@@ -22,58 +22,41 @@ define('MAX_KWD', 69);
  * Keyword functions
  */
 
-
-function make_seed()
-{
-    list($usec, $sec) = explode(' ', microtime());
-    return (float) $sec + ((float) $usec * 100000);
-} // fn make_seed
-
-
-function make_hash()
-{
-    mt_srand(make_seed());
-    $hash = mt_rand(0, 255);
-    return $hash;
-} // fn make_hash
-
-
 function init_hash()
 {
     global $kwd_hash;
-
-    for($i = 0; $i < 256; $i++) {
-        $kwd_hash[$i] = 0;
-    }
+    
+    $kwd_hash = array();
 } // fn init_hash
 
 
 function add_kwd($p_kwd, $p_length)
 {
     global $kwd_hash;
-
-    $h = make_hash();
-
-    if (strcmp($p_kwd, $kwd_hash[$h]) == 0) {
-        return;
+    
+    $p_kwd = trim($p_kwd);
+    if (!isset($kwd_hash[$p_kwd])) {
+    	$kwd_hash[$p_kwd] = false;
     }
-
-    $kwd_hash[$h] = substr($p_kwd, 0, $p_length);
 } // fn add_kwd
 
 
-function del_kwd_list()
+function set_html_tag(&$p_inHTMLTag, $p_char)
 {
-    unset($GLOBALS['kwd_hash']);
-    $GLOBALS['kwd_hash'] = array();
-} // fn del_kwd_list
+	if ($p_char == '<') {
+		$p_inHTMLTag++;
+	}
+	if ($p_char == '>') {
+		$p_inHTMLTag = $p_inHTMLTag > 0 ? $p_inHTMLTag - 1 : 0;
+	}
+}
 
 
-function parse_kwd($p_kwd)
+function parse_kwd($p_kwd, $p_isHTML = true)
 {
     $t = array(
                0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0,
+               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
                0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
                0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1,
@@ -87,6 +70,7 @@ function parse_kwd($p_kwd)
                1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
                );
 
+    $inHTMLTag = 0;
     if (!empty($p_kwd)) {
         $kwd_l = strlen($p_kwd);
         $q = null;
@@ -94,18 +78,31 @@ function parse_kwd($p_kwd)
         $l = 0;
         for ($q = $p_kwd; $x < $kwd_l;) {
             $w_l = 0;
+            
             while ($x < $kwd_l && $t[ord(substr($q, $x, 1))]) {
-                $x++;
+            	if ($p_isHTML) {
+            		set_html_tag($inHTMLTag, $q[$x]);
+            	}
+            	$x++;
                 $w_l++;
             }
 
             if ($w_l > 1) {
-                $word = substr($q, $l, $w_l);
+            	if ($inHTMLTag) {
+            		continue;
+            	}
+                $word = trim(substr($q, $l, $w_l), ' -');
+                if (is_numeric($word) && $word < 100) {
+                	continue;
+                }
                 add_kwd($word, mymin($w_l, MAX_KWD));
             } else {
                 $l = $x;
                 while ($l < $kwd_l && !$t[ord(substr($q, $l, 1))]) {
-                    $l++;
+                	if ($p_isHTML) {
+                		set_html_tag($inHTMLTag, $q[$l]);
+                	}
+                	$l++;
                 }
                 $x = $l;
             }
@@ -122,9 +119,10 @@ function parse_kwd($p_kwd)
 
 function build_kwd_list($p_article)
 {
-    parse_kwd($p_article['Keywords']);
-    parse_kwd($p_article['Name']);
-
+    parse_kwd($p_article['Keywords'], false);
+    parse_kwd($p_article['Name'], false);
+    parse_kwd($p_article['AuthorName'], false);
+    
     if (empty($p_article['Type'])) {
         return;
     }
@@ -134,8 +132,7 @@ function build_kwd_list($p_article)
         . ' AND IdLanguage = ' . $p_article['IdLanguage'];
     $sql_result = mysql_query($sql_query);
     if (!$sql_result) {
-        print('Error getting article: ' . mysql_error());
-        exit(1);
+    	exit_error('Error getting article: ' . mysql_error());
     }
 
     $row = mysql_fetch_row($sql_result);
@@ -158,19 +155,23 @@ function build_kwd_list($p_article)
 
 function gather($p_conf_dir)
 {
+	global $g_silent, $g_verbose;
+
     // connects to the database server
     db_connect($p_conf_dir);
 
     // selects articles not yet indexed
     $sql_query = 'SELECT IdPublication, NrIssue, NrSection, Number, '
-        .  'IdLanguage, Published, Type, Keywords, Name '
-        .  "FROM Articles WHERE IsIndexed = 'N' ORDER BY Number";
+        . 'IdLanguage, Published, Type, Keywords, Name, '
+        . "TRIM(CONCAT(first_name, ' ', last_name)) AS AuthorName \n"
+        . "FROM Articles as a LEFT JOIN Authors as auth \n"
+        . "  ON a.fk_default_author_id = auth.Id \n"
+        . "WHERE IsIndexed = 'N' AND Published = 'Y' ORDER BY Number";
     $sql_result = mysql_query($sql_query);
     if (!$sql_result) {
-        print('Error selecting articles not yet indexed: ' . mysql_error());
-        exit(1);
+        exit_error('Error selecting articles not yet indexed: ' . mysql_error());
     }
-
+    
     $nr_art = 0;
     $nr_new = 0;
     $nr_word = 0;
@@ -185,6 +186,7 @@ function gather($p_conf_dir)
         $article['Type'] = ($row['Type']) ? $row['Type'] : '';
         $article['Keywords'] = ($row['Keywords']) ? $row['Keywords'] : '';
         $article['Name'] = ($row['Name']) ? $row['Name'] : '';
+        $article['AuthorName'] = $row['AuthorName'];
 
         // deletes from index
         $sql_query = 'DELETE FROM ArticleIndex '
@@ -194,12 +196,7 @@ function gather($p_conf_dir)
             . ' AND NrSection = ' . $article['NrSection']
             . ' AND NrArticle = ' . $article['Number'];
         if (!mysql_query($sql_query)) {
-            print('Error deleting old index: ' . mysql_error());
-            exit(1);
-        }
-
-        if (!$article['Published']) {
-            continue;
+            exit_error('Error deleting old index: ' . mysql_error());
         }
 
         $nr_art++;
@@ -209,21 +206,18 @@ function gather($p_conf_dir)
 
         global $kwd_hash;
 
-        for ($i = 0; $i < 256; $i++) {
-            $w = $kwd_hash[$i];
-
-            if (empty($w)) {
+        foreach ($kwd_hash as $keyword=>$isSet) {
+            if (empty($keyword)) {
                 continue;
             }
 
             $nr_word++;
 
             $sql_query = 'SELECT Id FROM KeywordIndex '
-                . "WHERE Keyword = '" . mysql_real_escape_string($w) ."'";
+                . "WHERE Keyword = '" . mysql_real_escape_string($keyword) ."'";
             $sql_res = mysql_query($sql_query);
             if (!$sql_res) {
-                print('Error getting KeywordId: ' . mysql_error());
-                exit(1);
+                exit_error('Error getting KeywordId: ' . mysql_error());
             }
 
             $drow = mysql_fetch_array($sql_res, MYSQL_ASSOC);
@@ -231,15 +225,13 @@ function gather($p_conf_dir)
             mysql_free_result($sql_res);
             if ($kwd_id == 0) {
                 if (!mysql_query('LOCK TABLE KeywordIndex WRITE')) {
-                    print('Error locking table KeywordIndex: '
-                          . mysql_error());
-                    exit(1);
+                    exit_error('Error locking table KeywordIndex: '
+                               . mysql_error());
                 }
                 $sql_query = 'SELECT MAX(Id) AS Id FROM KeywordIndex';
                 $sql_res = mysql_query($sql_query);
                 if (!$sql_res) {
-                    print('Error reading the last id: ' . mysql_error());
-                    exit(1);
+                    exit_error('Error reading the last id: ' . mysql_error());
                 }
 
                 $drow = mysql_fetch_array($sql_res, MYSQL_ASSOC);
@@ -252,24 +244,20 @@ function gather($p_conf_dir)
 
                 // inserts in keyword list
                 $sql_query = 'INSERT INTO KeywordIndex '
-                    . "SET Keyword = '".mysql_real_escape_string($w)."', "
+                    . "SET Keyword = '".mysql_real_escape_string($keyword)."', "
                     . 'Id = '.$kwd_id;
                 $sql_res = mysql_query($sql_query);
                 if (!$sql_res) {
-                    print('Error adding keyword: ' . mysql_error());
-                    exit(1);
+                    exit_error('Error adding keyword: ' . mysql_error());
                 }
 
                 if (!mysql_query('UNLOCK TABLES')) {
-                    print('Error unlocking table KeywordIndex: '
-                          . mysql_error());
-                    exit(1);
+                    exit_error('Error unlocking table KeywordIndex: '
+                               . mysql_error());
                 }
 
                 $nr_new++;
             }
-
-            unset($w);
 
             // inserts in article index
             $sql_query = 'INSERT IGNORE INTO ArticleIndex '
@@ -280,12 +268,10 @@ function gather($p_conf_dir)
                 . ', NrSection = ' . $article['NrSection']
                 . ', NrArticle = ' . $article['Number'];
             if (!mysql_query($sql_query)) {
-                print('Error adding article to index: ' . mysql_error());
-                exit(1);
+                exit_error('Error adding article to index: ' . mysql_error());
             }
+            out_msg("Found $nr_art articles, $nr_word words of which $nr_new new.\r", true, false);
         }
-
-        del_kwd_list();
 
         unset($article['Name']);
         unset($article['Keywords']);
@@ -298,18 +284,14 @@ function gather($p_conf_dir)
             . ' AND Number = ' . $article['Number']
             . ' AND IdLanguage = ' . $article['IdLanguage'];
         if (!mysql_query($sql_query)) {
-            print('Error updating article: ' . mysql_error());
-            exit(1);
+            exit_error('Error updating article: ' . mysql_error());
         }
-
-        $m++;
-
     }
 
-    if ($nr_art > 0 || $nr_word > 0 || $nr_new > 0) {
-        print('Campsite: '.$nr_art.' new articles, '
-              .$nr_word.' words processed, '
-              .$nr_new." of them are new\n");
+    if (($nr_art > 0 || $nr_word > 0 || $nr_new > 0) && !$g_silent) {
+        out_msg('Campsite index: '.$nr_art.' articles, '
+                .$nr_word.' words processed, '
+                .$nr_new." of them are new.");
     }
 
     mysql_close();
@@ -340,8 +322,7 @@ function is_valid_conf_dir($p_conf_dir)
         }
         return true;
     } catch (Exception $e) {
-        print('Error: ' . $e->getMessage() . "\n");
-        exit(1);
+        exit_error('Error: ' . $e->getMessage());
     }
 } // fn isValidConfDir
 
@@ -352,33 +333,70 @@ function mymin($p_a, $p_b)
 } // fn mymin
 
 
+function out_msg($p_msg, $p_ifVerboseSet = false, $p_newLine = true)
+{
+    global $g_silent, $g_verbose;
+    if (!$g_silent && ($g_verbose || !$p_ifVerboseSet)) {
+        echo "$p_msg" . ($p_newLine ? "\n" : '');
+    }
+}
+
+
+function exit_error($p_errMsg, $p_ifVerboseSet = false)
+{
+    out_msg($p_errMsg, $p_ifVerboseSet);
+    exit(1);
+}
+
+
 function usage()
 {
-    printf("Usage: campsite-indexer [options]\n"
-           ."Options:\n"
-           ."\t--conf_dir=[configuration_dir]: Host name of the MySQL Server.\n"
-           ."\t--help: Display this information.\n");
+    out_msg("Usage: campsite-indexer [options]\n"
+            ."Options:\n"
+            ."\t--conf_dir=[configuration_dir]: Host name of the MySQL Server.\n"
+            ."\t--silent: The script will not display any message\n"
+            ."\t\t(has precedence over --verbose).\n"
+            ."\t--verbose: The script will display detailed information.\n"
+            ."\t--help: Display this information.");
 } // fn usage
 
 
-// gets the arguments from command line, if any
-if (is_array($GLOBALS['argv']) && !empty($GLOBALS['argv'][1])) {
-    $option = explode('=', $GLOBALS['argv'][1]);
-    if ($option[0] != '--conf_dir') {
-        usage();
-        exit(0);
-    }
+$g_silent = false;
+$g_verbose = false;
+$conf_dir = '';
 
-    $conf_dir = (!empty($option[1])) ? rtrim($option[1], '/') : '';
-    if (empty($conf_dir)) {
-        usage();
-        exit(0);
+// gets the arguments from command line, if any
+for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
+    $option = explode('=', $GLOBALS['argv'][$i]);
+    switch ($option[0]) {
+    	case '--conf_dir':
+    		$conf_dir = !empty($option[1]) ? rtrim($option[1], '/') : '';
+    		if (empty($conf_dir)) {
+    			out_msg("Configuration directory not specified!");
+    			usage();
+    			exit(1);
+    		}
+    		break;
+    	case '--silent':
+    		$g_silent = true;
+    		break;
+    	case '--verbose':
+    		$g_verbose = true;
+    		break;
+    	case '--help':
+    		usage();
+    		exit(0);
+    	default:
+    		out_msg("Invalid option '" . $option[0] . "'!");
+    		usage();
+    		exit(1);
     }
-} else {
+}
+$g_verbose = !$g_silent && $g_verbose;
+if (empty($conf_dir)) {
     $bin_dir = dirname(__FILE__);
     $conf_dir = preg_replace('/bin$/', 'conf', $bin_dir);
 }
-
 
 // runs the script
 gather($conf_dir);
