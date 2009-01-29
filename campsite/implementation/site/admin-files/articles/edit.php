@@ -178,7 +178,10 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 <!-- YUI dependencies //-->
 <script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
 <script src="/javascript/yui/build/event/event-min.js"></script>
+<script src="/javascript/yui/build/dom/dom-min.js"></script>
 <script src="/javascript/yui/build/connection/connection-min.js"></script>
+<script src="/javascript/yui/build/animation/animation-min.js"></script>
+<script src="/javascript/yui/build/container/container.js"></script>
 
 <!-- Autocomplete Dependencies -->
 <script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
@@ -189,6 +192,8 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 
 <!-- CSS file (default YUI Sam Skin) -->
 <link type="text/css" rel="stylesheet" href="/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
+
+<link type="text/css" rel="stylesheet" href="/javascript/yui/build/container/assets/container.css">
 
 <link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
 
@@ -428,13 +433,12 @@ if ($f_edit_mode == "edit") { ?>
 
 			     <td nowrap>
 			       <div id="yui-saved-box">
-			         <div id="yui-saved-title"><?php putGS("Saved:"); ?>&nbsp;</div>
 				 <div id="yui-connection-saved"></div>
 				 <div id="yui-saved">
                                  <script>
 				    var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
 			            if (document.getElementById('yui-connection-saved').value == undefined) {
-				        document.write(dateTime);
+				        document.write('<?php putGS("Saved:"); ?> ' + dateTime);
 				    }
 				 </script>
                                  </div>
@@ -471,7 +475,7 @@ if ($f_edit_mode == "edit") { ?>
                     <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <?php } ?>
-					<input type="button" name="save" id="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('all');" />
+					<input type="button" name="save" id="save" value="<?php putGS('Save All'); ?>" class="button" onClick="makeRequest('all');" />
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="submit" name="save_and_close" id="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 				</td>
@@ -482,7 +486,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 	                  <td align="left" valign="top" style="padding-right: 5px;">
 	                  <?php if ($f_edit_mode == "edit") { ?>
-			    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_article_title');" />
+			    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_article_title');" />
 			  <?php } ?>
                           </td>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
@@ -498,7 +502,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" valign="top" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_article_author');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_article_author');" />
 				<?php } ?>
 				</td>
 				<td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
@@ -702,7 +706,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('f_keywords');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_keywords');" />
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
@@ -731,7 +735,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -765,7 +769,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -844,7 +848,7 @@ window.location.reload();
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
@@ -933,7 +937,7 @@ window.location.reload();
             <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
             &nbsp;&nbsp;&nbsp;&nbsp;
             <?php } ?>
-			<input type="button" name="save" value="<?php putGS('Save'); ?>" class="button" onClick="makeRequest('all');" />
+			<input type="button" name="save" value="<?php putGS('Save All'); ?>" class="button" onClick="makeRequest('all');" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="submit" name="save_and_close" value="<?php putGS('Save and Close'); ?>" class="button" />
 		</td>
@@ -1026,6 +1030,8 @@ var resp = document.getElementById('yui-connection-container');
 var mesg = document.getElementById('yui-connection-message');
 var saved = document.getElementById('yui-connection-saved');
 
+YAHOO.namespace("example.container");
+
 var handleSuccess = function(o){
     if(o.responseText !== undefined){
         resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
@@ -1036,8 +1042,9 @@ var handleSuccess = function(o){
 
 	document.getElementById('yui-saved').style.display = 'none';
 	var savedTime = makeSavedTime();
-	saved.innerHTML = savedTime;
+	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
 	mesg.innerHTML = "Article Saved";
+	YAHOO.example.container.wait.hide();
     }
 };
 
@@ -1046,6 +1053,7 @@ var handleFailure = function(o){
         resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
 	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
 	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
+	YAHOO.example.container.wait.hide();
     }
 };
 
@@ -1060,6 +1068,24 @@ var sUrl = "/admin/articles/yui-assets/post.php";
 
 
 function makeRequest(a){
+    // Initialize the temporary Panel to display while waiting
+    // for article saving
+    YAHOO.example.container.wait = 
+        new YAHOO.widget.Panel("wait",
+                                        { width:"240px",
+					  fixedcenter:true,
+					  close:false,
+					  draggable:false,
+					  modal:true,
+					  visible:false,
+					  effect:{effect:YAHOO.widget.ContainerEffect.FADE, duration:0.5}
+					}
+			       );
+
+    YAHOO.example.container.wait.setHeader("Saving...");
+    YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
+    YAHOO.example.container.wait.render(document.body);
+
     var postAction = '&f_save=' + a;
 
     var ycaFArticleTitle = document.getElementById('f_article_title').value;
@@ -1123,6 +1149,9 @@ function makeRequest(a){
       + "&f_article_number=" + ycaFArticleNumber
       + "&f_message=" + encodeURIComponent(ycaFMessage)
       + postCustomFieldsData + postCustomTextareasData + postAction;
+
+    // Show the saving panel
+    YAHOO.example.container.wait.show();
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
 }
