@@ -143,6 +143,11 @@ class Phorum_message extends DatabaseObject {
 		}
 		$message["ip"] = $user_ip;
 
+        $lockTables = array($PHORUM['message_table'],
+                            $PHORUM['search_table'],
+                            $PHORUM['subscribers_table']);
+        $this->lockTables($lockTables);
+
 		phorum_db_post_message($message);
 
 		$this->mod_emailcomments($message);
@@ -197,6 +202,8 @@ class Phorum_message extends DatabaseObject {
 	    if ($forumObj->emailModeratorsEnabled()) {
 	        //phorum_email_moderators($message);
 	    }
+	    
+	    $this->unlockTables();
 
 	    return true;
 	} // fn create
@@ -224,6 +231,11 @@ class Phorum_message extends DatabaseObject {
 		if (!$this->exists()) {
 			return true;
 		}
+		
+		$lockTables = array($PHORUM['message_table'],
+                            $PHORUM['search_table'],
+                            $PHORUM['subscribers_table']);
+        $this->lockTables($lockTables);
 
 	    if ($p_mode == PHORUM_DELETE_TREE) {
 	    	$mids = phorum_db_get_messagetree($this->m_data['message_id'], $this->m_data['forum_id']);
@@ -278,6 +290,9 @@ class Phorum_message extends DatabaseObject {
 	    // ??? Note: phorum_db_update_forum_stats() requires global parameter passing.
 	    $PHORUM['forum_id'] = $this->m_data['forum_id'];
 	    phorum_db_update_forum_stats(true);
+	    $g_ado_db->Execute('UNLOCK TABLES');
+	    
+	    $this->unlockTables();
 
 		$this->m_exists = false;
 
