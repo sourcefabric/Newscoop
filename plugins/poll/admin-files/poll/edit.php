@@ -266,7 +266,7 @@ function poll_set_nr_of_answers()
     var value = false;
 
     for (n = 1; n <= nr_of_answers; n++) {
-        document.getElementById('poll_answer_tr_' + n).style.display = 'table-row';
+        document.getElementById('poll_answer_tr_' + n).style.display = '';
         
         if (poll_values[n] && poll_values[n] != '__undefined__') { 
             document.getElementById('poll_answer_input_' + n).value = poll_values[n];    
