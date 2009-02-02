@@ -204,6 +204,7 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 
 <link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
 
+
 <?php
 // If the article is locked.
 if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
@@ -1148,13 +1149,13 @@ function makeRequest(a){
 					  fixedcenter:true,
 					  close:false,
 					  draggable:false,
+					  zindex: 4,
 					  modal:true,
-					  visible:false,
-					  effect:{effect:YAHOO.widget.ContainerEffect.FADE, duration:0.5}
+					  visible:false
 					}
 			       );
 
-    YAHOO.example.container.wait.setHeader("Saving...");
+    YAHOO.example.container.wait.setHeader("<?php putGS('Saving, please wait...'); ?>");
     YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
     YAHOO.example.container.wait.render(document.body);
 

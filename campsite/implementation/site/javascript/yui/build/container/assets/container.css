@@ -193,7 +193,7 @@ PLEASE NOTE:
     position:relative;
     left:0;
     top:0;
-    font:1em Arial;
+    font:1em sans-serif, helvetica, arial;
     background-color:#FFF;
     border:1px solid #000;
     z-index:1;
@@ -201,15 +201,16 @@ PLEASE NOTE:
 }
 
 .yui-panel .hd {
-    background-color:#3d77cb;
-    color:#FFF;
-    font-size:100%;
+    background-color:#efefee;
+    color:#333333;
+    font-size:90%;
     line-height:100%;
     border:1px solid #FFF;
-    border-bottom:1px solid #000;
-    font-weight:bold;
+    border-bottom:0px solid #000;
+    font-weight:normal;
     padding:4px;
     white-space:nowrap;
+    text-align: center;
 }
 
 .yui-panel .bd {
