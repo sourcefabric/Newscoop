@@ -169,13 +169,14 @@ foreach ($dbColumns as $dbColumn) {
         $hasArticleBodyField = true;
     }
 }
+
 if (($f_edit_mode == "edit") && $hasArticleBodyField) {
     $languageSelectedObj = new Language($f_language_selected);
     $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 ?>
-<!-- YUI dependencies //-->
+<!-- YUI dependencies -->
 <script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
 <script src="/javascript/yui/build/event/event-min.js"></script>
 <script src="/javascript/yui/build/dom/dom-min.js"></script>
@@ -183,15 +184,21 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 <script src="/javascript/yui/build/animation/animation-min.js"></script>
 <script src="/javascript/yui/build/container/container.js"></script>
 
-<!-- Autocomplete Dependencies -->
+<!-- Autocomplete dependencies -->
 <script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script src="/javascript/yui/build/datasource/datasource-min.js"></script>
+
+<!-- Button dependencies -->
+<script src="/javascript/yui/build/element/element-beta-min.js"></script>
+<script src="/javascript/yui/build/button/button-min.js"></script>
 
 <!-- Autocomplete Source file -->
 <script src="/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
 
 <!-- CSS file (default YUI Sam Skin) -->
 <link type="text/css" rel="stylesheet" href="/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
+
+<link rel="stylesheet" type="text/css" href="/javascript/yui/build/button/assets/skins/sam/button.css" />
 
 <link type="text/css" rel="stylesheet" href="/javascript/yui/build/container/assets/container.css">
 
@@ -456,6 +463,7 @@ if ($f_edit_mode == "edit") { ?>
 	<td valign="top">
 	<!-- BEGIN article content -->
 	<form name="article_edit" action="do_edit.php" method="POST">
+	<fieldset id="pushbuttonsfrommarkup" class=" yui-skin-sam">
 	<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
 	<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
 	<input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
@@ -486,13 +494,13 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 	                  <td align="left" valign="top" style="padding-right: 5px;">
 	                  <?php if ($f_edit_mode == "edit") { ?>
-			    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_article_title');" />
+                            <input type="button" id="save_f_article_title" name="button4" value="Saved">
 			  <?php } ?>
                           </td>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
                           <td align="left" valign="top" colspan="2">
                           <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" />
+                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" onchange="buttonEnable('save_f_article_title');" />
                           <?php } else {
                               print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
                                 }
@@ -502,14 +510,14 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" valign="top" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_article_author');" />
+					<input type="button" id="save_f_article_author" name="button5" value="Saved">
 				<?php } ?>
 				</td>
 				<td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
                 <td align="left" valign="top" class="yui-skin-sam">
                     <?php if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
-                        <input type="text" name="f_article_author" id="f_article_author" size="45" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" />
+                        <input type="text" name="f_article_author" id="f_article_author" size="45" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" onchange="buttonEnable('save_f_article_author');" />
                         <div id="authorContainer"></div>
                     </div>
                     <?php } else {
@@ -706,13 +714,13 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('f_keywords');" />
+					<input type="button" id="save_f_keywords" name="button6" value="Saved">
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
 				<td>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" />
+					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" onchange="buttonEnable('save_f_keywords');" />
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
@@ -723,6 +731,7 @@ if ($f_edit_mode == "edit") { ?>
 			<?php
 			$fCustomFields = array();
                         $fCustomTextareas = array();
+                        $saveButtons = array();
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
 				if (stristr($dbColumn->getType(), "char")
@@ -734,8 +743,13 @@ if ($f_edit_mode == "edit") { ?>
 			?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
-					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+				    <?php if ($f_edit_mode == "edit") {
+				    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
+                                    ?>
+					<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -752,7 +766,8 @@ if ($f_edit_mode == "edit") { ?>
 					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
 					   size="50"
-					   maxlength="255" />
+					   maxlength="255"
+			                   onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
 		        }
@@ -847,8 +862,13 @@ window.location.reload();
 			?>
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
-				<?php if ($f_edit_mode == "edit") { ?>
-				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+				<?php if ($f_edit_mode == "edit") {
+                                $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
+                                ?>
+			        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
@@ -864,7 +884,7 @@ window.location.reload();
 				        ?>
 					<td><textarea name="<?php print($textAreaId); ?>"
 								  id="<?php print($textAreaId); ?>"
-								  rows="20" cols="70"><?php print $text; ?></textarea>
+								  rows="20" cols="70" onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
 					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td>
@@ -933,6 +953,11 @@ window.location.reload();
 	<tr>
 		<td colspan="2" align="center">
             <?php if ($f_publication_id > 0) { ?>
+
+            <div>
+            </div>
+        </fieldset>
+
             <!-- Preview Link -->
             <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -1032,6 +1057,52 @@ var saved = document.getElementById('yui-connection-saved');
 
 YAHOO.namespace("example.container");
 
+YAHOO.example.init = function () {
+
+    // "click" event handler for each Button instance
+    function onButtonClick(p_oEvent) {
+        var fieldPrefix = "save_";
+	var buttonId = this.get("id");
+	var field = buttonId.substr(fieldPrefix.length);
+
+	makeRequest(field);
+    }
+
+    // "contentready" event handler for the "pushbuttonsfrommarkup" <fieldset>
+    YAHOO.util.Event.onContentReady("pushbuttonsfrommarkup", function () {
+	// Create Buttons using existing <input> elements as a data source
+	var oSaveArticleTitleButton = new YAHOO.widget.Button("save_f_article_title", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});
+	var oSaveArticleAuthorButton = new YAHOO.widget.Button("save_f_article_author", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});
+	var oSaveKeywordsButton = new YAHOO.widget.Button("save_f_keywords", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});
+<?php
+    foreach ($saveButtons as $saveButton) {
+	  print($saveButton);
+    }
+?>
+    });
+} ();
+
+function buttonEnable(buttonId) {
+    var oPushButton = YAHOO.widget.Button.getButton(buttonId);
+    oPushButton.set("disabled", false);
+    oPushButton.set("label", "Save");
+}
+
+function buttonDisable(buttonId) {
+    var oPushButton = YAHOO.widget.Button.getButton(buttonId);
+    oPushButton.set("disabled", true);
+    oPushButton.set("label", "Saved");
+}
+
 var handleSuccess = function(o){
     if(o.responseText !== undefined){
         resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
@@ -1045,6 +1116,7 @@ var handleSuccess = function(o){
 	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
 	mesg.innerHTML = "Article Saved";
 	YAHOO.example.container.wait.hide();
+	
     }
 };
 
@@ -1154,6 +1226,7 @@ function makeRequest(a){
     YAHOO.example.container.wait.show();
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
+    buttonDisable("save_" + a);
 }
 
 function makeSavedTime() {
