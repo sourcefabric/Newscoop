@@ -22,11 +22,19 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	if (is_array($p_dbColumns)) {
 	    foreach ($p_dbColumns as $dbColumn) {
 	        if (stristr($dbColumn->getType(), "blob")) {
-		    $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
+		    if ($p_articleNumber > 0) {
+		        $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
+		    } else {
+		        $editors[] = $dbColumn->getName();
+		    }
 		}
 	    }
 	} else {
-	    $editors[] = $p_dbColumns.'_'.$p_articleNumber;
+	    if ($p_articleNumber > 0) {
+	        $editors[] = $p_dbColumns.'_'.$p_articleNumber;
+	    } else {
+	        $editors[] = $p_dbColumns;
+	    }
 	}
 	$textareas = implode(",", $editors);
 

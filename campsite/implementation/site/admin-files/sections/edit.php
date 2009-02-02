@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Template.php');
 
 if (!$g_user->hasPermission('ManageSection')) {
@@ -30,8 +30,7 @@ if (!is_object($languageObj)) {
   $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
-editor_load_xinha('cDescription', $g_user, $editorLanguage);
-
+editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage);
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
