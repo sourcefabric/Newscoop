@@ -62,6 +62,11 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	$plugins[] = 'campsiteimage';
 	$plugins_list = implode(",", $plugins);
 
+	$statusbar_location = "none";
+	if ($p_user->hasPermission('EditorStatusBar')) {
+	    $statusbar_location = "bottom";
+	}
+
 	/** STEP 3 ********************************************************
 	 * We create a default configuration to be used by all the editors.
 	 * If you wish to configure some of the editors differently this
@@ -230,6 +235,7 @@ tinyMCE.init({
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
     theme_advanced_resizing : false,
+    theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
     // Example content CSS (should be your site CSS)
     content_css : "<?php echo $stylesheetFile; ?>",
