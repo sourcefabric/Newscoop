@@ -671,11 +671,12 @@ class CampInstallationBaseHelper
         global $g_db;
 
         if (!ini_get('apc.enabled') || !function_exists('apc_store')) {
-            return false;
+            $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
+                ."WHERE varname = 'SiteCacheEnabled'";
+        } else {
+            $sqlQuery = "UPDATE SystemPreferences SET value = 'Y' "
+                ."WHERE varname = 'SiteCacheEnabled'";
         }
-
-        $sqlQuery = "UPDATE SystemPreferences SET value = 'Y' "
-            ."WHERE varname = 'SiteCacheEnabled'";
         if (!$g_db->Execute($sqlQuery)) {
             return false;
         }
