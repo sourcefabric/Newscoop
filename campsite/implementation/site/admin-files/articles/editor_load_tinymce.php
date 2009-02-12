@@ -254,7 +254,7 @@ tinyMCE.init({
     paste_remove_styles: true,
 
     setup : function(ed) {
-        ed.onChange.add(function(ed, l) {
+        ed.onKeyUp.add(function(ed, l) {
 	    var idx = ed.id.lastIndexOf('_');
 	    var buttonId = ed.id.substr(0, idx);
 	    buttonEnable('save_' + buttonId);

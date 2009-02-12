@@ -501,7 +501,7 @@ if ($f_edit_mode == "edit") { ?>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
                           <td align="left" valign="top" colspan="2">
                           <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" onchange="buttonEnable('save_f_article_title');" />
+                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" onkeyup="buttonEnable('save_f_article_title');" />
                           <?php } else {
                               print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
                                 }
@@ -518,7 +518,7 @@ if ($f_edit_mode == "edit") { ?>
                 <td align="left" valign="top" class="yui-skin-sam">
                     <?php if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
-                        <input type="text" name="f_article_author" id="f_article_author" size="45" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" onchange="buttonEnable('save_f_article_author');" />
+                        <input type="text" name="f_article_author" id="f_article_author" size="45" class="input_text" value="<?php print htmlspecialchars($articleAuthorObj->getName()); ?>" onkeyup="buttonEnable('save_f_article_author');" />
                         <div id="authorContainer"></div>
                     </div>
                     <?php } else {
@@ -721,7 +721,7 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
 				<td>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" onchange="buttonEnable('save_f_keywords');" />
+					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" onkeyup="buttonEnable('save_f_keywords');" />
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
@@ -768,7 +768,7 @@ if ($f_edit_mode == "edit") { ?>
 					   class="input_text"
 					   size="50"
 					   maxlength="255"
-			                   onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
+			                   onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
 		        }
@@ -885,7 +885,7 @@ window.location.reload();
 				        ?>
 					<td><textarea name="<?php print($textAreaId); ?>"
 								  id="<?php print($textAreaId); ?>"
-								  rows="20" cols="70" onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
+								  rows="20" cols="70" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
 					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td>
