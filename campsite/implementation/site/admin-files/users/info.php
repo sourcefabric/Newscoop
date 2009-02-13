@@ -39,6 +39,10 @@ $my_user_type = $editUser->getUserType();
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_meter_min.js"></script>
+<link href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/css/default.css" rel="stylesheet" type="text/css" />
+
+
 <form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
@@ -66,13 +70,73 @@ if (!$isNewUser) {
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>
 				<td>
-				<input type="password" class="input_text" name="password" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>">
+                                  <table cellpadding="0" cellspacing="0">
+                                  <tr>
+                                    <td>
+                                      <input type="password" class="input_text" id="password" name="password" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The password must be at least 6 characters long and both passwords should match."); ?>" onkeyup="chkPass(this.value);">
+                                    </td>
+                                    <td style="padding-left:6px;">
+                                      <div id="score">0%</div>
+                                      <div id="scorebar">&nbsp;</div>
+                                    </td>
+                                    <td style="padding-left:4px;">
+                                      <div id="complexity">Too Short</div>
+                                    </td>
+                                  </tr>
+                                  </table>
+
+                                  <div id="div_nLength" style="display:none"></div>
+                    <div id="nLength" style="display:none"></div>
+                    <div id="nLengthBonus" style="display:none;"></div>
+                    <div id="div_nAlphaUC" style="display:none;"></div>
+                    <div id="nAlphaUC" style="display:none;"></div>
+                    <div id="nAlphaUCBonus" style="display:none;"></div>
+                    <div id="div_nAlphaLC" style="display:none;"></div>
+                    <div id="nAlphaLC" style="display:none;"></div>
+                    <div id="nAlphaLCBonus" style="display:none;"></div>
+                    <div id="div_nNumber" style="display:none;"></div>
+                    <div id="nNumber" style="display:none;"></div>
+                    <div id="nNumberBonus" style="display:none;"></div>
+                    <div id="div_nSymbol" style="display:none;"></div>
+                    <div id="nSymbol" style="display:none;"></div>
+                    <div id="nSymbolBonus" style="display:none;"></div>
+                    <div id="div_nMidChar" style="display:none;"></div>
+                    <div id="nMidChar" style="display:none;"></div>
+                    <div id="nMidCharBonus" style="display:none;"></div>
+                    <div id="div_nRequirements" style="display:none;"></div>
+                    <div id="nRequirements" style="display:none;"></div>
+                    <div id="nRequirementsBonus" style="display:none;"></div>
+                    <div id="div_nAlphasOnly" style="display:none;"></div>
+                    <div id="nAlphasOnly" style="display:none;"></div>
+                    <div id="nAlphasOnlyBonus" style="display:none;"></div>
+                    <div id="div_nNumbersOnly" style="display:none;"></div>
+                    <div id="nNumbersOnly" style="display:none;"></div>
+                    <div id="nNumbersOnlyBonus" style="display:none;"></div>
+                    <div id="div_nRepChar" style="display:none;"></div>
+                    <div id="nRepChar" style="display:none;"></div>
+                    <div id="nRepCharBonus" style="display:none;"></div>
+                    <div id="div_nConsecAlphaUC" style="display:none;"></div>
+                    <div id="nConsecAlphaUC" style="display:none;"></div>
+                    <div id="nConsecAlphaUCBonus" style="display:none;"></div>
+                    <div id="div_nConsecAlphaLC" style="display:none;"></div>
+                    <div id="nConsecAlphaLC" style="display:none;"></div>
+                    <div id="nConsecAlphaLCBonus" style="display:none;"></div>
+                    <div id="div_nConsecNumber" style="display:none;"></div>
+                    <div id="nConsecNumber" style="display:none;"></div>
+                    <div id="nConsecNumberBonus" style="display:none;"></div>
+                    <div id="div_nSeqAlpha" style="display:none;"></div>
+                    <div id="nSeqAlpha" style="display:none;"></div>
+                    <div id="nSeqAlphaBonus" style="display:none;"></div>
+                    <div id="div_nSeqNumber" style="display:none;"></div>
+                    <div id="nSeqNumber" style="display:none;"></div>
+                    <div id="nSeqNumberBonus" style="display:none;"></div>
 				</td>
 			</tr>
 			<tr>
 				<td align="right"><?php putGS("Confirm password"); ?>:</td>
 				<td>
 				<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32" alt="length|6" emsg="<?php putGS("The confirm password must be at least 6 characters long and both passwords should match."); ?>">
+                                <input type="text" id="passwordTxt" name="passwordTxt" class="hide" />
 				</td>
 <?php
 }
@@ -158,16 +222,76 @@ if (!$isNewUser) {
 		?>
 
 		<tr>
-			<td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>
-			<td>
-			<input type="password" class="input_text" name="password" size="16" maxlength="32">
+                  <td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>
+		  <td>
+                    <table cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+			<input type="password" class="input_text" id="password" name="password" size="16" maxlength="32" onkeyup="chkPass(this.value);">
+                      </td>
+                      <td style="padding-left:6px;">
+                        <div id="score">0%</div>
+                        <div id="scorebar">&nbsp;</div>
+                      </td>
+                      <td style="padding-left:4px;">
+                        <div id="complexity">Too Short</div>
+                      </td>
+                    </tr>
+                    </table>
+
+                    <div id="div_nLength" style="display:none"></div>
+                    <div id="nLength" style="display:none"></div>
+                    <div id="nLengthBonus" style="display:none;"></div>
+                    <div id="div_nAlphaUC" style="display:none;"></div>
+                    <div id="nAlphaUC" style="display:none;"></div>
+                    <div id="nAlphaUCBonus" style="display:none;"></div>
+                    <div id="div_nAlphaLC" style="display:none;"></div>
+                    <div id="nAlphaLC" style="display:none;"></div>
+                    <div id="nAlphaLCBonus" style="display:none;"></div>
+                    <div id="div_nNumber" style="display:none;"></div>
+                    <div id="nNumber" style="display:none;"></div>
+                    <div id="nNumberBonus" style="display:none;"></div>
+                    <div id="div_nSymbol" style="display:none;"></div>
+                    <div id="nSymbol" style="display:none;"></div>
+                    <div id="nSymbolBonus" style="display:none;"></div>
+                    <div id="div_nMidChar" style="display:none;"></div>
+                    <div id="nMidChar" style="display:none;"></div>
+                    <div id="nMidCharBonus" style="display:none;"></div>
+                    <div id="div_nRequirements" style="display:none;"></div>
+                    <div id="nRequirements" style="display:none;"></div>
+                    <div id="nRequirementsBonus" style="display:none;"></div>
+                    <div id="div_nAlphasOnly" style="display:none;"></div>
+                    <div id="nAlphasOnly" style="display:none;"></div>
+                    <div id="nAlphasOnlyBonus" style="display:none;"></div>
+                    <div id="div_nNumbersOnly" style="display:none;"></div>
+                    <div id="nNumbersOnly" style="display:none;"></div>
+                    <div id="nNumbersOnlyBonus" style="display:none;"></div>
+                    <div id="div_nRepChar" style="display:none;"></div>
+                    <div id="nRepChar" style="display:none;"></div>
+                    <div id="nRepCharBonus" style="display:none;"></div>
+                    <div id="div_nConsecAlphaUC" style="display:none;"></div>
+                    <div id="nConsecAlphaUC" style="display:none;"></div>
+                    <div id="nConsecAlphaUCBonus" style="display:none;"></div>
+                    <div id="div_nConsecAlphaLC" style="display:none;"></div>
+                    <div id="nConsecAlphaLC" style="display:none;"></div>
+                    <div id="nConsecAlphaLCBonus" style="display:none;"></div>
+                    <div id="div_nConsecNumber" style="display:none;"></div>
+                    <div id="nConsecNumber" style="display:none;"></div>
+                    <div id="nConsecNumberBonus" style="display:none;"></div>
+                    <div id="div_nSeqAlpha" style="display:none;"></div>
+                    <div id="nSeqAlpha" style="display:none;"></div>
+                    <div id="nSeqAlphaBonus" style="display:none;"></div>
+                    <div id="div_nSeqNumber" style="display:none;"></div>
+                    <div id="nSeqNumber" style="display:none;"></div>
+                    <div id="nSeqNumberBonus" style="display:none;"></div>
 			</td>
 		</tr>
 
 		<tr>
 			<td align="right" nowrap width="1%"><?php putGS("Confirm password"); ?>:</td>
 			<td>
-			<input type="password" class="input_text" name="passwordConf" size="16" maxlength="32">
+			<input type="password" class="input_text" id="passwordConf" name="passwordConf" size="16" maxlength="32">
+                        <input type="text" id="passwordTxt" name="passwordTxt" class="hide" />
 			</td>
 		</tr>
 		</table>
