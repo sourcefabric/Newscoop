@@ -176,7 +176,8 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             if ($campsite->issue->defined) {
             	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
             }
-            $sectionsList = Section::GetList($constraints, array('Number'=>'ASC'));
+            $sectionsList = Section::GetList($constraints, array('Number'=>'ASC'),
+                                             0, 0, $count);
             if (!isGS('-- ALL SECTIONS --')) {
             	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
             }
@@ -185,6 +186,29 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             foreach ($sectionsList as $section) {
             	$html .= '<option value="' . $section->getSectionNumber() . '">'
             	      . htmlspecialchars($section->getName()) . '</option>';
+            }
+            $html .= '</select>';
+        } elseif ($attribute == 'issue') {
+        	$constraints = array();
+            $operator = new Operator('is', 'integer');
+            if ($campsite->publication->defined) {
+                $constraints[] = new ComparisonOperation('IdPublication', $operator, $campsite->publication->identifier);
+            }
+            if ($campsite->language->defined) {
+                $constraints[] = new ComparisonOperation('IdLanguage', $operator, $campsite->language->number);
+            }
+            $constraints[] = new ComparisonOperation('published', $operator, 'true');
+            $issuesList = Issue::GetList($constraints,
+                                         array(array('field'=>'bynumber', 'dir'=>'DESC')),
+                                         0, 0, $count);
+            $html = '<select name="f_search_issue" ' . $p_params['html_code'] . '>';
+            $html .= '<option value="0" selected>&nbsp;</option>';
+            foreach ($issuesList as $issue) {
+            	$issueDesc = $issue->getIssueNumber() . '. '
+            	           . $issue->getName()
+            	           . ' ('. $issue->getPublicationDate() . ')';
+                $html .= '<option value="' . $issue->getIssueNumber() . '">'
+                      . htmlspecialchars($issueDesc) . '</option>';
             }
             $html .= '</select>';
         }

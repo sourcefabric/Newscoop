@@ -39,7 +39,7 @@ class SearchResultsList extends ListObject
 	                                                         $context->publication->identifier);
 	    }
 	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
-	    && $context->issue->defined) {
+	    && $context->issue->defined && $p_parameters['search_issue'] == 0) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $context->issue->number);
 	    }
@@ -48,6 +48,10 @@ class SearchResultsList extends ListObject
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $context->section->number);
 	    }
+        if ($p_parameters['search_issue'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $p_parameters['search_issue']);
+        }
         if ($p_parameters['search_section'] != 0) {
             $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
                                                              $p_parameters['search_section']);
@@ -69,7 +73,7 @@ class SearchResultsList extends ListObject
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 
-	    if ($p_parameters['scope'] == 'keywords') {
+	    if ($p_parameters['scope'] == 'index') {
 	    	$articlesList = Article::SearchByKeyword($keywords,
 	    	                $p_parameters['match_all'],
 	    	                $this->m_constraints,
@@ -163,7 +167,8 @@ class SearchResultsList extends ListObject
     			case 'search_level':
     			case 'search_phrase':
     			case 'search_results':
-    			case 'search_section':
+                case 'search_issue':
+                case 'search_section':
     			case 'start_date':
                 case 'end_date':
                 case 'topic_id':

@@ -50,13 +50,13 @@ table.main {
 }
 
 table.content {
-    width: 736px;
+    width: 732px;
     margin: 5px 0px 15px 0px;
     padding: 10px;
 }
 
 table.rightbox {
-    width: 184px;
+    width: 190px;
     margin: 0 0 15px 0;
     padding: 5px;
     text-align: center;
@@ -75,7 +75,7 @@ table.userform {
 }
 
 table.rightbar {
-    width: 184px;
+    width: 190px;
     margin: 0 0 15px 0;
     padding: 5px;
     border-top: 1px solid #dfdfdf;
@@ -244,7 +244,6 @@ div#genericform form textarea {
     margin-bottom: 5px;
 }
 div#genericform form select {
-	width: 100px;
     font-size: 70%;
     border: 1px solid #a5a5a5;
     margin-bottom: 5px;
