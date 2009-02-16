@@ -161,17 +161,19 @@ function TransformImageTags($p_match) {
 		$alignTag = 'align='.$attrs['align'];
 	}
 	$altTag = '';
-	if (isset($attrs['alt'])) {
+	if (isset($attrs['alt']) && strlen($attrs['alt']) > 0) {
 		$altTag = 'alt="'.$attrs['alt'].'"';
 	}
 	$captionTag = '';
-	if (isset($attrs['title'])) {
+	if (isset($attrs['title']) && strlen($attrs['title']) > 0) {
 		$captionTag = 'sub="'.$attrs['title'].'"';
 	}
 	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";
 	return $imageTag;
 } // fn TransformImageTags
 
+
+$f_save = Input::Get('f_save', 'string', '', true);
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -190,7 +192,6 @@ $f_message = Input::Get('f_message', 'string', '', true);
 $f_creation_date = Input::Get('f_creation_date');
 $f_publish_date = Input::Get('f_publish_date');
 $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
-$f_save_and_close = Input::Get('f_save_and_close', 'int', 0, true);
 
 $data = new stdclass();
 $data->Results = new stdclass();
@@ -210,9 +211,9 @@ $data->Results->f_message = $f_message;
 $data->Results->f_creation_date = $f_creation_date;
 $data->Results->f_publish_date = $f_publish_date;
 $data->Results->f_comment_status = $f_comment_status;
-$data->Results->f_save_and_close = ($f_save_and_close) ? 1 : 0;
+$data->Results->f_save = $f_save;
 
-if (isset($_REQUEST['save_and_close'])) {
+if ($f_save == 'close') {
 	$f_save_button = 'save_and_close';
 	$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
 } else {
@@ -278,22 +279,30 @@ if ($f_article_title != $articleObj->getTitle()) {
 }
 
 // Update the article author
-$authorObj = new Author($f_article_author);
-if (!$authorObj->exists()) {
-	$authorData = Author::ReadName($f_article_author);
+if ($f_save == 'f_article_author' || $f_save == 'all') {
+    $authorObj = new Author($f_article_author);
+    if (!$authorObj->exists()) {
+        $authorData = Author::ReadName($f_article_author);
 	$authorObj->create($authorData);
+    }
+    $articleObj->setAuthorId($authorObj->getId());
 }
-$articleObj->setAuthorId($authorObj->getId());
-
 
 // Update the article.
-$articleObj->setOnFrontPage(!empty($f_on_front_page));
-$articleObj->setOnSectionPage(!empty($f_on_section_page));
-$articleObj->setIsPublic(!empty($f_is_public));
-$articleObj->setKeywords($f_keywords);
-$articleObj->setTitle($f_article_title);
+if ($f_save == 'all') {
+    $articleObj->setOnFrontPage(!empty($f_on_front_page));
+    $articleObj->setOnSectionPage(!empty($f_on_section_page));
+    $articleObj->setIsPublic(!empty($f_is_public));
+}
+if ($f_save == 'f_keywords' || $f_save == 'all') {
+    $articleObj->setKeywords($f_keywords);
+}
+if ($f_save == 'f_article_title' || $f_save == 'all') {
+    $articleObj->setTitle($f_article_title);
+}
 $articleObj->setIsIndexed(false);
-if (!empty($f_comment_status)) {
+
+if ($f_save == 'all' && !empty($f_comment_status)) {
     if ($f_comment_status == "enabled" || $f_comment_status == "locked") {
         $commentsEnabled = true;
     } else {
@@ -329,8 +338,9 @@ if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_publish_date)) {
 }
 
 foreach ($articleFields as $dbColumnName => $text) {
-	// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
-	$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
+    if ($f_save == $dbColumnName || $f_save == 'all') {
+        // Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
+        $text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
 
 	// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
@@ -346,6 +356,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$pattern = "/<\s*img\s*(($idAttr|$subAttr|$srcAttr|$altAttr|$alignAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
+    }
 }
 
 $logtext = getGS('Article content edited for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());

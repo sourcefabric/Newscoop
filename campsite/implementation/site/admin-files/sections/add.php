@@ -1,6 +1,6 @@
 <?php
 require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/sections/section_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_xinha.php");
+require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 
 if (!$g_user->hasPermission('ManageSection')) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
@@ -27,8 +27,7 @@ if (!is_object($languageObj)) {
   $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
-editor_load_xinha('f_description', $g_user, $editorLanguage);
-
+editor_load_tinymce('f_description', $g_user, 0, $editorLanguage);
 ?>
 <P>
 <FORM NAME="section_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">

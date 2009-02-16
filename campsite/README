@@ -1,11 +1,11 @@
 Campsite
-version     : 3.2-dev
-release date: July 04, 2008
+version     : 3.2.0-rc3 "David"
+release date: January 22, 2009
 contact     : contact@campware.org
 url         : http://www.campware.org
-copyright   : (c)1999-2008 Media Development Loan Fund
+copyright   : (c)1999-2009 Media Development Loan Fund
 support     : mailto: campsite-support@campware.org; subject: subscribe
-manual      : http://code.campware.org/manuals/campsite/3.2/
+manual      : http://code.campware.org/manuals/campsite/3.1/
 
 INTRODUCTION
 

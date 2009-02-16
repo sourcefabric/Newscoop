@@ -71,8 +71,12 @@
 	</tr>
 	<tr>
 		<td><span class="formtext">Gender:</span></td>
-		<td>{{ camp_select object="user" attribute="gender" male_name="male"
-		female_name="female" }}</td>
+		<td>
+		  <span class="formtext">
+		  {{ camp_select object="user" attribute="gender" male_name="male"
+		     female_name="female" }}
+		  </span>
+		</td>
 	</tr>
 	<tr>
 		<td><span class="formtext">Title:</span></td>

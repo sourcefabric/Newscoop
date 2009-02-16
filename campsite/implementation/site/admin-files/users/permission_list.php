@@ -78,7 +78,8 @@ function camp_get_permission_list()
 		'EditorSubhead'=>getGS('User may add subheads'),
 		'EditorImage'=>getGS('User may insert images'),
 		'EditorSourceView'=>getGS('User may view the HTML source'),
-		'EditorEnlarge'=>getGS('User may enlarge the editor'));
+		'EditorEnlarge'=>getGS('User may enlarge the editor'),
+		'EditorStatusBar'=>getGS('User may use the editor status bar'));
 
 	$editor_group_2 = array(
 		'EditorFontFace'=>getGS('User may change the font face'),

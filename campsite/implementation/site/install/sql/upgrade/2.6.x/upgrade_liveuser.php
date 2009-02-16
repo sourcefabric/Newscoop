@@ -222,6 +222,7 @@ if (!mysql_select_db($liveuser_db_name, $liveUserConn)) {
     echo "Unable to use the database " . $db_name . ".\n";
     exit(1);
 }
+mysql_query("SET NAMES 'utf8'", $liveUserConn);
 
 $campsiteConn = mysql_connect($db_host, $db_user, $db_passwd, true);
 if (!$campsiteConn) {
@@ -233,6 +234,7 @@ if (!mysql_select_db($campsite_db_name, $campsiteConn)) {
     echo "Unable to use the database " . $db_name . ".\n";
     exit(1);
 }
+mysql_query("SET NAMES 'utf8'", $campsiteConn);
 
 // Get all the campsite users
 if (!($res = mysql_query("SELECT * FROM Users ORDER BY Id", $campsiteConn))) {

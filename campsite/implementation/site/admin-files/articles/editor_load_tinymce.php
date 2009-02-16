@@ -22,11 +22,19 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	if (is_array($p_dbColumns)) {
 	    foreach ($p_dbColumns as $dbColumn) {
 	        if (stristr($dbColumn->getType(), "blob")) {
-		    $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
+		    if ($p_articleNumber > 0) {
+		        $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
+		    } else {
+		        $editors[] = $dbColumn->getName();
+		    }
 		}
 	    }
 	} else {
-	    $editors[] = $p_dbColumns.'_'.$p_articleNumber;
+	    if ($p_articleNumber > 0) {
+	        $editors[] = $p_dbColumns.'_'.$p_articleNumber;
+	    } else {
+	        $editors[] = $p_dbColumns;
+	    }
 	}
 	$textareas = implode(",", $editors);
 
@@ -53,6 +61,11 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	}
 	$plugins[] = 'campsiteimage';
 	$plugins_list = implode(",", $plugins);
+
+	$statusbar_location = "none";
+	if ($p_user->hasPermission('EditorStatusBar')) {
+	    $statusbar_location = "bottom";
+	}
 
 	/** STEP 3 ********************************************************
 	 * We create a default configuration to be used by all the editors.
@@ -212,6 +225,7 @@ tinyMCE.init({
     elements : "<?php p($textareas); ?>",
     theme : "advanced",
     plugins : "<?php p($plugins_list); ?>",
+    forced_root_block : "",
 
     // Theme options
     theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
@@ -221,6 +235,7 @@ tinyMCE.init({
     theme_advanced_toolbar_location : "top",
     theme_advanced_toolbar_align : "left",
     theme_advanced_resizing : false,
+    theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
     // Example content CSS (should be your site CSS)
     content_css : "<?php echo $stylesheetFile; ?>",
@@ -239,6 +254,12 @@ tinyMCE.init({
     paste_remove_styles: true,
 
     setup : function(ed) {
+        ed.onKeyUp.add(function(ed, l) {
+	    var idx = ed.id.lastIndexOf('_');
+	    var buttonId = ed.id.substr(0, idx);
+	    buttonEnable('save_' + buttonId);
+	});
+
     <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
         ed.addButton('campsite-subhead', {
         title : 'Subhead',

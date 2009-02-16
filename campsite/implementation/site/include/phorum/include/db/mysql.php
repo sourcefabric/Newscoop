@@ -4667,6 +4667,7 @@ function phorum_db_mysql_connect(){
     if (empty($conn)){
         $conn = mysql_connect($PHORUM["DBCONFIG"]["server"], $PHORUM["DBCONFIG"]["user"], $PHORUM["DBCONFIG"]["password"], true);
         mysql_select_db($PHORUM["DBCONFIG"]["name"], $conn);
+        mysql_query("SET NAMES 'utf8'");
     }
     return $conn;
 }

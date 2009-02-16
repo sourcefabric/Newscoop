@@ -361,6 +361,9 @@ hr {
 .audiosearch_container {
 	padding: 1px;
 }
+.disk_save_icon {
+	cursor: pointer;
+}
 
 /* Drag-and-drop ordering */
 div#audioclip_sortlist div {

@@ -15,6 +15,7 @@ require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/Log.php');
 require_once($g_documentRoot.'/classes/ArticleTypeField.php');
 require_once($g_documentRoot.'/classes/Translation.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($g_documentRoot.'/'.$ADMIN_DIR.'/localizer/Localizer.php');
 
 /**

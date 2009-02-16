@@ -967,6 +967,27 @@ class DatabaseObject {
         return $cacheKey.'_'.get_class($this);
     } // fn getCacheKey
 
+
+    protected function lockTables(array $p_tables = array(), $p_write = true)
+    {
+    	global $g_ado_db;
+    	
+    	if (count($p_tables) == 0) {
+    		return;
+    	}
+    	$mode = $p_write ? 'WRITE' : 'READ';
+    	$lockQuery = 'LOCK TABLES ' . implode(', ', $p_tables) . " $mode";
+    	return $g_ado_db->Execute($lockQuery);
+    }
+    
+    
+    protected function unlockTables()
+    {
+    	global $g_ado_db;
+
+    	$unlockQuery = 'UNLOCK TABLES';
+    	return $g_ado_db->Execute($unlockQuery);
+    }
 } // class DatabaseObject
 
 ?>

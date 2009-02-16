@@ -155,11 +155,11 @@ function TransformImageTags($p_match) {
 		$alignTag = 'align='.$attrs['align'];
 	}
 	$altTag = '';
-	if (isset($attrs['alt'])) {
+	if (isset($attrs['alt']) && strlen($attrs['alt']) > 0) {
 		$altTag = 'alt="'.$attrs['alt'].'"';
 	}
 	$captionTag = '';
-	if (isset($attrs['title'])) {
+	if (isset($attrs['title']) && strlen($attrs['title']) > 0) {
 		$captionTag = 'sub="'.$attrs['title'].'"';
 	}
 	$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag>";

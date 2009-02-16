@@ -142,6 +142,8 @@ final class CampInstallation extends CampInstallationBase
         $session = CampSession::singleton();
         $config_db = $session->getData('config.db', 'installation');
 
+	$tpl->assign('overwrite_db', $this->m_overwriteDb);
+
         if (!empty($config_db)) {
             $tpl->assign('db', $config_db);
         } else {

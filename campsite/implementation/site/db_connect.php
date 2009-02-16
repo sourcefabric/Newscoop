@@ -18,6 +18,7 @@ if (!isset($g_ado_db)) {
 	$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
 	$g_ado_db->Connect($Campsite['DATABASE_SERVER_ADDRESS'], $Campsite['DATABASE_USER'],
 		$Campsite['DATABASE_PASSWORD'], $Campsite['DATABASE_NAME']);
+    $g_ado_db->Execute("SET NAMES 'utf8'");
 }
 
 if (!$g_ado_db->IsConnected()) {

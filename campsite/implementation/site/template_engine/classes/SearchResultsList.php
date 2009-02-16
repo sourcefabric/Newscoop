@@ -39,7 +39,7 @@ class SearchResultsList extends ListObject
 	                                                         $context->publication->identifier);
 	    }
 	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
-	    && $context->issue->defined) {
+	    && $context->issue->defined && $p_parameters['search_issue'] == 0) {
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $context->issue->number);
 	    }
@@ -48,6 +48,10 @@ class SearchResultsList extends ListObject
 	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $context->section->number);
 	    }
+        if ($p_parameters['search_issue'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $p_parameters['search_issue']);
+        }
         if ($p_parameters['search_section'] != 0) {
             $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
                                                              $p_parameters['search_section']);
@@ -68,10 +72,22 @@ class SearchResultsList extends ListObject
         }
 
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
-	    $articlesList = $p_parameters['search_results'];
-    	$articlesList = Article::SearchByKeyword($keywords, $p_parameters['match_all'],
-    	                                         $this->m_constraints, $this->m_order, $p_start,
-    	                                         $p_limit, $p_count);
+
+	    if ($p_parameters['scope'] == 'index') {
+	    	$articlesList = Article::SearchByKeyword($keywords,
+	    	                $p_parameters['match_all'],
+	    	                $this->m_constraints,
+	    	                $this->m_order,
+	    	                $p_start, $p_limit, $p_count);
+	    } else {
+            $articlesList = Article::SearchByField($keywords,
+                            $p_parameters['scope'],
+                            $p_parameters['match_all'],
+                            $this->m_constraints,
+                            $this->m_order,
+                            $p_start, $p_limit, $p_count);
+	    }
+
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
@@ -151,10 +167,12 @@ class SearchResultsList extends ListObject
     			case 'search_level':
     			case 'search_phrase':
     			case 'search_results':
-    			case 'search_section':
+                case 'search_issue':
+                case 'search_section':
     			case 'start_date':
                 case 'end_date':
                 case 'topic_id':
+                case 'scope':
     				if ($parameter == 'length' || $parameter == 'columns'
     				|| $parameter == 'search_level' || $parameter == 'search_section') {
     					$intValue = (int)$value;

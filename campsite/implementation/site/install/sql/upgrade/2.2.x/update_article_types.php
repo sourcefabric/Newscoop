@@ -17,6 +17,7 @@ if (!mysql_connect($db_host, $db_user, $db_passwd))
 	die("Unable to connect to the database.\n");
 if (!mysql_select_db($db_name))
 	die("Unable to use the database " . $db_name . ".\n");
+mysql_query("SET NAMES 'utf8'");
 
 if (!($res = mysql_query("SHOW TABLES LIKE 'X%'")))
 	die("Unable to read from the database.\n");

@@ -7,3 +7,20 @@ div#yui-connection-message {
     font-weight: bold;
     color: green;
 }
+div#yui-saved-box{
+    background-color: #00CB38;
+    color: #FFF;
+    font-weight: bold;
+    border: 1px solid white;
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-bottom: 2px;
+}
+div#authorAutoComplete {
+    width:25em; /* set width here or else widget will expand to fit its container */
+    padding-bottom:2em;
+}
+fieldset#pushbuttonsfrommarkup,
+fieldset#pushbuttonsfrommarkup div {
+    border: 0;
+}

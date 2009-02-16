@@ -55,9 +55,9 @@
 
 	    // Register buttons
 	    ed.addButton('campsiteinternallink', {
-	        title : 'campsiteinternallink.link_desc',
+	        title : 'campsiteinternallink.campsiteinternallink_desc',
 		cmd : 'mceCampsiteInternalLink',
-		image : url + '/img/example.gif'
+		image : url + '/img/campsiteinternallink.gif'
 	    });
 
 	    ed.addShortcut('ctrl+k', 'campsiteinternallink.campsiteinternallink_desc', 'mceCampsiteInternalLink');

@@ -2,6 +2,7 @@
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once('DB.php');
 
 // Global permissions array
 global $g_permissions;
@@ -12,9 +13,20 @@ global $LiveUserAdmin;
 
 // Data Source Name (DSN)
 $dsn = 'mysql://'.$Campsite['db']['user']
-        .':'.$Campsite['db']['pass']
-		.'@'.$Campsite['db']['host']
-		.'/'.$Campsite['db']['name'];
+            .':'.$Campsite['db']['pass']
+            .'@'.$Campsite['db']['host']
+            .'/'.$Campsite['db']['name'];
+
+$db = DB::connect($dsn);
+if (PEAR::isError($db)) {
+?>
+        <font color="red" size="3">
+        <p>ERROR connecting to the MySQL server!</p>
+        <p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
+        </font>
+<?php
+    exit(0);
+}
 
 // Define the LiveUser configuration
 $liveuserConfig = array (
@@ -41,6 +53,7 @@ $liveuserConfig = array (
             'allowEmptyPasswords' => 0,
             'passwordEncryptionMode' => 'SHA1',
             'storage' => array (
+		'connection' => $db,
                 'dsn' => $dsn,
                 'alias' => array (
                     'auth_user_id' => 'Id',
@@ -182,6 +195,7 @@ $liveuserConfig = array (
         'type' => 'Medium',
         'storage' => array(
             'DB' => array (
+		'connection' => $db,
                 'dsn' => $dsn,
                 'prefix' => 'liveuser_',
                 'alias' => array(),
@@ -195,22 +209,12 @@ $liveuserConfig = array (
 
 require_once(CS_PATH_PEAR_LOCAL.DIR_SEP.'LiveUser'.DIR_SEP.'Admin.php');
 
-$GLOBALS['LiveUser'] =& LiveUser::factory($liveuserConfig);
+$GLOBALS['LiveUser'] = LiveUser::singleton($liveuserConfig);
 if (!$GLOBALS['LiveUser']->init()) {
     exit(0);
 }
-$GLOBALS['LiveUserAdmin'] =& LiveUser_Admin::factory($liveuserConfig);
+$GLOBALS['LiveUserAdmin'] = LiveUser_Admin::singleton($liveuserConfig);
 if (!$GLOBALS['LiveUserAdmin']->init()) {
-    exit(0);
-}
-
-if ($GLOBALS['LiveUserAdmin']->auth->_storage->dbc === false) {
-?>
-	<font color="red" size="3">
-	<p>ERROR connecting to the MySQL server!</p>
-	<p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
-	</font>
-<?php
     exit(0);
 }
 

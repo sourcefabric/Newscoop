@@ -4214,6 +4214,7 @@ function phorum_db_mysqli_connect(){
     if (empty($conn)){
         $conn = mysqli_connect($PHORUM["DBCONFIG"]["server"], $PHORUM["DBCONFIG"]["user"], $PHORUM["DBCONFIG"]["password"], $PHORUM["DBCONFIG"]["name"]);
     }
+    mysqli_query($conn, "SET NAMES 'utf8'");
     return $conn;
 }
 

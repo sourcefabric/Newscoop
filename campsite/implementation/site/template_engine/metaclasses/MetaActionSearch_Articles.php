@@ -1,6 +1,7 @@
 <?php
 
 define('ACTION_SEARCH_ARTICLES_ERR_NO_KEYWORD', 'action_search_articles_err_no_keyword');
+define('ACTION_SEARCH_ARTICLES_ERR_INVALID_SCOPE', 'action_search_articles_err_invalid_scope');
 
 
 class MetaActionSearch_Articles extends MetaAction
@@ -54,10 +55,16 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
-        if (isset($p_input['f_search_section'])) {
-        	$this->m_properties['search_section'] = (int)$p_input['f_search_section'];
+        if (isset($p_input['f_search_issue'])) {
+        	$this->m_properties['search_issue'] = (int)$p_input['f_search_issue'];
         } else {
-        	$this->m_properties['search_section'] = 0;
+        	$this->m_properties['search_issue'] = 0;
+        }
+
+        if (isset($p_input['f_search_section'])) {
+            $this->m_properties['search_section'] = (int)$p_input['f_search_section'];
+        } else {
+            $this->m_properties['search_section'] = 0;
         }
 
         if (isset($p_input['f_search_start_date'])) {
@@ -72,13 +79,34 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['end_date'] = null;
         }
 
-        if (isset($p_input['f_search_topic'])) {
+        if (isset($p_input['f_search_topic'])
+        && $p_input['f_search_topic'] > 0) {
             $this->m_properties['topic_id'] = $p_input['f_search_topic'];
         } else {
             $this->m_properties['topic_id'] = null;
         }
 
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
+
+        $this->m_properties['scope'] = 'keywords';
+        if (isset($p_input['f_search_scope'])) {
+        	$searchScope = strtolower($p_input['f_search_scope']);
+        	switch ($searchScope) {
+        		case 'keywords':
+        		case 'content':
+        			$this->m_properties['scope'] = 'index';
+        			break;
+        		case 'title':
+        		case 'author':
+        			$this->m_properties['scope'] = $searchScope;
+        			break;
+        		default:
+                    $this->m_error = new PEAR_Error('Invalid search scope specified.',
+                    ACTION_SEARCH_ARTICLES_ERR_INVALID_SCOPE);
+        			return;
+        	}
+        }
+
         $this->m_error = ACTION_OK;
     }
 
@@ -103,8 +131,9 @@ class MetaActionSearch_Articles extends MetaAction
         }
         
         $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
-                        'f_search_keywords', 'f_search_section', 'f_search_start_date',
-                        'f_search_end_date', 'f_search_topic_id');
+                        'f_search_keywords', 'f_search_issue', 'f_search_section',
+                        'f_search_start_date', 'f_search_end_date', 'f_search_topic_id',
+                        'f_search_scope');
         foreach ($fields as $field) {
             $p_context->default_url->reset_parameter($field);
             $p_context->url->reset_parameter($field);
@@ -118,7 +147,7 @@ class MetaActionSearch_Articles extends MetaAction
 	                                                         $p_context->publication->identifier);
 	    }
 	    if ($this->m_properties['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
-	    && $p_context->issue->defined) {
+	    && $p_context->issue->defined && $this->m_properties['search_issue'] == 0) {
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrIssue', $operator,
 	                                                         $p_context->issue->number);
 	    }
@@ -127,10 +156,14 @@ class MetaActionSearch_Articles extends MetaAction
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $p_context->section->number);
 	    }
-	    if ($this->m_properties['search_section'] != 0) {
-	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
-                                                             $this->m_properties['search_section']);
+	    if ($this->m_properties['search_issue'] != 0) {
+	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $this->m_properties['search_issue']);
 	    }
+        if ($this->m_properties['search_section'] != 0) {
+            $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $this->m_properties['search_section']);
+        }
 	    if (!empty($this->m_properties['start_date'])) {
             $startDateOperator = new Operator('greater_equal', 'date');
 	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
@@ -160,12 +193,22 @@ class MetaActionSearch_Articles extends MetaAction
     {
         $p_property = MetaAction::TranslateProperty($p_property);
         if ($p_property == 'results_count') {
-            if (is_null($this->m_totalCount)) {
+        	if (!empty($this->m_totalCount)) {
+        		return $this->m_totalCount;
+        	}
+            if ($this->m_properties['scope'] == 'index') {
                 Article::SearchByKeyword($this->m_properties['search_keywords'],
                                          $this->m_properties['match_all'],
                                          $this->m_properties['constraints'],
                                          array(), 0, 0,
-                                         $this->m_totalCount);
+                                         $this->m_totalCount, true);
+            } else {
+                Article::SearchByField($this->m_properties['search_keywords'],
+                                       $this->m_properties['scope'],
+                                       $this->m_properties['match_all'],
+                                       $this->m_properties['constraints'],
+                                       array(), 0, 0,
+                                       $this->m_totalCount, true);
             }
             return $this->m_totalCount;
         }

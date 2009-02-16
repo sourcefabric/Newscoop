@@ -65,12 +65,29 @@ class BlogEntry extends DatabaseObject {
 
     function setProperty($p_name, $p_value)
     {
-        parent::setProperty($p_name, $p_value);
+        if ($p_name == 'admin_status') {
+            switch ($p_value) {
+                case 'online':
+                case 'moderated':
+                case 'readonly':
+                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                break;
+                  
+                case 'offline':
+                case 'pending':
+                    parent::setProperty('published', null);
+                break;
+            }          
+        }
+        
+        $result = parent::setProperty($p_name, $p_value);
 
         if ($p_name == 'status' || $p_name == 'admin_status') {
             require_once 'Blog.php';
             Blog::TriggerCounters($this->getProperty('fk_blog_id'));
         }
+        
+        return $result;
     }
 
     /**

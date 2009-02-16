@@ -32,6 +32,12 @@
         {{ /local }}
     {{ /if }}
     {{ /list_search_results }}
+    {{ if $campsite->prev_list_empty }}
+        <p>
+            Found no articles matching the keyword(s)
+            '{{ $campsite->search_articles_action->search_phrase }}'.
+        </p>
+    {{ /if }}
   </td>
 </tr>
 </table>

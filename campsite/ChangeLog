@@ -1,3 +1,35 @@
+3.2 rc1 (January 6, 2009)
+  Improvements
+  ------------
+  - #1791 - Use Ajax to save article screen
+  - #2312 - Swap out Xinha for TinyMCE
+  - #2542 - Ajaxization of WYSIWYG editor
+  - #2561 - Article Statistics: Most Commented
+  - #2596 - Replace PLUGINS_DIR by CS_PATH_PLUGINS
+  - #2598 - Plugin localizer
+  - #2645 - Plugins API
+  - #2668 - Log Article last edited/modified by
+  - #2669 - Rewrite the article statistics API to work in real time
+  - #2672 - Add static Author field
+
+  Bugs Fixed
+  ----------
+  - #1695 - Xinha crashes Firefox when copying/pasting text from OpenOffice
+  - #1750 - Home page should show locked status of articles
+  - #1799 - Home Page: Add "Most recently modified" articles
+  - #1800 - Home Page: Your Articles: show when an article will be published
+  - #1936 - users/index.php uses SQL directly in the HTML file
+  - #2550 - Fixing Xinha editor
+  - #2626 - Plugin installer does not set proper rights
+  - #2638 - Bugs/improvements to the Interview plugin
+  - #2639 - Bugs/improvements to the Poll plugin
+  - #2656 - Poll plugin crash when browsing categories in article edit screen
+  - #2674 - Articles list incomplete when 'reads' attribute specified
+
+  Other Tasks
+  -----------
+  - #2597 - Keep plugin files below /plugins/
+
 3.1.2 (October 31, 2008)
   Improvements
   ------------

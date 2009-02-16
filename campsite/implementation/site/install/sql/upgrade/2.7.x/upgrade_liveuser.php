@@ -220,6 +220,7 @@ if (!mysql_select_db($campsite_db_name, $campsiteConn)) {
     echo "Unable to use the database " . $db_name . ".\n";
     exit(1);
 }
+mysql_query("SET NAMES 'utf8'");
 
 // Clean the liveuser_userrights table
 if (!($res = mysql_query('DELETE FROM liveuser_userrights', $campsiteConn))) {

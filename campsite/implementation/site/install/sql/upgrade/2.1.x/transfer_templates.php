@@ -59,6 +59,7 @@ if (!mysql_connect($db_host, $db_user, $db_passwd))
 	die("Unable to connect to the database.\n");
 if (!mysql_select_db($db_name))
 	die("Unable to use the database " . $db_name . ".\n");
+mysql_query("SET NAMES 'utf8'");
 
 transfer_templates($templates_dir, $templates_dir);
 update_issues();

@@ -32,7 +32,7 @@ CREATE TABLE `plugin_poll` (
   `percentage_of_votes_overall` float unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`poll_nr`,`fk_language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `plugin_poll_answer` (
   `on_hitlist` tinyint(4) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP,
   UNIQUE KEY `NrPoll` (`fk_poll_nr`,`fk_language_id`,`nr_answer`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -66,7 +66,7 @@ CREATE TABLE `plugin_poll_article` (
   `fk_article_nr` int(10) unsigned NOT NULL default '0',
   `fk_article_language_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`fk_poll_nr`,`fk_article_nr`,`fk_article_language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -80,7 +80,7 @@ CREATE TABLE `plugin_poll_issue` (
   `fk_issue_language_id` int(10) unsigned NOT NULL,
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`fk_poll_nr`,`fk_issue_nr`,`fk_issue_language_id`,`fk_publication_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -92,7 +92,7 @@ CREATE TABLE `plugin_poll_publication` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`fk_poll_nr`,`fk_publication_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -107,7 +107,7 @@ CREATE TABLE `plugin_poll_section` (
   `fk_issue_nr` int(10) unsigned NOT NULL default '0',
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`fk_poll_nr`,`fk_section_nr`,`fk_section_language_id`,`fk_issue_nr`,`fk_publication_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -120,4 +120,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
   `fk_pollanswer_nr` int(11) NOT NULL,
   `fk_attachment_id` int(11) NOT NULL,
   PRIMARY KEY  (`fk_poll_nr`,`fk_pollanswer_nr`,`fk_attachment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

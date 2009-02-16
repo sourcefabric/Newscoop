@@ -43,11 +43,13 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $p_params['search_level'] = $campContext->search_articles_action->search_level;
         $p_params['search_phrase'] = $campContext->search_articles_action->search_phrase;
         $p_params['search_results'] = $campContext->search_articles_action->search_results;
+        $p_params['search_issue'] = $campContext->search_articles_action->search_issue;
         $p_params['search_section'] = $campContext->search_articles_action->search_section;
         $p_params['start_date'] = $campContext->search_articles_action->start_date;
         $p_params['end_date'] = $campContext->search_articles_action->end_date;
         $p_params['topic_id'] = $campContext->search_articles_action->topic_id;
-        
+        $p_params['scope'] = $campContext->search_articles_action->scope;
+
         $searchResultsList = new SearchResultsList($start, $p_params);
         if ($searchResultsList->isEmpty()) {
         	$campContext->setCurrentList($searchResultsList, array());
@@ -60,11 +62,13 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $campContext->url->set_parameter('f_match_all', $p_params['match_all']);
         $campContext->url->set_parameter('f_search_level', $p_params['search_level']);
         $campContext->url->set_parameter('f_search_keywords', $p_params['search_phrase']);
+        $campContext->url->set_parameter('f_search_issue', $p_params['search_issue']);
         $campContext->url->set_parameter('f_search_section', $p_params['search_section']);
         $campContext->url->set_parameter('f_search_start_date', $p_params['start_date']);
         $campContext->url->set_parameter('f_search_end_date', $p_params['end_date']);
         $campContext->url->set_parameter('f_search_topic', $p_params['topic_id']);
-        
+        $campContext->url->set_parameter('f_search_scope', $p_params['scope']);
+
         $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
     	                                                       'image', 'attachment', 'comment',
@@ -78,8 +82,9 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
             $p_repeat = true;
         } else {
             $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
-                            'f_search_keywords', 'f_search_section', 'f_search_start_date',
-                            'f_search_end_date', 'f_search_topic', $campContext->current_list_id());
+                            'f_search_keywords', 'f_search_issue', 'f_search_section',
+                            'f_search_start_date', 'f_search_end_date', 'f_search_topic',
+                            'f_search_scope', $campContext->current_list_id());
             foreach ($fields as $field) {
                 $campContext->url->reset_parameter($field);
             }

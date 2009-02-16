@@ -603,16 +603,23 @@ function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowCl
 }
 
 
-function camp_get_calendar_include()
+function camp_get_calendar_include($p_languageCode = null)
 {
-	$environmentLanguage = camp_session_get('TOL_Language', 'en');
+	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jscalendar';
+    $calendarLocalization = "lang/calendar-$p_languageCode.js";
+	if (!file_exists("$calendarPath/$calendarLocalization")) {
+        $p_languageCode = camp_session_get('TOL_Language', 'en');
+		$calendarLocalization = "lang/calendar-$p_languageCode.js";
+	}
+	
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
+	$calendarURL = "$websiteURL/javascript/jscalendar";
 	ob_start();
 ?>
-<style type="text/css">@import url(<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/lang/calendar-<?php echo $environmentLanguage ?>.js"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($websiteURL); ?>/javascript/jscalendar/calendar-setup.js"></script>
+<style type="text/css">@import url(<?php echo htmlspecialchars($calendarURL); ?>/calendar-system.css);</style>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar.js"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar-setup.js"></script>
 <?php
 	return ob_get_clean();
 }
@@ -654,6 +661,36 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
 </script>
 <?php
     return ob_get_clean();
+}
+
+
+function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
+{
+	$p_errors = array();
+	$articles = Article::GetArticlesOfType($p_sourceField->getArticleType());
+	foreach ($articles as $article) {
+		$articleData = $article->getArticleData();
+		$authorName = trim($articleData->getFieldValue($p_sourceField->getPrintName()));
+		if (empty($authorName)) {
+			continue;
+		}
+		$author = new Author($authorName);
+		if (!$author->exists()) {
+			if (!$author->create()) {
+				$p_errors[] = getGS('Unable to create author "$1" for article no. $2 ("$3") of type $4.',
+				                    $author->getName(), $article->getArticleNumber(),
+				                    $article->getName(), $article->getType());
+				continue;
+			}
+		}
+		if (!$article->setAuthorId($author->getId())) {
+			$p_errors[] = getGS('Error setting the author "$1" for article no. $2 ("$3") of type $4.',
+                                $author->getName(), $article->getArticleNumber(),
+                                $article->getName(), $article->getType());
+			continue;
+		}
+	}
+	return count($p_errors);
 }
 
 ?>

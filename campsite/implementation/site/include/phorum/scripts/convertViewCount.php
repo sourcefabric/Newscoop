@@ -11,6 +11,7 @@ If you are enabling Phorum's internal viewcount setting, you should disable mod_
 include("include/db/config.php");
 mysql_connect($PHORUM["DBCONFIG"]["server"],$PHORUM["DBCONFIG"]["user"],$PHORUM["DBCONFIG"]["password"]);
 mysql_select_db($PHORUM["DBCONFIG"]["name"]);
+mysql_query("SET NAMES 'utf8'");
 $query = "SELECT message_id, meta, viewcount FROM $PHORUM[DBCONFIG][table_prefix]_messages ORDER BY message_id DESC";
 $result = mysql_query($query);
 while ($row = mysql_fetch_array($result)){

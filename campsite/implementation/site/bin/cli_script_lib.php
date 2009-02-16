@@ -325,6 +325,7 @@ function camp_connect_to_database($p_dbName = "")
     if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
         camp_exit_with_error("Unable to select database $p_dbName");
     }
+    mysql_query("SET NAMES 'utf8'");
 } // fn camp_connect_to_database
 
 

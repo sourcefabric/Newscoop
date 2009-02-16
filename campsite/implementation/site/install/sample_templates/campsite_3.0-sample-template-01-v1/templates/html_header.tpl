@@ -35,6 +35,9 @@
     {{ search_form template="search.tpl" submit_button="Search" button_html_code="class=\"submitbutton\"" }}
       {{ camp_edit object="search" attribute="keywords" }}
     {{ /search_form }}
+    <a href="{{ uri options="template advanced-search.tpl" }}">
+      <span class="formtext">Advanced Search</span>
+    </a>
     </div>
   </td>
 </tr>

@@ -20,6 +20,7 @@ if (!mysql_connect($db_host, $db_user, $db_passwd)) {
 if (!mysql_select_db($db_name)) {
     die("Unable to use the database `$db_name`.\n");
 }
+mysql_query("SET NAMES 'utf8'");
 
 $sql = "SELECT lu.Name, lu.EMail, a.Number, a.IdLanguage "
      . "FROM liveuser_users AS lu, Articles AS a "

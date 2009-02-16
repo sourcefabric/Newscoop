@@ -106,7 +106,7 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
             $html .= '" '.$p_params['html_code'].' />';
         } elseif ($attribute == 'start_date' || $attribute == 'end_date') {
         	if (!$calendarIncludesSent) {
-        		$html = camp_get_calendar_include();
+        		$html = camp_get_calendar_include($campsite->language->code);
         		$calendarIncludesSent = true;
         	}
         	$html .= camp_get_calendar_field('f_search_' . $attribute, null, $p_params['html_code']);

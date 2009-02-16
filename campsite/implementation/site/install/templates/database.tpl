@@ -83,6 +83,15 @@
               alt="blank"
               emsg="You must complete the 'Database' field" /><br />
             </div>
+	    {{ if $overwrite_db }}
+	    <div class="form_field">
+	      <label for="db_overwrite">Overwrite Database</label>: &nbsp;
+	      Yes <input class="inputbox" type="radio"
+	      id="db_overwrite" name="db_overwrite" value="1" /> &nbsp;
+	      No <input class="inputbox" type="radio"
+	      id="db_overwrite" name="db_overwrite" value="0" checked /><br />
+	    </div>
+	    {{ /if }}
           </td>
         </tr>
         </table>
