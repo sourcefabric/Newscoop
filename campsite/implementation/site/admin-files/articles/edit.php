@@ -495,7 +495,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 	                  <td align="left" valign="top" style="padding-right: 5px;">
 	                  <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="button" id="save_f_article_title" name="button4" value="Saved">
+                            <input type="button" id="save_f_article_title" name="button4" value="<?php putGS('Saved'); ?>">
 			  <?php } ?>
                           </td>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
@@ -511,7 +511,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" valign="top" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="button" id="save_f_article_author" name="button5" value="Saved">
+					<input type="button" id="save_f_article_author" name="button5" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 				</td>
 				<td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
@@ -715,7 +715,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="button" id="save_f_keywords" name="button6" value="Saved">
+					<input type="button" id="save_f_keywords" name="button6" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
@@ -750,7 +750,7 @@ if ($f_edit_mode == "edit") { ?>
 	        disabled: true
 	});';
                                     ?>
-					<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
+					<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -869,7 +869,7 @@ window.location.reload();
 	        disabled: true
 	});';
                                 ?>
-			        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
+			        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
@@ -1095,13 +1095,13 @@ YAHOO.example.init = function () {
 function buttonEnable(buttonId) {
     var oPushButton = YAHOO.widget.Button.getButton(buttonId);
     oPushButton.set("disabled", false);
-    oPushButton.set("label", "Save");
+    oPushButton.set("label", "<?php putGS('Save'); ?>");
 }
 
 function buttonDisable(buttonId) {
     var oPushButton = YAHOO.widget.Button.getButton(buttonId);
     oPushButton.set("disabled", true);
-    oPushButton.set("label", "Saved");
+    oPushButton.set("label", "<?php putGS('Saved'); ?>");
 }
 
 var handleSuccess = function(o){
@@ -1115,7 +1115,7 @@ var handleSuccess = function(o){
 	document.getElementById('yui-saved').style.display = 'none';
 	var savedTime = makeSavedTime();
 	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
-	mesg.innerHTML = "Article Saved";
+	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
 	YAHOO.example.container.wait.hide();
 	
     }
