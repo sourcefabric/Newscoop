@@ -59,7 +59,7 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
 $parameters = array(
     'constraints' => $constraints,
     'length' => $f_length,
-    'order' => "$f_order"
+    'order' => "$f_order ASC"
 );
 
 define('PLUGIN_BLOG_ADMIN_MODE', true);
