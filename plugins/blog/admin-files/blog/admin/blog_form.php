@@ -31,11 +31,7 @@ if (!$g_user->hasPermission('plugin_blog_admin')) {
 $f_blog_id = Input::Get('f_blog_id', 'int');
 $Blog = new Blog($f_blog_id);
 
-if (!$f_blog_id) {
-    $user_id = $g_user->getUserId();   
-}
-
-if ($Blog->store($is_admin, $user_id)) {
+if ($Blog->store($is_admin)) {
     ?>
     <script language="javascript">
         window.opener.location.reload();

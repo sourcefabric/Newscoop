@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 24. November 2008 um 15:38
+-- Erstellungszeit: 19. Februar 2009 um 11:55
 -- Server Version: 5.0.32
--- PHP-Version: 5.2.0-8+etch7
+-- PHP-Version: 5.2.0-8+etch13
 -- 
 -- Datenbank: `campsite_netgazeti`
 -- 
@@ -23,7 +23,6 @@ CREATE TABLE `plugin_blog_blog` (
   `title` varchar(255) NOT NULL,
   `published` datetime NOT NULL,
   `info` text NOT NULL,
-  `tags` text NOT NULL,
   `admin_remark` text NOT NULL,
   `request_text` text NOT NULL,
   `status` enum('online','offline','moderated') NOT NULL default 'online',
@@ -54,7 +53,7 @@ CREATE TABLE `plugin_blog_comment` (
   `published` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `mood` varchar(255) NOT NULL,
+  `fk_mood_id` varchar(255) NOT NULL,
   `status` enum('online','offline','pending') NOT NULL default 'online',
   `admin_status` enum('online','offline','pending') NOT NULL default 'online',
   `feature` varchar(255) NOT NULL,
@@ -77,8 +76,7 @@ CREATE TABLE `plugin_blog_entry` (
   `released` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `tags` text NOT NULL,
-  `mood` varchar(255) NOT NULL,
+  `fk_mood_id` int(10) unsigned NOT NULL,
   `status` enum('online','offline') NOT NULL default 'online',
   `admin_status` enum('online','offline','pending') NOT NULL default 'online',
   `comments_online` int(10) unsigned NOT NULL default '0',
@@ -87,3 +85,27 @@ CREATE TABLE `plugin_blog_entry` (
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`entry_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+-- 
+-- Tabellenstruktur für Tabelle `plugin_blog_entry_topic`
+-- 
+
+CREATE TABLE `plugin_blog_entry_topic` (
+  `fk_entry_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`fk_entry_id`,`fk_topic_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+-- 
+-- Tabellenstruktur für Tabelle `plugin_blog_topic`
+-- 
+
+CREATE TABLE `plugin_blog_topic` (
+  `fk_blog_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`fk_blog_id`,`fk_topic_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

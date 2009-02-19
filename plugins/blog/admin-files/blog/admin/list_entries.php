@@ -59,7 +59,7 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
 $parameters = array(
     'constraints' => $constraints,
     'length' => $f_length,
-    'order' => "$f_order ASC"
+    'order' => "$f_order"
 );
 
 define('PLUGIN_BLOG_ADMIN_MODE', true);
@@ -302,7 +302,10 @@ if ($BlogEntriesList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=byblog_begin"><?php  putGS("List Comments"); ?></a>
+                <?php  putGS("Topics"); ?>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
+                <?php  putGS("List Comments"); ?>
             </TD>
             
             <?php if($is_admin) { ?>
@@ -349,6 +352,10 @@ if ($BlogEntriesList->getLength()) {
                 <td align="center"><?php p($MetaBlogEntry->published); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->comments); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
+                
+                <td align='center'>
+					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
+                </td>
               
                 <td align='center'>
                     <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>

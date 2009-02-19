@@ -30,7 +30,7 @@ class BlogComment extends DatabaseObject {
         'status',
         'title',
         'content',
-        'mood',
+        'fk_mood_id',
         'admin_status',
         'feature',
         'last_modified'
@@ -94,19 +94,19 @@ class BlogComment extends DatabaseObject {
     function __create($p_values=null) { return parent::create($p_values); }
     
     
-    function create($p_entry_id, $p_user_id, $p_user_name, $p_user_email, $p_title=null, $p_content=null, $p_mood=null)
+    function create($p_entry_id, $p_user_id, $p_user_name, $p_user_email, $p_title=null, $p_content=null, $p_mood_id=null)
     {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
 		  'fk_blog_id'    => BlogEntry::GetBlogId($p_entry_id),
-		  'fk_language_id'=> BlogEntry::getLanguageId($p_entry_id),
+		  'fk_language_id'=> BlogEntry::GetEntryLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
-		  'user_name'     => $p_poster_name,
-		  'user_email'    => $p_poster_email,
+		  'user_name'     => $p_user_name,
+		  'user_email'    => $p_user_email,
 		  'title'         => $p_title,
 		  'content'       => $p_content,
-		  'mood'          => $p_mood, 
+		  'fk_mood_id'    => $p_mood_id, 
 		);
 
 		$success = parent::create($values);
@@ -156,8 +156,8 @@ class BlogComment extends DatabaseObject {
             $cond .= " AND c.admin_status = '{$p_cond['admin_status']}'"; 
             if ($p_checkParent) $cond .= " AND b.admin_status = '{$p_cond['status']}' AND e.admin_status =  '{$p_cond['status']}'";   
         }
-         if (array_key_exists('mood', $p_cond) && strlen($p_cond['mood'])) {
-            $cond .= " AND c.mood IN ({$p_cond['mood']})";    
+         if (array_key_exists('fk_mood_id', $p_cond) && strlen($p_cond['fk_mood_id'])) {
+            $cond .= " AND c.fk_mood_id IN ({$p_cond['fk_mood_id']})";    
         }
         
         $queryStr = "SELECT     c.comment_id
@@ -183,7 +183,7 @@ class BlogComment extends DatabaseObject {
 		$comments   = array();
 		
 		while ($row = $query->FetchRow()) { 
-		    $tmpComment =& new BlogComment($row['comment_id']);
+		    $tmpComment = new BlogComment($row['comment_id']);
 		    $comments[] = $tmpComment;
 		}
 		return $comments;
@@ -202,7 +202,7 @@ class BlogComment extends DatabaseObject {
         
     static function GetEntryId($p_comment_id)
     {
-        $tmpComment =& new BlogComment($p_comment_id);
+        $tmpComment = new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_entry_id');           
     }
 
@@ -220,7 +220,7 @@ class BlogComment extends DatabaseObject {
        
     static function GetBlogId($p_comment_id)
     {
-        $tmpComment =& new BlogComment($p_comment_id);
+        $tmpComment = new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_blog_id');           
     }
 
@@ -291,11 +291,11 @@ class BlogComment extends DatabaseObject {
                 'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')            
             ),       
             'mood'      => array(
-                'element'   => 'BlogComment[mood]',
-                'type'      => 'checkbox_multi',
+                'element'   => 'BlogComment[fk_mood_id]',
+                'type'      => 'radio',
                 'label'     => 'mood',
-                'default'   => explode(', ', $data['mood']),
-                'options'   => $this->_getmoodList()      
+                'default'   => $data['fk_mood_id'],
+                'options'   => Blog::GetMoodList()      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
@@ -353,7 +353,7 @@ class BlogComment extends DatabaseObject {
               
         $mask = $this->_getFormMask($p_admin, $p_owner);
         
-        $form =& new html_QuickForm('blog_comment', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog_comment', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -361,7 +361,7 @@ class BlogComment extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
             
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
             
             return $renderer->toArray();
@@ -370,11 +370,9 @@ class BlogComment extends DatabaseObject {
     
     function store($p_admin, $p_user_id=null)
     {
-        require_once 'HTML/QuickForm.php';
-              
+        require_once 'HTML/QuickForm.php';     
         $mask = $this->_getFormMask($p_admin, $p_owner);
-      
-        $form =& new html_QuickForm('blog_comment', 'post', '', null, null, true); 
+        $form = new html_QuickForm('blog_comment', 'post', '', null, null, true); 
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($form->validate()) {
@@ -398,40 +396,28 @@ class BlogComment extends DatabaseObject {
                             }    
                         }
                         $v = substr($string, 0, -2);
-                        unset ($string);
-                            
+                        unset ($string);    
                     } 
                     $this->setProperty($k, $v); 
                 }
                 BlogEntry::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
                 return true;
                 
-            } else {
-                if (is_array($data['BlogComment']['mood'])) {
-                    unset ($string);
-                    foreach($data['BlogComment']['mood'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";   
-                        }    
-                    }
-                    $mood = substr($string, 0, -2);
-                }
-                if ($this->create(  $data['f_entry_id'], 
-                                    $p_user_id, 
-                                    $data['BlogComment']['user_name'], 
-                                    $data['BlogComment']['user_email'], 
-                                    $data['BlogComment']['title'], 
-                                    $data['BlogComment']['content'], 
-                                    $mood)) {
+            } elseif ($this->create(  
+                            $data['f_entry_id'], 
+                            $p_user_id, 
+                            $data['BlogComment']['user_name'], 
+                            $data['BlogComment']['user_email'], 
+                            $data['BlogComment']['title'], 
+                            $data['BlogComment']['content'], 
+                            $data['BlogComment']['fk_mood_id'])) {
                                         
-                    if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
-                    if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
-                    
-                    BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
-                      
-                    return true;    
-                }
-                return false; 
+                if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
+                if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
+                
+                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
+                  
+                return true;    
             }
         }  
         return false;
@@ -483,6 +469,12 @@ class BlogComment extends DatabaseObject {
         if (!is_array($p_parameters)) {
             return null;
         }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
+        
         
         $selectClauseObj = new SQLSelectClause();
 

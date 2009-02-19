@@ -53,7 +53,7 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
 }
 
 if ($f_admin_status = mysql_escape_string(Input::Get('f_admin_status', 'string'))) {
-    $constraints .= "admin_status is $f_admin_status ";   
+    $constraints .= "admin_status is $f_admin_status ";
 }
 
 $parameters = array(
@@ -64,6 +64,7 @@ $parameters = array(
 
 define('PLUGIN_BLOG_ADMIN_MODE', true);
 $self = basename(__FILE__);
+$self_params = $self.'?';
 if ($f_start)   $self_params .= "f_start=$f_start&amp;";
 
 $BlogsList = new BlogsList($f_start, $parameters);
@@ -291,6 +292,9 @@ if ($BlogsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
+                <?php  putGS("Topics"); ?>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60">
                 <?php  putGS("List Entries"); ?>
             </TD>
             
@@ -338,6 +342,10 @@ if ($BlogsList->getLength()) {
                 <td align="center"><?php p($MetaBlog->published); ?></td>
                 <td align="center"><?php p($MetaBlog->entries); ?></td>
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
+                
+                <td align='center'>
+					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
+                </td>
               
                 <td align='center'>
                     <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>

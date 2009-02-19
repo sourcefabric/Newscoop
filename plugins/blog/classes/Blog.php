@@ -25,7 +25,6 @@ class Blog extends DatabaseObject {
         'title',
         'published',
         'info',
-        'tags',
         'status',
         'admin_status',
         'admin_remark',
@@ -66,16 +65,16 @@ class Blog extends DatabaseObject {
     function __create($p_values = null) { return parent::create($p_values); }
 
 
-    function create($p_user_id, $p_language_id, $p_title, $p_info, $p_request_text, $p_tags=null)
+    function create($p_user_id, $p_language_id, $p_title, $p_info, $p_request_text, $p_feature)
     {
         // Create the record
         $values = array(
             'fk_user_id'    => $p_user_id,
-            'fk_language_id' => $p_language_id,
+            'fk_language_id'=> $p_language_id,
             'title'         => $p_title,
             'info'          => $p_info,
             'request_text'  => $p_request_text,
-            'tags'          => $p_tags
+            'feature'       => $p_feature
         );
 
         $success = parent::create($values);
@@ -85,7 +84,7 @@ class Blog extends DatabaseObject {
         }
 
         $this->fetch();
-
+        
         return true;
     }
 
@@ -109,7 +108,7 @@ class Blog extends DatabaseObject {
         return $this->getProperty('title');   
     }
 
-    function _buildQueryStr($p_cond)
+    private static function BuildQueryStr($p_cond)
     {
         $instance = new Blog();
 
@@ -134,13 +133,13 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = Blog::_buildQueryStr($p_cond);
+        $queryStr = Blog::BuildQueryStr($p_cond);
 
         $query = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $blogs = array();
 
         while ($row = $query->FetchRow()) {
-            $tmpBlog =& new Blog($row['blog_id']);
+            $tmpBlog = new Blog($row['blog_id']);
             $blogs[] = $tmpBlog;
         }
 
@@ -151,7 +150,7 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr   = Blog::_buildQueryStr($p_cond);
+        $queryStr   = Blog::BuildQueryStr($p_cond);
         $query      = $g_ado_db->Execute($queryStr); #
 
         return $query->RecordCount();
@@ -159,7 +158,7 @@ class Blog extends DatabaseObject {
 
     function getBlogEntrys()
     {
-        $BlogEntry =& new BlogEntry(array('blog_id' => $this->getProperty('blog_id')));
+        $BlogEntry = new BlogEntry(array('blog_id' => $this->getProperty('blog_id')));
 
         return $BlogEntry->getEntrys();
     }
@@ -195,7 +194,7 @@ class Blog extends DatabaseObject {
         $g_ado_db->Execute($queryStr);
     }
 
-    function _getFormMask($p_owner=false, $p_admin=false)
+    private function getFormMask($p_owner=false, $p_admin=false)
     {
         $data = $this->getData();
         
@@ -217,6 +216,16 @@ class Blog extends DatabaseObject {
             if (!in_array($k, Blog::$m_html_allowed_fields)) {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
+        }
+        
+        // load possible topic list
+        foreach ($this->GetTopicTreeFlat() as $topicId => $topicName) {
+            $topics[$topicId]  = $topicName;   
+        }
+        
+        // get the topics used
+        foreach ($this->getTopics() as $Topic) {            
+            $active_topics[$Topic->getTopicId()] = $Topic->getName($this->getLanguageId());
         }
 
         $mask = array(
@@ -272,13 +281,6 @@ class Blog extends DatabaseObject {
                 'label'     => 'Feature',
                 'default'   => $data['feature'],
             ),
-            'tags'      => array(
-                'element'   => 'Blog[tags]',
-                'type'      => 'checkbox_multi',
-                'label'     => 'Tags',
-                'default'   => explode(', ', $data['tags']),
-                'options'   => $this->_getTagList()
-            ),
             'status' => array(
                 'element'   => 'Blog[status]',
                 'type'      => 'select',
@@ -292,7 +294,7 @@ class Blog extends DatabaseObject {
                     'readonly'      => 'read only',
                 ),
                 
-           ),
+            ),
             'admin_status' => array(
                 'element'   => 'Blog[admin_status]',
                 'type'      => 'select',
@@ -300,9 +302,9 @@ class Blog extends DatabaseObject {
                 'default'   => $data['admin_status'],
                 'required'  => true,
                 'options'   => array(
-                    'pending'       => 'pending',
                     'online'        => 'online',
                     'offline'       => 'offline',
+                    'pending'       => 'pending',
                     'moderated'     => 'moderated',
                     'readonly'      => 'read only',
                 ),
@@ -353,9 +355,9 @@ class Blog extends DatabaseObject {
     {
         require_once 'HTML/QuickForm.php';
 
-        $mask = $this->_getFormMask($p_owner, $p_admin);
+        $mask = $this->getFormMask($p_owner, $p_admin);
 
-        $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($p_html) {
@@ -363,7 +365,7 @@ class Blog extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
 
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
 
             return $renderer->toArray();
@@ -373,11 +375,8 @@ class Blog extends DatabaseObject {
     function store($p_admin, $p_user_id=null)
     {
         require_once 'HTML/QuickForm.php';
-
-        $mask = $this->_getFormMask($p_admin);
-        #mergePostParams(&$mask);
-
-        $form =& new html_QuickForm('blog', 'post', '', null, null, true);
+        $mask = $this->getFormMask($p_admin);
+        $form = new html_QuickForm('blog', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
@@ -394,53 +393,26 @@ class Blog extends DatabaseObject {
 
             if ($data['f_blog_id']) {
                 foreach ($data['Blog'] as $k => $v) {
-                    if (is_array($v)) {
-                        foreach($v as $key => $value) {
-                            if ($value) {
-                                $string .= "$key, ";
-                            }
-                        }
-                        $this->setProperty($k, substr($string, 0, -2));
-                        unset ($string);
-
-                    } else {
-                        $this->setProperty($k, $v);
-                    }
+                    $this->setProperty($k, $v);
                 }
                 return true;
-            } else {
-                if (is_array($data['Blog']['tags'])) {
-                    unset ($string);
-                    foreach($data['Blog']['tags'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $tags = substr($string, 0, -2);
-                }
-                if ($this->create(  $p_user_id, 
-                                    $data['Blog']['fk_language_id'],
-                                    $data['Blog']['title'], 
-                                    $data['Blog']['info'], 
-                                    $data['Blog']['request_text'], 
-                                    $tags)
-                                  ) {
-                    if ($p_owner && $data['Blog']['status'])         $this->setProperty('status',   $data['Blog']['status']);
-                    if ($p_admin && $data['Blog']['admin_status'])   $this->setProperty('admin_status',   $data['Blog']['admin_status']);
-                    if ($p_admin && $data['Blog']['admin_remark'])   $this->setProperty('admin_remark',   $data['Blog']['admin_remark']);
+            } elseif ($this->create(
+                            isset($p_user_id) ? $p_user_id : $data['Blog']['fk_user_id'], 
+                            $data['Blog']['fk_language_id'],
+                            $data['Blog']['title'], 
+                            $data['Blog']['info'], 
+                            $data['Blog']['request_text'],
+                            $data['Blog']['feature'])
+                        ) {
+                if ($p_owner && $data['Blog']['status'])         $this->setProperty('status',   $data['Blog']['status']);
+                if ($p_admin && $data['Blog']['admin_status'])   $this->setProperty('admin_status',   $data['Blog']['admin_status']);
+                if ($p_admin && $data['Blog']['admin_remark'])   $this->setProperty('admin_remark',   $data['Blog']['admin_remark']);
 
-                    return true;
-                }
-                return false;
+                return true;
             }
         }
         return false;
 
-    }
-
-    function _getTagList()
-    {
-        return array('a' => 'film', 'b' => 'poesie', 'm' => 'multimedia');
     }
     
     /**
@@ -453,11 +425,121 @@ class Blog extends DatabaseObject {
         return $this->getProperty('blog_id');   
     }
     
-    
-    static function getLanguageId($p_blog_id)
+    /**
+     * get the blog language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
     {
-        $tmpBlog =& new Blog($p_blog_id);
+        return $this->getProperty('fk_language_id');
+    }
+      
+    public static function GetBlogLanguageId($p_blog_id)
+    {
+        $tmpBlog= new Blog($p_blog_id);
         return $tmpBlog->getProperty('fk_language_id');
+    }
+    
+    static public function GetTopicTree($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
+    {
+        $root_id = SystemPref::Get($key);
+        $tree = Topic::GetTree((int)$root_id);  
+        
+        return (array) $tree;
+    }
+    
+    static public function GetTopicTreeFlat($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
+    {       
+        foreach (self::GetTopicTree($p_key) as $branch) {
+             $flat[] = end($branch)->getTopicId();
+        }
+        
+        return (array) $flat;
+    }
+    
+    public function setTopics(array $p_topics=array()) 
+    {
+        // store the topics
+        $allowed_topics = self::GetTopicTreeFlat();
+        
+        BlogTopic::DeleteBlogTopics($this->getId());
+        
+        foreach ($p_topics as $topic_id) {
+            if (in_array($topic_id, $allowed_topics, true)) {
+                $BlogTopic = new BlogTopic($this->m_data['blog_id'], $topic_id);
+                $BlogTopic->create();
+            }
+        }
+    }
+    
+    public function getTopics() 
+    {   
+        foreach (BlogTopic::getAssignments($this->m_data['blog_id']) as $BlogTopic) {
+            $topics[] = $BlogTopic->getTopic();      
+        }
+        return (array) $topics;
+    }
+    
+    public static function getMoodList()
+    {
+        foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
+            $currentTopic = camp_array_peek($path, false, -1);
+            $name = $currentTopic->getName($language_id);
+            
+            if (empty($name)) {
+                // Backwards compatibility
+                $name = $currentTopic->getName(1);
+                if (empty($name)) {
+                    continue;
+                }
+            }
+            foreach ($path as $topicObj) {
+                $name = $topicObj->getName($language_id);
+                if (empty($name)) {
+                    $name = $topicObj->getName(1);
+                    if (empty($name)) {
+                        $name = "-----";
+                    }
+                }
+                $value = htmlspecialchars($name);
+            }
+            $selected = $currentTopic->getTopicId() == SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID') ? 'selected' : '';
+            $options[$currentTopic->getTopicId()] = $value;
+        }
+        
+        return $options;
+    }
+    
+    /**
+     * If we modify the admin status, 
+     * the publish date is modified too.
+     *
+     * @param string $p_name
+     * @param sring $p_value
+     */
+    function setProperty($p_name, $p_value)
+    {
+        if ($p_name == 'admin_status') {
+            switch ($p_value) {
+                case 'online':
+                case 'moderated':
+                case 'readonly':
+                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                break;
+                  
+                case 'offline':
+                case 'pending':
+                    parent::setProperty('published', null);
+                break;
+            }          
+        }
+        
+        if ($p_name == 'topics') {
+            return $this->setTopics($p_value);   
+        }
+        
+        return parent::setProperty($p_name, $p_value);
     }
     
     
@@ -484,6 +566,11 @@ class Blog extends DatabaseObject {
         
         if (!is_array($p_parameters)) {
             return null;
+        }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
         }
         
         $selectClauseObj = new SQLSelectClause();
@@ -591,31 +678,5 @@ class Blog extends DatabaseObject {
         }
         return $order;
     } // fn ProcessListOrder
-    
-    /**
-     * If we modify the admin status, 
-     * the publish date is modified too.
-     *
-     * @param string $p_name
-     * @param sring $p_value
-     */
-    function setProperty($p_name, $p_value)
-    {
-        if ($p_name == 'admin_status') {
-            switch ($p_value) {
-                case 'online':
-                case 'moderated':
-                case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
-                break;
-                  
-                case 'offline':
-                case 'pending':
-                    parent::setProperty('published', null);
-                break;
-            }          
-        }
-        return parent::setProperty($p_name, $p_value);
-    }
 }
 ?>

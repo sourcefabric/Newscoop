@@ -28,8 +28,7 @@ class BlogEntry extends DatabaseObject {
         'status',
         'title',
         'content',
-        'tags',
-        'mood',
+        'fk_mood_id',
         'admin_status',
         'comments_online',
         'comments_offline',
@@ -65,6 +64,10 @@ class BlogEntry extends DatabaseObject {
 
     function setProperty($p_name, $p_value)
     {
+        if ($p_name == 'topics') {
+            return $this->setTopics($p_value);   
+        }
+        
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
@@ -89,6 +92,8 @@ class BlogEntry extends DatabaseObject {
         
         return $result;
     }
+    
+
 
     /**
 	 * A way for internal functions to call the superclass create function.
@@ -97,17 +102,16 @@ class BlogEntry extends DatabaseObject {
     function __create($p_values=null) { return parent::create($p_values); }
 
 
-    function create($p_blog_id, $p_user_id, $p_title=null, $p_content=null, $p_tags=null, $p_mood=null)
+    function create($p_blog_id, $p_user_id, $p_title=null, $p_content=null, $p_mood_id=null)
     {
         // Create the record
         $values = array(
         'fk_blog_id'    => $p_blog_id,
-        'fk_language_id'=> Blog::getLanguageId($p_blog_id),
+        'fk_language_id'=> Blog::GetBlogLanguageId($p_blog_id),
         'fk_user_id'    => $p_user_id,
         'title'         => $p_title,
         'content'       => $p_content,
-        'tags'          => $p_tags,
-        'mood'          => $p_mood
+        'fk_mood_id'    => $p_mood_id
         );
 
         $success = parent::create($values);
@@ -229,7 +233,7 @@ class BlogEntry extends DatabaseObject {
         $entries    = array();
 
         while ($row = $query->FetchRow()) {
-            $tmpEntry =& new BlogEntry($row['entry_id']);
+            $tmpEntry = new BlogEntry($row['entry_id']);
             $entries[] = $tmpEntry;
         }
 
@@ -276,16 +280,10 @@ class BlogEntry extends DatabaseObject {
         Blog::TriggerCounters(self::GetBlogId($p_entry_id));
     }
 
-    static function GetBlogId($p_entry_id)
+    static public function GetBlogId($p_entry_id)
     {
-        $tmpEntry =& new BlogEntry($p_entry_id);
+        $tmpEntry = new BlogEntry($p_entry_id);
         return $tmpEntry->getProperty('fk_blog_id');
-    }
-    
-    static function getLanguageId($p_entry_id)
-    {
-        $tmpEntry =& new BlogEntry($p_entry_id);
-        return $tmpEntry->getProperty('fk_language_id');
     }
     
     function _getFormMask($p_admin)
@@ -365,19 +363,12 @@ class BlogEntry extends DatabaseObject {
                 ),
                 'required'  => true
             ),
-            'tags'      => array(
-                'element'   => 'BlogEntry[tags]',
-                'type'      => 'checkbox_multi',
-                'label'     => 'tags',
-                'default'   => explode(', ', $data['tags']),
-                'options'   => $this->_getTagList()
-            ),
             'mood'      => array(
-                'element'   => 'BlogEntry[mood]',
-                'type'      => 'checkbox_multi',
+                'element'   => 'BlogEntry[fk_mood_id]',
+                'type'      => 'radio',
                 'label'     => 'mood',
-                'default'   => explode(', ', $data['mood']),
-                'options'   => $this->_getmoodList()
+                'default'   => $data['fk_mood_id'],
+                'options'   => Blog::GetMoodList()
             ),
             'image'     => array(
                 'element'   => 'BlogEntry_Image',
@@ -420,10 +411,8 @@ class BlogEntry extends DatabaseObject {
     function getForm($p_target, $p_admin, $p_html=true)
     {
         require_once 'HTML/QuickForm.php';
-
         $mask = $this->_getFormMask($p_admin);
-
-        $form =& new html_QuickForm('blog_entry', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog_entry', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($p_html) {
@@ -431,7 +420,7 @@ class BlogEntry extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
 
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
 
             return $renderer->toArray();
@@ -445,7 +434,7 @@ class BlogEntry extends DatabaseObject {
         $mask = $this->_getFormMask($p_admin);
         #mergePostParams(&$mask);
 
-        $form =& new html_QuickForm('blog_entry', 'post', '', null, null, true);
+        $form = new html_QuickForm('blog_entry', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
@@ -482,39 +471,23 @@ class BlogEntry extends DatabaseObject {
 
                 return true;
 
-            } else {
-                if (is_array($data['BlogEntry']['mood'])) {
-                    unset ($string);
-                    foreach($data['BlogEntry']['mood'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $mood = substr($string, 0, -2);
-                }
-                if (is_array($data['BlogEntry']['tags'])) {
-                    unset ($string);
-                    foreach($data['BlogEntry']['tags'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $tags = substr($string, 0, -2);
-                }
-                if ($this->create($data['f_blog_id'], $p_user_id, $data['BlogEntry']['title'], $data['BlogEntry']['content'], $tags, $mood)) {
-                    if ($data['BlogEntry']['status']) $this->setProperty('status', $data['BlogEntry']['status']);
-                    if ($p_admin && $data['BlogEntry']['admin_status'])  $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
+            } elseif ($this->create(
+                            $data['f_blog_id'], 
+                            $p_user_id, 
+                            $data['BlogEntry']['title'], 
+                            $data['BlogEntry']['content'], 
+                            $data['f_mood_id'])
+                        ) {
+                if ($data['BlogEntry']['status']) $this->setProperty('status', $data['BlogEntry']['status']);
+                if ($p_admin && $data['BlogEntry']['admin_status'])  $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
 
-                    if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($this->getProperty('entry_id'));
-                    if ($data['BlogEntry_Image'])        BlogEntry::_storeImage( $data['BlogEntry_Image'], $this->getProperty('entry_id'));
+                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($this->getProperty('entry_id'));
+                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage( $data['BlogEntry_Image'], $this->getProperty('entry_id'));
 
-                    Blog::TriggerCounters($this->getProperty('fk_blog_id'));
+                Blog::TriggerCounters($this->getProperty('fk_blog_id'));
 
-                    return true;
-                }
-                return false;
+                return true;
             }
-
         }
         return false;
 
@@ -578,16 +551,6 @@ class BlogEntry extends DatabaseObject {
         }
     }
 
-    function _getTagList()
-    {
-        return array('a' => 'film', 'b' => 'poesie', 'm' => 'multimedia');
-    }
-
-    function _getmoodList()
-    {
-        return array('a' => 'happy', 'b' => 'sad');
-    }
-
     function setis_onfrontpage()
     {
         if ($OldEntry = BlogEntry::getis_onfrontpageEntry()) {
@@ -633,8 +596,47 @@ class BlogEntry extends DatabaseObject {
         return $this->getProperty('entry_id');   
     }
     
+    /**
+     * get the blogentry language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->getProperty('fk_language_id');
+    } 
     
-        /////////////////// Special template engine methods below here /////////////////////////////
+    public static function GetEntryLanguageId($p_entry_id)
+    {
+        $tmpEntry = new BlogEntry($p_entry_id);
+        return $tmpEntry->getProperty('fk_language_id');
+    }
+    
+    public function setTopics(array $p_topics=array()) 
+    {
+        // store the topics
+        $allowed_topics = Blog::GetTopicTreeFlat();
+        
+        BlogentryTopic::DeleteBlogentryTopics($this->getId());
+        
+        foreach ($p_topics as $topic_id) {
+            if (in_array($topic_id, $allowed_topics, true)) {
+                $BlogentryTopic = new BlogentryTopic($this->m_data['entry_id'], $topic_id);
+                $BlogentryTopic->create();
+            }
+        }
+    }
+    
+    public function getTopics() 
+    {   
+        foreach (BlogentryTopic::getAssignments($this->m_data['entry_id']) as $BlogentryTopic) {
+            $topics[] = $BlogentryTopic->getTopic();      
+        }
+        return (array) $topics;
+    }
+    
+    
+    /////////////////// Special template engine methods below here /////////////////////////////
     
     /**
      * Gets an blog list based on the given parameters.
@@ -657,6 +659,11 @@ class BlogEntry extends DatabaseObject {
         
         if (!is_array($p_parameters)) {
             return null;
+        }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
         }
         
         $selectClauseObj = new SQLSelectClause();
