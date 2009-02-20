@@ -443,7 +443,7 @@ class Blog extends DatabaseObject {
     
     static public function GetTopicTree($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
     {
-        $root_id = SystemPref::Get($key);
+        $root_id = SystemPref::Get($p_key);
         $tree = Topic::GetTree((int)$root_id);  
         
         return (array) $tree;
@@ -481,11 +481,11 @@ class Blog extends DatabaseObject {
         return (array) $topics;
     }
     
-    public static function getMoodList()
+    public static function getMoodList($p_language_id)
     {
         foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
             $currentTopic = camp_array_peek($path, false, -1);
-            $name = $currentTopic->getName($language_id);
+            $name = $currentTopic->getName($p_language_id);
             
             if (empty($name)) {
                 // Backwards compatibility
@@ -495,7 +495,7 @@ class Blog extends DatabaseObject {
                 }
             }
             foreach ($path as $topicObj) {
-                $name = $topicObj->getName($language_id);
+                $name = $topicObj->getName($p_language_id);
                 if (empty($name)) {
                     $name = $topicObj->getName(1);
                     if (empty($name)) {
@@ -508,7 +508,7 @@ class Blog extends DatabaseObject {
             $options[$currentTopic->getTopicId()] = $value;
         }
         
-        return $options;
+        return (array)$options;
     }
     
     /**
@@ -539,7 +539,36 @@ class Blog extends DatabaseObject {
             return $this->setTopics($p_value);   
         }
         
+        if ($p_name == 'fk_language_id') {
+            $this->onSetLanguage($p_value);
+        }
+        
         return parent::setProperty($p_name, $p_value);
+    }
+    
+    private function onSetLanguage($p_language_id)
+    {
+        if ($p_language_id == $this->getLanguageId()) {
+            return;   
+        }
+        
+        global $g_ado_db;
+        
+        $BlogEntry = new BlogEntry();
+        $entryTbl = $BlogEntry->m_dbTableName;
+
+        $BlogComment = new BlogComment();
+        $commentTbl = $BlogComment->m_dbTableName;
+        
+        $queryStr1 = "UPDATE $entryTbl
+                      SET fk_language_id = $p_language_id
+                      WHERE fk_blog_id = {$this->getId()}";
+        $g_ado_db->Execute($queryStr1);
+        
+        $queryStr1 = "UPDATE $commentTbl
+                      SET fk_language_id = $p_language_id
+                      WHERE fk_blog_id = {$this->getId()}";
+        $g_ado_db->Execute($queryStr1);
     }
     
     

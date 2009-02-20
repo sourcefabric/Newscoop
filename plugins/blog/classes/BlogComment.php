@@ -295,7 +295,7 @@ class BlogComment extends DatabaseObject {
                 'type'      => 'radio',
                 'label'     => 'mood',
                 'default'   => $data['fk_mood_id'],
-                'options'   => Blog::GetMoodList()      
+                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : BlogEntry::GetEntryLanguageId($data['fk_entry_id']))      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
@@ -435,13 +435,23 @@ class BlogComment extends DatabaseObject {
     }
     
     /**
-     * Get the blog identifier
+     * Get the blogcomment identifier
      *
      * @return int
      */
     public function getId()
     {
         return $this->getProperty('comment_id');   
+    }
+    
+    /**
+     * Get the blogcomment language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->getProperty('fk_language_id');   
     }
 
 

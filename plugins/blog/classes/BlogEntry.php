@@ -357,9 +357,9 @@ class BlogEntry extends DatabaseObject {
                 'label'     => 'Admin Status',
                 'default'   => $data['admin_status'],
                 'options'   => array(
-                    'pending'   => 'pending',
                     'online'    => 'online',
                     'offline'   => 'offline',
+                    'pending'   => 'pending',
                 ),
                 'required'  => true
             ),
@@ -368,7 +368,7 @@ class BlogEntry extends DatabaseObject {
                 'type'      => 'radio',
                 'label'     => 'mood',
                 'default'   => $data['fk_mood_id'],
-                'options'   => Blog::GetMoodList()
+                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : Blog::GetBlogLanguageId($data['fk_blog_id']))
             ),
             'image'     => array(
                 'element'   => 'BlogEntry_Image',
