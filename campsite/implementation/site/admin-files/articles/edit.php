@@ -1168,7 +1168,9 @@ function makeRequest(a){
     var ycaFCreationDate = document.getElementById('f_creation_date').value;
     var ycaFPublishDate = document.getElementById('f_publish_date').value;
     var ycaFIsPublic = document.getElementById('f_is_public').checked;
+    <?php if ($showCommentControls) { ?>
     var ycaFCommentStatus = document.getElementById('f_comment_status').value;
+    <?php } ?>
     var ycaFKeywords = document.getElementById('f_keywords').value;
     var ycaFPublicationId = document.getElementById('f_publication_id').value;
     var ycaFIssueNumber = document.getElementById('f_issue_number').value;
@@ -1212,7 +1214,9 @@ function makeRequest(a){
       + "&f_creation_date=" + ycaFCreationDate
       + "&f_publish_date=" + ycaFPublishDate
       + "&f_is_public=" + ycaFIsPublic
+    <?php if ($showCommentControls) { ?>
       + "&f_comment_status=" + ycaFCommentStatus
+    <?php } ?>
       + "&f_keywords=" + ycaFKeywords
       + "&f_publication_id=" + ycaFPublicationId
       + "&f_issue_number=" + ycaFIssueNumber
