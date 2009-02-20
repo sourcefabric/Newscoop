@@ -41,10 +41,6 @@ if ($f_name == "") {
 	$correct = false;
 	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"');
 }
-if ($f_description == "") {
-	$correct = false;
-	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Description').'"');
-}
 if ($f_number == 0) {
 	$correct= false;
 	$f_number = ($f_number + 0);
