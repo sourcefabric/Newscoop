@@ -74,8 +74,6 @@ class BlogEntriesList extends ListObject
      */
     protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
     {
-        $this->m_constraints = array();
-      
         if (!defined('PLUGIN_BLOG_ADMIN_MODE')) {
             $operator = new Operator('is', 'integer');
             $context = CampTemplate::singleton()->context();
