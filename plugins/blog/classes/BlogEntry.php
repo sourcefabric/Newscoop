@@ -288,6 +288,8 @@ class BlogEntry extends DatabaseObject {
     
     function _getFormMask($p_admin)
     {
+        global $g_user;
+        
         $data = $this->getData();
 
         foreach ($data as $k => $v) {
@@ -310,20 +312,8 @@ class BlogEntry extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
-                '<script language="javascript" type="text/javascript">'.
-                '     tinyMCE.init({'.
-                '     	mode : "exact",'.
-                '        elements : "tiny_mce_box",'.
-                '        theme : "advanced",'.
-                '        plugins : "emotions, paste", '.
-                '        paste_auto_cleanup_on_paste : true, '.
-                '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
-                '        theme_advanced_buttons2 : "", '.
-                '        theme_advanced_buttons3 : "" '.
-                '     });'.
-                '</script>',
-                'type'      => 'static'
+                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
+                'type'  => 'static'
             ),
             'title'     => array(
                 'element'   => 'BlogEntry[title]',
@@ -338,7 +328,7 @@ class BlogEntry extends DatabaseObject {
                 'label'     => 'Content',
                 'default'   => $data['content'],
                 'required'  => true,
-                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
             ),
             'status' => array(
                 'element'   => 'BlogEntry[status]',

@@ -196,6 +196,8 @@ class Blog extends DatabaseObject {
 
     private function getFormMask($p_owner=false, $p_admin=false)
     {
+        global $g_user;
+        
         $data = $this->getData();
         
         foreach (User::GetUsers() as $User) {
@@ -251,20 +253,7 @@ class Blog extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
-                               '<script language="javascript" type="text/javascript" src="/javascript/tiny_mce/tiny_mce.js"></script>'.
-                '<script language="javascript" type="text/javascript">'.
-                '     tinyMCE.init({'.
-                '     	mode : "exact",'.
-                '        elements : "tiny_mce_box",'.
-                '        theme : "advanced",'.
-                '        plugins : "emotions, paste", '.
-                '        paste_auto_cleanup_on_paste : true, '.
-                '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
-                '        theme_advanced_buttons2 : "", '.
-                '        theme_advanced_buttons3 : "" '.
-                '     });'.
-                '</script>',
+                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
                 'type'      => 'static'
             ),
             'info'      => array(
@@ -273,7 +262,7 @@ class Blog extends DatabaseObject {
                 'label'     => 'Info',
                 'default'   => $data['info'],
                 'required'  => true,
-                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
             ),
             'feature'     => array(
                 'element'   => 'Blog[feature]',
@@ -321,7 +310,7 @@ class Blog extends DatabaseObject {
                 'type'      => 'textarea',
                 'label'     => 'Admin Remark',
                 'default'   => $data['admin_remark'],
-                'attributes'=> array('cols' => 60, 'rows' => 8)
+                'attributes'=> array('cols' => 86, 'rows' => 10)
             ),
             'reset'     => array(
                 'element'   => 'reset',
@@ -570,6 +559,246 @@ class Blog extends DatabaseObject {
                       WHERE fk_blog_id = {$this->getId()}";
         $g_ado_db->Execute($queryStr1);
     }
+
+    /**
+     * @param array p_dbColumns
+     * @param object p_user The User object
+     * @param int p_editorLanguage The current or selected language
+     *
+     * @return void
+     */
+    public static function GetEditor($p_box_id, $p_user, $p_editorLanguage)
+    {
+    	global $Campsite;
+    
+    	$stylesheetFile = '/admin/articles/article_stylesheet.css';
+    
+    	/** STEP 2 ********************************************************
+    	 * Now, what are the plugins you will be using in the editors
+    	 * on this page.  List all the plugins you will need, even if not
+    	 * all the editors will use all the plugins.
+    	 ******************************************************************/
+    	$plugins = array();
+    	if ($p_user->hasPermission('EditorCopyCutPaste')) {
+    	    $plugins[] = 'paste';
+    	}
+    	if ($p_user->hasPermission('EditorFindReplace')) {
+    	  $plugins[] = 'searchreplace';
+    	}
+    	if ($p_user->hasPermission('EditorEnlarge')) {
+    	    $plugins[] = 'fullscreen';
+    	}
+    	if ($p_user->hasPermission('EditorTable')) {
+    	    $plugins[] = 'table';
+    	}
+    	if ($p_user->hasPermission('EditorLink')) {
+    	    $plugins[] = 'campsiteinternallink';
+    	}
+    	$plugins[] = 'campsiteimage';
+    	$plugins_list = implode(",", $plugins);
+    
+    	$statusbar_location = "none";
+    	if ($p_user->hasPermission('EditorStatusBar')) {
+    	    $statusbar_location = "bottom";
+    	}
+    
+    	/** STEP 3 ********************************************************
+    	 * We create a default configuration to be used by all the editors.
+    	 * If you wish to configure some of the editors differently this
+    	 * will be done in step 4.
+    	 ******************************************************************/
+    	$toolbar1 = array();
+    	if ($p_user->hasPermission('EditorBold')) {
+    	    $toolbar1[] = "bold";
+    	}
+    	if ($p_user->hasPermission('EditorItalic')) {
+    	    $toolbar1[] = "italic";
+    	}
+    	if ($p_user->hasPermission('EditorUnderline')) {
+    	    $toolbar1[] = "underline";
+    	}
+    	if ($p_user->hasPermission('EditorStrikethrough')) {
+    	    $toolbar1[] = "strikethrough";
+    	}
+    	if ($p_user->hasPermission('EditorTextAlignment')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "justifyleft";
+    	    $toolbar1[] = "justifycenter";
+    	    $toolbar1[] = "justifyright";
+    	    $toolbar1[] = "justifyfull";
+    	}
+    	if ($p_user->hasPermission('EditorIndent')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "outdent";
+    	    $toolbar1[] = "indent";
+    	    $toolbar1[] = "blockquote";
+    	}
+    	if ($p_user->hasPermission('EditorCopyCutPaste')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "copy";
+    	    $toolbar1[] = "cut";
+    	    $toolbar1[] = "paste";
+    	    $toolbar1[] = "pasteword";
+    	}
+    	if ($p_user->hasPermission('EditorUndoRedo')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "undo";
+    	    $toolbar1[] = "redo";
+    	}
+    	if ($p_user->hasPermission('EditorTextDirection')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "ltr";
+    	    $toolbar1[] = "rtl";
+    	    $toolbar1[] = "charmap";
+    	}
+    	if ($p_user->hasPermission('EditorLink')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "campsiteinternallink";
+    	    $toolbar1[] = "link";
+    	}
+    	if ($p_user->hasPermission('EditorSubhead')) {
+    	    $toolbar1[] = "campsite-subhead";
+    	}
+    	if ($p_user->hasPermission('EditorImage')) {
+    	    $toolbar1[] = "campsiteimage";
+    	}
+    	if ($p_user->hasPermission('EditorSourceView')) {
+    	    $toolbar1[] = "code";
+    	}
+    	if ($p_user->hasPermission('EditorEnlarge')) {
+    	    $toolbar1[] = "fullscreen";
+    	}
+    	if ($p_user->hasPermission('EditorHorizontalRule')) {
+    	    $toolbar1[] = "hr";
+    	}
+    	if ($p_user->hasPermission('EditorFontColor')) {
+    	    $toolbar1[] = "forecolor";
+    	    $toolbar1[] = "backcolor";
+    	}
+    	if ($p_user->hasPermission('EditorSubscript')) {
+    	    $toolbar1[] = "sub";
+    	}
+    	if ($p_user->hasPermission('EditorSuperscript')) {
+    	    $toolbar1[] = "sup";
+    	}
+    	if ($p_user->hasPermission('EditorFindReplace')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "search";
+    	    $toolbar1[] = "replace";
+    	}
+    
+    	$toolbar2 = array();
+    	// Slice up the first toolbar if it is too long.
+    	if (count($toolbar1) > 31) {
+    		$toolbar2 = array_splice($toolbar1, 31);
+    	}
+    
+    	// This is to put the bulleted and numbered list controls
+    	// on the most appropriate line of the toolbar.
+    	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 19) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "bullist";
+    	    $toolbar1[] = "numlist";
+    	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 31) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "bullist";
+    	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "numlist";
+    	} else {
+    	    $hasSeparator = false;
+    	    if ($p_user->hasPermission('EditorListBullet')) {
+    	        $toolbar2[] = "|";
+    	        $toolbar2[] = "bullist";
+    		$hasSeparator = true;
+    	    }
+    	    if ($p_user->hasPermission('EditorListNumber')) {
+    	        if (!$hasSeparator) {
+    		    $toolbar2[] = "|";
+    		}
+    	        $toolbar2[] = "numlist";
+    	    }
+    	}
+    
+    	if ($p_user->hasPermission('EditorFontFace')) {
+    	    $toolbar2[] = "|";
+    	    $toolbar2[] = "styleselect";
+    	    $toolbar2[] = "formatselect";
+    	    $toolbar2[] = "fontselect";
+    	}
+    	if ($p_user->hasPermission('EditorFontSize')) {
+    	    $toolbar2[] = "fontsizeselect";
+    	}
+    
+    	if ($p_user->hasPermission('EditorTable')) {
+    	    $toolbar3[] = "tablecontrols";
+    	}
+    
+    	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
+    	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
+    	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
+    	
+    	ob_start();
+    ?>
+                    
+    <!-- TinyMCE -->
+    <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
+    <script type="text/javascript">
+    
+    // Default skin
+    tinyMCE.init({
+        // General options
+        language : "<?php p($p_editorLanguage); ?>",
+        mode : "exact",
+        elements : "<?php p($p_box_id); ?>",
+        theme : "advanced",
+        plugins : "<?php p($plugins_list); ?>",
+        forced_root_block : "",
+        relative_urls : false,
+    
+        // Theme options
+        theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
+        theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
+        theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
+    
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_resizing : false,
+        theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
+    
+        // Example content CSS (should be your site CSS)
+        content_css : "<?php echo $stylesheetFile; ?>",
+    
+        // Drop lists for link/image/media/template dialogs
+        template_external_list_url : "lists/template_list.js",
+        external_link_list_url : "lists/link_list.js",
+        external_image_list_url : "lists/image_list.js",
+        media_external_list_url : "lists/media_list.js",
+    
+        // paste options
+        paste_use_dialog: false,
+        paste_auto_cleanup_on_paste: true,
+        paste_convert_headers_to_strong: true,
+        paste_remove_spans: true,
+        paste_remove_styles: true,
+    
+        setup : function(ed) {
+            ed.onKeyUp.add(function(ed, l) {
+    	    var idx = ed.id.lastIndexOf('_');
+    	    var buttonId = ed.id.substr(0, idx);
+    	    buttonEnable('save_' + buttonId);
+    	});
+    
+    
+        }
+    });
+    </script>
+    <!-- /TinyMCE -->
+        <?php
+        $output = ob_get_clean();
+        return $output;
+    } // fn editor_load_tinymce
+
     
     
     /////////////////// Special template engine methods below here /////////////////////////////

@@ -94,8 +94,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
     <?php } ?> 
     
     <?php if ($f_blog_id && $is_admin) { ?>
-        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
+        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
     <?php } ?>  
     
   </tr>
@@ -338,7 +338,7 @@ if ($BlogEntriesList->getLength()) {
                     p($MetaBlogEntry->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
                     } else {
                         p($MetaBlogEntry->title);
                     }
