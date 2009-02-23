@@ -408,10 +408,14 @@ class CampInstallationBase
         $cmd = 'crontab -l';
         exec($cmd, $output, $result);
         if ($result != 0) {
-            $this->m_step = 'cronjobs';
-            $this->m_message = 'Error: Could not save cron job files. '
-                .'Could not run the crontab executable.';
-            return false;
+        	$cmd = 'crontab -';
+            exec($cmd, $output, $result);
+            if ($result != 0) {
+                $this->m_step = 'cronjobs';
+                $this->m_message = 'Error: Could not save cron job files. '
+                    .'Could not run the crontab executable.';
+                return false;
+            }
         }
 
         $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
