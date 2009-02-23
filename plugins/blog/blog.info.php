@@ -40,12 +40,16 @@ $info = array(
         'objecttypes' => array(
             array('blog' => array('class' => 'Blog')),
             array('blogentry' => array('class' => 'BlogEntry')),
-            array('blogcomment' => array('class' => 'BlogComment'))
+            array('blogcomment' => array('class' => 'BlogComment')),
+            array('blogtopic' => array('class' => 'BlogTopic')),
+            array('blogentrytopic' => array('class' => 'BlogentryTopic'))
         ),
         'listobjects' => array(
             array('blogs' => array('class' => 'Blogs', 'list' => 'blogs')),
             array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries')),
-            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments'))
+            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments')),
+            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics')),
+            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics'))
         ),
         'init' => 'plugin_blog_init'
     ),
@@ -144,7 +148,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
                        'f_blogentry_id',
                        'f_blogentry_title',
                        'f_blogentry_content',
-                       'f_blogentry_mood',
+                       'f_blogentry_mood_id',
                        
                        'f_blogcomment',
                        'f_blogcomment_id',
@@ -152,7 +156,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
                        'f_blogcomment_content',
                        'f_blogcomment_user_name',
                        'f_blogcomment_user_email',
-                       'f_blogcomment_mood',
+                       'f_blogcomment_mood_id',
                        'f_preview_blogcomment',
                        'f_submit_blogcomment',
                        'f_captcha_code'

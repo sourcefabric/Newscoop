@@ -33,8 +33,8 @@ class MetaActionBlogentry extends MetaAction
             $this->m_properties['content'] = $p_input['f_blogentry_content'];
         }
         
-        if (isset($p_input['f_blogentry_mood'])) {
-            $this->m_properties['mood'] = $p_input['f_blogentry_mood'];
+        if (isset($p_input['f_blogentry_mood_id'])) {
+            $this->m_properties['mood_id'] = $p_input['f_blogentry_mood_id'];
         }
         
         $this->m_blogentry = new BlogEntry($p_input['f_blogentry_id']);
@@ -135,7 +135,7 @@ class MetaActionBlogentry extends MetaAction
                                            $this->m_properties['title'], 
                                            $this->m_properties['content'],
                                            null, 
-                                           $this->m_properties['mood'])) {
+                                           $this->m_properties['mood_id'])) {
                 //$_REQUEST['f_blogentry_id'] = $this->m_blogentry->identifier;
                 $this->m_error = ACTION_OK;
                 return true;   

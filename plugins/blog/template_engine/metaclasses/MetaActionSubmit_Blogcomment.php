@@ -53,7 +53,7 @@ class MetaActionSubmit_Blogcomment extends MetaAction
         
         $this->m_properties['title'] = $p_input['f_blogcomment_title'];
         $this->m_properties['content'] = $p_input['f_blogcomment_content'];
-        $this->m_properties['mood'] = $p_input['f_blogcomment_mood'];
+        $this->m_properties['mood_id'] = $p_input['f_blogcomment_mood_id'];
         $this->m_properties['user_name'] = $p_input['f_blogcomment_user_name'];
         $this->m_properties['user_email'] = $p_input['f_blogcomment_user_email'];
         
@@ -117,7 +117,7 @@ class MetaActionSubmit_Blogcomment extends MetaAction
                                          $this->m_properties['user_email'],
                                          $this->m_properties['title'], 
                                          $this->m_properties['content'], 
-                                         $this->m_properties['mood'])) {
+                                         $this->m_properties['mood_id'])) {
             $this->m_error = ACTION_OK;
             return true;   
         }   

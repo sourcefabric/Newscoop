@@ -27,7 +27,7 @@ final class MetaBlogComment extends MetaDbObject {
         $this->m_properties['title'] = 'title';
         $this->m_properties['name'] = 'title';
         $this->m_properties['content'] = 'content';
-        $this->m_properties['mood'] = 'mood';
+        $this->m_properties['mood_id'] = 'fk_mood_id';
         $this->m_properties['status'] = 'status';
         $this->m_properties['admin_status'] = 'admin_status';
         $this->m_properties['feature'] = 'feature';
@@ -44,6 +44,7 @@ final class MetaBlogComment extends MetaDbObject {
         $this->m_customProperties['entry'] = 'getEntry';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['user'] = 'getUser';
+        $this->m_customProperties['mood'] = 'getMood';
     } // fn __construct
 
         
@@ -69,6 +70,12 @@ final class MetaBlogComment extends MetaDbObject {
     {
         $MetaUser = new MetaUser($this->user_id);
         return $MetaUser;   
+    }
+    
+    public function getMood()
+    {
+        $MetaTopic = new MetaTopic($this->mood_id);
+        return $MetaTopic;   
     }
     
 } // class MetaBlogComment
