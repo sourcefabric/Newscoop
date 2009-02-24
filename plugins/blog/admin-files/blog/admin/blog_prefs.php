@@ -16,11 +16,13 @@ if (Input::Get('save')) {
     $f_blogcomment_mode = Input::Get('f_blogcomment_mode', 'string', 'registered');
     $f_blog_root_topic_id = Input::Get('f_blog_root_topic_id', 'int', 0);
     $f_blog_root_mood_id = Input::Get('f_blog_root_mood_id', 'int', 0);
+    $f_blog_image_derivates = Input::Get('f_blog_image_derivates', 'string');
     
     SystemPref::Set('PLUGIN_BLOGCOMMENT_USE_CAPTCHA', $f_blogcomment_use_captcha);
     SystemPref::Set('PLUGIN_BLOGCOMMENT_MODE', $f_blogcomment_mode);
     SystemPref::Set('PLUGIN_BLOG_ROOT_TOPIC_ID', $f_blog_root_topic_id);
     SystemPref::Set('PLUGIN_BLOG_ROOT_MOOD_ID', $f_blog_root_mood_id);
+    SystemPref::Set('PLUGIN_BLOG_IMAGE_DERIVATES', $f_blog_image_derivates);
     
     camp_html_add_msg(getGS("Blog preferences updated."), "ok");
 }
@@ -119,6 +121,10 @@ camp_html_display_msgs();
                 ?>
             </select>
        </td>
+    </tr>
+    <tr>
+        <td align="left"><?php putGS("Image derivate commands (one command per line)"); ?></td>
+        <td><textarea name="f_blog_image_derivates" rows=10 cols=50><?php p(SystemPref::Get("PLUGIN_BLOG_IMAGE_DERIVATES")) ?></textarea></td>
     </tr>
     <tr>
     	<td colspan="2" align="center" style="padding-top: 10px;">

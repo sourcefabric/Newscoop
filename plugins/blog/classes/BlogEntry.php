@@ -55,7 +55,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($this->keyValuesExist()) {
             $this->fetch();
-            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true, true);
+            $this->m_data['images'] = BlogImageHelper::GetImagePaths('entry', $p_entry_id, true, true);
 
         } elseif ($p_blog_id) {
             $this->m_data['fk_blog_id'] = $p_blog_id;
@@ -140,7 +140,7 @@ class BlogEntry extends DatabaseObject {
 
         parent::delete();
 
-        #BlogEntry::_removeImage($entry_id);
+        BlogImageHelper::RemoveImage('entry', $entry_id);
         Blog::TriggerCounters($blog_id);
     }
 
@@ -422,8 +422,6 @@ class BlogEntry extends DatabaseObject {
         require_once 'HTML/QuickForm.php';
 
         $mask = $this->_getFormMask($p_admin);
-        #mergePostParams(&$mask);
-
         $form = new html_QuickForm('blog_entry', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
@@ -454,9 +452,13 @@ class BlogEntry extends DatabaseObject {
                     $this->setProperty($k, $v);
                 }
 
-                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($data['f_entry_id']);
-                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage($data['BlogEntry_Image'], $data['f_entry_id']);
-
+                if ($data['BlogEntry_Image_remove']) {
+                   BlogImageHelper::RemoveImageDerivates('entry', $data['f_entry_id']);
+                }
+                if ($data['BlogEntry_Image']) {
+                    BlogImageHelper::StoreImageDerivates('entry', $data['f_entry_id'], $data['BlogEntry_Image']);
+                }
+                
                 Blog::TriggerCounters(BlogEntry::GetBlogId($data['f_entry_id']));
 
                 return true;
@@ -468,12 +470,15 @@ class BlogEntry extends DatabaseObject {
                             $data['BlogEntry']['content'], 
                             $data['f_mood_id'])
                         ) {
-                if ($data['BlogEntry']['status']) $this->setProperty('status', $data['BlogEntry']['status']);
-                if ($p_admin && $data['BlogEntry']['admin_status'])  $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
-
-                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($this->getProperty('entry_id'));
-                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage( $data['BlogEntry_Image'], $this->getProperty('entry_id'));
-
+                if ($data['BlogEntry']['status']) {
+                    $this->setProperty('status', $data['BlogEntry']['status']);
+                }
+                if ($p_admin && $data['BlogEntry']['admin_status']) {
+                    $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
+                }
+                if ($data['BlogEntry_Image']) {
+                    BlogImageHelper::StoreImageDerivates('entry', $this->getProperty('entry_id'), $data['BlogEntry_Image']);
+                }
                 Blog::TriggerCounters($this->getProperty('fk_blog_id'));
 
                 return true;
@@ -481,64 +486,6 @@ class BlogEntry extends DatabaseObject {
         }
         return false;
 
-    }
-
-    function _getImageFormates()
-    {
-        return array (42 => 42, 90 => 90, 205 => 205);
-    }
-
-    function _getImagePaths($p_entry_id, $p_check_exists=false, $p_as_url=false)
-    {
-        global $Campsite;
-        
-        foreach (BlogEntry::_getImageFormates() as $width => $height) {
-            $path[$width.'x'.$height] = $Campsite['IMAGE_DIRECTORY']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
-            $url[$width.'x'.$height] = $Campsite['IMAGE_BASE_URL']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
-
-            if ($p_check_exists && !file_exists($path[$width.'x'.$height])) {
-                unset ($path[$width.'x'.$height]);
-            }
-        }
-
-        if ($p_as_url) {
-            return $url;    
-        } else {
-            return $path;
-        }
-    }
-
-    function _storeImage($p_image, $p_entry_id)
-    {
-        if ($p_image['error'] == 0 && preg_match('/^image\/(p)?jp(e)?g$/', $p_image['type'])) {
-
-            foreach (BlogEntry::_getImagePaths($p_entry_id) as $dim => $path) {
-                list ($width, $height) = explode('x', $dim);
-                $d_width = $width * 2;
-                $d_height = $width * 2;
-
-                if (!file_exists(dirname($path))) {
-                    $mkdir = '';
-                    foreach (explode('/', dirname($path)) as $k => $dir) {
-                        $mkdir .= '/'.$dir;
-                        @mkdir($mkdir, 0775);
-                    }
-                }
-
-                $cmd = "convert -resize {$d_width}x -resize 'x{$d_height}<' -resize 50% -gravity center  -crop {$width}x{$height}+0+0 +repage {$p_image['tmp_name']} $path";
-                passthru($cmd, $return_value);
-            }
-
-            return $return_value;
-        }
-        return false;
-    }
-
-    function _removeImage($p_entry_id)
-    {
-        foreach (BlogEntry::_getImagePaths($p_entry_id, true) as $path) {
-            unlink($path);
-        }
     }
 
     function setis_onfrontpage()

@@ -54,6 +54,7 @@ class Blog extends DatabaseObject {
         $this->m_data['blog_id'] = $p_blog_id;
         if ($this->keyValuesExist()) {
             $this->fetch();
+            $this->m_data['images'] = BlogImageHelper::GetImagePaths('blog', $p_blog_id, true, true);
         }
     } // constructor
 
@@ -95,6 +96,7 @@ class Blog extends DatabaseObject {
         }
 
         parent::delete();
+        BlogImageHelper::RemoveImage('entry', $entry_id);
     }
 
     function getData()
@@ -304,7 +306,17 @@ class Blog extends DatabaseObject {
                     'label'     => 'Owner',
                     'default'   => $data['fk_user_id'],
                     'options'   => $ownerList,
-            ),        
+            ),
+            'image'     => array(
+                'element'   => 'Blog_Image',
+                'type'      => 'file',
+                'label'     => 'Image (.jpg, .png, .gif)',
+            ),
+            'image_remove' => array(
+                'element'   => 'Blog_Image_remove',
+                'type'      => 'checkbox',
+                'label'     => 'Remove Image',
+            ),       
             'admin_remark'      => array(
                 'element'   => 'Blog[admin_remark]',
                 'type'      => 'textarea',
@@ -369,7 +381,7 @@ class Blog extends DatabaseObject {
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
-            $data = $form->getSubmitValues();
+            $data = $form->getSubmitValues(true);
 
             foreach ($data['Blog'] as $k => $v) {
                 // clean user input
@@ -384,7 +396,16 @@ class Blog extends DatabaseObject {
                 foreach ($data['Blog'] as $k => $v) {
                     $this->setProperty($k, $v);
                 }
+                
+                if ($data['Blog_Image_remove']) {
+                    BlogImageHelper::RemoveImageDerivates('blog', $data['f_blog_id']);
+                }
+                if ($data['Blog_Image']) {
+                    BlogImageHelper::StoreImageDerivates('blog', $data['f_blog_id'], $data['Blog_Image']);
+                }
+                
                 return true;
+                
             } elseif ($this->create(
                             isset($p_user_id) ? $p_user_id : $data['Blog']['fk_user_id'], 
                             $data['Blog']['fk_language_id'],
@@ -392,11 +413,20 @@ class Blog extends DatabaseObject {
                             $data['Blog']['info'], 
                             $data['Blog']['request_text'],
                             $data['Blog']['feature'])
-                        ) {
-                if ($p_owner && $data['Blog']['status'])         $this->setProperty('status',   $data['Blog']['status']);
-                if ($p_admin && $data['Blog']['admin_status'])   $this->setProperty('admin_status',   $data['Blog']['admin_status']);
-                if ($p_admin && $data['Blog']['admin_remark'])   $this->setProperty('admin_remark',   $data['Blog']['admin_remark']);
-
+              ) {
+                if ($p_owner && $data['Blog']['status']) {
+                    $this->setProperty('status',   $data['Blog']['status']);
+                }
+                if ($p_admin && $data['Blog']['admin_status']) {
+                    $this->setProperty('admin_status', $data['Blog']['admin_status']);
+                }
+                if ($p_admin && $data['Blog']['admin_remark']) {
+                    $this->setProperty('admin_remark', $data['Blog']['admin_remark']);
+                }
+                if ($data['Blog_Image']) {
+                    BlogImageHelper::StoreImageDerivates('blog', $this->getProperty('blog_id'), $data['BlogEntry_Image']);
+                }
+                
                 return true;
             }
         }
@@ -798,8 +828,7 @@ class Blog extends DatabaseObject {
         $output = ob_get_clean();
         return $output;
     } // fn editor_load_tinymce
-
-    
+        
     
     /////////////////// Special template engine methods below here /////////////////////////////
     

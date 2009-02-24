@@ -84,8 +84,8 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
     <TD><A HREF="list_entries.php" ><B><?php  putGS("List all Entries"); ?></B></A></TD>
     
     <?php if ($is_admin) { ?>
-            <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=720, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=720, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
+            <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
     <?php } ?>
 
 </tr>
@@ -328,7 +328,7 @@ if ($BlogsList->getLength()) {
                     p($MetaBlog->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('blog_form.php?f_blog_id=<?php p($MetaBlog->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=720, top=100, left=100');"><?php p($MetaBlog->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('blog_form.php?f_blog_id=<?php p($MetaBlog->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');"><?php p($MetaBlog->title); ?></a><?php
                     } else {
                         p($MetaBlog->title);
                     }
