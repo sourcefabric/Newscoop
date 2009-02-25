@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -113,7 +117,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "기
 regGS("There was an error reading request parameters.", "요구 파라미터를 읽는중 에러가 있습니다. ");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "기사를 미리볼 수 없습니다. 기사 템플레이트을 선택했는지 확인하시오.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "기사를 미리볼 수 없습니다. 프론트페이지 템플레이트를 선택했는지 확인하시오.");
-regGS("Insert Internal Link", "내부링크 삽입");
 regGS("No such article.", "그런 기사 없슴");
 regGS("No such section.", "그런 섹션 없슴.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -113,7 +117,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "Eş
 regGS("There was an error reading request parameters.", "O eroare s-a produs în timpul interpretării parametrilor cererii.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul articolului.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul primei pagini.");
-regGS("Insert Internal Link", "Inserează link intern");
 regGS("No such article.", "Articolul nu există");
 regGS("No such section.", "Secţiunea nu există.");
 regGS("Are you sure you want to delete this scheduled action?", "");

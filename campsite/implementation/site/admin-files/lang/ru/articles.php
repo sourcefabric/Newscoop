@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "Сервер он-лайн: включен");
 regGS("Online Server: Off", "Сервер он-лайн: выключен");
 regGS("Title", "Заголовок");
@@ -113,7 +117,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "В�
 regGS("There was an error reading request parameters.", "Ошибка чтения параметров запроса.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон статьи.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон титульной страницы.");
-regGS("Insert Internal Link", "Вставить внутреннюю ссылку");
 regGS("No such article.", "Нет такой статьи.");
 regGS("No such section.", "Нет такой рубрики:ru");
 regGS("Reorder", "");
@@ -124,9 +127,5 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы уверены, что хотите удалить этот аудио файл из этой статьи");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

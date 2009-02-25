@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "Saving, please wait...");
+regGS("Saved", "Saved");
+regGS("Save All", "Save All");
+regGS("Article Saved", "Article Saved");
 regGS("Online Server: On", "Online Server: On");
 regGS("Online Server: Off", "Online Server: Off");
 regGS("Title", "Title");
@@ -113,7 +117,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "Are
 regGS("There was an error reading request parameters.", "There was an error reading request parameters.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.");
-regGS("Insert Internal Link", "Insert Internal Link");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

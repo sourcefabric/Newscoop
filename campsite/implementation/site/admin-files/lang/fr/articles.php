@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -113,7 +117,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "Ete
 regGS("There was an error reading request parameters.", "Il y avait une erreur survenu lors de la lecture des paramètres requis.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Cet article ne peut être visualisé. SVP assurez-vous que son template d'article est sélectionné.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Cet article ne peut pas être visualiser. SVP assurez-vous  que son template de page d'accueil est sélectionné.");
-regGS("Insert Internal Link", "Insérer Lien interne");
 regGS("No such article.", "Pas d'article correspondant");
 regGS("No such section.", "Pas une telle section.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

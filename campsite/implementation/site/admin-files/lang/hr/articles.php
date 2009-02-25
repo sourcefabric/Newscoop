@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -121,7 +125,6 @@ regGS("Are you sure you want to delete this scheduled action?", "Jeste li sigurn
 regGS("There was an error reading request parameters.", "Greška pri čitanju traženih parametra.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak članka.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak  naslovnice.");
-regGS("Insert Internal Link", "Umetni unutarnji link");
 regGS("No such article.", "Nema tog članka.");
 regGS("No such section.", "Nema te sekcije.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

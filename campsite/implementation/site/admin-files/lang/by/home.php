@@ -1,4 +1,15 @@
 <?php 
+regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
+regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "");
+regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
+regGS("Select field from which to generate the author", "");
+regGS("Recently Modified Articles", "");
+regGS("Publish Schedule", "");
+regGS("No articles have been modified yet.", "");
+regGS("Modification Date", "");
+regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
 regGS("There are currently no articles in statistics.", "Няма артыкулаў у статыстыцы прагляду");
 regGS("Publish date", "Дата публікацыі");
 regGS("Most Popular Articles", "Найпапулярнейшыя арыткулы");

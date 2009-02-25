@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -115,7 +119,6 @@ regGS("Are you sure you want to remove the image '$1' from the article?", "Da li
 regGS("There was an error reading request parameters.", "Greška pri čitanju traženih parametara.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Tekst ne može biti pregledan. Proverite da li je odabran šablon za za prikaz teksta.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Tekst ne može biti pregledan. Proverite da li je odabran šablon za prvu stranu.");
-regGS("Insert Internal Link", "Napravi interni link");
 regGS("No such article.", "Nema takvog teksta.");
 regGS("No such section.", "Nema te rubrike.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

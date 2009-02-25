@@ -1,4 +1,8 @@
 <?php 
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -114,7 +118,6 @@ regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
-regGS("Insert Internal Link", "Vložit vnitřní link");
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

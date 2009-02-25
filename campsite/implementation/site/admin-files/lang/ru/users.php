@@ -1,4 +1,5 @@
 <?php 
+regGS("User may use the editor status bar", "");
 regGS("Click here to use existing user type permissions (discard section customization)", "Нажмите эту кнопку, чтобы использовать права доступа существующего типа пользователя (сброс инструментария секции) ");
 regGS("Click here to customize user permissions per section", "Нажмите эту кнопку, чтобы настроить права пользователя секции");
 regGS("User may clear up the system cache", "Пользователь может очищать систему кеширования");
