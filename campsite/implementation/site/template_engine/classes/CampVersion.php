@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.2.0-rc4';
+    private $m_release = '3.2.0';
 
     /**
      * @var string
@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2009-01-27';
+    private $m_releaseDate = '2009-02-27';
 
     /**
      * @var string

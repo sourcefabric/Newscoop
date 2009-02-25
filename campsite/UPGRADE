@@ -8,7 +8,7 @@ Upgrading from Campsite 2.6.x and 2.7.x versions:
 Repeat the following steps for each instance:
 
 1. Backup the instance using campsite-backup-instance
-2. Perform a new Campsite 3.0 install
+2. Perform a new Campsite 3.2 install
 3. Run the restore backup script from the admin interface
 
 
@@ -18,6 +18,8 @@ Upgrading from Campsite 3.0.x and 3.1.x:
 
 Drop the 3.2 sources over the existing 3.0/3.1 install, open a browser
 and make a request for the publication home page: http://[site_name]
+The upgrade will be performed automatically when you make the first
+request to the publication site or to the Campsite admin interface.
 
 
 Compatibility issues
@@ -26,3 +28,6 @@ In version 3.0 the template language was modified extensively. The
 backup restore script will provide an automated conversion of the old
 template files to the new format. For more details on language changes
 please read the manual.
+
+The 3.2 template language is fully backward compatible with versions
+3.1 and 3.0. The 3.2 version only brings additions to the language.
