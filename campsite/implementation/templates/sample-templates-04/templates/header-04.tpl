@@ -1,0 +1,1 @@
+<a href="{{ uri options="issue" }}"><img src="/templates/img/banner.gif" border="0"></a>

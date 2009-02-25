@@ -1,0 +1,20 @@
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+<tr> 
+   <td width="363" bgcolor="#3878af" valign="top" align="center"><p class="datum">My Town, {{ $smarty.now|camp_date_format:"%M %d, %Y" }}</p></td>
+   <td width="384" valign="top">
+     <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#3878af">
+     <tr>
+      {{ local }}
+      {{ set_publication identifier="5" }}
+      {{ set_current_issue }}
+      {{ list_sections constraints="number smaller 51" }}
+      <td width="76"><img border="0" src="/templates/img/04bgmeni.gif" align="left">
+      <p class="main-index" align="center"><a class="main-index" href="{{ uri options="section reset_article_list" }}">{{ $campsite->section->name }}</a></p>
+      </td>
+      {{ /list_sections }}
+      {{ /local }}
+      </tr>
+      </table>
+  </td>
+</tr>
+</table>
