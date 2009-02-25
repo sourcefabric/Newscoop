@@ -1,0 +1,109 @@
+#!/usr/bin/php
+<?php
+
+if (!is_array($GLOBALS['argv'])) {
+	echo "\n";
+	echo "Can't read command line arguments\n";
+	echo "\n";
+	exit(1);
+}
+
+$CAMPSITE_DIR = dirname(dirname(__FILE__));
+$ETC_DIR = $CAMPSITE_DIR . '/conf';
+
+require_once("cli_script_lib.php");
+
+if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	exit(1);
+}
+
+// include install_conf.php file
+require_once("$ETC_DIR/install_conf.php");
+
+$help = false;
+$silent = false;
+$default_dir = false;
+for ($i = 0; ; $i++) {
+	if (!isset($GLOBALS['argv'][$i])) {
+		break;
+	}
+	$arg = trim($GLOBALS['argv'][$i]);
+    $help |= ($arg == "--help");
+	$silent |= ($arg == "--silent");
+	$default_dir |= ($arg == "--default_dir");
+}
+
+if (!$silent) {
+	echo "\n";
+	echo "Campsite UTF8 Converter Utility\n";
+	echo "-----------------------\n";
+}
+
+$usage =
+"  Usage:
+  campsite-utf8-converter [--silent] [--default_dir]
+
+  This script will backup all of your website data needed to re-create
+  your site from scratch, except for the Campsite software itself.
+  Later, if you want to restore from a backup file, use the script
+  'campsite-restore'.
+
+  Parameters:
+    --help
+        Show this help and exit.
+
+    --silent
+        Don't display any messages on success.
+
+    --default_dir:
+        Save the backup archive in the backup default directory:
+            $CAMPSITE_DIR/backup/
+        By default the backup file is saved in the current directory.
+
+  See also:
+      campsite-backup
+      campsite-restore
+
+";
+
+if (empty($ETC_DIR) || $help == true) {
+	echo $usage;
+	exit(1);
+}
+
+if (!is_file("$ETC_DIR/database_conf.php")) {
+	echo "\n";
+	echo "Database configuration file is missing!\n";
+	echo "\n";
+	exit(1);
+}
+require_once("$ETC_DIR/database_conf.php");
+
+if (!$silent) {
+        echo "UTF8 Converter script version: ".$Campsite["VERSION"]."\n";
+        echo "Converting up the database...\n";
+}
+
+camp_utf8_convert();
+
+function camp_utf8_convert()
+{
+    global $Campsite;
+
+    $sql = "SELECT CONCAT('ALTER TABLE ', table_name, ' CONVERT TO CHARACTER SET utf8') FROM information_schema.tables WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+    $sqlSentences = mysql_fetch_array($res);
+    if (!is_array($sqlSentences)) {
+        $sqlSentences = array();
+    }
+    foreach ($sqlSentences as $sentence) {
+        mysql_query($sentence);
+    }
+} // fn camp_utf8_convert
+
+if (!$silent) {
+	echo "done.\n";
+}
+
+exit(0);
+
+?>
