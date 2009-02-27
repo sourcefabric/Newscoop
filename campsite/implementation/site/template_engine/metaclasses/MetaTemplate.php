@@ -32,7 +32,10 @@ final class MetaTemplate extends MetaDbObject {
     public function __construct($p_templateIdOrName = null)
     {
         $this->m_dbObject = new Template($p_templateIdOrName);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Template();
+        }
+        
 		$this->InitProperties();
         $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';

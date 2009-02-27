@@ -35,7 +35,10 @@ final class MetaAuthor extends MetaDbObject {
     public function __construct($p_idOrName = null)
     {
         $this->m_dbObject = new Author($p_idOrName);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Author();
+        }
+        
 		$this->InitProperties();
 		$this->m_customProperties['name'] = 'getName';
         $this->m_customProperties['defined'] = 'defined';

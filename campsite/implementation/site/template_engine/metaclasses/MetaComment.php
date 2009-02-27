@@ -37,7 +37,10 @@ final class MetaComment extends MetaDbObject {
     public function __construct($p_messageId = null)
     {
         $this->m_dbObject = new Phorum_message($p_messageId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Phorum_message();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['submit_date'] = 'getSubmitDate';
         $this->m_customProperties['defined'] = 'defined';

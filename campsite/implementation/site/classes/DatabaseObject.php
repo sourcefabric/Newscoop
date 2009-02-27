@@ -246,7 +246,6 @@ class DatabaseObject {
 			$queryStr .= implode(', ', $tmpColumnNames);
 			$queryStr .= ' FROM ' . $this->m_dbTableName;
 			$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
-//			$queryStr .= ' LIMIT 1';
 			$resultSet = $g_ado_db->GetRow($queryStr);
 			if ($resultSet) {
 				foreach ($this->getColumnNames() as $dbColumnName) {
@@ -277,6 +276,8 @@ class DatabaseObject {
 							. ' WHERE ' . $this->getKeyWhereClause();
 				if ($g_ado_db->GetRow($queryStr)) {
 					$this->m_exists = true;
+				} else {
+					$this->m_exists = false;
 				}
 			}
 		}

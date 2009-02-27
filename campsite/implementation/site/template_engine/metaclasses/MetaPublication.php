@@ -38,7 +38,10 @@ final class MetaPublication extends MetaDbObject {
     public function __construct($p_publicationId = null)
     {
         $this->m_dbObject = new Publication($p_publicationId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Publication();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';

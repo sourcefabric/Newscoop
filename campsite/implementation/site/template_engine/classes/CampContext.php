@@ -822,6 +822,28 @@ final class CampContext
 
         $this->m_readonlyProperties['url']->language = $p_newLanguage;
         $this->m_objects['language'] = $p_newLanguage;
+        
+        if ($this->article->defined()) {
+        	$oldArticle = $this->m_objects['article'];
+        	$newArticle = new MetaArticle($p_newLanguage->number,
+        	                              $oldArticle->number);
+            $this->setArticleHandler($oldArticle, $newArticle);
+        }
+        if ($this->section->defined() && !$this->m_objects['article']->defined()) {
+        	$oldSection = $this->m_objects['section'];
+        	$newSection = new MetaSection($oldSection->publication->identifier,
+        	                              $oldSection->issue->number,
+        	                              $p_newLanguage->number,
+        	                              $oldSection->number);
+            $this->setSectionHandler($oldSection, $newSection);
+        }
+        if ($this->issue->defined() && !$this->m_objects['section']->defined()) {
+        	$oldIssue = $this->m_objects['issue'];
+        	$newIssue = new MetaIssue($oldIssue->publication->identifier,
+        	                          $p_newLanguage->number,
+        	                          $oldIssue->number);
+            $this->setIssueHandler($oldIssue, $newIssue);
+        }
 
         $languageHandlerRunning = false;
     }
@@ -867,8 +889,11 @@ final class CampContext
         }
         $issueHandlerRunning = true;
 
-        if ($p_newIssue->defined() && $this->getPublication() != $p_newIssue->publication) {
+        if ($p_newIssue->defined() && $this->getPublication() !== $p_newIssue->publication) {
             $this->setPublicationHandler($this->getPublication(), $p_newIssue->publication);
+        }
+        if ($p_newIssue->defined() && $this->getLanguage() !== $p_newIssue->language) {
+            $this->setLanguageHandler($this->getLanguage(), $p_newIssue->language);
         }
         $this->setSectionHandler($this->getSection(), new MetaSection());
         $this->m_readonlyProperties['url']->issue = $p_newIssue;
@@ -892,7 +917,7 @@ final class CampContext
         }
         $sectionHandlerRunning = true;
 
-        if ($p_newSection->defined() && $this->getIssue() != $p_newSection->issue) {
+        if ($p_newSection->defined() && $this->getIssue() !== $p_newSection->issue) {
             $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
         }
         $this->setArticleHandler($this->getArticle(), new MetaArticle());
@@ -917,7 +942,7 @@ final class CampContext
         }
         $articleHandlerRunning = true;
 
-        if ($p_newArticle->defined() && $this->getSection() != $p_newArticle->section) {
+        if ($p_newArticle->defined() && $this->getSection() !== $p_newArticle->section) {
             $this->setSectionHandler($this->getSection(), $p_newArticle->section);
         }
         $this->m_objects['subtitle'] = new MetaSubtitle();

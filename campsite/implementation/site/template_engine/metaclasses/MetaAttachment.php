@@ -37,6 +37,9 @@ final class MetaAttachment extends MetaDbObject {
     public function __construct($p_attachmentId = null)
     {
         $this->m_dbObject = new Attachment($p_attachmentId);
+        if (!$this->m_dbObject->exists()) {
+        	$this->m_dbObject = new Attachment();
+        }
 
 		$this->InitProperties();
         $this->m_customProperties['description'] = 'getDescription';
