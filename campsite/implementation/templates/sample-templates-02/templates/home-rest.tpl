@@ -2,7 +2,7 @@
         <tr>
           <td height="90" align="left">{{ include file="home-banner.tpl" }}</td>
         </tr>
-{{ list_articles constraints="type is Article topic is Home rest:en" order="bynumber asc" }}
+{{ list_articles constraints="type is Article topic is Home\ rest:en" order="bynumber asc" }}
         <tr>
           <td valign="top">
 	        {{ if $campsite->image->has_image1 }}
