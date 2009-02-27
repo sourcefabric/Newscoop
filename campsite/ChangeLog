@@ -47,12 +47,15 @@
   - #2706 - Poll plugin: admin interface doesn't show fields according to
             the choosen number of answers
   - #2712 - Blog classes need to set published datetime automatically
+  - #2713 - Changing the language in the template invalidates the
+            issue/section/article objects
   - #2723 - Liveuser db connect error
   - #2732 - Problem with installer and non-existing apache crontab
             (cron table for user apache)
   - #2738 - Unicode screwed up in default database
   - #2749 - Restore script fails due to duplicated key
   - #2750 - Blog admin lists foreign entries
+  - #2751 - List of articles with ignore_language doesn't work well
 
   Other Tasks
   -----------
