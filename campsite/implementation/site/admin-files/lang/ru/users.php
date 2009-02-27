@@ -1,7 +1,5 @@
 <?php 
-regGS("User may use the editor status bar", "");
-regGS("Click here to use existing user type permissions (discard section customization)", "Нажмите эту кнопку, чтобы использовать права доступа существующего типа пользователя (сброс инструментария секции) ");
-regGS("Click here to customize user permissions per section", "Нажмите эту кнопку, чтобы настроить права пользователя секции");
+regGS("User may use the editor status bar", "Пользователь может использовать строку состояния редактора");
 regGS("User may clear up the system cache", "Пользователь может очищать систему кеширования");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Другой пользователь зарегистрировался под этим электронным адресом, пожалуйста, введите другой.");
 regGS("You do not have the right to sync Campsite and Phorum users.", "Вы не имеете прав доступа к синхронизации работы Campsite и посетителей форума.");

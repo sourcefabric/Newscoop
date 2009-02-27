@@ -1,15 +1,15 @@
 <?php 
-regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
-regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "");
-regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
-regGS("Select field from which to generate the author", "");
-regGS("Recently Modified Articles", "");
-regGS("Publish Schedule", "");
-regGS("No articles have been modified yet.", "");
-regGS("Modification Date", "");
-regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
+regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Невозможно создать автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
+regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "Возникли ошибки в процессе установки автора статей типа '$1' из поля '$2'.");
+regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "Автор успешно установлен для статей типа '$1' из поля '$2'.");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 минут(ы) назад.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 час(ов) $4 минут(ы) назад.");
+regGS("Select field from which to generate the author", "Выберите поле, из которого нужно генерировать автора");
+regGS("Recently Modified Articles", "Недавно измененные статьи");
+regGS("Publish Schedule", "Расписание публикации");
+regGS("No articles have been modified yet.", "Нет измененных статей.");
+regGS("Modification Date", "Дата изменения");
+regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Ошибка в процессе установки автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
 regGS("There are currently no articles in statistics.", "Нет статей в статистике просмотра.");
 regGS("Publish date", "Дата опубликования");
 regGS("Most Popular Articles", "Самые популярные статьи");

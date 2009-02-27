@@ -1,14 +1,14 @@
 <?php 
 regGS("Unable to add attachment.", "Немагчыма дадаць файл.");
-regGS("There was a problem uploading the file.", "");
-regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
-regGS("The maximum file upload size was not configured in Campsite.", "");
-regGS("The file exceeds the allowed max file size.", "");
-regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
-regGS("Maximum Upload Size", "");
-regGS("File Size", "");
-regGS("File Name", "");
-regGS("Download", "");
+regGS("There was a problem uploading the file.", "Праблема загрузкі файла.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Загружаны файл захаваны на сервер часткова. Гэта звязана з тым, што максімальна дапушчальны час загрузкі файла пераўзыходзіць час, неабходны для загрузкі гэтага файла. Максімальны час загрузкі вызначаны ў файле 'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "Максімальны памер файла для загрузкі не вызначаны ў Campsite.");
+regGS("The file exceeds the allowed max file size.", "Памер гэтага файла пераўзыходзіць дапушчальны.");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Калі ласка пераканайцеся, што Вы правільна абнавілі базу дадзеных: запусціце $1 у абалонцы.");
+regGS("Maximum Upload Size", "Максімальны памер загружанага файла");
+regGS("File Size", "Памер файла");
+regGS("File Name", "Імя файла");
+regGS("Download", "Загрузіць");
 regGS("File '$1' updated.", "Файл '$1' абноўлены. ");
 regGS("File '$1' deleted.", "Файл '$1'  выдалены. ");
 regGS("File '$1' added.", "Файл '$1' даданы.");

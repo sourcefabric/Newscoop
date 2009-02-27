@@ -1,9 +1,9 @@
 <?php 
-regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "");
-regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
-regGS("There are $1 subscriptions which will be affected.", "");
-regGS("There are $1 articles in this section.", "");
+regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Broj članaka<BR><SMALL>(publikovano/ukupno)</SMALL>");
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL naziv mora biti jedinstven za sve rubrike u okviru izdanja.<br>URL naziv koji ste uneli (\"$1\") je u konfliktu sa rubrikom \"$2$3. $4$5\" ");
+regGS("Section updated", "Rubrika je izmenjena");
+regGS("There are $1 subscriptions which will be affected.", "Postoji $1 pretplata na koje će se odraziti ova izmena.");
+regGS("There are $1 articles in this section.", "Ukupno je $1 članaka u ovoj rubrici.");
 regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Rubrika #$1 \"$2\" je izmenjena. (publikacija:  $3, izdanje:  $4)");
 regGS("Go To Articles", "Idi na tekstove");
 regGS("Add section to all subscriptions.", "Dodaj rubriku u sve pretplate.");
@@ -43,9 +43,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Upozorenje");
 regGS("You must select a section.", "Morate izabrati rubriku");
 regGS("You must specify a name for the section.", "Morate uneti ime rubrike.");
+regGS("The section could not be added.", "Rubrika ne može biti dodata.");
+regGS("Add new section", "Dodaj novu rubriku");
 regGS("Please check if another section with the same number does not already exist.", "Proverite da li već ne postoji rubrika pod istim brojem");
 regGS("Short Name", "Skraćeno ime");
 regGS("Destination section number", "Broj ciljne rubrike");
-regGS("The section could not be added.", "Rubrika ne može biti dodata.");
-regGS("Add new section", "Dodaj novu rubriku");
 ?>

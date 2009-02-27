@@ -1,7 +1,7 @@
 <?php 
-regGS("Are you sure you want to make $1 a $2 field?", "");
-regGS("Is Content", "");
-regGS("Back to Article Types List", "");
+regGS("Are you sure you want to make $1 a $2 field?", "Вы ўпэўненыя, што жадаеце зрабіць $1 полем $2");
+regGS("Is Content", "З'яўляецца змесцівам");
+regGS("Back to Article Types List", "Вярнуцца да спісу тыпаў артыкулаў");
 regGS("show", "Паказаць");
 regGS("hide", "Схаваць");
 regGS("You must enter a name for the field.", "Вы павiнны ўвесьцi назву поля.");

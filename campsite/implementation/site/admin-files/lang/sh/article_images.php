@@ -1,11 +1,11 @@
 <?php 
-regGS("Unable to add new image.", "");
-regGS("Image number '$1' already exists", "");
-regGS("You do not have the right to change image information.", "");
-regGS("The image number specified is already in use.", "");
-regGS("The image has been removed from the article.", "");
-regGS("Image '$1' updated.", "");
-regGS("Image '$1' added.", "");
+regGS("Unable to add new image.", "Nije moguće dodati novu sliku.");
+regGS("Image number '$1' already exists", "Slika broj '$1' već postoji");
+regGS("You do not have the right to change image information.", "Nemate pravo menjanja podataka o slikama.");
+regGS("The image number specified is already in use.", "Broj slike koji ste uneli je već upotrebljen.");
+regGS("The image has been removed from the article.", "slika je uklonjena iz članka.");
+regGS("Image '$1' updated.", "slika '$1' je izmenjena.");
+regGS("Image '$1' added.", "Slika '$1' je dodata.");
 regGS("Edit article", "Uredi tekst");
 regGS("You do not have the right to attach images to articles.", "Nemate pravo da kačite slike uz tekstove.");
 regGS("You do not have the right to add images.", "Nemate pravo da dodajete slike.");

@@ -1,15 +1,15 @@
 <?php 
-regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
-regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "");
-regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
-regGS("Select field from which to generate the author", "");
-regGS("Recently Modified Articles", "");
-regGS("Publish Schedule", "");
-regGS("No articles have been modified yet.", "");
-regGS("Modification Date", "");
-regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
+regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Немагчыма стварыць аўтара \"$1\" для артыкула №$2 (\"$3\") тыпу $4.");
+regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "Паўсталі памылкі падчас усталёвак аўтара артыкулаў тыпу '$1' з поля '$2'.");
+regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "Аўтар паспяхова ўсталяваны для артыкулаў тыпу '$1' з поля '$2'.");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Артыкул быў заблакаваны $1 ($2) $3 хвілін назад.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Артыкул быў заблакаваны $1 ($2) $3 гадзін $4 хвілін назад.");
+regGS("Select field from which to generate the author", "Абярыце поле, з якога трэба генераваць аўтара");
+regGS("Recently Modified Articles", "Нядаўна змененыя артыкулы");
+regGS("Publish Schedule", "Расклад публікацыі");
+regGS("No articles have been modified yet.", "Няма змененых артыкулаў.");
+regGS("Modification Date", "Дата змены");
+regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Памылка падчас усталёвак аўтара \"$1\" для артыкула №$2 (\"$3\") тыпу $4.");
 regGS("There are currently no articles in statistics.", "Няма артыкулаў у статыстыцы прагляду");
 regGS("Publish date", "Дата публікацыі");
 regGS("Most Popular Articles", "Найпапулярнейшыя арыткулы");

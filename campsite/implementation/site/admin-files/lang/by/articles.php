@@ -1,16 +1,16 @@
 <?php 
-regGS("Saving, please wait...", "");
-regGS("Saved", "");
-regGS("Save All", "");
-regGS("Article Saved", "");
-regGS("Online Server: On", "");
-regGS("Online Server: Off", "");
-regGS("Title", "");
-regGS("Length", "");
-regGS("Download", "");
-regGS("Creator", "");
-regGS("Audioclips order saved.", "");
-regGS("Audioclips", "");
+regGS("Saving, please wait...", "Захоўваецца, калі ласка пачакайце...");
+regGS("Saved", "Захавана");
+regGS("Save All", "Захаваць усё");
+regGS("Article Saved", "Артыкул захаваны");
+regGS("Online Server: On", "Сервер ён-лайн: уключаны");
+regGS("Online Server: Off", "Сервер ён-лайн: выключаны");
+regGS("Title", "Загаловак");
+regGS("Length", "Даўжыня");
+regGS("Download", "Загрузка");
+regGS("Creator", "Аўтар");
+regGS("Audioclips order saved.", "Парадак аўдыёкліпаў захаваны.");
+regGS("Audioclips", "Аўдыёкліпы");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
 regGS("Select location:", "Выбераце  месцазнаходжаньне:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Вы ня можаце мець два артыкулы ў адной рубрыцы з аднолькавай назвай. Азначаная назва ўжо выкарыстоўваецца артыкулам '$1'.");
@@ -119,6 +119,7 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Немагчыма зрабіць папярэдні  агляд артыкула. Пераканайцеся, ці выбраны шаблён тытульнай старонкі.");
 regGS("No such article.", "Няма такога артыкула.");
 regGS("No such section.", "Няма такой рубрыкі:by ");
+regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("No such issue.", "Няма такога выпуску");
@@ -127,5 +128,8 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
-regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \\'$1\\' з гэтага артыкула?");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>
