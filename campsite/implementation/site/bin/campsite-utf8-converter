@@ -34,7 +34,7 @@ for ($i = 0; ; $i++) {
 if (!$silent) {
 	echo "\n";
 	echo "Campsite UTF8 Converter Utility\n";
-	echo "-----------------------\n";
+	echo "-------------------------------\n";
 }
 
 $usage =
@@ -77,24 +77,44 @@ if (!$silent) {
 
 camp_utf8_convert();
 
+
 function camp_utf8_convert()
 {
     global $Campsite;
 
+    // Connects to database server
     camp_connect_to_database();
-    $sql = "SELECT CONCAT('ALTER TABLE ', table_name, ' CONVERT TO CHARACTER SET utf8') FROM information_schema.tables WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+
+    //
+    $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to convert database charset to utf8");
+    }
+
+    //
+    $sql = 'SET character_set_client = utf8';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to convert the client charset to utf8");
+    }
+
+    // Builds ALTER TABLE sql queries for all database tables
+    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', table_name, ' CONVERT TO CHARACTER SET utf8') FROM information_schema.tables WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
     $sqlSentences = null;
     $res = mysql_query($sql);
     while ($row = mysql_fetch_row($res)) {
-       $sqlSentences[] = $row;
+       $sqlSentences[] = $row[0];
     }
 
     if (!is_array($sqlSentences)) {
         $sqlSentences = array();
     }
     foreach ($sqlSentences as $sentence) {
-        mysql_query($sentence);
+        if (!($res = mysql_query($sentence))) {
+            camp_exit_with_error("Unable to convert data to utf8");
+        }
     }
+
+    return true;
 } // fn camp_utf8_convert
 
 if (!$silent) {
