@@ -19,6 +19,7 @@ $dsn = 'mysql://'.$Campsite['db']['user']
 
 $db = DB::connect($dsn);
 if (PEAR::isError($db)) {
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 ?>
         <font color="red" size="3">
         <p>ERROR connecting to the MySQL server!</p>
