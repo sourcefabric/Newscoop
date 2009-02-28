@@ -346,14 +346,15 @@ foreach ($articleFields as $dbColumnName => $text) {
 	// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
 	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
 
-	// Replace <img src="A" align="B" alt="C" sub="D">
-	// with <!** Image [image_template_id] align=B alt="C" sub="D">
-	$srcAttr = "(src\s*=\s*[\"][^\"]*[\"])";
-	$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
-	$alignAttr = "(align\s*=\s*[\"][^\"]*[\"])";
-	$subAttr = "(title\s*=\s*[\"][^\"]*[\"])";
-	$idAttr = "(id\s*=\s*[\"][^\"]*[\"])";
-	$pattern = "/<\s*img\s*(($idAttr|$subAttr|$srcAttr|$altAttr|$alignAttr)\s*)*[\s\w\"']*\/>/i";
+	// Replace <img id=".." src=".." alt=".." title=".." align="..">
+	// with <!** Image [image_template_id] align=".." alt=".." sub="..">
+    $idAttr = "(id\s*=\s*\"[^\"]*\")";
+	$srcAttr = "(src\s*=\s*\"[^\"]*\")";
+	$altAttr = "(alt\s*=\s*\"[^\"]*\")";
+    $subAttr = "(title\s*=\s*\"[^\"]*\")";
+	$alignAttr = "(align\s*=\s*\"[^\"]*\")";
+    $otherAttr = "(\w+\s*=\s*\"[^\"]*\")";
+	$pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$otherAttr)\s*)*[\s\w\"']*\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
     }
