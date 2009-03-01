@@ -20,26 +20,9 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 // include install_conf.php file
 require_once("$ETC_DIR/install_conf.php");
 
-$help = false;
-$silent = false;
-for ($i = 0; ; $i++) {
-	if (!isset($GLOBALS['argv'][$i])) {
-		break;
-	}
-	$arg = trim($GLOBALS['argv'][$i]);
-        $help |= ($arg == "--help");
-	$silent |= ($arg == "--silent");
-}
-
-if (!$silent) {
-	echo "\n";
-	echo "Campsite UTF8 Converter Utility\n";
-	echo "-------------------------------\n";
-}
-
 $usage =
 "  Usage:
-  campsite-utf8-converter [--silent]
+  campsite-utf8-converter [--help] [--log] [--silent]
 
   This script will convert all of your website character and text
   data in database to utf8 character set.
@@ -47,6 +30,9 @@ $usage =
   Parameters:
     --help
         Show this help and exit.
+
+    --log=LOG_FILE
+        Records the sql queries in the specified file.
 
     --silent
         Don't display any messages on success.
@@ -57,7 +43,41 @@ $usage =
 
 ";
 
-if (empty($ETC_DIR) || $help == true) {
+
+$silent = false;
+
+// gets the arguments from command line, if any
+for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
+    $option = explode('=', $GLOBALS['argv'][$i]);
+    switch ($option[0]) {
+        case '--log':
+            $log_file = !empty($option[1]) ? rtrim($option[1], '/') : '';
+            if (empty($log_file)) {
+                echo "Error: Log file not specified!\n\n";
+                echo $usage;
+                exit(1);
+            }
+            break;
+        case '--silent':
+            $silent = true;
+            break;
+        case '--help':
+            echo $usage;
+            exit(0);
+        default:
+            echo "Error: Invalid option '" . $option[0] . "'!\n\n";
+            echo $usage;
+            exit(1);
+    }
+}
+
+if (!$silent) {
+	echo "\n";
+	echo "Campsite UTF8 Converter Utility\n";
+	echo "-------------------------------\n";
+}
+
+if (empty($ETC_DIR)) {
 	echo $usage;
 	exit(1);
 }
@@ -75,26 +95,41 @@ if (!$silent) {
         echo "Converting up the database...\n";
 }
 
-camp_utf8_convert();
+camp_utf8_convert($log_file);
 
 
-function camp_utf8_convert()
+function camp_utf8_convert($p_log_file)
 {
     global $Campsite;
 
     // Connects to database server
     camp_connect_to_database();
 
-    //
+    // Whether logging or not
+    $do_log = (!empty($p_log_file)) ? true : false;
+    if ($do_log) {
+        if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
+            $do_log = false;
+            camp_exit_with_error("Log file is missed or not writable!\n");
+        }
+    }
+
+    // Sets the character set for the database
     $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
     if (!($res = mysql_query($sql))) {
         camp_exit_with_error("Unable to convert database charset to utf8");
     }
+    if ($do_log) {
+        $log_text = $sql . "\n";
+    }
 
-    //
+    // Sets the character set for the client
     $sql = 'SET character_set_client = utf8';
     if (!($res = mysql_query($sql))) {
         camp_exit_with_error("Unable to convert the client charset to utf8");
+    }
+    if ($do_log) {
+        $log_text .= $sql . "\n";
     }
 
     // Builds ALTER TABLE sql queries for all database tables
@@ -111,6 +146,14 @@ function camp_utf8_convert()
     foreach ($sqlSentences as $sentence) {
         if (!($res = mysql_query($sentence))) {
             camp_exit_with_error("Unable to convert data to utf8");
+        } elseif ($do_log) {
+            $log_text .= $sentence . "\n";
+        }
+    }
+
+    if ($do_log) {
+        if (@file_put_contents($p_log_file, $log_text) === false) {
+            camp_exit_with_error("Couldn't write Log file");
         }
     }
 
