@@ -446,6 +446,7 @@ function camp_upgrade_database($p_dbName)
             $first = false;
         }
     }
+    camp_utf8_convert();
 
     return 0;
 } // fn camp_upgrade_database
@@ -582,6 +583,13 @@ function camp_detect_database_version($p_dbName, &$version)
     return 0;
 } // fn camp_detect_database_version
 
+
+/**
+ * Migrates the configuration files from 2.x versions formatting
+ * to 3.x versions formatting
+ * @param $p_configFile - configuration file content
+ * @return string - new configuration file content
+ */
 function camp_migrate_config_file($p_configFile)
 {
     global $Campsite;
@@ -608,5 +616,91 @@ function camp_migrate_config_file($p_configFile)
     $p_configFile = preg_replace($patternArray, $replacementArray, $p_configFile);
     return $p_configFile;
 } // camp_migrate_config_file
+
+
+/**
+ * Converts the current database to UTF-8 encoding.
+ * @param $p_log_file
+ * @return bool - true if success
+ */
+function camp_utf8_convert($p_log_file = null)
+{
+    global $Campsite;
+
+    // Whether logging or not
+    $do_log = (!empty($p_log_file)) ? true : false;
+    if ($do_log) {
+        if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
+            $do_log = false;
+            camp_exit_with_error("Log file is missed or not writable!\n");
+        }
+    }
+
+    // Sets the character set for the database
+    $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to convert database charset to utf8");
+    }
+    if ($do_log) {
+        $log_text = $sql . "\n";
+    }
+
+    // Sets the character set for the client
+    $sql = 'SET character_set_client = utf8';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to convert the client charset to utf8");
+    }
+    if ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    // Deletes data from ArticleIndex and KeywordIndex tables to fix duplicate values
+    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.ArticleIndex';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to remove article index data");
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.KeywordIndex';
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to remove keyword index data");
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    $sql = 'UPDATE ' . $Campsite['DATABASE_NAME'] . ".Articles SET IsIndexed = 'N'";
+    if (!($res = mysql_query($sql))) {
+        camp_exit_with_error("Unable to update article table data");
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    // Builds ALTER TABLE sql queries for all database tables
+    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', table_name, ' CONVERT TO CHARACTER SET utf8') FROM information_schema.tables WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+    $sqlSentences = array();
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_row($res)) {
+       $sqlSentences[] = $row[0];
+    }
+
+    foreach ($sqlSentences as $sentence) {
+    	echo "$sentence\n";
+        if (!($res = mysql_query($sentence))) {
+            camp_exit_with_error("Unable to convert data to utf8");
+        } elseif ($do_log) {
+            $log_text .= $sentence . "\n";
+        }
+    }
+
+    // Writes Log file
+    if ($do_log) {
+        if (@file_put_contents($p_log_file, $log_text) === false) {
+            camp_exit_with_error("Couldn't write Log file");
+        }
+    }
+
+    return true;
+} // fn camp_utf8_convert
 
 ?>
