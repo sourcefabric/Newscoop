@@ -353,8 +353,8 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$altAttr = "(alt\s*=\s*\"[^\"]*\")";
     $subAttr = "(title\s*=\s*\"[^\"]*\")";
 	$alignAttr = "(align\s*=\s*\"[^\"]*\")";
-    $otherAttr = "(\w+\s*=\s*\"[^\"]*\")";
-	$pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$otherAttr)\s*)*[\s\w\"']*\/>/i";
+        $otherAttr = "(\s*\w+\s*=\s*\"[^\"]*\")*";
+        $pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr)\s*)*[\s\w\"']*$otherAttr\/>/i";
 	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
 	$articleTypeObj->setProperty($dbColumnName, $text);
     }
