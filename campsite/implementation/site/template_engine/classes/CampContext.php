@@ -470,8 +470,20 @@ final class CampContext
      */
     public function allPropertiesNames()
     {
-        return array_merge(array_keys($this->m_objects),
-        array_keys($this->m_properties));
+        $propertiesNames = array_keys($this->m_properties);
+        $propertiesNames[]= 'language';
+        $propertiesNames[]= 'publication';
+        $propertiesNames[]= 'issue';
+        $propertiesNames[]= 'section';
+        $propertiesNames[]= 'article';
+        $propertiesNames[]= 'image';
+        $propertiesNames[]= 'attachment';
+        $propertiesNames[]= 'audioclip';
+        $propertiesNames[]= 'comment';
+        $propertiesNames[]= 'subtitle';
+        $propertiesNames[]= 'topic';
+        $propertiesNames[]= 'user';
+        return $propertiesNames;
     }
 
 
