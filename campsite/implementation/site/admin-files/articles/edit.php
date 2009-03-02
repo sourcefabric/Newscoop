@@ -733,6 +733,7 @@ if ($f_edit_mode == "edit") { ?>
 			$fCustomFields = array();
                         $fCustomTextareas = array();
                         $saveButtons = array();
+                        $saveButtonNames = array('save_f_article_title','save_f_article_author','save_f_keywords');
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
 				if (stristr($dbColumn->getType(), "char")
@@ -745,6 +746,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				    <?php if ($f_edit_mode == "edit") {
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
 				    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
 	        onclick: { fn: onButtonClick },
 	        disabled: true
@@ -864,6 +866,7 @@ window.location.reload();
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") {
+                                $saveButtonNames[] = 'save_' . $dbColumn->getName();
                                 $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
 	        onclick: { fn: onButtonClick },
 	        disabled: true
@@ -1231,7 +1234,18 @@ function makeRequest(a){
     YAHOO.example.container.wait.show();
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
-    buttonDisable("save_" + a);
+
+    if (a == "all") {
+        <?php
+            foreach ($saveButtonNames as $saveButtonName) {
+        ?>
+                buttonDisable("<?php print($saveButtonName); ?>");
+        <?php
+            }
+        ?>
+    } else {
+        buttonDisable("save_" + a);
+    }
 }
 
 function makeSavedTime() {
