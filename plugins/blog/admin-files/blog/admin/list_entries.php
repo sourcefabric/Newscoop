@@ -304,8 +304,8 @@ if ($BlogEntriesList->getLength()) {
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <?php  putGS("Topics"); ?>
             </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="60">
-                <?php  putGS("List Comments"); ?>
+            <TD ALIGN="center" VALIGN="TOP" width="60" colspan="2">
+                <?php  putGS("Comments"); ?>
             </TD>
             
             <?php if($is_admin) { ?>
@@ -357,12 +357,18 @@ if ($BlogEntriesList->getLength()) {
 					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
                 </td>
               
+                <?php if($is_admin) { ?>
+                    <td align='center'>
+                        <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
+                            <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
+                        </a>
+                    </td>
+                <?php } ?>
+                
                 <td align='center'>
-                    <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
-                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
-                    </a>
+                    <A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $MetaBlogEntry->identifier ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
                 </td>
-              
+                
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {

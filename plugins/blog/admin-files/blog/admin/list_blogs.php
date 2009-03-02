@@ -294,8 +294,8 @@ if ($BlogsList->getLength()) {
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <?php  putGS("Topics"); ?>
             </TD>
-            <TD ALIGN="center" VALIGN="TOP" width="60">
-                <?php  putGS("List Entries"); ?>
+            <TD ALIGN="center" VALIGN="TOP" width="60" <?php p($is_admin ? 'colspan="2"' : '') ?>>
+                <?php  putGS("Entries"); ?>
             </TD>
             
             <?php if($is_admin) { ?>
@@ -343,16 +343,21 @@ if ($BlogsList->getLength()) {
                 <td align="center"><?php p($MetaBlog->entries); ?></td>
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
                 
-                <td align='center'>
-					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
-                </td>
-              
+                <?php if ($is_admin) { ?>
+                    <td align='center'>
+    					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
+                    </td>
+                    <td align='center'>
+                        <A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $MetaBlog->identifier ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A
+                    </td>
+                <?php } ?> 
+                
                 <td align='center'>
                     <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
-              
+
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
