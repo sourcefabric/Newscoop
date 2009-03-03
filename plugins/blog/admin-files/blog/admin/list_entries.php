@@ -354,9 +354,23 @@ if ($BlogEntriesList->getLength()) {
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
                 
                 <td align='center'>
-					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
+                    <?php
+                    // get the topics used
+                    $topics = array();
+                    $BlogEntry = new BlogEntry($MetaBlogEntry->identifier);
+                    foreach ($BlogEntry->getTopics() as $Topic) {            
+                        $topics[] = "{$Topic->getName($BlogEntry->getLanguageId())}";
+                    }
+                    $topics_list = implode(' | ', $topics);        
+                    ?>
+                
+					<A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
                 </td>
-              
+                
+                <td align='center'>
+                    <A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $MetaBlogEntry->identifier ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
+                </td>
+                          
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
@@ -364,10 +378,6 @@ if ($BlogEntriesList->getLength()) {
                         </a>
                     </td>
                 <?php } ?>
-                
-                <td align='center'>
-                    <A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $MetaBlogEntry->identifier ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
-                </td>
                 
                 <?php if($is_admin) { ?>
                     <td align='center'>

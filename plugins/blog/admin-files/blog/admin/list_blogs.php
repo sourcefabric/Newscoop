@@ -345,14 +345,25 @@ if ($BlogsList->getLength()) {
                 
                 <?php if ($is_admin) { ?>
                     <td align='center'>
-    					<A href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
+                        <?php
+                        // get the topics used
+                        $topics = array();
+                        $Blog = new Blog($MetaBlog->identifier);
+                        foreach ($Blog->getTopics() as $Topic) {            
+                            $topics[] = "{$Topic->getName($Blog->getLanguageId())}";
+                        }
+                        $topics_list = implode(' | ', $topics);        
+                        ?>
+                    
+    					<A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0"></A>
                     </td>
-                    <td align='center'>
+                    
+                    <td align='center' width="20">
                         <A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $MetaBlog->identifier ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A
                     </td>
                 <?php } ?> 
                 
-                <td align='center'>
+                <td align='center' width="20">
                     <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
