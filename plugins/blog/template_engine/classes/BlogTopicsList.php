@@ -22,18 +22,21 @@ class BlogTopicsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    if (!$context->blog->defined || !$context->language->defined) {
+	    
+	    if (!$context->blog->defined) {
 	        return array();
 	    }
-	    $comparisonOperation = new ComparisonOperation('fk_blog_id', $operator,
-	                                                   $context->blog->identifier);
+	    
+	    $comparisonOperation = new ComparisonOperation('fk_blog_id', $operator, $context->blog->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
 
 	    $blogTopicsList = BlogTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaTopicsList = array();
+	    
 	    foreach ($blogTopicsList as $topic) {
 	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
 	    }
+	    
 	    return $metaTopicsList;
 	}
 

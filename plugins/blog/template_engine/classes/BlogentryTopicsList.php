@@ -1,13 +1,10 @@
 <?php
 
-require_once('ListObject.php');
-
-
 /**
- * ArticleTopicsList class
+ * BlogentryTopicsList class
  *
  */
-class ArticleTopicsList extends ListObject
+class BlogentryTopicsList extends ListObject
 {
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -25,18 +22,20 @@ class ArticleTopicsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    if (!$context->article->defined || !$context->language->defined) {
+	    
+	    if (!$context->blogentry->defined) {
 	        return array();
 	    }
-	    $comparisonOperation = new ComparisonOperation('nrarticle', $operator,
-	                                                   $context->article->number);
+	    
+	    $comparisonOperation = new ComparisonOperation('fk_entry_id', $operator, $context->blogentry->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
-
-	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $blogentryTopicsList = BlogentryTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaTopicsList = array();
-	    foreach ($articleTopicsList as $topic) {
+	    
+	    foreach ($blogentryTopicsList as $topic) {
 	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
 	    }
+	    
 	    return $metaTopicsList;
 	}
 
@@ -82,7 +81,7 @@ class ArticleTopicsList extends ListObject
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_topics");
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_blogentry_topics");
     					}
 	    				$parameters[$parameter] = (int)$value;
     				} else {
@@ -90,7 +89,7 @@ class ArticleTopicsList extends ListObject
     				}
     				break;
     			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_topics", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_blogentry_topics", $p_smarty);
     		}
     	}
     	return $parameters;

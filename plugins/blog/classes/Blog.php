@@ -500,7 +500,7 @@ class Blog extends DatabaseObject {
         return (array) $topics;
     }
     
-    public static function getMoodList($p_language_id)
+    public static function GetMoodList($p_language_id)
     {
         foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
             $currentTopic = camp_array_peek($path, false, -1);
@@ -681,6 +681,7 @@ class Blog extends DatabaseObject {
     	    $toolbar1[] = "rtl";
     	    $toolbar1[] = "charmap";
     	}
+    	/*
     	if ($p_user->hasPermission('EditorLink')) {
     	    $toolbar1[] = "|";
     	    $toolbar1[] = "campsiteinternallink";
@@ -688,9 +689,9 @@ class Blog extends DatabaseObject {
     	}
     	if ($p_user->hasPermission('EditorSubhead')) {
     	    $toolbar1[] = "campsite-subhead";
-    	}
+    	}*/
     	if ($p_user->hasPermission('EditorImage')) {
-    	    $toolbar1[] = "campsiteimage";
+    	    $toolbar1[] = "image";
     	}
     	if ($p_user->hasPermission('EditorSourceView')) {
     	    $toolbar1[] = "code";
@@ -774,6 +775,15 @@ class Blog extends DatabaseObject {
     <!-- TinyMCE -->
     <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
     <script type="text/javascript">
+    function CampsiteSubhead(ed) {
+        element = ed.dom.getParent(ed.selection.getNode(), 'span');
+        if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
+    	return false;
+        } else {
+            html = ed.selection.getContent({format : 'text'});
+    	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
+        }
+    } // fn CampsiteSubhead
     
     // Default skin
     tinyMCE.init({

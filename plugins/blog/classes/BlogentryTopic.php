@@ -196,6 +196,124 @@ class BlogentryTopic extends DatabaseObject {
         
         return $BlogEntry;  
     }
+    
+        /**
+     * Returns an blog topics list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparisonOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     * @param integer $p_count
+     *    The total count of the elements; this count is computed without
+     *    applying the start ($p_start) and limit parameters ($p_limit)
+     *
+     * @return array $blogTopicsList
+     *    An array of Topic objects
+     */
+    public static function GetList(array $p_parameters, $p_order = null,
+                                   $p_start = 0, $p_limit = 0, &$p_count)
+    {
+        global $g_ado_db;
+
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
+
+        // processes the parameters
+        foreach ($p_parameters as $parameter) {
+            $comparisonOperation = self::ProcessListParameters($parameter);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            if (strpos($comparisonOperation['left'], 'fk_entry_id') !== false) {
+                $hasBlogentryId = true;
+            }
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
+        }
+
+        // validates whether blog number was given
+        if ($hasBlogentryId == false) {
+            CampTemplate::singleton()->trigger_error("missed parameter Blogentry Number in statement list_blog_topics");
+            return array();
+        }
+
+        // sets the main table and columns to be fetched
+        $tmpBlogentryTopic = new BlogentryTopic();
+        $selectClauseObj->setTable($tmpBlogentryTopic->getDbTableName());
+        $selectClauseObj->addColumn('fk_topic_id');
+        $countClauseObj->setTable($tmpBlogentryTopic->getDbTableName());
+        $countClauseObj->addColumn('COUNT(*)');
+        unset($tmpBlogTopic);
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
+
+        // sets the order condition if any
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $selectClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $selectQuery = $selectClauseObj->buildQuery();
+        $topics = $g_ado_db->GetAll($selectQuery);
+        if (!is_array($topics)) {
+            return array();
+        }
+        $countQuery = $countClauseObj->buildQuery();
+        $p_count = $g_ado_db->GetOne($countQuery);
+
+        // builds the array of topic objects
+        $blogentryTopicsList = array();
+        foreach ($topics as $topic) {
+            $topObj = new Topic($topic['fk_topic_id']);
+            if ($topObj->exists()) {
+                $blogentryTopicsList[] = $topObj;
+            }
+        }
+
+        return $blogentryTopicsList;
+    } // fn GetList
+
+
+    /**
+     * Processes a paremeter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation;
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+        $comparisonOperation = array();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'fk_entry_id':
+            $comparisonOperation['left'] = 'fk_entry_id';
+            $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        }
+
+        $operatorObj = $p_param->getOperator();
+        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
+
        
 } // class BlogentryTopic
 

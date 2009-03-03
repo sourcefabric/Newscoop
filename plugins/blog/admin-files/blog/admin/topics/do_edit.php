@@ -8,9 +8,10 @@ switch ($f_mode) {
             exit;
         }
         $f_blog_id = Input::Get('f_blog_id', 'int');
+        $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), 1);
         $topics = Blog::GetTopicTree();
         $Blog = new Blog($f_blog_id);
-        $Blog->setTopics(Input::Get('f_topic_ids', 'array', array(), 1));
+        $Blog->setTopics($f_topic_ids);
     break;
     
     case 'entry_topic':
@@ -20,9 +21,10 @@ switch ($f_mode) {
             exit;
         }
         $f_blogentry_id = Input::Get('f_blogentry_id', 'int');
+        $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), 1);
         $topics = Blog::GetTopicTree();
         $BlogEntry = new BlogEntry($f_blogentry_id);
-        $BlogEntry->setTopics(Input::Get('f_topic_ids', 'array', array(), 1));
+        $BlogEntry->setTopics($f_topic_ids);
     break;   
     
 }
@@ -34,9 +36,6 @@ if (!Input::IsValid()) {
 
 ?>
 <script>
-<?php if (!is_null($f_topic_ids)) { ?>
-window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Topics added."); ?>";
-window.opener.document.forms.article_edit.submit();
-<?php } ?>
+window.opener.location.reload();
 window.close();
 </script>

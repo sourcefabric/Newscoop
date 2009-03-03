@@ -66,7 +66,7 @@ $info = array(
     	'/blog/moderator/blog_form.php',
     	'/blog/moderator/entry_form.php',
     	'/blog/moderator/comment_form.php',
-    	'/blog/admin/topics/popup.php'    	
+    	'/blog/moderator/topics/popup.php'    	
     ),
     'install' => 'plugin_blog_install',
     'enable' => 'plugin_blog_install',

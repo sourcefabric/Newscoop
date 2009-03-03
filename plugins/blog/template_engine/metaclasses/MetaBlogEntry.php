@@ -27,7 +27,6 @@ final class MetaBlogEntry extends MetaDbObject {
         $this->m_properties['title'] = 'title';
         $this->m_properties['name'] = 'title';
         $this->m_properties['content'] = 'content';
-        $this->m_properties['tags'] = 'tags';
         $this->m_properties['mood_id'] = 'fk_mood_id';
         $this->m_properties['images'] = 'images';
         $this->m_properties['admin_status'] = 'admin_status';
