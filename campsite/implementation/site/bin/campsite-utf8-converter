@@ -112,9 +112,9 @@ if (!is_file("$ETC_DIR/database_conf.php")) {
     exit(1);
 }
 require_once("$ETC_DIR/database_conf.php");
+camp_connect_to_database();
 
 if ($listCharsets) {
-    camp_connect_to_database();
     echo "The list of available charsets:\n";
     $charsetsList = camp_get_all_charsets();
     foreach ($charsetsList as $charsetName=>$charsetDescription) {
@@ -125,7 +125,7 @@ if ($listCharsets) {
 
 if (empty($charset)) {
     if (!$silent) {
-        camp_exit_with_error('Please specify charset!');
+        camp_exit_with_error('Please specify the charset!');
     }
     exit(1);
 }
@@ -164,7 +164,6 @@ if (!$silent) {
     echo "Converting the database from '$charset' to 'UTF-8'...\n";
 }
 
-camp_connect_to_database();
 $dumpFile = $Campsite['DATABASE_NAME']."-database-$charset.sql";
 camp_backup_database($Campsite['DATABASE_NAME'], $dumpFile, $output,
                      array("--default-character-set=$charset"));
