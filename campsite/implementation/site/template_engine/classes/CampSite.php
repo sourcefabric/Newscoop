@@ -133,7 +133,7 @@ final class CampSite extends CampSystem
             $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
         } else {
             $templates_dir = CS_PATH_SMARTY_TEMPLATES;
-            $template = $this->getTemplateName();
+            $template = $uri->getTemplate();
             if (empty($template)) {
                 $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
                 if (is_null($tplId)) {
@@ -186,25 +186,6 @@ final class CampSite extends CampSystem
             break;
         }
     } // fn event
-
-
-    /**
-     * Returns the template file name
-     *
-     * @return string $template
-     */
-    public function getTemplateName()
-    {
-//        $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-//        if (!empty($tplId)) {
-//            $template = CampSystem::GetTemplateNameById($tplId);
-//        } else {
-            $uri = self::GetURIInstance();
-            $template = $uri->getTemplate();
-//        }
-
-        return $template;
-    } // fn getTemplate
 
 
     /**
@@ -271,26 +252,28 @@ final class CampSite extends CampSystem
     public static function GetURIInstance($p_uri = 'SELF')
     {
         global $g_ado_db;
+        
+        static $urlType = null;
 
-        $urlType = 0;
+        if (is_null($urlType)) {
+        	// tries to get the url type from publication attributes
+        	$sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
+        	. 'FROM Publications p, Aliases a '
+        	. 'WHERE p.Id = a.IdPublication AND '
+        	. "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
+        	$data = $g_ado_db->GetRow($sqlQuery);
+        	if (!empty($data)) {
+        		$urlTypeObj = new UrlType($data['IdURLType']);
+        		if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
+        			$urlType = $urlTypeObj->getId();
+        		}
+        	}
 
-        // tries to get the url type from publication attributes
-        $sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
-            . 'FROM Publications p, Aliases a '
-            . 'WHERE p.Id = a.IdPublication AND '
-            . "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
-        $data = $g_ado_db->GetRow($sqlQuery);
-        if (!empty($data)) {
-            $urlTypeObj = new UrlType($data['IdURLType']);
-            if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
-                $urlType = $urlTypeObj->getId();
-            }
-        }
-
-        // sets url type to default if necessary
-        if (!$urlType) {
-            $config = self::GetConfigInstance();
-            $urlType = $config->getSetting('campsite.url_default_type');
+        	// sets url type to default if necessary
+        	if (!$urlType) {
+        		$config = self::GetConfigInstance();
+        		$urlType = $config->getSetting('campsite.url_default_type');
+        	}
         }
 
         // instanciates the corresponding URI object

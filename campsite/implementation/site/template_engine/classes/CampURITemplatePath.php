@@ -374,8 +374,10 @@ class CampURITemplatePath extends CampURI
         }
 
         $trimmedPath = trim($this->getPath(), '/');
-        list($lookDir, $template) = explode('/', $trimmedPath);
-        if ($lookDir != $this->m_templatesPrefix) {
+        $pathParts = explode('/', $trimmedPath);
+        $tplDir = array_shift($pathParts);
+        $template = implode('/', $pathParts);
+        if ($tplDir != $this->m_templatesPrefix) {
             return null;
         }
 
