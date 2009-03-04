@@ -56,7 +56,7 @@ $Campsite['cache']['expiration_time'] = 900;
 $Campsite['cache']['path'] = null;
 
 /** Smarty settings **/
-$Campsite['smarty']['caching'] = true;
+$Campsite['smarty']['caching'] = false;
 $Campsite['smarty']['debugging'] = false;
 $Campsite['smarty']['force_compile'] = false;
 $Campsite['smarty']['compile_check'] = true;
