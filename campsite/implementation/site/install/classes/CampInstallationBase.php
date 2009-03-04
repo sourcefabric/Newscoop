@@ -332,7 +332,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo tables';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
@@ -343,7 +343,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo prepare file';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
@@ -354,7 +354,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo data';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }

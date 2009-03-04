@@ -55,14 +55,19 @@ function camp_escape_shell_arg($p_arg)
  * Execute a command in the shell.
  *
  * @param string $p_cmd
- * @param string $p_errMsg
- * @param boolean $p_printOutput
+ * @param string $p_errMsg - default empty
+ * @param boolean $p_printOutput - default true
+ * @param boolean $p_silent - default false
  */
-function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
+function camp_exec_command($p_cmd, $p_errMsg = "",
+                           $p_printOutput = true, $p_silent = false)
 {
     $p_cmd .= " 2> /dev/null";
     @exec($p_cmd, $output, $result);
     if ($result != 0) {
+    	if ($p_silent) {
+    		exit(1);
+    	}
         if (!$p_printOutput) {
             $output = array();
         }
@@ -82,9 +87,10 @@ function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
  */
 function camp_readline()
 {
-    $fp = fopen("php://stdin", "r");
-    $in = fgets($fp, 4094); // Maximum windows buffer size
-    fclose ($fp);
+    if (!isset($GLOBALS['stdin'])) {
+        $GLOBALS['stdin'] = fopen("php://stdin", "r");
+    }
+    $in = fgets($GLOBALS['stdin'], 4094); // Maximum windows buffer size
     return $in;
 } // fn camp_readline
 
@@ -270,7 +276,8 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
  * @param string $p_output
  * @return int
  */
-function camp_backup_database($p_dbName, $p_destFile, &$p_output)
+function camp_backup_database($p_dbName, $p_destFile, &$p_output,
+                              $p_customParams = array())
 {
 	global $Campsite;
 
@@ -282,7 +289,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output)
 	if ($password != "") {
         $cmd .= " --password=$password";
     }
+    $cmd .= ' ' . implode(' ', $p_customParams);
     $cmd .= " $p_dbName > $p_destFile";
+    $p_output = array();
     @exec($cmd, $p_output, $result);
     return $result;
 } // fn camp_backup_database
@@ -632,7 +641,7 @@ function camp_utf8_convert($p_log_file = null)
     if ($do_log) {
         if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
             $do_log = false;
-            camp_exit_with_error("Log file is missed or not writable!\n");
+            camp_exit_with_error("Log file is missing or not writable!\n");
         }
     }
 
@@ -685,7 +694,6 @@ function camp_utf8_convert($p_log_file = null)
     }
 
     foreach ($sqlSentences as $sentence) {
-    	echo "$sentence\n";
         if (!($res = mysql_query($sentence))) {
             camp_exit_with_error("Unable to convert data to utf8");
         } elseif ($do_log) {
@@ -702,5 +710,113 @@ function camp_utf8_convert($p_log_file = null)
 
     return true;
 } // fn camp_utf8_convert
+
+
+/**
+ * Sets the encoding to UTF8 for the given encoding in the SQL
+ * dump file.
+ * @param $p_inDumpFile - source dump file full path
+ * @param $p_outDumpFile - destination dump file full path
+ * @param $p_fromEncoding - encoding from which to convert to UTF8
+ * @return bool - true if successful
+ */
+function camp_change_dump_encoding($p_inDumpFile, $p_outDumpFile,
+                                   $p_fromEncoding)
+{
+	$inFile = fopen($p_inDumpFile, "r");
+	if (!$inFile) {
+        camp_exit_with_error("Unable to open the source dump file $p_inDumpFile!");
+	}
+	$outFile = fopen($p_outDumpFile, 'w');
+    if (!$outFile) {
+        camp_exit_with_error("Unable to open the destination dump file $p_outDumpFile!");
+    }
+    while (!feof($inFile)) {
+    	$line = fgets($inFile);
+    	$pattern = "/SET\s+NAMES\s+[']?${p_fromEncoding}[']?([^_])/i";
+    	$replacement = 'SET NAMES utf8${1}';
+    	$line = preg_replace($pattern, $replacement, $line);
+        $pattern = "/CHARSET\s*=\s*[']?${p_fromEncoding}[']?([^_])/i";
+        $replacement = 'CHARSET=utf8${1}';
+        $line = preg_replace($pattern, $replacement, $line);
+    	if (fputs($outFile, $line) === false) {
+            camp_exit_with_error("Unable to write the dump file $p_outDumpFile!");
+    	}
+    }
+    fclose($inFile);
+    fclose($outFile);
+    return true;
+}
+
+
+/**
+ * Returns the server default character set.
+ * @return string or false if error
+ */
+function camp_get_server_charset()
+{
+	$sql = "SHOW VARIABLES LIKE 'character_set_server'";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res, MYSQL_ASSOC);
+	if (!$row) {
+		return false;
+	}
+	return $row['Value'];
+}
+
+
+/**
+ * Returns true if the given charset was valid.
+ * @param $p_charset
+ * @return bool
+ */
+function camp_valid_charset($p_charset)
+{
+    $sql = "SHOW CHARACTER SET LIKE '$p_charset'";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res, MYSQL_ASSOC);
+    if (!$row) {
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * Returns an array of all the database server charsets.
+ * @return array
+ */
+function camp_get_all_charsets()
+{
+	$charsets = array();
+    $sql = "SHOW CHARACTER SET";
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+    	$charsets[$row['Charset']] = $row['Description'];
+    }
+    return $charsets;
+}
+
+
+/**
+ * Restores the Campsite database from the given dump file.
+ * @param $p_sqlFile - dump file
+ * @return bool - true on success
+ */
+function camp_restore_database($p_sqlFile, $p_silent = false)
+{
+	global $Campsite;
+	
+	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+	. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+	. $Campsite['DATABASE_SERVER_PORT'];
+	if ($Campsite['DATABASE_PASSWORD'] != "") {
+		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+	}
+	$cmd .= ' ' . $Campsite['DATABASE_NAME'] . " < $p_sqlFile";
+	camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
+	                  true, $p_silent);
+	return true;
+}
 
 ?>

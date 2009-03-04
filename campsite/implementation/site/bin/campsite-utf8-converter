@@ -2,10 +2,10 @@
 <?php
 
 if (!is_array($GLOBALS['argv'])) {
-	echo "\n";
-	echo "Can't read command line arguments\n";
-	echo "\n";
-	exit(1);
+    echo "\n";
+    echo "Can't read command line arguments\n";
+    echo "\n";
+    exit(1);
 }
 
 $CAMPSITE_DIR = dirname(dirname(__FILE__));
@@ -14,7 +14,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 require_once("cli_script_lib.php");
 
 if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
-	exit(1);
+    exit(1);
 }
 
 // include install_conf.php file
@@ -22,7 +22,8 @@ require_once("$ETC_DIR/install_conf.php");
 
 $usage =
 "  Usage:
-  campsite-utf8-converter [--help] [--log] [--silent]
+  campsite-utf8-converter [--help] [--log] [--silent] [--force] \
+                          --charset=[from_charset]|--default_charset
 
   This script will convert all of your website character and text
   data in database to utf8 character set.
@@ -37,6 +38,18 @@ $usage =
     --silent
         Don't display any messages on success.
 
+    --force
+        Dont prompt, assume 'yes' to questions.
+
+    --charset=[from_charset]
+        Specify the character set from which to convert to UTF8.
+
+    --default-charset
+        Convert from the database server character set to UTF8.
+
+    --list-charsets
+        List all available charsets and exit.
+
   See also:
       campsite-backup
       campsite-restore
@@ -45,6 +58,9 @@ $usage =
 
 
 $silent = false;
+$force = false;
+$listCharsets = false;
+$charset = null;
 
 // gets the arguments from command line, if any
 for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
@@ -61,6 +77,18 @@ for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
         case '--silent':
             $silent = true;
             break;
+        case '--force':
+            $force = true;
+            break;
+        case '--charset':
+            $charset = $option[1];
+            break;
+        case '--default-charset':
+            $charset = camp_get_server_charset();
+            break;
+        case '--list-charsets':
+            $listCharsets = true;
+            break;
         case '--help':
             echo $usage;
             exit(0);
@@ -72,35 +100,85 @@ for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
 }
 
 if (!$silent) {
-	echo "\n";
-	echo "Campsite UTF8 Converter Utility\n";
-	echo "-------------------------------\n";
-}
-
-if (empty($ETC_DIR)) {
-	echo $usage;
-	exit(1);
+    echo "\n";
+    echo "Campsite UTF8 Converter Utility\n";
+    echo "-------------------------------\n";
 }
 
 if (!is_file("$ETC_DIR/database_conf.php")) {
-	echo "\n";
-	echo "Database configuration file is missing!\n";
-	echo "\n";
-	exit(1);
+    if (!$silent) {
+        camp_exit_with_error("Database configuration file is missing!");
+    }
+    exit(1);
 }
 require_once("$ETC_DIR/database_conf.php");
-require_once("cli_script_lib.php");
+
+if ($listCharsets) {
+    camp_connect_to_database();
+    echo "The list of available charsets:\n";
+    $charsetsList = camp_get_all_charsets();
+    foreach ($charsetsList as $charsetName=>$charsetDescription) {
+        echo "- $charsetName: $charsetDescription\n";
+    }
+    exit(0);
+}
+
+if (empty($charset)) {
+    if (!$silent) {
+        camp_exit_with_error('Please specify charset!');
+    }
+    exit(1);
+}
+if (!camp_valid_charset($charset)) {
+    if (!$silent) {
+        camp_exit_with_error("Invalid charset '$charset'!");
+    }
+    exit(1);
+}
+
+if (!$force) {
+    if ($silent) {
+        exit(1);
+    }
+    echo "\nWARNING! The conversion to UTF-8 may break your database content!\n";
+    echo "If you broke your database content it can not be recovered unless\n";
+    echo "you restore the database from a backup!\n\n";
+    echo "It is strongly recommended that you back up your Campsite instance\n";
+    echo "before performing the conversion!\n\n";
+    echo "Do you want to continue the conversion now? (y/N): ";
+    if (strtolower(trim(camp_readline())) != 'y') {
+        echo "Conversion aborted by the user!\n";
+        exit(1);
+    }
+}
+
+if (empty($ETC_DIR)) {
+    if (!$silent) {
+        echo $usage;
+    }
+    exit(1);
+}
 
 if (!$silent) {
-        echo "UTF8 Converter script version: ".$Campsite["VERSION"]."\n";
-        echo "Converting up the database...\n";
+    echo "UTF8 Converter script version: ".$Campsite["VERSION"]."\n";
+    echo "Converting the database from '$charset' to 'UTF-8'...\n";
 }
 
 camp_connect_to_database();
-camp_utf8_convert($log_file);
+$dumpFile = $Campsite['DATABASE_NAME']."-database-$charset.sql";
+camp_backup_database($Campsite['DATABASE_NAME'], $dumpFile, $output,
+                     array("--default-character-set=$charset"));
+$outDumpFile = $Campsite['DATABASE_NAME'].'-database-utf8.sql';
+camp_change_dump_encoding($dumpFile, $outDumpFile, $charset);
+camp_restore_database($outDumpFile, $silent);
+camp_utf8_convert();
+unlink($dumpFile);
+unlink($outDumpFile);
 
 if (!$silent) {
-	echo "done.\n";
+    echo "done.\n\n";
+    echo "IMPORTANT!\n";
+    echo "You must restart the apache server for the changes to take effect!\n";
 }
 
 exit(0);
