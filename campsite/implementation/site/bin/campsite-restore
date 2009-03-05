@@ -113,6 +113,17 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 // include install configuration file
 require_once("$ETC_DIR/install_conf.php");
 
+if ($useExistingConfig || isset($options['l'])) {
+    if (!file_exists($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File 'database_conf.php' does not exist. Is Campsite installed?\n\n";
+        exit(1);
+    }
+    if (!is_writable($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File 'database_conf.php' is not writable by this script.\n\n";
+        exit(1);
+    }
+}
+
 
 // display the list of available character sets if the option -l was supplied
 if (isset($options['l'])) {
@@ -334,16 +345,6 @@ $templatesDirName = 'templates';
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 
 $destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir);
-if (!$useExistingConfig) {
-    if (!file_exists($ETC_DIR.'/database_conf.php')) {
-        echo "ERROR! File $dir does not exist.  Is Campsite installed?\n\n";
-        exit(1);
-    }
-    if (!is_writable($ETC_DIR.'/database_conf.php')) {
-        echo "ERROR! File $dir is not writable by this script.\n\n";
-        exit(1);
-    }
-}
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
