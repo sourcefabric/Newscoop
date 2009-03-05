@@ -489,7 +489,7 @@ if ($convertToUTF) {
     }
     $outDumpFile = "$tempDirName/$origDbName-database-utf8.sql";
     camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
-    camp_restore_database($outDumpFile, $errors);
+    camp_restore_database($outDumpFile);
     unlink($dumpFile);
     unlink($outDumpFile);
 
