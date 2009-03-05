@@ -12,6 +12,18 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 $archive_file = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : '';
 $options = getopt("t:efc:slh");
 
+
+// define the cleanup function
+function __exit_cleanup()
+{
+    global $tempDirName;
+    
+    if (!empty($tempDirName)) {
+        camp_remove_dir($tempDirName);
+    }
+}
+
+
 echo "\nCampsite Restore Utility\n";
 echo "------------------------\n";
 
@@ -51,7 +63,10 @@ $usage =
     [-e]
         Use the existing configuration files instead of the ones in the
         backup file. In other words, the existing config files in the
-        current installation will not be replaced.
+        current installation will not be replaced. This parameter takes
+        precedence over -t parameter. E.g.: the database name will be
+        read from the existing database configuration file, not from the
+        -t option.
 
     [-c <charset>]
         Convert the database data from <charset> to UTF-8.
@@ -74,46 +89,35 @@ $usage =
 
 ";
 
+// display help if -h parameter was supplied
 if (isset($options['h'])) {
     echo $usage;
     exit(0);
 }
 
+// initialize options variables from command line parameters
 $useExistingConfig = isset($options['e']);
 $doPrompt = !isset($options['f']);
 $destDbSpecified = isset($options['t']);
 $destDbName = isset($options['t']) ? $options['t'] : "";
 $convertToUTF = isset($options['c']) || isset($options['s']);
 
+
+// include the utils library
 require_once("cli_script_lib.php");
 
-if (array_search('-c', $GLOBALS['argv']) !== false
-&& empty($options['c'])) {
-    camp_exit_with_error("Please specify the character set from which to convert the data to UTF-8.");
-}
-
-if (empty($ETC_DIR) || empty($archive_file) || ($destDbSpecified && $destDbName == "")) {
-    echo $usage;
-    exit(1);
-}
-
-if (!file_exists($archive_file) && $archive_file != '-l') {
-    camp_exit_with_error("The backup file you specified does not exist.");
-}
-
-
+// include the install configuration script
 if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
     camp_exit_with_error("Unable to read the install configuration file!");
 }
-
 // include install configuration file
 require_once("$ETC_DIR/install_conf.php");
 
-if (($res = camp_connect_to_database()) != 0) {
-    camp_exit_with_error($res);
-}
 
+// display the list of available character sets if the option -l was supplied
 if (isset($options['l'])) {
+    require_once("$ETC_DIR/database_conf.php");
+    camp_connect_to_database();
     echo "The list of available charsets:\n";
     $charsetsList = camp_get_all_charsets();
     foreach ($charsetsList as $charsetName=>$charsetDescription) {
@@ -122,7 +126,26 @@ if (isset($options['l'])) {
     exit(0);
 }
 
+
+// verify if the command line parameters were valid
+if (empty($archive_file) || ($destDbSpecified && $destDbName == "")
+|| (array_search('-c', $GLOBALS['argv']) !== false && empty($options['c']))) {
+    echo $usage;
+    camp_exit_with_error("Invalid parameters; please read the usage description above.");
+}
+
+if (!file_exists($archive_file)) {
+    camp_exit_with_error("The backup file you specified does not exist.");
+}
+
+if (!is_writable(getcwd())) {
+    camp_exit_with_error("You do not have permissions to the currect directory.");
+}
+
+// If convert to UTF-8 verify if the source character set was valid.
 if ($convertToUTF) {
+    require_once("$ETC_DIR/database_conf.php");
+    camp_connect_to_database();
     $fromCharset = isset($options['c']) ? $options['c'] : camp_get_server_charset();
     if (!camp_valid_charset($fromCharset)) {
         camp_exit_with_error("Invalid charset '$fromCharset'!");
@@ -139,12 +162,13 @@ if ($convertToUTF) {
             exit(1);
         }
     }
+    mysql_close();
 }
 
-if (!is_writable(getcwd())) {
-    echo "You do not have permissions to the currect directory.";
-    exit(1);
-}
+
+/*
+ * Start the restore operation.
+ */
 
 $adviceOnError = "Please run this script as '" . $Campsite['APACHE_USER'] . "' or as 'root'.";
 
@@ -238,9 +262,6 @@ if (!$isNewBackupFormat) {
 }
 echo "done.\n";
 
-echo " * Backup database name is '$origDbName'.\n";
-echo " * Destination database name (to be replaced) is '$destDbName'.\n";
-
 //
 // Get the version from the backup archive.
 //
@@ -279,8 +300,13 @@ if (!camp_is_readable($includeFile)) {
     echo "done.\n\n";
     exit(1);
 }
-require_once($includeFile);
+require($includeFile);
 $destDbName = $Campsite['DATABASE_NAME'];
+camp_connect_to_database();
+
+echo " * Backup database name is '$origDbName'.\n";
+echo " * Destination database name (to be replaced) is '$destDbName'.\n";
+
 
 //
 // Restore the backup files
@@ -321,7 +347,7 @@ if (!$useExistingConfig) {
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
-        echo "ERROR! Directory $dir does not exist.  Is Campsite installed?\n\n";
+        echo "ERROR! Directory $dir does not exist. Is Campsite installed?\n\n";
         exit(1);
     }
     if (!is_writable($dir)) {
@@ -414,9 +440,6 @@ if ($backupVersion < 3) {
 // Restore the database...
 //
 echo " * Restoring the database...";
-if (($res = camp_connect_to_database()) != 0) {
-    camp_exit_with_error($res);
-}
 if (camp_database_exists($destDbName)) {
     camp_clean_database($destDbName);
 } else {
@@ -484,7 +507,7 @@ if ($useExistingConfig || $destDbSpecified) {
     echo
 "Note: If you are doing a site-to-site transfer you may have to fix the
 aliases in your publications before the frontend will work.  An alias
-is the base URL for your publication.  To change an alias, login to the
+is the base URL for your publication. To change an alias, login to the
 administration interface and go to the publication configure screen.\n\n";
 }
 

@@ -176,14 +176,44 @@ function camp_read_files($p_startDir = '.')
  */
 function camp_remove_dir($p_dirName, $p_msg = "")
 {
-    if ($p_dirName == "" || $p_dirName == "/") {
-        camp_exit_with_error("ERROR! camp_remove_dir: Bad directory name.");
+	$p_dirName = str_replace('//', '/', $p_dirName);
+	$dirBaseName = trim($p_dirName, '/');
+    if ($p_dirName == "/" || $dirBaseName == ''
+    || $dirBaseName == '.' || $dirBaseName == '..'
+    || (strpos($dirBaseName, '/') == false && $p_dirName[0] == '/')) {
+        camp_exit_with_error("camp_remove_dir: Bad directory name '$p_dirName'.");
     }
     if (empty($p_msg)) {
-        $p_msg = "Unable to remove directory $p_dirName";
+        $p_msg = "Unable to remove directory '$p_dirName'";
     }
-    $command = "rm -rf $p_dirName";
-    camp_exec_command($command, $p_msg);
+    
+    $removeDir = true;
+    if (strrpos($p_dirName, '*') == (strlen($p_dirName) - 1)) {
+    	$p_dirName = substr($p_dirName, 0, strlen($p_dirName) - 1);
+    	$removeDir = false;
+    }
+    $p_dirName = rtrim($p_dirName, '/');
+    
+    $dirContent = scandir($p_dirName);
+    if ($dirContent === false) {
+    	camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
+    }
+    foreach ($dirContent as $file) {
+    	if ($file == '.' || $file == '..') {
+    		continue;
+    	}
+    	$filePath = "$p_dirName/$file";
+    	if (is_dir($filePath)) {
+    		camp_remove_dir($filePath);
+    		continue;
+    	}
+    	if (!unlink($filePath)) {
+            camp_exit_with_error("Unable to delete the file '$filePath'.");
+    	}
+    }
+    if ($removeDir) {
+        rmdir($p_dirName);
+    }
 } // fn camp_remove_dir
 
 
@@ -305,6 +335,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
  */
 function camp_exit_with_error($p_errorStr)
 {
+	if (function_exists('__exit_cleanup')) {
+		__exit_cleanup();
+	}
     if (is_array($p_errorStr)) {
         $p_errorStr = implode("\n", $p_errorStr);
     }
@@ -328,11 +361,11 @@ function camp_connect_to_database($p_dbName = "")
     $res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
         . $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
     if (!$res) {
-        camp_exit_with_error("Unable to connect to database server");
+        camp_exit_with_error("Unable to connect to the database server.");
     }
 
     if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
-        camp_exit_with_error("Unable to select database $p_dbName");
+        camp_exit_with_error("Unable to select database '$p_dbName'.");
     }
     mysql_query("SET NAMES 'utf8'");
 } // fn camp_connect_to_database
