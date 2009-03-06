@@ -39,11 +39,11 @@ global $Campsite;
 		    <td align="left"><?php echo htmlspecialchars($reporter->getEmail()); ?></td>
 		</tr>
 		<tr>
-		    <td nowrap><?php putGS("Subject:") ?></td>
+		    <td nowrap><?php putGS("Subject") ?>:</td>
 		    <td align="left"><?php echo htmlspecialchars($reporter->getDescription()); ?></td>
 		</tr>
 		<tr align="left">
-		    <td valign="top" nowrap><?php putGS("Comment:") ?></td>
+		    <td valign="top" nowrap><?php putGS("Comment") ?>:</td>
 		    <td>
 				<?php echo $reporter->getBacktraceString(); ?>
 		    </td>

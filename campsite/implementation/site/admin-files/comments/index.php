@@ -357,12 +357,12 @@ function onSummaryClick(p_messageId)
             </tr>
 
             <tr>
-                <td><b><?php putGS("Subject:"); ?></b></td>
+                <td><b><?php putGS("Subject"); ?>:</b></td>
                 <td><input type="text" name="f_subject_<?php p($comment->getMessageId()); ?>" value="<?php p(htmlspecialchars($comment->getSubject())); ?>" size="30" class="input_text"></td>
             </tr>
 
             <tr>
-                <td><b><?php putGS("Comment:"); ?></b></td>
+                <td><b><?php putGS("Comment"); ?>:</b></td>
             </tr>
 
             <tr>

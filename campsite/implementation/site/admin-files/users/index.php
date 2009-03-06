@@ -107,7 +107,7 @@ if ($canManage) {
 		?>
 		</select>
 		<input type="text" name="subscription_date" value="<?php p(htmlspecialchars($userSearchParameters['subscription_date'])); ?>" class="input_text" style="width: 100px;">
-		&nbsp;<?php putGS('(yyyy-mm-dd)'); ?>&nbsp;&nbsp;
+		&nbsp;(<?php putGS('YYYY-MM-DD'); ?>)&nbsp;&nbsp;
 		<?php putGS("status"); ?>:
 		<select name="subscription_status" class="input_select" style="width: 100px;">
 		<option value=""></option>
