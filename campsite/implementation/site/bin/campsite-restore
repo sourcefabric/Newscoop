@@ -165,8 +165,6 @@ if ($convertToUTF) {
         echo "\nWARNING! The conversion to UTF-8 may break your database content!\n";
         echo "If you broke your database content it can not be recovered unless\n";
         echo "you restore the database from a backup!\n\n";
-        echo "It is strongly recommended that you back up your Campsite instance\n";
-        echo "before performing the conversion!\n\n";
         echo "Do you want to continue the conversion now? (y/N): ";
         if (strtolower(trim(camp_readline())) != 'y') {
             echo "Restore operation aborted by the user!\n";

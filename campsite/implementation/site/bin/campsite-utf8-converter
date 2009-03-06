@@ -61,6 +61,7 @@ $silent = false;
 $force = false;
 $listCharsets = false;
 $charset = null;
+$useDefaultCharset = false;
 
 // gets the arguments from command line, if any
 for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
@@ -84,7 +85,7 @@ for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
             $charset = $option[1];
             break;
         case '--default-charset':
-            $charset = camp_get_server_charset();
+            $useDefaultCharset = true;
             break;
         case '--list-charsets':
             $listCharsets = true;
@@ -123,6 +124,9 @@ if ($listCharsets) {
     exit(0);
 }
 
+if ($useDefaultCharset) {
+    $charset = camp_get_server_charset();
+}
 if (empty($charset)) {
     if (!$silent) {
         camp_exit_with_error('Please specify the charset!');
