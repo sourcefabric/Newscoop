@@ -170,9 +170,31 @@ camp_backup_database($Campsite['DATABASE_NAME'], $dumpFile, $output,
 $outDumpFile = $Campsite['DATABASE_NAME'].'-database-utf8.sql';
 camp_change_dump_encoding($dumpFile, $outDumpFile, $charset);
 camp_restore_database($outDumpFile, $silent);
-camp_utf8_convert();
+$skipped = array();
+camp_utf8_convert(null, $skipped);
 unlink($dumpFile);
 unlink($outDumpFile);
+
+if (!$silent && count($skipped) > 0) {
+    echo "
+Encountered non-critical errors while converting data to UTF-8 encoding!
+The following database queries were unsuccessful because after conversion
+text values become case insensitive. Words written in different case were
+unique before the conversion; after the conversion they are identical,
+breaking some constraints in the database.
+
+The upgrade script can not fix these issues automatically!
+
+You can continue to use the data as is and manually fix these issues
+later. The table fields that were not converted will not support case
+insensitive searches.
+
+Please save the following list of skipped queries:\n";
+    foreach ($skipped as $query) {
+        echo "$query;\n";
+    }
+    echo "-- end of queries list --\n";
+}
 
 if (!$silent) {
     echo "done.\n\n";

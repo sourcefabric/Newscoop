@@ -1,6 +1,7 @@
 -- add new log event for article editing
 INSERT INTO Events (Id, Name, Notify, IdLanguage) VALUES (37, 'Edit article content', 'N', 1);
 
+DELETE FROM `liveuser_rights_right_id_seq` WHERE id < (SELECT MAX(right_id) FROM `liveuser_rights`);
 INSERT INTO `liveuser_rights` VALUES ((SELECT id + 1 FROM `liveuser_rights_right_id_seq`), 0, 'EditorStatusBar', 1);
 UPDATE `liveuser_rights_right_id_seq` set id = id + 1;
 

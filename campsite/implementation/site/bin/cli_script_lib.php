@@ -447,6 +447,7 @@ function camp_upgrade_database($p_dbName)
     }
 
     $first = true;
+    $skipped = array();
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
                       "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
                       "2.7.x", "3.0.x", "3.1.0", "3.1.x");
@@ -455,7 +456,8 @@ function camp_upgrade_database($p_dbName)
             continue;
         }
         if ($first) {
-            echo "\n\t* Upgrading the database from version $db_version...";
+        	echo "\n\t* Upgrading the database from version $db_version...";
+            camp_utf8_convert(null, $skipped);
         }
         $output = array();
 
@@ -488,7 +490,27 @@ function camp_upgrade_database($p_dbName)
             $first = false;
         }
     }
-    camp_utf8_convert();
+    
+    if (count($skipped) > 0) {
+    	echo "
+Encountered non-critical errors while converting data to UTF-8 encoding!
+The following database queries were unsuccessful because after conversion
+text values become case insensitive. Words written in different case were
+unique before the conversion; after the conversion they are identical,
+breaking some constraints in the database.
+
+The upgrade script can not fix these issues automatically!
+
+You can continue to use the data as is and manually fix these issues
+later. The table fields that were not converted will not support case
+insensitive searches.
+
+Please save the following list of skipped queries:\n";
+    	foreach ($skipped as $query) {
+    		echo "$query;\n";
+    	}
+    	echo "-- end of queries list --\n";
+    }
 
     return 0;
 } // fn camp_upgrade_database
@@ -665,7 +687,7 @@ function camp_migrate_config_file($p_configFile)
  * @param $p_log_file
  * @return bool - true if success
  */
-function camp_utf8_convert($p_log_file = null)
+function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
 {
     global $Campsite;
 
@@ -719,7 +741,10 @@ function camp_utf8_convert($p_log_file = null)
     }
 
     // Builds ALTER TABLE sql queries for all database tables
-    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', table_name, ' CONVERT TO CHARACTER SET utf8') FROM information_schema.tables WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', \n"
+         . "  table_name, ' CONVERT TO CHARACTER SET utf8') \n"
+         . "FROM information_schema.tables \n"
+         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
     $sqlSentences = array();
     $res = mysql_query($sql);
     while ($row = mysql_fetch_row($res)) {
@@ -728,9 +753,30 @@ function camp_utf8_convert($p_log_file = null)
 
     foreach ($sqlSentences as $sentence) {
         if (!($res = mysql_query($sentence))) {
-            camp_exit_with_error("Unable to convert data to utf8");
+            camp_exit_with_error("Unable to convert data to UTF-8 on query:\n$sentence");
         } elseif ($do_log) {
             $log_text .= $sentence . "\n";
+        }
+    }
+
+    $sql = "SELECT table_name, column_name, \n"
+         . "  REPLACE(column_type, 'binary', 'char') AS column_type, \n"
+         . "is_nullable, column_default \n"
+         . "FROM information_schema.columns \n"
+         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "' \n"
+         . "  AND data_type LIKE 'varbinary%'";
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+    	$table_name = $row['table_name'];
+    	$column_name = $row['column_name'];
+    	$column_type = $row['column_type'];
+    	$is_nullable = strtolower($row['is_nullable']) != 'no';
+    	$nullDefinition = $is_nullable ? '' : 'NOT NULL';
+    	$column_default = is_null($row['column_default']) ? 'NULL' : "'" . $row['column_default'] . "'";
+    	$sql = "ALTER TABLE `$table_name` MODIFY `$column_name` \n"
+             . "  $column_type $nullDefinition DEFAULT $column_default";
+        if (!mysql_query($sql)) {
+        	$p_skipped[] = $sql;
         }
     }
 

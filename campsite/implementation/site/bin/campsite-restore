@@ -474,21 +474,20 @@ if ($dbVersion < '2.6.0') {
 echo " * Upgrading (if necessary)...";
 $res = camp_upgrade_database($destDbName);
 if ($res !== 0) {
-    echo "ERROR: $res\n";
-    exit(1);
+    camp_exit_with_error($res);
 }
 echo "   done.\n";
 
 if ($convertToUTF) {
     echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
 
-    $dumpFile = "$tempDirName/$origDbName-database-$fromCharset.sql";
+    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
     if (camp_backup_database($destDbName, $dumpFile, $output,
     array("--default-character-set=$fromCharset")) != 0) {
         camp_exit_with_error("Unable to backup the database $destDbName\n"
         . implode("\n", $output));
     }
-    $outDumpFile = "$tempDirName/$origDbName-database-utf8.sql";
+    $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
     camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
     camp_restore_database($outDumpFile);
     unlink($dumpFile);
