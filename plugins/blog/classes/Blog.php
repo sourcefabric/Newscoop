@@ -38,7 +38,6 @@ class Blog extends DatabaseObject {
     );
 
     static $m_html_allowed_fields = array('info');
-    static $m_html_allowed_tags = '<strong><em><u><a><img><p>';
 
     /**
 	 * Construct by passing in the primary key to access the article in
@@ -386,7 +385,7 @@ class Blog extends DatabaseObject {
             foreach ($data['Blog'] as $k => $v) {
                 // clean user input
                 if (in_array($k, Blog::$m_html_allowed_fields)) {
-                    $data['Blog'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
+                    $data['Blog'][$k] = $v;
                 } else {
                     $data['Blog'][$k] = htmlspecialchars_array($v);
                 }

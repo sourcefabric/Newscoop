@@ -37,7 +37,6 @@ class BlogEntry extends DatabaseObject {
     );
 
     static $m_html_allowed_fields = array('content');
-    static $m_html_allowed_tags = '<strong><em><u><a><img><p>';
 
     /**
 	 * Construct by passing in the primary key to access the article in
