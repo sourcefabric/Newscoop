@@ -379,9 +379,7 @@ class BlogComment extends DatabaseObject {
             
             foreach ($data['BlogComment'] as $k => $v) {
                 // clean user input
-                if (in_array($k, BlogComment::$m_html_allowed_fields)) { 
-                    $data['BlogComment'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
-                } else {
+                if (!in_array($k, BlogComment::$m_html_allowed_fields)) { 
                     $data['BlogComment'][$k] = htmlspecialchars_array($v);
                 }
             }

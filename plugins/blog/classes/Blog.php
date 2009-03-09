@@ -384,9 +384,7 @@ class Blog extends DatabaseObject {
 
             foreach ($data['Blog'] as $k => $v) {
                 // clean user input
-                if (in_array($k, Blog::$m_html_allowed_fields)) {
-                    $data['Blog'][$k] = $v;
-                } else {
+                if (!in_array($k, Blog::$m_html_allowed_fields)) {
                     $data['Blog'][$k] = htmlspecialchars_array($v);
                 }
             }

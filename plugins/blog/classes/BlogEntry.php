@@ -429,9 +429,7 @@ class BlogEntry extends DatabaseObject {
 
             foreach ($data['BlogEntry'] as $k => $v) {
                 // clean user input
-                if (in_array($k, BlogEntry::$m_html_allowed_fields)) {
-                    $data['BlogEntry'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
-                } else {
+                if (!in_array($k, BlogEntry::$m_html_allowed_fields)) {
                     $data['BlogEntry'][$k] = htmlspecialchars_array($v);
                 }
             }
