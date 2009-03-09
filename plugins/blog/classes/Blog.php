@@ -678,15 +678,14 @@ class Blog extends DatabaseObject {
     	    $toolbar1[] = "rtl";
     	    $toolbar1[] = "charmap";
     	}
-    	/*
     	if ($p_user->hasPermission('EditorLink')) {
     	    $toolbar1[] = "|";
-    	    $toolbar1[] = "campsiteinternallink";
+    	    #$toolbar1[] = "campsiteinternallink";
     	    $toolbar1[] = "link";
     	}
     	if ($p_user->hasPermission('EditorSubhead')) {
-    	    $toolbar1[] = "campsite-subhead";
-    	}*/
+    	    #$toolbar1[] = "campsite-subhead";
+    	}
     	if ($p_user->hasPermission('EditorImage')) {
     	    $toolbar1[] = "image";
     	}
