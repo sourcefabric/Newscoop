@@ -58,6 +58,7 @@ camp_html_display_msgs();
         <td align="left"><?php putGS("Blog topic root"); ?></td>
         <td>
             <select name="f_blog_root_topic_id" />
+                <option value="0">--root--</option>
                 <?php
                 foreach (Topic::GetTree() as $path) {
                     $option='';
@@ -92,6 +93,7 @@ camp_html_display_msgs();
         <td align="left"><?php putGS("Blog mood root"); ?></td>
         <td>
             <select name="f_blog_root_mood_id" />
+                <option value="0">--root--</option>
                 <?php
                 foreach (Topic::GetTree() as $path) {
                     $option='';
@@ -123,7 +125,7 @@ camp_html_display_msgs();
        </td>
     </tr>
     <tr>
-        <td align="left"><?php putGS("Image derivate commands (one command per line)"); ?></td>
+        <td align="left"><?php putGS("Image derivate commands (one dimension per line)"); ?></td>
         <td><textarea name="f_blog_image_derivates" rows=10 cols=50><?php p(SystemPref::Get("PLUGIN_BLOG_IMAGE_DERIVATES")) ?></textarea></td>
     </tr>
     <tr>
