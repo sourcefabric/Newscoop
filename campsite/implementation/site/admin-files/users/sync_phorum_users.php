@@ -11,7 +11,7 @@ if (!$g_user->hasPermission('SyncPhorumUsers')) {
 $queryStr = "SELECT u.Id, pu.user_id, u.UName, u.Password, u.EMail "
             . "FROM liveuser_users AS u LEFT JOIN phorum_users AS pu "
             . "ON u.UName = pu.username "
-            . "WHERE fk_campsite_user_id IS NULL OR fk_campsite_user_id = 0";
+            . "WHERE fk_campsite_user_id IS NULL OR fk_campsite_user_id != u.Id";
 $nullUsers = $g_ado_db->GetAll($queryStr);
 if (is_array($nullUsers) && sizeof($nullUsers) > 0) {
     foreach ($nullUsers as $nullUser) {
@@ -20,14 +20,12 @@ if (is_array($nullUsers) && sizeof($nullUsers) > 0) {
             $phorumUser->create($nullUser['UName'], $nullUser['Password'],
                                 $nullUser['EMail'], $nullUser['Id'], true);
         } else {
-            $queryStr = "SELECT user_id FROM phorum_users WHERE fk_campsite_user_id = '".$nullUser['Id']."'";
-            $phorumUser = $g_ado_db->GetRow($queryStr);
-            if (sizeof($phorumUser) < 1) {
-                // insert the corresponding phorum user
-                $sql = "UPDATE phorum_users SET fk_campsite_user_id = ".$nullUser['Id']
-                    . " WHERE user_id = ".$nullUser['user_id'];
-                $g_ado_db->Execute($sql);
-            }
+            $sql = "UPDATE phorum_users SET fk_campsite_user_id = NULL"
+                 . " WHERE fk_campsite_user_id = ".$nullUser['Id'];
+            $g_ado_db->Execute($sql);
+        	$sql = "UPDATE phorum_users SET fk_campsite_user_id = ".$nullUser['Id']
+                 . " WHERE user_id = ".$nullUser['user_id'];
+            $g_ado_db->Execute($sql);
         }
     }
 }
