@@ -61,6 +61,7 @@ class BlogComment extends DatabaseObject {
     
     function setProperty($p_name, $p_value)
     {   
+        /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
@@ -75,6 +76,7 @@ class BlogComment extends DatabaseObject {
                 break;
             }          
         }
+        */
         
         $result = parent::setProperty($p_name, $p_value);
     
@@ -105,7 +107,8 @@ class BlogComment extends DatabaseObject {
 		  'user_email'    => $p_user_email,
 		  'title'         => $p_title,
 		  'content'       => $p_content,
-		  'fk_mood_id'    => $p_mood_id, 
+		  'fk_mood_id'    => $p_mood_id,
+		  'published'     => date('Y-m-d H:i:s')
 		);
 
 		$success = parent::create($values);
@@ -113,7 +116,7 @@ class BlogComment extends DatabaseObject {
 		if (!$success) {
 			return false;
 		}
-
+		
 		$this->fetch();
 		
 		BlogEntry::TriggerCounters($p_entry_id);
@@ -207,13 +210,21 @@ class BlogComment extends DatabaseObject {
 
     function getBlog()
     {
-        $Blog = new Blog($this->getProperty('fk_blog_id'));
+        static $Blog;
+        
+        if (!is_object($Bog)) {
+            $Blog = new Blog($this->getProperty('fk_blog_id'));
+        }
         return $Blog;   
     }
    
     function getEntry()
     {
-        $Entry = new $Entry($this->getProperty('fk_entry_id'));
+        static $Entry;
+        
+        if (!is_object($Entry)) {
+            $Entry = new $Entry($this->getProperty('fk_entry_id'));
+        }
         return $Entry;   
     }
        
@@ -408,9 +419,23 @@ class BlogComment extends DatabaseObject {
                             $data['BlogComment']['title'], 
                             $data['BlogComment']['content'], 
                             $data['BlogComment']['fk_mood_id'])) {
-                                        
-                if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
-                if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
+                
+                // set proper status/adminstatus if blog is not moderated
+                // DB default is pending
+                if ($this->getBlog()->getProperty('admin_status') == 'online') {
+                    $this->setProperty('admin_status', 'online');   
+                }
+                if ($this->getBlog()->getProperty('status') == 'online') {
+                    $this->setProperty('status', 'online');   
+                }
+                
+                // admin and owner can override
+                if ($p_admin && $data['BlogComment']['admin_status']) {
+                    $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
+                }
+                if ($p_owner && $data['BlogComment']['status']) {
+                    $this->setProperty('status', $data['BlogComment']['status']);
+                }
                 
                 BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
                   

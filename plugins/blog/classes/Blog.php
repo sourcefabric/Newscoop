@@ -74,7 +74,8 @@ class Blog extends DatabaseObject {
             'title'         => $p_title,
             'info'          => $p_info,
             'request_text'  => $p_request_text,
-            'feature'       => $p_feature
+            'feature'       => $p_feature,
+            'published'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);
@@ -409,10 +410,10 @@ class Blog extends DatabaseObject {
                             $data['Blog']['title'], 
                             $data['Blog']['info'], 
                             $data['Blog']['request_text'],
-                            $data['Blog']['feature'])
-              ) {
-                if ($p_owner && $data['Blog']['status']) {
-                    $this->setProperty('status',   $data['Blog']['status']);
+                            $data['Blog']['feature'])) {
+                                
+                if ($data['Blog']['status']) {
+                    $this->setProperty('status', $data['Blog']['status']);
                 }
                 if ($p_admin && $data['Blog']['admin_status']) {
                     $this->setProperty('admin_status', $data['Blog']['admin_status']);
@@ -536,6 +537,7 @@ class Blog extends DatabaseObject {
      */
     function setProperty($p_name, $p_value)
     {
+        /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
@@ -550,6 +552,7 @@ class Blog extends DatabaseObject {
                 break;
             }          
         }
+        */
         
         if ($p_name == 'topics') {
             return $this->setTopics($p_value);   

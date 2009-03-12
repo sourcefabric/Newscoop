@@ -67,6 +67,7 @@ class BlogEntry extends DatabaseObject {
             return $this->setTopics($p_value);   
         }
         
+        /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
@@ -81,6 +82,7 @@ class BlogEntry extends DatabaseObject {
                 break;
             }          
         }
+        */
         
         $result = parent::setProperty($p_name, $p_value);
 
@@ -110,7 +112,8 @@ class BlogEntry extends DatabaseObject {
         'fk_user_id'    => $p_user_id,
         'title'         => $p_title,
         'content'       => $p_content,
-        'fk_mood_id'    => $p_mood_id
+        'fk_mood_id'    => $p_mood_id,
+        'published'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);
@@ -155,7 +158,11 @@ class BlogEntry extends DatabaseObject {
     
     function getBlog()
     {
-        $Blog = new Blog($this->getProperty('fk_blog_id'));
+        static $Blog;
+        
+        if (!is_object($Bog)) {
+            $Blog = new Blog($this->getProperty('fk_blog_id'));
+        }
         return $Blog;   
     }
 
@@ -332,7 +339,7 @@ class BlogEntry extends DatabaseObject {
             'status' => array(
                 'element'   => 'BlogEntry[status]',
                 'type'      => 'select',
-                'label'     => 'Status',
+                'label'     => 'status',
                 'default'   => $data['status'],
                 'options'   => array(
                     'online'    => 'online',
@@ -343,7 +350,7 @@ class BlogEntry extends DatabaseObject {
             'admin_status' => array(
                 'element'   => 'BlogEntry[admin_status]',
                 'type'      => 'select',
-                'label'     => 'Admin Status',
+                'label'     => 'Admin status',
                 'default'   => $data['admin_status'],
                 'options'   => array(
                     'online'    => 'online',
@@ -465,17 +472,29 @@ class BlogEntry extends DatabaseObject {
                             $p_user_id, 
                             $data['BlogEntry']['title'], 
                             $data['BlogEntry']['content'], 
-                            $data['f_mood_id'])
-                        ) {
+                            $data['f_mood_id'])) {
+                                
+                // set proper status/adminstatus if blog is not moderated
+                // DB default is pending
+                if ($this->getBlog()->getProperty('admin_status') == 'online') {
+                    $this->setProperty('admin_status', 'online');   
+                }
+                if ($this->getBlog()->getProperty('status') == 'online') {
+                    $this->setProperty('status', 'online');   
+                }
+                
+                // admin and owner can override
                 if ($data['BlogEntry']['status']) {
                     $this->setProperty('status', $data['BlogEntry']['status']);
                 }
                 if ($p_admin && $data['BlogEntry']['admin_status']) {
                     $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
                 }
+                
                 if ($data['BlogEntry_Image']) {
                     BlogImageHelper::StoreImageDerivates('entry', $this->getProperty('entry_id'), $data['BlogEntry_Image']);
                 }
+                
                 Blog::TriggerCounters($this->getProperty('fk_blog_id'));
 
                 return true;
