@@ -458,6 +458,7 @@ function camp_upgrade_database($p_dbName)
         if ($first) {
         	echo "\n\t* Upgrading the database from version $db_version...";
             camp_utf8_convert(null, $skipped);
+            $first = false;
         }
         $output = array();
 
@@ -485,11 +486,8 @@ function camp_upgrade_database($p_dbName)
                 return "$script ($db_version): " . implode("\n", $output);
             }
         }
-        if ($first) {
-            echo "done.\n";
-            $first = false;
-        }
     }
+    echo "done.\n";
     
     if (count($skipped) > 0) {
     	echo "
