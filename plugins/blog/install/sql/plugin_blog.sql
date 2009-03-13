@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 19. Februar 2009 um 11:55
+-- Erstellungszeit: 13. März 2009 um 13:35
 -- Server Version: 5.0.32
 -- PHP-Version: 5.2.0-8+etch13
 -- 
@@ -54,8 +54,8 @@ CREATE TABLE `plugin_blog_comment` (
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
   `fk_mood_id` varchar(255) NOT NULL,
-  `status` enum('online','offline','pending') NOT NULL default 'online',
-  `admin_status` enum('online','offline','pending') NOT NULL default 'online',
+  `status` enum('online','offline','pending') NOT NULL default 'pending',
+  `admin_status` enum('online','offline','pending') NOT NULL default 'pending',
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`comment_id`)
@@ -78,7 +78,7 @@ CREATE TABLE `plugin_blog_entry` (
   `content` text NOT NULL,
   `fk_mood_id` int(10) unsigned NOT NULL,
   `status` enum('online','offline') NOT NULL default 'online',
-  `admin_status` enum('online','offline','pending') NOT NULL default 'online',
+  `admin_status` enum('online','offline','pending') NOT NULL default 'pending',
   `comments_online` int(10) unsigned NOT NULL default '0',
   `comments_offline` int(10) unsigned NOT NULL default '0',
   `feature` varchar(255) NOT NULL,
