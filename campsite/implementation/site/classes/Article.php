@@ -2105,6 +2105,21 @@ class Article extends DatabaseObject {
                 } else {
                     $hasNotTopics[] = $comparisonOperation['right'];
                 }
+            } elseif ($leftOperand == 'author') {
+            	$otherTables['Authors'] = array('fk_default_author_id'=>'id');
+            	$author = Author::ReadName($comparisonOperation['right']);
+            	$symbol = $comparisonOperation['symbol'];
+            	$valModifier = strtolower($symbol) == 'like' ? '%' : '';
+            	$cond = $symbol == '<>' ? 'OR' : 'AND';
+            	
+            	$firstName = $author['first_name'];
+            	$lastName = $author['last_name'];
+            	$whereCondition = "(Authors.first_name $symbol "
+            	                . "'$valModifier$firstName$valModifier'"
+            	                . " $cond Authors.last_name $symbol "
+            	                . "'$valModifier$lastName$valModifier')";
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields

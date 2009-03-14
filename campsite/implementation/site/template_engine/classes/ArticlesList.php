@@ -30,7 +30,8 @@ class ArticlesList extends ListObject
                                                                 'type'=>'void'),
                                          'topic'=>array('field'=>null,
                                                         'type'=>'topic'),
-                                         'reads'=>array('field'=>null, 'type'=>'integer')
+                                         'reads'=>array('field'=>null, 'type'=>'integer'),
+                                         'author'=>array('field'=>null, 'type'=>'string')
                                    );
 
     private static $s_orderFields = array(
@@ -196,6 +197,13 @@ class ArticlesList extends ListObject
        	                } else {
        	                    $value = $topicObj->getTopicId();
        	                }
+       	            } elseif ($attribute == 'author') {
+                        if (strtolower($word) == '__current') {
+                        	$context = CampTemplate::singleton()->context();
+                        	$value = $context->article->author->name;
+                        } else {
+                        	$value = $word;
+                        }
        	            } else {
        	                $value = $word;
        	            }
