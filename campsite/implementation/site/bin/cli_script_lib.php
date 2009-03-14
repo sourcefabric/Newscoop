@@ -774,7 +774,12 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     	$sql = "ALTER TABLE `$table_name` MODIFY `$column_name` \n"
              . "  $column_type $nullDefinition DEFAULT $column_default";
         if (!mysql_query($sql)) {
+        	if ($table_name == 'Articles' && $column_name == 'Name') {
+                camp_exit_with_error("Unable to convert data to UTF-8 on query:\n$sql");
+        	}
         	$p_skipped[] = $sql;
+        } elseif ($do_log) {
+            $log_text .= $sql . "\n";
         }
     }
 
