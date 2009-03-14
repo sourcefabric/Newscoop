@@ -2110,14 +2110,11 @@ class Article extends DatabaseObject {
             	$author = Author::ReadName($comparisonOperation['right']);
             	$symbol = $comparisonOperation['symbol'];
             	$valModifier = strtolower($symbol) == 'like' ? '%' : '';
-            	$cond = $symbol == '<>' ? 'OR' : 'AND';
             	
             	$firstName = $author['first_name'];
             	$lastName = $author['last_name'];
-            	$whereCondition = "(Authors.first_name $symbol "
-            	                . "'$valModifier$firstName$valModifier'"
-            	                . " $cond Authors.last_name $symbol "
-            	                . "'$valModifier$lastName$valModifier')";
+            	$whereCondition = "CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol "
+            	                . "'$valModifier$firstName $lastName$valModifier'";
                 $selectClauseObj->addWhere($whereCondition);
                 $countClauseObj->addWhere($whereCondition);
             } else {
