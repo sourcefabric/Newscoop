@@ -356,7 +356,7 @@ class Topic extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
-					                 $p_parentId = null, $p_sqlOptions = null)
+					                 $p_parentId = null, $p_sqlOptions = null, $p_order = null)
 	{
 		$constraints = array();
 		if (!is_null($p_id)) {
@@ -370,6 +370,20 @@ class Topic extends DatabaseObject {
 		}
 		if (!is_null($p_parentId)) {
 			$constraints[] = array("ParentId", $p_parentId);
+		}
+		if (is_array($p_order) && count($p_order) > 0) {
+			$order = array();
+			foreach ($p_order as $orderCond) {
+				switch ($orderCond['field']) {
+                	case 'byname':
+                		$order['Name'] = $orderCond['dir'];
+                		break;
+                	case 'bynumber':
+                		$order['Id'] = $orderCond['dir'];
+                		break;
+                }
+			}
+			$p_sqlOptions['ORDER BY'] = $order;
 		}
 		return DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
 	} // fn GetTopics
