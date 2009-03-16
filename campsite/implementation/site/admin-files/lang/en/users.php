@@ -1,7 +1,8 @@
 <?php 
+regGS("Password Generator", "Password Generator");
+regGS("Generate", "Generate");
+regGS("Clean", "Clean");
 regGS("User may use the editor status bar", "User may use the editor status bar");
-regGS("Click here to use existing user type permissions (discard section customization)", "Click here to use existing user type permissions (discard section customization)");
-regGS("Click here to customize user permissions per section", "Click here to customize user permissions per section");
 regGS("User may clear up the system cache", "User may clear up the system cache");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Another user is registered with that e-mail address, please choose a different one.");
 regGS("You do not have the right to sync Campsite and Phorum users.", "You do not have the right to sync Campsite and Phorum users.");

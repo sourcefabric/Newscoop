@@ -1,4 +1,7 @@
 <?php 
+regGS("Password Generator", "");
+regGS("Generate", "");
+regGS("Clean", "");
 regGS("User may use the editor status bar", "Korisnik može da koristi status bar editora");
 regGS("User may clear up the system cache", "Korisnik može da briše sistemski keš");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Drugi korisnik je već registrovan sa tom e-mail adresom, molimo izaberite drugu.");

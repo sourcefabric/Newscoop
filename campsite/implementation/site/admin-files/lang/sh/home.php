@@ -1,10 +1,12 @@
 <?php 
+regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
+regGS("Select the field from which to generate the author", "");
+regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
 regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Nemoguće je napraviti autora \"$1\" za članak broj $2 (\"$3\") of tipa $4.");
 regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "Došlo je do greške pri podešavanju autora za članke tipa '$1' korišćenjem polja '$2'.");
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "Autor je uspešno postavljen za članke tipa '$1' koršćenjem polja '$2'.");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Članak je zaključan od strane $1 ($2) pre $3 minut(a).");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Članak je zaključan od strane $1 ($2) pre $3 čas(ova) i $4 minut(a).");
-regGS("Select field from which to generate the author", "Izaberite polje na osnovu koga se generiše autor");
 regGS("Recently Modified Articles", "Skorije menjani članci");
 regGS("Publish Schedule", "Raspored objavljivanja");
 regGS("No articles have been modified yet.", "Nijedan članak još nije menjan.");

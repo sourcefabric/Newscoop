@@ -1,10 +1,12 @@
 <?php 
+regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
+regGS("Select the field from which to generate the author", "");
+regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
 regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
 regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "");
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
-regGS("Select field from which to generate the author", "");
 regGS("Recently Modified Articles", "");
 regGS("Publish Schedule", "");
 regGS("No articles have been modified yet.", "");

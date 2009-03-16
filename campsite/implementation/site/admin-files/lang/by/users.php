@@ -1,4 +1,7 @@
 <?php 
+regGS("Password Generator", "");
+regGS("Generate", "");
+regGS("Clean", "");
 regGS("User may use the editor status bar", "Карыстач можа карыстацца радком стану рэдактара");
 regGS("User may clear up the system cache", "Карыстач можа чысціць сістэму кэшавання");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Іншы карыстач зарэгістраваўся пад гэтым электронным адрасам, калі ласка, увядзіце іншы.");
