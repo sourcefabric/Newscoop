@@ -279,9 +279,7 @@ if ($BlogEntriesList->getLength()) {
             
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
                 <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
-                &nbsp;<SMALL>
-                <?php if ($is_admin) putGS('Click to edit'); ?>
-                </SMALL>
+                &nbsp;<SMALL><?php if ($is_admin) putGS('Click to edit'); ?></SMALL>
             </TD>           
             <TD align="center" valign="top" width="60">
                 <A href="<?php p($self_params) ?>f_order=byuser_id"><?php  putGS("User"); ?></a>
@@ -297,6 +295,8 @@ if ($BlogEntriesList->getLength()) {
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=bycomments"><?php  putGS("Comments"); ?></a>
+                <br>
+                <SMALL><?php putGS('online/offline'); ?></SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
@@ -350,7 +350,7 @@ if ($BlogEntriesList->getLength()) {
                 <td align="center"><?php putGS($MetaBlogEntry->status); ?></td>
                 <td align="center"><?php putGS($MetaBlogEntry->admin_status); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->published); ?></td>
-                <td align="center"><?php p($MetaBlogEntry->comments); ?></td>
+                <td align="center"><?php p($MetaBlogEntry->comments_online); ?> / <?php p($MetaBlogEntry->comments_offline); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
                 
                 <td align='center'>

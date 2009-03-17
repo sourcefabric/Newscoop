@@ -25,11 +25,12 @@ class MetaActionPreview_Blogcomment extends MetaAction
             $this->m_error = new PEAR_Error('None or invalid blogentry was given.', ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY);
             return;
         }
-        
+        /*
         if (!isset($p_input['f_blogcomment_title']) || empty($p_input['f_blogcomment_title'])) {
             $this->m_error = new PEAR_Error('The comment subject was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_TITLE);
             return;
         }
+        */
         if (!isset($p_input['f_blogcomment_content']) || empty($p_input['f_blogcomment_content'])) {
             $this->m_error = new PEAR_Error('The comment content was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_CONTENT);
             return;

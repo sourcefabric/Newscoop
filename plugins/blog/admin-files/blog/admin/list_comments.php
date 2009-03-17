@@ -259,7 +259,7 @@ if ($BlogCommentsList->getLength()) {
             <?php } ?>
             
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
-                <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Comment"); ?></a>
                 &nbsp;<SMALL>
                 <?php if ($is_admin) putGS('Click to edit'); ?>
                 </SMALL>
@@ -311,7 +311,7 @@ if ($BlogCommentsList->getLength()) {
                     p($MetaBlogComment->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('comment_form.php?f_comment_id=<?php p($MetaBlogComment->identifier); ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');"><?php p($MetaBlogComment->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('comment_form.php?f_comment_id=<?php p($MetaBlogComment->identifier); ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');"><?php p(mb_substr(strip_tags($MetaBlogComment->content), 0, 70)); ?></a><?php
                     } else {
                         p($MetaBlogComment->title);
                     }

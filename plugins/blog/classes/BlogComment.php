@@ -277,8 +277,7 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
                 'label'     => 'Titel',
-                'default'   => $data['title'],
-                'required'  => true            
+                'default'   => $data['title']           
             ),
             'user_name'     => array(
                 'element'   => 'BlogComment[user_name]',
