@@ -111,6 +111,12 @@ if ($g_user->hasPermission("AddArticle")) {
     $menu_actions->addItem($menu_item);
 }
 
+if ($g_user->hasPermission("ImportLegacyArchive")) {
+    $menu_item =& DynMenuItem::Create(getGS('Import legacy archive'), "/$ADMIN/articles/la_import.php",
+        array("icon" => sprintf($iconTemplateStr, "add_article.png")));
+    $menu_actions->addItem($menu_item);
+}
+
 if ($g_user->hasPermission("ManageTempl")) {
     $menu_item =& DynMenuItem::Create(getGS('Upload new template'),
         "/$ADMIN/templates/upload_templ.php?Path=/look/&Back=".urlencode($_SERVER['REQUEST_URI']),
