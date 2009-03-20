@@ -16,6 +16,7 @@ class BlogTopic extends DatabaseObject {
      * @var string
      */
     var $m_dbTableName = 'plugin_blog_topic';
+    static $s_dbTableName = 'plugin_blog_topic';
 
     /**
      * All column names in the table
@@ -90,9 +91,7 @@ class BlogTopic extends DatabaseObject {
     {
         global $g_ado_db;
         
-        $BlogTopic = new BlogTopic();
-
-        $query = "DELETE FROM {$BlogTopic->m_dbTableName}
+        $query = "DELETE FROM {BlogTopic::$s_dbTableName}
                   WHERE fk_blog_id = $p_blog_id";
          
         return $g_ado_db->execute($query);  
@@ -136,8 +135,6 @@ class BlogTopic extends DatabaseObject {
         global $g_ado_db;
         $records = array();
         
-        $BlogTopic = new BlogTopic();
-        
         if (!empty($p_blog_id)) {
             $where .= "AND fk_blog_id = $p_blog_id ";   
         }
@@ -150,7 +147,7 @@ class BlogTopic extends DatabaseObject {
         }
         
         $query = "SELECT    *
-                  FROM      {$BlogTopic->m_dbTableName}
+                  FROM      {BlogTopic::$s_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_blog_id DESC";
         

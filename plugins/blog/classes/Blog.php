@@ -17,6 +17,7 @@ class Blog extends DatabaseObject {
     var $m_keyColumnNames       = array('blog_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_blog';
+    static $s_dbTableName       = 'plugin_blog_blog';
 
     var $m_columnNames = array(
         'blog_id',
@@ -112,8 +113,6 @@ class Blog extends DatabaseObject {
 
     private static function BuildQueryStr($p_cond)
     {
-        $instance = new Blog();
-
         if (array_key_exists('fk_user_id', $p_cond)) {
             $cond .= " AND fk_user_id = {$p_cond['fk_user_id']}";
         }
@@ -125,7 +124,7 @@ class Blog extends DatabaseObject {
         }
 
         $queryStr = "SELECT     blog_id
-                     FROM       {$instance->m_dbTableName}
+                     FROM       {self::$s_dbTableName}
                      WHERE      1 $cond
                      ORDER BY   blog_id DESC";
         return $queryStr;
@@ -135,7 +134,7 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = Blog::BuildQueryStr($p_cond);
+        $queryStr = self::BuildQueryStr($p_cond);
 
         $query = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $blogs = array();
@@ -152,7 +151,7 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr   = Blog::BuildQueryStr($p_cond);
+        $queryStr   = self::BuildQueryStr($p_cond);
         $query      = $g_ado_db->Execute($queryStr); #
 
         return $query->RecordCount();
@@ -169,11 +168,8 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
         
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
+        $blogs_tbl = self::$s_dbTableName;
+        $entries_tbl = BlogEntry::$s_dbTableName;
 
         $queryStr = "UPDATE $blogs_tbl
                      SET    entries_online = 
@@ -217,7 +213,7 @@ class Blog extends DatabaseObject {
 
         foreach ($data as $k => $v) {
             // clean user input
-            if (!in_array($k, Blog::$m_html_allowed_fields)) {
+            if (!in_array($k, self::$m_html_allowed_fields)) {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
         }
@@ -255,7 +251,7 @@ class Blog extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
+                'text'      => self::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
                 'type'      => 'static'
             ),
             'info'      => array(
@@ -385,7 +381,7 @@ class Blog extends DatabaseObject {
 
             foreach ($data['Blog'] as $k => $v) {
                 // clean user input
-                if (!in_array($k, Blog::$m_html_allowed_fields)) {
+                if (!in_array($k, self::$m_html_allowed_fields)) {
                     $data['Blog'][$k] = htmlspecialchars_array($v);
                 }
             }
@@ -573,11 +569,8 @@ class Blog extends DatabaseObject {
         
         global $g_ado_db;
         
-        $BlogEntry = new BlogEntry();
-        $entryTbl = $BlogEntry->m_dbTableName;
-
-        $BlogComment = new BlogComment();
-        $commentTbl = $BlogComment->m_dbTableName;
+        $entryTbl = self::$s_dbTableName;
+        $commentTbl = BlogComment::$s_dbTableName;
         
         $queryStr1 = "UPDATE $entryTbl
                       SET fk_language_id = $p_language_id
@@ -876,16 +869,53 @@ class Blog extends DatabaseObject {
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
-            if (empty($comparisonOperation)) {
-                continue;
-            }
+            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
+            $leftOperand = strtolower($comparisonOperation['left']);
             
-            $whereCondition = $comparisonOperation['left'] . ' '
-            . $comparisonOperation['symbol'] . " '"
-            . $comparisonOperation['right'] . "' ";
+            if ($leftOperand == 'matchalltopics') {
+                // set the matchAllTopics flag
+                $matchAllTopics = true;
+                
+            } elseif ($leftOperand == 'topic') {
+                // add the topic to the list of match/do not match topics depending
+                // on the operator
+                if ($comparisonOperation['symbol'] == '=') {
+                    $hasTopics[] = $comparisonOperation['right'];
+                } else {
+                    $hasNotTopics[] = $comparisonOperation['right'];
+                }
+            } else {
+                $comparisonOperation = self::ProcessListParameters($param);
+                if (empty($comparisonOperation)) {
+                    continue;
+                }
+                
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);   
+            }
+        }
+        
+        if (count($hasTopics) > 0) {
+            if ($matchAllTopics) {
+                foreach ($hasTopics as $topicId) {
+                    $sqlQuery = self::BuildTopicSelectClause(array($topicId));
+                    $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
+                    $selectClauseObj->addWhere($whereCondition);
+                }
+            } else {
+                $sqlQuery = self::BuildTopicSelectClause($hasTopics);
+                $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
+                $selectClauseObj->addWhere($whereCondition);
+            }
+        }
+        if (count($hasNotTopics) > 0) {
+            $sqlQuery = self::BuildTopicSelectClause($hasNotTopics, true);
+            $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
+        
         
         // sets the columns to be fetched
         $tmpBlog = new Blog();
@@ -937,20 +967,58 @@ class Blog extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters($p_param)
+    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
     {
-        $comparisonOperation = array();
+        $conditionOperation = array();
 
-        $comparisonOperation['left'] = BlogsList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
-
-        if (isset($comparisonOperation['left'])) {
-            $operatorObj = $p_param->getOperator();
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        $leftOperand = strtolower($p_param->getLeftOperand());
+        $conditionOperation['left'] = $leftOperand;
+        switch ($leftOperand) {
+        /*
+        case 'keyword':
+            $conditionOperation['symbol'] = 'LIKE';
+            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            break;
+        case 'onfrontpage':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'onsection':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'public':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        */
+        case 'matchalltopics':
+            $conditionOperation['symbol'] = '=';
+            $conditionOperation['right'] = 'true';
+            break;
+        case 'topic':
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        /*
+        case 'published':
+            if (strtolower($p_param->getRightOperand()) == 'true') {
+                $conditionOperation['symbol'] = '=';
+                $conditionOperation['right'] =  'Y';
+            }
+            break;
+        case 'reads':
+            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
+        */
+        default:
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
         }
 
-        return $comparisonOperation;
+        if (!isset($conditionOperation['symbol'])) {
+            $operatorObj = $p_param->getOperator();
+            $conditionOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $conditionOperation;
     } // fn ProcessListParameters
+
 
     /**
      * Processes an order directive coming from template tags.
@@ -977,5 +1045,22 @@ class Blog extends DatabaseObject {
         }
         return $order;
     } // fn ProcessListOrder
+    
+    /**
+     * Returns a select query for obtaining the blogs that have the given topics
+     *
+     * @param array $p_TopicIds
+     * @param array $p_typeAttributes
+     * @param bool $p_negate
+     * @return string
+     */
+    private static function BuildTopicSelectClause(array $p_TopicIds, $p_negate = false)
+    {
+        $notCondition = $p_negate ? ' NOT' : '';
+        $selectClause = '        SELECT fk_blog_id FROM '.BlogTopic::$$s_dbTableName.' WHERE fk_topic_id'
+                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+        
+        return $selectClause;
+    }
 }
 ?>

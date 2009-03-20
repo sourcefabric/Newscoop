@@ -17,6 +17,7 @@ class BlogComment extends DatabaseObject {
     var $m_keyColumnNames       = array('comment_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_comment';
+    static $s_dbTableName       = 'plugin_blog_comment';
 
     var $m_columnNames = array(
         'comment_id',
@@ -81,7 +82,7 @@ class BlogComment extends DatabaseObject {
         $result = parent::setProperty($p_name, $p_value);
     
         if ($p_name == 'status' || $p_name == 'admin_status') {
-            BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));   
+            self::TriggerCounters($this->getProperty('fk_entry_id'));   
         }
         
         return $result; 
@@ -100,8 +101,8 @@ class BlogComment extends DatabaseObject {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
-		  'fk_blog_id'    => BlogEntry::GetBlogId($p_entry_id),
-		  'fk_language_id'=> BlogEntry::GetEntryLanguageId($p_entry_id),
+		  'fk_blog_id'    => self::GetBlogId($p_entry_id),
+		  'fk_language_id'=> self::GetEntryLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
 		  'user_name'     => $p_user_name,
 		  'user_email'    => $p_user_email,
@@ -119,7 +120,7 @@ class BlogComment extends DatabaseObject {
 		
 		$this->fetch();
 		
-		BlogEntry::TriggerCounters($p_entry_id);
+		self::TriggerCounters($p_entry_id);
 
         return true; 
     }
@@ -128,7 +129,7 @@ class BlogComment extends DatabaseObject {
     {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-        BlogEntry::TriggerCounters($entry_id);   
+        self::TriggerCounters($entry_id);   
     }
     
     function getData()
@@ -138,14 +139,9 @@ class BlogComment extends DatabaseObject {
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
     {    
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
-        
-        $BlogComment = new BlogComment();
-        $comments_tbl = $BlogComment->m_dbTableName;
+        $blogs_tbl = Blog::$s_dbTableName;
+        $entries_tbl = self::$s_dbTableName;
+        $comments_tbl = BlogComment::$s_dbTableName;
             
         if (array_key_exists('fk_entry_id', $p_cond)) {
             $cond .= " AND c.fk_entry_id = {$p_cond['fk_entry_id']}";    
@@ -304,7 +300,7 @@ class BlogComment extends DatabaseObject {
                 'type'      => 'radio',
                 'label'     => 'mood',
                 'default'   => $data['fk_mood_id'],
-                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : BlogEntry::GetEntryLanguageId($data['fk_entry_id']))      
+                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : self::GetEntryLanguageId($data['fk_entry_id']))      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
@@ -407,7 +403,7 @@ class BlogComment extends DatabaseObject {
                     } 
                     $this->setProperty($k, $v); 
                 }
-                BlogEntry::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
+                self::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
                 return true;
                 
             } elseif ($this->create(  
@@ -436,7 +432,7 @@ class BlogComment extends DatabaseObject {
                     $this->setProperty('status', $data['BlogComment']['status']);
                 }
                 
-                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
+                self::TriggerCounters($this->getProperty('fk_entry_id'));  
                   
                 return true;    
             }

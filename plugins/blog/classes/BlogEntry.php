@@ -17,6 +17,7 @@ class BlogEntry extends DatabaseObject {
     var $m_keyColumnNames       = array('entry_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_entry';
+    static $s_dbTableName       = 'plugin_blog_entry';
 
     var $m_columnNames = array(
         'entry_id',
@@ -168,11 +169,8 @@ class BlogEntry extends DatabaseObject {
 
     function _buildQueryStr($p_cond, $p_checkParent)
     {
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
+        $blogs_tbl = Blog::s_dbTableName;
+        $entries_tbl = self::s_dbTableName;
         
         if (array_key_exists('fk_blog_id', $p_cond)) {
             $cond .= " AND e.fk_blog_id = {$p_cond['fk_blog_id']}";
@@ -183,11 +181,11 @@ class BlogEntry extends DatabaseObject {
         }
 
         if (array_key_exists('status', $p_cond)) {
-            $cond .= BlogEntry::_buildSubQuery($p_cond, 'status', $p_checkParent);
+            $cond .= self::_buildSubQuery($p_cond, 'status', $p_checkParent);
         }
 
         if (array_key_exists('admin_status', $p_cond)) {
-            $cond .= BlogEntry::_buildSubQuery($p_cond, 'admin_status', $p_checkParent);
+            $cond .= self::_buildSubQuery($p_cond, 'admin_status', $p_checkParent);
         }
 
         if (array_key_exists('GROUP BY', $p_cond)) {
@@ -234,7 +232,7 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr   = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
+        $queryStr   = self::_buildQueryStr($p_cond, $p_checkParent);
         $query      = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $entries    = array();
 
@@ -250,7 +248,7 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
+        $queryStr = self::_buildQueryStr($p_cond, $p_checkParent);
 
         $query = $g_ado_db->Execute($queryStr);
 
@@ -265,11 +263,8 @@ class BlogEntry extends DatabaseObject {
             return false;   
         }
         
-        $BlogEntry = new BlogEntry();
-        $entryTbl = $BlogEntry->m_dbTableName;
-
-        $BlogComment = new BlogComment();
-        $commentTbl = $BlogComment->m_dbTableName;
+        $entries_tbl = self::s_dbTableName;
+        $commentTbl  = BlogComment::s_dbTableName;
         
         $queryStr = "UPDATE $entryTbl
                      SET    comments_online = 
@@ -300,7 +295,7 @@ class BlogEntry extends DatabaseObject {
 
         foreach ($data as $k => $v) {
             // clean user input
-            if (!in_array($k, BlogEntry::$m_html_allowed_fields)) {
+            if (!in_array($k, self::$m_html_allowed_fields)) {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
         }
@@ -436,7 +431,7 @@ class BlogEntry extends DatabaseObject {
 
             foreach ($data['BlogEntry'] as $k => $v) {
                 // clean user input
-                if (!in_array($k, BlogEntry::$m_html_allowed_fields)) {
+                if (!in_array($k, self::$m_html_allowed_fields)) {
                     $data['BlogEntry'][$k] = htmlspecialchars_array($v);
                 }
             }
@@ -463,7 +458,7 @@ class BlogEntry extends DatabaseObject {
                     BlogImageHelper::StoreImageDerivates('entry', $data['f_entry_id'], $data['BlogEntry_Image']);
                 }
                 
-                Blog::TriggerCounters(BlogEntry::GetBlogId($data['f_entry_id']));
+                Blog::TriggerCounters(self::GetBlogId($data['f_entry_id']));
 
                 return true;
 
@@ -506,7 +501,7 @@ class BlogEntry extends DatabaseObject {
 
     function setis_onfrontpage()
     {
-        if ($OldEntry = BlogEntry::getis_onfrontpageEntry()) {
+        if ($OldEntry = self::getis_onfrontpageEntry()) {
             $OldEntry->setProperty('is_onfrontpage', 0);
         }
 
@@ -522,8 +517,7 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $BlogEntry = new BlogEntry();
-        $tblName = $BlogEntry->m_dbTableName;
+        $tblName = self::$s_dbTableName;
 
         $query = "SELECT    entry_id
                   FROM      `{$tblName}`
@@ -623,20 +617,56 @@ class BlogEntry extends DatabaseObject {
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
-            if (empty($comparisonOperation)) {
-                continue;
-            }
+            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
+            $leftOperand = strtolower($comparisonOperation['left']);
             
-            $whereCondition = $comparisonOperation['left'] . ' '
-            . $comparisonOperation['symbol'] . " '"
-            . $comparisonOperation['right'] . "' ";
+            if ($leftOperand == 'matchalltopics') {
+                // set the matchAllTopics flag
+                $matchAllTopics = true;
+                
+            } elseif ($leftOperand == 'topic') {
+                // add the topic to the list of match/do not match topics depending
+                // on the operator
+                if ($comparisonOperation['symbol'] == '=') {
+                    $hasTopics[] = $comparisonOperation['right'];
+                } else {
+                    $hasNotTopics[] = $comparisonOperation['right'];
+                }
+            } else {
+                $comparisonOperation = self::ProcessListParameters($param);
+                if (empty($comparisonOperation)) {
+                    continue;
+                }
+                
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);   
+            }
+        }
+        
+        if (count($hasTopics) > 0) {
+            if ($matchAllTopics) {
+                foreach ($hasTopics as $topicId) {
+                    $sqlQuery = self::BuildTopicSelectClause(array($topicId));
+                    $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
+                    $selectClauseObj->addWhere($whereCondition);
+                }
+            } else {
+                $sqlQuery = self::BuildTopicSelectClause($hasTopics);
+                $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
+                $selectClauseObj->addWhere($whereCondition);
+            }
+        }
+        if (count($hasNotTopics) > 0) {
+            $sqlQuery = self::BuildTopicSelectClause($hasNotTopics, true);
+            $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
         
         // sets the columns to be fetched
         $tmpBlogEntry = new BlogEntry();
-		$columnNames = $tmpBlogEntry->getColumnNames(true);
+        $columnNames = $tmpBlogEntry->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $selectClauseObj->addColumn($columnName);
         }
@@ -684,20 +714,58 @@ class BlogEntry extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters($p_param)
+    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
     {
-        $comparisonOperation = array();
+        $conditionOperation = array();
 
-        $comparisonOperation['left'] = BlogEntriesList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
-
-        if (isset($comparisonOperation['left'])) {
-            $operatorObj = $p_param->getOperator();
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        $leftOperand = strtolower($p_param->getLeftOperand());
+        $conditionOperation['left'] = $leftOperand;
+        switch ($leftOperand) {
+        /*
+        case 'keyword':
+            $conditionOperation['symbol'] = 'LIKE';
+            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            break;
+        case 'onfrontpage':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'onsection':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        case 'public':
+            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            break;
+        */
+        case 'matchalltopics':
+            $conditionOperation['symbol'] = '=';
+            $conditionOperation['right'] = 'true';
+            break;
+        case 'topic':
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        /*
+        case 'published':
+            if (strtolower($p_param->getRightOperand()) == 'true') {
+                $conditionOperation['symbol'] = '=';
+                $conditionOperation['right'] =  'Y';
+            }
+            break;
+        case 'reads':
+            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
+        */
+        default:
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
         }
 
-        return $comparisonOperation;
+        if (!isset($conditionOperation['symbol'])) {
+            $operatorObj = $p_param->getOperator();
+            $conditionOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $conditionOperation;
     } // fn ProcessListParameters
+
 
                                       
     /**
@@ -725,6 +793,23 @@ class BlogEntry extends DatabaseObject {
             $order['entry_id'] = 'asc';  
         }
         return $order;
+    }
+    
+    /**
+     * Returns a select query for obtaining the entries that have the given topics
+     *
+     * @param array $p_TopicIds
+     * @param array $p_typeAttributes
+     * @param bool $p_negate
+     * @return string
+     */
+    private static function BuildTopicSelectClause(array $p_TopicIds, $p_negate = false)
+    {
+        $notCondition = $p_negate ? ' NOT' : '';
+        $selectClause = '        SELECT fk_entry_id FROM '.BlogentryTopic::$s_dbTableName.' WHERE fk_topic_id'
+                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+                      
+        return $selectClause;
     }
 }
 ?>

@@ -34,6 +34,9 @@ class BlogEntriesList extends ListObject
                                         'comments_offline' => array('field' => 'comments_offline', 'type' => 'integer'),
                                         'comments' => array('field' => 'comments_online + comments_offline', 'type' => 'integer'),
                                         'feature' => array('field' => 'feature', 'type' => 'string'),
+                                        'matchalltopics'=>array('field' => null, 'type'=>'void'),
+                                        'matchanytopic'=>array('field' => null, 'type'=>'void'),
+                                        'topic'=>array('field' => null,'type'=>'topic'),
                                );
                                    
     private static $s_orderFields = array(
@@ -83,6 +86,16 @@ class BlogEntriesList extends ListObject
                                                                $context->blog->identifier);
                 $this->m_constraints[] = $comparisonOperation;
             }
+            if ($context->language->defined) {
+        	    $comparisonOperation = new ComparisonOperation('fk_language_id', $operator,
+    	                                                       $context->language->number);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
+            if ($context->topic->defined) {
+    	        $comparisonOperation = new ComparisonOperation('topic', $operator,
+    	                                                       $context->topic->identifier);
+    	        $this->m_constraints[] = $comparisonOperation;
+    	    }
         }
         $blogEntriesList = BlogEntry::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaBlogEntriesList = array();
@@ -92,64 +105,119 @@ class BlogEntriesList extends ListObject
         return $metaBlogEntriesList;
     }
 
-    /**
-     * Processes list constraints passed in an array.
-     *
-     * @param array $p_constraints
-     * @return array
-     */
-    protected function ProcessConstraints(array $p_constraints)
-    {
-        if (!is_array($p_constraints)) {
-            return null;
-        }
-
-        $parameters = array();
-        $state = 1;
-        $attribute = null;
-        $operator = null;
-        $value = null;
-        foreach ($p_constraints as $word) {
-            switch ($state) {
-                case 1: // reading the parameter name
-                    if (!array_key_exists($word, BlogEntriesList::$s_parameters)) {
-                        CampTemplate::singleton()->trigger_error("invalid attribute $word in list_blogentries, constraints parameter");
-                        break;
-                    }
-                    $attribute = $word;
-                    $state = 2;
-                    break;
-                case 2: // reading the operator
-                    $type = BlogEntriesList::$s_parameters[$attribute]['type'];
-                    try {
-                        $operator = new Operator($word, $type);
-                    }
-                    catch (InvalidOperatorException $e) {
-                        CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_blogentries, constraints parameter");
-                    }
-                    $state = 3;
-                    break;
-                case 3: // reading the value to compare against
-                    $type = BlogEntriesList::$s_parameters[$attribute]['type'];
-                    $metaClassName = 'Meta'.strtoupper($type[0]).strtolower(substr($type, 1));
-                    try {
-                        $value = new $metaClassName($word);
-                        $value = $word;
-                           $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
-                        $parameters[] = $comparisonOperation;
-                    } catch (InvalidValueException $e) {
-                        CampTemplate::singleton()->trigger_error("invalid value $word of attribute $attribute in list_blogentries, constraints parameter");
-                    }
-                    $state = 1;
-                    break;
-            }
-        }
-        if ($state != 1) {
+	/**
+	 * Processes list constraints passed in an array.
+	 *
+	 * @param array $p_constraints
+	 * @return array
+	 */
+	protected function ProcessConstraints(array $p_constraints)
+	{
+	    $parameters = array();
+	    $state = 1;
+	    $attribute = null;
+	    $operator = null;
+	    $value = null;
+	    foreach ($p_constraints as $index=>$word) {
+	        switch ($state) {
+	            case 1: // reading the parameter name
+	                $attribute = strtolower($word);
+	                if (!array_key_exists($attribute, self::$s_parameters)) {
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_blogentries, constraints parameter");
+	                    return false;
+	                }
+	                if ($attribute == 'keyword') {
+	                    $operator = new Operator('is', 'string');
+	                    $state = 3;
+	                } elseif ($attribute == 'matchalltopics' || $attribute == 'matchanytopic') {
+	                    if ($attribute == 'matchalltopics') {
+	                        $operator = new Operator('is', 'boolean');
+	                        $comparisonOperation = new ComparisonOperation($attribute, $operator, 'true');
+	                        $parameters[] = $comparisonOperation;
+	                    }
+	                    $state = 1;
+	                } else {
+                        $state = 2;
+	                }
+	                if ($attribute == 'onfrontpage' || $attribute == 'onsection') {
+	                    if (($index + 1) < count($p_constraints)) {
+	                        try {
+	                            $operator = new Operator($p_constraints[$index+1], 'switch');
+	                        }
+	                        catch (InvalidOperatorException $e) {
+        	                    $operator = new Operator('is', 'switch');
+        	                    $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
+                	            $parameters[] = $comparisonOperation;
+                	            $state = 1;
+	                        }
+	                    } else {
+    	                    $operator = new Operator('is', 'switch');
+                            $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
+                            $parameters[] = $comparisonOperation;
+                            $state = 1;
+	                    }
+	                }
+	                break;
+	            case 2: // reading the operator
+	                $type = self::$s_parameters[$attribute]['type'];
+	                try {
+	                    $operator = new Operator($word, $type);
+	                }
+	                catch (InvalidOperatorException $e) {
+    	                CampTemplate::singleton()->trigger_error("invalid operator $word of parameter constraints.$attribute in statement list_blogentries");
+	                    return false;
+	                }
+	                $state = 3;
+	                break;
+	            case 3: // reading the value to compare against
+	                $type = self::$s_parameters[$attribute]['type'];
+	                $metaClassName = 'Meta'.ucfirst($type);
+	                try {
+    	                $valueObj = new $metaClassName($word);
+	                } catch (InvalidValueException $e) {
+                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_blogentries");
+	                    return false;
+	                }
+       	            if ($attribute == 'type') {
+                        $word = trim($word);
+       	                $blogType = new BlogType($word);
+       	                if (!$blogType->exists()) {
+	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_blogentries");
+	                        return false;
+       	                }
+       	                $value = $word;
+       	            } elseif ($attribute == 'topic') {
+       	                $topicObj = new Topic($word);
+       	                if (!$topicObj->exists()) {
+	                        CampTemplate::singleton()->trigger_error("invalid value $word of parameter constraints.$attribute in statement list_blogentries");
+	                        return false;
+       	                } else {
+       	                    $value = $topicObj->getTopicId();
+       	                }
+       	            } elseif ($attribute == 'author') {
+                        if (strtolower($word) == '__current') {
+                        	$context = CampTemplate::singleton()->context();
+                        	$value = $context->blog->author->name;
+                        } else {
+                        	$value = $word;
+                        }
+       	            } else {
+       	                $value = $word;
+       	            }
+       	            $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
+    	            $parameters[] = $comparisonOperation;
+	                $state = 1;
+	                break;
+	        }
+	    }
+	    if ($state != 1) {
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_blogentries");
-        }
+            return false;
+	    }
 
-        return $parameters;
-    }
+		return $parameters;
+	}
+
 
     /**
      * Processes order constraints passed in an array.
