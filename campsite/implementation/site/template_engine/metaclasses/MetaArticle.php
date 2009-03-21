@@ -504,8 +504,7 @@ final class MetaArticle extends MetaDbObject {
      * @param string $p_language - language code
      * @return bool
      */
-    public function translated_to($p_language)
-    {
+    public function translated_to($p_language) {
         if (is_string($p_language)) {
             $languages = Language::GetLanguages(null, $p_language);
             if (sizeof($languages) == 0) {
@@ -521,6 +520,25 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
+    /**
+     * Returns a list of MetaLanguage objects - list of languages in which
+     * the article was translated.
+     * 
+     * @param boolean $p_excludeCurrent
+     * @param array $p_order
+     * @return array of MetaLanguage
+     */
+    public function languages_list($p_excludeCurrent = true,
+    array $p_order = array()) {
+    	$languages = $this->m_dbObject->getLanguages($p_excludeCurrent, $p_order);
+    	$metaLanguagesList = array();
+    	foreach ($languages as $language) {
+            $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
+    	}
+    	return $metaLanguagesList;
+    }
+    
+    
     /**
      * Returns true if the article keywords field had the given keyword.
      *

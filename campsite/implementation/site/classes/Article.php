@@ -624,20 +624,42 @@ class Article extends DatabaseObject {
 
 	/**
 	 * Return an array of Language objects, one for each
-	 * type of language the article is written in.
-	 *
+	 * language the article is written in.
+	 * 
+     * @param boolean $p_excludeCurrent
+     *      If true, exclude the current language from the list.
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
 	 * @return array
 	 */
-	public function getLanguages()
+	public function getLanguages($p_excludeCurrent = false, array $p_order = array())
 	{
-		$tmpLanguage  = new Language();
+		if (!$this->exists()) {
+			return array();
+		}
+		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 	 	$queryStr = 'SELECT '.implode(',', $columnNames).' FROM Articles, Languages '
-	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
-	 				.' AND NrIssue='.$this->m_data['NrIssue']
-	 				.' AND NrSection='.$this->m_data['NrSection']
-	 				.' AND Number='.$this->m_data['Number']
-	 				.' AND Articles.IdLanguage=Languages.Id';
+	 				.' WHERE Articles.IdLanguage = Languages.Id'
+                    .' AND IdPublication = ' . $this->m_data['IdPublication']
+	 				.' AND NrIssue = ' . $this->m_data['NrIssue']
+	 				.' AND NrSection = ' . $this->m_data['NrSection']
+	 				.' AND Number = ' . $this->m_data['Number'];
+        if ($p_excludeCurrent) {
+            $queryStr .= ' AND Languages.Id != ' . $this->m_data['IdLanguage'];
+	 	}
+        $order = Article::ProcessLanguageListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
+        }
+	 	if (count($sqlOrder) > 0) {
+	 		$queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
+	 	}
 	 	$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
@@ -648,7 +670,7 @@ class Article extends DatabaseObject {
 	 * type of language the article is written in.
 	 *
 	 * @param int $p_articleNumber
-	 * 		Optional.  Use this if you call this function statically.
+	 * 		Optional. Use this if you call this function statically.
 	 *
 	 * @return array
 	 */
@@ -2446,7 +2468,14 @@ class Article extends DatabaseObject {
      * Processes an order directive coming from template tags.
      *
      * @param array $p_order
-     *      The array of order directives
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
+     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
+     *        bypopularity, bycomments
+     *      order_direction can take one of the following values:
+     *        asc, desc
      *
      * @return array
      *      The array containing processed values of the condition
@@ -2627,6 +2656,51 @@ class Article extends DatabaseObject {
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
         return $articlesList;
+    }
+
+
+
+    /**
+     * Processes an order directive for the article translations list.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessLanguageListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Languages.Id';
+                    break;
+                case 'byname':
+                    $dbField = 'Languages.OrigName';
+                    break;
+                case 'byenglish_name':
+                    $dbField = 'Languages.Name';
+                    break;
+                case 'bycode':
+                    $dbField = 'Languages.Code';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
+        }
+        return $order;
     }
 
 } // class Article

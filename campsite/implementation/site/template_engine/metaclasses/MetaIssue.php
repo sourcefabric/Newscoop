@@ -59,6 +59,27 @@ final class MetaIssue extends MetaDbObject {
     } // fn __construct
 
 
+    /**
+     * Returns a list of MetaLanguage objects - list of languages in which
+     * the issue was translated.
+     * 
+     * @param boolean $p_excludeCurrent
+     * @param array $p_order
+     * @param boolean $p_allIssues
+     * @return array of MetaLanguage
+     */
+    public function languages_list($p_excludeCurrent = true,
+    array $p_order = array(), $p_allIssues = false) {
+        $languages = $this->m_dbObject->getLanguages(false, $p_excludeCurrent,
+        $p_order, $p_allIssues);
+        $metaLanguagesList = array();
+        foreach ($languages as $language) {
+            $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
+        }
+        return $metaLanguagesList;
+    }
+    
+    
     protected function getPublishYear()
     {
         $publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));

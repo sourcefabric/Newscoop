@@ -54,6 +54,32 @@ final class MetaPublication extends MetaDbObject {
     } // fn __construct
 
 
+    /**
+     * Returns a list of MetaLanguage objects - list of languages in which
+     * the issue was translated.
+     * 
+     * @param boolean $p_excludeCurrent
+     * @param array $p_order
+     * @param boolean $p_allIssues
+     * @return array of MetaLanguage
+     */
+    public function languages_list($p_excludeCurrent = true,
+    array $p_order = array()) {
+    	if ($p_excludeCurrent) {
+    		$context = CampTemplate::singleton()->context();
+    		$languageId = $context->language->number;
+    	} else {
+    		$languageId = null;
+    	}
+        $languages = $this->m_dbObject->getLanguages($languageId, $p_order);
+        $metaLanguagesList = array();
+        foreach ($languages as $language) {
+            $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
+        }
+        return $metaLanguagesList;
+    }
+
+
     protected function getDefaultSiteName()
     {
         $defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());

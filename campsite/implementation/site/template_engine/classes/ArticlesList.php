@@ -295,7 +295,7 @@ class ArticlesList extends ListObject
                 case 'ignore_issue':
                 case 'ignore_section':
                 case 'ignore_language':
-                    settype($value, 'boolean');
+                    $value = isset($value) && strtolower($value) != 'false';
                     $parameters[$parameter] = $value;
                     break;
     		    default:

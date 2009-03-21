@@ -485,21 +485,39 @@ class Publication extends DatabaseObject {
 	    return $forum->setPublicPermissions($publicPermissions);
     }
 
+
 	/**
-	 * Return all languages used in the publication as an array of Language objects.
+	 * Return all languages used in the publication as an array of
+	 * Language objects.
+	 * 
+     * @param integer $p_excludeLanguageId
+     *      If greater than 0, exclude the language with the given 
+     *      identifier from the list.
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
 	 * @return array
 	 */
-	public function getLanguages($p_sqlOptions = null)
+	public function getLanguages($p_excludeLanguageId = null, array $p_order = array())
 	{
-	    if (is_null($p_sqlOptions)) {
-	        $p_sqlOptions = array();
-	    }
-	    if (!isset($p_sqlOptions["ORDER BY"])) {
-	        $p_sqlOptions["ORDER BY"] = array("Name" => "ASC");
-	    }
-		$queryStr = 'SELECT l.* FROM Issues AS i LEFT JOIN Languages AS l ON i.IdLanguage = l.Id '
-				. 'WHERE i.IdPublication = ' . $this->getPublicationId() . ' GROUP BY IdLanguage';
-        $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		$queryStr = 'SELECT Languages.* FROM Issues LEFT JOIN Languages '
+		          . 'ON Issues.IdLanguage = Languages.Id WHERE '
+		          . 'Issues.IdPublication = ' . $this->getPublicationId();
+        if ($p_excludeLanguageId > 0) {
+        	$queryStr .= ' AND Languages.Id != ' . $p_excludeLanguageId;
+        }
+        $queryStr .= ' GROUP BY Languages.Id';
+        $order = Publication::ProcessLanguageListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
+        }
+        if (count($sqlOrder) > 0) {
+            $queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
+        }
 		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	}
@@ -557,5 +575,49 @@ class Publication extends DatabaseObject {
 		return $publications;
 	} // fn getPublications
 
+
+    /**
+     * Processes an order directive for the issue translations list.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessLanguageListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Languages.Id';
+                    break;
+                case 'byname':
+                    $dbField = 'Languages.OrigName';
+                    break;
+                case 'byenglish_name':
+                    $dbField = 'Languages.Name';
+                    break;
+                case 'bycode':
+                    $dbField = 'Languages.Code';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
+        }
+        return $order;
+    }
+	
 } // class Publication
 ?>

@@ -43,7 +43,9 @@ final class CampContext
 
     // Defines the list objects
     private $m_listObjects = array(
-	                         'issues'=>array('class'=>'Issues', 'list'=>'issues',
+                             'languages'=>array('class'=>'Languages', 'list'=>'languages',
+                                             'url_id'=>'lang'),
+                             'issues'=>array('class'=>'Issues', 'list'=>'issues',
 	                         				 'url_id'=>'iss'),
 	                         'sections'=>array('class'=>'Sections', 'list'=>'sections',
 	                         				   'url_id'=>'sec'),
