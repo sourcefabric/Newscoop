@@ -66,11 +66,23 @@ class BlogCommentsList extends ListObject
     	    $operator = new Operator('is', 'integer');
     	    $context = CampTemplate::singleton()->context();
     	    
+    	    if (!$p_parameters['ignore_status']) {
+    	        $comparisonOperation = new ComparisonOperation('status', $operator, 'online');
+    	        $this->m_constraints[] = $comparisonOperation; 
+    	    }
+    	    if (!$p_parameters['ignore_admin_status']) {
+    	        $comparisonOperation = new ComparisonOperation('admin_status', $operator, 'online');
+    	        $this->m_constraints[] = $comparisonOperation; 
+    	    }
     	    if ($context->blogentry->defined) {
         	    $comparisonOperation = new ComparisonOperation('entry_id', $operator, $context->blogentry->identifier);
                 $this->m_constraints[] = $comparisonOperation;
     	    } elseif ($context->blog->defined) {
         	    $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
+    	    if ($context->language->defined) {
+        	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $context->language->number);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
 	    }

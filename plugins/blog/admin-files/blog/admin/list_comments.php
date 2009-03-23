@@ -107,6 +107,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 <p>
 
 <FORM name="selector" method="get">
+<input type="hidden" name="f_blogentry_id" value="<?php p($f_entry_id) ?>">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>

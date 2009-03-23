@@ -869,7 +869,7 @@ class Blog extends DatabaseObject {
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
+            $comparisonOperation = self::ProcessListParameters($param);
             $leftOperand = strtolower($comparisonOperation['left']);
             
             if ($leftOperand == 'matchalltopics') {
@@ -967,28 +967,19 @@ class Blog extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
+    private static function ProcessListParameters($p_param)
     {
         $conditionOperation = array();
 
         $leftOperand = strtolower($p_param->getLeftOperand());
-        $conditionOperation['left'] = $leftOperand;
+        $conditionOperation['left'] = BlogsList::$s_parameters[$leftOperand]['field'];
+        
         switch ($leftOperand) {
-        /*
-        case 'keyword':
+
+        case 'feature':
             $conditionOperation['symbol'] = 'LIKE';
             $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
             break;
-        case 'onfrontpage':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        case 'onsection':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        case 'public':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        */
         case 'matchalltopics':
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'true';
@@ -996,16 +987,6 @@ class Blog extends DatabaseObject {
         case 'topic':
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
-        /*
-        case 'published':
-            if (strtolower($p_param->getRightOperand()) == 'true') {
-                $conditionOperation['symbol'] = '=';
-                $conditionOperation['right'] =  'Y';
-            }
-            break;
-        case 'reads':
-            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
-        */
         default:
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;

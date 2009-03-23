@@ -169,8 +169,8 @@ class BlogEntry extends DatabaseObject {
 
     function _buildQueryStr($p_cond, $p_checkParent)
     {
-        $blogs_tbl = Blog::s_dbTableName;
-        $entries_tbl = self::s_dbTableName;
+        $blogs_tbl = Blog::$s_dbTableName;
+        $entries_tbl = self::$s_dbTableName;
         
         if (array_key_exists('fk_blog_id', $p_cond)) {
             $cond .= " AND e.fk_blog_id = {$p_cond['fk_blog_id']}";
@@ -263,8 +263,8 @@ class BlogEntry extends DatabaseObject {
             return false;   
         }
         
-        $entries_tbl = self::s_dbTableName;
-        $commentTbl  = BlogComment::s_dbTableName;
+        $entryTbl = self::$s_dbTableName;
+        $commentTbl  = BlogComment::$s_dbTableName;
         
         $queryStr = "UPDATE $entryTbl
                      SET    comments_online = 
@@ -617,7 +617,7 @@ class BlogEntry extends DatabaseObject {
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param, $otherTables);
+            $comparisonOperation = self::ProcessListParameters($param);
             $leftOperand = strtolower($comparisonOperation['left']);
             
             if ($leftOperand == 'matchalltopics') {
@@ -714,46 +714,32 @@ class BlogEntry extends DatabaseObject {
      * @return array $comparisonOperation
      *      The array containing processed values of the condition
      */
-    private static function ProcessListParameters($p_param, array &$p_otherTables = array())
+    private static function ProcessListParameters($p_param)
     {
         $conditionOperation = array();
 
         $leftOperand = strtolower($p_param->getLeftOperand());
-        $conditionOperation['left'] = $leftOperand;
+        
         switch ($leftOperand) {
-        /*
-        case 'keyword':
+            
+        case 'feature':
             $conditionOperation['symbol'] = 'LIKE';
             $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
             break;
-        case 'onfrontpage':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        case 'onsection':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        case 'public':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
-            break;
-        */
+            
         case 'matchalltopics':
+            $conditionOperation['left'] = $leftOperand;
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'true';
             break;
+            
         case 'topic':
+            $conditionOperation['left'] = $leftOperand;
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
-        /*
-        case 'published':
-            if (strtolower($p_param->getRightOperand()) == 'true') {
-                $conditionOperation['symbol'] = '=';
-                $conditionOperation['right'] =  'Y';
-            }
-            break;
-        case 'reads':
-            $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
-        */
+
         default:
+            $conditionOperation['left'] = BlogEntriesList::$s_parameters[$leftOperand]['field'];
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
             break;
         }

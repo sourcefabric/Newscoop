@@ -91,7 +91,7 @@ class BlogentryTopic extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $query = "DELETE FROM {BlogentryTopic::$s_dbTableName}
+        $query = "DELETE FROM ".BlogentryTopic::$s_dbTableName."
                   WHERE fk_entry_id = $p_blogentry_id";
          
         return $g_ado_db->execute($query);  
@@ -147,7 +147,7 @@ class BlogentryTopic extends DatabaseObject {
         }
         
         $query = "SELECT    *
-                  FROM      {BlogentryTopic::$s_dbTableName}
+                  FROM      ".BlogentryTopic::$s_dbTableName."
                   WHERE     1 $where
                   ORDER BY  fk_entry_id DESC";
         

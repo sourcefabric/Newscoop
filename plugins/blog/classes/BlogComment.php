@@ -82,7 +82,7 @@ class BlogComment extends DatabaseObject {
         $result = parent::setProperty($p_name, $p_value);
     
         if ($p_name == 'status' || $p_name == 'admin_status') {
-            self::TriggerCounters($this->getProperty('fk_entry_id'));   
+            BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));   
         }
         
         return $result; 
@@ -119,8 +119,6 @@ class BlogComment extends DatabaseObject {
 		}
 		
 		$this->fetch();
-		
-		self::TriggerCounters($p_entry_id);
 
         return true; 
     }
@@ -129,7 +127,7 @@ class BlogComment extends DatabaseObject {
     {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-        self::TriggerCounters($entry_id);   
+        BlogEntry::TriggerCounters($entry_id);   
     }
     
     function getData()
@@ -300,7 +298,7 @@ class BlogComment extends DatabaseObject {
                 'type'      => 'radio',
                 'label'     => 'mood',
                 'default'   => $data['fk_mood_id'],
-                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : self::GetEntryLanguageId($data['fk_entry_id']))      
+                'options'   => Blog::GetMoodList(!empty($data['fk_language_id']) ? $data['fk_language_id'] : BlogEntry::GetEntryLanguageId($data['fk_entry_id']))      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
@@ -308,8 +306,10 @@ class BlogComment extends DatabaseObject {
                 'label'     => 'status',
                 'default'   => $data['status'],
                 'options'   => array(
+                                'pending'   => 'pending',
                                 'online'    => 'online',
                                 'offline'   => 'offline'
+                                
                                ),
                 'required'  => true            
             ),          
@@ -319,6 +319,7 @@ class BlogComment extends DatabaseObject {
                 'label'     => 'Admin status',
                 'default'   => $data['admin_status'],
                 'options'   => array(
+                                'pending'   => 'pending',
                                 'online'    => 'online',
                                 'offline'   => 'offline',
                                ),
@@ -403,7 +404,7 @@ class BlogComment extends DatabaseObject {
                     } 
                     $this->setProperty($k, $v); 
                 }
-                self::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
+                BlogEntry::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
                 return true;
                 
             } elseif ($this->create(  
@@ -432,7 +433,7 @@ class BlogComment extends DatabaseObject {
                     $this->setProperty('status', $data['BlogComment']['status']);
                 }
                 
-                self::TriggerCounters($this->getProperty('fk_entry_id'));  
+                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
                   
                 return true;    
             }

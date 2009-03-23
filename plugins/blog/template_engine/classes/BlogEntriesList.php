@@ -80,20 +80,25 @@ class BlogEntriesList extends ListObject
         if (!defined('PLUGIN_BLOG_ADMIN_MODE')) {
             $operator = new Operator('is', 'integer');
             $context = CampTemplate::singleton()->context();
-                
+            
+            if (!$p_parameters['ignore_status']) {
+                $comparisonOperation = new ComparisonOperation('status', $operator, 'online');
+                $this->m_constraints[] = $comparisonOperation;
+            }
+            if (!$p_parameters['ignore_admin_status']) {
+                $comparisonOperation = new ComparisonOperation('admin_status', $operator, 'online');
+                $this->m_constraints[] = $comparisonOperation;
+            }                
             if ($context->blog->defined) {
-                $comparisonOperation = new ComparisonOperation('blog_id', $operator,
-                                                               $context->blog->identifier);
+                $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
                 $this->m_constraints[] = $comparisonOperation;
             }
             if ($context->language->defined) {
-        	    $comparisonOperation = new ComparisonOperation('fk_language_id', $operator,
-    	                                                       $context->language->number);
+        	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $context->language->number);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
             if ($context->topic->defined) {
-    	        $comparisonOperation = new ComparisonOperation('topic', $operator,
-    	                                                       $context->topic->identifier);
+    	        $comparisonOperation = new ComparisonOperation('topic', $operator, $context->topic->identifier);
     	        $this->m_constraints[] = $comparisonOperation;
     	    }
         }
