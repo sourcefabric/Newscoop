@@ -94,6 +94,7 @@ class MetaActionSearch_Articles extends MetaAction
         	switch ($searchScope) {
         		case 'keywords':
         		case 'content':
+        		case 'index':
         			$this->m_properties['scope'] = 'index';
         			break;
         		case 'title':
