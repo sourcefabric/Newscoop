@@ -778,6 +778,9 @@ abstract class CampURI {
         }
         $memberName = "m_$p_property";
         $this->$memberName = $p_value;
+        if ($p_property == 'publication') {
+        	$this->m_host = $this->m_publication->site;
+        }
         $this->validateCache(false);
         return true;
     } // fn __set
