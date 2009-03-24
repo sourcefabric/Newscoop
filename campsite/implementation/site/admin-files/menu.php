@@ -111,7 +111,7 @@ if ($g_user->hasPermission("AddArticle")) {
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ImportLegacyArchive")) {
+if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
     $menu_item =& DynMenuItem::Create(getGS('Import legacy archive'), "/$ADMIN/articles/la_import.php",
         array("icon" => sprintf($iconTemplateStr, "add_article.png")));
     $menu_actions->addItem($menu_item);

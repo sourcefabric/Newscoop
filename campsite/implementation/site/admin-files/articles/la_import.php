@@ -4,7 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
 
 global $Campsite;
 
-if (!$g_user->hasPermission('ImportLegacyArchive')) {
+if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticle')) {
     camp_html_display_error(getGS("You do not have the right to import legacy archves."));
     exit;
 }
@@ -59,9 +59,76 @@ $articleTypes = ArticleType::GetArticleTypes();
 $allPublications = Publication::GetPublications();
 $allLanguages = Language::GetLanguages();
 
-//if (!empty($_FILES['f_input_file'])) {
-//    var_dump($_FILES['f_input_file']);
-//}
+$isValidXMLFile = false;
+if ($f_save && !empty($_FILES['f_input_file'])) {
+    if (file_exists($_FILES['f_input_file']['tmp_name'])) {
+        if (!($buffer = @file_get_contents($_FILES['f_input_file']['tmp_name']))) {
+	    camp_html_display_error(getGS("File could not be read."));
+	    exit;
+	}
+	$xml = new SimpleXMLElement($buffer);
+	if (!is_object($xml)) {
+	    camp_html_display_error(getGS("File is not a valid XML file."));
+            exit;
+	}
+
+	if (!isset($xml->article->name)) {
+	    camp_html_add_msg(getGS("Bad format in XML file."));
+	}
+
+	$isValidXMLFile = true;
+    } else {
+        camp_html_display_error(getGS("File does not exist."));
+        exit;
+    }
+} elseif ($f_save) {
+    camp_html_add_msg(getGS("File could not be uploaded."));
+}
+
+
+if ($isValidXMLFile) {
+    if ($f_publication_id > 0) {
+        $publicationObj = new Publication($f_publication_id);
+	if (!$publicationObj->exists()) {
+	    camp_html_display_error(getGS('Publication does not exist.'));
+	    exit;
+	}
+
+	if ($f_issue_number > 0) {
+	    $issueObj = new Issue($f_publication_id, $f_article_language_id, $f_issue_number);
+	    if (!$issueObj->exists()) {
+	        camp_html_display_error(getGS('Issue does not exist.'));
+		exit;
+	    }
+
+	    if ($f_section_number > 0) {
+	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_article_language_id, $f_section_number);
+		if (!$sectionObj->exists()) {
+		    camp_html_display_error(getGS('Section does not exist.'));
+		    exit;
+		}
+	    }
+	}
+    }
+    
+    foreach ($xml->article as $article) {
+        $existingArticles = Article::GetByName($article->name,
+					       $f_publication_id,
+					       $f_issue_number,
+					       $f_section_number,
+					       $f_article_language_id);
+	if (count($existingArticles) > 0) {
+	    $existingArticle = array_pop($existingArticles);
+	}
+        $articleObj = new Article($f_article_language_id);
+	$articleObj->create($f_article_type, $article->name, $f_publication_id, $f_issue_number, $f_section_number);
+
+        echo '<p><strong>' . $article->name . '</strong><br />';
+	echo $article->articleTypeFields->fintro;
+	echo '</p>';
+    }
+}
+
 
 // Gets all issues
 $allIssues = array();
@@ -208,7 +275,7 @@ echo camp_html_breadcrumbs($crumbs);
 <tr>
   <td colspan="2" align="center">
     <hr noshade size="1" color="black">
-    <input type="submit" name="f_save" value="<?php putGS('Save'); ?>" class="button" onclick="document.forms.add_article.action='do_add.php';" />
+    <input type="submit" name="f_save" value="<?php putGS('Save'); ?>" class="button" />
   </td>
 </tr>
 </table>

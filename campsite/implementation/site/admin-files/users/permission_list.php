@@ -27,8 +27,7 @@ function camp_get_permission_list()
 	'DeleteFile'=>getGS('User may delete article attachments'),
 	'ManageTopics'=>getGS('User may manage topics'),
 	'CommentModerate'=>getGS('User may moderate comments'),
-	'CommentEnable' => getGS('User may enable comments'),
-	'ImportLegacyArchive' => getGS('User may import legacy archives'));
+	'CommentEnable' => getGS('User may enable comments'));
 
     $templates_group = array(
 	'ManageTempl'=>getGS('User may manage templates'),
