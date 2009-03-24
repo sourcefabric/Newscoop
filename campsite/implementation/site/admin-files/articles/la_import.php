@@ -1,6 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleType.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleType.php");
 
 global $Campsite;
 
@@ -175,15 +176,9 @@ echo camp_html_breadcrumbs($crumbs);
   <td valign="top">
     <table>
     <tr>
-      <td align="right"><?php putGS("Input File"); ?>:</td>
-      <td>
-        <input type="file" name="f_input_file" id="f_input_file" size="40" class="input_text" emsg="<?php putGS('You must select an XML input file.'); ?>" />
-      </td>
-    </tr>
-    <tr>
       <td align="right"><?php putGS("Article Type"); ?>:</td>
       <td>
-        <select name="f_article_type" id="f_article_type" class="input_select">
+        <select name="f_article_type" id="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must select an article type.'); ?>">
         <option value=""><?php putGS('---Select article type---'); ?></option>
         <?php
         foreach ($articleTypes as $article_type) {
@@ -197,7 +192,7 @@ echo camp_html_breadcrumbs($crumbs);
     <tr>
       <td align="right"><?php putGS("Language"); ?>:</td>
       <td>
-        <select name="f_article_language_id" id="f_article_language_id" class="input_select" onchange="if (this.options[this.selectedIndex].value != <?php p($f_article_language_id); ?>) {this.form.submit();}">
+        <select name="f_article_language_id" id="f_article_language_id" class="input_select" alt="select" emsg="<?php putGS('You must select an article language.'); ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_article_language_id); ?>) {this.form.submit();}">
         <option value=""><?php putGS('---Select language---'); ?></option>
         <?php
         foreach ($allLanguages as $language) {
@@ -211,7 +206,7 @@ echo camp_html_breadcrumbs($crumbs);
       <td align="right"><?php putGS("Publication"); ?>:</td>
       <td>
         <?php if ($f_article_language_id > 0 && count($allPublications) > 1) { ?>
-        <select name="f_publication_id" id="f_publication_id" class="input_select" onchange="if (this.options[this.selectedIndex].value != <?php p($f_publication_id); ?>) {this.form.submit();}">
+        <select name="f_publication_id" id="f_publication_id" class="input_select" alt="select" emsg="<?php putGS('You must select a publication.'); ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_publication_id); ?>) {this.form.submit();}">
         <option value=""><?php putGS('---Select publication---'); ?></option>
         <?php
         foreach ($allPublications as $publication) {
@@ -267,6 +262,12 @@ echo camp_html_breadcrumbs($crumbs);
       <td>
         <input type="radio" name="f_overwrite_articles" value="Y" <?php if ($f_overwrite_articles == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_overwrite_articles" value="N" <?php if ($f_overwrite_articles == 'N' || $f_overwrite_articles == '') p("checked"); ?> /> <?php putGS("No"); ?>
+      </td>
+    </tr>
+    <tr>
+      <td align="right"><?php putGS("Input File"); ?>:</td>
+      <td>
+        <input type="file" name="f_input_file" id="f_input_file" size="40" class="input_text" alt="file|xml|0" emsg="<?php putGS('You must select a XML input file.'); ?>" />
       </td>
     </tr>
     </table>
