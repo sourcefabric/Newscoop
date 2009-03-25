@@ -151,17 +151,18 @@ if ($isValidXMLFile) {
 	$dbColumns = $articleTypeObj->getUserDefinedColumns();
 	$articleTypeFields = array();
 	foreach ($dbColumns as $dbColumn) {
-	    $field = strtolower($dbColumn->getName());
-	    if (!isset($article->articleTypeFields->$field)) {
+	    $fieldName = substr($dbColumn->getName(), 1);
+	    $field = strtolower($fieldName);
+	    if (!isset($article->$field)) {
 	        $errorMessages[] = 'The article type field "<i>'
-		    .$dbColumn->getName()
+		    .$fieldName
 		    .'</i>" does not match any field from XML input file.';
 		continue;
 	    }
 
 	    // Replace <span class="subhead"> ... </span> with
 	    // <!** Title> ... <!** EndTitle>
-	    $text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", (string) $article->articleTypeFields->$field);
+	    $text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", (string) $article->$field);
 
 	    // Replace <a href="campsite_internal_link?IdPublication=1&..."
 	    // ...> ... </a>
