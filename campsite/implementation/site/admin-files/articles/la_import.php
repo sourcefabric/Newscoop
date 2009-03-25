@@ -10,6 +10,8 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticl
     exit;
 }
 
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_content_lib.php");
+
 // Whether form was submitted
 $f_save = Input::Get('f_save', 'string', '', true);
 
@@ -94,7 +96,6 @@ if ($isValidXMLFile) {
 	    camp_html_display_error(getGS('Publication does not exist.'));
 	    exit;
 	}
-
 	if ($f_issue_number > 0) {
 	    $issueObj = new Issue($f_publication_id, $f_article_language_id, $f_issue_number);
 	    if (!$issueObj->exists()) {
@@ -111,22 +112,87 @@ if ($isValidXMLFile) {
 	    }
 	}
     }
-    
+
+    // Loads article data from XML file into database
+    $errorMessages = array();
     foreach ($xml->article as $article) {
-        $existingArticles = Article::GetByName($article->name,
+        $existingArticles = Article::GetByName((string) $article->name,
 					       $f_publication_id,
 					       $f_issue_number,
 					       $f_section_number,
 					       $f_article_language_id);
+	// There is already an article with same name and language
 	if (count($existingArticles) > 0) {
 	    $existingArticle = array_pop($existingArticles);
+	    // Is overwrite articles false? then skip and process next article
+	    if ($f_overwrite_articles == 'N') {
+	        $errorMessages[] = 'Article "' . (string) $article->name . '" '
+		    .'already exist and was not overwritten.';
+	        continue;
+	    }
 	}
-        $articleObj = new Article($f_article_language_id);
-	$articleObj->create($f_article_type, $article->name, $f_publication_id, $f_issue_number, $f_section_number);
 
-        echo '<p><strong>' . $article->name . '</strong><br />';
-	echo $article->articleTypeFields->fintro;
-	echo '</p>';
+	if (isset($existingArticle) && $existingArticle->exists()) {
+	    $articleObj = $existingArticle;
+	} else {
+	    $articleObj = new Article($f_article_language_id);
+	    $articleName = (string) $article->name;
+	    $articleObj->create($f_article_type, $articleName, $f_publication_id, $f_issue_number, $f_section_number);
+	}
+
+	// Checks whether article was successfully created
+	if (!$articleObj->exists()) {
+	    camp_html_display_error(getGS('Article could not be created.'), $BackLink);
+	    exit;
+	}
+
+	$articleTypeObj = $articleObj->getArticleData();
+	$dbColumns = $articleTypeObj->getUserDefinedColumns();
+	$articleTypeFields = array();
+	foreach ($dbColumns as $dbColumn) {
+	    $field = strtolower($dbColumn->getName());
+	    if (!isset($article->articleTypeFields->$field)) {
+	        $errorMessages[] = 'The article type field "'
+		    .$dbColumn->getName()
+		    .'" does not match any field from XML input file.';
+		continue;
+	    }
+
+	    // Replace <span class="subhead"> ... </span> with
+	    // <!** Title> ... <!** EndTitle>
+	    $text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", (string) $article->articleTypeFields->$field);
+
+	    // Replace <a href="campsite_internal_link?IdPublication=1&..."
+	    // ...> ... </a>
+	    // with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
+	    $text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
+
+	    // Replace <img id=".." src=".." alt=".." title=".." align="..">
+	    // with <!** Image [image_template_id] align=".." alt=".." sub="..">
+	    $idAttr = "(id\s*=\s*\"[^\"]*\")";
+	    $srcAttr = "(src\s*=\s*\"[^\"]*\")";
+	    $altAttr = "(alt\s*=\s*\"[^\"]*\")";
+	    $subAttr = "(title\s*=\s*\"[^\"]*\")";
+	    $alignAttr = "(align\s*=\s*\"[^\"]*\")";
+	    $widthAttr = "(width\s*=\s*\"[^\"]*\")";
+	    $heightAttr = "(height\s*=\s*\"[^\"]*\")";
+	    $otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
+	    $pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
+	    $text = preg_replace_callback($pattern, "TransformImageTags", $text);
+	    $articleTypeObj->setProperty($dbColumn->getName(), $text);
+	}
+
+	// Updates the article author
+	$authorObj = new Author((string) $article->author);
+	if (!$authorObj->exists()) {
+	    $authorData = Author::ReadName((string) $article->author);
+	    $authorObj->create($authorData);
+	}
+	$articleObj->setAuthorId($authorObj->getId());
+
+	// Updates the article
+	$articleObj->setCreatorId($g_user->getUserId());
+	$articleObj->setKeywords((string) $article->keywords);
     }
 }
 
