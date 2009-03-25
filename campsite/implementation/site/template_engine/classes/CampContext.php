@@ -138,7 +138,6 @@ final class CampContext
             }
         }
 
-        $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview', 'off') == 'on';
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['subs_by_type'] = null;
 
@@ -173,12 +172,15 @@ final class CampContext
             $this->m_objects['comment'] = new MetaComment($commentId);
         }
 
+        $this->m_readonlyProperties['preview'] = false;
         $userId = CampRequest::GetVar('LoginUserId');
         if (!is_null($userId)) {
             $user = new User($userId);
             if ($user->exists()
             && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
                 $this->m_objects['user'] = new MetaUser($userId);
+                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
+                && $this->m_objects['user']->is_admin;
             }
         }
 
