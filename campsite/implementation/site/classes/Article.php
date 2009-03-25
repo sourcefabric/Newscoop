@@ -637,7 +637,8 @@ class Article extends DatabaseObject {
      *        asc, desc
 	 * @return array
 	 */
-	public function getLanguages($p_excludeCurrent = false, array $p_order = array())
+	public function getLanguages($p_excludeCurrent = false, array $p_order = array(),
+	$p_published = true)
 	{
 		if (!$this->exists()) {
 			return array();
@@ -652,6 +653,9 @@ class Article extends DatabaseObject {
 	 				.' AND Number = ' . $this->m_data['Number'];
         if ($p_excludeCurrent) {
             $queryStr .= ' AND Languages.Id != ' . $this->m_data['IdLanguage'];
+	 	}
+	 	if ($p_published) {
+	 		$queryStr .= " AND Articles.Published = 'Y'";
 	 	}
         $order = Article::ProcessLanguageListOrder($p_order);
         foreach ($order as $orderDesc) {

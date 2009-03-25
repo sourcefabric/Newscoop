@@ -92,8 +92,7 @@ class ArticlesList extends ListObject
 	                                                       $context->topic->identifier);
 	        $this->m_constraints[] = $comparisonOperation;
 	    }
-	    $user = CampTemplate::singleton()->context()->user;
-	    if (CampRequest::GetVar('preview') != 'on' || !$user->is_admin) {
+	    if (!$context->preview) {
 	        $comparisonOperation = new ComparisonOperation('published', $operator, 'true');
     	    $this->m_constraints[] = $comparisonOperation;
 	    }

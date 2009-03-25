@@ -516,7 +516,8 @@ final class MetaArticle extends MetaDbObject {
         }
         $article = new Article($language->getLanguageId(),
         $this->m_dbObject->getArticleNumber());
-        return (int)$article->exists();
+        return (int)$article->exists()
+        && ($article->isPublished() || CampTemplate::singleton()->context()->preview);
     }
 
 
@@ -530,7 +531,8 @@ final class MetaArticle extends MetaDbObject {
      */
     public function languages_list($p_excludeCurrent = true,
     array $p_order = array()) {
-    	$languages = $this->m_dbObject->getLanguages($p_excludeCurrent, $p_order);
+    	$languages = $this->m_dbObject->getLanguages($p_excludeCurrent, $p_order,
+    	!CampTemplate::singleton()->context()->preview);
     	$metaLanguagesList = array();
     	foreach ($languages as $language) {
             $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());

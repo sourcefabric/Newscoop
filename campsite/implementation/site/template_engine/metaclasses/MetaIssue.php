@@ -55,6 +55,7 @@ final class MetaIssue extends MetaDbObject {
         $this->m_customProperties['publication'] = 'getPublication';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['is_current'] = 'isCurrent';
+        $this->m_customProperties['is_published'] = 'isPublished';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
@@ -71,7 +72,7 @@ final class MetaIssue extends MetaDbObject {
     public function languages_list($p_excludeCurrent = true,
     array $p_order = array(), $p_allIssues = false) {
         $languages = $this->m_dbObject->getLanguages(false, $p_excludeCurrent,
-        $p_order, $p_allIssues);
+        $p_order, $p_allIssues, !CampTemplate::singleton()->context()->preview);
         $metaLanguagesList = array();
         foreach ($languages as $language) {
             $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
@@ -179,6 +180,11 @@ final class MetaIssue extends MetaDbObject {
         $this->m_dbObject->getLanguageId());
         return !is_null($currentIssue)
         && $currentIssue->getIssueNumber() == $this->m_dbObject->getIssueNumber();
+    }
+
+
+    protected function isPublished() {
+    	return $this->m_dbObject->isPublished();
     }
 
 } // class MetaIssue

@@ -379,6 +379,16 @@ class Issue extends DatabaseObject {
 	} // fn setIssueTemplateId
 
 
+    /**
+     * Returns true if the issue was published
+     *
+     * @return boolean
+     */
+	public function isPublished() {
+		return $this->m_data['Published'] == 'Y';
+	}
+
+
 	/**
 	 * Return the current state in the workflow:
 	 * 'Y' if the issue is published, 'N' if it is not published.
@@ -491,7 +501,8 @@ class Issue extends DatabaseObject {
 	 * 		Return an array of Language objects.
 	 */
 	public function getLanguages($p_getUnusedLanguagesOnly = false,
-	$p_excludeCurrent = true, array $p_order = array(), $p_allIssues = false)
+	$p_excludeCurrent = true, array $p_order = array(), $p_allIssues = false,
+	$p_published = true)
 	{
 		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
@@ -501,6 +512,9 @@ class Issue extends DatabaseObject {
 						." ON Issues.IdPublication = ".$this->m_data['IdPublication'];
             if (!$p_allIssues) {
                 $queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
+            }
+            if ($p_published) {
+                $queryStr .= " AND Issues.Published = 'Y'";
             }
             $queryStr .= " AND Issues.IdLanguage = Languages.Id "
                       ." WHERE Issues.IdPublication IS NULL";
@@ -514,6 +528,9 @@ class Issue extends DatabaseObject {
             $queryStr .= " AND Issues.IdLanguage = Languages.Id ";
             if ($p_excludeCurrent) {
                 $queryStr .= " AND Languages.Id != " . $this->m_data['IdLanguage'];
+            }
+            if ($p_published) {
+                $queryStr .= " AND Issues.Published = 'Y'";
             }
 		}
 		list($languagesKey) = $tmpLanguage->getKeyColumnNames();

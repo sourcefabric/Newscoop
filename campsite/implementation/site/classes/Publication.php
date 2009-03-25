@@ -502,13 +502,17 @@ class Publication extends DatabaseObject {
      *        asc, desc
 	 * @return array
 	 */
-	public function getLanguages($p_excludeLanguageId = null, array $p_order = array())
+	public function getLanguages($p_excludeLanguageId = null,
+	array $p_order = array(), $p_published = true)
 	{
 		$queryStr = 'SELECT Languages.* FROM Issues LEFT JOIN Languages '
 		          . 'ON Issues.IdLanguage = Languages.Id WHERE '
 		          . 'Issues.IdPublication = ' . $this->getPublicationId();
         if ($p_excludeLanguageId > 0) {
         	$queryStr .= ' AND Languages.Id != ' . $p_excludeLanguageId;
+        }
+        if ($p_published) {
+            $queryStr .= " AND Issues.Published = 'Y'";
         }
         $queryStr .= ' GROUP BY Languages.Id';
         $order = Publication::ProcessLanguageListOrder($p_order);

@@ -71,7 +71,8 @@ final class MetaPublication extends MetaDbObject {
     	} else {
     		$languageId = null;
     	}
-        $languages = $this->m_dbObject->getLanguages($languageId, $p_order);
+        $languages = $this->m_dbObject->getLanguages($languageId, $p_order,
+        !CampTemplate::singleton()->context()->preview);
         $metaLanguagesList = array();
         foreach ($languages as $language) {
             $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
