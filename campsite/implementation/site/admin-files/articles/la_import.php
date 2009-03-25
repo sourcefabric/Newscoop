@@ -80,6 +80,7 @@ if ($f_save && !empty($_FILES['f_input_file'])) {
 	}
 
 	$isValidXMLFile = true;
+	@unlink($_FILES['f_input_file']['tmp_name']);
     } else {
         camp_html_display_error(getGS("File does not exist."));
         exit;
@@ -126,7 +127,7 @@ if ($isValidXMLFile) {
 	    $existingArticle = array_pop($existingArticles);
 	    // Is overwrite articles false? then skip and process next article
 	    if ($f_overwrite_articles == 'N') {
-	        $errorMessages[] = 'Article "' . (string) $article->name . '" '
+	        $errorMessages[] = 'Article "<i>'.(string) $article->name.'</i>" '
 		    .'already exist and was not overwritten.';
 	        continue;
 	    }
@@ -152,9 +153,9 @@ if ($isValidXMLFile) {
 	foreach ($dbColumns as $dbColumn) {
 	    $field = strtolower($dbColumn->getName());
 	    if (!isset($article->articleTypeFields->$field)) {
-	        $errorMessages[] = 'The article type field "'
+	        $errorMessages[] = 'The article type field "<i>'
 		    .$dbColumn->getName()
-		    .'" does not match any field from XML input file.';
+		    .'</i>" does not match any field from XML input file.';
 		continue;
 	    }
 
@@ -194,6 +195,8 @@ if ($isValidXMLFile) {
 	$articleObj->setCreatorId($g_user->getUserId());
 	$articleObj->setKeywords((string) $article->keywords);
     }
+
+    camp_html_add_msg(getGS("Legacy archive imported."), "ok");
 }
 
 
@@ -234,7 +237,7 @@ echo camp_html_breadcrumbs($crumbs);
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
 <tr>
   <td colspan="2">
-    <b><?php  putGS("Import legacy archive"); ?></b>
+    <b><?php putGS("Import legacy archive"); ?></b>
     <hr noshade size="1" color="black">
   </td>
 </tr>
@@ -345,6 +348,26 @@ echo camp_html_breadcrumbs($crumbs);
     <input type="submit" name="f_save" value="<?php putGS('Save'); ?>" class="button" />
   </td>
 </tr>
+</table><br />
+
+<?php if (sizeof($errorMessages) > 0) { ?>
+<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+<tr>
+  <td>
+    <b><?php putGS("Error List"); ?></b>
+    <hr noshade size="1" color="black">
+  </td>
+</tr>
+<tr>
+  <td>
+    <?php
+    foreach ($errorMessages as $error) {
+        print($error . "<br />");
+    }
+    ?>
+  </td>
+</tr>
 </table>
+<?php } ?>
 
 <?php camp_html_copyright_notice(); ?>
