@@ -46,7 +46,49 @@ class CampURITemplatePath extends CampURI
     CampRequest::SECTION_NR,
     CampRequest::ARTICLE_NR
     );
+    
+    /**
+     * Parameters used for the language definition
+     * 
+     * @var array
+     */
+    static private $m_languageParameters = array(
+    CampRequest::LANGUAGE_ID
+    );
+    
+    /**
+     * Parameters used for the issue definition
+     * 
+     * @var array
+     */
+    static private $m_issueParameters = array(
+    CampRequest::LANGUAGE_ID,
+    CampRequest::ISSUE_NR
+    );
 
+    /**
+     * Parameters used for the section definition
+     * 
+     * @var array
+     */
+    static private $m_sectionParameters = array(
+    CampRequest::LANGUAGE_ID,
+    CampRequest::ISSUE_NR,
+    CampRequest::SECTION_NR
+    );
+    
+    /**
+     * Parameters used for the article definition
+     * 
+     * @var array
+     */
+    static private $m_articleParameters = array(
+    CampRequest::LANGUAGE_ID,
+    CampRequest::ISSUE_NR,
+    CampRequest::SECTION_NR,
+    CampRequest::ARTICLE_NR
+    );
+    
     /**
      * Templates directory
      *
@@ -74,7 +116,8 @@ class CampURITemplatePath extends CampURI
     } // fn __construct
 
 
-    public function getQueryArray() {
+    public function getQueryArray(array $p_keepParameters = array(),
+    array $p_removeParameters = array()) {
         $queryArray = parent::getQueryArray();
         if ($this->m_language->defined()) {
             $queryArray[CampRequest::LANGUAGE_ID] = $this->m_language->number;
@@ -88,8 +131,19 @@ class CampURITemplatePath extends CampURI
         if ($this->m_article->defined()) {
             $queryArray[CampRequest::ARTICLE_NR] = $this->m_article->number;
         }
+        if (count($p_removeParameters) > 0) {
+            $removeKeys = array_combine($p_removeParameters,
+            array_fill(0, count($p_removeParameters, null)));
+            $queryArray = array_diff_key($queryArray, $removeKeys);
+        }
+        if (count($p_keepParameters)) {
+            $keepKeys = array_combine($p_keepParameters,
+            array_fill(0, count($p_keepParameters), null));
+            $queryArray = array_intersect_key($queryArray, $keepKeys);
+        }
         return $queryArray;
     }
+
 
 
     /**
@@ -250,6 +304,7 @@ class CampURITemplatePath extends CampURI
     {
         return in_array($p_parameterName, CampURITemplatePath::$m_restrictedParameters);
     }
+
 
 
     /**
@@ -415,10 +470,12 @@ class CampURITemplatePath extends CampURI
      *
      * @param array $p_params
      *      An array of valid URL parameters
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return void
      */
-    protected function buildURI(array &$p_params = array())
+    protected function buildURI(array &$p_params = array(), $p_preview = false)
     {
         if ($this->isValidCache()) {
             return;
@@ -428,33 +485,53 @@ class CampURITemplatePath extends CampURI
 
         switch ($parameter) {
             case 'language':
-                $this->m_buildQuery = $this->getURILanguage();
                 $this->m_buildPath = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
                 $this->m_publication->identifier));
+                $keepParams = CampURITemplatePath::$m_languageParameters;
+                if ($p_preview) {
+                    $keepParams = array_merge(CampURI::$m_previewParameters, $keepParams);
+                }
+                $this->m_buildQueryArray = $this->getQueryArray($keepParams);
                 $p_params = array();
                 break;
             case 'publication':
-                $this->m_buildQuery = $this->getURIPublication();
                 $this->m_buildPath = $this->buildPath(CampSystem::GetTemplate($this->m_language->number,
                 $this->m_publication->identifier));
+                $keepParams = CampURITemplatePath::$m_languageParameters;
+                if ($p_preview) {
+                    $keepParams = array_merge(CampURI::$m_previewParameters, $keepParams);
+                }
+                $this->m_buildQueryArray = $this->getQueryArray($keepParams);
                 $p_params = array();
                 break;
             case 'issue':
-                $this->m_buildQuery = $this->getURIIssue();
                 $this->m_buildPath = $this->buildPath(CampSystem::GetIssueTemplate($this->m_language->number,
                 $this->m_publication->identifier, $this->m_issue->number));
+                $keepParams = CampURITemplatePath::$m_issueParameters;
+                if ($p_preview) {
+                    $keepParams = array_merge(CampURI::$m_previewParameters, $keepParams);
+                }
+                $this->m_buildQueryArray = $this->getQueryArray($keepParams);
                 $p_params = array();
                 break;
             case 'section':
-                $this->m_buildQuery = $this->getURISection();
                 $this->m_buildPath = $this->buildPath(CampSystem::GetSectionTemplate($this->m_language->number,
                 $this->m_publication->identifier, $this->m_issue->number, $this->m_section->number));
+                $keepParams = CampURITemplatePath::$m_sectionParameters;
+                if ($p_preview) {
+                    $keepParams = array_merge(CampURI::$m_previewParameters, $keepParams);
+                }
+                $this->m_buildQueryArray = $this->getQueryArray($keepParams);
                 $p_params = array();
                 break;
             case 'article':
-                $this->m_buildQuery = $this->getURIArticle();
                 $this->m_buildPath = $this->buildPath(CampSystem::GetArticleTemplate($this->m_language->number,
                 $this->m_publication->identifier, $this->m_issue->number, $this->m_section->number));
+                $keepParams = CampURITemplatePath::$m_articleParameters;
+                if ($p_preview) {
+                    $keepParams = array_merge(CampURI::$m_previewParameters, $keepParams);
+                }
+                $this->m_buildQueryArray = $this->getQueryArray($keepParams);
                 $p_params = array();
                 break;
             case 'template':
@@ -467,7 +544,7 @@ class CampURITemplatePath extends CampURI
                 if (!empty($parameter)) {
                     array_unshift($p_params, $parameter);
                     $count = count($p_params);
-                    parent::buildURI($p_params);
+                    parent::buildURI($p_params, $p_preview);
                     if (count($p_params) == $count) {
                         array_shift($p_params);
                     }

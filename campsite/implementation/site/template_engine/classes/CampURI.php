@@ -155,6 +155,13 @@ abstract class CampURI {
      * @var boolean
      */
     protected $m_validURI = false;
+    
+    /**
+     * The list of parameters used in preview mode
+     * @var array
+     */
+    static protected $m_previewParameters = array('LoginUserId',
+    'LoginUserKey', 'AdminAccess', 'previewLang', 'preview');
 
 
     /**
@@ -409,9 +416,21 @@ abstract class CampURI {
      * @return array $m_queryArray
      *      The array of query vars
      */
-    public function getQueryArray()
+    public function getQueryArray(array $p_keepParameters = array(),
+    array $p_removeParameters = array())
     {
-        return $this->m_queryArray;
+    	$queryArray = $this->m_queryArray;
+    	if (count($p_removeParameters) > 0) {
+    		$removeKeys = array_combine($p_removeParameters,
+    		array_fill(0, count($p_removeParameters, null)));
+    		$queryArray = array_diff_key($queryArray, $removeKeys);
+    	}
+    	if (count($p_keepParameters)) {
+    		$keepKeys = array_combine($p_keepParameters,
+    		array_fill(0, count($p_keepParameters), null));
+    		$queryArray = array_intersect_key($queryArray, $keepKeys);
+    	}
+        return $queryArray;
     } // fn getQueryArray
 
 
@@ -504,11 +523,13 @@ abstract class CampURI {
      *
      * @param string $p_param
      *      The URL parameter
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return string
      *      The URI string requested
      */
-    public function getURI($p_param = null)
+    public function getURI($p_param = null, $p_preview = false)
     {
         if (!$this->m_validURI) {
             return null;
@@ -519,7 +540,7 @@ abstract class CampURI {
         $this->m_buildQueryArray = $this->getQueryArray();
 
         $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
+        $this->buildURI($params, $p_preview);
         if (!empty($this->m_buildQuery)) {
             return $this->m_buildPath . '?' . $this->m_buildQuery;
         }
@@ -533,11 +554,13 @@ abstract class CampURI {
      *
      * @param string $p_param
      *      The URL parameter
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return string
      *      The URI path string requested
      */
-    public function getURIPath($p_param = null)
+    public function getURIPath($p_param = null, $p_preview = false)
     {
         if (!$this->m_validURI) {
             return null;
@@ -548,7 +571,7 @@ abstract class CampURI {
         $this->m_buildQueryArray = $this->getQueryArray();
 
         $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
+        $this->buildURI($params, $p_preview);
         return $this->m_buildPath;
     } // fn getURIPath
 
@@ -557,11 +580,13 @@ abstract class CampURI {
      * Returns the URI query parameters based on given URL parameter.
      *
      * @param string $p_param
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return string
      *      The URI query string requested
      */
-    public function getURLParameters($p_param = null)
+    public function getURLParameters($p_param = null, $p_preview = false)
     {
         if (!$this->m_validURI) {
             return null;
@@ -572,7 +597,7 @@ abstract class CampURI {
         $this->m_buildQueryArray = $this->getQueryArray();
 
         $params = preg_split("/[\s]+/", $p_param);
-        $this->buildURI($params);
+        $this->buildURI($params, $p_preview);
         return $this->m_buildQuery;
     } // fn getURLParameters
 
@@ -827,10 +852,12 @@ abstract class CampURI {
      *
      * @param array $p_params
      *      An array of valid URL parameters
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return void
      */
-    protected function buildURI(array &$p_params = array()) {
+    protected function buildURI(array &$p_params = array(), $p_preview = false) {
         if ($this->isValidCache()) {
             return;
         }
@@ -843,7 +870,11 @@ abstract class CampURI {
         switch ($parameter) {
             case 'root_level':
                 $this->m_buildPath = '/';
-                $this->m_buildQueryArray = array();
+                if ($p_preview) {
+                    $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
+                } else {
+                    $this->m_buildQueryArray = array();
+                }
                 $p_params = array();
                 break;
             case 'articleattachment':
@@ -953,7 +984,6 @@ abstract class CampURI {
     protected function resetList($listIdPrefix) {
         foreach ($this->getQueryArray() as $parameter=>$value) {
             if (strncasecmp($parameter, $listIdPrefix, strlen($listIdPrefix)) == 0) {
-                $this->setQueryVar($parameter);
                 unset($this->m_buildQueryArray[$parameter]);
             }
         }
@@ -965,6 +995,11 @@ abstract class CampURI {
             $this->setQueryVar($parameter);
             unset($this->m_buildQueryArray[$parameter]);
         }
+    }
+
+
+    public static function GetPreviewParameters() {
+    	return CampURI::$m_previewParameters;
     }
 
 

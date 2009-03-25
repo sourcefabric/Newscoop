@@ -331,10 +331,12 @@ class CampURIShortNames extends CampURI
      *
      * @param array $p_params
      *      An array of valid URL parameters
+     * @param boolean $p_preview
+     *      If true, will keep the preview parameters in the URL
      *
      * @return void
      */
-    protected function buildURI(array &$p_params = array())
+    protected function buildURI(array &$p_params = array(), $p_preview = false)
     {
         if ($this->isValidCache()) {
             return;
@@ -346,22 +348,38 @@ class CampURIShortNames extends CampURI
             case 'language':
             case 'publication':
                 $this->m_buildPath = $this->getURILanguage();
-                $this->m_buildQueryArray = array();
+                if ($p_preview) {
+                    $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
+                } else {
+                	$this->m_buildQueryArray = array();
+                }
                 $p_params = array();
                 break;
             case 'issue':
                 $this->m_buildPath = $this->getURIIssue();
-                $this->m_buildQueryArray = array();
+                if ($p_preview) {
+                    $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
+                } else {
+                    $this->m_buildQueryArray = array();
+                }
                 $p_params = array();
                 break;
             case 'section':
                 $this->m_buildPath = $this->getURISection();
-                $this->m_buildQueryArray = array();
+                if ($p_preview) {
+                    $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
+                } else {
+                    $this->m_buildQueryArray = array();
+                }
                 $p_params = array();
                 break;
             case 'article':
                 $this->m_buildPath = $this->getURIArticle();
-                $this->m_buildQueryArray = array();
+                if ($p_preview) {
+                    $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
+                } else {
+                    $this->m_buildQueryArray = array();
+                }
                 $p_params = array();
                 break;
             case 'template':
@@ -375,7 +393,7 @@ class CampURIShortNames extends CampURI
                 if (!empty($parameter)) {
                     array_unshift($p_params, $parameter);
                     $count = count($p_params);
-                    parent::buildURI($p_params);
+                    parent::buildURI($p_params, $p_preview);
                     if (count($p_params) == $count) {
                         array_shift($p_params);
                     }

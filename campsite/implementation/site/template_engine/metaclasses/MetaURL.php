@@ -147,7 +147,8 @@ final class MetaURL
      */
     private function getURI()
     {
-        return $this->m_uriObj->getURI($this->m_uri_parameter);
+        return $this->m_uriObj->getURI($this->m_uri_parameter,
+        CampTemplate::singleton()->context()->preview);
     } // fn getURL
 
 
@@ -156,7 +157,8 @@ final class MetaURL
      */
     private function getURIPath()
     {
-        return $this->m_uriObj->getURIPath($this->m_uri_parameter);
+        return $this->m_uriObj->getURIPath($this->m_uri_parameter,
+        CampTemplate::singleton()->context()->preview);
     } // fn getURL
 
 
@@ -165,7 +167,8 @@ final class MetaURL
      */
     private function getURLParameters()
     {
-        return $this->m_uriObj->getURLParameters($this->m_uri_parameter);
+        return $this->m_uriObj->getURLParameters($this->m_uri_parameter,
+        CampTemplate::singleton()->context()->preview);
     } // fn getURL
 
 

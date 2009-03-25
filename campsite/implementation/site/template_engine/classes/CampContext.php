@@ -138,6 +138,7 @@ final class CampContext
             }
         }
 
+        $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview', 'off') == 'on';
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['subs_by_type'] = null;
 
