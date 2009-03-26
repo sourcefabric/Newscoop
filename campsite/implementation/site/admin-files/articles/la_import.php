@@ -116,6 +116,7 @@ if ($isValidXMLFile) {
 
     // Loads article data from XML file into database
     $errorMessages = array();
+    $articleCount = 0;
     foreach ($xml->article as $article) {
         $existingArticles = Article::GetByName((string) $article->name,
 					       $f_publication_id,
@@ -146,6 +147,9 @@ if ($isValidXMLFile) {
 	    camp_html_display_error(getGS('Article could not be created.'), $BackLink);
 	    exit;
 	}
+
+	// Number of articles successfully created in database
+	$articleCount++;
 
 	$articleTypeObj = $articleObj->getArticleData();
 	$dbColumns = $articleTypeObj->getUserDefinedColumns();
@@ -197,7 +201,7 @@ if ($isValidXMLFile) {
 	$articleObj->setKeywords((string) $article->keywords);
     }
 
-    camp_html_add_msg(getGS("Legacy archive imported."), "ok");
+    camp_html_add_msg(getGS("$1 articles successfully imported.", $articleCount), "ok");
 }
 
 
