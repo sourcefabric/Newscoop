@@ -228,9 +228,9 @@ class Article extends DatabaseObject {
 		if (!$success) {
 			return;
 		}
+        $this->fetch();
 		$this->setProperty('UploadDate', 'NOW()', true, true);
-		$this->fetch();
-
+		
 		// Insert an entry into the article type table.
 		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],

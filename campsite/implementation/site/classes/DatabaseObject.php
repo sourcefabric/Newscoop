@@ -420,6 +420,7 @@ class DatabaseObject {
 			$this->m_data[$this->m_keyColumnNames[0]] =
 				$g_ado_db->Insert_ID();
 		}
+		$this->resetCache();
 		return $success;
 	} // fn create
 
@@ -553,7 +554,7 @@ class DatabaseObject {
 			}
 		}
 		// If the value hasnt changed, dont update it.
-		if ($p_value == $this->m_data[$p_dbColumnName]) {
+		if ($p_value == $this->m_data[$p_dbColumnName] && !$p_isSql) {
 			return true;
 		}
 		// If we dont have the key to this row, we cant update it.
@@ -916,6 +917,23 @@ class DatabaseObject {
 	public function SetUseCache($p_useCache)
 	{
 		DatabaseObject::$m_useCache = $p_useCache;
+	}
+
+
+	public function resetCache()
+	{
+        if (!DatabaseObject::GetUseCache()) {
+            return false;
+        }
+
+        if (!$this->exists()) {
+            return false;
+        }
+
+        $cacheKey = $this->getCacheKey();
+        $cacheObj = CampCache::singleton();
+
+        return $cacheObj->delete($cacheKey);
 	}
 
 
