@@ -113,7 +113,7 @@ if ($g_user->hasPermission("AddArticle")) {
 
 if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
     $menu_item =& DynMenuItem::Create(getGS('Import legacy archive'), "/$ADMIN/articles/la_import.php",
-        array("icon" => sprintf($iconTemplateStr, "add_article.png")));
+        array("icon" => sprintf($iconTemplateStr, "import_archive.png")));
     $menu_actions->addItem($menu_item);
 }
 
@@ -179,7 +179,7 @@ $menu_item =& DynMenuItem::Create(getGS("Change your password"),
 $menu_actions->addItem($menu_item);
 
 if (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")) {
-    $menu_item =& DynMenuItem::Create(getGS("Clear System Cache"),
+    $menu_item =& DynMenuItem::Create(getGS("Clear system cache"),
         "/$ADMIN/home.php?clear_cache=yes",
         array("icon" => sprintf($iconTemplateStr, "actions.png")));
     $menu_actions->addItem($menu_item);
