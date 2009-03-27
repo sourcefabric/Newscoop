@@ -1,4 +1,25 @@
 <?php 
+regGS("You must select an article language.", "");
+regGS("You must select a publication.", "");
+regGS("You must select a file to upload.", "");
+regGS("You must select a XML input file.", "");
+regGS("You do not have the right to import legacy archves.", "");
+regGS("There was a problem uploading the file.", "");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
+regGS("The file exceeds the allowed max file size.", "");
+regGS("Overwrite existing articles", "");
+regGS("Optional", "");
+regGS("Input File", "");
+regGS("Import legacy archive", "");
+regGS("File is not a valid XML file.", "");
+regGS("File does not exist.", "");
+regGS("File could not be uploaded.", "");
+regGS("File could not be read.", "");
+regGS("Error List", "");
+regGS("Bad format in XML file.", "");
+regGS("Article could not be created.", "");
+regGS("---Select article type---", "");
+regGS("$1 articles successfully imported.", "");
 regGS("Saving, please wait...", "Захоўваецца, калі ласка пачакайце...");
 regGS("Saved", "Захавана");
 regGS("Save All", "Захаваць усё");
@@ -11,7 +32,7 @@ regGS("Download", "Загрузка");
 regGS("Creator", "Аўтар");
 regGS("Audioclips order saved.", "Парадак аўдыёкліпаў захаваны.");
 regGS("Audioclips", "Аўдыёкліпы");
-regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "");
+regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \'$1\' з гэтага артыкула?");
 regGS("Select location:", "Выбераце  месцазнаходжаньне:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Вы ня можаце мець два артыкулы ў адной рубрыцы з аднолькавай назвай. Азначаная назва ўжо выкарыстоўваецца артыкулам '$1'.");
 regGS("Visible to non-subscribers", "Вiдаць ня толькi падпiсчыкам");
@@ -128,8 +149,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \\'$1\\' з гэтага артыкула?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>

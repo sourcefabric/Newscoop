@@ -1,4 +1,5 @@
 <?php 
+regGS("Import legacy archive", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
 regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
@@ -16,7 +17,7 @@ regGS("There are currently no articles in statistics.", "");
 regGS("Publish date", "");
 regGS("Most Popular Articles", "");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
-regGS("Clear System Cache", "");
+regGS("Clear system cache", "");
 regGS("Campsite cache was cleaned up", "");
 regGS("The system was unable to upload the file '$1'. ", "Eroare la transferul fişierului '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Verificaţi validiteatea fişierului; ar putea fi corupt.");

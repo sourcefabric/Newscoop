@@ -1,4 +1,25 @@
 <?php 
+regGS("You must select an article language.", "");
+regGS("You must select a publication.", "");
+regGS("You must select a file to upload.", "");
+regGS("You must select a XML input file.", "");
+regGS("You do not have the right to import legacy archves.", "");
+regGS("There was a problem uploading the file.", "");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
+regGS("The file exceeds the allowed max file size.", "");
+regGS("Overwrite existing articles", "");
+regGS("Optional", "");
+regGS("Input File", "");
+regGS("Import legacy archive", "");
+regGS("File is not a valid XML file.", "");
+regGS("File does not exist.", "");
+regGS("File could not be uploaded.", "");
+regGS("File could not be read.", "");
+regGS("Error List", "");
+regGS("Bad format in XML file.", "");
+regGS("Article could not be created.", "");
+regGS("---Select article type---", "");
+regGS("$1 articles successfully imported.", "");
 regGS("Saving, please wait...", "Snimam, pričekajte...");
 regGS("Saved", "Sačuvano");
 regGS("Save All", "Sačuvaj sve");
@@ -122,8 +143,4 @@ regGS("No such section.", "Nema te rubrike.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 regGS("Are you sure you want to delete this scheduled action?", " ");
 regGS("Are you sure you want to remove the image '$1' from the article?", "Da li ste sigurni da želite da obrišete sliku $1 iz članka?");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Da li ste sigurni da želite da uklonite audio fajl \\'$1\\' iz članka?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite temu \\'$1\\'?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite fajl \\'$1\\'?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite sliku \\'$1\\'?");
 ?>

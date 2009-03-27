@@ -1,4 +1,5 @@
 <?php 
+regGS("Import legacy archive", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
 regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
@@ -16,7 +17,7 @@ regGS("There are currently no articles in statistics.", "Trenutno nema članaka 
 regGS("Publish date", "Datum objavljivanja");
 regGS("Most Popular Articles", "Najpopularniji članci");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Nije moguće povezati se na Kempkaster server, molimo Vas proverite postavke za Kempkaster server.");
-regGS("Clear System Cache", "Obriši sistemski keš");
+regGS("Clear system cache", "Obriši sistemski keš");
 regGS("Campsite cache was cleaned up", "Kempsajtov keš je obrisan");
 regGS("The system was unable to upload the file '$1'. ", "Sistem nije bio u stanju da uploaduje fajl '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Proverite fajl koji pokušavate da uploadujete, moguće je da je oštećen.");
