@@ -305,12 +305,11 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                 <?php if ($lockInfo) { ?>
 	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
 	            <?php } ?>
-			<?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
 			<?php
+			echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
 			p(htmlspecialchars($tmpArticle->getTitle()));
-			p(" (".htmlspecialchars($language->getNativeName()).")");
+			p(" (".htmlspecialchars($language->getNativeName()).")</a>");
 			?>
-			</A>
 			</TD>
 
 			<td align="center" valign="top">
@@ -771,12 +770,11 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                 <?php if ($lockInfo) { ?>
 	               <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
 	            <?php } ?>
-            <?php echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php"); ?>
             <?php
+            echo camp_html_article_link($tmpArticle, $section->getLanguageId(), "edit.php");
             p(htmlspecialchars($tmpArticle->getTitle()));
-            p(" (".htmlspecialchars($language->getNativeName()).")");
+            p(" (".htmlspecialchars($language->getNativeName()).")</a>");
             ?>
-            </A>
             </TD>
 
             <td align="center" valign="top">

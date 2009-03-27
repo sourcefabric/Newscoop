@@ -503,7 +503,7 @@ class Publication extends DatabaseObject {
 	 * @return array
 	 */
 	public function getLanguages($p_excludeLanguageId = null,
-	array $p_order = array(), $p_published = true)
+	array $p_order = array(), $p_published = false)
 	{
 		$queryStr = 'SELECT Languages.* FROM Issues LEFT JOIN Languages '
 		          . 'ON Issues.IdLanguage = Languages.Id WHERE '

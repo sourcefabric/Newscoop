@@ -502,7 +502,7 @@ class Issue extends DatabaseObject {
 	 */
 	public function getLanguages($p_getUnusedLanguagesOnly = false,
 	$p_excludeCurrent = true, array $p_order = array(), $p_allIssues = false,
-	$p_published = true)
+	$p_published = false)
 	{
 		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);

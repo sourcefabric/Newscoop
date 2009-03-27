@@ -118,12 +118,38 @@ class Article extends DatabaseObject {
 	public function Article($p_languageId = null, $p_articleNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['Number'] = $p_articleNumber;
+		$this->m_data['IdLanguage'] = (int)$p_languageId;
+		$this->m_data['Number'] = (int)$p_articleNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
+
+
+    /**
+     * Fetch a single record from the database for the given key.
+     *
+     * @param array $p_recordSet
+     *      If the record has already been fetched and we just need to
+     *      assign the data to the object's internal member variable.
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    public function fetch($p_recordSet = null)
+    {
+    	$res = parent::fetch($p_recordSet);
+        settype($this->m_data['IdPublication'], 'integer');
+        settype($this->m_data['NrIssue'], 'integer');
+        settype($this->m_data['NrSection'], 'integer');
+        settype($this->m_data['IdLanguage'], 'integer');
+        settype($this->m_data['Number'], 'integer');
+        settype($this->m_data['IdUser'], 'integer');
+        settype($this->m_data['fk_default_author_id'], 'integer');
+        settype($this->m_data['LockUser'], 'integer');
+        settype($this->m_data['ArticleOrder'], 'integer');
+        return $res;
+    }
 
 
 	/**
@@ -170,9 +196,9 @@ class Article extends DatabaseObject {
 		    && ($p_publicationId > 0)
 		    && ($p_issueNumber > 0)
 		    && ($p_sectionNumber > 0) ) {
-			$values['IdPublication'] = $p_publicationId;
-			$values['NrIssue'] = $p_issueNumber;
-			$values['NrSection'] = $p_sectionNumber;
+			$values['IdPublication'] = (int)$p_publicationId;
+			$values['NrIssue'] = (int)$p_issueNumber;
+			$values['NrSection'] = (int)$p_sectionNumber;
 		}
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
@@ -233,7 +259,7 @@ class Article extends DatabaseObject {
 			// If we were not able to get an ID.
 			return 0;
 		}
-		return $g_ado_db->Insert_ID();
+		return (int)$g_ado_db->Insert_ID();
 	} // fn __generateArticleNumber
 
 
@@ -299,11 +325,11 @@ class Article extends DatabaseObject {
 		foreach ($copyArticles as $copyMe) {
     		// Construct the duplicate article object.
     		$articleCopy = new Article();
-    		$articleCopy->m_data['IdPublication'] = $p_destPublicationId;
-    		$articleCopy->m_data['NrIssue'] = $p_destIssueNumber;
-    		$articleCopy->m_data['NrSection'] = $p_destSectionNumber;
-    		$articleCopy->m_data['IdLanguage'] = $copyMe->m_data['IdLanguage'];
-    		$articleCopy->m_data['Number'] = $newArticleNumber;
+    		$articleCopy->m_data['IdPublication'] = (int)$p_destPublicationId;
+    		$articleCopy->m_data['NrIssue'] = (int)$p_destIssueNumber;
+    		$articleCopy->m_data['NrSection'] = (int)$p_destSectionNumber;
+    		$articleCopy->m_data['IdLanguage'] = (int)$copyMe->m_data['IdLanguage'];
+    		$articleCopy->m_data['Number'] = (int)$newArticleNumber;
     		$values = array();
     		// Copy some attributes
     		$values['ShortName'] = $newArticleNumber;
@@ -385,13 +411,13 @@ class Article extends DatabaseObject {
 	{
 		$columns = array();
 		if ($this->m_data["IdPublication"] != $p_destPublicationId) {
-			$columns["IdPublication"] = $p_destPublicationId;
+			$columns["IdPublication"] = (int)$p_destPublicationId;
 		}
 		if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
-			$columns["NrIssue"] = $p_destIssueNumber;
+			$columns["NrIssue"] = (int)$p_destIssueNumber;
 		}
 		if ($this->m_data["NrSection"] != $p_destSectionNumber) {
-			$columns["NrSection"] = $p_destSectionNumber;
+			$columns["NrSection"] = (int)$p_destSectionNumber;
 		}
 		$success = false;
 		if (count($columns) > 0) {
@@ -638,7 +664,7 @@ class Article extends DatabaseObject {
 	 * @return array
 	 */
 	public function getLanguages($p_excludeCurrent = false, array $p_order = array(),
-	$p_published = true)
+	$p_published = false)
 	{
 		if (!$this->exists()) {
 			return array();
@@ -914,7 +940,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getPublicationId()
 	{
-		return $this->m_data['IdPublication'];
+		return (int)$this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
@@ -927,7 +953,7 @@ class Article extends DatabaseObject {
 	public function setPublicationId($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('IdPublication', $p_value);
+			return $this->setProperty('IdPublication', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -941,7 +967,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getIssueNumber()
 	{
-		return $this->m_data['NrIssue'];
+		return (int)$this->m_data['NrIssue'];
 	} // fn getIssueNumber
 
 
@@ -954,7 +980,7 @@ class Article extends DatabaseObject {
 	public function setIssueNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('NrIssue', $p_value);
+			return $this->setProperty('NrIssue', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -968,7 +994,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getSectionNumber()
 	{
-		return $this->m_data['NrSection'];
+		return (int)$this->m_data['NrSection'];
 	} // fn getSectionNumber
 
 
@@ -981,7 +1007,7 @@ class Article extends DatabaseObject {
 	public function setSectionNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('NrSection', $p_value);
+			return $this->setProperty('NrSection', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -995,7 +1021,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getLanguageId()
 	{
-		return $this->m_data['IdLanguage'];
+		return (int)$this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -1010,7 +1036,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getArticleNumber()
 	{
-		return $this->m_data['Number'];
+		return (int)$this->m_data['Number'];
 	} // fn getArticleNumber
 
 
@@ -1077,7 +1103,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getCreatorId()
 	{
-		return $this->m_data['IdUser'];
+		return (int)$this->m_data['IdUser'];
 	} // fn getCreatorId
 
 
@@ -1089,7 +1115,7 @@ class Article extends DatabaseObject {
      */
     public function setCreatorId($p_value)
     {
-        return parent::setProperty('IdUser', $p_value);
+        return parent::setProperty('IdUser', (int)$p_value);
     } // fn setCreatorId
 
 
@@ -1099,7 +1125,7 @@ class Article extends DatabaseObject {
      */
     public function getAuthorId()
     {
-        return $this->m_data['fk_default_author_id'];
+        return (int)$this->m_data['fk_default_author_id'];
     } // fn getAuthorId
 
 
@@ -1111,7 +1137,7 @@ class Article extends DatabaseObject {
      */
     public function setAuthorId($p_value)
     {
-        return parent::setProperty('fk_default_author_id', $p_value);
+        return parent::setProperty('fk_default_author_id', (int)$p_value);
     } // fn setAuthorId
 
 
