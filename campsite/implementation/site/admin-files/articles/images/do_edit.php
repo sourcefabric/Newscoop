@@ -60,7 +60,8 @@ if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 
 if ($g_user->hasPermission('AttachImageToArticle')) {
 	if (is_numeric($f_image_template_id) && ($f_image_template_id > 0)) {
-		$updated = ArticleImage::SetTemplateId($f_article_number, $f_image_id, $f_image_template_id);
+		$articleImageObj = new ArticleImage($f_article_number, $f_image_id);
+		$updated = $articleImageObj->setTemplateId($f_image_template_id);
 		if ($updated == false) {
 			camp_html_add_msg(getGS("Image number '$1' already exists", $f_image_template_id));
 			camp_html_goto_page($backLink);

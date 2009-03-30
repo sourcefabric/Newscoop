@@ -99,6 +99,19 @@ class ArticleImage extends DatabaseObject {
 	} // fn getImage
 
 
+    /**
+     * This call will only work for entries that already exist.
+     *
+     * @param int $p_templateId
+     *
+     * @return boolean
+     */
+    public function setTemplateId($p_templateId)
+    {
+        return $this->setProperty('Number', $p_templateId);
+    } // fn setTemplateId
+
+
 	/**
 	 * Get a free Template ID.
 	 * @param int $p_articleNumber
@@ -211,24 +224,6 @@ class ArticleImage extends DatabaseObject {
 		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
 		Log::Message($logtext, null, 41);
 	} // fn AddImageToArticle
-
-
-	/**
-	 * This call will only work for entries that already exist.
-	 *
-	 * @param int $p_articleNumber
-	 * @param int $p_imageId
-	 * @param int $p_templateId
-	 *
-	 * @return void
-	 */
-	public static function SetTemplateId($p_articleNumber, $p_imageId, $p_templateId)
-	{
-		global $g_ado_db;
-		$queryStr = "UPDATE ArticleImages SET Number=$p_templateId"
-					." WHERE NrArticle=$p_articleNumber AND IdImage=$p_imageId";
-		return $g_ado_db->Execute($queryStr);
-	} // fn SetTemplateId
 
 
 	/**
