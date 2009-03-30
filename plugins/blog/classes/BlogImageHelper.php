@@ -4,9 +4,12 @@ class BlogImageHelper {
     {
         $format_prefs = SystemPref::Get("PLUGIN_BLOG_IMAGE_DERIVATES");
         
-        foreach (explode("\n", $format_prefs) as $format) {
-            list ($width, $height) = explode('x', $format);
-            $formats[trim($width)] = trim($height);      
+        if (strlen($format_prefs)) {
+            foreach (explode("\n", $format_prefs) as $format) {
+                if (preg_match('/([0-9]*) *[xX] *([0-9]*)/', $format, $matched)) {
+                    $formats[] = array('width' => $matched[1], 'height' => $matched[2]);
+                }   
+            }
         }
         return (array) $formats;
     }
@@ -15,7 +18,9 @@ class BlogImageHelper {
     {
         global $Campsite;
         
-        foreach (BlogImageHelper::GetImageFormats() as $width => $height) {
+        foreach (BlogImageHelper::GetImageFormats() as $format) {
+            $width = $format['width'];
+            $height = $format['height'];
             $path[$width.'x'.$height] = $Campsite['IMAGE_DIRECTORY']."plugin_blog/$p_object_type/{$width}x{$height}/image_{$p_object_id}.png";
             
             $url[$width.'x'.$height] = $Campsite['IMAGE_BASE_URL']."plugin_blog/$p_object_type/{$width}x{$height}/image_{$p_object_id}.png";
