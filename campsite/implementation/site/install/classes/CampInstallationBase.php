@@ -122,7 +122,7 @@ class CampInstallationBase
             }
             if ($this->finish()) {
                 $this->saveConfiguration();
-                self::EnablePlugins();
+                self::InstallPlugins();
             }
             break;
         }
@@ -561,7 +561,7 @@ class CampInstallationBase
         }
     }
     
-    private static function EnablePlugins()
+    private static function InstallPlugins()
     {
         global $g_documentRoot;
         
@@ -572,7 +572,7 @@ class CampInstallationBase
             $CampPlugin = new CampPlugin($info['name']);
             $CampPlugin->create($info['name'], $info['version']);
             $CampPlugin->install();
-            $CampPlugin->enable();
+            $CampPlugin->disable();
             
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
                 call_user_func("plugin_{$info['name']}_addPermissions");
