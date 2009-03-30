@@ -145,7 +145,6 @@ class LanguagesList extends ListObject
     				break;
                 case 'of_publication':
                 case 'of_issue':
-                case 'of_section':
                 case 'of_article':
                 case 'exclude_current':
                 	$value = isset($value) && strtolower($value) != 'false';
