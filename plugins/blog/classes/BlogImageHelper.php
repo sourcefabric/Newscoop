@@ -32,9 +32,9 @@ class BlogImageHelper {
         }
 
         if ($p_as_url) {
-            return $url;    
+            return (array) $url;    
         } else {
-            return $path;
+            return (array) $path;
         }
     }
     
