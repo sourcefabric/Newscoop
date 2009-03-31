@@ -3,12 +3,8 @@
 			          <td colspan="2" bgcolor="#FFFFFF"><img src="/templates/img/servis-top.gif"></td>
 			        </tr>
 	{{ local }}
-        {{ set_publication name="dynamic" }}
-        {{ unset_issue }}
-        {{ unset_article }}
         {{ list_sections constraints="number greater 99" }}
-        {{ if $campsite->section->number == 230 }}
-        {{ else }}
+        {{ if $campsite->section->number != 230 }}
 			        <tr>
 					  <td width="1" bgcolor="#DDDDDD"></td>
 			          <td class="servis" 

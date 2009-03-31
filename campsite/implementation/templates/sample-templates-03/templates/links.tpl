@@ -5,10 +5,9 @@
 </table>
 <table style="border: 1px solid #666666" width="100%" cellpadding="0" cellspacing="0" border="0">
 {{ local }}
-{{ set_publication name="dynamic" }}
 {{ unset_issue }}
 {{ set_section number="230" }}
-{{ list_articles constraints="type is link" order="bynumber desc" }}
+{{ list_articles constraints="type is Link" order="bynumber desc" }}
 			  <tr>
 			    <td style="border-bottom: 1px solid #666666"><p class="link"><a class="crno-podvuceno" href="http://{{ $campsite->article->url }}">{{ $campsite->article->name }}</a></p></td>
 			  </tr>					  			  	

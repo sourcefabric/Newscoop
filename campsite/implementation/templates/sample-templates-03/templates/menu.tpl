@@ -3,10 +3,7 @@
     <td bgcolor="#7F7F7F"><p class="navig-belo">Sections</p></td>
   </tr>
 	{{ local }}
-        {{ set_publication name="dynamic" }}
-        {{ set_issue current }}
-        {{ unset_section }}
-        {{ unset_article }}
+        {{ set_current_issue }}
         {{ list_sections constraints="number smaller 99" }}
   <tr>
     <td class="navigacija"><p class="navig-crno"><a class="navig" href="{{ uri options="reset_article_list" }}">{{ $campsite->section->name }}</a></p></td>

@@ -5,10 +5,7 @@
 	          <tr>
 		        <td><img src="/templates/img/strelica1.gif" height="14" width="14" border="0"></td>
      	{{ local }}
-        {{ set_publication name="dynamic" }}
         {{ unset_issue }}
-        {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections constraints="number greater 100" }}
         {{ if $campsite->section->number == 230 }}
         {{ else }}
@@ -46,10 +43,8 @@
 		    <table cellpadding="0" cellspacing="0" border="0">
 			  <tr>
         {{ local }}
-        {{ set_publication name="dynamic" }}
-        {{ set_issue current }}
+        {{ set_current_issue }}
         {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections constraints="number smaller 200" }}
 			    <td><span class="hor-bar"><a class="hor-bar" href="{{ uri options="reset_article_list" }}">{{ $campsite->section->name }}</a></span></td>
 				<td width="1"><img src="/templates/img/vert-siv-horbar.gif"></td>

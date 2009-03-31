@@ -10,10 +10,8 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 	    <tr>
 		  <td width="300" height="35" align="right" bgcolor="#C2C2C2">
               {{ local }}
-                          {{ set_publication name="dynamic" }}
-                          {{ set_issue current }}
+                          {{ set_current_issue }}
                           {{ unset_section }}
-                          {{ unset_article }}
 
             <form class="form" name="sadrzaj" style="margin:0;padding:0;">
               <select style="margin: 0px 0px 0px 0px" name="sadrzaj" onChange="MM_jumpMenu('parent',this,1)">

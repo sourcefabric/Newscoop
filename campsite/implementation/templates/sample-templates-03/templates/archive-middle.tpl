@@ -10,7 +10,6 @@
     <td valign="top">
       <p class="tekst-front"><b></b><a class="dalje" href="{{ uripath options="issue" }}">{{ $campsite->issue->name }}, dated {{ $campsite->issue->date->%w, %m %y }}</a></b></p>
       {{ local }}
-      {{ set_publication name="dynamic" }}
       {{ unset_section }}
       {{ list_articles constraints="type is Article" }}
 
