@@ -64,9 +64,11 @@ class IssuesList extends ListObject
 	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
-	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;
+	    if ($context->language->defined) {
+            $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
+	                                                       $context->language->number);
+            $this->m_constraints[] = $comparisonOperation;
+	    }
 	    if (!$context->preview) {
 	        $comparisonOperation = new ComparisonOperation('published', $operator, 'true');
     	    $this->m_constraints[] = $comparisonOperation;

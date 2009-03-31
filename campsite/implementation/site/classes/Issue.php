@@ -729,7 +729,6 @@ class Issue extends DatabaseObject {
         global $g_ado_db;
 
         $hasPublicationId = false;
-        $hasLanguageId = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
 
@@ -741,9 +740,6 @@ class Issue extends DatabaseObject {
             }
             if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
                 $hasPublicationId = true;
-            }
-            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
-                $hasLanguageId = true;
             }
 
             $whereCondition = $comparisonOperation['left'] . ' '
@@ -759,13 +755,7 @@ class Issue extends DatabaseObject {
                 .'Identifier in statement list_topics');
             return;
         }
-        // validates whether language identifier was given
-/*        if ($hasLanguageId == false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Language '
-                .'Identifier in statement list_topics');
-            return;
-        }
-*/
+
         // sets the columns to be fetched
         $tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
@@ -788,6 +778,9 @@ class Issue extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
+
+        $selectClauseObj->addGroupField('Number');
+        $selectClauseObj->addGroupField('IdLanguage');
 
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
