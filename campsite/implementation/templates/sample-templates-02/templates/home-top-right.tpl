@@ -1,5 +1,5 @@
 <table width="100%" cellspacing="0" cellpadding="0">
-{{ list_articles length="2" constraints="type is Article topic is Home right:en" }}
+{{ list_articles length="2" constraints="type is Article topic is Home\ right:en" }}
               <tr>
                 <td>
 			      <p class="nadnaslov">{{ $campsite->article->deck }}</p>

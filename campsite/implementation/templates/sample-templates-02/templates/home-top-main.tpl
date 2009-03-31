@@ -1,4 +1,4 @@
-{{ list_articles length="1" constraints="type is Article topic is Home main:en" }}
+{{ list_articles length="1" constraints="type is Article topic is Home\ main:en" }}
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 			  <tr>
                 <td valign="top">

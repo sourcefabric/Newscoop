@@ -11,7 +11,6 @@
     <td valign="top">
       <p class="naslov"><b></b><a class="naslov" href="{{ uripath options="issue" }}">{{ $campsite->issue->name }}, dated {{ $campsite->issue->date|camp_date_format:"%W, %M %Y" }}</a></b></p>
       {{ local }}
-      {{ set_publication name="Dynamic" }}
       {{ unset_section }}
       {{ list_articles constraints="type is Article" }}
 
