@@ -46,9 +46,9 @@ $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 $campsite->initSession();
 
 // upgrading the database
-$res = camp_upgrade_database($Campsite['DATABASE_NAME']);
+$res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
 if ($res !== 0) {
-    display_upgrade_error("while upgrading the database: $res");
+    display_upgrade_error("While upgrading the database: $res");
 }
 
 CampRequest::SetVar('step', 'finish');

@@ -175,7 +175,10 @@ $outDumpFile = $Campsite['DATABASE_NAME'].'-database-utf8.sql';
 camp_change_dump_encoding($dumpFile, $outDumpFile, $charset);
 camp_restore_database($outDumpFile, $silent);
 $skipped = array();
-camp_utf8_convert(null, $skipped);
+$res = camp_utf8_convert(null, $skipped);
+if ($res !== true) {
+    camp_exit_with_error($res);
+}
 unlink($dumpFile);
 unlink($outDumpFile);
 
