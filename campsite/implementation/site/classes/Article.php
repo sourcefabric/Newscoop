@@ -567,14 +567,14 @@ class Article extends DatabaseObject {
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 
-		// Delete row from Articles table.
-		$deleted = parent::delete();
-
 		// Delete row from article type table.
 		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
+
+        // Delete row from Articles table.
+        $deleted = parent::delete();
 
 		if ($deleted) {
 			if (function_exists("camp_load_translation_strings")) {
