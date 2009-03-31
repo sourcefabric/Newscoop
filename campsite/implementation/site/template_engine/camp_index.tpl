@@ -1105,25 +1105,25 @@
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Subtitles Count:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->subtitles_count('Full_text') }}
+    {{ $campsite->article->subtitles_count("Full_text") }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->subtitles_count('Full_text') }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->subtitles_count("Full_text") }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Translated to:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->translated_to('ro') }}
+    {{ $campsite->article->translated_to("ro") }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->translated_to('ro') }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->translated_to("ro") }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
   <td bgcolor="#d4ffa2" nowrap valign="top">Has Keyword:</td>
   <td bgcolor="#d4ffa2" valign="top">
-    {{ $campsite->article->has_keyword('fsf') }}
+    {{ $campsite->article->has_keyword("fsf") }}
   </td>
-  <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_keyword('fsf') }}{{ /literal }}</td>
+  <td nowrap valign="top">{{ literal }}{{ $campsite->article->has_keyword("fsf") }}{{ /literal }}</td>
   <td nowrap valign="top">custom</td>
 </tr>
 <tr>
