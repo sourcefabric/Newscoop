@@ -33,8 +33,8 @@
 		<ul>
 	{{ /if }}
 
-	<li><b><a href="/tpl/fastnews/article.tpl?{{ urlparameters }}">
-	{{ $campsite->article->name }}</a></b>{{ if ! $campsite->article->content_accesible }} <img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}<br>
+	<li><b><a href="{{ uri options="template fastnews/article.tpl" }}">
+	{{ $campsite->article->name }}</a></b>{{ if ! $campsite->article->content_accessible }} <img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}<br>
 	{{ if $campsite->article->type_name == "extended" }}
 		<i>{{ $campsite->article->author }}</i>, {{ $campsite->article->date|camp_date_format:"%W, %M %e %Y" }}
 	{{ /if }}

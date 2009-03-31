@@ -3,7 +3,7 @@
 <h2>{{ $campsite->article->name }}</h2>
 {{ $campsite->article->date|camp_date_format:"%W, %M %e %Y" }}
 
-{{ if $campsite->article->content_accesible }}
+{{ if $campsite->article->content_accessible }}
   
     {{ list_subtitles }}
       {{ $campsite->article->body }}

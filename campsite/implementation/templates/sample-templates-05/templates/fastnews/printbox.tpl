@@ -6,7 +6,7 @@
 <script src="/printbox/popup.js"></script>
 
 {{ if $campsite->article->defined }}
-	{{ if $campsite->article->content_accesible }}
+	{{ if $campsite->article->content_accessible }}
 	<!--
 	if you want to change the look of printbox, you 
 	must change this template (for non-JS users) 

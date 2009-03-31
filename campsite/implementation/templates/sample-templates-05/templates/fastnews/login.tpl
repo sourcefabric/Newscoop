@@ -28,8 +28,7 @@
 
 <p>If you don't have a username and password, you'll need to <b>subscribe</b> before you can access certain content:</p>
 
-<p class="opt"><a href="{{ uri options="template useradd.tpl" }}&SubsType=trial">Free trial subscription</a></p>
-<p class="opt"><a href="{{ uri options="template useradd.tpl" }}&SubsType=paid">Buy a full subscription</a></p>
+<p class="opt"><a href="{{ uri options="template fastnews/useredit.tpl" }}">Subscribe</a></p>
 
 {{ include file="fastnews/footer.tpl" }}
 </body>

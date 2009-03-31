@@ -26,7 +26,7 @@
 
 		<item>
 			<title>{{ $campsite->article->name }}</title>
-			<description>{{ $campsite->article->intro }}{{ if ! $campsite->article->content_accesible }} <img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}</description>
+			<description>{{ $campsite->article->intro }}{{ if ! $campsite->article->content_accessible }} <img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}</description>
 			<link>http://%{SERVER}/tpl/fastnews/article.tpl?{{ urlparameters }}</link>
 			<pubDate>{{ $campsite->article->date }}</pubDate>
 		</item>

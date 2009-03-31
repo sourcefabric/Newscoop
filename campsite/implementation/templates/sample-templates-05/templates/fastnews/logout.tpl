@@ -1,5 +1,9 @@
-{{  }}
-
+{{ if $campsite->url->get_parameter('logout') == 'true' }}
+<META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserId=; path=/">
+<META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserKey=; path=/">
+{{ $campsite->url->reset_parameter('logout') }}
+<META HTTP-EQUIV="Refresh" content="0;url={{ uri }}">
+{{ /if }}
 {{ include file="fastnews/utility-header.tpl" }}
 
 <div class=rightfloat>

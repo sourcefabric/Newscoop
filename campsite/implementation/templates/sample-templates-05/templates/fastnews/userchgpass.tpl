@@ -1,3 +1,5 @@
+{{ include file="fastnews/htmlheader.tpl" }}
+
 {{ include file="fastnews/utility-header.tpl" }}
 
 <div class=rightfloat>

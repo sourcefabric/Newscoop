@@ -5,7 +5,7 @@
 	<address>{{ $campsite->article->author }}<br>
 	{{ $campsite->article->date|camp_date_format:"%W, %M %e %Y" }}</address>
 
-	{{ if $campsite->article->content_accesible }}
+	{{ if $campsite->article->content_accessible }}
 		
 		
 			{{ $campsite->article->text }}

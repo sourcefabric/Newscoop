@@ -6,9 +6,9 @@
 <ul>
 {{ list_sections }}
 {{ if $campsite->default_section == $campsite->section }}
-	<li><b><a href="/tpl/fastnews/section.tpl?{{ urlparameters options="section reset_article_list" }}">{{ $campsite->section->name }}</a></b>
+	<li><b><a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a></b>
 {{ else }}
-	<li><a href="/tpl/fastnews/section.tpl?{{ urlparameters options="section reset_article_list" }}">{{ $campsite->section->name }}</a>
+	<li><a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>
 {{ /if }}
 {{ /list_sections }}
 </ul>

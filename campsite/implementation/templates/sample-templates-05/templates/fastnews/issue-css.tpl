@@ -98,7 +98,7 @@
 The following articles were marked as 'Show article on front page' by the journalist. This template contains the 'List article OnFrontPage is on' command.
 {{ /if }}
 
-{{ if $campsite->article->translated_to == "ro" }}
+{{ if $campsite->article->translated_to("ro") }}
 <div class="small-sans-serif-text"><p>This article is translated into Romanian
 {{ /if }}</p></div>
 

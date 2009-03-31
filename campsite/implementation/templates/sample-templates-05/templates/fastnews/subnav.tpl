@@ -1,4 +1,4 @@
-{{ if $campsite->article->content_accesible }}
+{{ if $campsite->article->content_accessible }}
 
 {{ local }}
 
@@ -12,14 +12,14 @@
 			{{ /if }}
 	
 			{{ if $campsite->subtitle->number == $campsite->article->body->subtitle_number }}
-				<li value="{{ $campsite->list->index }}">{{ $campsite->subtitle->name }}</li>
+				<li value="{{ $campsite->current_list->index }}">{{ $campsite->subtitle->name }}</li>
 			{{ else }}
-				<li value="{{ $campsite->list->index }}"><a href="{{ uri }}">{{ $campsite->subtitle->name }}</a></li>
+				<li value="{{ $campsite->current_list->index }}"><a href="{{ uri }}">{{ $campsite->subtitle->name }}</a></li>
 			{{ /if }}
 	
 			{{ if $campsite->current_list->at_end }}
 				</ol>
-				<p class=opt><small><a href="{{ uri options="template article-complete.tpl" }}">single page view</a></small></p>
+				<p class=opt><small><a href="{{ uri options="template fastnews/article-complete.tpl" }}">single page view</a></small></p>
 				</div>
 			{{ /if }}
 		{{ /list_subtitles }}
@@ -36,9 +36,9 @@
 			{{ /if }}
 	
 			{{ if $campsite->subtitle->number == $campsite->article->text->subtitle_number }}
-				<li value="{{ $campsite->list->index }}">{{ $campsite->subtitle->name }}</li>
+				<li value="{{ $campsite->current_list->index }}">{{ $campsite->subtitle->name }}</li>
 			{{ else }}
-				<li value="{{ $campsite->list->index }}"><a href="{{ uri }}">{{ $campsite->subtitle->name }}</a></li>
+				<li value="{{ $campsite->current_list->index }}"><a href="{{ uri }}">{{ $campsite->subtitle->name }}</a></li>
 			{{ /if }}
 	
 			{{ if $campsite->current_list->at_end }}

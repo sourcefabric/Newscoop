@@ -8,7 +8,7 @@ div.subheads{ width:150pt; border: solid 2pt #BB2233; padding:5pt;margin-top:10p
 div.subheads ol{padding-left:1.5em; font-size:small}
 div.subheads ol b{font-weight:normal}
 
-div.nextprev {text-alignment:center}
+div.nextprev {text-align:center}
 hr.endart { clear:both }
 h1 { padding-top:15pt; margin-top:0 }
 

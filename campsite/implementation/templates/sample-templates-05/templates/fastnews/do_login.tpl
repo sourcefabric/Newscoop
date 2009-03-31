@@ -17,6 +17,7 @@
 {{ include file="fastnews/utility-header.tpl" }}
 {{ include file="fastnews/userinfo.tpl" }}
 <h1>Login failed</h1>
+<p>{{ $campsite->login_action->error_message }}</p>
 <p>Sorry, your username and/or password were incorrect. Please go back and try again.</p>
 {{ include file="fastnews/footer.tpl" }}
 </body>

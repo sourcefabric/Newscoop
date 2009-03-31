@@ -1,4 +1,4 @@
-{{ user_form template="userchgpass.tpl" submit_button="Submit" }}
+{{ user_form template="fastnews/userchgpass.tpl" submit_button="Submit" }}
 <p>Change password for {{ $campsite->user->name }}, login {{ $campsite->user->uname }}.
 <table>
 <tr><td>Password:</td><td>{{ camp_edit object="user" attribute="password" }}</td></tr>

@@ -6,9 +6,9 @@
 <ul>
 {{ list_sections }}
 {{ if $campsite->default_section == $campsite->section }}
-	<li><b><a href="/tpl/fastnews/section.tpl?{{ urlparameters options="section reset_article_list" }}">{{ $campsite->section->name }}</a></b>
+	<li><b><a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a></b>
 {{ else }}
-	<li><a href="/tpl/fastnews/section.tpl?{{ urlparameters options="section reset_article_list" }}">{{ $campsite->section->name }}</a>
+	<li><a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>
 {{ /if }}
 {{ /list_sections }}
 </ul>
@@ -17,9 +17,9 @@
 <ul>
 {{ list_articles }}
 {{ if $campsite->default_article == $campsite->article }}
-	<li>{{ $campsite->article->name }}{{ if ! $campsite->article->content_accesible }}&nbsp;<img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}
+	<li>{{ $campsite->article->name }}{{ if ! $campsite->article->content_accessible }}&nbsp;<img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}
 {{ else }}
-	<li><a href="{{ uri options="article reset_subtitle_list" }}">{{ $campsite->article->name }}</a>{{ if ! $campsite->article->content_accesible }}&nbsp;<img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}
+	<li><a href="{{ uri options="article" }}">{{ $campsite->article->name }}</a>{{ if ! $campsite->article->content_accessible }}&nbsp;<img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">{{ /if }}
 {{ /if }}
 {{ /list_articles }}
 </ul>

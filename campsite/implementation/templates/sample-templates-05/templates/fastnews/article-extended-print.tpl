@@ -5,7 +5,7 @@
 {{ $campsite->article->date|camp_date_format:"%W, %M %e %Y" }}</address>
 
 stuff...
-{{ if $campsite->article->content_accesible }}
+{{ if $campsite->article->content_accessible }}
 	
 		{{ list_subtitles }}
 			{{ $campsite->article->text }}

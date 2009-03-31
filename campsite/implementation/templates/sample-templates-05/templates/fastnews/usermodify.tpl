@@ -1,3 +1,5 @@
+{{ include file="fastnews/htmlheader.tpl" }}
+
 {{ include file="fastnews/utility-header.tpl" }}
 
 <div class=rightfloat>
@@ -13,10 +15,10 @@
 		<p>User information was updated.
 		{{ else }}
 		<p>There was an error on user info: {{ $campsite->edit_user_action->error_message }}
-		{{ include file="fastnews/usermodifyform.tpl" }}
+		{{ include file="fastnews/usereditform.tpl" }}
 		{{ /if }}
 	{{ else }}
-	{{ include file="fastnews/usermodifyform.tpl" }}
+	{{ include file="fastnews/usereditform.tpl" }}
 	{{ /if }}
 {{ else }}
 	<p>You are not logged in and not allowed to change user info.

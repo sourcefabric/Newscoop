@@ -5,7 +5,7 @@
 	<h1>{{ $campsite->article->name }}</h1>
 	<address>{{ $campsite->article->date|camp_date_format:"%W, %e %M %Y" }}</address>
 
-	{{ if $campsite->article->content_accesible }}
+	{{ if $campsite->article->content_accessible }}
 		
 			
 			{{ $campsite->article->body }}

@@ -5,7 +5,7 @@
 <h4>Sections</h4>
 <ul>
 {{ list_sections }}
-<li><a href="/tpl/fastnews/section.tpl?{{ urlparameters options="section reset_article_list" }}">{{ $campsite->section->name }}</a></li>
+<li><a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a></li>
 {{ /list_sections }}
 </ul>
 

@@ -6,7 +6,7 @@
 <table bgcolor=white width=800>
 <tr bgcolor=white>
 	<td align=center><h1>{{ $campsite->publication->name }}</h1></td>
-	<td><h2>{{ $campsite->issue->name }} (#{{ $campsite->issue->number }}) {{ if $campsite->issue->is_current }} (current issue){{ /if }}</h2> on {{ $smarty.now|camp_date_format:"%W, %M %e %Y" }}</td>
+	<td><h2>{{ $campsite->issue->name }}ï¿½(#{{ $campsite->issue->number }}) {{ if $campsite->issue->is_current }} (current issue){{ /if }}</h2> on {{ $smarty.now|camp_date_format:"%W, %M %e %Y" }}</td>
 	<td align=right>{{ include file="fastnews/userinfo.tpl" }}</td>
 </tr>
 <tr bgcolor=white><td colspan=3><hr></td></tr>
@@ -25,7 +25,7 @@
 	<tr>
 		<td>
 		<b>Search articles</b>
-		{{ search_form template="search.tpl" submit_button="Search" }}
+		{{ search_form template="fastnews/search.tpl" submit_button="Search" }}
 			<p>{{ camp_edit object="search" attribute="keywords" }} <p>{{ camp_select object="search" attribute="mode" }} match all keywords<p>
 		{{ /search_form }}
 		</td>
@@ -45,7 +45,7 @@
 		<ul>
 		<ul>
 	{{ /if }}
-	{{ if $campsite->article->translated_to == "ro" }}
+	{{ if $campsite->article->translated_to("ro") }}
 	<p>This article is translated into Romanian
 	{{ /if }}
 	<li><b><a href="{{ uri options="reset_subtitle_list" }}">
