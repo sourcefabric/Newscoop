@@ -116,28 +116,29 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         break;
 
     case 'subscription':
-        if ($attribute == 'languages') {
-            $sqlQuery = "SELECT l.Id, l.OrigName "
-                ."FROM Issues as i, Languages as l "
-                ."WHERE  i.IdLanguage = l.Id and i.IdPublication = "
-                .$campsite->publication->identifier
-                ." GROUP BY l.Id";
-            $data = $g_ado_db->GetAll($sqlQuery);
-            foreach ($data as $language) {
-                $output[] = $language['OrigName'];
-                $values[] = $language['Id'];
+    	$subsType = strtolower(CampRequest::GetVar('SubsType'));
+    	if ($subsType != 'trial' && $subsType != 'paid') {
+    		return null;
+    	}
+    	if ($attribute == 'languages') {
+            $publicationLanguages = $campsite->publication->languages_list(false);
+            foreach ($publicationLanguages as $language) {
+                $output[] = $language->name;
+                $values[] = $language->number;
             }
             $selectTag = true;
-            $html = '<select name="subscription_language[]" '
-                .'size="3" ' // TODO set the size value
-                .' ' // TODO set multipleability
-                .'onchange="update_subscription_payment();" '
-                .'id="select_language" ' . $p_params['html_code'] . '>';
+            $html = '<select name="subscription_language[]" multiple size="3" ';
+            if ($subsType == 'paid') {
+                $html .= 'onchange="update_subscription_payment();" ';
+            }
+            $html .= 'id="select_language" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'alllanguages') {
-            $html = '<input type="checkbox" name="subs_all_languages" '
-                .'onchange="update_subscription_payment(); '
-                .'ToggleElementEnabled(\'select_language\');" '
-                . $p_params['html_code'] . ' />';
+        	$html = '<input type="checkbox" name="subs_all_languages" '
+                .'onchange="ToggleElementEnabled(\'select_language\');';
+            if ($subsType == 'paid') {
+                $html .= ' update_subscription_payment();';
+            }
+            $html .= '" ' . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'section') {
             if ($campsite->subs_by_type == 'publication') {
                 $html = '<input type="hidden" name="cb_subs[]" value="'

@@ -49,9 +49,9 @@ class Subscription extends DatabaseObject
 	public function delete()
 	{
 		global $g_ado_db;
-		$deleted = parent::delete();
 	    $queryStr = "DELETE FROM SubsSections WHERE IdSubscription=".$this->m_data['Id'];
 	    $g_ado_db->Execute($queryStr);
+        $deleted = parent::delete();
 	    return $deleted;
 	} // fn delete
 
