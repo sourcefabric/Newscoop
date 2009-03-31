@@ -431,7 +431,7 @@ function camp_database_exists($p_dbName)
 /**
  * @param string $p_dbName
  */
-function camp_upgrade_database($p_dbName)
+function camp_upgrade_database($p_dbName, $p_silent = false)
 {
     global $Campsite;
 
@@ -456,8 +456,13 @@ function camp_upgrade_database($p_dbName)
             continue;
         }
         if ($first) {
-        	echo "\n\t* Upgrading the database from version $db_version...";
-            camp_utf8_convert(null, $skipped);
+        	if (!$p_silent) {
+                echo "\n\t* Upgrading the database from version $db_version...";
+        	}
+            $res = camp_utf8_convert(null, $skipped);
+            if ($res !== true) {
+            	return $res;
+            }
             $first = false;
         }
         $output = array();
@@ -487,9 +492,11 @@ function camp_upgrade_database($p_dbName)
             }
         }
     }
-    echo "done.\n";
+    if (!$p_silent) {
+        echo "done.\n";
+    }
     
-    if (count($skipped) > 0) {
+    if (count($skipped) > 0 && !$p_silent) {
     	echo "
 Encountered non-critical errors while converting data to UTF-8 encoding!
 The following database queries were unsuccessful because after conversion
@@ -694,14 +701,14 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     if ($do_log) {
         if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
             $do_log = false;
-            camp_exit_with_error("Log file is missing or not writable!\n");
+            return "Log file is missing or not writable!";
         }
     }
 
     // Sets the character set for the database
     $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
     if (!($res = mysql_query($sql))) {
-        camp_exit_with_error("Unable to convert database charset to utf8");
+        return "Unable to convert database character set to utf8.";
     }
     if ($do_log) {
         $log_text = $sql . "\n";
@@ -710,7 +717,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     // Sets the character set for the client
     $sql = 'SET character_set_client = utf8';
     if (!($res = mysql_query($sql))) {
-        camp_exit_with_error("Unable to convert the client charset to utf8");
+        return "Unable to convert the client character set to utf8.";
     }
     if ($do_log) {
         $log_text .= $sql . "\n";
@@ -719,21 +726,21 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     // Deletes data from ArticleIndex and KeywordIndex tables to fix duplicate values
     $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.ArticleIndex';
     if (!($res = mysql_query($sql))) {
-        camp_exit_with_error("Unable to remove article index data");
+        return "Unable to remove article index data.";
     } elseif ($do_log) {
         $log_text .= $sql . "\n";
     }
 
     $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.KeywordIndex';
     if (!($res = mysql_query($sql))) {
-        camp_exit_with_error("Unable to remove keyword index data");
+        return "Unable to remove keyword index data.";
     } elseif ($do_log) {
         $log_text .= $sql . "\n";
     }
 
     $sql = 'UPDATE ' . $Campsite['DATABASE_NAME'] . ".Articles SET IsIndexed = 'N'";
     if (!($res = mysql_query($sql))) {
-        camp_exit_with_error("Unable to update article table data");
+        return "Unable to update article table data.";
     } elseif ($do_log) {
         $log_text .= $sql . "\n";
     }
@@ -751,7 +758,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
 
     foreach ($sqlSentences as $sentence) {
         if (!($res = mysql_query($sentence))) {
-            camp_exit_with_error("Unable to convert data to UTF-8 on query:\n$sentence");
+            return "Unable to convert data to UTF-8 on query:\n$sentence";
         } elseif ($do_log) {
             $log_text .= $sentence . "\n";
         }
@@ -775,7 +782,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
              . "  $column_type $nullDefinition DEFAULT $column_default";
         if (!mysql_query($sql)) {
         	if ($table_name == 'Articles' && $column_name == 'Name') {
-                camp_exit_with_error("Unable to convert data to UTF-8 on query:\n$sql");
+                return "Unable to convert data to UTF-8 on query:\n$sql";
         	}
         	$p_skipped[] = $sql;
         } elseif ($do_log) {
@@ -786,7 +793,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     // Writes Log file
     if ($do_log) {
         if (@file_put_contents($p_log_file, $log_text) === false) {
-            camp_exit_with_error("Couldn't write Log file");
+            return "Couldn't write Log file.";
         }
     }
 

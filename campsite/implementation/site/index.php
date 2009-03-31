@@ -20,12 +20,18 @@ define('CS_INSTALL_DIR', dirname(__FILE__) . '/install');
 $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 
 require_once($g_documentRoot.'/include/campsite_init.php');
+require_once($g_documentRoot.'/bin/cli_script_lib.php');
 
 // initiates the campsite site
 $campsite = new CampSite();
 
 // loads site configuration settings
 $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
+
+$res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
+if ($res !== 0) {
+    display_upgrade_error("Unable to detect the database version: $res");
+}
 
 // starts the session
 $campsite->initSession();
@@ -37,7 +43,7 @@ $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
 $params = array('context' => null,
                 'template' => $template,
                 'templates_dir' => $templates_dir,
-                'info_message' => 'Upgrading the database...'
+                'info_message' => "Upgrading the database from version $dbVersion..."
 );
 $document = CampSite::GetHTMLDocumentInstance();
 $document->render($params);
