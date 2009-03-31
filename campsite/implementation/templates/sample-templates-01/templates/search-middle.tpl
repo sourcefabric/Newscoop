@@ -6,7 +6,7 @@
 {{ if $campsite->current_list->at_beginning }}
 <p class="tekst">Results:</p>
 {{ /if }}
-<p class="tekst"><span><a class="dalje" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></span> od {{ $campsite->article->creation_date|camp_date_format:"%e.%m.%Y" }} from section <b>{{ $campsite->section->name }}</b></p>
+<p class="tekst"><span><a class="dalje" href="{{ uri options="article" }}">{{ $campsite->article->name }}</a></span> od {{ $campsite->article->creation_date|camp_date_format:"%e.%m.%Y" }} from section <b>{{ $campsite->section->name }}</b></p>
 {{ /list_search_results }}
 {{ if $campsite->prev_list_empty }}
       <p class="tekst"><i>Search results returned no articles... Please try with different parameters.</i></p>

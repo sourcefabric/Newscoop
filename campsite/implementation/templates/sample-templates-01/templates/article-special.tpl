@@ -6,7 +6,7 @@
              {{ /if }}
              <p class="podnaslov">{{ $campsite->article->byline }}</p>
              <p class="tekst">{{ $campsite->article->intro }}</p>
-{{ if $campsite->article->content_accesible }}
+{{ if $campsite->article->content_accessible }}
              <p class="tekst">{{ $campsite->article->full_text }}</p>
 {{ else }}
 <p class="footer">You must be subscribed to read whole article...</p>

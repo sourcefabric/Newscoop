@@ -1,18 +1,17 @@
+{{ local }}
+{{ set_publication identifier="5" }}
+{{ set_current_issue }}
+{{ unset_section }}
+{{ unset_article }}
 <table border="0" cellpadding="0" cellspacing="0">
-<tr>
+              <tr>
                 <td class="menu"><p class="indeks" align="left"><a class="indeks" href="/">HOME</a></p></td>
               </tr>
-        {{ local }}
-        {{ set_publication identifier="5" }}
-        {{ set_current_issue }}
-        {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections constraints="number smaller 31" }}
               <tr>
                 <td class="menu"><p class="indeks" align="left"><a class="indeks" href="{{ uri options="section reset_article_list" }}">{{ $campsite->section->name }}</a></p></td>
               </tr>
 		{{ /list_sections }}
-		{{ /local }}
               <tr>
                 <td background="/templates/img/05bgmeni2b.gif">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -23,20 +22,13 @@
                   </table>
                 </td>
               </tr>
-        {{ local }}
-        {{ set_publication identifier="5" }}
-        {{ set_current_issue }}
-        {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections constraints="number greater 31" }}
-        {{ if $campsite->section->number > 199 }}
-        {{ else }}
+        {{ if $campsite->section->number < 200 }}
               <tr>
 			    <td class="menu"><p class="indeks" align="left"><a class="indeks" href="{{ uri options="section reset_article_list" }}">{{ $campsite->section->name }}</a></p></td>
               </tr>
         {{ /if }}
 		{{ /list_sections }}
-		{{ /local }}
               <tr>
                 <td background="/templates/img/05bgmeni2b.gif">
 				  <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -47,20 +39,13 @@
                   </table>
                 </td>
               </tr>
-	{{ local }}
-        {{ set_publication identifier="5" }}
-        {{ unset_issue }}
-        {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections constraints="number greater 199" }}
-        {{ if $campsite->section->number == 230 }}
-        {{ else }}
+        {{ if $campsite->section->number != 230 }}
               <tr>
                 <td class="menu"><p class="indeks" align="left"><a class="indeks" href="{{ uri options="section reset_article_list" }}">{{ $campsite->section->name }}</a></p></td>
               </tr>
         {{ /if }}
-	{{ /list_sections }}
-	{{ /local }}
+    	{{ /list_sections }}
               <tr>
                 <td background="/templates/img/05bgmeni2b.gif">
                   <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -87,15 +72,11 @@
                   </table>
                 </td>
               </tr>
-{{ local }}
-{{ set_publication identifier="5" }}
-{{ unset_issue }}
-{{ set_section number="230" }}
-{{ list_articles constraints="type is link" }}
+              {{ set_section number="230" }}
+              {{ list_articles ignore_issue="true" constraints="type is link" }}
               <tr>
                 <td class="menu"><a class="indeks" href="http://{{ $campsite->article->url }}" target="_blank">{{ $campsite->article->name }}</a></td>
               </tr>
-{{ /list_articles }}
-{{ /local }}			  
-              
-			</table>
+              {{ /list_articles }}
+</table>
+{{ /local }}            

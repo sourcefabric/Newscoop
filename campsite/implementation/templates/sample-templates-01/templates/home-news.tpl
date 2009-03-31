@@ -6,7 +6,6 @@
 					  {{ if $campsite->image->has_image1 }}
 				     <div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 1" }}" width="72"></div>
 					  {{ /if }}
-	                 <p class="nadnaslov">{{ $campsite->article->deck }}</p>
 					 <p class="naslov"><a class="naslov" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></p>   
                      <p class="podnaslov">{{ $campsite->article->byline }}</p> 
 					 <p class="tekst">{{ $campsite->article->intro }} <span class="dalje"><a class="dalje" href="{{ uri options="reset_subtitle_list" }}"> full story</a></span></p>

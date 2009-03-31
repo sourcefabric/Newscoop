@@ -11,7 +11,7 @@
              <p class="blok-podnaslov">{{ $campsite->article->autor }}</p>
              {{ /if }}
              <p class="tekst">{{ $campsite->article->intro }}</p>
-{{ if $campsite->article->content_accesible }}
+{{ if $campsite->article->content_accessible }}
              <p class="tekst">{{ $campsite->article->tekst }}</p>
              {{ if $campsite->article->antrfile != "" }}
              <div style="background-color:#E4EEF8;"><p class="tekst">{{ $campsite->article->antrfile }}</p></div>

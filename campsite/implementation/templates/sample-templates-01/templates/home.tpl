@@ -47,9 +47,6 @@
 	
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
           <tr>
-            <td height="15"></td>
-          </tr>
-          <tr>
             <td>
               {{ include file="home-article.tpl" }}</td>
           </tr>
@@ -105,10 +102,29 @@
     </td>
 	<td width="8"></td>
     <td width="133" valign="top" bgcolor="#d3e5f1"> 
+        <!--main right--> 
+        {{ include file="right.tpl" }}
+    </td>
 	
   </tr>
   
   <!-- footer -->
+  <tr>
+    <td colspan="2"></td>
+    <td align="center">{{ include file="banner.tpl" }}</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <td colspan="5" height="25"></td>
+  </tr>
+  <tr>
+    <td align="center" style="padding: 3px 0px 3px 0px" colspan="5">
+        {{ include file="footer.tpl" }}</td>
+  </tr>
+  <tr>
+    <td colspan="5" align="center" style="padding: 3px 0px 3px 0px">
+    {{ include file="footer-01.tpl" }}</td>
+  </tr>
   
 </table>
 
