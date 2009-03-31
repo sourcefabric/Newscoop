@@ -14,7 +14,7 @@
 {{ if $campsite->current_list->at_beginning }}
 <p class="text">Search results:</p>
 {{ /if }}
-<p class="text"><span><a class="dalje" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></span> from {{ $campsite->article->creation_date|camp_date_format:"%e.%m.%Y" }} in section <b>{{ $campsite->section->name }}</b></p>
+<p class="text"><span><a class="dalje" href="{{ uri options="article" }}">{{ $campsite->article->name }}</a></span> from {{ $campsite->article->creation_date|camp_date_format:"%e.%m.%Y" }} in section <b>{{ $campsite->section->name }}</b></p>
 {{ /list_search_results }}
 {{ if $campsite->prev_list_empty }}
       <p class="tekst"><i>No results.</i></p>

@@ -2,7 +2,6 @@
 <table border="0" cellpadding="5" cellspacing="0" width="100%">
   <tr> 
     <td valign="top">
-{{ unset_section }}
 {{ list_issues length="3" order="bydate desc" }}
   {{ if $campsite->issue->is_current }}
   {{ else }} 
@@ -10,8 +9,6 @@
     <td valign="top">
       <p class="naslov"><b><a class="blok-naslov" href="{{ uripath options="issue" }}">{{ $campsite->issue->name }}, dated {{ $campsite->issue->date|camp_date_format:"%W, %M %Y" }}</b></a></p>
       {{ local }}
-      {{ set_publication name="Dynamic" }}
-      {{ unset_section }}
       {{ list_articles constraints="type is Article" }}
 
         <span class="dalje"><a class="dalje" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></span><br/>
@@ -20,7 +17,7 @@
       {{ /local }}
     </td>
   </tr>
-			  
+
   {{ if $campsite->current_list->at_end }}
 
   <!-- forward / back -->

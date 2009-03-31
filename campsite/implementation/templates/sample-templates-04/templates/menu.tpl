@@ -1,6 +1,5 @@
 <table width="100%" cellspacing="0" cellpadding="0">
         {{ local }}
-        {{ set_publication name="Dynamic" }}
         {{ set_current_issue }}
         {{ list_sections constraints="number smaller 199" }}
               <tr>
@@ -17,10 +16,6 @@
                 <td valign="middle" bgcolor="#006B24" height="16" style="padding-left: 3px"><p class="index-naslovi"><img src="/templates/img/indexleft2.gif"> About PT#4</p></td>
               </tr>
         {{ local }}
-        {{ set_publication name="Dynamic" }}
-        {{ unset_issue }}
-        {{ unset_section }}
-        {{ unset_article }}
         {{ list_sections length="3" constraints="number greater 199" }}
 			  <tr>
                 <td height="1" background="/templates/img/bgrleft2b.gif"></td>
@@ -46,7 +41,6 @@
                 <td height="2" bgcolor="#ffffff"></td>
               </tr>
                         {{ local }}
-                        {{ unset_issue }}
                         {{ set_section number="230" }}
 			{{ list_articles constraints="type is Link" }}
               <tr>
