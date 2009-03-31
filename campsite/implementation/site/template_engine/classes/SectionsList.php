@@ -32,12 +32,17 @@ class SectionsList extends ListObject
 	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
 	                                                   $context->publication->identifier);
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
-	                                                   $context->issue->number);
+        if ($context->issue->defined) {
+            $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
+                                                           $context->issue->number);
+            $this->m_constraints[] = $comparisonOperation;
+        }
+        if ($context->language->defined) {
+            $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
+	                                                       $context->language->number);
+        }
 	    $this->m_constraints[] = $comparisonOperation;
-	    $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
-	                                                   $context->language->number);
-	    $this->m_constraints[] = $comparisonOperation;
+	    $this->m_order = array('Number'=>'asc');
 
 	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaSectionsList = array();
