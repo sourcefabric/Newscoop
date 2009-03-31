@@ -40,8 +40,8 @@ class SectionsList extends ListObject
         if ($context->language->defined) {
             $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
 	                                                       $context->language->number);
+            $this->m_constraints[] = $comparisonOperation;
         }
-	    $this->m_constraints[] = $comparisonOperation;
 	    $this->m_order = array('Number'=>'asc');
 
 	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
