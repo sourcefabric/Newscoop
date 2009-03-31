@@ -22,19 +22,19 @@ class MetaActionLogin extends MetaAction
     {
         $this->m_defined = true;
         $this->m_name = 'login';
-        if (!isset($p_input['f_user_uname']) || empty($p_input['f_user_uname'])) {
+        if (!isset($p_input['f_login_uname']) || empty($p_input['f_login_uname'])) {
             $this->m_error = new PEAR_Error('The user name was not filled in.',
             ACTION_LOGIN_ERR_NO_USER_NAME);
             return;
         }
-        $this->m_properties['user_name'] = $p_input['f_user_uname'];
-        if (!isset($p_input['f_user_password'])) {
+        $this->m_properties['user_name'] = $p_input['f_login_uname'];
+        if (!isset($p_input['f_login_password'])) {
             $this->m_error = new PEAR_Error('The password was not filled in.',
             ACTION_LOGIN_ERR_NO_PASSWORD);
             return;
         }
-        $user = User::FetchUserByName($p_input['f_user_uname']);
-        if (is_null($user) || !$user->isValidPassword($p_input['f_user_password'])) {
+        $user = User::FetchUserByName($this->m_properties['user_name']);
+        if (is_null($user) || !$user->isValidPassword($p_input['f_login_password'])) {
             $this->m_error = new PEAR_Error('Invalid user credentials',
             ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
@@ -59,10 +59,10 @@ class MetaActionLogin extends MetaAction
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
 
-        $p_context->default_url->reset_parameter('f_user_uname');
-        $p_context->url->reset_parameter('f_user_uname');
-        $p_context->default_url->reset_parameter('f_user_password');
-        $p_context->url->reset_parameter('f_user_password');
+        $p_context->default_url->reset_parameter('f_login_uname');
+        $p_context->url->reset_parameter('f_login_uname');
+        $p_context->default_url->reset_parameter('f_login_password');
+        $p_context->url->reset_parameter('f_login_password');
 
         if ($this->m_error != ACTION_OK) {
             return false;
