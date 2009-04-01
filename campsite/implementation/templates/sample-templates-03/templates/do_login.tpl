@@ -13,20 +13,9 @@
 <!-- iznad headera -->
 
   <tr>
-    <td>{{ include file="header.tpl" }}            </td>
+    <td>{{ include file="header.tpl" }}</td>
   </tr>
 
-<!-- end iznad headera -->
-
-<!-- header -->
-
-<!-- end header -->
-  
-<!-- horizontal bar -->
-
-<!-- end horizonat bar -->
-
-<!-- front kolone -->
 
   <tr>
     <td>
@@ -64,12 +53,12 @@
 			<!-- end srednja kolona -->
 			
 			{{ if $campsite->login_action->ok }}
-      <META http-equiv="refresh" content="5;url={{ uri options="template home.tpl" }}">
-      <p class="tekst-front">You are successfuly loged in. Home page will be atuomaticly loaded. Please wait...<br><br>
-If loading fail click <a class="dalje" href="{{ uri options="template home.tpl" }}">here</a>.</p>
+      <META http-equiv="refresh" content="5;url={{ uri options="issue" }}">
+      <p class="tekst-front">You are successfuly loged in. The home page will be automaticaly loaded. Please wait...<br><br>
+If loading fails click <a class="dalje" href="{{ uri options="issue" }}">here</a>.</p>
       {{ else }}
         <p class="tekst-front">Login error: <b><font style="color: #CC0000"> {{ $campsite->login_action->error_message }}</font></b></p>
-        <p class="tekst-front">Check if You are correctly input username and password and try again.</p>
+        <p class="tekst-front">Check if the username and password were correct and try again.</p>
       {{ /if }}
 
 		  </td>
