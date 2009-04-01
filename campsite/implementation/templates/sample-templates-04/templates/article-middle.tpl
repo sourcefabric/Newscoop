@@ -100,7 +100,7 @@ document.getElementById("comment_{{ $campsite->comment->identifier }}").style.pa
 				</td>
 				<td>
                                     {{ if $campsite->user->logged_in }}
-                                        {{ $campsite->user->email }}
+                                        <p>{{ $campsite->user->email }}</p>
                                     {{ else }}
                                         {{ camp_edit object="comment" attribute="reader_email" }}
                                     {{ /if }}

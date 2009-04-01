@@ -76,7 +76,9 @@
 		  <!-- main content -->
 		  
 		  {{ if $campsite->edit_subscription_action->ok }}
-    <META http-equiv="refresh" content="5;url={{ uri options="template home.tpl" }}">
+    <META http-equiv="refresh" content="5;url={{ uri options="issue" }}">
+    <p class="text">Your subscription was created successfuly. The home page will be automaticaly loaded. Please wait...<br><br>
+If loading fails click <a class="naslov" href="{{ uri options="issue" }}">here</a>.</p>
 {{ else }}
     <p class="text">{{ $campsite->edit_subscription_action->error_message }}</p>
 {{ /if }}

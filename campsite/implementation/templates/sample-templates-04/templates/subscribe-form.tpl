@@ -9,8 +9,8 @@
 <tr><td class="subscribe">Password again:</td><td class="subscribe">{{ camp_edit object="user" attribute="passwordagain" }}</td></tr>
 <tr><td class="subscribe">EMail:</td><td class="subscribe">{{ camp_edit object="user" attribute="email" }}</td></tr>
 <tr><td class="subscribe">City:</td><td class="subscribe">{{ camp_edit object="user" attribute="city" }}</td></tr>
-<tr><td class="subscribe">Street Address:</td><td class="subscribe">{{ camp_edit object="user" attribute="straddress" }}</td></tr>
-<tr><td class="subscribe">Postal Code:</td><td class="subscribe">{{ camp_edit object="user" attribute="postalcode" }}</td></tr>
+<tr><td class="subscribe">Street Address:</td><td class="subscribe">{{ camp_edit object="user" attribute="str_address" }}</td></tr>
+<tr><td class="subscribe">Postal Code:</td><td class="subscribe">{{ camp_edit object="user" attribute="postal_code" }}</td></tr>
 <tr><td class="subscribe">State:</td><td class="subscribe">{{ camp_edit object="user" attribute="state" }}</td></tr>
 <tr><td class="subscribe">Country:</td><td class="subscribe">{{ camp_select object="user" attribute="country" }}</td></tr>
 <tr><td class="subscribe">Phone:</td><td class="subscribe">{{ camp_edit object="user" attribute="phone" }}</td></tr>

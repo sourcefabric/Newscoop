@@ -1,6 +1,6 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: campsite
+-- Host: localhost    Database: campsite32
 -- ------------------------------------------------------
 -- Server version	5.0.67-0ubuntu6
 
@@ -139,6 +139,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `ArticleComments` WRITE;
 /*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
+INSERT INTO `ArticleComments` (`fk_article_number`, `fk_language_id`, `fk_comment_id`, `is_first`) VALUES (40,1,1,1);
 /*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1145,7 +1146,7 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL default 'T',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1223,7 +1224,7 @@ CREATE TABLE `Templates` (
   `Level` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1232,7 +1233,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Templates` WRITE;
 /*!40000 ALTER TABLE `Templates` DISABLE KEYS */;
-INSERT INTO `Templates` (`Id`, `Name`, `Type`, `Level`) VALUES (1,'section.tpl',1,0),(2,'search-box.tpl',1,0),(3,'article-middle.tpl',1,0),(4,'article.tpl',1,0),(41,'footer.tpl',1,0),(15,'home.tpl',1,0),(16,'menu.tpl',1,0),(8,'search-middle.tpl',1,0),(9,'section-middle.tpl',1,0),(10,'header-01.tpl',1,0),(11,'header-03.tpl',1,0),(12,'header-02.tpl',1,0),(13,'search.tpl',1,0),(14,'home-middle.tpl',1,0),(17,'right.tpl',1,0),(18,'login-box.tpl',1,0),(26,'logout.tpl',1,0),(27,'subscribe.tpl',1,0),(21,'subscribe-info.tpl',1,0),(22,'subscribe-form.tpl',1,0),(23,'do_subscribe.tpl',1,0),(24,'do_login.tpl',1,0),(28,'login-box-old.tpl',1,0),(30,'home-old.tpl',1,0),(31,'home-middle-old.tpl',1,0),(32,'header-04.tpl',1,0),(33,'archive-middle.tpl',1,0),(35,'archive.tpl',1,0),(36,'home-middle-vert.tpl',1,0),(37,'print.tpl',1,0),(38,'service.tpl',1,0),(39,'service-middle.tpl',1,0),(40,'rss.tpl',1,0),(43,'test.tpl',1,0),(44,'flash.tpl',1,0);
+INSERT INTO `Templates` (`Id`, `Name`, `Type`, `Level`) VALUES (1,'section.tpl',1,0),(46,'img/bgrtiker.gif',5,1),(3,'article-middle.tpl',1,0),(4,'article.tpl',1,0),(41,'footer.tpl',1,0),(15,'home.tpl',1,0),(16,'menu.tpl',1,0),(8,'search-middle.tpl',1,0),(9,'section-middle.tpl',1,0),(10,'header-01.tpl',1,0),(11,'header-03.tpl',1,0),(12,'header-02.tpl',1,0),(13,'search.tpl',1,0),(14,'home-middle.tpl',1,0),(17,'right.tpl',1,0),(18,'login-box.tpl',1,0),(26,'logout.tpl',1,0),(27,'subscribe.tpl',1,0),(21,'subscribe-info.tpl',1,0),(22,'subscribe-form.tpl',1,0),(23,'do_subscribe.tpl',1,0),(24,'do_login.tpl',1,0),(47,'img/bgrmeni3.gif',5,1),(48,'img/banner.gif',5,1),(50,'img/04bgmeni.gif',5,1),(32,'header-04.tpl',1,0),(33,'archive-middle.tpl',1,0),(35,'archive.tpl',1,0),(49,'img/mdlflogo.gif',5,1),(37,'print.tpl',1,0),(38,'service.tpl',1,0),(39,'service-middle.tpl',1,0),(40,'rss.tpl',1,0),(45,'style04.css',5,0),(51,'img/indexleft4.gif',5,1),(52,'img/indexleft3.gif',5,1),(53,'img/bgrmeni2.gif',5,1),(54,'img/bgrleft1.gif',5,1),(55,'img/bgrmiddle2.gif',5,1),(56,'img/anketa.gif',5,1),(57,'img/meni.gif',5,1),(58,'img/bgrleft2a.gif',5,1),(59,'img/leftwhite.gif',5,1),(60,'img/indexleft2.gif',5,1),(61,'img/bgrmeni4.gif',5,1),(62,'img/bgrnaslovna.gif',5,1),(63,'img/lslogo.gif',5,1),(64,'img/bgrright1.gif',5,1),(65,'img/islinija1.gif',5,1),(66,'img/tizer.gif',5,1),(67,'img/tockelogo.gif',5,1),(68,'img/cover.jpg',5,1),(69,'img/camplogo.gif',5,1),(70,'img/bgrleft2b.gif',5,1),(71,'img/bgrmenilinija.gif',5,1),(72,'img/bgrmeni1.gif',5,1),(73,'img/bgrmiddle1.gif',5,1),(74,'img/bgrfooter.gif',5,1),(75,'img/rss.gif',5,1),(76,'img/bgrleft4.gif',5,1),(77,'img/leftwhite2.gif',5,1),(78,'img/naslovnastrelica.gif',5,1),(79,'img/bgrleft3.gif',5,1),(80,'img/indexleft.gif',5,1);
 /*!40000 ALTER TABLE `Templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1767,7 +1768,7 @@ SET character_set_client = utf8;
 CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1776,7 +1777,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users_perm_user_id_seq` (`id`) VALUES (1);
+INSERT INTO `liveuser_perm_users_perm_user_id_seq` (`id`) VALUES (2);
 /*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2024,7 +2025,7 @@ CREATE TABLE `liveuser_users` (
   `isActive` tinyint(1) default '1',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2033,7 +2034,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`) VALUES (1,0,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2009-02-25 18:36:19','0000-00-00 00:00:00','2008-07-08 11:41:23',1);
+INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`) VALUES (1,0,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2009-04-01 10:47:18','0000-00-00 00:00:00','2009-04-01 13:38:17',1);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2047,7 +2048,7 @@ SET character_set_client = utf8;
 CREATE TABLE `liveuser_users_auth_user_id_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2056,7 +2057,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_users_auth_user_id_seq` (`id`) VALUES (1);
+INSERT INTO `liveuser_users_auth_user_id_seq` (`id`) VALUES (2);
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2200,7 +2201,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `phorum_forums` WRITE;
 /*!40000 ALTER TABLE `phorum_forums` DISABLE KEYS */;
-INSERT INTO `phorum_forums` (`forum_id`, `name`, `active`, `description`, `template`, `folder_flag`, `parent_id`, `list_length_flat`, `list_length_threaded`, `moderation`, `threaded_list`, `threaded_read`, `float_to_top`, `check_duplicate`, `allow_attachment_types`, `max_attachment_size`, `max_totalattachment_size`, `max_attachments`, `pub_perms`, `reg_perms`, `display_ip_address`, `allow_email_notify`, `language`, `email_moderators`, `message_count`, `sticky_count`, `thread_count`, `last_post_time`, `display_order`, `read_length`, `vroot`, `edit_post`, `template_settings`, `count_views`, `display_fixed`, `reverse_threading`, `inherit_id`) VALUES (1,'My Publication',1,'','default',0,0,30,15,0,0,0,1,1,'',0,0,0,10,15,0,0,'english',0,0,0,0,0,0,30,0,1,'',2,0,0,NULL);
+INSERT INTO `phorum_forums` (`forum_id`, `name`, `active`, `description`, `template`, `folder_flag`, `parent_id`, `list_length_flat`, `list_length_threaded`, `moderation`, `threaded_list`, `threaded_read`, `float_to_top`, `check_duplicate`, `allow_attachment_types`, `max_attachment_size`, `max_totalattachment_size`, `max_attachments`, `pub_perms`, `reg_perms`, `display_ip_address`, `allow_email_notify`, `language`, `email_moderators`, `message_count`, `sticky_count`, `thread_count`, `last_post_time`, `display_order`, `read_length`, `vroot`, `edit_post`, `template_settings`, `count_views`, `display_fixed`, `reverse_threading`, `inherit_id`) VALUES (1,'My Publication',1,'','default',0,0,30,15,0,0,0,1,1,'',0,0,0,10,15,0,0,'english',0,1,0,1,1238582702,0,30,0,1,'',2,0,0,NULL);
 /*!40000 ALTER TABLE `phorum_forums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2271,7 +2272,7 @@ CREATE TABLE `phorum_messages` (
   KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
   KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2614,7 +2615,7 @@ CREATE TABLE `phorum_users` (
   KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2636,4 +2637,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-02-25 18:36:36
+-- Dump completed on 2009-04-01 10:47:30
