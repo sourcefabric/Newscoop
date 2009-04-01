@@ -139,7 +139,6 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `ArticleComments` WRITE;
 /*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
-INSERT INTO `ArticleComments` (`fk_article_number`, `fk_language_id`, `fk_comment_id`, `is_first`) VALUES (41,1,1,1);
 /*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2637,4 +2636,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-04-01 10:35:53
+-- Dump completed on 2009-04-01 12:18:55
