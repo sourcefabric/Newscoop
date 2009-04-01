@@ -28,7 +28,9 @@
 
 <p>If you don't have a username and password, you'll need to <b>subscribe</b> before you can access certain content:</p>
 
+{{ $campsite->url->set_parameter("subscribe", "true") }}
 <p class="opt"><a href="{{ uri options="template fastnews/useredit.tpl" }}">Subscribe</a></p>
+{{ $campsite->url->reset_parameter("subscribe") }}
 
 {{ include file="fastnews/footer.tpl" }}
 </body>

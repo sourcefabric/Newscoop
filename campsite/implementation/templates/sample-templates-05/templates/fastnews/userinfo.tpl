@@ -10,11 +10,14 @@
 	{{ if $campsite->user->defined }}
 		<p class="opt">Your are not logged in. Login <a href="{{ uri options="template fastnews/login.tpl" }}">here</a>
 	{{ else }}
-		<p class="opt"><b>Subscribe to Fastnews</b></p>
+		<p class="opt"><b>Subscribe to {{ $campsite->publication->name }}</b></p>
 		<p class="opt">Fastnews is supported by paying subscribers.
 		Some content, labelled <img src="/templates/fastnews/subscriber.png" width=11 height=11" alt="[S]">,
 		will only be open to you if you have a subscription</p>
-		<p class="opt"><a href="{{ uri options="template fastnews/useredit.tpl" }}l">Subscribe</a></p>
+		
+		{{ $campsite->url->set_parameter("subscribe", "true") }}
+		<p class="opt"><a href="{{ uri options="template fastnews/useredit.tpl" }}">Subscribe</a></p>
+        {{ $campsite->url->reset_parameter("subscribe") }}
 
 		<p class="opt">Existing subscribers <a href="{{ uri options="template fastnews/login.tpl" }}">login&nbsp;here</a>
 	{{ /if }}
