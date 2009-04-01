@@ -1,17 +1,17 @@
 {{ if ! $campsite->user->logged_in }}
-    {{ login_form submit_button="Login" button_html_code="class=\"button\"" }}
+    {{ login_form submit_button="Login" button_html_code="class=\"button\"" template="do_login.tpl" }}
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
    <td colspan="2" height="8"></td>
   </tr>
   <tr>
-   <td align="left"><span class="dalje">Name:</span></td><td align="right">{{ camp_edit object="user" attribute="uname" html_code="class=\"field\"" }}</td>
+   <td align="left"><span class="dalje">Name:</span></td><td align="right">{{ camp_edit object="login" attribute="uname" html_code="class=\"field\"" }}</td>
   </tr>
   <tr>
    <td colspan="2" height="8"></td>
   </tr>
   <tr>
-   <td align="left"><span class="dalje">Password:</span></td><td align="right">{{camp_edit object="user" attribute="password" html_code="class=\"field\"" }}
+   <td align="left"><span class="dalje">Password:</span></td><td align="right">{{camp_edit object="login" attribute="password" html_code="class=\"field\"" }}
   </tr>
   <tr>
    <td colspan="2" height="8"></td>

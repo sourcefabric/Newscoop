@@ -7,27 +7,7 @@
 </head>
 
 <body topmargin="5" leftmargin="5" bgcolor="#FFFFFF">
-
 <table width="747" cellpadding="0" cellspacing="0" border="0">
-
-  <!--main baner-->
-  
-  <tr> 
-    <td colspan="5">
-	  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-        <tr> 
-          <td width="19"></td>
-          <td><img border="0" src="/templates/img/baner1.gif"></td>
-        </tr>
-      </table>
-	</td>
-  </tr>
-  <tr> 
-    <td colspan="5" height="13"><img border="0" src="/templates/img/01.gif" width="1" height="13"></td>
-  </tr>
-  
-  <!--end main baner-->
-  
   <!--header-->
   
   <tr> 
@@ -57,7 +37,9 @@
 	<td width="8"></td>
     <td width="467" valign="top">
 {{ if $campsite->edit_subscription_action->ok }}
-    <META http-equiv="refresh" content="5;url={{ uri options="template home.tpl" }}">
+    <META http-equiv="refresh" content="5;url={{ uri options="issue" }}">
+    <p>Your subscription was created successfuly. The home page will be automaticaly loaded. Please wait...<br><br>
+If loading fails click <a class="naslov" href="{{ uri options="issue" }}">here</a>.</p>
 {{ else }}
     {{ $campsite->edit_subscription_action->error_message }}
 {{ /if }}

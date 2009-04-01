@@ -140,6 +140,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `ArticleComments` WRITE;
 /*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
+INSERT INTO `ArticleComments` (`fk_article_number`, `fk_language_id`, `fk_comment_id`, `is_first`) VALUES (48,1,1,1);
 /*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -335,7 +336,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Articles` WRITE;
 /*!40000 ALTER TABLE `Articles` DISABLE KEYS */;
-INSERT INTO `Articles` (`IdPublication`, `NrIssue`, `NrSection`, `Number`, `IdLanguage`, `Name`, `Type`, `IdUser`, `fk_default_author_id`, `OnFrontPage`, `OnSection`, `Published`, `PublishDate`, `UploadDate`, `Keywords`, `Public`, `IsIndexed`, `LockUser`, `LockTime`, `ShortName`, `ArticleOrder`, `comments_enabled`, `comments_locked`, `time_updated`, `object_id`) VALUES (5,1,40,40,1,'Morbi lacinia lacus','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','40',39,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,52,1,'Phasellus in metus','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','52',51,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,36,1,'Phasellus in risus','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','36',35,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,37,1,'Donec pretium molestie','Special',3,0,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',1,'2009-03-31 13:48:34','37',37,0,0,'2009-03-31 10:48:34',0),(5,1,20,38,1,'Open Source Democracy','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','38',24,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,39,1,'Free E-Book Released','Article',3,0,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','39',24,1,0,'2009-02-25 17:50:31',0),(5,1,10,35,1,'Praesent nulla magna','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','35',29,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,24,1,'Belgian government chooses OpenDocument','Article',3,NULL,'Y','N','Y','2005-08-03 00:00:00','2005-08-03 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','24',24,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,25,1,'Maecenas rutrum','Interview',3,0,'N','Y','Y','2005-08-03 00:00:00','2005-08-03 00:00:00','','Y','Y',1,'2009-03-31 13:53:52','25',25,1,0,'2009-03-31 10:53:52',0),(5,1,10,29,1,'Integer sit amet elit','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','29',29,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,30,1,'Lorem ipsum dolor sit amet','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','30',30,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,31,1,'Cras vestibulum ultrices arcu','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','31',31,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,32,1,'Praesent tincidunt vestibulum orci','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','32',32,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,33,1,'In iaculis lacus eu lorem','Interview',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','33',25,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,34,1,'Aenean rhoncus','Interview',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','34',33,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,44,1,'Integer et arcu lore','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','44',38,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,41,1,'Etiam aliquet euismod','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','41',40,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,42,1,'Nunc adipiscing sodales','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','42',41,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,43,1,'Cras semper lacus vel nunc','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','43',39,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,51,1,'Phasellus in','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','51',36,1,0,'2006-08-24 23:53:04',NULL),(5,1,40,45,1,'Cras semper lacus vel nun','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','45',43,1,0,'2006-08-24 23:53:04',NULL),(5,1,40,47,1,'Praesent tincidunt vestibulum','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','47',32,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,48,1,'Lorem ipsum dolor sit','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','48',30,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,49,1,'Lorem ipsum dolor','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','49',48,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,50,1,'Lorem ipsum','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','50',49,1,0,'2006-08-24 23:53:04',NULL),(5,1,230,53,1,'Campware','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','53',53,0,0,'0000-00-00 00:00:00',NULL),(5,1,230,54,1,'MDLF','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','54',54,0,0,'0000-00-00 00:00:00',NULL),(5,1,230,55,1,'Media On The Web','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','55',55,0,0,'0000-00-00 00:00:00',NULL),(5,1,200,56,1,'About us','Service',3,0,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',1,'2009-03-31 14:32:49','56',26,0,0,'2009-03-31 11:32:49',0),(5,1,210,57,1,'Contact','Service',3,0,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',1,'2009-03-31 14:33:04','57',46,0,0,'2009-03-31 11:33:04',0);
+INSERT INTO `Articles` (`IdPublication`, `NrIssue`, `NrSection`, `Number`, `IdLanguage`, `Name`, `Type`, `IdUser`, `fk_default_author_id`, `OnFrontPage`, `OnSection`, `Published`, `PublishDate`, `UploadDate`, `Keywords`, `Public`, `IsIndexed`, `LockUser`, `LockTime`, `ShortName`, `ArticleOrder`, `comments_enabled`, `comments_locked`, `time_updated`, `object_id`) VALUES (5,1,40,40,1,'Morbi lacinia lacus','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','40',39,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,52,1,'Phasellus in metus','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','52',51,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,36,1,'Phasellus in risus','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','36',35,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,37,1,'Donec pretium molestie','Special',3,0,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','37',37,0,0,'2009-03-31 10:48:34',0),(5,1,20,38,1,'Open Source Democracy','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','38',24,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,39,1,'Free E-Book Released','Article',3,0,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','39',24,1,0,'2009-02-25 17:50:31',0),(5,1,10,35,1,'Praesent nulla magna','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','35',29,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,24,1,'Belgian government chooses OpenDocument','Article',3,NULL,'Y','N','Y','2005-08-03 00:00:00','2005-08-03 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','24',24,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,25,1,'Maecenas rutrum','Interview',3,0,'N','Y','Y','2005-08-03 00:00:00','2005-08-03 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','25',25,1,0,'2009-03-31 10:53:52',0),(5,1,10,29,1,'Integer sit amet elit','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','29',29,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,30,1,'Lorem ipsum dolor sit amet','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','30',30,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,31,1,'Cras vestibulum ultrices arcu','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','31',31,1,0,'2006-08-24 23:53:04',NULL),(5,1,10,32,1,'Praesent tincidunt vestibulum orci','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','32',32,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,33,1,'In iaculis lacus eu lorem','Interview',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','33',25,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,34,1,'Aenean rhoncus','Interview',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','34',33,1,0,'2006-08-24 23:53:04',NULL),(5,1,20,44,1,'Integer et arcu lore','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','44',38,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,41,1,'Etiam aliquet euismod','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','41',40,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,42,1,'Nunc adipiscing sodales','Article',3,NULL,'Y','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','42',41,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,43,1,'Cras semper lacus vel nunc','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','43',39,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,51,1,'Phasellus in','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','51',36,1,0,'2006-08-24 23:53:04',NULL),(5,1,40,45,1,'Cras semper lacus vel nun','Article',3,NULL,'N','N','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','45',43,1,0,'2006-08-24 23:53:04',NULL),(5,1,40,47,1,'Praesent tincidunt vestibulum','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','47',32,1,0,'2006-08-24 23:53:04',NULL),(5,1,30,48,1,'Lorem ipsum dolor sit','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','48',30,1,0,'2006-08-24 23:53:04',NULL),(5,1,50,49,1,'Lorem ipsum dolor','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','49',48,1,0,'2006-08-24 23:53:04',NULL),(5,1,60,50,1,'Lorem ipsum','Article',3,NULL,'N','Y','Y','2005-08-04 00:00:00','2005-08-04 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','50',49,1,0,'2006-08-24 23:53:04',NULL),(5,1,230,53,1,'Campware','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','53',53,0,0,'0000-00-00 00:00:00',NULL),(5,1,230,54,1,'MDLF','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','54',54,0,0,'0000-00-00 00:00:00',NULL),(5,1,230,55,1,'Media On The Web','link',3,NULL,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','55',55,0,0,'0000-00-00 00:00:00',NULL),(5,1,200,56,1,'About us','Service',3,0,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','56',26,0,0,'2009-03-31 11:32:49',0),(5,1,210,57,1,'Contact','Service',3,0,'N','N','Y','2005-08-15 00:00:00','2005-08-15 00:00:00','','Y','Y',0,'0000-00-00 00:00:00','57',46,0,0,'2009-03-31 11:33:04',0);
 /*!40000 ALTER TABLE `Articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -913,7 +914,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Publications` WRITE;
 /*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
-INSERT INTO `Publications` (`Id`, `Name`, `IdDefaultLanguage`, `TimeUnit`, `UnitCost`, `UnitCostAllLang`, `Currency`, `TrialTime`, `PaidTime`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`) VALUES (5,'My Publication',1,'D',0.00,0.00,'0',0,0,5,2,1,1,1,0,0,1,0);
+INSERT INTO `Publications` (`Id`, `Name`, `IdDefaultLanguage`, `TimeUnit`, `UnitCost`, `UnitCostAllLang`, `Currency`, `TrialTime`, `PaidTime`, `IdDefaultAlias`, `IdURLType`, `fk_forum_id`, `comments_enabled`, `comments_article_default_enabled`, `comments_subscribers_moderated`, `comments_public_moderated`, `comments_captcha_enabled`, `comments_spam_blocking_enabled`) VALUES (5,'My Publication',1,'M',1.00,2.00,'0',1,1,5,2,1,1,1,0,0,1,0);
 /*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1147,7 +1148,7 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL default 'T',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1225,7 +1226,7 @@ CREATE TABLE `Templates` (
   `Level` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=133 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1234,7 +1235,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `Templates` WRITE;
 /*!40000 ALTER TABLE `Templates` DISABLE KEYS */;
-INSERT INTO `Templates` (`Id`, `Name`, `Type`, `Level`) VALUES (68,'search-box.tpl',1,0),(76,'header-01.tpl',1,0),(88,'home-article.tpl',1,0),(86,'logout.tpl',1,0),(120,'home-news.tpl',1,0),(123,'service-middle.tpl',1,0),(85,'footer-01.tpl',1,0),(110,'right.tpl',1,0),(122,'service.tpl',1,0),(67,'section.tpl',1,0),(109,'archive.tpl',1,0),(72,'home.tpl',1,0),(112,'section-rest.tpl',1,0),(111,'search-middle.tpl',1,0),(116,'article-special.tpl',1,0),(98,'article-specijal.tpl',1,0),(115,'article-interview.tpl',1,0),(94,'login-box.tpl',1,0),(95,'section-article.tpl',1,0),(108,'archive-middle.tpl',1,0),(107,'menu.tpl',1,0),(99,'do_login.tpl',1,0),(71,'footer.tpl',1,0),(92,'header.tpl',1,0),(114,'article-article.tpl',1,0),(70,'article.tpl',1,0),(79,'search.tpl',1,0),(113,'section-news.tpl',1,0),(119,'home-rest.tpl',1,0),(102,'article-intervju.tpl',1,0),(103,'do_login-cont.tpl',1,0),(104,'banner.tpl',1,0),(117,'article-complete.tpl',1,0),(118,'home-culture.tpl',1,0),(121,'section-special.tpl',1,0),(128,'subscribe.tpl',1,0),(129,'subscribe-form.tpl',1,0),(130,'subscribe-info.tpl',1,0),(131,'do_subscribe.tpl',1,0),(132,'rss.tpl',1,0);
+INSERT INTO `Templates` (`Id`, `Name`, `Type`, `Level`) VALUES (68,'search-box.tpl',1,0),(76,'header-01.tpl',1,0),(88,'home-article.tpl',1,0),(86,'logout.tpl',1,0),(120,'home-news.tpl',1,0),(123,'service-middle.tpl',1,0),(85,'footer-01.tpl',1,0),(110,'right.tpl',1,0),(122,'service.tpl',1,0),(67,'section.tpl',1,0),(109,'archive.tpl',1,0),(72,'home.tpl',1,0),(112,'section-rest.tpl',1,0),(111,'search-middle.tpl',1,0),(116,'article-special.tpl',1,0),(98,'article-specijal.tpl',1,0),(115,'article-interview.tpl',1,0),(94,'login-box.tpl',1,0),(95,'section-article.tpl',1,0),(108,'archive-middle.tpl',1,0),(107,'menu.tpl',1,0),(99,'do_login.tpl',1,0),(71,'footer.tpl',1,0),(92,'header.tpl',1,0),(114,'article-article.tpl',1,0),(70,'article.tpl',1,0),(79,'search.tpl',1,0),(113,'section-news.tpl',1,0),(119,'home-rest.tpl',1,0),(102,'article-intervju.tpl',1,0),(103,'do_login-cont.tpl',1,0),(104,'banner.tpl',1,0),(117,'article-complete.tpl',1,0),(118,'home-culture.tpl',1,0),(121,'section-special.tpl',1,0),(128,'subscribe.tpl',1,0),(129,'subscribe-form.tpl',1,0),(130,'subscribe-info.tpl',1,0),(131,'do_subscribe.tpl',1,0),(132,'rss.tpl',1,0),(133,'01-style.css',5,0),(134,'img/tb.gif',5,1),(135,'img/01.gif',5,1),(136,'img/baner4.gif',5,1),(137,'img/06linija.gif',5,1),(138,'img/napred.gif',5,1),(139,'img/ffox.gif',5,1),(140,'img/04bgmeni.gif',5,1),(141,'img/nazad.gif',5,1),(142,'img/05bgmeni2.gif',5,1),(143,'img/islinija1.gif',5,1),(144,'img/cover.jpg',5,1),(145,'img/transpa.gif',5,1),(146,'img/bann1.gif',5,1),(147,'img/desno2.gif',5,1),(148,'img/packaged.gif',5,1),(149,'img/bann2.gif',5,1),(150,'img/03bg.gif',5,1),(151,'img/desno1.gif',5,1),(152,'img/06linijabel.gif',5,1),(153,'img/05bgmeni2b.gif',5,1),(154,'img/02bg.gif',5,1);
 /*!40000 ALTER TABLE `Templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1828,7 +1829,7 @@ SET character_set_client = utf8;
 CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1837,7 +1838,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users_perm_user_id_seq` (`id`) VALUES (1);
+INSERT INTO `liveuser_perm_users_perm_user_id_seq` (`id`) VALUES (5);
 /*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2085,7 +2086,7 @@ CREATE TABLE `liveuser_users` (
   `isActive` tinyint(1) default '1',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2094,7 +2095,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`) VALUES (1,998890502,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N',1,'','','','AD','','','','','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2009-03-31 10:19:14','0000-00-00 00:00:00','2009-03-31 13:19:14',1);
+INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`) VALUES (1,0,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','N',1,'','','','AD','','','','','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2009-04-01 09:50:27','0000-00-00 00:00:00','2009-04-01 12:49:50',1);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2108,7 +2109,7 @@ SET character_set_client = utf8;
 CREATE TABLE `liveuser_users_auth_user_id_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2117,7 +2118,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_users_auth_user_id_seq` (`id`) VALUES (1);
+INSERT INTO `liveuser_users_auth_user_id_seq` (`id`) VALUES (5);
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2261,7 +2262,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `phorum_forums` WRITE;
 /*!40000 ALTER TABLE `phorum_forums` DISABLE KEYS */;
-INSERT INTO `phorum_forums` (`forum_id`, `name`, `active`, `description`, `template`, `folder_flag`, `parent_id`, `list_length_flat`, `list_length_threaded`, `moderation`, `threaded_list`, `threaded_read`, `float_to_top`, `check_duplicate`, `allow_attachment_types`, `max_attachment_size`, `max_totalattachment_size`, `max_attachments`, `pub_perms`, `reg_perms`, `display_ip_address`, `allow_email_notify`, `language`, `email_moderators`, `message_count`, `sticky_count`, `thread_count`, `last_post_time`, `display_order`, `read_length`, `vroot`, `edit_post`, `template_settings`, `count_views`, `display_fixed`, `reverse_threading`, `inherit_id`) VALUES (1,'My Publication',1,'','default',0,0,30,15,0,0,0,1,1,'',0,0,0,10,15,0,0,'english',0,0,0,0,0,0,30,0,1,'',2,0,0,NULL);
+INSERT INTO `phorum_forums` (`forum_id`, `name`, `active`, `description`, `template`, `folder_flag`, `parent_id`, `list_length_flat`, `list_length_threaded`, `moderation`, `threaded_list`, `threaded_read`, `float_to_top`, `check_duplicate`, `allow_attachment_types`, `max_attachment_size`, `max_totalattachment_size`, `max_attachments`, `pub_perms`, `reg_perms`, `display_ip_address`, `allow_email_notify`, `language`, `email_moderators`, `message_count`, `sticky_count`, `thread_count`, `last_post_time`, `display_order`, `read_length`, `vroot`, `edit_post`, `template_settings`, `count_views`, `display_fixed`, `reverse_threading`, `inherit_id`) VALUES (1,'My Publication',1,'','default',0,0,30,15,0,0,0,1,1,'',0,0,0,10,15,0,0,'english',0,1,0,1,1238577269,0,30,0,1,'',2,0,0,NULL);
 /*!40000 ALTER TABLE `phorum_forums` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2332,7 +2333,7 @@ CREATE TABLE `phorum_messages` (
   KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
   KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2499,7 +2500,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `phorum_settings` WRITE;
 /*!40000 ALTER TABLE `phorum_settings` DISABLE KEYS */;
-INSERT INTO `phorum_settings` (`name`, `type`, `data`) VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}');
+INSERT INTO `phorum_settings` (`name`, `type`, `data`) VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}'),('mod_emailcomments','S','a:2:{s:9:\"addresses\";a:1:{i:1;s:0:\"\";}s:14:\"from_addresses\";a:1:{i:1;s:0:\"\";}}');
 /*!40000 ALTER TABLE `phorum_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2675,7 +2676,7 @@ CREATE TABLE `phorum_users` (
   KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2697,4 +2698,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-03-31 11:38:15
+-- Dump completed on 2009-04-01  9:50:35

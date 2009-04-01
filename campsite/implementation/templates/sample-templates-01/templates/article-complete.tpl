@@ -21,17 +21,18 @@
 					cellpadding="0" id="comment_{{ $campsite->comment->identifier }}">
 					<tr>
 						<td valign="top" align="left" style="background-color: #3878af; padding: 3px;">
-							{{ $campsite->comment->subject }}
+							<p class="tekst">{{ $campsite->comment->subject }}</p>
 						</td>
 					</tr>
 					<tr>
 						<td align="left" valign="top" style=" font-size: 8pt; padding: 3px;">
-							Posted {{ $campsite->comment->submit_date }}
-							by <b>{{ $campsite->comment->reader_email|obfuscate_email }}</b></td>
+							<p class="tekst">Posted {{ $campsite->comment->submit_date }}
+							by <b>{{ $campsite->comment->reader_email|obfuscate_email }}</b></p>
+                        </td>
 					</tr>
 					<tr>
 						<td valign="top" align="left" style="padding: 3px">
-							{{ $campsite->comment->content }}
+							<p class="tekst">{{ $campsite->comment->content }}</p>
 						</td>
 					</tr>
 				</table>
@@ -40,7 +41,7 @@ document.getElementById("comment_{{ $campsite->comment->identifier }}").style.pa
 </script>
 				{{ /list_article_comments }}
 {{ if $campsite->prev_list_empty }}
-					No comments have been posted.
+					<p class="tekst">No comments have been posted.</p>
 				{{ /if }}
 		</td>
 	</tr>
@@ -56,7 +57,7 @@ document.getElementById("comment_{{ $campsite->comment->identifier }}").style.pa
 			<table cellpadding="3" style="border:1px solid black; background-color: #d3e5f1;">
 			<tr>
 				<td colspan="2">
-					<b>Add a comment</b><br>
+					<p class="tekst"><b>Add a comment</b></p>
 					<span style="color: red">{{ $campsite->submit_comment_action->error_message }}</span>
 				</td>
 				<td>
@@ -64,37 +65,37 @@ document.getElementById("comment_{{ $campsite->comment->identifier }}").style.pa
 			</tr>
 			<tr>
 				<td>
-					Your name/email:
+					<p class="tekst">Your name/email:</p>
 				</td>
 				<td>
-                                    {{ if $campsite->user->logged_in }}
-                                        {{ $campsite->user->email }}
-                                    {{ else }}
-                                        {{ camp_edit object="comment" attribute="reader_email" html_code="class=\"longfield\"" }}
-                                    {{ /if }}
+                    {{ if $campsite->user->logged_in }}
+                        <p class="tekst">{{ $campsite->user->email }}</p>
+                    {{ else }}
+                        {{ camp_edit object="comment" attribute="reader_email" html_code="class=\"longfield\"" }}
+                    {{ /if }}
 				</td>
 			</tr>
 			<tr>
 				<td>
-					Subject:
+					<p class="tekst">Subject:</p>
 				</td>
 				<td>
-                                        {{ camp_edit object="comment" attribute="subject" html_code="class=\"longfield\"" }}
+                    {{ camp_edit object="comment" attribute="subject" html_code="class=\"longfield\"" }}
 				</td>
 			</tr>
 			<tr>
 				<td valign="top">
-					Comment:
+					<p class="tekst">Comment:</p>
 				</td>
 				<td>
-                                        {{ camp_edit object="comment" attribute="content" html_code="class=\"textarea\"" }}
+                    {{ camp_edit object="comment" attribute="content" columns="35" rows="5" html_code="class=\"textarea\"" }}
 				</td>
 			</tr>
 
 	{{ if $campsite->publication->captcha_enabled }}
 			<tr>
 				<td colspan="2" align="center">
-					Type in this code (used to prevent spam):<br>
+					<p class="tekst">Type in this code (used to prevent spam):</p>
 					<img src="{{ captcha_image_link }}"><br>
 					{{ camp_edit object="captcha" attribute="code" html_code="class=\"field\"" }}
 				</td>

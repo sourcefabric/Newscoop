@@ -2,7 +2,6 @@
 {{ set_publication identifier="5" }}
 {{ set_current_issue }}
 {{ unset_section }}
-{{ unset_article }}
 <table border="0" cellpadding="0" cellspacing="0">
               <tr>
                 <td class="menu"><p class="indeks" align="left"><a class="indeks" href="/">HOME</a></p></td>
