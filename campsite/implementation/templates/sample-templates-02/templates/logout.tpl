@@ -75,8 +75,8 @@
 <META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserId=; path=/">
 <META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserKey=; path=/">
 <META http-equiv="refresh" content="5;url={{ uri options="issue" }}">
-<p class="tekst">You have been logged out. Home page will be atuomaticly loaded. Please wait...<br><br>
-If loading fail click <a class="plus" href="{{ uri options="template home.tpl" }}">here.</a>.
+<p class="tekst">You have been logged out. The home page will be automaticaly loaded. Please wait...<br><br>
+If loading fails click <a class="plus" href="{{ uri options="issue" }}">here.</a>.
 
 
     <!-- end srednja kolona -->
