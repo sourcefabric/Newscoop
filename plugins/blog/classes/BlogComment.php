@@ -101,8 +101,8 @@ class BlogComment extends DatabaseObject {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
-		  'fk_blog_id'    => self::GetBlogId($p_entry_id),
-		  'fk_language_id'=> self::GetEntryLanguageId($p_entry_id),
+		  'fk_blog_id'    => BlogEntry::GetBlogId($p_entry_id),
+		  'fk_language_id'=> BlogEntry::GetEntryLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
 		  'user_name'     => $p_user_name,
 		  'user_email'    => $p_user_email,
@@ -117,7 +117,16 @@ class BlogComment extends DatabaseObject {
 		if (!$success) {
 			return false;
 		}
-		
+        
+		// set proper status/adminstatus if blog is not moderated
+        // DB default is pending
+        if ($this->getBlog()->getProperty('admin_status') == 'online') {
+            $this->setProperty('admin_status', 'online');   
+        }
+        if ($this->getBlog()->getProperty('status') == 'online') {
+            $this->setProperty('status', 'online');   
+        }
+                
 		$this->fetch();
 
         return true; 
@@ -416,16 +425,7 @@ class BlogComment extends DatabaseObject {
                             $data['BlogComment']['content'], 
                             $data['BlogComment']['fk_mood_id'])) {
                 
-                // set proper status/adminstatus if blog is not moderated
-                // DB default is pending
-                if ($this->getBlog()->getProperty('admin_status') == 'online') {
-                    $this->setProperty('admin_status', 'online');   
-                }
-                if ($this->getBlog()->getProperty('status') == 'online') {
-                    $this->setProperty('status', 'online');   
-                }
-                
-                // admin and owner can override
+                // admin and owner can override status setting
                 if ($p_admin && $data['BlogComment']['admin_status']) {
                     $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
                 }

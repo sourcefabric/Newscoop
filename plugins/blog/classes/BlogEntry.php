@@ -122,6 +122,15 @@ class BlogEntry extends DatabaseObject {
         if (!$success) {
             return false;
         }
+        
+        // set proper status/adminstatus if blog is not moderated
+        // DB default is pending
+        if ($this->getBlog()->getProperty('admin_status') == 'online') {
+            $this->setProperty('admin_status', 'online');   
+        }
+        if ($this->getBlog()->getProperty('status') == 'online') {
+            $this->setProperty('status', 'online');   
+        }
 
         $this->fetch();
 
@@ -469,16 +478,7 @@ class BlogEntry extends DatabaseObject {
                             $data['BlogEntry']['content'], 
                             $data['f_mood_id'])) {
                                 
-                // set proper status/adminstatus if blog is not moderated
-                // DB default is pending
-                if ($this->getBlog()->getProperty('admin_status') == 'online') {
-                    $this->setProperty('admin_status', 'online');   
-                }
-                if ($this->getBlog()->getProperty('status') == 'online') {
-                    $this->setProperty('status', 'online');   
-                }
-                
-                // admin and owner can override
+                // admin and owner can override status setting
                 if ($data['BlogEntry']['status']) {
                     $this->setProperty('status', $data['BlogEntry']['status']);
                 }
