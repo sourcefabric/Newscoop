@@ -6,7 +6,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleType.php");
 global $Campsite;
 
 if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticle')) {
-    camp_html_display_error(getGS("You do not have the right to import legacy archves."));
+    camp_html_display_error(getGS("You do not have the right to import XML archives."));
     exit;
 }
 
@@ -230,7 +230,7 @@ if ($f_issue_number > 0) {
 
 $crumbs = array();
 $crumbs[] = array(getGS("Actions"), "");
-$crumbs[] = array(getGS("Import legacy archive"), "");
+$crumbs[] = array(getGS("Import XML"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -242,7 +242,7 @@ echo camp_html_breadcrumbs($crumbs);
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
 <tr>
   <td colspan="2">
-    <b><?php putGS("Import legacy archive"); ?></b>
+    <b><?php putGS("Import XML"); ?></b>
     <hr noshade size="1" color="black">
   </td>
 </tr>

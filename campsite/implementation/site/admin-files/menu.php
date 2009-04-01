@@ -112,7 +112,7 @@ if ($g_user->hasPermission("AddArticle")) {
 }
 
 if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
-    $menu_item =& DynMenuItem::Create(getGS('Import legacy archive'), "/$ADMIN/articles/la_import.php",
+    $menu_item =& DynMenuItem::Create(getGS('Import XML'), "/$ADMIN/articles/la_import.php",
         array("icon" => sprintf($iconTemplateStr, "import_archive.png")));
     $menu_actions->addItem($menu_item);
 }

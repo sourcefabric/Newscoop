@@ -3,14 +3,14 @@ regGS("You must select an article language.", "You must select an article langua
 regGS("You must select a publication.", "You must select a publication.");
 regGS("You must select a file to upload.", "You must select a file to upload.");
 regGS("You must select a XML input file.", "You must select a XML input file.");
-regGS("You do not have the right to import legacy archves.", "You do not have the right to import legacy archves.");
+regGS("You do not have the right to import XML archives.", "You do not have the right to import XML archives.");
 regGS("There was a problem uploading the file.", "There was a problem uploading the file.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'");
 regGS("The file exceeds the allowed max file size.", "The file exceeds the allowed max file size.");
 regGS("Overwrite existing articles", "Overwrite existing articles");
 regGS("Optional", "Optional");
 regGS("Input File", "Input File");
-regGS("Import legacy archive", "Import legacy archive");
+regGS("Import XML", "Import XML");
 regGS("File is not a valid XML file.", "File is not a valid XML file.");
 regGS("File does not exist.", "File does not exist.");
 regGS("File could not be uploaded.", "File could not be uploaded.");

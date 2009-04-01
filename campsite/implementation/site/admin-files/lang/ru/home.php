@@ -1,5 +1,5 @@
 <?php 
-regGS("Import legacy archive", "");
+regGS("Import XML", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
 regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
