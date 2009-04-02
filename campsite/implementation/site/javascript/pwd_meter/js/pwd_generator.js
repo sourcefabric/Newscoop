@@ -31,6 +31,8 @@ function GeneratePassword() {
     document.forms[0].passwordConf.value = sPassword;
     document.getElementById('passtext').innerHTML = sPassword;
 
+    chkPass(sPassword);
+
     return true;
 }
 
@@ -38,6 +40,8 @@ function cleanGeneratedPasswords() {
     document.forms[0].password.value = '';
     document.forms[0].passwordConf.value = '';
     document.getElementById('passtext').innerHTML = '';
+    var sPassword = '';
+    chkPass(sPassword);
 }
 
 function getRandomNum() {
