@@ -763,7 +763,7 @@ if ($f_edit_mode == "edit") { ?>
 				if ($f_edit_mode == "edit") {
 				    $fCustomFields[] = $dbColumn->getName();
 				?>
-		        <input name="<?php echo $dbColumn->getName(); ?>"
+		                  <input name="<?php echo $dbColumn->getName(); ?>"
 				    id="<?php echo $dbColumn->getName(); ?>"
 					   type="TEXT"
 					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
@@ -787,7 +787,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+                                        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -797,6 +797,11 @@ if ($f_edit_mode == "edit") { ?>
 				<?php
 				    if ($f_edit_mode == "edit") {
 				        $fCustomFields[] = $dbColumn->getName();
+					$saveButtonNames[] = 'save_' . $dbColumn->getName();
+					$saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
 				?>
 				<input name="<?php echo $dbColumn->getName(); ?>"
 				           id="<?php echo $dbColumn->getName(); ?>"
@@ -804,7 +809,8 @@ if ($f_edit_mode == "edit") { ?>
 					   value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
 					   size="11"
-					   maxlength="10" />
+					   maxlength="10"
+                                           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
 				<?php } else { ?>
 					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
 					<?php
@@ -907,9 +913,16 @@ window.location.reload();
 				$articleTopicId = $articleData->getProperty($dbColumn->getName());
 			?>
 			<tr>
-			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
-				<?php if ($f_edit_mode == "edit") { ?>
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+			<td align="left" style="padding-right: 5px;">
+				<?php if ($f_edit_mode == "edit") {
+				    $fCustomFields[] = $dbColumn->getName();
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
+				    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
+                                ?>
+				<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 			</td>
 			<td align="right">
@@ -919,7 +932,7 @@ window.location.reload();
 			    <?php if (count($subtopics) == 0) { ?>
 			    No subtopics available.
     			<?php } else { ?>
-    				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
+    				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
     				<option value="0"></option>
     				<?php
     				$TOL_Language = camp_session_get('TOL_Language', 'en');
