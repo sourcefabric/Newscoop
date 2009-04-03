@@ -115,6 +115,8 @@ if ($isValidXMLFile) {
     }
 
     // Loads article data from XML file into database
+    $xmlArticle = array();
+    $articleFields = array();
     $errorMessages = array();
     $articleCount = 0;
     foreach ($xml->article as $article) {
@@ -128,8 +130,8 @@ if ($isValidXMLFile) {
 	    $existingArticle = array_pop($existingArticles);
 	    // Is overwrite articles false? then skip and process next article
 	    if ($f_overwrite_articles == 'N') {
-	        $errorMessages[] = 'Article "<i>'.(string) $article->name.'</i>" '
-		    .'already exist and was not overwritten.';
+	        $errorMessages[][] = 'Article "<i>'.(string) $article->name.'</i>" '
+		    .'already exist and was not overwritten.<br />';
 	        continue;
 	    }
 	}
@@ -147,9 +149,13 @@ if ($isValidXMLFile) {
 	    camp_html_display_error(getGS('Article could not be created.'), $BackLink);
 	    exit;
 	}
+	$articleFields['name'] = true;
 
 	// Number of articles successfully created in database
 	$articleCount++;
+	$errorMessages[$articleCount][] = '<p><strong>'
+	    . htmlspecialchars((string) $article->name) . '</strong></p>';
+	$xmlArticle = get_object_vars($article);
 
 	$articleTypeObj = $articleObj->getArticleData();
 	$dbColumns = $articleTypeObj->getUserDefinedColumns();
@@ -158,11 +164,13 @@ if ($isValidXMLFile) {
 	    $fieldName = substr($dbColumn->getName(), 1);
 	    $field = strtolower($fieldName);
 	    if (!isset($article->$field)) {
-	        $errorMessages[] = 'The article type field "<i>'
+	        $errorMessages[$articleCount][] = 'The article type field "<i>'
 		    .$fieldName
-		    .'</i>" does not match any field from XML input file.';
+		    .'</i>" does not match any field from XML input file.<br />';
 		continue;
 	    }
+
+	    $articleFields[$field] = true;
 
 	    // Replace <span class="subhead"> ... </span> with
 	    // <!** Title> ... <!** EndTitle>
@@ -199,6 +207,17 @@ if ($isValidXMLFile) {
 	// Updates the article
 	$articleObj->setCreatorId($g_user->getUserId());
 	$articleObj->setKeywords((string) $article->keywords);
+	$articleFields['author'] = true;
+	$articleFields['keywords'] = true;
+
+	foreach($xmlArticle as $articleFieldName => $articleFieldValue) {
+	    if (!array_key_exists($articleFieldName, $articleFields)) {
+	        $errorMessages[$articleCount][] = '"' . $articleFieldName
+		    .'" field in XML file '
+		    . 'was not loaded into database as there is not any '
+		    . 'article type field matching it.<br />';
+	    }
+	}
     }
 
     camp_html_add_msg(getGS("$1 articles successfully imported.", $articleCount), "ok");
@@ -366,8 +385,10 @@ echo camp_html_breadcrumbs($crumbs);
 <tr>
   <td>
     <?php
-    foreach ($errorMessages as $error) {
-        print($error . "<br />");
+    foreach ($errorMessages as $key => $errors) {
+        for ($i = 0; $i < sizeof($errors); $i++) {
+	    print($errors[$i]);
+	}
     }
     ?>
   </td>
