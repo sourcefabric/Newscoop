@@ -152,7 +152,8 @@ class BlogEntry extends DatabaseObject {
 
         parent::delete();
 
-        BlogImageHelper::RemoveImage('entry', $entry_id);
+        BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
+        BlogentryTopic::OnBlogentryDelete($entry_id);
         Blog::TriggerCounters($blog_id);
     }
 

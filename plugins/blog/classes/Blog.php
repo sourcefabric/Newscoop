@@ -92,12 +92,15 @@ class Blog extends DatabaseObject {
 
     function delete()
     {
-        foreach (BlogEntry::getEntries(array('fk_blog_id' => $this->getProperty('blog_id'))) as $Entry) {
+        $blog_id =  $this->getProperty('blog_id');
+        
+        foreach (BlogEntry::getEntries(array('fk_blog_id' => $blog_id)) as $Entry) {
             $Entry->delete();
         }
 
         parent::delete();
-        BlogImageHelper::RemoveImage('entry', $entry_id);
+        BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
+        BlogTopic::OnBlogDelete($blog_id);
     }
 
     function getData()

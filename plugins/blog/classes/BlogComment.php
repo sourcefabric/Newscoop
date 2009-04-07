@@ -146,9 +146,9 @@ class BlogComment extends DatabaseObject {
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
     {    
-        $blogs_tbl = Blog::$s_dbTableName;
-        $entries_tbl = self::$s_dbTableName;
-        $comments_tbl = BlogComment::$s_dbTableName;
+        $blogs_tbl      = Blog::$s_dbTableName;
+        $entries_tbl    = BlogEntry::$s_dbTableName;
+        $comments_tbl   = BlogComment::$s_dbTableName;
             
         if (array_key_exists('fk_entry_id', $p_cond)) {
             $cond .= " AND c.fk_entry_id = {$p_cond['fk_entry_id']}";    
