@@ -20,7 +20,7 @@ require_once('config.inc.php');
   <form action="attachments.php" id="uploadForm" method="post">
   <fieldset>
     <div class="dirs">
-      <iframe src="attachments.php?article_id=<?php echo $_REQUEST['article_id']; ?>" name="attachmentsManager" id="attachmentsManager" class="attachmentFrame" scrolling="auto" title="Attachment Selection" frameborder="0"></iframe>
+      <iframe src="attachments.php?article_id=<?php echo $_REQUEST['article_id']; ?>&language_selected=<?php echo $_REQUEST['language_selected']; ?>" name="attachmentsManager" id="attachmentsManager" class="attachmentFrame" scrolling="auto" title="Attachment Selection" frameborder="0"></iframe>
     </div>
   </fieldset>
 
@@ -28,6 +28,7 @@ require_once('config.inc.php');
   <table class="inputTable">
     <input type="hidden" id="f_attachment_id" value="" />
     <input type="hidden" id="f_url" value="" />
+    <input type="hidden" id="f_description" value="" />
   </table>
   <!--// file attachment properties -->
   <div style="text-align: right;">

@@ -8,21 +8,12 @@
 require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');
 
-$refreshDir = false;
-
-// Check for any sub-directory request.
-// Check that the requested sub-directory exists and valid.
-if (isset($_REQUEST['dir'])) {
-	$path = rawurldecode($_REQUEST['dir']);
-	if ($manager->validRelativePath($path)) {
-		$relative = $path;
-	}
-}
-
 $manager = new AttachmentManager($AMConfig);
 
+$languageSelected = (isset($_REQUEST['language_selected'])) ? $_REQUEST['language_selected'] : null;
+
 // Get the list of files and directories
-$list = $manager->getFiles($_REQUEST['article_id']);
+$list = $manager->getFiles($_REQUEST['article_id'], $languageSelected);
 
 
 /**
@@ -30,29 +21,19 @@ $list = $manager->getFiles($_REQUEST['article_id']);
  */
 function drawFiles($list, &$manager)
 {
-    global $relative;
+    global $languageSelected;
 
     foreach($list as $entry => $file)
     {
+        $languageId = ($file['attachment']->getLanguageId()) ? $file['attachment']->getLanguageId() : $languageSelected;
+	$downloadURL = '/attachment/' . basename($file['attachment']->getStorageLocation()) . '?g_download=1';
 ?>
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="block" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $file['attachment']->getAttachmentUrl(); ?>', '<?php echo $file['alt']; ?>');">
-          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $file['attachment']->getAttachmentUrl(); ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>">linkable icon</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="edit">
-        <?php
-	/*
-        if ($file['image']) {
-            echo $file['image'][0].'x'.$file['image'][1];
-        } else {
-            echo " ";
-        }
-	*/
-        ?>
+        <td class="block" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>'">
+          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
+       <?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>
         </td>
       </tr>
       </table>
@@ -109,52 +90,19 @@ function drawErrorBase(&$manager)
       {
           hideMessage();
           var topDoc = window.top.document;
+      }
 
-      <?php
-      //we need to refesh the drop directory list
-      //save the current dir, delete all select options
-      //add the new list, re-select the saved dir.
-      if($refreshDir)
+      function editImage(image)
       {
-          $dirs = $manager->getDirs();
-      ?>
-          var selection = topDoc.getElementById('dirPath');
-		var currentDir = selection.options[selection.selectedIndex].text;
-
-		while(selection.length > 0)
-		{	selection.remove(0); }
-
-		selection.options[selection.length] = new Option("/","<?php echo rawurlencode('/'); ?>");
-		<?php foreach($dirs as $relative=>$fullpath) { ?>
-		selection.options[selection.length] = new Option("<?php echo $relative; ?>","<?php echo rawurlencode($relative); ?>");
-		<?php } ?>
-
-		for(var i = 0; i < selection.length; i++)
-		{
-			var thisDir = selection.options[i].text;
-			if(thisDir == currentDir)
-			{
-				selection.selectedIndex = i;
-				break;
-			}
-		}
-<?php } ?>
-	}
-
-	function editImage(image)
-	{
-		var url = "editor.php?img="+image;
-		Dialog(url, function(param)
-		{
-			if (!param) // user must have pressed Cancel
-				return false;
-			else
-			{
-				return true;
-			}
-		}, null);
-	}
-
+	  var url = "editor.php?img="+image;
+	  Dialog(url, function(param)
+	  {
+	      if (!param) // user must have pressed Cancel
+		  return false;
+	      else
+		  return true;
+	  }, null);
+      }
 /*]]>*/
     </script>
 
@@ -173,10 +121,12 @@ function drawErrorBase(&$manager)
 
 <?php
     $firstAttachment = array_shift($list);
-    if (!empty($firstAttachment)) {	?>
+    if (!empty($firstAttachment)) {
+        $downloadURL = '/attachment/' . basename($firstAttachment['attachment']->getStorageLocation()) . '?g_download=1';
+?>
   <!-- automatically select the first attachment -->
   <script>
-    CampsiteAttachmentDialog.select(<?php echo $firstAttachment["attachment"]->getAttachmentId(); ?>, '<?php echo $firstAttachment["attachment"]->getAttachmentUrl(); ?>', '<?php echo $firstAttachment["alt"]; ?>');
+    CampsiteAttachmentDialog.select(<?php echo $firstAttachment['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');
   </script>
 <?php } ?>
 

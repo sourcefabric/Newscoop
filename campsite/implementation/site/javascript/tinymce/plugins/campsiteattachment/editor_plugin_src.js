@@ -11,6 +11,8 @@
             this.editor = ed;
 	    editorId = ed.id;
 	    articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
+	    topDoc = window.top.document;
+	    langId = topDoc.getElementById('f_language_selected').value;
 
 	    // Register commands
 	    ed.addCommand('mceCampsiteAttachment', function() {
@@ -33,7 +35,7 @@
 		}
 
 		ed.windowManager.open({
-                    file : url + '/popup.php?article_id=' + articleNo,
+                    file : url + '/popup.php?article_id=' + articleNo + '&language_selected=' + langId,
 		        width : 580 + parseInt(ed.getLang('campsiteattachment.delta_width', 0)),
 			height : 330 + parseInt(ed.getLang('campsiteattachment.delta_height', 0)),
 			inline : 1

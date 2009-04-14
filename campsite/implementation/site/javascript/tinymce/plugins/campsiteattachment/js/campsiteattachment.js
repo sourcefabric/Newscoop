@@ -24,18 +24,18 @@ var CampsiteAttachmentDialog = {
     },
 
     insert : function() {
-	var ed = tinyMCEPopup.editor, dom = ed.dom;
+	var ed = tinyMCEPopup.editor;
+	var dom = ed.dom;
 	var topDoc = window.top.document;
 
-	tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
-	    src : topDoc.getElementById('f_url').value,
-	    id : topDoc.getElementById('f_attachment_id').value
-	}));
-
+	ed.selection.setContent(dom.createHTML('a', {
+		    href : topDoc.getElementById('f_url').value,
+		    title : topDoc.getElementById('f_description').value
+	    }, ed.selection.getContent()));
 	tinyMCEPopup.close();
     },
 
-    select : function(p_attachment_id, p_filename) {
+    select : function(p_attachment_id, p_filename, p_description) {
 	var topDoc = window.top.document;
 
 	var obj = topDoc.getElementById('f_attachment_id');
@@ -43,6 +43,9 @@ var CampsiteAttachmentDialog = {
 
 	var obj = topDoc.getElementById('f_url');
 	obj.value = p_filename;
+
+	var obj = topDoc.getElementById('f_description');
+	obj.value = p_description;
     },
 
     close : function() {
