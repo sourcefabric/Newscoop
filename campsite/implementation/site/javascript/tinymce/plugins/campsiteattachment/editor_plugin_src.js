@@ -14,6 +14,24 @@
 
 	    // Register commands
 	    ed.addCommand('mceCampsiteAttachment', function() {
+		var se = ed.selection;
+
+		// No selection and not in link
+		if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
+		    alert(ed.getLang('You need to select some text before creating a link'));
+		    return;
+		}
+
+		var action = '';
+		var elm = se.getNode();
+		elm = ed.dom.getParent(elm, "A");
+		if (elm != null && elm.nodeName == "A")
+		    action = "update";
+
+		if (action == 'update') {
+		    var href = ed.dom.getAttrib(elm, 'href');
+		}
+
 		ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo,
 		        width : 580 + parseInt(ed.getLang('campsiteattachment.delta_width', 0)),
@@ -31,7 +49,7 @@
 		image : url + '/img/campsiteattachment.gif'
 	    });
 
-	    ed.addShortcut('ctrl+g', 'campsiteattachment.campsiteattachment_desc', 'mceCampsiteAttachment');
+	    ed.addShortcut('ctrl+h', 'campsiteattachment.campsiteattachment_desc', 'mceCampsiteAttachment');
 
 	    ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');

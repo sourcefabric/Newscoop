@@ -6,11 +6,7 @@
  */
 
 require_once('config.inc.php');
-require_once('classes/ImageManager.php');
-
-//default path is /
-$relative = '/';
-$manager = new ImageManager($IMConfig);
+require_once('classes/AttachmentManager.php');
 
 $refreshDir = false;
 
@@ -23,10 +19,10 @@ if (isset($_REQUEST['dir'])) {
 	}
 }
 
-$manager = new ImageManager($IMConfig);
+$manager = new AttachmentManager($AMConfig);
 
 // Get the list of files and directories
-$list = $manager->getFiles($relative, $_REQUEST['article_id']);
+$list = $manager->getFiles($_REQUEST['article_id']);
 
 
 /**
@@ -39,46 +35,31 @@ function drawFiles($list, &$manager)
     foreach($list as $entry => $file)
     {
 ?>
-		<td>
-			<table width="100" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="block" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
-		</td></tr><tr><td class="edit">
-		<?php
-		if ($file['image']) {
-			echo $file['image'][0].'x'.$file['image'][1];
-		}
-		else {
-			echo " ";
-		}
-		?>
-		</td></tr></table></td>
-	  <?php
-	}//foreach
+    <td>
+      <table width="100" cellpadding="0" cellspacing="0">
+      <tr>
+        <td class="block" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $file['attachment']->getAttachmentUrl(); ?>', '<?php echo $file['alt']; ?>');">
+          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $file['attachment']->getAttachmentUrl(); ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>">linkable icon</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="edit">
+        <?php
+	/*
+        if ($file['image']) {
+            echo $file['image'][0].'x'.$file['image'][1];
+        } else {
+            echo " ";
+        }
+	*/
+        ?>
+        </td>
+      </tr>
+      </table>
+    </td>
+  <?php
+  }//foreach
 }//function drawFiles
-
-
-/**
- * Draw the directory.
- */
-function drawDirs($list, &$manager)
-{
-	global $relative;
-
-	foreach($list as $path => $dir)
-	{ ?>
-		<td><table width="100" cellpadding="0" cellspacing="0"><tr><td class="block">
-		<a href="images.php?dir=<?php echo rawurlencode($path); ?>" onclick="updateDir('<?php echo $path; ?>')" title="<?php echo $dir['entry']; ?>"><img src="img/folder.gif" height="80" width="80" alt="<?php echo $dir['entry']; ?>" /></a>
-		</td></tr><tr>
-		<td class="edit">
-			<a href="images.php?dir=<?php echo $relative; ?>&amp;deld=<?php echo rawurlencode($path); ?>" title="Trash" onclick="return confirmDeleteDir('<?php echo $dir['entry']; ?>', <?php echo $dir['count']; ?>);"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a>
-			<?php echo $dir['entry']; ?>
-		</td>
-		</tr></table></td>
-	  <?php
-	} //foreach
-}//function drawDirs
 
 
 function drawNoResults()
@@ -109,7 +90,7 @@ function drawErrorBase(&$manager)
 <head>
   <title>Image List</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link href="css/imagelist.css" rel="stylesheet" type="text/css" />
+  <link href="css/attachmentlist.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="assets/dialog.js"></script>
   <script type="text/javascript">
   /*<![CDATA[*/
@@ -183,20 +164,19 @@ function drawErrorBase(&$manager)
 </head>
 <body>
 <?php if ($manager->isValidBase() == false) { drawErrorBase($manager); }
-      elseif(count($list[0]) > 0 || count($list[1]) > 0) { ?>
+      elseif(count($list) > 0) { ?>
   <table>
   <tr>
-<?php drawDirs($list[0], $manager); ?>
-<?php drawFiles($list[1], $manager); ?>
+<?php drawFiles($list, $manager); ?>
   </tr>
   </table>
 
 <?php
-    $firstAttachment = array_shift($list[1]);
+    $firstAttachment = array_shift($list);
     if (!empty($firstAttachment)) {	?>
   <!-- automatically select the first attachment -->
   <script>
-      CampsiteAttachmentDialog.select(<?php echo $firstAttachment['template_id']; ?>, '<?php echo $firstAttachment['attachment_object']->getAttachmentUrl(); ?>', '<?php echo $firstAttachment['alt']; ?>');
+    CampsiteAttachmentDialog.select(<?php echo $firstAttachment["attachment"]->getAttachmentId(); ?>, '<?php echo $firstAttachment["attachment"]->getAttachmentUrl(); ?>', '<?php echo $firstAttachment["alt"]; ?>');
   </script>
 <?php } ?>
 

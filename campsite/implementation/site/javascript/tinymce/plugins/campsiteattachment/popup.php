@@ -26,13 +26,8 @@ require_once('config.inc.php');
 
   <!-- file attachment properties -->
   <table class="inputTable">
-    <input type="hidden" id="f_image_template_id" value="" />
+    <input type="hidden" id="f_attachment_id" value="" />
     <input type="hidden" id="f_url" value="" />
-    <input type="hidden" id="f_vert" value="" />
-    <input type="hidden" id="f_horiz" value="" />
-    <input type="hidden" id="f_border" value="" />
-    <input type="hidden" id="f_width" value="" />
-    <input type="hidden" id="f_height" value="" />
   </table>
   <!--// file attachment properties -->
   <div style="text-align: right;">
