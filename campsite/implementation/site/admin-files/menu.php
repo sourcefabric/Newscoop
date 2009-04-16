@@ -27,6 +27,9 @@ $showUserMenu = ($g_user->hasPermission("ManageUsers")
 	|| $g_user->hasPermission("ManageReaders")
     || $g_user->hasPermission("SyncPhorumUsers"));
 
+$showAdminActions = (($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle"))
+		     || (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")));
+
 $iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 
 DynMenuItem::SetMenuType("DynMenuItem_JsCook");
@@ -111,12 +114,6 @@ if ($g_user->hasPermission("AddArticle")) {
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
-    $menu_item =& DynMenuItem::Create(getGS('Import XML'), "/$ADMIN/articles/la_import.php",
-        array("icon" => sprintf($iconTemplateStr, "import_archive.png")));
-    $menu_actions->addItem($menu_item);
-}
-
 if ($g_user->hasPermission("ManageTempl")) {
     $menu_item =& DynMenuItem::Create(getGS('Upload new template'),
         "/$ADMIN/templates/upload_templ.php?Path=/look/&Back=".urlencode($_SERVER['REQUEST_URI']),
@@ -178,11 +175,21 @@ $menu_item =& DynMenuItem::Create(getGS("Change your password"),
     array("icon" => sprintf($iconTemplateStr, "change_password.png")));
 $menu_actions->addItem($menu_item);
 
-if (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")) {
-    $menu_item =& DynMenuItem::Create(getGS("Clear system cache"),
-        "/$ADMIN/home.php?clear_cache=yes",
-        array("icon" => sprintf($iconTemplateStr, "actions.png")));
-    $menu_actions->addItem($menu_item);
+if ($showAdminActions) {
+    $menu_actions->addSplit();
+
+    if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
+        $menu_item =& DynMenuItem::Create(getGS('Import XML'), "/$ADMIN/articles/la_import.php",
+					  array("icon" => sprintf($iconTemplateStr, "import_archive.png")));
+	$menu_actions->addItem($menu_item);
+    }
+
+    if (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")) {
+        $menu_item =& DynMenuItem::Create(getGS("Clear system cache"),
+					  "/$ADMIN/home.php?clear_cache=yes",
+					  array("icon" => sprintf($iconTemplateStr, "actions.png")));
+	$menu_actions->addItem($menu_item);
+    }
 }
 
 if ($showConfigureMenu) {
