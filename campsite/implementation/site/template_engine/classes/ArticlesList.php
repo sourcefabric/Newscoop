@@ -50,6 +50,18 @@ class ArticlesList extends ListObject
                                     );
 
 
+    private static $s_articleTypes = null;
+    
+    
+    private static $s_dynamicFields = null;
+    
+    
+    const CONSTRAINT_ATTRIBUTE_NAME = 1;
+    const CONSTRAINT_DYNAMIC_FIELD = 4;
+    const CONSTRAINT_OPERATOR = 2;
+    const CONSTRAINT_VALUE = 3;
+
+    
     /**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
@@ -107,6 +119,7 @@ class ArticlesList extends ListObject
 	    return $metaArticlesList;
 	}
 
+
 	/**
 	 * Processes list constraints passed in an array.
 	 *
@@ -118,28 +131,52 @@ class ArticlesList extends ListObject
 	    $parameters = array();
 	    $state = 1;
 	    $attribute = null;
+	    $articleTypeName = null;
 	    $operator = null;
 	    $value = null;
 	    foreach ($p_constraints as $index=>$word) {
-	        switch ($state) {
-	            case 1: // reading the parameter name
-	                $attribute = strtolower($word);
+	    	switch ($state) {
+	    		case self::CONSTRAINT_ATTRIBUTE_NAME: // reading the parameter name
+	    			$attribute = strtolower($word);
 	                if (!array_key_exists($attribute, ArticlesList::$s_parameters)) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_articles, constraints parameter");
-	                    return false;
+	                	// not a static field; is it a article type name?
+	                	self::ReadArticleTypes();
+	                	if (array_key_exists($attribute, self::$s_articleTypes)) {
+	                		$articleTypeName = self::$s_articleTypes[$attribute];
+	                		$state = self::CONSTRAINT_DYNAMIC_FIELD;
+	                		break;
+	                	}
+	                	
+	                	// not an article type name; is it a dynamic field name?
+	                	$dynamicFields = self::GetDynamicFields($articleTypeName, $attribute);
+	                	if (count($dynamicFields) > 0) {
+	                		if (count($dynamicFields) == 1) {
+	                			$type = $dynamicFields[0]->getGenericType();
+	                		} else {
+                                $type = 'string';
+	                		}
+	                		$state = self::CONSTRAINT_OPERATOR;
+	                		break;
+	                	}
+	                	
+	                	// unknown attribute
+	                	CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_articles, constraints parameter");
+	                	return false;
+	                } else {
+                        $type = ArticlesList::$s_parameters[$attribute]['type'];
 	                }
 	                if ($attribute == 'keyword') {
 	                    $operator = new Operator('is', 'string');
-	                    $state = 3;
+	                    $state = self::CONSTRAINT_VALUE;
 	                } elseif ($attribute == 'matchalltopics' || $attribute == 'matchanytopic') {
 	                    if ($attribute == 'matchalltopics') {
 	                        $operator = new Operator('is', 'boolean');
 	                        $comparisonOperation = new ComparisonOperation($attribute, $operator, 'true');
 	                        $parameters[] = $comparisonOperation;
 	                    }
-	                    $state = 1;
+	                    $state = self::CONSTRAINT_ATTRIBUTE_NAME;
 	                } else {
-                        $state = 2;
+                        $state = self::CONSTRAINT_OPERATOR;
 	                }
 	                if ($attribute == 'onfrontpage' || $attribute == 'onsection') {
 	                    if (($index + 1) < count($p_constraints)) {
@@ -150,18 +187,27 @@ class ArticlesList extends ListObject
         	                    $operator = new Operator('is', 'switch');
         	                    $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
                 	            $parameters[] = $comparisonOperation;
-                	            $state = 1;
+                	            $state = self::CONSTRAINT_ATTRIBUTE_NAME;
 	                        }
 	                    } else {
     	                    $operator = new Operator('is', 'switch');
                             $comparisonOperation = new ComparisonOperation($attribute, $operator, 'on');
                             $parameters[] = $comparisonOperation;
-                            $state = 1;
+                            $state = self::CONSTRAINT_ATTRIBUTE_NAME;
 	                    }
 	                }
 	                break;
-	            case 2: // reading the operator
-	                $type = ArticlesList::$s_parameters[$attribute]['type'];
+	    		case self::CONSTRAINT_DYNAMIC_FIELD:
+	    			$attribute = strtolower($word);
+	    			$dynamicFields = self::GetDynamicFields($articleTypeName, $attribute);
+	    			if (count($dynamicFields) > 0) {
+	    				$type = $dynamicFields[0]->getGenericType();
+	    				$state = self::CONSTRAINT_OPERATOR;
+	    				break;
+	    			}
+                    CampTemplate::singleton()->trigger_error("invalid dynamic field $word in statement list_articles, constraints parameter");
+                    return false;
+	            case self::CONSTRAINT_OPERATOR: // reading the operator
 	                try {
 	                    $operator = new Operator($word, $type);
 	                }
@@ -169,10 +215,9 @@ class ArticlesList extends ListObject
     	                CampTemplate::singleton()->trigger_error("invalid operator $word of parameter constraints.$attribute in statement list_articles");
 	                    return false;
 	                }
-	                $state = 3;
+	                $state = self::CONSTRAINT_VALUE;
 	                break;
-	            case 3: // reading the value to compare against
-	                $type = ArticlesList::$s_parameters[$attribute]['type'];
+	            case self::CONSTRAINT_VALUE: // reading the value to compare against
 	                $metaClassName = 'Meta'.ucfirst($type);
 	                try {
     	                $valueObj = new $metaClassName($word);
@@ -206,19 +251,27 @@ class ArticlesList extends ListObject
        	            } else {
        	                $value = $word;
        	            }
+       	            if (!is_null($articleTypeName)) {
+       	            	$attribute = "$articleTypeName.$attribute";
+       	            }
        	            $comparisonOperation = new ComparisonOperation($attribute, $operator, $value);
-    	            $parameters[] = $comparisonOperation;
-	                $state = 1;
+       	            $parameters[] = $comparisonOperation;
+       	            $state = self::CONSTRAINT_ATTRIBUTE_NAME;
+	                $attribute = null;
+	                $articleTypeName = null;
+	                $type = null;
+	                $value = null;
 	                break;
 	        }
 	    }
-	    if ($state != 1) {
+	    if ($state != self::CONSTRAINT_ATTRIBUTE_NAME) {
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_articles");
             return false;
 	    }
 
 		return $parameters;
 	}
+
 
 	/**
 	 * Processes order constraints passed in an array.
@@ -256,6 +309,7 @@ class ArticlesList extends ListObject
 
 	    return $order;
 	}
+
 
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
@@ -302,6 +356,43 @@ class ArticlesList extends ListObject
     		}
     	}
     	return $parameters;
+	}
+
+
+	private static function ReadArticleTypes()
+	{
+		if (is_null(self::$s_articleTypes)) {
+            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+			$articleTypes = ArticleType::GetArticleTypes(true);
+			self::$s_articleTypes = array();
+			foreach ($articleTypes as $articleType) {
+				self::$s_articleTypes[strtolower($articleType)] = $articleType;
+			}
+		}
+	}
+
+
+	private static function ReadDynamicFields()
+	{
+		if (is_null(self::$s_dynamicFields)) {
+            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTypeField.php');
+			self::$s_dynamicFields = ArticleTypeField::FetchFields();
+		}
+	}
+	
+	
+	private static function GetDynamicFields($p_articleTypeName = null, $p_fieldName)
+	{
+		$result = array();
+		self::ReadDynamicFields();
+		foreach (self::$s_dynamicFields as $dynamicField) {
+			if (strtolower($dynamicField->getPrintName()) == strtolower($p_fieldName)
+			&& (is_null($p_articleTypeName)
+			|| strtolower($dynamicField->getArticleType()) == strtolower($p_articleTypeName))) {
+				$result[] = $dynamicField;
+			}
+		}
+		return $result;
 	}
 }
 

@@ -574,7 +574,10 @@ abstract class ListObject
 	    foreach (str_split($p_constraintsString) as $char) {
 	        if (preg_match('/[\s]/', $char) && !$escaped) {
 	            if (!empty($lastWord)) {
-	                $words[] = $lastWord;
+	            	if ($lastWord == "''") {
+	            		$lastWord = '';
+	            	}
+	            	$words[] = $lastWord;
 	                $lastWord = '';
 	            }
 	        } elseif ($char == "\\" && !$escaped) {
@@ -585,6 +588,9 @@ abstract class ListObject
 	        }
 	    }
 	    if (strlen($lastWord) > 0) {
+	    	if ($lastWord == "''") {
+	    		$lastWord = '';
+	    	}
 	        $words[] = $lastWord;
 	    }
 	    return $words;
