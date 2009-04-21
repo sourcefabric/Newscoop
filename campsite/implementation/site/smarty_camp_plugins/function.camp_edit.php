@@ -67,7 +67,9 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
                 .'maxlength="32" '.$p_params['html_code'].' value="'
                 .smarty_function_escape_special_chars($fieldValue).'" />';
         } elseif (in_array($attribute, $txtAreaFields)) {
-            $html = '<textarea name="f_user_'.$attribute.'" cols="40" rows="4" '
+        	$cols = isset($p_params['columns']) ? (int)$p_params['columns'] : 40;
+        	$rows = isset($p_params['rows']) ? (int)$p_params['rows'] : 4;
+        	$html = '<textarea name="f_user_'.$attribute."\" cols=\"$cols\" rows=\"$rows\" "
                 .$p_params['html_code'].'>'
                 .smarty_function_escape_special_chars($fieldValue).'</textarea>';
         } elseif (in_array($attribute, $otherFields)) {
