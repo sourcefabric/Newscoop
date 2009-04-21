@@ -2362,8 +2362,16 @@ class Article extends DatabaseObject {
                                                    $p_negate = false)
     {
         $notCondition = $p_negate ? ' NOT' : '';
-        $selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
-                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+        if (!$p_negate) {
+        	$selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
+                          . ' IN (' . implode(', ', $p_TopicIds) . ")\n";
+        } else {
+        	$selectClause = "        SELECT a.Number\n"
+        	              . "        FROM Articles AS a LEFT JOIN ArticleTopics AS at\n"
+        	              . "          ON a.Number = at.NrArticle\n"
+                          . "        WHERE TopicId IS NULL OR TopicId NOT IN ("
+                          . implode(', ', $p_TopicIds) . ")\n";
+        }
         foreach ($p_typeAttributes as $typeAttribute) {
             $selectClause .= "        UNION\n"
                           . "        SELECT NrArticle FROM "
