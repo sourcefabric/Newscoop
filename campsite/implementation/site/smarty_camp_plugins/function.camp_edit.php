@@ -117,7 +117,9 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
         if ($campsite->article->comments_enabled == 1) {
             $fieldValue = $campsite->default_url->get_parameter('f_comment_'.$attribute);
             if ($attribute == 'content') {
-                $html = '<textarea name="f_comment_'.$attribute.'" cols="40" rows="4" '
+            	$cols = isset($p_params['columns']) ? (int)$p_params['columns'] : 40;
+            	$rows = isset($p_params['rows']) ? (int)$p_params['rows'] : 4;
+                $html = '<textarea name="f_comment_'.$attribute."\" cols=\"$cols\" rows=\"$rows\" "
                     .$p_params['html_code'].'>'
                     .smarty_function_escape_special_chars($fieldValue)
                     .'</textarea>';
