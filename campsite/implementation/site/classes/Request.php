@@ -69,9 +69,11 @@ class Request extends DatabaseObject {
 
     public function isInStats()
     {
-    	$currentTime = date('Y-m-d G');
-    	$lastUpdateTime = date('Y-m-d G', strtotime($this->getLastStatsUpdate()));
-    	return $currentTime == $lastUpdateTime;
+        $lastUpdateTime = strtotime($this->getLastStatsUpdate());
+        return $lastUpdateTime != 0;
+//    	$currentTime = date('Y-m-d G');
+//    	$lastUpdateTime = date('Y-m-d G', strtotime($this->getLastStatsUpdate()));
+//    	return $currentTime == $lastUpdateTime;
     }
 } // class Request
 

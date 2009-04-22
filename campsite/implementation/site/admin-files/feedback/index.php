@@ -27,11 +27,11 @@ global $ADMIN;
             ?></td>
         </tr>
         <tr>
-        	<td align="left" nowrap><?php putGS("Subject:"); ?></td>
+        	<td align="left" nowrap><?php putGS("Subject"); ?>:</td>
             <td><input type="text" class="input_text" name="f_description" value="" size="32" maxlength="255"></td>
         </tr>
         <tr>
-            <td align="left" valign="top" nowrap><?php putGS("Comment:"); ?></td>
+            <td align="left" valign="top" nowrap><?php putGS("Comment"); ?>:</td>
             <td>
                 <textarea cols="50" rows="6" class="input_text" name="f_body"></textarea>
             </td>

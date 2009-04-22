@@ -55,14 +55,19 @@ function camp_escape_shell_arg($p_arg)
  * Execute a command in the shell.
  *
  * @param string $p_cmd
- * @param string $p_errMsg
- * @param boolean $p_printOutput
+ * @param string $p_errMsg - default empty
+ * @param boolean $p_printOutput - default true
+ * @param boolean $p_silent - default false
  */
-function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
+function camp_exec_command($p_cmd, $p_errMsg = "",
+                           $p_printOutput = true, $p_silent = false)
 {
     $p_cmd .= " 2> /dev/null";
     @exec($p_cmd, $output, $result);
     if ($result != 0) {
+    	if ($p_silent) {
+    		exit(1);
+    	}
         if (!$p_printOutput) {
             $output = array();
         }
@@ -82,9 +87,10 @@ function camp_exec_command($p_cmd, $p_errMsg = "", $p_printOutput = true)
  */
 function camp_readline()
 {
-    $fp = fopen("php://stdin", "r");
-    $in = fgets($fp, 4094); // Maximum windows buffer size
-    fclose ($fp);
+    if (!isset($GLOBALS['stdin'])) {
+        $GLOBALS['stdin'] = fopen("php://stdin", "r");
+    }
+    $in = fgets($GLOBALS['stdin'], 4094); // Maximum windows buffer size
     return $in;
 } // fn camp_readline
 
@@ -170,14 +176,44 @@ function camp_read_files($p_startDir = '.')
  */
 function camp_remove_dir($p_dirName, $p_msg = "")
 {
-    if ($p_dirName == "" || $p_dirName == "/") {
-        camp_exit_with_error("ERROR! camp_remove_dir: Bad directory name.");
+	$p_dirName = str_replace('//', '/', $p_dirName);
+	$dirBaseName = trim($p_dirName, '/');
+    if ($p_dirName == "/" || $dirBaseName == ''
+    || $dirBaseName == '.' || $dirBaseName == '..'
+    || (strpos($dirBaseName, '/') == false && $p_dirName[0] == '/')) {
+        camp_exit_with_error("camp_remove_dir: Bad directory name '$p_dirName'.");
     }
     if (empty($p_msg)) {
-        $p_msg = "Unable to remove directory $p_dirName";
+        $p_msg = "Unable to remove directory '$p_dirName'";
     }
-    $command = "rm -rf $p_dirName";
-    camp_exec_command($command, $p_msg);
+    
+    $removeDir = true;
+    if (strrpos($p_dirName, '*') == (strlen($p_dirName) - 1)) {
+    	$p_dirName = substr($p_dirName, 0, strlen($p_dirName) - 1);
+    	$removeDir = false;
+    }
+    $p_dirName = rtrim($p_dirName, '/');
+    
+    $dirContent = scandir($p_dirName);
+    if ($dirContent === false) {
+    	camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
+    }
+    foreach ($dirContent as $file) {
+    	if ($file == '.' || $file == '..') {
+    		continue;
+    	}
+    	$filePath = "$p_dirName/$file";
+    	if (is_dir($filePath)) {
+    		camp_remove_dir($filePath);
+    		continue;
+    	}
+    	if (!unlink($filePath)) {
+            camp_exit_with_error("Unable to delete the file '$filePath'.");
+    	}
+    }
+    if ($removeDir) {
+        rmdir($p_dirName);
+    }
 } // fn camp_remove_dir
 
 
@@ -270,7 +306,8 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
  * @param string $p_output
  * @return int
  */
-function camp_backup_database($p_dbName, $p_destFile, &$p_output)
+function camp_backup_database($p_dbName, $p_destFile, &$p_output,
+                              $p_customParams = array())
 {
 	global $Campsite;
 
@@ -282,7 +319,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output)
 	if ($password != "") {
         $cmd .= " --password=$password";
     }
+    $cmd .= ' ' . implode(' ', $p_customParams);
     $cmd .= " $p_dbName > $p_destFile";
+    $p_output = array();
     @exec($cmd, $p_output, $result);
     return $result;
 } // fn camp_backup_database
@@ -296,6 +335,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output)
  */
 function camp_exit_with_error($p_errorStr)
 {
+	if (function_exists('__exit_cleanup')) {
+		__exit_cleanup();
+	}
     if (is_array($p_errorStr)) {
         $p_errorStr = implode("\n", $p_errorStr);
     }
@@ -319,11 +361,11 @@ function camp_connect_to_database($p_dbName = "")
     $res = mysql_connect($Campsite['DATABASE_SERVER_ADDRESS'] . ":"
         . $Campsite['DATABASE_SERVER_PORT'], $db_user, $db_password);
     if (!$res) {
-        camp_exit_with_error("Unable to connect to database server");
+        camp_exit_with_error("Unable to connect to the database server.");
     }
 
     if ($p_dbName != "" && !mysql_select_db($p_dbName)) {
-        camp_exit_with_error("Unable to select database $p_dbName");
+        camp_exit_with_error("Unable to select database '$p_dbName'.");
     }
     mysql_query("SET NAMES 'utf8'");
 } // fn camp_connect_to_database
@@ -389,7 +431,7 @@ function camp_database_exists($p_dbName)
 /**
  * @param string $p_dbName
  */
-function camp_upgrade_database($p_dbName)
+function camp_upgrade_database($p_dbName, $p_silent = false)
 {
     global $Campsite;
 
@@ -405,6 +447,7 @@ function camp_upgrade_database($p_dbName)
     }
 
     $first = true;
+    $skipped = array();
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
                       "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
                       "2.7.x", "3.0.x", "3.1.0", "3.1.x");
@@ -413,7 +456,14 @@ function camp_upgrade_database($p_dbName)
             continue;
         }
         if ($first) {
-            echo "\n\t* Upgrading the database from version $db_version...";
+        	if (!$p_silent) {
+                echo "\n\t* Upgrading the database from version $db_version...";
+        	}
+            $res = camp_utf8_convert(null, $skipped);
+            if ($res !== true) {
+            	return $res;
+            }
+            $first = false;
         }
         $output = array();
 
@@ -441,10 +491,30 @@ function camp_upgrade_database($p_dbName)
                 return "$script ($db_version): " . implode("\n", $output);
             }
         }
-        if ($first) {
-            echo "done.\n";
-            $first = false;
-        }
+    }
+    if (!$p_silent) {
+        echo "done.\n";
+    }
+    
+    if (count($skipped) > 0 && !$p_silent) {
+    	echo "
+Encountered non-critical errors while converting data to UTF-8 encoding!
+The following database queries were unsuccessful because after conversion
+text values become case insensitive. Words written in different case were
+unique before the conversion; after the conversion they are identical,
+breaking some constraints in the database.
+
+The upgrade script can not fix these issues automatically!
+
+You can continue to use the data as is and manually fix these issues
+later. The table fields that were not converted will not support case
+insensitive searches.
+
+Please save the following list of skipped queries:\n";
+    	foreach ($skipped as $query) {
+    		echo "$query;\n";
+    	}
+    	echo "-- end of queries list --\n";
     }
 
     return 0;
@@ -582,6 +652,13 @@ function camp_detect_database_version($p_dbName, &$version)
     return 0;
 } // fn camp_detect_database_version
 
+
+/**
+ * Migrates the configuration files from 2.x versions formatting
+ * to 3.x versions formatting
+ * @param $p_configFile - configuration file content
+ * @return string - new configuration file content
+ */
 function camp_migrate_config_file($p_configFile)
 {
     global $Campsite;
@@ -608,5 +685,227 @@ function camp_migrate_config_file($p_configFile)
     $p_configFile = preg_replace($patternArray, $replacementArray, $p_configFile);
     return $p_configFile;
 } // camp_migrate_config_file
+
+
+/**
+ * Converts the current database to UTF-8 encoding.
+ * @param $p_log_file
+ * @return bool - true if success
+ */
+function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
+{
+    global $Campsite;
+
+    // Whether logging or not
+    $do_log = (!empty($p_log_file)) ? true : false;
+    if ($do_log) {
+        if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
+            $do_log = false;
+            return "Log file is missing or not writable!";
+        }
+    }
+
+    // Sets the character set for the database
+    $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
+    if (!($res = mysql_query($sql))) {
+        return "Unable to convert database character set to utf8.";
+    }
+    if ($do_log) {
+        $log_text = $sql . "\n";
+    }
+
+    // Sets the character set for the client
+    $sql = 'SET character_set_client = utf8';
+    if (!($res = mysql_query($sql))) {
+        return "Unable to convert the client character set to utf8.";
+    }
+    if ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    // Deletes data from ArticleIndex and KeywordIndex tables to fix duplicate values
+    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.ArticleIndex';
+    if (!($res = mysql_query($sql))) {
+        return "Unable to remove article index data.";
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.KeywordIndex';
+    if (!($res = mysql_query($sql))) {
+        return "Unable to remove keyword index data.";
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    $sql = 'UPDATE ' . $Campsite['DATABASE_NAME'] . ".Articles SET IsIndexed = 'N'";
+    if (!($res = mysql_query($sql))) {
+        return "Unable to update article table data.";
+    } elseif ($do_log) {
+        $log_text .= $sql . "\n";
+    }
+
+    // Builds ALTER TABLE sql queries for all database tables
+    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', \n"
+         . "  table_name, ' CONVERT TO CHARACTER SET utf8') \n"
+         . "FROM information_schema.tables \n"
+         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+    $sqlSentences = array();
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_row($res)) {
+       $sqlSentences[] = $row[0];
+    }
+
+    foreach ($sqlSentences as $sentence) {
+        if (!($res = mysql_query($sentence))) {
+            return "Unable to convert data to UTF-8 on query:\n$sentence";
+        } elseif ($do_log) {
+            $log_text .= $sentence . "\n";
+        }
+    }
+
+    $sql = "SELECT table_name, column_name, \n"
+         . "  REPLACE(column_type, 'binary', 'char') AS column_type, \n"
+         . "is_nullable, column_default \n"
+         . "FROM information_schema.columns \n"
+         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "' \n"
+         . "  AND data_type LIKE 'varbinary%'";
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+    	$table_name = $row['table_name'];
+    	$column_name = $row['column_name'];
+    	$column_type = $row['column_type'];
+    	$is_nullable = strtolower($row['is_nullable']) != 'no';
+    	$nullDefinition = $is_nullable ? '' : 'NOT NULL';
+    	$column_default = is_null($row['column_default']) ? 'NULL' : "'" . $row['column_default'] . "'";
+    	$sql = "ALTER TABLE `$table_name` MODIFY `$column_name` \n"
+             . "  $column_type $nullDefinition DEFAULT $column_default";
+        if (!mysql_query($sql)) {
+        	if ($table_name == 'Articles' && $column_name == 'Name') {
+                return "Unable to convert data to UTF-8 on query:\n$sql";
+        	}
+        	$p_skipped[] = $sql;
+        } elseif ($do_log) {
+            $log_text .= $sql . "\n";
+        }
+    }
+
+    // Writes Log file
+    if ($do_log) {
+        if (@file_put_contents($p_log_file, $log_text) === false) {
+            return "Couldn't write Log file.";
+        }
+    }
+
+    return true;
+} // fn camp_utf8_convert
+
+
+/**
+ * Sets the encoding to UTF8 for the given encoding in the SQL
+ * dump file.
+ * @param $p_inDumpFile - source dump file full path
+ * @param $p_outDumpFile - destination dump file full path
+ * @param $p_fromEncoding - encoding from which to convert to UTF8
+ * @return bool - true if successful
+ */
+function camp_change_dump_encoding($p_inDumpFile, $p_outDumpFile,
+                                   $p_fromEncoding)
+{
+	$inFile = fopen($p_inDumpFile, "r");
+	if (!$inFile) {
+        camp_exit_with_error("Unable to open the source dump file $p_inDumpFile!");
+	}
+	$outFile = fopen($p_outDumpFile, 'w');
+    if (!$outFile) {
+        camp_exit_with_error("Unable to open the destination dump file $p_outDumpFile!");
+    }
+    while (!feof($inFile)) {
+    	$line = fgets($inFile);
+    	$pattern = "/SET\s+NAMES\s+[']?${p_fromEncoding}[']?([^_])/i";
+    	$replacement = 'SET NAMES utf8${1}';
+    	$line = preg_replace($pattern, $replacement, $line);
+        $pattern = "/CHARSET\s*=\s*[']?${p_fromEncoding}[']?([^_])/i";
+        $replacement = 'CHARSET=utf8${1}';
+        $line = preg_replace($pattern, $replacement, $line);
+    	if (fputs($outFile, $line) === false) {
+            camp_exit_with_error("Unable to write the dump file $p_outDumpFile!");
+    	}
+    }
+    fclose($inFile);
+    fclose($outFile);
+    return true;
+}
+
+
+/**
+ * Returns the server default character set.
+ * @return string or false if error
+ */
+function camp_get_server_charset()
+{
+	$sql = "SHOW VARIABLES LIKE 'character_set_server'";
+	$res = mysql_query($sql);
+	$row = mysql_fetch_array($res, MYSQL_ASSOC);
+	if (!$row) {
+		return false;
+	}
+	return $row['Value'];
+}
+
+
+/**
+ * Returns true if the given charset was valid.
+ * @param $p_charset
+ * @return bool
+ */
+function camp_valid_charset($p_charset)
+{
+    $sql = "SHOW CHARACTER SET LIKE '$p_charset'";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res, MYSQL_ASSOC);
+    if (!$row) {
+        return false;
+    }
+    return true;
+}
+
+
+/**
+ * Returns an array of all the database server charsets.
+ * @return array
+ */
+function camp_get_all_charsets()
+{
+	$charsets = array();
+    $sql = "SHOW CHARACTER SET";
+    $res = mysql_query($sql);
+    while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
+    	$charsets[$row['Charset']] = $row['Description'];
+    }
+    return $charsets;
+}
+
+
+/**
+ * Restores the Campsite database from the given dump file.
+ * @param $p_sqlFile - dump file
+ * @return bool - true on success
+ */
+function camp_restore_database($p_sqlFile, $p_silent = false)
+{
+	global $Campsite;
+	
+	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+	. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+	. $Campsite['DATABASE_SERVER_PORT'];
+	if ($Campsite['DATABASE_PASSWORD'] != "") {
+		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+	}
+	$cmd .= ' ' . $Campsite['DATABASE_NAME'] . " < $p_sqlFile";
+	camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
+	                  true, $p_silent);
+	return true;
+}
 
 ?>

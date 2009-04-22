@@ -3,7 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2008 MDLF, Inc.
+ * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
@@ -58,8 +58,8 @@ $Campsite['cache']['path'] = null;
 /** Smarty settings **/
 $Campsite['smarty']['caching'] = false;
 $Campsite['smarty']['debugging'] = false;
-$Campsite['smarty']['force_compile'] = true;
-$Campsite['smarty']['compile_check'] = false;
+$Campsite['smarty']['force_compile'] = false;
+$Campsite['smarty']['compile_check'] = true;
 $Campsite['smarty']['use_subdirs'] = false;
 $Campsite['smarty']['left_delimeter'] = '#{#{';
 $Campsite['smarty']['right_delimeter'] = '#}#}';

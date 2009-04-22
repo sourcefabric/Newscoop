@@ -122,7 +122,7 @@ class CampInstallationBase
             }
             if ($this->finish()) {
                 $this->saveConfiguration();
-                self::EnablePlugins();
+                self::InstallPlugins();
             }
             break;
         }
@@ -332,7 +332,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo tables';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
@@ -343,7 +343,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo prepare file';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
@@ -354,7 +354,7 @@ class CampInstallationBase
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
         if ($errors > 0) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Importing Database';
+            $this->m_message = 'Error: Importing Database: demo data';
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
@@ -408,10 +408,14 @@ class CampInstallationBase
         $cmd = 'crontab -l';
         exec($cmd, $output, $result);
         if ($result != 0) {
-            $this->m_step = 'cronjobs';
-            $this->m_message = 'Error: Could not save cron job files. '
-                .'Could not run the crontab executable.';
-            return false;
+        	$cmd = 'crontab -';
+            exec($cmd, $output, $result);
+            if ($result != 0) {
+                $this->m_step = 'cronjobs';
+                $this->m_message = 'Error: Could not save cron job files. '
+                    .'Could not run the crontab executable.';
+                return false;
+            }
         }
 
         $cronJobsDir = CS_INSTALL_DIR.DIR_SEP.'cron_jobs';
@@ -557,7 +561,7 @@ class CampInstallationBase
         }
     }
     
-    private static function EnablePlugins()
+    private static function InstallPlugins()
     {
         global $g_documentRoot;
         
@@ -568,7 +572,7 @@ class CampInstallationBase
             $CampPlugin = new CampPlugin($info['name']);
             $CampPlugin->create($info['name'], $info['version']);
             $CampPlugin->install();
-            $CampPlugin->enable();
+            $CampPlugin->disable();
             
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
                 call_user_func("plugin_{$info['name']}_addPermissions");

@@ -141,11 +141,10 @@ class CampGetImage
      */
     private function PushImage()
     {
-        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
         header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        header('Cache-Control: no-store, no-cache, must-revalidate');
-        header('Cache-Control: post-check=0, pre-check=0', false);
-        header('Pragma: no-cache');
+//        header('Cache-Control: no-store, no-cache, must-revalidate');
+//        header('Cache-Control: post-check=0, pre-check=0', false);
+//        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_imageMetaData['ContentType']);
 
         if($this->m_ratio<100){

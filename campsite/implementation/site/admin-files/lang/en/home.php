@@ -1,9 +1,23 @@
 <?php 
+regGS("Import XML", "Import XML");
+regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "You must have the permissions to add/change issues and articles in order to set the author for all articles.");
+regGS("Select the field from which to generate the author", "Select the field from which to generate the author");
+regGS("Invalid or empty field $1. You must select a valid dynamic field.", "Invalid or empty field $1. You must select a valid dynamic field.");
+regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.");
+regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "There were errors setting the author for articles of type '$1' from the field '$2'.");
+regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "The author was set successfuly for articles of type '$1' from the field '$2'.");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "The article has been locked by $1 ($2) $3 minute(s) ago.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.");
+regGS("Recently Modified Articles", "Recently Modified Articles");
+regGS("Publish Schedule", "Publish Schedule");
+regGS("No articles have been modified yet.", "No articles have been modified yet.");
+regGS("Modification Date", "Modification Date");
+regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.");
 regGS("There are currently no articles in statistics.", "There are currently no articles in statistics.");
 regGS("Publish date", "Publish date");
 regGS("Most Popular Articles", "Most Popular Articles");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Unable to connect to the Campcaster server, please verify the Campcaster server settings.");
-regGS("Clear System Cache", "Clear System Cache");
+regGS("Clear system cache", "Clear system cache");
 regGS("Campsite cache was cleaned up", "Campsite cache was cleaned up");
 regGS("The system was unable to upload the file '$1'. ", "The system was unable to upload the file '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Please check the file you are trying to upload, it might be corrupted.");

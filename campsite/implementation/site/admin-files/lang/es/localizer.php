@@ -1,6 +1,4 @@
 <?php 
-regGS("Polls", "");
-regGS("Interview", "");
 regGS("Preview Window", "");
 regGS("Article Audioclips", "");
 regGS("Feedback", "Retroalimentación");

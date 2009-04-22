@@ -40,6 +40,7 @@ $my_user_type = $editUser->getUserType();
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_meter_min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_generator_min.js"></script>
 <link href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/css/default.css" rel="stylesheet" type="text/css" />
 
 
@@ -67,6 +68,26 @@ if (!$isNewUser) {
 ?>
 				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Account name"); ?>"></td>
 			</tr>
+
+                <tr>
+		  <td nowrap><?php putGS("Password Generator"); ?>:</td>
+                  <td>
+                    <table cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <input type="button" class="button" value="<?php putGS('Generate'); ?>" onClick="GeneratePassword()">
+                      </td>
+                      <td style="padding-left:6px;">
+                        <div id="passtext"> </div>
+                      </td>
+                      <td style="padding-left:6px;">
+                        <input type="button" class="button" value="<?php putGS('Clean'); ?>" onClick="cleanGeneratedPasswords()">
+                      </td>
+                    </tr>
+                    </table>
+                  </td>
+                </tr>
+
 			<tr>
 				<td align="right"><?php putGS("Password"); ?>:</td>
 				<td>
@@ -220,6 +241,25 @@ if (!$isNewUser) {
 		<?php
 		}
 		?>
+
+                <tr>
+		  <td nowrap><?php putGS("Password Generator"); ?>:</td>
+                  <td>
+                    <table cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <input type="button" class="button" value="<?php putGS('Generate'); ?>" onClick="GeneratePassword()">
+                      </td>
+                      <td style="padding-left:6px;">
+                        <div id="passtext"> </div>
+                      </td>
+                      <td style="padding-left:6px;">
+                        <input type="button" class="button" value="<?php putGS('Clean'); ?>" onClick="cleanGeneratedPasswords()">
+                      </td>
+                    </tr>
+                    </table>
+                  </td>
+                </tr>
 
 		<tr>
                   <td align="right" nowrap width="1%"><?php putGS("Password"); ?>:</td>

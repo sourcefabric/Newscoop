@@ -495,7 +495,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 	                  <td align="left" valign="top" style="padding-right: 5px;">
 	                  <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="button" id="save_f_article_title" name="button4" value="Saved">
+                            <input type="button" id="save_f_article_title" name="button4" value="<?php putGS('Saved'); ?>">
 			  <?php } ?>
                           </td>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
@@ -511,7 +511,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" valign="top" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="button" id="save_f_article_author" name="button5" value="Saved">
+					<input type="button" id="save_f_article_author" name="button5" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 				</td>
 				<td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
@@ -715,7 +715,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") { ?>
-					<input type="button" id="save_f_keywords" name="button6" value="Saved">
+					<input type="button" id="save_f_keywords" name="button6" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 				</td>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
@@ -733,6 +733,7 @@ if ($f_edit_mode == "edit") { ?>
 			$fCustomFields = array();
                         $fCustomTextareas = array();
                         $saveButtons = array();
+                        $saveButtonNames = array('save_f_article_title','save_f_article_author','save_f_keywords');
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
 				if (stristr($dbColumn->getType(), "char")
@@ -745,12 +746,13 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 				    <?php if ($f_edit_mode == "edit") {
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
 				    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
 	        onclick: { fn: onButtonClick },
 	        disabled: true
 	});';
                                     ?>
-					<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
+					<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -761,7 +763,7 @@ if ($f_edit_mode == "edit") { ?>
 				if ($f_edit_mode == "edit") {
 				    $fCustomFields[] = $dbColumn->getName();
 				?>
-		        <input name="<?php echo $dbColumn->getName(); ?>"
+		                  <input name="<?php echo $dbColumn->getName(); ?>"
 				    id="<?php echo $dbColumn->getName(); ?>"
 					   type="TEXT"
 					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
@@ -785,7 +787,7 @@ if ($f_edit_mode == "edit") { ?>
 			<tr>
 				<td align="left" style="padding-right: 5px;">
 					<?php if ($f_edit_mode == "edit") { ?>
-					<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" class="disk_save_icon" name="save" alt="save" onClick="makeRequest('<?php p($dbColumn->getName()); ?>');" />
+                                        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 					<?php } ?>
 				</td>
 				<td align="right">
@@ -795,6 +797,11 @@ if ($f_edit_mode == "edit") { ?>
 				<?php
 				    if ($f_edit_mode == "edit") {
 				        $fCustomFields[] = $dbColumn->getName();
+					$saveButtonNames[] = 'save_' . $dbColumn->getName();
+					$saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
 				?>
 				<input name="<?php echo $dbColumn->getName(); ?>"
 				           id="<?php echo $dbColumn->getName(); ?>"
@@ -802,7 +809,8 @@ if ($f_edit_mode == "edit") { ?>
 					   value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
 					   size="11"
-					   maxlength="10" />
+					   maxlength="10"
+                                           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
 				<?php } else { ?>
 					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
 					<?php
@@ -864,12 +872,13 @@ window.location.reload();
 			<tr>
 			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
 				<?php if ($f_edit_mode == "edit") {
+                                $saveButtonNames[] = 'save_' . $dbColumn->getName();
                                 $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
 	        onclick: { fn: onButtonClick },
 	        disabled: true
 	});';
                                 ?>
-			        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="Saved">
+			        <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 			</td>
 			<td align="right" valign="top" style="padding-top: 8px;">
@@ -904,9 +913,16 @@ window.location.reload();
 				$articleTopicId = $articleData->getProperty($dbColumn->getName());
 			?>
 			<tr>
-			<td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
-				<?php if ($f_edit_mode == "edit") { ?>
-				<input type="image" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" name="save" value="save" />
+			<td align="left" style="padding-right: 5px;">
+				<?php if ($f_edit_mode == "edit") {
+				    $fCustomFields[] = $dbColumn->getName();
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
+				    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+	        onclick: { fn: onButtonClick },
+	        disabled: true
+	});';
+                                ?>
+				<input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
 				<?php } ?>
 			</td>
 			<td align="right">
@@ -916,7 +932,7 @@ window.location.reload();
 			    <?php if (count($subtopics) == 0) { ?>
 			    No subtopics available.
     			<?php } else { ?>
-    				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
+    				<select class="input_select" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
     				<option value="0"></option>
     				<?php
     				$TOL_Language = camp_session_get('TOL_Language', 'en');
@@ -1095,13 +1111,13 @@ YAHOO.example.init = function () {
 function buttonEnable(buttonId) {
     var oPushButton = YAHOO.widget.Button.getButton(buttonId);
     oPushButton.set("disabled", false);
-    oPushButton.set("label", "Save");
+    oPushButton.set("label", "<?php putGS('Save'); ?>");
 }
 
 function buttonDisable(buttonId) {
     var oPushButton = YAHOO.widget.Button.getButton(buttonId);
     oPushButton.set("disabled", true);
-    oPushButton.set("label", "Saved");
+    oPushButton.set("label", "<?php putGS('Saved'); ?>");
 }
 
 var handleSuccess = function(o){
@@ -1115,7 +1131,7 @@ var handleSuccess = function(o){
 	document.getElementById('yui-saved').style.display = 'none';
 	var savedTime = makeSavedTime();
 	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
-	mesg.innerHTML = "Article Saved";
+	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
 	YAHOO.example.container.wait.hide();
 	
     }
@@ -1168,7 +1184,9 @@ function makeRequest(a){
     var ycaFCreationDate = document.getElementById('f_creation_date').value;
     var ycaFPublishDate = document.getElementById('f_publish_date').value;
     var ycaFIsPublic = document.getElementById('f_is_public').checked;
+    <?php if ($showCommentControls) { ?>
     var ycaFCommentStatus = document.getElementById('f_comment_status').value;
+    <?php } ?>
     var ycaFKeywords = document.getElementById('f_keywords').value;
     var ycaFPublicationId = document.getElementById('f_publication_id').value;
     var ycaFIssueNumber = document.getElementById('f_issue_number').value;
@@ -1212,7 +1230,9 @@ function makeRequest(a){
       + "&f_creation_date=" + ycaFCreationDate
       + "&f_publish_date=" + ycaFPublishDate
       + "&f_is_public=" + ycaFIsPublic
+    <?php if ($showCommentControls) { ?>
       + "&f_comment_status=" + ycaFCommentStatus
+    <?php } ?>
       + "&f_keywords=" + ycaFKeywords
       + "&f_publication_id=" + ycaFPublicationId
       + "&f_issue_number=" + ycaFIssueNumber
@@ -1227,7 +1247,18 @@ function makeRequest(a){
     YAHOO.example.container.wait.show();
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
-    buttonDisable("save_" + a);
+
+    if (a == "all") {
+        <?php
+            foreach ($saveButtonNames as $saveButtonName) {
+        ?>
+                buttonDisable("<?php print($saveButtonName); ?>");
+        <?php
+            }
+        ?>
+    } else {
+        buttonDisable("save_" + a);
+    }
 }
 
 function makeSavedTime() {

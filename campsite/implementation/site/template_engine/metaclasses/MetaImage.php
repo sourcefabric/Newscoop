@@ -35,7 +35,10 @@ final class MetaImage extends MetaDbObject {
     public function __construct($p_imageId = null)
     {
         $this->m_dbObject = new Image($p_imageId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Image();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';

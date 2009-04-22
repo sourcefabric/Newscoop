@@ -1,8 +1,6 @@
 <?php 
-regGS("Polls", "");
-regGS("Interview", "");
-regGS("Preview Window", "");
-regGS("Article Audioclips", "");
+regGS("Preview Window", "Акно прадагляду");
+regGS("Article Audioclips", "Аўдыёкліпы артыкула");
 regGS("Show translated strings", "Паказаць перакладзеныя радкі");
 regGS("Hide translated strings", "Схаваць перакладзеныя радкі");
 regGS("Feedback", "Зваротная сувязь");

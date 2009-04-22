@@ -9,7 +9,7 @@ regGS("You do not have the right to move articles.", "У Вас нет прав 
 regGS("Unable to create folder.", "Невозможно создать папку.");
 regGS("Unable to $1 template.", "Шаблон $1 невозможно использовать.");
 regGS("To New Name", "К новому имени");
-regGS("These templates", "Шаблоны");
+regGS("These templates", "Эти шаблоны");
 regGS("The template object $1 is in use and can not be deleted.", "Объект шаблона $1 используется и не может быть удален.");
 regGS("The template object $1 could not be renamed.", "Объект шаблона $1 не может быть переименован.");
 regGS("Template(s) moved.", "Шаблон(ы) перемещены.");

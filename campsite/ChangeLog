@@ -1,30 +1,94 @@
-3.2 rc1 (January 6, 2009)
+3.2.1 (March 31, 2009)
+  Improvements
+  ------------
+  - #2769 - Import of legacy archives from other CMSs and HTML
+            (base implementation)
+  - #2780 - Implement template languages list for site, publication,
+            issue, article
+  - #2773 - List articles by Author
+  - #2615 - Implement order by Number in the list of topics and subtopics
+  - #2254 - Ability to print user name/real name of subscriber with comment
+  - #2745 - Strong password generator
+  - #2804 - Add 'preview' template attribute
+
+  Bugs Fixed
+  ----------
+  - #2761 - Preview mode url parameters are missing from URI
+  - #2792 - set_publication does not change the publication alias
+  - #2783 - Upgrading from 2.6 leaves users table in inconsistent state
+  - #2784 - Users synchronize script does not work for inconsistent data
+  - #2807 - Part of the article data is not set upon article creation
+  - #2812 - The article image number not updated in the admin interface
+  - #2775 - It's not possible to create new blog
+  - #2785 - urlparameters does not insert the article number if the
+            options="article" parameter was missing
+  - #2782 - Upgrade crashes on invalid rights id sequence
+  - #2790 - Upgrade continues on article field conversion error
+  - #2791 - Translation strings are missign from set author and users screens
+  - #2794 - The blog plugin doesn't respect topic enviroment/constraints
+  - #2797 - Advanced search crash when 'index' scope was specified
+  - #2799 - The meta date time class throws error on empty values
+  - #2806 - Article edit screen crash for non-assigned articles
+  - #2817 - The sections are not ordered in the admin content menu
+
+3.2.0 (March 06, 2009)
   Improvements
   ------------
   - #1791 - Use Ajax to save article screen
   - #2312 - Swap out Xinha for TinyMCE
+  - #2538 - Advanced article search
   - #2542 - Ajaxization of WYSIWYG editor
   - #2561 - Article Statistics: Most Commented
-  - #2596 - Replace PLUGINS_DIR by CS_PATH_PLUGINS
+  - #2596 - Replace PLUGINS_DIR by CS_PATH_PLUGINS (Plugin API)
   - #2598 - Plugin localizer
-  - #2645 - Plugins API
-  - #2668 - Log Article last edited/modified by
+  - #2602 - Password strength meter and automatic strong password generator
+  - #2620 - Implementation of a blog plugin
+  - #2645 - Improvementes to the plugins API
+  - #2668 - Log Article edited/modified action
   - #2669 - Rewrite the article statistics API to work in real time
   - #2672 - Add static Author field
+  - #2681 - Implement article publish_date in list articles constraints
+  - #2689 - Make TinyMCE status bar (where it prints current breadcrumb of
+            html structure) toggable via permissions
+  - #2690 - Implement dynamic update of the author
+  - #2736 - Section description should not be a mandatory field
 
   Bugs Fixed
   ----------
-  - #1695 - Xinha crashes Firefox when copying/pasting text from OpenOffice
   - #1750 - Home page should show locked status of articles
   - #1799 - Home Page: Add "Most recently modified" articles
   - #1800 - Home Page: Your Articles: show when an article will be published
   - #1936 - users/index.php uses SQL directly in the HTML file
   - #2550 - Fixing Xinha editor
+  - #2612 - Database can be overwritten at installation time without warning
+            the user
   - #2626 - Plugin installer does not set proper rights
   - #2638 - Bugs/improvements to the Interview plugin
   - #2639 - Bugs/improvements to the Poll plugin
   - #2656 - Poll plugin crash when browsing categories in article edit screen
   - #2674 - Articles list incomplete when 'reads' attribute specified
+  - #2688 - Fix the way of printing the parameters in the URLs
+  - #2693 - The language is not set correctly for localizer in
+            camp_select statement
+  - #2695 - Advanced search is CASE_SENSITIVE while it should be not
+  - #2697 - Poll: set default charset to utf8
+  - #2700 - The search engine indexer skips words
+  - #2702 - Comments in local language (russian) shown as unconverted
+            utf8 in Admin & on front-end
+  - #2703 - The comment data may be broken on concurrent inserts
+  - #2704 - Installing on apache without APC results in crash
+  - #2706 - Poll plugin: admin interface doesn't show fields according to
+            the choosen number of answers
+  - #2712 - Blog classes need to set published datetime automatically
+  - #2713 - Changing the language in the template invalidates the
+            issue/section/article objects
+  - #2723 - Liveuser db connect error
+  - #2732 - Problem with installer and non-existing apache crontab
+            (cron table for user apache)
+  - #2738 - Unicode screwed up in default database
+  - #2749 - Restore script fails due to duplicated key
+  - #2750 - Blog admin lists foreign entries
+  - #2751 - List of articles with ignore_language doesn't work well
 
   Other Tasks
   -----------

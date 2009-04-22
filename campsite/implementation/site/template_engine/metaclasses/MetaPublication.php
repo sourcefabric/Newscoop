@@ -38,7 +38,10 @@ final class MetaPublication extends MetaDbObject {
     public function __construct($p_publicationId = null)
     {
         $this->m_dbObject = new Publication($p_publicationId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Publication();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';
@@ -49,6 +52,33 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
         $this->m_customProperties['subscription_time'] = 'getSubscriptionTime';
     } // fn __construct
+
+
+    /**
+     * Returns a list of MetaLanguage objects - list of languages in which
+     * the issue was translated.
+     * 
+     * @param boolean $p_excludeCurrent
+     * @param array $p_order
+     * @param boolean $p_allIssues
+     * @return array of MetaLanguage
+     */
+    public function languages_list($p_excludeCurrent = true,
+    array $p_order = array()) {
+    	if ($p_excludeCurrent) {
+    		$context = CampTemplate::singleton()->context();
+    		$languageId = $context->language->number;
+    	} else {
+    		$languageId = null;
+    	}
+        $languages = $this->m_dbObject->getLanguages($languageId, $p_order,
+        !CampTemplate::singleton()->context()->preview);
+        $metaLanguagesList = array();
+        foreach ($languages as $language) {
+            $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
+        }
+        return $metaLanguagesList;
+    }
 
 
     protected function getDefaultSiteName()

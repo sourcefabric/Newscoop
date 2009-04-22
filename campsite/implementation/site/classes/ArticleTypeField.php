@@ -360,6 +360,18 @@ class ArticleTypeField {
 		}
 		return $topicId;
 	}
+	
+	
+	public function getGenericType()
+	{
+		switch ($this->getType()) {
+			case 'topic':
+			case 'date':
+				return $this->getType();
+			default:
+				return 'string';
+		}
+	}
 
 
 	/**
@@ -757,8 +769,10 @@ class ArticleTypeField {
 	    if (isset($p_dataType)) {
 	        $whereClauses[] = "field_type = '" . $g_ado_db->escape($p_dataType) . "'";
 	    }
-	    $query = 'SELECT * FROM ArticleTypeMetadata WHERE '
-	             . implode(' and ', $whereClauses)
+	    if (count($whereClauses) > 0) {
+	    	$whereString = 'WHERE ' . implode(' and ', $whereClauses);
+	    }
+	    $query = "SELECT * FROM ArticleTypeMetadata $whereString"
 	             . ' ORDER BY type_name ASC, field_name ASC';
 	    $rows = $g_ado_db->GetAll($query);
 	    $fields = array();

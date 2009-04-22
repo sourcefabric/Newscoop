@@ -118,12 +118,38 @@ class Article extends DatabaseObject {
 	public function Article($p_languageId = null, $p_articleNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['IdLanguage'] = $p_languageId;
-		$this->m_data['Number'] = $p_articleNumber;
+		$this->m_data['IdLanguage'] = (int)$p_languageId;
+		$this->m_data['Number'] = (int)$p_articleNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor
+
+
+    /**
+     * Fetch a single record from the database for the given key.
+     *
+     * @param array $p_recordSet
+     *      If the record has already been fetched and we just need to
+     *      assign the data to the object's internal member variable.
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    public function fetch($p_recordSet = null)
+    {
+    	$res = parent::fetch($p_recordSet);
+        settype($this->m_data['IdPublication'], 'integer');
+        settype($this->m_data['NrIssue'], 'integer');
+        settype($this->m_data['NrSection'], 'integer');
+        settype($this->m_data['IdLanguage'], 'integer');
+        settype($this->m_data['Number'], 'integer');
+        settype($this->m_data['IdUser'], 'integer');
+        settype($this->m_data['fk_default_author_id'], 'integer');
+        settype($this->m_data['LockUser'], 'integer');
+        settype($this->m_data['ArticleOrder'], 'integer');
+        return $res;
+    }
 
 
 	/**
@@ -170,9 +196,9 @@ class Article extends DatabaseObject {
 		    && ($p_publicationId > 0)
 		    && ($p_issueNumber > 0)
 		    && ($p_sectionNumber > 0) ) {
-			$values['IdPublication'] = $p_publicationId;
-			$values['NrIssue'] = $p_issueNumber;
-			$values['NrSection'] = $p_sectionNumber;
+			$values['IdPublication'] = (int)$p_publicationId;
+			$values['NrIssue'] = (int)$p_issueNumber;
+			$values['NrSection'] = (int)$p_sectionNumber;
 		}
 		$values['ShortName'] = $this->m_data['Number'];
 		$values['Type'] = $p_articleType;
@@ -202,9 +228,9 @@ class Article extends DatabaseObject {
 		if (!$success) {
 			return;
 		}
+        $this->fetch();
 		$this->setProperty('UploadDate', 'NOW()', true, true);
-		$this->fetch();
-
+		
 		// Insert an entry into the article type table.
 		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
@@ -233,7 +259,7 @@ class Article extends DatabaseObject {
 			// If we were not able to get an ID.
 			return 0;
 		}
-		return $g_ado_db->Insert_ID();
+		return (int)$g_ado_db->Insert_ID();
 	} // fn __generateArticleNumber
 
 
@@ -299,11 +325,11 @@ class Article extends DatabaseObject {
 		foreach ($copyArticles as $copyMe) {
     		// Construct the duplicate article object.
     		$articleCopy = new Article();
-    		$articleCopy->m_data['IdPublication'] = $p_destPublicationId;
-    		$articleCopy->m_data['NrIssue'] = $p_destIssueNumber;
-    		$articleCopy->m_data['NrSection'] = $p_destSectionNumber;
-    		$articleCopy->m_data['IdLanguage'] = $copyMe->m_data['IdLanguage'];
-    		$articleCopy->m_data['Number'] = $newArticleNumber;
+    		$articleCopy->m_data['IdPublication'] = (int)$p_destPublicationId;
+    		$articleCopy->m_data['NrIssue'] = (int)$p_destIssueNumber;
+    		$articleCopy->m_data['NrSection'] = (int)$p_destSectionNumber;
+    		$articleCopy->m_data['IdLanguage'] = (int)$copyMe->m_data['IdLanguage'];
+    		$articleCopy->m_data['Number'] = (int)$newArticleNumber;
     		$values = array();
     		// Copy some attributes
     		$values['ShortName'] = $newArticleNumber;
@@ -385,13 +411,13 @@ class Article extends DatabaseObject {
 	{
 		$columns = array();
 		if ($this->m_data["IdPublication"] != $p_destPublicationId) {
-			$columns["IdPublication"] = $p_destPublicationId;
+			$columns["IdPublication"] = (int)$p_destPublicationId;
 		}
 		if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
-			$columns["NrIssue"] = $p_destIssueNumber;
+			$columns["NrIssue"] = (int)$p_destIssueNumber;
 		}
 		if ($this->m_data["NrSection"] != $p_destSectionNumber) {
-			$columns["NrSection"] = $p_destSectionNumber;
+			$columns["NrSection"] = (int)$p_destSectionNumber;
 		}
 		$success = false;
 		if (count($columns) > 0) {
@@ -541,14 +567,14 @@ class Article extends DatabaseObject {
 				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
 		}
 
-		// Delete row from Articles table.
-		$deleted = parent::delete();
-
 		// Delete row from article type table.
 		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
+
+        // Delete row from Articles table.
+        $deleted = parent::delete();
 
 		if ($deleted) {
 			if (function_exists("camp_load_translation_strings")) {
@@ -624,20 +650,46 @@ class Article extends DatabaseObject {
 
 	/**
 	 * Return an array of Language objects, one for each
-	 * type of language the article is written in.
-	 *
+	 * language the article is written in.
+	 * 
+     * @param boolean $p_excludeCurrent
+     *      If true, exclude the current language from the list.
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
 	 * @return array
 	 */
-	public function getLanguages()
+	public function getLanguages($p_excludeCurrent = false, array $p_order = array(),
+	$p_published = false)
 	{
-		$tmpLanguage  = new Language();
+		if (!$this->exists()) {
+			return array();
+		}
+		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 	 	$queryStr = 'SELECT '.implode(',', $columnNames).' FROM Articles, Languages '
-	 				.' WHERE IdPublication='.$this->m_data['IdPublication']
-	 				.' AND NrIssue='.$this->m_data['NrIssue']
-	 				.' AND NrSection='.$this->m_data['NrSection']
-	 				.' AND Number='.$this->m_data['Number']
-	 				.' AND Articles.IdLanguage=Languages.Id';
+	 				.' WHERE Articles.IdLanguage = Languages.Id'
+                    .' AND IdPublication = ' . $this->m_data['IdPublication']
+	 				.' AND NrIssue = ' . $this->m_data['NrIssue']
+	 				.' AND NrSection = ' . $this->m_data['NrSection']
+	 				.' AND Number = ' . $this->m_data['Number'];
+        if ($p_excludeCurrent) {
+            $queryStr .= ' AND Languages.Id != ' . $this->m_data['IdLanguage'];
+	 	}
+	 	if ($p_published) {
+	 		$queryStr .= " AND Articles.Published = 'Y'";
+	 	}
+        $order = Article::ProcessLanguageListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
+        }
+	 	if (count($sqlOrder) > 0) {
+	 		$queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
+	 	}
 	 	$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
@@ -648,7 +700,7 @@ class Article extends DatabaseObject {
 	 * type of language the article is written in.
 	 *
 	 * @param int $p_articleNumber
-	 * 		Optional.  Use this if you call this function statically.
+	 * 		Optional. Use this if you call this function statically.
 	 *
 	 * @return array
 	 */
@@ -888,7 +940,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getPublicationId()
 	{
-		return $this->m_data['IdPublication'];
+		return (int)$this->m_data['IdPublication'];
 	} // fn getPublicationId
 
 
@@ -901,7 +953,7 @@ class Article extends DatabaseObject {
 	public function setPublicationId($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('IdPublication', $p_value);
+			return $this->setProperty('IdPublication', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -915,7 +967,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getIssueNumber()
 	{
-		return $this->m_data['NrIssue'];
+		return (int)$this->m_data['NrIssue'];
 	} // fn getIssueNumber
 
 
@@ -928,7 +980,7 @@ class Article extends DatabaseObject {
 	public function setIssueNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('NrIssue', $p_value);
+			return $this->setProperty('NrIssue', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -942,7 +994,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getSectionNumber()
 	{
-		return $this->m_data['NrSection'];
+		return (int)$this->m_data['NrSection'];
 	} // fn getSectionNumber
 
 
@@ -955,7 +1007,7 @@ class Article extends DatabaseObject {
 	public function setSectionNumber($p_value)
 	{
 		if (is_numeric($p_value)) {
-			return $this->setProperty('NrSection', $p_value);
+			return $this->setProperty('NrSection', (int)$p_value);
 		} else {
 			return false;
 		}
@@ -969,7 +1021,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getLanguageId()
 	{
-		return $this->m_data['IdLanguage'];
+		return (int)$this->m_data['IdLanguage'];
 	} // fn getLanguageId
 
 
@@ -984,7 +1036,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getArticleNumber()
 	{
-		return $this->m_data['Number'];
+		return (int)$this->m_data['Number'];
 	} // fn getArticleNumber
 
 
@@ -1051,7 +1103,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getCreatorId()
 	{
-		return $this->m_data['IdUser'];
+		return (int)$this->m_data['IdUser'];
 	} // fn getCreatorId
 
 
@@ -1063,7 +1115,7 @@ class Article extends DatabaseObject {
      */
     public function setCreatorId($p_value)
     {
-        return parent::setProperty('IdUser', $p_value);
+        return parent::setProperty('IdUser', (int)$p_value);
     } // fn setCreatorId
 
 
@@ -1073,7 +1125,7 @@ class Article extends DatabaseObject {
      */
     public function getAuthorId()
     {
-        return $this->m_data['fk_default_author_id'];
+        return (int)$this->m_data['fk_default_author_id'];
     } // fn getAuthorId
 
 
@@ -1085,7 +1137,7 @@ class Article extends DatabaseObject {
      */
     public function setAuthorId($p_value)
     {
-        return parent::setProperty('fk_default_author_id', $p_value);
+        return parent::setProperty('fk_default_author_id', (int)$p_value);
     } // fn setAuthorId
 
 
@@ -2105,6 +2157,18 @@ class Article extends DatabaseObject {
                 } else {
                     $hasNotTopics[] = $comparisonOperation['right'];
                 }
+            } elseif ($leftOperand == 'author') {
+            	$otherTables['Authors'] = array('fk_default_author_id'=>'id');
+            	$author = Author::ReadName($comparisonOperation['right']);
+            	$symbol = $comparisonOperation['symbol'];
+            	$valModifier = strtolower($symbol) == 'like' ? '%' : '';
+            	
+            	$firstName = $author['first_name'];
+            	$lastName = $author['last_name'];
+            	$whereCondition = "CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol "
+            	                . "'$valModifier$firstName $lastName$valModifier'";
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
@@ -2298,8 +2362,16 @@ class Article extends DatabaseObject {
                                                    $p_negate = false)
     {
         $notCondition = $p_negate ? ' NOT' : '';
-        $selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
-                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+        if (!$p_negate) {
+        	$selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
+                          . ' IN (' . implode(', ', $p_TopicIds) . ")\n";
+        } else {
+        	$selectClause = "        SELECT a.Number\n"
+        	              . "        FROM Articles AS a LEFT JOIN ArticleTopics AS at\n"
+        	              . "          ON a.Number = at.NrArticle\n"
+                          . "        WHERE TopicId IS NULL OR TopicId NOT IN ("
+                          . implode(', ', $p_TopicIds) . ")\n";
+        }
         foreach ($p_typeAttributes as $typeAttribute) {
             $selectClause .= "        UNION\n"
                           . "        SELECT NrArticle FROM "
@@ -2434,7 +2506,14 @@ class Article extends DatabaseObject {
      * Processes an order directive coming from template tags.
      *
      * @param array $p_order
-     *      The array of order directives
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
+     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
+     *        bypopularity, bycomments
+     *      order_direction can take one of the following values:
+     *        asc, desc
      *
      * @return array
      *      The array containing processed values of the condition
@@ -2615,6 +2694,51 @@ class Article extends DatabaseObject {
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
         return $articlesList;
+    }
+
+
+
+    /**
+     * Processes an order directive for the article translations list.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessLanguageListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Languages.Id';
+                    break;
+                case 'byname':
+                    $dbField = 'Languages.OrigName';
+                    break;
+                case 'byenglish_name':
+                    $dbField = 'Languages.Name';
+                    break;
+                case 'bycode':
+                    $dbField = 'Languages.Code';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
+        }
+        return $order;
     }
 
 } // class Article

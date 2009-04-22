@@ -1,4 +1,29 @@
 <?php 
+regGS("You must select an article language.", "");
+regGS("You must select a publication.", "");
+regGS("You must select a file to upload.", "");
+regGS("You must select a XML input file.", "");
+regGS("You do not have the right to import XML archives.", "");
+regGS("There was a problem uploading the file.", "");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
+regGS("The file exceeds the allowed max file size.", "");
+regGS("Overwrite existing articles", "");
+regGS("Optional", "");
+regGS("Input File", "");
+regGS("Import XML", "");
+regGS("File is not a valid XML file.", "");
+regGS("File does not exist.", "");
+regGS("File could not be uploaded.", "");
+regGS("File could not be read.", "");
+regGS("Error List", "");
+regGS("Bad format in XML file.", "");
+regGS("Article could not be created.", "");
+regGS("---Select article type---", "");
+regGS("$1 articles successfully imported.", "");
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -113,7 +138,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "기
 regGS("There was an error reading request parameters.", "요구 파라미터를 읽는중 에러가 있습니다. ");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "기사를 미리볼 수 없습니다. 기사 템플레이트을 선택했는지 확인하시오.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "기사를 미리볼 수 없습니다. 프론트페이지 템플레이트를 선택했는지 확인하시오.");
-regGS("Insert Internal Link", "내부링크 삽입");
 regGS("No such article.", "그런 기사 없슴");
 regGS("No such section.", "그런 섹션 없슴.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

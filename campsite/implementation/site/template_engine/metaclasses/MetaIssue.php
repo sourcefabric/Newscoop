@@ -36,7 +36,10 @@ final class MetaIssue extends MetaDbObject {
     $p_issueNumber = null)
     {
         $this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Issue();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['year'] = 'getPublishYear';
         $this->m_customProperties['mon'] = 'getPublishMonth';
@@ -52,10 +55,32 @@ final class MetaIssue extends MetaDbObject {
         $this->m_customProperties['publication'] = 'getPublication';
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['is_current'] = 'isCurrent';
+        $this->m_customProperties['is_published'] = 'isPublished';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
+    /**
+     * Returns a list of MetaLanguage objects - list of languages in which
+     * the issue was translated.
+     * 
+     * @param boolean $p_excludeCurrent
+     * @param array $p_order
+     * @param boolean $p_allIssues
+     * @return array of MetaLanguage
+     */
+    public function languages_list($p_excludeCurrent = true,
+    array $p_order = array(), $p_allIssues = false) {
+        $languages = $this->m_dbObject->getLanguages(false, $p_excludeCurrent,
+        $p_order, $p_allIssues, !CampTemplate::singleton()->context()->preview);
+        $metaLanguagesList = array();
+        foreach ($languages as $language) {
+            $metaLanguagesList[] = new MetaLanguage($language->getLanguageId());
+        }
+        return $metaLanguagesList;
+    }
+    
+    
     protected function getPublishYear()
     {
         $publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));
@@ -155,6 +180,11 @@ final class MetaIssue extends MetaDbObject {
         $this->m_dbObject->getLanguageId());
         return !is_null($currentIssue)
         && $currentIssue->getIssueNumber() == $this->m_dbObject->getIssueNumber();
+    }
+
+
+    protected function isPublished() {
+    	return $this->m_dbObject->isPublished();
     }
 
 } // class MetaIssue

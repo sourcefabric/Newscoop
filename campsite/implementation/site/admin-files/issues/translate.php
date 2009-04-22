@@ -17,7 +17,8 @@ if (!Input::IsValid()) {
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
-$unusedLanguages = $issueObj->getLanguages(true);
+$unusedLanguages = $issueObj->getLanguages(true, true,
+array(array('field'=>'byname', 'dir'=>'asc')), false, false);
 
 include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 

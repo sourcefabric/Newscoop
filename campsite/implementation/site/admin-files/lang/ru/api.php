@@ -5,11 +5,11 @@ regGS("The following fields are mandatory:", "Данные поля обязат
 regGS("Missing value for $1", "Пропущено значение переменной $1");
 regGS("Manage Plugins", "Управлять прагинами");
 regGS("* Marked fields are mandatory.", "* Отмеченные поля обязательны для заполнения");
-regGS("$1 is of type $2", "$1 иммет тип $2");
+regGS("$1 is of type $2", "$1 имеет тип $2");
 regGS("Invalid resize width/height.", "Невозможно изменить длину/ширину.");
 regGS("Can not fetch audioclip metadata: the connection to Campcaster was not established.", "Доступ к метаданным аудиоклипа запрещен: соединение с Campcaster не было установлено");
 regGS("Image type $1 is not supported.", "Тип картинки $1 не поддерживается.");
-regGS("There was a problem trying to execute the XML RPC function.", "Воникла проблема попытки выполнения функции XML RPC");
+regGS("There was a problem trying to execute the XML RPC function.", "Возникла проблема попытки выполнения функции XML RPC");
 regGS("The Campcaster server configuration is invalid.", "Конфигурация сервера Campcaster неправильная.");
 regGS("Template $1 was moved to $2", "Шаблон $1 был перемещен в $2");
 regGS("Template $1 was deleted", "Шаблон $1 был удален");

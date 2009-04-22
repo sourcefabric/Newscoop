@@ -121,7 +121,7 @@ class SearchResultsList extends ListObject
 	        switch ($state) {
                 case 1: // reading the order field
 	                if (array_search(strtolower($word), SearchResultsList::$s_orderFields) === false) {
-	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_searchresult, order parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_search_results, order parameter");
 	                } else {
     	                $orderField = $word;
                         $state = 2;
@@ -131,14 +131,14 @@ class SearchResultsList extends ListObject
                     if (MetaOrder::IsValid($word)) {
                         $order[] = array('field'=>$orderField, 'dir'=>$word);
                     } else {
-                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_searchresult, order parameter");
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_search_results, order parameter");
                     }
                     $state = 1;
 	                break;
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_searchresult");
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_search_results");
 	    }
 
 	    return $order;

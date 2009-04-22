@@ -36,6 +36,9 @@ final class MetaSection extends MetaDbObject {
     {
 		$this->m_dbObject = new Section($p_publicationId, $p_issueNumber,
 										$p_languageId, $p_sectionNumber);
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Section();
+        }
 
 		$this->InitProperties();
 		$this->m_customProperties['template'] = 'getTemplate';

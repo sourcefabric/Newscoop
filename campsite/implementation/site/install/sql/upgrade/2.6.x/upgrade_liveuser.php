@@ -250,8 +250,6 @@ while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
 			$key = 'handle';
 		} elseif ($key == 'Password') {
 			$key = 'passwd';
-		} elseif ($key == 'Id') {
-			continue;
 		}
         $liveUserData[$key] = $value;
     }

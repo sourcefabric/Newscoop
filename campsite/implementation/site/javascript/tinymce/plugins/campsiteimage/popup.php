@@ -56,7 +56,7 @@ $manager = new ImageManager($IMConfig);
       <td align="right"><label for="f_align">Alignment:</label></td>
       <td>
         <select size="1" id="f_align"  title="Positioning of this image">
-          <option value="none">Not set</option>
+          <option value="">Not set</option>
           <option value="left">Left</option>
           <option value="right">Right</option>
           <option value="middle">Middle</option>

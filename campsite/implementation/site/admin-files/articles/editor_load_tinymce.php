@@ -226,6 +226,7 @@ tinyMCE.init({
     theme : "advanced",
     plugins : "<?php p($plugins_list); ?>",
     forced_root_block : "",
+    relative_urls : false,
 
     // Theme options
     theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",

@@ -379,6 +379,16 @@ class Issue extends DatabaseObject {
 	} // fn setIssueTemplateId
 
 
+    /**
+     * Returns true if the issue was published
+     *
+     * @return boolean
+     */
+	public function isPublished() {
+		return $this->m_data['Published'] == 'Y';
+	}
+
+
 	/**
 	 * Return the current state in the workflow:
 	 * 'Y' if the issue is published, 'N' if it is not published.
@@ -475,27 +485,63 @@ class Issue extends DatabaseObject {
 	 * @param boolean $p_getUnusedLanguagesOnly
 	 * 		Reverses the search and finds only those languages which this
 	 * 		issue has not been translated into.
+	 * @param boolean $p_excludeCurrent
+	 *      If true, exclude the current language from the list.
+	 * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+	 * @param boolean $p_allIssues
+	 *      If true return all the languages in which all issues of the
+	 *      publication were translated.
 	 * @return array
 	 * 		Return an array of Language objects.
 	 */
-	public function getLanguages($p_getUnusedLanguagesOnly = false)
+	public function getLanguages($p_getUnusedLanguagesOnly = false,
+	$p_excludeCurrent = true, array $p_order = array(), $p_allIssues = false,
+	$p_published = false)
 	{
 		$tmpLanguage = new Language();
 		$columnNames = $tmpLanguage->getColumnNames(true);
 		if ($p_getUnusedLanguagesOnly) {
 			$queryStr = "SELECT ".implode(',', $columnNames)
 						." FROM Languages LEFT JOIN Issues "
-						." ON Issues.IdPublication = ".$this->m_data['IdPublication']
-						." AND Issues.Number= ".$this->m_data['Number']
-						." AND Issues.IdLanguage = Languages.Id "
-						." WHERE Issues.IdPublication IS NULL";
+						." ON Issues.IdPublication = ".$this->m_data['IdPublication'];
+            if (!$p_allIssues) {
+                $queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
+            }
+            if ($p_published) {
+                $queryStr .= " AND Issues.Published = 'Y'";
+            }
+            $queryStr .= " AND Issues.IdLanguage = Languages.Id "
+                      ." WHERE Issues.IdPublication IS NULL";
 		} else {
 			$queryStr = "SELECT ".implode(',', $columnNames)
 						." FROM Languages, Issues "
-						." WHERE Issues.IdPublication = ".$this->m_data['IdPublication']
-						." AND Issues.Number= ".$this->m_data['Number']
-						." AND Issues.IdLanguage = Languages.Id ";
+						." WHERE Issues.IdPublication = ".$this->m_data['IdPublication'];
+            if (!$p_allIssues) {
+                $queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
+            }
+            $queryStr .= " AND Issues.IdLanguage = Languages.Id ";
+            if ($p_excludeCurrent) {
+                $queryStr .= " AND Languages.Id != " . $this->m_data['IdLanguage'];
+            }
+            if ($p_published) {
+                $queryStr .= " AND Issues.Published = 'Y'";
+            }
 		}
+		list($languagesKey) = $tmpLanguage->getKeyColumnNames();
+		$queryStr .= " GROUP BY $languagesKey";
+        $order = Issue::ProcessLanguageListOrder($p_order);
+		foreach ($order as $orderDesc) {
+            $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
+        }
+        if (count($sqlOrder) > 0) {
+            $queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
+        }
 		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
@@ -683,7 +729,6 @@ class Issue extends DatabaseObject {
         global $g_ado_db;
 
         $hasPublicationId = false;
-        $hasLanguageId = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
 
@@ -695,9 +740,6 @@ class Issue extends DatabaseObject {
             }
             if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
                 $hasPublicationId = true;
-            }
-            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
-                $hasLanguageId = true;
             }
 
             $whereCondition = $comparisonOperation['left'] . ' '
@@ -713,13 +755,7 @@ class Issue extends DatabaseObject {
                 .'Identifier in statement list_topics');
             return;
         }
-        // validates whether language identifier was given
-/*        if ($hasLanguageId == false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Language '
-                .'Identifier in statement list_topics');
-            return;
-        }
-*/
+
         // sets the columns to be fetched
         $tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
@@ -742,6 +778,9 @@ class Issue extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
+
+        $selectClauseObj->addGroupField('Number');
+        $selectClauseObj->addGroupField('IdLanguage');
 
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
@@ -884,6 +923,50 @@ class Issue extends DatabaseObject {
         return $order;
     }
 
+
+    /**
+     * Processes an order directive for the issue translations list.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessLanguageListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Languages.Id';
+                    break;
+                case 'byname':
+                    $dbField = 'Languages.OrigName';
+                    break;
+                case 'byenglish_name':
+                    $dbField = 'Languages.Name';
+                    break;
+                case 'bycode':
+                    $dbField = 'Languages.Code';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
+        }
+        return $order;
+    }
+    
 } // class Issue
 
 ?>

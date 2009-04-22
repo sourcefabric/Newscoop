@@ -1,4 +1,29 @@
 <?php 
+regGS("You must select an article language.", "You must select an article language.");
+regGS("You must select a publication.", "You must select a publication.");
+regGS("You must select a file to upload.", "You must select a file to upload.");
+regGS("You must select a XML input file.", "You must select a XML input file.");
+regGS("You do not have the right to import XML archives.", "You do not have the right to import XML archives.");
+regGS("There was a problem uploading the file.", "There was a problem uploading the file.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'");
+regGS("The file exceeds the allowed max file size.", "The file exceeds the allowed max file size.");
+regGS("Overwrite existing articles", "Overwrite existing articles");
+regGS("Optional", "Optional");
+regGS("Input File", "Input File");
+regGS("Import XML", "Import XML");
+regGS("File is not a valid XML file.", "File is not a valid XML file.");
+regGS("File does not exist.", "File does not exist.");
+regGS("File could not be uploaded.", "File could not be uploaded.");
+regGS("File could not be read.", "File could not be read.");
+regGS("Error List", "Error List");
+regGS("Bad format in XML file.", "Bad format in XML file.");
+regGS("Article could not be created.", "Article could not be created.");
+regGS("---Select article type---", "---Select article type---");
+regGS("$1 articles successfully imported.", "$1 articles successfully imported.");
+regGS("Saving, please wait...", "Saving, please wait...");
+regGS("Saved", "Saved");
+regGS("Save All", "Save All");
+regGS("Article Saved", "Article Saved");
 regGS("Online Server: On", "Online Server: On");
 regGS("Online Server: Off", "Online Server: Off");
 regGS("Title", "Title");
@@ -113,7 +138,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "Are
 regGS("There was an error reading request parameters.", "There was an error reading request parameters.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.");
-regGS("Insert Internal Link", "Insert Internal Link");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
 regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");

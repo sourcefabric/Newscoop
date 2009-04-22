@@ -189,6 +189,17 @@ if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
 	<?php } ?>
 	<!-- CAPTCHA-->
 
+        <tr>
+                <td colspan="2" align="center">
+                        <hr noshade size="1"  color="black" />
+                </td>
+        </tr>
+        <tr>
+                <td colspan="2">
+			  <a href="password_restore.php"><?php putGS("Did you forget your password?"); ?></a>
+                </td>
+        </tr>
+
 	<tr>
 		<td colspan="2" align="center">
 		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?> />

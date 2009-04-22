@@ -89,7 +89,7 @@ if (isset($connectedToOnlineServer)
 		</tr>
 		<tr>
 		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_name" class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_NAMES])) { ?>checked<?php } ?> align="middle"></td>
-		    <td><?php putGS("Name:"); ?> <?php p($comment->getAuthor()); ?></td>
+		    <td><?php putGS("Name"); ?>: <?php p($comment->getAuthor()); ?></td>
 		</tr>
 		<tr>
 		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_email"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_EMAILS])) { ?>checked<?php } if ($comment->getEmail() == '') { ?>disabled<?php } ?>></td>

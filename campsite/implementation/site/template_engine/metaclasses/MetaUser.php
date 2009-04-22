@@ -67,7 +67,10 @@ final class MetaUser extends MetaDbObject {
     public function __construct($p_userId = null)
     {
         $this->m_dbObject = new User($p_userId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new User();
+        }
+        
         $this->InitProperties();
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['defined'] = 'defined';

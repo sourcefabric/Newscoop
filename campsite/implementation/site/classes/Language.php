@@ -176,28 +176,93 @@ class Language extends DatabaseObject {
 
 
 	/**
-	 * Return an array of Language objects based on the contraints given.
+	 * Return an array of Language objects based on the given contraints.
 	 *
 	 * @param int $p_id
 	 * @param string $p_languageCode
 	 * @param string $p_name
+	 * @param array $p_excludedLanguages
+	 * @param array $p_order
 	 * @return array
 	 */
 	public static function GetLanguages($p_id = null, $p_languageCode = null,
-	                                    $p_name = null)
+	$p_name = null, array $p_excludedLanguages = array(), array $p_order = array())
 	{
-	    $constraints = array();
+		global $g_ado_db;
+		
+        $selectClauseObj = new SQLSelectClause();
+        $tmpLanguage = new Language();
+        $selectClauseObj->setTable($tmpLanguage->getDbTableName());
+        
 	    if (!is_null($p_id)) {
-	    	$constraints[] = array("Id", $p_id);
+	    	$selectClauseObj->addWhere('Id = ' . (int)$p_id);
 	    }
 	    if (!is_null($p_languageCode)) {
-	    	$constraints[] = array("Code", $p_languageCode);
+	    	$selectClauseObj->addWhere("Code = '" . $g_ado_db->escape($p_languageCode) . "'");
 	    }
 	    if (!is_null($p_name)) {
-	    	$constraints[] = array("Name", $p_name);
+            $selectClauseObj->addWhere("Name = '" . $g_ado_db->escape($p_name) . "'");
 	    }
-	    return DatabaseObject::Search('Language', $constraints);
+	    if (count($p_excludedLanguages) > 0) {
+	    	$excludedLanguages = array();
+	    	foreach ($p_excludedLanguages as $excludedLanguage) {
+	    		$excludedLanguages[] = (int)$excludedLanguage;
+	    	}
+	    	$selectClauseObj->addWhere("Id NOT IN (" . implode(', ', $excludedLanguages) . ")");
+	    }
+        $order = Language::ProcessLanguageListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $selectClauseObj->addOrderBy($orderDesc['field'] . ' ' . $orderDesc['dir']);
+        }
+        $selectClause = $selectClauseObj->buildQuery();
+	    $languages = DbObjectArray::Create('Language', $selectClause);
+	    return $languages;
 	} // fn GetLanguages
+
+
+    /**
+     * Processes an order directive for the issue translations list.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, byenglish_name, bycode
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessLanguageListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+                case 'bynumber':
+                    $dbField = 'Languages.Id';
+                    break;
+                case 'byname':
+                    $dbField = 'Languages.OrigName';
+                    break;
+                case 'byenglish_name':
+                    $dbField = 'Languages.Name';
+                    break;
+                case 'bycode':
+                    $dbField = 'Languages.Code';
+                    break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+            }
+            $order[] = array('field'=>$dbField, 'dir'=>$direction);
+        }
+        return $order;
+    }
+
 
 	/**
 	 * This will create the symbolic links needed for short URLs to work

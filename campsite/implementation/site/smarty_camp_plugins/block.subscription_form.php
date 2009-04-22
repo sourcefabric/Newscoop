@@ -84,6 +84,8 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     }
     $html = "<form name=\"subscription_form\" action=\"" . $url->uri_path
     . "\" method=\"post\" ".$p_params['html_code'].">\n";
+    $html .= "<input type=\"hidden\" name=\"subs_by_type\" value=\""
+    . $campsite->subs_by_type . "\" />\n";
     if (isset($template)) {
         $html .= "<input type=\"hidden\" name=\"tpl\" value=\"".$template->identifier."\" />\n";
     }
@@ -115,8 +117,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     ."\" ".$p_params['button_html_code']."/>\n";
     $html .= "</form>\n";
 
-    if ($subsType == 'paid') {
-        ?>
+?>
 <script type="text/javascript">
 /**
  * Returns true if the given object had the given property.
@@ -171,12 +172,7 @@ function update_subscription_payment() {
 	}
 	my_form.suma.value = Math.round(100 * sum * unitcost * lang_count) / 100
 }
-</script>
-        <?php
-}
 
-?>
-<script type="text/javascript">
 function ToggleElementEnabled(id) {
 	if (document.getElementById(id).disabled) {
 		document.getElementById(id).disabled = false

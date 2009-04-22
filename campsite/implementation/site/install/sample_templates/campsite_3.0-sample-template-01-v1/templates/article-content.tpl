@@ -69,8 +69,16 @@
   <ul>
   {{ list_article_comments order="bydate desc" }}
     <li>{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
-    <a href="{{ uri }}#comments">Subject: {{ $campsite->comment->subject }}</a>,
-    Author: {{ $campsite->comment->nickname }}, Email: {{ $campsite->comment->email }}
+    <a href="{{ uri }}#comments">Subject: {{ $campsite->comment->subject }}</a>
+    by <u>{{ $campsite->comment->nickname }}</u>,
+    on {{ $campsite->comment->submit_date }}
+    <br/>Author:
+    {{ if !$campsite->comment->anonymous_author }}
+      {{ $campsite->comment->real_name }},
+    {{ else }}
+      anonymous,
+    {{ /if }}
+    Email: {{ $campsite->comment->email }}
     {{ if $campsite->comment == $campsite->default_comment }}</b>{{ /if }}<br/>
     Content: {{ $campsite->comment->content }}
     </li>

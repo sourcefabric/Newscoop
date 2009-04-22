@@ -186,7 +186,7 @@ final class MetaSubtitle {
         $content = preg_replace("|$endLinkPattern|i", '</a>', $content);
 
         //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
-        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub)="?[^"]+"?)*)[\s]*>';
+        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
@@ -208,11 +208,11 @@ final class MetaSubtitle {
 
         $imageNumber = $p_matches[1];
         $detailsString = $p_matches[2];
-        preg_match_all('/[\s]+(align|alt|sub)="([^"]+)"/i', $detailsString, $detailsArray1);
+        preg_match_all('/[\s]+(align|alt|sub|width|height)="([^"]+)"/i', $detailsString, $detailsArray1);
         $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
         $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
         $detailsArray1 = is_array($detailsArray1) ? $detailsArray1 : array();
-        preg_match_all('/[\s]+(align|alt|sub)=([^"\s]+)/i', $detailsString, $detailsArray2);
+        preg_match_all('/[\s]+(align|alt|sub|width|height)=([^"\s]+)/i', $detailsString, $detailsArray2);
         $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
         $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
         $detailsArray2 = is_array($detailsArray2) ? $detailsArray2 : array();
@@ -227,9 +227,15 @@ final class MetaSubtitle {
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
         . '&amp;NrImage=' . $imageNumber . '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
-            $imgString .= ' alt="' . $detailsArray['alt'] . '" ';
+            $imgString .= ' title="' . $detailsArray['alt'] . '"';
         }
-        $imgString .= 'border="0" hspace="5" vspace="5">';
+        if (isset($detailsArray['width']) && !empty($detailsArray['width'])) {
+            $imgString .= ' width="' . $detailsArray['width'] . '"';
+        }
+        if (isset($detailsArray['height']) && !empty($detailsArray['height'])) {
+            $imgString .= ' height="' . $detailsArray['height'] . '"';
+        }
+        $imgString .= ' border="0" hspace="5" vspace="5">';
         $imgString .= '</td>';
         $imgString .= '</tr>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {

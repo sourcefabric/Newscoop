@@ -22,6 +22,7 @@ if (!isset($g_ado_db)) {
 }
 
 if (!$g_ado_db->IsConnected()) {
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 ?>
 	<font color="red" size="3">
 	<p>ERROR connecting to the MySQL server!</p>

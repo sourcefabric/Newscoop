@@ -33,7 +33,10 @@ final class MetaTopic extends MetaDbObject {
     public function __construct($p_topicIdOrName = null)
     {
         $this->m_dbObject = new Topic($p_topicIdOrName);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Topic();
+        }
+        
 		$this->InitProperties();
 		$this->m_customProperties['name'] = 'getName';
 		$this->m_customProperties['value'] =  'getValue';

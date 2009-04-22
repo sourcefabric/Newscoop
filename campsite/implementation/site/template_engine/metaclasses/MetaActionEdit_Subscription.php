@@ -50,12 +50,17 @@ class MetaActionEdit_Subscription extends MetaAction
         } else {
             $this->m_languages = array(0);
         }
-
-        $this->m_sections = $p_input['cb_subs'];
-
-        if (is_null($this->m_sections) || count($this->m_sections) == 0) {
-            $this->m_error = new PEAR_Error("You must select at least a section to subscribe to.");
-            return;
+        
+        $this->m_properties['subs_by_type'] = 'publication';
+        
+        if (isset($p_input['subs_by_type'])
+        && strtolower($p_input['subs_by_type']) == 'by_section') {
+        	$this->m_properties[''] = 'section';
+            $this->m_sections = $p_input['cb_subs'];
+            if (is_null($this->m_sections) || count($this->m_sections) == 0) {
+            	$this->m_error = new PEAR_Error("You must select at least a section to subscribe to.");
+            	return;
+            }
         }
 
         $this->m_error = null;
@@ -118,6 +123,12 @@ class MetaActionEdit_Subscription extends MetaAction
         'NoticeSent'=>'N'
         );
 
+        if ($this->m_properties['subs_by_type'] == 'publication') {
+        	$sectionsList = Section::GetUniqueSections($p_context->publication->identifier);
+        	foreach ($sectionsList as $section) {
+        		$this->m_sections[] = $section['id'];
+        	}
+        }
         foreach ($this->m_languages as $languageId) {
             foreach ($this->m_sections as $sectionNumber) {
                 $subsSection = new SubscriptionSection($subscription->getSubscriptionId(),

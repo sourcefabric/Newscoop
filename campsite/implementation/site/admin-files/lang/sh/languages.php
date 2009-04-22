@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("No language.", "Nema jezika.");
 regGS("Delete language $1", "Obriši jezik $1");
 regGS("You do not have the right to add languages.", "Nemate pravo da dodajete jezike.");
@@ -32,6 +32,7 @@ regGS("Saturday", "subota");
 regGS("Sunday", "nedelja");
 regGS("You do not have the right to add new languages.", "Nemate pravo da dodajete nove jezike");
 regGS("There are $1 issue(s) left.", "Preostalo je $1 izdanja.");
+regGS("Native name", "Izvorno ime");
 regGS("The language $1 has been successfuly added.", "Jezik $1 uspešno je dodat");
 regGS("Please check if a language with the same name does not already exist.", "Proverite da li jezik sa istim imenom već ne postoji");
 regGS("The language could not be added.", "Jezik ne može biti dodat");
@@ -42,5 +43,4 @@ regGS("Language information has been successfuly updated.", "Podaci o jeziku su 
 regGS("Language information could not be updated.", "Podaci o jeziku ne mogu biti izmenjeni");
 regGS("A language with the same name already exists.", "Jezik pod tim imenom već postoji");
 regGS("Add another language", "Dodaj sledeći jezik");
-regGS("Native name", "Izvorno ime");
 ?>

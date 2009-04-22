@@ -525,8 +525,6 @@ class Section extends DatabaseObject {
         global $g_ado_db;
 
         $hasPublicationId = false;
-        $hasLanguageId = false;
-        $hasIssueNr = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
 
@@ -538,12 +536,6 @@ class Section extends DatabaseObject {
             }
             if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
                 $hasPublicationId = true;
-            }
-            if (strpos($comparisonOperation['left'], 'IdLanguage') !== false) {
-                $hasLanguageId = true;
-            }
-            if (strpos($comparisonOperation['left'], 'NrIssue') !== false) {
-                $hasIssueNr = true;
             }
 
             $whereCondition = $comparisonOperation['left'] . ' '
@@ -557,18 +549,6 @@ class Section extends DatabaseObject {
         if ($hasPublicationId == false) {
             CampTemplate::singleton()->trigger_error('missed parameter Publication '
                 .'Identifier in statement list_sections');
-            return;
-        }
-        // validates whether language identifier was given
-        if ($hasLanguageId == false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Language '
-                .'Identifier in statement list_sections');
-            return;
-        }
-        // validates whether issue number was given
-        if ($hasIssueNr == false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Issue Number '
-                .'in statement list_sections');
             return;
         }
 
@@ -594,6 +574,9 @@ class Section extends DatabaseObject {
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
+        $selectClauseObj->addGroupField('Number');
+        $selectClauseObj->addGroupField('IdLanguage');
+        
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
 

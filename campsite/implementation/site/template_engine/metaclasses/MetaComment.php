@@ -19,6 +19,8 @@ require_once($g_documentRoot.'/include/pear/Date.php');
  * @package Campsite
  */
 final class MetaComment extends MetaDbObject {
+	
+	private $m_realName = false;
 
     private function InitProperties()
     {
@@ -37,14 +39,42 @@ final class MetaComment extends MetaDbObject {
     public function __construct($p_messageId = null)
     {
         $this->m_dbObject = new Phorum_message($p_messageId);
-
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new Phorum_message();
+        }
+        
         $this->InitProperties();
+        $this->m_customProperties['real_name'] = 'getRealName';
+        $this->m_customProperties['anonymous_author'] = 'isAuthorAnonymous';
         $this->m_customProperties['submit_date'] = 'getSubmitDate';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
-    protected function getSubmitDate() {
+    protected function getRealName()
+    {
+    	if ($this->m_realName === false) {
+        	$userId = $this->m_dbObject->getUserId();
+            if ($userId > 0) {
+                $userObj = new User($userId);
+                $this->m_realName = $userObj->getRealName();
+            } else {
+            	$this->m_realName = null;
+            }
+    	}
+    	return $this->m_realName;
+    }
+
+    
+    protected function isAuthorAnonymous()
+    {
+    	$this->getRealName();
+    	return is_null($this->m_realName);
+    }
+
+
+    protected function getSubmitDate()
+    {
         $date = new Date($this->m_dbObject->getCreationDate());
         return $date->getDate();
     }
@@ -56,7 +86,6 @@ final class MetaComment extends MetaDbObject {
                         . OF_OBJECT_STRING . ' comment';
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
-
 
 } // class MetaComment
 

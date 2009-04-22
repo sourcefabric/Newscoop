@@ -1,4 +1,29 @@
 <?php 
+regGS("You must select an article language.", "");
+regGS("You must select a publication.", "");
+regGS("You must select a file to upload.", "");
+regGS("You must select a XML input file.", "");
+regGS("You do not have the right to import XML archives.", "");
+regGS("There was a problem uploading the file.", "");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
+regGS("The file exceeds the allowed max file size.", "");
+regGS("Overwrite existing articles", "");
+regGS("Optional", "");
+regGS("Input File", "");
+regGS("Import XML", "");
+regGS("File is not a valid XML file.", "");
+regGS("File does not exist.", "");
+regGS("File could not be uploaded.", "");
+regGS("File could not be read.", "");
+regGS("Error List", "");
+regGS("Bad format in XML file.", "");
+regGS("Article could not be created.", "");
+regGS("---Select article type---", "");
+regGS("$1 articles successfully imported.", "");
+regGS("Saving, please wait...", "");
+regGS("Saved", "");
+regGS("Save All", "");
+regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");
@@ -113,7 +138,6 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "¿E
 regGS("There was an error reading request parameters.", "Hubo un error en la lectura de parámetros de solicitud");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "No se puede previsualizar este artículo.  Por favor asegúrese que seleccionó el template artículo.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "No se puede previsualizar este artículo.  Por favor asegúrese que seleccionó el template de portada.");
-regGS("Insert Internal Link", "Insertar enlace externo");
 regGS("No such article.", "No existe articulo");
 regGS("No such section.", "No existe sección");
 regGS("Reorder", "");

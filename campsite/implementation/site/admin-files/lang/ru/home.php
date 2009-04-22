@@ -1,9 +1,23 @@
 <?php 
+regGS("Import XML", "");
+regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
+regGS("Select the field from which to generate the author", "");
+regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
+regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Невозможно создать автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
+regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "Возникли ошибки в процессе установки автора статей типа '$1' из поля '$2'.");
+regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "Автор успешно установлен для статей типа '$1' из поля '$2'.");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 минут(ы) назад.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 час(ов) $4 минут(ы) назад.");
+regGS("Recently Modified Articles", "Недавно измененные статьи");
+regGS("Publish Schedule", "Расписание публикации");
+regGS("No articles have been modified yet.", "Нет измененных статей.");
+regGS("Modification Date", "Дата изменения");
+regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Ошибка в процессе установки автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
 regGS("There are currently no articles in statistics.", "Нет статей в статистике просмотра.");
 regGS("Publish date", "Дата опубликования");
 regGS("Most Popular Articles", "Самые популярные статьи");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Невозможно соединиться с сервером Campsite, пожалуйста, проверьте настройки сервера.");
-regGS("Clear System Cache", "Очистить систему кеширования");
+regGS("Clear system cache", "Очистить систему кеширования");
 regGS("Campsite cache was cleaned up", "Система кеширования Campsite очищена");
 regGS("The system was unable to upload the file '$1'. ", "Система не может загрузить файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.");

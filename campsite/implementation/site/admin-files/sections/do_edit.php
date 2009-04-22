@@ -54,9 +54,6 @@ if ($cName == "") {
 if ($cShortName == "")  {
 	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('URL Name').'"'));
 }
-if ($cDescription == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('Description').'"'));
-}
 $isValidShortName = camp_is_valid_url_name($cShortName);
 
 if (!$isValidShortName) {

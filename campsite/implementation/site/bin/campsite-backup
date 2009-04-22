@@ -20,6 +20,7 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 // include install_conf.php file
 require_once("$ETC_DIR/install_conf.php");
 
+
 $help = false;
 $silent = false;
 $default_dir = false;
@@ -30,7 +31,7 @@ for ($i = 0; ; $i++) {
 	$arg = trim($GLOBALS['argv'][$i]);
     $help |= ($arg == "--help");
 	$silent |= ($arg == "--silent");
-	$default_dir |= ($arg == "--default_dir");
+	$default_dir |= ($arg == "--default-dir");
 }
 
 if (!$silent) {
@@ -41,7 +42,7 @@ if (!$silent) {
 
 $usage =
 "  Usage:
-  campsite-backup [--silent] [--default_dir]
+  campsite-backup [--silent] [--default-dir]
 
   This script will backup all of your website data needed to re-create
   your site from scratch, except for the Campsite software itself.
@@ -55,7 +56,7 @@ $usage =
     --silent
         Don't display any messages on success.
 
-    --default_dir:
+    --default-dir:
         Save the backup archive in the backup default directory:
             $CAMPSITE_DIR/backup/
         By default the backup file is saved in the current directory.

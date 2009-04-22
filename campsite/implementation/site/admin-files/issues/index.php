@@ -61,7 +61,7 @@ if (count($allIssues) > 0) {
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Number"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Name<BR><SMALL>(click to see sections)</SMALL>"); ?></B></TD>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("URL Name"); ?></B></TD>
-		<TD ALIGN="center" VALIGN="TOP"><B><?php putGS("Publish Date $1", "<br><small>".getGS("(yyyy-mm-dd)")."</small>"); ?></B></TD>
+		<TD ALIGN="center" VALIGN="TOP"><B><?php putGS("Publish Date $1", "<br><small>(".getGS("YYYY-MM-DD").")</small>"); ?></B></TD>
 
 		<?php  if ($g_user->hasPermission('ManageIssue')) { ?>
 		<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Configure"); ?></B></TD>

@@ -68,7 +68,8 @@ if ($f_publication_id > 0) {
 	$f_translation_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName(), true);
 }
 
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(),
+array(array('field'=>'byname', 'dir'=>'asc')));
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 

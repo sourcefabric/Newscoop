@@ -18,24 +18,23 @@
  */
 function smarty_function_urlparameters($p_params, &$p_smarty)
 {
-    $validParams = array('language','publication','issue','section',
-                         'article','articleattachment','image', 'template',
-                         'previous_items', 'next_items', 'previous_subtitle',
-                         'next_subtitle', 'all_subtitles');
-    $option = null;
-    if (isset($p_params['options']) && !empty($p_params['options'])) {
-        $optionsString = strtolower($p_params['options']);
-        $options = preg_split('/ /', $p_params['options']);
-        $option = $options[0];
-    }
-
     $context = $p_smarty->get_template_vars('campsite');
-    if (isset($option) && in_array($option, $validParams)) {
-        // sets the URL parameter option
-        $context->url->uri_parameter = $optionsString;
+
+    $url = 'url';
+    $params = preg_split("/[\s]+/", $p_params['options']);
+    foreach ($params as $index=>$param) {
+        if (strcasecmp('fromstart', $param) == 0) {
+            $url = 'default_url';
+            unset($params[$index]);
+            $p_params['options'] = implode(', ', $params);
+            break;
+        }
     }
 
-    return $context->url->url_parameters;
+    // sets the URL parameter option
+    $context->$url->uri_parameter = $p_params['options'];
+	
+    return $context->$url->url_parameters;
 } // fn smarty_function_urlparameters
 
 ?>

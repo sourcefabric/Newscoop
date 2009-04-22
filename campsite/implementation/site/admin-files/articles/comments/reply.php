@@ -85,12 +85,12 @@ if (isset($connectedToOnlineServer)
 </tr>
 
 <tr>
-    <td align="right" valign="top" nowrap><?php putGS("Subject:"); ?></td>
+    <td align="right" valign="top" nowrap><?php putGS("Subject"); ?>:</td>
     <td><?php p(htmlspecialchars($comment->getSubject())); ?></td>
 </tr>
 
 <tr>
-    <td align="right" valign="top" nowrap><?php putGS("Comment:"); ?></td>
+    <td align="right" valign="top" nowrap><?php putGS("Comment"); ?>:</td>
     <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
 </tr>
 
@@ -111,7 +111,7 @@ if (isset($connectedToOnlineServer)
 
 <tr>
     <td valign="middle" align="right">
-        <?php putGS("Subject:"); ?>
+        <?php putGS("Subject"); ?>:
     </td>
 
     <td>
@@ -121,7 +121,7 @@ if (isset($connectedToOnlineServer)
 
 <tr>
     <td valign="top" align="right" style="padding-top: 5px;">
-        <?php putGS("Comment:"); ?>
+        <?php putGS("Comment"); ?>:
     </td>
 
     <td>

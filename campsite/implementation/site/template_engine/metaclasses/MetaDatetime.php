@@ -27,7 +27,10 @@ final class MetaDatetime
 
     public function __construct($p_value)
     {
-        $this->setValue($p_value);
+    	$p_value = trim($p_value);
+    	if (!empty($p_value)) {
+            $this->setValue($p_value);
+    	}
     } // fn __construct
 
     public function setValue($p_value)

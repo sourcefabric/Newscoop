@@ -88,12 +88,13 @@ class MetaActionSearch_Articles extends MetaAction
 
         $this->m_properties['submit_button'] = $p_input['f_search_articles'];
 
-        $this->m_properties['scope'] = 'keywords';
+        $this->m_properties['scope'] = 'index';
         if (isset($p_input['f_search_scope'])) {
         	$searchScope = strtolower($p_input['f_search_scope']);
         	switch ($searchScope) {
         		case 'keywords':
         		case 'content':
+        		case 'index':
         			$this->m_properties['scope'] = 'index';
         			break;
         		case 'title':
