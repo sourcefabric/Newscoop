@@ -75,7 +75,7 @@ class DatabaseObject {
 	 *
 	 * @var bool
 	 */
-	private static $m_useCache = false;
+	private static $m_useCache = null;
 
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -88,11 +88,37 @@ class DatabaseObject {
 	 */
 	public function DatabaseObject($p_columnNames = null)
 	{
-	    self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
+		if (is_null(self::$m_useCache)) {
+			self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
+		}
 	    if (!is_null($p_columnNames)) {
 	      $this->setColumnNames($p_columnNames);
 	    }
 	} // constructor
+
+
+    /**
+     * Returns true if the current object is the same type as the given
+     * object then has the same value.
+     * @param mix $p_otherObject
+     * @return boolean
+     */
+	public function sameAs($p_otherObject)
+	{
+		if (get_class($this) != get_class($p_otherObject)
+		|| $this->m_dbTableName != $p_otherObject->m_dbTableName) {
+			return false;
+		}
+		if (!$this->m_exists && !$p_otherObject->m_exists) {
+			return true;
+		}
+		foreach ($this->m_keyColumnNames as $keyColumnName) {
+			if ($this->m_data[$keyColumnName] != $p_otherObject->m_data[$keyColumnName]) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 
 	/**

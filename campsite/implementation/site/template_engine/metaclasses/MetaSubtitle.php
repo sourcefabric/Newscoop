@@ -100,6 +100,21 @@ final class MetaSubtitle {
     }
 
 
+    /**
+     * Returns true if the current object is the same type as the given
+     * object then has the same value.
+     * @param mix $p_otherObject
+     * @return boolean
+     */
+    public function same_as($p_otherObject)
+    {
+        return get_class($this) == get_class($p_otherObject)
+        && $this->m_number == $p_otherObject->m_number
+        && $this->m_fieldName == $p_otherObject->m_fieldName
+        && $this->m_name == $p_otherObject->m_name;
+    }
+
+
     public function __get($p_property)
     {
         switch (strtolower($p_property)) {

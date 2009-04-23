@@ -18,14 +18,43 @@ require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
  * @package Campsite
  */
 class MetaDbObject {
-    //
+    /**
+     * Pointer to the database access class instantiation
+     * @var DatabaseObject
+     */
     protected $m_dbObject = null;
 
+    /**
+     * Array of meta class properties
+     * @var array
+     */
     protected $m_properties = null;
 
+    /**
+     * Array of meta class custom properties
+     * @var array
+     */
     protected $m_customProperties = null;
 
+    /**
+     * The name of the method used to retrieve a property value
+     * @var string
+     */
     protected $m_getPropertyMethod = 'getProperty';
+
+
+    /**
+     * Returns true if the current object is the same type as the given
+     * object then has the same value.
+     * @param mix $p_otherObject
+     * @return boolean
+     */
+    public function same_as($p_otherObject)
+    {
+    	return get_class($this) == get_class($p_otherObject)
+    	&& (is_null($this->m_dbObject) && is_null($p_otherObject->m_dbObject)
+    	|| $this->m_dbObject->sameAs($p_otherObject->m_dbObject));
+    }
 
 
     public function __get($p_property)
@@ -78,6 +107,12 @@ class MetaDbObject {
     }
 
 
+
+    /**
+     * Returns true if the current object was initialized
+     * 
+     * @return boolean
+     */
     final public function defined()
     {
         return is_object($this->m_dbObject) && $this->m_dbObject->exists();
