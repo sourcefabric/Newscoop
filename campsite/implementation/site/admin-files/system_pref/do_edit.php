@@ -15,6 +15,7 @@ $f_site_title = Input::Get('f_site_title');
 $f_site_metakeywords = Input::Get('f_site_metakeywords');
 $f_site_metadescription = Input::Get('f_site_metadescription');
 $f_cache_enabled = Input::Get('f_cache_enabled');
+$f_cache_engine = Input::Get('f_cache_engine');
 $f_secret_key = Input::Get('f_secret_key');
 $f_session_lifetime = intval(Input::Get('f_session_lifetime'));
 $f_keyword_separator = Input::Get('f_keyword_separator');
@@ -57,12 +58,13 @@ SystemPref::Set('SiteMetaKeywords', $f_site_metakeywords);
 SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
 
 // Caching
+SystemPref::Set('CacheEngine', $f_cache_engine);
 if ($f_cache_enabled == 'Y') {
-    if (CampCache::IsAPCEnabled()) {
+    if (CampCache::IsEnabled($f_cache_engine)) {
         SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
     } else {
         $msg_ok = 0;
-        camp_html_add_msg(getGS('Invalid: You need PHP APC enabled in order to use the caching system.'));
+        camp_html_add_msg(getGS("Invalid: You need PHP $f_cache_engine enabled in order to use the caching system."));
     }
 } else {
     SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);

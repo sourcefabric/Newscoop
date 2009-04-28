@@ -28,7 +28,7 @@ $showUserMenu = ($g_user->hasPermission("ManageUsers")
     || $g_user->hasPermission("SyncPhorumUsers"));
 
 $showAdminActions = (($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle"))
-		     || (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")));
+		     || (CampCache::IsEnabled() && $g_user->hasPermission("ClearCache")));
 
 $iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
 
@@ -184,7 +184,7 @@ if ($showAdminActions) {
 	$menu_actions->addItem($menu_item);
     }
 
-    if (CampCache::IsAPCEnabled() && $g_user->hasPermission("ClearCache")) {
+    if (CampCache::IsEnabled() && $g_user->hasPermission("ClearCache")) {
         $menu_item =& DynMenuItem::Create(getGS("Clear system cache"),
 					  "/$ADMIN/home.php?clear_cache=yes",
 					  array("icon" => sprintf($iconTemplateStr, "actions.png")));

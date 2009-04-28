@@ -76,6 +76,12 @@ class DatabaseObject {
 	 * @var bool
 	 */
 	private static $m_useCache = null;
+	
+	/**
+	 * The default engine to use
+	 * @var string
+	 */
+	private static $m_cacheEngine = null;
 
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -90,6 +96,9 @@ class DatabaseObject {
 	{
 		if (is_null(self::$m_useCache)) {
 			self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
+			if (self::$m_useCache) {
+				self::$m_cacheEngine = SystemPref::Get('CacheEngine');
+			}
 		}
 	    if (!is_null($p_columnNames)) {
 	      $this->setColumnNames($p_columnNames);

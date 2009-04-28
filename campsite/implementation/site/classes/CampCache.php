@@ -3,17 +3,9 @@
  * @package Campsite
  */
 
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/conf/install_conf.php');
-
+require_once(dirname(dirname(__FILE__)).'/conf/install_conf.php');
+require_once(dirname(__FILE__).'/cache/CacheEngine.php');
+require_once(dirname(__FILE__).'/SystemPref.php');
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");
@@ -24,6 +16,12 @@ define('CACHE_SERIAL_FOOTER', "*/\n?".">");
  */
 final class CampCache
 {
+	/**
+	 * Stores the cache engine wrapper object.
+	 * @var CacheEngine
+	 */
+	private $m_cacheEngine = null;
+
     /**
      * The cache key for the current cache object.
      *
@@ -50,9 +48,11 @@ final class CampCache
      * CampCache class constructor.
      *
      */
-    private function __construct()
+    private function __construct($p_cacheEngine)
     {
         global $Campsite;
+
+        $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
 
         if (isset($Campsite['CAMP_SECRET'])) {
 			$this->m_secret = $Campsite['CAMP_SECRET'];
@@ -68,14 +68,14 @@ final class CampCache
     /**
      * Singleton function that returns the global class object.
      *
-     * @return object
-     *    CampCache
+     * @return CampCache
      */
     public static function singleton()
     {
-        if (!isset(self::$m_instance) && self::IsAPCEnabled()) {
-            self::$m_instance = new CampCache();
-        }
+    	if (!is_null(self::$m_instance)) {
+    		return self::$m_instance;
+    	}
+        self::$m_instance = new CampCache(SystemPref::Get('CacheEngine'));
 
         return self::$m_instance;
     } // fn singleton
@@ -115,7 +115,7 @@ final class CampCache
      */
     public function fetch($p_key)
     {
-        $serial = apc_fetch($this->genKey($p_key));
+        $serial = $this->m_cacheEngine->fetchValue($this->genKey($p_key));
 
         return $this->unserialize($serial);
     } // fn fetch
@@ -138,7 +138,7 @@ final class CampCache
     {
         $p_data = $this->serialize($p_data);
 
-        return apc_store($this->genKey($p_key), $p_data, $p_ttl);
+        return $this->m_cacheEngine->storeValue($this->genKey($p_key), $p_data, $p_ttl);
     } // fn fetch
 
 
@@ -153,7 +153,7 @@ final class CampCache
      */
     public function delete($p_key)
     {
-        return apc_delete($this->genKey($p_key));
+        return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
 
 
@@ -169,7 +169,11 @@ final class CampCache
      */
     public function clear($p_type = null)
     {
-        return apc_clear_cache($p_type);
+    	if ($p_type == 'user') {
+            return $this->m_cacheEngine->clearValues();
+    	} else {
+    		return $this->m_cacheEngine->clearPages();
+    	}
     } // fn clear
 
 
@@ -186,7 +190,8 @@ final class CampCache
      */
     public function info($p_type = null)
     {
-        return apc_cache_info($p_type);
+    	$type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
+    	return $this->m_cacheEngine->getInfo($type);
     } // fn info
 
 
@@ -199,7 +204,7 @@ final class CampCache
      */
     public function meminfo()
     {
-        return apc_sma_info();
+    	return $this->m_cacheEngine->getMemInfo();
     } // fn meminfo
 
 
@@ -255,15 +260,20 @@ final class CampCache
 
 
     /**
-     * Returns whether APC is enabled or not in the system.
+     * Returns whether the given cache engine was enabled
      *
+     * @param $p_cacheEngine
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public static function IsAPCEnabled()
+    public static function IsEnabled($p_cacheEngine = null)
     {
-        return (ini_get('apc.enabled') && function_exists('apc_store'));
-    } // fn IsAPCEnabled
+    	if (is_null($p_cacheEngine)) {
+    		$p_cacheEngine = SystemPref::Get('CacheEngine');
+    	}
+    	$cacheEngine = new CampCache($p_cacheEngine);
+    	return $cacheEngine->m_cacheEngine->isSupported();
+    } // fn IsEnabled
 
 } // class CampCache
 

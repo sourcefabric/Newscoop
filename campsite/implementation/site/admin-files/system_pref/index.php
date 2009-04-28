@@ -4,6 +4,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
 require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
+require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
@@ -22,6 +23,8 @@ $max_upload_filesize = SystemPref::Get("MaxUploadFileSize");
 if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 	SystemPref::Set("MaxUploadFileSize",ini_get('upload_max_filesize'));
 }
+
+$availableCacheEngines = CacheEngine::AvailableEngines();
 
 ?>
 <p></p>
@@ -75,6 +78,20 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
     <td align="left" valign="top">
         <input type="radio" name="f_cache_enabled" value="Y" <?php if (SystemPref::Get("SiteCacheEnabled") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_cache_enabled" value="N" <?php if (SystemPref::Get("SiteCacheEnabled") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Cache Engine:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_cache_engine" class="input_select">
+        <?php
+        foreach ($availableCacheEngines as $cacheEngineName=>$engineData) {
+        	echo "<option value=\"$cacheEngineName\">$cacheEngineName</option>\n";
+        }
+        ?>
+        </select>
     </td>
 </tr>
 <tr>
