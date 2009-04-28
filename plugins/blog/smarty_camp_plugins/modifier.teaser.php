@@ -10,14 +10,14 @@
 require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
 
 /**
- * Campsite camp_date_format modifier plugin
+ * Campsite teaser modifier plugin
  *
  * Type:     modifier
- * Name:     camp_date_format
- * Purpose:  format datestamps via MySQL date and time functions
+ * Name:     teaser
+ * Purpose:  build an teaser our of input
  *
  * @param string
- *     $p_unixtime the date in unixtime format from $smarty.now
+ *     $p_input the string or object
  * @param string
  *     $p_format the date format wanted
  *
@@ -29,9 +29,15 @@ function smarty_modifier_teaser($p_input)
 {
     $pattern = '/<!-- *break *-->/i';
     
-    if (preg_match($pattern, $p_input, $matches, PREG_OFFSET_CAPTURE)) {
+    if (is_object($p_input) && method_exists($p_input, '__toString')) {
+        $input = $p_input->__toString();
+    } else {
+         $input = (string) $p_input;
+    }
+    
+    if (preg_match($pattern, $input, $matches, PREG_OFFSET_CAPTURE)) {
         $length = $matches[0][1];
-        $output = substr($p_input, 0, $length);
+        $output = substr($input, 0, $length);
         $output .= '[...]';
     } else {
         static $length;
@@ -39,7 +45,7 @@ function smarty_modifier_teaser($p_input)
         if (empty($length)) {
             $length = is_null(SystemPref::Get('teaser_length')) ? 150 : SystemPref::Get('teaser_length');
         }
-        $output = mb_substr($p_input, 0, $length);
+        $output = mb_substr($input, 0, $length, 'UTF-8');
         $output .= '[...]';
     }
     
