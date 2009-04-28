@@ -32,6 +32,7 @@ $f_blog_id = Input::Get('f_blog_id', 'int');
 $Blog = new Blog($f_blog_id);
 
 if ($Blog->store($is_admin)) {
+    camp_html_add_msg(getGS('Blog saved.'), 'ok');
     ?>
     <script language="javascript">
         window.opener.location.reload();

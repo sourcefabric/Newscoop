@@ -37,6 +37,7 @@ if (!$f_entry_id) {
 $BlogEntry = new BlogEntry($f_entry_id, $f_blog_id);
 
 if ($BlogEntry->store($is_admin, $user_id)) {
+    camp_html_add_msg(getGS('Blog entry saved.'), 'ok');
     ?>
     <script language="javascript">
         window.opener.location.reload();

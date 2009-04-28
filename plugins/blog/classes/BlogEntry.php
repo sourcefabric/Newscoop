@@ -374,13 +374,30 @@ class BlogEntry extends DatabaseObject {
             'image'     => array(
                 'element'   => 'BlogEntry_Image',
                 'type'      => 'file',
-                'label'     => 'Image (.jpg)',
+                'label'     => 'Image (.jpg, .png, .gif)',
+            ),
+            'image_display'  => array(
+                'element'   => 'image_display',
+                'text'      => '<img src="'.$data['images']['100x100'].'">',
+                'type'  => 'static',
+                'groupit'   => true
             ),
             'image_remove' => array(
                 'element'   => 'BlogEntry_Image_remove',
                 'type'      => 'checkbox',
-                'label'     => 'Remove Image',
+                'label'     => 'Remove this Image',
+                'groupit'   => true
             ),
+            'image_label'  => array(
+                'element'   => 'image_label',
+                'text'      => 'Remove this image',
+                'type'  => 'static',
+                'groupit'   => true
+            ),
+            'image_group' =>  isset($data['images']['100x100']) ? array(
+                'group'     => array('image_display', 'BlogEntry_Image_remove', 'image_label'),
+            
+            ) : null,
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',

@@ -2,6 +2,7 @@
 class BlogImageHelper {   
     private static function GetImageFormats()
     {
+        $formats[] = array('width' => 100, 'height' => 100);
         $format_prefs = SystemPref::Get("PLUGIN_BLOG_IMAGE_DERIVATES");
         
         if (strlen($format_prefs)) {
@@ -67,9 +68,26 @@ class BlogImageHelper {
 
             $cmd = "convert -resize {$d_width}x -resize 'x{$d_height}<' -resize 50% -gravity center  -crop {$width}x{$height}+0+0 +repage {$p_image['tmp_name']} $path";
             system($cmd, $return_value);
+            
+            $all_right = $return_value || $all_right;
+            
+            if ($return_value ==  0) {
+                $success[] = $width.'x'.$height;       
+            } else {
+                $failed[] = $width.'x'.$height;   
+            }
+        }
+        
+        if (function_exists('camp_html_add_msg')) {
+            if (is_array($success)) {
+                camp_html_add_msg(getGS('Created image derivate(s): $1', implode(', ', $success)), 'ok');
+            }
+            if (is_array($failed)) {
+                camp_html_add_msg(getGS('Failed to create image derivate(s): $1', implode(', ', $failed)), 'error');    
+            }
         }
 
-        return $return_value;
+        return $all_right;
     }
 
     public static function RemoveImageDerivates($p_object_type, $p_object_id)

@@ -91,6 +91,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 </tr>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
 <p>
 
 <FORM name="selector" method="get">

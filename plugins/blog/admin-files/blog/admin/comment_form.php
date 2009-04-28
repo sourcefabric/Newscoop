@@ -37,6 +37,7 @@ if (!$f_comment_id) {
 $BlogComment = new BlogComment($f_comment_id, $f_entry_id);
 
 if ($BlogComment->store($is_admin, $user_id)) {
+    camp_html_add_msg(getGS('Blog comment saved.'), 'ok');
     ?>
     <script language="javascript">
         window.opener.location.reload();
