@@ -59,8 +59,7 @@ function smarty_block_blogcomment_form($p_params, $p_content, &$p_smarty, &$p_re
     if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
         $p_params['button_html_code'] = '';
     }
-
-    #$searchListIdPrefix = $campsite->list_id_prefix('SearchResultsList');
+    
     if (isset($template)) {
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
     }
@@ -72,11 +71,6 @@ function smarty_block_blogcomment_form($p_params, $p_content, &$p_smarty, &$p_re
         $html .= "<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
     }
     foreach ($campsite->url->form_parameters as $param) {
-        /*
-        if (strncasecmp($param[name], $searchListIdPrefix, strlen($searchListIdPrefix)) == 0) {
-            continue;
-        }
-        */
         if ($param['name'] == 'tpl') {
             continue;
         }
@@ -86,7 +80,7 @@ function smarty_block_blogcomment_form($p_params, $p_content, &$p_smarty, &$p_re
     $html .= $p_content;
     
     $html .= "<input type=\"submit\" name=\"f_submit_blogcomment\" "
-    ."id=\"article_comment_submit\" value=\""
+    ."id=\"blogcomment_submit\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
     ."\" " . $p_params['button_html_code'] . " />\n";
     if (isset($p_params['preview_button']) && !empty($p_params['preview_button'])) {
