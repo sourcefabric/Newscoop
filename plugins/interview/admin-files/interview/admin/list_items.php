@@ -45,8 +45,9 @@ if (!$is_admin && !$is_moderator && !$is_guest) {
 
 $f_interview_id = Input::Get('f_interview_id', 'int');
 
-if (!$f_interview_id) {
-    invalid_input;   
+if (!Input::IsValid()) {
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 
 $f_length = Input::Get('f_length', 'int', 20);
