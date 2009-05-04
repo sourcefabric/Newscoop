@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @param array p_dbColumns
  * @param object p_user The User object
@@ -58,8 +57,12 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	}
 	if ($p_user->hasPermission('EditorLink')) {
 	    $plugins[] = 'campsiteinternallink';
+	    $plugins[] = 'campsiteattachment';
 	}
-	$plugins[] = 'campsiteimage';
+	if ($p_user->hasPermission('EditorImage')) {
+	    $plugins[] = 'campsiteimage';
+	    $plugins[] = 'media';
+	}
 	$plugins_list = implode(",", $plugins);
 
 	$statusbar_location = "none";
@@ -120,12 +123,14 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "campsiteinternallink";
 	    $toolbar1[] = "link";
+	    $toolbar1[] = "campsiteattachment";
 	}
 	if ($p_user->hasPermission('EditorSubhead')) {
 	    $toolbar1[] = "campsite-subhead";
 	}
 	if ($p_user->hasPermission('EditorImage')) {
 	    $toolbar1[] = "campsiteimage";
+	    $toolbar1[] = "media";
 	}
 	if ($p_user->hasPermission('EditorSourceView')) {
 	    $toolbar1[] = "code";
@@ -225,6 +230,7 @@ tinyMCE.init({
     elements : "<?php p($textareas); ?>",
     theme : "advanced",
     plugins : "<?php p($plugins_list); ?>",
+    file_browser_callback : "campsitemedia",
     forced_root_block : "",
     relative_urls : false,
 
@@ -263,7 +269,7 @@ tinyMCE.init({
 
     <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
         ed.addButton('campsite-subhead', {
-        title : 'Subhead',
+        title : 'Campsite Subhead',
         image : '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
         onclick : function() {
                       CampsiteSubhead(ed);
@@ -272,6 +278,24 @@ tinyMCE.init({
     <?php } ?>
     }
 });
+
+function campsitemedia(field_name, url, type, win)
+{
+    topDoc = window.top.document;
+    articleNo = topDoc.getElementById('f_article_number').value;
+    langId = topDoc.getElementById('f_language_selected').value;
+
+    tinyMCE.activeEditor.windowManager.open({
+	    url: "/javascript/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
+	    width: 580,
+	    height: 320,
+	    inline : "yes",
+	    close_previous : "no"
+        },{
+            window : win,
+	    input : field_name
+    });
+}
 </script>
 <!-- /TinyMCE -->
 <?php
