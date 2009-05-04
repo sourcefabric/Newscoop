@@ -51,6 +51,31 @@ class Phorum_message extends DatabaseObject {
 	} // constructor
 
 
+    /**
+     * Fetch a single record from the database for the given key.
+     *
+     * @param array $p_recordSet
+     *      If the record has already been fetched and we just need to
+     *      assign the data to the object's internal member variable.
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+	public function fetch($p_recordSet = null)
+	{
+		$res = parent::fetch($p_recordSet);
+		if (!is_array($this->m_data['meta']) && $res) {
+            // convert meta field
+            if (empty($this->m_data["meta"])){
+                $this->m_data["meta"] = array();
+            } else {
+                $this->m_data["meta"] = unserialize($this->m_data["meta"]);
+            }
+		}
+		return $res;
+	}
+
+
 	/**
 	 * Create a message.
 	 *
@@ -800,12 +825,6 @@ class Phorum_message extends DatabaseObject {
 	    $returnArray = array();
 	    if (count($result) > 0){
             foreach ($result as $row) {
-                // convert meta field
-                if (empty($row["meta"])){
-                    $row["meta"] = array();
-                } else {
-                    $row["meta"] = unserialize($row["meta"]);
-                }
                 $tmpMessage = new Phorum_message();
                 $tmpMessage->fetch($row);
                 $returnArray[$row['message_id']] = $tmpMessage;

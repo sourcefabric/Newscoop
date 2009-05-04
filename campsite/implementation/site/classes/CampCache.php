@@ -68,8 +68,7 @@ final class CampCache
     /**
      * Singleton function that returns the global class object.
      *
-     * @return object
-     *    CampCache
+     * @return CampCache
      */
     public static function singleton()
     {
@@ -115,7 +114,7 @@ final class CampCache
      */
     public function fetch($p_key)
     {
-        $serial = apc_fetch($this->genKey($p_key));
+    	$serial = apc_fetch($this->genKey($p_key));
 
         return $this->unserialize($serial);
     } // fn fetch
@@ -169,7 +168,7 @@ final class CampCache
      */
     public function clear($p_type = null)
     {
-        return apc_clear_cache($p_type);
+    	return apc_clear_cache($p_type);
     } // fn clear
 
 

@@ -430,7 +430,7 @@ class SQLSelectClause {
      */
     private function buildOrderBy()
     {
-        return implode (', ', $this->m_orderBy);
+        return implode (",\n    ", $this->m_orderBy);
     } // fn buildOrderBy
 
 } // class SQLSelectClause
