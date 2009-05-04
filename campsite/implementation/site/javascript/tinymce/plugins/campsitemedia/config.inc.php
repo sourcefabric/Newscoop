@@ -96,4 +96,9 @@ $AMConfig['validate_files'] = false;
  due to error or bad image file.
 */
 $AMConfig['default_thumbnail'] = 'img/default.gif';
+
+/*
+ Valid media formats
+*/
+$AMConfig['media_formats'] = 'swf,flv,mov,qt,mpg,mp3,mp4,mpeg,avi,wmv,wm,asf,asx,wmx,wvx,rm,ra,ram';
 ?>

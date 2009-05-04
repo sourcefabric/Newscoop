@@ -77,20 +77,26 @@ class AttachmentManager
      *         'storage'=>'full file path')
      * </code>
      */
-    function getFiles($p_articleId, $p_languageId = null)
+    function getFiles($p_articleId, $p_languageId = null, $p_filter = true)
     {
         $files = array();
 
 	if ($this->isValidBase() == false)
 	    return $files;
 
+	$mediaFormats = array();
+	if ($p_filter == true) {
+	    $mediaFormats = explode(',', $this->m_config['media_formats']);
+	}
 	$articleAttachments = ArticleAttachment::GetAttachmentsByArticleNumber($p_articleId, $p_languageId);
 	foreach ($articleAttachments as $articleAttachment) {
 	    if (!$this->config['validate_files']) {
-	        $file['attachment'] = $articleAttachment;
-		$file['url'] = $articleAttachment->getAttachmentUrl();
-		$file['storage'] = $articleAttachment->getStorageLocation();
-		$files[$articleAttachment->getAttachmentId()] = $file;
+	        if (in_array($articleAttachment->getExtension(), $mediaFormats)) {
+		  $file['attachment'] = $articleAttachment;
+		  $file['url'] = $articleAttachment->getAttachmentUrl();
+		  $file['storage'] = $articleAttachment->getStorageLocation();
+		  $files[$articleAttachment->getAttachmentId()] = $file;
+		}
 	    }
 	}
 
