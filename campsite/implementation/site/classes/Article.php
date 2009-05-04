@@ -2134,7 +2134,7 @@ class Article extends DatabaseObject {
                     . ' ' . $comparisonOperation['symbol']
                     . " '" . $g_ado_db->escape($comparisonOperation['right']) . "' ";
                 if ($leftOperand == 'reads'
-                && strstr($comparisonOperation['symbol'], '=')
+                && strstr($comparisonOperation['symbol'], '=') !== false
                 && $comparisonOperation['right'] == 0) {
                 	$selectClauseObj->addConditionalWhere($whereCondition);
                 	$countClauseObj->addConditionalWhere($whereCondition);
@@ -2205,14 +2205,17 @@ class Article extends DatabaseObject {
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
-
+        
+        $selectClauseObj->addGroupField('Articles.Number');
+        $selectClauseObj->addGroupField('Articles.IdLanguage');
+        
         if (!is_array($p_order)) {
             $p_order = array();
         }
 
         // sets the ORDER BY condition
-        $p_order = count($p_order) > 0 ? $p_order : Article::$s_defaultOrder;
-        $order = Article::ProcessListOrder($p_order, $otherTables);
+        $p_order = array_merge($p_order, Article::$s_defaultOrder);
+        $order = Article::ProcessListOrder($p_order, $otherTables, $otherWhereConditions);
         foreach ($order as $orderDesc) {
             $orderColumn = $orderDesc['field'];
             $orderDirection = $orderDesc['dir'];
@@ -2232,13 +2235,33 @@ class Article extends DatabaseObject {
                 	if ($parent == '__TABLE_ALIAS') {
                 		continue;
                 	}
-                	$condOperator = $firstCondition ? '' : 'AND ';
-                    $tableJoin .= "        $condOperator`$articleTable`.`$parent` = `$tableAlias`.`$child`\n";
+                    $condOperator = $firstCondition ? '' : 'AND ';
+                	if ($parent == '__CONST') {
+                		$constTable = $child['table'];
+                		$constField = $child['field'];
+                		$value = $child['value'];
+                		$negate = isset($child['negate']) ? $child['negate'] : false;
+                		if (is_null($value)) {
+                			$operator = $negate ? 'IS NOT' : 'IS';
+                			$value = 'NULL';
+                		} else {
+                			$operator = $negate ? '!=' : '=';
+                			$value = "'" . $g_ado_db->escape($value) . "'";
+                		}
+                		$tableJoin .= "        $condOperator`$constTable`.`$constField` $operator $value\n";
+                	} else {
+                		$tableJoin .= "        $condOperator`$articleTable`.`$parent` = `$tableAlias`.`$child`\n";
+                	}
                     $firstCondition = false;
                 }
                 $selectClauseObj->addJoin($tableJoin);
                 $countClauseObj->addJoin($tableJoin);
             }
+        }
+        // other where conditions needed for certain order options
+        foreach ($otherWhereConditions as $whereCondition) {
+        	$selectClauseObj->addWhere($whereCondition);
+        	$countClauseObj->addWhere($whereCondition);
         }
 
         // sets the LIMIT start and offset values
@@ -2518,7 +2541,8 @@ class Article extends DatabaseObject {
      * @return array
      *      The array containing processed values of the condition
      */
-    private static function ProcessListOrder(array $p_order, array &$p_otherTables = array())
+    private static function ProcessListOrder(array $p_order, array &$p_otherTables = array(),
+    array &$p_whereConditions = array())
     {
         $order = array();
         foreach ($p_order as $orderDesc) {
@@ -2566,6 +2590,13 @@ class Article extends DatabaseObject {
                 	$p_otherTables[$joinTable] = array('__TABLE_ALIAS'=>'comments_counter',
                 	                                   'Number'=>'fk_article_number',
                 	                                   'IdLanguage'=>'fk_language_id');
+                	break;
+                case 'bylastcomment':
+                	$dbField = 'ArticleComments.fk_comment_id';
+                	$p_otherTables['ArticleComments'] = array('Number'=>'fk_article_number',
+                	'IdLanguage'=>'fk_language_id');
+                	$p_whereConditions[] = "`ArticleComments`.`fk_comment_id` IS NOT NULL";
+                	break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';

@@ -19,6 +19,27 @@ require_once($g_documentRoot.'/classes/Article.php');
 
 class ArticleComment
 {
+	/**
+	 * Returns an Article object to which the comment identified
+	 * by the given id belongs to. Returns null if invalid message id.
+	 * @param $p_messageId
+	 * @return Article
+	 */
+	public static function GetArticleOf($p_messageId)
+	{
+		global $g_ado_db;
+		$p_messageId = (int)$p_messageId;
+		$sql = "SELECT * FROM ArticleComments WHERE fk_comment_id = $p_messageId";
+		$res = $g_ado_db->GetAll($sql);
+		if (is_array($res) && count($res) > 0) {
+			$articleNo = $res[0]['fk_article_number'];
+			$languageId = $res[0]['fk_language_id'];
+			$article = new Article($languageId, $articleNo);
+			return $article;
+		}
+		return null;
+	}
+
 
     /**
      * Get the comment ID for the given article.
@@ -297,25 +318,15 @@ class ArticleComment
             $parameters[] = $comparisonOperation;
         }
 
-        // validates whether both article number and language id were given
-        if (is_null($articleNumber)) {
-            CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_comments");
-        }
-        if (is_null($languageId)) {
-            CampTemplate::singleton()->trigger_error("missed parameter Language Id in statement list_article_comments");
-        }
-
-        // gets the thread id for the article
-        $threadId = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
-        if (!$threadId) {
-            return array();
+        if (!is_null($articleNumber) && !is_null($languageId)) {
+        	// gets the thread id for the article
+        	$threadId = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
+            $selectClauseObj->addWhere('thread = '.$threadId);
+            $countClauseObj->addWhere('thread = '.$threadId);
         }
 
-        // adds WHERE conditions
-        $selectClauseObj->addWhere('thread = '.$threadId);
         $selectClauseObj->addWhere('message_id != thread');
         $selectClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
-        $countClauseObj->addWhere('thread = '.$threadId);
         $countClauseObj->addWhere('message_id != thread');
         $countClauseObj->addWhere('status = '.PHORUM_STATUS_APPROVED);
 

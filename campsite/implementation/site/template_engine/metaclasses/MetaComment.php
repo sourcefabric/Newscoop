@@ -47,6 +47,7 @@ final class MetaComment extends MetaDbObject {
         $this->m_customProperties['real_name'] = 'getRealName';
         $this->m_customProperties['anonymous_author'] = 'isAuthorAnonymous';
         $this->m_customProperties['submit_date'] = 'getSubmitDate';
+        $this->m_customProperties['article'] = 'getArticle';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
@@ -77,6 +78,16 @@ final class MetaComment extends MetaDbObject {
     {
         $date = new Date($this->m_dbObject->getCreationDate());
         return $date->getDate();
+    }
+
+
+    protected function getArticle()
+    {
+    	$article = ArticleComment::GetArticleOf($this->m_dbObject->getMessageId());
+    	if (is_null($article)) {
+    		return new MetaArticle();
+    	}
+    	return new MetaArticle($article->getLanguageId(), $article->getArticleNumber());
     }
 
 

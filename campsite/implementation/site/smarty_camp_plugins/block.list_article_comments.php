@@ -39,8 +39,10 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
         	$p_repeat = false;
             return null;
         }
-        $campContext->setCurrentList($articleCommentsList, array('comment'));
+        $campContext->setCurrentList($articleCommentsList, array('comment', 'language',
+        'issue', 'section', 'article'));
         $campContext->comment = $campContext->current_article_comments_list->current;
+        $campContext->url->set_parameter('acid', $campContext->comment->identifier);
         $p_repeat = true;
     } else {
         $campContext->current_article_comments_list->defaultIterator()->next();

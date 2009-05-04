@@ -988,6 +988,9 @@ final class CampContext
      */
     private function setCommentHandler(MetaComment $p_oldComment, MetaComment $p_newComment) {
         if (!$p_oldComment->same_as($p_newComment)) {
+            if ($p_newComment->defined()) {
+            	$this->setArticleHandler($this->article, $p_newComment->article);
+            }
             $this->m_objects['comment'] = $p_newComment;
         }
     }

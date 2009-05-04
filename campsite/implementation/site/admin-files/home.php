@@ -89,8 +89,8 @@ echo $breadcrumbs;
 
 $clearCache = Input::Get('clear_cache', 'string', 'no', true);
 if (($clearCache == 'yes') && $g_user->hasPermission('ClearCache')) {
-    apc_clear_cache();
-    apc_clear_cache('user');
+	CampCache::singleton()->clear('user');
+    CampCache::singleton()->clear();
     $actionMsg = getGS('Campsite cache was cleaned up');
     $res = 'OK';
 }

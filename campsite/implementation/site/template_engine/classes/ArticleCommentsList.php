@@ -27,16 +27,38 @@ class ArticleCommentsList extends ListObject
 	{
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
-	    if (!$context->article->defined || !$context->language->defined) {
-	        return array();
-	    }
-	    $comparisonOperation = new ComparisonOperation('article_number', $operator,
-	                                                   $context->article->number);
-	    $this->m_constraints[] = $comparisonOperation;
 
-        $comparisonOperation = new ComparisonOperation('language_id', $operator,
-                                                       $context->language->number);
-        $this->m_constraints[] = $comparisonOperation;
+	    if (!$p_parameters['ignore_article']) {
+	    	if (!$context->article->defined) {
+	    		CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
+	    		return array();
+	    	}
+	    	$comparisonOperation = new ComparisonOperation('article_number', $operator,
+	    	                                               $context->article->number);
+	    	$this->m_constraints[] = $comparisonOperation;
+	    } else {
+	    	$order = array();
+	    	foreach ($this->m_order as $orderCond) {
+	    		if ($orderCond['field'] == 'bydate') {
+	    			$order[] = $orderCond;
+	    		}
+	    	}
+	    	if (count($order) == 0) {
+	    		$this->m_order[] = array('field'=>'bydate', 'dir'=>'desc');
+	    	} else {
+	    		$this->m_order = $order;
+	    	}
+	    }
+
+	    if (!$p_parameters['ignore_language']) {
+            if (!$context->language->defined) {
+                CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_comments");
+                return array();
+            }
+	    	$comparisonOperation = new ComparisonOperation('language_id', $operator,
+	    	                                               $context->language->number);
+	    	$this->m_constraints[] = $comparisonOperation;
+	    }
 
 	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaCommentsList = array();
@@ -45,6 +67,7 @@ class ArticleCommentsList extends ListObject
 	    }
 	    return $metaCommentsList;
 	}
+
 
 	/**
 	 * Processes list constraints passed in an array.
@@ -56,6 +79,7 @@ class ArticleCommentsList extends ListObject
 	{
 		return array();
 	}
+
 
 	/**
 	 * Processes order constraints passed in an array.
@@ -94,6 +118,7 @@ class ArticleCommentsList extends ListObject
 	    return $order;
 	}
 
+
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
 	 * parameters and parameters with invalid values. Returns an array of
@@ -105,7 +130,9 @@ class ArticleCommentsList extends ListObject
 	protected function ProcessParameters(array $p_parameters)
 	{
 		$parameters = array();
-    	foreach ($p_parameters as $parameter=>$value) {
+        $parameters['ignore_language'] = false;
+        $parameters['ignore_article'] = false;
+        foreach ($p_parameters as $parameter=>$value) {
     		$parameter = strtolower($parameter);
     		switch ($parameter) {
     			case 'length':
@@ -122,7 +149,12 @@ class ArticleCommentsList extends ListObject
 	    				$parameters[$parameter] = $value;
     				}
     				break;
-    			default:
+                case 'ignore_language':
+                case 'ignore_article':
+                	$value = isset($value) && strtolower($value) != 'false';
+                    $parameters[$parameter] = $value;
+                    break;
+                default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
     	}
