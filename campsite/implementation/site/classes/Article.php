@@ -2592,7 +2592,7 @@ class Article extends DatabaseObject {
                 	                                   'IdLanguage'=>'fk_language_id');
                 	break;
                 case 'bylastcomment':
-                	$dbField = 'ArticleComments.fk_comment_id';
+                	$dbField = 'MAX(ArticleComments.fk_comment_id)';
                 	$p_otherTables['ArticleComments'] = array('Number'=>'fk_article_number',
                 	'IdLanguage'=>'fk_language_id');
                 	$p_whereConditions[] = "`ArticleComments`.`fk_comment_id` IS NOT NULL";
