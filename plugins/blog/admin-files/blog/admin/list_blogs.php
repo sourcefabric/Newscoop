@@ -284,7 +284,7 @@ if ($BlogsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byentries"><?php  putGS("Entries"); ?></a>
@@ -342,7 +342,7 @@ if ($BlogsList->getLength()) {
                 <td align="center"><?php p($MetaBlog->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlog->status); ?></td>
                 <td align="center"><?php putGS($MetaBlog->admin_status); ?></td>
-                <td align="center"><?php p($MetaBlog->published); ?></td>
+                <td align="center"><?php p($MetaBlog->date); ?></td>
                 <td align="center"><?php p($MetaBlog->entries_online); ?> / <?php p($MetaBlog->entries_offline); ?></td>
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
                 

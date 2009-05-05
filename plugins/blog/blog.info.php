@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'blog',
-    'version' => '0.1',
+    'version' => '0.2',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(
@@ -70,7 +70,7 @@ $info = array(
     ),
     'install' => 'plugin_blog_install',
     'enable' => 'plugin_blog_install',
-    'update' => '',
+    'update' => 'plugin_blog_update',
     'disable' => '',
     'uninstall' => 'plugin_blog_uninstall'
 );
@@ -113,6 +113,18 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_blog_comment');        
         
         system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'blog');    
+    }
+    
+    function plugin_blog_update()
+    {
+        global $g_documentRoot;
+        
+        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'blog'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
+        
+        unset($GLOBALS['g_db']);       
     }
     
     function plugin_blog_init(&$p_context)

@@ -24,7 +24,7 @@ class BlogEntry extends DatabaseObject {
         'fk_blog_id',
         'fk_language_id',
         'fk_user_id',
-        'published',
+        'date',
         'released',
         'status',
         'title',
@@ -74,12 +74,12 @@ class BlogEntry extends DatabaseObject {
                 case 'online':
                 case 'moderated':
                 case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
                   
                 case 'offline':
                 case 'pending':
-                    parent::setProperty('published', null);
+                    parent::setProperty('date', null);
                 break;
             }          
         }
@@ -114,7 +114,7 @@ class BlogEntry extends DatabaseObject {
         'title'         => $p_title,
         'content'       => $p_content,
         'fk_mood_id'    => $p_mood_id,
-        'published'     => date('Y-m-d H:i:s')
+        'date'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);

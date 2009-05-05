@@ -23,7 +23,7 @@ final class MetaBlogComment extends MetaDbObject {
         $this->m_properties['user_id'] = 'fk_user_id';
         $this->m_properties['user_name'] = 'user_name';
         $this->m_properties['user_email'] = 'user_email';
-        $this->m_properties['published'] = 'published';
+        $this->m_properties['date'] = 'date';
         $this->m_properties['title'] = 'title';
         $this->m_properties['name'] = 'title';
         $this->m_properties['content'] = 'content';

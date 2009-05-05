@@ -277,7 +277,7 @@ if ($BlogCommentsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
@@ -323,7 +323,7 @@ if ($BlogCommentsList->getLength()) {
                 <td align="center"><?php p($MetaBlogComment->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlogComment->status); ?></td>
                 <td align="center"><?php putGS($MetaBlogComment->admin_status); ?></td>
-                <td align="center"><?php p($MetaBlogComment->published); ?></td>
+                <td align="center"><?php p($MetaBlogComment->date); ?></td>
                 <td align="center"><?php p($MetaBlogComment->feature); ?></td>
               
                 <?php if($is_admin) { ?>

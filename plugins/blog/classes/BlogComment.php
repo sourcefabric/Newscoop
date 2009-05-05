@@ -27,7 +27,7 @@ class BlogComment extends DatabaseObject {
         'fk_user_id',
         'user_name',
         'user_email',
-        'published',
+        'date',
         'status',
         'title',
         'content',
@@ -68,12 +68,12 @@ class BlogComment extends DatabaseObject {
                 case 'online':
                 case 'moderated':
                 case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
                   
                 case 'offline':
                 case 'pending':
-                    parent::setProperty('published', null);
+                    parent::setProperty('date', null);
                 break;
             }          
         }
@@ -109,7 +109,7 @@ class BlogComment extends DatabaseObject {
 		  'title'         => $p_title,
 		  'content'       => $p_content,
 		  'fk_mood_id'    => $p_mood_id,
-		  'published'     => date('Y-m-d H:i:s')
+		  'date'     => date('Y-m-d H:i:s')
 		);
 
 		$success = parent::create($values);
@@ -315,10 +315,9 @@ class BlogComment extends DatabaseObject {
                 'label'     => 'status',
                 'default'   => $data['status'],
                 'options'   => array(
-                                'pending'   => 'pending',
                                 'online'    => 'online',
-                                'offline'   => 'offline'
-                                
+                                'offline'   => 'offline',
+                                'pending'   => 'pending'
                                ),
                 'required'  => true            
             ),          

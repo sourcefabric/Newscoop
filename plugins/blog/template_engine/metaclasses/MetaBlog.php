@@ -21,7 +21,7 @@ final class MetaBlog extends MetaDbObject {
         $this->m_properties['user_id'] = 'fk_user_id';
         $this->m_properties['title'] = 'title';
         $this->m_properties['name'] = 'title';
-        $this->m_properties['published'] = 'published';
+        $this->m_properties['date'] = 'date';
         $this->m_properties['info'] = 'info';
         $this->m_properties['images'] = 'images';
         $this->m_properties['admin_remark'] = 'admin_remark';

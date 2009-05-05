@@ -83,7 +83,7 @@ class MetaActionBlogentry extends MetaAction
                     return false;
                 }
                 $this->m_blogentry->setProperty('answer', $this->m_properties['answer']);
-                $this->m_blogentry->setProperty('status', 'published');
+                $this->m_blogentry->setProperty('status', 'date');
             }
             
             if ($is_moderator) {

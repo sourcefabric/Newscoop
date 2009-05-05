@@ -24,7 +24,7 @@ class Blog extends DatabaseObject {
         'fk_language_id',
         'fk_user_id',
         'title',
-        'published',
+        'date',
         'info',
         'status',
         'admin_status',
@@ -76,7 +76,7 @@ class Blog extends DatabaseObject {
             'info'          => $p_info,
             'request_text'  => $p_request_text,
             'feature'       => $p_feature,
-            'published'     => date('Y-m-d H:i:s')
+            'date'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);
@@ -559,12 +559,12 @@ class Blog extends DatabaseObject {
                 case 'online':
                 case 'moderated':
                 case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
                   
                 case 'offline':
                 case 'pending':
-                    parent::setProperty('published', null);
+                    parent::setProperty('date', null);
                 break;
             }          
         }
@@ -589,7 +589,7 @@ class Blog extends DatabaseObject {
         
         global $g_ado_db;
         
-        $entryTbl = self::$s_dbTableName;
+        $entryTbl   = BlogEntry::$s_dbTableName;
         $commentTbl = BlogComment::$s_dbTableName;
         
         $queryStr1 = "UPDATE $entryTbl
