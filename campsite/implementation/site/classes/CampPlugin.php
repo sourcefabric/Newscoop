@@ -42,8 +42,9 @@ class CampPlugin extends DatabaseObject {
     public function create($p_name, $p_version, $p_enabled = true)
     {
         // Create the record
+        $this->m_data['Name'] = $p_name;
+        
         $values = array(
-            'Name' => $p_name,
             'Version' => $p_version,
             'Enabled' => $p_enabled ? 1 : 0
         );
@@ -55,38 +56,36 @@ class CampPlugin extends DatabaseObject {
         }
     }
 
-    static public function GetAll()
+    static public function GetAll($p_reload = false)
     {
         global $g_ado_db;
 
-        if (!is_null(self::$m_allPlugins)) {
-            return self::$m_allPlugins;
+        if ($p_reload || !is_array(self::$m_allPlugins)) {
+    
+            $CampPlugin = new CampPlugin();
+            $tblname = $CampPlugin->m_dbTableName;
+    
+            $query = "SELECT Name
+                      FROM   $tblname";
+    
+            $res = $g_ado_db->execute($query);
+            if (!$res) {
+                return array();
+            }
+            self::$m_allPlugins = array();
+    
+            while ($row = $res->FetchRow()) {
+                self::$m_allPlugins[] = new CampPlugin($row['Name']);;
+            }
         }
-
-        $CampPlugin = new CampPlugin();
-        $tblname = $CampPlugin->m_dbTableName;
-
-        $query = "SELECT Name
-                  FROM   $tblname";
-
-        $res = $g_ado_db->execute($query);
-        if (!$res) {
-            return array();
-        }
-        self::$m_allPlugins = array();
-
-        while ($row = $res->FetchRow()) {
-            self::$m_allPlugins[] = new CampPlugin($row['Name']);;
-        }
-
         return self::$m_allPlugins;
     }
 
-    static public function GetEnabled()
+    static public function GetEnabled($p_reload = false)
     {
         $plugins = array();
 
-        foreach (self::GetAll() as $CampPlugin) {
+        foreach (self::GetAll($p_reload) as $CampPlugin) {
             if ($CampPlugin->isEnabled()) {
                 $plugins[] = $CampPlugin;
             }
@@ -104,9 +103,16 @@ class CampPlugin extends DatabaseObject {
         return $this->getProperty('Name');
     }
 
-    public function getVersion()
+    public function getDbVersion()
     {
         return $this->getProperty('Version');
+    }
+    
+    
+    public function getFsVersion()
+    {
+        $info = self::getPluginInfos();
+        return $info[$this->getName()]['version'];
     }
 
     public function isEnabled()
@@ -156,13 +162,21 @@ class CampPlugin extends DatabaseObject {
             call_user_func($info['uninstall']);
         }
         
-        self::ClearPluginInfos();        
+        self::RefreshPluginInfos();        
         $this->delete();   
     }
+    
+    public function update()
+    {
+        $info = $this->getPluginInfo();
+        if (function_exists($info['update'])) {
+            call_user_func($info['update']);
+        }
+    }
 
-    static public function GetPluginInfos()
+    static public function GetPluginInfos($p_reload = false)
     {          
-        if (!is_array(self::$m_pluginInfos)) {
+        if ($p_reload || !is_array(self::$m_pluginInfos)) {
             self::$m_pluginInfos = array();
 
             if (!is_dir(CS_PATH_PLUGINS)) {
@@ -182,11 +196,6 @@ class CampPlugin extends DatabaseObject {
         }
 
         return self::$m_pluginInfos;
-    }
-    
-    static public function ClearPluginInfos()
-    {
-        self::$m_pluginInfos = null;
     }
 
     public function getPluginInfo($p_plugin_name = '')
@@ -330,7 +339,7 @@ class CampPlugin extends DatabaseObject {
         
         $tar->extract(CS_PATH_PLUGINS);
         
-        CampPlugin::clearPluginInfos();
+        CampPlugin::GetPluginInfos(true);
     }
     
     public static function PluginAdminHooks($p_filename, $p_area=null)
@@ -349,6 +358,21 @@ class CampPlugin extends DatabaseObject {
                 include $filepath;   
             }  
         }  
+    }
+    
+    public static function GetNeedsUpdate()
+    {
+        $upgradable = false;
+        
+        foreach (self::GetEnabled(true) as $CampPlugin) {
+            if ($CampPlugin->getFsVersion() != $CampPlugin->getDbVersion()) {
+                $upgradable[$CampPlugin->getName()]  = array(
+                                                            'db' => $CampPlugin->getDbVersion(),
+                                                            'current' => $CampPlugin->getFsVersion()
+                                                        ); 
+            }
+        }
+        return $upgradable;  
     }
 }
 
