@@ -2542,8 +2542,11 @@ class Article extends DatabaseObject {
      *      The array containing processed values of the condition
      */
     private static function ProcessListOrder(array $p_order, array &$p_otherTables = array(),
-    array &$p_whereConditions = array())
+    &$p_whereConditions = array())
     {
+    	if (!is_array($p_whereConditions)) {
+    		$p_whereConditions = array();
+    	}
         $order = array();
         foreach ($p_order as $orderDesc) {
             $field = $orderDesc['field'];
