@@ -228,6 +228,7 @@ class CampGetImage
             switch ($res) {
                 case 'target_exists':
                 case 'target_created':
+                    header('Campsite-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
                     readfile($this->getTargetPath());
                 break;
                 default:
