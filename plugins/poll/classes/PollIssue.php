@@ -193,7 +193,7 @@ class PollIssue extends DatabaseObject {
                   WHERE     1 $where
                   ORDER BY  fk_poll_nr DESC";
  
-        $res = $g_ado_db->selectLimit($query, $p_limit, $p_offset);
+        $res = $g_ado_db->selectLimit($query, $p_limit == 0 ? -1 : $p_limit, $p_offset);
         
         while ($row = $res->fetchRow()) {
             $records[] = new PollIssue($row['fk_poll_nr'], $row['fk_issue_language_id'], $row['fk_issue_nr'], $row['fk_publication_id']);      

@@ -243,6 +243,11 @@ class PollAnswerAttachment extends DatabaseObject {
         if (!is_array($p_parameters)) {
             return null;
         }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
 
         // sets the where conditions
         foreach ($p_parameters as $param) {

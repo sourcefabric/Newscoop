@@ -611,6 +611,11 @@ class Poll extends DatabaseObject {
             return null;
         }
         
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
+        
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
