@@ -17,16 +17,22 @@ require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
 class CampGetImage
 {
     /**
-     * @param string $m_imagePath
+     * @param string $m_imageSource
      *      Path to a local file.
      */
-    private $m_imagePath = '';
+    private $m_imageSource = '';
 
     /**
-     * @param string $m_location
+     * @param string $m_imageTarget
+     *      Path to a local derivate file.
+     */
+    private $m_imageTarget = '';
+
+    /**
+     * @param string $m_isLocal
      *      Flag if image is local ore remote.
      */
-    private $m_location = TRUE;
+    private $m_isLocal = TRUE;
 
     /**
      * @param array $m_imageMetaData
@@ -41,6 +47,20 @@ class CampGetImage
      */
     private $m_ratio = 100;
 
+    /**
+     * @param integer $m_ttl
+     *      ttl for cached files
+     */
+    private $m_ttl = 0;
+
+    private $m_basePath;
+    
+    private $m_cache_dir = '/image_cache/';
+    
+    private $m_derivates_dir = '/derivates/';
+    
+    private $m_fetch_dir = '/fetched/';
+
 
     /**
      * Class constructor.
@@ -52,8 +72,10 @@ class CampGetImage
      * @param integer $p_imageRatio
      *      The ratio for image resize
      */
-    public function __construct($p_imageNr, $p_articleNr,$p_imageRatio=100)
+    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100)
     {
+        $this->m_basePath = $_SERVER['DOCUMENT_ROOT'].'/images/';
+
         if (empty($p_articleNr) || empty($p_imageNr)
         || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
             $this->ExitError('Invalid parameters');
@@ -70,21 +92,51 @@ class CampGetImage
      *
      * @param string $p_path
      */
-    public function SetImagePath($p_path)
+    public function setSourcePath()
     {
-        $this->m_imagePath = $p_path;
-        return 0;
-    }   // fn SetImagePath
+        if (!$this->m_isLocal) {
+            $fetched = $this->m_cache_dir.$this->m_fetch_dir;       
+        }
+        
+        if ($this->CheckLocalFile($this->m_basePath.$fetched.$this->getLocalFileName())) {
+            $this->m_isLocal = true;
+            $this->m_imageSource = $this->m_basePath.$fetched.$this->getLocalFileName();
+            
+        } elseif ($this->CheckRemoteFile($this->m_imageMetaData['URL'])) {
+            $this->m_isLocal = false;
+            $this->m_imageSource = $this->m_imageMetaData['URL'];
+            
+        } else {
+            return false;   
+        }
+        return true;
+    }   // fn setSourcePath
 
 
     /**
      * Returns path to the local image file.
      *
      */
-    public function GetImagePath()
+    public function getSourcePath()
     {
-        return $this->m_imagePath;
-    }   // fn GetImagePath
+        return $this->m_imageSource;
+    }   // fn getSourcePath
+
+    /**
+     * Returns path to the local image derivate file.
+     *
+     */
+    public function getTargetPath()
+    {
+        if (!$this->m_isLocal) {
+            $fetched = $this->m_fetch_dir;       
+        }
+        if ($this->m_ratio < 100) {
+            $derivates = $this->m_derivates_dir.$this->m_ratio.'/';    
+        } 
+        
+        return $this->m_basePath.$this->m_cache_dir.$fetched.$derivates.$this->getLocalFileName();
+    }   // fn getTargetPath
 
 
     /**
@@ -106,7 +158,7 @@ class CampGetImage
      */
     private function CheckLocalFile($p_imagePath)
     {
-        return file_exists($p_imagePath);
+        return is_readable($p_imagePath);
     }  // fn CheckLocalFile
 
 
@@ -132,8 +184,27 @@ class CampGetImage
     private function ReadImage($p_ending)
     {
         $func = 'imagecreatefrom'.$p_ending;;
-        return $func($this->GetImagePath());
+        return $func($this->getSourcePath());
     }  // fn ReadImage
+    
+    
+    /**
+     * Create an proper file ending for given ContenType
+     *
+     * @return string
+     */
+    private function GetEnding()
+    {
+        switch($this->m_imageMetaData['ContentType']){
+            case 'image/gif': $func_ending ='gif'; break;
+            case 'image/jpeg': $func_ending ='jpeg'; break;
+            case 'image/png': $func_ending ='png'; break;
+            default: $func_ending ='jpeg'; break;
+        }
+        return $func_ending;
+    }
+
+
     /**
      * Sends headers and output image
      * Send image to resize if need
@@ -142,26 +213,27 @@ class CampGetImage
     private function PushImage()
     {
         header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-//        header('Cache-Control: no-store, no-cache, must-revalidate');
-//        header('Cache-Control: post-check=0, pre-check=0', false);
-//        header('Pragma: no-cache');
+        //        header('Cache-Control: no-store, no-cache, must-revalidate');
+        //        header('Cache-Control: post-check=0, pre-check=0', false);
+        //        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_imageMetaData['ContentType']);
 
-        if($this->m_ratio<100){
-           $func_ending = '';
-           switch($this->m_imageMetaData['ContentType']){
-               case 'image/gif':$func_ending ='gif'; break;
-               case 'image/jpeg':$func_ending ='jpeg'; break;
-               case 'image/png':$func_ending ='png'; break;
-               default:$func_ending ='jpeg';break;
-           }
-           $t = $this->ReadImage($func_ending);
-           $t = $this->ResizeImage($t);
-           $function = 'image'.$func_ending;
-           $function($t);
-        }
-        else{
-            readfile($this->GetImagePath());
+        if ($this->m_isLocal && $this->m_ratio == 100) {
+            // do not cache local 100% images
+            readfile($this->getSourcePath());
+            
+        } else {
+            $res = $this->imageCacheHandler();
+    
+            switch ($res) {
+                case 'target_exists':
+                case 'target_created':
+                    readfile($this->getTargetPath());
+                break;
+                default:
+                    // image was already send to brwoser by buildImageCache()
+                break;
+            }
         }
     }  // fn PushImage
 
@@ -183,7 +255,23 @@ class CampGetImage
         $dest = imagecreatetruecolor($w_dest,$h_dest);
         imagecopyresized($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
-     }  // fn ResizeImage
+    }  // fn ResizeImage
+    
+    
+    /**
+     * Return an local filename.
+     * For the url's, use md5 hash for it.
+     *
+     * @return string filename
+     */
+    private function getLocalFileName()
+    {
+        if (empty($this->m_imageMetaData['URL'])) {
+            return $this->m_imageMetaData['ImageFileName'];
+        } else {
+            return md5($this->m_imageMetaData['URL']).'.'.$this->getEnding();
+        }
+    }
 
 
     /**
@@ -208,18 +296,68 @@ class CampGetImage
         if(empty($this->m_imageMetaData)){
             $this->ExitError('Image not found');
         }
-        $this->m_location = empty($this->m_imageMetaData['URL']);
-        $this->SetImagePath($this->m_location?
-            $_SERVER['DOCUMENT_ROOT'].'/images/'.$this->m_imageMetaData['ImageFileName']:
-            $this->m_imageMetaData['URL']);
-
-
-        if(!($this->m_location?$this->CheckLocalFile($this->GetImagePath()):
-                                $this->CheckRemoteFile($this->GetImagePath()))){
-            $this->ExitError('File "'.$this->m_imageMetaData['ImageFileName'].'" not found');
+        
+        if (!$this->setSourcePath()) {
+            $this->ExitError('File "'.$this->m_imageMetaData['ImageFileName'].$this->m_imageMetaData['URL'].'" not found');
         }
+
         $this->PushImage();
     } // fn GetImage
+
+
+    /**
+     * Create the cached version of an image.
+     * If failed, send the derivate to the browser.
+     *
+     * @return unknown
+     */
+    private function imageCacheHandler()
+    {
+        if (is_readable($this->getTargetPath())) {
+            // cached image exists
+            return 'target_exists';
+        }
+
+        $cachedir  = dirname($this->getTargetPath());
+        $cachefile = basename($this->getTargetPath());
+
+        $func_ending = $this->GetEnding();
+        $t = $this->ReadImage($func_ending);
+        $t = $this->ResizeImage($t);
+        $function = 'image'.$func_ending;
+
+        if (is_dir($cachedir) && is_writable($cachedir)) {
+            $function($t, $this->getTargetPath());
+            return 'target_created';
+        } else {
+            // try to create the folder
+            if (self::MkDirRecursive($cachedir)) {
+                $function($t, $this->getTargetPath());
+                return 'target_created';
+            } else {
+                // fallback without caching
+                return $function($t, '');
+            }
+        }
+    }
+
+
+    /**
+     *  Create an directory tree.
+     *
+     * @param string $p_dir
+     * @return boolean
+     */
+    static private function MkdirRecursive($p_dir) {
+        foreach (explode('/', $p_dir) as $piece) {
+            $subdir .= '/'.$piece;
+            @mkdir($subdir);
+        }
+        if (is_dir($p_dir) && is_writable($p_dir)) {
+            return true;
+        }
+        return false;
+    }
 } // class CampGetImagePlus
 
 ?>
