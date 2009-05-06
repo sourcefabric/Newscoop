@@ -225,7 +225,12 @@ final class MetaSubtitle {
         $imgString .= '>';
         $imgString .= '<tr><td align="center">';
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
-        . '&amp;NrImage=' . $imageNumber . '"';
+        . '&amp;NrImage=' . $imageNumber;
+
+	$imgRatio = SystemPref::Get("EditorImageRatio");
+	$imgString .= ($imgRatio > 0 && $imgRatio < 100) ? '&ImageRatio=' . $imgRatio : '';
+	$imgString .= '"';
+
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' title="' . $detailsArray['alt'] . '"';
         }

@@ -138,6 +138,22 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 </tr>
 <tr>
 	<td colspan="2" align="left">
+		<strong><?php putGS("Editor Settings"); ?></strong>
+	</td>
+</tr>
+<tr>
+	<td align="left" width="400px">
+		<?php putGS("Image Resizing Ratio:"); ?>
+	</td>
+	<td align="left" valign="top">
+                <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
+	</td>
+</tr>
+<tr>
+	<td colspan="2"><hr></td>
+</tr>
+<tr>
+	<td colspan="2" align="left">
         <?php putGS("Reader subscriptions managed externally?"); ?>
         <input type="radio" name="f_external_subs_management" value="Y" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_external_subs_management" value="N" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
