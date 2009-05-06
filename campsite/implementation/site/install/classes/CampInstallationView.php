@@ -95,7 +95,11 @@ final class CampInstallationView
         $to_check = array(
             CS_PATH_SITE => 'Document Root Writable',
             CS_INSTALL_DIR.DIR_SEP.'cron_jobs' => 'Cron Jobs Writable',
-            CS_PATH_CONFIG => 'Configuration Files Writable',   
+            CS_PATH_CONFIG => 'Configuration Files Writable',
+            CS_PATH_SITE.DIR_SEP.'files' => 'Attachment Files Folder Writable',
+            CS_PATH_SITE.DIR_SEP.'images' => 'Images Folder Writable',
+            CS_PATH_SITE.DIR_SEP.'templates' => 'Templates Folder Writable',
+            CS_PATH_SITE.DIR_SEP.'templates_c' => 'Templates Cache Writable',
             CS_PATH_SITE.DIR_SEP.'plugins' => 'Plugins Folder Writable',
         );
         
