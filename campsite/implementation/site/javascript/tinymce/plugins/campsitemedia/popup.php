@@ -1,6 +1,7 @@
 <?php
 
 require_once('config.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
 
 ?>
@@ -34,7 +35,7 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
   <!--// file attachment properties -->
   <div style="text-align: right;">
     <hr />
-    <button type="button" class="buttons" onclick="CampsiteMediaDialog.insert();"><?php putGS('Select'); ?></button>
+    <button type="button" class="buttons" onclick="CampsiteMediaDialog.insert('<?php echo $Campsite['WEBSITE_URL']; ?>');"><?php putGS('Select'); ?></button>
     <button type="button" class="buttons" onclick="CampsiteMediaDialog.close();"><?php putGS('Cancel'); ?></button>
   </div>
   </form>

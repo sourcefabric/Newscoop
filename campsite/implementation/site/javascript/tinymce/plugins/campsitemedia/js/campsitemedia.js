@@ -23,13 +23,13 @@ var CampsiteMediaDialog = {
 	    var href = inst.dom.getAttrib(elm, 'href');
     },
 
-    insert : function() {
+    insert : function(url) {
 	var ed = tinyMCEPopup.editor;
 	var dom = ed.dom;
 	var topDoc = window.top.document;
 	var parentWin = tinyMCEPopup.getWindowArg("window");
 
-	parentWin.document.getElementById('src').value = topDoc.getElementById('f_url').value;
+	parentWin.document.getElementById('src').value = url + topDoc.getElementById('f_url').value;
 	ed.selection.setContent(dom.createHTML('a', {
 		    href : topDoc.getElementById('f_url').value,
 		    title : topDoc.getElementById('f_description').value
