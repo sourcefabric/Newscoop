@@ -29,7 +29,6 @@ camp_set_error_handler("camp_report_bug");
 $no_menu_scripts = array(
     '/login.php',
     '/do_login.php',
-    '/password_restore.php',
     '/issues/preview.php',
     '/issues/empty.php',
     '/ad_popup.php',
@@ -45,9 +44,9 @@ $no_menu_scripts = array(
     '/articles/audioclips/edit.php',
     '/articles/empty.php',
     '/comments/ban.php',
-    '/comments/do_ban.php',
-    '/imagearchive/do_add.php'
-);
+	'/comments/do_ban.php',
+	'/imagearchive/do_add.php'
+	);
 	
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
 
@@ -71,9 +70,7 @@ if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
 
 	// If they arent trying to login in...
-	if (($call_script != '/login.php')
-	      && ($call_script != '/do_login.php')
-	      && ($call_script != '/password_restore.php')) {
+	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
 		// Check if the user is logged in already
 		list($access, $g_user) = camp_check_admin_access($_REQUEST);
 		if (!$access) {
