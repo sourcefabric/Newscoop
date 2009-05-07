@@ -63,6 +63,10 @@ $manager = new ImageManager($IMConfig);
         </select>
       </td>
     </tr>
+    <tr>
+      <td align="right"><label for="f_ratio">Resizing Ratio:</label></td>
+      <td><input type="text" id="f_ratio" class="largelWidth" value="" /></td>
+    </tr>
     </table>
     <!--// image properties -->
     <div style="text-align: right;">
