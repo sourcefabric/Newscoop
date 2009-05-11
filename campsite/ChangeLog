@@ -1,3 +1,10 @@
+3.2.3 (May 11, 2009)
+  Bugs Fixed
+  ----------
+  - #2848 - Unable to create article types
+  - #2849 - Installer displays warnings related to session initialization
+  - #2850 - Tiny media plugin is not localized
+
 3.2.2 (May 08, 2009)
   Improvements
   ------------
