@@ -3,6 +3,8 @@
 require_once('config.inc.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
 require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+camp_load_translation_strings("tiny_media_plugin");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

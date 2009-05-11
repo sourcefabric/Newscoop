@@ -7,6 +7,9 @@
 
 require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+camp_load_translation_strings("tiny_media_plugin");
 
 $manager = new AttachmentManager($AMConfig);
 
@@ -50,7 +53,7 @@ function drawNoResults()
 ?>
 <table width="100%">
   <tr>
-    <td class="noResult"><script>document.write(i18n("No Attachments Found"));</script></td>
+    <td class="noResult"><?php putGS("No Media Files Found"); ?></td>
   </tr>
 </table>
 <?php

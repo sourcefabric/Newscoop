@@ -100,6 +100,7 @@ $mapPrefixToDir["preview"] = "/template_engine/classes";
 $mapPrefixToDir["plugins"] = "/admin-files/plugins";
 $mapPrefixToDir["plugin_interview"] = "/plugins/interview/admin-files/interview/admin";
 $mapPrefixToDir["plugin_poll"] = "/plugins/poll/admin-files/poll";
+$mapPrefixToDir["tiny_media_plugin"] = "/javascript/tinymce/plugins/campsitemedia";
 
 foreach (CampPlugin::GetPluginInfos() as $info) {
     if (CampPlugin::IsPluginEnabled($info['name'])) {
