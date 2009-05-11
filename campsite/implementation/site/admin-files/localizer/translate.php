@@ -128,6 +128,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
+    $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
 
     foreach (CampPlugin::GetPluginInfos() as $info) {
         if (CampPlugin::IsPluginEnabled($info['name'])) {
