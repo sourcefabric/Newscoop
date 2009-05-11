@@ -41,7 +41,10 @@ class ArticleType {
 		
 		$sql = "SELECT DISTINCT type_name FROM ArticleTypeMetadata WHERE type_name = '"
 		     . $g_ado_db->escape($p_articleType) . "'";
-		$p_articleType = $g_ado_db->GetOne($sql);
+		$articleType = $g_ado_db->GetOne($sql);
+		if (!empty($articleType)) {
+			$p_articleType = $articleType;
+		}
 		$this->m_name = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
 		// Get user-defined values.
