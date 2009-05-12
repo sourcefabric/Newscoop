@@ -165,7 +165,7 @@ if ($f_publication_id > 0) {
 
 $hasArticleBodyField = false;
 foreach ($dbColumns as $dbColumn) {
-    if (stristr($dbColumn->getType(), "blob")) {
+    if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
         $hasArticleBodyField = true;
     }
 }
@@ -736,11 +736,7 @@ if ($f_edit_mode == "edit") { ?>
                         $saveButtonNames = array('save_f_article_title','save_f_article_author','save_f_keywords');
 			// Display the article type fields.
 			foreach ($dbColumns as $dbColumn) {
-				if (stristr($dbColumn->getType(), "char")
-				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
-					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
-					// "char" types to "binary".
-
+				if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
 					// Single line text fields
 			?>
 			<tr>
@@ -778,7 +774,7 @@ if ($f_edit_mode == "edit") { ?>
 				</td>
 			</tr>
 			<?php
-			} elseif (stristr($dbColumn->getType(), "date")) {
+			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_DATE) {
 				// Date fields
 				if ($articleData->getProperty($dbColumn->getName()) == "0000-00-00") {
 					$articleData->setProperty($dbColumn->getName(), "CURDATE()", true, true);
@@ -820,7 +816,7 @@ if ($f_edit_mode == "edit") { ?>
 				</td>
 			</tr>
 			<?php
-			} elseif (stristr($dbColumn->getType(), "blob")) {
+			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
 				// Multiline text fields
 				// Transform Campsite-specific tags into editor-friendly tags.
 				$text = $articleData->getProperty($dbColumn->getName());
@@ -904,7 +900,7 @@ window.location.reload();
 			</td>
 			</tr>
 			<?php
-			} elseif (stristr($dbColumn->getType(), "topic")) {
+			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_TOPIC) {
 				$articleTypeField = new ArticleTypeField($articleObj->getType(),
 														 substr($dbColumn->getName(), 1));
 				$rootTopicId = $articleTypeField->getTopicTypeRootElement();

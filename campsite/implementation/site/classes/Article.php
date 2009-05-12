@@ -2013,9 +2013,11 @@ class Article extends DatabaseObject {
 	 */
 	public static function GetNumArticlesOfType($p_type)
 	{
-		global $g_ado_db;
-		$queryStr ="SELECT COUNT(*) FROM Articles WHERE Type='$p_type'";
-		return $g_ado_db->GetOne($queryStr);
+		$articleType = new ArticleType($p_type);
+		if (!$articleType->exists()) {
+			return false;
+		}
+		return $articleType->getNumArticles();
 	} // fn GetNumArticlesOfType
 
 
@@ -2029,7 +2031,8 @@ class Article extends DatabaseObject {
 	public static function GetArticlesOfType($p_type)
 	{
 		global $g_ado_db;
-		$sql = "SELECT * FROM Articles WHERE Type='$p_type'";
+        $sql = "SELECT * FROM Articles WHERE Type = '"
+        . $g_ado_db->escape($p_type) . "'";
 		$articles = DbObjectArray::Create('Article', $sql);
 		return $articles;
 	} // fn GetArticlesOfType

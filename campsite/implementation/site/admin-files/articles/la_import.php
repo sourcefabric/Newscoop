@@ -161,7 +161,7 @@ if ($isValidXMLFile) {
 	$dbColumns = $articleTypeObj->getUserDefinedColumns();
 	$articleTypeFields = array();
 	foreach ($dbColumns as $dbColumn) {
-	    $fieldName = substr($dbColumn->getName(), 1);
+	    $fieldName = $dbColumn->getPrintName();
 	    $field = strtolower($fieldName);
 	    if (!isset($article->$field)) {
 	        $errorMessages[$articleCount][] = 'The article type field "<i>'

@@ -23,6 +23,7 @@ class ArticleData extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle', 'IdLanguage');
 	var $m_dbTableName;
 	var $m_articleTypeName;
+	private $m_articleTypeObject = null;
 
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -110,31 +111,13 @@ class ArticleData extends DatabaseObject {
     *
     * @return array
     */
-    public function getUserDefinedColumns($p_showAll = 0)
-       {
-			global $g_ado_db;
-            if (!$p_showAll) {
-                $is_hidden = " AND is_hidden=0 ";
-            } else {
-                $is_hidden = "";
-            }
-
-			$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_articleTypeName ."' AND field_name != 'NULL' AND field_type IS NOT NULL $is_hidden ORDER BY field_weight ASC";
-			$queryArray = $g_ado_db->GetAll($queryStr);
-			$metadata = array();
-			if (is_array($queryArray)) {
-				foreach ($queryArray as $row) {
-					$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
-					$rowdata = $g_ado_db->GetAll($queryStr);
-					$columnMetadata = new ArticleTypeField(substr($this->m_dbTableName, 1));
-					$columnMetadata->fetch($rowdata[0]);
-					$columnMetadata->m_metadata = $columnMetadata->getMetadata();
-					$metadata[] = $columnMetadata;
-				}
-			}
-			return $metadata;
-
-       } // fn getUserDefinedColumns
+    public function getUserDefinedColumns($p_showAll = false)
+    {
+    	if (is_null($this->m_articleTypeObject)) {
+    		$this->m_articleTypeObject = new ArticleType($this->m_articleTypeName);
+    	}
+    	return $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll);
+    } // fn getUserDefinedColumns
 
 	/**
 	 * Copy the row in the database.

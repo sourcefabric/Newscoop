@@ -41,16 +41,17 @@ include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
 // Topic->Date = NO
 // Topic->Topic = NO* (TODO)
 $options = array();
-if ($articleField->getType() == 'mediumblob') {
+if ($articleField->getType() == ArticleTypeField::TYPE_BODY) {
     $options = array();
 }
-if ($articleField->getType() == 'date') {
-    $options = array('datey' => getGS('Date'), 'text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
-}
-if ($articleField->getType() == 'varchar(255)') {
+if ($articleField->getType() == ArticleTypeField::TYPE_DATE) {
     $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
 }
-if ($articleField->getType() == 'int(10) unsigned') {
+if ($articleField->getType() == ArticleTypeField::TYPE_TEXT) {
+    $options = array('body' => getGS('Multi-line Text with WYSIWYG'));
+}
+if ($articleField->getType() == ArticleTypeField::TYPE_TOPIC) {
+    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
 }
 ?>
 <script>
@@ -134,7 +135,7 @@ foreach ($topics as $topicPath) {
 </TABLE>
 </FORM>
 <P>
-<?php if ($articleField->getType() == 'int(10) unsigned') { ?>
+<?php if ($articleField->getType() == ArticleTypeField::TYPE_TOPIC) { ?>
 <script>
 UpdateArticleFieldContext();
 </script>

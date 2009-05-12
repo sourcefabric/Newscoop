@@ -164,7 +164,7 @@ final class MetaArticle extends MetaDbObject {
         && is_array($this->m_customProperties[$property])) {
             $dbProperty = $this->m_customProperties[$property][0];
             $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
-            if ($articleFieldType->getType() == 'mediumblob') {
+            if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                 $subtitleId = $this->subtitle_url_id($p_fieldName);
                 return CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
             }
@@ -182,7 +182,7 @@ final class MetaArticle extends MetaDbObject {
                 $dbProperty = $this->m_customProperties[$property][0];
                 $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
                 $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
-                if ($articleFieldType->getType() == 'mediumblob') {
+                if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {
                         $subtitleId = $this->subtitle_url_id($property);
                         $subtitleNo = CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
@@ -197,7 +197,7 @@ final class MetaArticle extends MetaDbObject {
                     }
                     $fieldValue = $this->getContentCache($property);
                 }
-                if ($articleFieldType->getType() == 'topic') {
+                if ($articleFieldType->getType() == ArticleTypeField::TYPE_TOPIC) {
                     $fieldValue = new MetaTopic($fieldValue);
                 }
                 return $fieldValue;

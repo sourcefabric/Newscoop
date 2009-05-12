@@ -79,7 +79,7 @@ class CacheEngine_APC extends CacheEngine
 	 */
 	public function clearValues()
 	{
-		return apc_clear_cache();
+		return apc_clear_cache('user');
 	}
 
 
@@ -113,7 +113,7 @@ class CacheEngine_APC extends CacheEngine
      */
     public function clearPages()
     {
-    	throw new UnsupportedCacheOperation('clear pages');
+        return apc_clear_cache();
     }
 
 

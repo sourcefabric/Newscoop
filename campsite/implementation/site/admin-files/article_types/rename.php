@@ -9,7 +9,7 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 	exit;
 }
 
-$articleTypes = ArticleType::GetArticleTypes();
+$articleTypes = ArticleType::GetArticleTypes(true);
 $f_name = trim(Input::get('f_name'));
 
 $crumbs = array();

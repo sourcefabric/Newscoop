@@ -162,7 +162,7 @@ foreach ($fields as $field) {
 	</td>
 
     <TD ALIGN="CENTER">
-        <?php if ($field->getType() == 'mediumblob') { ?>
+        <?php if ($field->getType() == ArticleTypeField::TYPE_BODY) { ?>
         <input type="checkbox" <?php if ($field->isContent()) { ?>checked<?php } ?> id="set_is_content_<?php echo $i; ?>" name="set_is_content_<?php echo $i; ?>" onclick="if (confirm('<?php putGS('Are you sure you want to make $1 a $2 field?', $field->getPrintName(), $contentType); ?>')) { location.href='/<?php p($ADMIN); ?>/article_types/fields/set_is_content.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_is_content=<?php print $setContentField; ?>' } else { document.getElementById('set_is_content_<?php echo $i; ?>').checked = <?php echo $isContentField; ?> }">
         <?php } else { ?>
         <?php putGS('N/A'); ?>

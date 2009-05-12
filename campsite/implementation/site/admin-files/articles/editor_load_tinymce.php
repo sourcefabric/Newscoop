@@ -20,7 +20,7 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	$editors = array();
 	if (is_array($p_dbColumns)) {
 	    foreach ($p_dbColumns as $dbColumn) {
-	        if (stristr($dbColumn->getType(), "blob")) {
+	        if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
 		    if ($p_articleNumber > 0) {
 		        $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
 		    } else {

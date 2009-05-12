@@ -53,7 +53,7 @@ class Translation extends DatabaseObject {
 			$p_phraseId = $this->m_data['phrase_id'];
 			$this->m_exists = false;
 		}
-		$sql = "DELETE FROM Translations WHERE phrase_id=$p_phraseId";
+		$sql = "DELETE FROM Translations WHERE phrase_id = " . (int)$p_phraseId;
 		$g_ado_db->Execute($sql);
 	} // fn deletePhrase
 
@@ -171,7 +171,7 @@ class Translation extends DatabaseObject {
 		if (!is_numeric($p_phraseId)) {
 			return $phrases;
 		}
-		$sql = "SELECT fk_language_id, translation_text FROM Translations WHERE phrase_id=".$p_phraseId;
+		$sql = "SELECT fk_language_id, translation_text FROM Translations WHERE phrase_id = $p_phraseId";
 		$rows = $g_ado_db->GetAll($sql);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {

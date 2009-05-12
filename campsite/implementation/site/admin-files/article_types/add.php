@@ -8,7 +8,7 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 	exit;
 }
 
-$articleTypes = ArticleType::GetArticleTypes();
+$articleTypes = ArticleType::GetArticleTypes(true);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

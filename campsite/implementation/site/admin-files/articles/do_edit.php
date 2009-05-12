@@ -46,7 +46,7 @@ $dbColumns = $articleTypeObj->getUserDefinedColumns();
 
 $articleFields = array();
 foreach ($dbColumns as $dbColumn) {
-    if (stristr($dbColumn->getType(), "blob")) {
+    if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
         $dbColumnParam = $dbColumn->getName() . '_' . $f_article_number;
     } else {
         $dbColumnParam = $dbColumn->getName();

@@ -26,7 +26,7 @@ $src = new ArticleType($f_src);
 $dest = new ArticleType($f_dest);
 
 $getString = '';
-foreach ($dest->m_dbColumns as $destColumn) {
+foreach ($dest->getUserDefinedColumns() as $destColumn) {
 	$getString .= "&f_src_". $destColumn->getPrintName() ."=". trim(Input::get('f_src_'. $destColumn->getPrintName()));
 }
 
@@ -34,7 +34,7 @@ if ($f_action == 'Step2') {
 	camp_html_goto_page("/$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $getString);
 }
 
-foreach ($dest->m_dbColumns as $destColumn) {
+foreach ($dest->getUserDefinedColumns() as $destColumn) {
     $tmp = trim(Input::get('f_src_'. $destColumn->getPrintName()));
 	$f_src_c[$destColumn->getPrintName()] = $tmp;
 }
@@ -64,32 +64,12 @@ $errMsgs = array();
 foreach ($f_src_c as $destColumn => $srcColumn) {
 	$destATF = new ArticleTypeField($f_dest, $destColumn);
 	$srcATF = new ArticleTypeField($f_src, $srcColumn);
-    $tmp = $srcATF->getType();
-    $tmp2 = $destATF->getType();
 
-	if (stristr($srcATF->getType(), 'blob') && stristr($destATF->getType(), 'char')) {
-		$errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
-							getGS('body'), $srcATF->getDisplayName(),
-							getGS('text'), $destATF->getDisplayName());
-		$ok = false;
-	}
-	if ((stristr($srcATF->getType(), 'char')
-		|| stristr($srcATF->getType(), 'blob')
-		|| stristr($srcATF->getType(), 'topic'))
-		&& stristr($destATF->getType(), 'date')) {
-		$errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
-							$srcATF->getType(), $srcATF->getPrintName(),
-							getGS('date'), $destATF->getDisplayName());
-		$ok = false;
-	}
-	if ((stristr($srcATF->getType(), 'char')
-		|| stristr($srcATF->getType(), 'blob')
-		|| stristr($srcATF->getType(), 'date'))
-		&& stristr($destATF->getType(), 'topic')) {
-		$errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
-							$srcATF->getType(), $srcATF->getPrintName(),
-							getGS('topic'), $destATF->getDisplayName());
-		$ok = false;
+	if (!$destATF->isConvertibleFrom($srcATF->getType())) {
+        $errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
+                            getGS($srcATF->getType()), $srcATF->getDisplayName(),
+                            getGS($destATF->getType()), $destATF->getDisplayName());
+        $ok = false;
 	}
 }
 
@@ -207,7 +187,7 @@ if ($ok) {
         	}
 
         	// display the warning in red if the user select NONE
-        	foreach ($src->m_dbColumns as $srcColumn) {
+        	foreach ($src->getUserDefinedColumns() as $srcColumn) {
         		if (array_search($srcColumn->getPrintName(), $f_src_c) === false) {
         			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1", "<B>". $srcColumn->getPrintName() ."</B>"); ?> <?php putGS("(No merge warning.)"); ?></FONT></LI><?php
         		}
@@ -323,11 +303,7 @@ if ($ok) {
         			if ($f_prev_action == 'Orig') $dbColumns = $srcDbColumns;
         			foreach ($dbColumns as $dbColumn) {
 
-        				if (stristr($dbColumn->getType(), "char")
-        				    /* DO NOT DELETE */ || stristr($dbColumn->getType(), "binary") /* DO NOT DELETE */ ) {
-        					// The "binary" comparizon is needed for Fedora distro; MySQL on Fedora changes ALL
-        					// "char" types to "binary".
-
+        				if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
         					// Single line text fields
         			?>
         			<TR>
@@ -348,11 +324,8 @@ if ($ok) {
         				</TD>
         			</TR>
         			<?php
-        			} elseif (stristr($dbColumn->getType(), "date")) {
+        			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_DATE) {
         				// Date fields
-        				//if ($srcArticleData->getProperty($f_src_c[$dbColumn->getPrintName()]) == "0000-00-00") {
-        				//	$articleData->setProperty($dbColumn->getName(), "CURDATE()", false, true);
-        				//}
         			?>
         			<TR>
         				<td align="left" style="padding-right: 5px;">
@@ -376,15 +349,16 @@ if ($ok) {
         				</TD>
         			</TR>
         			<?php
-        			} elseif (stristr($dbColumn->getType(), "blob")) {
+        			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
         				// Multiline text fields
         				// Transform Campsite-specific tags into editor-friendly tags.
-                        if ($f_prev_action == 'Orig')
+                        if ($f_prev_action == 'Orig') {
                             $text = $srcArticleData->getProperty($dbColumn->getName());
-                        else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')
+                        } elseif ($f_src_c[$dbColumn->getPrintName()] != 'NULL') {
             				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
-                        else
+                        } else {
                             $text = '';
+                        }
         				// Subheads
         				$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
         				$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
@@ -422,7 +396,7 @@ if ($ok) {
         			</TD>
         			</TR>
         			<?php
-        			} elseif (stristr($dbColumn->getType(), "topic")) {
+        			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_TOPIC) {
         			?>
         			<tr>
         			<TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
@@ -431,7 +405,11 @@ if ($ok) {
         				<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
         			</td>
         			<td>
-        			    <?php echo ''; ?>
+                        <?php
+                        $topicId = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
+                        $topic = new Topic($topicId);
+                        echo $topic->getName(camp_session_get('LoginLanguageId', 1));
+                        ?>
         			</td>
         			</tr>
         			<?php
@@ -462,7 +440,7 @@ if ($ok) {
         	<TD COLSPAN="2">
         	<DIV ALIGN="CENTER">
 
-        	<?php foreach ($dest->m_dbColumns as $destColumn) { ?>
+        	<?php foreach ($dest->getUserDefinedColumns() as $destColumn) { ?>
         	<INPUT TYPE="HIDDEN" NAME="f_src_<?php print $destColumn->getPrintName(); ?>" VALUE="<?php print $f_src_c[$destColumn->getPrintName()]; ?>">
         	<?php } ?>
 

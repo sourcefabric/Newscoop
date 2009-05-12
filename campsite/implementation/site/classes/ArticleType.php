@@ -22,11 +22,22 @@ require_once($g_documentRoot.'/'.$ADMIN_DIR.'/localizer/Localizer.php');
  * @package Campsite
  */
 class ArticleType {
-	var $m_columnNames = array();
-	var $m_dbTableName;
-	var $m_name;
-	var $m_metadata;
-	var $m_dbColumns;
+	private $m_columnNames = array();
+	private $m_dbTableName;
+
+	/**
+	 * Stores the article type name.
+	 * @var string
+	 */
+	private $m_name;
+
+	/**
+	 * Stores an ArticleTypeField object
+	 * @var ArticleTypeField
+	 */
+	private $m_metadata;
+	private $m_dbColumns;
+	private $m_publicFields = null;
 
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -37,19 +48,15 @@ class ArticleType {
 	 */
 	public function ArticleType($p_articleType)
 	{
-		global $g_ado_db;
-		
-		$sql = "SELECT DISTINCT type_name FROM ArticleTypeMetadata WHERE type_name = '"
-		     . $g_ado_db->escape($p_articleType) . "'";
-		$p_articleType = $g_ado_db->GetOne($sql);
-		$this->m_name = $p_articleType;
-		$this->m_dbTableName = 'X'.$p_articleType;
+        $this->m_metadata = new ArticleTypeField($p_articleType, 'NULL');
+		$this->m_name = $this->m_metadata->getArticleType();
+        $this->m_dbTableName = 'X' . $this->m_name;
+
 		// Get user-defined values.
 		$this->m_dbColumns = $this->getUserDefinedColumns();
 		foreach ($this->m_dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
-		$this->m_metadata = $this->getMetadata();
 	} // constructor
 
 
@@ -60,33 +67,32 @@ class ArticleType {
 	public function create()
 	{
 		global $g_ado_db;
-		$queryStr = "CREATE TABLE `".$this->m_dbTableName."`"
-					."(NrArticle INT UNSIGNED NOT NULL, "
-					." IdLanguage INT UNSIGNED NOT NULL, "
-					." PRIMARY KEY(NrArticle, IdLanguage))";
+		$queryStr = "CREATE TABLE `".$this->m_dbTableName."` (\n"
+                  . "    NrArticle INT UNSIGNED NOT NULL,\n"
+                  . "    IdLanguage INT UNSIGNED NOT NULL,\n"
+                  . "    PRIMARY KEY(NrArticle, IdLanguage)\n"
+                  . ") DEFAULT CHARSET=utf8";
 		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
-			$queryStr = "INSERT INTO ArticleTypeMetadata"
-						."(type_name, field_name) "
-						."VALUES ('".$this->m_name."', 'NULL')";
-			$success2 = $g_ado_db->Execute($queryStr);
+			$metadata = new ArticleTypeField($this->getTypeName(), 'NULL');
+			$success = $metadata->create(null);
 		} else {
-			return $success;
+			return false;
 		}
 
-		if ($success2) {
+		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
 		} else {
-			$queryStr = "DROP TABLE ".$this->m_dbTableName;
+			$queryStr = "DROP TABLE `" . $this->m_dbTableName . "`";
 			$result = $g_ado_db->Execute($queryStr);
 		}
 
-		return $success2;
+		return $success;
 	} // fn create
 
 
@@ -96,35 +102,30 @@ class ArticleType {
 	 */
 	public function exists()
 	{
-		global $g_ado_db;
-		$queryStr = "SHOW TABLES LIKE '".$this->m_dbTableName."'";
-		$result = $g_ado_db->GetOne($queryStr);
-		if ($result) {
-			return true;
-		} else {
-			return false;
-		}
+		return $this->m_metadata->exists();
 	} // fn exists
 
 
 	/**
-	 * Delete the article type.  This will delete the entire table
-	 * in the database.  Not recommended unless there is no article
+	 * Delete the article type. This will delete the entire table
+	 * in the database. Not recommended unless there is no article
 	 * data in the table.
 	 */
 	public function delete()
 	{
 		global $g_ado_db;
-		$queryStr = "DROP TABLE ".$this->m_dbTableName;
+
+		$translation = new Translation(null, $this->m_metadata->getPhraseId());
+		$translation->deletePhrase();
+
+		foreach ($this->m_dbColumns as $field) {
+			$field->delete();
+		}
+        $this->m_metadata->delete();
+
+		$queryStr = "DROP TABLE `" . $this->m_dbTableName . "`";
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$queryStr = "DELETE FROM Translations WHERE phrase_id = '" . $this->m_metadata['fk_phrase_id'] . "'";
-			$g_ado_db->Execute($queryStr);
-			$queryStr = "DELETE FROM ArticleTypeMetadata WHERE type_name='".$this->m_name."'";
-			$success2 = $g_ado_db->Execute($queryStr);
-		}
-
-		if ($success2) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -135,40 +136,64 @@ class ArticleType {
 
 
 	/**
-	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
-	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
+	 * Rename the article type. This will move the entire table in the
+	 * database and update ArticleTypeMetadata. Usually, one wants to
+	 * just rename the Display Name, which is done via SetDisplayName
 	 *
+	 * @param $p_newName
 	 */
 	public function rename($p_newName)
 	{
 		global $g_ado_db;
-		if (!ArticleType::isValidFieldName($p_newName)) return 0;
-		$queryStr = "RENAME TABLE ".$this->m_dbTableName ." TO X".$p_newName;
-		$success = $g_ado_db->Execute($queryStr);
-		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET type_name='$p_newName' WHERE type_name='". $this->m_name ."'";
-			$success2 = $g_ado_db->Execute($queryStr);
+
+		if (!ArticleType::isValidFieldName($p_newName)) {
+			return false;
 		}
-        if ($success2) {
-            $queryStr = "UPDATE Articles SET Type='". $p_newName ."' WHERE Type='". $this->m_name ."'";
-            $success3 = $g_ado_db->Execute($queryStr);
-        }
-		if ($success3) {
-			$this->m_name = $p_newName;
-			$this->m_dbTableName = 'X'. $p_newName;
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logText = getGS('The article type $1 has been renamed to $2.', $this->m_name, $p_newName);
-			Log::Message($logText, null, 62);
+		$metadata = new ArticleTypeField($p_newName, 'NULL');
+		if ($metadata->exists()) {
+			return false;
 		}
 
+		$oldNameEsc = $g_ado_db->escape($this->m_name);
+		$newNameEsc = $g_ado_db->escape($p_newName);
+
+		$queryStr = "RENAME TABLE `" . $this->m_dbTableName . "` TO `X$p_newName`";
+		$success = $g_ado_db->Execute($queryStr);
+		if ($success) {
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$newNameEsc' "
+			. "WHERE type_name = '$oldNameEsc'";
+			$success = $g_ado_db->Execute($queryStr);
+		}
+        if ($success) {
+            $queryStr = "UPDATE Articles SET Type = '$newNameEsc' WHERE Type = '$oldNameEsc'";
+            $success = $g_ado_db->Execute($queryStr);
+        }
+		if ($success) {
+            $this->m_name = $p_newName;
+            $this->m_dbTableName = 'X'. $p_newName;
+
+            if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
+			$logText = getGS('The article type $1 has been renamed to $2.', $oldName, $p_newName);
+			Log::Message($logText, null, 62);
+		} else {
+            $queryStr = "RENAME TABLE `X$p_newName` TO `" . $this->m_dbTableName . "`";
+            $g_ado_db->Execute($queryStr);
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$oldName' "
+            . "WHERE type_name = '$newNameEsc'";
+            $g_ado_db->Execute($queryStr);
+            $queryStr = "UPDATE Articles SET Type = '$oldName' WHERE Type = '$newNameEsc'";
+            $g_ado_db->Execute($queryStr);
+		}
+		return $success;
 	} // fn rename
 
 
 	/**
-	* A quick lookup to see if the current language is already translated for this article type: used by delete and update in setName
-	* returns 0 if no translation or the phrase_id if there is one.
+	* A quick lookup to see if the current language was already translated
+	* for this article type: used by delete and update in setName.
+	* Returns 0 if no translation or the phrase_id if there is one.
 	*
 	* @param int p_languageId
 	*
@@ -176,17 +201,18 @@ class ArticleType {
 	**/
 	public function translationExists($p_languageId)
 	{
-		global $g_ado_db;
-		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_name ."' AND atm.field_name='NULL' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
-		$row = $g_ado_db->getAll($sql);
-		if (count($row)) return $row[0]['fk_phrase_id'];
-		else { return 0; }
-
+		if ($this->m_metadata->getPhraseId() != -1) {
+			$translation = new Translation($p_languageId, $this->m_metadata->getPhraseId());
+			if ($translation->exists()) {
+				return $translation->getPhraseId();
+			}
+		}
+		return 0;
 	} // fn translationExists
 
 
 	/**
-	 * Set the type name for the given language.  A new entry in
+	 * Set the type name for the given language. A new entry in
 	 * the database will be created if the language does not exist.
 	 *
 	 * @param int $p_languageId
@@ -201,50 +227,13 @@ class ArticleType {
 			return false;
 		}
 
-		// if the string is empty, nuke it
-		if (!is_string($p_value) || $p_value == '') {
-			if ($phrase_id = $this->translationExists($p_languageId)) {
-			    $trans = new Translation($p_languageId, $phrase_id);
-			    $trans->delete();
-			    $this->m_metadata['fk_phrase_id'] = null;
-				$changed = true;
-			} else { $changed = false; }
-		} else if ($phrase_id = $this->translationExists($p_languageId)) {
-			// just update
-			$description = new Translation($p_languageId, $phrase_id);
-			$description->setText($p_value);
-			$changed = true;
-		} else {
-			// Insert the new translation.
-			// first get the fk_phrase_id
-			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata WHERE type_name='". $this->m_name ."' AND field_name='NULL'";
-			$row = $g_ado_db->GetOne($sql);
-
-			// if this is the first translation ...
-			if (!is_numeric($row)) {
-				$description = new Translation($p_languageId);
-				$description->create($p_value);
-				$phrase_id = $description->getPhraseId();
-				// if the phrase_id isn't there, insert it.
-				$sql = "UPDATE ArticleTypeMetadata SET fk_phrase_id=".$phrase_id ." WHERE type_name='". $this->m_name ."' AND field_name='NULL'";
-				$changed = $g_ado_db->Execute($sql);
-				if ($changed) {
-					$this->m_metadata['fk_phrase_id'] = $phrase_id;
-				}
-			} else {
-				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
-				$desc = new Translation($p_languageId, $row);
-				$desc->create($p_value);
-				$this->m_metadata['fk_phrase_id'] = $phrase_id;
-				$changed = true;
-			}
-		}
+		$changed = $this->m_metadata->setName($p_languageId, $p_value);
 
 		if ($changed) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article Type $1 translation updated', $this->m_name);
+			$logtext = getGS('Article type $1 translation updated', $this->m_name);
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;
@@ -258,11 +247,7 @@ class ArticleType {
 	 */
 	public function getPhraseId()
 	{
-		if (isset($this->m_metadata['fk_phrase_id'])) {
-			return $this->m_metadata['fk_phrase_id'];
-		} else {
-			return -1;
-		}
+		return $this->m_metadata->getPhraseId();
 	} // fn getPhraseId
 
 
@@ -273,11 +258,7 @@ class ArticleType {
 	 */
 	public function getTranslations()
 	{
-		$return = array();
-		$tmp = Translation::getTranslations($this->getPhraseId());
-		foreach ($tmp as $k => $v)
-			$return[$k] = $v;
-		return $return;
+		return Translation::GetTranslations($this->getPhraseId());
 	} // fn getTranslations
 
 
@@ -306,10 +287,7 @@ class ArticleType {
 	**/
 	public function getMetadata()
 	{
-		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata WHERE type_name='". $this->m_name ."' and field_name='NULL'";
-		$queryArray = $g_ado_db->GetRow($queryStr);
-		return $queryArray;
+		return $this->m_metadata->getMetadata();
 	} // fn getMetadata
 
 
@@ -318,36 +296,24 @@ class ArticleType {
 	 *
 	 * @return array
 	 */
-	public function getUserDefinedColumns()
+	public function getUserDefinedColumns($p_fieldName = null, $p_selectHidden = true)
 	{
-		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata "
-		            ." WHERE type_name='". $this->m_name ."'"
-		            ." AND field_name != 'NULL' "
-		            ." AND field_type IS NOT NULL "
-		            ." AND type_name NOT LIKE 'XPreview%'"
-		            ." ORDER BY field_weight ASC";
-		$queryArray = $g_ado_db->GetAll($queryStr);
-		$metadata = array();
-		if (is_array($queryArray)) {
-			foreach ($queryArray as $row) {
-			    if (empty($row['field_name'])) {
-			        $deleteQuery = "ALTER TABLE " . $this->m_dbTableName . " DROP COLUMN F";
-			        $g_ado_db->Execute($deleteQuery);
-			        $deleteQuery = "DELETE FROM ArticleTypeMetadata WHERE type_name = '"
-			        . $this->m_name . "' AND field_name = ''";
-			        $g_ado_db->Execute($deleteQuery);
-			        continue;
-			    }
-				$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName ." LIKE 'F". $row['field_name'] ."'";
-				$rowdata = $g_ado_db->GetAll($queryStr);
-				$columnMetadata = new ArticleTypeField($this->m_name);
-				$columnMetadata->fetch($rowdata[0]);
-				$columnMetadata->m_metadata = $columnMetadata->getMetadata();
-				$metadata[] = $columnMetadata;
+		if (is_null($p_fieldName) && $p_selectHidden) {
+			if (is_null($this->m_dbColumns)) {
+				$this->m_dbColumns = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
+				false, false, true, true);
 			}
+			return $this->m_dbColumns;
 		}
-		return $metadata;
+		if (is_null($p_fieldName) && !$p_selectHidden) {
+			if (is_null($this->m_publicFields)) {
+				$this->m_publicFields = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
+				false, false, true, false);
+			}
+			return $this->m_publicFields;
+		}
+		return ArticleTypeField::FetchFields($p_fieldName, $this->m_name, 'NULL',
+		false, false, true, $p_selectHidden);
 	} // fn getUserDefinedColumns
 
 
@@ -388,12 +354,14 @@ class ArticleType {
 	public static function GetArticleTypes($p_includeHidden = false)
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT type_name FROM ArticleTypeMetadata WHERE field_name='NULL'";
+		$queryStr = "SELECT type_name FROM ArticleTypeMetadata WHERE field_name = 'NULL'";
 		if (!$p_includeHidden) {
-		    $queryStr .= " AND is_hidden=0";
+		    $queryStr .= " AND is_hidden = 0";
 		}
 		$res = $g_ado_db->GetAll($queryStr);
-		if (!$res) return array();
+		if (!$res) {
+			return array();
+		}
 		$finalNames = array();
 		foreach ($res as $v) {
 			$finalNames[] = $v['type_name'];
@@ -410,23 +378,7 @@ class ArticleType {
 	 */
 	public function setStatus($p_status)
 	{
-		global $g_ado_db;
-		if ($p_status == 'hide') {
-			$status = 1;
-		} elseif ($p_status == 'show') {
-			$status = 0;
-		} else {
-		    return;
-		}
-		$queryStr = "UPDATE ArticleTypeMetadata "
-		            ." SET is_hidden = $status "
-		            ." WHERE type_name='". $this->m_name."'"
-		            ." AND field_name='NULL'";
-		$ret = $g_ado_db->Execute($queryStr);
-		if ($ret) {
-			$this->m_metadata['is_hidden'] = $status;
-		}
-		return $ret;
+		return $this->m_metadata->setStatus($p_status);
 	} // fn setStatus
 
 
@@ -438,8 +390,7 @@ class ArticleType {
 	 */
 	public function getStatus()
 	{
-  		if ($this->m_metadata['is_hidden']) return 'hidden';
-		else return 'shown';
+		return $this->m_metadata->getStatus();
 	} // fn getStatus
 
 
@@ -450,12 +401,7 @@ class ArticleType {
 	 */
 	public function commentsEnabled()
 	{
-	    if (isset($this->m_metadata['comments_enabled'])
-	        && $this->m_metadata['comments_enabled']) {
-	        return true;
-	    } else {
-	        return false;
-	    }
+		return $this->m_metadata->getProperty('comments_enabled');
 	} // fn commentsEnabled
 
 
@@ -466,17 +412,8 @@ class ArticleType {
 	 */
 	public function setCommentsEnabled($p_value)
 	{
-		global $g_ado_db;
 		$p_value = $p_value ? '1' : '0';
-		$queryStr = "UPDATE ArticleTypeMetadata "
-		            ." SET comments_enabled=$p_value "
-		            ." WHERE type_name='". $this->m_name ."'"
-		            ." AND field_name='NULL'";
-		$ret = $g_ado_db->Execute($queryStr);
-		if ($ret) {
-			$this->m_metadata['comments_enabled'] = $p_value;
-		}
-		return $ret;
+		return $this->m_metadata->setProperty('comments_enabled', $p_value);
 	} // fn setCommentsEnabled
 
 
@@ -490,15 +427,7 @@ class ArticleType {
 	 */
 	public function getDisplayNameLanguageCode($p_lang = 0)
 	{
-		if (!$p_lang) {
-			$lang = camp_session_get('LoginLanguageId', 1);
-		} else {
-			$lang = $p_lang;
-		}
-		$languageObj = new Language($lang);
-		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) return '';
-		return '('. $languageObj->getCode() .')';
+		return $this->m_metadata->getDisplayNameLanguageCode($p_lang);
 	} // fn getDisplayNameLanguageCode
 
 
@@ -513,15 +442,10 @@ class ArticleType {
 	 */
 	public function getDisplayName($p_lang = 0)
 	{
-		if (!$p_lang) {
-			$lang = camp_session_get('LoginLanguageId', 1);
-		} else {
-			$lang = $p_lang;
+		$displayName = $this->m_metadata->getDisplayName($p_lang);
+		if ($displayName == 'NULL') {
+			return $this->m_name;
 		}
-
-		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) return substr($this->getTableName(), 1);
-		return $translations[$lang];
 	} // fn getDisplayName
 
 
@@ -533,25 +457,26 @@ class ArticleType {
 	public function getNumArticles()
 	{
 		global $g_ado_db;
-        $sql = "SELECT COUNT(*) FROM ". $this->m_dbTableName .", Articles WHERE "
-               . $this->m_dbTableName . ".NrArticle = Articles.Number AND "
-               . $this->m_dbTableName . ".IdLanguage = Articles.IdLanguage";
-		$res = $g_ado_db->GetOne($sql);
-		return $res;
+        $sql = "SELECT COUNT(*) FROM `". $this->m_dbTableName ."`, Articles WHERE `"
+               . $this->m_dbTableName . "`.NrArticle = Articles.Number AND `"
+               . $this->m_dbTableName . "`.IdLanguage = Articles.IdLanguage";
+		return $g_ado_db->GetOne($sql);
 	} // fn getNumArticles
+
 
     /**
      *
-     * For the preview of merge; this grabs an array of the article numbers for calculating next, prev, and cur
+     * For the preview of merge; this grabs an array of the article numbers
+     * for calculating next, previous and current.
      *
      * @return array
      */
     public function getArticlesArray()
     {
         global $g_ado_db;
-        $sql = "SELECT NrArticle FROM ". $this->m_dbTableName .", Articles WHERE "
-               . $this->m_dbTableName . ".NrArticle = Articles.Number AND "
-               . $this->m_dbTableName . ".IdLanguage = Articles.IdLanguage";
+        $sql = "SELECT NrArticle FROM `". $this->m_dbTableName ."`, Articles WHERE `"
+               . $this->m_dbTableName . "`.NrArticle = Articles.Number AND `"
+               . $this->m_dbTableName . "`.IdLanguage = Articles.IdLanguage";
         $rows = $g_ado_db->GetAll($sql);
         $returnArray = array();
         foreach ($rows as $row) {
@@ -656,6 +581,9 @@ class ArticleType {
 	    	return 0;
 	    }
 	    foreach ($rows as $row) {
+	    	$articleObj = new Article($row['IdLanguage'], $row['NrArticle']);
+	    	$articleObj->resetCache();
+	    	unset($articleObj);
             $fields = array();
             $values = array();
             foreach ($p_rules as $destC => $srcC) {
@@ -680,6 +608,9 @@ class ArticleType {
         if (!$g_ado_db->Execute($sql)) {
         	return 0;
         }
+        
+        $sql = "DELETE FROM X$p_src";
+        $g_ado_db->Execute($sql);
 
 	    return 1;
 	} // fn merge

@@ -21,7 +21,7 @@ $src = new ArticleType($f_src);
 $dest = new ArticleType($f_dest);
 
 $tmp = Input::get('f_src_Fe');
-foreach ($dest->m_dbColumns as $destColumn) {
+foreach ($dest->getUserDefinedColumns() as $destColumn) {
 	$f_src_c[$destColumn->getPrintName()] = trim(Input::get('f_src_'. $destColumn->getPrintName()));
 }
 $srcNumArticles = $src->getNumArticles();
@@ -117,11 +117,11 @@ echo camp_html_breadcrumbs($crumbs);
 				<b><?php print $dest->getDisplayName(); ?></b>
 			</td>
 		</tr>
-		<?php foreach ($dest->m_dbColumns as $destColumn) { ?>
+		<?php foreach ($dest->getUserDefinedColumns() as $destColumn) { ?>
 		<TR>
 			<TD align="center">
 				<SELECT CLASS="input_select" NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
-				<?php foreach ($src->m_dbColumns as $srcColumn) { ?>
+				<?php foreach ($src->getUserDefinedColumns() as $srcColumn) { ?>
 					<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 				<?php } ?>
 					<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getPrintName()] == 'NULL') { print "SELECTED"; } ?>><?php putGS("--None--"); ?></OPTION>

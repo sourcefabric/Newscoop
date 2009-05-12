@@ -596,10 +596,11 @@ class DatabaseObject {
 		if ($p_commit && !$this->keyValuesExist()) {
 			return false;
 		}
+		$isKeyColumn = in_array($p_dbColumnName, $this->m_keyColumnNames);
 		// Special case if we are modifying a key value -
 		// we need to remember the old key value if we are going to commit
 		// later on.
-		if (!$p_commit && in_array($p_dbColumnName, $this->m_keyColumnNames)) {
+		if (!$p_commit && $isKeyColumn) {
 			// Remember the old value so we can tell the database which row
 			// we are changing.
 			if (!isset($this->m_oldKeyValues[$p_dbColumnName])) {
@@ -611,7 +612,7 @@ class DatabaseObject {
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
-				$value = "'".mysql_real_escape_string($p_value)."'";
+				$value = "'".$g_ado_db->escape($p_value)."'";
 			}
 			$queryStr = 'UPDATE '.$this->m_dbTableName
 						.' SET `'. $p_dbColumnName.'`='.$value
@@ -621,6 +622,11 @@ class DatabaseObject {
 			$success = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
 			if ($result !== false) {
 				$this->m_exists = true;
+				if ($isKeyColumn && DatabaseObject::GetUseCache()) {
+					$cacheKey = $this->getCacheKey();
+					$cacheObj = CampCache::singleton();
+					$cacheObj->delete($cacheKey);
+				}
 			}
 		}
 		// Store the value locally.

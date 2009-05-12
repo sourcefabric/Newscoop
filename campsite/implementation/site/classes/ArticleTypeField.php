@@ -6,51 +6,42 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+require_once(dirname(__FILE__).'/Log.php');
+require_once(dirname(__FILE__).'/Topic.php');
 
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/Topic.php');
 
 /**
  * @package Campsite
  */
-class ArticleTypeField {
-	var $m_dbTableName;
-	var $m_articleTypeName;
-	var $m_dbColumnName;
-	var $m_fieldName;
-	var $Field;
-	var $Type;
-	var $Null;
-	var $Key;
-	var $Default;
-	var $Extra;
-	var $m_metadata;
+class ArticleTypeField extends DatabaseObject {
+	const TYPE_TEXT = 'text';
+	const TYPE_BODY = 'body';
+	const TYPE_DATE = 'date';
+	const TYPE_TOPIC = 'topic';
 
-	public function ArticleTypeField($p_articleTypeName = null, $p_fieldName = null)
+    var $m_dbTableName = 'ArticleTypeMetadata';
+	var $m_keyColumnNames = array('type_name', 'field_name');
+    var $m_columnNames = array(
+        'type_name',
+        'field_name',
+        'field_weight',
+        'is_hidden',
+        'comments_enabled',
+        'fk_phrase_id',
+        'field_type',
+        'field_type_param',
+        'is_content_field');
+    private $m_rootTopicId = null;
+
+
+	public function __construct($p_articleTypeName = null, $p_fieldName = null)
 	{
-		$this->m_articleTypeName = $p_articleTypeName;
-
-		$this->m_dbTableName = "X".$p_articleTypeName;
-		$this->m_dbColumnName = "F".$p_fieldName;
-		$this->m_fieldName = $p_fieldName;
-		if (!is_null($this->m_articleTypeName) && !is_null($this->m_fieldName)) {
-			$this->fetch();
-			$this->m_metadata = $this->getMetadata();
-		}
+		$this->m_data['type_name'] = $p_articleTypeName;
+		$this->m_data['field_name'] = $p_fieldName;
+        if ($this->keyValuesExist()) {
+            $this->fetch();
+        }
 	} // constructor
-
-
-	/**
-	 * @return string
-	 */
-	public function getDbTableName()
-	{
-		return $this->m_dbTableName;
-	} // fn getDbTableName
 
 
 	/**
@@ -60,13 +51,12 @@ class ArticleTypeField {
 	 */
 	public function getArticleType()
 	{
-		return substr($this->m_dbTableName, 1);
+		return $this->m_data['type_name'];
 	} // fn getArticleType
 
 
 	/**
-	 * Rename the article type.  This will move the entire table in the database and update ArticleTypeMetadata.
-	 * Usually, one wants to just rename the Display Name, which is done via SetDisplayName
+	 * Rename the article type field.
 	 *
 	 * @param string p_newName
 	 *
@@ -74,41 +64,23 @@ class ArticleTypeField {
 	public function rename($p_newName)
 	{
 		global $g_ado_db;
-		if (!ArticleType::isValidFieldName($p_newName)) return 0;
-		// TODO: This sql sequence could be cleaned up for efficiency.  Renaming columns is tricky in mysql. pjh 2006/March
-		$queryStr = "SHOW COLUMNS FROM ". $this->m_dbTableName;
-		$success = 0;
-		$res = $g_ado_db->getAll($queryStr);
-		if (empty($res))
-			return;
-
-		$queryStr = 0;
-
-	    if (count($res) > 0) {
-	    	foreach ($res as $row) {
-	    		if ($row['Field'] == $this->m_dbColumnName) {
-					$queryStr = "ALTER TABLE ". $this->m_dbTableName ." CHANGE COLUMN ". $this->m_dbColumnName ." F". $p_newName ." ". $row['Type'];
-					break;
-	    		}
-	    	}
+		if (!$this->exists() || !ArticleType::isValidFieldName($p_newName)) {
+			return 0;
 		}
-		if ($queryStr) {
-			$success = $g_ado_db->Execute($queryStr);
-		}
+
+		$types = self::DatabaseTypes();
+		$queryStr = "ALTER TABLE `X". $this->m_data['type_name']
+		."` CHANGE COLUMN `". $this->getName() ."` `F$p_newName` "
+		. $types[$this->getType()];
+		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET field_name='". $p_newName ."' WHERE field_name='". $this->m_fieldName ."' AND type_name='". $this->m_articleTypeName ."'";
-			$success2 = $g_ado_db->Execute($queryStr);
-		}
-
-
-		if ($success2) {
+			$this->setProperty('field_name', $p_newName);
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logText = getGS('The article type field $1 has been renamed to $2.', $this->m_fieldName, $p_newName);
-    		$this->m_dbColumnName = 'F'. $p_newName;
-			$this->m_fieldName = $p_newName;
+			$logText = getGS('The article type field $1 has been renamed to $2.',
+			$this->m_data['field_name'], $p_newName);
 			Log::Message($logText, null, 62);
 		}
 	} // fn rename
@@ -123,46 +95,41 @@ class ArticleTypeField {
 	{
 		global $g_ado_db;
 
-		$isContent = 0;
-		$p_type = strtolower($p_type);
-		$queryStr = "ALTER TABLE ".$this->m_dbTableName." ADD COLUMN ".$this->m_dbColumnName;
-		switch ($p_type) {
-			case 'text':
-			    $queryStr .= " VARCHAR(255) NOT NULL";
-			    break;
-			case 'date':
-		    	$queryStr .= " DATE NOT NULL";
-		    	break;
-			case 'body':
-                $isContent = (int)$p_isContent;
-			    $queryStr .= " MEDIUMBLOB NOT NULL";
-		    	break;
-			case 'topic':
-				$queryStr .= " INTEGER UNSIGNED NOT NULL";
-				$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
-							."VALUES ('".$this->m_articleTypeName."', '".$this->m_fieldName."', '"
-							.$p_rootTopicId ."')";
-				if (!$g_ado_db->Execute($queryStr2)) {
-					return false;
-				}
-				break;
-		    default:
-		    	return false;
+        $p_type = strtolower($p_type);
+        $types = self::DatabaseTypes();
+		if ($this->getPrintName() != 'NULL' && !array_key_exists($p_type, $types)) {
+			return false;
 		}
-		$success = $g_ado_db->Execute($queryStr);
-		if ($success) {
-			$success = 0;
-			$weight = $this->getNextOrder();
-			$queryStr = "INSERT INTO ArticleTypeMetadata (type_name, field_name, field_type, field_weight, is_content_field) VALUES ('". $this->m_articleTypeName ."','". $this->m_fieldName ."', '". $p_type ."', $weight, '$isContent')";
+
+        $p_rootTopicId = (int)$p_rootTopicId;
+		if ($p_type == self::TYPE_TOPIC && $this->getPrintName() != 'NULL') {
+			$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
+			. "VALUES ('".$g_ado_db->escape($this->m_data['type_name']) . "', '"
+			. $g_ado_db->escape($this->m_data['field_name']) . "', '$p_rootTopicId')";
+			if (!$g_ado_db->Execute($queryStr2)) {
+				return false;
+			}
+		}
+
+		if ($this->getPrintName() != 'NULL') {
+			$queryStr = "ALTER TABLE `X" . $this->m_data['type_name'] . "` ADD COLUMN `"
+			. $this->getName() . '` ' . $types[$p_type];
 			$success = $g_ado_db->Execute($queryStr);
 		}
+		if ($success || $this->getPrintName() == 'NULL') {
+			$data = array('is_content_field'=>((int)$p_isContent && $this->getPrintName() != 'NULL'));
+			if ($this->getPrintName() != 'NULL') {
+				$data['field_type'] = $p_type;
+				$data['field_weight'] = $this->getNextOrder();
+			}
+			$success = parent::create($data);
+		}
 
 		if ($success) {
-
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 created', $this->m_fieldName);
+			$logtext = getGS('Article type field $1 created', $this->m_data['field_name']);
 			Log::Message($logtext, null, 71);
 		}
 		return $success;
@@ -170,47 +137,84 @@ class ArticleTypeField {
 
 
 	/**
-     * Changes the type of the ATF.
+	 * Returns an array of types compatible with the current field type.
+	 * @return array
+	 */
+	public function getCompatibleTypes()
+	{
+		$type = $this->getType();
+		switch ($type) {
+			case self::TYPE_BODY:
+				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_BODY);
+			case self::TYPE_TEXT:
+				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_TEXT);
+			case self::TYPE_DATE:
+				return array(self::TYPE_DATE);
+			case self::TYPE_TOPIC:
+				return array(self::TYPE_TOPIC);
+		}
+		return false;
+	}
+
+
+	/**
+	 * Returns true if the given type can be converted to the current field type.
+	 * @param $p_type
+	 * @return boolean
+	 */
+	public function isConvertibleFrom($p_type)
+	{
+		return array_search($p_type, $this->getCompatibleTypes()) !== false;
+	}
+
+
+	/**
+     * Changes the type of the field
      *
      * @param string p_type (text|date|body|topic)
      */
 	public function setType($p_type, $p_rootTopicId)
 	{
 		global $g_ado_db;
+
 		$p_type = strtolower($p_type);
-		$queryStr = "ALTER TABLE ".$this->m_dbTableName." CHANGE ".$this->m_dbColumnName ." ". $this->m_dbColumnName;
-		switch ($p_type) {
-			case 'text':
-			    $queryStr .= " VARCHAR(255) NOT NULL";
-			    break;
-			case 'date':
-		    	$queryStr .= " DATE NOT NULL";
-		    	break;
-			case 'body':
-		    	$queryStr .= " MEDIUMBLOB NOT NULL";
-		    	break;
-			case 'topic':
-				$queryStr .= " INTEGER UNSIGNED NOT NULL";
-				$queryStr2 = "UPDATE TopicFields SET RootTopicId=". $p_rootTopicId ." WHERE ArticleType='". $this->m_articleTypeName ."' AND FieldName='". $this->m_fieldName ."'";
-				if (!$g_ado_db->Execute($queryStr2)) {
-				    return false;
-				}
-				break;
-		    default:
-		    	return false;
+        $types = self::DatabaseTypes();
+        if (!array_key_exists($p_type, $types)) {
+            return false;
+        }
+        if ($this->getType() == $p_type) {
+        	return true;
+        }
+
+        if ($this->getType() == self::TYPE_TOPIC) {
+        	$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '"
+        	. $g_ado_db->escape($this->m_data['type_name'])
+            ."' AND FieldName = '". $g_ado_db->escape($this->m_data['field_name']) ."'";
+            if (!$g_ado_db->Execute($queryStr)) {
+                return false;
+            }
+        }
+		if ($p_type == self::TYPE_TOPIC) {
+			$queryStr2 = "UPDATE TopicFields SET RootTopicId = " . (int)$p_rootTopicId
+			." WHERE ArticleType = '". $g_ado_db->escape($this->m_data['type_name'])
+			."' AND FieldName = '". $g_ado_db->escape($this->m_data['field_name']) ."'";
+			if (!$g_ado_db->Execute($queryStr2)) {
+				return false;
+			}
 		}
+        $queryStr = "ALTER TABLE `X" . $this->m_data['type_name'] . "` MODIFY `"
+        . $this->getName() . '` ' . $types[$p_type];
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$success = 0;
-			$queryStr = "UPDATE ArticleTypeMetadata SET field_type='". $p_type ."' WHERE type_name='". $this->m_articleTypeName ."' AND field_name='". $this->m_fieldName ."'";
-			$success = $g_ado_db->Execute($queryStr);
+			$success = $this->setProperty('field_type', $p_type);
+            $this->m_rootTopicId = null;
 		}
 
 		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 changed', $this->m_fieldName);
+			$logtext = getGS('Article type field $1 changed', $this->m_data['field_name']);
 			Log::Message($logtext, null, 71);
 		}
 		return $success;
@@ -218,92 +222,57 @@ class ArticleTypeField {
 
 
 	/**
-	 * @return boolean
+	 * Deletes the current article type field.
 	 */
-	public function exists()
-	{
-		global $g_ado_db;
-		$queryStr = "SHOW COLUMNS FROM ".$this->m_dbTableName." LIKE '".$this->m_dbColumnName."'";
-		$exists = $g_ado_db->GetOne($queryStr);
-		if ($exists) {
-			return true;
-		} else {
-			return false;
-		}
-	} // fn exists
-
-
-	/**
-	 * @return void
-	 */
-	public function fetch($p_recordSet = null)
-	{
-		global $g_ado_db;
-		if (!is_null($p_recordSet)) {
-			foreach ($p_recordSet as $key => $value) {
-				$this->$key = $value;
-			}
-		} else {
-			$queryStr = 'SHOW COLUMNS FROM '.$this->m_dbTableName
-						." LIKE '".$this->m_dbColumnName."'";
-			$row = $g_ado_db->GetAll($queryStr);
-			if (!is_null($row) && is_array($row) && sizeof($row) > 0 && !is_null($row[0])) {
-				$this->fetch($row[0]);
-			}
-		}
-		if (!empty($this->Field)) {
-    		$this->m_fieldName = substr($this->Field, 1);
-		}
-		$this->m_dbColumnName = 'F'.$this->m_fieldName;
-	} // fn fetch
-
-
-	/**
-	* Deletes an ATF
-	*/
 	public function delete()
 	{
 		global $g_ado_db;
+		
+		if (!$this->exists()) {
+			return false;
+		}
 
 		$orders = $this->getOrders();
-		$queryStr = "ALTER TABLE ".$this->m_dbTableName." DROP COLUMN ".$this->m_dbColumnName;
-		$success = $g_ado_db->Execute($queryStr);
 
-		if ($success) {
-			$success = 0;
-			$queryStr = "DELETE FROM ArticleTypeMetadata "
-			            ." WHERE type_name='". $this->m_articleTypeName ."'"
-			            ." AND field_name='". $this->m_fieldName ."'";
+        $translation = new Translation(null, $this->getPhraseId());
+        $translation->deletePhrase();
+
+        if ($this->getPrintName() != 'NULL') {
+			$queryStr = "ALTER TABLE `X" . $this->m_data['type_name']
+			. "` DROP COLUMN `" . $this->getName() . "`";
 			$success = $g_ado_db->Execute($queryStr);
+		}
+
+		if ($success || $this->getPrintName() == 'NULL') {
+            $myType = $this->getType();
+			if ($myType == self::TYPE_TOPIC) {
+                $queryStr = "DELETE FROM TopicFields WHERE ArticleType = '"
+                . $g_ado_db->escape($this->m_data['type_name']) . "' and FieldName = '"
+                . $g_ado_db->escape($this->m_data['field_name']) . "'";
+                $g_ado_db->Execute($queryStr);
+                $this->m_rootTopicId = null;
+            }
+			$success = parent::delete();
 		}
 
 		// reorder
 		if ($success) {
-
-    	    //$mypos = array_keys($orders, $this->m_fieldName);
             $newOrders = array();
             foreach ($orders as $k => $v) {
-                if ($v != $this->m_fieldName)
+                if ($v != $this->m_data['field_name'])
                     $newOrders[] = $v;
 
             }
             $newOrders = array_reverse($newOrders);
 			$this->setOrders($newOrders);
-		}
 
-		if ($success) {
-
-			$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '".$this->m_articleTypeName
-						."' and FieldName = '".substr($this->m_dbColumnName, 1)."'";
-			$g_ado_db->Execute($queryStr);
 			if (function_exists("camp_load_translation_strings")) {
 			    camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 deleted', $this->m_fieldName);
+			$logtext = getGS('Article type field $1 deleted', $this->m_data['field_name']);
 			Log::Message($logtext, null, 72);
-            return true;
 		}
-		return false;
+		return $success;
 	} // fn delete
 
 
@@ -312,7 +281,7 @@ class ArticleTypeField {
 	 */
 	public function getName()
 	{
-		return $this->Field;
+		return 'F'.$this->m_data['field_name'];
 	} // fn getName
 
 
@@ -321,7 +290,7 @@ class ArticleTypeField {
 	 */
 	public function getPrintName()
 	{
-		return substr($this->Field, 1);
+		return $this->m_data['field_name'];
 	} // fn getPrintName
 
 
@@ -330,18 +299,7 @@ class ArticleTypeField {
 	 */
 	public function getType()
 	{
-		global $g_ado_db;
-		$tmp = $this->Type;
-		if (stristr($this->Type, 'int') != '') {
-    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
-    					.$this->m_articleTypeName."' and FieldName = '"
-    					.substr($this->Field, 1)."'";
-    		$topicId = $g_ado_db->GetOne($queryStr);
-    		if ($topicId > 0) {
-				return 'topic';
-    		}
-		}
-		return strtolower($this->Type);
+		return $this->m_data['field_type'];
 	} // fn getType
 
 
@@ -351,26 +309,14 @@ class ArticleTypeField {
 	public function getTopicTypeRootElement()
 	{
 		global $g_ado_db;
-		$topicId = null;
-		if (stristr($this->Type, 'int') != '') {
+
+		if ($this->getType() == self::TYPE_TOPIC && is_null($this->m_rootTopicId)) {
     		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
-    					.$this->m_articleTypeName."' and FieldName = '"
-    					.substr($this->Field, 1)."'";
-    		$topicId = $g_ado_db->GetOne($queryStr);
+    		. $g_ado_db->escape($this->getArticleType()) . "' and FieldName = '"
+    		. $g_ado_db->escape($this->getPrintName()) . "'";
+    		$this->m_rootTopicId = $g_ado_db->GetOne($queryStr);
 		}
-		return $topicId;
-	}
-	
-	
-	public function getGenericType()
-	{
-		switch ($this->getType()) {
-			case 'topic':
-			case 'date':
-				return $this->getType();
-			default:
-				return 'string';
-		}
+		return $this->m_rootTopicId;
 	}
 
 
@@ -382,20 +328,14 @@ class ArticleTypeField {
 	{
 		global $g_ado_db;
 		switch ($this->getType()) {
-	    case 'mediumblob':
+	    case self::TYPE_BODY:
 	    	return getGS('Multi-line Text with WYSIWYG');
-	    case 'varchar(255)':
+	    case self::TYPE_TEXT:
 	    	return getGS('Single-line Text');
-	    case 'varbinary(255)':
-	    	return getGS('Single-line Text');
-	    case 'date':
+	    case self::TYPE_DATE:
 	    	return getGS('Date');
-	    case 'topic':
-    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
-    					.$this->m_articleTypeName."' and FieldName = '"
-    					.substr($this->Field, 1)."'";
-    		$topicId = $g_ado_db->GetOne($queryStr);
-   			$topic = new Topic($topicId);
+	    case self::TYPE_TOPIC:
+   			$topic = new Topic($this->getTopicTypeRootElement());
    			$translations = $topic->getTranslations();
    			if (array_key_exists($p_languageId, $translations)) {
    				return "Topic (".$translations[$p_languageId].")";
@@ -454,7 +394,7 @@ class ArticleTypeField {
 
 		$translations = $this->getTranslations();
 		if (!isset($translations[$lang])) {
-		    return substr($this->Field, 1);
+		    return $this->getPrintName();
 		}
 		return $translations[$lang];
 	} // fn getDisplayName
@@ -467,7 +407,7 @@ class ArticleTypeField {
 	 */
 	public function getStatus()
 	{
-		if ($this->m_metadata['is_hidden']) {
+		if ($this->m_data['is_hidden']) {
 		    return 'hidden';
 		} else {
 		    return 'shown';
@@ -480,18 +420,14 @@ class ArticleTypeField {
 	 */
 	public function setStatus($p_status)
 	{
-		global $g_ado_db;
 		if ($p_status == 'show') {
-		    $set = "is_hidden=0";
+			$hidden = 0;
+		} elseif ($p_status == 'hide') {
+			$hidden = 1;
+		} else {
+			return null;
 		}
-		if ($p_status == 'hide') {
-		    $set = "is_hidden=1";
-		}
-		$queryStr = "UPDATE ArticleTypeMetadata "
-		            ." SET $set "
-		            ." WHERE type_name='". $this->m_articleTypeName ."'"
-		            ." AND field_name='". $this->m_fieldName ."'";
-		$ret = $g_ado_db->Execute($queryStr);
+		return $this->setProperty('is_hidden', $hidden);
 	} // fn setStatus
 
 
@@ -501,12 +437,7 @@ class ArticleTypeField {
 	 * @return array
 	 */
 	public function getMetadata() {
-		global $g_ado_db;
-		$queryStr = "SELECT * FROM ArticleTypeMetadata "
-		            ." WHERE type_name='". $this->m_articleTypeName ."'"
-		            ." AND field_name='". $this->m_fieldName ."'";
-		$queryArray = $g_ado_db->GetRow($queryStr);
-		return $queryArray;
+		return $this->m_data;
 	} // fn getMetadata
 
 
@@ -515,14 +446,15 @@ class ArticleTypeField {
 	 */
 	public function getPhraseId()
 	{
-		if (isset($this->m_metadata['fk_phrase_id'])) {
-		    return $this->m_metadata['fk_phrase_id'];
+		if (isset($this->m_data['fk_phrase_id'])) {
+		    return $this->m_data['fk_phrase_id'];
 		}
 		return -1;
 	} // fn getPhraseId()
 
 
 	/**
+	 * Returns an array of translation strings for the field name.
 	 * @return array
 	 */
 	public function getTranslations()
@@ -535,20 +467,25 @@ class ArticleTypeField {
 		return $return;
 	} // fn getTransltions
 
-	
+
+	/**
+	 * Returns true if the current field is a content field.
+	 * @return boolean
+	 */
 	public function isContent() {
-	    return $this->m_metadata['is_content_field'];
+	    return $this->m_data['is_content_field'];
 	}
 	
 
 
-	public function setIsContent($p_isContent) {
-        global $g_ado_db;
-	    $queryStr = "UPDATE ArticleTypeMetadata "
-                    ." SET is_content_field = " . (int)$p_isContent
-                    ." WHERE type_name='". $this->m_articleTypeName ."'"
-                    ." AND field_name='". $this->m_fieldName ."'";
-        $ret = $g_ado_db->Execute($queryStr);
+	/**
+	 * Sets the content flag. Returns true on success, false otherwise.
+	 * @param $p_isContent
+	 * @return boolean
+	 */
+	public function setIsContent($p_isContent)
+	{
+		return $this->setProperty('is_content_field', (int)$p_isContent);
 	}
 
 
@@ -561,20 +498,14 @@ class ArticleTypeField {
 	 * @return 0 or phrase id (int)
 	 */
 	public function translationExists($p_languageId) {
-		global $g_ado_db;
-		$sql = "SELECT atm.*, t.* FROM ArticleTypeMetadata atm, Translations t WHERE atm.type_name='". $this->m_articleTypeName ."' AND atm.field_name='". $this->m_fieldName ."' AND atm.fk_phrase_id = t.phrase_id AND t.fk_language_id = '$p_languageId'";
-		$row = $g_ado_db->getAll($sql);
-		if (count($row)) {
-		    return $row[0]['fk_phrase_id'];
-		} else {
-		    return 0;
-		}
+		$translation = new Translation($p_languageId, $this->m_data['fk_phrase_id']);
+		return $translation->exists();
 	} // fn translationExists
 
 
 	/**
 	 * Set the type name for the given language.  A new entry in
-	 * the database will be created if the language does not exist.
+	 * the database will be created if the language did not exist.
 	 *
 	 * @param int $p_languageId
 	 * @param string $p_value
@@ -596,34 +527,15 @@ class ArticleTypeField {
 			} else {
 			    $changed = false;
 			}
-		} else if ($phrase_id = $this->translationExists($p_languageId)) {
-			// just update
-			$description = new Translation($p_languageId, $phrase_id);
-			$description->setText($p_value);
-			$changed = true;
 		} else {
-			// Insert the new translation.
-			// first get the fk_phrase_id
-			$sql = "SELECT fk_phrase_id FROM ArticleTypeMetadata"
-			       ." WHERE type_name='". $this->m_articleTypeName ."'"
-			       ." AND field_name='". $this->m_fieldName ."'";
-			$row = $g_ado_db->GetRow($sql);
-			// if this is the first translation ...
-			if (!is_numeric($row['fk_phrase_id'])) {
-				$description = new Translation($p_languageId);
-				$description->create($p_value);
-				$phrase_id = $description->getPhraseId();
-				// if the phrase_id isn't there, insert it.
-				$sql = "UPDATE ArticleTypeMetadata "
-				       ." SET fk_phrase_id=".$phrase_id
-				       ." WHERE type_name='". $this->m_articleTypeName ."'"
-				       ." AND field_name='". $this->m_fieldName ."'";
-				$changed = $g_ado_db->Execute($sql);
+			$description = new Translation($p_languageId, $this->getProperty('fk_phrase_id'));
+			if ($description->exists()) {
+                $changed = $description->setText($p_value);
 			} else {
-				// if the phrase is already translated into atleast one language, just reuse that fk_phrase_id
-				$desc = new Translation($p_languageId, $row['fk_phrase_id']);
-				$desc->create($p_value);
-				$changed = true;
+				$changed = $description->create($p_value);
+				if ($changed && is_null($this->getProperty('fk_phrase_id'))) {
+					$this->setProperty('fk_phrase_id', $description->getPhraseId());
+				}
 			}
 		}
 
@@ -631,7 +543,7 @@ class ArticleTypeField {
 			if (function_exists("camp_load_translation_strings")) {
 			    camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Field $1 updated', $this->m_dbColumnName);
+			$logtext = getGS('Field $1 updated', $this->m_data['field_name']);
 			Log::Message($logtext, null, 143);
 		}
 
@@ -647,20 +559,17 @@ class ArticleTypeField {
 	public function getNextOrder()
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT field_weight "
-		            ." FROM ArticleTypeMetadata "
-		            ." WHERE type_name='". $this->m_articleTypeName ."'"
-		            ." AND field_name != 'NULL' "
-		            ." ORDER BY field_weight DESC LIMIT 1";
-		$row = $g_ado_db->getRow($queryStr);
-		if (isset($row['field_weight'])) {
-			$next = $row['field_weight'] + 1;
+		$queryStr = "SELECT field_weight FROM `" . $this->m_dbTableName
+		. "` WHERE type_name = '" . $g_ado_db->escape($this->m_data['type_name']) . "'"
+		. " AND field_name != 'NULL' ORDER BY field_weight DESC";
+		$field_weight = $g_ado_db->GetOne($queryStr);
+		if (!is_null($field_weight)) {
+			$next = $field_weight + 1;
 	    } else {
-		    $next = 0;
+		    $next = 1;
 		}
-		return ($next);
+		return $next;
 	} // fn getNextOrder
-
 
 
 	/**
@@ -674,11 +583,10 @@ class ArticleTypeField {
 	public function getOrders()
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT field_weight, field_name "
-		            ." FROM ArticleTypeMetadata "
-		            ." WHERE type_name='". $this->m_articleTypeName ."'"
-		            ." AND field_name != 'NULL' "
-		            ." ORDER BY field_weight DESC";
+
+		$queryStr = "SELECT field_weight, field_name FROM `" . $this->m_dbTableName
+		. "` WHERE type_name = '" . $g_ado_db->escape($this->m_data['type_name'])
+		. "' AND field_name != 'NULL' ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$orderArray = array();
 		foreach ($queryArray as $row => $values) {
@@ -701,11 +609,10 @@ class ArticleTypeField {
 	{
 		global $g_ado_db;
 		foreach ($orderArray as $order => $field) {
-			$queryStr = "UPDATE ArticleTypeMetadata "
-			            ." SET field_weight=$order "
-			            ." WHERE type_name='". $this->m_articleTypeName ."'"
-			            ." AND field_name='". $field ."'";
-			$g_ado_db->Execute($queryStr);
+			$field = new ArticleTypeField($this->m_data['type_name'], $field);
+			if ($field->exists()) {
+				$field->setProperty('field_weight', $order);
+			}
 		}
 	} // fn setOrders
 
@@ -719,12 +626,21 @@ class ArticleTypeField {
 	{
 		$orders = $this->getOrders();
 
-		$tmp = array_keys($orders, $this->m_fieldName);
+		$tmp = array_keys($orders, $this->m_data['field_name']);
+		if (count($tmp) == 0) {
+			return;
+		}
 		$pos = $tmp[0];
-		if ($pos == 0 && $move == 'up') {
+
+		reset($orders);
+		list($max, $value) = each($orders);
+		end($orders);
+		list($min, $value) = each($orders);
+
+		if ($pos <= $min && $move == 'up') {
 		    return;
 		}
-		if ( ($pos == count($orders) - 1) && ($move == 'down')) {
+		if ($pos >= $max && $move == 'down') {
 		    return;
 		}
 		if ($move == 'down') {
@@ -756,32 +672,53 @@ class ArticleTypeField {
 	 * @return array
 	 */
 	public static function FetchFields($p_name = null, $p_articleType = null,
-	                                   $p_dataType = null)
+	$p_dataType = null, $p_negateName = false, $p_negateArticleType = false,
+	$p_negateDataType = false, $p_selectHidden = true)
 	{
 	    global $g_ado_db;
 
 	    if (isset($p_name)) {
-	        $whereClauses[] = "field_name = '" . $g_ado_db->escape($p_name) . "'";
+	    	$operator = $p_negateName ? '<>' : '=';
+	        $whereClauses[] = "field_name $operator '" . $g_ado_db->escape($p_name) . "'";
 	    }
 	    if (isset($p_articleType)) {
-	        $whereClauses[] = "type_name = '" . $g_ado_db->escape($p_articleType) . "'";
+            $operator = $p_negateArticleType ? '<>' : '=';
+	    	$whereClauses[] = "type_name $operator '" . $g_ado_db->escape($p_articleType) . "'";
 	    }
 	    if (isset($p_dataType)) {
-	        $whereClauses[] = "field_type = '" . $g_ado_db->escape($p_dataType) . "'";
+            $operator = $p_negateDataType ? '<>' : '=';
+	    	$whereClauses[] = "field_type $operator '" . $g_ado_db->escape($p_dataType) . "'";
 	    }
-	    if (count($whereClauses) > 0) {
-	    	$whereString = 'WHERE ' . implode(' and ', $whereClauses);
+	    if (!$p_selectHidden) {
+	    	$whereClauses[] = 'is_hidden = false';
 	    }
-	    $query = "SELECT * FROM ArticleTypeMetadata $whereString"
-	             . ' ORDER BY type_name ASC, field_name ASC';
+	    $query = "SELECT * FROM `ArticleTypeMetadata` WHERE "
+	    . implode(' and ', $whereClauses) . ' ORDER BY type_name ASC, field_weight ASC';
 	    $rows = $g_ado_db->GetAll($query);
 	    $fields = array();
 	    foreach ($rows as $row) {
-	        $fields[] = new ArticleTypeField($row['type_name'], $row['field_name']);
+	    	$field = new ArticleTypeField($row['type_name'], $row['field_name']);
+	    	if ($field->getPrintName() == '') {
+	    		$field->delete();
+	    		continue;
+	    	}
+	        $fields[] = $field;
 	    }
 	    return $fields;
 	}
 
+
+	/**
+	 * Returns an array of valid field data types.
+	 * @return array
+	 */
+	public static function DatabaseTypes()
+	{
+        return array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
+        self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
+        self::TYPE_DATE=>'DATE NOT NULL',
+        self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL');
+	}
 } // class ArticleTypeField
 
 ?>
