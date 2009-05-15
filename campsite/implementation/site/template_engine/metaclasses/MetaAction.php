@@ -5,6 +5,8 @@ define('ACTION_OK', 0);
 
 class MetaAction
 {
+	const CACHE_KEY_LIST_OF_ACTIONS = 'template_engine_available_actions';
+
     /**
      * True if an action was set up; this member is set to false by the
      * base class. The specialized class must set it to true.
@@ -125,10 +127,14 @@ class MetaAction
             return MetaAction::$m_availableActions;
         }
 
+        if (self::FetchActionsFromCache()) {
+        	return self::$m_availableActions;
+        }
+
         require_once('File/Find.php');
 
         $actions = array();
-        
+
         $basePaths = array('.');
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $basePaths[] = $CampPlugin->getBasePath();  
@@ -137,13 +143,13 @@ class MetaAction
             $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/'.$basePath.'/template_engine/metaclasses';
             $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
             $directoryPath, 'perl', false);
-    
+
             foreach ($actionIncludeFiles as $includeFile) {
                 if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
                 || strtolower($matches[1]) == 'request') {
                     continue;
                 }
-    
+
                 require_once($includeFile);
                 $actionName = $matches[1];
                 if (class_exists('MetaAction'.$actionName)) {
@@ -152,8 +158,40 @@ class MetaAction
                 }
             }
         }    
-        MetaAction::$m_availableActions = $actions;
-        return MetaAction::$m_availableActions;
+        self::$m_availableActions = $actions;
+        self::StoreActionsInCache();
+        return self::$m_availableActions;
+    }
+
+
+    private static function FetchActionsFromCache()
+    {
+    	if (CampCache::IsEnabled()) {
+            $actions = CampCache::singleton()->fetch(self::CACHE_KEY_LIST_OF_ACTIONS);
+            if ($actions !== false && is_array($actions)) {
+                self::$m_availableActions = $actions;
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private static function StoreActionsInCache()
+    {
+    	if (CampCache::IsEnabled()) {
+            return CampCache::singleton()->add(self::CACHE_KEY_LIST_OF_ACTIONS, self::$m_availableActions);
+        }
+        return false;
+    }
+
+
+    public static function DeleteActionsFromCache()
+    {
+        if (CampCache::IsEnabled()) {
+        	return CampCache::singleton()->delete(self::CACHE_KEY_LIST_OF_ACTIONS);
+        }
+        return false;
     }
 
 

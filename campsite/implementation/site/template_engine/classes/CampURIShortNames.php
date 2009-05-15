@@ -215,8 +215,8 @@ class CampURIShortNames extends CampURI
     {
         $this->setQueryVar('acid', null);
 
-        $this->m_publication = new MetaPublication();
-        $this->m_language = new MetaLanguage();
+        $this->m_publication = null;
+        $this->m_language = null;
         $this->m_issue = new MetaIssue();
         $this->m_section = new MetaSection();
         $this->m_article = new MetaArticle();
@@ -227,7 +227,7 @@ class CampURIShortNames extends CampURI
         if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
             $this->m_publication = new MetaPublication($aliasArray[0]->getPublicationId());
         }
-        if (!$this->m_publication->defined()) {
+        if (is_null($this->m_publication) || !$this->m_publication->defined()) {
             CampTemplate::singleton()->trigger_error("Invalid site alias '$alias' in URL.");
             return;
         }
@@ -257,8 +257,7 @@ class CampURIShortNames extends CampURI
         } else {
             $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
         }
-
-        if (!$this->m_language->defined()) {
+        if (is_null($this->m_language) || !$this->m_language->defined()) {
             CampTemplate::singleton()->trigger_error("Invalid language code '$cLangCode' in URL.");
             return;
         }

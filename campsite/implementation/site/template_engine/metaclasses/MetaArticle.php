@@ -64,7 +64,7 @@ final class MetaArticle extends MetaDbObject {
 	        }
     	} else {
     		$this->m_dbObject = new Article();
-    		$this->m_articleData = new ArticleData();
+    		$this->m_articleData = new ArticleData(null, null, null);
     	}
         $this->InitProperties();
         $this->m_customProperties['year'] = 'getCreationYear';

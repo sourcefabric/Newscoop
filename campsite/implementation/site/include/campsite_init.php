@@ -10,15 +10,15 @@
  */
 
 // redirects to the installation process if necessary
-if (!file_exists($g_documentRoot.'/conf/configuration.php')
-        || !file_exists($g_documentRoot.'/conf/database_conf.php')) {
+if (!file_exists($g_campsiteDir.'/conf/configuration.php')
+        || !file_exists($g_campsiteDir.'/conf/database_conf.php')) {
     header('Location: /install/index.php');
+    exit;
 }
 
-require_once($g_documentRoot.'/include/campsite_constants.php');
-require_once($g_documentRoot.'/conf/configuration.php');
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/template_engine/classes/CampSite.php');
-require_once($g_documentRoot.'/admin-files/lib_campsite.php');
+require_once($g_campsiteDir.'/conf/configuration.php');
+require_once($g_campsiteDir.'/db_connect.php');
+require_once($g_campsiteDir.'/template_engine/classes/CampSite.php');
+require_once($g_campsiteDir.'/admin-files/lib_campsite.php');
 
 ?>

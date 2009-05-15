@@ -3,9 +3,13 @@
  * @package Campsite
  */
 
-require_once(dirname(dirname(__FILE__)).'/conf/install_conf.php');
-require_once(dirname(__FILE__).'/cache/CacheEngine.php');
-require_once(dirname(__FILE__).'/SystemPref.php');
+if (!isset($g_campsiteDir)) {
+    $g_campsiteDir = dirname(dirname(__FILE__));
+}
+
+require_once($g_campsiteDir.'/conf/install_conf.php');
+require_once($g_campsiteDir.'/classes/cache/CacheEngine.php');
+require_once($g_campsiteDir.'/classes/SystemPref.php');
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");
@@ -51,6 +55,10 @@ final class CampCache
     private function __construct($p_cacheEngine)
     {
         global $Campsite;
+        
+        if (empty($p_cacheEngine)) {
+        	return;
+        }
 
         $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
 
@@ -115,6 +123,9 @@ final class CampCache
      */
     public function fetch($p_key)
     {
+    	if (is_null($this->m_cacheEngine)) {
+    		return false;
+    	}
         $serial = $this->m_cacheEngine->fetchValue($this->genKey($p_key));
 
         return $this->unserialize($serial);
@@ -136,6 +147,9 @@ final class CampCache
      */
     public function store($p_key, $p_data, $p_ttl = 0)
     {
+    	if (is_null($this->m_cacheEngine)) {
+    		return false;
+    	}
         $p_data = $this->serialize($p_data);
 
         return $this->m_cacheEngine->storeValue($this->genKey($p_key), $p_data, $p_ttl);
@@ -153,7 +167,13 @@ final class CampCache
      */
     public function delete($p_key)
     {
-        return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
+        if (is_null($this->m_cacheEngine)) {
+            return false;
+        }
+        if ($p_key == SystemPref::CACHE_KEY_SYSTEM_PREF) {
+        	CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE);
+        }
+    	return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
 
 
@@ -169,6 +189,10 @@ final class CampCache
      */
     public function clear($p_type = null)
     {
+        if (is_null($this->m_cacheEngine)) {
+            return false;
+        }
+        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE);
     	if ($p_type == 'user') {
             return $this->m_cacheEngine->clearValues();
     	} else {
@@ -190,6 +214,9 @@ final class CampCache
      */
     public function info($p_type = null)
     {
+        if (is_null($this->m_cacheEngine)) {
+            return false;
+        }
     	$type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
     	return $this->m_cacheEngine->getInfo($type);
     } // fn info
@@ -204,6 +231,9 @@ final class CampCache
      */
     public function meminfo()
     {
+        if (is_null($this->m_cacheEngine)) {
+            return false;
+        }
     	return $this->m_cacheEngine->getMemInfo();
     } // fn meminfo
 
@@ -268,11 +298,13 @@ final class CampCache
      */
     public static function IsEnabled($p_cacheEngine = null)
     {
-    	if (is_null($p_cacheEngine)) {
-    		$p_cacheEngine = SystemPref::Get('CacheEngine');
+    	if (empty($p_cacheEngine)) {
+    		$cacheEngine = self::singleton();
+    	} else {
+    		$cacheEngine = new CampCache($p_cacheEngine);
     	}
-    	$cacheEngine = new CampCache($p_cacheEngine);
-    	return $cacheEngine->m_cacheEngine->isSupported();
+    	return !is_null($cacheEngine->m_cacheEngine)
+    	&& $cacheEngine->m_cacheEngine->isSupported();
     } // fn IsEnabled
 
 } // class CampCache

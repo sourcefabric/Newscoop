@@ -85,7 +85,6 @@ final class CampRequest
     public static function GetVar($p_varName, $p_defaultValue = null,
                                   $p_reqMethod = 'default', $p_dataType = null)
     {
-        CampRequest::TranslateMethod($p_reqMethod);
         CampRequest::InitInput($p_reqMethod);
 
         if (isset(CampRequest::$m_input[$p_reqMethod][$p_varName])
@@ -172,7 +171,7 @@ final class CampRequest
      *
      * @param string $p_reqMethod
      */
-    private static function InitInput($p_reqMethod) {
+    private static function InitInput(&$p_reqMethod) {
         CampRequest::TranslateMethod($p_reqMethod);
         switch($p_reqMethod) {
         case 'GET':

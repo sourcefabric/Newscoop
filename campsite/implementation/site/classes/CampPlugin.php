@@ -15,7 +15,10 @@
  */
 
 
-class CampPlugin extends DatabaseObject {
+class CampPlugin extends DatabaseObject
+{
+	const CACHE_KEY_PLUGINS_LIST = 'campsite_plugins_list';
+
     public $m_keyColumnNames = array('Name');
 
     public $m_dbTableName = 'Plugins';
@@ -24,7 +27,7 @@ class CampPlugin extends DatabaseObject {
 
     static private $m_allPlugins = null;
 
-    static protected $m_pluginInfos = null;
+    static protected $m_pluginsInfo = null;
 
     public function CampPlugin($p_name = null, $p_version = null)
     {
@@ -127,8 +130,10 @@ class CampPlugin extends DatabaseObject {
         if (function_exists($info['install'])) {
             call_user_func($info['install']);
         }
+        MetaAction::DeleteActionsFromCache();
+        self::ClearPluginsInfo();
     }
-    
+
     public function enable()
     {
         $this->setProperty('Enabled', 1);
@@ -137,6 +142,8 @@ class CampPlugin extends DatabaseObject {
         if (function_exists($info['enable'])) {
             call_user_func($info['enable']);
         }
+        MetaAction::DeleteActionsFromCache();
+        self::ClearPluginsInfo();
     }
 
     public function disable()
@@ -147,8 +154,10 @@ class CampPlugin extends DatabaseObject {
         if (function_exists($info['disable'])) {
             call_user_func($info['disable']);
         }
+        MetaAction::DeleteActionsFromCache();
+        self::ClearPluginsInfo();
     }
-    
+
     public function uninstall()
     {
         $info = $this->getPluginInfo();
@@ -156,14 +165,19 @@ class CampPlugin extends DatabaseObject {
             call_user_func($info['uninstall']);
         }
         
-        self::ClearPluginInfos();        
+        self::ClearPluginsInfo();        
         $this->delete();   
+        MetaAction::DeleteActionsFromCache();
+        self::ClearPluginsInfo();
     }
 
-    static public function GetPluginInfos()
+    static public function GetPluginsInfo()
     {          
-        if (!is_array(self::$m_pluginInfos)) {
-            self::$m_pluginInfos = array();
+        if (!is_array(self::$m_pluginsInfo)) {
+        	if (self::FetchCachePluginsInfo()) {
+        		return self::$m_pluginsInfo;
+        	}
+            self::$m_pluginsInfo = array();
 
             if (!is_dir(CS_PATH_PLUGINS)) {
                 continue;
@@ -174,19 +188,50 @@ class CampPlugin extends DatabaseObject {
                 if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)) {
                     if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
                         include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
-                        self::$m_pluginInfos[$entry] = $info;
+                        self::$m_pluginsInfo[$entry] = $info;
                     }
                 }
             }
             closedir($handle);
+
+            self::StoreCachePluginsInfo();
         }
 
-        return self::$m_pluginInfos;
+        return self::$m_pluginsInfo;
+    }
+
+    private static function FetchCachePluginsInfo()
+    {
+    	if (CampCache::IsEnabled()) {
+    		$pluginsInfo = CampCache::singleton()->fetch(self::CACHE_KEY_PLUGINS_LIST);
+    		if ($pluginsInfo !== false && is_array($pluginsInfo)) {
+    			self::$m_pluginsInfo = $pluginsInfo;
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
-    static public function ClearPluginInfos()
+    private static function StoreCachePluginsInfo()
     {
-        self::$m_pluginInfos = null;
+    	if (CampCache::IsEnabled()) {
+        	return CampCache::singleton()->add(self::CACHE_KEY_PLUGINS_LIST, self::$m_pluginsInfo);
+        }
+        return false;
+    }
+    
+    private static function DeleteCachePluginsInfo()
+    {
+        if (CampCache::IsEnabled()) {
+        	return CampCache::singleton()->delete(self::CACHE_KEY_PLUGINS_LIST);
+        }
+        return false;
+    }
+
+    public static function ClearPluginsInfo()
+    {
+    	self::DeleteCachePluginsInfo();
+        self::$m_pluginsInfo = null;
     }
 
     public function getPluginInfo($p_plugin_name = '')
@@ -199,7 +244,7 @@ class CampPlugin extends DatabaseObject {
             return false;
         }
 
-        $infos = self::GetPluginInfos();
+        $infos = self::GetPluginsInfo();
         $info = $infos[$name];
 
         return $info;
@@ -207,7 +252,7 @@ class CampPlugin extends DatabaseObject {
 
     static public function ExtendNoMenuScripts(&$p_no_menu_scripts)
     {
-        foreach (self::GetPluginInfos() as $info) {
+        foreach (self::GetPluginsInfo() as $info) {
             if (is_array($info['no_menu_scripts']) && CampPlugin::IsPluginEnabled($info['name'])) {
                 $p_no_menu_scripts = array_merge($p_no_menu_scripts, $info['no_menu_scripts']);
             }
@@ -220,7 +265,7 @@ class CampPlugin extends DatabaseObject {
         global $g_user;
         
         $root_menu = false;
-        $plugin_infos = self::GetPluginInfos();
+        $plugin_infos = self::GetPluginsInfo();
         
         if ($g_user->hasPermission('plugin_manager')) {
             $root_menu = true;   

@@ -133,4 +133,68 @@ class SyntaxError {
 
 }
 
+
+function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
+                              $p_errorLine = null, $p_errorContext = null)
+{
+    global $g_errorList;
+
+    if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) == 0) {
+        $errorString = substr($p_errorString, strlen("Campsite error:"));
+    } elseif(strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) == 0) {
+        $errorString = substr($p_errorString, strlen("Smarty error:"));
+    } else {
+        return;
+    }
+
+    $what = null;
+
+    if (preg_match('/unrecognized tag:?\s*\'?([^\(]*)\'?\s*\(/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_UNRECOGNIZED_TAG;
+        $what = array($matches[1]);
+    } elseif (preg_match('/(\$.+)\s+is\s+an\s+unknown\s+reference/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_UNKNOWN_REFERENCE;
+        $what = array($matches[1]);
+    } elseif (preg_match('/invalid\s+property\s+(.+)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_PROPERTY;
+        $what = array($matches[1], $matches[2]);
+    } elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+property\s+(.*)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_PROPERTY_VALUE;
+        $what = array($matches[1], $matches[2], $matches[3]);
+    } elseif (preg_match('/invalid\s+parameter\s+(.+)\s+in\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_PARAMETER;
+        $what = array($matches[1], $matches[2]);
+    } elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_PARAMETER_VALUE;
+        $what = array($matches[1], $matches[2], $matches[3]);
+    } elseif (preg_match('/missing\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_MISSING_PARAMETER;
+        $what = array($matches[1], $matches[2]);
+    } elseif (preg_match('/invalid\s+operator\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_OPERATOR;
+        $what = array($matches[1], $matches[2], $matches[3]);
+    } elseif (preg_match('/invalid\s+attribute\s+(.+)\s+in\s+statement\s+(.*),\s+(.*)\s+parameter/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_ATTRIBUTE;
+        $what = array($matches[1], $matches[2], $matches[3]);
+    } elseif (preg_match('/invalid\s+template\s+(.*)\s+specified\s+in\s+the\s+(.*)\s+form/', $errorString, $matches)) {
+        $errorCode = SYNTAX_ERROR_INVALID_TEMPLATE;
+        $what = array($matches[1], $matches[2]);
+    } else {
+        $errorCode = SYNTAX_ERROR_UNKNOWN;
+        $what = array($errorString);
+    }
+
+    if (preg_match('/\[in\s+([\d\w]*\.tpl)*\s+line\s+([\d]+)\s*\]/', $errorString, $matches)) {
+        $errorFile = $matches[1];
+        $errorLine = $matches[2];
+    } else {
+        $errorFile = null;
+        $errorLine = null;
+    }
+
+    $error = new SyntaxError(SyntaxError::ConstructParameters($errorCode, $errorFile,
+                             $errorLine, $what));
+    $g_errorList[] = $error;
+}
+
 ?>

@@ -102,7 +102,7 @@ $mapPrefixToDir["plugin_interview"] = "/plugins/interview/admin-files/interview/
 $mapPrefixToDir["plugin_poll"] = "/plugins/poll/admin-files/poll";
 $mapPrefixToDir["tiny_media_plugin"] = "/javascript/tinymce/plugins/campsitemedia";
 
-foreach (CampPlugin::GetPluginInfos() as $info) {
+foreach (CampPlugin::GetPluginsInfo() as $info) {
     if (CampPlugin::IsPluginEnabled($info['name'])) {
         if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
             $mapPrefixToDir[$info['localizer']['id']] = $info['localizer']['path'];

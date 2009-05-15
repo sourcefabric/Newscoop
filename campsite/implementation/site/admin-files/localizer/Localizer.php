@@ -14,7 +14,6 @@ require_once('File/Find.php');
 require_once('LocalizerConfig.php');
 require_once('LocalizerLanguage.php');
 require_once('LanguageMetadata.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/SyntaxError.php');
 
 
 function isGS($p_translateString)

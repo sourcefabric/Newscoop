@@ -568,7 +568,7 @@ class CampInstallationBase
         require_once($g_documentRoot.'/include/campsite_constants.php');
         require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
                 
-        foreach (CampPlugin::GetPluginInfos() as $info) {
+        foreach (CampPlugin::GetPluginsInfo() as $info) {
             $CampPlugin = new CampPlugin($info['name']);
             $CampPlugin->create($info['name'], $info['version']);
             $CampPlugin->install();

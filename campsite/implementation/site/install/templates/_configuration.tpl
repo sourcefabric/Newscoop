@@ -11,20 +11,13 @@
 
 global $Campsite;
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+$g_campsiteDir = dirname(dirname(__FILE__));
+
+require_once($g_campsiteDir.'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+require_once($g_campsiteDir.'/classes/SystemPref.php');
 
 
 /** System settings **/
@@ -74,8 +67,8 @@ $Campsite['smtp']['default_port'] = 25;
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
-require_once($g_documentRoot.'/conf/database_conf.php');
-require_once($g_documentRoot.'/conf/install_conf.php');
+require_once($g_campsiteDir.'/conf/database_conf.php');
+require_once($g_campsiteDir.'/conf/install_conf.php');
 
 
 /**
@@ -86,8 +79,8 @@ require_once($g_documentRoot.'/conf/install_conf.php');
  */
 function __autoload($p_className)
 {
-    global $g_documentRoot, $ADMIN, $ADMIN_DIR;
-    require_once($g_documentRoot.'/classes/CampPlugin.php');
+    global $g_campsiteDir, $ADMIN, $ADMIN_DIR;
+    require_once($g_campsiteDir.'/classes/CampPlugin.php');
 
     if (!is_string($p_className)) {
         return;
@@ -99,7 +92,7 @@ function __autoload($p_className)
                               'template_engine/metaclasses');
                       
     foreach ($classDirectories as $dirName) {
-        $fileName = "$g_documentRoot/$dirName/$p_className.php";
+        $fileName = "$g_campsiteDir/$dirName/$p_className.php";
         if (file_exists($fileName)) {
             require_once($fileName);
             return;
@@ -112,7 +105,7 @@ function __autoload($p_className)
     }
     foreach ($basePaths as $basePath) {                       
         foreach ($classDirectories as $dirName) {
-            $fileName = "$g_documentRoot/$basePath/$dirName/$p_className.php";
+            $fileName = "$g_campsiteDir/$basePath/$dirName/$p_className.php";
             if (file_exists($fileName)) {
                 require_once($fileName);
                 return;

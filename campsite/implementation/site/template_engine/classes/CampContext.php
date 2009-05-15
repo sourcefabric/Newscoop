@@ -121,7 +121,7 @@ final class CampContext
         }
         
         // register plugin objects and listobjects
-        foreach (CampPlugin::GetPluginInfos() as $info) {
+        foreach (CampPlugin::GetPluginsInfo() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
                 
                 if (is_array($info['template_engine']['objecttypes'])) {
@@ -201,7 +201,7 @@ final class CampContext
         $this->m_readonlyProperties['default_comment'] = $this->comment;
         
         // initialize plugins
-        foreach (CampPlugin::GetPluginInfos() as $info) {
+        foreach (CampPlugin::GetPluginsInfo() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name']) && function_exists($info['template_engine']['init'])) {
                 call_user_func($info['template_engine']['init'], $this);
             }

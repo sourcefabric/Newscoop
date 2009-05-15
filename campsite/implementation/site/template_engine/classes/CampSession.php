@@ -60,8 +60,7 @@ final class CampSession
     /**
      * Builds an instance object of this class only if there is no one.
      *
-     * @return object
-     *    A CampSession instance
+     * @return CampSession
      */
     public static function singleton()
     {
