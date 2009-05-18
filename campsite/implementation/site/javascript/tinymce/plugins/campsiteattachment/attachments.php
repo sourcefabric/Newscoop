@@ -23,15 +23,17 @@ function drawFiles($list, &$manager)
 {
     global $languageSelected;
 
+    $counter = 0;
     foreach($list as $entry => $file)
     {
+        $counter++;
         $languageId = ($file['attachment']->getLanguageId()) ? $file['attachment']->getLanguageId() : $languageSelected;
 	$downloadURL = '/attachment/' . basename($file['attachment']->getStorageLocation()) . '?g_download=1';
 ?>
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="block" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>'">
+        <td class="block" id="block_<?php echo $counter; ?>" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>', '<?php echo $counter; ?>');">
           <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
        <?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>
         </td>

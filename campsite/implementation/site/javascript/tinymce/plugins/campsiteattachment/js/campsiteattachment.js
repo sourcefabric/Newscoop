@@ -35,7 +35,7 @@ var CampsiteAttachmentDialog = {
 	tinyMCEPopup.close();
     },
 
-    select : function(p_attachment_id, p_filename, p_description) {
+    select : function(p_attachment_id, p_filename, p_description, p_selected) {
 	var topDoc = window.top.document;
 
 	var obj = topDoc.getElementById('f_attachment_id');
@@ -46,6 +46,16 @@ var CampsiteAttachmentDialog = {
 
 	var obj = topDoc.getElementById('f_description');
 	obj.value = p_description;
+
+	var allPageTags = new Array();
+	allPageTags = document.getElementsByTagName('*');
+	for (i = 0; i < allPageTags.length; i++) {
+	    if (allPageTags[i].className == 'block') {
+		allPageTags[i].style.backgroundColor='';
+	    }
+	}
+
+	document.getElementById('block_'+p_selected).style.backgroundColor='#FFC';
     },
 
     close : function() {
