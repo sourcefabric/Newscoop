@@ -9,7 +9,7 @@
  * @link http://www.campware.org
  */
 
-global $Campsite;
+global $Campsite, $g_campsiteDir;
 
 $g_campsiteDir = dirname(dirname(__FILE__));
 

@@ -9,6 +9,10 @@
  * @link http://www.campware.org
  */
 
+if (!isset($g_campsiteDir)) {
+    $g_campsiteDir = dirname(dirname(__FILE__));
+} 
+
 // redirects to the installation process if necessary
 if (!file_exists($g_campsiteDir.'/conf/configuration.php')
         || !file_exists($g_campsiteDir.'/conf/database_conf.php')) {
