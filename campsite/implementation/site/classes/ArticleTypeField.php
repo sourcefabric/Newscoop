@@ -468,6 +468,16 @@ class ArticleTypeField extends DatabaseObject {
 	} // fn getTransltions
 
 
+    /**
+     * Returns true if the current field is hidden.
+     * @return boolean
+     */
+	public function isHidden()
+	{
+		return $this->m_data['is_hidden'];
+	}
+
+
 	/**
 	 * Returns true if the current field is a content field.
 	 * @return boolean

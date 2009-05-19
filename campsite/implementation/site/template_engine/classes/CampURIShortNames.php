@@ -308,10 +308,8 @@ class CampURIShortNames extends CampURI
         if (!empty($cArticleSName)) {
             // we pass article short name as article identifier as they are
             // the same for Campsite, we will have to change this in the future
-            $articleObj = Article::GetByNumber($cArticleSName,
-            $this->m_publication->identifier, $this->m_issue->number,
-            $this->m_section->number, $this->m_language->number);
-            if (is_null($articleObj) || !$articleObj->exists()) {
+            $articleObj = new Article($this->m_language->number, $cArticleSName);
+            if (!$articleObj->exists()) {
                 CampTemplate::singleton()->trigger_error("Invalid article name '$cArticleSName' in URL.");
                 return;
             }

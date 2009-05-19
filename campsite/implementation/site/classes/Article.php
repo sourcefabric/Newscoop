@@ -118,8 +118,8 @@ class Article extends DatabaseObject {
 	public function Article($p_languageId = null, $p_articleNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['IdLanguage'] = (int)$p_languageId;
-		$this->m_data['Number'] = (int)$p_articleNumber;
+		$this->m_data['IdLanguage'] = $p_languageId;
+		$this->m_data['Number'] = $p_articleNumber;
 		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
@@ -139,15 +139,17 @@ class Article extends DatabaseObject {
     public function fetch($p_recordSet = null)
     {
     	$res = parent::fetch($p_recordSet);
-        settype($this->m_data['IdPublication'], 'integer');
-        settype($this->m_data['NrIssue'], 'integer');
-        settype($this->m_data['NrSection'], 'integer');
-        settype($this->m_data['IdLanguage'], 'integer');
-        settype($this->m_data['Number'], 'integer');
-        settype($this->m_data['IdUser'], 'integer');
-        settype($this->m_data['fk_default_author_id'], 'integer');
-        settype($this->m_data['LockUser'], 'integer');
-        settype($this->m_data['ArticleOrder'], 'integer');
+    	if ($this->exists()) {
+    		settype($this->m_data['IdPublication'], 'integer');
+    		settype($this->m_data['NrIssue'], 'integer');
+    		settype($this->m_data['NrSection'], 'integer');
+    		settype($this->m_data['IdLanguage'], 'integer');
+    		settype($this->m_data['Number'], 'integer');
+    		settype($this->m_data['IdUser'], 'integer');
+    		settype($this->m_data['fk_default_author_id'], 'integer');
+    		settype($this->m_data['LockUser'], 'integer');
+    		settype($this->m_data['ArticleOrder'], 'integer');
+    	}
         return $res;
     }
 
@@ -2302,12 +2304,17 @@ class Article extends DatabaseObject {
         if (count($fieldParts) > 1) {
             $fieldName = $fieldParts[1];
             $articleType = $fieldParts[0];
+            $field = new ArticleTypeField($articleType, $fieldName);
+            if (!$field->exists()) {
+            	return null;
+            }
+            $fields = array($field);
         } else {
             $articleType = null;
-        }
-        $fields = ArticleTypeField::FetchFields($fieldName, $articleType);
-        if (count($fields) == 0) {
-            return null;
+            $fields = ArticleTypeField::FetchFields($fieldName, $articleType);
+            if (count($fields) == 0) {
+            	return null;
+            }
         }
         $queries = array();
         foreach ($fields as $fieldObj) {

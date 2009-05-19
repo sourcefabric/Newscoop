@@ -27,34 +27,75 @@ final class MetaArticle extends MetaDbObject {
     private $m_state = null;
 
     private $m_contentCache = null;
+    
+    private static $m_baseProperties = array(
+    'name'=>'Name',
+    'number'=>'Number',
+    'keywords'=>'Keywords',
+    'type_name'=>'Type',
+    'creation_date'=>'UploadDate',
+    'publish_date'=>'PublishDate',
+    'url_name'=>'ShortName',
+    'comments_locked'=>'comments_locked',
+    'last_update'=>'time_updated',
+    'request_object_id'=>'object_id',
+    );
+
+    private static $m_defaultCustomProperties = array(
+    'year'=>'getCreationYear',
+    'mon'=>'getCreationMonth',
+    'wday'=>'getCreationWeekDay',
+    'mday'=>'getCreationMonthDay',
+    'yday'=>'getCreationYearDay',
+    'hour'=>'getCreationHour',
+    'min'=>'getCreationMinute',
+    'sec'=>'getCreationSecond',
+    'mon_name'=>'getCreationMonthName',
+    'wday_name'=>'getCreationWeekDayName',
+    'template'=>'getTemplate',
+    'comments_enabled'=>'getCommentsEnabled',
+    'on_front_page'=>'getOnFrontPage',
+    'on_section_page'=>'getOnSectionPage',
+    'is_published'=>'getIsPublished',
+    'is_public'=>'getIsPublic',
+    'is_indexed'=>'getIsIndexed',
+    'publication'=>'getPublication',
+    'issue'=>'getIssue',
+    'section'=>'getSection',
+    'language'=>'getLanguage',
+    'owner'=>'getOwner',
+    'author'=>'getAuthor',
+    'defined'=>'defined',
+    'has_attachments'=>'hasAttachments',
+    'image_index'=>'getImageIndex',
+    'comment_count'=>'getCommentCount',
+    'content_accessible'=>'isContentAccessible',
+    'image'=>'getImage',
+    'reads'=>'getReads',
+    'topics_count'=>'topicsCount',
+    'has_topics'=>'hasTopics'
+    );
 
 
     private function InitProperties()
     {
-        if (!is_null($this->m_properties)) {
-            return;
+        if (is_null($this->m_properties)) {
+        	$this->m_properties = self::$m_baseProperties;
         }
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['number'] = 'Number';
-        $this->m_properties['keywords'] = 'Keywords';
-        $this->m_properties['type_name'] = 'Type';
-        $this->m_properties['creation_date'] = 'UploadDate';
-        $this->m_properties['publish_date'] = 'PublishDate';
-        $this->m_properties['url_name'] = 'ShortName';
-        $this->m_properties['comments_locked'] = 'comments_locked';
-        $this->m_properties['last_update'] = 'time_updated';
-        $this->m_properties['request_object_id'] = 'object_id';
     }
 
 
     public function __construct($p_languageId = null, $p_articleId = null)
     {
-    	$this->m_dbObject = new Article($p_languageId, $p_articleId);
+    	$this->m_properties = self::$m_baseProperties;
+        $this->m_customProperties = self::$m_defaultCustomProperties;
+
+        $this->m_dbObject = new Article($p_languageId, $p_articleId);
     	if ($this->m_dbObject->exists()) {
-	        $this->m_articleData = new ArticleData($this->m_dbObject->getType(),
+    		$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
 	        $this->m_dbObject->getArticleNumber(),
 	        $this->m_dbObject->getLanguageId());
-	
+
 	        foreach ($this->m_articleData->m_columnNames as $property) {
 	            if ($property[0] != 'F') {
 	                continue;
@@ -66,39 +107,6 @@ final class MetaArticle extends MetaDbObject {
     		$this->m_dbObject = new Article();
     		$this->m_articleData = new ArticleData(null, null, null);
     	}
-        $this->InitProperties();
-        $this->m_customProperties['year'] = 'getCreationYear';
-        $this->m_customProperties['mon'] = 'getCreationMonth';
-        $this->m_customProperties['wday'] = 'getCreationWeekDay';
-        $this->m_customProperties['mday'] = 'getCreationMonthDay';
-        $this->m_customProperties['yday'] = 'getCreationYearDay';
-        $this->m_customProperties['hour'] = 'getCreationHour';
-        $this->m_customProperties['min'] = 'getCreationMinute';
-        $this->m_customProperties['sec'] = 'getCreationSecond';
-        $this->m_customProperties['mon_name'] = 'getCreationMonthName';
-        $this->m_customProperties['wday_name'] = 'getCreationWeekDayName';
-        $this->m_customProperties['template'] = 'getTemplate';
-        $this->m_customProperties['comments_enabled'] = 'getCommentsEnabled';
-        $this->m_customProperties['on_front_page'] = 'getOnFrontPage';
-        $this->m_customProperties['on_section_page'] = 'getOnSectionPage';
-        $this->m_customProperties['is_published'] = 'getIsPublished';
-        $this->m_customProperties['is_public'] = 'getIsPublic';
-        $this->m_customProperties['is_indexed'] = 'getIsIndexed';
-        $this->m_customProperties['publication'] = 'getPublication';
-        $this->m_customProperties['issue'] = 'getIssue';
-        $this->m_customProperties['section'] = 'getSection';
-        $this->m_customProperties['language'] = 'getLanguage';
-        $this->m_customProperties['owner'] = 'getOwner';
-        $this->m_customProperties['author'] = 'getAuthor';
-        $this->m_customProperties['defined'] = 'defined';
-        $this->m_customProperties['has_attachments'] = 'hasAttachments';
-        $this->m_customProperties['image_index'] = 'getImageIndex';
-        $this->m_customProperties['comment_count'] =  'getCommentCount';
-        $this->m_customProperties['content_accessible'] = 'isContentAccessible';
-        $this->m_customProperties['image'] = 'getImage';
-        $this->m_customProperties['reads'] = 'getReads';
-        $this->m_customProperties['topics_count'] = 'topicsCount';
-        $this->m_customProperties['has_topics'] = 'hasTopics';
     } // fn __construct
 
 
@@ -181,6 +189,7 @@ final class MetaArticle extends MetaDbObject {
             try {
                 $dbProperty = $this->m_customProperties[$property][0];
                 $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
+
                 $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {

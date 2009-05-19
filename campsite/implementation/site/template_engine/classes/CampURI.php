@@ -189,7 +189,7 @@ abstract class CampURI {
             // this works at least for apache, some research is needed
             // in order to support other web servers.
             if (!empty($_SERVER['PHP_SELF'])) {
-            $uriString = $scheme . $_SERVER['HTTP_HOST'];
+            	$uriString = $scheme . $_SERVER['HTTP_HOST'];
             }
             if (isset($_SERVER['REQUEST_URI'])) {
                 $uriString .= $_SERVER['REQUEST_URI'];

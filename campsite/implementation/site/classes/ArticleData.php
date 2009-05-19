@@ -39,14 +39,14 @@ class ArticleData extends DatabaseObject {
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
 		// Get user-defined values.
-		$dbColumns = $this->getUserDefinedColumns();
+		$dbColumns = $this->getUserDefinedColumns(true);
 		foreach ($dbColumns as $columnMetaData) {
 			$this->m_columnNames[] = $columnMetaData->getName();
 		}
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['NrArticle'] = $p_articleNumber;
 		$this->m_data['IdLanguage'] = $p_languageId;
-		if ($this->exists()) {
+		if ($this->keyValuesExist()) {
 			$this->fetch();
 		}
 	} // constructor

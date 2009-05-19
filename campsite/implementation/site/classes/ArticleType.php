@@ -35,8 +35,8 @@ class ArticleType {
 	 * Stores an ArticleTypeField object
 	 * @var ArticleTypeField
 	 */
-	private $m_metadata;
-	private $m_dbColumns;
+	private $m_metadata = null;
+	private $m_dbColumns = null;
 	private $m_publicFields = null;
 
 	/**
@@ -52,11 +52,16 @@ class ArticleType {
 		$this->m_name = $this->m_metadata->getArticleType();
         $this->m_dbTableName = 'X' . $this->m_name;
 
-		// Get user-defined values.
-		$this->m_dbColumns = $this->getUserDefinedColumns();
-		foreach ($this->m_dbColumns as $columnMetaData) {
-			$this->m_columnNames[] = $columnMetaData->getName();
-		}
+        if ($this->m_metadata->exists()) {
+        	// Get user-defined values.
+        	$this->getUserDefinedColumns();
+        	foreach ($this->m_dbColumns as $columnMetaData) {
+        		$this->m_columnNames[] = $columnMetaData->getName();
+        	}
+        } else {
+        	$this->m_dbColumns = array();
+        	$this->m_publicFields = array();
+        }
 	} // constructor
 
 
@@ -298,19 +303,18 @@ class ArticleType {
 	 */
 	public function getUserDefinedColumns($p_fieldName = null, $p_selectHidden = true)
 	{
-		if (is_null($p_fieldName) && $p_selectHidden) {
+		if (is_null($p_fieldName)) {
 			if (is_null($this->m_dbColumns)) {
 				$this->m_dbColumns = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
 				false, false, true, true);
+				$this->m_publicFields = array();
+				foreach ($this->m_dbColumns as $field) {
+					if (!$field->isHidden()) {
+						$this->m_publicFields[] = $field;
+					}
+				}
 			}
-			return $this->m_dbColumns;
-		}
-		if (is_null($p_fieldName) && !$p_selectHidden) {
-			if (is_null($this->m_publicFields)) {
-				$this->m_publicFields = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
-				false, false, true, false);
-			}
-			return $this->m_publicFields;
+			return $p_selectHidden ? $this->m_dbColumns : $this->m_publicFields;
 		}
 		return ArticleTypeField::FetchFields($p_fieldName, $this->m_name, 'NULL',
 		false, false, true, $p_selectHidden);

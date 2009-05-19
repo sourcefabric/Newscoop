@@ -101,7 +101,7 @@ class DatabaseObject {
 			}
 		}
 	    if (!is_null($p_columnNames)) {
-	      $this->setColumnNames($p_columnNames);
+	    	$this->setColumnNames($p_columnNames);
 	    }
 	} // constructor
 
@@ -171,8 +171,8 @@ class DatabaseObject {
 	 */
 	public function setColumnNames($p_columnNames)
 	{
-		foreach ($p_columnNames as $columnName) {
-			$this->m_data[$columnName] = null;
+		if (is_array($p_columnNames)) {
+			$this->m_data = array_fill_keys($p_columnNames, null);
 		}
 	} // fn setColumnNames
 
@@ -268,8 +268,7 @@ class DatabaseObject {
 		global $g_ado_db;
 
 		if (is_null($p_recordSet)) {
-			$object = $this->readFromCache();
-			if ($object !== false) {
+			if ($this->readFromCache() !== false) {
 				return true;
 			}
 
@@ -292,9 +291,7 @@ class DatabaseObject {
 				return false;
 			}
 		} else {
-			$object = $this->readFromCache($p_recordSet);
-			if ($object !== false) {
-				$this->m_exists = true;
+			if ($this->readFromCache($p_recordSet) !== false) {
 				return true;
 			}
 
@@ -306,13 +303,12 @@ class DatabaseObject {
 					$this->m_data[$dbColumnName] = null;
 				}
 			}
+			$this->m_exists = false;
 			if ($this->keyValuesExist()) {
 				$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
 							. ' WHERE ' . $this->getKeyWhereClause();
 				if ($g_ado_db->GetRow($queryStr)) {
 					$this->m_exists = true;
-				} else {
-					$this->m_exists = false;
 				}
 			}
 		}
@@ -333,18 +329,7 @@ class DatabaseObject {
 	 */
 	public function exists()
 	{
-		global $g_ado_db;
-
-		if (!is_null($this->m_exists)) {
-			return $this->m_exists;
-		}
-
-		$queryStr = 'SELECT `'.$this->m_keyColumnNames[0].'`';
-		$queryStr .= ' FROM ' . $this->m_dbTableName;
-		$queryStr .= ' WHERE ' . $this->getKeyWhereClause();
-//		$queryStr .= ' LIMIT 1';
-		$resultSet = $g_ado_db->GetRow($queryStr);
-		return (count($resultSet) > 0);
+		return !is_null($this->m_exists) && $this->m_exists;
 	} // fn exists
 
 
@@ -377,7 +362,8 @@ class DatabaseObject {
 	public function keyValuesExist()
 	{
 		foreach ($this->m_keyColumnNames as $columnName) {
-			if (!isset($this->m_data[$columnName]) /* || empty($this->m_data[$columnName]) */) {
+			if (!isset($this->m_data[$columnName])
+			|| is_null($this->m_data[$columnName])) {
 				return false;
 			}
 		}

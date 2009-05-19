@@ -199,7 +199,7 @@ final class CampContext
         // Initialize the default comment attribute at the end, after the
         // submit comment action had run.
         $this->m_readonlyProperties['default_comment'] = $this->comment;
-        
+
         // initialize plugins
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name']) && function_exists($info['template_engine']['init'])) {

@@ -28,12 +28,17 @@ class Alias extends DatabaseObject {
 	 * Constructor.
 	 * @param int $p_id
 	 */
-	public function Alias($p_id = null)
+	public function Alias($p_idOrName = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
-		if (!is_null($p_id)) {
-    		$this->m_data['Id'] = $p_id;
+		if (is_numeric($p_idOrName)) {
+    		$this->m_data['Id'] = $p_idOrName;
 			$this->fetch();
+		} elseif (!empty($p_idOrName)) {
+			$this->m_keyColumnNames = array('Name');
+			$this->m_data['Name'] = $p_idOrName;
+			$this->fetch();
+			$this->m_keyColumnNames = array('Id');
 		}
 	} // constructor
 

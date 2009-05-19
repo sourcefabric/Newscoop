@@ -256,15 +256,11 @@ final class CampSite extends CampSystem
         static $urlType = null;
 
         if (is_null($urlType)) {
-        	// tries to get the url type from publication attributes
-        	$sqlQuery = 'SELECT p.Id, p.IdDefaultLanguage, p.IdURLType '
-        	. 'FROM Publications p, Aliases a '
-        	. 'WHERE p.Id = a.IdPublication AND '
-        	. "a.Name = '" . $g_ado_db->Escape($_SERVER['HTTP_HOST']) . "'";
-        	$data = $g_ado_db->GetRow($sqlQuery);
-        	if (!empty($data)) {
-        		$urlTypeObj = new UrlType($data['IdURLType']);
-        		if (is_object($urlTypeObj) && $urlTypeObj->exists()) {
+        	$alias = new Alias($_SERVER['HTTP_HOST']);
+        	if ($alias->exists()) {
+        		$publication = new Publication($alias->getPublicationId());
+        		$urlTypeObj = new URLType($publication->getUrlTypeId());
+        		if ($urlTypeObj->exists()) {
         			$urlType = $urlTypeObj->getId();
         		}
         	}
