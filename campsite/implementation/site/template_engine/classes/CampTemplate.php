@@ -119,6 +119,9 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
+    	if (!self::singleton()->context()->preview) {
+    		return;
+    	}
     	if (is_object($p_smarty)) {
     		$p_smarty->trigger_error($p_message);
     	} else {

@@ -39,7 +39,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (isset($p_params['template'])) {
         $template = new MetaTemplate($p_params['template']);
         if (!$template->defined()) {
-            CampTemplate::trigger_error('invalid template "' . $p_params['template']
+            CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
             . '" specified in the user form');
             return false;
         }
