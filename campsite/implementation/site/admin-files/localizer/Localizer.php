@@ -719,6 +719,33 @@ class Localizer {
         @rmdir($langDir);
         return true;
     } // fn DeleteLanguageFiles
+    
+    /**
+     * Call this method to test if 2 versions have untranslated diffs
+     *
+     * @param string $prefix
+     * @param string $target_lang
+     * @return boolean
+     */
+    public static function HaveUntranslatedString($prefix, $target_lang)
+    {
+        global $g_localizerConfig;
+        
+        $defaultLang = new LocalizerLanguage($prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
+        $targetLang = new LocalizerLanguage($prefix, $target_lang);
+        $mode = Localizer::GetMode();
+        $defaultLang->loadFile($mode);
+        $targetLang->loadFile($mode);
+        $sourceStrings = $defaultLang->getTranslationTable();
+        $targetStrings = $targetLang->getTranslationTable();
+        
+        foreach ($sourceStrings as $k => $v) {
+            if (!strlen($targetStrings[$k])) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 } // class Localizer
 ?>

@@ -164,7 +164,10 @@ function translationForm($p_request)
 						<SELECT name="prefix" class="input_select" onchange="this.form.submit();">
 						<?PHP
 						foreach ($mapPrefixToDisplay as $prefix => $displayStr) {
-							camp_html_select_option($prefix, $screenDropDownSelection, $displayStr);
+						    if (!empty($prefix)) {
+						        $have_untranslated = Localizer::HaveUntranslatedString($prefix, $localizerTargetLanguage);
+						    }
+						    camp_html_select_option($prefix, $screenDropDownSelection, $displayStr, $have_untranslated ? array('style' => 'color:red') : array());
 						}
 						?>
 						</SELECT>

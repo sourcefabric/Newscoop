@@ -17,7 +17,7 @@ require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
  * @return boolean
  * 		Return TRUE if the option is selected, FALSE if not.
  */
-function camp_html_select_option($p_value, $p_selectedValue, $p_printValue)
+function camp_html_select_option($p_value, $p_selectedValue, $p_printValue, $p_attributes=array())
 {
 	$selected = false;
 	$str = '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
@@ -31,6 +31,9 @@ function camp_html_select_option($p_value, $p_selectedValue, $p_printValue)
 			$str .= ' SELECTED';
 			$selected = true;
 		}
+	}
+	foreach ($p_attributes as $k => $v) {
+	   $str .= " $k=\"$v\"";   
 	}
 	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
 	echo $str;
