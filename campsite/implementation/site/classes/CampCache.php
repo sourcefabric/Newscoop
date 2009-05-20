@@ -148,7 +148,7 @@ final class CampCache
     public function store($p_key, $p_data, $p_ttl = 0)
     {
     	if (is_null($this->m_cacheEngine)) {
-    		return false;
+	    return false;
     	}
         $p_data = $this->serialize($p_data);
 
@@ -171,7 +171,7 @@ final class CampCache
             return false;
         }
         if ($p_key == SystemPref::CACHE_KEY_SYSTEM_PREF) {
-        	CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE);
+	    CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
         }
     	return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
@@ -192,11 +192,11 @@ final class CampCache
         if (is_null($this->m_cacheEngine)) {
             return false;
         }
-        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE);
+        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
     	if ($p_type == 'user') {
             return $this->m_cacheEngine->clearValues();
     	} else {
-    		return $this->m_cacheEngine->clearPages();
+	    return $this->m_cacheEngine->clearPages();
     	}
     } // fn clear
 
