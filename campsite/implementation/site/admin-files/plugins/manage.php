@@ -104,7 +104,7 @@ if ($success) {
 ?>
 
 <P>
-<?php if (count($infos = CampPlugin::getPluginInfos()) > 0) { ?>
+<?php if (count($infos = CampPlugin::GetPluginsInfo()) > 0) { ?>
 <FORM name="plugins_enabled" action="manage.php">
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">
     <TR class="table_list_header">

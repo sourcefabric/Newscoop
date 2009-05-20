@@ -519,7 +519,7 @@ class User extends DatabaseObject {
 
         if (empty($pluginConfig)) {
             $pluginConfig = true;
-            foreach (CampPlugin::getPluginInfos() as $info) {
+            foreach (CampPlugin::GetPluginsInfo() as $info) {
                 if (CampPlugin::isPluginEnabled($info['name'])) {
                     self::$m_defaultConfig += $info['userDefaultConfig'];
                 }
