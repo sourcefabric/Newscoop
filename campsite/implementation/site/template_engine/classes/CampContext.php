@@ -109,6 +109,10 @@ final class CampContext
     private $m_savedContext = array();
 
 
+    private static $m_nullMetaArticle = null;
+
+    private static $m_nullMetaSection = null;
+
     /**
      * Class constructor
      */
@@ -119,6 +123,8 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+        self::$m_nullMetaArticle = new MetaArticle();
+        self::$m_nullMetaSection = new MetaSection();
         
         // register plugin objects and listobjects
         foreach (CampPlugin::GetPluginsInfo() as $info) {
@@ -149,24 +155,24 @@ final class CampContext
 
         $url = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
-        $this->publication = $url->publication;
-        $this->language = $url->language;
-        $this->issue = $url->issue;
-        $this->section = $url->section;
-        $this->article = $url->article;
-        $this->template = $url->template;
+        $this->m_objects['publication'] = $url->publication;
+        $this->m_objects['language'] = $url->language;
+        $this->m_objects['issue'] = $url->issue;
+        $this->m_objects['section'] = $url->section;
+        $this->m_objects['article'] = $url->article;
+        $this->m_objects['template'] = $url->template;
         if (is_numeric($url->get_parameter('tpid'))) {
-            $this->topic = new MetaTopic($url->get_parameter('tpid'));
+            $this->m_objects['topic'] = new MetaTopic($url->get_parameter('tpid'));
         }
 
-        $this->m_readonlyProperties['default_template'] = $this->template;
-        $this->m_readonlyProperties['default_language'] = $this->language;
-        $this->m_readonlyProperties['default_publication'] = $this->publication;
-        $this->m_readonlyProperties['default_issue'] = $this->issue;
-        $this->m_readonlyProperties['default_section'] = $this->section;
-        $this->m_readonlyProperties['default_article'] = $this->article;
+        $this->m_readonlyProperties['default_template'] = $this->m_objects['template'];
+        $this->m_readonlyProperties['default_language'] = $this->m_objects['language'];
+        $this->m_readonlyProperties['default_publication'] = $this->m_objects['publication'];
+        $this->m_readonlyProperties['default_issue'] = $this->m_objects['issue'];
+        $this->m_readonlyProperties['default_section'] = $this->m_objects['section'];
+        $this->m_readonlyProperties['default_article'] = $this->m_objects['article'];
         $this->m_readonlyProperties['default_topic'] = $this->topic;
-        $this->m_readonlyProperties['default_url'] = new MetaURL();
+        $this->m_readonlyProperties['default_url'] = $this->m_readonlyProperties['url'];
 
         if (!is_null($commentId = CampRequest::GetVar('acid'))) {
             $this->m_objects['comment'] = new MetaComment($commentId);
@@ -270,12 +276,12 @@ final class CampContext
 
                 $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
                 . CampContext::ObjectType($p_element).'.php';
-                
+
                 if (file_exists($classFullPath)) {
                     require_once($classFullPath);
                 } else {
                     $pluginImplementsClassFullPath = false;
-                     
+
                     foreach (CampPlugin::GetEnabled() as $CampPlugin) {
                         $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
                                         '/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
@@ -338,10 +344,8 @@ final class CampContext
     {
         $p_property = CampContext::TranslateProperty($p_property);
         return !is_null(CampContext::ObjectType($p_property))
-        || (is_array($this->m_properties)
-        && array_key_exists($p_property, $this->m_properties))
-        || (is_array($this->m_readonlyProperties)
-        && array_key_exists($p_property, $this->m_readonlyProperties));
+        || array_key_exists($p_property, $this->m_properties)
+        || array_key_exists($p_property, $this->m_readonlyProperties);
     } // fn has_property
 
 
@@ -912,7 +916,7 @@ final class CampContext
         if ($p_newIssue->defined() && !$this->getLanguage()->same_as($p_newIssue->language)) {
             $this->setLanguageHandler($this->getLanguage(), $p_newIssue->language);
         }
-        $this->setSectionHandler($this->getSection(), new MetaSection());
+        $this->setSectionHandler($this->getSection(), self::$m_nullMetaSection);
         $this->m_readonlyProperties['url']->issue = $p_newIssue;
         $this->m_objects['issue'] = $p_newIssue;
 
@@ -937,7 +941,7 @@ final class CampContext
         if ($p_newSection->defined() && !$this->getIssue()->same_as($p_newSection->issue)) {
             $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
         }
-        $this->setArticleHandler($this->getArticle(), new MetaArticle());
+        $this->setArticleHandler($this->getArticle(), self::$m_nullMetaArticle);
         $this->m_readonlyProperties['url']->section = $p_newSection;
         $this->m_objects['section'] = $p_newSection;
 

@@ -200,8 +200,8 @@ final class MetaSubtitle {
         $endLinkPattern = '<!\*\*[\s]*EndLink[\s]*>';
         $content = preg_replace("|$endLinkPattern|i", '</a>', $content);
 
-        //      image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF">
-        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height)="?[^"]+"?)*)[\s]*>';
+        // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
+        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|\w+)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
@@ -223,15 +223,25 @@ final class MetaSubtitle {
 
         $imageNumber = $p_matches[1];
         $detailsString = $p_matches[2];
-        preg_match_all('/[\s]+(align|alt|sub|width|height)="([^"]+)"/i', $detailsString, $detailsArray1);
-        $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
-        $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
-        $detailsArray1 = is_array($detailsArray1) ? $detailsArray1 : array();
-        preg_match_all('/[\s]+(align|alt|sub|width|height)=([^"\s]+)/i', $detailsString, $detailsArray2);
-        $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
-        $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
-        $detailsArray2 = is_array($detailsArray2) ? $detailsArray2 : array();
-        $detailsArray = array_merge($detailsArray1, $detailsArray2);
+        $detailsArray = array();
+        if (trim($detailsString) != '') {
+        	$imageAttributes = 'align|alt|sub|width|height|\w+';
+        	preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
+        	$detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
+        	if (count($detailsArray1[1]) > 0) {
+        		$detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
+        	} else {
+        		$detailsArray1 = array();
+        	}
+        	preg_match_all("/[\s]+($imageAttributes)=([^\"\s]+)/i", $detailsString, $detailsArray2);
+        	$detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
+        	if (count($detailsArray2[1]) > 0) {
+        		$detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
+        	} else {
+        		$detailsArray2 = array();
+        	}
+        	$detailsArray = array_merge($detailsArray1, $detailsArray2);
+        }
 
         $imgString = '<table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {

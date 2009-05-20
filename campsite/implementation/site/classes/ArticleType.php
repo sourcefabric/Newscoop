@@ -450,6 +450,7 @@ class ArticleType {
 		if ($displayName == 'NULL') {
 			return $this->m_name;
 		}
+		return $displayName;
 	} // fn getDisplayName
 
 
