@@ -201,7 +201,7 @@ final class MetaSubtitle {
         $content = preg_replace("|$endLinkPattern|i", '</a>', $content);
 
         // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
-        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|\w+)="?[^"]+"?)*)[\s]*>';
+        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)="?[^"]+"?)*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
@@ -225,7 +225,7 @@ final class MetaSubtitle {
         $detailsString = $p_matches[2];
         $detailsArray = array();
         if (trim($detailsString) != '') {
-        	$imageAttributes = 'align|alt|sub|width|height|\w+';
+        	$imageAttributes = 'align|alt|sub|width|height|ratio|\w+';
         	preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
         	$detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
         	if (count($detailsArray1[1]) > 0) {
@@ -250,7 +250,11 @@ final class MetaSubtitle {
         $imgString .= '>';
         $imgString .= '<tr><td align="center">';
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
-        . '&amp;NrImage=' . $imageNumber . '"';
+        . '&amp;NrImage=' . $imageNumber;
+        if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
+            $imgString .= '&ImageRatio=' . (int)$detailsArray['ratio'];
+        }
+        $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' title="' . $detailsArray['alt'] . '"';
         }

@@ -143,7 +143,7 @@ function TransformImageTags($p_match) {
     if (!isset($attrs['id'])) {
         return '';
     } else {
-        $templateId = $attrs['id'];
+        list($templateId, $imageRatio) = explode('_', $attrs['id']);
 	$articleImage = new ArticleImage($f_article_number, null, $templateId);
 	if (!$articleImage->exists()) {
 	    return '';
@@ -167,7 +167,11 @@ function TransformImageTags($p_match) {
     if (isset($attrs['height']) && strlen($attrs['height']) > 0) {
         $heightTag = 'height="'.$attrs['height'].'"';
     }
-    $imageTag = "<!** Image $templateId $alignTag $altTag $captionTag $widthTag $heightTag>";
+    $ratioTag = '';
+    if (isset($imageRatio) && ($imageRatio > 0 && $imageRatio < 100)) {
+        $ratioTag = 'ratio="'.$imageRatio.'"';
+    }
+    $imageTag = "<!** Image $templateId $alignTag $altTag $captionTag $widthTag $heightTag $ratioTag>";
     return $imageTag;
 } // fn TransformImageTags
 

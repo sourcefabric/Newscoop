@@ -15,7 +15,7 @@ var CampsiteImageDialog = {
 	tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
 	    src : topDoc.getElementById('f_url').value,
 	    align : topDoc.getElementById('f_align').value,
-	    id : topDoc.getElementById('f_image_template_id').value,
+            id : topDoc.getElementById('f_image_template_id').value + '_' + topDoc.getElementById('f_ratio').value,
 	    alt : topDoc.getElementById('f_alt').value,
 	    title : topDoc.getElementById('f_caption').value
 	}));
@@ -23,7 +23,7 @@ var CampsiteImageDialog = {
 	tinyMCEPopup.close();
     },
 
-    select : function(p_image_template_id, p_filename, p_alt) {
+    select : function(p_image_template_id, p_filename, p_alt, p_title) {
 	var topDoc = window.top.document;
 
 	var obj = topDoc.getElementById('f_image_template_id');
@@ -36,7 +36,7 @@ var CampsiteImageDialog = {
 	obj.value = p_alt;
 
 	var obj = topDoc.getElementById('f_caption');
-	obj.value = p_alt;
+	obj.value = p_title;
     },
 
     close : function() {

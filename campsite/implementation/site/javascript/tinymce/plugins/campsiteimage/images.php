@@ -44,8 +44,8 @@ function drawFiles($list, &$manager)
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="block" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
+				<td class="block" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
+		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
 		</td></tr><tr><td class="edit">
 		<?php
 		if ($file['image']) {
@@ -206,7 +206,7 @@ function drawErrorBase(&$manager)
 	if (!empty($firstImage)) {	?>
 	<!-- automatically select the first image -->
 	<script>
-	CampsiteImageDialog.select(<?php echo $firstImage['template_id']; ?>, '<?php echo $firstImage['image_object']->getImageUrl(); ?>', '<?php echo $firstImage['alt']; ?>');
+	    CampsiteImageDialog.select(<?php echo $firstImage['template_id']; ?>, '<?php echo $firstImage['image_object']->getImageUrl(); ?>', '<?php echo $firstImage['alt']; ?>', '<?php echo $firstImage['alt']; ?>');
 	</script>
 	<?php } ?>
 
