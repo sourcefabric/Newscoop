@@ -143,7 +143,11 @@ function TransformImageTags($p_match) {
     if (!isset($attrs['id'])) {
         return '';
     } else {
-        list($templateId, $imageRatio) = explode('_', $attrs['id']);
+        if (strpos($attrs['id'], '_')) {
+	    list($templateId, $imageRatio) = explode('_', $attrs['id']);
+	} else {
+	    $templateId = $attrs['id'];
+	}
 	$articleImage = new ArticleImage($f_article_number, null, $templateId);
 	if (!$articleImage->exists()) {
 	    return '';
