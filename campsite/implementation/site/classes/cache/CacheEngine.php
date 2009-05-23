@@ -17,6 +17,9 @@ abstract class CacheEngine
     const CACHE_VALUES_INFO = 1;
     const CACHE_PAGES_INFO = 2;
 
+
+    abstract public function getName();
+
 	/**
 	 * Inserts the value identified by the given key in the cache.
 	 * Returns false if the key already existed and does not

@@ -21,11 +21,13 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaUser extends MetaDbObject {
 
-    private function InitProperties()
+    public function __construct($p_userId = null)
     {
-        if (!is_null($this->m_properties)) {
-            return;
+        $this->m_dbObject = new User($p_userId);
+        if (!$this->m_dbObject->exists()) {
+            $this->m_dbObject = new User();
         }
+
         $this->m_properties['identifier'] = 'Id';
         $this->m_properties['name'] = 'Name';
         $this->m_properties['uname'] = 'UName';
@@ -61,17 +63,7 @@ final class MetaUser extends MetaDbObject {
         $this->m_properties['pref3'] = 'Pref3';
         $this->m_properties['pref4'] = 'Pref4';
         $this->m_properties['password_encrypted'] = 'Password';
-    }
 
-
-    public function __construct($p_userId = null)
-    {
-        $this->m_dbObject = new User($p_userId);
-        if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new User();
-        }
-        
-        $this->InitProperties();
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['logged_in'] =  'isLoggedIn';

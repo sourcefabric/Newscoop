@@ -113,6 +113,9 @@ class ArticleData extends DatabaseObject {
     */
     public function getUserDefinedColumns($p_showAll = false)
     {
+    	if (empty($this->m_articleTypeName)) {
+    		return array();
+    	}
     	if (is_null($this->m_articleTypeObject)) {
     		$this->m_articleTypeObject = new ArticleType($this->m_articleTypeName);
     	}

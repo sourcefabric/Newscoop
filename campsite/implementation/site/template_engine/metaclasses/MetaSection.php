@@ -18,34 +18,33 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  * @package Campsite
  */
 final class MetaSection extends MetaDbObject {
-
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['name'] = 'Name';
-		$this->m_properties['number'] = 'Number';
-		$this->m_properties['description'] = 'Description';
-        $this->m_properties['url_name'] = 'ShortName';
-	}
+	private static $m_baseProperties = array(
+	'name'=>'Name',
+    'number'=>'Number',
+    'description'=>'Description',
+    'url_name'=>'ShortName'
+	);
+	
+	private static $m_defaultCustomProperties = array(
+	'template'=>'getTemplate',
+    'publication'=>'getPublication',
+    'issue'=>'getIssue',
+    'language'=>'getLanguage',
+    'defined'=>'defined'
+	);
 
 
     public function __construct($p_publicationId = null, $p_issueNumber = null,
                                 $p_languageId = null, $p_sectionNumber = null)
     {
+    	$this->m_properties = self::$m_baseProperties;
+    	$this->m_customProperties = self::$m_defaultCustomProperties;
+
 		$this->m_dbObject = new Section($p_publicationId, $p_issueNumber,
 										$p_languageId, $p_sectionNumber);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Section();
         }
-
-		$this->InitProperties();
-		$this->m_customProperties['template'] = 'getTemplate';
-        $this->m_customProperties['publication'] = 'getPublication';
-        $this->m_customProperties['issue'] = 'getIssue';
-        $this->m_customProperties['language'] = 'getLanguage';
-        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 

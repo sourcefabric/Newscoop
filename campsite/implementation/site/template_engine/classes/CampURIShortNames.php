@@ -223,9 +223,9 @@ class CampURIShortNames extends CampURI
 
         // gets the publication object based on site name (URI host)
         $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
-        $aliasArray = Alias::GetAliases(null, null, $alias);
-        if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
-            $this->m_publication = new MetaPublication($aliasArray[0]->getPublicationId());
+        $aliasObj = new Alias($alias);
+        if ($aliasObj->exists()) {
+            $this->m_publication = new MetaPublication($aliasObj->getPublicationId());
         }
         if (is_null($this->m_publication) || !$this->m_publication->defined()) {
             CampTemplate::singleton()->trigger_error("Invalid site alias '$alias' in URL.");

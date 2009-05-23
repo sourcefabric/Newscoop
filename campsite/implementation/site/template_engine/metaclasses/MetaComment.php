@@ -22,19 +22,6 @@ final class MetaComment extends MetaDbObject {
 	
 	private $m_realName = false;
 
-    private function InitProperties()
-    {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-        $this->m_properties['identifier'] = 'message_id';
-        $this->m_properties['nickname'] = 'author';
-        $this->m_properties['reader_email'] = 'email';
-        $this->m_properties['subject'] = 'subject';
-        $this->m_properties['content'] = 'body';
-        $this->m_properties['level'] = 'thread_depth';
-    }
-
 
     public function __construct($p_messageId = null)
     {
@@ -42,8 +29,14 @@ final class MetaComment extends MetaDbObject {
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Phorum_message();
         }
-        
-        $this->InitProperties();
+
+        $this->m_properties['identifier'] = 'message_id';
+        $this->m_properties['nickname'] = 'author';
+        $this->m_properties['reader_email'] = 'email';
+        $this->m_properties['subject'] = 'subject';
+        $this->m_properties['content'] = 'body';
+        $this->m_properties['level'] = 'thread_depth';
+
         $this->m_customProperties['real_name'] = 'getRealName';
         $this->m_customProperties['anonymous_author'] = 'isAuthorAnonymous';
         $this->m_customProperties['submit_date'] = 'getSubmitDate';

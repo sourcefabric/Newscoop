@@ -43,9 +43,11 @@ final class CampCache
     /**
      * Holds instance of the class.
      *
-     * @var object
+     * @var CampCache
      */
     private static $m_instance = null;
+
+    private static $m_enabled = null;
 
 
     /**
@@ -84,6 +86,9 @@ final class CampCache
     		return self::$m_instance;
     	}
         self::$m_instance = new CampCache(SystemPref::Get('CacheEngine'));
+        self::$m_enabled = !is_null(self::$m_instance->m_cacheEngine)
+        && SystemPref::Get('SiteCacheEnabled') == 'Y'
+        && self::$m_instance->m_cacheEngine->isSupported();
 
         return self::$m_instance;
     } // fn singleton
@@ -290,7 +295,28 @@ final class CampCache
 
 
     /**
-     * Returns whether the given cache engine was enabled
+     * Returns true if the given cache engine was supported
+     *
+     * @param $p_cacheEngine
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    public static function IsSupported($p_cacheEngine = null)
+    {
+    	if (empty($p_cacheEngine)) {
+    		return false;
+    	}
+    	try {
+    		$cacheEngine = CacheEngine::Factory($p_cacheEngine);
+    		return true;
+    	} catch (InvalidCacheEngine $ex) {
+    		return false;
+    	}
+    }
+
+
+    /**
+     * Returns true if the given cache engine was enabled
      *
      * @param $p_cacheEngine
      * @return boolean
@@ -298,13 +324,10 @@ final class CampCache
      */
     public static function IsEnabled($p_cacheEngine = null)
     {
-    	if (empty($p_cacheEngine)) {
-    		$cacheEngine = self::singleton();
-    	} else {
-    		$cacheEngine = new CampCache($p_cacheEngine);
+    	if (is_null(self::$m_enabled)) {
+    		self::singleton();
     	}
-    	return !is_null($cacheEngine->m_cacheEngine)
-    	&& $cacheEngine->m_cacheEngine->isSupported();
+    	return self::$m_enabled;
     } // fn IsEnabled
 
 } // class CampCache

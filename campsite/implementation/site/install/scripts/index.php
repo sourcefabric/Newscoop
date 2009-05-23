@@ -9,116 +9,77 @@
  * @link http://www.campware.org
  */
 
-global $g_documentRoot;
-global $Campsite;
+$start0 = microtime(true);
 
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+$g_documentRoot = dirname(__FILE__);
+$g_campsiteDir = $g_documentRoot;
 
-require_once($g_documentRoot.'/include/campsite_init.php');
-require_once($g_documentRoot.'/template_engine/classes/SyntaxError.php');
+require_once($g_campsiteDir.'/include/campsite_init.php');
 
-set_include_path(get_include_path() . PATH_SEPARATOR
-                 . $_SERVER['DOCUMENT_ROOT'] . '/include/pear');
-
-function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
-							  $p_errorLine = null, $p_errorContext = null)
-{
-	global $g_errorList;
-
-	if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) == 0) {
-		$errorString = substr($p_errorString, strlen("Campsite error:"));
-	} elseif(strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) == 0) {
-		$errorString = substr($p_errorString, strlen("Smarty error:"));
-	} else {
-		return;
-	}
-
-	$what = null;
-
-	if (preg_match('/unrecognized tag:?\s*\'?([^\(]*)\'?\s*\(/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_UNRECOGNIZED_TAG;
-		$what = array($matches[1]);
-	} elseif (preg_match('/(\$.+)\s+is\s+an\s+unknown\s+reference/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_UNKNOWN_REFERENCE;
-		$what = array($matches[1]);
-	} elseif (preg_match('/invalid\s+property\s+(.+)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_PROPERTY;
-		$what = array($matches[1], $matches[2]);
-	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+property\s+(.*)\s+of\s+object\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_PROPERTY_VALUE;
-		$what = array($matches[1], $matches[2], $matches[3]);
-	} elseif (preg_match('/invalid\s+parameter\s+(.+)\s+in\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_PARAMETER;
-		$what = array($matches[1], $matches[2]);
-	} elseif (preg_match('/invalid\s+value\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_PARAMETER_VALUE;
-		$what = array($matches[1], $matches[2], $matches[3]);
-	} elseif (preg_match('/missing\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_MISSING_PARAMETER;
-		$what = array($matches[1], $matches[2]);
-	} elseif (preg_match('/invalid\s+operator\s+(.+)\s+of\s+parameter\s+(.*)\s+in\s+statement\s+(.*)/', $errorString, $matches)) {
-		$errorCode = SYNTAX_ERROR_INVALID_OPERATOR;
-		$what = array($matches[1], $matches[2], $matches[3]);
-    } elseif (preg_match('/invalid\s+attribute\s+(.+)\s+in\s+statement\s+(.*),\s+(.*)\s+parameter/', $errorString, $matches)) {
-        $errorCode = SYNTAX_ERROR_INVALID_ATTRIBUTE;
-        $what = array($matches[1], $matches[2], $matches[3]);
-    } elseif (preg_match('/invalid\s+template\s+(.*)\s+specified\s+in\s+the\s+(.*)\s+form/', $errorString, $matches)) {
-        $errorCode = SYNTAX_ERROR_INVALID_TEMPLATE;
-        $what = array($matches[1], $matches[2]);
-    } else {
-		$errorCode = SYNTAX_ERROR_UNKNOWN;
-		$what = array($errorString);
-	}
-
-	if (preg_match('/\[in\s+([\d\w]*\.tpl)*\s+line\s+([\d]+)\s*\]/', $errorString, $matches)) {
-		$errorFile = $matches[1];
-		$errorLine = $matches[2];
-	} else {
-		$errorFile = null;
-		$errorLine = null;
-	}
-
-	$error = new SyntaxError(SyntaxError::ConstructParameters($errorCode, $errorFile,
-							 $errorLine, $what));
-	$g_errorList[] = $error;
-}
-
-
-set_error_handler('templateErrorHandler');
-
-// initiates the campsite site
+$start1 = microtime(true);
+// initializes the campsite object
 $campsite = new CampSite();
 
-// loads site configuration settings
-$campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
-
-// starts the session
-$campsite->initSession();
-
-// initiates the context
-$campsite->init();
-
-// dispatches campsite
-$campsite->dispatch();
-
+$start2 = microtime(true);
 // triggers an event before render the page.
 // looks for preview language if any.
 $previewLang = $campsite->event('beforeRender');
-// loads translations strings in the proper language
-// for preview error messaging.
-camp_load_translation_strings('preview', $previewLang);
+if (!is_null($previewLang)) {
+    require_once($g_campsiteDir.'/template_engine/classes/SyntaxError.php');
+	set_error_handler('templateErrorHandler');
 
+    // loads translations strings in the proper language for the error messages display
+    camp_load_translation_strings('preview', $previewLang);
+}
+
+$start3 = microtime(true);
+// loads site configuration settings
+$campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
+
+$start4 = microtime(true);
+// starts the session
+$campsite->initSession();
+
+$start5 = microtime(true);
+// initiates the context
+$campsite->init();
+
+$start6 = microtime(true);
+// dispatches campsite
+$campsite->dispatch();
+
+$start7 = microtime(true);
 // renders the site
 $campsite->render();
 
+$end1 = microtime(true);
 // triggers an event after displaying
 $campsite->event('afterRender');
+$end2 = microtime(true);
+
+$initPaths = $start1 - $start0;
+$initCampsite = $start2 - $start1;
+$loadTranslation = $start3 - $start2;
+$loadConfig = $start4 - $start3;
+$initSession = $start5 - $start4;
+$initContext = $start6 - $start5;
+$dispatch = $start7 - $start6;
+$renderTemplate = $end1 - $start7;
+$endEvent = $end2 - $end1;
+
+echo "<h3>init paths: $initPaths sec</h3>\n";
+echo "<h3>init campsite: $initCampsite sec</h3>\n";
+echo "<h3>load translation: $loadTranslation sec</h3>\n";
+echo "<h3>load config: $loadConfig sec</h3>\n";
+//echo "<h3>init session: $initSession sec</h3>\n";
+echo "<h3>init context: $initContext sec</h3>\n";
+echo "<h3>dispatch: $dispatch sec</h3>\n";
+
+$initTime = $start7 - $start0;
+echo "<h3>init time: $initTime sec</h3>\n";
+echo "<h3>template display time: $renderTemplate sec</h3>\n";
+echo "<h3>end event: $endEvent sec</h3>\n";
+$totalTime = $end2 - $start0;
+echo "<h3>total time: $totalTime sec</h3>\n";
 
 ?>

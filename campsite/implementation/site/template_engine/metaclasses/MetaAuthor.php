@@ -20,27 +20,19 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaAuthor extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['identifier'] = 'Id';
-        $this->m_properties['first_name'] = 'first_name';
-        $this->m_properties['last_name'] = 'last_name';
-        $this->m_properties['email'] = 'email';
-	}
-
-
     public function __construct($p_idOrName = null)
     {
         $this->m_dbObject = new Author($p_idOrName);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Author();
         }
-        
-		$this->InitProperties();
-		$this->m_customProperties['name'] = 'getName';
+
+        $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['first_name'] = 'first_name';
+        $this->m_properties['last_name'] = 'last_name';
+        $this->m_properties['email'] = 'email';
+
+        $this->m_customProperties['name'] = 'getName';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 

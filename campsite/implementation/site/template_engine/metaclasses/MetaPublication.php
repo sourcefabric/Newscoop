@@ -20,21 +20,6 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaPublication extends MetaDbObject {
 
-    private function InitProperties()
-    {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['subscription_currency'] = 'Currency';
-        $this->m_properties['subscription_trial_time'] = 'TrialTime';
-        $this->m_properties['subscription_paid_time'] = 'PaidTime';
-        $this->m_properties['subscription_unit_cost'] = 'UnitCost';
-        $this->m_properties['subscription_unit_cost_all_lang'] = 'UnitCostAllLang';
-    }
-
-
     public function __construct($p_publicationId = null)
     {
         $this->m_dbObject = new Publication($p_publicationId);
@@ -42,7 +27,14 @@ final class MetaPublication extends MetaDbObject {
             $this->m_dbObject = new Publication();
         }
         
-        $this->InitProperties();
+        $this->m_properties['name'] = 'Name';
+        $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['subscription_currency'] = 'Currency';
+        $this->m_properties['subscription_trial_time'] = 'TrialTime';
+        $this->m_properties['subscription_paid_time'] = 'PaidTime';
+        $this->m_properties['subscription_unit_cost'] = 'UnitCost';
+        $this->m_properties['subscription_unit_cost_all_lang'] = 'UnitCostAllLang';
+
         $this->m_customProperties['site'] = 'getDefaultSiteName';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['default_language'] = 'getDefaultLanguage';

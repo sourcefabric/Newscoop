@@ -19,25 +19,17 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaTemplate extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['name'] = 'Name';
-		$this->m_properties['identifier'] = 'Id';
-	}
-
-
     public function __construct($p_templateIdOrName = null)
     {
         $this->m_dbObject = new Template($p_templateIdOrName);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Template();
         }
-        
-		$this->InitProperties();
-        $this->m_customProperties['type'] = 'getTemplateType';
+
+        $this->m_properties['name'] = 'Name';
+        $this->m_properties['identifier'] = 'Id';
+
+		$this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 

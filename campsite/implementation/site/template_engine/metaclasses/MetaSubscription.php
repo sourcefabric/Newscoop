@@ -21,24 +21,16 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
  */
 final class MetaSubscription extends MetaDbObject {
 
-    private function InitProperties()
-    {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-        $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['currency'] = 'Currency';
-    }
-
-
     public function __construct($p_subscriptionId = null)
     {
         $this->m_dbObject = new Subscription($p_subscriptionId);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Subscription();
         }
-        
-        $this->InitProperties();
+
+        $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['currency'] = 'Currency';
+
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['start_date'] = 'getStartDate';
         $this->m_customProperties['expiration_date'] = 'getExpirationDate';

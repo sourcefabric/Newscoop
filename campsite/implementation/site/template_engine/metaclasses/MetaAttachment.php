@@ -21,31 +21,31 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
  */
 final class MetaAttachment extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['identifier'] = 'id';
-		$this->m_properties['file_name'] = 'file_name';
-		$this->m_properties['mime_type'] = 'mime_type';
-		$this->m_properties['extension'] = 'extension';
-		$this->m_properties['size_b'] = 'size_in_bytes';
-	}
+	private static $m_baseProperties = array(
+	'identifier'=>'id',
+    'file_name'=>'file_name',
+    'mime_type'=>'mime_type',
+    'extension'=>'extension',
+    'size_b'=>'size_in_bytes'
+	);
+	
+	private static $m_defaultCustomProperties = array(
+    'description'=>'getDescription',
+    'size_kb'=>'getSizeKB',
+    'size_mb'=>'getSizeMB',
+    'defined'=>'defined'
+	);
 
 
     public function __construct($p_attachmentId = null)
     {
+    	$this->m_properties = self::$m_baseProperties;
+    	$this->m_customProperties = self::$m_defaultCustomProperties;
+
         $this->m_dbObject = new Attachment($p_attachmentId);
         if (!$this->m_dbObject->exists()) {
         	$this->m_dbObject = new Attachment();
         }
-
-		$this->InitProperties();
-        $this->m_customProperties['description'] = 'getDescription';
-        $this->m_customProperties['size_kb'] = 'getSizeKB';
-        $this->m_customProperties['size_mb'] = 'getSizeMB';
-        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 

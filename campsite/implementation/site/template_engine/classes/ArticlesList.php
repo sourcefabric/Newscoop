@@ -1,6 +1,7 @@
 <?php
 
 require_once('ListObject.php');
+require_once($g_campsiteDir . '/classes/CampCache.php');
 
 
 /**
@@ -77,6 +78,13 @@ class ArticlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
+		if (CampCache::IsEnabled()) {
+			$key = 'ArticlesList_' . serialize($p_parameters) . '_' . $p_start . '_' . $p_limit;
+			$metaArticlesList = CampCache::singleton()->fetch($key);
+            if ($metaArticlesList !== false && is_array($metaArticlesList)) {
+            	return $metaArticlesList;
+            }
+		}
 	    $operator = new Operator('is', 'integer');
 	    $context = CampTemplate::singleton()->context();
 
@@ -117,6 +125,9 @@ class ArticlesList extends ListObject
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
                                                   $article->getArticleNumber());
 	    }
+        if (CampCache::IsEnabled()) {
+            CampCache::singleton()->store($key, $metaArticlesList, 600);
+        }
 	    return $metaArticlesList;
 	}
 

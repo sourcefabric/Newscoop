@@ -4,10 +4,18 @@ require_once(dirname(__FILE__).'/CacheEngine.php');
 
 class CacheEngine_APC extends CacheEngine
 {
+	private static $m_name = 'APC';
+
 	private static $m_description = "The Alternative PHP Cache (APC)
 	is a free and open opcode cache for PHP. It was conceived of to
 	provide a free, open, and robust framework for caching and
 	optimizing PHP intermediate code.";
+
+
+	public function getName()
+	{
+		return self::$m_name;
+	}
 
 
 	/**

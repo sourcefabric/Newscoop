@@ -19,27 +19,19 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaLanguage extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['name'] = 'OrigName';
-		$this->m_properties['number'] = 'Id';
-		$this->m_properties['english_name'] = 'Name';
-		$this->m_properties['code'] = 'Code';
-	}
-
-
     public function __construct($p_languageId = null)
     {
 		$this->m_dbObject = new Language($p_languageId);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Language();
         }
-		
-		$this->InitProperties();
-        $this->m_customProperties['defined'] = 'defined';
+
+        $this->m_properties['name'] = 'OrigName';
+        $this->m_properties['number'] = 'Id';
+        $this->m_properties['english_name'] = 'Name';
+        $this->m_properties['code'] = 'Code';
+
+		$this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 } // class MetaLanguage

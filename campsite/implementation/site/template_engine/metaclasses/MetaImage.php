@@ -19,27 +19,19 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaImage extends MetaDbObject {
 
-    private function InitProperties()
-    {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-        $this->m_properties['number'] = 'Id';
-        $this->m_properties['photographer'] = 'Photographer';
-        $this->m_properties['place'] = 'Place';
-        $this->m_properties['description'] = 'Description';
-        $this->m_properties['date'] = 'Date';
-    }
-
-
     public function __construct($p_imageId = null)
     {
         $this->m_dbObject = new Image($p_imageId);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Image();
         }
-        
-        $this->InitProperties();
+
+        $this->m_properties['number'] = 'Id';
+        $this->m_properties['photographer'] = 'Photographer';
+        $this->m_properties['place'] = 'Place';
+        $this->m_properties['description'] = 'Description';
+        $this->m_properties['date'] = 'Date';
+
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';
         $this->m_customProperties['wday'] = 'getWeekDay';

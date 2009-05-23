@@ -21,15 +21,6 @@ require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
  */
 final class MetaTopic extends MetaDbObject {
 
-	private function InitProperties()
-	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
-		$this->m_properties['identifier'] = 'Id';
-	}
-
-
     public function __construct($p_topicIdOrName = null)
     {
         $this->m_dbObject = new Topic($p_topicIdOrName);
@@ -37,7 +28,8 @@ final class MetaTopic extends MetaDbObject {
             $this->m_dbObject = new Topic();
         }
         
-		$this->InitProperties();
+        $this->m_properties['identifier'] = 'Id';
+
 		$this->m_customProperties['name'] = 'getName';
 		$this->m_customProperties['value'] =  'getValue';
         $this->m_customProperties['defined'] = 'defined';

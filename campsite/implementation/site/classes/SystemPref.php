@@ -21,6 +21,7 @@ require_once($g_campsiteDir.'/template_engine/classes/CampSession.php');
  */
 class SystemPref {
     const SESSION_KEY_CACHE_ENGINE = 'campsite_cache_engine';
+    const SESSION_KEY_CACHE_ENABLED = 'campsite_cache_enabled';
 
 	const CACHE_KEY_SYSTEM_PREF = 'campsite_system_preferences';
 	
@@ -55,6 +56,8 @@ class SystemPref {
 			}
 			CampSession::singleton()->setData(self::SESSION_KEY_CACHE_ENGINE,
 			$Campsite['system_preferences']['CacheEngine']);
+            CampSession::singleton()->setData(self::SESSION_KEY_CACHE_ENABLED,
+            $Campsite['system_preferences']['SiteCacheEnabled']);
 			self::StoreSystemPrefsInCache();
 		}
 	} // fn __LoadConfig
@@ -74,6 +77,9 @@ class SystemPref {
 		if (!isset($Campsite['system_preferences'])) {
 			if ($p_varName == 'CacheEngine') {
 				return CampSession::singleton()->getData(self::SESSION_KEY_CACHE_ENGINE);
+			}
+			if ($p_varName == 'SiteCacheEnabled') {
+				return CampSession::singleton()->getData(self::SESSION_KEY_CACHE_ENABLED);
 			}
 
 			SystemPref::__LoadConfig();
@@ -152,7 +158,8 @@ class SystemPref {
     public static function DeleteSystemPrefsFromCache()
     {
         CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
-    	if (CampCache::IsEnabled()) {
+        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENABLED, null, 'default', true);
+        if (CampCache::IsEnabled()) {
             return CampCache::singleton()->delete(self::CACHE_KEY_SYSTEM_PREF);
         }
         return false;

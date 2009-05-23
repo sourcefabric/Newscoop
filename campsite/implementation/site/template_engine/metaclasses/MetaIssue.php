@@ -19,44 +19,44 @@ require_once($g_documentRoot.'/template_engine/metaclasses/MetaDbObject.php');
  */
 final class MetaIssue extends MetaDbObject {
 
-    private function InitProperties()
-    {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['number'] = 'Number';
-        $this->m_properties['date'] = 'PublicationDate';
-        $this->m_properties['publish_date'] = 'PublicationDate';
-        $this->m_properties['url_name'] = 'ShortName';
-    }
+	private static $m_baseProperties = array(
+	'name'=>'Name',
+    'number'=>'Number',
+    'date'=>'PublicationDate',
+    'publish_date'=>'PublicationDate',
+    'url_name'=>'ShortName'
+	);
+
+	private static $m_defaultCustomProperties = array(
+    'year'=>'getPublishYear',
+    'mon'=>'getPublishMonth',
+    'wday'=>'getPublishWeekDay',
+    'mday'=>'getPublishMonthDay',
+    'yday'=>'getPublishYearDay',
+    'hour'=>'getPublishHour',
+    'min'=>'getPublishMinute',
+    'sec'=>'getPublishSecond',
+    'mon_name'=>'getPublishMonthName',
+    'wday_name'=>'getPublishWeekDayName',
+    'template'=>'getTemplate',
+    'publication'=>'getPublication',
+    'language'=>'getLanguage',
+    'is_current'=>'isCurrent',
+    'is_published'=>'isPublished',
+    'defined'=>'defined'
+	);
 
 
     public function __construct($p_publicationId = null, $p_languageId = null,
     $p_issueNumber = null)
     {
+        $this->m_properties = self::$m_baseProperties;
+        $this->m_customProperties = self::$m_defaultCustomProperties;
+
         $this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Issue();
         }
-        
-        $this->InitProperties();
-        $this->m_customProperties['year'] = 'getPublishYear';
-        $this->m_customProperties['mon'] = 'getPublishMonth';
-        $this->m_customProperties['wday'] = 'getPublishWeekDay';
-        $this->m_customProperties['mday'] = 'getPublishMonthDay';
-        $this->m_customProperties['yday'] = 'getPublishYearDay';
-        $this->m_customProperties['hour'] = 'getPublishHour';
-        $this->m_customProperties['min'] = 'getPublishMinute';
-        $this->m_customProperties['sec'] = 'getPublishSecond';
-        $this->m_customProperties['mon_name'] = 'getPublishMonthName';
-        $this->m_customProperties['wday_name'] = 'getPublishWeekDayName';
-        $this->m_customProperties['template'] = 'getTemplate';
-        $this->m_customProperties['publication'] = 'getPublication';
-        $this->m_customProperties['language'] = 'getLanguage';
-        $this->m_customProperties['is_current'] = 'isCurrent';
-        $this->m_customProperties['is_published'] = 'isPublished';
-        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 

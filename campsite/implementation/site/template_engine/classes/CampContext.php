@@ -153,16 +153,15 @@ final class CampContext
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
-        $url = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
-        $this->m_objects['publication'] = $url->publication;
-        $this->m_objects['language'] = $url->language;
-        $this->m_objects['issue'] = $url->issue;
-        $this->m_objects['section'] = $url->section;
-        $this->m_objects['article'] = $url->article;
-        $this->m_objects['template'] = $url->template;
-        if (is_numeric($url->get_parameter('tpid'))) {
-            $this->m_objects['topic'] = new MetaTopic($url->get_parameter('tpid'));
+        $this->m_objects['publication'] = $this->m_readonlyProperties['url']->publication;
+        $this->m_objects['language'] = $this->m_readonlyProperties['url']->language;
+        $this->m_objects['issue'] = $this->m_readonlyProperties['url']->issue;
+        $this->m_objects['section'] = $this->m_readonlyProperties['url']->section;
+        $this->m_objects['article'] = $this->m_readonlyProperties['url']->article;
+        $this->m_objects['template'] = $this->m_readonlyProperties['url']->template;
+        if (is_numeric($this->m_readonlyProperties['url']->get_parameter('tpid'))) {
+            $this->m_objects['topic'] = new MetaTopic($this->m_readonlyProperties['url']->get_parameter('tpid'));
         }
 
         $this->m_readonlyProperties['default_template'] = $this->m_objects['template'];

@@ -77,14 +77,6 @@ final class MetaArticle extends MetaDbObject {
     );
 
 
-    private function InitProperties()
-    {
-        if (is_null($this->m_properties)) {
-        	$this->m_properties = self::$m_baseProperties;
-        }
-    }
-
-
     public function __construct($p_languageId = null, $p_articleId = null)
     {
     	$this->m_properties = self::$m_baseProperties;

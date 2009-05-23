@@ -60,11 +60,11 @@ SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
 // Caching
 SystemPref::Set('CacheEngine', $f_cache_engine);
 if ($f_cache_enabled == 'Y') {
-    if (CampCache::IsEnabled($f_cache_engine)) {
+    if (CampCache::IsSupported($f_cache_engine)) {
         SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
     } else {
         $msg_ok = 0;
-        camp_html_add_msg(getGS("Invalid: You need PHP $f_cache_engine enabled in order to use the caching system."));
+        camp_html_add_msg(getGS('Invalid: You need PHP $1 enabled in order to use the caching system.', $f_cache_engine));
     }
 } else {
     SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
