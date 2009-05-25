@@ -41,9 +41,9 @@
     {{ login_form submit_button="Login" button_html_code="class=\"submitbutton\"" }}
       <div align="left">
         <span class="formtext">User ID:</span>
-        {{ camp_edit object="user" attribute="uname" }}
+        {{ camp_edit object="login" attribute="uname" }}
         <span class="formtext">Password:</span>
-        {{camp_edit object="user" attribute="password" }}
+        {{camp_edit object="login" attribute="password" }}
       </div>
     <div align="center">{{ /login_form }}</div>
     </div>
