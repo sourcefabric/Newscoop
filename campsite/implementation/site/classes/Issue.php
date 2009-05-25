@@ -728,6 +728,18 @@ class Issue extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $issuesList = CampCache::singleton()->fetch($cacheKey);
+	    if ($issuesList !== false
+		    && is_array($issuesList)) {
+	        return $issuesList;
+	    }
+	}
+
         $hasPublicationId = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -805,6 +817,9 @@ class Issue extends DatabaseObject {
                 $issuesList[] = $issObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $issuesList, 600);
+	}
 
         return $issuesList;
     } // fn GetList

@@ -203,6 +203,18 @@ class ArticleAttachment extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $articleAttachmentsList = CampCache::singleton()->fetch($cacheKey);
+	    if ($articleAttachmentsList !== false
+		    && is_array($articleAttachmentsList)) {
+	        return $articleAttachmentsList;
+	    }
+	}
+
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -282,6 +294,9 @@ class ArticleAttachment extends DatabaseObject {
                 $articleAttachmentsList[] = $attchObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $articleAttachmentsList, 600);
+	}
 
         return $articleAttachmentsList;
     } // fn GetList

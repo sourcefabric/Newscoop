@@ -524,6 +524,18 @@ class Section extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $sectionsList = CampCache::singleton()->fetch($cacheKey);
+	    if ($sectionsList !== false
+		    && is_array($sectionsList)) {
+	        return $sectionsList;
+	    }
+	}
+
         $hasPublicationId = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -600,6 +612,9 @@ class Section extends DatabaseObject {
                 $sectionsList[] = $secObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $sectionsList, 600);
+	}
 
         return $sectionsList;
     } // fn GetList

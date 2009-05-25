@@ -14,10 +14,10 @@ require_once(dirname(__FILE__).'/Topic.php');
  * @package Campsite
  */
 class ArticleTypeField extends DatabaseObject {
-	const TYPE_TEXT = 'text';
-	const TYPE_BODY = 'body';
-	const TYPE_DATE = 'date';
-	const TYPE_TOPIC = 'topic';
+    const TYPE_TEXT = 'text';
+    const TYPE_BODY = 'body';
+    const TYPE_DATE = 'date';
+    const TYPE_TOPIC = 'topic';
 
     var $m_dbTableName = 'ArticleTypeMetadata';
 	var $m_keyColumnNames = array('type_name', 'field_name');
@@ -687,6 +687,21 @@ class ArticleTypeField extends DatabaseObject {
 	{
 	    global $g_ado_db;
 
+	    if (CampCache::IsEnabled()) {
+	        $paramString = (is_null($p_name)) ? 'null_' : $p_name . '_';
+		$paramString .= (is_null($p_articleType)) ? 'null_' : $p_articleType . '_';
+		$paramString .= (is_null($p_dataType)) ? 'null_' : $p_dataType . '_';
+		$paramString .= ($p_negateName == false) ? 'false_' : 'true_';
+		$paramString .= ($p_negateArticleType == false) ? 'false_' : 'true_';
+		$paramString .= ($p_negateDataType == false) ? 'false_' : 'true_';
+		$paramString .= ($p_selectHidden == false)? 'false_' : 'true_';
+		$cacheKey = __CLASS__ . '_List_' . $paramString;
+	        $articleTypeFieldsList = CampCache::singleton()->fetch($cacheKey);
+		if ($articleTypeFieldsList !== false && is_array($articleTypeFieldsList)) {
+		    return $articleTypeFieldsList;
+		}
+	    }
+
 	    if (isset($p_name)) {
 	    	$operator = $p_negateName ? '<>' : '=';
 	        $whereClauses[] = "field_name $operator '" . $g_ado_db->escape($p_name) . "'";
@@ -714,8 +729,12 @@ class ArticleTypeField extends DatabaseObject {
 	    	}
 	        $fields[] = $field;
 	    }
+	    if (CampCache::IsEnabled()) {
+	        CampCache::singleton()->store($cacheKey, $fields, 600);
+	    }
+
 	    return $fields;
-	}
+	} // fn FetchFields
 
 
 	/**
@@ -724,10 +743,10 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public static function DatabaseTypes()
 	{
-        return array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
-        self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
-        self::TYPE_DATE=>'DATE NOT NULL',
-        self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL');
+	    return array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
+			 self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
+			 self::TYPE_DATE=>'DATE NOT NULL',
+			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL');
 	}
 } // class ArticleTypeField
 

@@ -2108,6 +2108,17 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $articlesList = CampCache::singleton()->fetch($cacheKey);
+	    if ($articlesList !== false && is_array($articlesList)) {
+	        return $articlesList;
+	    }
+	}
+
         $matchAllTopics = false;
         $hasTopics = array();
         $hasNotTopics = array();
@@ -2290,6 +2301,11 @@ class Article extends DatabaseObject {
             $articlesList[] = new Article($article['IdLanguage'],
                                           $article['Number']);
         }
+
+	// stores articles list in cache
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $articlesList, 600);
+	}
 
         return $articlesList;
     } // fn GetList

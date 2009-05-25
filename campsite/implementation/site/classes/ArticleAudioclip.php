@@ -229,6 +229,18 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $articleAudioclipsList = CampCache::singleton()->fetch($cacheKey);
+	    if ($articleAudioclipsList !== false
+		    && is_array($articleAudioclipsList)) {
+	        return $articleAudioclipsList;
+	    }
+	}
+
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -298,6 +310,9 @@ class ArticleAudioclip extends DatabaseObject {
                 $articleAudioclipsList[] = $aclipObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $articleAudioclipsList, 600);
+	}
 
         return $articleAudioclipsList;
     } // fn GetList

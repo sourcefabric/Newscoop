@@ -235,6 +235,18 @@ class ArticleTopic extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $articleTopicsList = CampCache::singleton()->fetch($cacheKey);
+	    if ($articleTopicsList !== false
+		    && is_array($articleTopicsList)) {
+	        return $articleTopicsList;
+	    }
+	}
+
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
 
@@ -298,6 +310,9 @@ class ArticleTopic extends DatabaseObject {
                 $articleTopicsList[] = $topObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $articleTopicsList, 600);
+	}
 
         return $articleTopicsList;
     } // fn GetList

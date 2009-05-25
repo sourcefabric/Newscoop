@@ -296,6 +296,18 @@ class ArticleComment
     {
         global $g_ado_db, $PHORUM;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = serialize($p_parameters) . '_';
+	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
+	    $paramString.= $p_start . '_' . $p_limit;
+	    $cacheKey = __CLASS__ . '_List_' . $paramString;
+	    $articleCommentsList = CampCache::singleton()->fetch($cacheKey);
+	    if ($articleCommentsList !== false
+		    && is_array($articleCommentsList)) {
+	        return $articleCommentsList;
+	    }
+	}
+
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
 
@@ -366,6 +378,9 @@ class ArticleComment
                 $articleCommentsList[] = $pmObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $articleCommentsList, 600);
+	}
 
         return $articleCommentsList;
     } // fn GetList
