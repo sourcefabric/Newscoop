@@ -138,7 +138,7 @@ class MetaActionEdit_Subscription extends MetaAction
         }
 
         $fields = array('SubsType', 'tx_subs', 'nos', 'unitcost', 'unitcostalllang',
-        'f_substype', 'cb_subs', 'subs_all_languages', 'suma', 'tpl');
+        'f_substype', 'cb_subs', 'subs_all_languages', 'suma', 'tpl', 'subscription_language');
         foreach (CampRequest::GetInput() as $field=>$value) {
             if (strncmp('tx_subs', $field, strlen('tx_subs')) == 0) {
                 $fields[] = $field;

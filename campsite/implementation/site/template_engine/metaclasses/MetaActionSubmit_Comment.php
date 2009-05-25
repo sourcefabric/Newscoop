@@ -13,6 +13,7 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
 
 
 class MetaActionSubmit_Comment extends MetaAction
