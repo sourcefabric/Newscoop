@@ -123,9 +123,10 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();
-        
+
         // register plugin objects and listobjects
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {

@@ -217,9 +217,9 @@ class CampURIShortNames extends CampURI
 
         $this->m_publication = null;
         $this->m_language = null;
-        $this->m_issue = new MetaIssue();
-        $this->m_section = new MetaSection();
-        $this->m_article = new MetaArticle();
+        $this->m_issue = null;
+        $this->m_section = null;
+        $this->m_article = null;
 
         // gets the publication object based on site name (URI host)
         $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
@@ -270,8 +270,7 @@ class CampURIShortNames extends CampURI
                 $this->m_issue = new MetaIssue($this->m_publication->identifier,
                 $this->m_language->number,
                 $issueArray[0]->getIssueNumber());
-            }
-	        if (!$this->m_issue->defined()) {
+            } else {
 	            CampTemplate::singleton()->trigger_error("Invalid issue name '$cIssueSName' in URL.");
 	            return;
 	        }
@@ -297,8 +296,7 @@ class CampURIShortNames extends CampURI
                 $this->m_issue->number,
                 $this->m_language->number,
                 $sectionArray[0]->getSectionNumber());
-            }
-            if (!$this->m_section->defined()) {
+            } else {
                 CampTemplate::singleton()->trigger_error("Invalid section name '$cSectionSName' in URL.");
                 return;
             }

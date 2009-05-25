@@ -83,8 +83,8 @@ final class MetaArticle extends MetaDbObject {
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
         $this->m_dbObject = new Article($p_languageId, $p_articleId);
-    	if ($this->m_dbObject->exists()) {
-    		$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
+        if ($this->m_dbObject->exists()) {
+        	$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
 	        $this->m_dbObject->getArticleNumber(),
 	        $this->m_dbObject->getLanguageId());
 
@@ -95,10 +95,12 @@ final class MetaArticle extends MetaDbObject {
 	            $property = substr($property, 1);
 	            $this->m_customProperties[strtolower($property)] = array($property);
 	        }
-    	} else {
-    		$this->m_dbObject = new Article();
-    		$this->m_articleData = new ArticleData(null, null, null);
-    	}
+        } else {
+        	if (!is_null($p_languageId) || !is_null($p_articleId)) {
+        		$this->m_dbObject = new Article();
+        	}
+        	$this->m_articleData = new ArticleData(null, null, null);
+        }
     } // fn __construct
 
 

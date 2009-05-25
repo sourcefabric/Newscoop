@@ -81,12 +81,14 @@ abstract class ListObject
 	 */
 	private $m_orderStr;
 
+	private $m_parameters;
+
 	/**
 	 * The constraints array
 	 *
 	 * @var array
 	 */
-	protected $m_constraints;
+	protected $m_constraints = array();
 
 	/**
 	 * The order constraints array
@@ -115,6 +117,11 @@ abstract class ListObject
 	 * @var object
 	 */
 	protected $m_defaultIterator = null;
+	
+	private $m_cacheKey = null;
+
+	protected $m_defaultTTL = 600;
+
 
 	/**
 	 * constructor
@@ -167,18 +174,25 @@ abstract class ListObject
 		/**
 		 * Process the list constraints.
 		 */
-		$this->m_constraints = $this->ProcessConstraints(ListObject::ParseConstraintsString($this->m_constraintsStr));
+		$constraints = $this->ProcessConstraints(self::ParseConstraintsString($this->m_constraintsStr));
+        if ($constraints === false || $parameters === false) {
+            $this->m_totalCount = 0;
+            $this->m_objects = new MyArrayObject(array());
+            $this->m_hasNextElements = false;
+            return;
+        }
+        $this->m_parameters = $parameters;
+        $this->m_constraints = array_merge($this->m_constraints, $constraints);
 
 		/**
 		 * Process order constraints.
 		 */
 		$this->m_order = $this->ProcessOrder(ListObject::ParseConstraintsString($this->m_orderStr));
 
-        if ($this->m_constraints === false) {
-            $this->m_totalCount = 0;
-            $this->m_objects = new MyArrayObject(array());
-            $this->m_hasNextElements = false;
-            return;
+        $list = $this->fetchFromCache();
+        if (!is_null($list)) {
+        	$this->duplicateObject($list);
+        	return;
         }
 
 		$objects = $this->CreateList($this->m_start, $this->m_limit, $parameters, $this->m_totalCount);
@@ -187,7 +201,9 @@ abstract class ListObject
 		}
   		$this->m_objects = new MyArrayObject($objects);
   		$this->m_hasNextElements = $this->m_totalCount > ($this->m_start + $this->getLength());
+  		$this->storeInCache();
 	}
+
 
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -228,6 +244,52 @@ abstract class ListObject
 	 * @return array
 	 */
 	abstract protected function ProcessParameters(array $p_parameters);
+
+
+	private function fetchFromCache()
+	{
+        if (CampCache::IsEnabled()) {
+            $object = CampCache::singleton()->fetch($this->getCacheKey());
+            if ($object !== false && is_object($object)) {
+                return $object;
+            }
+        }
+        return null;
+	}
+
+
+	private function storeInCache()
+	{
+        if (CampCache::IsEnabled()) {
+            CampCache::singleton()->store($this->getCacheKey(), $this, $this->m_defaultTTL);
+        }
+	}
+
+
+	protected function getCacheKey()
+	{
+		if (is_null($this->m_cacheKey)) {
+			$this->m_cacheKey = get_class($this) . '__' . serialize($this->m_constraints)
+			. '__' . serialize($this->m_order) . '__' . $this->m_start
+			. '__' . $this->m_limit . '__' . $this->m_columns;
+		}
+		return $this->m_cacheKey;
+	}
+
+
+    /**
+     * Copies the given object
+     *
+     * @param object $p_source
+     * @return object
+     */
+    private function duplicateObject($p_source)
+    {
+        foreach ($p_source as $key=>$value) {
+            $this->$key = $value;
+        }
+    }
+
 
 	/**
 	 * Generates a unique name for this list object.

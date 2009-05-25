@@ -13,6 +13,7 @@ $f_subscription_id = Input::Get('f_subscription_id', 'int', 0);
 
 $publicationObj = new Publication($f_publication_id);
 $languageObj = new Language($publicationObj->getDefaultLanguageId());
+$subscription = new Subscription($f_subscription_id);
 
 $manageUser = new User($f_user_id);
 $sections = SubscriptionSection::GetSubscriptionSections($f_subscription_id);
@@ -65,13 +66,7 @@ if ($subscription_num_sections < $publication_num_sections
 <p>
 
 <?php
-$isPaid = 0;
-if (isset($sections[0])) {
-	$sType = $sections[0]->getProperty('Type');
-	if ($sType == 'P') {
-		$isPaid = 1;
-	}
-}
+$isPaid = $subscription->getProperty('Type') == 'P';
 ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
@@ -87,7 +82,8 @@ if (isset($sections[0])) {
 
 <?php
 $color= 0;
-foreach ($sections as $section) { ?>
+foreach ($sections as $section) {
+?>
 <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<TD >
 		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/sections/change.php?f_user_id=<?php p($f_user_id); ?>&f_publication_id=<?php p($f_publication_id); ?>&f_language_id=<?php p($section->getProperty('IdLanguage')); ?>&f_subscription_id=<?php p($f_subscription_id); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>"><?php p(htmlspecialchars($section->getProperty('Name'))); ?></A>

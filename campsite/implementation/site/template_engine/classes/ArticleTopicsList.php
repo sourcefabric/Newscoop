@@ -23,15 +23,6 @@ class ArticleTopicsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    if (!$context->article->defined || !$context->language->defined) {
-	        return array();
-	    }
-	    $comparisonOperation = new ComparisonOperation('nrarticle', $operator,
-	                                                   $context->article->number);
-	    $this->m_constraints[] = $comparisonOperation;
-
 	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaTopicsList = array();
 	    foreach ($articleTopicsList as $topic) {
@@ -93,8 +84,29 @@ class ArticleTopicsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_topics", $p_smarty);
     		}
     	}
-    	return $parameters;
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        if (!$context->article->defined) {
+        	CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_topics");
+        	return array();
+        }
+        $this->m_constraints[] = new ComparisonOperation('nrarticle', $operator,
+                                                         $context->article->number);
+
+        return $parameters;
 	}
+
+
+    protected function getCacheKey()
+    {
+        if (is_null($this->m_cacheKey)) {
+            $this->m_cacheKey = get_class($this) . '__' . serialize($this->m_parameters)
+            . '__' . serialize($this->m_order) . '__' . $this->m_start
+            . '__' . $this->m_limit . '__' . $this->m_columns;
+        }
+        return $this->m_cacheKey;
+    }
 }
 
 ?>

@@ -23,23 +23,6 @@ class ArticleAttachmentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    if (!$context->article->defined) {
-	        return array();
-	    }
-	    $comparisonOperation = new ComparisonOperation('article_number', $operator,
-	                                                   $context->article->number);
-	    $this->m_constraints[] = $comparisonOperation;
-
-        if (isset($p_parameters['language'])
-                && strtolower($p_parameters['language']) == 'current'
-                && $context->language->defined) {
-            $comparisonOperation = new ComparisonOperation('language_id', $operator,
-                                                           $context->language->number);
-            $this->m_constraints[] = $comparisonOperation;
-	    }
-
 	    $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaAttachmentsList = array();
 	    foreach ($articleAttachmentsList as $attachment) {
@@ -102,8 +85,36 @@ class ArticleAttachmentsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_attachments", $p_smarty);
     		}
     	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        if (!$context->article->defined) {
+        	CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_attachments");
+        	return false;
+        }
+        $this->m_constraints[] = new ComparisonOperation('article_number', $operator,
+                                                         $context->article->number);
+
+        if (isset($p_parameters['language'])
+                && strtolower($p_parameters['language']) == 'current'
+                && $context->language->defined) {
+            $this->m_constraints[] = new ComparisonOperation('language_id', $operator,
+                                                             $context->language->number);
+        }
+
     	return $parameters;
 	}
+
+
+    protected function getCacheKey()
+    {
+        if (is_null($this->m_cacheKey)) {
+            $this->m_cacheKey = get_class($this) . '__' . serialize($this->m_parameters)
+            . '__' . serialize($this->m_order) . '__' . $this->m_start
+            . '__' . $this->m_limit . '__' . $this->m_columns;
+        }
+        return $this->m_cacheKey;
+    }
 }
 
 ?>

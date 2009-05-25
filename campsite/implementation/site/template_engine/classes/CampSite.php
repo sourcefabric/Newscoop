@@ -259,10 +259,7 @@ final class CampSite extends CampSystem
         	$alias = new Alias($_SERVER['HTTP_HOST']);
         	if ($alias->exists()) {
         		$publication = new Publication($alias->getPublicationId());
-        		$urlTypeObj = new URLType($publication->getUrlTypeId());
-        		if ($urlTypeObj->exists()) {
-        			$urlType = $urlTypeObj->getId();
-        		}
+        		$urlType = $publication->getUrlTypeId();
         	}
 
         	// sets url type to default if necessary

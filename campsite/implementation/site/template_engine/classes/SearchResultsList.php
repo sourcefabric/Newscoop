@@ -31,46 +31,6 @@ class SearchResultsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION
-	    && $context->publication->defined) {
-	        $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
-	                                                         $context->publication->identifier);
-	    }
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
-	    && $context->issue->defined && $p_parameters['search_issue'] == 0) {
-	        $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
-	                                                         $context->issue->number);
-	    }
-	    if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION
-	    && $context->section->defined && $p_parameters['search_section'] == 0) {
-	        $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
-	                                                         $context->section->number);
-	    }
-        if ($p_parameters['search_issue'] != 0) {
-            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
-                                                             $p_parameters['search_issue']);
-        }
-        if ($p_parameters['search_section'] != 0) {
-            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
-                                                             $p_parameters['search_section']);
-        }
-        if (!empty($p_parameters['start_date'])) {
-            $startDateOperator = new Operator('greater_equal', 'date');
-        	$this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
-                                                             $p_parameters['start_date']);
-        }
-        if (!empty($p_parameters['end_date'])) {
-            $endDateOperator = new Operator('smaller_equal', 'date');
-        	$this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
-                                                             $p_parameters['end_date']);
-        }
-        if (!empty($p_parameters['topic_id'])) {
-            $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
-                                                             $p_parameters['topic_id']);
-        }
-
 	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
 
 	    if ($p_parameters['scope'] == 'index') {
@@ -188,8 +148,60 @@ class SearchResultsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_search_results", $p_smarty);
     		}
     	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION
+        && $context->publication->defined) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
+                                                             $context->publication->identifier);
+        }
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
+        && $context->issue->defined && $p_parameters['search_issue'] == 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $context->issue->number);
+        }
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION
+        && $context->section->defined && $p_parameters['search_section'] == 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $context->section->number);
+        }
+        if ($p_parameters['search_issue'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $p_parameters['search_issue']);
+        }
+        if ($p_parameters['search_section'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $p_parameters['search_section']);
+        }
+        if (!empty($p_parameters['start_date'])) {
+            $startDateOperator = new Operator('greater_equal', 'date');
+            $this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
+                                                             $p_parameters['start_date']);
+        }
+        if (!empty($p_parameters['end_date'])) {
+            $endDateOperator = new Operator('smaller_equal', 'date');
+            $this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
+                                                             $p_parameters['end_date']);
+        }
+        if (!empty($p_parameters['topic_id'])) {
+            $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
+                                                             $p_parameters['topic_id']);
+        }
+
     	return $parameters;
 	}
+
+
+    protected function getCacheKey()
+    {
+        if (is_null($this->m_cacheKey)) {
+            $this->m_cacheKey = get_class($this) . '__' . serialize($this->m_parameters)
+            . '__' . serialize($this->m_order) . '__' . $this->m_start
+            . '__' . $this->m_limit . '__' . $this->m_columns;
+        }
+        return $this->m_cacheKey;
+    }
 }
 
 ?>

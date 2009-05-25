@@ -25,41 +25,7 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-
-	    if (!$p_parameters['ignore_article']) {
-	    	if (!$context->article->defined) {
-	    		CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
-	    		return array();
-	    	}
-	    	$comparisonOperation = new ComparisonOperation('article_number', $operator,
-	    	                                               $context->article->number);
-	    	$this->m_constraints[] = $comparisonOperation;
-	    } else {
-	    	$order = array();
-	    	foreach ($this->m_order as $orderCond) {
-	    		if ($orderCond['field'] == 'bydate') {
-	    			$order[] = $orderCond;
-	    		}
-	    	}
-	    	if (count($order) == 0) {
-	    		$this->m_order[] = array('field'=>'bydate', 'dir'=>'desc');
-	    	} else {
-	    		$this->m_order = $order;
-	    	}
-	    }
-
-	    if (!$p_parameters['ignore_language']) {
-            if (!$context->language->defined) {
-                CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_comments");
-                return array();
-            }
-	    	$comparisonOperation = new ComparisonOperation('language_id', $operator,
-	    	                                               $context->language->number);
-	    	$this->m_constraints[] = $comparisonOperation;
-	    }
-
+		$this->m_defaultTTL = 1;
 	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaCommentsList = array();
 	    foreach ($articleCommentsList as $comment) {
@@ -158,8 +124,53 @@ class ArticleCommentsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
     	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+
+        if (!$p_parameters['ignore_article']) {
+            if (!$context->article->defined) {
+                CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
+                return false;
+            }
+            $this->m_constraints[] = new ComparisonOperation('article_number', $operator,
+                                                             $context->article->number);
+        } else {
+            $order = array();
+            foreach ($this->m_order as $orderCond) {
+                if ($orderCond['field'] == 'bydate') {
+                    $order[] = $orderCond;
+                }
+            }
+            if (count($order) == 0) {
+                $this->m_order[] = array('field'=>'bydate', 'dir'=>'desc');
+            } else {
+                $this->m_order = $order;
+            }
+        }
+
+        if (!$p_parameters['ignore_language']) {
+            if (!$context->language->defined) {
+                CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_comments");
+                return false;
+            }
+            $this->m_constraints[] = new ComparisonOperation('language_id', $operator,
+                                                             $context->language->number);
+        }
+
     	return $parameters;
 	}
+
+
+    protected function getCacheKey()
+    {
+        if (is_null($this->m_cacheKey)) {
+            $this->m_cacheKey = get_class($this) . '__' . serialize($this->m_parameters)
+            . '__' . serialize($this->m_order) . '__' . $this->m_start
+            . '__' . $this->m_limit . '__' . $this->m_columns;
+        }
+        return $this->m_cacheKey;
+    }
 }
 
 ?>

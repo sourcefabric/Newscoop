@@ -82,15 +82,14 @@ function __autoload($p_className)
     global $g_campsiteDir, $ADMIN, $ADMIN_DIR;
     require_once($g_campsiteDir.'/classes/CampPlugin.php');
 
+    static $classDirectories = array('classes',
+                              'template_engine/classes',
+                              'template_engine/metaclasses');
+                      
     if (!is_string($p_className)) {
         return;
     }
 
-    $classDirectories = array('classes',
-                              'template_engine',
-                              'template_engine/classes',
-                              'template_engine/metaclasses');
-                      
     foreach ($classDirectories as $dirName) {
         $fileName = "$g_campsiteDir/$dirName/$p_className.php";
         if (file_exists($fileName)) {

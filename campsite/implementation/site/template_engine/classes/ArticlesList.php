@@ -1,7 +1,7 @@
 <?php
 
 require_once('ListObject.php');
-require_once($g_campsiteDir . '/classes/CampCache.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/CampCache.php');
 
 
 /**
@@ -78,46 +78,6 @@ class ArticlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		if (CampCache::IsEnabled()) {
-			$key = 'ArticlesList_' . serialize($p_parameters) . '_' . $p_start . '_' . $p_limit;
-			$metaArticlesList = CampCache::singleton()->fetch($key);
-            if ($metaArticlesList !== false && is_array($metaArticlesList)) {
-            	return $metaArticlesList;
-            }
-		}
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-
-	    if ($context->publication->defined && !$p_parameters['ignore_publication']) {
-    	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
-	                                                       $context->publication->identifier);
-            $this->m_constraints[] = $comparisonOperation;
-	    }
-	    if ($context->language->defined && !$p_parameters['ignore_language']) {
-	        $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
-	                                                       $context->language->number);
-	        $this->m_constraints[] = $comparisonOperation;
-	    }
-	    if ($context->issue->defined && !$p_parameters['ignore_issue']) {
-            $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
-                                                           $context->issue->number);
-    	    $this->m_constraints[] = $comparisonOperation;
-	    }
-	    if ($context->section->defined && !$p_parameters['ignore_section']) {
-            $comparisonOperation = new ComparisonOperation('NrSection', $operator,
-                                                           $context->section->number);
-    	    $this->m_constraints[] = $comparisonOperation;
-	    }
-	    if ($context->topic->defined) {
-	        $comparisonOperation = new ComparisonOperation('topic', $operator,
-	                                                       $context->topic->identifier);
-	        $this->m_constraints[] = $comparisonOperation;
-	    }
-	    if (!$context->preview) {
-	        $comparisonOperation = new ComparisonOperation('published', $operator, 'true');
-    	    $this->m_constraints[] = $comparisonOperation;
-	    }
-
 	    $articlesList = Article::GetList($this->m_constraints, $this->m_order,
 	    $p_start, $p_limit, $p_count);
 	    $metaArticlesList = array();
@@ -125,9 +85,6 @@ class ArticlesList extends ListObject
 	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
                                                   $article->getArticleNumber());
 	    }
-        if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($key, $metaArticlesList, 600);
-        }
 	    return $metaArticlesList;
 	}
 
@@ -281,7 +238,7 @@ class ArticlesList extends ListObject
             return false;
 	    }
 
-		return $parameters;
+	    return $parameters;
 	}
 
 
@@ -367,6 +324,33 @@ class ArticlesList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
     		}
     	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        if ($context->publication->defined && !$p_parameters['ignore_publication']) {
+            $this->m_constraints[] = new ComparisonOperation('IdPublication', $operator,
+                                                             $context->publication->identifier);
+        }
+        if ($context->language->defined && !$p_parameters['ignore_language']) {
+            $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
+                                                             $context->language->number);
+        }
+        if ($context->issue->defined && !$p_parameters['ignore_issue']) {
+            $this->m_constraints[] = new ComparisonOperation('NrIssue', $operator,
+                                                             $context->issue->number);
+        }
+        if ($context->section->defined && !$p_parameters['ignore_section']) {
+            $this->m_constraints[] = new ComparisonOperation('NrSection', $operator,
+                                                             $context->section->number);
+        }
+        if ($context->topic->defined) {
+            $this->m_constraints[] = new ComparisonOperation('topic', $operator,
+                                                             $context->topic->identifier);
+        }
+        if (!$context->preview) {
+            $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
+        }
+
     	return $parameters;
 	}
 

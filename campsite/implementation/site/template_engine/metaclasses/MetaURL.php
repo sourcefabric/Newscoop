@@ -22,6 +22,19 @@ require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
  */
 final class MetaURL
 {
+	private static $m_defaultCustomProperties = array(
+	'uri'=>'getURI',
+    'uri_path'=>'getURIPath',
+    'url'=>'getURL',
+    'url_parameters'=>'getURLParameters',
+    'form_parameters'=>'getFormParameters',
+    'base'=>'getBase',
+    'path'=>'getPath',
+    'query'=>'getQuery',
+    'type'=>'getURLType',
+	'request_uri'=>'getRequestURI'
+	);
+	
     /**
      * @var CampURI object
      */
@@ -40,19 +53,8 @@ final class MetaURL
 
     public function __construct()
     {
-        $this->m_uriObj = CampSite::GetURIInstance();
-
-        $this->m_customProperties['uri'] = 'getURI';
-        $this->m_customProperties['uri_path'] = 'getURIPath';
-        $this->m_customProperties['url'] = 'getURL';
-        $this->m_customProperties['url_parameters'] = 'getURLParameters';
-
-        $this->m_customProperties['form_parameters'] = 'getFormParameters';
-        $this->m_customProperties['base'] = 'getBase';
-        $this->m_customProperties['path'] = 'getPath';
-        $this->m_customProperties['query'] = 'getQuery';
-        $this->m_customProperties['type'] = 'getURLType';
-        $this->m_customProperties['request_uri'] = 'getRequestURI';
+        $this->m_customProperties = self::$m_defaultCustomProperties;
+    	$this->m_uriObj = CampSite::GetURIInstance();
     } // fn __construct
 
 

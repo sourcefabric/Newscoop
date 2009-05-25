@@ -38,6 +38,9 @@ class ArticleData extends DatabaseObject {
 	{
 		$this->m_articleTypeName = $p_articleType;
 		$this->m_dbTableName = 'X'.$p_articleType;
+		if (empty($this->m_articleTypeName)) {
+			return;
+		}
 		// Get user-defined values.
 		$dbColumns = $this->getUserDefinedColumns(true);
 		foreach ($dbColumns as $columnMetaData) {

@@ -1022,7 +1022,13 @@ abstract class CampURI {
         $queryString = '';
         $queryVars = array();
         foreach ($p_queryArray as $var => $value) {
-            $queryVars[] = $var.'='.urlencode($value);
+        	if (is_array($value)) {
+        		foreach ($value as $item) {
+        			$queryVars[] = $var.'[]='.urlencode($item);
+        		}
+        	} else {
+        		$queryVars[] = $var.'='.urlencode($value);
+        	}
         }
         $separator = $p_HTMLEscape ? '&amp;' : '&';
         $queryString = implode($separator, $queryVars);

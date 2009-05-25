@@ -42,7 +42,7 @@ final class MetaSection extends MetaDbObject {
 
 		$this->m_dbObject = new Section($p_publicationId, $p_issueNumber,
 										$p_languageId, $p_sectionNumber);
-        if (!$this->m_dbObject->exists()) {
+        if (!$this->m_dbObject->exists() && !is_null($p_sectionNumber)) {
             $this->m_dbObject = new Section();
         }
     } // fn __construct

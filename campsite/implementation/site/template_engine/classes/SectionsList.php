@@ -27,23 +27,6 @@ class SectionsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $operator = new Operator('is', 'integer');
-	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('IdPublication', $operator,
-	                                                   $context->publication->identifier);
-	    $this->m_constraints[] = $comparisonOperation;
-        if ($context->issue->defined) {
-            $comparisonOperation = new ComparisonOperation('NrIssue', $operator,
-                                                           $context->issue->number);
-            $this->m_constraints[] = $comparisonOperation;
-        }
-        if ($context->language->defined) {
-            $comparisonOperation = new ComparisonOperation('IdLanguage', $operator,
-	                                                       $context->language->number);
-            $this->m_constraints[] = $comparisonOperation;
-        }
-	    $this->m_order = array('Number'=>'asc');
-
 	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaSectionsList = array();
 	    foreach ($sectionsList as $section) {
@@ -122,7 +105,7 @@ class SectionsList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-		return array();
+		return array('Number'=>'asc');
 	}
 
 	/**
@@ -157,6 +140,20 @@ class SectionsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_sections", $p_smarty);
     		}
     	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        $this->m_constraints[] = new ComparisonOperation('IdPublication', $operator,
+                                                         $context->publication->identifier);
+        if ($context->issue->defined) {
+            $this->m_constraints[] = new ComparisonOperation('NrIssue', $operator,
+                                                             $context->issue->number);
+        }
+        if ($context->language->defined) {
+            $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
+                                                             $context->language->number);
+        }
+
     	return $parameters;
 	}
 }

@@ -26,7 +26,7 @@ final class MetaComment extends MetaDbObject {
     public function __construct($p_messageId = null)
     {
         $this->m_dbObject = new Phorum_message($p_messageId);
-        if (!$this->m_dbObject->exists()) {
+        if (!$this->m_dbObject->exists() && !is_null($p_messageId)) {
             $this->m_dbObject = new Phorum_message();
         }
 
