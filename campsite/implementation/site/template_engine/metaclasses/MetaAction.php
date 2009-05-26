@@ -229,7 +229,8 @@ class MetaAction
         || !array_key_exists($p_property, $this->m_properties)) {
             $this->trigger_invalid_property_error($p_property);
         }
-        if (method_exists($this, $this->m_properties[$p_property])) {
+        if (is_string($this->m_properties[$p_property])
+        && method_exists($this, $this->m_properties[$p_property])) {
             $methodName = $this->m_properties[$p_property];
             return $this->$methodName();
         }
