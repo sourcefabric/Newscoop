@@ -9,6 +9,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Audioclip.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 /**
  * @package Campsite
@@ -225,11 +226,12 @@ class ArticleAudioclip extends DatabaseObject {
         global $g_ado_db;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $articleAudioclipsList = CampCache::singleton()->fetch($cacheKey);
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleAudioclipsList = $cacheListObj->fetchFromCache();
 	    if ($articleAudioclipsList !== false
 		    && is_array($articleAudioclipsList)) {
 	        return $articleAudioclipsList;
@@ -306,7 +308,7 @@ class ArticleAudioclip extends DatabaseObject {
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $articleAudioclipsList, 600);
+	    $cacheListObj->storeInCache($articleAudioclipsList);
 	}
 
         return $articleAudioclipsList;

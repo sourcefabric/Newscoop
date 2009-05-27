@@ -252,6 +252,15 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
+	    $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
+	    $issueTemplate = CampCache::singleton()->fetch($cacheKey);
+	    if ($issueTemplate !== false && !empty($issueTemplate)) {
+	        return $issueTemplate;
+	    }
+	}
+
         $sql = 'SELECT t.Name FROM Issues as i, Templates as t '
             . 'WHERE i.IssueTplId = t.Id'
             . ' AND i.IdLanguage = ' . $p_lngId
@@ -261,6 +270,9 @@ abstract class CampSystem
         if (empty($data)) {
             CampTemplate::singleton()->trigger_error('...');
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $data);
+	}
 
         return $data;
     } // fn GetIssueTemplate
@@ -269,6 +281,15 @@ abstract class CampSystem
     public static function GetSectionTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr)
     {
         global $g_ado_db;
+
+	if (CampCache::IsEnabled()) {
+	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
+	    $cacheKey = __CLASS__ . '_SectionTemplate_' . $paramString;
+	    $sectionTemplate = CampCache::singleton()->fetch($cacheKey);
+	    if ($sectionTemplate !== false && !empty($sectionTemplate)) {
+	        return $sectionTemplate;
+	    }
+	}
 
         if ($p_sctNr > 0) {
             $sql = 'SELECT t.Name FROM Sections as s, Templates as t '
@@ -292,6 +313,9 @@ abstract class CampSystem
         if (empty($data)) {
             CampTemplate::singleton()->trigger_error('...');
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $data);
+	}
 
         return $data;
     } // fn GetSectionTemplate
@@ -300,6 +324,15 @@ abstract class CampSystem
     public static function GetArticleTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr)
     {
         global $g_ado_db;
+
+	if (CampCache::IsEnabled()) {
+	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
+	    $cacheKey = __CLASS__ . '_ArticleTemplate_' . $paramString;
+	    $articleTemplate = CampCache::singleton()->fetch($cacheKey);
+	    if ($articleTemplate !== false && !empty($articleTemplate)) {
+	        return $articleTemplate;
+	    }
+	}
 
         if ($p_sctNr > 0) {
             $sql = 'SELECT t.Name FROM Sections as s, Templates as t '
@@ -323,6 +356,9 @@ abstract class CampSystem
         if (empty($data)) {
             CampTemplate::singleton()->trigger_error('...');
         }
+	if (CampCache::IsEnabled()) {
+	    CampCache::singleton()->store($cacheKey, $data);
+	}
 
         return $data;
     } // fn GetArticleTemplate

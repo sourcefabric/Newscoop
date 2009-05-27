@@ -9,6 +9,8 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Author.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
+
 
 /**
  * @package Campsite
@@ -196,6 +198,19 @@ class ArticleAuthor extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleAuthorsList = $cacheListObj->fetchFromCache();
+	    if ($articleAuthorsList !== false
+		    && is_array($articleAuthorsList)) {
+	        return $articleAuthorsList;
+	    }
+	}
+
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -265,6 +280,9 @@ class ArticleAuthor extends DatabaseObject {
                 $articleAuthorsList[] = $authorObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    $cacheListObj->storeInCache($articleAuthorsList);
+	}
 
         return $articleAuthorsList;
     } // fn GetList
