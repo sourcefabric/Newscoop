@@ -44,14 +44,14 @@ abstract class ListObject
 	 *
 	 * @var int
 	 */
-	private $m_start;
+	protected $m_start;
 
 	/**
 	 * The maximum number of objects in the list, 0 for no limit
 	 *
 	 * @var int
 	 */
-	private $m_limit;
+	protected $m_limit;
 
 	/**
 	 * True if the generated list has more elements than $this->m_limit
@@ -65,7 +65,7 @@ abstract class ListObject
 	 *
 	 * @var int
 	 */
-	private $m_columns;
+	protected $m_columns;
 
 	/**
 	 * The initial constraints string.
