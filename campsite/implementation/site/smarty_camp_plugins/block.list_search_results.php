@@ -38,7 +38,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('SearchResultsList');
 
-        $p_params['template'] = $campContext->search_articles_action->template;
+        $p_params['template'] = $campContext->search_articles_action->template->name;
         $p_params['match_all'] = $campContext->search_articles_action->match_all;
         $p_params['search_level'] = $campContext->search_articles_action->search_level;
         $p_params['search_phrase'] = $campContext->search_articles_action->search_phrase;

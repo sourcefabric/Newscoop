@@ -81,7 +81,7 @@ abstract class ListObject
 	 */
 	private $m_orderStr;
 
-	private $m_parameters;
+	protected $m_parameters;
 
 	/**
 	 * The constraints array
@@ -118,7 +118,7 @@ abstract class ListObject
 	 */
 	protected $m_defaultIterator = null;
 	
-	private $m_cacheKey = null;
+	protected $m_cacheKey = null;
 
 	protected $m_defaultTTL = 600;
 
@@ -163,9 +163,9 @@ abstract class ListObject
 		 * - order string (m_orderStr)
 		 * - list name (m_name)
 		 */
-		$this->m_start = is_numeric($p_start) ? $p_start : 0;
-		$this->m_limit = isset($parameters['length']) ? $parameters['length'] : 0;
-		$this->m_columns = isset($parameters['columns']) ? $parameters['columns'] : 0;
+		$this->m_start = is_numeric($p_start) ? (int)$p_start : 0;
+		$this->m_limit = isset($parameters['length']) ? (int)$parameters['length'] : 0;
+		$this->m_columns = isset($parameters['columns']) ? (int)$parameters['columns'] : 0;
 		$this->m_constraintsStr = isset($parameters['constraints']) ? $parameters['constraints'] : '';
 		$this->m_orderStr = isset($parameters['order']) ? $parameters['order'] : '';
 		$name = isset($parameters['name']) ? $parameters['name'] : '';
@@ -269,7 +269,7 @@ abstract class ListObject
 	protected function getCacheKey()
 	{
 		if (is_null($this->m_cacheKey)) {
-			$this->m_cacheKey = get_class($this) . '__' . serialize($this->m_constraints)
+			$this->m_cacheKey = __CLASS__ . '__' . serialize($this->m_constraints)
 			. '__' . serialize($this->m_order) . '__' . $this->m_start
 			. '__' . $this->m_limit . '__' . $this->m_columns;
 		}
