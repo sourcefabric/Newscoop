@@ -72,6 +72,10 @@ class ArticleType {
 	public function create()
 	{
 		global $g_ado_db;
+		
+		if (strlen($this->m_dbTableName) <= 1) {
+			return false;
+		}
 		$queryStr = "CREATE TABLE `".$this->m_dbTableName."` (\n"
                   . "    NrArticle INT UNSIGNED NOT NULL,\n"
                   . "    IdLanguage INT UNSIGNED NOT NULL,\n"
