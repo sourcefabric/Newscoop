@@ -11,6 +11,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 /**
  * @package Campsite
@@ -396,6 +397,18 @@ class ArticleImage extends DatabaseObject {
     {
         global $g_ado_db;
 
+	if (CampCache::IsEnabled()) {
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleImagesList = $cacheListObj->fetchFromCache();
+	    if ($articleImagesList !== false && is_array($articleImagesList)) {
+	        return $articleImagesList;
+	    }
+	}
+
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -472,6 +485,9 @@ class ArticleImage extends DatabaseObject {
                 $articleImagesList[] = $imgObj;
             }
         }
+	if (CampCache::IsEnabled()) {
+	    $cacheListObj->storeInCache($articleImagesList);
+	}
 
         return $articleImagesList;
     } // fn GetList

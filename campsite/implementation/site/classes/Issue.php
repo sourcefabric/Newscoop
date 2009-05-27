@@ -667,10 +667,10 @@ class Issue extends DatabaseObject {
 		global $g_ado_db;
 
 		if (CampCache::IsEnabled()) {
-		    $paramsArray['publication_id'] = $p_publicationId;
-		    $paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
-		    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-		    $issue = $cacheListObj->fetchFromCache();
+		    $paramString = $p_publicationId . '_';
+		    $paramString.= (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
+		    $cacheKey = __CLASS__ . '_CurrentIssue_' . $paramString;
+		    $issue = CampCache::singleton()->fetch($cacheKey);
 		    if ($issue !== false && is_object($issue)) {
 		        return $issue;
 		    }
@@ -688,7 +688,7 @@ class Issue extends DatabaseObject {
 		}
 		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
 		if (CampCache::IsEnabled()) {
-		    $cacheListObj->storeInCache($issue);
+		    CampCache::singleton()->store($cacheKey, $issue);
 		}
 
 		return $issue;

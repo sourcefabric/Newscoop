@@ -11,6 +11,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 class ArticleComment
 {
@@ -292,13 +293,13 @@ class ArticleComment
         global $g_ado_db, $PHORUM;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $articleCommentsList = CampCache::singleton()->fetch($cacheKey);
-	    if ($articleCommentsList !== false
-		    && is_array($articleCommentsList)) {
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleCommentsList = $cacheListObj->fetchFromCache();
+	    if ($articleCommentsList !== false && is_array($articleCommentsList)) {
 	        return $articleCommentsList;
 	    }
 	}
@@ -374,7 +375,7 @@ class ArticleComment
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $articleCommentsList, 600);
+	    $cacheListObj->storeInCache($articleCommentsList);
 	}
 
         return $articleCommentsList;
