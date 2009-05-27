@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Phorum_user.php");
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Phorum_user.php");
 
 if (!$g_user->hasPermission('SyncPhorumUsers')) {
     camp_html_display_error(getGS("You do not have the right to sync Campsite and Phorum users."));

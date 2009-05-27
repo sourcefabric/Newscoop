@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/DynMenuItem.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/DynMenuItem.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 camp_load_translation_strings("home");
 global $ADMIN;
 global $g_user;

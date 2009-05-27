@@ -1,11 +1,11 @@
 <?php
 camp_load_translation_strings("user_subscription_sections");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SubscriptionSection.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Subscription.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/SubscriptionSection.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
 
 $f_user_id = Input::Get('f_user_id', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);

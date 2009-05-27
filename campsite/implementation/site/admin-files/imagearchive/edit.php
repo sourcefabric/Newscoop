@@ -1,10 +1,10 @@
 <?php
 camp_load_translation_strings("imagearchive");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
@@ -25,7 +25,7 @@ else {
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 echo $breadcrumbs;
 

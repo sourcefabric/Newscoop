@@ -3,13 +3,9 @@
  * @package Campsite
  */
 
-if (!isset($g_campsiteDir)) {
-    $g_campsiteDir = dirname(dirname(__FILE__));
-}
-
-require_once($g_campsiteDir.'/conf/install_conf.php');
-require_once($g_campsiteDir.'/classes/cache/CacheEngine.php');
-require_once($g_campsiteDir.'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/cache/CacheEngine.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");

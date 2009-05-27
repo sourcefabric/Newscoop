@@ -1,7 +1,7 @@
 <?php
 camp_load_translation_strings("article_types");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
@@ -17,7 +17,7 @@ $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
 $crumbs[] = array(getGS("Rename article type"), "");
 echo camp_html_breadcrumbs($crumbs);
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <P>

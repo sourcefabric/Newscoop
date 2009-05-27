@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 
 global $Campsite;
 /**

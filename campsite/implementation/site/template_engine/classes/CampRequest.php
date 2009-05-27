@@ -193,7 +193,7 @@ final class CampRequest
             return;
         }
         if (!isset(CampRequest::$m_input[$p_reqMethod])) {
-            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+            require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
             CampRequest::$m_input[$p_reqMethod] = Input::CleanMagicQuotes($input);
         }
     }

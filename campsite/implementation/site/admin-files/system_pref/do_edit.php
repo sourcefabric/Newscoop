@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("system_pref");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {

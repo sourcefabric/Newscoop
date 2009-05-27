@@ -1,9 +1,9 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleTypeField.php");
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticleTypeField.php");
 camp_load_translation_strings("home");
 
 if (!$g_user->hasPermission('ChangeArticle')

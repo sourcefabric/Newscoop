@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 camp_load_translation_strings("api");
 
 $Pub = Input::Get('Pub', 'int', 0);
@@ -20,7 +20,7 @@ $allIssues = Issue::GetIssues($Pub, null, null, null, $publicationObj->getLangua
 $totalIssues = Issue::GetNumIssues($Pub);
 
 $pager = new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php?Pub=$Pub&");
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
 ?>

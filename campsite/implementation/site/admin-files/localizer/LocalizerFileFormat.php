@@ -47,7 +47,7 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
 	        }
 	        return true;
         } else {
-        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_READ_FILE), CAMP_ERROR_READ_FILE);
+        	return new PEAR_Error(CAMP_ERROR_READ_FILE, CAMP_ERROR_READ_FILE);
         }
 	} // fn load
 

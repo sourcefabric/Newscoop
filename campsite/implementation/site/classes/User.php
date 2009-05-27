@@ -6,16 +6,11 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/UserType.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/conf/liveuser_configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/UserType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
 
 /**

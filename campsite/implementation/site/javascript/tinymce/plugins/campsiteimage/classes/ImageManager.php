@@ -7,8 +7,8 @@
  */
 
 require_once('Files.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 
 /**
  * ImageManager Class.

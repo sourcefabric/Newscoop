@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
 
 
 define('ACTION_EDIT_USER_ERR_INTERNAL', 'action_edit_user_err_internal');

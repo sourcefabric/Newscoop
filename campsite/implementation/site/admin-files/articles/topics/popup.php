@@ -1,8 +1,8 @@
 <?PHP
 camp_load_translation_strings("article_images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/topics/topic_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/topics/topic_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Topic.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 
 if (!$g_user->hasPermission("AttachTopicToArticle")) {
 	$errorStr = getGS('You do not have the right to attach topics to articles.');

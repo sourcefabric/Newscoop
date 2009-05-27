@@ -1,14 +1,14 @@
 <?php
 require_once "HTTP/Client.php";
-require_once($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir'] . "/classes/BugReporter.php");
+require_once($GLOBALS['g_campsiteDir'] . "/classes/Input.php");
 camp_load_translation_strings("bug_reporting");
 
 //
 // Post the error to server
 //
 
-global $Campsite, $ADMIN_DIR, $g_documentRoot, $g_bugReporterDefaultServer;
+global $Campsite, $ADMIN_DIR, $g_bugReporterDefaultServer;
 
 $server = $g_bugReporterDefaultServer;
 //$server = "http://localhost/trac/autotrac";

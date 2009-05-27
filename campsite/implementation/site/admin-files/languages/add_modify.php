@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/localizer/Localizer.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $editMode = ($f_language_id != 0);
@@ -38,7 +38,7 @@ if ($editMode) {
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
 ?>

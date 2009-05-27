@@ -1,12 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/UrlType.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_setting.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 camp_load_translation_strings("api");
 
 // Check permissions
@@ -27,7 +27,7 @@ $crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");
 $crumbs[] = array(getGS("Add new publication"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">

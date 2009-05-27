@@ -15,7 +15,7 @@ if (!is_array($Campsite)) {
 	echo "Invalid configuration file(s)";
 	exit(1);
 }
-$_SERVER['DOCUMENT_ROOT'] = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
+$GLOBALS['g_campsiteDir'] = $Campsite['WWW_DIR'] . "/" . $Campsite['DATABASE_NAME'] . "/html";
 require_once($Campsite['WWW_COMMON_DIR'] . "/html/configuration.php");
 
 //$db_name = "testcampsite";

@@ -1,10 +1,10 @@
 <?php
 camp_load_translation_strings("comments");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('CommentModerate')) {
 	camp_html_display_error(getGS("You do not have the right to moderate comments." ));

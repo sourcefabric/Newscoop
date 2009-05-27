@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 if (!$g_user->hasPermission("AddArticle")) {
 	$errorStr = getGS('You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.');

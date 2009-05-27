@@ -1,11 +1,11 @@
 <?php
 camp_load_translation_strings("user_subscription_sections");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Subscription.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SubscriptionSection.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Subscription.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/SubscriptionSection.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
 
 if (!$g_user->hasPermission('ManageSubscriptions')) {
 	camp_html_display_error(getGS("You do not have the right to change subscriptions."));
@@ -51,7 +51,7 @@ $crumbs[] = array(getGS("Subscribed sections").": ".$publicationObj->getName(), 
 $crumbs[] = array(getGS("Change subscription"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_change.php"  onsubmit="return <?php camp_html_fvalidate(); ?>;">

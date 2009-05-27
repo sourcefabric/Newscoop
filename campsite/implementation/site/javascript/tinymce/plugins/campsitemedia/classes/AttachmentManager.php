@@ -6,8 +6,8 @@
  */
 
 require_once('Files.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
 /**
  * AttachmentManager Class.

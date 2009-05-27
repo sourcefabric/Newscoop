@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir']. '/classes/Article.php');
 
 // Check permissions
 if (!$g_user->hasPermission('DeleteIssue')) {

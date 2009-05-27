@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/IssuePublish.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 camp_load_translation_strings("articles");
 camp_load_translation_strings("logs");
 

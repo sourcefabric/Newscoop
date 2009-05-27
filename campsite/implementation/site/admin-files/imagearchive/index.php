@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("imagearchive");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SimplePager.php');
 camp_load_translation_strings("api");
 
 // Initialize input variables ///////////////////////////////////////////////////
@@ -46,7 +46,7 @@ $crumbs[] = array(getGS('Image Archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <p>

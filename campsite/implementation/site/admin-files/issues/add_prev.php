@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
@@ -17,7 +17,7 @@ $allLanguages = Language::GetLanguages();
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 $lastCreatedIssue = Issue::GetLastCreatedIssue($Pub);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top(getGS('Copy previous issue'), array('Pub' => $publicationObj), true, true, array(getGS("Issues") => "/$ADMIN/issues/?Pub=$Pub"));
 

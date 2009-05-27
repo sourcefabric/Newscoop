@@ -1,9 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
 camp_load_translation_strings("globals");
 camp_load_translation_strings("articles");
 

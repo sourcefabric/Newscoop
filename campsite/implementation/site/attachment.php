@@ -2,10 +2,10 @@
 
 // This file will deliver the attachment. It is supposed to work like this:
 // http://site/attachment/xxxxxxxxx.ext
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
+$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
 $g_download = Input::Get('g_download', 'int', 0, true);
 $g_show_in_browser = Input::Get('g_show_in_browser', 'int', 0, true);

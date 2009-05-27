@@ -7,8 +7,8 @@
 
 require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 camp_load_translation_strings("tiny_media_plugin");
 
 $manager = new AttachmentManager($AMConfig);

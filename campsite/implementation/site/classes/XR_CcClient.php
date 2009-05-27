@@ -6,12 +6,7 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once('XML/RPC.php');
 
 /**

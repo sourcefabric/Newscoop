@@ -358,7 +358,7 @@ class ArticlesList extends ListObject
 	private static function ReadArticleTypes()
 	{
 		if (is_null(self::$s_articleTypes)) {
-            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+            require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 			$articleTypes = ArticleType::GetArticleTypes(true);
 			self::$s_articleTypes = array();
 			foreach ($articleTypes as $articleType) {
@@ -371,7 +371,7 @@ class ArticlesList extends ListObject
 	private static function ReadDynamicFields()
 	{
 		if (is_null(self::$s_dynamicFields)) {
-            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTypeField.php');
+            require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
 			self::$s_dynamicFields = ArticleTypeField::FetchFields();
 		}
 	}

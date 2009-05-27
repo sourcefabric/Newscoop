@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleImage.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/ArticleImage.php");
 
 // This is used in TransformSubheads() in order to figure out when
 // a SPAN tag closes.

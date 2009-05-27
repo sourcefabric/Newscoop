@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 
 if (!$g_user->hasPermission('ManageTopics')) {
 	camp_html_display_error(getGS("You do not have the right to add topics."));

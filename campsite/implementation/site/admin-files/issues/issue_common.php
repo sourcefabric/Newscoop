@@ -1,10 +1,10 @@
 <?PHP
 camp_load_translation_strings("issues");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 /**
  * Check if the given parameters match an existing issue.  All parameters

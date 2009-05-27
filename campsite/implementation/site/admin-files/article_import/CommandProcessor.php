@@ -1,7 +1,7 @@
 <?
-require_once($_SERVER['DOCUMENT_ROOT'].'/article_import/DocBookParser.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/article_import/DocBookParser.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 // Command processor
 if ($_REQUEST["form_name"] == "upload_article_form") {

@@ -6,18 +6,13 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/ArticleData.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/Language.php');
-require_once($g_documentRoot.'/classes/CampCacheList.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleData.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 /**
  * @package Campsite
@@ -293,11 +288,10 @@ class Article extends DatabaseObject {
 	{
 		// It is an optimization to put these here because in most cases
 		// you dont need these files.
-		global $g_documentRoot;
-		require_once($g_documentRoot.'/classes/ArticleImage.php');
-		require_once($g_documentRoot.'/classes/ArticleTopic.php');
-		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
-        require_once($g_documentRoot.'/classes/ArticleAudioclip.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
 
 		$copyArticles = array();
 		if ($p_copyTranslations) {
@@ -536,14 +530,13 @@ class Article extends DatabaseObject {
 	{
 		// It is an optimization to put these here because in most cases
 		// you dont need these files.
-		global $g_documentRoot;
-		require_once($g_documentRoot.'/classes/ArticleImage.php');
-		require_once($g_documentRoot.'/classes/ArticleTopic.php');
-		require_once($g_documentRoot.'/classes/ArticleIndex.php');
-		require_once($g_documentRoot.'/classes/ArticleAttachment.php');
-        require_once($g_documentRoot.'/classes/ArticleAudioclip.php');
-		require_once($g_documentRoot.'/classes/ArticleComment.php');
-		require_once($g_documentRoot.'/classes/ArticlePublish.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
 		// Delete scheduled publishing
 		ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
@@ -1255,8 +1248,7 @@ class Article extends DatabaseObject {
 	 */
 	public function setWorkflowStatus($p_value)
 	{
-		global $g_documentRoot;
-		require_once($g_documentRoot.'/classes/ArticleIndex.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
 		$p_value = strtoupper($p_value);
 		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
@@ -1366,8 +1358,7 @@ class Article extends DatabaseObject {
 	 */
 	public function getKeywords()
 	{
-		global $g_documentRoot;
-		require_once($g_documentRoot.'/classes/SystemPref.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 		$keywords = $this->m_data['Keywords'];
 		$keywordSeparator = SystemPref::Get("KeywordSeparator");
 		return str_replace(",", $keywordSeparator, $keywords);
@@ -1392,8 +1383,7 @@ class Article extends DatabaseObject {
 	 */
 	public function setKeywords($p_value)
 	{
-		global $g_documentRoot;
-		require_once($g_documentRoot.'/classes/SystemPref.php');
+		require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 		$keywordsSeparator = SystemPref::Get('KeywordSeparator');
 		$p_value = str_replace($keywordsSeparator, ",", $p_value);
 		return parent::setProperty('Keywords', $p_value);

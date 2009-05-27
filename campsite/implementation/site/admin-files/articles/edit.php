@@ -1,13 +1,13 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleImage.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAudioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ShortURL.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 camp_load_translation_strings("article_comments");
 camp_load_translation_strings("api");
 
@@ -79,7 +79,7 @@ if ($f_publication_id > 0) {
 }
 
 if ($showComments) {
-    require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
+    require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
     if (SystemPref::Get("UseDBReplication") == 'Y') {
         $dbReplicationObj = new DbReplication();
         $connectedToOnlineServer = $dbReplicationObj->connect();
@@ -144,7 +144,7 @@ if ($lockedByCurrentUser) {
 //
 // Begin Display of page
 //
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 if ($f_edit_mode == "edit") {
     $title = getGS("Edit article");

@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings('home');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/XR_CcClient.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/XR_CcClient.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 camp_load_translation_strings("article_audioclips");
 camp_load_translation_strings("api");
 

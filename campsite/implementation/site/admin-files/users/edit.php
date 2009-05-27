@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Subscription.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Publication.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/Subscription.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/Publication.php");
 
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
@@ -37,7 +37,7 @@ if ($userId > 0) {
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <p>
 <?php
@@ -67,7 +67,7 @@ if ($canManage && ($userId > 0)) {
 <table border="0">
 <tr>
 	<td rowspan="2" valign="top" >
-		<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/info.php"); ?>
+		<?php require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/info.php"); ?>
 	</td>
 <?php if ($userId > 0) { ?>
 	<td valign="top" >
@@ -76,7 +76,7 @@ if ($canManage && ($userId > 0)) {
 			<td valign="top">
 		        <?php
        			if (($uType == 'Subscribers') && ($g_user->hasPermission("ManageSubscriptions"))) {
-        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/subscriptions.php");
+        			require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/subscriptions.php");
 	        	}
         		?>
 			</td>
@@ -85,7 +85,7 @@ if ($canManage && ($userId > 0)) {
 			<td valign="top">
         		<?php
 			if ($uType == 'Subscribers') {
-        			require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/ipaccesslist.php");
+        			require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/ipaccesslist.php");
         		}
 			?>
 			</td>

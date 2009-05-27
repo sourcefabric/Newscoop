@@ -1,6 +1,6 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticlePublish.php');
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
 if (!$g_user->hasPermission("Publish")) {
 	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
@@ -74,7 +74,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
 

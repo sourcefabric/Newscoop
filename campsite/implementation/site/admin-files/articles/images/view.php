@@ -1,7 +1,7 @@
 <?php
 camp_load_translation_strings("article_images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 
 $f_backlink = Input::Get('Back', 'string', '');
 $f_image_id = Input::Get('f_image_id', 'int', 0);

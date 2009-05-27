@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("article_types");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
 // Check permissions
 if (!$g_user->hasPermission('DeleteArticleTypes')) {

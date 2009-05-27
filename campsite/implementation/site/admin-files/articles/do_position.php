@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 
 // Check permissions
 if (!$g_user->hasPermission('Publish')) {

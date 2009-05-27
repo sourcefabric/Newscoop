@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("system_pref");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 
 
@@ -17,7 +17,7 @@ $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("System Preferences"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 $max_upload_filesize = SystemPref::Get("MaxUploadFileSize");
 if(empty($max_upload_filesize) || $max_upload_filesize == 0) {

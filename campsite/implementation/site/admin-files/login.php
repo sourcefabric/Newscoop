@@ -1,13 +1,10 @@
 <?php
 
-global $g_documentRoot;
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot."/$ADMIN_DIR/languages.php");
-require_once($g_documentRoot.'/classes/LoginAttempts.php');
-require_once($g_documentRoot.'/include/captcha/php-captcha.inc.php');
-require_once($g_documentRoot."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/languages.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
@@ -77,7 +74,7 @@ camp_load_translation_strings("home");
 <head>
 	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<TITLE><?php  putGS("Login"); ?></title>
 </head>
 <body >
@@ -91,8 +88,8 @@ camp_load_translation_strings("home");
 </table>
 
 <?php
-if (file_exists($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php")) {
-	require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/demo_login.php");
+if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
+	require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
 

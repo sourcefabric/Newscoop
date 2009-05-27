@@ -5,11 +5,11 @@ header("Content-type: text/html; charset=UTF-8");
 global $Campsite;
 global $DEBUG;
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/template_engine/classes/SyntaxError.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/SyntaxError.php');
 
 
 $g_errorList = array();

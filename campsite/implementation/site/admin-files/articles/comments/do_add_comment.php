@@ -1,12 +1,12 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbReplication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_message.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_user.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleComment.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_user.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);

@@ -1,14 +1,14 @@
 <?php
 header('Content-Type: application/json');
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/ArticleComment.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/ArticleComment.php");
 
 require_once('JSON.php');
 
 $json = new Services_JSON();
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_content_lib.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_content_lib.php");
 
 
 $f_save = Input::Get('f_save', 'string', '', true);

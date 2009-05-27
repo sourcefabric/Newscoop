@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/Date.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/pear/Date.php');
 
 define('ACTION_EDIT_SUBSCRIPTION_ERR_INTERNAL', 'action_edit_subscription_err_internal');
 define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_USER', 'action_edit_subscription_err_no_user');

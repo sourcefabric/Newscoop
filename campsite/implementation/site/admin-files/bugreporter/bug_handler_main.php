@@ -1,5 +1,5 @@
 <?PHP
-require_once ($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");
+require_once ($GLOBALS['g_campsiteDir'] . "/classes/BugReporter.php");
 
 /**
  * Called for all Campsite errors.

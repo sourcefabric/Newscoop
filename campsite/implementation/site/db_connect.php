@@ -1,12 +1,8 @@
 <?php
 
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
-require_once($g_documentRoot.'/conf/database_conf.php');
+$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
 
 global $g_ado_db;
 global $Campsite;

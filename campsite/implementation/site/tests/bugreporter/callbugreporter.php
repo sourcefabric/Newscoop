@@ -14,7 +14,7 @@ set_error_handler ($oldErrorHandler);
 function camp_call_bug_reporter($p_number, $p_string, $p_file, $p_line)
 {
     global $ADMIN_DIR, $ADMIN, $Campsite;
-    require_once ($_SERVER['DOCUMENT_ROOT'] . "/classes/BugReporter.php");
+    require_once ($GLOBALS['g_campsiteDir'] . "/classes/BugReporter.php");
 
     // --- Don't print the previous screen (in which the error occurred) ---
     ob_end_clean();

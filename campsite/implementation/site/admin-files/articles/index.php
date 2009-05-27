@@ -1,11 +1,11 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticlePublish.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleImage.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleTopic.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/ArticleComment.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/SimplePager.php');
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']. '/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/ArticlePublish.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleImage.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleTopic.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleComment.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
 camp_load_translation_strings("api");
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -114,7 +114,7 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Article List'), $topArray);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>

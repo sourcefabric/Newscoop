@@ -1,10 +1,10 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 
 $rootDirectory = $ADMIN_DIR;
 
@@ -32,7 +32,7 @@ $issueLanguage = new Language($sLanguage);
 <HTML>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+    <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<TITLE><?php putGS("Article Import"); ?></TITLE>
 </HEAD>
 

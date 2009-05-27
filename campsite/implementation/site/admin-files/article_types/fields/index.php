@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("article_type_fields");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $articleTypeName = Input::Get('f_article_type');
 // return value is sorted by language
@@ -23,7 +23,7 @@ $crumbs[] = array(getGS("Article type fields"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 if ($g_user->hasPermission("ManageArticleTypes")) {
-	include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+	include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 	?>
 <script>
 var field_ids = new Array;

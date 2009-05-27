@@ -274,7 +274,7 @@ final class CampContext
                     throw new InvalidObjectException($p_element);
                 }
 
-                $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
+                $classFullPath = $GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/'
                 . CampContext::ObjectType($p_element).'.php';
 
                 if (file_exists($classFullPath)) {
@@ -283,7 +283,7 @@ final class CampContext
                     $pluginImplementsClassFullPath = false;
 
                     foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                        $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
+                        $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath().
                                         '/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
                         if (file_exists($pluginClassFullPath)) {
                             $pluginImplementsClassFullPath = $pluginClassFullPath;   
@@ -628,7 +628,7 @@ final class CampContext
 
         $p_objectType = CampContext::TranslateProperty($p_objectType);
 
-        $classFullPath = $_SERVER['DOCUMENT_ROOT'].'/template_engine/metaclasses/'
+        $classFullPath = $GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/'
         . CampContext::ObjectType($p_objectType).'.php';
         
         if (file_exists($classFullPath)) {
@@ -637,7 +637,7 @@ final class CampContext
             $pluginImplementsClassFullPath = false;
              
             foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                $pluginClassFullPath = $_SERVER['DOCUMENT_ROOT'].'/'.$CampPlugin->getBasePath().
+                $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath().
                                 '/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
                 if (file_exists($pluginClassFullPath)) {
                     $pluginImplementsClassFullPath = $pluginClassFullPath;   

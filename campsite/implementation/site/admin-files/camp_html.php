@@ -6,7 +6,7 @@
 /**
  * includes
  */
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 
 /**
  * Print out an HTML OPTION element.
@@ -266,7 +266,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	}
 	$breadcrumbs[] = array($p_title, "");
 	if ($p_fValidate) {
-		include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+		include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 	}
 	echo camp_html_breadcrumbs($breadcrumbs);
 } // fn camp_html_content_top

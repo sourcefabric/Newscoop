@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/user_types/utypes_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/permission_list.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/user_types/utypes_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/permission_list.php");
 camp_load_translation_strings("users");
 
 $canManage = $g_user->hasPermission('ManageUserTypes');

@@ -1,10 +1,10 @@
 <?PHP
 camp_load_translation_strings("pub");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/UrlType.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/UrlType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 
 function camp_is_publication_conflicting($p_publicationName)

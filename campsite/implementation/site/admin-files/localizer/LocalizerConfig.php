@@ -3,12 +3,6 @@
  * @package Campware
  */
 
-// We indirectly reference the document root because some
-// scripts that use this file run from the command line,
-// therefore $_SERVER['DOCUMENT_ROOT'] is not defined in
-// these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 /**
  * Since the XML_Serializer package is not yet stable,
  * we must use our own package.  The package has a bug fix applied
@@ -39,11 +33,11 @@ $g_localizerConfig['DEFAULT_FILE_TYPE'] = 'gs';
 
 // The top-level directory to the set of directories
 // that need translation files.
-$g_localizerConfig['BASE_DIR'] = $g_documentRoot;
+$g_localizerConfig['BASE_DIR'] = $GLOBALS['g_campsiteDir'];
 
 // The top-level directory to the set of directories
 // that need translation files.
-$g_localizerConfig['TRANSLATION_DIR'] = $g_documentRoot.'/admin-files/lang';
+$g_localizerConfig['TRANSLATION_DIR'] = $GLOBALS['g_campsiteDir'].'/admin-files/lang';
 
 // Name of the XML file that contains the list of supported languages.
 $g_localizerConfig['LANGUAGE_METADATA_FILENAME'] = 'languages.xml';
@@ -51,8 +45,7 @@ $g_localizerConfig['LANGUAGE_METADATA_FILENAME'] = 'languages.xml';
 // File encoding for XML files.
 $g_localizerConfig['FILE_ENCODING'] = 'UTF-8';
 
-// For the interface - the relative path (from DOCUMENT_ROOT)
-// of the icons directory
+// For the interface - the relative path of the icons directory
 global $Campsite;
 $g_localizerConfig['ICONS_DIR'] = $Campsite['ADMIN_IMAGE_BASE_URL'];
 

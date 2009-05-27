@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once('DB.php');
 
 // Global permissions array

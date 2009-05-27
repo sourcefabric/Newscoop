@@ -1,5 +1,4 @@
 <?php
-$DOCUMENT_ROOT = $_SERVER['DOCUMENT_ROOT'];
 
 /**
  * Check if user has access to the admin.
@@ -10,7 +9,7 @@ function camp_check_admin_access($p_request)
 {
 	global $ADMIN, $g_ado_db, $LiveUser;
 
-	require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+	require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 	$access = false;
 	$XPerm = array();

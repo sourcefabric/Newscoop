@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/SimplePager.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/SimplePager.php");
 camp_load_translation_strings("api");
 
 if (Input::Get('reset_search', 'string', 'false', true) == 'true') {

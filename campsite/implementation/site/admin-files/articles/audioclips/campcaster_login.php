@@ -1,8 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/languages.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 
 // Load the language files.
 camp_load_translation_strings("globals");
@@ -33,7 +33,7 @@ if (PEAR::isError($xrc) && $xrc->getCode() != 805) {
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
-    <?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+    <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<title><?php putGS("Campcaster Login"); ?></title>
 </head>
 <body>

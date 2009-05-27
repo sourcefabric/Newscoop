@@ -1,7 +1,7 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Publication.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Issue.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Section.php");
 
 global $Campsite;
 

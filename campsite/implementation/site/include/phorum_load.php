@@ -3,8 +3,8 @@ global $Campsite;
 global $PHORUM;
 define( "PHORUM", "5.1-dev" );
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum/include/constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/phorum/include/constants.php');
 
 $dbName = $Campsite['DATABASE_NAME'];
 if (SystemPref::Get("UseDBReplication") == 'Y') {
@@ -35,6 +35,6 @@ $PHORUM['DBCONFIG']=array(
     'mysql_use_ft'  =>  '1'
 );
 
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum/include/db/mysql.php");
+require_once($GLOBALS['g_campsiteDir']."/include/phorum/include/db/mysql.php");
 
 ?>

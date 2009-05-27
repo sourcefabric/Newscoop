@@ -2,7 +2,7 @@
 // For phorum_email_moderators() and phorum_email_notice().
 //include_once("./include/email_functions.php");
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
 
 
 class Phorum_message extends DatabaseObject {

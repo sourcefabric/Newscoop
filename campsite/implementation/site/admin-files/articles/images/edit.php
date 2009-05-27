@@ -1,7 +1,7 @@
 <?php
 camp_load_translation_strings("article_images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 
 $uri = $_SERVER['REQUEST_URI'];
 

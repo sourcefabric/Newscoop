@@ -6,17 +6,12 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once(CS_PATH_PEAR_LOCAL.'/PEAR.php');
-require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/SystemPref.php');
-require_once($g_documentRoot.'/classes/CampCache.php');
-require_once($g_documentRoot.'/classes/Exceptions.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Exceptions.php');
 
 
 /**

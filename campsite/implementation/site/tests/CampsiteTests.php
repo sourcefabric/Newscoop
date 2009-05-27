@@ -1,7 +1,7 @@
 <?
 
 require_once("PHPUnit.php");
-require_once("$DOCUMENT_ROOT/classes/Article.php");
+require_once(dirname(dirname(__FILE__))."/classes/Article.php");
 
 class ArticleTest extends PHPUnit_TestCase {
 	function ArticleTest($name) {

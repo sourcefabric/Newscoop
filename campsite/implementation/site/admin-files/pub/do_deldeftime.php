@@ -1,8 +1,8 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SubscriptionDefaultTime.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {

@@ -3,8 +3,8 @@
  * @package Campsite
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/adodb/adodb.inc.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  * A simple class for Database Replication.

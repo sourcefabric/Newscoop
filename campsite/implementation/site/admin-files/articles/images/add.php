@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("article_images");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleImage.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Image.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticleImage.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Image.php");
 
 if (!$g_user->hasPermission("AddImage")) {
 	camp_html_display_error(getGS("You do not have the right to add images" ), null, true);
@@ -35,7 +35,7 @@ $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
 
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
 ?>

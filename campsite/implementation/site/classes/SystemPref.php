@@ -3,14 +3,10 @@
  * @package Campsite
  */
 
-if (!isset($g_campsiteDir)) {
-	$g_campsiteDir = dirname(dirname(__FILE__));
-}
-
-require_once($g_campsiteDir.'/db_connect.php');
-require_once($g_campsiteDir.'/classes/DatabaseObject.php');
-require_once($g_campsiteDir.'/classes/Log.php');
-require_once($g_campsiteDir.'/template_engine/classes/CampSession.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSession.php');
 
 /**
  * @package Campsite

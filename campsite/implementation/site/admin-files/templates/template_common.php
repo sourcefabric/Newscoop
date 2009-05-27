@@ -1,11 +1,11 @@
 <?php
 camp_load_translation_strings("templates");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Template.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/FileTextSearch.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/User.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Template.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/FileTextSearch.php");
 
 function camp_get_text_extensions()
 {

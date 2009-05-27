@@ -1,10 +1,10 @@
 <?PHP
 camp_load_translation_strings("topics");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Topic.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/User.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 
 function camp_topic_path($p_topic, $p_languageId)
 {

@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
@@ -20,7 +20,7 @@ $allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
 $unusedLanguages = $issueObj->getLanguages(true, true,
 array(array('field'=>'byname', 'dir'=>'asc')), false, false);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationObj, 'Issue' => $issueObj));
 

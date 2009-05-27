@@ -1,15 +1,9 @@
 <?php
 /**
  * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
  */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 
 /**
  * Class CampGetImage
@@ -210,7 +204,7 @@ class CampGetImage
         }
         $this->m_location = empty($this->m_imageMetaData['URL']);
         $this->SetImagePath($this->m_location?
-            $_SERVER['DOCUMENT_ROOT'].'/images/'.$this->m_imageMetaData['ImageFileName']:
+            $GLOBALS['g_campsiteDir'].'/images/'.$this->m_imageMetaData['ImageFileName']:
             $this->m_imageMetaData['URL']);
 
 

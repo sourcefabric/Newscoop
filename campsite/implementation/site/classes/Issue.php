@@ -6,20 +6,15 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/SQLSelectClause.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/Language.php');
-require_once($g_documentRoot.'/classes/Section.php');
-require_once($g_documentRoot.'/classes/IssuePublish.php');
-require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite

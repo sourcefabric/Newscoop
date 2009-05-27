@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/templates/template_common.php");
 
 if (!$g_user->hasPermission('ManageTempl')) {
 	camp_html_display_error(getGS("You do not have the right to create templates."));
@@ -28,7 +28,7 @@ $crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
 $crumbs[] = array(getGS("Duplicate template").": $Name", "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <P>

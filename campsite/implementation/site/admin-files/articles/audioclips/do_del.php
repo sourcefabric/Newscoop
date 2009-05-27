@@ -1,11 +1,11 @@
 <?php
 camp_load_translation_strings("article_files");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAudioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Audioclip.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
     camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);

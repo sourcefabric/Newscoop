@@ -11,10 +11,9 @@
 
 $start0 = microtime(true);
 
-$g_documentRoot = dirname(__FILE__);
-$g_campsiteDir = $g_documentRoot;
+$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
-require_once($g_campsiteDir.'/include/campsite_init.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 
 $start1 = microtime(true);
 // initializes the campsite object
@@ -25,7 +24,7 @@ $start2 = microtime(true);
 // looks for preview language if any.
 $previewLang = $campsite->event('beforeRender');
 if (!is_null($previewLang)) {
-    require_once($g_campsiteDir.'/template_engine/classes/SyntaxError.php');
+    require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/SyntaxError.php');
 	set_error_handler('templateErrorHandler');
 
     // loads translations strings in the proper language for the error messages display

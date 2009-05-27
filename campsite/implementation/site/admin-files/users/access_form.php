@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
 require_once('permission_list.php');
 
 $uType = 'Staff';

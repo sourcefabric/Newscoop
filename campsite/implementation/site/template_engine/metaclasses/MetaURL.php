@@ -12,10 +12,8 @@
 /**
  * Includes
  */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/classes/UrlType.php');
-require_once($g_documentRoot.'/template_engine/classes/Exceptions.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/UrlType.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/Exceptions.php');
 
 /**
  * Class MetaURL

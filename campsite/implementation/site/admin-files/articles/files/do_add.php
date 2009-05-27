@@ -1,10 +1,10 @@
 <?php
 camp_load_translation_strings("article_files");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Attachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleAttachment.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Translation.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('AddFile')) {
 	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);

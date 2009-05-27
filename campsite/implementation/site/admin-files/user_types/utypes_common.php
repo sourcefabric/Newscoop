@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("user_types");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']. '/classes/UserType.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Log.php');
 
 function read_utype_common_parameters()
 {

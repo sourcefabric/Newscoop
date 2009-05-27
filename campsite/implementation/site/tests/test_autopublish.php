@@ -1,8 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Article.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticlePublish.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Issue.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 
 // AUTOPUBLISH TESTS
 

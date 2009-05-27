@@ -1,14 +1,14 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Publication.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Issue.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Section.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Article.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticlePublish.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/IssuePublish.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SimplePager.php");
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Publication.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Issue.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Section.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Article.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticlePublish.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
 camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
@@ -97,7 +97,7 @@ if (($clearCache == 'yes') && $g_user->hasPermission('ClearCache')) {
 
 $syncUsers = Input::Get('sync_users', 'string', 'no', true);
 if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
-    require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/users/sync_phorum_users.php");
+    require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/users/sync_phorum_users.php");
     $actionMsg = getGS('Campsite and Phorum users were synchronized');
     $res = 'OK';
 }

@@ -1,10 +1,10 @@
 <?php
 camp_load_translation_strings("languages");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/localizer/Localizer.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/TimeUnit.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/localizer/Localizer.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/TimeUnit.php');
 
 if (!$g_user->hasPermission('ManageLanguages')) {
 	camp_html_display_error(getGS("You do not have the right to add new languages."));

@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/XR_CcClient.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/XR_CcClient.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 
 $sessid = null;
 $sessid = camp_session_get('cc_sessid', '');

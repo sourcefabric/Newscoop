@@ -14,18 +14,12 @@ global $g_db;
 
 /**
  * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
  */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/conf/install_conf.php');
-require_once($g_documentRoot.'/include/adodb/adodb.inc.php');
-require_once($g_documentRoot.'/classes/Input.php');
-require_once($g_documentRoot.'/template_engine/classes/CampRequest.php');
-require_once($g_documentRoot.'/install/classes/CampInstallationView.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
+require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
 
 
 /**
@@ -521,20 +515,20 @@ class CampInstallationBase
         file_put_contents($path2, $buffer2);
 
         // create images and files directories
-        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images');
-        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
-        CampInstallationBase::CreateDirectory($_SERVER['DOCUMENT_ROOT'].DIR_SEP.'files');
+        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images');
+        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
+        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'files');
 
 // We use htaccess files instead of links
 //        if ($this->m_os !== 'windows') {
             // create the symlinks to the index.php file for each language
-//            require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+//            require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 //            Language::CreateLanguageLinks();
 
             // create the symlink tpl.php -> index.php, needed for template
             // path URL processing
-//            $indexFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'index.php';
-//            $tplFile = $_SERVER['DOCUMENT_ROOT'].DIR_SEP.'tpl.php';
+//            $indexFile = $GLOBALS['g_campsiteDir'].DIR_SEP.'index.php';
+//            $tplFile = $GLOBALS['g_campsiteDir'].DIR_SEP.'tpl.php';
 //            if (file_exists($tplFile)) {
 //                @unlink($tplFile);
 //            }
@@ -563,9 +557,7 @@ class CampInstallationBase
     
     private static function InstallPlugins()
     {
-        global $g_documentRoot;
-        
-        require_once($g_documentRoot.'/include/campsite_constants.php');
+        require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
         require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
                 
         foreach (CampPlugin::GetPluginsInfo() as $info) {

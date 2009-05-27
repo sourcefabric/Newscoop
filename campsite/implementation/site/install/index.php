@@ -11,15 +11,9 @@
 
 /**
  * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
  */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/include/campsite_constants.php');
-require_once($g_documentRoot.'/install/classes/CampInstallation.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');
 
 define('CS_INSTALL_DIR', dirname(__FILE__));
 
@@ -34,10 +28,12 @@ $install->initSession();
 
 $step = $install->execute();
 if ($step == 'finish') {
-    $copyAdmin = @copy($g_documentRoot.'/install/scripts/admin.php', $g_documentRoot.'/admin.php');
-    $copyIndex = @copy($g_documentRoot.'/install/scripts/index.php', $g_documentRoot.'/index.php');
-    if ($copyAdmin && $copyIndex && file_exists($g_documentRoot.'/upgrade.php')) {
-        @unlink($g_documentRoot.'/upgrade.php');
+    $copyAdmin = @copy($GLOBALS['g_campsiteDir'].'/install/scripts/admin.php',
+    $GLOBALS['g_campsiteDir'].'/admin.php');
+    $copyIndex = @copy($GLOBALS['g_campsiteDir'].'/install/scripts/index.php',
+    $GLOBALS['g_campsiteDir'].'/index.php');
+    if ($copyAdmin && $copyIndex && file_exists($GLOBALS['g_campsiteDir'].'/upgrade.php')) {
+        @unlink($GLOBALS['g_campsiteDir'].'/upgrade.php');
     }
 }
 

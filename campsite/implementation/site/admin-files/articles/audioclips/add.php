@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("article_audioclips");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/XR_CcClient.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 
 if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
     camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
@@ -53,7 +53,7 @@ if (PEAR::isError($resp)) {
     }
 }
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
 ?>

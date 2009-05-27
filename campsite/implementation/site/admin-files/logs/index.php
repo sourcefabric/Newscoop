@@ -1,12 +1,12 @@
 <?php
 camp_load_translation_strings("logs");
 camp_load_translation_strings("api");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Language.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/User.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Log.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Event.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/User.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Event.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SimplePager.php');
 
 if (!$g_user->hasPermission('ViewLogs')) {
 	camp_html_display_error(getGS("You do not have the right to view logs."));

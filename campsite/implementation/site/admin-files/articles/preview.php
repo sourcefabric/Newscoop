@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ShortURL.php');
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);

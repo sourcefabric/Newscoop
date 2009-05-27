@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("article_type_fields");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Topic.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
@@ -26,7 +26,7 @@ $crumbs[] = array(getGS("Add new field"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <script>

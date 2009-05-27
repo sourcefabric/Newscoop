@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 if (!$g_user->hasPermission('DeleteLanguages')) {
 	camp_html_display_error(getGS("You do not have the right to delete languages."));

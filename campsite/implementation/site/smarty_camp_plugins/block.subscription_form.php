@@ -4,8 +4,6 @@
  * @package Campsite
  */
 
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 
 /**
  * Campsite subscription_form block plugin

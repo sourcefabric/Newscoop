@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleType.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticleType.php");
 
 global $Campsite;
 
@@ -10,7 +10,7 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticl
     exit;
 }
 
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_content_lib.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_content_lib.php");
 
 // Whether form was submitted
 $f_save = Input::Get('f_save', 'string', '', true);

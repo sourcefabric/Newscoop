@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/ArticleComment.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_content_lib.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/ArticleComment.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_content_lib.php");
 
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);

@@ -1,6 +1,6 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/UserType.php');
-require_once($_SERVER['DOCUMENT_ROOT']. '/classes/Country.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/UserType.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Country.php');
 
 if (!isset($editUser) || gettype($editUser) != 'object') {
 	camp_html_display_error(getGS('No such user account.'), "/$ADMIN/users/?".get_user_urlparams());
@@ -519,7 +519,7 @@ if ($editUser->isAdmin() && $canManage) {
 		<table border="0" cellspacing="0" cellpadding="6" align="center" width="100%">
 			<tr>
 				<td>
-<?php require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/access_form.php"); ?>
+<?php require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/access_form.php"); ?>
 				</td>
 			</tr>
 		</table>

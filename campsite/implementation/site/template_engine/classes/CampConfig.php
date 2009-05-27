@@ -37,10 +37,10 @@ final class CampConfig
      */
     private function __construct($p_configFile = null)
     {
-        global $g_documentRoot, $Campsite;
+        global $Campsite;
 
         if (empty($p_configFile)) {
-            $p_configFile = $g_documentRoot.'/conf/configuration.php';
+            $p_configFile = $GLOBALS['g_campsiteDir'].'/conf/configuration.php';
         }
         if (!file_exists($p_configFile)) {
             header('Location: /install/index.php');

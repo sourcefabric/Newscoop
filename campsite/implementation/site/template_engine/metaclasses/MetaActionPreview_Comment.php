@@ -8,7 +8,7 @@ define('ACTION_PREVIEW_COMMENT_ERR_NO_EMAIL', 'action_comment_preview_err_no_ema
 define('ACTION_PREVIEW_COMMENT_ERR_NO_PUBLIC', 'action_comment_preview_err_no_public');
 define('ACTION_PREVIEW_COMMENT_ERR_BANNED', 'action_comment_preview_err_banned');
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/phorum_load.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
 
 
 class MetaActionPreview_Comment extends MetaAction

@@ -1,9 +1,9 @@
 <?php
 camp_load_translation_strings("imagearchive");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 // Check input
 $f_image_description = Input::Get('f_image_description');

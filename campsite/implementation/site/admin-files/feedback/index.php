@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 camp_load_translation_strings("bug_reporting");
 camp_load_translation_strings("feedback");
 

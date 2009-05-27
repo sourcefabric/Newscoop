@@ -1,9 +1,9 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/include/phorum_load.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_forum.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Phorum_setting.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
+require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {

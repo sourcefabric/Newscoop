@@ -18,7 +18,7 @@ if(!defined('DIR_SEP')) {
 $scheme = (empty($_SERVER['HTTPS'])) ? 'http://' : 'https://';
 // Campsite paths (used by template engine)
 define('CS_PATH_BASE_URL', $scheme.$_SERVER['HTTP_HOST'].'/');
-define('CS_PATH_SITE', $_SERVER['DOCUMENT_ROOT']);
+define('CS_PATH_SITE', dirname(dirname(__FILE__)));
 define('CS_PATH_CONFIG', CS_PATH_SITE.DIR_SEP.'conf');
 define('CS_PATH_CLASSES', CS_PATH_SITE.DIR_SEP.'classes');
 define('CS_PATH_INCLUDES', CS_PATH_SITE.DIR_SEP.'include');

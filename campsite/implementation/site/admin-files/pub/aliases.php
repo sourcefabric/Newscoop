@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Alias.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 
 $Pub = Input::Get('Pub', 'int');
 

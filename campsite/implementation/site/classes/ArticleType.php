@@ -6,17 +6,12 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot.'/classes/ArticleTypeField.php');
-require_once($g_documentRoot.'/classes/Translation.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
-require_once($g_documentRoot.'/'.$ADMIN_DIR.'/localizer/Localizer.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/'.$ADMIN_DIR.'/localizer/Localizer.php');
 
 /**
  * @package Campsite

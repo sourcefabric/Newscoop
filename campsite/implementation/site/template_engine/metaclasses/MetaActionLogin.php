@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 
 define('ACTION_LOGIN_ERR_NO_USER_NAME', 'action_login_err_no_user_name');

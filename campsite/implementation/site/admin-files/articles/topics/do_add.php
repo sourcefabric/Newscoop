@@ -1,9 +1,9 @@
 <?PHP
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/topics/topic_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Topic.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Log.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/DbObjectArray.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleTopic.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/topics/topic_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Topic.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);

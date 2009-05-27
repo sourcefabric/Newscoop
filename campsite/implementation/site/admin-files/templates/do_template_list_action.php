@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/templates/template_common.php");
 
 // Get input
 $f_template_codes = Input::Get('f_template_code', 'array', array(), true);

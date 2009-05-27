@@ -1,7 +1,7 @@
 <?PHP
 camp_load_translation_strings("article_files");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SystemPref.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
@@ -36,7 +36,7 @@ camp_html_display_msgs();
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Attach File to Article"); ?></title>
-	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
 

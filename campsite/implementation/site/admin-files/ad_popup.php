@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/db_connect.php");
+require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
 camp_load_translation_strings("home");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 ?>
 <HEAD>

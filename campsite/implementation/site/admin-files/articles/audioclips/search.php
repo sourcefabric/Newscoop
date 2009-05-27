@@ -1,8 +1,8 @@
 <?php
 camp_load_translation_strings("article_audioclips");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Audioclip.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SimplePager.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Audioclip.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SimplePager.php');
 
 $f_order_by = Input::Get('f_order_by', 'string', 'dc:title', true);
 $f_order_direction = Input::Get('f_order_direction', 'string', 0, true);

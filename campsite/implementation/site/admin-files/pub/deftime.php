@@ -1,8 +1,8 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/pub/pub_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/SubscriptionDefaultTime.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Country.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/TimeUnit.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
@@ -26,7 +26,7 @@ if (!$pubTimeUnit->exists()) {
 
 $defaultTimes = SubscriptionDefaultTime::GetSubscriptionDefaultTimes(null, $Pub);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_content_top(getGS("Subscription Settings by Country"), array("Pub" => $publicationObj));
 

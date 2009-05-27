@@ -5,24 +5,26 @@
  * Here you can set up anything that should be applied globally to all scripts.
  */
 
+$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+
 // goes to install process if configuration files does not exist yet
-if (!file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php')
-        || !file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/database_conf.php')) {
+if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
+        || !file_exists($GLOBALS['g_campsiteDir'].'/conf/database_conf.php')) {
     header('Location: /install/index.php');
 }
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
 global $ADMIN_DIR;
 global $ADMIN;
 global $g_user;
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/lib_campsite.php");
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
 
 set_include_path(get_include_path() . PATH_SEPARATOR
-                 . $_SERVER['DOCUMENT_ROOT'] . '/include/pear');
+                 . $GLOBALS['g_campsiteDir'] . '/include/pear');
 
 camp_set_error_handler("camp_report_bug");
 

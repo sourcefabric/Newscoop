@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/templates/template_common.php");
 
 if (!$g_user->hasPermission('ManageTempl')) {
 	camp_html_display_error(getGS("You do not have the right to modify templates."));

@@ -346,8 +346,6 @@ class CampPlugin extends DatabaseObject
 
     static public function ExtractPackage($p_uploaded_package, &$p_log = null)
     {
-        global $g_documentRoot;
-        
         $plugin_name = false;
 
         require_once('Archive/Tar.php');

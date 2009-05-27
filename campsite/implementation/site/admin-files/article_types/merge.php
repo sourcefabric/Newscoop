@@ -1,7 +1,7 @@
 <?php
 camp_load_translation_strings("article_types");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ArticleType.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {

@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/topics/topics_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 
 $f_show_languages = camp_session_get('f_show_languages', array());
 
@@ -23,7 +23,7 @@ $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Topics"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script>
 function checkAllLang()

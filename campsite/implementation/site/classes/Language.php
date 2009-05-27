@@ -6,19 +6,14 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
 global $ADMIN_DIR;
 
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/conf/configuration.php');
-require_once($g_documentRoot.'/classes/DatabaseObject.php');
-require_once($g_documentRoot.'/classes/DbObjectArray.php');
-require_once($g_documentRoot.'/classes/Log.php');
-require_once($g_documentRoot."/$ADMIN_DIR/localizer/Localizer.php");
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/localizer/Localizer.php");
 
 /**
  * @package Campsite
@@ -103,9 +98,8 @@ class Language extends DatabaseObject {
 	 */
 	public function delete($p_deleteLanguageFiles = true)
 	{
-		global $g_documentRoot;
-		if (is_link($g_documentRoot . "/" . $this->getCode() . ".php")) {
-			unlink($g_documentRoot . "/" . $this->getCode() . ".php");
+		if (is_link($GLOBALS['g_campsiteDir'] . '/' . $this->getCode() . '.php')) {
+			unlink($GLOBALS['g_campsiteDir'] . '/' . $this->getCode() . '.php');
 		}
 		if ($p_deleteLanguageFiles) {
 			$result = Localizer::DeleteLanguageFiles($this->getCode());
@@ -272,13 +266,11 @@ class Language extends DatabaseObject {
 	{
 	    global $g_ado_db;
 
-	    $document_root = $_SERVER['DOCUMENT_ROOT'];
-
 	    $languages = $g_ado_db->GetAll('select Code from Languages');
-	    $index_file = "$document_root/index.php";
+	    $index_file = $GLOBALS['g_campsiteDir'].'/index.php';
 	    foreach ($languages as $language) {
 	        $languageCode = $language["Code"];
-	        $link = "$document_root/$languageCode.php";
+	        $link = $GLOBALS['g_campsiteDir']."/$languageCode.php";
 	        if (file_exists($link) && !is_link($link)) {
 	            unlink($link);
 	        }

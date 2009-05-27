@@ -1,7 +1,7 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/issues/issue_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Template.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Alias.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
 
 $Language = Input::Get('Language', 'int', 0);
 $Pub = Input::Get('Pub', 'int', 0);

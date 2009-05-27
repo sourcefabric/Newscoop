@@ -9,15 +9,15 @@
  * @link http://www.campware.org
  */
 
-global $Campsite, $g_campsiteDir;
+global $Campsite;
 
-$g_campsiteDir = dirname(dirname(__FILE__));
+$GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 
-require_once($g_campsiteDir.'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
-require_once($g_campsiteDir.'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 
 /** System settings **/

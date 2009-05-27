@@ -140,7 +140,7 @@ class MetaAction
             $basePaths[] = $CampPlugin->getBasePath();  
         }
         foreach ($basePaths as $basePath) {
-            $directoryPath = $_SERVER['DOCUMENT_ROOT'].'/'.$basePath.'/template_engine/metaclasses';
+            $directoryPath = $GLOBALS['g_campsiteDir'].'/'.$basePath.'/template_engine/metaclasses';
             $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
             $directoryPath, 'perl', false);
 

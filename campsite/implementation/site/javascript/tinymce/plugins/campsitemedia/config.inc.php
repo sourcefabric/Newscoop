@@ -4,7 +4,7 @@
  * @author $Author: holman $
  * @version $Id: config.inc.php 8002 2008-05-12 18:24:23Z holman $
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 
 global $Campsite;
 

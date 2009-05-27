@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/templates/template_common.php");
 
 $f_template_code = Input::Get('f_template_code', 'array', array(), true);
 $f_destination_folder = Input::Get('f_destination_folder', 'string', '', true);
@@ -96,7 +96,7 @@ $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs[] = array(getGS("Move templates"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
 

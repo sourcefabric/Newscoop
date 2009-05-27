@@ -12,7 +12,7 @@ if (! defined('CAMP_TESTS')) {
 }
 
 if (! defined('CAMP_CLASSES')) {
-    define ('CAMP_CLASSES', $_SERVER['DOCUMENT_ROOT'] . "/classes/");
+    define ('CAMP_CLASSES', $GLOBALS['g_campsiteDir'] . "/classes/");
 }
 
 require_once (SIMPLE_TEST . 'unit_tester.php');

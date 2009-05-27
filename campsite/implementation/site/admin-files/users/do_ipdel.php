@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
-require_once($_SERVER['DOCUMENT_ROOT']. "/classes/Log.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/classes/Log.php");
 
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 $uType = 'Subscribers';

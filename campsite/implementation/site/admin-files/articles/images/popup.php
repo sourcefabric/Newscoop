@@ -1,10 +1,10 @@
 <?PHP
 camp_load_translation_strings("article_images");
 camp_load_translation_strings('api');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/articles/article_common.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Image.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/ImageSearch.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 
 if (!$g_user->hasPermission("AttachImageToArticle")) {
 	$errorStr = getGS('You do not have the right to attach images to articles.');

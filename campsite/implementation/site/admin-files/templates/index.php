@@ -1,5 +1,5 @@
 <?php
-require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/templates/template_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/templates/template_common.php");
 
 if (!$g_user->hasPermission('ManageTempl') && !$g_user->hasPermission('DeleteTempl')) {
 	camp_html_goto_page("/$ADMIN/");
@@ -18,7 +18,7 @@ $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
 echo camp_html_breadcrumbs($crumbs);
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <P>

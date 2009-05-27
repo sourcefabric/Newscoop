@@ -6,19 +6,14 @@
 /**
  * Includes
  */
-// We indirectly reference the DOCUMENT_ROOT so we can enable
-// scripts to use this file from the command line, because $_SERVER['DOCUMENT_ROOT']
-// is not defined in these cases.
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
-
-require_once($g_documentRoot.'/db_connect.php');
-require_once($g_documentRoot.'/classes/Alias.php');
-require_once($g_documentRoot.'/classes/Publication.php');
-require_once($g_documentRoot.'/classes/Issue.php');
-require_once($g_documentRoot.'/classes/Section.php');
-require_once($g_documentRoot.'/classes/Article.php');
-require_once($g_documentRoot.'/classes/Language.php');
-require_once($g_documentRoot.'/classes/Template.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 
 class ShortURL
 {

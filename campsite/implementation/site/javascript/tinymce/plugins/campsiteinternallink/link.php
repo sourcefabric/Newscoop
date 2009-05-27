@@ -7,15 +7,15 @@
  *       set in the POST.
  *
  */
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/camp_html.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Language.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Publication.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Issue.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Section.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 $maxSelectLength = 60;
 $languageId = Input::get('IdLanguage', 'int', 0, true);

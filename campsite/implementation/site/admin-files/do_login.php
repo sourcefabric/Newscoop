@@ -1,14 +1,14 @@
 <?php
 camp_load_translation_strings('home');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/XR_CcClient.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Article.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/Input.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/LoginAttempts.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/captcha/php-captcha.inc.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/crypto/rc4Encrypt.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/pear/PEAR.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/XR_CcClient.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/crypto/rc4Encrypt.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/pear/PEAR.php');
 camp_load_translation_strings("api");
 
 $f_user_name = Input::Get('f_user_name');

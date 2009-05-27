@@ -2,7 +2,7 @@
 camp_load_translation_strings("plugins");
 camp_load_translation_strings("api");
 
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 
 if (!$g_user->hasPermission('plugin_manager')) {
     camp_html_display_error(getGS("You do not have the right to manage plugins."));
