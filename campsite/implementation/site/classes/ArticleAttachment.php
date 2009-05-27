@@ -14,6 +14,7 @@ $g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
 require_once($g_documentRoot.'/classes/DatabaseObject.php');
 require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Attachment.php');
+require_once($g_documentRoot.'/classes/CampCacheList.php');
 require_once($g_documentRoot.'/template_engine/classes/CampTemplate.php');
 
 /**
@@ -204,11 +205,12 @@ class ArticleAttachment extends DatabaseObject {
         global $g_ado_db;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $articleAttachmentsList = CampCache::singleton()->fetch($cacheKey);
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleAttachmentsList = $cacheListObj->fetchFromCache();
 	    if ($articleAttachmentsList !== false
 		    && is_array($articleAttachmentsList)) {
 	        return $articleAttachmentsList;
@@ -295,7 +297,7 @@ class ArticleAttachment extends DatabaseObject {
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $articleAttachmentsList, 600);
+	    $cacheListObj->storeInCache($articleAttachmentsList);
 	}
 
         return $articleAttachmentsList;

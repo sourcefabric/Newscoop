@@ -16,6 +16,7 @@ require_once($g_documentRoot.'/classes/SQLSelectClause.php');
 require_once($g_documentRoot.'/classes/Article.php');
 require_once($g_documentRoot.'/classes/Topic.php');
 require_once($g_documentRoot.'/classes/Log.php');
+require_once($g_documentRoot.'/classes/CampCacheList.php');
 
 /**
  * @package Campsite
@@ -236,11 +237,12 @@ class ArticleTopic extends DatabaseObject {
         global $g_ado_db;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $articleTopicsList = CampCache::singleton()->fetch($cacheKey);
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $articleTopicsList = $cacheListObj->fetchFromCache();
 	    if ($articleTopicsList !== false
 		    && is_array($articleTopicsList)) {
 	        return $articleTopicsList;
@@ -311,7 +313,7 @@ class ArticleTopic extends DatabaseObject {
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $articleTopicsList, 600);
+	    $cacheListObj->storeInCache($articleTopicsList);
 	}
 
         return $articleTopicsList;

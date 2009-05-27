@@ -8,6 +8,7 @@
  */
 require_once(dirname(__FILE__).'/Log.php');
 require_once(dirname(__FILE__).'/Topic.php');
+require_once(dirname(__FILE__).'/CampCacheList.php');
 
 
 /**
@@ -688,16 +689,17 @@ class ArticleTypeField extends DatabaseObject {
 	    global $g_ado_db;
 
 	    if (CampCache::IsEnabled()) {
-	        $paramString = (is_null($p_name)) ? 'null_' : $p_name . '_';
-		$paramString .= (is_null($p_articleType)) ? 'null_' : $p_articleType . '_';
-		$paramString .= (is_null($p_dataType)) ? 'null_' : $p_dataType . '_';
-		$paramString .= ($p_negateName == false) ? 'false_' : 'true_';
-		$paramString .= ($p_negateArticleType == false) ? 'false_' : 'true_';
-		$paramString .= ($p_negateDataType == false) ? 'false_' : 'true_';
-		$paramString .= ($p_selectHidden == false)? 'false_' : 'true_';
-		$cacheKey = __CLASS__ . '_List_' . $paramString;
-	        $articleTypeFieldsList = CampCache::singleton()->fetch($cacheKey);
-		if ($articleTypeFieldsList !== false && is_array($articleTypeFieldsList)) {
+	        $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
+		$paramsArray['article_type'] = (is_null($p_articleType)) ? 'null' : $p_articleType;
+		$paramsArray['data_type'] = (is_null($p_dataType)) ? 'null' : $p_dataType;
+		$paramsArray['negate_name'] = ($p_negateName == false) ? 'false' : 'true';
+		$paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
+		$paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
+		$paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
+		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	        $articleTypeFieldsList = $cacheListObj->fetchFromCache();
+		if ($articleTypeFieldsList !== false
+		        && is_array($articleTypeFieldsList)) {
 		    return $articleTypeFieldsList;
 		}
 	    }
@@ -730,7 +732,7 @@ class ArticleTypeField extends DatabaseObject {
 	        $fields[] = $field;
 	    }
 	    if (CampCache::IsEnabled()) {
-	        CampCache::singleton()->store($cacheKey, $fields, 600);
+	        $cacheListObj->storeInCache($fields);
 	    }
 
 	    return $fields;
