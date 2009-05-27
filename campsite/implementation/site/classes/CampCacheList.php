@@ -103,7 +103,7 @@ class CampCacheList
 		}
 	    }
 	    $paramString = implode('_', $this->m_parameters);
-	    $this->m_cacheKey = $this->m_className . '_' . $paramString;
+	    $this->m_cacheKey = $this->m_className . '_List_' . $paramString;
 	}
 
 	return $this->m_cacheKey;
