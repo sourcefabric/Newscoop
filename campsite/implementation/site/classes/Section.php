@@ -11,6 +11,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
 /**
@@ -371,24 +372,42 @@ class Section extends DatabaseObject {
 	                                   $p_languageId = null, $p_urlName = null,
 	                                   $p_sectionName = null, $p_sqlOptions = null)
 	{
-		$constraints = array();
-		if (!is_null($p_publicationId)) {
-			$constraints[] = array("IdPublication", $p_publicationId);
+	    if (CampCache::IsEnabled()) {
+	        $paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
+		$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
+		$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+		$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
+		$paramsArray['section_name'] = (is_null($p_sectionName)) ? 'null' : $p_sectionName;
+		$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
+		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$sectionsList = $cacheListObj->fetchFromCache();
+		if ($sectionsList !== false && is_array($sectionsList)) {
+		  return $sectionsList;
 		}
-		if (!is_null($p_issueNumber)) {
-			$constraints[] = array("NrIssue", $p_issueNumber);
-		}
-		if (!is_null($p_languageId)) {
-			$constraints[] = array("IdLanguage", $p_languageId);
-		}
-		if (!is_null($p_urlName)) {
-			$constraints[] = array("ShortName", $p_urlName);
-		}
-		if (!is_null($p_sectionName)) {
-			$constraints[] = array("Name", $p_sectionName);
-		}
+	    }
 
-		return DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
+	    $constraints = array();
+	    if (!is_null($p_publicationId)) {
+	        $constraints[] = array("IdPublication", $p_publicationId);
+	    }
+	    if (!is_null($p_issueNumber)) {
+	        $constraints[] = array("NrIssue", $p_issueNumber);
+	    }
+	    if (!is_null($p_languageId)) {
+	        $constraints[] = array("IdLanguage", $p_languageId);
+	    }
+	    if (!is_null($p_urlName)) {
+	        $constraints[] = array("ShortName", $p_urlName);
+	    }
+	    if (!is_null($p_sectionName)) {
+	        $constraints[] = array("Name", $p_sectionName);
+	    }
+	    $sectionsList = DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
+	    if (CampCache::IsEnabled()) {
+	        $cacheListObj->storeInCache($sectionsList);
+	    }
+
+	    return $sectionsList;
 	} // fn GetSections
 
 
@@ -520,13 +539,13 @@ class Section extends DatabaseObject {
         global $g_ado_db;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $sectionsList = CampCache::singleton()->fetch($cacheKey);
-	    if ($sectionsList !== false
-		    && is_array($sectionsList)) {
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $sectionsList = $cacheListObj->fetchFromCache();
+	    if ($sectionsList !== false && is_array($sectionsList)) {
 	        return $sectionsList;
 	    }
 	}
@@ -608,7 +627,7 @@ class Section extends DatabaseObject {
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $sectionsList, 600);
+	    $cacheListObj->storeInCache($sectionsList);
 	}
 
         return $sectionsList;

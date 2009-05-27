@@ -182,11 +182,24 @@ class Language extends DatabaseObject {
 	public static function GetLanguages($p_id = null, $p_languageCode = null,
 	$p_name = null, array $p_excludedLanguages = array(), array $p_order = array())
 	{
-		global $g_ado_db;
-		
-        $selectClauseObj = new SQLSelectClause();
-        $tmpLanguage = new Language();
-        $selectClauseObj->setTable($tmpLanguage->getDbTableName());
+	    global $g_ado_db;
+
+	    if (CampCache::IsEnabled()) {
+	        $paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
+		$paramsArray['language_code'] = (is_null($p_languageCode)) ? 'null' : $p_languageCode;
+		$paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
+		$paramsArray['excluded_languages'] = $p_excludedLanguages;
+		$paramsArray['order'] = $p_order;
+		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$languages = $cacheListObj->fetchFromCache();
+		if ($languages !== false && is_array($languages)) {
+		    return $languages;
+		}
+	    }
+
+	    $selectClauseObj = new SQLSelectClause();
+	    $tmpLanguage = new Language();
+	    $selectClauseObj->setTable($tmpLanguage->getDbTableName());
         
 	    if (!is_null($p_id)) {
 	    	$selectClauseObj->addWhere('Id = ' . (int)$p_id);
@@ -204,12 +217,16 @@ class Language extends DatabaseObject {
 	    	}
 	    	$selectClauseObj->addWhere("Id NOT IN (" . implode(', ', $excludedLanguages) . ")");
 	    }
-        $order = Language::ProcessLanguageListOrder($p_order);
-        foreach ($order as $orderDesc) {
-            $selectClauseObj->addOrderBy($orderDesc['field'] . ' ' . $orderDesc['dir']);
-        }
-        $selectClause = $selectClauseObj->buildQuery();
+	    $order = Language::ProcessLanguageListOrder($p_order);
+	    foreach ($order as $orderDesc) {
+	        $selectClauseObj->addOrderBy($orderDesc['field'] . ' ' . $orderDesc['dir']);
+	    }
+	    $selectClause = $selectClauseObj->buildQuery();
 	    $languages = DbObjectArray::Create('Language', $selectClause);
+	    if (CampCache::IsEnabled()) {
+	        $cacheListObj->storeInCache($languages);
+	    }
+
 	    return $languages;
 	} // fn GetLanguages
 

@@ -664,18 +664,34 @@ class Issue extends DatabaseObject {
 	public static function GetCurrentIssue($p_publicationId, $p_languageId = null)
 	{
 		global $g_ado_db;
+
+		if (CampCache::IsEnabled()) {
+		    $paramsArray['publication_id'] = $p_publicationId;
+		    $paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+		    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		    $issue = $cacheListObj->fetchFromCache();
+		    if ($issue !== false && is_object($issue)) {
+		        return $issue;
+		    }
+		}
+
 		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
-					. "IdPublication = $p_publicationId";
+		    . "IdPublication = $p_publicationId";
 		if (!is_null($p_languageId)) {
-			$queryStr .= " AND IdLanguage = $p_languageId";
+		    $queryStr .= " AND IdLanguage = $p_languageId";
 		}
 		$queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
 		$result = $g_ado_db->GetRow($queryStr);
 		if (is_null($result)) {
-	    	return null;
+		    return null;
 		}
-		return new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
-	}
+		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
+		if (CampCache::IsEnabled()) {
+		    $cacheListObj->storeInCache($issue);
+		}
+
+		return $issue;
+	} // fn GetCurrentIssue
 
 
 	/**
@@ -724,13 +740,13 @@ class Issue extends DatabaseObject {
         global $g_ado_db;
 
 	if (CampCache::IsEnabled()) {
-	    $paramString = serialize($p_parameters) . '_';
-	    $paramString.= (is_null($p_order)) ? 'null_' : $p_order . '_';
-	    $paramString.= $p_start . '_' . $p_limit;
-	    $cacheKey = __CLASS__ . '_List_' . $paramString;
-	    $issuesList = CampCache::singleton()->fetch($cacheKey);
-	    if ($issuesList !== false
-		    && is_array($issuesList)) {
+	    $paramsArray['parameters'] = serialize($p_parameters);
+	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+	    $paramsArray['start'] = $p_start;
+	    $paramsArray['limit'] = $p_limit;
+	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+	    $issuesList = $cacheListObj->fetchFromCache();
+	    if ($issuesList !== false && is_array($issuesList)) {
 	        return $issuesList;
 	    }
 	}
@@ -813,7 +829,7 @@ class Issue extends DatabaseObject {
             }
         }
 	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $issuesList, 600);
+	    $cacheListObj->storeInCache($issuesList);
 	}
 
         return $issuesList;
