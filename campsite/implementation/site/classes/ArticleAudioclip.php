@@ -225,18 +225,18 @@ class ArticleAudioclip extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleAudioclipsList = $cacheListObj->fetchFromCache();
-	    if ($articleAudioclipsList !== false
-		    && is_array($articleAudioclipsList)) {
-	        return $articleAudioclipsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleAudioclipsList = $cacheListObj->fetchFromCache();
+        	if ($articleAudioclipsList !== false
+        	&& is_array($articleAudioclipsList)) {
+        		return $articleAudioclipsList;
+        	}
+        }
 
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
@@ -293,23 +293,25 @@ class ArticleAudioclip extends DatabaseObject {
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $audioclips = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($audioclips)) {
-            return null;
-        }
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($audioclips)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of attachment objects
-        $articleAudioclipsList = array();
-        foreach ($audioclips as $audioclip) {
-            $aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
-            if ($aclipObj->exists()) {
-                $articleAudioclipsList[] = $aclipObj;
-            }
+        	// builds the array of attachment objects
+        	$articleAudioclipsList = array();
+        	foreach ($audioclips as $audioclip) {
+        		$aclipObj = new Audioclip($audioclip['fk_audioclip_gunid']);
+        		if ($aclipObj->exists()) {
+        			$articleAudioclipsList[] = $aclipObj;
+        		}
+        	}
+        } else {
+        	$articleAudioclipsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleAudioclipsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleAudioclipsList);
+        }
 
         return $articleAudioclipsList;
     } // fn GetList

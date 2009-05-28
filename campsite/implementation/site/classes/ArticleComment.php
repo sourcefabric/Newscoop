@@ -292,17 +292,17 @@ class ArticleComment
     {
         global $g_ado_db, $PHORUM;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleCommentsList = $cacheListObj->fetchFromCache();
-	    if ($articleCommentsList !== false && is_array($articleCommentsList)) {
-	        return $articleCommentsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleCommentsList = $cacheListObj->fetchFromCache();
+        	if ($articleCommentsList !== false && is_array($articleCommentsList)) {
+        		return $articleCommentsList;
+        	}
+        }
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -359,24 +359,26 @@ class ArticleComment
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $comments = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($comments)) {
-            return array();
-        }
-        $countClauseObj->addColumn('COUNT(*)');
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($comments)) {
+        	$countClauseObj->addColumn('COUNT(*)');
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of comment objects
-        $articleCommentsList = array();
-        foreach ($comments as $comment) {
-            $pmObj = new Phorum_message($comment['message_id']);
-            if ($pmObj->exists()) {
-                $articleCommentsList[] = $pmObj;
-            }
+        	// builds the array of comment objects
+        	$articleCommentsList = array();
+        	foreach ($comments as $comment) {
+        		$pmObj = new Phorum_message($comment['message_id']);
+        		if ($pmObj->exists()) {
+        			$articleCommentsList[] = $pmObj;
+        		}
+        	}
+        } else {
+        	$articleCommentsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleCommentsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleCommentsList);
+        }
 
         return $articleCommentsList;
     } // fn GetList

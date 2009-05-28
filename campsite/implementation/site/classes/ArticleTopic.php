@@ -231,18 +231,18 @@ class ArticleTopic extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleTopicsList = $cacheListObj->fetchFromCache();
-	    if ($articleTopicsList !== false
-		    && is_array($articleTopicsList)) {
-	        return $articleTopicsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleTopicsList = $cacheListObj->fetchFromCache();
+        	if ($articleTopicsList !== false
+        	&& is_array($articleTopicsList)) {
+        		return $articleTopicsList;
+        	}
+        }
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -293,23 +293,25 @@ class ArticleTopic extends DatabaseObject {
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $topics = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($topics)) {
-            return array();
-        }
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($topics)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of topic objects
-        $articleTopicsList = array();
-        foreach ($topics as $topic) {
-            $topObj = new Topic($topic['TopicId']);
-            if ($topObj->exists()) {
-                $articleTopicsList[] = $topObj;
-            }
+        	// builds the array of topic objects
+        	$articleTopicsList = array();
+        	foreach ($topics as $topic) {
+        		$topObj = new Topic($topic['TopicId']);
+        		if ($topObj->exists()) {
+        			$articleTopicsList[] = $topObj;
+        		}
+        	}
+        } else {
+        	$articleTopicsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleTopicsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleTopicsList);
+        }
 
         return $articleTopicsList;
     } // fn GetList

@@ -100,6 +100,9 @@ class SubtitlesList extends ListObject
                     CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_subtitles", $p_smarty);
             }
         }
+        $article = CampTemplate::singleton()->context()->article;
+        $parameters['article_number'] = $article->number;
+        $parameters['language_number'] = $article->language->number;
         return $parameters;
     }
 

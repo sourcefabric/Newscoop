@@ -199,18 +199,18 @@ class ArticleAttachment extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleAttachmentsList = $cacheListObj->fetchFromCache();
-	    if ($articleAttachmentsList !== false
-		    && is_array($articleAttachmentsList)) {
-	        return $articleAttachmentsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleAttachmentsList = $cacheListObj->fetchFromCache();
+        	if ($articleAttachmentsList !== false
+        	&& is_array($articleAttachmentsList)) {
+        		return $articleAttachmentsList;
+        	}
+        }
 
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
@@ -277,23 +277,25 @@ class ArticleAttachment extends DatabaseObject {
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $attachments = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($attachments)) {
-            return null;
-        }
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($attachments)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of attachment objects
-        $articleAttachmentsList = array();
-        foreach ($attachments as $attachment) {
-            $attchObj = new Attachment($attachment['id']);
-            if ($attchObj->exists()) {
-                $articleAttachmentsList[] = $attchObj;
-            }
+        	// builds the array of attachment objects
+        	$articleAttachmentsList = array();
+        	foreach ($attachments as $attachment) {
+        		$attchObj = new Attachment($attachment['id']);
+        		if ($attchObj->exists()) {
+        			$articleAttachmentsList[] = $attchObj;
+        		}
+        	}
+        } else {
+        	$articleAttachmentsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleAttachmentsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleAttachmentsList);
+        }
 
         return $articleAttachmentsList;
     } // fn GetList

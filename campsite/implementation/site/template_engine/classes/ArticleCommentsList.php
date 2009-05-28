@@ -25,7 +25,7 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		$this->m_defaultTTL = 1;
+		$this->m_defaultTTL = 10;
 	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaCommentsList = array();
 	    foreach ($articleCommentsList as $comment) {
@@ -160,16 +160,6 @@ class ArticleCommentsList extends ListObject
 
     	return $parameters;
 	}
-
-
-    protected function getCacheKey()
-    {
-        if (is_null($this->m_cacheKey)) {
-            $this->m_cacheKey = __CLASS__ . '__' . serialize($this->m_parameters)
-            . '__' . $this->m_start . '__' . $this->m_limit . '__' . $this->m_columns;
-        }
-        return $this->m_cacheKey;
-    }
 }
 
 ?>

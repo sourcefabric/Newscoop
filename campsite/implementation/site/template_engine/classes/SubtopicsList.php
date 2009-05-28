@@ -135,6 +135,7 @@ class SubtopicsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_subtopics", $p_smarty);
     		}
     	}
+        $parameters['topic_identifier'] = CampTemplate::singleton()->context()->topic->identifier;
     	return $parameters;
 	}
 

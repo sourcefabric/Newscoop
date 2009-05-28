@@ -397,17 +397,17 @@ class ArticleImage extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleImagesList = $cacheListObj->fetchFromCache();
-	    if ($articleImagesList !== false && is_array($articleImagesList)) {
-	        return $articleImagesList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleImagesList = $cacheListObj->fetchFromCache();
+        	if ($articleImagesList !== false && is_array($articleImagesList)) {
+        		return $articleImagesList;
+        	}
+        }
 
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
@@ -471,23 +471,25 @@ class ArticleImage extends DatabaseObject {
         // builds the query executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $images = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($images)) {
-            return null;
-        }
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($images)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of image objects
-        $articleImagesList = array();
-        foreach ($images as $image) {
-            $imgObj = new Image($image['Id']);
-            if ($imgObj->exists()) {
-                $articleImagesList[] = $imgObj;
-            }
+        	// builds the array of image objects
+        	$articleImagesList = array();
+        	foreach ($images as $image) {
+        		$imgObj = new Image($image['Id']);
+        		if ($imgObj->exists()) {
+        			$articleImagesList[] = $imgObj;
+        		}
+        	}
+        } else {
+        	$articleImagesList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleImagesList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleImagesList);
+        }
 
         return $articleImagesList;
     } // fn GetList

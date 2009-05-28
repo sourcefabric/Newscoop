@@ -198,18 +198,18 @@ class ArticleAuthor extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articleAuthorsList = $cacheListObj->fetchFromCache();
-	    if ($articleAuthorsList !== false
-		    && is_array($articleAuthorsList)) {
-	        return $articleAuthorsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articleAuthorsList = $cacheListObj->fetchFromCache();
+        	if ($articleAuthorsList !== false
+        	&& is_array($articleAuthorsList)) {
+        		return $articleAuthorsList;
+        	}
+        }
 
         $hasArticleNr = false;
         $selectClauseObj = new SQLSelectClause();
@@ -266,23 +266,25 @@ class ArticleAuthor extends DatabaseObject {
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $authors = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($authors)) {
-            return null;
-        }
-        $countQuery = $countClauseObj->buildQuery();
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($authors)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of attachment objects
-        $articleAuthorsList = array();
-        foreach ($authors as $author) {
-            $authorObj = new Author($author['fk_author_id']);
-            if ($authorObj->exists()) {
-                $articleAuthorsList[] = $authorObj;
-            }
+        	// builds the array of attachment objects
+        	$articleAuthorsList = array();
+        	foreach ($authors as $author) {
+        		$authorObj = new Author($author['fk_author_id']);
+        		if ($authorObj->exists()) {
+        			$articleAuthorsList[] = $authorObj;
+        		}
+        	}
+        } else {
+        	$articleAuthorsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articleAuthorsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articleAuthorsList);
+        }
 
         return $articleAuthorsList;
     } // fn GetList

@@ -269,7 +269,7 @@ abstract class ListObject
 	protected function getCacheKey()
 	{
 		if (is_null($this->m_cacheKey)) {
-			$this->m_cacheKey = __CLASS__ . '__' . serialize($this->m_constraints)
+			$this->m_cacheKey = get_class($this) . '__' . serialize($this->m_constraints)
 			. '__' . serialize($this->m_order) . '__' . $this->m_start
 			. '__' . $this->m_limit . '__' . $this->m_columns;
 		}

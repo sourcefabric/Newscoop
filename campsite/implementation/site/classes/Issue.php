@@ -757,17 +757,17 @@ class Issue extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $issuesList = $cacheListObj->fetchFromCache();
-	    if ($issuesList !== false && is_array($issuesList)) {
-	        return $issuesList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$issuesList = $cacheListObj->fetchFromCache();
+        	if ($issuesList !== false && is_array($issuesList)) {
+        		return $issuesList;
+        	}
+        }
 
         $hasPublicationId = false;
         $selectClauseObj = new SQLSelectClause();
@@ -830,25 +830,26 @@ class Issue extends DatabaseObject {
         $selectQuery = $selectClauseObj->buildQuery();
         $countQuery = $countClauseObj->buildQuery();
         $issues = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($issues)) {
-            $p_count = 0;
-            return array();
-        }
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($issues)) {
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of issue objects
-        $issuesList = array();
-        foreach ($issues as $issue) {
-            $issObj = new Issue($issue['IdPublication'],
-                                $issue['IdLanguage'],
-                                $issue['Number']);
-            if ($issObj->exists()) {
-                $issuesList[] = $issObj;
-            }
+        	// builds the array of issue objects
+        	$issuesList = array();
+        	foreach ($issues as $issue) {
+        		$issObj = new Issue($issue['IdPublication'],
+        		$issue['IdLanguage'],
+        		$issue['Number']);
+        		if ($issObj->exists()) {
+        			$issuesList[] = $issObj;
+        		}
+        	}
+        } else {
+        	$issuesList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($issuesList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($issuesList);
+        }
 
         return $issuesList;
     } // fn GetList

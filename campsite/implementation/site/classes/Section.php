@@ -538,17 +538,17 @@ class Section extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $sectionsList = $cacheListObj->fetchFromCache();
-	    if ($sectionsList !== false && is_array($sectionsList)) {
-	        return $sectionsList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$sectionsList = $cacheListObj->fetchFromCache();
+        	if ($sectionsList !== false && is_array($sectionsList)) {
+        		return $sectionsList;
+        	}
+        }
 
         $hasPublicationId = false;
         $selectClauseObj = new SQLSelectClause();
@@ -610,25 +610,27 @@ class Section extends DatabaseObject {
         $selectQuery = $selectClauseObj->buildQuery();
         $countQuery = $countClauseObj->buildQuery();
         $sections = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($sections)) {
-            return array();
-        }
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($sections)) {
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of section objects
-        $sectionsList = array();
-        foreach ($sections as $section) {
-            $secObj = new Section($section['IdPublication'],
-                                  $section['NrIssue'],
-                                  $section['IdLanguage'],
-                                  $section['Number']);
-            if ($secObj->exists()) {
-                $sectionsList[] = $secObj;
-            }
+        	// builds the array of section objects
+        	$sectionsList = array();
+        	foreach ($sections as $section) {
+        		$secObj = new Section($section['IdPublication'],
+        		$section['NrIssue'],
+        		$section['IdLanguage'],
+        		$section['Number']);
+        		if ($secObj->exists()) {
+        			$sectionsList[] = $secObj;
+        		}
+        	}
+        } else {
+        	$sectionsList = array();
+        	$p_count = 0;
         }
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($sectionsList);
-	}
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($sectionsList);
+        }
 
         return $sectionsList;
     } // fn GetList
