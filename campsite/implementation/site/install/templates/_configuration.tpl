@@ -67,8 +67,8 @@ $Campsite['smtp']['default_port'] = 25;
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
-require_once($g_campsiteDir.'/conf/database_conf.php');
-require_once($g_campsiteDir.'/conf/install_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
 
 
 /**
@@ -79,8 +79,8 @@ require_once($g_campsiteDir.'/conf/install_conf.php');
  */
 function __autoload($p_className)
 {
-    global $g_campsiteDir, $ADMIN, $ADMIN_DIR;
-    require_once($g_campsiteDir.'/classes/CampPlugin.php');
+    global $ADMIN, $ADMIN_DIR;
+    require_once($GLOBALS['g_campsiteDir'].'/classes/CampPlugin.php');
 
     static $classDirectories = array('classes',
                               'template_engine/classes',
@@ -91,7 +91,7 @@ function __autoload($p_className)
     }
 
     foreach ($classDirectories as $dirName) {
-        $fileName = "$g_campsiteDir/$dirName/$p_className.php";
+        $fileName = $GLOBALS['g_campsiteDir']."/$dirName/$p_className.php";
         if (file_exists($fileName)) {
             require_once($fileName);
             return;
@@ -104,7 +104,7 @@ function __autoload($p_className)
     }
     foreach ($basePaths as $basePath) {                       
         foreach ($classDirectories as $dirName) {
-            $fileName = "$g_campsiteDir/$basePath/$dirName/$p_className.php";
+            $fileName = $GLOBALS['g_campsiteDir']."/$basePath/$dirName/$p_className.php";
             if (file_exists($fileName)) {
                 require_once($fileName);
                 return;

@@ -9,9 +9,7 @@
  * @link http://www.campware.org
  */
 
-/**
- * Includes
- */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');
 
