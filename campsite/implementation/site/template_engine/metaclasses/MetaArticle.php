@@ -186,7 +186,7 @@ final class MetaArticle extends MetaDbObject {
                         $subtitleNo = CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
                         if (is_null($subtitleNo)) {
                             $subtitleNo = 0;
-                        } elseif ($subtitleNo == 'all') {
+                        } elseif ($subtitleNo === 'all') {
                             $subtitleNo = null;
                         }
                         $bodyField = new MetaArticleBodyField($fieldValue, $this,

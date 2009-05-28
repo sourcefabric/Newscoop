@@ -65,7 +65,7 @@ final class MetaArticleBodyField {
                                                          $p_headerFormatStart, $p_headerFormatEnd);
         $this->m_sutitlesNames = array();
         foreach ($this->m_subtitles as $subtitle) {
-            $this->m_sutitlesNames = $subtitle->name;
+            $this->m_sutitlesNames[] = $subtitle->name;
         }
         $this->m_parent_article = new Article($p_parent->language->number, $p_parent->number);
         $this->m_fieldName = $p_fieldName;

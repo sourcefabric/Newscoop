@@ -154,6 +154,7 @@ final class CampContext
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
+        $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
         $this->m_objects['publication'] = $this->m_readonlyProperties['url']->publication;
         $this->m_objects['language'] = $this->m_readonlyProperties['url']->language;
@@ -172,7 +173,6 @@ final class CampContext
         $this->m_readonlyProperties['default_section'] = $this->m_objects['section'];
         $this->m_readonlyProperties['default_article'] = $this->m_objects['article'];
         $this->m_readonlyProperties['default_topic'] = $this->topic;
-        $this->m_readonlyProperties['default_url'] = $this->m_readonlyProperties['url'];
 
         if (!is_null($commentId = CampRequest::GetVar('acid'))) {
             $this->m_objects['comment'] = new MetaComment($commentId);
