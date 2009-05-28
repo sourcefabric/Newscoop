@@ -1,4 +1,5 @@
 <?php
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 
 global $Campsite;

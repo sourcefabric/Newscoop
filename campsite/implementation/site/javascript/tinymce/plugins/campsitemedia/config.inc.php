@@ -4,6 +4,7 @@
  * @author $Author: holman $
  * @version $Id: config.inc.php 8002 2008-05-12 18:24:23Z holman $
  */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 
 global $Campsite;

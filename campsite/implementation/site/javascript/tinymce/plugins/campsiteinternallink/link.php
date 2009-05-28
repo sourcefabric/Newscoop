@@ -7,6 +7,7 @@
  *       set in the POST.
  *
  */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
