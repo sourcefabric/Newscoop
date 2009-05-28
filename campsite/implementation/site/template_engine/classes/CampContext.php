@@ -224,8 +224,6 @@ final class CampContext
     final public function __get($p_element)
     {
         try {
-            $p_element = CampContext::TranslateProperty($p_element);
-
             // Verify if an object of this type exists
             if (!is_null(CampContext::ObjectType($p_element))) {
                 if (!isset($this->m_objects[$p_element])
@@ -235,16 +233,18 @@ final class CampContext
                 return $this->m_objects[$p_element];
             }
 
-            // Verify if a property with this name exists
-            if (is_array($this->m_properties)
-            && array_key_exists($p_element, $this->m_properties)) {
-                return $this->m_properties[$p_element];
-            }
+            $p_element = CampContext::TranslateProperty($p_element);
 
             // Verify if a readonly property with this name exists
             if (is_array($this->m_readonlyProperties)
             && array_key_exists($p_element, $this->m_readonlyProperties)) {
                 return $this->m_readonlyProperties[$p_element];
+            }
+
+            // Verify if a property with this name exists
+            if (is_array($this->m_properties)
+            && array_key_exists($p_element, $this->m_properties)) {
+                return $this->m_properties[$p_element];
             }
 
             // No object of this type of property with this name exist.
@@ -663,7 +663,7 @@ final class CampContext
      * @param string $p_property
      * @return string
      */
-    static function TranslateProperty($p_property)
+    public static function TranslateProperty($p_property)
     {
         return strtolower($p_property);
     } // fn TranslateProperty

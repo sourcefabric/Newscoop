@@ -17,21 +17,10 @@
 final class CampSite extends CampSystem
 {
     /**
-     * Request time from client.
-     *
-     * @var string
-     */
-    private $m_requestTime = null;
-
-
-    /**
      * Class constructor
      */
     final public function __construct()
     {
-        parent::__construct();
-
-        $this->m_requestTime = date('Y-m-d H:i:s', time());
     } // fn __construct
 
 
@@ -164,12 +153,12 @@ final class CampSite extends CampSystem
     {
         global $g_errorList;
 
+        $preview = CampTemplate::singleton()->context()->preview;
         switch ($p_eventName) {
         case 'beforeRender':
-            return CampRequest::GetVar('previewLang', null);
+            return $preview ? CampRequest::GetVar('previewLang', null) : null;
         case 'afterRender':
-            $doPreview = CampRequest::GetVar('preview', 'off');
-            if ($doPreview == 'on') {
+            if ($preview) {
                 print("\n<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
                     ."parent.e.document.write(\"<html><head><title>Errors</title>"
                     ."</head><body bgcolor=white text=black>\\\n<pre>\\\n"

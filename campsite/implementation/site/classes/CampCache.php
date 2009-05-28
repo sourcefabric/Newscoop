@@ -45,6 +45,14 @@ final class CampCache
 
     private static $m_enabled = null;
 
+    private static $m_storeRequests = 0;
+
+    private static $m_fetchRequests = 0;
+
+    private static $m_hits = 0;
+
+    private static $m_missKeys = array();
+
 
     /**
      * CampCache class constructor.
@@ -127,7 +135,13 @@ final class CampCache
     	if (is_null($this->m_cacheEngine)) {
     		return false;
     	}
+    	self::$m_fetchRequests ++;
         $serial = $this->m_cacheEngine->fetchValue($this->genKey($p_key));
+        if ($serial !== false) {
+        	self::$m_hits ++;
+        } else {
+        	self::$m_missKeys[$p_key]++;
+        }
 
         return $this->unserialize($serial);
     } // fn fetch
@@ -151,6 +165,7 @@ final class CampCache
     	if (is_null($this->m_cacheEngine)) {
 	    return false;
     	}
+    	self::$m_storeRequests ++;
         $p_data = $this->serialize($p_data);
 
         return $this->m_cacheEngine->storeValue($this->genKey($p_key), $p_data, $p_ttl);
@@ -290,6 +305,30 @@ final class CampCache
     } // fn genKey
 
 
+    public static function GetStoreRequests()
+    {
+    	return self::$m_storeRequests;
+    }
+
+
+    public static function GetFetchRequests()
+    {
+    	return self::$m_fetchRequests;
+    }
+
+
+    public static function GetHits()
+    {
+    	return self::$m_hits;
+    }
+
+
+    public static function GetMissKeys()
+    {
+    	return self::$m_missKeys;
+    }
+
+
     /**
      * Returns true if the given cache engine was supported
      *
@@ -309,6 +348,7 @@ final class CampCache
     		return false;
     	}
     }
+
 
 
     /**

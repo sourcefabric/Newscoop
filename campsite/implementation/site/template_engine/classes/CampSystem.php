@@ -16,14 +16,6 @@
 abstract class CampSystem
 {
     /**
-     * Class constructor
-     */
-    protected function __construct()
-    {
-    } // fn __construct
-
-
-    /**
      *
      */
     abstract protected function dispatch();
