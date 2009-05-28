@@ -574,48 +574,65 @@ class Issue extends DatabaseObject {
 	                                 $p_preferredLanguage = null,
 	                                 $p_sqlOptions = null)
 	{
-		$tmpIssue = new Issue();
-		$columnNames = $tmpIssue->getColumnNames(true);
-		$queryStr = 'SELECT '.implode(',', $columnNames);
-		if (!is_null($p_preferredLanguage)) {
-			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
-			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
+	    if (CampCache::IsEnabled()) {
+	        $paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
+		$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+		$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
+		$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
+		$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
+		$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
+		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$issuesList = $cacheListObj->fetchFromCache();
+		if ($issuesList !== false && is_array($issuesList)) {
+		    return $issuesList;
 		}
-		// We have to display the language name so oftern that we might
-		// as well fetch it by default.
-		$queryStr .= ', Languages.OrigName as LanguageName';
-		$queryStr .= ' FROM Issues, Languages ';
-		$whereClause = array();
-		$whereClause[] = "Issues.IdLanguage=Languages.Id";
-		if (!is_null($p_publicationId)) {
-			$whereClause[] = "Issues.IdPublication=$p_publicationId";
-		}
-		if (!is_null($p_languageId)) {
-			$whereClause[] = "Issues.IdLanguage=$p_languageId";
-		}
-		if (!is_null($p_issueNumber)) {
-			$whereClause[] = "Issues.Number=$p_issueNumber";
-		}
-		if (!is_null($p_urlName)) {
-			$whereClause[] = "Issues.ShortName='".mysql_real_escape_string($p_urlName)."'";
-		}
-		if (count($whereClause) > 0) {
-			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
-		}
-		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		global $g_ado_db;
-		$issues = array();
-		$rows = $g_ado_db->GetAll($queryStr);
-		if (is_array($rows)) {
-			foreach ($rows as $row) {
-				$tmpObj = new Issue();
-				$tmpObj->fetch($row);
-				$tmpObj->m_languageName = $row['LanguageName'];
-				$issues[] = $tmpObj;
-			}
-		}
+	    }
 
-		return $issues;
+	    $tmpIssue = new Issue();
+	    $columnNames = $tmpIssue->getColumnNames(true);
+	    $queryStr = 'SELECT '.implode(',', $columnNames);
+	    if (!is_null($p_preferredLanguage)) {
+	        $queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+		$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
+	    }
+	    // We have to display the language name so oftern that we might
+	    // as well fetch it by default.
+	    $queryStr .= ', Languages.OrigName as LanguageName';
+	    $queryStr .= ' FROM Issues, Languages ';
+	    $whereClause = array();
+	    $whereClause[] = "Issues.IdLanguage=Languages.Id";
+	    if (!is_null($p_publicationId)) {
+	        $whereClause[] = "Issues.IdPublication=$p_publicationId";
+	    }
+	    if (!is_null($p_languageId)) {
+	        $whereClause[] = "Issues.IdLanguage=$p_languageId";
+	    }
+	    if (!is_null($p_issueNumber)) {
+	        $whereClause[] = "Issues.Number=$p_issueNumber";
+	    }
+	    if (!is_null($p_urlName)) {
+	        $whereClause[] = "Issues.ShortName='".mysql_real_escape_string($p_urlName)."'";
+	    }
+	    if (count($whereClause) > 0) {
+	        $queryStr .= ' WHERE '.implode(' AND ', $whereClause);
+	    }
+	    $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+	    global $g_ado_db;
+	    $issues = array();
+	    $rows = $g_ado_db->GetAll($queryStr);
+	    if (is_array($rows)) {
+	        foreach ($rows as $row) {
+		    $tmpObj = new Issue();
+		    $tmpObj->fetch($row);
+		    $tmpObj->m_languageName = $row['LanguageName'];
+		    $issues[] = $tmpObj;
+		}
+	    }
+	    if (CampCache::IsEnabled()) {
+	        $cacheListObj->storeInCache($issues);
+	    }
+
+	    return $issues;
 	} // fn GetIssues
 
 

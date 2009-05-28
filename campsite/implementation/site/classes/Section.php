@@ -382,7 +382,7 @@ class Section extends DatabaseObject {
 		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
 		$sectionsList = $cacheListObj->fetchFromCache();
 		if ($sectionsList !== false && is_array($sectionsList)) {
-		  return $sectionsList;
+		    return $sectionsList;
 		}
 	    }
 
