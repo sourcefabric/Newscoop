@@ -73,7 +73,7 @@ $pager =& new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_or
 $TotalList = new InterviewsList();
 $total = $TotalList->count;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 

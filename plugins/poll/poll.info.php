@@ -53,11 +53,11 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
 
     function plugin_poll_install()
     {
-        global $LiveUserAdmin, $g_documentRoot;
+        global $LiveUserAdmin;
         
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_poll', 'has_implied' => 1));  
         
-        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', $error_queries);
@@ -67,7 +67,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
     
     function plugin_poll_uninstall()
     {
-        global $LiveUserAdmin, $g_documentRoot, $g_ado_db;
+        global $LiveUserAdmin, $g_ado_db;
         
         foreach (array('plugin_poll') as $right_def_name) {
             $filter = array(

@@ -4,7 +4,7 @@
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<title><?php putGS("Edit Interview"); ?></title>
-	<?php include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
     <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
     <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
@@ -53,7 +53,7 @@ $Interview = new Interview($f_interview_id);
 // new usernames may exist
 foreach(array('guest') as $type) {
     if ($_REQUEST['f_'.$type.'_user_id'] == '__new__') {
-        require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+        require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
     
         if (User::UserNameExists($_REQUEST['f_'.$type.'_new_user_login']) || Phorum_user::UserNameExists($_REQUEST['f_'.$type.'_new_user_login'])) {
             $errorMsg = getGS('User name $1 already exists, please choose a different login name.', $_REQUEST['f_'.$type.'_new_user_login']);

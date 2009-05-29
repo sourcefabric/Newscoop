@@ -7,12 +7,12 @@ global $Campsite;
 global $DEBUG;
 
 // initialize needed global variables
-$_SERVER['DOCUMENT_ROOT'] = getenv("DOCUMENT_ROOT");
+$GLOBALS['g_campsiteDir'] = getenv("DOCUMENT_ROOT");
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/liveuser_configuration.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 
 
 $g_errorList = array();
@@ -104,7 +104,7 @@ $tpl->assign('campsite', $context);
 #set_error_handler('templateErrorHandler');
 
 try {
-	$tpl->display($_SERVER['DOCUMENT_ROOT'] .'/plugins/poll/template_engine/poll_index.tpl');
+	$tpl->display($GLOBALS['g_campsiteDir'] .'/plugins/poll/template_engine/poll_index.tpl');
 } catch (InvalidPropertyHandlerException $e) {
 	echo "<p>Internal error: handler was not specified for property " . $e->getPropertyName()
 		. " of object " . $e->getClassName() . "</p>\n";

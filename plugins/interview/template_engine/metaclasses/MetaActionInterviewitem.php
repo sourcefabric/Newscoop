@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 define('ACTION_INTERVIEWITEM_ERR_NO_QUESTION', 'ACTION_INTERVIEWITEM_ERR_NO_QUESTION');
 define('ACTION_INTERVIEWITEM_ERR_NO_ANSWER', 'ACTION_INTERVIEWITEM_ERR_NO_ANSWER');

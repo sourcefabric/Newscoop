@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 define('ACTION_BLOG_ERR_NO_TITLE', 'ACTION_BLOG_ERR_NO_TITLE');
 define('ACTION_BLOG_ERR_NO_CONTENT', 'ACTION_BLOG_ERR_NO_CONTENT');

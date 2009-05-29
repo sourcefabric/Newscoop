@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 
 define('ACTION_INTERVIEW_NOTIFY_INVALID_ACTION', 'ACTION_INTERVIEW_NOTIFY_INVALID_ACTION');

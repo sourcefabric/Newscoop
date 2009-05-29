@@ -1,6 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 define('ACTION_BLOGACTION_ERR_NO_USER', 'ACTION_BLOGACTION_ERR_NO_USER');
 define('ACTION_BLOGACTION_ERR_INVALID_BLOG', 'ACTION_BLOGACTION_ERR_INVALID_BLOG');

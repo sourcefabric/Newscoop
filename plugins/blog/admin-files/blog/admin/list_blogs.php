@@ -74,7 +74,7 @@ $pager =& new SimplePager($total, $f_length, "f_start", "$self?f_order=$f_order&
 $TotalList = new BlogsList();
 $total = $TotalList->count;
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 

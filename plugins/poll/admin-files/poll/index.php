@@ -25,7 +25,7 @@ foreach ($parents as $poll) {
 $pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_order=$f_poll_order&amp;", false);
 $allLanguages = Language::GetLanguages();
 
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 

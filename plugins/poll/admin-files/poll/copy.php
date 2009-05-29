@@ -38,7 +38,7 @@ camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(ge
 </TABLE>
 
 <?php
-include_once($_SERVER['DOCUMENT_ROOT']."/$ADMIN_DIR/javascript_common.php");
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 camp_html_display_msgs();
 ?>
 <style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>

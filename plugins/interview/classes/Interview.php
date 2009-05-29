@@ -836,7 +836,7 @@ class Interview extends DatabaseObject {
             foreach (array('guest') as $type) {
                 if ($data['f_'.$type.'_user_id'] == '__new__') {
                     global $ADMIN_DIR;
-                    require_once($_SERVER['DOCUMENT_ROOT']. "/$ADMIN_DIR/users/users_common.php");
+                    require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
                     
                     $passwd = substr(sha1(rand()), 0, 10);
                     
@@ -1016,7 +1016,7 @@ class Interview extends DatabaseObject {
     
     private function getInvitationFormMask($p_preview = false, &$p_userid = null)
     {
-        global $Campsite, $g_documentRoot;
+        global $Campsite;
         
         $data = $this->m_data;
         

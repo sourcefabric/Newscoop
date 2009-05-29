@@ -74,12 +74,12 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
 
     function plugin_blog_install()
     {
-        global $LiveUserAdmin, $g_documentRoot;
+        global $LiveUserAdmin;
         
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_admin', 'has_implied' => 1));
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_moderator', 'has_implied' => 1)); 
         
-        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'blog'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'plugin_blog.sql', $error_queries);
@@ -89,7 +89,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     
     function plugin_blog_uninstall()
     {
-        global $LiveUserAdmin, $g_documentRoot, $g_ado_db;
+        global $LiveUserAdmin, $g_ado_db;
         
         foreach (array('plugin_blog_admin', 'plugin_blog_moderator') as $right_def_name) {
             $filter = array(
