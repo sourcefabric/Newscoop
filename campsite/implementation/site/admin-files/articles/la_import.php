@@ -289,7 +289,7 @@ echo camp_html_breadcrumbs($crumbs);
         <option value=""><?php putGS('---Select language---'); ?></option>
         <?php
         foreach ($allLanguages as $language) {
-            camp_html_select_option($language->getLanguageId(), $f_article_language_id, $language->getName());
+            camp_html_select_option($language->getLanguageId(), $f_article_language_id, $language->getNativeName());
         }
         ?>
         </select>
