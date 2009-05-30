@@ -42,6 +42,7 @@ class ArticleImage extends DatabaseObject {
 			$this->m_data['Number'] = $p_templateId;
 			$this->m_keyColumnNames = array('NrArticle', 'Number');
 			$this->fetch();
+			$this->m_keyColumnNames = array('NrArticle', 'IdImage');
 		}
 	} // constructor
 

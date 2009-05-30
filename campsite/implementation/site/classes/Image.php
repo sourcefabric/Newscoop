@@ -10,8 +10,6 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 require_once('HTTP/Client.php');
 
 
@@ -86,6 +84,8 @@ class Image extends DatabaseObject {
 	 */
 	public function delete()
 	{
+		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}

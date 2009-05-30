@@ -25,7 +25,7 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		$this->m_defaultTTL = 10;
+		$this->m_defaultTTL = 20;
 	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaCommentsList = array();
 	    foreach ($articleCommentsList as $comment) {

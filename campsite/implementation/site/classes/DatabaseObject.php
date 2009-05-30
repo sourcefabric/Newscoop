@@ -283,7 +283,6 @@ class DatabaseObject {
 				$this->m_exists = true;
 			} else {
 				$this->m_exists = false;
-				return false;
 			}
 		} else {
 			if ($this->readFromCache($p_recordSet) !== false) {
@@ -313,7 +312,7 @@ class DatabaseObject {
 		// Write the object to cache
         $this->writeCache();
 
-		return true;
+		return $this->m_exists;
 	} // fn fetch
 
 
@@ -971,11 +970,10 @@ class DatabaseObject {
 			return false;
 		}
 
-		if (!$this->exists()) {
-			return false;
-		}
-
         $cacheKey = $this->getCacheKey();
+        if ($cacheKey === false) {
+        	return false;
+        }
         $cacheObj = CampCache::singleton();
 
         return $cacheObj->add($cacheKey, $this);

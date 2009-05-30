@@ -44,12 +44,15 @@ class MetaAction
     private static $m_availableActions = null;
 
 
+    private static $m_defaultAction = null;
+
+
     /**
      * Base initializations
      *
      * @param array $p_input
      */
-    public function __construct($p_name = 'default_action')
+    public function __construct($p_name = 'default')
     {
         $this->m_name = $p_name;
         if (!is_array($this->m_properties)) {
@@ -82,6 +85,14 @@ class MetaAction
     }
 
 
+    public static function DefaultAction()
+    {
+    	if (is_null(self::$m_defaultAction)) {
+    		self::$m_defaultAction = new MetaAction();
+    	}
+    	return self::$m_defaultAction;
+    }
+
     /**
      * Factory method; creates an object specialized from MetaAction
      * based on the given input.
@@ -92,7 +103,7 @@ class MetaAction
     public static function CreateAction(array $p_input)
     {
         if (count($p_input) == 0) {
-            return new MetaAction();
+            return self::DefaultAction();
         }
 
         $actions = MetaAction::ReadAvailableActions();
@@ -111,7 +122,7 @@ class MetaAction
             }
         }
 
-        return new MetaAction();
+        return self::DefaultAction();
     }
 
 
@@ -153,7 +164,7 @@ class MetaAction
                 require_once($includeFile);
                 $actionName = $matches[1];
                 if (class_exists('MetaAction'.$actionName)) {
-                    $actions[strtolower($actionName)] = array('name'=>$actionName,
+                    $actions[self::TranslateProperty($actionName)] = array('name'=>$actionName,
                     'file'=>"$directoryPath/MetaAction$actionName.php");
                 }
             }

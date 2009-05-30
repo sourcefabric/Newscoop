@@ -739,24 +739,15 @@ class Article extends DatabaseObject {
 	 */
 	public function getSection()
 	{
-		global $g_ado_db;
-	    $queryStr = 'SELECT * FROM Sections '
-	    			.' WHERE IdPublication='.$this->getPublicationId()
-	    			.' AND NrIssue='.$this->getIssueNumber()
-	    			.' AND IdLanguage='.$this->getLanguageId();
-		$query = $g_ado_db->Execute($queryStr);
-		if ($query->RecordCount() <= 0) {
-			$queryStr = 'SELECT * FROM Sections '
-						.' WHERE IdPublication='.$this->getPublicationId()
-						.' AND NrIssue='.$this->getIssueNumber()
-						.' LIMIT 1';
-			$query = $g_ado_db->Execute($queryStr);
-		}
-		$row = $query->FetchRow();
 		$section = new Section($this->getPublicationId(), $this->getIssueNumber(),
-			$this->getLanguageId());
-		$section->fetch($row);
-	    return $section;
+		$this->getLanguageId(), $this->getSectionNumber());
+		if (!$section->exists()) {
+			$sections = Section::GetSections($this->getPublicationId(), $this->getIssueNumber());
+			if (count($sections) > 0) {
+				return $sections[0];
+			}
+		}
+		return $section;
 	} // fn getSection
 
 
@@ -1752,22 +1743,22 @@ class Article extends DatabaseObject {
 		$tmpArticle = new Article();
 		$columnNames = $tmpArticle->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(", ", $columnNames)
-					.' FROM Articles '
-	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
-	    			.' ORDER BY Number DESC, IdLanguage '
-	    			." LIMIT $p_start, $p_maxRows";
+		.' FROM Articles '
+		." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 "
+		.' ORDER BY Number DESC, IdLanguage '
+		." LIMIT $p_start, $p_maxRows";
 		$query = $g_ado_db->Execute($queryStr);
 		$articles = array();
 		if ($query != false) {
-		    while ($row = $query->FetchRow()) {
-		        $tmpArticle = new Article();
-			$tmpArticle->fetch($row);
-			$articles[] = $tmpArticle;
-		    }
+			while ($row = $query->FetchRow()) {
+				$tmpArticle = new Article();
+				$tmpArticle->fetch($row);
+				$articles[] = $tmpArticle;
+			}
 		}
 		$queryStr = 'SELECT COUNT(*) FROM Articles'
-	    			." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 ";
-	    $totalArticles = $g_ado_db->GetOne($queryStr);
+		." WHERE IdPublication=0 AND NrIssue=0 AND NrSection=0 ";
+		$totalArticles = $g_ado_db->GetOne($queryStr);
 
 		return array($articles, $totalArticles);
 	} // fn GetUnplacedArticles
@@ -2099,17 +2090,17 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramsArray['parameters'] = serialize($p_parameters);
-	    $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-	    $paramsArray['start'] = $p_start;
-	    $paramsArray['limit'] = $p_limit;
-	    $cacheListObj = new CampCacheList($paramsArray, __CLASS__);
-	    $articlesList = $cacheListObj->fetchFromCache();
-	    if ($articlesList !== false && is_array($articlesList)) {
-	        return $articlesList;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$articlesList = $cacheListObj->fetchFromCache();
+        	if ($articlesList !== false && is_array($articlesList)) {
+        		return $articlesList;
+        	}
+        }
 
         $matchAllTopics = false;
         $hasTopics = array();
@@ -2281,23 +2272,23 @@ class Article extends DatabaseObject {
 
         // runs the SQL query
         $articles = $g_ado_db->GetAll($selectQuery);
-        if (!is_array($articles)) {
-            $p_count = 0;
-            return array();
-        }
-        $p_count = $g_ado_db->GetOne($countQuery);
+        if (is_array($articles)) {
+        	$p_count = $g_ado_db->GetOne($countQuery);
 
-        // builds the array of Article objects
-        $articlesList = array();
-        foreach ($articles as $article) {
-            $articlesList[] = new Article($article['IdLanguage'],
-                                          $article['Number']);
+        	// builds the array of Article objects
+        	$articlesList = array();
+        	foreach ($articles as $article) {
+        		$articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+        	}
+        } else {
+        	$articlesList = array();
+        	$p_count = 0;
         }
 
-	// stores articles list in cache
-	if (CampCache::IsEnabled()) {
-	    $cacheListObj->storeInCache($articlesList);
-	}
+        // stores articles list in cache
+        if (CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($articlesList);
+        }
 
         return $articlesList;
     } // fn GetList

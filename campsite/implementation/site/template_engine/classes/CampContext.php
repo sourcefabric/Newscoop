@@ -128,21 +128,18 @@ final class CampContext
         self::$m_nullMetaSection = new MetaSection();
 
         // register plugin objects and listobjects
-        foreach (CampPlugin::GetPluginsInfo() as $info) {
-            if (CampPlugin::IsPluginEnabled($info['name'])) {
-                
-                if (is_array($info['template_engine']['objecttypes'])) {
-                    foreach ($info['template_engine']['objecttypes'] as $objecttype) {
-                        $this->registerObjectType($objecttype);
-                    }
-                }
-                
-                if (is_array($info['template_engine']['listobjects'])) {
-                    foreach ($info['template_engine']['listobjects'] as $listobject) {
-                        $this->registerListObject($listobject);
-                    }
-                }
-            }
+        foreach (CampPlugin::GetPluginsInfo(true) as $info) {
+        	if (is_array($info['template_engine']['objecttypes'])) {
+        		foreach ($info['template_engine']['objecttypes'] as $objecttype) {
+        			$this->registerObjectType($objecttype);
+        		}
+        	}
+
+        	if (is_array($info['template_engine']['listobjects'])) {
+        		foreach ($info['template_engine']['listobjects'] as $listobject) {
+        			$this->registerListObject($listobject);
+        		}
+        	}
         }
 
         $this->m_properties['htmlencoding'] = false;
@@ -155,7 +152,7 @@ final class CampContext
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $this->m_readonlyProperties['default_url'] = new MetaURL();
-        $this->m_readonlyProperties['url'] = new MetaURL();
+        $this->m_readonlyProperties['url'] = clone($this->m_readonlyProperties['default_url']);
         $this->m_objects['publication'] = $this->m_readonlyProperties['url']->publication;
         $this->m_objects['language'] = $this->m_readonlyProperties['url']->language;
         $this->m_objects['issue'] = $this->m_readonlyProperties['url']->issue;
@@ -191,14 +188,17 @@ final class CampContext
         }
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
-        $this->m_readonlyProperties['request_action']->takeAction($this);
+        $requestActionName = $this->m_readonlyProperties['request_action']->name;
+        if ($requestActionName != 'default') {
+        	$this->m_readonlyProperties['request_action']->takeAction($this);
+        }
 
-        foreach (MetaAction::ReadAvailableActions() as $actionNameCase=>$actionAttributes) {
-            $propertyName = CampContext::TranslateProperty($actionNameCase . '_action');
-            if ($this->m_readonlyProperties['request_action']->name == $actionNameCase) {
+        foreach (MetaAction::ReadAvailableActions() as $actionName=>$actionAttributes) {
+            $propertyName = $actionName . '_action';
+            if ($requestActionName == $actionName) {
                 $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
-                $this->m_readonlyProperties[$propertyName] = new MetaAction($propertyName);
+                $this->m_readonlyProperties[$propertyName] = MetaAction::DefaultAction();
             }
         }
 
@@ -207,8 +207,8 @@ final class CampContext
         $this->m_readonlyProperties['default_comment'] = $this->comment;
 
         // initialize plugins
-        foreach (CampPlugin::GetPluginsInfo() as $info) {
-            if (CampPlugin::IsPluginEnabled($info['name']) && function_exists($info['template_engine']['init'])) {
+        foreach (CampPlugin::GetPluginsInfo(true) as $info) {
+            if (function_exists($info['template_engine']['init'])) {
                 call_user_func($info['template_engine']['init'], $this);
             }
         }

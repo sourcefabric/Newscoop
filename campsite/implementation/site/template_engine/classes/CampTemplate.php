@@ -37,6 +37,9 @@ final class CampTemplate extends Smarty
 	private $m_context = null;
 
 
+	private $m_preview = false;
+
+
     private function __construct()
     {
         parent::Smarty();
@@ -92,6 +95,7 @@ final class CampTemplate extends Smarty
     {
     	if (!isset($this->m_context)) {
     		$this->m_context = new CampContext();
+    		$this->m_preview = $this->m_context->preview;
     	}
     	return $this->m_context;
     } // fn context
@@ -113,7 +117,7 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-    	if (!self::singleton()->context()->preview) {
+    	if (!self::singleton()->m_preview) {
     		return;
     	}
     	if (is_object($p_smarty)) {
