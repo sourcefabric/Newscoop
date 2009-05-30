@@ -1615,12 +1615,28 @@ class Article extends DatabaseObject {
 		if (!is_null($p_languageId)) {
 			$whereClause[] = "IdLanguage=$p_languageId";
 		}
-		$whereClause[] = "Name='$p_name'";
+		$whereClause[] = "Name='" . $g_ado_db->escape($p_name) . "'";
 		if (count($whereClause) > 0) {
 			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
 		}
-		$result = DbObjectArray::Create("Article", $queryStr);
-		return $result;
+
+        if (CampCache::IsEnabled()) {
+            $paramsArray['get_by_name_where_clause'] = serialize($whereClause);
+            $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+            $articlesList = $cacheListObj->fetchFromCache();
+            if ($articlesList !== false && is_array($articlesList)) {
+                return $articlesList;
+            }
+        }
+
+		$articlesList = DbObjectArray::Create("Article", $queryStr);
+
+        // stores articles list in cache
+        if (CampCache::IsEnabled()) {
+            $cacheListObj->storeInCache($articlesList);
+        }
+
+		return $articlesList;
     } // fn GetByName
 
 
@@ -2095,7 +2111,7 @@ class Article extends DatabaseObject {
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
         	$articlesList = $cacheListObj->fetchFromCache();
         	if ($articlesList !== false && is_array($articlesList)) {
         		return $articlesList;

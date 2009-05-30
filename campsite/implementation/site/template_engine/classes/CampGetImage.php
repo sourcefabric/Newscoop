@@ -3,6 +3,7 @@
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 
 /**
@@ -17,16 +18,16 @@ class CampGetImage
     private $m_imagePath = '';
 
     /**
-     * @param string $m_location
+     * @param boolean $m_location
      *      Flag if image is local ore remote.
      */
-    private $m_location = TRUE;
+    private $m_isLocal = TRUE;
 
     /**
-     * @param array $m_imageMetaData
+     * @param Image $m_image
      *      Consists name, type and url of the image
      */
-    private $m_imageMetaData = array();
+    private $m_image = null;
 
 
     /**
@@ -139,11 +140,11 @@ class CampGetImage
 //        header('Cache-Control: no-store, no-cache, must-revalidate');
 //        header('Cache-Control: post-check=0, pre-check=0', false);
 //        header('Pragma: no-cache');
-        header('Content-type: ' . $this->m_imageMetaData['ContentType']);
+        header('Content-type: ' . $this->m_image->getContentType());
 
         if($this->m_ratio<100){
            $func_ending = '';
-           switch($this->m_imageMetaData['ContentType']){
+           switch($this->m_image->getContentType()){
                case 'image/gif':$func_ending ='gif'; break;
                case 'image/jpeg':$func_ending ='jpeg'; break;
                case 'image/png':$func_ending ='png'; break;
@@ -188,29 +189,21 @@ class CampGetImage
      */
     private function GetImage($p_imageNr, $p_articleNr)
     {
-        global $g_ado_db;
-
-        $query = 'SELECT `Images`.`URL`, `Images`.`ImageFileName`, `Images`.`ContentType`
-                  FROM `Images`, `ArticleImages`
-                  WHERE `Images`.`Id` = `ArticleImages`.`IdImage`
-                  AND `ArticleImages`.NrArticle = "'.$g_ado_db->Escape($p_articleNr).'"
-                  AND `ArticleImages`.`Number` = "'.$g_ado_db->Escape($p_imageNr).'"
-                  LIMIT 1';
-
-        $this->m_imageMetaData = $g_ado_db->GetRow($query);
-
-        if(empty($this->m_imageMetaData)){
+        $articleImage = new ArticleImage($p_articleNr, null, $p_imageNr);
+        if (!$articleImage->exists()) {
+        	$this->ExitError('Image not found');
+        }
+        $this->m_image = new Image($articleImage->getImageId());
+        if (!$this->m_image->exists()) {
             $this->ExitError('Image not found');
         }
-        $this->m_location = empty($this->m_imageMetaData['URL']);
-        $this->SetImagePath($this->m_location?
-            $GLOBALS['g_campsiteDir'].'/images/'.$this->m_imageMetaData['ImageFileName']:
-            $this->m_imageMetaData['URL']);
+        $url = $this->m_image->getUrl();
+        $this->m_isLocal = empty($url);
+        $this->SetImagePath($this->m_image->getImageStorageLocation());
 
-
-        if(!($this->m_location?$this->CheckLocalFile($this->GetImagePath()):
-                                $this->CheckRemoteFile($this->GetImagePath()))){
-            $this->ExitError('File "'.$this->m_imageMetaData['ImageFileName'].'" not found');
+        if(!($this->m_isLocal?$this->CheckLocalFile($this->GetImagePath()):
+                              $this->CheckRemoteFile($this->GetImagePath()))){
+            $this->ExitError('File "'.$this->GetImagePath().'" not found');
         }
         $this->PushImage();
     } // fn GetImage

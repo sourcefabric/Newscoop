@@ -190,7 +190,7 @@ class Language extends DatabaseObject {
 		$paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
 		$paramsArray['excluded_languages'] = $p_excludedLanguages;
 		$paramsArray['order'] = $p_order;
-		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
 		$languages = $cacheListObj->fetchFromCache();
 		if ($languages !== false && is_array($languages)) {
 		    return $languages;

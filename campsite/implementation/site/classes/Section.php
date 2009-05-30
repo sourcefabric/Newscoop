@@ -379,7 +379,7 @@ class Section extends DatabaseObject {
 		$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
 		$paramsArray['section_name'] = (is_null($p_sectionName)) ? 'null' : $p_sectionName;
 		$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
-		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
 		$sectionsList = $cacheListObj->fetchFromCache();
 		if ($sectionsList !== false && is_array($sectionsList)) {
 		    return $sectionsList;
@@ -543,7 +543,7 @@ class Section extends DatabaseObject {
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
         	$sectionsList = $cacheListObj->fetchFromCache();
         	if ($sectionsList !== false && is_array($sectionsList)) {
         		return $sectionsList;

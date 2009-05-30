@@ -696,7 +696,7 @@ class ArticleTypeField extends DatabaseObject {
 		$paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
 		$paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
 		$paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
-		$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
 	        $articleTypeFieldsList = $cacheListObj->fetchFromCache();
 		if ($articleTypeFieldsList !== false
 		        && is_array($articleTypeFieldsList)) {

@@ -204,7 +204,7 @@ class ArticleAttachment extends DatabaseObject {
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
         	$articleAttachmentsList = $cacheListObj->fetchFromCache();
         	if ($articleAttachmentsList !== false
         	&& is_array($articleAttachmentsList)) {

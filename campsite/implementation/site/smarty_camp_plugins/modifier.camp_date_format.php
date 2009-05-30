@@ -27,11 +27,15 @@ require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
  */
 function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_onlyEnglish = false)
 {
-    global $g_ado_db;
-
-    $attributes = array('year'=>'%Y', 'mon'=>'%c', 'mday'=>'%e', 'yday'=>'%j',
+    static $attributes = array('year'=>'%Y', 'mon'=>'%c', 'mday'=>'%e', 'yday'=>'%j',
                         'wday'=>'%w', 'hour'=>'%H', 'min'=>'%i', 'sec'=>'%S',
                         'mon_name'=>'%M', 'wday_name'=>'%W');
+    static $specifiersMap = array('%h'=>'%I', '%i'=>'%M', '%s'=>'%S');
+    static $conversionMap = array('%M'=>'__month_name__', '%W'=>'__weekday_name__',
+                                  '%c'=>'__month__', '%e'=>'__day_of_the_month__',
+                                  '%D'=>'__day_of_the_month_suffix__', '%l'=>'__hour_12_clock__');
+    static $numberSuffix = array(0=>'th', 1=>'st', 2=>'nd', 3=>'rd', 4=>'th', 5=>'th', 6=>'th',
+                                 7=>'th', 8=>'th', 9=>'th');
 
     if (array_key_exists(trim(strtolower($p_format)), $attributes)) {
         $p_format = $attributes[trim(strtolower($p_format))];
@@ -44,45 +48,35 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_only
     $p_unixtime = smarty_make_timestamp($p_unixtime);
 
     if (is_null($p_format) || empty($p_format)) {
-        $dbQuery = "SELECT FROM_UNIXTIME('".$p_unixtime."') AS date";
-        $row = $g_ado_db->GetRow($dbQuery);
-        return $row['date'];
+    	return strftime('%D %T', $p_unixtime);
     }
 
-    $dbQuery =
-        "SELECT FROM_UNIXTIME('".$p_unixtime."', '".$p_format."') AS date, "
-        ."MONTH(FROM_UNIXTIME('".$p_unixtime."')) AS month, "
-        ."DAYOFWEEK(FROM_UNIXTIME('".$p_unixtime."')) AS day";
-    $row = $g_ado_db->GetRow($dbQuery);
-    if (sizeof($row) < 1) {
-        return null;
-    }
-    $formattedDate = $row['date'];
+    $p_replaceCount = 0;
+    $p_format = str_replace(array_keys($conversionMap), array_values($conversionMap),
+    $p_format, $p_replaceCount);
 
-    $hasTxtMonth = (strpos($p_format, '%M') !== false) ? true : false;
-    $hasTxtWDay = (strpos($p_format, '%W') !== false) ? true : false;
-    if ($hasTxtMonth || $hasTxtWDay) {
-        $dbQuery =
-            "SELECT Month".$row['month']." AS month, "
-            ."WDay".$row['day']." AS day "
-            ." FROM Languages WHERE Id = 1 OR Id = ".$campsite->language->number
-            ." ORDER BY Id";
-        $lang = $g_ado_db->GetAll($dbQuery);
-        if (sizeof($lang) != 2) {
-            return $formattedDate;
-        }
-        if ($hasTxtMonth) {
-	    if (!$p_onlyEnglish) {
-                $formattedDate = str_replace($lang[0]['month'], $lang[1]['month'], $formattedDate);
-	    }
-        }
-        if ($hasTxtWDay) {
-	    if (!$p_onlyEnglish) {
-	        $formattedDate = str_replace($lang[0]['day'], $lang[1]['day'], $formattedDate);
-	    }
-        }
-    }
+    $p_format = str_replace(array_keys($specifiersMap), array_values($specifiersMap), $p_format);
 
+    $formattedDate = strftime($p_format, $p_unixtime);
+    if ($p_replaceCount > 0) {
+    	$languageObj = new Language($campsite->language->number);
+        if (!$languageObj->exists()) {
+            $languageObj = new Language(1);
+        }
+        $timeArray = getdate($p_unixtime);
+        $suffixNo = $timeArray['mday'] % 10;
+        $hour = $timeArray['hours'] % 12;
+        if ($hour == 0) {
+        	$hour = 12;
+        }
+        $replaceValues = array($languageObj->getProperty('Month'.$timeArray['mon']),
+                               $languageObj->getProperty('WDay'.(1+$timeArray['wday'])),
+                               $timeArray['mon'],
+                               $timeArray['mday'],
+                               $timeArray['mday'].$numberSuffix[$suffixNo],
+                               $hour);
+        $formattedDate = str_replace(array_values($conversionMap), $replaceValues, $formattedDate);
+    }
     return $formattedDate;
 } // fn smarty_modifier_camp_date_format
 

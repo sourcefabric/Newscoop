@@ -20,11 +20,11 @@ class CampCacheList
     private $m_cacheKey = null;
 
     /**
-     * Class name where the list belongs to.
+     * The name of the method generating the list.
      *
      * @var string
      */
-    private $m_className = null;
+    private $m_methodName = null;
 
     /**
      * Parameters passed to build the list with.
@@ -45,12 +45,15 @@ class CampCacheList
      * Class constructor.
      *
      * @param array $p_parameters
-     * @param string $p_className
+     * @param string $p_methodName
      */
-    public function __construct(array $p_parameters, $p_className)
+    public function __construct(array $p_parameters, $p_methodName, $p_defaultTTL = null)
     {
-        $this->m_className = $p_className;
-	$this->m_parameters = $p_parameters;
+        $this->m_methodName = $p_methodName;
+        $this->m_parameters = $p_parameters;
+        if (!is_null($p_defaultTTL)) {
+        	$this->m_defaultTTL = $p_defaultTTL;
+        }
     }
 
 
@@ -63,14 +66,14 @@ class CampCacheList
      */
     public function fetchFromCache()
     {
-        if (CampCache::IsEnabled()) {
-	    $list = CampCache::singleton()->fetch($this->getCacheKey());
-	    if ($list !== false && is_array($list)) {
-	        return $list;
-	    }
-	}
+    	if (CampCache::IsEnabled()) {
+    		$list = CampCache::singleton()->fetch($this->getCacheKey());
+    		if ($list !== false && is_array($list)) {
+    			return $list;
+    		}
+    	}
 
-	return null;
+    	return false;
     }
 
 
@@ -83,9 +86,9 @@ class CampCacheList
      */
     public function storeInCache(array $p_list)
     {
-        if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($this->getCacheKey(), $p_list, $this->m_defaultTTL);
-	}
+    	if (CampCache::IsEnabled()) {
+    		CampCache::singleton()->store($this->getCacheKey(), $p_list, $this->m_defaultTTL);
+    	}
     }
 
 
@@ -96,17 +99,17 @@ class CampCacheList
      */
     private function getCacheKey()
     {
-        if (is_null($this->m_cacheKey)) {
-	    foreach($this->m_parameters as $paramName => $paramValue) {
-	        if (is_array($paramValue)) {
-		    $this->m_parameters[$paramName] = serialize($paramValue);
-		}
-	    }
-	    $paramString = implode('_', $this->m_parameters);
-	    $this->m_cacheKey = $this->m_className . '_List_' . $paramString;
-	}
+    	if (is_null($this->m_cacheKey)) {
+    		foreach($this->m_parameters as $paramName => $paramValue) {
+    			if (is_array($paramValue)) {
+    				$this->m_parameters[$paramName] = serialize($paramValue);
+    			}
+    		}
+    		$paramString = implode('_', $this->m_parameters);
+    		$this->m_cacheKey = $this->m_methodName . '_' . $paramString;
+    	}
 
-	return $this->m_cacheKey;
+    	return $this->m_cacheKey;
     }
 
 } // class CampCacheList

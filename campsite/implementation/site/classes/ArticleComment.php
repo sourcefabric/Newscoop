@@ -15,6 +15,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 class ArticleComment
 {
+	const DEFAULT_TTL = 30;
+
+
 	/**
 	 * Returns an Article object to which the comment identified
 	 * by the given id belongs to. Returns null if invalid message id.
@@ -142,16 +145,24 @@ class ArticleComment
     public static function GetArticleComments($p_articleNumber, $p_languageId,
                                               $p_status = null, $p_countOnly = false)
     {
-        global $PHORUM;
-        global $g_ado_db;
-        $threadId = ArticleComment::GetCommentThreadId($p_articleNumber,
-                                                       $p_languageId);
+        global $PHORUM, $g_ado_db;
+
+        if (CampCache::IsEnabled()) {
+        	$cacheKey = __METHOD__ . '_' . (int)$p_articleNumber . '_'
+        	. (int)$p_languageId . '_' . $p_status . '_' . (int)$p_count_only;
+        	$result = CampCache::singleton()->fetch($cacheKey);
+            if ($result !== false) {
+                return $result;
+            }
+        }
+
+        $threadId = ArticleComment::GetCommentThreadId($p_articleNumber, $p_languageId);
         if (!$threadId) {
-        	if ($p_countOnly) {
-        		return 0;
-        	} else {
-            	return null;
+            $result = $p_countOnly ? 0 : null;
+        	if (CampCache::IsEnabled()) {
+        		CampCache::singleton()->store($cacheKey, $result);
         	}
+        	return $result;
         }
 
         // Are we counting or getting the comments?
@@ -176,12 +187,14 @@ class ArticleComment
                     . $whereClause
                     ." ORDER BY message_id";
         if ($p_countOnly) {
-        	$count = $g_ado_db->GetOne($queryStr);
-       		return $count;
+        	$result = $g_ado_db->GetOne($queryStr);
         } else {
-	        $messages = DbObjectArray::Create("Phorum_message", $queryStr);
-	        return $messages;
+	        $result = DbObjectArray::Create("Phorum_message", $queryStr);
         }
+        if (CampCache::IsEnabled()) {
+        	CampCache::singleton()->store($cacheKey, $result);
+        }
+        return $result;
     } // fn GetArticleComments
 
 
@@ -297,7 +310,7 @@ class ArticleComment
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __CLASS__);
+        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__, self::DEFAULT_TTL);
         	$articleCommentsList = $cacheListObj->fetchFromCache();
         	if ($articleCommentsList !== false && is_array($articleCommentsList)) {
         		return $articleCommentsList;

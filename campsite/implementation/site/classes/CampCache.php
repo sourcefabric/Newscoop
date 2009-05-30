@@ -141,6 +141,7 @@ final class CampCache
         	self::$m_hits ++;
         } else {
         	self::$m_missKeys[$p_key]++;
+        	return false;
         }
 
         return $this->unserialize($serial);
