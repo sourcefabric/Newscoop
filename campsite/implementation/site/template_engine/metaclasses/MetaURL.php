@@ -245,7 +245,9 @@ final class MetaURL
         }
         $methodName = $this->m_customProperties[$p_property];
 
-        return $this->$methodName();
+        $value = $this->$methodName();
+        $this->m_uri_parameter = null;
+        return $value;
     } // fn getCustomProperty
 
 
