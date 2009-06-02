@@ -40,7 +40,7 @@ function onCommentAction(p_type, p_commentId)
 <tr>
 
 <?php
-if (count($comments) <= 0) {
+if (!is_array($comments) || count($comments) <= 0) {
     ?>
     <tr><td style="padding-left: 15px;"><?php putGS("No comments posted."); ?></td></tr>
     <?php
