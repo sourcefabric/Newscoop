@@ -23,6 +23,7 @@ $f_login_num = Input::Get('f_login_num', 'int');
 $f_max_upload_filesize = Input::Get('f_max_upload_filesize');
 $f_smtp_host = Input::Get('f_smtp_host');
 $f_smtp_port = intval(Input::Get('f_smtp_port'));
+$f_editor_image_ratio = intval(Input::Get('f_editor_image_ratio'));
 $f_use_replication = Input::Get('f_use_replication');
 $f_db_repl_host = Input::Get('f_db_repl_host');
 $f_db_repl_user = Input::Get('f_db_repl_user');
@@ -103,6 +104,9 @@ if ($f_smtp_port <= 0) {
     $f_smtp_port = 25;
 }
 SystemPref::Set('SMTPPort', $f_smtp_port);
+
+// Image resizing ratio for WYSIWYG editor
+SystemPref::Set('EditorImageRatio', $f_editor_image_ratio);
 
 // External subscription management
 SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);

@@ -3,7 +3,14 @@
  * @package Campsite
  */
 
+/**
+ * Includes
+ */
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
+/**
+ * @package Campsite
+ */
 final class MetaSubtitle {
 
     /**
@@ -253,6 +260,8 @@ final class MetaSubtitle {
         . '&amp;NrImage=' . $imageNumber;
         if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
             $imgString .= '&ImageRatio=' . (int)$detailsArray['ratio'];
+        } elseif ($imgRatio = SystemPref::Get("EditorImageRatio")) {
+	    $imgString .= ($imgRatio > 0 && $imgRatio < 100) ? '&ImageRatio=' . $imgRatio : '';
         }
         $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
