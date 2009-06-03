@@ -496,29 +496,6 @@ class Section extends DatabaseObject {
 
 
     /**
-     * Return the default config of all section rights.
-     *
-     * @return array
-     *      $sectionRights An array of rights for all the sections
-     */
-    public static function GetRightsDefaultConfig()
-    {
-        global $g_ado_db;
-
-        $queryStr = 'SELECT right_define_name FROM liveuser_rights '
-            ."WHERE right_define_name LIKE 'ManageSection_%_P%'";
-        $sectionRights = array();
-        $rights = $g_ado_db->GetAll($queryStr);
-        foreach ($rights as $right) {
-            $right_name = $right['right_define_name'];
-            $sectionRights[$right_name] = 'N';
-        }
-
-        return $sectionRights;
-    } // fn GetRightsDefaultConfig
-
-
-    /**
      * Returns a sections list based on the given parameters.
      *
      * @param array $p_parameters
