@@ -325,7 +325,7 @@ function onSummaryClick(p_messageId)
                     <?php
                         $articleData = $article->getArticleData();
                         // Get article type fields.
-                        $dbColumns = $articleData->getUserDefinedColumns();
+                        $dbColumns = $articleData->getUserDefinedColumns(false, true);
                         foreach ($dbColumns as $dbColumn) {
                             ?>
                             <tr>

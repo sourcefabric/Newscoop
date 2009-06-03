@@ -180,21 +180,22 @@ class Language extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetLanguages($p_id = null, $p_languageCode = null,
-	$p_name = null, array $p_excludedLanguages = array(), array $p_order = array())
+	$p_name = null, array $p_excludedLanguages = array(), array $p_order = array(),
+	$p_skipCache = false)
 	{
 	    global $g_ado_db;
 
-	    if (CampCache::IsEnabled()) {
-	        $paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
-		$paramsArray['language_code'] = (is_null($p_languageCode)) ? 'null' : $p_languageCode;
-		$paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
-		$paramsArray['excluded_languages'] = $p_excludedLanguages;
-		$paramsArray['order'] = $p_order;
-		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-		$languages = $cacheListObj->fetchFromCache();
-		if ($languages !== false && is_array($languages)) {
-		    return $languages;
-		}
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
+	    	$paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
+	    	$paramsArray['language_code'] = (is_null($p_languageCode)) ? 'null' : $p_languageCode;
+	    	$paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
+	    	$paramsArray['excluded_languages'] = $p_excludedLanguages;
+	    	$paramsArray['order'] = $p_order;
+	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+	    	$languages = $cacheListObj->fetchFromCache();
+	    	if ($languages !== false && is_array($languages)) {
+	    		return $languages;
+	    	}
 	    }
 
 	    $selectClauseObj = new SQLSelectClause();
@@ -223,7 +224,7 @@ class Language extends DatabaseObject {
 	    }
 	    $selectClause = $selectClauseObj->buildQuery();
 	    $languages = DbObjectArray::Create('Language', $selectClause);
-	    if (CampCache::IsEnabled()) {
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	        $cacheListObj->storeInCache($languages);
 	    }
 

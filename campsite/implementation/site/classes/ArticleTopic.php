@@ -227,11 +227,11 @@ class ArticleTopic extends DatabaseObject {
      *    An array of Topic objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
@@ -309,7 +309,7 @@ class ArticleTopic extends DatabaseObject {
         	$articleTopicsList = array();
         	$p_count = 0;
         }
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$cacheListObj->storeInCache($articleTopicsList);
         }
 

@@ -14,7 +14,7 @@ if (!$g_user->hasPermission('ChangeArticle')
 
 $f_src_author_field = Input::Get('f_src_author_field', 'string', '');
 if (!empty($f_src_author_field)) {
-	$fields = ArticleTypeField::FetchFields($f_src_author_field, null, 'text');
+	$fields = ArticleTypeField::FetchFields($f_src_author_field, null, 'text', false, false, false, true, true);
 	if (count($fields) == 0) {
 	    camp_html_add_msg(getGS("Invalid or empty field $1. You must select a valid dynamic field.", $f_src_author_field));
 	}
@@ -35,7 +35,7 @@ if (!empty($f_src_author_field)) {
     camp_html_display_msgs();
 }
 
-$availableFields = ArticleTypeField::FetchFields(null, null, 'text');
+$availableFields = ArticleTypeField::FetchFields(null, null, 'text', false, false, false, true, true);
 
 ?>
 

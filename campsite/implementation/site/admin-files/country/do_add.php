@@ -6,7 +6,7 @@ if (!$g_user->hasPermission('ManageCountries')) {
 	exit;
 }
 
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $f_country_code = trim(Input::Get('f_country_code'));
 $f_country_name = trim(Input::Get('f_country_name'));

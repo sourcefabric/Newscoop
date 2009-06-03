@@ -25,13 +25,13 @@ $sectionId = Input::get('NrSection', 'int', 0, true);
 $issueId = Input::get('NrIssue', 'int', 0, true);
 $articleId = Input::get('NrArticle', 'int', 0, true);
 $target = Input::get('targetlist', 'string', '', true);
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
-        $issues = Issue::GetIssues($publicationId, $languageId);
+        $issues = Issue::GetIssues($publicationId, $languageId, null, null, null, null, true);
 }
 if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
-        $sections = Section::GetSections($publicationId, $issueId, $languageId);
+        $sections = Section::GetSections($publicationId, $issueId, $languageId, null, null, null, true);
 }
 if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
         $articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);

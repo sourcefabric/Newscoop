@@ -109,7 +109,7 @@ class ArticleData extends DatabaseObject {
     *
     * @return array
     */
-    public function getUserDefinedColumns($p_showAll = false)
+    public function getUserDefinedColumns($p_showAll = false, $p_skipCache = false)
     {
     	if (empty($this->m_articleTypeName)) {
     		return array();
@@ -117,7 +117,7 @@ class ArticleData extends DatabaseObject {
     	if (is_null($this->m_articleTypeObject)) {
     		$this->m_articleTypeObject = new ArticleType($this->m_articleTypeName);
     	}
-    	return $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll);
+    	return $this->m_articleTypeObject->getUserDefinedColumns(null, $p_showAll, $p_skipCache);
     } // fn getUserDefinedColumns
 
 	/**

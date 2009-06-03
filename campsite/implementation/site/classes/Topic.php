@@ -325,7 +325,7 @@ class Topic extends DatabaseObject {
 	    $name = $components[0];
 	    $languageCode = $components[1];
 
-	    $languages = Language::GetLanguages(null, $languageCode);
+	    $languages = Language::GetLanguages(null, $languageCode, null, array(), array(), true);
 	    if (count($languages) < 1) {
 	        return null;
 	    }

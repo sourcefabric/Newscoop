@@ -26,7 +26,7 @@ $src = new ArticleType($f_src);
 $dest = new ArticleType($f_dest);
 
 $getString = '';
-foreach ($dest->getUserDefinedColumns() as $destColumn) {
+foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) {
 	$getString .= "&f_src_". $destColumn->getPrintName() ."=". trim(Input::get('f_src_'. $destColumn->getPrintName()));
 }
 
@@ -34,7 +34,7 @@ if ($f_action == 'Step2') {
 	camp_html_goto_page("/$ADMIN/article_types/merge2.php?f_src=$f_src&f_dest=$f_dest". $getString);
 }
 
-foreach ($dest->getUserDefinedColumns() as $destColumn) {
+foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) {
     $tmp = trim(Input::get('f_src_'. $destColumn->getPrintName()));
 	$f_src_c[$destColumn->getPrintName()] = $tmp;
 }
@@ -130,9 +130,9 @@ if ($ok) {
         $curPreview = new Article($firstLanguage, $f_cur_preview);
         $articleCreator = new User($curPreview->getCreatorId());
         $articleData = $dest->getPreviewArticleData();
-        $dbColumns = $articleData->getUserDefinedColumns(1);
+        $dbColumns = $articleData->getUserDefinedColumns(1, true);
         $srcArticleData = $curPreview->getArticleData();
-        $srcDbColumns = $srcArticleData->getUserDefinedColumns(1);
+        $srcDbColumns = $srcArticleData->getUserDefinedColumns(1, true);
         $getString = '';
         foreach ($_GET as $k => $v) {
             if ( ($k != 'f_action') && ($k != 'f_preview_action') ) {
@@ -187,7 +187,7 @@ if ($ok) {
         	}
 
         	// display the warning in red if the user select NONE
-        	foreach ($src->getUserDefinedColumns() as $srcColumn) {
+        	foreach ($src->getUserDefinedColumns(null, true, true) as $srcColumn) {
         		if (array_search($srcColumn->getPrintName(), $f_src_c) === false) {
         			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1", "<B>". $srcColumn->getPrintName() ."</B>"); ?> <?php putGS("(No merge warning.)"); ?></FONT></LI><?php
         		}
@@ -440,7 +440,7 @@ if ($ok) {
         	<TD COLSPAN="2">
         	<DIV ALIGN="CENTER">
 
-        	<?php foreach ($dest->getUserDefinedColumns() as $destColumn) { ?>
+        	<?php foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) { ?>
         	<INPUT TYPE="HIDDEN" NAME="f_src_<?php print $destColumn->getPrintName(); ?>" VALUE="<?php print $f_src_c[$destColumn->getPrintName()]; ?>">
         	<?php } ?>
 

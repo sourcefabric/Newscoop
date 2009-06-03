@@ -41,7 +41,7 @@ $allIssues = array();
 if ($f_destination_publication_id > 0) {
 	$allIssues = Issue::GetIssues($f_destination_publication_id,
 								  $f_article_language, null, null, null,
-								  array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")));
+								  array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")), true);
     if (count($allIssues) == 1) {
         $singleIssue = camp_array_peek($allIssues);
         $f_destination_issue_number = $singleIssue->getIssueNumber();
@@ -51,7 +51,7 @@ if ($f_destination_publication_id > 0) {
 $allSections = array();
 if ($f_destination_issue_number > 0) {
 	$selectedIssue = new Issue($f_destination_publication_id, $f_article_language, $f_destination_issue_number);
-	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_article_language, null, null, array("ORDER BY" => array("Name" => "ASC")));
+	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $f_article_language, null, null, array("ORDER BY" => array("Name" => "ASC")), true);
 	if (count($allSections) == 1) {
 	    $singleSection = camp_array_peek($allSections);
 	    $f_destination_section_number = $singleSection->getSectionNumber();
@@ -59,7 +59,7 @@ if ($f_destination_issue_number > 0) {
 }
 
 $allArticleTypes = ArticleType::GetArticleTypes();
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Actions"), "");

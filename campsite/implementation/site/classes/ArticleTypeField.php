@@ -684,24 +684,24 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public static function FetchFields($p_name = null, $p_articleType = null,
 	$p_dataType = null, $p_negateName = false, $p_negateArticleType = false,
-	$p_negateDataType = false, $p_selectHidden = true)
+	$p_negateDataType = false, $p_selectHidden = true, $p_skipCache = false)
 	{
 	    global $g_ado_db;
 
-	    if (CampCache::IsEnabled()) {
-	        $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
-		$paramsArray['article_type'] = (is_null($p_articleType)) ? 'null' : $p_articleType;
-		$paramsArray['data_type'] = (is_null($p_dataType)) ? 'null' : $p_dataType;
-		$paramsArray['negate_name'] = ($p_negateName == false) ? 'false' : 'true';
-		$paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
-		$paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
-		$paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
-		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-	        $articleTypeFieldsList = $cacheListObj->fetchFromCache();
-		if ($articleTypeFieldsList !== false
-		        && is_array($articleTypeFieldsList)) {
-		    return $articleTypeFieldsList;
-		}
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
+	    	$paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
+	    	$paramsArray['article_type'] = (is_null($p_articleType)) ? 'null' : $p_articleType;
+	    	$paramsArray['data_type'] = (is_null($p_dataType)) ? 'null' : $p_dataType;
+	    	$paramsArray['negate_name'] = ($p_negateName == false) ? 'false' : 'true';
+	    	$paramsArray['negate_article_type'] = ($p_negateArticleType == false) ? 'false' : 'true';
+	    	$paramsArray['negate_data_type'] = ($p_negateDataType == false) ? 'false' : 'true';
+	    	$paramsArray['select_hidden'] = ($p_selectHidden == false)? 'false' : 'true';
+	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+	    	$articleTypeFieldsList = $cacheListObj->fetchFromCache();
+	    	if ($articleTypeFieldsList !== false
+	    	&& is_array($articleTypeFieldsList)) {
+	    		return $articleTypeFieldsList;
+	    	}
 	    }
 
 	    if (isset($p_name)) {
@@ -731,7 +731,7 @@ class ArticleTypeField extends DatabaseObject {
 	    	}
 	        $fields[] = $field;
 	    }
-	    if (CampCache::IsEnabled()) {
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	        $cacheListObj->storeInCache($fields);
 	    }
 

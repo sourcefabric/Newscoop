@@ -12,7 +12,7 @@ $TOL_Language = camp_session_get('TOL_Language', 'en');
 if (!Template::IsValidPath($Path)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $fullPath = $Campsite['TEMPLATE_DIRECTORY'].$Path;
 if (!is_writable($fullPath)) {

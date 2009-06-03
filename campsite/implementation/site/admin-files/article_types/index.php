@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $articleTypes = ArticleType::GetArticleTypes(true);
 // return value is sorted by language
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $lang = camp_session_get('LoginLanguageId', 1);
 $languageObj = new Language($lang);

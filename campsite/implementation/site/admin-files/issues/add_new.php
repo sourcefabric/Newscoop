@@ -13,7 +13,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj = new Publication($Pub);
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");

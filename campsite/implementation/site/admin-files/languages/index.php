@@ -3,7 +3,7 @@ camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Languages"), "");

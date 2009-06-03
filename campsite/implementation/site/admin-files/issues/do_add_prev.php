@@ -33,7 +33,7 @@ if (camp_html_has_msgs()) {
 }
 // check if the issue number already exists
 $lastIssue = Issue::GetLastCreatedIssue($f_publication_id);
-$existingIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
+$existingIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number, null, null, null, true);
 if (count($existingIssues) > 0) {
 	$conflictingIssue = array_pop($existingIssues);
 	$conflictingIssueLink = "/$ADMIN/issues/edit.php?"

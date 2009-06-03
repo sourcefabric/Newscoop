@@ -69,7 +69,7 @@ if ($f_publication_id > 0) {
 }
 
 $allLanguages = Language::GetLanguages(null, null, null, array(),
-array(array('field'=>'byname', 'dir'=>'asc')));
+array(array('field'=>'byname', 'dir'=>'asc')), true);
 $articleLanguages = $articleObj->getLanguages();
 $articleLanguages = DbObjectArray::GetColumn($articleLanguages, "Id");
 

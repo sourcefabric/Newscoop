@@ -1598,7 +1598,7 @@ class Article extends DatabaseObject {
      * @return array
      */
     public static function GetByName($p_name, $p_publicationId = null, $p_issueId = null,
-    					             $p_sectionId = null, $p_languageId = null)
+    					             $p_sectionId = null, $p_languageId = null, $p_skipCache = false)
     {
         global $g_ado_db;
         $queryStr = 'SELECT * FROM Articles';
@@ -1620,7 +1620,7 @@ class Article extends DatabaseObject {
 			$queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
 		}
 
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
             $paramsArray['get_by_name_where_clause'] = serialize($whereClause);
             $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
             $articlesList = $cacheListObj->fetchFromCache();
@@ -1632,7 +1632,7 @@ class Article extends DatabaseObject {
 		$articlesList = DbObjectArray::Create("Article", $queryStr);
 
         // stores articles list in cache
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
             $cacheListObj->storeInCache($articlesList);
         }
 
@@ -2102,11 +2102,11 @@ class Article extends DatabaseObject {
      *    An array of Article objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
@@ -2197,7 +2197,8 @@ class Article extends DatabaseObject {
         }
 
         if (count($hasTopics) > 0 || count($hasNotTopics) > 0) {
-            $typeAttributes = ArticleTypeField::FetchFields(null, null, 'topic');
+            $typeAttributes = ArticleTypeField::FetchFields(null, null, 'topic', false,
+            false, false, true, $p_skipCache);
         }
         if (count($hasTopics) > 0) {
             if ($matchAllTopics) {
@@ -2302,7 +2303,7 @@ class Article extends DatabaseObject {
         }
 
         // stores articles list in cache
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$cacheListObj->storeInCache($articlesList);
         }
 
@@ -2326,7 +2327,8 @@ class Article extends DatabaseObject {
             $fields = array($field);
         } else {
             $articleType = null;
-            $fields = ArticleTypeField::FetchFields($fieldName, $articleType);
+            $fields = ArticleTypeField::FetchFields($fieldName, $articleType,
+            null, false, false, false, true, true);
             if (count($fields) == 0) {
             	return null;
             }

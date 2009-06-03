@@ -9,7 +9,7 @@ if (empty($f_country_language_selected)) {
 	$f_country_language_selected = null;
 }
 $ItemsPerPage = 20;
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $countries = Country::GetCountries($f_country_language_selected, null, null,
 				array("LIMIT" => array("START" => $f_country_offset, "MAX_ROWS" => $ItemsPerPage)));
 $numCountries = Country::GetNumCountries($f_country_language_selected);

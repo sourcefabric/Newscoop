@@ -16,7 +16,7 @@ if (!Input::IsValid()) {
 }
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number);
+$allIssues = Issue::GetIssues($f_publication_id, null, $f_issue_number, null, null, null, true);
 $unusedLanguages = $issueObj->getLanguages(true, true,
 array(array('field'=>'byname', 'dir'=>'asc')), false, false);
 

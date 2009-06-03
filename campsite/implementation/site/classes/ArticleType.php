@@ -129,6 +129,7 @@ class ArticleType {
 
 		$queryStr = "DROP TABLE `" . $this->m_dbTableName . "`";
 		$success = $g_ado_db->Execute($queryStr);
+		CampCache::singleton()->clear('user');
 		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
@@ -300,12 +301,12 @@ class ArticleType {
 	 *
 	 * @return array
 	 */
-	public function getUserDefinedColumns($p_fieldName = null, $p_selectHidden = true)
+	public function getUserDefinedColumns($p_fieldName = null, $p_selectHidden = true, $p_skipCache = false)
 	{
 		if (is_null($p_fieldName)) {
-			if (is_null($this->m_dbColumns)) {
+			if ($p_skipCache || is_null($this->m_dbColumns)) {
 				$this->m_dbColumns = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
-				false, false, true, true);
+				false, false, true, true, $p_skipCache);
 				$this->m_publicFields = array();
 				foreach ($this->m_dbColumns as $field) {
 					if (!$field->isHidden()) {
@@ -316,7 +317,7 @@ class ArticleType {
 			return $p_selectHidden ? $this->m_dbColumns : $this->m_publicFields;
 		}
 		return ArticleTypeField::FetchFields($p_fieldName, $this->m_name, 'NULL',
-		false, false, true, $p_selectHidden);
+		false, false, true, $p_selectHidden, $p_skipCache);
 	} // fn getUserDefinedColumns
 
 
@@ -615,6 +616,7 @@ class ArticleType {
         
         $sql = "DELETE FROM X$p_src";
         $g_ado_db->Execute($sql);
+        CampCache::singleton()->clear('user');
 
 	    return 1;
 	} // fn merge

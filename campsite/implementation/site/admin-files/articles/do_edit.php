@@ -42,7 +42,7 @@ if (!$articleObj->exists()) {
 }
 
 $articleTypeObj = $articleObj->getArticleData();
-$dbColumns = $articleTypeObj->getUserDefinedColumns();
+$dbColumns = $articleTypeObj->getUserDefinedColumns(false, true);
 
 $articleFields = array();
 foreach ($dbColumns as $dbColumn) {

@@ -5,10 +5,10 @@ $f_show_languages = camp_session_get('f_show_languages', array());
 
 $topics = Topic::GetTree();
 // return value is sorted by language
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $loginLanguageId = 0;
-$loginLanguage = Language::GetLanguages(null, camp_session_get('TOL_Language', 'en'));
+$loginLanguage = Language::GetLanguages(null, camp_session_get('TOL_Language', 'en'), null, array(), array(), true);
 if (is_array($loginLanguage)) {
 	$loginLanguage = array_pop($loginLanguage);
 	$loginLanguageId = $loginLanguage->getLanguageId();

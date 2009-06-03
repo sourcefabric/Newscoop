@@ -41,7 +41,7 @@ if ($f_publication_id > 0) {
 }
 
 // Only show the languages for sections which have been translated.
-$sections = Section::GetSections($f_publication_id, $f_issue_number);
+$sections = Section::GetSections($f_publication_id, $f_issue_number, null, null, null, null, true);
 $languageIds = DbObjectArray::GetColumn($sections, 'IdLanguage');
 $allLanguages = array();
 foreach ($languageIds as $languageId) {

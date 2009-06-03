@@ -18,7 +18,7 @@ if (!Input::IsValid()) {
 }
 $publicationObj = new Publication($Pub);
 $issueObj = new Issue($Pub, $Language, $Issue);
-$allSections = Section::GetSections($Pub, $Issue, $Language, null, null, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)));
+$allSections = Section::GetSections($Pub, $Issue, $Language, null, null, array('ORDER BY' => 'Number', 'LIMIT' => array('START' => $SectOffs, 'MAX_ROWS' => $ItemsPerPage)), true);
 $totalSections = Section::GetTotalSections($Pub, $Issue, $Language);
 
 $pager = new SimplePager($totalSections, $ItemsPerPage, "SectOffs_".$Pub."_".$Issue."_".$Language, "index.php?Pub=$Pub&Issue=$Issue&Language=$Language&");

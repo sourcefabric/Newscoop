@@ -81,7 +81,7 @@ if (!camp_html_has_msgs()) {
 		}
 	}
 
-	$conflictingSection = array_pop(Section::GetSections($Pub, $Issue, $Language, $cShortName));
+	$conflictingSection = array_pop(Section::GetSections($Pub, $Issue, $Language, $cShortName, null, null, true));
 	if (is_object($conflictingSection) && ($conflictingSection->getSectionNumber() != $Section)) {
 		$conflictingSectionLink = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$conflictingSection->getSectionNumber();
 

@@ -45,7 +45,7 @@ $articleAuthorObj = new Author($articleObj->getAuthorId());
 
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns(0);
+$dbColumns = $articleData->getUserDefinedColumns(false, true);
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);

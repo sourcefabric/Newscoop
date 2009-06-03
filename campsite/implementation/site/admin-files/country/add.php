@@ -6,7 +6,7 @@ if (!$g_user->hasPermission('ManageCountries')) {
 	exit;
 }
 
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");

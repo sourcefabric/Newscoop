@@ -572,20 +572,20 @@ class Issue extends DatabaseObject {
 	                                 $p_issueNumber = null,
 	                                 $p_urlName = null,
 	                                 $p_preferredLanguage = null,
-	                                 $p_sqlOptions = null)
+	                                 $p_sqlOptions = null, $p_skipCache = false)
 	{
-	    if (CampCache::IsEnabled()) {
-	        $paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
-		$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
-		$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
-		$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
-		$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
-		$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
-		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-		$issuesList = $cacheListObj->fetchFromCache();
-		if ($issuesList !== false && is_array($issuesList)) {
-		    return $issuesList;
-		}
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
+	    	$paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
+	    	$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+	    	$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
+	    	$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
+	    	$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
+	    	$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
+	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+	    	$issuesList = $cacheListObj->fetchFromCache();
+	    	if ($issuesList !== false && is_array($issuesList)) {
+	    		return $issuesList;
+	    	}
 	    }
 
 	    $tmpIssue = new Issue();
@@ -621,14 +621,14 @@ class Issue extends DatabaseObject {
 	    $issues = array();
 	    $rows = $g_ado_db->GetAll($queryStr);
 	    if (is_array($rows)) {
-	        foreach ($rows as $row) {
-		    $tmpObj = new Issue();
-		    $tmpObj->fetch($row);
-		    $tmpObj->m_languageName = $row['LanguageName'];
-		    $issues[] = $tmpObj;
-		}
+	    	foreach ($rows as $row) {
+	    		$tmpObj = new Issue();
+	    		$tmpObj->fetch($row);
+	    		$tmpObj->m_languageName = $row['LanguageName'];
+	    		$issues[] = $tmpObj;
+	    	}
 	    }
-	    if (CampCache::IsEnabled()) {
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	        $cacheListObj->storeInCache($issues);
 	    }
 
@@ -753,11 +753,11 @@ class Issue extends DatabaseObject {
      *    An array of Issue objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
@@ -847,7 +847,7 @@ class Issue extends DatabaseObject {
         	$issuesList = array();
         	$p_count = 0;
         }
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$cacheListObj->storeInCache($issuesList);
         }
 

@@ -24,7 +24,7 @@ function camp_is_issue_conflicting($p_publicationId, $p_issueNumber, $p_language
 {
 	global $ADMIN;
 	// The tricky part - language ID and URL name must be unique.
-	$conflictingIssues = Issue::GetIssues($p_publicationId, $p_languageId, null, $p_urlName);
+	$conflictingIssues = Issue::GetIssues($p_publicationId, $p_languageId, null, $p_urlName, null, null, true);
 	$conflictingIssue = array_pop($conflictingIssues);
 
 	// Check if the issue conflicts with another issue.

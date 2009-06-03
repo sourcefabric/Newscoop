@@ -60,7 +60,7 @@ if (!Input::IsValid()) {
 
 $articleTypes = ArticleType::GetArticleTypes();
 $allPublications = Publication::GetPublications();
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $isValidXMLFile = false;
 if ($f_save && !empty($_FILES['f_input_file'])) {
@@ -124,7 +124,7 @@ if ($isValidXMLFile) {
 					       $f_publication_id,
 					       $f_issue_number,
 					       $f_section_number,
-					       $f_article_language_id);
+					       $f_article_language_id, true);
 	// There is already an article with same name and language
 	if (count($existingArticles) > 0) {
 	    $existingArticle = array_pop($existingArticles);
@@ -158,7 +158,7 @@ if ($isValidXMLFile) {
 	$xmlArticle = get_object_vars($article);
 
 	$articleTypeObj = $articleObj->getArticleData();
-	$dbColumns = $articleTypeObj->getUserDefinedColumns();
+	$dbColumns = $articleTypeObj->getUserDefinedColumns(false, true);
 	$articleTypeFields = array();
 	foreach ($dbColumns as $dbColumn) {
 	    $fieldName = $dbColumn->getPrintName();
@@ -227,7 +227,7 @@ if ($isValidXMLFile) {
 // Gets all issues
 $allIssues = array();
 if ($f_publication_id > 0) {
-    $allIssues = Issue::GetIssues($f_publication_id, $f_article_language_id, null, null, null, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")));
+    $allIssues = Issue::GetIssues($f_publication_id, $f_article_language_id, null, null, null, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")), true);
     // Automatically selects the issue if there is only one
     if (count($allIssues) == 1) {
         $tmpIssue = camp_array_peek($allIssues);
@@ -239,7 +239,7 @@ if ($f_publication_id > 0) {
 $allSections = array();
 if ($f_issue_number > 0) {
     $destIssue = new Issue($f_publication_id);
-    $allSections = Section::GetSections($f_publication_id, $f_issue_number, $f_article_language_id, null, null, array("ORDER BY" => array("Number" => "DESC")));
+    $allSections = Section::GetSections($f_publication_id, $f_issue_number, $f_article_language_id, null, null, array("ORDER BY" => array("Number" => "DESC")), true);
     // Automatically selects the section if there is only one
     if (count($allSections) == 1) {
         $tmpSection = camp_array_peek($allSections);

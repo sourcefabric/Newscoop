@@ -10,7 +10,7 @@ $f_country_code = Input::Get('f_country_code');
 $f_country_language = Input::Get('f_country_language');
 
 $country = new Country($f_country_code, $f_country_language);
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $countryTranslations = Country::GetCountries(null, $f_country_code);
 
 $crumbs = array();

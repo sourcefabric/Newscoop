@@ -370,20 +370,20 @@ class Section extends DatabaseObject {
 	 */
 	public static function GetSections($p_publicationId = null, $p_issueNumber = null,
 	                                   $p_languageId = null, $p_urlName = null,
-	                                   $p_sectionName = null, $p_sqlOptions = null)
+	                                   $p_sectionName = null, $p_sqlOptions = null, $p_skipCache = false)
 	{
-	    if (CampCache::IsEnabled()) {
-	        $paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
-		$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
-		$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
-		$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
-		$paramsArray['section_name'] = (is_null($p_sectionName)) ? 'null' : $p_sectionName;
-		$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
-		$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-		$sectionsList = $cacheListObj->fetchFromCache();
-		if ($sectionsList !== false && is_array($sectionsList)) {
-		    return $sectionsList;
-		}
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
+	    	$paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
+	    	$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
+	    	$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+	    	$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
+	    	$paramsArray['section_name'] = (is_null($p_sectionName)) ? 'null' : $p_sectionName;
+	    	$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
+	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+	    	$sectionsList = $cacheListObj->fetchFromCache();
+	    	if ($sectionsList !== false && is_array($sectionsList)) {
+	    		return $sectionsList;
+	    	}
 	    }
 
 	    $constraints = array();
@@ -403,7 +403,7 @@ class Section extends DatabaseObject {
 	        $constraints[] = array("Name", $p_sectionName);
 	    }
 	    $sectionsList = DatabaseObject::Search('Section', $constraints, $p_sqlOptions);
-	    if (CampCache::IsEnabled()) {
+	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	        $cacheListObj->storeInCache($sectionsList);
 	    }
 
@@ -511,11 +511,11 @@ class Section extends DatabaseObject {
      *    An array of Section objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$paramsArray['parameters'] = serialize($p_parameters);
         	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
         	$paramsArray['start'] = $p_start;
@@ -605,7 +605,7 @@ class Section extends DatabaseObject {
         	$sectionsList = array();
         	$p_count = 0;
         }
-        if (CampCache::IsEnabled()) {
+        if (!$p_skipCache && CampCache::IsEnabled()) {
         	$cacheListObj->storeInCache($sectionsList);
         }
 

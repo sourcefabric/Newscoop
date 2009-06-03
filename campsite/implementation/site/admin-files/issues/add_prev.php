@@ -13,7 +13,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj = new Publication($Pub);
-$allLanguages = Language::GetLanguages();
+$allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 $newIssueId = Issue::GetUnusedIssueId($Pub);
 $lastCreatedIssue = Issue::GetLastCreatedIssue($Pub);
 

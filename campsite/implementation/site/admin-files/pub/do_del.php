@@ -32,7 +32,7 @@ if ($issuesRemaining > 0) {
 	$doDelete = false;
 }
 
-$sectionsRemaining = Section::GetSections($Pub);
+$sectionsRemaining = Section::GetSections($Pub, null, null, null, null, null, true);
 if (count($sectionsRemaining) > 0) {
 	$errorMsgs[] = getGS('There are $1 section(s) left.', count($sectionsRemaining));
 	$doDelete = false;

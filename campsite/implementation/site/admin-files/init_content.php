@@ -15,12 +15,12 @@ $Campsite["sections"] = array();
 foreach ($Campsite["publications"] as $publication) {
 	$Campsite["issues"][$publication->getPublicationId()] =
 		Issue::GetIssues($publication->getPublicationId(), null, null, null, $publication->getLanguageId(),
-			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'));
+			array('ORDER BY'=>array('Number'=>'DESC'), 'LIMIT' => '5'), true);
 	foreach ($Campsite["issues"][$publication->getPublicationId()] as $issue) {
 		$Campsite["sections"][$issue->getPublicationId()][$issue->getIssueNumber()][$issue->getLanguageId()] =
 			Section::GetSections($issue->getPublicationId(),
 				$issue->getIssueNumber(), $issue->getLanguageId(),
-				null, null, array('ORDER BY'=>array('Number'=>'ASC'), 'LIMIT' => '10'));
+				null, null, array('ORDER BY'=>array('Number'=>'ASC'), 'LIMIT' => '10'), true);
 	}
 }
 

@@ -94,7 +94,7 @@ $articleObj = new Article($f_article_language);
 $conflictingArticles = Article::GetByName($f_article_name,
 										  $publication_id,
 										  $issue_number,
-										  $section_number);
+										  $section_number, null, true);
 if (count($conflictingArticles) > 0) {
 	$conflictingArticle = array_pop($conflictingArticles);
 	$conflictingArticleLink = camp_html_article_url($conflictingArticle,

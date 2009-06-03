@@ -23,7 +23,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$languages = Language::GetLanguages();
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
 $publicationObj = new Publication($f_publication_id);

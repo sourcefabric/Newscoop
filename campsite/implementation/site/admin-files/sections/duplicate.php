@@ -51,7 +51,7 @@ $allIssues = array();
 if ($f_dest_publication_id > 0) {
     // Get the most recent 50 Issues...if they want something farther back, we are in trouble.
     $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC"));
-	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, null, $sqlOptions);
+	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, null, $sqlOptions, true);
 	if (count($allIssues) == 1) {
 		$f_dest_issue_number = $f_src_issue_number;
 	}
@@ -61,7 +61,7 @@ $allSections = array();
 $destIssueObj = null;
 if ($f_dest_issue_number > 0) {
     $destIssueObj = new Issue($f_dest_publication_id, $sectionObj->getLanguageId(), $f_dest_issue_number);
-	$allSections = Section::GetSections($f_dest_publication_id, $f_dest_issue_number, $sectionObj->getLanguageId());
+	$allSections = Section::GetSections($f_dest_publication_id, $f_dest_issue_number, $sectionObj->getLanguageId(), null, null, null, true);
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
