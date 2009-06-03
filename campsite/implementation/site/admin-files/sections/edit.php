@@ -27,7 +27,7 @@ $url_args2 = $url_args1."&Section=$Section";
 
 $languageObj = new Language($Language);
 if (!is_object($languageObj)) {
-  $languageObj = new Language(1);
+    $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage);
@@ -150,6 +150,7 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage);
 	  	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
 	  	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
 	  	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
+                <INPUT TYPE="HIDDEN" NAME="f_language_selected" ID="f_language_selected" VALUE="<?php p($editorLanguage); ?>">
 	  	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</TD>
 </TR>
