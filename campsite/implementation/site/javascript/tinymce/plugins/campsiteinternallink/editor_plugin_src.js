@@ -70,7 +70,7 @@
 
 	getInfo : function() {
             return {
-		longname : 'Campsite Internal Link',
+		longname : 'campsiteinternallink.campsiteinternallink_desc',
 		author : 'Campware',
 		authorurl : 'http://www.campware.org',
 		infourl : 'http://code.campware.org/projects/campsite',

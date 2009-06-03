@@ -269,7 +269,7 @@ tinyMCE.init({
 
     <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
         ed.addButton('campsite-subhead', {
-        title : 'Campsite Subhead',
+        title : 'campsitesubhead.campsitesubhead_desc',
         image : '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
         onclick : function() {
                       CampsiteSubhead(ed);
