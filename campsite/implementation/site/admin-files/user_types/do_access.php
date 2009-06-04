@@ -23,7 +23,7 @@ if (is_numeric($uTypeId) && $uTypeId > 0) {
 $rightsFields = User::GetDefaultConfig();
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
-	$userType->setPermission($field, ($val == 'on'));
+	$userType->setPermission($field, ($val != 'off'));
 }
 $logtext = getGS('User type $1 changed permissions', $userType->getName());
 Log::Message($logtext, $userType->getName(), 123);

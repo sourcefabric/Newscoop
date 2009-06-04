@@ -28,7 +28,7 @@ $rights = array();
 $rightsFields = User::GetDefaultConfig();
 foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
-	if ($val == 'on') {
+	if ($val != 'off') {
 		$rights[$field] = 1;
 	}
 }

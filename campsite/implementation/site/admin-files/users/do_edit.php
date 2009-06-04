@@ -92,7 +92,7 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	$permissions = array();
 	foreach ($rightsFields as $field=>$value) {
 		$val = Input::Get($field, 'string', 'off');
-		$permissionEnabled = ($val == 'on') ? true : false;
+		$permissionEnabled = ($val == 'off') ? false : true;
 		$permissions[$field] = $permissionEnabled;
 	}
 }

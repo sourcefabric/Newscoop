@@ -17,7 +17,7 @@ function checkAll(numItems, rowPrefix, checkboxPrefix)
 	for (i = 0; i < numItems; i++) {
 		document.getElementById(rowPrefix+i).className = 'list_row_click';
 		document.getElementById(checkboxPrefix+i).checked = true;
-        marked_row[i] = true;
+                marked_row[i] = true;
 	}
 } // fn checkAll
 
@@ -33,9 +33,32 @@ function uncheckAll(numItems, rowPrefix, checkboxPrefix)
 	for (i = 0; i < numItems; i++) {
 		document.getElementById(rowPrefix+i).className = default_class[i];
 		document.getElementById(checkboxPrefix+i).checked = false;
-        marked_row[i] = false;
+                marked_row[i] = false;
 	}
 } // fn uncheckAll
+
+
+function checkRestore(numItems, checkedItems, rowPrefix, checkboxPrefix)
+{
+    if (rowPrefix == null) {
+        rowPrefix = defaultRowPrefix;
+    }
+    if (checkboxPrefix == null) {
+        checkboxPrefix = defaultCheckboxPrefix;
+    }
+
+    for (i = 0; i < numItems; i++) {
+       if (checkedItems.indexOf(checkboxPrefix+i) >= 0) {
+           document.getElementById(rowPrefix+i).className = 'list_row_click';
+           document.getElementById(checkboxPrefix+i).checked = true;
+           marked_row[i] = true;
+       } else {
+           document.getElementById(rowPrefix+i).className = default_class[i];
+           document.getElementById(checkboxPrefix+i).checked = false;
+           marked_row[i] = false;
+	}
+    }
+} // fn checkRestore
 
 /**
  * Sets/unsets the pointer and marker in browse mode
