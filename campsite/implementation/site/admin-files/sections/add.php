@@ -77,6 +77,7 @@ editor_load_tinymce('f_description', $g_user, 0, $editorLanguage);
 	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
+        <INPUT TYPE="HIDDEN" NAME="f_language_selected" ID="f_language_selected" VALUE="<?php p($editorLanguage); ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
 	</DIV>
 	</TD>
