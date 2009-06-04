@@ -721,13 +721,13 @@ class Localizer {
     } // fn DeleteLanguageFiles
     
     /**
-     * Call this method to test if 2 versions have untranslated diffs
+     * Return information about overall, translated and untralslated string count.
      *
      * @param string $prefix
      * @param string $target_lang
-     * @return boolean
+     * @return array
      */
-    public static function HaveUntranslatedString($prefix, $target_lang)
+    public static function GetTranslationStatus($prefix, $target_lang)
     {
         global $g_localizerConfig;
         
@@ -739,12 +739,17 @@ class Localizer {
         $sourceStrings = $defaultLang->getTranslationTable();
         $targetStrings = $targetLang->getTranslationTable();
         
+        $translated = 0;
+        $untranslated = 0;
+        
         foreach ($sourceStrings as $k => $v) {
-            if (!strlen($targetStrings[$k])) {
-                return true;
+            if (strlen($targetStrings[$k])) {
+                $translated++;
+            } else {
+                $untranslated++;   
             }
         }
-        return false;
+        return array('all' => count($sourceStrings), 'translated' => $translated, 'untranslated' => $untranslated);
     }
 
 } // class Localizer

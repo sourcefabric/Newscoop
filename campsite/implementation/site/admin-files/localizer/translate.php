@@ -165,9 +165,9 @@ function translationForm($p_request)
 						<?PHP
 						foreach ($mapPrefixToDisplay as $prefix => $displayStr) {
 						    if (!empty($prefix)) {
-						        $have_untranslated = Localizer::HaveUntranslatedString($prefix, $localizerTargetLanguage);
+						        $transl_status[$prefix] = Localizer::GetTranslationStatus($prefix, $localizerTargetLanguage);
 						    }
-						    camp_html_select_option($prefix, $screenDropDownSelection, $displayStr, $have_untranslated ? array('style' => 'color:red') : array());
+						    camp_html_select_option($prefix, $screenDropDownSelection, $displayStr, $transl_status[$prefix]['untranslated'] ? array('style' => 'color:red') : array());
 						}
 						?>
 						</SELECT>
@@ -209,10 +209,43 @@ function translationForm($p_request)
 				</tr>
 				</table>
 			</td>
+			
+			<td>
+				<table>
+				<tr>
+					<td>
+						<?php putGS('Translation status:'); ?>
+					</td>
+				</tr>
+				<tr>
+					<td>
+				        <?php
+				        if ($screenDropDownSelection) {
+				            $all = $transl_status[$screenDropDownSelection]['all'];
+				            $transl = $transl_status[$screenDropDownSelection]['translated']; 
+				            $untransl = $transl_status[$screenDropDownSelection]['untranslated'];   
+				        } else {
+    				        foreach ($transl_status as $screen) {
+    				            $all += $screen['all'];
+    				            $transl += $screen['translated'];
+    				            $untransl += $screen['untranslated']; 
+    				        }
+				        }
+				        if ($all) {
+				            putGS("$1 of $2 strings translated", $transl, $all);
+				            echo '<br>'.round(100 - 100 / $all * $untransl, 2) . ' %';
+				        } else {
+				            echo 'N/A';   
+				        }
+				        ?>
+					</td>
+				</tr>
+				</table>
+			</td>
 
 		</tr>
 		<tr>
-			<td align="center" colspan="3">
+			<td align="center" colspan="4">
 				<table>
 				<tr>
 					<td>
