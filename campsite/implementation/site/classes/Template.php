@@ -437,7 +437,18 @@ class Template extends DatabaseObject {
 		if ($p_update) {
 			Template::UpdateStatus();
 		}
-		$queryStr = 'SELECT * FROM Templates';
+		$queryStr = 'SELECT * FROM Templates WHERE 1';
+		
+		if (SystemPref::Get('TemplateFilterHidden') == 'Y') {		    
+		  $queryStr .= ' AND Name NOT REGEXP "(^\\\\.)|(/\\\\.)" ';    
+		} elseif (SystemPref::Get('TemplateFilterSVN') == 'Y') {		    
+		  $queryStr .= ' AND Name NOT REGEXP "(^\\\\.)|(/\\\\.)" ';    
+		}
+		
+		if (SystemPref::Get('TemplateFilterCVS') == 'Y') {		    
+		  $queryStr .= ' AND Name NOT REGEXP "CVS/" ';    
+		}
+		
 		if (!is_null($p_sqlOptions)) {
 			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		} else {

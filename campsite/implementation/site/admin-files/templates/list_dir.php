@@ -157,6 +157,17 @@ if(isset($files) && is_array($files)) {
 			sort($dirs);
 			$color = 0;
 			foreach ($dirs as $dirname) {
+			    // filter folders
+				if (SystemPref::Get('TemplateFilterHidden') == 'Y' && preg_match('/(^\.)|(\/\.)/', $dirname)) {
+			         continue;   
+			    } elseif (SystemPref::Get('TemplateFilterSVN') == 'Y' && preg_match('/(^\.svn)|(\/\.svn)/', $dirname)) {
+			         continue;   
+			    }
+			    
+			    if (SystemPref::Get('TemplateFilterCVS') == 'Y' && preg_match('/(^CVS)|(\/CVS)/', $dirname)) {
+			         continue;   
+			    }
+			    
 				$tr_class = "";
 				if ($color) {
 					$color = 0;
@@ -204,6 +215,12 @@ if(isset($files) && is_array($files)) {
 			foreach ($files as $filename) {
 				$templateName = (!empty($listbasedir) ? $listbasedir."/" : "").$filename;
 				$templateName = $templateName[0] == "/" ? substr($templateName, 1) : $templateName;
+
+				// filter hidden files
+				if (SystemPref::Get('TemplateFilterHidden') == 'Y' && preg_match('/(^\.)|(\/\.)/', $templateName)) {
+			         continue;   
+			    }   
+			        
 				$templateObj = new Template($templateName);
 				if ($color) {
 					$tr_class = "list_row_even";
