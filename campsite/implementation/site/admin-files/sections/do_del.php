@@ -27,6 +27,13 @@ if ($f_deleteSubscriptions != "") {
     $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($f_publication_id, $f_section_number);
 }
 
+$offsetVarName = 'SectOffs_'.$f_publication_id.'_'.$f_issue_number.'_'.$f_language_id;
+$SectOffs = camp_session_get($offsetVarName, 0);
+$totalSections = Section::GetTotalSections($f_publication_id, $f_issue_number, $f_language_id);
+if ($SectOffs >= $totalSections) {
+    camp_session_set($offsetVarName, 0);
+}
+
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS('Delete section'), $topArray);
 ?>
@@ -50,7 +57,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
+        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/index.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 	</TD>
 </TR>
 </TABLE>
