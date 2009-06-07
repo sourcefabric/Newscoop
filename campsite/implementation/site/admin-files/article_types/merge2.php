@@ -102,32 +102,40 @@ echo camp_html_breadcrumbs($crumbs);
 			</td>
 		</tr>
 		<TR>
-			<TD align="center">
+			<TD align="right">
 				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Source Article Type");?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
 			</TD>
-			<TD align="center" style="padding-left: 20px;">
+			<TD align="left" style="padding-left: 2px;">
 				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Destination Article Type"); ?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
 			</TD>
 		</TR>
 		<tr>
-			<td align="center">
+			<td align="right">
 				 <b><?php print $src->getDisplayName(); ?></b>
 			</td>
-			<td align="center">
+			<td align="left">
 				<b><?php print $dest->getDisplayName(); ?></b>
 			</td>
 		</tr>
 		<?php foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) { ?>
 		<TR>
-			<TD align="center">
+			<TD align="right">
 				<SELECT CLASS="input_select" NAME="f_src_<?php print $destColumn->getPrintName(); ?>">
-				<?php foreach ($src->getUserDefinedColumns(null, true, true) as $srcColumn) { ?>
-					<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
+				<?php
+				$selected = false;
+				foreach ($src->getUserDefinedColumns(null, true, true) as $srcColumn) {
+					if (!$destColumn->isConvertibleFrom($srcColumn->getType())) {
+						continue;
+					}
+					$selected = ($srcColumn->getType() == $destColumn->getType()
+					|| $f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) && !$selected;
+				?>
+					<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($selected) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 				<?php } ?>
 					<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getPrintName()] == 'NULL') { print "SELECTED"; } ?>><?php putGS("--None--"); ?></OPTION>
 				</SELECT>
 			</TD>
-			<TD align="center">= <?php print $destColumn->getDisplayName(); ?></TD>
+			<TD align="left">-&gt; <?php print $destColumn->getDisplayName(); ?></TD>
 		</TR>
 		<?php } ?>
 		</table>

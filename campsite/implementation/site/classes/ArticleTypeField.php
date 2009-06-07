@@ -19,6 +19,7 @@ class ArticleTypeField extends DatabaseObject {
     const TYPE_BODY = 'body';
     const TYPE_DATE = 'date';
     const TYPE_TOPIC = 'topic';
+    const TYPE_SWITCH = 'switch';
 
     var $m_dbTableName = 'ArticleTypeMetadata';
 	var $m_keyColumnNames = array('type_name', 'field_name');
@@ -138,23 +139,52 @@ class ArticleTypeField extends DatabaseObject {
 
 
 	/**
-	 * Returns an array of types compatible with the current field type.
+	 * Returns an array of types compatible with the given field type.
 	 * @return array
 	 */
-	public function getCompatibleTypes()
+	public static function TypesConvertibleTo($p_type)
 	{
-		$type = $this->getType();
-		switch ($type) {
+		switch ($p_type) {
 			case self::TYPE_BODY:
-				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_BODY);
+				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH);
 			case self::TYPE_TEXT:
-				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_TEXT);
+				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH);
 			case self::TYPE_DATE:
-				return array(self::TYPE_DATE);
+				return array();
 			case self::TYPE_TOPIC:
-				return array(self::TYPE_TOPIC);
+				return array();
+			case self::TYPE_SWITCH:
+				return array();
 		}
 		return false;
+	}
+
+
+	public static function TypesConvertibleFrom($p_type)
+	{
+		$allTypes = self::DatabaseTypes();
+		if (!array_key_exists($p_type, $allTypes)) {
+			return false;
+		}
+		$convertibleFromTypes = array();
+		foreach ($allTypes as $typeName=>$sqlDesc) {
+			if (array_search($p_type, self::TypesConvertibleTo($typeName)) !== false) {
+				$convertibleFromTypes[] = $typeName;
+			}
+		}
+		return $convertibleFromTypes;
+	}
+
+
+	public function getConvertibleFromTypes()
+	{
+		return self::TypesConvertibleTo($this->getType());
+	}
+
+
+	public function getConvertibleToTypes()
+	{
+		return self::TypesConvertibleFrom($this->getType());
 	}
 
 
@@ -165,7 +195,14 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public function isConvertibleFrom($p_type)
 	{
-		return array_search($p_type, $this->getCompatibleTypes()) !== false;
+		return $this->getType() == $p_type
+		|| array_search($p_type, $this->getConvertibleFromTypes()) !== false;
+	}
+
+
+	public function isConvertibleTo($p_type)
+	{
+		return array_search($p_type, $this->getConvertibleToTypes());
 	}
 
 
@@ -325,10 +362,9 @@ class ArticleTypeField extends DatabaseObject {
 	 * Get a human-readable representation of the column type.
 	 * @return string
 	 */
-	public function getPrintType($p_languageId = 1)
+	public static function VerboseTypeName($p_typeName, $p_languageId = 1, $p_rootTopicId = null)
 	{
-		global $g_ado_db;
-		switch ($this->getType()) {
+		switch ($p_typeName) {
 	    case self::TYPE_BODY:
 	    	return getGS('Multi-line Text with WYSIWYG');
 	    case self::TYPE_TEXT:
@@ -336,20 +372,32 @@ class ArticleTypeField extends DatabaseObject {
 	    case self::TYPE_DATE:
 	    	return getGS('Date');
 	    case self::TYPE_TOPIC:
-   			$topic = new Topic($this->getTopicTypeRootElement());
+	    	if (is_null($p_rootTopicId)) {
+	    		return getGS('Topic');
+	    	}
+   			$topic = new Topic($p_rootTopicId);
    			$translations = $topic->getTranslations();
    			if (array_key_exists($p_languageId, $translations)) {
-   				return "Topic (".$translations[$p_languageId].")";
+   				return getGS('Topic') . ' (' . $translations[$p_languageId] . ')';
    			} elseif ($p_languageId != 1 && array_key_exists(1, $translations)) {
-   				return "Topic (".$translations[1].")";
+   				return getGS('Topic') . ' (' . $translations[1] . ')';
    			} else {
-   				return "Topic (".end($translations).")";
+   				return getGS('Topic') . ' (' . end($translations) . ')';
    			}
 	    	break;
+	    case self::TYPE_SWITCH:
+	    	return getGS('Switch');
 	    default:
 	    	return "unknown";
 		}
-	} // fn getPrintType
+	} // fn VerboseTypeName
+
+
+	public function getVerboseTypeName($p_languageId = 1)
+	{
+		$rootTopicId = $this->getType() == self::TYPE_TOPIC ? $this->getTopicTypeRootElement() : null;
+		return self::VerboseTypeName($this->getType(), $p_languageId, $rootTopicId);
+	}
 
 
 	/**
@@ -745,10 +793,12 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public static function DatabaseTypes()
 	{
-	    return array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
+	    static $types = array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
 			 self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
 			 self::TYPE_DATE=>'DATE NOT NULL',
-			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL');
+			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL',
+			 self::TYPE_SWITCH=>'BOOLEAN NOT NULL');
+        return $types;
 	}
 } // class ArticleTypeField
 

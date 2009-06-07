@@ -150,7 +150,7 @@ foreach ($fields as $field) {
 	</TD>
 
 	<TD>
-		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getPrintType()); ?></A>
+		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getVerboseTypeName($languageObj->getLanguageId())); ?></A>
 	</TD>
 
 	<TD>

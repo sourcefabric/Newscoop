@@ -41,23 +41,6 @@ foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) {
 
 
 // Verify the merge rules
-// Text->Text = OK
-// Text->Body = OK
-// Body->Text = NO
-// Body->Body = OK
-// Text->Date = NO
-// Text->Topic = NO
-// Body->Date = NO
-// Body->Topic = NO
-// Date->Text = OK
-// Date->Body = OK
-// Date->Date = OK
-// Date->Topic = NO
-// Topic->Text = OK
-// Topic->Body = OK
-// Topic->Date = NO
-// Topic->Topic = NO* (TODO)
-
 $ok = true;
 $errMsgs = array();
 
@@ -85,7 +68,7 @@ if ($ok && $f_action == 'Merge') {
     if ($ok) {
     	$f_delete = Input::get('f_delete', 'int', 0);
         if ($f_delete) {
-    	   // delete the source TODO
+            // delete the source article type
             $at = new ArticleType($f_src);
             $at->delete();
         }

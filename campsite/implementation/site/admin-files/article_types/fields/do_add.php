@@ -30,7 +30,7 @@ if ($field->exists()) {
 	$correct = false;
 }
 
-$validTypes = array('text', 'date', 'body', 'topic');
+$validTypes = array_keys(ArticleTypeField::DatabaseTypes());
 if (!in_array($fieldType, $validTypes)) {
 	$errorMsgs[] = getGS('Invalid field type.');
 	$correct = false;

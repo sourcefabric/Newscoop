@@ -83,6 +83,8 @@ foreach ($dbColumns as $dbColumn) {
     }
     if (isset($_REQUEST[$dbColumnParam])) {
         $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
+    } else {
+    	$articleFields[$dbColumn->getName()] = null;
     }
 }
 
@@ -177,26 +179,7 @@ if (preg_match("/\d{4}-\d{2}-\d{2}/", $f_publish_date)) {
 
 foreach ($articleFields as $dbColumnName => $text) {
     if ($f_save == $dbColumnName || $f_save == 'all') {
-        // Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
-        $text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i", "TransformSubheads", $text);
-
-        // Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
-        // with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
-      	$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i", "TransformInternalLinks", $text);
-
-      	// Replace <img id=".." src=".." alt=".." title=".." align="..">
-      	// with <!** Image [image_template_id] align=".." alt=".." sub="..">
-      	$idAttr = "(id\s*=\s*\"[^\"]*\")";
-      	$srcAttr = "(src\s*=\s*\"[^\"]*\")";
-      	$altAttr = "(alt\s*=\s*\"[^\"]*\")";
-      	$subAttr = "(title\s*=\s*\"[^\"]*\")";
-      	$alignAttr = "(align\s*=\s*\"[^\"]*\")";
-      	$widthAttr = "(width\s*=\s*\"[^\"]*\")";
-      	$heightAttr = "(height\s*=\s*\"[^\"]*\")";
-      	$otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
-      	$pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
-      	$text = preg_replace_callback($pattern, "TransformImageTags", $text);
-      	$articleTypeObj->setProperty($dbColumnName, $text);
+    	$articleTypeObj->setProperty($dbColumnName, $text);
     }
 }
 

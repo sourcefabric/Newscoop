@@ -81,6 +81,42 @@ class ArticleData extends DatabaseObject {
 	} // fn getDisplayName
 
 
+	public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+	{
+		if (!in_array($p_dbColumnName, $this->m_columnNames)) {
+            return false;
+		}
+		$articleField = new ArticleTypeField($this->m_articleTypeName, substr($p_dbColumnName, 1));
+		if ($articleField->getType() == ArticleTypeField::TYPE_BODY) {
+			// Replace <span class="subhead"> ... </span> with <!** Title> ... <!** EndTitle>
+			$text = preg_replace_callback("/(<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>|<\s*span|<\s*\/\s*span\s*>)/i",
+			array('ArticleData', "TransformSubheads"), $p_value);
+
+			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
+			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
+			$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i",
+			array('ArticleData', "TransformInternalLinks"), $text);
+
+			// Replace <img id=".." src=".." alt=".." title=".." align="..">
+			// with <!** Image [image_template_id] align=".." alt=".." sub="..">
+			$idAttr = "(id\s*=\s*\"[^\"]*\")";
+			$srcAttr = "(src\s*=\s*\"[^\"]*\")";
+			$altAttr = "(alt\s*=\s*\"[^\"]*\")";
+			$subAttr = "(title\s*=\s*\"[^\"]*\")";
+			$alignAttr = "(align\s*=\s*\"[^\"]*\")";
+			$widthAttr = "(width\s*=\s*\"[^\"]*\")";
+			$heightAttr = "(height\s*=\s*\"[^\"]*\")";
+			$otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
+			$pattern = "/<\s*img\s*(($idAttr|$srcAttr|$altAttr|$subAttr|$alignAttr|$widthAttr|$heightAttr|$otherAttr)\s*)*\/>/i";
+			$p_value = preg_replace_callback($pattern, array($this, "transformImageTags"), $text);
+		}
+		if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
+			return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'));
+		}
+        return parent::setProperty($p_dbColumnName, $p_value);
+	}
+
+
 	/**
 	 * Copy the row in the database.
 	 * @param int $p_destArticleNumber
@@ -145,6 +181,162 @@ class ArticleData extends DatabaseObject {
 		}
 		$g_ado_db->Execute($queryStr);
 	} // fn copyToExistingRecord
+
+
+	public static function TransformSubheads($match) {
+		static $spanCounter = -1;
+
+		// This matches '<span class="campsite_subhead">'
+		if (preg_match("/<\s*span[^>]*class\s*=\s*[\"']campsite_subhead[\"'][^>]*>/i", $match[0])) {
+			$spanCounter = 1;
+			return "<!** Title>";
+		}
+		// This matches '<span'
+		elseif (($spanCounter >= 0) && preg_match("/<\s*span/i", $match[0])) {
+			$spanCounter += 1;
+		}
+		// This matches '</span>'
+		elseif (($spanCounter >= 0) && preg_match("/<\s*\/\s*span\s*>/i", $match[0])) {
+			$spanCounter -= 1;
+		}
+		if ($spanCounter == 0) {
+			$spanCounter = -1;
+			return "<!** EndTitle>";
+		}
+		return $match[0];
+	} // fn TransformSubheads
+
+
+	/**
+	 * This function is a callback for preg_replace_callback().
+	 * It will replace <a href="campsite_internal_link?...">...</a>
+	 * with <!** Link Internal ...> ... <!** EndLink>
+	 * @param array p_match
+	 * @return string
+	 */
+	public static function TransformInternalLinks($p_match) {
+		static $internalLinkCounter = 0;
+		static $internalLinkStartTag = 0;
+
+		// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
+		$internalLinkStartRegex = "/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i";
+
+		// This matches '</a>'
+		$internalLinkEndRegex = "/<\s*\/a\s*>/i";
+
+		if (preg_match($internalLinkEndRegex, $p_match[0])) {
+			// Check if we are closing an internal link
+			if ($internalLinkCounter > 0) {
+				$internalLinkCounter = 0;
+				// Make sure the starting link was not blank (a blank
+				// indicates it was a link to no where)
+				if ($internalLinkStartTag != "") {
+					// Replace the HTML tag with a template tag
+					$retval = "<!** EndLink>";
+					$internalLinkStartTag = "";
+					return $retval;
+				} else {
+					// The starting link was blank, so we return blank for the
+					// ending link.
+					return "";
+				}
+			} else {
+				// Leave the HTML tag as is (for external links).
+				return '</a>';
+			}
+		} elseif (preg_match($internalLinkStartRegex, $p_match[0])) {
+			// Get the URL
+			preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
+			$url = isset($url[1]) ? $url[1] : '';
+			$parsedUrl = parse_url($url);
+			$parsedUrl = str_replace("&amp;", "&", $parsedUrl);
+
+			$retval = "";
+			// It's possible that there isnt a query string - in which case
+			// its a link to no where, so we remove it ($retval is empty
+			// string).
+			if (isset($parsedUrl["query"])) {
+				// Get the target, if there is one
+				preg_match("/target\s*=\s*[\"']([_\w]*)[\"']/i", $p_match[0], $target);
+				$target = isset($target[1]) ? $target[1] : null;
+
+				// Replace the HTML tag with a template tag
+				$retval = "<!** Link Internal ".$parsedUrl["query"];
+				if (!is_null($target)) {
+					$retval .= " TARGET ".$target;
+				}
+				$retval .= ">";
+			}
+
+			// Mark that we are now inside an internal link.
+			$internalLinkCounter = 1;
+			// Remember the starting link tag
+			$internalLinkStartTag = $retval;
+
+			return $retval;
+		}
+	} // fn TransformInternalLinks
+
+
+	/**
+	 * This function is a callback for preg_replace_callback().
+	 * It will replace <img src="http://[hostname]/[image_dir]/cms-image-000000001.jpg" align="center" alt="alternate text" sub="caption text" id="5">
+	 * with <!** Image [image_template_id] align=CENTER alt="alternate text" sub="caption text">
+	 * @param array p_match
+	 * @return string
+	 */
+	public function transformImageTags($p_match) {
+		array_shift($p_match);
+		$attrs = array();
+		foreach ($p_match as $attr) {
+			$attr = split('=', $attr);
+			if (isset($attr[0]) && !empty($attr[0])) {
+				$attrName = trim(strtolower($attr[0]));
+				$attrValue = isset($attr[1]) ? $attr[1] : '';
+				// Strip out the quotes
+				$attrValue = str_replace('"', '', $attrValue);
+				$attrs[$attrName] = $attrValue;
+			}
+		}
+
+		if (!isset($attrs['id'])) {
+			return '';
+		} else {
+			if (strpos($attrs['id'], '_')) {
+				list($templateId, $imageRatio) = explode('_', $attrs['id']);
+			} else {
+				$templateId = $attrs['id'];
+			}
+			$articleImage = new ArticleImage($this->m_data['NrArticle'], null, $templateId);
+			if (!$articleImage->exists()) {
+				return '';
+			}
+		}
+		$alignTag = '';
+		if (isset($attrs['align'])) {
+			$alignTag = 'align="'.$attrs['align'].'"';
+		}
+		$altTag = '';
+		if (isset($attrs['alt']) && strlen($attrs['alt']) > 0) {
+			$altTag = 'alt="'.$attrs['alt'].'"';
+		}
+		$captionTag = '';
+		if (isset($attrs['title']) && strlen($attrs['title']) > 0) {
+			$captionTag = 'sub="'.$attrs['title'].'"';
+		}
+		if (isset($attrs['width']) && strlen($attrs['width']) > 0) {
+			$widthTag = 'width="'.$attrs['width'].'"';
+		}
+		if (isset($attrs['height']) && strlen($attrs['height']) > 0) {
+			$heightTag = 'height="'.$attrs['height'].'"';
+		}
+		$ratioTag = '';
+		if (isset($imageRatio) && ($imageRatio > 0 && $imageRatio < 100)) {
+			$ratioTag = 'ratio="'.$imageRatio.'"';
+		}
+		$imageTag = "<!** Image $templateId $alignTag $altTag $captionTag $widthTag $heightTag $ratioTag>";
+		return $imageTag;
+	} // fn TransformImageTags
 
 } // class ArticleData
 

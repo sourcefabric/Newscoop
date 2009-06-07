@@ -381,7 +381,7 @@ if ($f_edit_mode == "edit") { ?>
           }
           if (count($articleEvents) > 0) {
           ?>
-            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="absmiddle" style="padding-bottom: 1px;">
+            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;">
           <?php
           }
           ?>
@@ -955,6 +955,30 @@ window.location.reload();
 			</td>
 			</tr>
 			<?php
+			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+				$checked = $articleData->getFieldValue($dbColumn->getPrintName()) ? 'checked' : '';
+			?>
+            <tr>
+            <td align="left" style="padding-right: 5px;">
+                <?php if ($f_edit_mode == "edit") {
+                    $fCustomFields[] = $dbColumn->getName();
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
+                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+            onclick: { fn: onButtonClick },
+            disabled: true
+    });';
+                                ?>
+                <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
+                <?php } ?>
+            </td>
+            <td align="right">
+                <?php echo $dbColumn->getDisplayName(); ?>:
+            </td>
+            <td>
+            <input type="checkbox" <?php echo $checked; ?> class="input_checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+            </td>
+            </tr>
+			<?php
 			}
 		} // foreach ($dbColumns as $dbColumn)
 		?>
@@ -966,11 +990,6 @@ window.location.reload();
 	<tr>
 		<td colspan="2" align="center">
             <?php if ($f_publication_id > 0) { ?>
-
-            <div>
-            </div>
-        </fieldset>
-
             <!-- Preview Link -->
             <input type="submit" name="preview" value="<?php putGS('Preview'); ?>" class="button" onclick="window.open('/<?php echo $ADMIN; ?>/articles/preview.php?f_publication_id=<?php p($f_publication_id); ?>&amp;f_issue_number=<?php p($f_issue_number); ?>&amp;f_section_number=<?php p($f_section_number); ?>&amp;f_article_number=<?php p($f_article_number); ?>&amp;f_language_id=<?php p($f_language_id); ?>&amp;f_language_selected=<?php p($f_language_selected); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=680, height=560'); return false">
             &nbsp;&nbsp;&nbsp;&nbsp;
@@ -982,6 +1001,7 @@ window.location.reload();
 	</tr>
 	<?php } ?>
 	</table>
+	</fieldset>
     </form>
 	<!-- END Article Content -->
 </td>

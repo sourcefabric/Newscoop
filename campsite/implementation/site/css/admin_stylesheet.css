@@ -76,7 +76,10 @@ hr {
 	font-size: 9pt;
 }
 
-.input_checkbox { }
+.input_checkbox {
+    background-color: #f0f0ff;
+    border: 1px solid grey;
+}
 
 .input_radio { }
 

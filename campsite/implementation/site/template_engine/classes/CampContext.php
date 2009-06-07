@@ -152,7 +152,7 @@ final class CampContext
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
         $this->m_readonlyProperties['default_url'] = new MetaURL();
-        $this->m_readonlyProperties['url'] = clone($this->m_readonlyProperties['default_url']);
+        $this->m_readonlyProperties['url'] = new MetaURL();
         $this->m_objects['publication'] = $this->m_readonlyProperties['url']->publication;
         $this->m_objects['language'] = $this->m_readonlyProperties['url']->language;
         $this->m_objects['issue'] = $this->m_readonlyProperties['url']->issue;

@@ -28,6 +28,10 @@ echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
+foreach (ArticleTypeField::DatabaseTypes() as $type=>$sqlDesc) {
+    $options[$type] = ArticleTypeField::VerboseTypeName($type, $currentLanguageId);
+}
+
 ?>
 <script>
 function UpdateArticleFieldContext() {
@@ -64,11 +68,12 @@ function UpdateArticleFieldContext() {
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
-		<OPTION VALUE="text"><?php  putGS('Single-line Text'); ?>
-		<OPTION VALUE="date"><?php  putGS('Date'); ?>
-		<OPTION VALUE="body"><?php  putGS('Multi-line Text with WYSIWYG'); ?>
-        <?php if (count($topics) > 0) { ?>
-    		<OPTION VALUE="topic"><?php  putGS('Topic'); ?>
+        <?php foreach ($options as $k => $v) {
+        	if ($k == ArticleTypeField::TYPE_TOPIC && count($topics) == 0) {
+        		continue;
+        	}
+        ?>
+            <OPTION VALUE="<?php print $k; ?>"><?php echo $v; ?></OPTION>
         <?php } ?>
     </SELECT>
 	</TD>

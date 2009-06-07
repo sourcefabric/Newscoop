@@ -23,35 +23,14 @@ $crumbs[] = array(getGS("Reassign a field type"), "");
 echo camp_html_breadcrumbs($crumbs);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
+$lang = camp_session_get('LoginLanguageId', 1);
+$languageObj = new Language($lang);
+
 // Verify the merge rules
-// Text->Text = OK
-// Text->Body = OK
-// Body->Text = NO
-// Body->Body = OK
-// Text->Date = NO
-// Text->Topic = NO
-// Body->Date = NO
-// Body->Topic = NO
-// Date->Text = OK
-// Date->Body = OK
-// Date->Date = OK
-// Date->Topic = NO
-// Topic->Text = OK
-// Topic->Body = OK
-// Topic->Date = NO
-// Topic->Topic = NO* (TODO)
 $options = array();
-if ($articleField->getType() == ArticleTypeField::TYPE_BODY) {
-    $options = array();
-}
-if ($articleField->getType() == ArticleTypeField::TYPE_DATE) {
-    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
-}
-if ($articleField->getType() == ArticleTypeField::TYPE_TEXT) {
-    $options = array('body' => getGS('Multi-line Text with WYSIWYG'));
-}
-if ($articleField->getType() == ArticleTypeField::TYPE_TOPIC) {
-    $options = array('text' => getGS('Single-line Text'), 'body' => getGS('Multi-line Text with WYSIWYG'));
+$convertibleFromTypes = $articleField->getConvertibleToTypes();
+foreach ($convertibleFromTypes as $type) {
+	$options[$type] = ArticleTypeField::VerboseTypeName($type, $languageObj->getLanguageId());
 }
 ?>
 <script>
@@ -68,7 +47,7 @@ function UpdateArticleFieldContext() {
 </script>
 
 
-<?php if (!count($options)) { ?>
+<?php if (count($options) < 1) { ?>
 <P>
 You cannot reassign this type.
 </P>
@@ -86,7 +65,7 @@ You cannot reassign this type.
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
         <?php foreach ($options as $k => $v) { ?>
-        	<OPTION VALUE="<?php print $k; ?>"><?php putGS($v); ?></OPTION>
+        	<OPTION VALUE="<?php print $k; ?>"><?php echo $v; ?></OPTION>
         <?php } ?>
     </SELECT>
 

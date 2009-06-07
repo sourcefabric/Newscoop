@@ -236,24 +236,24 @@ final class CampSite extends CampSystem
      *      The URI to work with
      * @return CampURI
      */
-    public static function GetURIInstance($p_uri = 'SELF')
+    public static function GetURIInstance()
     {
-        global $g_ado_db;
-        
-        static $urlType = null;
+        static $uriInstance = null;
 
-        if (is_null($urlType)) {
-        	$alias = new Alias($_SERVER['HTTP_HOST']);
-        	if ($alias->exists()) {
-        		$publication = new Publication($alias->getPublicationId());
-        		$urlType = $publication->getUrlTypeId();
-        	}
+        if (!is_null($uriInstance)) {
+        	return clone($uriInstance);
+        }
 
-        	// sets url type to default if necessary
-        	if (!$urlType) {
-        		$config = self::GetConfigInstance();
-        		$urlType = $config->getSetting('campsite.url_default_type');
-        	}
+        $alias = new Alias($_SERVER['HTTP_HOST']);
+        if ($alias->exists()) {
+        	$publication = new Publication($alias->getPublicationId());
+        	$urlType = $publication->getUrlTypeId();
+        }
+
+        // sets url type to default if necessary
+        if (!$urlType) {
+        	$config = self::GetConfigInstance();
+        	$urlType = $config->getSetting('campsite.url_default_type');
         }
 
         // instanciates the corresponding URI object
