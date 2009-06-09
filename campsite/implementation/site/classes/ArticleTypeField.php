@@ -195,7 +195,13 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public function isConvertibleFrom($p_type)
 	{
-		return $this->getType() == $p_type
+		if (is_object($p_type) && get_class($p_type) == __CLASS__) {
+			if ($this->getType() == 'topic' && $p_type->getType() == 'topic') {
+				return $this->getTopicTypeRootElement() == $p_type->getTopicTypeRootElement();
+			}
+			$p_type = $p_type->getType();
+		}
+		return ($this->getType() == $p_type && $p_type != 'topic')
 		|| array_search($p_type, $this->getConvertibleFromTypes()) !== false;
 	}
 

@@ -20,10 +20,6 @@ if ($f_src == $f_dest) {
 $src = new ArticleType($f_src);
 $dest = new ArticleType($f_dest);
 
-$tmp = Input::get('f_src_Fe');
-foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) {
-	$f_src_c[$destColumn->getPrintName()] = trim(Input::get('f_src_'. $destColumn->getPrintName()));
-}
 $srcNumArticles = $src->getNumArticles();
 
 if ($srcNumArticles <= 0) {
@@ -87,7 +83,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
-	<TD COLSPAN="2">
+	<TD COLSPAN="3">
 		<b><?php putGS("Merge Article Types: Step $1 of $2", "2", "3"); ?></b>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
@@ -96,23 +92,26 @@ echo camp_html_breadcrumbs($crumbs);
 	<td>
 		<table cellpadding="2">
 		<tr>
-			<td colspan="2" style="padding-bottom: 10px;">
+			<td colspan="3" style="padding-bottom: 10px;">
 				<b><?php putGS("There are $1 articles associated with $2 that will be merged.", $srcNumArticles, $src->getDisplayName());?></b>
 
 			</td>
 		</tr>
 		<TR>
 			<TD align="right">
-				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Source Article Type");?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
+				<u><?php putGS("Source Article Type");?></u>
 			</TD>
+			<td>
+			</td>
 			<TD align="left" style="padding-left: 2px;">
-				<u>&nbsp;&nbsp;&nbsp;&nbsp;<?php putGS("Destination Article Type"); ?>:&nbsp;&nbsp;&nbsp;&nbsp;</u>
+				<u><?php putGS("Destination Article Type"); ?></u>
 			</TD>
 		</TR>
 		<tr>
 			<td align="right">
 				 <b><?php print $src->getDisplayName(); ?></b>
 			</td>
+			<td>-&gt;</td>
 			<td align="left">
 				<b><?php print $dest->getDisplayName(); ?></b>
 			</td>
@@ -124,18 +123,19 @@ echo camp_html_breadcrumbs($crumbs);
 				<?php
 				$selected = false;
 				foreach ($src->getUserDefinedColumns(null, true, true) as $srcColumn) {
-					if (!$destColumn->isConvertibleFrom($srcColumn->getType())) {
+					if (!$destColumn->isConvertibleFrom($srcColumn)) {
 						continue;
 					}
 					$selected = ($srcColumn->getType() == $destColumn->getType()
-					|| $f_src_c[$destColumn->getPrintName()] == $srcColumn->getPrintName()) && !$selected;
+					|| $destColumn->getPrintName() == $srcColumn->getPrintName()) && !$selected;
 				?>
 					<OPTION VALUE="<?php print $srcColumn->getPrintName(); ?>" <?php if ($selected) { print "SELECTED"; } ?>><?php print $srcColumn->getDisplayName(); ?></OPTION>
 				<?php } ?>
-					<OPTION VALUE="NULL" <?php if ($f_src_c[$destColumn->getPrintName()] == 'NULL') { print "SELECTED"; } ?>><?php putGS("--None--"); ?></OPTION>
+					<OPTION VALUE="NULL" <?php if (!$selected) { print "SELECTED"; } ?>><?php putGS("--None--"); ?></OPTION>
 				</SELECT>
 			</TD>
-			<TD align="left">-&gt; <?php print $destColumn->getDisplayName(); ?></TD>
+			<td>-&gt;</td>
+			<TD align="left"><?php print $destColumn->getDisplayName(); ?></TD>
 		</TR>
 		<?php } ?>
 		</table>

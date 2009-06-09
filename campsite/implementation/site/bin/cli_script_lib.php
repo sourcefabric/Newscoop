@@ -713,7 +713,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     }
 
     // Sets the character set for the database
-    $sql = 'ALTER DATABASE ' . $Campsite['DATABASE_NAME'] . ' CHARACTER SET utf8';
+    $sql = 'ALTER DATABASE `' . $Campsite['DATABASE_NAME'] . '` CHARACTER SET utf8';
     if (!($res = mysql_query($sql))) {
         return "Unable to convert database character set to utf8.";
     }
@@ -731,21 +731,21 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     }
 
     // Deletes data from ArticleIndex and KeywordIndex tables to fix duplicate values
-    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.ArticleIndex';
+    $sql = 'DELETE FROM `' . $Campsite['DATABASE_NAME'] . '`.ArticleIndex';
     if (!($res = mysql_query($sql))) {
         return "Unable to remove article index data.";
     } elseif ($do_log) {
         $log_text .= $sql . "\n";
     }
 
-    $sql = 'DELETE FROM ' . $Campsite['DATABASE_NAME'] . '.KeywordIndex';
+    $sql = 'DELETE FROM `' . $Campsite['DATABASE_NAME'] . '`.KeywordIndex';
     if (!($res = mysql_query($sql))) {
         return "Unable to remove keyword index data.";
     } elseif ($do_log) {
         $log_text .= $sql . "\n";
     }
 
-    $sql = 'UPDATE ' . $Campsite['DATABASE_NAME'] . ".Articles SET IsIndexed = 'N'";
+    $sql = 'UPDATE `' . $Campsite['DATABASE_NAME'] . "`.Articles SET IsIndexed = 'N'";
     if (!($res = mysql_query($sql))) {
         return "Unable to update article table data.";
     } elseif ($do_log) {

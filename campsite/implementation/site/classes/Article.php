@@ -84,7 +84,7 @@ class Article extends DatabaseObject {
 
 	private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'asc'),
                                            array('field'=>'byIssue', 'dir'=>'desc'),
-                                           array('field'=>'bySection', 'dir'=>'desc'),
+                                           array('field'=>'bySection', 'dir'=>'asc'),
                                            array('field'=>'bySectionOrder', 'dir'=>'asc'));
 
     private static $s_regularParameters = array('idpublication'=>'IdPublication',

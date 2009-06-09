@@ -115,7 +115,6 @@ final class CampRequest
     public static function SetVar($p_varName, $p_varValue = null,
                                   $p_reqMethod = 'default', $p_overwrite = true)
     {
-        CampRequest::TranslateMethod($p_reqMethod);
         CampRequest::InitInput($p_reqMethod);
         if (!$p_overwrite && isset(CampRequest::$m_input[$p_reqMethod][$p_varName])) {
             return CampRequest::$m_input[$p_reqMethod][$p_varName];
@@ -123,8 +122,8 @@ final class CampRequest
 
         CampRequest::$m_input[$p_reqMethod][$p_varName] = $p_varValue;
         if ($p_reqMethod == 'DEFAULT') {
-            CampRequest::InitInput('get');
-            CampRequest::InitInput('post');
+            CampRequest::InitInput($method = 'get');
+            CampRequest::InitInput($method = 'post');
             if (!is_null($p_varValue)) {
                 CampRequest::$m_input['GET'][$p_varName] = $p_varValue;
                 CampRequest::$m_input['POST'][$p_varName] = $p_varValue;
@@ -133,7 +132,7 @@ final class CampRequest
                 unset(CampRequest::$m_input['POST'][$p_varName]);
             }
         } else {
-            CampRequest::InitInput('DEFAULT');
+            CampRequest::InitInput($method = 'DEFAULT');
             if (!is_null($p_varValue)) {
                 CampRequest::$m_input['DEFAULT'][$p_varName] = $p_varValue;
             } else {
@@ -151,7 +150,6 @@ final class CampRequest
      */
     public static function GetInput($p_reqMethod = 'default')
     {
-        CampRequest::TranslateMethod($p_reqMethod);
         CampRequest::InitInput($p_reqMethod);
         return CampRequest::$m_input[$p_reqMethod];
     } // fn GetInput
@@ -173,27 +171,27 @@ final class CampRequest
      */
     private static function InitInput(&$p_reqMethod) {
         CampRequest::TranslateMethod($p_reqMethod);
-        switch($p_reqMethod) {
-        case 'GET':
-            $input = &$_GET;
-            break;
-        case 'POST':
-            $input = &$_POST;
-            break;
-        case 'COOKIE':
-            $input = &$_COOKIE;
-            break;
-        case 'FILES':
-            $input = &$_FILES;
-            break;
-        case 'DEFAULT':
-            $input = &$_REQUEST;
-            break;
-        default:
-            return;
-        }
         if (!isset(CampRequest::$m_input[$p_reqMethod])) {
-            require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+        	switch($p_reqMethod) {
+        		case 'GET':
+        			$input = &$_GET;
+        			break;
+        		case 'POST':
+        			$input = &$_POST;
+        			break;
+        		case 'COOKIE':
+        			$input = &$_COOKIE;
+        			break;
+        		case 'FILES':
+        			$input = &$_FILES;
+        			break;
+        		case 'DEFAULT':
+        			$input = &$_REQUEST;
+        			break;
+        		default:
+        			return;
+        	}
+        	require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
             CampRequest::$m_input[$p_reqMethod] = Input::CleanMagicQuotes($input);
         }
     }

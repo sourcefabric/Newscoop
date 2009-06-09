@@ -45,10 +45,13 @@ $ok = true;
 $errMsgs = array();
 
 foreach ($f_src_c as $destColumn => $srcColumn) {
+	if ($srcColumn == 'NULL') {
+		continue;
+	}
 	$destATF = new ArticleTypeField($f_dest, $destColumn);
 	$srcATF = new ArticleTypeField($f_src, $srcColumn);
 
-	if (!$destATF->isConvertibleFrom($srcATF->getType())) {
+	if (!$destATF->isConvertibleFrom($srcATF)) {
         $errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
                             getGS($srcATF->getType()), $srcATF->getDisplayName(),
                             getGS($destATF->getType()), $destATF->getDisplayName());
@@ -396,8 +399,19 @@ if ($ok) {
         			</td>
         			</tr>
         			<?php
+        			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+                        $checked = $srcArticleData->getFieldValue($dbColumn->getPrintName()) ? 'checked' : '';
+                    ?>
+                    <tr>
+                    <TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
+                    </td>
+                    <td align="right"><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:</td>
+                    <td>
+                    <input type="checkbox" <?php echo $checked; ?> class="input_checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" disabled>
+                    </td>
+                    </tr>
+                    <?php
         			}
-
         		} // foreach ($dbColumns as $dbColumn)
         		?>
         			</TABLE>

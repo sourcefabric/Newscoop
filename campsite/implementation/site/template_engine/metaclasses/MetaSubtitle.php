@@ -294,7 +294,7 @@ final class MetaSubtitle {
      */
     public static function ProcessInternalLink(array $p_matches) {
         $parametersString = $p_matches[1];
-        $targetName = $p_matches[4];
+        $targetName = isset($p_matches[4]) ? $p_matches[4] : null;
         preg_match_all('/([\d\w]+)=([\d\w]+)&?/i', $parametersString, $parametersArray);
         $parametersArray = array_combine($parametersArray[1], $parametersArray[2]);
 
