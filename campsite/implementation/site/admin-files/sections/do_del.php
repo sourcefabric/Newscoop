@@ -11,19 +11,31 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_language_id= Input::Get('f_language_id', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_deleteSubscriptions = Input::Get('f_delete_subscriptions', 'string', '', true);
+$f_delete_all_section_translations = Input::Get('f_delete_all_section_translations', 'string', '', true);
+$f_delete_all_articles_translations = Input::Get('f_delete_all_articles_translations', 'string', '', true);
+$f_delete_subscriptions = Input::Get('f_delete_subscriptions', 'string', '', true);
 
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+$sectionName = $sectionObj->getName();
 
 $articles = Article::GetArticles($f_publication_id, $f_issue_number, $f_section_number, $f_language_id);
 $numArticles = count($articles);
 $numSubscriptionsDeleted = 0;
 $numArticlesDeleted = 0;
-$numArticlesDeleted = $sectionObj->delete(true);
+$f_delete_all_section_translations = ($f_delete_all_section_translations == 'Y') ? true : false;
+$f_delete_all_articles_translations = ($f_delete_all_articles_translations == 'Y') ? true : false;
+if ($f_delete_all_section_translations == false) {
+    $numArticlesDeleted = $sectionObj->delete(true, $f_delete_all_articles_translations);
+} else {
+    $sectionTranslations = Section::GetSections($f_publication_id, $f_issue_number, null, null, $sectionObj->getName(), null);
+    foreach ($sectionTranslations as $key => $sectionTranslation) {
+        $numArticlesDeleted += $sectionTranslation->delete(true, $f_delete_all_articles_translations);
+    }
+}
 
-if ($f_deleteSubscriptions != "") {
+if ($f_delete_subscriptions != "") {
     $numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($f_publication_id, $f_section_number);
 }
 
@@ -49,7 +61,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <LI><?php putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionObj->getName()).'</B>'); ?></LI>
+        <LI><?php putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionName).'</B>'); ?></LI>
 		<LI><?php putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
 		<LI><?php putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
         </BLOCKQUOTE>

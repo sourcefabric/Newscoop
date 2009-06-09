@@ -18,6 +18,7 @@ $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
+$sectionTranslations = Section::GetSections($f_publication_id, $f_issue_number, null, null, $sectionObj->getName(), null);
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS('Delete section'), $topArray);
 
@@ -33,6 +34,26 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center"><?php putGS('There are $1 articles in this section.', '<b>'.$numArticles.'</b>'); ?></TD>
+</TR>
+<TR>
+	<TD COLSPAN="2" align="center">
+                <INPUT TYPE="radio" NAME="f_delete_all_section_translations" class="input_checkbox" value="N" checked> <?php putGS('Delete only this section ($1)', $sectionObj->getLanguageName()); ?>
+                <br/>
+                <INPUT TYPE="radio" NAME="f_delete_all_section_translations" class="input_checkbox" value="Y"> <?php putGS('Delete all translations of this section'); ?>
+                <br />
+                <?php
+                foreach ($sectionTranslations as $key => $sectionTranslation) {
+                    echo $sectionTranslation->getLanguageName() . '<br />';
+                }
+                ?>
+        </TD>
+</TR>
+<TR>
+	<TD COLSPAN="2" align="center">
+                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="N" checked> <?php putGS('Delete all articles in this section\'s language ($1)', $sectionObj->getLanguageName()); ?>
+                <br/>
+                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="Y"> <?php putGS('Delete all articles and all of their translations '); ?>
+        </TD>
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
