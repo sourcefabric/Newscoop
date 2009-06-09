@@ -73,7 +73,7 @@ camp_html_display_msgs();
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Code"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_code" SIZE="2" MAXLENGTH="2" alt="length|2|2" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_code" SIZE="6" MAXLENGTH="6" alt="length|2|6" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
 	</TD>
 </TR>
 <TR>
