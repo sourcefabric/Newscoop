@@ -91,6 +91,7 @@ class ArticleType {
 			}
 		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
+            CampCache::singleton()->clear('user');
 		} else {
 			$queryStr = "DROP TABLE `" . $this->m_dbTableName . "`";
 			$result = $g_ado_db->Execute($queryStr);

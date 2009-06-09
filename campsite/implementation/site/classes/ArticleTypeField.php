@@ -133,6 +133,7 @@ class ArticleTypeField extends DatabaseObject {
 			}
 			$logtext = getGS('Article type field $1 created', $this->m_data['field_name']);
 			Log::Message($logtext, null, 71);
+            CampCache::singleton()->clear('user');
 		}
 		return $success;
 	} // fn create
@@ -315,6 +316,7 @@ class ArticleTypeField extends DatabaseObject {
 			}
 			$logtext = getGS('Article type field $1 deleted', $this->m_data['field_name']);
 			Log::Message($logtext, null, 72);
+            CampCache::singleton()->clear('user');
 		}
 		return $success;
 	} // fn delete
