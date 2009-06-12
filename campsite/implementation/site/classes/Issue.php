@@ -72,9 +72,9 @@ class Issue extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-	    	$logtext = getGS('Issue $1 added in publication $2',
-	    					 $this->m_data['Name']." (".$this->m_data['Number'].")",
-	    					 $this->m_data['IdPublication']);
+	    	$logtext = getGS('Issue "$1" ($2) added in publication $3',
+				 $this->m_data['Name'], $this->m_data['Number'],
+				 $this->m_data['IdPublication']);
     		Log::Message($logtext, null, 11);
 	    }
 	    return $success;
@@ -90,29 +90,31 @@ class Issue extends DatabaseObject {
 	 */
 	public function delete($p_deleteSections = true, $p_deleteArticles = true)
 	{
-		global $g_ado_db;
+	    global $g_ado_db;
 
-		// Delete all scheduled publishing events
+	    // Delete all scheduled publishing events
 	    IssuePublish::OnIssueDelete($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
 
-		$articlesDeleted = 0;
-		if ($p_deleteSections) {
-    		$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
+	    $articlesDeleted = 0;
+	    if ($p_deleteSections) {
+	        $sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
     		foreach ($sections as $section) {
-    		    $articlesDeleted += $section->delete($p_deleteArticles);
+		    $articlesDeleted += $section->delete($p_deleteArticles);
     		}
-		}
+	    }
+
+	    $tmpData = $this->m_data;
 	    $success = parent::delete();
 	    if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-	    	$logtext = getGS('Issue $1 from publication $2 deleted',
-	    		$this->m_data['Name']." (".$this->m_data['Number'].")",
-	    		$this->m_data['IdPublication']);
-			Log::Message($logtext, null, 12);
+	        if (function_exists("camp_load_translation_strings")) {
+		    camp_load_translation_strings("api");
+		}
+	    	$logtext = getGS('Issue "$1" ($2) from publication $3 deleted',
+				 $tmpData['Name'], $tmpData['Number'],
+				 $tmpData['IdPublication']);
+		Log::Message($logtext, null, 12);
 	    }
-		return $articlesDeleted;
+	    return $articlesDeleted;
 	} // fn delete
 
 
@@ -134,7 +136,7 @@ class Issue extends DatabaseObject {
     	$columns['ArticleTplId'] = $this->m_data['ArticleTplId'];
         $created = $newIssue->create($p_destIssueId, $columns);
         if ($created) {
-        	// Copy the sections in the issue
+	    // Copy the sections in the issue
             $sections = Section::GetSections($this->m_data['IdPublication'],
                 							 $this->m_data['Number'],
                 							 $this->m_data['IdLanguage']);
@@ -443,8 +445,8 @@ class Issue extends DatabaseObject {
 				camp_load_translation_strings("api");
 			}
 			$logtext = getGS('Issue $1 changed status to $2',
-							 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
-							 $status);
+					 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
+					 $status);
 			Log::Message($logtext, null, 14);
 		}
 	} // fn setWorkflowStatus

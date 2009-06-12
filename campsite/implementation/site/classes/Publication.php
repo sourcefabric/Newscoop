@@ -71,7 +71,7 @@ class Publication extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Publication $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			$logtext = getGS('Publication "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
 			Log::Message($logtext, null, 1);
 		}
 		return $created;
@@ -97,7 +97,7 @@ class Publication extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Publication $1 changed', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			$logtext = getGS('Publication "$1" ($2) changed', $this->m_data['Name'], $this->m_data['Id']);
 			Log::Message($logtext, null, 3);
 		}
 		return $updated;
@@ -117,12 +117,13 @@ class Publication extends DatabaseObject {
 				$alias->delete();
 			}
 		}
+		$tmpData = $this->m_data;
 		$deleted = parent::delete();
 		if ($deleted) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Publication $1 deleted', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			$logtext = getGS('Publication "$1" ($2) deleted', $tmpData['Name'], $tmpData['Id']);
 			Log::Message($logtext, null, 2);
 		}
 		return $deleted;

@@ -81,6 +81,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Event"); ?></B></TD>
 	<?php  } ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("Description"); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"  ><B><?php  putGS("User IP Address"); ?></B></TD>
 </TR>
 <?php
 	$color=0;
@@ -106,6 +107,9 @@ echo camp_html_breadcrumbs($crumbs);
 		<TD>
 			<?php  p(htmlspecialchars($entry->getText())); ?>
 		</TD>
+                <TD>
+                        <?php  p(htmlspecialchars($entry->getClientIP())); ?>
+                </TD>
 	</TR>
 <?php
 }

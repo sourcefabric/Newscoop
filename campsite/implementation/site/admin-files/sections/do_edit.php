@@ -98,8 +98,8 @@ if (!camp_html_has_msgs()) {
 		$modified &= $sectionObj->setUrlName($cShortName);
 		camp_html_add_msg(getGS("Section updated"), "ok");
 	}
-	$logtext = getGS('Section #$1 "$2" updated. (Publication: $3, Issue: $4)',
-    				 $Issue, $cName, $publicationObj->getPublicationId(), $issueObj->getIssueNumber());
+	$logtext = getGS('Section "$1" ($2) updated. (Publication: $3, Issue: $4)',
+			 $cName, $Section, $publicationObj->getPublicationId(), $issueObj->getIssueNumber());
 	Log::Message($logtext, $g_user->getUserId(), 21);
 }
 camp_html_goto_page($editUrl);

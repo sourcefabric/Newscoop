@@ -8,6 +8,7 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 /**
  * @package Campsite
@@ -50,6 +51,8 @@ class Attachment extends DatabaseObject {
 		// Delete the description
 		Translation::deletePhrase($this->m_data['fk_description_id']);
 
+		$tmpData = $this->m_data;
+
 		// Delete the record in the database
 		$success = parent::delete();
 
@@ -59,6 +62,8 @@ class Attachment extends DatabaseObject {
 			unlink($file);
 		}
 
+		$logtext = getGS('File #$1 "$2" deleted.', $tmpData['id'], $tmpData['file_name']);
+		Log::Message($logtext, null, 39);
 		return $success;
 	} // fn delete
 

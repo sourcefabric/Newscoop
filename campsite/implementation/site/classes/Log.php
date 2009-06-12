@@ -20,7 +20,8 @@ class Log extends DatabaseObject {
 		'time_created',
 		'fk_event_id',
 		'fk_user_id',
-		'text');
+		'text',
+		'user_ip');
 
 
 	/**
@@ -48,7 +49,8 @@ class Log extends DatabaseObject {
 					." time_created=NOW(), "
 					." fk_event_id=$p_eventId,"
 					." fk_user_id=$p_userId, "
-					." text='".mysql_real_escape_string($p_text)."'";
+					." text='".mysql_real_escape_string($p_text)."',"
+		                        ." user_ip=INET_ATON('".$_SERVER['REMOTE_ADDR']."')";
 		$g_ado_db->Execute($queryStr);
 	} // fn Message
 
@@ -81,6 +83,12 @@ class Log extends DatabaseObject {
 	{
 		return $this->m_data['fk_event_id'];
 	} // fn getEventId
+
+
+	public function getClientIP()
+	{
+	    return $this->m_data['user_ip_addr'];
+	}
 
 
 	/**
@@ -116,11 +124,12 @@ class Log extends DatabaseObject {
 		$tmpLog = new Log();
 		$columns = $tmpLog->getColumnNames(true);
 		$queryStr = "SELECT ".implode(", ", $columns)
-					.", liveuser_users.Name as full_name"
-                    .", liveuser_users.UName as user_name"
-					." FROM Log"
-					." LEFT JOIN liveuser_users"
-                    ." ON Log.fk_user_id = liveuser_users.Id";
+		    .", INET_NTOA(Log.user_ip) AS user_ip_addr"
+		    .", liveuser_users.Name as full_name"
+		    .", liveuser_users.UName as user_name"
+		    ." FROM Log"
+		    ." LEFT JOIN liveuser_users"
+		    ." ON Log.fk_user_id = liveuser_users.Id";
 		if (!is_null($p_eventId)) {
 			$queryStr .= " WHERE Log.fk_event_id=$p_eventId";
 		}

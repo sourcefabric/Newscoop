@@ -53,7 +53,7 @@ $changed &= $issueObj->setSectionTemplateId($f_section_template_id);
 $changed &= $issueObj->setArticleTemplateId($f_article_template_id);
 
 if ($changed) {
-	$logtext = getGS('Issue $1 updated in publication $2', $f_issue_name, $publicationObj->getName());
+        $logtext = getGS('Issue "$1" ($2) updated in publication "$3"', $f_issue_name, $f_issue_number, $publicationObj->getName());
 	Log::Message($logtext, $g_user->getUserId(), 11);
 } else {
 	$errMsg = getGS("Could not save the changes to the issue.");

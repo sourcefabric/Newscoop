@@ -511,7 +511,7 @@ class Article extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Article #$1 "$2" ($3) translated to "$5" ($4)',
+		$logtext = getGS('Article #$1 "$2" ($3) translated to "$4" ($5)',
 			$this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(),
 			$articleCopy->getTitle(), $articleCopy->getLanguageName());
 		Log::Message($logtext, null, 31);
@@ -569,18 +569,20 @@ class Article extends DatabaseObject {
 			$this->m_data['IdLanguage']);
 		$articleData->delete();
 
-        // Delete row from Articles table.
-        $deleted = parent::delete();
+		$tmpData = $this->m_data;
+		$tmpData['languageName'] = $this->getLanguageName();
+		// Delete row from Articles table.
+		$deleted = parent::delete();
 
 		if ($deleted) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article #$1: "$2" ($3) deleted.',
-				$this->m_data['Number'], $this->m_data['Name'],	$this->getLanguageName())
-				." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
-				." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
-				." ".getGS("Section")." ".$this->m_data['NrSection'].")";
+			$logtext = getGS('Article #$1 "$2" ($3) deleted.',
+				$tmpData['Number'], $tmpData['Name'],	$tmpData['languageName'])
+				." (".getGS("Publication")." ".$tmpData['IdPublication'].", "
+				." ".getGS("Issue")." ".$tmpData['NrIssue'].", "
+				." ".getGS("Section")." ".$tmpData['NrSection'].")";
 			Log::Message($logtext, null, 32);
 		}
 		return $deleted;
@@ -1265,7 +1267,7 @@ class Article extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 		    camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Article #$1: "$2" status changed from $3 to $4.',
+		$logtext = getGS('Article #$1 "$2" status changed from $3 to $4.',
 			$this->m_data['Number'], $this->m_data['Name'],
 			$this->getWorkflowDisplayString(), $this->getWorkflowDisplayString($p_value))
 			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "

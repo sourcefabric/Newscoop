@@ -63,7 +63,7 @@ if ($correct) {
 	$dstIssueObj = new Issue($f_dest_publication_id, $f_language_id, $f_dest_issue_number);
 	$created = true;
 	// Record the event in the log.
-    $logtext = getGS('Section $1 has been duplicated to $2. $3 of $4',
+    $logtext = getGS('Section "$1" has been duplicated to $2. "$3" of "$4"',
                      $dstSectionObj->getName(), $f_dest_issue_number, $dstIssueObj->getName(),
                      $dstPublicationObj->getName());
     Log::Message($logtext, $g_user->getUserId(), 154);

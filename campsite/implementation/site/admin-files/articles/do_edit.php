@@ -1,8 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/ArticleComment.php");
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_content_lib.php");
-
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -142,7 +140,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 	$articleTypeObj->setProperty($dbColumnName, $text);
 }
 
-$logtext = getGS('Article content edited for "$1" (Publication: $2, Issue: $3, Section: $4, Language: $5)', $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
+$logtext = getGS('Content edited for article #$1: "$2" (Publication: $3, Issue: $4, Section: $5, Language: $6)', $articleObj->getArticleNumber(), $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
 Log::Message($logtext, $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {

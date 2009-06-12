@@ -48,9 +48,15 @@ if (!is_writable(dirname($filePath))) {
 	exit;
 }
 ArticleAttachment::RemoveAttachmentFromArticle($f_attachment_id, $f_article_number);
+$logtext = getGS('File #$1 "$2" unattached from article #$3 "$4"',
+		 $attachmentObj->getAttachmentId(), $attachmentObj->getFileName(),
+		 $articleObj->getArticleNumber(), $articleObj->getName());
+Log::Message($logtext, null, 39);
+
+$attachmentFileName = $attachmentObj->getFileName();
 $attachmentObj->delete();
 
 // Go back to article.
-camp_html_add_msg(getGS("File '$1' deleted.", $attachmentObj->getFileName()), "ok");
+camp_html_add_msg(getGS("File '$1' deleted.", $attachmentFileName), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 ?>
