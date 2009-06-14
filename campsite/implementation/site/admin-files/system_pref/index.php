@@ -286,11 +286,11 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
 	<td colspan="2"><hr></td>
 </tr>
 <tr>
-    <td colspan="2" align="left">
-        <?php putGS("Filter templates?"); ?>
-        <input type="checkbox" name="f_filter_hidden" value="Y" <?php if (SystemPref::Get("TemplateFilterHidden") == 'Y') p("checked"); ?> /> <?php putGS("Hidden files/folders"); ?>
-        <input type="checkbox" name="f_filter_svn" value="Y" <?php if (SystemPref::Get("TemplateFilterSVN") == 'Y') p("checked"); ?> /> <?php putGS(".svn folders"); ?>
-        <input type="checkbox" name="f_filter_cvs" value="Y" <?php if (SystemPref::Get("TemplateFilterCVS") == 'Y') p("checked"); ?> /> <?php putGS("CVS folders"); ?>
+    <td align="left">
+        <?php putGS("Templates filter mask (separated by comma)"); ?>
+    </td>
+    <td>
+        <input type="text" name="f_template_filter" value="<?php p(SystemPref::Get("TemplateFilter")) ?>" maxlenght="50" size="30" class="input_text"/>
     </td>
 </tr>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?> 

@@ -437,18 +437,12 @@ class Template extends DatabaseObject {
 		if ($p_update) {
 			Template::UpdateStatus();
 		}
-		$queryStr = 'SELECT * FROM Templates WHERE 1';
+		$queryStr = 'SELECT * FROM Templates';
 		
-		if (SystemPref::Get('TemplateFilterHidden') == 'Y') {		    
-		  $queryStr .= ' AND Name NOT REGEXP "(^\\\\.)|(/\\\\.)" ';    
-		} elseif (SystemPref::Get('TemplateFilterSVN') == 'Y') {		    
-		  $queryStr .= ' AND Name NOT REGEXP "(^\\\\.)|(/\\\\.)" ';    
+		if ($rexeg = Template::GetTemplateFilterRegex(true)) {
+            $queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
 		}
-		
-		if (SystemPref::Get('TemplateFilterCVS') == 'Y') {		    
-		  $queryStr .= ' AND Name NOT REGEXP "CVS/" ';    
-		}
-		
+		    
 		if (!is_null($p_sqlOptions)) {
 			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
 		} else {
@@ -563,6 +557,48 @@ class Template extends DatabaseObject {
 		}
 		return false;
 	} // fn move
+	
+	/**
+	 * Return an regular expression to filter template lists
+	 *
+	 * @param boolean $p_sql indicates usage for sql query
+	 * @return string
+	 */
+	static public function GetTemplateFilterRegex($p_sql = false) {
+	 	$filters = array();
+	 	
+		if ($filterStr = SystemPref::Get('TemplateFilter')) {
+		  foreach (explode(',', $filterStr) as $filter) {
+		      
+		       
+
+    		      
+    		   if ($p_sql) {
+    		      $filter = preg_quote(trim($filter), '/');       // quote the filter
+    		      $filter = str_replace('\\', '\\\\', $filter);
+    		      $filter = str_replace('\\*', '.*', $filter);    // * becomes .*
+    		      $filter = str_replace('\\?', '.', $filter);     //  becomes . 
+    		      $filter1 = "(^$filter$)";
+    		      $filters[] = $filter1;
+    		      $filter2 = "(/$filter$)";
+    		      $filters[] = $filter2;
+    		      $filter1 = "(^$filter/)";
+    		      $filters[] = $filter1;
+    		      $filter2 = "(/$filter/)";
+    		      $filters[] = $filter2;
+		      } else {
+		          $filter = preg_quote(trim($filter), '/');   // quote the filter
+		          $filter = str_replace('\\*', '.*', $filter); // * becomes .*
+		          $filter = str_replace('\\?', '.', $filter);     //  becomes . 
+    		      $filter = "(^$filter$)";
+    		      $filters[] = $filter;
+		      }
+		  }   
+		}
+		$filterRegex = implode('|', $filters);
+
+		return $filterRegex;
+	}
 
 } // class Template
 

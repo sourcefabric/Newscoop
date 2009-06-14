@@ -38,9 +38,7 @@ $f_external_subs_management = Input::Get('f_external_subs_management');
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
 	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
-$f_filter_hidden = Input::Get('f_filter_hidden', 'N', 'string', true);
-$f_filter_svn = Input::Get('f_filter_svn', 'N', 'string', true);
-$f_filter_cvs = Input::Get('f_filter_cvs', 'N', 'string', true);
+$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -147,10 +145,8 @@ if ($f_use_campcaster == 'Y') {
     SystemPref::Set("UseCampcasterAudioclips", 'N');
 }
 
-// template filters
-SystemPref::Set("TemplateFilterHidden", $f_filter_hidden);
-SystemPref::Set("TemplateFilterCVS", $f_filter_cvs);
-SystemPref::Set("TemplateFilterSVN", $f_filter_svn);
+// template filter
+SystemPref::Set("TemplateFilter", $f_template_filter);
 
 $logtext = getGS('System preferences updated');
 Log::Message($logtext, $g_user->getUserId(), 171);

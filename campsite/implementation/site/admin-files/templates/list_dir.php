@@ -153,18 +153,15 @@ if(isset($files) && is_array($files)) {
 		if (empty($currentFolder)) {
 			$currentFolder = "/";
 		}
+		
+		$filterRegex = Template::GetTemplateFilterRegex();
+		
 		if (isset($dirs)) {
 			sort($dirs);
 			$color = 0;
 			foreach ($dirs as $dirname) {
-			    // filter folders
-				if (SystemPref::Get('TemplateFilterHidden') == 'Y' && preg_match('/(^\.)|(\/\.)/', $dirname)) {
-			         continue;   
-			    } elseif (SystemPref::Get('TemplateFilterSVN') == 'Y' && preg_match('/(^\.svn)|(\/\.svn)/', $dirname)) {
-			         continue;   
-			    }
-			    
-			    if (SystemPref::Get('TemplateFilterCVS') == 'Y' && preg_match('/(^CVS)|(\/CVS)/', $dirname)) {
+			    // filter folders			    
+			    if (strlen($filterRegex) && preg_match("/$filterRegex/", $dirname)) {
 			         continue;   
 			    }
 			    
