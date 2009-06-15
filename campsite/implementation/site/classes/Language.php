@@ -58,8 +58,7 @@ class Language extends DatabaseObject {
 	    		$this->delete(false);
 	    		return $result;
 	    	}
-// We use htaccess files instead of links
-//	    	Language::CreateLanguageLinks();
+            CampCache::singleton()->clear('user');
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -81,6 +80,10 @@ class Language extends DatabaseObject {
 	public function update($p_values = null, $p_commit = true, $p_isSql = false)
 	{
 		$success = parent::update($p_values, $p_commit, $p_isSql);
+		if (!$success) {
+			return false;
+		}
+		CampCache::singleton()->clear('user');
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
@@ -109,6 +112,7 @@ class Language extends DatabaseObject {
 		}
 		$success = parent::delete();
 		if ($success) {
+            CampCache::singleton()->clear('user');
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
