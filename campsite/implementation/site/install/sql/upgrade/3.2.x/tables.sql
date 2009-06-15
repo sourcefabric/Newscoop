@@ -13,6 +13,6 @@ CREATE TABLE `Enumerations` (
 CREATE TABLE `EnumerationElements` (
   `fk_enumeration_id` int(10) unsigned NOT NULL,
   `element_id` int(10) unsigned NOT NULL,
-  `phrase_id` int(10) unsigned NOT NULL,
+  `fk_phrase_id` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`fk_enumeration_id`, `element_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
