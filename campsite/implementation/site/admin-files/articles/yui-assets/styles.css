@@ -1,12 +1,13 @@
 div#yui-connection-container {display:none;}
-div#yui-connection-message {
+div#yui-connection-message, div#yui-connection-error {
     padding-top: 0.25em;
     padding-bottom: 0.25em;
     padding-left: 0.75em;
     font-size: 14pt;
     font-weight: bold;
-    color: green;
 }
+div#yui-connection-message { color: green; }
+div#yui-connection-error { color: red; }
 div#yui-saved-box{
     background-color: #00CB38;
     color: #FFF;

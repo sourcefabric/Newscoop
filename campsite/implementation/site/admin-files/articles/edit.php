@@ -278,6 +278,7 @@ if ($f_edit_mode == "edit") { ?>
 
 <div id="yui-connection-container"></div>
 <div id="yui-connection-message"></div>
+<div id="yui-connection-error"></div>
 
 <table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
 <tr>
@@ -1086,6 +1087,7 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
 <script>
 var resp = document.getElementById('yui-connection-container');
 var mesg = document.getElementById('yui-connection-message');
+var emsg = document.getElementById('yui-connection-error');
 var saved = document.getElementById('yui-connection-saved');
 
 YAHOO.namespace("example.container");
@@ -1144,28 +1146,30 @@ var handleSuccess = function(o){
 	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
 	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
 
+	mesg.style.display = 'inline';
 	document.getElementById('yui-saved').style.display = 'none';
 	var savedTime = makeSavedTime();
 	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
 	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
+	emsg.style.display = 'none' ;
 	YAHOO.example.container.wait.hide();
 	
     }
 };
 
 var handleFailure = function(o){
-    if(o.responseText !== undefined){
-        resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
-	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
-	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
-	YAHOO.example.container.wait.hide();
+    if(o.status == 0 || o.status == -1) {
+        mesg.style.display = 'none';
+        emsg.style.display = 'inline';
+        emsg.innerHTML = '<?php putGS("Unable to reach Campsite. Please check your internet connection."); ?>';
+        YAHOO.example.container.wait.hide();
     }
 };
 
 var callback =
 {
-    success:handleSuccess,
-    failure:handleFailure
+    success: handleSuccess,
+    failure: handleFailure
 };
 
 
@@ -1263,6 +1267,7 @@ function makeRequest(a){
     YAHOO.example.container.wait.show();
 
     var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, callback, postData);
+    setTimeout(function() { YAHOO.util.Connect.abort(request, callback) }, 30000);
 
     if (a == "all") {
         <?php
