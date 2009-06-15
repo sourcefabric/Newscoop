@@ -9,7 +9,7 @@ $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true)
 
 $loginLanguageId = 0;
 $loginLanguage = Language::GetLanguages(null, camp_session_get('TOL_Language', 'en'), null, array(), array(), true);
-if (is_array($loginLanguage)) {
+if (is_array($loginLanguage) && count($loginLanguage) > 0) {
 	$loginLanguage = array_pop($loginLanguage);
 	$loginLanguageId = $loginLanguage->getLanguageId();
 }
