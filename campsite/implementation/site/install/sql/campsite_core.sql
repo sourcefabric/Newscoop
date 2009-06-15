@@ -1,8 +1,8 @@
 -- MySQL dump 10.11
 --
--- Host: localhost    Database: campsite32
+-- Host: localhost    Database: campsite33
 -- ------------------------------------------------------
--- Server version	5.0.67-0ubuntu6
+-- Server version	5.0.75-0ubuntu10.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -267,6 +267,7 @@ CREATE TABLE `ArticleTypeMetadata` (
   `field_type` varchar(255) default NULL,
   `field_type_param` varchar(255) default NULL,
   `is_content_field` tinyint(1) NOT NULL default '0',
+  `max_size` int(10) unsigned default NULL,
   PRIMARY KEY  (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -519,6 +520,54 @@ SET character_set_client = @saved_cs_client;
 LOCK TABLES `Dictionary` WRITE;
 /*!40000 ALTER TABLE `Dictionary` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Dictionary` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EnumerationElements`
+--
+
+DROP TABLE IF EXISTS `EnumerationElements`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `EnumerationElements` (
+  `fk_enumeration_id` int(10) unsigned NOT NULL,
+  `element_id` int(10) unsigned NOT NULL,
+  `phrase_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`fk_enumeration_id`,`element_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `EnumerationElements`
+--
+
+LOCK TABLES `EnumerationElements` WRITE;
+/*!40000 ALTER TABLE `EnumerationElements` DISABLE KEYS */;
+/*!40000 ALTER TABLE `EnumerationElements` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Enumerations`
+--
+
+DROP TABLE IF EXISTS `Enumerations`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `Enumerations` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `name` char(128) NOT NULL default '',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Enumerations`
+--
+
+LOCK TABLES `Enumerations` WRITE;
+/*!40000 ALTER TABLE `Enumerations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Enumerations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -802,6 +851,7 @@ CREATE TABLE `Log` (
   `fk_event_id` int(10) unsigned NOT NULL default '0',
   `fk_user_id` int(10) unsigned default NULL,
   `text` varchar(255) NOT NULL default '',
+  `user_ip` int(10) unsigned default NULL,
   KEY `IdEvent` (`fk_event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -1160,7 +1210,7 @@ CREATE TABLE `SystemPreferences` (
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `varname` (`varname`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -1169,7 +1219,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES ( 1, 'ExternalSubscriptionManagement', 'N', '2007-03-07 07:15:36' ) , ( 2, 'KeywordSeparator', ',', '2007-03-07 07:15:36' ) , ( 3, 'LoginFailedAttemptsNum', '3', '2007-06-16 04:52:31' ) , ( 4, 'MaxUploadFileSize', '16M', '2007-10-04 22:16:54' ) , ( 5, 'UseDBReplication', 'N', '2007-03-07 07:15:36' ) , ( 6, 'DBReplicationHost', '', '2007-03-07 07:15:36' ) , ( 7, 'DBReplicationUser', '', '2007-03-07 07:15:36' ) , ( 8, 'DBReplicationPass', '', '2007-03-07 07:15:36' ) , ( 9, 'DBReplicationPort', '3306', '2007-03-07 07:15:36' ) , ( 10, 'UseCampcasterAudioclips', 'N', '2007-03-07 07:15:36' ) , ( 11, 'CampcasterHostName', 'localhost', '2007-03-07 07:15:36' ) , ( 12, 'CampcasterHostPort', '80', '2007-03-07 07:15:36' ) , ( 13, 'CampcasterXRPCPath', '/campcaster/storageServer/var/xmlrpc', '2007-03-07 07:15:36' ) , ( 14, 'CampcasterXRPCFile', 'xrLocStor.php', '2007-03-07 07:15:36' ) , ( 15, 'SiteOnline', 'Y', '2007-10-07 01:49:11' ) , ( 16, 'SiteCharset', 'utf-8', '2007-07-26 04:49:32' ) , ( 17, 'SiteLocale', 'en-US', '2007-07-26 04:49:56' ) , ( 18, 'SiteCacheEnabled', 'N', '2009-01-16 20:40:12' ) , ( 22, 'SiteMetaKeywords', 'Campsite, MDLF, Campware, CMS, OpenSource, Media', '2007-10-05 01:3 1:36' ) , ( 19, 'SiteSecretKey', '4b506c2968184be185f6282f5dcac832', '2007-10-04 20:51:41' ) , ( 20, 'SiteSessionLifeTime', '1400', '2007-10-04 20:51:51' ) , ( 21, 'SiteTitle', 'Campsite 3.2', '2008-06-27 14:06:50' ) , ( 23, 'SiteMetaDescription', 'Campsite 3.2 site, try it out!', '2008-06-27 14:06:50' ) , ( 24, 'SMTPHost', 'localhost', '2007-10-26 01:30:45' ) , ( 25, 'SMTPPort', '25', '2007-10-26 01:30:45' ) , ( 26, 'CacheEngine', 'APC', '2009-05-18 11:02:06' ) , ( 27, 'EditorImageRatio', '100', '2009-06-01 19:09:49' ) , ( 28, 'TemplateFilter', '.*, CVS', '2009-06-04 17:19:52');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','N','2009-01-16 20:40:12'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite 3.2','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite 3.2 site, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'CacheEngine','APC','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1889,40 +1939,40 @@ SET character_set_client = utf8;
 CREATE TABLE `liveuser_users` (
   `Id` int(10) unsigned NOT NULL auto_increment,
   `KeyId` int(10) unsigned default NULL,
-  `Name` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
-  `UName` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
-  `Password` varchar(64) character set utf8 collate utf8_bin NOT NULL default '',
-  `EMail` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
-  `Reader` enum('Y','N') character set utf8 collate utf8_bin NOT NULL default 'Y',
+  `Name` varchar(255) NOT NULL default '',
+  `UName` varchar(70) NOT NULL default '',
+  `Password` varchar(64) NOT NULL default '',
+  `EMail` varchar(255) NOT NULL default '',
+  `Reader` enum('Y','N') NOT NULL default 'Y',
   `fk_user_type` int(10) unsigned default NULL,
-  `City` varchar(100) character set utf8 collate utf8_bin NOT NULL default '',
-  `StrAddress` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
-  `State` varchar(32) character set utf8 collate utf8_bin NOT NULL default '',
-  `CountryCode` varchar(21) character set utf8 collate utf8_bin default NULL,
-  `Phone` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
-  `Fax` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
-  `Contact` varchar(64) character set utf8 collate utf8_bin NOT NULL default '',
-  `Phone2` varchar(20) character set utf8 collate utf8_bin NOT NULL default '',
-  `Title` enum('Mr.','Mrs.','Ms.','Dr.') character set utf8 collate utf8_bin NOT NULL default 'Mr.',
-  `Gender` enum('M','F') character set utf8 collate utf8_bin default NULL,
-  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') character set utf8 collate utf8_bin NOT NULL default '0-17',
-  `PostalCode` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
-  `Employer` varchar(140) character set utf8 collate utf8_bin NOT NULL default '',
-  `EmployerType` varchar(140) character set utf8 collate utf8_bin NOT NULL default '',
-  `Position` varchar(70) character set utf8 collate utf8_bin NOT NULL default '',
+  `City` varchar(100) NOT NULL default '',
+  `StrAddress` varchar(255) NOT NULL default '',
+  `State` varchar(32) NOT NULL default '',
+  `CountryCode` varchar(21) default NULL,
+  `Phone` varchar(20) NOT NULL default '',
+  `Fax` varchar(20) NOT NULL default '',
+  `Contact` varchar(64) NOT NULL default '',
+  `Phone2` varchar(20) NOT NULL default '',
+  `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL default 'Mr.',
+  `Gender` enum('M','F') default NULL,
+  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL default '0-17',
+  `PostalCode` varchar(70) NOT NULL default '',
+  `Employer` varchar(140) NOT NULL default '',
+  `EmployerType` varchar(140) NOT NULL default '',
+  `Position` varchar(70) NOT NULL default '',
   `Interests` mediumblob NOT NULL,
-  `How` varchar(255) character set utf8 collate utf8_bin NOT NULL default '',
-  `Languages` varchar(100) character set utf8 collate utf8_bin NOT NULL default '',
+  `How` varchar(255) NOT NULL default '',
+  `Languages` varchar(100) NOT NULL default '',
   `Improvements` mediumblob NOT NULL,
-  `Pref1` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
-  `Pref2` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
-  `Pref3` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
-  `Pref4` enum('N','Y') character set utf8 collate utf8_bin NOT NULL default 'N',
-  `Field1` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
-  `Field2` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
-  `Field3` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
-  `Field4` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
-  `Field5` varchar(150) character set utf8 collate utf8_bin NOT NULL default '',
+  `Pref1` enum('N','Y') NOT NULL default 'N',
+  `Pref2` enum('N','Y') NOT NULL default 'N',
+  `Pref3` enum('N','Y') NOT NULL default 'N',
+  `Pref4` enum('N','Y') NOT NULL default 'N',
+  `Field1` varchar(150) NOT NULL default '',
+  `Field2` varchar(150) NOT NULL default '',
+  `Field3` varchar(150) NOT NULL default '',
+  `Field4` varchar(150) NOT NULL default '',
+  `Field5` varchar(150) NOT NULL default '',
   `Text1` mediumblob NOT NULL,
   `Text2` mediumblob NOT NULL,
   `Text3` mediumblob NOT NULL,
@@ -2542,4 +2592,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-02-27 12:03:42
+-- Dump completed on 2009-06-15 17:22:00
