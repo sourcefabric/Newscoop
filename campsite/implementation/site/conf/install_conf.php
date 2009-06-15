@@ -53,7 +53,7 @@ $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
 $Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.2/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
-$Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
+$Campsite['SUPPORT_EMAIL'] = 'campsite-support@campware.org';
 $Campsite['DEBUG'] = true;
 
 require_once($Campsite['CAMPSITE_DIR'].'/template_engine/classes/CampVersion.php');
