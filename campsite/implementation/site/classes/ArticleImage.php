@@ -247,7 +247,7 @@ class ArticleImage extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Image $1 unlinked from $2', $p_imageId, $p_articleNumber);
+		$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
 		Log::Message($logtext, null, 42);
 	} // fn RemoveImageFromArticle
 

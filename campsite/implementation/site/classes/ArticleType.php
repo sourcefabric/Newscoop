@@ -89,7 +89,7 @@ class ArticleType {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-		    $logtext = getGS('The article type $1 has been added.', $this->m_name);
+		    $logtext = getGS('The article type "$1" has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
             CampCache::singleton()->clear('user');
 		} else {
@@ -135,7 +135,7 @@ class ArticleType {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('The article type $1 has been deleted.', $this->m_name);
+			$logtext = getGS('The article type "$1" has been deleted.', $this->m_name);
 			Log::Message($logtext, null, 62);
 		}
 	} // fn delete
@@ -181,7 +181,7 @@ class ArticleType {
             if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logText = getGS('The article type $1 has been renamed to $2.', $oldName, $p_newName);
+			$logText = getGS('The article type "$1" has been renamed to "$2".', $oldName, $p_newName);
 			Log::Message($logText, null, 62);
 		} else {
             $queryStr = "RENAME TABLE `X$p_newName` TO `" . $this->m_dbTableName . "`";
@@ -239,7 +239,7 @@ class ArticleType {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type $1 translation updated', $this->m_name);
+			$logtext = getGS('Article type "$1" translation updated', $this->m_name);
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;

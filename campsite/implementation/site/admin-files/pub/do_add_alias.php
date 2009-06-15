@@ -35,7 +35,7 @@ if ($correct) {
 		$newAlias = new Alias();
 		$created = $newAlias->create(array('Name' => "$cName", "IdPublication" => "$cPub"));
 		if ($created) {
-			$logtext = getGS('The site alias $1 has been added to publication $2.',
+			$logtext = getGS('The site alias "$1" has been added to publication "$2".',
 						$cName, $publicationObj->getName());
 			Log::Message($logtext, $g_user->getUserId(), 151);
 			camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$cPub");

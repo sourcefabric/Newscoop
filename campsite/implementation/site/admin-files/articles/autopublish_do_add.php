@@ -107,6 +107,8 @@ foreach ($articles as $tmpArticle) {
 	if ($f_section_page_action == "S" || $f_section_page_action == "R") {
 		$articlePublishObj->setSectionPageAction($f_section_page_action);
 	}
+	$logtext = getGS('Scheduled action added for article #$1: "$2" (Publication: $3, Issue: $4, Section: $5, Language: $6)', $tmpArticle->getArticleNumber(), $tmpArticle->getTitle(), $tmpArticle->getPublicationId(), $tmpArticle->getIssueNumber(), $tmpArticle->getSectionNumber(), $tmpArticle->getLanguageId());
+	Log::Message($logtext, $g_user->getUserId(), 37);
 }
 if ($f_mode == "multi") {
 	$args = $_REQUEST;

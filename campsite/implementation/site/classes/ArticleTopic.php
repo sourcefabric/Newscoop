@@ -59,7 +59,7 @@ class ArticleTopic extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Topic $1 added to article', $p_topicId);
+		$logtext = getGS('Topic $1 added to article $2', $p_topicId, $p_articleNumber);
 		Log::Message($logtext, null, 144);
 	} // fn AddTopicToArticle
 
@@ -78,7 +78,7 @@ class ArticleTopic extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Article topic $1 deleted', $p_topicId);
+		$logtext = getGS('Article topic $1 deleted from article $2', $p_topicId, $p_articleNumber);
 		Log::Message($logtext, null, 145);
 	} // fn RemoveTopicFromArticle
 

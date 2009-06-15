@@ -35,7 +35,7 @@ if ($correct) {
 		if ($aliasDups <= 0) {
 			$success = $alias->setName($f_name);
 			if ($success) {
-				$logtext = getGS('The site alias for publication $1 has been modified to $2.',
+				$logtext = getGS('The site alias for publication "$1" has been modified to "$2".',
 								 $publicationObj->getName(), $f_name);
 				Log::Message($logtext, $g_user->getUserId(), 153);
 			}

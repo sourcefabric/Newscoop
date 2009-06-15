@@ -6,9 +6,9 @@
 /**
  * Includes
  */
-require_once(dirname(__FILE__).'/Log.php');
-require_once(dirname(__FILE__).'/Topic.php');
-require_once(dirname(__FILE__).'/CampCacheList.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Topic.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 
 /**
@@ -77,12 +77,13 @@ class ArticleTypeField extends DatabaseObject {
 		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
+                        $fieldName = $this->m_data['field_name'];
 			$this->setProperty('field_name', $p_newName);
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logText = getGS('The article type field $1 has been renamed to $2.',
-			$this->m_data['field_name'], $p_newName);
+			$logText = getGS('The article type field "$1" has been renamed to "$2".',
+			$fieldName, $p_newName);
 			Log::Message($logText, null, 62);
 		}
 	} // fn rename
@@ -131,7 +132,7 @@ class ArticleTypeField extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 created', $this->m_data['field_name']);
+			$logtext = getGS('Article type field "$1" created', $this->m_data['field_name']);
 			Log::Message($logtext, null, 71);
             CampCache::singleton()->clear('user');
 		}
@@ -259,7 +260,7 @@ class ArticleTypeField extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 changed', $this->m_data['field_name']);
+			$logtext = getGS('Article type field "$1" changed', $this->m_data['field_name']);
 			Log::Message($logtext, null, 71);
 		}
 		return $success;
@@ -297,6 +298,7 @@ class ArticleTypeField extends DatabaseObject {
                 $g_ado_db->Execute($queryStr);
                 $this->m_rootTopicId = null;
             }
+			$fieldName = $this->m_data['field_name'];
 			$success = parent::delete();
 		}
 
@@ -314,7 +316,7 @@ class ArticleTypeField extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 			    camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Article type field $1 deleted', $this->m_data['field_name']);
+			$logtext = getGS('Article type field "$1" deleted', $fieldName);
 			Log::Message($logtext, null, 72);
             CampCache::singleton()->clear('user');
 		}
@@ -610,7 +612,7 @@ class ArticleTypeField extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 			    camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Field $1 updated', $this->m_data['field_name']);
+			$logtext = getGS('Field "$1" updated', $this->m_data['field_name']);
 			Log::Message($logtext, null, 143);
 		}
 

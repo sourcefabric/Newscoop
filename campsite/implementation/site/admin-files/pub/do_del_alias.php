@@ -21,11 +21,12 @@ $aliasObj = new Alias($Alias);
 $errorMsgs = array();
 
 if ($publicationObj->getDefaultAliasId() != $Alias) {
+        $aliasName = $aliasObj->getName();
 	$deleted = $aliasObj->delete();
 
 	if ($deleted) {
-		$logtext = getGS('The alias $1 has been deleted from publication $2.',
-						 $aliasObj->getName(), $publicationObj->getName());
+		$logtext = getGS('The alias "$1" has been deleted from publication "$2".',
+						 $aliasName, $publicationObj->getName());
 		Log::Message($logtext, $g_user->getUserId(), 152);
 		camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$Pub");
 	} else {

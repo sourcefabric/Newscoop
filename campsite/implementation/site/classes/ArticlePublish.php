@@ -42,6 +42,22 @@ class ArticlePublish extends DatabaseObject {
 	} // constructor
 
 
+	public function delete()
+	{
+	    $articleNumber = $this->getArticleNumber();
+	    $deleted = parent::delete();
+	    if ($deleted) {
+	        if (function_exists("camp_load_translation_strings")) {
+		    camp_load_translation_strings("api");
+		}
+		$logtext = getGS('Scheduled action deleted from Article #$1',
+				 $articleNumber);
+		Log::Message($logtext, null, 37);
+	    }
+	    return $deleted;
+	} // fn delete
+
+
 	/**
 	 * Get the unique ID that identifies this action.
 	 * @return int
