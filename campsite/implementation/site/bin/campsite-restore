@@ -7,6 +7,7 @@ if (!is_array($GLOBALS['argv'])) {
 }
 
 $CAMPSITE_DIR = dirname(dirname(__FILE__));
+$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 $archive_file = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : '';

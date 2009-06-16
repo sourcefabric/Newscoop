@@ -397,6 +397,7 @@ if (empty($conf_dir)) {
     $bin_dir = dirname(__FILE__);
     $conf_dir = preg_replace('/bin$/', 'conf', $bin_dir);
 }
+$GLOBALS['g_campsiteDir'] = dirname($conf_dir);
 
 // runs the script
 gather($conf_dir);
