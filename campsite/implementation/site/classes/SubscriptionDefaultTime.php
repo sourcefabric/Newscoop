@@ -41,9 +41,7 @@ class SubscriptionDefaultTime extends DatabaseObject
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('The default subscription time for $1 has been added.',
-						 "(".getGS("Publication")." ".$publicationObj->getName()
-						 .':'.$this->m_data['CountryCode'].")");
+		$logtext = getGS('The default subscription time for ($1 "$2":$3) has been added.', getGS("Publication"), $publicationObj->getName(), $this->m_data['CountryCode']);
 		Log::Message($logtext, null, 4);
 		return $success;
   	} // fn create

@@ -52,12 +52,13 @@ class Country extends DatabaseObject {
 
 	public function delete()
 	{
+	        $tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Country $1 deleted', $this->m_data['Name'].' ('.$this->m_data['Code'].')' );
+			$logtext = getGS('Country "$1" ($2) deleted', $tmpData['Name'], $tmpData['Code']);
 			Log::Message($logtext, null, 134);
 		}
 		return $success;
