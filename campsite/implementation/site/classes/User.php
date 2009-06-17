@@ -123,7 +123,7 @@ class User extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User account $1 created', $this->m_data['Name']." (".$this->m_data['UName'].")");
+            $logtext = getGS('User account "$1" ($2) created', $this->m_data['Name'], $this->m_data['UName']);
             Log::Message($logtext, null, 51);
 
             return true;
@@ -159,7 +159,7 @@ class User extends DatabaseObject {
                 if (function_exists("camp_load_translation_strings")) {
                     camp_load_translation_strings("api");
                 }
-                $logtext = getGS('The user account $1 has been deleted.', $this->m_data['Name']." (".$this->m_data['UName'].")");
+                $logtext = getGS('The user account "$1" ($2) has been deleted.', $this->m_data['Name'], $this->m_data['UName']);
                 Log::Message($logtext, null, 52);
                 return true;
             }
@@ -311,9 +311,7 @@ class User extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User permissions for $1 changed',
-                             $this->m_data['Name']
-                             ." (".$this->m_data['UName'].")");
+            $logtext = getGS('User permissions for "$1" ($2) changed', $this->m_data['Name'], $this->m_data['UName']);
             Log::Message($logtext, null, 55);
         }
     } // fn setUserType
@@ -685,7 +683,7 @@ class User extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Password changed for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
+        $logtext = getGS('Password changed for user "$1" ($2)', $this->m_data['Name'], $this->m_data['UName']);
         Log::Message($logtext, null, 54);
     }  // fn setPassword
 
@@ -793,7 +791,7 @@ class User extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Base data synchronized to phorum user for $1', $this->m_data['Name']." (".$this->m_data['UName'].")");
+            $logtext = getGS('Base data synchronized to phorum user for "$1" ($2)', $this->m_data['Name'], $this->m_data['UName']);
             Log::Message($logtext, null, 161);
         }
     } // fn syncPhorumUser

@@ -16,7 +16,10 @@ $action = new IssuePublish($event_id);
 $deleted = $action->delete();
 
 if ($deleted) {
-	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+        $issueObj = new Issue($Pub, $Language, $Issue);
+        $logtext = getGS('Scheduled action deleted from issue #$1: "$2" (Publication: $3)', $Issue, $issueObj->getName(), $Pub);
+        Log::Message($logtext, $g_user->getUserId(), 17);
+        camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 $publicationObj = new Publication($Pub);
 $issueObj = new Issue($Pub, $Language, $Issue);

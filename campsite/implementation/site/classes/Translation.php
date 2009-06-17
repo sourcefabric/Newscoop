@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 class Translation extends DatabaseObject {
 	var $m_dbTableName = 'Translations';

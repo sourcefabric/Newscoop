@@ -32,6 +32,7 @@ if ($publish_articles != "Y" && $publish_articles != "N") {
 
 $created = 0;
 if ($correct) {
+        $issuePublishExists = true;
 	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
     $issuePublishObj = new IssuePublish($event_id);
 	if (!$issuePublishObj->exists()) {
@@ -39,6 +40,7 @@ if ($correct) {
 	    $issuePublishObj->setPublicationId($Pub);
 	    $issuePublishObj->setIssueNumber($Issue);
 	    $issuePublishObj->setLanguageId($Language);
+	    $issuePublishExists = false;
 	}
     $issuePublishObj->setPublishAction($action);
     $issuePublishObj->setPublishArticlesAction($publish_articles);
@@ -46,7 +48,11 @@ if ($correct) {
 	$created = 1;
 }
 if ($created) {
-	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
+        $action = ($issuePublishExists) ? 'updated' : 'added';
+        $issueObj = new Issue($Pub, $Language, $Issue);
+        $logtext = getGS('Scheduled action $1 for issue #$2: "$3" (Publication: $4)', $action, $Issue, $issueObj->getName(), $Pub);
+        Log::Message($logtext, $g_user->getUserId(), 16);
+        camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 
 $issueObj = new Issue($Pub, $Language, $Issue);

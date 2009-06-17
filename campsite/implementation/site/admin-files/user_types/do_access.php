@@ -25,7 +25,7 @@ foreach ($rightsFields as $field=>$value) {
 	$val = Input::Get($field, 'string', 'off');
 	$userType->setPermission($field, ($val != 'off'));
 }
-$logtext = getGS('User type $1 changed permissions', $userType->getName());
+$logtext = getGS('Permissions changed for user type "$1"', $userType->getName());
 Log::Message($logtext, $userType->getName(), 123);
 
 $msg = getGS("Permissions successfully modified");

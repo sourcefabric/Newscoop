@@ -106,7 +106,7 @@ class Topic extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic $1 added', $this->m_data['Name']." (".$this->m_data['Id'].")");
+			$logtext = getGS('Topic "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
 			Log::Message($logtext, null, 141);
 		}
 		return $success;
@@ -153,7 +153,7 @@ class Topic extends DatabaseObject {
 			} else {
 				$name = $this->m_names[$p_languageId];
 			}
-			$logtext = getGS('Topic $1 deleted', $name." (".$this->m_data['Id'].")");
+			$logtext = getGS('Topic "$1" ($2) deleted', $name, $this->m_data['Id']);
 			Log::Message($logtext, null, 142);
 		}
 		return $deleted;
@@ -210,7 +210,7 @@ class Topic extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic $1 updated', $this->m_data['Id'].": (".$oldValue." -> ".$this->m_names[$p_languageId].")");
+			$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['Id'], $oldValue, $this->m_names[$p_languageId]);
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;

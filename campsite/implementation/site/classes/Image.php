@@ -67,7 +67,7 @@ class Image extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Changed image properties of $1', $this->m_data['Id']);
+			$logtext = getGS('Changed properties for image "$1" ($2)', $this->m_data['Description'], $this->m_data['Id']);
 			Log::Message($logtext, null, 43);
 		}
 		return $success;
@@ -111,12 +111,14 @@ class Image extends DatabaseObject {
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
 
+		$imageId = $this->getImageId();
+		$imageDescription = $this->getDescription();
 		// Delete the record in the database
 		if (!parent::delete()) {
 			return new PEAR_Error(getGS("Could not delete record from the database."));
 		}
 
-		$logtext = getGS('Image $1 deleted', $this->m_data['Id']);
+		$logtext = getGS('Image "$1" ($2) deleted', $imageDescription, $imageId);
 		Log::Message($logtext, null, 42);
 		return true;
 	} // fn delete
@@ -542,8 +544,8 @@ class Image extends DatabaseObject {
 	        return new PEAR_Error($ex->getMessage(), $ex->getCode());
 	    }
         $image->commit();
-		$logtext = getGS('The image $1 has been added.',
-						$image->m_data['Description']." (".$image->m_data['Id'].")");
+		$logtext = getGS('The image "$1" ($2) has been added.',
+				 $image->m_data['Description'], $image->m_data['Id']);
 		Log::Message($logtext, null, 41);
 
         return $image;

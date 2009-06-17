@@ -23,12 +23,13 @@ if ($imageObj->inUse()) {
 	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 }
 
+$imageDescription = $imageObj->getDescription();
 $result = $imageObj->delete();
 if (PEAR::isError($result)) {
 	camp_html_add_msg($result->getMessage());
 } else {
 	// Go back to article image list.
-	camp_html_add_msg(getGS("Image '$1' deleted.", $imageObj->getDescription()), "ok");
+	camp_html_add_msg(getGS("Image '$1' deleted.", $imageDescription), "ok");
 }
 camp_html_goto_page("/$ADMIN/imagearchive/index.php");
 

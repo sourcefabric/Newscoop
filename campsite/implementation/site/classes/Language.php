@@ -53,17 +53,17 @@ class Language extends DatabaseObject {
 	{
 		$success = parent::create($p_values);
 		if ($success) {
-	    	$result = Localizer::CreateLanguageFiles($this->m_data['Code']);
-	    	if (PEAR::isError($result)) {
-	    		$this->delete(false);
-	    		return $result;
-	    	}
-            CampCache::singleton()->clear('user');
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
+		        $result = Localizer::CreateLanguageFiles($this->m_data['Code']);
+			if (PEAR::isError($result)) {
+			        $this->delete(false);
+				return $result;
 			}
-	        $logtext = getGS('Language $1 added', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
-	        Log::Message($logtext, null, 101);
+			CampCache::singleton()->clear('user');
+			if (function_exists("camp_load_translation_strings")) {
+			        camp_load_translation_strings("api");
+			}
+			$logtext = getGS('Language "$1" ($2) added', $this->m_data['Name'], $this->m_data['OrigName']);
+			Log::Message($logtext, null, 101);
 		}
 		return $success;
 	} // fn create
@@ -87,9 +87,9 @@ class Language extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-        $logtext = getGS('Language $1 modified', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
-        Log::Message($logtext, null, 103);
-        return $success;
+		$logtext = getGS('Language "$1" ($2) modified', $this->m_data['Name'], $this->m_data['OrigName']);
+		Log::Message($logtext, null, 103);
+		return $success;
 	} // fn update
 
 
@@ -110,13 +110,14 @@ class Language extends DatabaseObject {
 				return result;
 			}
 		}
+		$tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {
-            CampCache::singleton()->clear('user');
+		        CampCache::singleton()->clear('user');
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Language $1 deleted', $this->m_data['Name']." (".$this->m_data['OrigName'].")");
+			$logtext = getGS('Language "$1" ($2) deleted', $tmpData['Name'], $tmpData['OrigName']);
 			Log::Message($logtext, null, 102);
 		}
 		return $success;

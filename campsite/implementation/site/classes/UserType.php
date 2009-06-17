@@ -144,7 +144,7 @@ class UserType extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User type $1 added', $p_name);
+            $logtext = getGS('User type "$1" added', $p_name);
             Log::Message($logtext, null, 121);
         }
         return $success;
@@ -167,7 +167,7 @@ class UserType extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User type $1 deleted', $this->m_data['group_define_name']);
+            $logtext = getGS('User type "$1" deleted', $this->m_data['group_define_name']);
             Log::Message($logtext, null, 122);
             return true;
         }
