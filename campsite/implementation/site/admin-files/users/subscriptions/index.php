@@ -81,7 +81,7 @@ foreach ($subscriptions as $subscription) { ?>
 	<?php } ?>
 	</TD>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/do_del.php?f_user_id=<?php p($f_user_id); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publication->getName())); ?>" TITLE="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publication->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', htmlspecialchars($publication->getName())); ?>');"></A>
+		<A HREF="/<?php p($ADMIN); ?>/users/subscriptions/do_del.php?f_user_id=<?php p($f_user_id); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>&f_publication_id=<?php p($subscription->getPublicationId()); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publication->getName())); ?>" TITLE="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publication->getName())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', htmlspecialchars($publication->getName())); ?>');"></A>
 	</TD>
 </TR>
 <?php

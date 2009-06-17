@@ -73,6 +73,10 @@ $created = $subscription->create(array(
 if (!$created) {
 	$errorMsgs[] = getGS('The subscription could not be added.')
 				.' '.getGS("Please check if there isn't another subscription to the same publication.");
+} else {
+        $logtext = getGS('Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)',
+			 $f_user_id, $f_publication_id, $f_subscription_active, $subsType);
+        Log::Message($logtext, null, 181);
 }
 
 if ($created && ($f_add_sections_now == 'Y')) {

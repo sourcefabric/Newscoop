@@ -19,6 +19,8 @@ $subscription = new Subscription($f_subscription_id);
 $publication = new Publication($subscription->getPublicationId());
 
 if ($subscription->delete()) {
+        $logtext = getGS('Subscription #$1 deleted for user #$2 (Publication: $3)', $f_subscription_id, $f_user_id, $f_publication_id);
+        Log::Message($logtext, null, 182);
 	$uriPath = strtok($_SERVER['HTTP_REFERER'], "?");
 	$inSubscriptions = (strstr($uriPath, '/subscriptions') != '')
 						|| !$g_user->hasPermission('ManageUsers');
