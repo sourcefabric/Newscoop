@@ -6,8 +6,8 @@
  *
  * @return void
  */
-function editor_load_tinymce($p_dbColumns, $p_user,
-			     $p_articleNumber, $p_editorLanguage)
+function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
+			     $p_editorLanguage, $p_objectType = 'article')
 {
 	global $Campsite;
 
@@ -57,11 +57,15 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	}
 	if ($p_user->hasPermission('EditorLink')) {
 	    $plugins[] = 'campsiteinternallink';
-	    $plugins[] = 'campsiteattachment';
+	    if ($p_objectType == 'article') {
+	        $plugins[] = 'campsiteattachment';
+	    }
 	}
 	if ($p_user->hasPermission('EditorImage')) {
-	    $plugins[] = 'campsiteimage';
-	    $plugins[] = 'media';
+	    if ($p_objectType == 'article') {
+	        $plugins[] = 'campsiteimage';
+		$plugins[] = 'media';
+	    }
 	}
 	$plugins_list = implode(",", $plugins);
 
@@ -123,14 +127,18 @@ function editor_load_tinymce($p_dbColumns, $p_user,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "campsiteinternallink";
 	    $toolbar1[] = "link";
-	    $toolbar1[] = "campsiteattachment";
+	    if ($p_objectType == 'article') {
+	        $toolbar1[] = "campsiteattachment";
+	    }
 	}
 	if ($p_user->hasPermission('EditorSubhead')) {
 	    $toolbar1[] = "campsite-subhead";
 	}
 	if ($p_user->hasPermission('EditorImage')) {
-	    $toolbar1[] = "campsiteimage";
-	    $toolbar1[] = "media";
+	    if ($p_objectType == 'article') {
+	        $toolbar1[] = "campsiteimage";
+		$toolbar1[] = "media";
+	    }
 	}
 	if ($p_user->hasPermission('EditorSourceView')) {
 	    $toolbar1[] = "code";
