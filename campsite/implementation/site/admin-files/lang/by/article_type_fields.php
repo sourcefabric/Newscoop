@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "Вы ўпэўненыя, што жадаеце зрабіць $1 полем $2");
 regGS("Is Content", "З'яўляецца змесцівам");
 regGS("Back to Article Types List", "Вярнуцца да спісу тыпаў артыкулаў");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "Вы можаце вы
 regGS("Translating field", "Поле перакладу");
 regGS("The translation could not be added.", "Пераклад ня можа быць даданы.");
 regGS("The field $1 does not exist.", "Поле $1 не iснуе.");
-regGS("The field $1 does not already exist.", "Поле $1 ўжо не iснуе.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Поле $1 можа зьмяшчаць толькi лiтары i сымбаль падкрэсьлiваньня (_).");
 regGS("Template Field Name", "Назва поля шаблёну");
 regGS("Show/Hide", "Паказаць/Схаваць");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "$1 тып артыкулаў $2 ");
 regGS("Top element", "Верхнi элемэнт");
 regGS("Article type fields", "Палi тыпаў артыкулаў");
 regGS("Delete field $1", "Выдалiць поле $1");
-regGS("Multi-line Text with WYSIWYG", "Цела артыкула");
-regGS("Single-line Text", "Тэкст");
 regGS("Adding new field", "Дадаваньне новага поля");
 regGS("You do not have the right to add article type fields.", "Вы ня маеце права  дадаваць палі тыпаў артыкулаў.");
 regGS("The field $1 already exists.", "Поле $1 ўжо iснуе.");

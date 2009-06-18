@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "Вы уверены, что хотите сделать $1 поля $2");
 regGS("Is Content", "В контексте");
 regGS("Back to Article Types List", "Вернуться к списку типов статей");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "Вы можете ис
 regGS("Translating field", "Поле перевода");
 regGS("The translation could not be added.", "Перевод не может быть добавлен.");
 regGS("The field $1 does not exist.", "Поле $1 не существует.");
-regGS("The field $1 does not already exist.", "Поле $1 уже не существует.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Поле $1 может содержать только буквы и символ подчеркивания (_).");
 regGS("Template Field Name", "Название поля шаблона");
 regGS("Show/Hide", "Показать/Спрятать");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "$1 тип статей $2");
 regGS("Top element", "Верхний элемент");
 regGS("Article type fields", "Поля типов статей");
 regGS("Delete field $1", "Удалить поле $1");
-regGS("Multi-line Text with WYSIWYG", "Тело статьи");
-regGS("Single-line Text", "Текст");
 regGS("Adding new field", "Добавление нового поля");
 regGS("You do not have the right to add article type fields.", "Вы не имеете права добавления полей типов статей.");
 regGS("The field $1 already exists.", "Поле $1 уже существует.");

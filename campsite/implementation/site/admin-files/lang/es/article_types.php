@@ -1,8 +1,4 @@
 <?php 
-regGS("topic", "tópico");
-regGS("text", "texto");
-regGS("date", "fecha");
-regGS("body", "cuerpo");
 regGS("You cannot merge the same type into itself.", "No puede combinar el mismo tipo en sí mismo.");
 regGS("View the source ($1) version of $2", "Ver la versión de la fuente ($1) de $2");
 regGS("View of original ($1) $2", "Vista de la original ($1) $2");

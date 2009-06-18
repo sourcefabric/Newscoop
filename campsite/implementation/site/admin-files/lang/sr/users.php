@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -70,12 +72,10 @@ regGS("User account $1 was created successfully.", "Кориснички нал�
 regGS("Click here to change password", "Кликните овде за промену лозинке");
 regGS("Old Password", "Стара лозинка");
 regGS("You do not have the right to change user account permissions.", "Немате право да мењате додељена права за корисничке налоге");
-regGS("Permissions for $1 changed", "Додељена права за $1 су измењена");
 regGS("You do not have the right to change user account information.", "Немате право да мењате податке за кориснички налог ");
 regGS("Click here to customize user permissions", "Кликните овде за измену права корисника");
 regGS("Click here to use existing user type permissions (discard customization)", "Кликните овде за коришћење постојећих права за тип корисника (поништава измене)");
 regGS("Click here to leave password unchanged", "Кликните овде да оставите лозинку неизмењену");
-regGS("User account information changed for $1", "Подаци за кориснички налог $1 су промењени");
 regGS("The password you typed is incorrect.", "Лозинка коју сте унели је неисправна");
 regGS("You do not have the right to delete user accounts.", "Немате право да бришете корисничке налоге");
 regGS("Are you sure you want to delete the user account $1 ?", "Да ли сте сигурни да желите да обришете кориснички налог $1?");

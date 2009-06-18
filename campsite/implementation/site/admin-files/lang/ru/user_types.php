@@ -1,6 +1,5 @@
 <?php 
-regGS("There are no sections", "Нет выбранных рубрик");
-regGS("There are no issues", "Нет выпусков");
+regGS("Permissions changed for user type \"$1\"", "");
 regGS("User Type '$1' successfully deleted", "Тип пользователя '$1' успешно удален");
 regGS("Permissions successfully modified", "Права доступа успешно обновлены");
 regGS("User types", "Типы пользователей");
@@ -11,7 +10,6 @@ regGS("You do not have the right to delete user types.", "Вы не имеете
 regGS("User type", "Тип пользователей");
 regGS("Change user type permissions", "Изменить права типа пользователей");
 regGS("You do not have the right to change user type permissions.", "Вы не имеете прав доступа к изменению прав типов пользователей.");
-regGS("User type $1 changed permissions", "Права типа пользователей $1 изменены");
 regGS("A user type with the name '$1' already exists.", "Тип пользователя с именем '$1' уже существует.");
 regGS("Access", "Доступ");
 regGS("You do not have the right to add user types.", "Вы не имеете права добавлять типы пользователей.:ru");

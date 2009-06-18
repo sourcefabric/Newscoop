@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "");
 regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "");
@@ -49,8 +54,6 @@ regGS("The publication $1 could not be deleted.", "出版物$1不能被删除");
 regGS("The publication could not be added.", "不能添加出版物");
 regGS("You do not have the right to manage publications.", "您无权管理出版物");
 regGS("You must select a country.", "您必须选择一个国家");
-regGS("Default subscription time for $1 changed", "$1的默认订阅时间已改变");
-regGS("Subscription default time for $1 deleted", "$1的默认订阅时间已删除");
 regGS("Time Unit", "时间单位");
 regGS("Currency", "货币");
 regGS("Edit languages", "");

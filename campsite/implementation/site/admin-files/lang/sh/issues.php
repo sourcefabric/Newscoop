@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednosti koje pokušavate da podesite su u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u ovoj publikaciji za isti jezik.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jezik i URL naziv moraju biti jedinstveni za svako izdanje u publikaciji.");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Promeni detalje o izdanju");
 regGS("You do not have the right to change issue details.", "Nemate pravo da menjate podatke o izdanju");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum objavljivanja<br><small>(gggg-mm-dd)</small>");
 regGS("Front Page Template", "Šablon za prvu stranu");
-regGS("Issue $1 updated in publication $2", "Izdanje $1 je izmenjeno u publikaciji $2");
 regGS("You do not have the right to delete issues.", "Nemate pravo da brišete izdanja");
 regGS("Are you sure you want to delete the issue $1?", "Sigurni ste da želite da obrišete izdanje $1?");
 regGS("Use the structure of the previous issue", "Iskoristi strukturu prethodnog izdanja");

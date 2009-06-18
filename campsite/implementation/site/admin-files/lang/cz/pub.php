@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "");
 regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "Publikace $1 nemohla být sma
 regGS("The publication could not be added.", "Publikace nemohla být přidána");
 regGS("You do not have the right to manage publications.", "Nemáte právo spravovat publikace");
 regGS("You must select a country.", "Vyberte zemi");
-regGS("Default subscription time for $1 changed", "Předplatné období pro $1 bylo změněno");
-regGS("Subscription default time for $1 deleted", "Předplatné období pro $1 bylo smazáno");
 regGS("Add new alias", "");
 regGS("Alias (click to edit)", "");
 regGS("Edit aliases", "");
 regGS("Publication Aliases", "");
 regGS("Adding new alias", "");
-regGS("The site alias $1 has been added to publication $2.", "");
 regGS("The site alias $1 could not be added.", "");
 regGS("Another alias with the same name exists already.", "");
 regGS("Edit alias", "");
 regGS("Editing alias", "");
-regGS("The site alias for publication $1 has been modified to $2.", "");
 regGS("The site alias $1 could not be modified.", "");
 regGS("Are you sure you want to delete the alias $1?", "");
 regGS("Deleting alias", "");
 regGS("The alias $1 could not be deleted.", "");
-regGS("The alias $1 has been deleted from publication $2.", "");
 regGS("$1 is the default publication alias, it can not be deleted.", "");
 regGS("You do not have the right to add publications.", "");
 regGS("There are $1 issue(s) left.", "");

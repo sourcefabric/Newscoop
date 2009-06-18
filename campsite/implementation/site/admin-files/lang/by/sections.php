@@ -1,10 +1,15 @@
 <?php 
+regGS("Delete all articles written in $1 language from this section", "");
+regGS("Delete all articles and all of their translations", "");
+regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");
+regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "");
+regGS("Delete only this section ($1)", "");
+regGS("Delete all translations of this section", "");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Колькасць артыкулаў <BR><SMALL>(Апублікаваных/Агульная)</SMALL>");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL павiнны быць унікальны для ўсiх рубрык у гэтым выданьнi.<br> Азначаны URL (\"$1\") канфлiктуе з рубрыкай \"$2$3. $4$5\"");
 regGS("Section updated", "Рубрыка абноўленая");
 regGS("There are $1 subscriptions which will be affected.", "Гэта будзе ўжыта да $1 падпiскі (ак) ");
 regGS("There are $1 articles in this section.", "Артыкулаў у гэтай рубрыцы: $1.");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Рубрыка #$1 \"$2\" абноўлена. (Выданьне: $3, Выпуск: $4) ");
 regGS("Go To Articles", "Перайсьцi да артыкулаў");
 regGS("Add section to all subscriptions.", "Дадаць рубрыку да ўсiх падпiсак");
 regGS("Delete section from all subscriptions.", "Выдалiць рубрыку з усiх падпiсак.");

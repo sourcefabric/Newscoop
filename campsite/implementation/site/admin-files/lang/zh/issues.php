@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -35,7 +38,6 @@ regGS("Updating issue", "正在更新议题");
 regGS("Changing issue's details", "正在改变议题详情");
 regGS("The issue $1 has been successfuly changed.", "议题$1已被成功修改");
 regGS("The issue could not be changed.", "议题不能被修改");
-regGS("Issue $1 updated in publication $2", "议题$1在发布$2中已更新");
 regGS("You do not have the right to delete issues.", "您无权删除议题");
 regGS("Are you sure you want to delete the issue $1?", "你确认删除议题$1");
 regGS("Use the structure of the previous issue", "用以前议题的结构");

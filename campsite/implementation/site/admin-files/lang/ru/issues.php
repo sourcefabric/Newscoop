@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Величины, которые вы пытаетесь установить, конфликтуют с выпуском \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Номер должен быть уникальным для каждого выпуска этого издания на том же языке.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Язык и URL доолжен быть уникальным для каждого выпуска этого издания.");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Сменить параметры выпуска"
 regGS("You do not have the right to change issue details.", "Вы не имеете прав доступа к изменению параметров выпуска.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Дата публикации<BR><SMALL>(гггг-мм-дд)</SMALL>");
 regGS("Front Page Template", "Шаблон титульной страницы");
-regGS("Issue $1 updated in publication $2", "Выпуск $1 обновлен в издании $2");
 regGS("You do not have the right to delete issues.", "Вы не имеете прав доступа для удаления выпусков.");
 regGS("Are you sure you want to delete the issue $1?", "Вы уверены, что хотите удалить выпуск $1?");
 regGS("Use the structure of the previous issue", "Использовать структуру предыдущего выпуска");

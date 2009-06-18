@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "");
 regGS("Is Content", "");
 regGS("Back to Article Types List", "Înapoi la lista tipurilor de articole");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "Poţi folosi doar lite
 regGS("Translating field", "Se traduce câmpul");
 regGS("The translation could not be added.", "Traducerea nu a putut fi adăugată.");
 regGS("The field $1 does not exist.", "Câmpul $1 nu există.");
-regGS("The field $1 does not already exist.", "Câmpul $1 nu există încă.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Câmpul $1 poate conţine doar litere sau caracterul underscore (_).");
 regGS("Template Field Name", "Numele câmpului şablonului");
 regGS("Show/Hide", "Arată/Ascunde");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "$1 tipul de articol $2");
 regGS("Top element", "Elementul principal");
 regGS("Article type fields", "Câmpurile tipului de articol");
 regGS("Delete field $1", "Şterge câmpul $1");
-regGS("Multi-line Text with WYSIWYG", "Text multi-line cu editor grafic");
-regGS("Single-line Text", "Text single-line");
 regGS("Adding new field", "Adaug câmp nou");
 regGS("You do not have the right to add article type fields.", "Nu aveţi dreptul să adăugaţi câmpuri ale tipurilor de articole.");
 regGS("The field $1 already exists.", "Câmpul $1 există deja.");

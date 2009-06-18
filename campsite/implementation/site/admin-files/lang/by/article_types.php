@@ -1,8 +1,4 @@
 <?php 
-regGS("topic", "Тэма");
-regGS("text", "тэкст");
-regGS("date", "дата");
-regGS("body", "зьмест");
 regGS("You cannot merge the same type into itself.", "Вы ня можаце аб'яднаць тып сам з сабой.");
 regGS("View the source ($1) version of $2", "Прагляд крынiцы ($1) вэрсii $2");
 regGS("View of original ($1) $2", "Прагляд арыгіналу ($1) $2");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -34,7 +37,6 @@ regGS("Updating issue", "Obnova vydání");
 regGS("Changing issue's details", "Změna detailů vydání");
 regGS("The issue $1 has been successfuly changed.", "Vydání $1 bylo úspěšně změněno");
 regGS("The issue could not be changed.", "Vydání nemohlo být změněno");
-regGS("Issue $1 updated in publication $2", "Vydání $1 bylo obnoveno v publikaci $2");
 regGS("You do not have the right to delete issues.", "Nemáte právo mazat vydání");
 regGS("Are you sure you want to delete the issue $1?", "Určitě chcete smazat vydání $1?");
 regGS("Use the structure of the previous issue", "Použít strukturu předchozího vydání");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -28,7 +31,6 @@ regGS("Change issue details", "이슈 내역 수정");
 regGS("You do not have the right to change issue details.", "이슈 내역을 수정할 권한이 없습니다.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "출판일자<BR><SMALL>(년-월-일)</SAMLL>");
 regGS("Front Page Template", "프론트페이지 템플레이트");
-regGS("Issue $1 updated in publication $2", "이슈 $1 이 출판사이트 $2에 업데이트됨");
 regGS("You do not have the right to delete issues.", "이슈를 삭제할 권한이 없습니다. ");
 regGS("Are you sure you want to delete the issue $1?", "이슈 $1 을 확실히 삭제합니까?");
 regGS("Use the structure of the previous issue", "이전 이슈의 구조를 사용");

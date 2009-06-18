@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -70,12 +72,10 @@ regGS("User account $1 was created successfully.", "Contul utilizatorului $1 a f
 regGS("Click here to change password", "Clic pentru a schimba parola");
 regGS("Old Password", "Parola veche");
 regGS("You do not have the right to change user account permissions.", "Nu aveţi dreptul să modificaţi drepturile contului de utilizator");
-regGS("Permissions for $1 changed", "Drepturile pentru contul $1 au fost modificate");
 regGS("You do not have the right to change user account information.", "u aveţi dreptul să modificaţi informaţiile despre contul de utilizator");
 regGS("Click here to customize user permissions", "Clic pentru a personaliza permisiunile utilizatorilor");
 regGS("Click here to use existing user type permissions (discard customization)", "Clic pentru a folosi permisiunile existente ale utilizatorului (nu se ia în considerare personalizarea)");
 regGS("Click here to leave password unchanged", "Clic pentru a lăsa parola neschimbată");
-regGS("User account information changed for $1", "Informaţiile despre contul de utilizator $1 au fost modificate");
 regGS("The password you typed is incorrect.", "Parola introdusă este incorectă");
 regGS("You do not have the right to delete user accounts.", "Nu ai dreptul să ştergi conturi de utilizatori.");
 regGS("Are you sure you want to delete the user account $1 ?", "Eşti sigur că vrei să ştergi contul de utilizator $1?");

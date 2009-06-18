@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -70,12 +72,10 @@ regGS("User account $1 was created successfully.", "사용자 아이디 $1 이 �
 regGS("Click here to change password", "패스워드 변경하려면 여기를 클릭하시오");
 regGS("Old Password", "이전 패스워드");
 regGS("You do not have the right to change user account permissions.", "사용자 아이디 권한을 변경할 수 없습니다. ");
-regGS("Permissions for $1 changed", "$1 권한이 변경됨");
 regGS("You do not have the right to change user account information.", "사용자 아이디 정보를 변경할 권한이 없습니다. ");
 regGS("Click here to customize user permissions", "사용자 권한을 수정하려면 여기를 클릭하시오");
 regGS("Click here to use existing user type permissions (discard customization)", "기존 사용자 타입 권한을 사용하려면 여기를 클릭하시오.");
 regGS("Click here to leave password unchanged", "패스워드를 그대로 사용하려면 여기를 클릭하시오");
-regGS("User account information changed for $1", "$1 사용자 아이디 정보 변경됨");
 regGS("The password you typed is incorrect.", "입력한 패스워드가 틀립니다.");
 regGS("You do not have the right to delete user accounts.", "사용자 아이디를 삭제할 권한이 없습니다. ");
 regGS("Are you sure you want to delete the user account $1 ?", "$1 사용자 아이디를 확실히 삭제합니까?");

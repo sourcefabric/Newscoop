@@ -1,9 +1,9 @@
 <?php 
+regGS("The image \"$1\" has been removed from the article.", "");
 regGS("Unable to add new image.", "Nije moguće dodati novu sliku.");
 regGS("Image number '$1' already exists", "Slika broj '$1' već postoji");
 regGS("You do not have the right to change image information.", "Nemate pravo menjanja podataka o slikama.");
 regGS("The image number specified is already in use.", "Broj slike koji ste uneli je već upotrebljen.");
-regGS("The image has been removed from the article.", "slika je uklonjena iz članka.");
 regGS("Image '$1' updated.", "slika '$1' je izmenjena.");
 regGS("Image '$1' added.", "Slika '$1' je dodata.");
 regGS("Edit article", "Uredi tekst");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Ändra utgåvans detaljer");
 regGS("You do not have the right to change issue details.", "Du har inte rätt att ändra utgåvedetaljer.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publiceringsdatum<BR><SMALL>(åååå-mm-dd)</SMALL>");
 regGS("Front Page Template", "Framsidesmall");
-regGS("Issue $1 updated in publication $2", "Utgåva $1 updaterad i publikation $2");
 regGS("You do not have the right to delete issues.", "Du har inte rätt att radera utgåvor.");
 regGS("Are you sure you want to delete the issue $1?", "Är du säker på att du vill radera utgåvan $1?");
 regGS("Use the structure of the previous issue", "Använd strukturen från föregående utgåva");

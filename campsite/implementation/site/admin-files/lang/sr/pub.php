@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "");
 regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "Публикација $1 н�
 regGS("The publication could not be added.", "Публикација не може бити додата");
 regGS("You do not have the right to manage publications.", "Немате право да администрирате публикацијама");
 regGS("You must select a country.", "Морате изабрати државу");
-regGS("Default subscription time for $1 changed", "Трајање основне претплате за $1 промењено");
-regGS("Subscription default time for $1 deleted", "Дужина претплате за $1 је избрисана");
 regGS("Add new alias", "Додај нови алиас");
 regGS("Alias (click to edit)", "Алиас (клик за уређивање)");
 regGS("Edit aliases", "Уреди алиасе");
 regGS("Publication Aliases", "алиаси за публикацију");
 regGS("Adding new alias", "Додавање новог алиаса");
-regGS("The site alias $1 has been added to publication $2.", "Сајт алиас $1 је додат у публикацију $2.");
 regGS("The site alias $1 could not be added.", "Сајт алиас $1 не може бити додат.");
 regGS("Another alias with the same name exists already.", "Већ постоји алиас са истим именом");
 regGS("Edit alias", "Уреди алиас");
 regGS("Editing alias", "Уређивање алиаса");
-regGS("The site alias for publication $1 has been modified to $2.", "Сајт алиас за публикацију $1 је промењен у $2.");
 regGS("The site alias $1 could not be modified.", "Сајт алиас $1 не може бити промењен.");
 regGS("Are you sure you want to delete the alias $1?", "Да ли сте сигурни да желите да обришете алиас $1?");
 regGS("Deleting alias", "Брисање алиаса");
 regGS("The alias $1 could not be deleted.", "Алиас $1 не може бити обрисан.");
-regGS("The alias $1 has been deleted from publication $2.", "Алиас $1 је обрисан из публикације $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 је основни алиас за публикацију, па не може бити обрисан.");
 regGS("You do not have the right to add publications.", "Немате право да додајете публикације.");
 regGS("There are $1 issue(s) left.", "Преостало је $1 издања.");

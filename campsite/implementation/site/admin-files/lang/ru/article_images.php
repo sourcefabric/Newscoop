@@ -1,9 +1,9 @@
 <?php 
+regGS("The image \"$1\" has been removed from the article.", "");
 regGS("Unable to add new image.", "Невозможно добавление нового изображения.");
 regGS("Image number '$1' already exists", "Изображение с номером '$1'  уже существует.");
 regGS("You do not have the right to change image information.", "Вы не имеете права изменять информацию об изображении.");
 regGS("The image number specified is already in use.", "Указанный номер изображения уже используется.");
-regGS("The image has been removed from the article.", "Изображение удалено из статьи.");
 regGS("Image '$1' updated.", "Изображение '$1' обновлено.");
 regGS("Image '$1' added.", "Изображение '$1' добавлено.");
 regGS("Edit article", "Редактировать статью");

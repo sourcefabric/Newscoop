@@ -1,8 +1,4 @@
-<?php
-regGS("topic", "");
-regGS("text", "");
-regGS("date", "");
-regGS("body", "");
+<?php 
 regGS("You cannot merge the same type into itself.", "");
 regGS("View the source ($1) version of $2", "");
 regGS("View of original ($1) $2", "");

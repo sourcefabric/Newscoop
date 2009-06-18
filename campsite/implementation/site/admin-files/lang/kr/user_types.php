@@ -1,6 +1,5 @@
 <?php 
-regGS("There are no sections", "");
-regGS("There are no issues", "");
+regGS("Permissions changed for user type \"$1\"", "");
 regGS("User Type '$1' successfully deleted", "");
 regGS("Permissions successfully modified", "");
 regGS("User types", "사용자 타입");
@@ -11,7 +10,6 @@ regGS("You do not have the right to delete user types.", "사용자 타입을 �
 regGS("User type", "사용자 타입");
 regGS("Change user type permissions", "사용자 타입 권한 변경 ");
 regGS("You do not have the right to change user type permissions.", "사용자 타입 권한을 변경할 권한이 없습니다. ");
-regGS("User type $1 changed permissions", "사용자 타입 $1 권한 수정됨");
 regGS("A user type with the name '$1' already exists.", "$ 이름의 사용자 타입이 이미 존재합니다. ");
 regGS("Access", "권한");
 ?>

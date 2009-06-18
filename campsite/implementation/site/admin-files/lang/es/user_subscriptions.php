@@ -1,4 +1,6 @@
 <?php 
+regGS("Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)", "");
+regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "");
 regGS("Please select one or more languages.", "Por favor elija uno o más idiomas.");
 regGS("Regardless of the language", "Sin importar el idioma");
 regGS("Individual languages", "Idiomas individuales");

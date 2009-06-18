@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Los valores que intenta establecer tienen conflicto con la edición \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Cada edición en esta publicación del mismo idioma debe tener un número único.");
 regGS("The language and URL name must be unique for each issue in this publication.", "El idioma y el nombre del URL deben ser únicos para cada edición en esta publicación.");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Cambian detalles de edición");
 regGS("You do not have the right to change issue details.", "No tiene derechos para cambiar detalles de edición");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Fecha de Publicación");
 regGS("Front Page Template", "Plantilla de portada");
-regGS("Issue $1 updated in publication $2", "Edición $1 actualizada en publicación $2");
 regGS("You do not have the right to delete issues.", "No tiene derechos para borrar ediciones");
 regGS("Are you sure you want to delete the issue $1?", "¿Estas seguro que desea borrar la edición $1?");
 regGS("Use the structure of the previous issue", "Usar la estructura de la edición previa");

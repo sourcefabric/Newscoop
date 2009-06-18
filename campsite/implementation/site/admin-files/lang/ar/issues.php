@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -28,7 +31,6 @@ regGS("Change issue details", "بدّل تفاصيل الإصدار");
 regGS("You do not have the right to change issue details.", "لا يحق لك تغيير تفاصيل الإصدار");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "تاريخ النشر <br>");
 regGS("Front Page Template", "قالب الصفحة الأمامية");
-regGS("Issue $1 updated in publication $2", " تحديث الإصدار $1 في المنشور $2");
 regGS("You do not have the right to delete issues.", "لا يحق لك إلغاء الإصدارات");
 regGS("Are you sure you want to delete the issue $1?", "هل أنت متأكد من أنك تريد إلغاء الإصدار $1 ؟  ");
 regGS("Use the structure of the previous issue", "إستخدم هيكلية الإصدار السابق");

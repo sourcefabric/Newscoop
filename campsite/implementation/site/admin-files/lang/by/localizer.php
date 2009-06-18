@@ -1,4 +1,7 @@
 <?php 
+regGS("Translation status:", "");
+regGS("Editor Media Plugin", "");
+regGS("$1 of $2 strings translated", "");
 regGS("Preview Window", "Акно прадагляду");
 regGS("Article Audioclips", "Аўдыёкліпы артыкула");
 regGS("Show translated strings", "Паказаць перакладзеныя радкі");

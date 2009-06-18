@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "");
 regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "لا  يمكن إلغاء ا�
 regGS("The publication could not be added.", "لا يمكن إضافة المنشور");
 regGS("You do not have the right to manage publications.", "لا يحق لك إدارة المنشورات");
 regGS("You must select a country.", "اختر بلداً");
-regGS("Default subscription time for $1 changed", " تغيير مدّة الاشتراك الأصلية لـ $1");
-regGS("Subscription default time for $1 deleted", "تمّ الغاء مدّة الاشتراك الأصلية لـ $1");
 regGS("Add new alias", "أضف اسم مستعار جديد");
 regGS("Alias (click to edit)", "الاسم المستعار ( اضغط للتعديل)");
 regGS("Edit aliases", "تعديل الاسم المستعار");
 regGS("Publication Aliases", "اسم المنشور المستعار");
 regGS("Adding new alias", "اضافة اسم مستعار جديد");
-regGS("The site alias $1 has been added to publication $2.", "تم اضافة اسم الموقع المستعار 1 المنشور 2$");
 regGS("The site alias $1 could not be added.", "لم يتم اضافة اسم الموقع المستعار 1$");
 regGS("Another alias with the same name exists already.", "هنالك اسم مستعار آخر بنفس الاسم");
 regGS("Edit alias", "تعديل الاسم المستعار");
 regGS("Editing alias", "تعديل الاسم المستعار");
-regGS("The site alias for publication $1 has been modified to $2.", "تم تعديل اسم الموقع المستعار للمنشور 1$ الى 2$");
 regGS("The site alias $1 could not be modified.", "لم يتم تعديل اسم الموقع المستعار 1$");
 regGS("Are you sure you want to delete the alias $1?", "هل انت متأكد من حذف الاسم المستعار 1");
 regGS("Deleting alias", "حذف الاسم المستعار");
 regGS("The alias $1 could not be deleted.", "لم يتم حذف الاسم المستعار 1$");
-regGS("The alias $1 has been deleted from publication $2.", "تم حذف الاسم المستعار 1$ من  المنشور 2$");
 regGS("$1 is the default publication alias, it can not be deleted.", "لا يمكن الغاء الاسم المستعار 1$ لانه الاسم الافتراضي");
 regGS("You do not have the right to add publications.", "لا تملك صلاحية اضافة منشورات");
 regGS("There are $1 issue(s) left.", "هنالك $1 أعداد متبقية.");

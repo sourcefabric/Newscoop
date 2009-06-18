@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Issue \"$1\" ($2) updated in publication \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "The number must be unique for each issue in this publication of the same language.");
 regGS("The language and URL name must be unique for each issue in this publication.", "The language and URL name must be unique for each issue in this publication.");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Change issue details");
 regGS("You do not have the right to change issue details.", "You do not have the right to change issue details.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Front Page Template", "Front Page Template");
-regGS("Issue $1 updated in publication $2", "Issue $1 updated in publication $2");
 regGS("You do not have the right to delete issues.", "You do not have the right to delete issues.");
 regGS("Are you sure you want to delete the issue $1?", "Are you sure you want to delete the issue $1?");
 regGS("Use the structure of the previous issue", "Use the structure of the previous issue");

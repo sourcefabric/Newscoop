@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -70,12 +72,10 @@ regGS("User account $1 was created successfully.", "");
 regGS("Click here to change password", "");
 regGS("Old Password", "");
 regGS("You do not have the right to change user account permissions.", "您无权改变帐户许可");
-regGS("Permissions for $1 changed", "$1的许可已改变");
 regGS("You do not have the right to change user account information.", "您无权修改帐户信息");
 regGS("Click here to customize user permissions", "");
 regGS("Click here to use existing user type permissions (discard customization)", "");
 regGS("Click here to leave password unchanged", "");
-regGS("User account information changed for $1", "帐户信息已为$1改变");
 regGS("The password you typed is incorrect.", "密码输入正确");
 regGS("You do not have the right to delete user accounts.", "您无权删除帐户");
 regGS("Are you sure you want to delete the user account $1 ?", "您确认要删除帐户$1？");

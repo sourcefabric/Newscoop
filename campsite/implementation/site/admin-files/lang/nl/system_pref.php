@@ -1,11 +1,16 @@
 <?php 
+regGS("Templates filter mask (separated by comma)", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "");
+regGS("Image Resizing Ratio:", "");
+regGS("Image Resizing Ratio", "");
+regGS("Editor Settings", "");
+regGS("Cache Engine:", "");
 regGS("Session Lifetime", "");
 regGS("Please enter the site title", "");
 regGS("Please enter the site meta keywords", "");
 regGS("Please enter the site meta description", "");
 regGS("Please enter the secret key", "");
 regGS("Please enter the Keyword Seperator", "");
-regGS("Invalid: You need PHP APC enabled in order to use the caching system.", "");
 regGS("Site Title:", "");
 regGS("Site On-Line:", "");
 regGS("Site Meta Keywords:", "");

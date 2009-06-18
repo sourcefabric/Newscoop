@@ -1,6 +1,5 @@
 <?php 
-regGS("There are no sections", "");
-regGS("There are no issues", "");
+regGS("Permissions changed for user type \"$1\"", "");
 regGS("User Type '$1' successfully deleted", "");
 regGS("Permissions successfully modified", "");
 regGS("User types", "Tipo de usuario");
@@ -11,7 +10,6 @@ regGS("You do not have the right to delete user types.", "No tiene derecho a bor
 regGS("User type", "Tipo de usuario");
 regGS("Change user type permissions", "Cambiar permisos de tipo de usuario");
 regGS("You do not have the right to change user type permissions.", "No tiene derecho a cambiar permisos de tipo de usuario");
-regGS("User type $1 changed permissions", "Permisos de tipo de usuario $1 cambiados");
 regGS("A user type with the name '$1' already exists.", "Ya existe un tipo de usuario con el nombre '$1'.");
 regGS("Access", "Acceso");
 regGS("You do not have the right to add user types.", "No tiene derecho a agregar tipo de usuario");

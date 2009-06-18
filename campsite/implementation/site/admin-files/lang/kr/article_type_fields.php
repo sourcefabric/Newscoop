@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "");
 regGS("Is Content", "");
 regGS("Back to Article Types List", "");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "");
 regGS("Translating field", "");
 regGS("The translation could not be added.", "");
 regGS("The field $1 does not exist.", "");
-regGS("The field $1 does not already exist.", "");
 regGS("The $1 field may only contain letters and underscore (_) character.", "");
 regGS("Template Field Name", "");
 regGS("Show/Hide", "");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "");
 regGS("Top element", "톱 구성요소");
 regGS("Article type fields", "기사 타입 필드");
 regGS("Delete field $1", "필드 $1 삭제");
-regGS("Multi-line Text with WYSIWYG", "기사 본문");
-regGS("Single-line Text", "텍스트");
 regGS("Adding new field", "새로운 필드 추가");
 regGS("You do not have the right to add article type fields.", "기사 타입 필드를 추가할 권한이 없습니다.");
 regGS("The field $1 already exists.", "필드 $1 이 이미 존재합니다. ");

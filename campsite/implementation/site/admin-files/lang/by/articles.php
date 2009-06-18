@@ -1,4 +1,7 @@
 <?php 
+regGS("Unable to reach Campsite. Please check your internet connection.", "");
+regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");
+regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");
 regGS("You must select an article language.", "");
 regGS("You must select a publication.", "");
 regGS("You must select a file to upload.", "");
@@ -140,7 +143,6 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Немагчыма зрабіць папярэдні  агляд артыкула. Пераканайцеся, ці выбраны шаблён тытульнай старонкі.");
 regGS("No such article.", "Няма такога артыкула.");
 regGS("No such section.", "Няма такой рубрыкі:by ");
-regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("No such issue.", "Няма такога выпуску");

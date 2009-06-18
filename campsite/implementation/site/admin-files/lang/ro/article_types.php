@@ -1,8 +1,4 @@
 <?php 
-regGS("topic", "subiect de discuţie");
-regGS("text", "text");
-regGS("date", "data");
-regGS("body", "corp");
 regGS("You cannot merge the same type into itself.", "Nu poţi combina acelaşi tip cu el însuşi.");
 regGS("View the source ($1) version of $2", "Vezi versiunea ($1) a sursei pentru $2");
 regGS("View of original ($1) $2", "Vizualizarea originalului ($1) $2");

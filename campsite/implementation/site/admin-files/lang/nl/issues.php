@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "");
 regGS("The language and URL name must be unique for each issue in this publication.", "");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Wijzig de uitgave details");
 regGS("You do not have the right to change issue details.", "Je hebt niet de rechten om de uitgave details te wijzigen.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publicatie datum<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("Front Page Template", "Voorpagina Sjabloon");
-regGS("Issue $1 updated in publication $2", "Uitgave $1 bijgewerkt in publicatie $2");
 regGS("You do not have the right to delete issues.", "Je hebt niet de rechten om uitgaven te verwijderen.");
 regGS("Are you sure you want to delete the issue $1?", "Wet je zeker dat je uitgave $1 wilt verwijderen?");
 regGS("Use the structure of the previous issue", "Gebruik de structuur van de vorige uitgave");

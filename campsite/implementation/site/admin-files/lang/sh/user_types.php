@@ -1,6 +1,5 @@
 <?php 
-regGS("There are no sections", "Nema rubrika");
-regGS("There are no issues", "Nema izdanja");
+regGS("Permissions changed for user type \"$1\"", "");
 regGS("User Type '$1' successfully deleted", "Tip korisnika '$1' je uspešno obrisan");
 regGS("Permissions successfully modified", "Prava su uspešno promenjena");
 regGS("User types", "Tipovi korisnika");
@@ -11,7 +10,6 @@ regGS("You do not have the right to delete user types.", "Nemate pravo da briše
 regGS("User type", "Tip korsnika");
 regGS("Change user type permissions", "Promeni prava dodeljena tipu korisnika");
 regGS("You do not have the right to change user type permissions.", "Nemate pravo da menjate dodeljena prava tipu korisnika.");
-regGS("User type $1 changed permissions", "Prava dodeljena tipu korisnika $1 su promenjena");
 regGS("A user type with the name '$1' already exists.", "Tip korisnika sa imenom '$1' već postoji.");
 regGS("Access", "Pristup");
 regGS("You do not have the right to add user types.", "Nemate pravo da dodajete tipove korisnika");

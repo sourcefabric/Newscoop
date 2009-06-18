@@ -1,4 +1,6 @@
 <?php 
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "");
 regGS("Unable to add attachment.", "Немагчыма дадаць файл.");
 regGS("There was a problem uploading the file.", "Праблема загрузкі файла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Загружаны файл захаваны на сервер часткова. Гэта звязана з тым, што максімальна дапушчальны час загрузкі файла пераўзыходзіць час, неабходны для загрузкі гэтага файла. Максімальны час загрузкі вызначаны ў файле 'php.ini'");

@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -70,12 +72,10 @@ regGS("User account $1 was created successfully.", "Användarkontot $1 skapades 
 regGS("Click here to change password", "Klicka här för att byta lösenord");
 regGS("Old Password", "Gammalt lösenord");
 regGS("You do not have the right to change user account permissions.", "du har inte rätt att ändra användarkontorättigheter.");
-regGS("Permissions for $1 changed", "Rättigheterna för $1 ändrade");
 regGS("You do not have the right to change user account information.", "Du har inte rätt att ändra användarkontoinformation.");
 regGS("Click here to customize user permissions", "Klicka här för att modifiera användarrättigheterna");
 regGS("Click here to use existing user type permissions (discard customization)", "Klicka här för att använda en existerande användartyp (ta bort modifikationer)");
 regGS("Click here to leave password unchanged", "Klicka här för att lämna lösenordet oförändrat");
-regGS("User account information changed for $1", "Användarkontoinformationen ändrat för $1");
 regGS("The password you typed is incorrect.", "Lösenordet du skrev är felaktigt.");
 regGS("You do not have the right to delete user accounts.", "Du har inte rätt att radera användarkonton.");
 regGS("Are you sure you want to delete the user account $1 ?", "Är du säker att du vill radera användarkontot $1?");

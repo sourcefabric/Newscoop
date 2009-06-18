@@ -50,9 +50,9 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="N" checked> <?php putGS('Delete all articles in this section\'s language ($1)', $sectionObj->getLanguageName()); ?>
+                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="N" checked> <?php putGS('Delete all articles written in $1 language from this section', $sectionObj->getLanguageName()); ?>
                 <br/>
-                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="Y"> <?php putGS('Delete all articles and all of their translations '); ?>
+                <INPUT TYPE="radio" NAME="f_delete_all_articles_translations" class="input_checkbox" value="Y"> <?php putGS('Delete all articles and all of their translations'); ?>
         </TD>
 </TR>
 <TR>

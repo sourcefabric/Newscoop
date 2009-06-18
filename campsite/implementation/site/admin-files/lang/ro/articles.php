@@ -1,4 +1,7 @@
 <?php 
+regGS("Unable to reach Campsite. Please check your internet connection.", "");
+regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");
+regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");
 regGS("You must select an article language.", "");
 regGS("You must select a publication.", "");
 regGS("You must select a file to upload.", "");
@@ -141,5 +144,4 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Articolul nu există");
 regGS("No such section.", "Secţiunea nu există.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)", "Article content edited for \"$1\" (Publication: $2, Issue: $3, Section: $4, Language: $5)");
 ?>

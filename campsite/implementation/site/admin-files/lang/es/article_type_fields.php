@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "");
 regGS("Is Content", "");
 regGS("Back to Article Types List", "");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "Solo puede usar letras
 regGS("Translating field", "Campo de traducción");
 regGS("The translation could not be added.", "No se pudo agregar la traducción.");
 regGS("The field $1 does not exist.", "El campo $1 no existe.");
-regGS("The field $1 does not already exist.", "El campo $1 todavía no existe.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "El campo $1 solo puede contener letras y el caracter de guión mayor (_).");
 regGS("Template Field Name", "Campo nombre de la plantilla");
 regGS("Show/Hide", "Mostrar/ocultar");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "$1 el tipo de artículo $2");
 regGS("Top element", "Elemento superior o encabezado");
 regGS("Article type fields", "Campos de tipo de archivo");
 regGS("Delete field $1", "Borrar campo $1");
-regGS("Multi-line Text with WYSIWYG", "Cuerpo del artículo");
-regGS("Single-line Text", "Texto");
 regGS("Adding new field", "Agregar nuevo campo");
 regGS("You do not have the right to add article type fields.", "No tiene derecho para agregar campos de tipo de articulo");
 regGS("The field $1 already exists.", "El campo $1 ya existe");

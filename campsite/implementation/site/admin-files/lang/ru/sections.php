@@ -1,10 +1,15 @@
 <?php 
+regGS("Delete all articles written in $1 language from this section", "");
+regGS("Delete all articles and all of their translations", "");
+regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");
+regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "");
+regGS("Delete only this section ($1)", "");
+regGS("Delete all translations of this section", "");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Количество статей <BR><SMALL>(Опубликованных/Общее)</SMALL>");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL должен быть уникальным для всех рубрик в этом выпуске.<br>Указанный URL (\"$1\") конфликтует с рубрикой \"$2$3. $4$5\"");
 regGS("Section updated", "Рубрика обновлена");
 regGS("There are $1 subscriptions which will be affected.", "Будет применено к $1 подписке(ам)");
 regGS("There are $1 articles in this section.", "Статей в этой рубрике: $1.");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Рубрика #$1 \"$2\" обновлена. (Издание: $3, Выпуск: $4)");
 regGS("Go To Articles", "Перейти к статьям");
 regGS("Add section to all subscriptions.", "Добавить рубрику ко всем подпискам.");
 regGS("Delete section from all subscriptions.", "Удалить рубрику из всех подписок.");

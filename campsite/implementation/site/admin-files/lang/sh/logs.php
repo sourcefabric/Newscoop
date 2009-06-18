@@ -1,4 +1,5 @@
-<?php
+<?php 
+regGS("User IP Address", "");
 regGS("You do not have the right to view logs.", "Nemate pravo dа pregledate logove");
 regGS("User", "Korisnik");
 regGS("Event", "Akcija");

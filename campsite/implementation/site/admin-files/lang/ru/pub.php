@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "Адрес модератора");
 regGS("From Address", "От");
 regGS("Use CAPTCHA to prevent spam?", "Использовать CAPTCHA для предотвращения спама?");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "Не удалось удал�
 regGS("The publication could not be added.", "Не удалось добавить издание.");
 regGS("You do not have the right to manage publications.", "Вы не имеете прав доступа для управления изданиями.");
 regGS("You must select a country.", "Вы должны выбрать страну.");
-regGS("Default subscription time for $1 changed", "Время подписки по умолчанию для $1 изменено");
-regGS("Subscription default time for $1 deleted", "Время подписки по умолчанию для $1 удалено");
 regGS("Add new alias", "Добавить новый псевдоним");
 regGS("Alias (click to edit)", "Псевдонимы (щелкните для правки)");
 regGS("Edit aliases", "Правка псевдонимов");
 regGS("Publication Aliases", "Псевдонимы изданий");
 regGS("Adding new alias", "Добавление новых псевдонимов");
-regGS("The site alias $1 has been added to publication $2.", "Псевдоним сайта $1 добавлен к изданию $2.");
 regGS("The site alias $1 could not be added.", "Псевдоним сайта $1 не может быть добавлен.");
 regGS("Another alias with the same name exists already.", "Псевдоним с таким же именем уже существует.");
 regGS("Edit alias", "Править псевдоним");
 regGS("Editing alias", "Редактирование псевдонима");
-regGS("The site alias for publication $1 has been modified to $2.", "Псевдоним сайта для издания $1 изменен на $2.");
 regGS("The site alias $1 could not be modified.", "Псевдоним сайта $1 не может быть изменен.");
 regGS("Are you sure you want to delete the alias $1?", "Вы уверены, что хотите удалить псевдоним $1?");
 regGS("Deleting alias", "Удаление псевдонима");
 regGS("The alias $1 could not be deleted.", "Псевдоним $1 не может быть изменен.");
-regGS("The alias $1 has been deleted from publication $2.", "Псевдоним $1 был удален из издания $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 - это псевдоним публикации по умолчанию, он не может быть удален.");
 regGS("You do not have the right to add publications.", "Вы не имеете прав доступа для добавления нового издания.");
 regGS("There are $1 issue(s) left.", "Отсалось выпусков: $1");

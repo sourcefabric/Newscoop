@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "");
 regGS("From Address", "");
 regGS("Use CAPTCHA to prevent spam?", "");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "Publikationen $1 kunde inte r
 regGS("The publication could not be added.", "Publikationen kunde inte läggas till.");
 regGS("You do not have the right to manage publications.", "Du har inte rätt att hantera publikationer.");
 regGS("You must select a country.", "Du måste välja ett land.");
-regGS("Default subscription time for $1 changed", "Grundprenumerationstid för $1 ändrad");
-regGS("Subscription default time for $1 deleted", "Grundprenumerationstiden för $1 raderad");
 regGS("Add new alias", "Lägg till nytt alias");
 regGS("Alias (click to edit)", "Alias (klicka för att redigera)");
 regGS("Edit aliases", "Redigera aliasar");
 regGS("Publication Aliases", "Publikationsaliasar");
 regGS("Adding new alias", "Lägger till nytt alias");
-regGS("The site alias $1 has been added to publication $2.", "Sajtaliaset $1 har lagts till till publikationen $2.");
 regGS("The site alias $1 could not be added.", "Sajtaliaset $1 kunde inte läggas till.");
 regGS("Another alias with the same name exists already.", "Ett annat alias med samma namn finns redan.");
 regGS("Edit alias", "Redigera alias");
 regGS("Editing alias", "Redigerar alias");
-regGS("The site alias for publication $1 has been modified to $2.", "Sajtaliaset för publikationen $1 har ändrats till $2.");
 regGS("The site alias $1 could not be modified.", "Sajtaliaset $1 kunde inte ändras.");
 regGS("Are you sure you want to delete the alias $1?", "Är du säker att du vill radera sajtaliaset $1?");
 regGS("Deleting alias", "Raderar alias");
 regGS("The alias $1 could not be deleted.", "Aliaset $1 kunde inte raderas.");
-regGS("The alias $1 has been deleted from publication $2.", "Aliaset $1 har raderats från publikationen $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 är grundpublikationsaliaset, det kan inte raderas.");
 regGS("You do not have the right to add publications.", "Du har inte rätt att lägga till publikationer.");
 regGS("There are $1 issue(s) left.", "Det finns $1 utgåva(or) kvar.");

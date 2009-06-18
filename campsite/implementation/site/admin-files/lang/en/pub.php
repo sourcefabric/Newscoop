@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "The site alias for publication \"$1\" has been modified to \"$2\".");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "The site alias \"$1\" has been added to publication \"$2\".");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "The alias \"$1\" has been deleted from publication \"$2\".");
+regGS("Subscription default time for \"$1\":$2 deleted", "Subscription default time for \"$1\":$2 deleted");
+regGS("Default subscription time for \"$1\":$2 changed", "Default subscription time for \"$1\":$2 changed");
 regGS("Moderator Address", "Moderator Address");
 regGS("From Address", "From Address");
 regGS("Use CAPTCHA to prevent spam?", "Use CAPTCHA to prevent spam?");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "The publication $1 could not 
 regGS("The publication could not be added.", "The publication could not be added.");
 regGS("You do not have the right to manage publications.", "You do not have the right to manage publications.");
 regGS("You must select a country.", "You must select a country.");
-regGS("Default subscription time for $1 changed", "Default subscription time for $1 changed");
-regGS("Subscription default time for $1 deleted", "Subscription default time for $1 deleted");
 regGS("Add new alias", "Add new alias");
 regGS("Alias (click to edit)", "Alias (click to edit)");
 regGS("Edit aliases", "Edit aliases");
 regGS("Publication Aliases", "Publication Aliases");
 regGS("Adding new alias", "Adding new alias");
-regGS("The site alias $1 has been added to publication $2.", "The site alias $1 has been added to publication $2.");
 regGS("The site alias $1 could not be added.", "The site alias $1 could not be added.");
 regGS("Another alias with the same name exists already.", "Another alias with the same name exists already.");
 regGS("Edit alias", "Edit alias");
 regGS("Editing alias", "Editing alias");
-regGS("The site alias for publication $1 has been modified to $2.", "The site alias for publication $1 has been modified to $2.");
 regGS("The site alias $1 could not be modified.", "The site alias $1 could not be modified.");
 regGS("Are you sure you want to delete the alias $1?", "Are you sure you want to delete the alias $1?");
 regGS("Deleting alias", "Deleting alias");
 regGS("The alias $1 could not be deleted.", "The alias $1 could not be deleted.");
-regGS("The alias $1 has been deleted from publication $2.", "The alias $1 has been deleted from publication $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 is the default publication alias, it can not be deleted.");
 regGS("You do not have the right to add publications.", "You do not have the right to add publications.");
 regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.");

@@ -1,4 +1,6 @@
 <?php 
+regGS("User account information changed for \"$1\"", "");
+regGS("Permissions changed for user \"$1\"", "");
 regGS("Password Generator", "");
 regGS("Generate", "");
 regGS("Clean", "");
@@ -82,7 +84,6 @@ regGS("Edit user account permissions", "Editovat práva uživatelského účtu")
 regGS("You do not have the right to change user account permissions.", "Nemáte právo měnit práva uživatelského účtu");
 regGS("This user account does not have permissions information.", "Tento uživatelský účet nemá informace o právech");
 regGS("Updating user account permissions", "Obnova práv uživatelského účtu");
-regGS("Permissions for $1 changed", "Práva pro $1 byla změněna");
 regGS("User account permissions have been successfuly updated.", "Práva uživatelského účtu byla úspěšně obnovena");
 regGS("User account permissions could not be updated.", "Práva uživatelského účtu nemohla být obnovena");
 regGS("Change user account information", "Změnit informace uživatelského účtu");
@@ -90,7 +91,6 @@ regGS("You do not have the right to change user account information.", "Nemáte 
 regGS("Changing user account information", "Změna informací uživatelského účtu");
 regGS("User account information has been changed.", "Informace uživatelského účtu byly změněny");
 regGS("User account information could not be changed.", "Informace uživatelského účtu nemohly být změněny");
-regGS("User account information changed for $1", "Informace uživatelského účtu byly změněny pro $1");
 regGS("Old password", "Staré heslo");
 regGS("New password", "Nové heslo");
 regGS("Confirm new password", "Potvrďte nové heslo");

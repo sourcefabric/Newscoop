@@ -1,4 +1,6 @@
 <?php 
+regGS("Precision", "");
+regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "");
 regGS("Is Content", "");
 regGS("Back to Article Types List", "");
@@ -14,7 +16,6 @@ regGS("You can only use letters or the underscore (_).", "");
 regGS("Translating field", "");
 regGS("The translation could not be added.", "");
 regGS("The field $1 does not exist.", "");
-regGS("The field $1 does not already exist.", "");
 regGS("The $1 field may only contain letters and underscore (_) character.", "");
 regGS("Template Field Name", "");
 regGS("Show/Hide", "");
@@ -32,8 +33,6 @@ regGS("$1 article type $2", "");
 regGS("Top element", "Vršni element");
 regGS("Article type fields", "Polja za tip članaka");
 regGS("Delete field $1", "Izbriši polje $1");
-regGS("Multi-line Text with WYSIWYG", "Tijelo članka");
-regGS("Single-line Text", "Tekst");
 regGS("Adding new field", "Dodavanje novog polja");
 regGS("You do not have the right to add article type fields.", "Nemate ovlasti dodavati polja za tip članaka.");
 regGS("The field $1 already exists.", "Polje $1 već postoji.");

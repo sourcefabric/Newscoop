@@ -1,10 +1,15 @@
 <?php 
+regGS("Delete all articles written in $1 language from this section", "");
+regGS("Delete all articles and all of their translations", "");
+regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");
+regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "");
+regGS("Delete only this section ($1)", "");
+regGS("Delete all translations of this section", "");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "Adresa de Internet trebuie să fie unică pentru fiecare secţiune din această ediţie.<br>Adresa de Internet specificată (\"$1\") intră în conflict cu secţiunea \"$2$3. $4$5\"");
 regGS("Section updated", "Secţiunea a fost actualizată");
 regGS("There are $1 subscriptions which will be affected.", "Există $1 abonamente care vor fi afectate.");
 regGS("There are $1 articles in this section.", "Există $1 articole în această secţiune.");
-regGS("Section #$1 \"$2\" updated. (Publication: $3, Issue: $4)", "Secţiunea #$1 \"$2\" a fost actualizată. (Publicaţia: $3, Ediţia: $4)");
 regGS("Go To Articles", "Mergi la articole");
 regGS("Add section to all subscriptions.", "Adaugă secţiunea la toate abonamentele.");
 regGS("Delete section from all subscriptions.", "Şterge secţiunea din toate abonamentele.");

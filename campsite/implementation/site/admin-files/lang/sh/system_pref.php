@@ -1,11 +1,16 @@
 <?php 
+regGS("Templates filter mask (separated by comma)", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "");
+regGS("Image Resizing Ratio:", "");
+regGS("Image Resizing Ratio", "");
+regGS("Editor Settings", "");
+regGS("Cache Engine:", "");
 regGS("Session Lifetime", "Trajanje sessiona");
 regGS("Please enter the site title", "Unesite naziv sajta");
 regGS("Please enter the site meta keywords", "Unesite meta ključne reči za sajt");
 regGS("Please enter the site meta description", "Unesite meta opis sajta");
 regGS("Please enter the secret key", "Unesite tajni ključ");
 regGS("Please enter the Keyword Seperator", "Unesite separator ključnih reči");
-regGS("Invalid: You need PHP APC enabled in order to use the caching system.", "Greška: potrebno je da imate omogućen PHP APC da biste bili u mogućnosti da koristite sistem keširanja.");
 regGS("Site Title:", "Naziv sajta");
 regGS("Site On-Line:", "Sajt online?");
 regGS("Site Meta Keywords:", "Meta ključne reči sajta:");

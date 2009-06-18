@@ -1,4 +1,7 @@
 <?php 
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Valorile pe care încerci să le impui intră în conflict cu numărul \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Numărul trebuie să fie unic pentru fiecare ediţie din această publicaţie în aceeaşi limbă.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Limba şi adresa de Internet trebuie să fie unice pentru fiecare ediţiei a acestei publicaţii.");
@@ -28,7 +31,6 @@ regGS("Change issue details", "Modifică detaliile ediţiei");
 regGS("You do not have the right to change issue details.", "Nu ai dreptul să modifici detaliile ediţiei.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Data publicării<br><small>(aaaa-ll-zz)</small>");
 regGS("Front Page Template", "Şablonul primei pagini");
-regGS("Issue $1 updated in publication $2", "Ediţia $1 din publicaţia $2 a fost modificată");
 regGS("You do not have the right to delete issues.", "Nu ai dreptul să ştergi ediţii.");
 regGS("Are you sure you want to delete the issue $1?", "Eşti sigur că vrei să ştergi ediţia $1?");
 regGS("Use the structure of the previous issue", "Foloseşte structura ediţiei anterioare");

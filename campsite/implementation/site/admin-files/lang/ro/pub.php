@@ -1,4 +1,9 @@
 <?php 
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
+regGS("Subscription default time for \"$1\":$2 deleted", "");
+regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "Adresa moderatorului");
 regGS("From Address", "Adresa de la care se trimite");
 regGS("Use CAPTCHA to prevent spam?", "Vrei să foloseşti CAPTCHA pentru a opri mesajele nesolicitate?");
@@ -52,24 +57,19 @@ regGS("The publication $1 could not be deleted.", "Publicaţia $1 nu poate fi ş
 regGS("The publication could not be added.", "Publicaţia nu poate fi adăugată");
 regGS("You do not have the right to manage publications.", "Nu ai dreptul de a administra publicaţii.");
 regGS("You must select a country.", "Trebuie să selectezi o ţară.");
-regGS("Default subscription time for $1 changed", "Timpul din oficiu pe ţară pentru abonament pentru ţara $1 a fost modificat");
-regGS("Subscription default time for $1 deleted", "Timpul din oficiu de abonament pentru ţara $1 a fost şters");
 regGS("Add new alias", "Adaugă alias nou");
 regGS("Alias (click to edit)", "Alias (clic pentru a modifica)");
 regGS("Edit aliases", "Modifică alias-uri");
 regGS("Publication Aliases", "Alias-urile publicaţiilor");
 regGS("Adding new alias", "Se adaugă alias nou");
-regGS("The site alias $1 has been added to publication $2.", "Alias-ul site-ului $1 a fost adăugat publicaţiei $2.");
 regGS("The site alias $1 could not be added.", "Alias-ul site-ului $1 nu a putut fi adăugat.");
 regGS("Another alias with the same name exists already.", "Un alias identic există deja.");
 regGS("Edit alias", "Modifică alias");
 regGS("Editing alias", "Se modifică alias");
-regGS("The site alias for publication $1 has been modified to $2.", "Alias-ul site-ului pentru publicaţia $1 a fost modificat în $2.");
 regGS("The site alias $1 could not be modified.", "Alias-ul site-ului $1 nu a putut fi modificat.");
 regGS("Are you sure you want to delete the alias $1?", "Eşti sigur că vrei să ştergi alias-ul $1?");
 regGS("Deleting alias", "Se şterge alias-ul");
 regGS("The alias $1 could not be deleted.", "Alias-ul $1 nu a putut fi şters.");
-regGS("The alias $1 has been deleted from publication $2.", "Alias-ul $1 a fost şters din publicaţia $2.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 este alias-ul din oficiu al publicaţiei, nu poate fi şters.");
 regGS("You do not have the right to add publications.", "Nu ai dreptul să adaugi publicaţii.");
 regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii.");
