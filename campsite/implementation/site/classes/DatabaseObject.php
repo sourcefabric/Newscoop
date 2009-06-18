@@ -592,7 +592,7 @@ class DatabaseObject {
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
-				$value = "'".$g_ado_db->escape($p_value)."'";
+				$value = is_null($p_value) ? 'NULL' : "'".$g_ado_db->escape($p_value)."'";
 			}
 			$queryStr = 'UPDATE '.$this->m_dbTableName
 						.' SET `'. $p_dbColumnName.'`='.$value

@@ -50,6 +50,13 @@ function UpdateArticleFieldContext() {
 	    ToggleRowVisibility('is_content');
 	    ToggleBoolValue('show_is_content');
 	}
+
+    var show_precision = my_form.elements["show_precision"].value
+    if ((show_precision == "true" && field_type != "numeric")
+            || (show_precision == "false" && field_type == "numeric")) {
+        ToggleRowVisibility('precision');
+        ToggleBoolValue('show_precision');
+    }
 }
 </script>
 
@@ -57,6 +64,7 @@ function UpdateArticleFieldContext() {
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
+<input type="hidden" name="show_precision" id="show_precision" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
@@ -107,6 +115,10 @@ foreach ($topics as $topicPath) {
 <tr style="display: none;" id="is_content">
     <td><?php putGS('Is Content'); ?>:</td>
     <td><input type="checkbox" name="f_is_content"></td>
+</tr>
+<tr style="display: none;" id="precision">
+    <td><?php putGS('Precision'); ?>:</td>
+    <td><input type="text" class="input_select" size="2" maxlength="2" name="f_precision"></td>
 </tr>
 <TR>
 	<TD COLSPAN="2">

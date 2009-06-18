@@ -20,6 +20,7 @@ class ArticleTypeField extends DatabaseObject {
     const TYPE_DATE = 'date';
     const TYPE_TOPIC = 'topic';
     const TYPE_SWITCH = 'switch';
+    const TYPE_NUMERIC = 'numeric';
 
     var $m_dbTableName = 'ArticleTypeMetadata';
 	var $m_keyColumnNames = array('type_name', 'field_name');
@@ -92,9 +93,9 @@ class ArticleTypeField extends DatabaseObject {
 	/**
 	 * Create a column in the table.
 	 * @param string $p_type
-	 *		Can be one of: 'text', 'date', 'body'.
+	 *		Can be one of: 'text', 'date', 'body', 'switch', 'numeric'.
 	 */
-	public function create($p_type, $p_rootTopicId = 0, $p_isContent = false)
+	public function create($p_type, array $p_params = array())
 	{
 		global $g_ado_db;
 
@@ -104,11 +105,14 @@ class ArticleTypeField extends DatabaseObject {
 			return false;
 		}
 
-        $p_rootTopicId = (int)$p_rootTopicId;
 		if ($p_type == self::TYPE_TOPIC && $this->getPrintName() != 'NULL') {
+			if (!isset($p_params['root_topic_id']) && !is_numeric($p_params['root_topic_id'])) {
+				return false;
+			}
+			$rootTopicId = (int)$p_params['root_topic_id'];
 			$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
 			. "VALUES ('".$g_ado_db->escape($this->m_data['type_name']) . "', '"
-			. $g_ado_db->escape($this->m_data['field_name']) . "', '$p_rootTopicId')";
+			. $g_ado_db->escape($this->m_data['field_name']) . "', '$rootTopicId')";
 			if (!$g_ado_db->Execute($queryStr2)) {
 				return false;
 			}
@@ -120,8 +124,14 @@ class ArticleTypeField extends DatabaseObject {
 			$success = $g_ado_db->Execute($queryStr);
 		}
 		if ($success || $this->getPrintName() == 'NULL') {
-			$data = array('is_content_field'=>((int)$p_isContent && $this->getPrintName() != 'NULL'));
+			$data = array();
 			if ($this->getPrintName() != 'NULL') {
+				if ($p_type == self::TYPE_BODY && isset($p_params['is_content'])) {
+                    $data['is_content_field'] = (int)$p_params['is_content'];
+				}
+				if ($p_type == self::TYPE_NUMERIC && isset($p_params['precision'])) {
+					$data['field_type_param'] = 'precision=' . (int)$p_params['precision'];
+				}
 				$data['field_type'] = $p_type;
 				$data['field_weight'] = $this->getNextOrder();
 			}
@@ -148,14 +158,16 @@ class ArticleTypeField extends DatabaseObject {
 	{
 		switch ($p_type) {
 			case self::TYPE_BODY:
-				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH);
+				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
 			case self::TYPE_TEXT:
-				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH);
+				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
 			case self::TYPE_DATE:
 				return array();
 			case self::TYPE_TOPIC:
 				return array();
 			case self::TYPE_SWITCH:
+				return array();
+			case self::TYPE_NUMERIC:
 				return array();
 		}
 		return false;
@@ -217,9 +229,9 @@ class ArticleTypeField extends DatabaseObject {
 	/**
      * Changes the type of the field
      *
-     * @param string p_type (text|date|body|topic)
+     * @param string p_type (text|date|body|topic|switch|numeric)
      */
-	public function setType($p_type, $p_rootTopicId)
+	public function setType($p_type)
 	{
 		global $g_ado_db;
 
@@ -240,18 +252,11 @@ class ArticleTypeField extends DatabaseObject {
                 return false;
             }
         }
-		if ($p_type == self::TYPE_TOPIC) {
-			$queryStr2 = "UPDATE TopicFields SET RootTopicId = " . (int)$p_rootTopicId
-			." WHERE ArticleType = '". $g_ado_db->escape($this->m_data['type_name'])
-			."' AND FieldName = '". $g_ado_db->escape($this->m_data['field_name']) ."'";
-			if (!$g_ado_db->Execute($queryStr2)) {
-				return false;
-			}
-		}
         $queryStr = "ALTER TABLE `X" . $this->m_data['type_name'] . "` MODIFY `"
         . $this->getName() . '` ' . $types[$p_type];
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
+			$this->setProperty('field_type_param', null);
 			$success = $this->setProperty('field_type', $p_type);
             $this->m_rootTopicId = null;
 		}
@@ -397,6 +402,8 @@ class ArticleTypeField extends DatabaseObject {
 	    	break;
 	    case self::TYPE_SWITCH:
 	    	return getGS('Switch');
+	    case self::TYPE_NUMERIC:
+	    	return getGS('Numeric');
 	    default:
 	    	return "unknown";
 		}
@@ -807,7 +814,8 @@ class ArticleTypeField extends DatabaseObject {
 			 self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
 			 self::TYPE_DATE=>'DATE NOT NULL',
 			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL',
-			 self::TYPE_SWITCH=>'BOOLEAN NOT NULL');
+			 self::TYPE_SWITCH=>'BOOLEAN NOT NULL',
+			 self::TYPE_NUMERIC=>'DOUBLE NOT NULL');
         return $types;
 	}
 } // class ArticleTypeField

@@ -13,31 +13,25 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 $articleTypeName = Input::Get('f_article_type');
 $fieldName = trim(Input::Get('f_field_name'));
 $fieldType = trim(Input::Get('f_article_field_type'));
-$rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 
 $correct = true;
 $errorMsgs = array();
 
-if (!ArticleType::IsValidFieldName($fieldName)) {
-	$errorMsgs[] = getGS('The $1  must not be void and may only contain letters and underscore (_) character.','<B>'.getGS('Name').'</B>');
-	$correct = false;
-}
 if (!$field->exists()) {
-	$errorMsgs[] = getGS('The field $1 does not already exist.', '<B>'.urlencode($fieldName).'</B>');
+	$errorMsgs[] = getGS('The field $1 does not exist.', '<B>'.urlencode($fieldName).'</B>');
 	$correct = false;
 }
 
-$validTypes = array('text', 'date', 'body', 'topic');
-if (!in_array($fieldType, $validTypes)) {
-	$errorMsgs[] = getGS('Invalid field type.');
+if (array_search($fieldType, $field->getConvertibleToTypes()) === false) {
+	$errorMsgs[] = getGS('Can not convert the field $1 from $2 to type $3.',
+	$fieldName, $field->getType(), $fieldType);
 	$correct = false;
 }
 
 if ($correct) {
-	//$field->create($fieldType, $rootTopicId);
-	$field->setType($fieldType, $rootTopicId);
+	$field->setType($fieldType);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 
@@ -61,14 +55,14 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2">
-		<BLOCKQUOTE>
+		<BLOCKQUOTE><ul>
 		<?php
 		foreach ($errorMsgs as $errorMsg) { ?>
 			<li><?php p($errorMsg); ?></li>
 			<?php
 		}
 		?>
-		</BLOCKQUOTE>
+		</ul></BLOCKQUOTE>
 	</TD>
 </TR>
 <TR>

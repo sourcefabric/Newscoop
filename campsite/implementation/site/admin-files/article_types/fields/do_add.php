@@ -15,6 +15,7 @@ $fieldName = trim(Input::Get('f_field_name'));
 $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 $isContent = Input::Get('f_is_content');
+$precision = Input::Get('f_precision');
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 
@@ -37,7 +38,9 @@ if (!in_array($fieldType, $validTypes)) {
 }
 
 if ($correct) {
-	$field->create($fieldType, $rootTopicId, strtolower($isContent) == 'on');
+	$params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
+	'precision'=>$precision);
+	$field->create($fieldType, $params);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 
