@@ -73,7 +73,7 @@ if (in_array($extension, $imageExtensions)) {
 		$contents = $f_content;
 	}
 	?>
-	<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/SyntaxHighlighter.css"></link>
+	<link type="text/css" rel="stylesheet" href="<?php echo $GLOBALS['g_campsiteDir']; ?>/javascript/SyntaxHighlighter/SyntaxHighlighter.css"></link>
 	<P>
 	<FORM NAME="template_edit" METHOD="POST" ACTION="do_edit.php"  >
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
@@ -90,16 +90,19 @@ if (in_array($extension, $imageExtensions)) {
 	</TR>
 
 	<TR>
-		<TD colspan="2"><TEXTAREA ROWS="25" COLS="90" NAME="cField" WRAP="NO" class="input_text"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA></TD>
-	</TR>
-
-	<TR>
-		<TD align="center" colspan="2">
-		<?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
-		<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-		<?php  } else { ?>
-		<INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
-		<?php  } ?>
+		<TD colspan="2">
+		  <TEXTAREA ROWS="40" COLS="120" NAME="cField" id="cField" WRAP="NO" class="input_text"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA>
+    	<script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/editarea/edit_area/edit_area_full.js"></script>
+      <script language="javascript" type="text/javascript">
+      editAreaLoader.init({
+      	id : "cField"		          // textarea id
+      	,syntax: "html"			      // syntax to be used for highgliting
+      	,start_highlight: true		  // to display with highlight mode on start-up
+      	,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help"
+        ,syntax_selection_allow: "css,html,js,php,xml"
+        ,replace_tab_by_spaces: 2
+      });
+      </script>
 		</TD>
     </tr>
 	</table>
@@ -130,21 +133,6 @@ if (in_array($extension, $imageExtensions)) {
 	</TR>
 	</TABLE>
 	<?php } ?>
-
-	<?php if (trim($contents) != "") {
-		?>
-	<textarea name="code" class="html" cols="60" rows="10"><?php  p(htmlspecialchars($contents)); ?></textarea>
-	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/shCore.js"></script>
-	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/syntaxHighlighter/shBrushCSharp.js"></script>
-	<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/SyntaxHighlighter/shBrushXml.js"></script>
-	<script language="javascript">
-	    dp.SyntaxHighlighter.HighlightAll('code');
-	</script>
-	<?php } ?>
-
-	<SCRIPT>
-	document.template_edit.cField.focus();
-	</SCRIPT>
 <?php } ?>
 <p>
 <P>
