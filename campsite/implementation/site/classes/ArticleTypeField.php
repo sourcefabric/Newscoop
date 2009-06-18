@@ -433,7 +433,7 @@ class ArticleTypeField extends DatabaseObject {
 	    case self::TYPE_NUMERIC:
 	    	return getGS('Numeric');
 	    default:
-	    	return "unknown";
+	    	return getGS("unknown");
 		}
 	} // fn VerboseTypeName
 

@@ -28,6 +28,8 @@ set_include_path(get_include_path() . PATH_SEPARATOR
 
 camp_set_error_handler("camp_report_bug");
 
+camp_load_translation_strings("api");
+
 $no_menu_scripts = array(
     '/login.php',
     '/do_login.php',
