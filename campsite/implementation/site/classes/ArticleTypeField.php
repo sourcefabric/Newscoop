@@ -21,6 +21,9 @@ class ArticleTypeField extends DatabaseObject {
     const TYPE_TOPIC = 'topic';
     const TYPE_SWITCH = 'switch';
     const TYPE_NUMERIC = 'numeric';
+    
+    const NUMERIC_DEFAULT_DIGITS = 65;
+    const NUMERIC_DEFAULT_PRECISION = 2;
 
     var $m_dbTableName = 'ArticleTypeMetadata';
 	var $m_keyColumnNames = array('type_name', 'field_name');
@@ -35,6 +38,7 @@ class ArticleTypeField extends DatabaseObject {
         'field_type_param',
         'is_content_field');
     private $m_rootTopicId = null;
+    private $m_precision = null;
 
 
 	public function __construct($p_articleTypeName = null, $p_fieldName = null)
@@ -71,14 +75,14 @@ class ArticleTypeField extends DatabaseObject {
 			return 0;
 		}
 
-		$types = self::DatabaseTypes();
-		$queryStr = "ALTER TABLE `X". $this->m_data['type_name']
-		."` CHANGE COLUMN `". $this->getName() ."` `F$p_newName` "
-		. $types[$this->getType()];
+		$types = self::DatabaseTypes(null, $this->m_precision);
+
+		$queryStr = "ALTER TABLE `X". $this->m_data['type_name']."` CHANGE COLUMN `"
+		. $this->getName() ."` `F$p_newName` ". $types[$this->getType()];
 		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
-                        $fieldName = $this->m_data['field_name'];
+			$fieldName = $this->m_data['field_name'];
 			$this->setProperty('field_name', $p_newName);
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
@@ -88,6 +92,29 @@ class ArticleTypeField extends DatabaseObject {
 			Log::Message($logText, null, 62);
 		}
 	} // fn rename
+
+
+    /**
+     * Fetch a single record from the database for the given key.
+     *
+     * @param array $p_recordSet
+     *      If the record has already been fetched and we just need to
+     *      assign the data to the object's internal member variable.
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+	public function fetch($p_recordSet = null)
+	{
+		$success = parent::fetch($p_recordSet);
+		if ($success && $this->getType() == self::TYPE_NUMERIC) {
+			$params = explode('=', $this->m_data['field_type_param']);
+			if (isset($params[0]) && $params[0] == 'precision') {
+				$this->m_precision = (int) $params[1];
+			}
+		}
+		return $success;
+	}
 
 
 	/**
@@ -100,7 +127,8 @@ class ArticleTypeField extends DatabaseObject {
 		global $g_ado_db;
 
         $p_type = strtolower($p_type);
-        $types = self::DatabaseTypes();
+        $numericPrecision = isset($p_params['precision']) ? $p_params['precision'] : null;
+        $types = self::DatabaseTypes(null, $numericPrecision);
 		if ($this->getPrintName() != 'NULL' && !array_key_exists($p_type, $types)) {
 			return false;
 		}
@@ -808,14 +836,20 @@ class ArticleTypeField extends DatabaseObject {
 	 * Returns an array of valid field data types.
 	 * @return array
 	 */
-	public static function DatabaseTypes()
+	public static function DatabaseTypes($p_numericDigits = null, $p_numericPrecision = null)
 	{
-	    static $types = array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
+		$p_numericDigits = is_null($p_numericDigits) ? self::NUMERIC_DEFAULT_DIGITS : $p_numericDigits;
+		$p_numericPrecision = is_null($p_numericPrecision) ? self::NUMERIC_DEFAULT_PRECISION : $p_numericPrecision;
+		settype($p_numericDigits, 'integer');
+		settype($p_numericPrecision, 'integer');
+		$numericDef = "NUMERIC($p_numericDigits, $p_numericPrecision) NOT NULL";
+
+		$types = array(self::TYPE_TEXT=>'VARCHAR(255) NOT NULL',
 			 self::TYPE_BODY=>'MEDIUMBLOB NOT NULL',
 			 self::TYPE_DATE=>'DATE NOT NULL',
 			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL',
 			 self::TYPE_SWITCH=>'BOOLEAN NOT NULL',
-			 self::TYPE_NUMERIC=>'DOUBLE NOT NULL');
+			 self::TYPE_NUMERIC=>$numericDef);
         return $types;
 	}
 } // class ArticleTypeField

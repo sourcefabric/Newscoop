@@ -976,10 +976,42 @@ window.location.reload();
                 <?php echo $dbColumn->getDisplayName(); ?>:
             </td>
             <td>
-            <input type="checkbox" <?php echo $checked; ?> class="input_checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+            <input type="checkbox" <?php echo $checked; ?> class="input_checkbox"
+                   name="<?php echo $dbColumn->getName(); ?>"
+                   id="<?php echo $dbColumn->getName(); ?>"
+                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>
+                   onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
             </td>
             </tr>
 			<?php
+			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_NUMERIC) {
+            ?>
+            <tr>
+            <td align="left" style="padding-right: 5px;">
+                <?php if ($f_edit_mode == "edit") {
+                    $fCustomFields[] = $dbColumn->getName();
+                                    $saveButtonNames[] = 'save_' . $dbColumn->getName();
+                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
+            onclick: { fn: onButtonClick },
+            disabled: true
+    });';
+                                ?>
+                <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
+                <?php } ?>
+            </td>
+            <td align="right">
+                <?php echo $dbColumn->getDisplayName(); ?>:
+            </td>
+            <td>
+            <input type="text" class="input_text" size="20" maxlength="20"
+                   name="<?php echo $dbColumn->getName(); ?>"
+                   value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
+                   id="<?php echo $dbColumn->getName(); ?>"
+                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> 
+                   onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+            </td>
+            </tr>
+            <?php
 			}
 		} // foreach ($dbColumns as $dbColumn)
 		?>
