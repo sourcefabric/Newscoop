@@ -732,6 +732,7 @@ if ($f_edit_mode == "edit") { ?>
 
 			<?php
 			$fCustomFields = array();
+                        $fCustomSwitches = array();
                         $fCustomTextareas = array();
                         $saveButtons = array();
                         $saveButtonNames = array('save_f_article_title','save_f_article_author','save_f_keywords');
@@ -962,7 +963,7 @@ window.location.reload();
             <tr>
             <td align="left" style="padding-right: 5px;">
                 <?php if ($f_edit_mode == "edit") {
-                    $fCustomFields[] = $dbColumn->getName();
+                    $fCustomSwitches[] = $dbColumn->getName();
                                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
                     $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
             onclick: { fn: onButtonClick },
@@ -976,11 +977,7 @@ window.location.reload();
                 <?php echo $dbColumn->getDisplayName(); ?>:
             </td>
             <td>
-            <input type="checkbox" <?php echo $checked; ?> class="input_checkbox"
-                   name="<?php echo $dbColumn->getName(); ?>"
-                   id="<?php echo $dbColumn->getName(); ?>"
-                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>
-                   onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+            <input type="checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" class="input_checkbox" <?php echo $checked; ?> />
             </td>
             </tr>
 			<?php
@@ -1104,6 +1101,13 @@ for($i = 0; $i < sizeof($fCustomFields); $i++) {
     $jsArrayFieldsStr .= "'" . addslashes($fCustomFields[$i]) . "'";
     if ($i + 1 < sizeof($fCustomFields)) {
         $jsArrayFieldsStr .= ',';
+    }
+}
+$jsArraySwitchesStr = '';
+for($i = 0; $i < sizeof($fCustomSwitches); $i++) {
+    $jsArraySwitchesStr .= "'" . addslashes($fCustomSwitches[$i]) . "'";
+    if ($i + 1 < sizeof($fCustomSwitches)) {
+        $jsArraySwitchesStr .= ',';
     }
 }
 $jsArrayTextareasStr = '';
@@ -1249,12 +1253,21 @@ function makeRequest(a){
     var ycaFMessage = document.getElementById('f_message').value;
 
     var textFields = [<?php print($jsArrayFieldsStr); ?>];
+    var textSwitches = [<?php print($jsArraySwitchesStr); ?>];
     var textAreas = [<?php print($jsArrayTextareasStr); ?>];
     var postCustomFieldsData = '';
+    var postCustomSwitchesData = '';
     var postCustomTextareasData = '';
 
     for (i = 0; i < textFields.length; i++) {
         postCustomFieldsData += '&' + textFields[i] + '=' + encodeURIComponent(document.getElementById(textFields[i]).value);
+    }
+
+    for (i = 0; i < textSwitches.length; i++) {
+        if (document.getElementById(textSwitches[i]).checked == true)
+	    postCustomSwitchesData += '&' + textSwitches[i] + '=on';
+	else
+	    postCustomSwitchesData += '&' + textSwitches[i] + '=';
     }
 
     for (i = 0; i < textAreas.length; i++) {
@@ -1293,7 +1306,8 @@ function makeRequest(a){
       + "&f_language_selected=" + ycaFLanguageSelected
       + "&f_article_number=" + ycaFArticleNumber
       + "&f_message=" + encodeURIComponent(ycaFMessage)
-      + postCustomFieldsData + postCustomTextareasData + postAction;
+      + postCustomFieldsData + postCustomSwitchesData
+      + postCustomTextareasData + postAction;
 
     // Show the saving panel
     YAHOO.example.container.wait.show();
