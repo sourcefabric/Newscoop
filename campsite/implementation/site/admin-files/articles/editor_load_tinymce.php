@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @param array p_dbColumns
@@ -110,6 +111,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "copy";
 	    $toolbar1[] = "cut";
 	    $toolbar1[] = "paste";
+	    $toolbar1[] = "pastetext";
 	    $toolbar1[] = "pasteword";
 	}
 	if ($p_user->hasPermission('EditorUndoRedo')) {
@@ -167,8 +169,8 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 
 	$toolbar2 = array();
 	// Slice up the first toolbar if it is too long.
-	if (count($toolbar1) > 31) {
-		$toolbar2 = array_splice($toolbar1, 31);
+	if (count($toolbar1) > 33) {
+		$toolbar2 = array_splice($toolbar1, 33);
 	}
 
 	// This is to put the bulleted and numbered list controls
@@ -177,7 +179,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	    $toolbar1[] = "numlist";
-	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 31) {
+	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 33) {
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {

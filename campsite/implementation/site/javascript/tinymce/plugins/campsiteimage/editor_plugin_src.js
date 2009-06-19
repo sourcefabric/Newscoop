@@ -17,7 +17,7 @@
 		ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo,
 		        width : 580 + parseInt(ed.getLang('campsiteimage.delta_width', 0)),
-			height : 330 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
+			height : 345 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
 			inline : 1
 		    }, {
 		    plugin_url : url

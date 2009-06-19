@@ -1,5 +1,5 @@
 tinyMCE.addI18n('en.campsiteinternallink_dlg',{
-title:"Insert/edit internal link",
+campsiteinternallink_title:"Insert/edit internal link",
 language:"Language",
 section:"Section",
 article:"Article",

@@ -20,7 +20,7 @@
 
 		// No selection and not in link
 		if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
-		    alert(ed.getLang('You need to select some text before creating a link'));
+		    alert(ed.getLang('campsiteattachment.select_to_link'));
 		    return;
 		}
 
