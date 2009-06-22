@@ -34,7 +34,7 @@ class MetaActionInterviewitem extends MetaAction
             $this->m_properties['status'] = $p_input['f_interviewitem_status'];
         }
         
-        $this->m_interviewitem = new InterviewItem($p_input['f_interviewitem_interview_id'], $p_input['f_interviewitem_id']);
+        $this->m_interviewitem = new InterviewItem($p_input['f_interview_id'], $p_input['f_interviewitem_id']);
     }
 
 
@@ -116,7 +116,6 @@ class MetaActionInterviewitem extends MetaAction
                 return false;
             }
             if ($this->m_interviewitem->create($p_context->user->identifier, $this->m_properties['question'])) {
-                $_REQUEST['f_interviewitem_id'] = $this->m_interviewitem->getProperty('item_id');
                 $this->m_error = ACTION_OK;
                 return true;   
             }   

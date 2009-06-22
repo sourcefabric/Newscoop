@@ -42,20 +42,18 @@ function smarty_block_interviewitem_form($p_params, $p_content, &$p_smarty, &$p_
     }
 
     if (isset($p_content)) {
-        $html = "<form name=\"interviewitem_question\" action=\"{$campsite->url->uri_path}\" method=\"post\" >\n";
-        $html .= "<input type=\"hidden\" name=\"f_interviewitem\" value=\"edit\">\n";
-        
+        $html = "<form name=\"interviewitem_question\" action=\"{$campsite->url->uri_path}\" method=\"post\" >\n";        
         if ($tpl_id) {
             $html .= "<input type=\"hidden\" name=\"".TEMPLATE_ID."\" value=\"$tpl_id\" />\n";
         }
         if ($campsite->interview->identifier) {
-            $html .= "<input type=\"hidden\" name=\"f_interviewitem_interview_id\" value=\"{$campsite->interview->identifier}\" />\n";
+            $html .= "<input type=\"hidden\" name=\"f_interview_id\" value=\"{$campsite->interview->identifier}\" />\n";
         }
         if ($campsite->interviewitem->identifier) {
             $html .= "<input type=\"hidden\" name=\"f_interviewitem_id\" value=\"{$campsite->interviewitem->identifier}\" />\n";
         }
         $html .= $p_content;
-        $html .= "<input type=\"submit\" name=\"f_interviewitem_submit\" value=\""
+        $html .= "<input type=\"submit\" name=\"f_interviewitem\" value=\""
               .smarty_function_escape_special_chars($p_params['submit_button'])
               ."\" ".$p_params['html_code']." />\n</form>\n";
     }

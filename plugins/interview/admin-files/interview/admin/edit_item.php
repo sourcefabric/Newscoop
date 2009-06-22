@@ -35,8 +35,9 @@ if (!$is_admin && !$is_moderator && !$is_guest) {
 
 $f_item_id = Input::Get('f_item_id', 'int');
 
-if (!$f_item_id) {
-    invalid_input;   
+if (!Input::IsValid()) {
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 
 $InterviewItem = new InterviewItem(null, $f_item_id);

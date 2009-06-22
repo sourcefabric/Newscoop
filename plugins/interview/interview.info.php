@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'interview',
-    'version' => '0.1',
+    'version' => '3.3.x-0.3',
     'label' => 'Interview',
     'description' => 'This plugin provides functionality to perform online interviews.',  
     'menu' => array(
@@ -69,7 +69,7 @@ $info = array(
     ),
     'install' => 'plugin_interview_install',
     'enable'  => 'plugin_interview_install',
-    'update'  => '',
+    'update'  => 'plugin_interview_update',
     'disable' => '',
     'uninstall' => 'plugin_interview_uninstall'
 );
@@ -116,6 +116,18 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
     
+    function plugin_interview_update()
+    {
+        global $g_documentRoot;
+        
+        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
+        
+        unset($GLOBALS['g_db']);       
+    }
+    
     function plugin_interview_init(&$p_context)
     {      
         $interview_id = Input::Get("f_interview_id", "int");
@@ -127,6 +139,19 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
             $p_context->interview = new MetaInterview($context->interviewitem->interview_id);
         } else {
             $p_context->interview = new MetaInterview($interview_id);
+        }
+        
+        foreach (array('f_interview_id', 
+                       'f_interview_action',
+                       'f_interviewnotify',
+                       'f_interviewitem',
+                       'f_interviewitem_id',
+                       'f_interviewitem_question',
+                       'f_interviewitem_action'
+                   ) as $v) {
+                       
+            $p_context->url->reset_parameter($v);
+            $p_context->default_url->reset_parameter($v);   
         }
     }
     

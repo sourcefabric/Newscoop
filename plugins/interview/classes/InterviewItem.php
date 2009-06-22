@@ -25,12 +25,18 @@ class InterviewItem extends DatabaseObject {
         
         // string - question text
         'question',
+        
+        // datetime - question date
+        'question_date',        
              
         // string - status
         'status',
         
         // string - answer
         'answer',
+        
+        // datetime - answer date
+        'answer_date',
         
         // int - custom list position
         'position',
@@ -553,6 +559,19 @@ class InterviewItem extends DatabaseObject {
             $InterviewItem->delete();   
         }      
     }
+    
+    public function setProperty($p_name, $p_value)
+    {
+        switch ($p_name) {
+            case 'question':
+            case 'answer':
+                if ($this->getProperty($p_name) == '') {
+                    parent::setProperty($p_name.'_date', date('Y-m-d H:i:s'));   
+                }
+            break;  
+        }   
+        parent::setProperty($p_name, $p_value);
+    }
 
     /////////////////// Special template engine methods below here /////////////////////////////
     
@@ -580,6 +599,11 @@ class InterviewItem extends DatabaseObject {
         
         if (!is_array($p_parameters)) {
             return null;
+        }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
         }
         
         $selectClauseObj = new SQLSelectClause();

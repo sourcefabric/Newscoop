@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Erstellungszeit: 24. November 2008 um 15:38
+-- Erstellungszeit: 04. Juni 2009 um 15:05
 -- Server Version: 5.0.32
--- PHP-Version: 5.2.0-8+etch7
+-- PHP-Version: 5.2.0-8+etch13
 -- 
 -- Datenbank: `campsite_netgazeti`
 -- 
@@ -21,9 +21,8 @@ CREATE TABLE `plugin_blog_blog` (
   `fk_language_id` int(10) unsigned NOT NULL,
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `title` varchar(255) NOT NULL,
-  `published` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `info` text NOT NULL,
-  `tags` text NOT NULL,
   `admin_remark` text NOT NULL,
   `request_text` text NOT NULL,
   `status` enum('online','offline','moderated') NOT NULL default 'online',
@@ -35,7 +34,7 @@ CREATE TABLE `plugin_blog_blog` (
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`blog_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -51,16 +50,16 @@ CREATE TABLE `plugin_blog_comment` (
   `fk_user_id` int(10) unsigned NOT NULL default '0',
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(255) NOT NULL,
-  `published` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `mood` varchar(255) NOT NULL,
-  `status` enum('online','offline','pending') NOT NULL default 'online',
-  `admin_status` enum('online','offline','pending') NOT NULL default 'online',
+  `fk_mood_id` varchar(255) NOT NULL,
+  `status` enum('online','offline','pending') NOT NULL default 'pending',
+  `admin_status` enum('online','offline','pending') NOT NULL default 'pending',
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 -- --------------------------------------------------------
 
@@ -73,17 +72,40 @@ CREATE TABLE `plugin_blog_entry` (
   `fk_blog_id` int(10) unsigned NOT NULL default '0',
   `fk_language_id` int(10) unsigned NOT NULL,
   `fk_user_id` int(10) unsigned NOT NULL default '0',
-  `published` datetime NOT NULL,
+  `date` datetime NOT NULL,
   `released` datetime NOT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `tags` text NOT NULL,
-  `mood` varchar(255) NOT NULL,
+  `fk_mood_id` int(10) unsigned NOT NULL,
   `status` enum('online','offline') NOT NULL default 'online',
-  `admin_status` enum('online','offline','pending') NOT NULL default 'online',
+  `admin_status` enum('online','offline','pending') NOT NULL default 'pending',
   `comments_online` int(10) unsigned NOT NULL default '0',
   `comments_offline` int(10) unsigned NOT NULL default '0',
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`entry_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+
+-- --------------------------------------------------------
+
+-- 
+-- Tabellenstruktur für Tabelle `plugin_blog_entry_topic`
+-- 
+
+CREATE TABLE `plugin_blog_entry_topic` (
+  `fk_entry_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`fk_entry_id`,`fk_topic_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+-- 
+-- Tabellenstruktur für Tabelle `plugin_blog_topic`
+-- 
+
+CREATE TABLE `plugin_blog_topic` (
+  `fk_blog_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`fk_blog_id`,`fk_topic_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

@@ -47,8 +47,13 @@ if (!$g_user->hasPermission('plugin_interview_admin')) {
 }
 
 $f_interview_id = Input::Get('f_interview_id', 'int');
-$Interview = new Interview($f_interview_id);
 
+if (!Input::IsValid()) {
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
+}
+
+$Interview = new Interview($f_interview_id);
 
 // new usernames may exist
 foreach(array('guest') as $type) {

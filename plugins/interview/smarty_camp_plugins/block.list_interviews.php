@@ -42,11 +42,13 @@ function smarty_block_list_interviews($p_params, $p_content, &$p_smarty, &$p_rep
     
     if (is_null($currentInterview)) {
 	    $p_repeat = false;
+	    $campContext->url->reset_parameter('f_interview_id');
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
         $campContext->interview = $currentInterview;
     	$p_repeat = true;
+    	$campContext->url->set_parameter('f_interview_id', $currentInterview->identifier);
     }
 
     if (isset($p_content)) {
@@ -55,6 +57,7 @@ function smarty_block_list_interviews($p_params, $p_content, &$p_smarty, &$p_rep
             $campContext->current_interviews_list->defaultIterator()->next();
             if (!is_null($campContext->current_interviews_list->current)) {
                 $campContext->interview = $campContext->current_interviews_list->current;
+                $campContext->url->set_parameter('f_interview_id', $campContext->current_interviews_list->current->identifier);
             }
         }
     }

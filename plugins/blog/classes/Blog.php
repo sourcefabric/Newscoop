@@ -17,15 +17,15 @@ class Blog extends DatabaseObject {
     var $m_keyColumnNames       = array('blog_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_blog';
+    static $s_dbTableName       = 'plugin_blog_blog';
 
     var $m_columnNames = array(
         'blog_id',
         'fk_language_id',
         'fk_user_id',
         'title',
-        'published',
+        'date',
         'info',
-        'tags',
         'status',
         'admin_status',
         'admin_remark',
@@ -39,7 +39,6 @@ class Blog extends DatabaseObject {
     );
 
     static $m_html_allowed_fields = array('info');
-    static $m_html_allowed_tags = '<strong><em><u><a><img><p>';
 
     /**
 	 * Construct by passing in the primary key to access the article in
@@ -55,6 +54,7 @@ class Blog extends DatabaseObject {
         $this->m_data['blog_id'] = $p_blog_id;
         if ($this->keyValuesExist()) {
             $this->fetch();
+            $this->m_data['images'] = BlogImageHelper::GetImagePaths('blog', $p_blog_id, true, true);
         }
     } // constructor
 
@@ -66,16 +66,17 @@ class Blog extends DatabaseObject {
     function __create($p_values = null) { return parent::create($p_values); }
 
 
-    function create($p_user_id, $p_language_id, $p_title, $p_info, $p_request_text, $p_tags=null)
+    function create($p_user_id, $p_language_id, $p_title, $p_info, $p_request_text, $p_feature)
     {
         // Create the record
         $values = array(
             'fk_user_id'    => $p_user_id,
-            'fk_language_id' => $p_language_id,
+            'fk_language_id'=> $p_language_id,
             'title'         => $p_title,
             'info'          => $p_info,
             'request_text'  => $p_request_text,
-            'tags'          => $p_tags
+            'feature'       => $p_feature,
+            'date'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);
@@ -85,17 +86,21 @@ class Blog extends DatabaseObject {
         }
 
         $this->fetch();
-
+        
         return true;
     }
 
     function delete()
     {
-        foreach (BlogEntry::getEntries(array('fk_blog_id' => $this->getProperty('blog_id'))) as $Entry) {
+        $blog_id =  $this->getProperty('blog_id');
+        
+        foreach (BlogEntry::getEntries(array('fk_blog_id' => $blog_id)) as $Entry) {
             $Entry->delete();
         }
 
         parent::delete();
+        BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
+        BlogTopic::OnBlogDelete($blog_id);
     }
 
     function getData()
@@ -109,10 +114,8 @@ class Blog extends DatabaseObject {
         return $this->getProperty('title');   
     }
 
-    function _buildQueryStr($p_cond)
+    private static function BuildQueryStr($p_cond)
     {
-        $instance = new Blog();
-
         if (array_key_exists('fk_user_id', $p_cond)) {
             $cond .= " AND fk_user_id = {$p_cond['fk_user_id']}";
         }
@@ -124,7 +127,7 @@ class Blog extends DatabaseObject {
         }
 
         $queryStr = "SELECT     blog_id
-                     FROM       {$instance->m_dbTableName}
+                     FROM       {self::$s_dbTableName}
                      WHERE      1 $cond
                      ORDER BY   blog_id DESC";
         return $queryStr;
@@ -134,13 +137,13 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = Blog::_buildQueryStr($p_cond);
+        $queryStr = self::BuildQueryStr($p_cond);
 
         $query = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $blogs = array();
 
         while ($row = $query->FetchRow()) {
-            $tmpBlog =& new Blog($row['blog_id']);
+            $tmpBlog = new Blog($row['blog_id']);
             $blogs[] = $tmpBlog;
         }
 
@@ -151,7 +154,7 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr   = Blog::_buildQueryStr($p_cond);
+        $queryStr   = self::BuildQueryStr($p_cond);
         $query      = $g_ado_db->Execute($queryStr); #
 
         return $query->RecordCount();
@@ -159,7 +162,7 @@ class Blog extends DatabaseObject {
 
     function getBlogEntrys()
     {
-        $BlogEntry =& new BlogEntry(array('blog_id' => $this->getProperty('blog_id')));
+        $BlogEntry = new BlogEntry(array('blog_id' => $this->getProperty('blog_id')));
 
         return $BlogEntry->getEntrys();
     }
@@ -168,11 +171,8 @@ class Blog extends DatabaseObject {
     {
         global $g_ado_db;
         
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
+        $blogs_tbl = self::$s_dbTableName;
+        $entries_tbl = BlogEntry::$s_dbTableName;
 
         $queryStr = "UPDATE $blogs_tbl
                      SET    entries_online = 
@@ -195,8 +195,10 @@ class Blog extends DatabaseObject {
         $g_ado_db->Execute($queryStr);
     }
 
-    function _getFormMask($p_owner=false, $p_admin=false)
+    private function getFormMask($p_owner=false, $p_admin=false)
     {
+        global $g_user;
+        
         $data = $this->getData();
         
         foreach (User::GetUsers() as $User) {
@@ -214,9 +216,19 @@ class Blog extends DatabaseObject {
 
         foreach ($data as $k => $v) {
             // clean user input
-            if (!in_array($k, Blog::$m_html_allowed_fields)) {
+            if (!in_array($k, self::$m_html_allowed_fields)) {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
+        }
+        
+        // load possible topic list
+        foreach ($this->GetTopicTreeFlat() as $topicId => $topicName) {
+            $topics[$topicId]  = $topicName;   
+        }
+        
+        // get the topics used
+        foreach ($this->getTopics() as $Topic) {            
+            $active_topics[$Topic->getTopicId()] = $Topic->getName($this->getLanguageId());
         }
 
         $mask = array(
@@ -242,20 +254,7 @@ class Blog extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
-                               '<script language="javascript" type="text/javascript" src="/javascript/tiny_mce/tiny_mce.js"></script>'.
-                '<script language="javascript" type="text/javascript">'.
-                '     tinyMCE.init({'.
-                '     	mode : "exact",'.
-                '        elements : "tiny_mce_box",'.
-                '        theme : "advanced",'.
-                '        plugins : "emotions, paste", '.
-                '        paste_auto_cleanup_on_paste : true, '.
-                '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
-                '        theme_advanced_buttons2 : "", '.
-                '        theme_advanced_buttons3 : "" '.
-                '     });'.
-                '</script>',
+                'text'      => self::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
                 'type'      => 'static'
             ),
             'info'      => array(
@@ -264,20 +263,13 @@ class Blog extends DatabaseObject {
                 'label'     => 'Info',
                 'default'   => $data['info'],
                 'required'  => true,
-                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
             ),
             'feature'     => array(
                 'element'   => 'Blog[feature]',
                 'type'      => 'text',
                 'label'     => 'Feature',
                 'default'   => $data['feature'],
-            ),
-            'tags'      => array(
-                'element'   => 'Blog[tags]',
-                'type'      => 'checkbox_multi',
-                'label'     => 'Tags',
-                'default'   => explode(', ', $data['tags']),
-                'options'   => $this->_getTagList()
             ),
             'status' => array(
                 'element'   => 'Blog[status]',
@@ -292,7 +284,7 @@ class Blog extends DatabaseObject {
                     'readonly'      => 'read only',
                 ),
                 
-           ),
+            ),
             'admin_status' => array(
                 'element'   => 'Blog[admin_status]',
                 'type'      => 'select',
@@ -300,9 +292,9 @@ class Blog extends DatabaseObject {
                 'default'   => $data['admin_status'],
                 'required'  => true,
                 'options'   => array(
-                    'pending'       => 'pending',
                     'online'        => 'online',
                     'offline'       => 'offline',
+                    'pending'       => 'pending',
                     'moderated'     => 'moderated',
                     'readonly'      => 'read only',
                 ),
@@ -313,13 +305,40 @@ class Blog extends DatabaseObject {
                     'label'     => 'Owner',
                     'default'   => $data['fk_user_id'],
                     'options'   => $ownerList,
-            ),        
+            ),
+            'image'     => array(
+                'element'   => 'Blog_Image',
+                'type'      => 'file',
+                'label'     => 'Image (.jpg, .png, .gif)',
+            ),
+            'image_display'  => array(
+                'element'   => 'image_display',
+                'text'      => '<img src="'.$data['images']['100x100'].'">',
+                'type'  => 'static',
+                'groupit'   => true
+            ),
+            'image_remove' => array(
+                'element'   => 'Blog_Image_remove',
+                'type'      => 'checkbox',
+                'label'     => 'Remove this Image',
+                'groupit'   => true
+            ),
+            'image_label'  => array(
+                'element'   => 'image_label',
+                'text'      => 'Remove this image',
+                'type'  => 'static',
+                'groupit'   => true
+            ),
+            'image_group' =>  isset($data['images']['100x100']) ? array(
+                'group'     => array('image_display', 'Blog_Image_remove', 'image_label'),
+            
+            ) : null,      
             'admin_remark'      => array(
                 'element'   => 'Blog[admin_remark]',
                 'type'      => 'textarea',
                 'label'     => 'Admin Remark',
                 'default'   => $data['admin_remark'],
-                'attributes'=> array('cols' => 60, 'rows' => 8)
+                'attributes'=> array('cols' => 86, 'rows' => 10)
             ),
             'reset'     => array(
                 'element'   => 'reset',
@@ -353,9 +372,9 @@ class Blog extends DatabaseObject {
     {
         require_once 'HTML/QuickForm.php';
 
-        $mask = $this->_getFormMask($p_owner, $p_admin);
+        $mask = $this->getFormMask($p_owner, $p_admin);
 
-        $form =& new html_QuickForm('blog', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($p_html) {
@@ -363,7 +382,7 @@ class Blog extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
 
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
 
             return $renderer->toArray();
@@ -373,74 +392,60 @@ class Blog extends DatabaseObject {
     function store($p_admin, $p_user_id=null)
     {
         require_once 'HTML/QuickForm.php';
-
-        $mask = $this->_getFormMask($p_admin);
-        #mergePostParams(&$mask);
-
-        $form =& new html_QuickForm('blog', 'post', '', null, null, true);
+        $mask = $this->getFormMask($p_admin);
+        $form = new html_QuickForm('blog', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
-            $data = $form->getSubmitValues();
+            $data = $form->getSubmitValues(true);
 
             foreach ($data['Blog'] as $k => $v) {
                 // clean user input
-                if (in_array($k, Blog::$m_html_allowed_fields)) {
-                    $data['Blog'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
-                } else {
+                if (!in_array($k, self::$m_html_allowed_fields)) {
                     $data['Blog'][$k] = htmlspecialchars_array($v);
                 }
             }
 
             if ($data['f_blog_id']) {
                 foreach ($data['Blog'] as $k => $v) {
-                    if (is_array($v)) {
-                        foreach($v as $key => $value) {
-                            if ($value) {
-                                $string .= "$key, ";
-                            }
-                        }
-                        $this->setProperty($k, substr($string, 0, -2));
-                        unset ($string);
-
-                    } else {
-                        $this->setProperty($k, $v);
-                    }
+                    $this->setProperty($k, $v);
                 }
+                
+                if ($data['Blog_Image_remove']) {
+                    BlogImageHelper::RemoveImageDerivates('blog', $data['f_blog_id']);
+                }
+                if ($data['Blog_Image']) {
+                    BlogImageHelper::StoreImageDerivates('blog', $data['f_blog_id'], $data['Blog_Image']);
+                }
+                
                 return true;
-            } else {
-                if (is_array($data['Blog']['tags'])) {
-                    unset ($string);
-                    foreach($data['Blog']['tags'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $tags = substr($string, 0, -2);
+                
+            } elseif ($this->create(
+                            isset($p_user_id) ? $p_user_id : $data['Blog']['fk_user_id'], 
+                            $data['Blog']['fk_language_id'],
+                            $data['Blog']['title'], 
+                            $data['Blog']['info'], 
+                            $data['Blog']['request_text'],
+                            $data['Blog']['feature'])) {
+                                
+                if ($data['Blog']['status']) {
+                    $this->setProperty('status', $data['Blog']['status']);
                 }
-                if ($this->create(  $p_user_id, 
-                                    $data['Blog']['fk_language_id'],
-                                    $data['Blog']['title'], 
-                                    $data['Blog']['info'], 
-                                    $data['Blog']['request_text'], 
-                                    $tags)
-                                  ) {
-                    if ($p_owner && $data['Blog']['status'])         $this->setProperty('status',   $data['Blog']['status']);
-                    if ($p_admin && $data['Blog']['admin_status'])   $this->setProperty('admin_status',   $data['Blog']['admin_status']);
-                    if ($p_admin && $data['Blog']['admin_remark'])   $this->setProperty('admin_remark',   $data['Blog']['admin_remark']);
-
-                    return true;
+                if ($p_admin && $data['Blog']['admin_status']) {
+                    $this->setProperty('admin_status', $data['Blog']['admin_status']);
                 }
-                return false;
+                if ($p_admin && $data['Blog']['admin_remark']) {
+                    $this->setProperty('admin_remark', $data['Blog']['admin_remark']);
+                }
+                if ($data['Blog_Image']) {
+                    BlogImageHelper::StoreImageDerivates('blog', $this->getProperty('blog_id'), $data['BlogEntry_Image']);
+                }
+                
+                return true;
             }
         }
         return false;
 
-    }
-
-    function _getTagList()
-    {
-        return array('a' => 'film', 'b' => 'poesie', 'm' => 'multimedia');
     }
     
     /**
@@ -453,13 +458,402 @@ class Blog extends DatabaseObject {
         return $this->getProperty('blog_id');   
     }
     
-    
-    static function getLanguageId($p_blog_id)
+    /**
+     * get the blog language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
     {
-        $tmpBlog =& new Blog($p_blog_id);
+        return $this->getProperty('fk_language_id');
+    }
+      
+    public static function GetBlogLanguageId($p_blog_id)
+    {
+        $tmpBlog= new Blog($p_blog_id);
         return $tmpBlog->getProperty('fk_language_id');
     }
     
+    static public function GetTopicTree($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
+    {
+        $root_id = SystemPref::Get($p_key);
+        $tree = Topic::GetTree((int)$root_id);  
+        
+        return (array) $tree;
+    }
+    
+    static public function GetTopicTreeFlat($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
+    {       
+        foreach (self::GetTopicTree($p_key) as $branch) {
+             $flat[] = end($branch)->getTopicId();
+        }
+        
+        return (array) $flat;
+    }
+    
+    public function setTopics(array $p_topics=array()) 
+    {
+        // store the topics
+        $allowed_topics = self::GetTopicTreeFlat();
+        
+        BlogTopic::DeleteBlogTopics($this->getId());
+        
+        foreach ($p_topics as $topic_id) {
+            if (in_array($topic_id, $allowed_topics, true)) {
+                $BlogTopic = new BlogTopic($this->m_data['blog_id'], $topic_id);
+                $BlogTopic->create();
+            }
+        }
+    }
+    
+    public function getTopics() 
+    {   
+        foreach (BlogTopic::getAssignments($this->m_data['blog_id']) as $BlogTopic) {
+            $topics[] = $BlogTopic->getTopic();      
+        }
+        return (array) $topics;
+    }
+    
+    public static function GetMoodList($p_language_id)
+    {
+        foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
+            $currentTopic = camp_array_peek($path, false, -1);
+            $name = $currentTopic->getName($p_language_id);
+            
+            if (empty($name)) {
+                // Backwards compatibility
+                $name = $currentTopic->getName(1);
+                if (empty($name)) {
+                    continue;
+                }
+            }
+            foreach ($path as $topicObj) {
+                $name = $topicObj->getName($p_language_id);
+                if (empty($name)) {
+                    $name = $topicObj->getName(1);
+                    if (empty($name)) {
+                        $name = "-----";
+                    }
+                }
+                $value = htmlspecialchars($name);
+            }
+            $selected = $currentTopic->getTopicId() == SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID') ? 'selected' : '';
+            $options[$currentTopic->getTopicId()] = $value;
+        }
+        
+        return (array)$options;
+    }
+    
+    /**
+     * If we modify the admin status, 
+     * the publish date is modified too.
+     *
+     * @param string $p_name
+     * @param sring $p_value
+     */
+    function setProperty($p_name, $p_value)
+    {
+        /*
+        if ($p_name == 'admin_status') {
+            switch ($p_value) {
+                case 'online':
+                case 'moderated':
+                case 'readonly':
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
+                break;
+                  
+                case 'offline':
+                case 'pending':
+                    parent::setProperty('date', null);
+                break;
+            }          
+        }
+        */
+        
+        if ($p_name == 'topics') {
+            return $this->setTopics($p_value);   
+        }
+        
+        if ($p_name == 'fk_language_id') {
+            $this->onSetLanguage($p_value);
+        }
+        
+        return parent::setProperty($p_name, $p_value);
+    }
+    
+    private function onSetLanguage($p_language_id)
+    {
+        if ($p_language_id == $this->getLanguageId()) {
+            return;   
+        }
+        
+        global $g_ado_db;
+        
+        $entryTbl   = BlogEntry::$s_dbTableName;
+        $commentTbl = BlogComment::$s_dbTableName;
+        
+        $queryStr1 = "UPDATE $entryTbl
+                      SET fk_language_id = $p_language_id
+                      WHERE fk_blog_id = {$this->getId()}";
+        $g_ado_db->Execute($queryStr1);
+        
+        $queryStr1 = "UPDATE $commentTbl
+                      SET fk_language_id = $p_language_id
+                      WHERE fk_blog_id = {$this->getId()}";
+        $g_ado_db->Execute($queryStr1);
+    }
+
+    /**
+     * @param array p_dbColumns
+     * @param object p_user The User object
+     * @param int p_editorLanguage The current or selected language
+     *
+     * @return void
+     */
+    public static function GetEditor($p_box_id, $p_user, $p_editorLanguage)
+    {
+    	global $Campsite;
+    
+    	$stylesheetFile = '/admin/articles/article_stylesheet.css';
+    
+    	/** STEP 2 ********************************************************
+    	 * Now, what are the plugins you will be using in the editors
+    	 * on this page.  List all the plugins you will need, even if not
+    	 * all the editors will use all the plugins.
+    	 ******************************************************************/
+    	$plugins = array();
+    	if ($p_user->hasPermission('EditorCopyCutPaste')) {
+    	    $plugins[] = 'paste';
+    	}
+    	if ($p_user->hasPermission('EditorFindReplace')) {
+    	  $plugins[] = 'searchreplace';
+    	}
+    	if ($p_user->hasPermission('EditorEnlarge')) {
+    	    $plugins[] = 'fullscreen';
+    	}
+    	if ($p_user->hasPermission('EditorTable')) {
+    	    $plugins[] = 'table';
+    	}
+    	if ($p_user->hasPermission('EditorLink')) {
+    	    $plugins[] = 'campsiteinternallink';
+    	}
+        $plugins[] = 'drupalbreak';
+    	$plugins_list = implode(",", $plugins);
+    
+    	$statusbar_location = "none";
+    	if ($p_user->hasPermission('EditorStatusBar')) {
+    	    $statusbar_location = "bottom";
+    	}
+    
+    	/** STEP 3 ********************************************************
+    	 * We create a default configuration to be used by all the editors.
+    	 * If you wish to configure some of the editors differently this
+    	 * will be done in step 4.
+    	 ******************************************************************/
+    	$toolbar1 = array();
+    	if ($p_user->hasPermission('EditorBold')) {
+    	    $toolbar1[] = "bold";
+    	}
+    	if ($p_user->hasPermission('EditorItalic')) {
+    	    $toolbar1[] = "italic";
+    	}
+    	if ($p_user->hasPermission('EditorUnderline')) {
+    	    $toolbar1[] = "underline";
+    	}
+    	if ($p_user->hasPermission('EditorStrikethrough')) {
+    	    $toolbar1[] = "strikethrough";
+    	}
+    	if ($p_user->hasPermission('EditorTextAlignment')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "justifyleft";
+    	    $toolbar1[] = "justifycenter";
+    	    $toolbar1[] = "justifyright";
+    	    $toolbar1[] = "justifyfull";
+    	}
+    	if ($p_user->hasPermission('EditorIndent')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "outdent";
+    	    $toolbar1[] = "indent";
+    	    $toolbar1[] = "blockquote";
+    	}
+    	if ($p_user->hasPermission('EditorCopyCutPaste')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "copy";
+    	    $toolbar1[] = "cut";
+    	    $toolbar1[] = "paste";
+    	    $toolbar1[] = "pasteword";
+    	}
+    	if ($p_user->hasPermission('EditorUndoRedo')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "undo";
+    	    $toolbar1[] = "redo";
+    	}
+    	if ($p_user->hasPermission('EditorTextDirection')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "ltr";
+    	    $toolbar1[] = "rtl";
+    	    $toolbar1[] = "charmap";
+    	}
+    	if ($p_user->hasPermission('EditorLink')) {
+    	    $toolbar1[] = "|";
+    	    #$toolbar1[] = "campsiteinternallink";
+    	    $toolbar1[] = "link";
+    	}
+    	if ($p_user->hasPermission('EditorSubhead')) {
+    	    #$toolbar1[] = "campsite-subhead";
+    	}
+    	if ($p_user->hasPermission('EditorImage')) {
+    	    $toolbar1[] = "image";
+    	}
+
+    	$toolbar1[] = "drupalbreak";
+
+    	if ($p_user->hasPermission('EditorSourceView')) {
+    	    $toolbar1[] = "code";
+    	}
+    	if ($p_user->hasPermission('EditorEnlarge')) {
+    	    $toolbar1[] = "fullscreen";
+    	}
+    	if ($p_user->hasPermission('EditorHorizontalRule')) {
+    	    $toolbar1[] = "hr";
+    	}
+    	if ($p_user->hasPermission('EditorFontColor')) {
+    	    $toolbar1[] = "forecolor";
+    	    $toolbar1[] = "backcolor";
+    	}
+    	if ($p_user->hasPermission('EditorSubscript')) {
+    	    $toolbar1[] = "sub";
+    	}
+    	if ($p_user->hasPermission('EditorSuperscript')) {
+    	    $toolbar1[] = "sup";
+    	}
+    	if ($p_user->hasPermission('EditorFindReplace')) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "search";
+    	    $toolbar1[] = "replace";
+    	}
+    
+    	$toolbar2 = array();
+    	// Slice up the first toolbar if it is too long.
+    	if (count($toolbar1) > 31) {
+    		$toolbar2 = array_splice($toolbar1, 31);
+    	}
+    
+    	// This is to put the bulleted and numbered list controls
+    	// on the most appropriate line of the toolbar.
+    	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 19) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "bullist";
+    	    $toolbar1[] = "numlist";
+    	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 31) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "bullist";
+    	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
+    	    $toolbar1[] = "|";
+    	    $toolbar1[] = "numlist";
+    	} else {
+    	    $hasSeparator = false;
+    	    if ($p_user->hasPermission('EditorListBullet')) {
+    	        $toolbar2[] = "|";
+    	        $toolbar2[] = "bullist";
+    		$hasSeparator = true;
+    	    }
+    	    if ($p_user->hasPermission('EditorListNumber')) {
+    	        if (!$hasSeparator) {
+    		    $toolbar2[] = "|";
+    		}
+    	        $toolbar2[] = "numlist";
+    	    }
+    	}
+    
+    	if ($p_user->hasPermission('EditorFontFace')) {
+    	    $toolbar2[] = "|";
+    	    $toolbar2[] = "styleselect";
+    	    $toolbar2[] = "formatselect";
+    	    $toolbar2[] = "fontselect";
+    	}
+    	if ($p_user->hasPermission('EditorFontSize')) {
+    	    $toolbar2[] = "fontsizeselect";
+    	}
+    
+    	if ($p_user->hasPermission('EditorTable')) {
+    	    $toolbar3[] = "tablecontrols";
+    	}
+    
+    	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
+    	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
+    	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
+    	
+    	ob_start();
+    ?>
+                    
+    <!-- TinyMCE -->
+    <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
+    <script type="text/javascript">
+    function CampsiteSubhead(ed) {
+        element = ed.dom.getParent(ed.selection.getNode(), 'span');
+        if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
+    	return false;
+        } else {
+            html = ed.selection.getContent({format : 'text'});
+    	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
+        }
+    } // fn CampsiteSubhead
+    
+    // Default skin
+    tinyMCE.init({
+        // General options
+        language : "<?php p($p_editorLanguage); ?>",
+        mode : "exact",
+        elements : "<?php p($p_box_id); ?>",
+        theme : "advanced",
+        plugins : "<?php p($plugins_list); ?>",
+        forced_root_block : "",
+        relative_urls : false,
+    
+        // Theme options
+        theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
+        theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
+        theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
+    
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_resizing : false,
+        theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
+    
+        // Example content CSS (should be your site CSS)
+        content_css : "<?php echo $stylesheetFile; ?>",
+    
+        // Drop lists for link/image/media/template dialogs
+        template_external_list_url : "lists/template_list.js",
+        external_link_list_url : "lists/link_list.js",
+        external_image_list_url : "lists/image_list.js",
+        media_external_list_url : "lists/media_list.js",
+    
+        // paste options
+        paste_use_dialog: false,
+        paste_auto_cleanup_on_paste: true,
+        paste_convert_headers_to_strong: true,
+        paste_remove_spans: true,
+        paste_remove_styles: true,
+    
+        setup : function(ed) {
+            ed.onKeyUp.add(function(ed, l) {
+    	    var idx = ed.id.lastIndexOf('_');
+    	    var buttonId = ed.id.substr(0, idx);
+    	    buttonEnable('save_' + buttonId);
+    	});
+    
+    
+        }
+    });
+    </script>
+    <!-- /TinyMCE -->
+        <?php
+        $output = ob_get_clean();
+        return $output;
+    } // fn editor_load_tinymce
+        
     
     /////////////////// Special template engine methods below here /////////////////////////////
     
@@ -486,20 +880,62 @@ class Blog extends DatabaseObject {
             return null;
         }
         
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
+        
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (empty($comparisonOperation)) {
-                continue;
-            }
+            $leftOperand = strtolower($comparisonOperation['left']);
             
-            $whereCondition = $comparisonOperation['left'] . ' '
-            . $comparisonOperation['symbol'] . " '"
-            . $comparisonOperation['right'] . "' ";
+            if ($leftOperand == 'matchalltopics') {
+                // set the matchAllTopics flag
+                $matchAllTopics = true;
+                
+            } elseif ($leftOperand == 'topic') {
+                // add the topic to the list of match/do not match topics depending
+                // on the operator
+                if ($comparisonOperation['symbol'] == '=') {
+                    $hasTopics[] = $comparisonOperation['right'];
+                } else {
+                    $hasNotTopics[] = $comparisonOperation['right'];
+                }
+            } else {
+                $comparisonOperation = self::ProcessListParameters($param);
+                if (empty($comparisonOperation)) {
+                    continue;
+                }
+                
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);   
+            }
+        }
+        
+        if (count($hasTopics) > 0) {
+            if ($matchAllTopics) {
+                foreach ($hasTopics as $topicId) {
+                    $sqlQuery = self::BuildTopicSelectClause(array($topicId));
+                    $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
+                    $selectClauseObj->addWhere($whereCondition);
+                }
+            } else {
+                $sqlQuery = self::BuildTopicSelectClause($hasTopics);
+                $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
+                $selectClauseObj->addWhere($whereCondition);
+            }
+        }
+        if (count($hasNotTopics) > 0) {
+            $sqlQuery = self::BuildTopicSelectClause($hasNotTopics, true);
+            $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
+        
         
         // sets the columns to be fetched
         $tmpBlog = new Blog();
@@ -553,18 +989,37 @@ class Blog extends DatabaseObject {
      */
     private static function ProcessListParameters($p_param)
     {
-        $comparisonOperation = array();
+        $conditionOperation = array();
 
-        $comparisonOperation['left'] = BlogsList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
+        $leftOperand = strtolower($p_param->getLeftOperand());
+        $conditionOperation['left'] = BlogsList::$s_parameters[$leftOperand]['field'];
+        
+        switch ($leftOperand) {
 
-        if (isset($comparisonOperation['left'])) {
-            $operatorObj = $p_param->getOperator();
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        case 'feature':
+            $conditionOperation['symbol'] = 'LIKE';
+            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            break;
+        case 'matchalltopics':
+            $conditionOperation['symbol'] = '=';
+            $conditionOperation['right'] = 'true';
+            break;
+        case 'topic':
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
+        default:
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
         }
 
-        return $comparisonOperation;
+        if (!isset($conditionOperation['symbol'])) {
+            $operatorObj = $p_param->getOperator();
+            $conditionOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $conditionOperation;
     } // fn ProcessListParameters
+
 
     /**
      * Processes an order directive coming from template tags.
@@ -593,29 +1048,20 @@ class Blog extends DatabaseObject {
     } // fn ProcessListOrder
     
     /**
-     * If we modify the admin status, 
-     * the publish date is modified too.
+     * Returns a select query for obtaining the blogs that have the given topics
      *
-     * @param string $p_name
-     * @param sring $p_value
+     * @param array $p_TopicIds
+     * @param array $p_typeAttributes
+     * @param bool $p_negate
+     * @return string
      */
-    function setProperty($p_name, $p_value)
+    private static function BuildTopicSelectClause(array $p_TopicIds, $p_negate = false)
     {
-        if ($p_name == 'admin_status') {
-            switch ($p_value) {
-                case 'online':
-                case 'moderated':
-                case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
-                break;
-                  
-                case 'offline':
-                case 'pending':
-                    parent::setProperty('published', null);
-                break;
-            }          
-        }
-        return parent::setProperty($p_name, $p_value);
+        $notCondition = $p_negate ? ' NOT' : '';
+        $selectClause = '        SELECT fk_blog_id FROM '.BlogTopic::$$s_dbTableName.' WHERE fk_topic_id'
+                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+        
+        return $selectClause;
     }
 }
 ?>

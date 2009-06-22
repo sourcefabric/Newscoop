@@ -17,6 +17,7 @@ class BlogComment extends DatabaseObject {
     var $m_keyColumnNames       = array('comment_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_comment';
+    static $s_dbTableName       = 'plugin_blog_comment';
 
     var $m_columnNames = array(
         'comment_id',
@@ -26,18 +27,17 @@ class BlogComment extends DatabaseObject {
         'fk_user_id',
         'user_name',
         'user_email',
-        'published',
+        'date',
         'status',
         'title',
         'content',
-        'mood',
+        'fk_mood_id',
         'admin_status',
         'feature',
         'last_modified'
     );
     
     static $m_html_allowed_fields = array('content');
-    static $m_html_allowed_tags = '<strong><em><u><a><img><p>';
 
     /**
 	 * Construct by passing in the primary key to access the article in
@@ -62,20 +62,22 @@ class BlogComment extends DatabaseObject {
     
     function setProperty($p_name, $p_value)
     {   
+        /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
                 case 'moderated':
                 case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
                   
                 case 'offline':
                 case 'pending':
-                    parent::setProperty('published', null);
+                    parent::setProperty('date', null);
                 break;
             }          
         }
+        */
         
         $result = parent::setProperty($p_name, $p_value);
     
@@ -94,19 +96,20 @@ class BlogComment extends DatabaseObject {
     function __create($p_values=null) { return parent::create($p_values); }
     
     
-    function create($p_entry_id, $p_user_id, $p_user_name, $p_user_email, $p_title=null, $p_content=null, $p_mood=null)
+    function create($p_entry_id, $p_user_id, $p_user_name, $p_user_email, $p_title=null, $p_content=null, $p_mood_id=null)
     {
 		// Create the record
 		$values = array(
 		  'fk_entry_id'   => $p_entry_id,
 		  'fk_blog_id'    => BlogEntry::GetBlogId($p_entry_id),
-		  'fk_language_id'=> BlogEntry::getLanguageId($p_entry_id),
+		  'fk_language_id'=> BlogEntry::GetEntryLanguageId($p_entry_id),
 		  'fk_user_id'    => $p_user_id,
-		  'user_name'     => $p_poster_name,
-		  'user_email'    => $p_poster_email,
+		  'user_name'     => $p_user_name,
+		  'user_email'    => $p_user_email,
 		  'title'         => $p_title,
 		  'content'       => $p_content,
-		  'mood'          => $p_mood, 
+		  'fk_mood_id'    => $p_mood_id,
+		  'date'     => date('Y-m-d H:i:s')
 		);
 
 		$success = parent::create($values);
@@ -114,10 +117,17 @@ class BlogComment extends DatabaseObject {
 		if (!$success) {
 			return false;
 		}
-
+        
+		// set proper status/adminstatus if blog is not moderated
+        // DB default is pending
+        if ($this->getBlog()->getProperty('admin_status') == 'online') {
+            $this->setProperty('admin_status', 'online');   
+        }
+        if ($this->getBlog()->getProperty('status') == 'online') {
+            $this->setProperty('status', 'online');   
+        }
+                
 		$this->fetch();
-		
-		BlogEntry::TriggerCounters($p_entry_id);
 
         return true; 
     }
@@ -136,14 +146,9 @@ class BlogComment extends DatabaseObject {
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
     {    
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
-        
-        $BlogComment = new BlogComment();
-        $comments_tbl = $BlogComment->m_dbTableName;
+        $blogs_tbl      = Blog::$s_dbTableName;
+        $entries_tbl    = BlogEntry::$s_dbTableName;
+        $comments_tbl   = BlogComment::$s_dbTableName;
             
         if (array_key_exists('fk_entry_id', $p_cond)) {
             $cond .= " AND c.fk_entry_id = {$p_cond['fk_entry_id']}";    
@@ -156,8 +161,8 @@ class BlogComment extends DatabaseObject {
             $cond .= " AND c.admin_status = '{$p_cond['admin_status']}'"; 
             if ($p_checkParent) $cond .= " AND b.admin_status = '{$p_cond['status']}' AND e.admin_status =  '{$p_cond['status']}'";   
         }
-         if (array_key_exists('mood', $p_cond) && strlen($p_cond['mood'])) {
-            $cond .= " AND c.mood IN ({$p_cond['mood']})";    
+         if (array_key_exists('fk_mood_id', $p_cond) && strlen($p_cond['fk_mood_id'])) {
+            $cond .= " AND c.fk_mood_id IN ({$p_cond['fk_mood_id']})";    
         }
         
         $queryStr = "SELECT     c.comment_id
@@ -183,7 +188,7 @@ class BlogComment extends DatabaseObject {
 		$comments   = array();
 		
 		while ($row = $query->FetchRow()) { 
-		    $tmpComment =& new BlogComment($row['comment_id']);
+		    $tmpComment = new BlogComment($row['comment_id']);
 		    $comments[] = $tmpComment;
 		}
 		return $comments;
@@ -202,25 +207,33 @@ class BlogComment extends DatabaseObject {
         
     static function GetEntryId($p_comment_id)
     {
-        $tmpComment =& new BlogComment($p_comment_id);
+        $tmpComment = new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_entry_id');           
     }
 
     function getBlog()
     {
-        $Blog = new Blog($this->getProperty('fk_blog_id'));
+        static $Blog;
+        
+        if (!is_object($Bog)) {
+            $Blog = new Blog($this->getProperty('fk_blog_id'));
+        }
         return $Blog;   
     }
    
     function getEntry()
     {
-        $Entry = new $Entry($this->getProperty('fk_entry_id'));
+        static $Entry;
+        
+        if (!is_object($Entry)) {
+            $Entry = new $Entry($this->getProperty('fk_entry_id'));
+        }
         return $Entry;   
     }
        
     static function GetBlogId($p_comment_id)
     {
-        $tmpComment =& new BlogComment($p_comment_id);
+        $tmpComment = new BlogComment($p_comment_id);
         return $tmpComment->getProperty('fk_blog_id');           
     }
 
@@ -267,8 +280,7 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
                 'label'     => 'Titel',
-                'default'   => $data['title'],
-                'required'  => true            
+                'default'   => $data['title']           
             ),
             'user_name'     => array(
                 'element'   => 'BlogComment[user_name]',
@@ -291,11 +303,11 @@ class BlogComment extends DatabaseObject {
                 'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')            
             ),       
             'mood'      => array(
-                'element'   => 'BlogComment[mood]',
-                'type'      => 'checkbox_multi',
+                'element'   => 'BlogComment[fk_mood_id]',
+                'type'      => 'radio',
                 'label'     => 'mood',
-                'default'   => explode(', ', $data['mood']),
-                'options'   => $this->_getmoodList()      
+                'default'   => $data['fk_mood_id'],
+                'options'   => Blog::GetMoodList(!empty($data['fk_language_id']) ? $data['fk_language_id'] : BlogEntry::GetEntryLanguageId($data['fk_entry_id']))      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
@@ -304,7 +316,8 @@ class BlogComment extends DatabaseObject {
                 'default'   => $data['status'],
                 'options'   => array(
                                 'online'    => 'online',
-                                'offline'   => 'offline'
+                                'offline'   => 'offline',
+                                'pending'   => 'pending'
                                ),
                 'required'  => true            
             ),          
@@ -314,6 +327,7 @@ class BlogComment extends DatabaseObject {
                 'label'     => 'Admin status',
                 'default'   => $data['admin_status'],
                 'options'   => array(
+                                'pending'   => 'pending',
                                 'online'    => 'online',
                                 'offline'   => 'offline',
                                ),
@@ -353,7 +367,7 @@ class BlogComment extends DatabaseObject {
               
         $mask = $this->_getFormMask($p_admin, $p_owner);
         
-        $form =& new html_QuickForm('blog_comment', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog_comment', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -361,7 +375,7 @@ class BlogComment extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
             
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
             
             return $renderer->toArray();
@@ -370,11 +384,9 @@ class BlogComment extends DatabaseObject {
     
     function store($p_admin, $p_user_id=null)
     {
-        require_once 'HTML/QuickForm.php';
-              
+        require_once 'HTML/QuickForm.php';     
         $mask = $this->_getFormMask($p_admin, $p_owner);
-      
-        $form =& new html_QuickForm('blog_comment', 'post', '', null, null, true); 
+        $form = new html_QuickForm('blog_comment', 'post', '', null, null, true); 
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($form->validate()) {
@@ -382,9 +394,7 @@ class BlogComment extends DatabaseObject {
             
             foreach ($data['BlogComment'] as $k => $v) {
                 // clean user input
-                if (in_array($k, BlogComment::$m_html_allowed_fields)) { 
-                    $data['BlogComment'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
-                } else {
+                if (!in_array($k, BlogComment::$m_html_allowed_fields)) { 
                     $data['BlogComment'][$k] = htmlspecialchars_array($v);
                 }
             }
@@ -398,40 +408,33 @@ class BlogComment extends DatabaseObject {
                             }    
                         }
                         $v = substr($string, 0, -2);
-                        unset ($string);
-                            
+                        unset ($string);    
                     } 
                     $this->setProperty($k, $v); 
                 }
                 BlogEntry::TriggerCounters(BlogComment::GetEntryId($data['comment_id']));
                 return true;
                 
-            } else {
-                if (is_array($data['BlogComment']['mood'])) {
-                    unset ($string);
-                    foreach($data['BlogComment']['mood'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";   
-                        }    
-                    }
-                    $mood = substr($string, 0, -2);
+            } elseif ($this->create(  
+                            $data['f_entry_id'], 
+                            $p_user_id, 
+                            $data['BlogComment']['user_name'], 
+                            $data['BlogComment']['user_email'], 
+                            $data['BlogComment']['title'], 
+                            $data['BlogComment']['content'], 
+                            $data['BlogComment']['fk_mood_id'])) {
+                
+                // admin and owner can override status setting
+                if ($p_admin && $data['BlogComment']['admin_status']) {
+                    $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
                 }
-                if ($this->create(  $data['f_entry_id'], 
-                                    $p_user_id, 
-                                    $data['BlogComment']['user_name'], 
-                                    $data['BlogComment']['user_email'], 
-                                    $data['BlogComment']['title'], 
-                                    $data['BlogComment']['content'], 
-                                    $mood)) {
-                                        
-                    if ($p_owner && $data['BlogComment']['status'])         $this->setProperty('status', $data['BlogComment']['status']);
-                    if ($p_admin && $data['BlogComment']['admin_status'])   $this->setProperty('admin_status', $data['BlogComment']['admin_status']);
-                    
-                    BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
-                      
-                    return true;    
+                if ($p_owner && $data['BlogComment']['status']) {
+                    $this->setProperty('status', $data['BlogComment']['status']);
                 }
-                return false; 
+                
+                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
+                  
+                return true;    
             }
         }  
         return false;
@@ -449,13 +452,23 @@ class BlogComment extends DatabaseObject {
     }
     
     /**
-     * Get the blog identifier
+     * Get the blogcomment identifier
      *
      * @return int
      */
     public function getId()
     {
         return $this->getProperty('comment_id');   
+    }
+    
+    /**
+     * Get the blogcomment language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->getProperty('fk_language_id');   
     }
 
 
@@ -483,6 +496,12 @@ class BlogComment extends DatabaseObject {
         if (!is_array($p_parameters)) {
             return null;
         }
+        
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
+        
         
         $selectClauseObj = new SQLSelectClause();
 

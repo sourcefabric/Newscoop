@@ -94,18 +94,18 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
     <?php } ?> 
     
     <?php if ($f_blog_id && $is_admin) { ?>
-        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
+        <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
     <?php } ?>  
     
   </tr>
 </TABLE>
 
-
-
+<?php camp_html_display_msgs(); ?>
 <p>
 
 <FORM name="selector" method="get">
+<input type="hidden" name="f_blog_id" value="<?php p($f_blog_id) ?>">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -279,9 +279,7 @@ if ($BlogEntriesList->getLength()) {
             
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
                 <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
-                &nbsp;<SMALL>
-                <?php if ($is_admin) putGS('Click to edit'); ?>
-                </SMALL>
+                &nbsp;<SMALL><?php if ($is_admin) putGS('Click to edit'); ?></SMALL>
             </TD>           
             <TD align="center" valign="top" width="60">
                 <A href="<?php p($self_params) ?>f_order=byuser_id"><?php  putGS("User"); ?></a>
@@ -293,16 +291,21 @@ if ($BlogEntriesList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=bycomments"><?php  putGS("Comments"); ?></a>
+                <br>
+                <SMALL><?php putGS('online/offline'); ?></SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=byblog_begin"><?php  putGS("List Comments"); ?></a>
+                <?php  putGS("Topics"); ?>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60" colspan="2">
+                <?php  putGS("Comments"); ?>
             </TD>
             
             <?php if($is_admin) { ?>
@@ -335,7 +338,7 @@ if ($BlogEntriesList->getLength()) {
                     p($MetaBlogEntry->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=450, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
                     } else {
                         p($MetaBlogEntry->title);
                     }
@@ -346,16 +349,37 @@ if ($BlogEntriesList->getLength()) {
                 <td align="center"><?php p($MetaBlogEntry->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlogEntry->status); ?></td>
                 <td align="center"><?php putGS($MetaBlogEntry->admin_status); ?></td>
-                <td align="center"><?php p($MetaBlogEntry->published); ?></td>
-                <td align="center"><?php p($MetaBlogEntry->comments); ?></td>
+                <td align="center"><?php p($MetaBlogEntry->date); ?></td>
+                <td align="center"><?php p($MetaBlogEntry->comments_online); ?> / <?php p($MetaBlogEntry->comments_offline); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
-              
+                
                 <td align='center'>
-                    <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
-                        <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
-                    </a>
+                    <?php
+                    // get the topics used
+                    $topics = array();
+                    $BlogEntry = new BlogEntry($MetaBlogEntry->identifier);
+                    foreach ($BlogEntry->getTopics() as $Topic) {            
+                        $topics[] = "{$Topic->getName($BlogEntry->getLanguageId())}";
+                    }
+                    $topics_list = implode(' | ', $topics); 
+                    
+				    ?>
+				    <A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/<?php p($is_admin ? 'add.png' : 'preview.png') ?>" border="0"></A>
+
                 </td>
-              
+                
+                <td align='center'>
+                    <A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $MetaBlogEntry->identifier ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
+                </td>
+                          
+                <?php if($is_admin) { ?>
+                    <td align='center'>
+                        <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
+                            <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
+                        </a>
+                    </td>
+                <?php } ?>
+                
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {

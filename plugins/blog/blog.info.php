@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'blog',
-    'version' => '0.1',
+    'version' => '3.3.x-0.2',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(
@@ -40,12 +40,16 @@ $info = array(
         'objecttypes' => array(
             array('blog' => array('class' => 'Blog')),
             array('blogentry' => array('class' => 'BlogEntry')),
-            array('blogcomment' => array('class' => 'BlogComment'))
+            array('blogcomment' => array('class' => 'BlogComment')),
+            array('blogtopic' => array('class' => 'BlogTopic')),
+            array('blogentrytopic' => array('class' => 'BlogentryTopic'))
         ),
         'listobjects' => array(
             array('blogs' => array('class' => 'Blogs', 'list' => 'blogs')),
             array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries')),
-            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments'))
+            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments')),
+            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics')),
+            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics'))
         ),
         'init' => 'plugin_blog_init'
     ),
@@ -58,13 +62,15 @@ $info = array(
     	'/blog/admin/blog_form.php',
     	'/blog/admin/entry_form.php',
     	'/blog/admin/comment_form.php',
+    	'/blog/admin/topics/popup.php',
     	'/blog/moderator/blog_form.php',
     	'/blog/moderator/entry_form.php',
     	'/blog/moderator/comment_form.php',
+    	'/blog/moderator/topics/popup.php'    	
     ),
     'install' => 'plugin_blog_install',
     'enable' => 'plugin_blog_install',
-    'update' => '',
+    'update' => 'plugin_blog_update',
     'disable' => '',
     'uninstall' => 'plugin_blog_uninstall'
 );
@@ -109,6 +115,18 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'blog');    
     }
     
+    function plugin_blog_update()
+    {
+        global $g_documentRoot;
+        
+        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'blog'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
+        
+        unset($GLOBALS['g_db']);       
+    }
+    
     function plugin_blog_init(&$p_context)
     {      
         $blog_id = Input::Get("f_blog_id", "int");
@@ -142,7 +160,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
                        'f_blogentry_id',
                        'f_blogentry_title',
                        'f_blogentry_content',
-                       'f_blogentry_mood',
+                       'f_blogentry_mood_id',
                        
                        'f_blogcomment',
                        'f_blogcomment_id',
@@ -150,7 +168,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
                        'f_blogcomment_content',
                        'f_blogcomment_user_name',
                        'f_blogcomment_user_email',
-                       'f_blogcomment_mood',
+                       'f_blogcomment_mood_id',
                        'f_preview_blogcomment',
                        'f_submit_blogcomment',
                        'f_captcha_code'

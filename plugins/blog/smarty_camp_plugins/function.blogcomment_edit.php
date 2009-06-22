@@ -37,7 +37,6 @@ function smarty_function_blogcomment_edit($p_params, &$p_smarty)
 
     switch ($p_params['attribute']) {
         case 'title':
-        case 'mood':
         case 'user_name':
         case 'user_email':
             $attr = $p_params['attribute'];
@@ -63,6 +62,18 @@ function smarty_function_blogcomment_edit($p_params, &$p_smarty)
                         '     });'.
                         '</script>';
             }
+        break;
+        
+        case 'mood':
+             $value = isset($_REQUEST['f_blogcomment_mood_id']) ? Input::Get('f_blogcomment_mood_id') : $campsite->blogcomment->mood_id;
+            $html = "<select name=\"f_blogcomment_mood_id\" {$params['html_code']}>";
+            
+            foreach (Blog::getMoodList($campsite->blog->language_id) as $key => $val) {
+                $selected = $value == $key ? 'selected="selected"' : '';
+                $html .= "<option value=\"$key\" $selected {$params['html_code']}>$val</option>";
+            }
+            
+            $html .= '</select>';
         break;
     }
     

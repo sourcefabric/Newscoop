@@ -46,11 +46,13 @@ final class MetaInterview extends MetaDbObject {
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['moderator'] = 'getModerator';
         $this->m_customProperties['guest'] = 'getGuest';
-        $this->m_customProperties['is_user_admin'] = 'isUserAdmin';
-        $this->m_customProperties['is_user_moderator'] = 'isUserModerator';
-        $this->m_customProperties['is_user_guest'] = 'isUserGuest';
+        $this->m_customProperties['user_is_admin'] = 'userIsAdmin';
+        $this->m_customProperties['user_is_moderator'] = 'userIsModerator';
+        $this->m_customProperties['user_is_guest'] = 'userIsGuest';
         $this->m_customProperties['in_questions_timeframe'] = 'inQuestionsTimeframe';
         $this->m_customProperties['in_interview_timeframe'] = 'inInterviewTimeframe';
+        $this->m_customProperties['nr_questions'] = 'nrQuestions';
+        $this->m_customProperties['nr_answeres'] = 'nrAnswers';
         
 
     } // fn __construct
@@ -105,7 +107,7 @@ final class MetaInterview extends MetaDbObject {
         return null;
     }
     
-    public function isUserAdmin(&$p_context = null)
+    public function userIsAdmin(&$p_context = null)
     {
         if (is_object($p_context)) {
             $context = $p_context;   
@@ -119,7 +121,7 @@ final class MetaInterview extends MetaDbObject {
         return false;
     }
     
-    public function isUserModerator(&$p_context = null)
+    public function userIsModerator(&$p_context = null)
     {
         if (is_object($p_context)) {
             $context = $p_context;   
@@ -133,7 +135,7 @@ final class MetaInterview extends MetaDbObject {
         return false;
     }
 
-    public function isUserGuest(&$p_context = null)
+    public function userIsGuest(&$p_context = null)
     {
         if (is_object($p_context)) {
             $context = $p_context;   
@@ -164,6 +166,22 @@ final class MetaInterview extends MetaDbObject {
             return true;   
         } 
         return false;
+    }
+    
+    public function nrQuestions()
+    {
+        $start = 0;
+        $params = array('constraints' => 'status not rejected');
+        $itemsList = new InterviewItemsList($start, $params);
+        return $itemsList->count;
+    }
+    
+    public function nrAnswers()
+    {
+        $start = 0;
+        $params = array('constraints' => 'status is published');
+        $itemsList = new InterviewItemsList($start, $params);
+        return $itemsList->count;
     }
     
 } // class MetaInterview

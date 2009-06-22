@@ -107,6 +107,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <p>
 
 <FORM name="selector" method="get">
+<input type="hidden" name="f_blogentry_id" value="<?php p($f_entry_id) ?>">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -259,7 +260,7 @@ if ($BlogCommentsList->getLength()) {
             <?php } ?>
             
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
-                <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Comment"); ?></a>
                 &nbsp;<SMALL>
                 <?php if ($is_admin) putGS('Click to edit'); ?>
                 </SMALL>
@@ -276,7 +277,7 @@ if ($BlogCommentsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
@@ -311,7 +312,7 @@ if ($BlogCommentsList->getLength()) {
                     p($MetaBlogComment->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('comment_form.php?f_comment_id=<?php p($MetaBlogComment->identifier); ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');"><?php p($MetaBlogComment->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('comment_form.php?f_comment_id=<?php p($MetaBlogComment->identifier); ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');"><?php p(mb_substr(strip_tags($MetaBlogComment->content), 0, 70)); ?></a><?php
                     } else {
                         p($MetaBlogComment->title);
                     }
@@ -322,7 +323,7 @@ if ($BlogCommentsList->getLength()) {
                 <td align="center"><?php p($MetaBlogComment->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlogComment->status); ?></td>
                 <td align="center"><?php putGS($MetaBlogComment->admin_status); ?></td>
-                <td align="center"><?php p($MetaBlogComment->published); ?></td>
+                <td align="center"><?php p($MetaBlogComment->date); ?></td>
                 <td align="center"><?php p($MetaBlogComment->feature); ?></td>
               
                 <?php if($is_admin) { ?>

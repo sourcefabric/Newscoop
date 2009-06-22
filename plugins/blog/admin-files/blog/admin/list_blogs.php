@@ -53,7 +53,7 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
 }
 
 if ($f_admin_status = mysql_escape_string(Input::Get('f_admin_status', 'string'))) {
-    $constraints .= "admin_status is $f_admin_status ";   
+    $constraints .= "admin_status is $f_admin_status ";
 }
 
 $parameters = array(
@@ -64,6 +64,7 @@ $parameters = array(
 
 define('PLUGIN_BLOG_ADMIN_MODE', true);
 $self = basename(__FILE__);
+$self_params = $self.'?';
 if ($f_start)   $self_params .= "f_start=$f_start&amp;";
 
 $BlogsList = new BlogsList($f_start, $parameters);
@@ -83,13 +84,14 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
     <TD><A HREF="list_entries.php" ><B><?php  putGS("List all Entries"); ?></B></A></TD>
     
     <?php if ($is_admin) { ?>
-            <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
+            <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
     <?php } ?>
 
 </tr>
 </TABLE>
 
+<?php camp_html_display_msgs(); ?>
 <p>
 
 <FORM name="selector" method="get">
@@ -282,16 +284,21 @@ if ($BlogsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=byadmin_status"><?php  putGS("Admin Status"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=bypublished"><?php  putGS("Published"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byentries"><?php  putGS("Entries"); ?></a>
+                <br>
+                <SMALL><?php putGS('online/offline'); ?></SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
                 <A href="<?php p($self_params) ?>f_order=byfeature"><?php  putGS("Feature"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <?php  putGS("List Entries"); ?>
+                <?php  putGS("Topics"); ?>
+            </TD>
+            <TD ALIGN="center" VALIGN="TOP" width="60" <?php p($is_admin ? 'colspan="2"' : '') ?>>
+                <?php  putGS("Entries"); ?>
             </TD>
             
             <?php if($is_admin) { ?>
@@ -324,7 +331,7 @@ if ($BlogsList->getLength()) {
                     p($MetaBlog->identifier.'.'); 
                     
                     if ($is_admin) {
-                        ?><a href="javascript: void(0);" onclick="window.open('blog_form.php?f_blog_id=<?php p($MetaBlog->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=600, top=100, left=100');"><?php p($MetaBlog->title); ?></a><?php
+                        ?><a href="javascript: void(0);" onclick="window.open('blog_form.php?f_blog_id=<?php p($MetaBlog->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');"><?php p($MetaBlog->title); ?></a><?php
                     } else {
                         p($MetaBlog->title);
                     }
@@ -335,16 +342,35 @@ if ($BlogsList->getLength()) {
                 <td align="center"><?php p($MetaBlog->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlog->status); ?></td>
                 <td align="center"><?php putGS($MetaBlog->admin_status); ?></td>
-                <td align="center"><?php p($MetaBlog->published); ?></td>
-                <td align="center"><?php p($MetaBlog->entries); ?></td>
+                <td align="center"><?php p($MetaBlog->date); ?></td>
+                <td align="center"><?php p($MetaBlog->entries_online); ?> / <?php p($MetaBlog->entries_offline); ?></td>
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
-              
+                
                 <td align='center'>
+                    <?php
+                    // get the topics used
+                    $topics = array();
+                    $Blog = new Blog($MetaBlog->identifier);
+                    foreach ($Blog->getTopics() as $Topic) {            
+                        $topics[] = "{$Topic->getName($Blog->getLanguageId())}";
+                    }
+                    $topics_list = implode(' | ', $topics);
+                    ?>
+					<A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/<?php p($is_admin ? 'add.png' : 'preview.png') ?>" border="0"></A>
+                </td>
+                
+                <?php if ($is_admin) { ?>   
+                    <td align='center' width="20">
+                        <A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $MetaBlog->identifier ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A
+                    </td>
+                <?php } ?> 
+                
+                <td align='center' width="20">
                     <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
-              
+
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {

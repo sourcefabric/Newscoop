@@ -29,11 +29,12 @@ class MetaActionSubmit_Blogcomment extends MetaAction
             $this->m_error = new PEAR_Error('None or invalid blogentry was given.', ACTION_BLOGCOMMENT_ERR_INVALID_ENTRY);
             return;
         }
-        
+        /*
         if (!isset($p_input['f_blogcomment_title']) || empty($p_input['f_blogcomment_title'])) {
             $this->m_error = new PEAR_Error('The comment subject was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_TITLE);
             return;
         }
+        */
         if (!isset($p_input['f_blogcomment_content']) || empty($p_input['f_blogcomment_content'])) {
             $this->m_error = new PEAR_Error('The comment content was not filled in.', ACTION_BLOGCOMMENT_ERR_NO_CONTENT);
             return;
@@ -53,7 +54,7 @@ class MetaActionSubmit_Blogcomment extends MetaAction
         
         $this->m_properties['title'] = $p_input['f_blogcomment_title'];
         $this->m_properties['content'] = $p_input['f_blogcomment_content'];
-        $this->m_properties['mood'] = $p_input['f_blogcomment_mood'];
+        $this->m_properties['mood_id'] = $p_input['f_blogcomment_mood_id'];
         $this->m_properties['user_name'] = $p_input['f_blogcomment_user_name'];
         $this->m_properties['user_email'] = $p_input['f_blogcomment_user_email'];
         
@@ -117,7 +118,7 @@ class MetaActionSubmit_Blogcomment extends MetaAction
                                          $this->m_properties['user_email'],
                                          $this->m_properties['title'], 
                                          $this->m_properties['content'], 
-                                         $this->m_properties['mood'])) {
+                                         $this->m_properties['mood_id'])) {
             $this->m_error = ACTION_OK;
             return true;   
         }   

@@ -21,14 +21,13 @@ final class MetaBlogEntry extends MetaDbObject {
         $this->m_properties['blog_id'] = 'fk_blog_id';
         $this->m_properties['language_id'] = 'fk_language_id';
         $this->m_properties['user_id'] = 'fk_user_id';
-        $this->m_properties['published'] = 'published';
+        $this->m_properties['date'] = 'date';
         $this->m_properties['released'] = 'released';
         $this->m_properties['status'] = 'status';
         $this->m_properties['title'] = 'title';
         $this->m_properties['name'] = 'title';
         $this->m_properties['content'] = 'content';
-        $this->m_properties['tags'] = 'tags';
-        $this->m_properties['mood'] = 'mood';
+        $this->m_properties['mood_id'] = 'fk_mood_id';
         $this->m_properties['images'] = 'images';
         $this->m_properties['admin_status'] = 'admin_status';
         $this->m_properties['comments_online'] = 'comments_online';
@@ -47,6 +46,7 @@ final class MetaBlogEntry extends MetaDbObject {
         $this->m_customProperties['language'] = 'getLanguage';
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['comments'] = 'getCommentsCount';
+        $this->m_customProperties['mood'] = 'getMood';
     } // fn __construct
     
     public function getBlog()
@@ -70,6 +70,12 @@ final class MetaBlogEntry extends MetaDbObject {
     public function getCommentsCount()
     {
         return $this->comments_online + $this->comments_offline;
+    }
+    
+    public function getMood()
+    {
+        $MetaTopic = new MetaTopic($this->mood_id);
+        return $MetaTopic;   
     }
 
 } // class MetaBlogEntry

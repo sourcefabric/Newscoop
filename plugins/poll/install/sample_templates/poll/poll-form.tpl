@@ -30,7 +30,7 @@
         
     {{ else }}
     
-        This poll expired.<p>
+        You reached max_vote_count, or this poll has expired.<p>
         {{ assign var='display_poll_result' value=true }}
         
     {{ /if }}  
@@ -40,9 +40,7 @@
     
         {{ poll_form template='poll/section-polls.tpl' submit_button='submit' }} 
             {{ list_poll_answers }} 
-                {{ pollanswer_edit }}
-                   {{ $campsite->pollanswer->answer }}
-                {{ /pollanswer_edit }}
+                {{ pollanswer_edit }} {{ $campsite->pollanswer->answer }}
                 <br>
             {{ /list_poll_answers }}
         {{ /poll_form }}

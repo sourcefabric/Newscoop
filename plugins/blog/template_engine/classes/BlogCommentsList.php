@@ -16,11 +16,11 @@ class BlogCommentsList extends ListObject
                                         'blog_id' => array('field' => 'fk_blog_id', 'type' => 'integer'),
                                         'language_id' => array('field' => 'fk_language_id', 'type' => 'integer'),
                                         'user_id' => array('field' => 'fk_user_id', 'type' => 'integer'),
-                                        'published' => array('field' => 'published', 'type' => 'datetime'),
-                                        'published_year' => array('field' => 'YEAR(published)', 'type' => 'integer'),
-                                        'published_month' => array('field' => 'MONTH(published)', 'type' => 'integer'),
-                                        'published_mday' => array('field' => 'DAYOFMONTH(published)', 'type' => 'integer'),
-                                        'published_wday' => array('field' => 'DAYOFWEEK(published)', 'type' => 'integer'),
+                                        'date' => array('field' => 'date', 'type' => 'datetime'),
+                                        'date_year' => array('field' => 'YEAR(date)', 'type' => 'integer'),
+                                        'date_month' => array('field' => 'MONTH(date)', 'type' => 'integer'),
+                                        'date_mday' => array('field' => 'DAYOFMONTH(date)', 'type' => 'integer'),
+                                        'date_wday' => array('field' => 'DAYOFWEEK(date)', 'type' => 'integer'),
                                         'name' => array('field' => 'title', 'type' => 'string'),
                                         'title' => array('field' => 'title', 'type' => 'string'),
                                         'content' => array('field' => 'content', 'type' => 'string'),
@@ -35,11 +35,11 @@ class BlogCommentsList extends ListObject
                                       'byentry_id',
                                       'byblog_id',
                                       'byuser_id',
-                                      'bypublished',
-                                      'bypublished_year',
-                                      'bypublished_month',
-                                      'bypublished_mday',
-                                      'bypublished_wday',
+                                      'bydate',
+                                      'bydate_year',
+                                      'bydate_month',
+                                      'bydate_mday',
+                                      'bydate_wday',
                                       'byname',
                                       'bytitle',
                                       'bycontent',
@@ -66,11 +66,23 @@ class BlogCommentsList extends ListObject
     	    $operator = new Operator('is', 'integer');
     	    $context = CampTemplate::singleton()->context();
     	    
+    	    if (!$p_parameters['ignore_status']) {
+    	        $comparisonOperation = new ComparisonOperation('status', $operator, 'online');
+    	        $this->m_constraints[] = $comparisonOperation; 
+    	    }
+    	    if (!$p_parameters['ignore_admin_status']) {
+    	        $comparisonOperation = new ComparisonOperation('admin_status', $operator, 'online');
+    	        $this->m_constraints[] = $comparisonOperation; 
+    	    }
     	    if ($context->blogentry->defined) {
         	    $comparisonOperation = new ComparisonOperation('entry_id', $operator, $context->blogentry->identifier);
                 $this->m_constraints[] = $comparisonOperation;
     	    } elseif ($context->blog->defined) {
         	    $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
+                $this->m_constraints[] = $comparisonOperation;
+    	    }
+    	    if ($context->language->defined) {
+        	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $context->language->number);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
 	    }

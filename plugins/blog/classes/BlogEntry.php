@@ -17,19 +17,19 @@ class BlogEntry extends DatabaseObject {
     var $m_keyColumnNames       = array('entry_id');
     var $m_keyIsAutoIncrement   = true;
     var $m_dbTableName          = 'plugin_blog_entry';
+    static $s_dbTableName       = 'plugin_blog_entry';
 
     var $m_columnNames = array(
         'entry_id',
         'fk_blog_id',
         'fk_language_id',
         'fk_user_id',
-        'published',
+        'date',
         'released',
         'status',
         'title',
         'content',
-        'tags',
-        'mood',
+        'fk_mood_id',
         'admin_status',
         'comments_online',
         'comments_offline',
@@ -38,7 +38,6 @@ class BlogEntry extends DatabaseObject {
     );
 
     static $m_html_allowed_fields = array('content');
-    static $m_html_allowed_tags = '<strong><em><u><a><img><p>';
 
     /**
 	 * Construct by passing in the primary key to access the article in
@@ -56,7 +55,7 @@ class BlogEntry extends DatabaseObject {
 
         if ($this->keyValuesExist()) {
             $this->fetch();
-            $this->m_data['images'] = BlogEntry::_getImagePaths($p_entry_id, true, true);
+            $this->m_data['images'] = BlogImageHelper::GetImagePaths('entry', $p_entry_id, true, true);
 
         } elseif ($p_blog_id) {
             $this->m_data['fk_blog_id'] = $p_blog_id;
@@ -65,20 +64,26 @@ class BlogEntry extends DatabaseObject {
 
     function setProperty($p_name, $p_value)
     {
+        if ($p_name == 'topics') {
+            return $this->setTopics($p_value);   
+        }
+        
+        /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
                 case 'online':
                 case 'moderated':
                 case 'readonly':
-                    parent::setProperty('published', date('Y-m-d H:i:s'));
+                    parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
                   
                 case 'offline':
                 case 'pending':
-                    parent::setProperty('published', null);
+                    parent::setProperty('date', null);
                 break;
             }          
         }
+        */
         
         $result = parent::setProperty($p_name, $p_value);
 
@@ -89,6 +94,8 @@ class BlogEntry extends DatabaseObject {
         
         return $result;
     }
+    
+
 
     /**
 	 * A way for internal functions to call the superclass create function.
@@ -97,23 +104,32 @@ class BlogEntry extends DatabaseObject {
     function __create($p_values=null) { return parent::create($p_values); }
 
 
-    function create($p_blog_id, $p_user_id, $p_title=null, $p_content=null, $p_tags=null, $p_mood=null)
+    function create($p_blog_id, $p_user_id, $p_title=null, $p_content=null, $p_mood_id=null)
     {
         // Create the record
         $values = array(
         'fk_blog_id'    => $p_blog_id,
-        'fk_language_id'=> Blog::getLanguageId($p_blog_id),
+        'fk_language_id'=> Blog::GetBlogLanguageId($p_blog_id),
         'fk_user_id'    => $p_user_id,
         'title'         => $p_title,
         'content'       => $p_content,
-        'tags'          => $p_tags,
-        'mood'          => $p_mood
+        'fk_mood_id'    => $p_mood_id,
+        'date'     => date('Y-m-d H:i:s')
         );
 
         $success = parent::create($values);
 
         if (!$success) {
             return false;
+        }
+        
+        // set proper status/adminstatus if blog is not moderated
+        // DB default is pending
+        if ($this->getBlog()->getProperty('admin_status') == 'online') {
+            $this->setProperty('admin_status', 'online');   
+        }
+        if ($this->getBlog()->getProperty('status') == 'online') {
+            $this->setProperty('status', 'online');   
         }
 
         $this->fetch();
@@ -136,7 +152,8 @@ class BlogEntry extends DatabaseObject {
 
         parent::delete();
 
-        #BlogEntry::_removeImage($entry_id);
+        BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
+        BlogentryTopic::OnBlogentryDelete($entry_id);
         Blog::TriggerCounters($blog_id);
     }
 
@@ -152,17 +169,18 @@ class BlogEntry extends DatabaseObject {
     
     function getBlog()
     {
-        $Blog = new Blog($this->getProperty('fk_blog_id'));
+        static $Blog;
+        
+        if (!is_object($Bog)) {
+            $Blog = new Blog($this->getProperty('fk_blog_id'));
+        }
         return $Blog;   
     }
 
     function _buildQueryStr($p_cond, $p_checkParent)
     {
-        $Blog = new Blog();
-        $blogs_tbl = $Blog->m_dbTableName;
-        
-        $BlogEntry = new BlogEntry();
-        $entries_tbl = $BlogEntry->m_dbTableName;
+        $blogs_tbl = Blog::$s_dbTableName;
+        $entries_tbl = self::$s_dbTableName;
         
         if (array_key_exists('fk_blog_id', $p_cond)) {
             $cond .= " AND e.fk_blog_id = {$p_cond['fk_blog_id']}";
@@ -173,11 +191,11 @@ class BlogEntry extends DatabaseObject {
         }
 
         if (array_key_exists('status', $p_cond)) {
-            $cond .= BlogEntry::_buildSubQuery($p_cond, 'status', $p_checkParent);
+            $cond .= self::_buildSubQuery($p_cond, 'status', $p_checkParent);
         }
 
         if (array_key_exists('admin_status', $p_cond)) {
-            $cond .= BlogEntry::_buildSubQuery($p_cond, 'admin_status', $p_checkParent);
+            $cond .= self::_buildSubQuery($p_cond, 'admin_status', $p_checkParent);
         }
 
         if (array_key_exists('GROUP BY', $p_cond)) {
@@ -224,12 +242,12 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr   = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
+        $queryStr   = self::_buildQueryStr($p_cond, $p_checkParent);
         $query      = $g_ado_db->SelectLimit($queryStr, $p_perPage, ($p_currPage-1) * $p_perPage);
         $entries    = array();
 
         while ($row = $query->FetchRow()) {
-            $tmpEntry =& new BlogEntry($row['entry_id']);
+            $tmpEntry = new BlogEntry($row['entry_id']);
             $entries[] = $tmpEntry;
         }
 
@@ -240,7 +258,7 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = BlogEntry::_buildQueryStr($p_cond, $p_checkParent);
+        $queryStr = self::_buildQueryStr($p_cond, $p_checkParent);
 
         $query = $g_ado_db->Execute($queryStr);
 
@@ -255,11 +273,8 @@ class BlogEntry extends DatabaseObject {
             return false;   
         }
         
-        $BlogEntry = new BlogEntry();
-        $entryTbl = $BlogEntry->m_dbTableName;
-
-        $BlogComment = new BlogComment();
-        $commentTbl = $BlogComment->m_dbTableName;
+        $entryTbl = self::$s_dbTableName;
+        $commentTbl  = BlogComment::$s_dbTableName;
         
         $queryStr = "UPDATE $entryTbl
                      SET    comments_online = 
@@ -276,25 +291,21 @@ class BlogEntry extends DatabaseObject {
         Blog::TriggerCounters(self::GetBlogId($p_entry_id));
     }
 
-    static function GetBlogId($p_entry_id)
+    static public function GetBlogId($p_entry_id)
     {
-        $tmpEntry =& new BlogEntry($p_entry_id);
+        $tmpEntry = new BlogEntry($p_entry_id);
         return $tmpEntry->getProperty('fk_blog_id');
-    }
-    
-    static function getLanguageId($p_entry_id)
-    {
-        $tmpEntry =& new BlogEntry($p_entry_id);
-        return $tmpEntry->getProperty('fk_language_id');
     }
     
     function _getFormMask($p_admin)
     {
+        global $g_user;
+        
         $data = $this->getData();
 
         foreach ($data as $k => $v) {
             // clean user input
-            if (!in_array($k, BlogEntry::$m_html_allowed_fields)) {
+            if (!in_array($k, self::$m_html_allowed_fields)) {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
         }
@@ -312,20 +323,8 @@ class BlogEntry extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
-                '<script language="javascript" type="text/javascript">'.
-                '     tinyMCE.init({'.
-                '     	mode : "exact",'.
-                '        elements : "tiny_mce_box",'.
-                '        theme : "advanced",'.
-                '        plugins : "emotions, paste", '.
-                '        paste_auto_cleanup_on_paste : true, '.
-                '        theme_advanced_buttons1 : "bold, italic, underline, undo, redo, link, emotions", '.
-                '        theme_advanced_buttons2 : "", '.
-                '        theme_advanced_buttons3 : "" '.
-                '     });'.
-                '</script>',
-                'type'      => 'static'
+                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
+                'type'  => 'static'
             ),
             'title'     => array(
                 'element'   => 'BlogEntry[title]',
@@ -340,12 +339,12 @@ class BlogEntry extends DatabaseObject {
                 'label'     => 'Content',
                 'default'   => $data['content'],
                 'required'  => true,
-                'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
             ),
             'status' => array(
                 'element'   => 'BlogEntry[status]',
                 'type'      => 'select',
-                'label'     => 'Status',
+                'label'     => 'status',
                 'default'   => $data['status'],
                 'options'   => array(
                     'online'    => 'online',
@@ -356,39 +355,49 @@ class BlogEntry extends DatabaseObject {
             'admin_status' => array(
                 'element'   => 'BlogEntry[admin_status]',
                 'type'      => 'select',
-                'label'     => 'Admin Status',
+                'label'     => 'Admin status',
                 'default'   => $data['admin_status'],
                 'options'   => array(
-                    'pending'   => 'pending',
                     'online'    => 'online',
                     'offline'   => 'offline',
+                    'pending'   => 'pending',
                 ),
                 'required'  => true
             ),
-            'tags'      => array(
-                'element'   => 'BlogEntry[tags]',
-                'type'      => 'checkbox_multi',
-                'label'     => 'tags',
-                'default'   => explode(', ', $data['tags']),
-                'options'   => $this->_getTagList()
-            ),
             'mood'      => array(
-                'element'   => 'BlogEntry[mood]',
-                'type'      => 'checkbox_multi',
+                'element'   => 'BlogEntry[fk_mood_id]',
+                'type'      => 'radio',
                 'label'     => 'mood',
-                'default'   => explode(', ', $data['mood']),
-                'options'   => $this->_getmoodList()
+                'default'   => $data['fk_mood_id'],
+                'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : Blog::GetBlogLanguageId($data['fk_blog_id']))
             ),
             'image'     => array(
                 'element'   => 'BlogEntry_Image',
                 'type'      => 'file',
-                'label'     => 'Image (.jpg)',
+                'label'     => 'Image (.jpg, .png, .gif)',
+            ),
+            'image_display'  => array(
+                'element'   => 'image_display',
+                'text'      => '<img src="'.$data['images']['100x100'].'">',
+                'type'  => 'static',
+                'groupit'   => true
             ),
             'image_remove' => array(
                 'element'   => 'BlogEntry_Image_remove',
                 'type'      => 'checkbox',
-                'label'     => 'Remove Image',
+                'label'     => 'Remove this Image',
+                'groupit'   => true
             ),
+            'image_label'  => array(
+                'element'   => 'image_label',
+                'text'      => 'Remove this image',
+                'type'  => 'static',
+                'groupit'   => true
+            ),
+            'image_group' =>  isset($data['images']['100x100']) ? array(
+                'group'     => array('image_display', 'BlogEntry_Image_remove', 'image_label'),
+            
+            ) : null,
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
@@ -420,10 +429,8 @@ class BlogEntry extends DatabaseObject {
     function getForm($p_target, $p_admin, $p_html=true)
     {
         require_once 'HTML/QuickForm.php';
-
         $mask = $this->_getFormMask($p_admin);
-
-        $form =& new html_QuickForm('blog_entry', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('blog_entry', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($p_html) {
@@ -431,7 +438,7 @@ class BlogEntry extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
 
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
 
             return $renderer->toArray();
@@ -443,9 +450,7 @@ class BlogEntry extends DatabaseObject {
         require_once 'HTML/QuickForm.php';
 
         $mask = $this->_getFormMask($p_admin);
-        #mergePostParams(&$mask);
-
-        $form =& new html_QuickForm('blog_entry', 'post', '', null, null, true);
+        $form = new html_QuickForm('blog_entry', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate()){
@@ -453,9 +458,7 @@ class BlogEntry extends DatabaseObject {
 
             foreach ($data['BlogEntry'] as $k => $v) {
                 // clean user input
-                if (in_array($k, BlogEntry::$m_html_allowed_fields)) {
-                    $data['BlogEntry'][$k] = strip_tags($v, Blog::$m_html_allowed_tags);
-                } else {
+                if (!in_array($k, self::$m_html_allowed_fields)) {
                     $data['BlogEntry'][$k] = htmlspecialchars_array($v);
                 }
             }
@@ -475,122 +478,48 @@ class BlogEntry extends DatabaseObject {
                     $this->setProperty($k, $v);
                 }
 
-                if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($data['f_entry_id']);
-                if ($data['BlogEntry_Image'])        BlogEntry::_storeImage($data['BlogEntry_Image'], $data['f_entry_id']);
-
-                Blog::TriggerCounters(BlogEntry::GetBlogId($data['f_entry_id']));
+                if ($data['BlogEntry_Image_remove']) {
+                   BlogImageHelper::RemoveImageDerivates('entry', $data['f_entry_id']);
+                }
+                if ($data['BlogEntry_Image']) {
+                    BlogImageHelper::StoreImageDerivates('entry', $data['f_entry_id'], $data['BlogEntry_Image']);
+                }
+                
+                Blog::TriggerCounters(self::GetBlogId($data['f_entry_id']));
 
                 return true;
 
-            } else {
-                if (is_array($data['BlogEntry']['mood'])) {
-                    unset ($string);
-                    foreach($data['BlogEntry']['mood'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $mood = substr($string, 0, -2);
+            } elseif ($this->create(
+                            $data['f_blog_id'], 
+                            $p_user_id, 
+                            $data['BlogEntry']['title'], 
+                            $data['BlogEntry']['content'], 
+                            $data['f_mood_id'])) {
+                                
+                // admin and owner can override status setting
+                if ($data['BlogEntry']['status']) {
+                    $this->setProperty('status', $data['BlogEntry']['status']);
                 }
-                if (is_array($data['BlogEntry']['tags'])) {
-                    unset ($string);
-                    foreach($data['BlogEntry']['tags'] as $key => $value) {
-                        if ($value) {
-                            $string .= "$key, ";
-                        }
-                    }
-                    $tags = substr($string, 0, -2);
+                if ($p_admin && $data['BlogEntry']['admin_status']) {
+                    $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
                 }
-                if ($this->create($data['f_blog_id'], $p_user_id, $data['BlogEntry']['title'], $data['BlogEntry']['content'], $tags, $mood)) {
-                    if ($data['BlogEntry']['status']) $this->setProperty('status', $data['BlogEntry']['status']);
-                    if ($p_admin && $data['BlogEntry']['admin_status'])  $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
-
-                    if ($data['BlogEntry_Image_remove']) BlogEntry::_removeImage($this->getProperty('entry_id'));
-                    if ($data['BlogEntry_Image'])        BlogEntry::_storeImage( $data['BlogEntry_Image'], $this->getProperty('entry_id'));
-
-                    Blog::TriggerCounters($this->getProperty('fk_blog_id'));
-
-                    return true;
+                
+                if ($data['BlogEntry_Image']) {
+                    BlogImageHelper::StoreImageDerivates('entry', $this->getProperty('entry_id'), $data['BlogEntry_Image']);
                 }
-                return false;
+                
+                Blog::TriggerCounters($this->getProperty('fk_blog_id'));
+
+                return true;
             }
-
         }
         return false;
 
-    }
-
-    function _getImageFormates()
-    {
-        return array (42 => 42, 90 => 90, 205 => 205);
-    }
-
-    function _getImagePaths($p_entry_id, $p_check_exists=false, $p_as_url=false)
-    {
-        global $Campsite;
-        
-        foreach (BlogEntry::_getImageFormates() as $width => $height) {
-            $path[$width.'x'.$height] = $Campsite['IMAGE_DIRECTORY']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
-            $url[$width.'x'.$height] = $Campsite['IMAGE_BASE_URL']."plugin_blog/entry/{$width}x{$height}/{$p_entry_id}.jpg";
-
-            if ($p_check_exists && !file_exists($path[$width.'x'.$height])) {
-                unset ($path[$width.'x'.$height]);
-            }
-        }
-
-        if ($p_as_url) {
-            return $url;    
-        } else {
-            return $path;
-        }
-    }
-
-    function _storeImage($p_image, $p_entry_id)
-    {
-        if ($p_image['error'] == 0 && preg_match('/^image\/(p)?jp(e)?g$/', $p_image['type'])) {
-
-            foreach (BlogEntry::_getImagePaths($p_entry_id) as $dim => $path) {
-                list ($width, $height) = explode('x', $dim);
-                $d_width = $width * 2;
-                $d_height = $width * 2;
-
-                if (!file_exists(dirname($path))) {
-                    $mkdir = '';
-                    foreach (explode('/', dirname($path)) as $k => $dir) {
-                        $mkdir .= '/'.$dir;
-                        @mkdir($mkdir, 0775);
-                    }
-                }
-
-                $cmd = "convert -resize {$d_width}x -resize 'x{$d_height}<' -resize 50% -gravity center  -crop {$width}x{$height}+0+0 +repage {$p_image['tmp_name']} $path";
-                passthru($cmd, $return_value);
-            }
-
-            return $return_value;
-        }
-        return false;
-    }
-
-    function _removeImage($p_entry_id)
-    {
-        foreach (BlogEntry::_getImagePaths($p_entry_id, true) as $path) {
-            unlink($path);
-        }
-    }
-
-    function _getTagList()
-    {
-        return array('a' => 'film', 'b' => 'poesie', 'm' => 'multimedia');
-    }
-
-    function _getmoodList()
-    {
-        return array('a' => 'happy', 'b' => 'sad');
     }
 
     function setis_onfrontpage()
     {
-        if ($OldEntry = BlogEntry::getis_onfrontpageEntry()) {
+        if ($OldEntry = self::getis_onfrontpageEntry()) {
             $OldEntry->setProperty('is_onfrontpage', 0);
         }
 
@@ -606,8 +535,7 @@ class BlogEntry extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $BlogEntry = new BlogEntry();
-        $tblName = $BlogEntry->m_dbTableName;
+        $tblName = self::$s_dbTableName;
 
         $query = "SELECT    entry_id
                   FROM      `{$tblName}`
@@ -633,8 +561,47 @@ class BlogEntry extends DatabaseObject {
         return $this->getProperty('entry_id');   
     }
     
+    /**
+     * get the blogentry language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->getProperty('fk_language_id');
+    } 
     
-        /////////////////// Special template engine methods below here /////////////////////////////
+    public static function GetEntryLanguageId($p_entry_id)
+    {
+        $tmpEntry = new BlogEntry($p_entry_id);
+        return $tmpEntry->getProperty('fk_language_id');
+    }
+    
+    public function setTopics(array $p_topics=array()) 
+    {
+        // store the topics
+        $allowed_topics = Blog::GetTopicTreeFlat();
+        
+        BlogentryTopic::DeleteBlogentryTopics($this->getId());
+        
+        foreach ($p_topics as $topic_id) {
+            if (in_array($topic_id, $allowed_topics, true)) {
+                $BlogentryTopic = new BlogentryTopic($this->m_data['entry_id'], $topic_id);
+                $BlogentryTopic->create();
+            }
+        }
+    }
+    
+    public function getTopics() 
+    {   
+        foreach (BlogentryTopic::getAssignments($this->m_data['entry_id']) as $BlogentryTopic) {
+            $topics[] = $BlogentryTopic->getTopic();      
+        }
+        return (array) $topics;
+    }
+    
+    
+    /////////////////// Special template engine methods below here /////////////////////////////
     
     /**
      * Gets an blog list based on the given parameters.
@@ -659,24 +626,65 @@ class BlogEntry extends DatabaseObject {
             return null;
         }
         
+        // adodb::selectLimit() interpretes -1 as unlimited
+        if ($p_limit == 0) {
+            $p_limit = -1;   
+        }
+        
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (empty($comparisonOperation)) {
-                continue;
-            }
+            $leftOperand = strtolower($comparisonOperation['left']);
             
-            $whereCondition = $comparisonOperation['left'] . ' '
-            . $comparisonOperation['symbol'] . " '"
-            . $comparisonOperation['right'] . "' ";
+            if ($leftOperand == 'matchalltopics') {
+                // set the matchAllTopics flag
+                $matchAllTopics = true;
+                
+            } elseif ($leftOperand == 'topic') {
+                // add the topic to the list of match/do not match topics depending
+                // on the operator
+                if ($comparisonOperation['symbol'] == '=') {
+                    $hasTopics[] = $comparisonOperation['right'];
+                } else {
+                    $hasNotTopics[] = $comparisonOperation['right'];
+                }
+            } else {
+                $comparisonOperation = self::ProcessListParameters($param);
+                if (empty($comparisonOperation)) {
+                    continue;
+                }
+                
+                $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+                $selectClauseObj->addWhere($whereCondition);   
+            }
+        }
+        
+        if (count($hasTopics) > 0) {
+            if ($matchAllTopics) {
+                foreach ($hasTopics as $topicId) {
+                    $sqlQuery = self::BuildTopicSelectClause(array($topicId));
+                    $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
+                    $selectClauseObj->addWhere($whereCondition);
+                }
+            } else {
+                $sqlQuery = self::BuildTopicSelectClause($hasTopics);
+                $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
+                $selectClauseObj->addWhere($whereCondition);
+            }
+        }
+        if (count($hasNotTopics) > 0) {
+            $sqlQuery = self::BuildTopicSelectClause($hasNotTopics, true);
+            $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
         
         // sets the columns to be fetched
         $tmpBlogEntry = new BlogEntry();
-		$columnNames = $tmpBlogEntry->getColumnNames(true);
+        $columnNames = $tmpBlogEntry->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $selectClauseObj->addColumn($columnName);
         }
@@ -726,18 +734,42 @@ class BlogEntry extends DatabaseObject {
      */
     private static function ProcessListParameters($p_param)
     {
-        $comparisonOperation = array();
+        $conditionOperation = array();
 
-        $comparisonOperation['left'] = BlogEntriesList::$s_parameters[strtolower($p_param->getLeftOperand())]['field'];
+        $leftOperand = strtolower($p_param->getLeftOperand());
+        
+        switch ($leftOperand) {
+            
+        case 'feature':
+            $conditionOperation['symbol'] = 'LIKE';
+            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            break;
+            
+        case 'matchalltopics':
+            $conditionOperation['left'] = $leftOperand;
+            $conditionOperation['symbol'] = '=';
+            $conditionOperation['right'] = 'true';
+            break;
+            
+        case 'topic':
+            $conditionOperation['left'] = $leftOperand;
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
 
-        if (isset($comparisonOperation['left'])) {
-            $operatorObj = $p_param->getOperator();
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+        default:
+            $conditionOperation['left'] = BlogEntriesList::$s_parameters[$leftOperand]['field'];
+            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            break;
         }
 
-        return $comparisonOperation;
+        if (!isset($conditionOperation['symbol'])) {
+            $operatorObj = $p_param->getOperator();
+            $conditionOperation['symbol'] = $operatorObj->getSymbol('sql');
+        }
+
+        return $conditionOperation;
     } // fn ProcessListParameters
+
 
                                       
     /**
@@ -765,6 +797,23 @@ class BlogEntry extends DatabaseObject {
             $order['entry_id'] = 'asc';  
         }
         return $order;
+    }
+    
+    /**
+     * Returns a select query for obtaining the entries that have the given topics
+     *
+     * @param array $p_TopicIds
+     * @param array $p_typeAttributes
+     * @param bool $p_negate
+     * @return string
+     */
+    private static function BuildTopicSelectClause(array $p_TopicIds, $p_negate = false)
+    {
+        $notCondition = $p_negate ? ' NOT' : '';
+        $selectClause = '        SELECT fk_entry_id FROM '.BlogentryTopic::$s_dbTableName.' WHERE fk_topic_id'
+                      . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+                      
+        return $selectClause;
     }
 }
 ?>

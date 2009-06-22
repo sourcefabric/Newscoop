@@ -15,7 +15,7 @@
             <tr><td>user_id</td><td>{{ $campsite->blog->user_id }}</td></tr>
             <tr><td>title</td><td>{{ $campsite->blog->title }}</td></tr>
             <tr><td>info</td><td>{{ $campsite->blog->info }}</td></tr>
-            <tr><td>published</td><td>{{ $campsite->blog->published|camp_date_format }}</td></tr>
+            <tr><td>date</td><td>{{ $campsite->blog->published|camp_date_format }}</td></tr>
             <tr><td>admin_remark</td><td>{{ $campsite->blog->admin_remark }}</td></tr>
             <tr><td>request_text</td><td>{{ $campsite->blog->request_text }}</td></tr>
             <tr><td>status</td><td>{{ $campsite->blog->status }}</td></tr>
@@ -86,7 +86,7 @@
         <tr><td>entry_id</td><td>{{ $campsite->blogcomment->entry_id }}</td></tr>
         <tr><td>blog_id</td><td>{{ $campsite->blogcomment->blog_id }}</td></tr>
         <tr><td>user_id</td><td>{{ $campsite->blogcomment->user_id }}</td></tr>
-        <tr><td>published</td><td>{{ $campsite->blogcomment->published }}</td></tr>
+        <tr><td>date</td><td>{{ $campsite->blogcomment->published }}</td></tr>
         <tr><td>title</td><td>{{ $campsite->blogcomment->title }}</td></tr>
         <tr><td>content</td><td>{{ $campsite->blogcomment->content }}</td></tr>
         <tr><td>mood</td><td>{{ $campsite->blogcomment->mood }}</td></tr>
@@ -101,7 +101,7 @@
         <table border=1>
         <tr><td>identifier</td><td>{{ $campsite->blogentry->identifier }}</td></tr>
         <tr><td>user_id</td><td>{{ $campsite->blogentry->user_id }}</td></tr>
-        <tr><td>published</td><td>{{ $campsite->blogentry->published }}</td></tr>
+        <tr><td>date</td><td>{{ $campsite->blogentry->published }}</td></tr>
         <tr><td>released</td><td>{{ $campsite->blogentry->released }}</td></tr>
         <tr><td>status</td><td>{{ $campsite->blogentry->status }}</td></tr>
         <tr><td>title</td><td>{{ $campsite->blogentry->title }}</td></tr>
@@ -190,7 +190,7 @@
         <tr><td>language_id</td><td>{{ $campsite->blog->language_id }}</td></tr>
         <tr><td>user_id</td><td>{{ $campsite->blog->user_id }}</td></tr>
         <tr><td>title</td><td>{{ $campsite->blog->title }}</td></tr>
-        <tr><td>published</td><td>{{ $campsite->blog->published|camp_date_format }}</td></tr>
+        <tr><td>date</td><td>{{ $campsite->blog->published|camp_date_format }}</td></tr>
         <tr><td>admin_remark</td><td>{{ $campsite->blog->admin_remark }}</td></tr>
         <tr><td>request_text</td><td>{{ $campsite->blog->request_text }}</td></tr>
         <tr><td>status</td><td>{{ $campsite->blog->status }}</td></tr>

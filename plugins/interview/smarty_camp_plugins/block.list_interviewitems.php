@@ -31,21 +31,28 @@ function smarty_block_list_interviewitems($p_params, $p_content, &$p_smarty, &$p
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
     $html = '';
+    
+    if (!$p_paqrams['oder']) {
+        $p_params['order'] = 'byOrder asc';   
+    }
 
     if (!isset($p_content)) {
-        $start = 0; new InterviewItemsList($start, $p_params);
+        $start = 0;
     	$interviewItemsList = new InterviewItemsList($start, $p_params);
     	$campContext->setCurrentList($interviewItemsList, array('interviewitem'));
     }
 
     $currentIterviewItem = $campContext->current_interviewitems_list->current;
+    
     if (is_null($currentIterviewItem)) {
 	    $p_repeat = false;
+	    $campContext->url->reset_parameter('f_interviewitem_id');
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
         $campContext->interviewitem = $currentIterviewItem;
     	$p_repeat = true;
+    	$campContext->url->set_parameter('f_interviewitem_id', $currentInterview->identifier);
     }
 
     if (isset($p_content)) {
@@ -54,6 +61,7 @@ function smarty_block_list_interviewitems($p_params, $p_content, &$p_smarty, &$p
             $campContext->current_interviewitems_list->defaultIterator()->next();
             if (!is_null($campContext->current_interviewitems_list->current)) {
                 $campContext->interviewitem = $campContext->current_interviewitems_list->current;
+                $campContext->url->set_parameter('f_interviewitem_id', $campContext->current_interviewitems_list->current->identifier);
             }
         }
     }

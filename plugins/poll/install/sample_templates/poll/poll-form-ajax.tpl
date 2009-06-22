@@ -90,7 +90,7 @@ function stop()
     {{ /list_poll_answers }}
     
     {{ if !$campsite->poll->is_votable }}
-        This poll has expired.
+        You reached max_vote_count, or this poll has expired.
     {{ /if }}
            
 {{ /poll_form }}
