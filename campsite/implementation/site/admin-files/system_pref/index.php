@@ -95,6 +95,42 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
     </td>
 </tr>
 <tr>
+    <td align="left" width="400px">
+        <?php putGS("Imagecache Lifetime:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_imagecache_lifetime" class="input_select">
+        <?php
+        $ttl = SystemPref::Get('ImagecacheLifetime');
+        foreach (array(0 => 'disabled',
+                       30   => '30 Seconds',
+                       60   => '1 Minute',
+                       300  => '5 Minutes',
+                       900  => '15 Minutes',
+                       1800 => '30 Minutes', 
+                       3600 => '1 Hour', 
+                       3600*24 => '1 Day', 
+                       3600*24*2 => '2 Days', 
+                       3600*24*3 => '3 Days',
+                       3600*24*4 => '4 Days',
+                       3600*24*5 => '5 Days',
+                       3600*24*6 => '6 Days',
+                       3600*24*7 => '1 Week',
+                       3600*24*14 => '2 Weeks',
+                       3600*24*21 => '3 Weeks',
+                       3600*24*31 => '1 Month',
+                       3600*24*61 => '2 Months',
+                       3600*24*91 => '3 Months',
+                       3600*24*183 => '6 Months',
+                       3600*24*365 => '1 Year',
+                       -1          => 'Infinite') as $k => $v) {
+        	camp_html_select_option($k, $ttl, $v); 
+        }
+        ?>
+        </select>
+    </td>
+</tr>
+<tr>
 	<td align="left" width="400px">
 		<?php putGS("Secret Key:"); ?>
 	</td>

@@ -18,6 +18,7 @@ $f_cache_enabled = Input::Get('f_cache_enabled');
 $f_cache_engine = Input::Get('f_cache_engine');
 $f_secret_key = Input::Get('f_secret_key');
 $f_session_lifetime = intval(Input::Get('f_session_lifetime'));
+$f_imagecache_lifetime = intval(Input::Get('f_imagecache_lifetime'));
 $f_keyword_separator = Input::Get('f_keyword_separator');
 $f_login_num = Input::Get('f_login_num', 'int');
 $f_max_upload_filesize = Input::Get('f_max_upload_filesize');
@@ -71,6 +72,9 @@ if ($f_cache_enabled == 'Y') {
 } else {
     SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
 }
+
+// Image cache lifetime
+SystemPref::Set('ImagecacheLifetime', $f_imagecache_lifetime);
 
 // Secret key
 SystemPref::Set('SiteSecretKey', $f_secret_key);
