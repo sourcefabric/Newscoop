@@ -1,4 +1,6 @@
 <?php 
+regGS("Rename article type '$1'", "");
+regGS("Invalid article type '$1'.", "");
 regGS("You cannot merge the same type into itself.", "Ne možete spojiti tip članka sa samim sobom.");
 regGS("View the source ($1) version of $2", "Pogledajte izvornu ($1) verziju $2");
 regGS("View of original ($1) $2", "Pogledaj originalni ($1) $2");
@@ -42,7 +44,6 @@ regGS("Show/Hide", "Prikaži/sakri");
 regGS("Show display names", "Prikaži pokazna imena");
 regGS("Show article on section page", "Prikaži članak na strani rubrike");
 regGS("Show article on front page", "Prikaži članak na prvoj strani");
-regGS("Rename article type", "Preimenuj tip članka");
 regGS("Publish date", "Datum objavljivanja");
 regGS("Merge!", "Spoji!");
 regGS("Merge types", "Spoj tipove");

@@ -335,10 +335,11 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
         $tmpStr .= "<span class='breadcrumb_intra_separator'>";
     }
 	if ($p_link != "") {
-        $tmpStr .= "<A HREF='$p_link' class='$class'>$p_text</A>";
+        $tmpStr .= "<A HREF='" . htmlspecialchars($p_link) . "' class='$class'>"
+        . htmlspecialchars($p_text) . "</A>";
 	}
 	else {
-	    $tmpStr .= "<SPAN CLASS='$class'>$p_text</SPAN>";
+	    $tmpStr .= "<SPAN CLASS='$class'>" . htmlspecialchars($p_text) . "</SPAN>";
 	}
 	$tmpStr .="</span>";
 	if ($p_separator) {

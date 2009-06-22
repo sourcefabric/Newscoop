@@ -21,6 +21,7 @@ $topics = Topic::GetTree();
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($articleTypeName, '');
 $crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 $crumbs[] = array(getGS("Add new field"), "");
 

@@ -11,11 +11,15 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 
 $articleTypes = ArticleType::GetArticleTypes(true);
 $f_name = trim(Input::get('f_name'));
+if (array_search($f_name, $articleTypes) === false) {
+    camp_html_display_error(getGS("Invalid article type '$1'.", $f_name));
+    exit;
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Rename article type"), "");
+$crumbs[] = array(getGS("Rename article type '$1'", $f_name), "");
 echo camp_html_breadcrumbs($crumbs);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
@@ -24,11 +28,6 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <FORM NAME="dialog" METHOD="POST" ACTION="do_rename.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <INPUT TYPE="hidden" VALUE="<?php p($f_name); ?>" NAME="f_oldName">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php putGS("Rename article type"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-</TR>
 <TR><TD COLSPAN="2">You may only use letters or the underscore (_) for a name.</TD></TR>
 <TR>
 	<TD ALIGN="LEFT" ><?php  putGS("Name"); ?>:</TD>

@@ -180,7 +180,7 @@ function camp_remove_dir($p_dirName, $p_msg = "")
 	$dirBaseName = trim($p_dirName, '/');
     if ($p_dirName == "/" || $dirBaseName == ''
     || $dirBaseName == '.' || $dirBaseName == '..'
-    || (strpos($dirBaseName, '/') == false && $p_dirName[0] == '/')) {
+    || (strpos($dirBaseName, '/') === false && $p_dirName[0] == '/')) {
         camp_exit_with_error("camp_remove_dir: Bad directory name '$p_dirName'.");
     }
     if (empty($p_msg)) {

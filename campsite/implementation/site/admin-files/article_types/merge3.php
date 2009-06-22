@@ -460,7 +460,7 @@ if (!$ok) {
     $crumbs = array();
     $crumbs[] = array(getGS("Configure"), "");
     $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-    $crumbs[] = array(getGS("Rename article type"), "");
+    $crumbs[] = array(getGS("Merge article type"), "");
 
     echo camp_html_breadcrumbs($crumbs);
 

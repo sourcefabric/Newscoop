@@ -18,6 +18,7 @@ $fields = $articleType->getUserDefinedColumns(null, true, true);
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($articleTypeName, "");
 $crumbs[] = array(getGS("Article type fields"), "");
 
 echo camp_html_breadcrumbs($crumbs);

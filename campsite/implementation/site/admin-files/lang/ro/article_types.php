@@ -1,4 +1,6 @@
 <?php 
+regGS("Rename article type '$1'", "");
+regGS("Invalid article type '$1'.", "");
 regGS("You cannot merge the same type into itself.", "Nu poţi combina acelaşi tip cu el însuşi.");
 regGS("View the source ($1) version of $2", "Vezi versiunea ($1) a sursei pentru $2");
 regGS("View of original ($1) $2", "Vizualizarea originalului ($1) $2");
@@ -42,7 +44,6 @@ regGS("Show/Hide", "Arată/Ascunde");
 regGS("Show display names", "Arată numele publice");
 regGS("Show article on section page", "Afişează articolul pe pagina secţiunii");
 regGS("Show article on front page", "Afişează articolul pe prima pagină");
-regGS("Rename article type", "Redenumeşte tipul articolului");
 regGS("Publish date", "Data publicării");
 regGS("Merge!", "Combină!");
 regGS("Merge types", "Tipuri de combinare");

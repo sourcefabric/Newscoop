@@ -1,4 +1,6 @@
 <?php 
+regGS("Rename article type '$1'", "");
+regGS("Invalid article type '$1'.", "");
 regGS("You cannot merge the same type into itself.", "Вы не можете объединить тип сам с собой.");
 regGS("View the source ($1) version of $2", "Просмотр источника ($1) версии $2");
 regGS("View of original ($1) $2", "Просмотр оригинала ($1) $2");
@@ -42,7 +44,6 @@ regGS("Show/Hide", "Показать/скрыть");
 regGS("Show display names", "Показать отображаемые названия");
 regGS("Show article on section page", "Показать статью на странице рубрики");
 regGS("Show article on front page", "Показать статью на титульной странице");
-regGS("Rename article type", "Переименовать тип статьи");
 regGS("Publish date", "Дата публикации");
 regGS("Merge!", "Объединить!");
 regGS("Merge types", "Объединить типы");

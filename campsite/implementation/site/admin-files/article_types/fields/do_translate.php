@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("article_types");
+camp_load_translation_strings("article_type_fields");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
@@ -48,6 +48,8 @@ if ($correct) {
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($f_article_type, '');
+$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($f_article_type));
 $crumbs[] = array(getGS("Adding new article type"), "");
 
 echo camp_html_breadcrumbs($crumbs);
