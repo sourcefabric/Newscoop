@@ -727,6 +727,14 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<?php
 		} // for
     	?>
+                <TR>
+    		<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
+				<?php
+				echo $unplacedArticlesPager->render();
+				?>
+			</TD>
+		</TR>
+		</TABLE>
 
         <!-- Most popular articles -->
         <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
@@ -821,16 +829,6 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         <?php
         } // if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish'))
         ?>
-
-    	<TR>
-    		<TD COLSPAN="2" NOWRAP style="padding-top: 10px;">
-				<?php
-				echo $unplacedArticlesPager->render();
-				?>
-			</TD>
-		</TR>
-		</TABLE>
-
 	</td>
 </tr>
 </table>
