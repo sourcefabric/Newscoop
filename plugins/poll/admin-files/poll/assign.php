@@ -126,7 +126,7 @@ switch ($f_poll_item) {
     		<B><?php putGS("Attach Polls"); ?></B>
     	</TD>
     	<TD style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-bottom: 1px solid #8baed1;" align="right">
-    	   <a href=""><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></a>
+    	   <a href=""><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a>
     	   <a href="assign_popup.php?f_include=edit.php&amp;f_language_id=<?php p($f_language_id) ?>&amp;f_no_menu=1&amp;f_from=<?php p(urlencode($_SERVER['REQUEST_URI'])) ?>"><b><?php putGS('Add new Poll');; ?></b></a>
         </TD>
     </TR>

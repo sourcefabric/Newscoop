@@ -48,11 +48,11 @@ foreach ($display as $translation) {
         </TR>
         <tr>
             <th><?php p($translation->getProperty('title')); ?> (<?php p($translation->getLanguageName()); ?>)</th>
-            <td align="CENTER"><?php p($translation->getProperty('nr_of_votes')); ?> / <?php p($translation->getProperty('nr_of_votes_overall')); ?></th>
+            <td align="CENTER"><?php p($translation->getProperty('nr_of_votes')); ?> / <?php p($translation->getProperty('nr_of_votes_overall')); ?></td>
             <td align="LEFT">
                 <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarlinks.png" width="1" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbar.png" width="<?php p($translation->getProperty('percentage_of_votes_overall')); ?>" height="9" class="IMG_norm"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/mainbarrechts.png" width="1" height="9" class="IMG_norm">
                 <?php printf($format, $translation->getProperty('percentage_of_votes_overall')); ?>%
-            </th>
+            </td>
             <th> </th>
         </tr>
         <?php
