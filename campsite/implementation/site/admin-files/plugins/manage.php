@@ -2,7 +2,7 @@
 camp_load_translation_strings("plugins");
 camp_load_translation_strings("api");
 
-require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
+require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
 
 if (!$g_user->hasPermission('plugin_manager')) {
     camp_html_display_error(getGS("You do not have the right to manage plugins."));
@@ -22,24 +22,26 @@ if (Input::Get('save')) {
     }
     
 
-    foreach ($p_plugins as $plugin => $version) {
-        $CampPlugin = new CampPlugin($plugin);
+    foreach ($p_plugins as $plugin => $oldversion) {
+        $CampPlugin = new CampPlugin($plugin);   // installed version, if exists
+        $currentVersion = $CampPlugin->getFsVersion();
         
         if ($p_enabled[$plugin]) {
             if ($CampPlugin->exists()) {
-                if ($CampPlugin->getVersion() != $version) {
+                if ($CampPlugin->getDbVersion() != $currentVersion) {
                     // update plugin
                     $CampPlugin->delete();
-                    $CampPlugin->create($plugin, $version);
+                    $CampPlugin->create($plugin, $currentVersion);
                     $CampPlugin->update();
-                    $CampPlugin->enable();        
+                    $CampPlugin->enable();
+                          
                 } else {
-                    // just enable disabled plugin
+                    // just enable plugin
                     $CampPlugin->enable();   
                 }
             } else {
                 // install + enable not previously installed plugin
-                $CampPlugin->create($plugin, $version);
+                $CampPlugin->create($plugin, $currentVersion);
                 $CampPlugin->install();
                 $CampPlugin->enable();
             }
@@ -64,11 +66,18 @@ if (Input::Get('p_uninstall')) {
     $Plugin->uninstall();    
 }
 
+// check if update is needet
+CampPlugin::GetPluginsInfo(true);
+if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
+    camp_html_add_msg(getGS("Some plugin(s) needs to be updated. Please press the save button."));  
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Plugins"), "");
 $crumbs[] = array(getGS("Manage"), "");
 echo camp_html_breadcrumbs($crumbs);
 
+camp_html_display_msgs();
 ?>
 <P>
 <FORM name="plugin_upload" action="manage.php" method='POST' enctype='multipart/form-data'>
