@@ -117,9 +117,7 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     
     function plugin_blog_update()
     {
-        global $g_campsiteDir;
-        
-        require_once($g_campsiteDir.'/install/classes/CampInstallationBase.php');
+        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'blog'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
