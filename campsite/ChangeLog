@@ -20,8 +20,8 @@
   - #2805 - Incorporate Editarea for template editing
   - #2847 - Preference setting for images resizing inserted via TinyMCE
   - #2854 - Cache the template meta actions list
-  - #2857 - Make Campsite work in a subdirectory of the virtual host root
-            directory
+  - #2857 - Partial changes to make Campsite work in a subdirectory of the
+            virtual host root directory
   - #2905 - Add Article Type name to the breadcrumbs in Article Type admin
             screens
   - #1933 - New section delete options
