@@ -46,7 +46,7 @@ if (!$g_user->hasPermission('plugin_interview_admin')) {
     exit;
 }
 
-$f_interview_id = Input::Get('f_interview_id', 'int');
+$f_interview_id = Input::Get('f_interview_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
     camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);

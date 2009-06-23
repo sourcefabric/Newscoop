@@ -118,9 +118,9 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
     
     function plugin_interview_update()
     {
-        global $g_documentRoot;
+        global $g_campsiteDir;
         
-        require_once($g_documentRoot.'/install/classes/CampInstallationBase.php');
+        require_once($g_campsiteDir.'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
         
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);

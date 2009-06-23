@@ -1,25 +1,22 @@
--- MySQL dump 10.11
---
--- Host: localhost    Database: campsite_30_interview
--- ------------------------------------------------------
--- Server version	5.0.32-Debian_7etch1-log
+-- phpMyAdmin SQL Dump
+-- version 2.9.1.1-Debian-3
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost
+-- Erstellungszeit: 23. Juni 2009 um 13:33
+-- Server Version: 5.0.32
+-- PHP-Version: 5.2.0-8+etch13
+-- 
+-- Datenbank: `campsite_netgazeti`
+-- 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+-- --------------------------------------------------------
 
---
--- Table structure for table `plugin_interview_interviews`
---
+-- 
+-- Tabellenstruktur für Tabelle `plugin_interview_interviews`
+-- 
 
-CREATE TABLE IF NOT EXISTS `plugin_interview_interviews` (
+CREATE TABLE `plugin_interview_interviews` (
   `interview_id` int(10) unsigned NOT NULL auto_increment,
   `fk_language_id` int(10) unsigned NOT NULL,
   `fk_moderator_user_id` int(10) unsigned NOT NULL,
@@ -44,31 +41,24 @@ CREATE TABLE IF NOT EXISTS `plugin_interview_interviews` (
   `position` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`interview_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
---
--- Table structure for table `plugin_interview_items`
---
+-- --------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS  `plugin_interview_items` (
+-- 
+-- Tabellenstruktur für Tabelle `plugin_interview_items`
+-- 
+
+CREATE TABLE `plugin_interview_items` (
   `item_id` int(10) unsigned NOT NULL auto_increment,
   `fk_interview_id` int(10) unsigned NOT NULL,
   `fk_questioneer_user_id` int(11) default NULL,
   `question` text NOT NULL,
+  `question_date` datetime NOT NULL,
   `status` enum('draft','pending','published','rejected') NOT NULL default 'draft',
   `answer` text NOT NULL,
+  `answer_date` datetime NOT NULL,
   `position` int(10) unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`item_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2008-06-05 12:38:23
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
