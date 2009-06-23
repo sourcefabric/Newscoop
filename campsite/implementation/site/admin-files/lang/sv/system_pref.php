@@ -1,4 +1,5 @@
 <?php 
+regGS("Imagecache Lifetime:", "");
 regGS("Templates filter mask (separated by comma)", "");
 regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "");
 regGS("Image Resizing Ratio:", "");
