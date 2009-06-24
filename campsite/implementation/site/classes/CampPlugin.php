@@ -64,19 +64,14 @@ class CampPlugin extends DatabaseObject
         global $g_ado_db;
 
         if ($p_reload || !is_array(self::$m_allPlugins)) {
-    
             $CampPlugin = new CampPlugin();
-            $tblname = $CampPlugin->m_dbTableName;
-    
-            $query = "SELECT Name
-                      FROM   $tblname";
-    
+            $query = "SELECT Name FROM `" . $CampPlugin->m_dbTableName . "`";
             $res = $g_ado_db->execute($query);
             if (!$res) {
                 return array();
             }
+
             self::$m_allPlugins = array();
-    
             while ($row = $res->FetchRow()) {
                 self::$m_allPlugins[] = new CampPlugin($row['Name']);;
             }
@@ -186,32 +181,53 @@ class CampPlugin extends DatabaseObject
         }
     }
     
-    static public function GetPluginsInfo($p_reload = false)
-    {          
-        if ($p_reload || !is_array(self::$m_pluginsInfo)) {
-            self::$m_pluginsInfo = array();
+    static public function GetPluginsInfo($p_selectEnabled = false, $p_reload = false)
+    {
+    	if (!is_array(self::$m_pluginsInfo)) {
+    		self::$m_pluginsInfo = array(0=>null, 1=>null);
+    	}
+    	$p_selectEnabled = $p_selectEnabled ? 1 : 0;
+        if (!is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
 
-            if (0 && self::FetchCachePluginsInfo()) {
-                return self::$m_pluginsInfo;
+            if (!$p_reload && self::FetchCachePluginsInfo()
+            && isset(self::$m_pluginsInfo[$p_selectEnabled])) {
+                return self::$m_pluginsInfo[$p_selectEnabled];
             }
 
             if (!is_dir(CS_PATH_PLUGINS)) {
                 continue;
             }
+            
+            self::$m_pluginsInfo[$p_selectEnabled] = array();
+            
+            $enabledPluginsNames = array();
+            if ($p_selectEnabled) {
+            	$enabledPlugins = self::GetEnabled();
+                if (count($enabledPlugins) == 0) {
+                	self::StoreCachePluginsInfo();
+                	return self::$m_pluginsInfo[$p_selectEnabled];
+                }
+            	foreach ($enabledPlugins as $plugin) {
+            		$enabledPluginsNames[] = $plugin->getName();
+            	}
+            }
 
             $handle=opendir(CS_PATH_PLUGINS);
             while ($entry = readdir($handle)) {
-                if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)) {
+                if ($entry != "." && $entry != ".." && $entry != '.svn'
+                && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)
+                && (!$p_selectEnabled || array_search($entry, $enabledPluginsNames) !== false)) {
                     if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
                         include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
-                        self::$m_pluginsInfo[$entry] = $info;
+                        self::$m_pluginsInfo[$p_selectEnabled][$entry] = $info;
                     }
                 }
             }
             closedir($handle);
+            self::StoreCachePluginsInfo();
         }
 
-        return self::$m_pluginsInfo;
+        return self::$m_pluginsInfo[$p_selectEnabled];
     }
 
     private static function FetchCachePluginsInfo()
@@ -283,7 +299,7 @@ class CampPlugin extends DatabaseObject
         global $g_user;
         
         $root_menu = false;
-        $plugin_infos = self::GetPluginsInfo();
+        $plugin_infos = self::GetPluginsInfo(true);
         
         if ($g_user->hasPermission('plugin_manager')) {
             $root_menu = true;   
@@ -291,17 +307,15 @@ class CampPlugin extends DatabaseObject
 
         
         foreach ($plugin_infos as $info) {
-            if (CampPlugin::IsPluginEnabled($info['name'])) {
-                if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
-                    $root_menu = true;
-                } elseif (is_array($info['menu']['sub'])) {
-                    foreach ($info['menu']['sub'] as $menu_info) {
-                        if ($g_user->hasPermission($menu_info['permission'])) {
-                            $root_menu = true;
-                        }
-                    }
-                }
-            }
+        	if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
+        		$root_menu = true;
+        	} elseif (is_array($info['menu']['sub'])) {
+        		foreach ($info['menu']['sub'] as $menu_info) {
+        			if ($g_user->hasPermission($menu_info['permission'])) {
+        				$root_menu = true;
+        			}
+        		}
+        	}
         }
         
         if (empty($root_menu)) {
@@ -391,7 +405,7 @@ class CampPlugin extends DatabaseObject
         
         $tar->extract(CS_PATH_PLUGINS);
         
-        CampPlugin::GetPluginsInfo(true);
+        CampPlugin::GetPluginsInfo(false, true);
     }
     
     public static function PluginAdminHooks($p_filename, $p_area=null)

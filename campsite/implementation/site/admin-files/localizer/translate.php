@@ -130,12 +130,10 @@ function translationForm($p_request)
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
     $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
 
-    foreach (CampPlugin::GetPluginsInfo() as $info) {
-        if (CampPlugin::IsPluginEnabled($info['name'])) {
-            if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
-                $mapPrefixToDisplay[$info['localizer']['id']] = $info['localizer']['screen_name'];
-            }   
-        }   
+    foreach (CampPlugin::GetPluginsInfo(true) as $info) {
+    	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
+    		$mapPrefixToDisplay[$info['localizer']['id']] = $info['localizer']['screen_name'];
+    	}
     }
 
 	// Whether to show translated strings or not.

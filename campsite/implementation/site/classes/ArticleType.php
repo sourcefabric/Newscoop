@@ -11,7 +11,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
-require_once($GLOBALS['g_campsiteDir'].'/'.$ADMIN_DIR.'/localizer/Localizer.php');
 
 /**
  * @package Campsite
@@ -89,7 +88,7 @@ class ArticleType {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-		    $logtext = getGS('The article type "$1" has been added.', $this->m_name);
+			$logtext = getGS('The article type "$1" has been added.', $this->m_name);
 	    	Log::Message($logtext, null, 61);
             CampCache::singleton()->clear('user');
 		} else {

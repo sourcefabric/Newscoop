@@ -2,7 +2,7 @@
 camp_load_translation_strings("plugins");
 camp_load_translation_strings("api");
 
-require_once($_SERVER['DOCUMENT_ROOT']."/classes/Input.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 
 if (!$g_user->hasPermission('plugin_manager')) {
     camp_html_display_error(getGS("You do not have the right to manage plugins."));
@@ -66,8 +66,8 @@ if (Input::Get('p_uninstall')) {
     $Plugin->uninstall();    
 }
 
-// check if update is needet
-CampPlugin::GetPluginsInfo(true);
+// check if update was needed
+CampPlugin::GetPluginsInfo(false, true);
 if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
     camp_html_add_msg(getGS("Some plugin(s) needs to be updated. Please press the save button."));  
 }
@@ -91,6 +91,7 @@ camp_html_display_msgs();
     <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php putGS('Upload') ?>" class="button"></td>
   </tr>
 </table>
+</FORM>
 
 <?php
 if ($success) {
@@ -167,8 +168,8 @@ if ($success) {
 </table>
 </form>
 <?php } else { ?>
-    <BLOCKQUOTE>
+    <BLOCKQUOTE><ul>
     <LI><?php  putGS('No plugins found.'); ?></LI>
-    </BLOCKQUOTE>
+    </ul></BLOCKQUOTE>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>
