@@ -61,24 +61,7 @@ class BlogComment extends DatabaseObject {
     } // constructor
     
     function setProperty($p_name, $p_value)
-    {   
-        /*
-        if ($p_name == 'admin_status') {
-            switch ($p_value) {
-                case 'online':
-                case 'moderated':
-                case 'readonly':
-                    parent::setProperty('date', date('Y-m-d H:i:s'));
-                break;
-                  
-                case 'offline':
-                case 'pending':
-                    parent::setProperty('date', null);
-                break;
-            }          
-        }
-        */
-        
+    {        
         $result = parent::setProperty($p_name, $p_value);
     
         if ($p_name == 'status' || $p_name == 'admin_status') {
@@ -86,6 +69,21 @@ class BlogComment extends DatabaseObject {
         }
         
         return $result; 
+    }
+    
+    function getProperty($p_name)
+    {
+        switch ($p_name) {
+            case 'content':
+                global $Campsite;
+                $content = preg_replace('!(../)*javascript/tinymce/plugins/emotions/img/!', $Campsite['WEBSITE_URL'].'/javascript/tinymce/plugins/emotions/img/', parent::getProperty($p_name));
+                return $content;
+            break;
+            
+            default:
+                return parent::getProperty($p_name);
+            break;
+        } 
     }
 
 
@@ -137,11 +135,6 @@ class BlogComment extends DatabaseObject {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
         BlogEntry::TriggerCounters($entry_id);   
-    }
-    
-    function getData()
-    {
-        return $this->m_data;    
     }
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
@@ -239,25 +232,16 @@ class BlogComment extends DatabaseObject {
 
     function _getFormMask($p_admin=false, $p_owner=false)
     {
-        $data = $this->getData();
-
-        foreach ($data as $k => $v) {
-            // clean user input
-            if (!in_array($k, BlogComment::$m_html_allowed_fields)) { 
-                $data[$k] = camp_html_entity_decode_array($v);
-            }
-        }
-        
         $mask = array(
             'f_comment_id' => array(
                 'element'   => 'f_comment_id',
                 'type'      => 'hidden',
-                'constant'  => $data['comment_id'],          
+                'constant'  => $this->getProperty('comment_id'),          
             ),            
             'f_entry_id' => array(
                 'element'   => 'f_entry_id',
                 'type'      => 'hidden',
-                'constant'  => $data['fk_entry_id'],         
+                'constant'  => $this->getProperty('fk_entry_id'),         
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
@@ -280,25 +264,25 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
                 'label'     => 'Titel',
-                'default'   => $data['title']           
+                'default'   => html_entity_decode($this->getProperty('title'))           
             ),
             'user_name'     => array(
                 'element'   => 'BlogComment[user_name]',
                 'type'      => 'text',
                 'label'     => 'Poster Name',
-                'default'   => $data['user_name']           
+                'default'   => html_entity_decode($this->getProperty('user_name'))           
             ),
             'user_email'     => array(
                 'element'   => 'BlogComment[user_email]',
                 'type'      => 'text',
                 'label'     => 'EMail',
-                'default'   => $data['user_email']           
+                'default'   => html_entity_decode($this->getProperty('user_email'))           
             ),
             'content'      => array(
                 'element'   => 'BlogComment[content]',
                 'type'      => 'textarea',
                 'label'     => 'Kommentar',
-                'default'   => $data['content'],
+                'default'   => $this->getProperty('content'),
                 'required'  => true,
                 'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')            
             ),       
@@ -306,14 +290,16 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'BlogComment[fk_mood_id]',
                 'type'      => 'radio',
                 'label'     => 'mood',
-                'default'   => $data['fk_mood_id'],
-                'options'   => Blog::GetMoodList(!empty($data['fk_language_id']) ? $data['fk_language_id'] : BlogEntry::GetEntryLanguageId($data['fk_entry_id']))      
+                'default'   => $this->getProperty('fk_mood_id'),
+                'options'   => Blog::GetMoodList($this->getProperty('fk_language_id') ? 
+                                    $this->getProperty('fk_language_id') : 
+                                    BlogEntry::GetEntryLanguageId($this->getProperty('fk_entry_id')))      
             ),         
             'status' => array(
                 'element'   => 'BlogComment[status]',
                 'type'      => 'select',
                 'label'     => 'status',
-                'default'   => $data['status'],
+                'default'   => $this->getProperty('status'),
                 'options'   => array(
                                 'online'    => 'online',
                                 'offline'   => 'offline',
@@ -325,7 +311,7 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'BlogComment[admin_status]',
                 'type'      => 'select',
                 'label'     => 'Admin status',
-                'default'   => $data['admin_status'],
+                'default'   => $this->getProperty('admin_status'),
                 'options'   => array(
                                 'pending'   => 'pending',
                                 'online'    => 'online',
