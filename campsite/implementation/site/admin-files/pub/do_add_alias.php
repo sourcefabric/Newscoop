@@ -25,7 +25,7 @@ $created = false;
 $errorMsgs = array();
 if (empty($cName)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>');
+	$errorMsgs[] = getGS('You must fill in the $1 field.', '<B>Name</B>');
 }
 
 $aliases = 0;

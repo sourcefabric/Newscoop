@@ -47,13 +47,13 @@ if (($f_language_name == "") || ($f_native_name == "") || ($f_language_code == "
 }
 $errorMsgs = array();
 if ($f_language_name == "") {
-    camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+    camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if ($f_native_name == "") {
-   	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'));
+   	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Native name').'</B>'));
 }
 if ($f_language_code == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Code').'</B>'));
 }
 
 if ($editMode) {

@@ -42,7 +42,7 @@ if ($errorField != "") {
 	if ($errorField == 'Type') {
 		$errorMsg = getGS('You must select a $1', $desc);
 	} else {
-		$errorMsg = getGS('You must complete the $1 field.', $desc);
+		$errorMsg = getGS('You must fill in the $1 field.', $desc);
 	}
 	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);

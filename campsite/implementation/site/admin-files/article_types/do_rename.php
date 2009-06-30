@@ -24,7 +24,7 @@ $created = false;
 $errorMsgs = array();
 if (empty($f_name)) {
     $correct = false;
-    $errorMsgs[] = getGS('You must complete the $1 field.','</B>'.getGS('Name').'</B>');
+    $errorMsgs[] = getGS('You must fill in the $1 field.','</B>'.getGS('Name').'</B>');
 } else {
 	$valid = ArticleType::IsValidFieldName($f_name);
 	if (!$valid) {

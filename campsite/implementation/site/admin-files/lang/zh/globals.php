@@ -103,7 +103,7 @@ regGS("Article Template", "");
 regGS("Default Language", "默认语言");
 regGS("Paid Period", "已付期");
 regGS("Preview", "预览");
-regGS("You must complete the $1 field.", "您必须完成$1字段");
+regGS("You must fill in the $1 field.", "您必须完成$1字段");
 regGS("Error", "");
 regGS("Invalid input: $1", "");
 regGS("Language does not exist.", "");

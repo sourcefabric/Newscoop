@@ -103,7 +103,7 @@ regGS("Article Template", "Predložak članka");
 regGS("Default Language", "Uobičajeni jezik");
 regGS("Paid Period", "Plaćeni period");
 regGS("Preview", "Pregled");
-regGS("You must complete the $1 field.", "Morate ispuniti polje $1.");
+regGS("You must fill in the $1 field.", "Morate ispuniti polje $1.");
 regGS("Error", "Greška");
 regGS("Invalid input: $1", "Pogrešan unos: $1");
 regGS("Language does not exist.", "Nema tog jezika.");

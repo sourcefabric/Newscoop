@@ -30,11 +30,11 @@ if ($f_new_language_id == 0) {
 }
 
 if ($f_name == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 
 if ($f_url_name == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('URL Name').'</B>'));
 }
 
 $errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f_new_language_id, $f_url_name, false);

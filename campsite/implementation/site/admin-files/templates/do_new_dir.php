@@ -15,7 +15,7 @@ $cName = Input::Get('cName', 'string', '');
 $backLink = "/$ADMIN/templates/new_dir.php?Path=".urlencode($cPath);
 
 if (trim($cName) == '') {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 	camp_html_goto_page($backLink);
 }
 

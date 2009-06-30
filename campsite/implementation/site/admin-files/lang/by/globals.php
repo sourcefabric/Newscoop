@@ -103,7 +103,7 @@ regGS("Article Template", "Шаблён артыкула");
 regGS("Default Language", "Мова па змаўчаньні");
 regGS("Paid Period", "Аплачаны пэрыяд");
 regGS("Preview", "Папярэднi агляд");
-regGS("You must complete the $1 field.", "Вы павiнны запоўніць поле $1.");
+regGS("You must fill in the $1 field.", "Вы павiнны запоўніць поле $1.");
 regGS("Error", "Памылка");
 regGS("Invalid input: $1", "Няправільны ўвод $1");
 regGS("Language does not exist.", "Такой мовы не iснуе.");

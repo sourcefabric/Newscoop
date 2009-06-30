@@ -49,10 +49,10 @@ $modified = false;
 
 $errors = array();
 if ($cName == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('Name').'"'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('Name').'"'));
 }
 if ($cShortName == "")  {
-	camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('URL Name').'"'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('URL Name').'"'));
 }
 $isValidShortName = camp_is_valid_url_name($cShortName);
 

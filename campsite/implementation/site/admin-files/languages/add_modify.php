@@ -61,19 +61,19 @@ camp_html_display_msgs();
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>" value="<?php p($languageObj->getProperty('Name')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_name" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php p($languageObj->getProperty('Name')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Native name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_native_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Native name')); ?>" value="<?php p($languageObj->getProperty('OrigName')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_native_name" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Native name')); ?>" value="<?php p($languageObj->getProperty('OrigName')); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Code"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_code" SIZE="6" MAXLENGTH="6" alt="length|2|6" emsg="<?php  putGS('You must complete the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_language_code" SIZE="6" MAXLENGTH="6" alt="length|2|6" emsg="<?php  putGS('You must fill in the $1 field.', getGS('Code')); ?>" value="<?php p($languageObj->getProperty('Code')); ?>">
 	</TD>
 </TR>
 <TR>

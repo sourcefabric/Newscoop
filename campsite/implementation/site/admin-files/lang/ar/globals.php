@@ -103,7 +103,7 @@ regGS("Article Template", "قالب المقال");
 regGS("Default Language", "اللغة الرئيسية");
 regGS("Paid Period", "فترة");
 regGS("Preview", "معاينة");
-regGS("You must complete the $1 field.", "يجب تعبئة الحقل $1");
+regGS("You must fill in the $1 field.", "يجب تعبئة الحقل $1");
 regGS("Error", "خطاء");
 regGS("Invalid input: $1", "إدخال غير صحيح");
 regGS("Language does not exist.", "اللغة غير موجودة");

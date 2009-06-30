@@ -24,7 +24,7 @@ $errorMsgs = array();
 
 if (empty($f_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must complete the $1 field.', '<B>Name</B>');
+	$errorMsgs[] = getGS('You must fill in the $1 field.', '<B>Name</B>');
 }
 
 $alias = new Alias($f_alias_id);

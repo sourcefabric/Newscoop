@@ -43,7 +43,7 @@ function onCommentsActivated(p_checkbox)
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Name"); ?>:</TD>
         	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getName())); } ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.',getGS('Name')); ?>">
+        	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getName())); } ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>">
         	</TD>
         </TR>
 
@@ -60,7 +60,7 @@ function onCommentsActivated(p_checkbox)
         		</SELECT>&nbsp;
         		<a href="/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php echo $f_publication_id ?>"><?php putGS("Edit aliases"); ?></a>
         		<?php } else { ?>
-                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($_SERVER['HTTP_HOST'])); ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.',getGS('Site')); ?>">
+                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($_SERVER['HTTP_HOST'])); ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Site')); ?>">
         		<?php } ?>
         	</TD>
         </TR>

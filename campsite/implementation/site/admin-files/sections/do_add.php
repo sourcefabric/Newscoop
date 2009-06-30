@@ -39,16 +39,16 @@ $isValidShortName = camp_is_valid_url_name($f_url_name);
 $errors = array();
 if ($f_name == "") {
 	$correct = false;
-	$errors[] = getGS('You must complete the $1 field.', '"'.getGS('Name').'"');
+	$errors[] = getGS('You must fill in the $1 field.', '"'.getGS('Name').'"');
 }
 if ($f_number == 0) {
 	$correct= false;
 	$f_number = ($f_number + 0);
-	$errors[] = getGS('You must complete the $1 field.','"'.getGS('Number').'"');
+	$errors[] = getGS('You must fill in the $1 field.','"'.getGS('Number').'"');
 }
 if ($f_url_name == "") {
 	$correct = false;
-	$errors[] = getGS('You must complete the $1 field.','"'.getGS('URL Name').'"');
+	$errors[] = getGS('You must fill in the $1 field.','"'.getGS('URL Name').'"');
 }
 if (!$isValidShortName && trim($f_url_name) != "") {
 	$correct = false;

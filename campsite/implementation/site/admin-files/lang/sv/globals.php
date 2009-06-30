@@ -103,7 +103,7 @@ regGS("Article Template", "Artikelmall");
 regGS("Default Language", "Förvalt språk");
 regGS("Paid Period", "Betald period");
 regGS("Preview", "Förhandsgranska");
-regGS("You must complete the $1 field.", "Du måste fylla i fältet $1.");
+regGS("You must fill in the $1 field.", "Du måste fylla i fältet $1.");
 regGS("Error", "Fel");
 regGS("Invalid input: $1", "Felaktig inmatning: $1");
 regGS("Language does not exist.", "Språket finns inte.");

@@ -40,7 +40,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php p(htmlspecialchars($editTopic->getName($f_topic_language_id))); ?>" SIZE="32" MAXLENGTH="255" alt="blank" emsg="<?php putGS('You must complete the $1 field.',getGS('Name')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php p(htmlspecialchars($editTopic->getName($f_topic_language_id))); ?>" SIZE="32" MAXLENGTH="255" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>">
 	</TD>
 </TR>
 <TR>

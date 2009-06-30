@@ -31,10 +31,10 @@ if ($f_new_language_id == 0) {
 	camp_html_add_msg(getGS('You must select a language.'));
 }
 if (empty($f_issue_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.', "'".getGS('Name')."'"));
+	camp_html_add_msg(getGS('You must fill in the $1 field.', "'".getGS('Name')."'"));
 }
 if (empty($f_url_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.', "'".getGS('URL Name')."'"));
+	camp_html_add_msg(getGS('You must fill in the $1 field.', "'".getGS('URL Name')."'"));
 }
 if (!camp_is_valid_url_name($f_url_name)) {
 	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"));

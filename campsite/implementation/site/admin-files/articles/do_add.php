@@ -41,7 +41,7 @@ if ($f_publication_id != 0) {
 
 // Check input
 if (empty($f_article_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 
 if (empty($f_article_type)) {

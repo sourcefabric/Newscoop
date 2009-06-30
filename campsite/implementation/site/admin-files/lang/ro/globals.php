@@ -103,7 +103,7 @@ regGS("Article Template", "Şablonul articolului");
 regGS("Default Language", "Limba din oficiu");
 regGS("Paid Period", "Perioada cu plată");
 regGS("Preview", "Vizualizare");
-regGS("You must complete the $1 field.", "Trebuie să completaţi câmpul $1.");
+regGS("You must fill in the $1 field.", "Trebuie să completaţi câmpul $1.");
 regGS("Error", "Eroare");
 regGS("Invalid input: $1", "Informaţie invalidă: $1");
 regGS("Language does not exist.", "Această limbă nu există.");

@@ -41,7 +41,7 @@ editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.', "'".getGS('Name')."'"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', "'".getGS('Name')."'"); ?>">
 	</TD>
 </TR>
 <TR>
@@ -55,13 +55,13 @@ editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_number" VALUE="<?php  p($newSectionNumber); ?>" SIZE="5"  alt="number|0" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Number')."'"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_number" VALUE="<?php  p($newSectionNumber); ?>" SIZE="5"  alt="number|0" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Number')."'"); ?>">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" VALUE="<?php  p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('URL Name')."'"); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" VALUE="<?php  p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('URL Name')."'"); ?>">
 	</TD>
 </TR>
 <TR>

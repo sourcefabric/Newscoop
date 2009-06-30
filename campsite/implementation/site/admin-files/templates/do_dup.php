@@ -15,7 +15,7 @@ $f_orig_name = Input::Get('f_orig_name', 'string', '');
 
 $backLink = "/$ADMIN/templates/dup.php?Path=".urlencode($f_path)."&Name=".urlencode($f_orig_name);
 if (trim($f_new_name) == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 	camp_html_goto_page($backLink);
 }
 $ok = false;

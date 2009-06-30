@@ -103,7 +103,7 @@ regGS("Article Template", "Modelo para Artigo");
 regGS("Default Language", "Idioma padrão");
 regGS("Paid Period", "Pago até");
 regGS("Preview", "Pré-visualizar");
-regGS("You must complete the $1 field.", "O campo $1 tem de ser preenchido.");
+regGS("You must fill in the $1 field.", "O campo $1 tem de ser preenchido.");
 regGS("Error", "Erro");
 regGS("Invalid input: $1", "Valor Inválido: $1");
 regGS("Language does not exist.", "Idioma inexistente.");

@@ -14,7 +14,7 @@ $country = new Country($f_country_code, $f_country_language);
 $language = new Language($f_country_language);
 
 if (empty($f_country_name)) {
-	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
+	$errorMsgs[] = getGS("You must fill in the $1 field.", "<B>".getGS("Name")."</B>");
 } else {
 	if ($country->setName($f_country_name)) {
 		camp_html_goto_page("/$ADMIN/country/index.php");

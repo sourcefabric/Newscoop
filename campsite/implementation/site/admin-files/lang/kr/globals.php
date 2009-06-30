@@ -103,7 +103,7 @@ regGS("Article Template", "기사템플레이트");
 regGS("Default Language", "기본언어");
 regGS("Paid Period", "지불된 기간");
 regGS("Preview", "미리보기");
-regGS("You must complete the $1 field.", "$1 필드를 완성하시오");
+regGS("You must fill in the $1 field.", "$1 필드를 완성하시오");
 regGS("Error", "에러");
 regGS("Invalid input: $1", "비정상 입력: $1");
 regGS("Language does not exist.", "언어가 없습니다.");

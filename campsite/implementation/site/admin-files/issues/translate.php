@@ -65,14 +65,14 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php  putGS('You must complete the $1 field.',getGS('Name')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php  putGS('You must fill in the $1 field.',getGS('Name')); ?>">
 	</TD>
 </TR>
 
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" size="32" value="<?php echo htmlspecialchars($issueObj->getUrlName()); ?>" alt="blank" emsg="<?php  putGS('You must complete the $1 field.',getGS('URL Name')); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" size="32" value="<?php echo htmlspecialchars($issueObj->getUrlName()); ?>" alt="blank" emsg="<?php  putGS('You must fill in the $1 field.',getGS('URL Name')); ?>">
 	</TD>
 </TR>
 
