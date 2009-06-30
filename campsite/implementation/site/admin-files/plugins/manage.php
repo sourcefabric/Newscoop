@@ -69,7 +69,7 @@ if (Input::Get('p_uninstall')) {
 // check if update was needed
 CampPlugin::GetPluginsInfo(false, true);
 if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
-    camp_html_add_msg(getGS("Some plugin(s) needs to be updated. Please press the save button."));  
+    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));  
 }
 
 $crumbs = array();
