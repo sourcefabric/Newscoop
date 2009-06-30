@@ -106,6 +106,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 <?php
 $color= 0;
 $i = 0;
+$duplicateFieldsCount = 0;
 foreach ($fields as $field) {
 	if ($field->getStatus() == 'hidden') {
 		$hideShowText = getGS('show');
@@ -125,6 +126,14 @@ foreach ($fields as $field) {
 	    $contentType = 'content';
         $isContentField = 'false';
         $setContentField = 'true';
+	}
+	$fieldName = $field->getPrintName();
+	$article = new MetaArticle();
+	if ($article->has_property($fieldName) || method_exists($article, $fieldName)) {
+		$duplicateFieldName = true;
+		$duplicateFieldsCount++;
+	} else {
+		$duplicateFieldName = false;
 	}
 
 ?>
@@ -148,7 +157,9 @@ foreach ($fields as $field) {
 	</TD>
 
 	<TD>
+        <?php if ($duplicateFieldName) { echo '<div class="failure_message">'; } ?>
 		<A HREF="rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
+		<?php if ($duplicateFieldName) { echo '**</div>'; } ?>
 	</TD>
 
 	<TD>
@@ -261,4 +272,9 @@ $i++;
 } // foreach
 ?>
 </TABLE>
+<?php
+if ($duplicateFieldsCount > 0) {
+	echo "<div class=\"indent\"><p class=\"failure_message\">** " . getGS('The field name was already in use as a base property of the article. The field content will not be displayed in the templates.') . "</p></div>";
+}
+?>
 <?php camp_html_copyright_notice(); ?>

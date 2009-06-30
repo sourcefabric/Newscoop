@@ -48,6 +48,14 @@ if (empty($f_name)) {
 			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
 		}
 	}
+	
+	if ($correct) {
+		$article = new MetaArticle();
+		if ($article->has_property($f_name) || method_exists($article, $f_name)) {
+			$correct = false;
+			$errorMsgs[] = getGS("The property '$1' is already in use.", $f_name);
+		}
+	}
 
     if ($correct) {
     	$old_articleTypeField->rename($f_name);

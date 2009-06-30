@@ -88,7 +88,11 @@ final class MetaArticle extends MetaDbObject {
 	                continue;
 	            }
 	            $property = substr($property, 1);
-	            $this->m_customProperties[strtolower($property)] = array($property);
+	            $tr_property = strtolower($property);
+	            if (array_key_exists($tr_property, $this->m_customProperties)) {
+	            	continue;
+	            }
+	            $this->m_customProperties[$tr_property] = array($property);
 	        }
         } else {
         	if (!is_null($p_languageId) || !is_null($p_articleId)) {

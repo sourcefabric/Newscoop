@@ -1,4 +1,6 @@
 <?php 
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
+regGS("The property '$1' is already in use.", "");
 regGS("Precision", "");
 regGS("Can not convert the field $1 from $2 to type $3.", "");
 regGS("Are you sure you want to make $1 a $2 field?", "Вы ўпэўненыя, што жадаеце зрабіць $1 полем $2");
