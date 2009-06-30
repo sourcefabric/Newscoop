@@ -85,13 +85,13 @@ camp_html_display_msgs();
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
-            <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
+            <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
             </TD>
         </TR>
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Question"); ?>:</TD>
             <TD>
-            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
+            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
             </TD>
         </TR>
         <?php
@@ -100,7 +100,7 @@ camp_html_display_msgs();
             <tr>
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $answer->getNumber()); ?>:</TD>
                 <TD>
-                <INPUT TYPE="TEXT" NAME="f_answer[<?php p($answer->getNumber()); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $answer->getNumber())); ?>" value="<?php p(htmlspecialchars($answer->getProperty('answer'))); ?>">
+                <INPUT TYPE="TEXT" NAME="f_answer[<?php p($answer->getNumber()); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Answer $1', $answer->getNumber())); ?>" value="<?php p(htmlspecialchars($answer->getProperty('answer'))); ?>">
                 </TD>
             </TR>
             <?php
