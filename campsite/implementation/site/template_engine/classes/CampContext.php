@@ -151,8 +151,36 @@ final class CampContext
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
+        $this->m_readonlyProperties['preview'] = false;
+        $userId = CampRequest::GetVar('LoginUserId');
+        if (!is_null($userId)) {
+            $user = new User($userId);
+            if ($user->exists()
+            && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
+                $this->m_objects['user'] = new MetaUser($userId);
+                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
+                && $this->m_objects['user']->is_admin;
+            }
+        }
+
         $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
+
+        if (!$this->m_readonlyProperties['preview']) {
+        	if (!$this->m_readonlyProperties['url']->article->is_published) {
+        		$this->m_readonlyProperties['default_url']->article = self::$m_nullMetaArticle;
+                $this->m_readonlyProperties['url']->article = self::$m_nullMetaArticle;
+        	}
+            if (!$this->m_readonlyProperties['url']->issue->is_published) {
+                $this->m_readonlyProperties['default_url']->article = self::$m_nullMetaArticle;
+                $this->m_readonlyProperties['url']->article = self::$m_nullMetaArticle;
+                $this->m_readonlyProperties['default_url']->section = self::$m_nullMetaSection;
+                $this->m_readonlyProperties['url']->section = self::$m_nullMetaSection;
+                $this->m_readonlyProperties['default_url']->issue = new MetaIssue();
+                $this->m_readonlyProperties['url']->issue = new MetaIssue();
+            }
+        }
+
         $this->m_objects['publication'] = $this->m_readonlyProperties['url']->publication;
         $this->m_objects['language'] = $this->m_readonlyProperties['url']->language;
         $this->m_objects['issue'] = $this->m_readonlyProperties['url']->issue;
@@ -173,18 +201,6 @@ final class CampContext
 
         if (!is_null($commentId = CampRequest::GetVar('acid'))) {
             $this->m_objects['comment'] = new MetaComment($commentId);
-        }
-
-        $this->m_readonlyProperties['preview'] = false;
-        $userId = CampRequest::GetVar('LoginUserId');
-        if (!is_null($userId)) {
-            $user = new User($userId);
-            if ($user->exists()
-            && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
-                $this->m_objects['user'] = new MetaUser($userId);
-                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
-                && $this->m_objects['user']->is_admin;
-            }
         }
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
@@ -905,6 +921,12 @@ final class CampContext
     private function setIssueHandler(MetaIssue $p_oldIssue, MetaIssue $p_newIssue)
     {
         static $issueHandlerRunning = false;
+
+        if (!$this->m_readonlyProperties['preview']
+        && !$p_newIssue->is_published && $p_newIssue->defined()) {
+            return;
+        }
+        
         if ($issueHandlerRunning || $p_newIssue->same_as($p_oldIssue)) {
             return;
         }
@@ -933,6 +955,12 @@ final class CampContext
     private function setSectionHandler(MetaSection $p_oldSection, MetaSection $p_newSection)
     {
         static $sectionHandlerRunning = false;
+
+        if (!$this->m_readonlyProperties['preview']
+        && !$p_newSection->issue->is_published && $p_newSection->defined()) {
+            return;
+        }
+
         if ($sectionHandlerRunning || $p_newSection->same_as($p_oldSection)) {
             return;
         }
@@ -958,6 +986,13 @@ final class CampContext
     private function setArticleHandler(MetaArticle $p_oldArticle, MetaArticle $p_newArticle)
     {
         static $articleHandlerRunning = false;
+
+        if (!$this->m_readonlyProperties['preview']
+        && (!$p_newArticle->is_published || !$p_newArticle->issue->is_published)
+        && $p_newArticle->defined()) {
+        	return;
+        }
+
         if ($articleHandlerRunning || $p_newArticle->same_as($p_oldArticle)) {
             return;
         }
