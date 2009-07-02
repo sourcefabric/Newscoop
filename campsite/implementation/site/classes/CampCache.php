@@ -79,6 +79,12 @@ final class CampCache
     } // fn __construct
 
 
+    public static function initialized()
+    {
+    	return !is_null(self::$m_instance);
+    }
+
+
     /**
      * Singleton function that returns the global class object.
      *
@@ -164,7 +170,7 @@ final class CampCache
     public function store($p_key, $p_data, $p_ttl = 0)
     {
     	if (is_null($this->m_cacheEngine)) {
-	    return false;
+    		return false;
     	}
     	self::$m_storeRequests ++;
         $p_data = $this->serialize($p_data);
