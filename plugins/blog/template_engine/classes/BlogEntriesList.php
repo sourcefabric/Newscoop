@@ -80,15 +80,15 @@ class BlogEntriesList extends ListObject
                 $comparisonOperation = new ComparisonOperation('admin_status', $operator, 'online');
                 $this->m_constraints[] = $comparisonOperation;
             }                
-            if ($context->blog->defined) {
+            if ($context->blog->defined && !$p_parameters['ignore_blog']) {
                 $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
                 $this->m_constraints[] = $comparisonOperation;
             }
-            if ($context->language->defined) {
+            if ($context->language->defined && !$p_parameters['ignore_language']) {
         	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $context->language->number);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
-            if ($context->topic->defined) {
+            if ($context->topic->defined && !$p_parameters['ignore_topic']) {
     	        $comparisonOperation = new ComparisonOperation('topic', $operator, $context->topic->identifier);
     	        $this->m_constraints[] = $comparisonOperation;
     	    }
@@ -275,6 +275,11 @@ class BlogEntriesList extends ListObject
                 case 'name':
                 case 'constraints':
                 case 'order':
+                case 'ignore_status':
+      			case 'ignore_adminstatus':
+      			case 'ignore_blog':
+      			case 'ignore_language':
+      			case 'ignore_topic':
                     if ($parameter == 'length' || $parameter == 'columns') {
                         $intValue = (int)$value;
                         if ("$intValue" != $value || $intValue < 0) {

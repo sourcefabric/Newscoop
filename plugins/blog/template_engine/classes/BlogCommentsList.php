@@ -74,14 +74,14 @@ class BlogCommentsList extends ListObject
     	        $comparisonOperation = new ComparisonOperation('admin_status', $operator, 'online');
     	        $this->m_constraints[] = $comparisonOperation; 
     	    }
-    	    if ($context->blogentry->defined) {
+    	    if ($context->blogentry->defined && !$p_parameters['ignore_blogentry']) {
         	    $comparisonOperation = new ComparisonOperation('entry_id', $operator, $context->blogentry->identifier);
                 $this->m_constraints[] = $comparisonOperation;
-    	    } elseif ($context->blog->defined) {
+    	    } elseif ($context->blog->defined && !$p_parameters['ignore_blog']) {
         	    $comparisonOperation = new ComparisonOperation('blog_id', $operator, $context->blog->identifier);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
-    	    if ($context->language->defined) {
+    	    if ($context->language->defined && $p_parameters['ignore_language']) {
         	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $context->language->number);
                 $this->m_constraints[] = $comparisonOperation;
     	    }
@@ -214,6 +214,11 @@ class BlogCommentsList extends ListObject
     			case 'name':
     			case 'constraints':
     			case 'order':
+		        case 'ignore_status':
+    			case 'ignore_adminstatus':
+    			case 'ignore_blog':
+    			case 'ignore_blogentry':
+    			case 'ignore_language':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
