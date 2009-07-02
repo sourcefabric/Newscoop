@@ -96,9 +96,9 @@ if (in_array($extension, $imageExtensions)) {
       <script language="javascript" type="text/javascript">
       editAreaLoader.init({
       	id : "cField"		          // textarea id
-      	,syntax: "html"			      // syntax to be used for highgliting
+      	,syntax: "html"			  // syntax to be used for highgliting
       	,start_highlight: true		  // to display with highlight mode on start-up
-      	,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, |, change_smooth_selection, highlight, reset_highlight, |, help"
+      	,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, |, change_smooth_selection, fullscreen, |, help"
         ,syntax_selection_allow: "css,html,js,php,xml"
         ,replace_tab_by_spaces: 2
       });
