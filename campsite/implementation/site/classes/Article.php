@@ -2624,10 +2624,16 @@ class Article extends DatabaseObject {
                 	                                   'IdLanguage'=>'fk_language_id');
                 	break;
                 case 'bylastcomment':
-                	$dbField = 'MAX(ArticleComments.fk_comment_id)';
-                	$p_otherTables['ArticleComments'] = array('Number'=>'fk_article_number',
-                	'IdLanguage'=>'fk_language_id');
-                	$p_whereConditions[] = "`ArticleComments`.`fk_comment_id` IS NOT NULL";
+                	$dbField = 'comment_ids.last_comment_id';
+                	$joinTable = "(SELECT MAX(fk_comment_id) AS last_comment_id, fk_article_number, fk_language_id \n"
+                	           . "    FROM ArticleComments AS ac LEFT JOIN phorum_messages AS pm \n"
+                	           . "        ON ac.fk_comment_id = pm.message_id \n"
+                	           . "    WHERE pm.status = 2 AND ac.is_first = false"
+                	           . "    GROUP BY fk_article_number, fk_language_id)";
+                	$p_otherTables[$joinTable] =  array('__TABLE_ALIAS'=>'comment_ids',
+                	                                    'Number'=>'fk_article_number',
+                	                                    'IdLanguage'=>'fk_language_id');
+                    $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
                 	break;
             }
             if (!is_null($dbField)) {
