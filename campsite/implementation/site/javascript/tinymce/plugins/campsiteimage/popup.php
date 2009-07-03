@@ -10,7 +10,10 @@ require_once('config.inc.php');
 require_once('classes/ImageManager.php');
 
 $manager = new ImageManager($IMConfig);
-
+$imageIdParam = '';
+if (isset($_REQUEST['image_id'])) {
+    $imageIdParam = '&image_id=' . $_REQUEST['image_id'];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -29,7 +32,7 @@ $manager = new ImageManager($IMConfig);
   <form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data">
   <fieldset>
     <div class="dirs">
-      <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id']; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
+      <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageIdParam; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
     </div>
   </fieldset>
 

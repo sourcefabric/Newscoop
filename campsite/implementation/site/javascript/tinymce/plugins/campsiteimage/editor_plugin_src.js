@@ -14,8 +14,24 @@
 
 	    // Register commands
 	    ed.addCommand('mceCampsiteImage', function() {
+		var se = ed.selection;
+		var url_params = '';
+
+		if (!se.isCollapsed() || ed.dom.getParent(se.getNode(), 'IMG')) {
+		    var action = '';
+		    var elm = se.getNode();
+		    elm = ed.dom.getParent(elm, "IMG");
+		    if (elm != null && elm.nodeName == "IMG")
+			action = "update";
+
+		    if (action == 'update') {
+			var elmId = ed.dom.getAttrib(elm, 'id');
+			url_params = '&image_id=' + elmId;
+		    }
+		}
+
 		ed.windowManager.open({
-                    file : url + '/popup.php?article_id=' + articleNo,
+                    file : url + '/popup.php?article_id=' + articleNo + url_params,
 		        width : 580 + parseInt(ed.getLang('campsiteimage.delta_width', 0)),
 			height : 345 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
 			inline : 1

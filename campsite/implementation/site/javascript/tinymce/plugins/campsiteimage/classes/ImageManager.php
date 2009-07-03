@@ -174,6 +174,15 @@ class ImageManager
 		return array($dirs, $files);
 	}
 
+
+	function getImageByNumber($articleId, $imageNumber)
+	{
+	    $articleImage = new ArticleImage($articleId, null, $imageNumber);
+	    $image = $articleImage->getImage();
+	    return $image;
+	}
+
+
 	/**
 	 * Count the number of files and directories in a given folder
 	 * minus the thumbnail folders and thumbnails.
