@@ -37,6 +37,16 @@ var CampsiteImageDialog = {
 
 	var obj = topDoc.getElementById('f_caption');
 	obj.value = p_title;
+
+	var allPageTags = new Array();
+	allPageTags = document.getElementsByTagName('*');
+	for (i = 0; i < allPageTags.length; i++) {
+	    if (allPageTags[i].className == 'block') {
+		allPageTags[i].style.backgroundColor='';
+	    }
+	}
+
+	document.getElementById('block_'+p_image_template_id).style.backgroundColor='#FFC';
     },
 
     close : function() {

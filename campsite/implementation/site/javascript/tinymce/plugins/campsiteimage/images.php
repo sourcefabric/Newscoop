@@ -29,6 +29,9 @@ $manager = new ImageManager($IMConfig);
 // Get the list of files and directories
 $list = $manager->getFiles($relative, $_REQUEST['article_id']);
 
+if (isset($_REQUEST['image_id'])) {
+    $image = $manager->getImageByNumber($_REQUEST['article_id'], $_REQUEST['image_id']);
+}
 
 /* ================= OUTPUT/DRAW FUNCTIONS ======================= */
 
@@ -40,11 +43,12 @@ function drawFiles($list, &$manager)
 	global $relative;
 
 	foreach($list as $entry => $file)
-	{ ?>
+	{
+?>
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="block" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
+				<td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
 		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
 		</td></tr><tr><td class="edit">
 		<?php
@@ -202,14 +206,23 @@ function drawErrorBase(&$manager)
 </table>
 
 	<?php
-	$firstImage = array_shift($list[1]);
-	if (!empty($firstImage)) {	?>
-	<!-- automatically select the first image -->
+	if (isset($image) && is_object($image)) {
+	    $templateId = $_REQUEST['image_id'];
+	    $imageUrl = $image->getImageUrl();
+	    $imageAlt = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	} else {
+	    $firstImage = array_shift($list[1]);
+	    if (!empty($firstImage)) {
+	        $templateId = $firstImage['template_id'];
+		$imageUrl = $firstImage['image_object']->getImageUrl();
+		$imageAlt = $firstImage['alt'];
+	    }
+	}
+	?>
+	<!-- automatically select the image -->
 	<script>
-	    CampsiteImageDialog.select(<?php echo $firstImage['template_id']; ?>, '<?php echo $firstImage['image_object']->getImageUrl(); ?>', '<?php echo $firstImage['alt']; ?>', '<?php echo $firstImage['alt']; ?>');
+	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageAlt; ?>');
 	</script>
-	<?php } ?>
-
 <?php } else { drawNoResults(); } ?>
 </body>
 </html>
