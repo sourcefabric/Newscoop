@@ -105,14 +105,15 @@ class SystemPref {
 					   ." WHERE varname='".mysql_real_escape_string($p_varName)."'";
 				$g_ado_db->Execute($sql);
 				$Campsite['system_preferences'][$p_varName] = $p_value;
+				self::StoreSystemPrefsInCache();
 			}
 	    } else {
 	    	$sql = "INSERT INTO SystemPreferences
 				    (varname, value) VALUES ('".mysql_real_escape_string($p_varName)."', '".mysql_real_escape_string($p_value)."')";
 	    	$g_ado_db->Execute($sql);
 	    	$Campsite['system_preferences'][$p_varName] = $p_value;
+	    	self::StoreSystemPrefsInCache();
 	    }
-	    self::DeleteSystemPrefsFromCache();
 	} // fn Set
 
 
