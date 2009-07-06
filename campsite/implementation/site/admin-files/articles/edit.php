@@ -844,7 +844,14 @@ if ($f_edit_mode == "edit") { ?>
 				// Images
 				preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
 
+				preg_match_all("/\s*sub=\"(.*?)\"/", $text, $titles);
+				
 				if (isset($imageMatches[1][0])) {
+				        if (isset($titles) && sizeof($titles) > 0) {
+					        for($x = 0; $x < sizeof($titles[0]); $x++) {
+						        $text = preg_replace("/\s*".$titles[0][$x]."/", ' title="'.$titles[1][$x].'"', $text);
+						}
+					}
 					$formattingErrors = false;
 					foreach ($imageMatches[1] as $templateId) {
 						// Get the image URL

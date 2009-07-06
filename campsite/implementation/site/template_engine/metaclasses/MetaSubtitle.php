@@ -265,8 +265,11 @@ final class MetaSubtitle {
         }
         $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
-            $imgString .= ' title="' . $detailsArray['alt'] . '"';
+            $imgString .= ' alt="' . $detailsArray['alt'] . '"';
         }
+	if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
+            $imgString .= ' title="' . $detailsArray['sub'] . '"';
+	}
         if (isset($detailsArray['width']) && !empty($detailsArray['width'])) {
             $imgString .= ' width="' . $detailsArray['width'] . '"';
         }

@@ -27,6 +27,10 @@
 		    if (action == 'update') {
 			var elmId = ed.dom.getAttrib(elm, 'id');
 			url_params = '&image_id=' + elmId;
+			if (ed.dom.getAttrib(elm, 'alt') !== null)
+			    url_params += '&image_alt=' + escape(ed.dom.getAttrib(elm, 'alt'));
+			if (ed.dom.getAttrib(elm, 'title') !== null)
+			    url_params += '&image_title=' + escape(ed.dom.getAttrib(elm, 'title'));
 		    }
 		}
 

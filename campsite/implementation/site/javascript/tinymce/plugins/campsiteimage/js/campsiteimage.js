@@ -15,9 +15,9 @@ var CampsiteImageDialog = {
 	tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
 	    src : topDoc.getElementById('f_url').value,
 	    align : topDoc.getElementById('f_align').value,
-            id : topDoc.getElementById('f_image_template_id').value + '_' + topDoc.getElementById('f_ratio').value,
-	    alt : topDoc.getElementById('f_alt').value,
-	    title : topDoc.getElementById('f_caption').value
+	    id : topDoc.getElementById('f_image_template_id').value + '_' + topDoc.getElementById('f_ratio').value,
+	    title : topDoc.getElementById('f_caption').value,
+	    alt : topDoc.getElementById('f_alt').value
 	}));
 
 	tinyMCEPopup.close();

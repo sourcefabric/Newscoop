@@ -31,6 +31,14 @@ $list = $manager->getFiles($relative, $_REQUEST['article_id']);
 
 if (isset($_REQUEST['image_id'])) {
     $image = $manager->getImageByNumber($_REQUEST['article_id'], $_REQUEST['image_id']);
+    $imageAltOpt = '';
+    $imageTitleOpt = '';
+    if (isset($_REQUEST['image_alt'])) {
+        $imageAltOpt = $_REQUEST['image_alt'];
+    }
+    if (isset($_REQUEST['image_title'])) {
+        $imageTitleOpt = $_REQUEST['image_title'];
+    }
 }
 
 /* ================= OUTPUT/DRAW FUNCTIONS ======================= */
@@ -209,19 +217,29 @@ function drawErrorBase(&$manager)
 	if (isset($image) && is_object($image)) {
 	    $templateId = $_REQUEST['image_id'];
 	    $imageUrl = $image->getImageUrl();
-	    $imageAlt = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	    if (!empty($imageAltOpt)) {
+	        $imageAlt = $imageAltOpt;
+	    } else {
+	        $imageAlt = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	    }
+	    if (!empty($imageTitleOpt)) {
+	        $imageTitle = $imageTitleOpt;
+	    } else {
+	        $imageTitle = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	    }
 	} else {
 	    $firstImage = array_shift($list[1]);
 	    if (!empty($firstImage)) {
 	        $templateId = $firstImage['template_id'];
 		$imageUrl = $firstImage['image_object']->getImageUrl();
 		$imageAlt = $firstImage['alt'];
+		$imageTitle = $imageAlt;
 	    }
 	}
 	?>
 	<!-- automatically select the image -->
 	<script>
-	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageAlt; ?>');
+	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>');
 	</script>
 <?php } else { drawNoResults(); } ?>
 </body>
