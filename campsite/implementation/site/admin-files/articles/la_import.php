@@ -10,8 +10,6 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticl
     exit;
 }
 
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_content_lib.php");
-
 // Whether form was submitted
 $f_save = Input::Get('f_save', 'string', '', true);
 
