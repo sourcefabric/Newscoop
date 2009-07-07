@@ -86,7 +86,7 @@ class CampURIShortNames extends CampURI
     private function getURILanguage()
     {
         $uriString = null;
-        if ($this->m_language->defined()) {
+        if (!is_null($this->m_language) && $this->m_language->defined()) {
             $uriString = '/' . $this->m_language->code . '/';
         }
 
@@ -108,7 +108,7 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        if ($this->m_issue->defined()) {
+        if (!is_null($this->m_issue) && $this->m_issue->defined()) {
             $uriString .= $this->m_issue->url_name . '/';
         } else {
             $uriString = null;
@@ -132,7 +132,7 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        if ($this->m_section->defined()) {
+        if (!is_null($this->m_section) && $this->m_section->defined()) {
             $uriString .= $this->m_section->url_name . '/';
         } else {
             $uriString = null;
@@ -153,7 +153,7 @@ class CampURIShortNames extends CampURI
     {
         $uriString = $this->getURISection();
 
-        if ($this->m_article->defined()) {
+        if (!is_null($this->m_article) && $this->m_article->defined()) {
             $uriString .= $this->m_article->url_name . '/';
         } else {
             $uriString = null;
@@ -393,13 +393,13 @@ class CampURIShortNames extends CampURI
             $this->buildURI($p_params);
         }
 
-        if ($this->m_language->defined && is_null($this->m_buildPath)) {
+        if (!is_null($this->m_language) && $this->m_language->defined() && is_null($this->m_buildPath)) {
             $this->m_buildPath = '/' . $this->m_language->code . '/';
-            if ($this->m_issue->defined) {
+            if (!is_null($this->m_issue) && $this->m_issue->defined()) {
                 $this->m_buildPath .= $this->m_issue->url_name . '/';
-                if ($this->m_section->defined) {
+                if (!is_null($this->m_section) && $this->m_section->defined()) {
                     $this->m_buildPath .= $this->m_section->url_name . '/';
-                    if ($this->m_article->defined) {
+                    if (!is_null($this->m_article) && $this->m_article->defined()) {
                         $this->m_buildPath .= $this->m_article->url_name . '/';
                     }
                 }
