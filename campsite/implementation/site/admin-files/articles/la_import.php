@@ -174,17 +174,21 @@ if ($isValidXMLFile) {
 	}
 
 	// Updates the article author
-	$authorObj = new Author((string) $article->author);
-	if (!$authorObj->exists()) {
-	    $authorData = Author::ReadName((string) $article->author);
-	    $authorObj->create($authorData);
+	if (isset($article->author) && !empty($article->author)) {
+	    $authorObj = new Author((string) $article->author);
+	    if (!$authorObj->exists()) {
+	        $authorData = Author::ReadName((string) $article->author);
+		$authorObj->create($authorData);
+	    }
+	    $articleObj->setAuthorId($authorObj->getId());
 	}
-	$articleObj->setAuthorId($authorObj->getId());
+	$articleFields['author'] = true;
 
 	// Updates the article
 	$articleObj->setCreatorId($g_user->getUserId());
-	$articleObj->setKeywords((string) $article->keywords);
-	$articleFields['author'] = true;
+	if (isset($article->keywords) && !empty($article->keywords)) {
+	    $articleObj->setKeywords((string) $article->keywords);
+	}
 	$articleFields['keywords'] = true;
 
 	foreach($xmlArticle as $articleFieldName => $articleFieldValue) {
