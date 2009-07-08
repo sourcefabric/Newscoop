@@ -90,12 +90,12 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
         ?>
        <TD> >> <B><?php p($Blog->getSubject()) ?></B></TD>
     <?php } else { ?> 
-        <TD> >> <B><?php putGS("All Entrys"); ?></B></TD>
+        <TD> >> <B><?php putGS("All posts"); ?></B></TD>
     <?php } ?> 
     
     <?php if ($f_blog_id && $is_admin) { ?>
         <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new Entry"); ?></B></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new post"); ?></B></A></TD>
     <?php } ?>  
     
   </tr>
@@ -401,7 +401,7 @@ if ($BlogEntriesList->getLength()) {
 <?php 
 } else {?>
     <BLOCKQUOTE>
-    <LI><?php  putGS('No entries.'); ?></LI>
+    <LI><?php  putGS('No posts.'); ?></LI>
     </BLOCKQUOTE>  
     <?php 
 }

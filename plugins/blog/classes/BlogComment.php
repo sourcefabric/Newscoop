@@ -37,7 +37,7 @@ class BlogComment extends DatabaseObject {
         'last_modified'
     );
     
-    static $m_html_allowed_fields = array('content');
+    static $m_html_allowed_fields = array();
 
     /**
 	 * Construct by passing in the primary key to access the article in
@@ -243,6 +243,7 @@ class BlogComment extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => $this->getProperty('fk_entry_id'),         
             ),
+            /*
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
                 'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
@@ -260,6 +261,7 @@ class BlogComment extends DatabaseObject {
                                '</script>',
                 'type'      => 'static'           
             ),
+            */
             'title'     => array(
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
@@ -329,7 +331,7 @@ class BlogComment extends DatabaseObject {
                 'element'   => 'xsubmit',
                 'type'      => 'button',
                 'label'     => 'Submit',
-                'attributes'=> array('onclick' => 'tinyMCE.triggerSave(); if (this.form.onsubmit()) this.form.submit()'),
+                'attributes'=> array('onclick' => 'if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
             ),
             'cancel'     => array(

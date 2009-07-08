@@ -1,16 +1,4 @@
 <html>
-<head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Edit BlogComment"); ?></title>
-	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-</head>
-<body>
 <?php
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
@@ -48,11 +36,25 @@ if ($BlogComment->store($is_admin, $user_id)) {
 }
 
 ?>
+<head>
+    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<META HTTP-EQUIV="Expires" CONTENT="now">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<title><?php $BlogComment->exists() ? putGS('Edit comment') : putGS('Add new comment'); ?></title>
+	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+</head>
+
+<body>
 <?php camp_html_display_msgs(); ?>
+
 <table style="margin-top: 10px; margin-left: 15px; margin-right: 15px;" cellpadding="0" cellspacing="0" width="95%" class="table_input">
     <TR>
     	<TD style="padding: 3px";>
-    		<B><?php $BlogComment->exists() ? putGS('Edit Comment') : putGS('Add new Comment'); ?></B>
+    		<B><?php $BlogComment->exists() ? putGS('Edit comment') : putGS('Add new comment'); ?></B>
     		<hr style="color: #8baed1";>
     	</TD>
     </TR>
