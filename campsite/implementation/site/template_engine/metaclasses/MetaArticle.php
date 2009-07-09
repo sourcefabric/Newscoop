@@ -195,7 +195,8 @@ final class MetaArticle extends MetaDbObject {
                             $subtitleNo = null;
                         }
                         $bodyField = new MetaArticleBodyField($fieldValue, $this,
-                                         $articleFieldType->getPrintName(), $this->name, $subtitleNo);
+                                         $articleFieldType->getPrintName(), $this->name, $subtitleNo,
+                                         '<span class="subtitle"><p>', '</p></span>');
                         $this->setContentCache($property, $bodyField);
                     }
                     $fieldValue = $this->getContentCache($property);
