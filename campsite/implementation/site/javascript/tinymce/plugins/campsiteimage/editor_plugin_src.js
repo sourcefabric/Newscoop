@@ -31,6 +31,13 @@
 			    url_params += '&image_alt=' + escape(ed.dom.getAttrib(elm, 'alt'));
 			if (ed.dom.getAttrib(elm, 'title') !== null)
 			    url_params += '&image_title=' + escape(ed.dom.getAttrib(elm, 'title'));
+			if (ed.dom.getAttrib(elm, 'align') !== null)
+			    url_params += '&image_alignment=' + escape(ed.dom.getAttrib(elm, 'align'));
+			if (ed.dom.getAttrib(elm, 'ratio') !== null && ed.dom.getAttrib(elm, 'ratio') != '')
+			    url_params += '&image_ratio=' + escape(ed.dom.getAttrib(elm, 'ratio'));
+			else
+			    if (elmId.lastIndexOf('_') > 0)
+				url_params += '&image_ratio=' + elmId.substring(elmId.lastIndexOf('_')+1);
 		    }
 		}
 

@@ -39,6 +39,12 @@ if (isset($_REQUEST['image_id'])) {
     if (isset($_REQUEST['image_title'])) {
         $imageTitleOpt = $_REQUEST['image_title'];
     }
+    if (isset($_REQUEST['image_alignment'])) {
+        $imageAlignOpt = $_REQUEST['image_alignment'];
+    }
+    if (isset($_REQUEST['image_ratio'])) {
+        $imageRatioOpt = $_REQUEST['image_ratio'];
+    }
 }
 
 /* ================= OUTPUT/DRAW FUNCTIONS ======================= */
@@ -48,17 +54,19 @@ if (isset($_REQUEST['image_id'])) {
  */
 function drawFiles($list, &$manager)
 {
-	global $relative;
+        global $relative, $image;
 
 	foreach($list as $entry => $file)
 	{
+	    if (isset($image) && is_object($image)) {
+	        if ($image->getImageId() == $file['image_object']->getImageId()) {
 ?>
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-				<td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
-		</td></tr><tr><td class="edit">
+				<td class="block" id="block_<?php echo $file['template_id']; ?>">
+		                        <img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/>
+		                </td></tr><tr><td class="edit">
 		<?php
 		if ($file['image']) {
 			echo $file['image'][0].'x'.$file['image'][1];
@@ -67,7 +75,29 @@ function drawFiles($list, &$manager)
 			echo " ";
 		}
 		?>
-		</td></tr></table></td>
+		                </td>
+                        </tr></table></td>
+        <?php
+			}
+		} else {
+	?>
+		<td>
+			<table width="100" cellpadding="0" cellspacing="0">
+			<tr>
+		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
+		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
+		                </td></tr><tr><td class="edit">
+		<?php
+		if ($file['image']) {
+			echo $file['image'][0].'x'.$file['image'][1];
+		}
+		else {
+			echo " ";
+		}
+		?>
+		                </td>
+                        </tr></table></td>
+	<?php   } ?>
 	  <?php
 	}//foreach
 }//function drawFiles
@@ -215,7 +245,11 @@ function drawErrorBase(&$manager)
 
 	<?php
 	if (isset($image) && is_object($image)) {
-	    $templateId = $_REQUEST['image_id'];
+	    if (strpos($_REQUEST['image_id'], '_') === false) {
+	        $templateId = $_REQUEST['image_id'];
+	    } else {
+	        list($templateId, $imageRatio) = explode('_', $_REQUEST['image_id']);
+	    }
 	    $imageUrl = $image->getImageUrl();
 	    if (!empty($imageAltOpt)) {
 	        $imageAlt = $imageAltOpt;
@@ -227,6 +261,8 @@ function drawErrorBase(&$manager)
 	    } else {
 	        $imageTitle = htmlspecialchars($image->getDescription(), ENT_QUOTES);
 	    }
+	    $imageAlign = (!empty($imageAlignOpt)) ? $imageAlignOpt : '';
+	    $imageRatio = (!empty($imageRatioOpt)) ? $imageRatioOpt : '';
 	} else {
 	    $firstImage = array_shift($list[1]);
 	    if (!empty($firstImage)) {
@@ -234,12 +270,14 @@ function drawErrorBase(&$manager)
 		$imageUrl = $firstImage['image_object']->getImageUrl();
 		$imageAlt = $firstImage['alt'];
 		$imageTitle = $imageAlt;
+		$imageAlign = '';
+		$imageRatio = '';
 	    }
 	}
 	?>
 	<!-- automatically select the image -->
 	<script>
-	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>');
+	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>');
 	</script>
 <?php } else { drawNoResults(); } ?>
 </body>
