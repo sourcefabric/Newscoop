@@ -59,6 +59,11 @@ class MetaActionPoll extends MetaAction
                 case 'ajax':            
                     $allowed_values = $_SESSION['camp_poll_maxvote'][$this->m_properties['poll_nr']][$this->m_properties['poll_language_id']];
                     
+                    if (!is_array($allowed_values)) {
+                        $this->m_error = new PEAR_Error('Invalid poll voting value.', ACTION_POLL_ERR_INVALID_VALUE);
+                        return false;   
+                    }
+                    
                     foreach ($Poll->getAnswers() as $PollAnswer) {
                         $nr = $PollAnswer->getNumber();
                         
