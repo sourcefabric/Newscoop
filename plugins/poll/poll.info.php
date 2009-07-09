@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'poll',
-    'version' => '3.3.x-0.2',
+    'version' => '3.3.x-0.2.1',
     'label' => 'Polls',
     'description' => 'This plugin provides functionality to perform polls (standard and advanced).',  
     'menu' => array(

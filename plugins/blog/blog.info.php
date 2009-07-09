@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'blog',
-    'version' => '3.3.x-0.2',
+    'version' => '3.3.x-0.2.1',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(
@@ -12,7 +12,7 @@ $info = array(
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
-                'label' => 'Administrate Blogs',
+                'label' => 'Administer Blogs',
                 'icon' => 'css/gear.png',
             ),
             array(
