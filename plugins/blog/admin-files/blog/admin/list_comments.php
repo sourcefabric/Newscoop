@@ -90,14 +90,14 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
         ?>
        <TD> >> <B><A HREF="list_entries.php?f_blog_id=<?php p($BlogEntry->getProperty('fk_blog_id')) ?>"><?php p($Blog->getSubject()) ?></A></B></TD>
        <TD> >> <B><?php p($BlogEntry->getSubject()) ?></B></TD>
-       <TD> >> <B><?php p('List Comments') ?></B></TD>
+       <TD> >> <B><?php p('List comments') ?></B></TD>
     <?php } else { ?> 
-        <TD> >> <B><?php putGS("List all Comments"); ?></B></TD>
+        <TD> >> <B><?php putGS("List all comments"); ?></B></TD>
     <?php } ?> 
         
     <?php if ($f_entry_id && $is_admin) { ?>
         <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $f_entry_id ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-        <TD><A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $f_entry_id ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><B><?php  putGS("Add new Comment"); ?></B></A></TD>
+        <TD><A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $f_entry_id ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><B><?php  putGS("Add new comment"); ?></B></A></TD>
     <?php } ?>
   </tr>
 </TABLE>

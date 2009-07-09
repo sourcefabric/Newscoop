@@ -81,11 +81,11 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
-    <TD><A HREF="list_entries.php" ><B><?php  putGS("List all Entries"); ?></B></A></TD>
+    <TD><A HREF="list_entries.php" ><B><?php  putGS("List all posts"); ?></B></A></TD>
     
     <?php if ($is_admin) { ?>
             <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><B><?php  putGS("Add new Blog"); ?></B></A></TD>
+            <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><B><?php  putGS("Add new blog"); ?></B></A></TD>
     <?php } ?>
 
 </tr>
@@ -287,7 +287,7 @@ if ($BlogsList->getLength()) {
                 <A href="<?php p($self_params) ?>f_order=bydate"><?php  putGS("Published"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60">
-                <A href="<?php p($self_params) ?>f_order=byentries"><?php  putGS("Entries"); ?></a>
+                <A href="<?php p($self_params) ?>f_order=byentries"><?php  putGS("Posts"); ?></a>
                 <br>
                 <SMALL><?php putGS('online/offline'); ?></SMALL>
             </TD>
@@ -298,7 +298,7 @@ if ($BlogsList->getLength()) {
                 <?php  putGS("Topics"); ?>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="60" <?php p($is_admin ? 'colspan="2"' : '') ?>>
-                <?php  putGS("Entries"); ?>
+                <?php  putGS("Posts"); ?>
             </TD>
             
             <?php if($is_admin) { ?>

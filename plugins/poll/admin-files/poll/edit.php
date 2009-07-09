@@ -126,7 +126,7 @@ camp_html_display_msgs();
             <TD>
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
-                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11" VALUE="<?php p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date begin')."'"); ?>"></td>
+                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11" VALUE="<?php p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>"></td>
                     <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_begin"
                          style="cursor: pointer; border: 1px solid red;"
                           title="Date selector"
@@ -153,7 +153,7 @@ camp_html_display_msgs();
             <TD>
                 <?php $now = getdate(); ?>
                 <table cellpadding="0" cellspacing="2"><tr>
-                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11" VALUE="<?php p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date end')."'"); ?>"></td>
+                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11" VALUE="<?php p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>"></td>
                     <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_end"
                          style="cursor: pointer; border: 1px solid red;"
                           title="Date selector"
@@ -178,13 +178,13 @@ camp_html_display_msgs();
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
             <TD>
-            <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
+            <INPUT TYPE="TEXT" NAME="f_title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($title); ?>">
             </TD>
         </TR>
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Question"); ?>:</TD>
             <TD>
-            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
+            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Question')); ?>"><?php echo htmlspecialchars($question); ?></TEXTAREA>
             </TD>
         </TR>
         <tr>
@@ -227,7 +227,7 @@ camp_html_display_msgs();
             <tr id="poll_answer_tr_<?php p($n); ?>" style="display: <?php is_array($answers) && array_key_exists($n, $answers) ? p('table-row') : p('none'); ?>">
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $n); ?>:</TD>
                 <TD>
-                    <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must complete the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
+                    <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must fill in the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
                 </TD>
                 
                 <?php if ($poll->exists()) { ?>
