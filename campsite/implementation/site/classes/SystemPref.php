@@ -141,7 +141,7 @@ class SystemPref {
     {
         global $Campsite;
 
-        CampSession::singleton()->setData('system_preferences', $Campsite['system_preferences']);
+        CampSession::singleton()->setData('system_preferences', $Campsite['system_preferences'], 'default', true);
 
         $cacheFileName = $GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME;
         $cacheFile = fopen($cacheFileName, 'w+');
@@ -164,7 +164,7 @@ class SystemPref {
 
     public static function DeleteSystemPrefsFromCache()
     {
-    	CampSession::singleton()->setData('system_preferences', null);
+    	CampSession::singleton()->setData('system_preferences', null, 'default', true);
     	if (file_exists($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME)) {
     		unlink($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME);
     	}
