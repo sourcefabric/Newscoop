@@ -31,6 +31,7 @@
   - #2931 - The import script crashes because of invalid include
   - #2935 - Poll plugin: warning message after voting
   - #2939 - Cache is not updated when saving the system preferences
+  - #2940 - list_articles fails if topic was set
 
 3.3.0 (June 24, 2009)
   Improvements
