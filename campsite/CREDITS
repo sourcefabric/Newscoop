@@ -335,4 +335,7 @@ Former contributors
 
 Thanks to
 - Rossz Vamos-Wentworth (helped with SuSE port)
-- all contributors who helped with bug reports and suggestions
+- All contributors who helped with bug reports and suggestions
+- Third-party open source software we use:
+  * TinyMCE - Javascript WYSIWYG Editor: http://tinymce.moxiecode.com/
+  * EditArea - the code editor in a textarea: http://www.cdolivet.com/index.php?page=editArea

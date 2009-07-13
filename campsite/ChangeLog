@@ -1,10 +1,11 @@
-3.3.1 (July 10, 2009)
+3.3.1 (July 13, 2009)
   Improvements
   ------------
   - #2891 - Rename Entry/Entries to Post/Posts in the blog plugin
   - #2912 - Choose template on edit template screen
+  - #2925 - Blog plugin: implement ignore_language, ignore_topic, ignore_blog, ignore_blogentry list parameters
   - #2932 - Blog plugin: implement unset_blog, unset_blogentry, unset_blogcomment
-  - #2937 - wrap subtitle in <span class="subtitle"> .. </span>
+  - #2937 - Wrap subtitle in <span class="subtitle"> .. </span>
 
   Bugs Fixed
   ----------
@@ -23,13 +24,13 @@
   - #2922 - Tiny MCE Insert Image popup defaults to first image regardless on what image is selected for re-editing
   - #2923 - Editarea template editor mess up lines on syntax highlighting
   - #2924 - The article content is dispayed for unpublished articles
-  - #2925 - Blog: add ignore_language, ignore_topic, ignore_blog, ignore_blogentry list parameters
   - #2926 - Error in advanced search
   - #2927 - The template engine cache is not used for the first request of a new reader
   - #2928 - Error upgrading when database name contains non alphanumeric characters
   - #2929 - Displaying a section URI when the section was not defined results in crash
   - #2931 - The import script crashes because of invalid include
-  - #2935 - Poll: warning message after voting
+  - #2935 - Poll plugin: warning message after voting
+  - #2939 - Cache is not updated when saving the system preferences
 
 3.3.0 (June 24, 2009)
   Improvements
