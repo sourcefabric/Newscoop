@@ -2426,8 +2426,7 @@ class Article extends DatabaseObject {
         }
         foreach ($p_typeAttributes as $typeAttribute) {
             $selectClause .= "        UNION\n"
-                          . "        SELECT NrArticle FROM "
-                          . $typeAttribute->getDbTableName()
+                          . "        SELECT NrArticle FROM `X" . $typeAttribute->getArticleType() . '`'
                           . " WHERE " . $typeAttribute->getName()
                           . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
         }
