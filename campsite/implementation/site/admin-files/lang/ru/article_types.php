@@ -1,6 +1,6 @@
 <?php 
-regGS("Rename article type '$1'", "");
-regGS("Invalid article type '$1'.", "");
+regGS("Rename article type '$1'", "Переименовать тип статьи '$1'");
+regGS("Invalid article type '$1'.", "Неправильный тип статьи '$1'.");
 regGS("You cannot merge the same type into itself.", "Вы не можете объединить тип сам с собой.");
 regGS("View the source ($1) version of $2", "Просмотр источника ($1) версии $2");
 regGS("View of original ($1) $2", "Просмотр оригинала ($1) $2");
