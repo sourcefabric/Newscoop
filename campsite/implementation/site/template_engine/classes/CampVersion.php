@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2009-07-10';
+    private $m_releaseDate = '2009-07-13';
 
     /**
      * @var string
