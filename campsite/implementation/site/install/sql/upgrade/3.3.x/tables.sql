@@ -1,0 +1,20 @@
+-- new columns for month and weekday short names
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth1` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth2` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth3` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth4` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth5` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth6` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth7` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth8` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth9` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth10` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth11` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortMonth12` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay1` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay2` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay3` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay4` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay5` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay6` VARCHAR(20);
+ALTER TABLE `Languages` ADD COLUMN `ShortWDay7` VARCHAR(20);

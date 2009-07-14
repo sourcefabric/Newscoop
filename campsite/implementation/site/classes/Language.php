@@ -22,9 +22,14 @@ class Language extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName',
-	   'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
-	   'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11',
-	   'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6', 'WDay7' );
+	    'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
+	    'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11',
+	    'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6',
+	    'WDay7', 'ShortMonth1', 'ShortMonth2', 'ShortMonth3', 'ShortMonth4',
+	    'ShortMonth5', 'ShortMonth6', 'ShortMonth7', 'ShortMonth8',
+	    'ShortMonth9', 'ShortMonth10', 'ShortMonth11', 'ShortMonth12',
+	    'ShortWDay1', 'ShortWDay2', 'ShortWDay3', 'ShortWDay4',
+	    'ShortWDay5', 'ShortWDay6', 'ShortWDay7');
 
 	/**
 	 * Constructor.

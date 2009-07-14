@@ -24,50 +24,79 @@ function smarty_function_calendar($p_params, &$p_smarty)
 {
     global $g_ado_db;
 
+    // if mandatory fields are missed, do nothing
     if (!isset($p_params['container']) || !isset($p_params['url'])) {
         return;
     }
 
-    // gets the context variable
+    // get the context variable
     $campsite = $p_smarty->get_template_vars('campsite');
     $html = '';
 
-    // gets parameters
+    // language must be set in context, otherwise function does nothing
+    if (!$campsite->language->defined) {
+        return;
+    }
+
+    // get parameters
     $container = $p_params['container'];
     $url = $p_params['url'];
     $style = (isset($p_params['style'])) ? $p_params['style'] : 'yui-skin-sam';
-    $calendarType = (isset($p_params['clickable_dates'])) ? $p_params['clickable_dates'] : 'issues';
+    $type = (isset($p_params['clickable_dates'])) ? $p_params['clickable_dates'] : 'issues';
+    $minDate = (isset($p_params['min_date'])) ? $p_params['min_date'] : '';
+    $maxDate = (isset($p_params['max_date'])) ? $p_params['max_date'] : '';
 
-    // gets dates
-    switch($calendarType) {
+    // get list of clickable dates
+    switch($type) {
     case 'articles':
-        $sql = 'SELECT PublishDate FROM Articles WHERE IdPublication = '
-	    . $campsite->publication->identifier . ' AND Published = \'Y\' '
-	    . 'GROUP BY PublishDate ORDER BY PublishDate';
-	$dateField = 'PublishDate';
+        $data = Article::GetPublicationDates($campsite->publication->identifier,
+					     $campsite->language->number);
 	break;
     case 'issues':
     default:
-        $sql = "SELECT PublicationDate FROM Issues WHERE IdPublication = "
-	    . $campsite->publication->identifier . " AND Published = 'Y'";
-	$dateField = 'PublicationDate';
+        $data = Issue::GetPublicationDates($campsite->publication->identifier,
+					   $campsite->language->number);
 	break;
     }
-    $data = $g_ado_db->GetAll($sql);
 
     if (!is_array($data) || sizeof($data) < 1) {
-        return;
+        $data = array();
     }
 
     $publishDates = array();
     foreach ($data as $publicationDate) {
-        $publishDate = explode(' ', $publicationDate[$dateField]);
+        $publishDate = explode(' ', $publicationDate['PublishDate']);
 	list($year, $month, $day) = explode('-', $publishDate[0]);
 	$publishDates[] = '"' . (int)$month . '/' . (int)$day . '/' . (int)$year . '"';
     }
 
+    // localize, only if language is other than English
+    if ($campsite->language->code != 'en') {
+        $monthsShort = 'cal1.cfg.setProperty("MONTHS_SHORT", [';
+	$monthsLong = 'cal1.cfg.setProperty("MONTHS_LONG", [';
+	for ($i = 1; $i <= 12; $i++) {
+	    $attrib = 'short_month' . $i;
+	    $monthsShort .= '"'.$campsite->language->$attrib.'"';
+	    $monthsShort .= ($i < 12) ? ',' : ']);';
+	    $attrib = 'month' . $i;
+	    $monthsLong .= '"'.$campsite->language->$attrib.'"';
+	    $monthsLong .= ($i < 12) ? ',' : ']);';
+	}
+	$wdaysShort = 'cal1.cfg.setProperty("WEEKDAYS_SHORT", [';
+	$wdaysLong = 'cal1.cfg.setProperty("WEEKDAYS_LONG", [';
+	for ($i = 1; $i <= 7; $i++) {
+	    $attrib = 'short_weekday' . $i;
+	    $wdaysShort .= '"'.$campsite->language->$attrib.'"';
+	    $wdaysShort .= ($i < 7) ? ',' : ']);';
+	    $attrib = 'weekday' . $i;
+	    $wdaysLong .= '"'.$campsite->language->$attrib.'"';
+	    $wdaysLong .= ($i < 7) ? ',' : ']);';
+	}
+    }
 
-$html = '
+
+    // build javascript code
+    $html = '
 <!--Begin source code for Calendar widget //-->
 <div class="' . $style .'">
 <div id="' . $container . '"></div>
@@ -96,8 +125,20 @@ $html = '
 
         var cal1 = new YAHOO.widget.Calendar("cal1","' . $container . '");
 
-        cal1.selectEvent.subscribe(handleSelect, cal1, true);
+        cal1.selectEvent.subscribe(handleSelect, cal1, true);';
 
+    if (!empty($minDate)) {
+        $html .= "\n\n\t" . 'cal1.cfg.setProperty("mindate", "'.$minDate.'");';
+    }
+    if (!empty($maxDate)) {
+        $html .= "\n\n\t" . 'cal1.cfg.setProperty("maxdate", "'.$maxDate.'");';
+    }
+    if ($campsite->language->code != 'en') {
+        $html .= "\n\n\t" . $monthsShort . "\n\t" . $monthsLong
+	    . "\n\t" . $wdaysShort . "\n\t" . $wdaysLong . "\n";
+    }
+        
+    $html .= '
         for (var i in contentDates)
             cal1.addRenderer(contentDates[i], cal1.renderCellStyleHighlight1);
 
@@ -109,7 +150,6 @@ $html = '
 <div style="clear:both" ></div>
 <!--End source code for Calendar widget //-->
 ';
-
 
     return $html;
 } // fn smarty_function_calendar

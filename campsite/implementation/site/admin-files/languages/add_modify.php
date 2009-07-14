@@ -152,6 +152,81 @@ camp_html_display_msgs();
 	</TD>
 </TR>
 <TR>
+	<TD COLSPAN="2"><?php  putGS('Please enter the translation for month short names.'); ?></TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Jan"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_1" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth1')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Feb"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_2" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth2')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Mar"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_3" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth3')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Apr"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_4" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth4')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("May"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_5" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth5')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Jun"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_6" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth6')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Jul"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_7" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth7')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Aug"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_8" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth8')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Sep"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_9" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth9')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Oct"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_10" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth10')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Nov"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_11" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth11')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Dec"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_month_12" SIZE="20" value="<?php p($languageObj->getProperty('ShortMonth12')); ?>">
+	</TD>
+</TR>
+<TR>
 	<TD COLSPAN="2"><?php  putGS('Please enter the translation for week day names.'); ?></TD>
 </TR>
 <TR>
@@ -194,6 +269,51 @@ camp_html_display_msgs();
 	<TD ALIGN="RIGHT" ><?php  putGS("Saturday"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="f_saturday" SIZE="20" value="<?php p($languageObj->getProperty('WDay7')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD COLSPAN="2"><?php  putGS('Please enter the translation for week day short names.'); ?></TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Su"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_sunday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay1')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Mo"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_monday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay2')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Tu"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_tuesday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay3')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("We"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_wednesday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay4')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Th"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_thursday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay5')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Fr"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_friday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay6')); ?>">
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Sa"); ?>:</TD>
+	<TD>
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_short_saturday" SIZE="20" value="<?php p($languageObj->getProperty('ShortWDay7')); ?>">
 	</TD>
 </TR>
 

@@ -736,6 +736,23 @@ class Issue extends DatabaseObject {
 	} // fn GetLastCreatedIssue
 
 
+	public static function GetPublicationDates($p_publicationId,
+						   $p_languageId,
+						   $p_skipCache = false)
+	{
+	    global $g_ado_db;
+	    $queryStr = 'SELECT PublicationDate AS PublishDate FROM Issues '
+	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
+	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y'";
+	    $dates = $g_ado_db->GetAll($queryStr);
+	    if (empty($dates)) {
+	        return null;
+	    }
+
+	    return $dates;
+	} // fn GetPublicationDates
+
+
     /**
      * Gets an issues list based on the given parameters.
      *

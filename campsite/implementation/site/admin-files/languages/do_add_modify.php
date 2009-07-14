@@ -28,6 +28,18 @@ $f_month_9 = Input::Get('f_month_9', 'string', '', true);
 $f_month_10 = Input::Get('f_month_10', 'string', '', true);
 $f_month_11 = Input::Get('f_month_11', 'string', '', true);
 $f_month_12 = Input::Get('f_month_12', 'string', '', true);
+$f_short_month_1 = Input::Get('f_short_month_1', 'string', '', true);
+$f_short_month_2 = Input::Get('f_short_month_2', 'string', '', true);
+$f_short_month_3 = Input::Get('f_short_month_3', 'string', '', true);
+$f_short_month_4 = Input::Get('f_short_month_4', 'string', '', true);
+$f_short_month_5 = Input::Get('f_short_month_5', 'string', '', true);
+$f_short_month_6 = Input::Get('f_short_month_6', 'string', '', true);
+$f_short_month_7 = Input::Get('f_short_month_7', 'string', '', true);
+$f_short_month_8 = Input::Get('f_short_month_8', 'string', '', true);
+$f_short_month_9 = Input::Get('f_short_month_9', 'string', '', true);
+$f_short_month_10 = Input::Get('f_short_month_10', 'string', '', true);
+$f_short_month_11 = Input::Get('f_short_month_11', 'string', '', true);
+$f_short_month_12 = Input::Get('f_short_month_12', 'string', '', true);
 $f_sunday = Input::Get('f_sunday', 'string', '', true);
 $f_monday = Input::Get('f_monday', 'string', '', true);
 $f_tuesday = Input::Get('f_tuesday', 'string', '', true);
@@ -35,6 +47,13 @@ $f_wednesday = Input::Get('f_wednesday', 'string', '', true);
 $f_thursday = Input::Get('f_thursday', 'string', '', true);
 $f_friday = Input::Get('f_friday', 'string', '', true);
 $f_saturday = Input::Get('f_saturday', 'string', '', true);
+$f_short_sunday = Input::Get('f_short_sunday', 'string', '', true);
+$f_short_monday = Input::Get('f_short_monday', 'string', '', true);
+$f_short_tuesday = Input::Get('f_short_tuesday', 'string', '', true);
+$f_short_wednesday = Input::Get('f_short_wednesday', 'string', '', true);
+$f_short_thursday = Input::Get('f_short_thursday', 'string', '', true);
+$f_short_friday = Input::Get('f_short_friday', 'string', '', true);
+$f_short_saturday = Input::Get('f_short_saturday', 'string', '', true);
 $D = Input::Get('D', 'string', '', true);
 $W = Input::Get('W', 'string', '', true);
 $M = Input::Get('M', 'string', '', true);
@@ -47,13 +66,13 @@ if (($f_language_name == "") || ($f_native_name == "") || ($f_language_code == "
 }
 $errorMsgs = array();
 if ($f_language_name == "") {
-    camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+    camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if ($f_native_name == "") {
-   	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Native name').'</B>'));
+   	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Native name').'</B>'));
 }
 if ($f_language_code == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Code').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Code').'</B>'));
 }
 
 if ($editMode) {
@@ -76,13 +95,32 @@ if ($correct) {
 					 'Month10' => $f_month_10,
 					 'Month11' => $f_month_11,
 					 'Month12' => $f_month_12,
+					 'ShortMonth1' => $f_short_month_1,
+					 'ShortMonth2' => $f_short_month_2,
+					 'ShortMonth3' => $f_short_month_3,
+					 'ShortMonth4' => $f_short_month_4,
+					 'ShortMonth5' => $f_short_month_5,
+					 'ShortMonth6' => $f_short_month_6,
+					 'ShortMonth7' => $f_short_month_7,
+					 'ShortMonth8' => $f_short_month_8,
+					 'ShortMonth9' => $f_short_month_9,
+					 'ShortMonth10' => $f_short_month_10,
+					 'ShortMonth11' => $f_short_month_11,
+					 'ShortMonth12' => $f_short_month_12,
 					 'WDay1' => $f_sunday,
 					 'WDay2' => $f_monday,
 					 'WDay3' => $f_tuesday,
 					 'WDay4' => $f_wednesday,
 					 'WDay5' => $f_thursday,
 					 'WDay6' => $f_friday,
-					 'WDay7' => $f_saturday);
+			                 'WDay7' => $f_saturday,
+					 'ShortWDay1' => $f_short_sunday,
+					 'ShortWDay2' => $f_short_monday,
+					 'ShortWDay3' => $f_short_tuesday,
+					 'ShortWDay4' => $f_short_wednesday,
+					 'ShortWDay5' => $f_short_thursday,
+					 'ShortWDay6' => $f_short_friday,
+					 'ShortWDay7' => $f_short_saturday);
 
 	$success = true;
     if ($editMode) {

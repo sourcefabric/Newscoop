@@ -2070,6 +2070,24 @@ class Article extends DatabaseObject {
 	    return $result;
 	} // fn GetRecentlyModifiedArticles
 
+
+	public static function GetPublicationDates($p_publicationId,
+						   $p_languageId,
+						   $p_skipCache = false)
+	{
+	    global $g_ado_db;
+	    $queryStr = 'SELECT PublishDate FROM Articles '
+	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
+	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y' "
+	        . 'GROUP BY PublishDate ORDER BY PublishDate';
+	    $dates = $g_ado_db->GetAll($queryStr);
+	    if (empty($dates)) {
+	        return null;
+	    }
+
+	    return $dates;
+	} // fn GetPublicationDates
+
 	
 	/**
 	 * Unlock all articles by the given user.
@@ -2426,8 +2444,7 @@ class Article extends DatabaseObject {
         }
         foreach ($p_typeAttributes as $typeAttribute) {
             $selectClause .= "        UNION\n"
-                          . "        SELECT NrArticle FROM "
-                          . $typeAttribute->getDbTableName()
+                          . "        SELECT NrArticle FROM `X" . $typeAttribute->getArticleType() . '`'
                           . " WHERE " . $typeAttribute->getName()
                           . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
         }
@@ -2624,10 +2641,16 @@ class Article extends DatabaseObject {
                 	                                   'IdLanguage'=>'fk_language_id');
                 	break;
                 case 'bylastcomment':
-                	$dbField = 'MAX(ArticleComments.fk_comment_id)';
-                	$p_otherTables['ArticleComments'] = array('Number'=>'fk_article_number',
-                	'IdLanguage'=>'fk_language_id');
-                	$p_whereConditions[] = "`ArticleComments`.`fk_comment_id` IS NOT NULL";
+                	$dbField = 'comment_ids.last_comment_id';
+                	$joinTable = "(SELECT MAX(fk_comment_id) AS last_comment_id, fk_article_number, fk_language_id \n"
+                	           . "    FROM ArticleComments AS ac LEFT JOIN phorum_messages AS pm \n"
+                	           . "        ON ac.fk_comment_id = pm.message_id \n"
+                	           . "    WHERE pm.status = 2 AND ac.is_first = false"
+                	           . "    GROUP BY fk_article_number, fk_language_id)";
+                	$p_otherTables[$joinTable] =  array('__TABLE_ALIAS'=>'comment_ids',
+                	                                    'Number'=>'fk_article_number',
+                	                                    'IdLanguage'=>'fk_language_id');
+                    $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
                 	break;
             }
             if (!is_null($dbField)) {
