@@ -506,21 +506,20 @@ class Template extends DatabaseObject {
 	public function delete() {
 		global $g_user;
 
-		$deleted = false;
 		$rootDir = '/';
-		if ($this->fileExists()) {
+		if ($this->exists()) {
 			$Path = dirname($rootDir . $this->getName());
 			$Name = basename($this->getName());
 			$fileFullPath = $this->getFullPath($Path, $Name);
 			if (!Template::InUse($this->getName())) {
-				$deleted = unlink($fileFullPath);
-				if($deleted) {
+				if (unlink($fileFullPath)) {
 					$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
 					Log::Message($logtext, $g_user->getUserId(), 112);
+					return true;
 				}
 			}
 		}
-		return $deleted;
+		return false;
 	} // fn delete
 
 
