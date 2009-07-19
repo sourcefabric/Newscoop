@@ -46,29 +46,55 @@ function smarty_function_calendar($p_params, &$p_smarty)
     $minDate = (isset($p_params['min_date'])) ? $p_params['min_date'] : '';
     $maxDate = (isset($p_params['max_date'])) ? $p_params['max_date'] : '';
 
+    if (strpos($type, ',') !== false &&
+	    ($type == 'issues,articles' || $type == 'articles,issues')) {
+        $type = 'issuesarticles';
+    }
+
     // get list of clickable dates
+    $issues = array();
+    $articles = array();
     switch($type) {
-    case 'articles':
-        $data = Article::GetPublicationDates($campsite->publication->identifier,
+    case 'issuesarticles':
+        $articles = Article::GetPublicationDates($campsite->publication->identifier,
+						 $campsite->language->number);
+	$issues = Issue::GetPublicationDates($campsite->publication->identifier,
 					     $campsite->language->number);
+	break;
+    case 'articles':
+        $articles = Article::GetPublicationDates($campsite->publication->identifier,
+						 $campsite->language->number);
 	break;
     case 'issues':
     default:
-        $data = Issue::GetPublicationDates($campsite->publication->identifier,
-					   $campsite->language->number);
+        $issues = Issue::GetPublicationDates($campsite->publication->identifier,
+					     $campsite->language->number);
 	break;
     }
 
-    if (!is_array($data) || sizeof($data) < 1) {
-        $data = array();
+    $issuesDates = array();
+    if (is_array($issues)) {
+	foreach ($issues as $publicationDate) {
+	    $publishDate = explode(' ', $publicationDate);
+	    list($year, $month, $day) = explode('-', $publishDate[0]);
+	    $issuesDates[] = '"' . (int)$month . '/' . (int)$day . '/' . (int)$year . '"';
+	}
+	$issuesDates = array_unique($issuesDates);
+    }
+    $articlesDates = array();
+    if (is_array($articles)) {
+	foreach ($articles as $publicationDate) {
+	    $publishDate = explode(' ', $publicationDate);
+	    list($year, $month, $day) = explode('-', $publishDate[0]);
+	    $articlesDates[] = '"' . (int)$month . '/' . (int)$day . '/' . (int)$year . '"';
+	}
+	$articlesDates = array_unique($articlesDates);
+    }
+    if (sizeof($articlesDates) >= sizeof($issuesDates)) {
+        $articlesDates = array_diff($articlesDates, $issuesDates);
     }
 
-    $publishDates = array();
-    foreach ($data as $publicationDate) {
-        $publishDate = explode(' ', $publicationDate['PublishDate']);
-	list($year, $month, $day) = explode('-', $publishDate[0]);
-	$publishDates[] = '"' . (int)$month . '/' . (int)$day . '/' . (int)$year . '"';
-    }
+    $publishDates = array_unique(array_merge($issuesDates, $articlesDates));
 
     // localize, only if language is other than English
     if ($campsite->language->code != 'en') {
@@ -106,6 +132,8 @@ function smarty_function_calendar($p_params, &$p_smarty)
 <script type="text/javascript">
     YAHOO.namespace("campsite.calendar");
     YAHOO.campsite.calendar.init = function() {
+        var issuesDates = new Array(' . implode(',', $issuesDates) . ');
+        var articlesDates = new Array(' . implode(',', $articlesDates) . ');
         var contentDates = new Array(' . implode(',', $publishDates) . ');
 
         function handleSelect(type,args,obj) {
@@ -139,8 +167,10 @@ function smarty_function_calendar($p_params, &$p_smarty)
     }
         
     $html .= '
-        for (var i in contentDates)
-            cal1.addRenderer(contentDates[i], cal1.renderCellStyleHighlight1);
+        for (var i in articlesDates)
+            cal1.addRenderer(articlesDates[i], cal1.renderCellStyleHighlight3);
+        for (var i in issuesDates)
+            cal1.addRenderer(issuesDates[i], cal1.renderCellStyleHighlight1);
 
         cal1.render();
     }

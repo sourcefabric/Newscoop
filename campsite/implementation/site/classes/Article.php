@@ -2071,21 +2071,41 @@ class Article extends DatabaseObject {
 	} // fn GetRecentlyModifiedArticles
 
 
+	/**
+	 * @param int $p_publicationId
+	 *
+	 * @param int $p_languageId
+	 *
+	 *
+	 * @return mixed
+	 *      array of issue publication dates
+	 *      null if query does not match any issue
+	 */
 	public static function GetPublicationDates($p_publicationId,
 						   $p_languageId,
 						   $p_skipCache = false)
 	{
 	    global $g_ado_db;
-	    $queryStr = 'SELECT PublishDate FROM Articles '
+	    $queryStr = 'SELECT Number FROM Articles '
 	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
 	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y' "
 	        . 'GROUP BY PublishDate ORDER BY PublishDate';
-	    $dates = $g_ado_db->GetAll($queryStr);
+	    $rows = $g_ado_db->GetAll($queryStr);
+
+	    $dates = array();
+	    if (is_array($rows)) {
+	    	foreach ($rows as $row) {
+		    $tmpObj = new Article($p_languageId, $row['Number']);
+		    if ($tmpObj->exists()) {
+		        $dates[] = $tmpObj->getPublishDate();
+		    }
+	    	}
+	    }
 	    if (empty($dates)) {
 	        return null;
 	    }
 
-	    return $dates;
+	    return array_unique($dates);
 	} // fn GetPublicationDates
 
 	

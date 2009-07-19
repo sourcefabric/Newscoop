@@ -736,20 +736,43 @@ class Issue extends DatabaseObject {
 	} // fn GetLastCreatedIssue
 
 
+	/**
+	 * @param int $p_publicationId
+	 *
+	 * @param int $p_languageId
+	 *
+	 * @param int $p_skipCache
+	 *
+	 *
+	 * @return mixed
+	 *      array of issue publication dates
+	 *      null if query does not match any issue
+	 */
 	public static function GetPublicationDates($p_publicationId,
 						   $p_languageId,
 						   $p_skipCache = false)
 	{
 	    global $g_ado_db;
-	    $queryStr = 'SELECT PublicationDate AS PublishDate FROM Issues '
+	    $queryStr = 'SELECT Number FROM Issues '
 	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
 	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y'";
-	    $dates = $g_ado_db->GetAll($queryStr);
+	    $rows = $g_ado_db->GetAll($queryStr);
+
+	    $dates = array();
+	    if (is_array($rows)) {
+	    	foreach ($rows as $row) {
+		    $tmpObj = new Issue($p_publicationId, $p_languageId,
+					$row['Number']);
+		    if ($tmpObj->exists()) {
+		        $dates[] = $tmpObj->getPublicationDate();
+		    }
+	    	}
+	    }
 	    if (empty($dates)) {
 	        return null;
 	    }
 
-	    return $dates;
+	    return array_unique($dates);
 	} // fn GetPublicationDates
 
 
