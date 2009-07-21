@@ -102,7 +102,7 @@ if (sizeof($allArticleTypes) == 0) {
 		<tr>
 			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must complete the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
+			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
 			</TD>
 		</TR>
 		<TR>
@@ -114,7 +114,7 @@ if (sizeof($allArticleTypes) == 0) {
                         $tmpAT = new ArticleType($allArticleTypes[0]);
                         echo $tmpAT->getDisplayName();
 			    } else { ?>
-    				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must complete the $1 field.', getGS('Article Type')); ?>">
+    				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must fill in the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {

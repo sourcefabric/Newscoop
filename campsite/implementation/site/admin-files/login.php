@@ -70,12 +70,13 @@ else {
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 ?>
 <head>
 	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-	<TITLE><?php  putGS("Login"); ?></title>
+        <TITLE><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 </head>
 <body >
 

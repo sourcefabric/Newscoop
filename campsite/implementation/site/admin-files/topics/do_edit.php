@@ -22,7 +22,7 @@ if (!empty($f_name)) {
 		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
 	}
 } else {
-	$errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
+	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 }
 
 $crumbs = array();

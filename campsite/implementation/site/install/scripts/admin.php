@@ -159,8 +159,11 @@ if (($extension == '.php') || ($extension == '')) {
 	echo "</html>\n";
 
 	camp_html_clear_msgs(true);
-} else {
+} elseif (file_exists($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script")) {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
+} else {
+	header("HTTP/1.1 404 Not found");
+	exit;
 }
 
 

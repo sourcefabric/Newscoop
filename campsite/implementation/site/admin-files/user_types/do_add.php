@@ -19,7 +19,7 @@ if ($uType != '') {
 		exit;
 	}
 } else {
-	camp_html_add_msg(getGS('You must complete the $1 field.', getGS('Name')));
+	camp_html_add_msg(getGS('You must fill in the $1 field.', getGS('Name')));
     camp_html_goto_page($BackLink);
 	exit;
 }

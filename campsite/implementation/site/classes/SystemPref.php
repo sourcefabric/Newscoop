@@ -20,6 +20,8 @@ class SystemPref {
     const SESSION_KEY_CACHE_ENABLED = 'campsite_cache_enabled';
 
 	const CACHE_KEY_SYSTEM_PREF = 'campsite_system_preferences';
+
+	const CACHE_FILE_NAME = 'system_preferences.php';
 	
 	var $m_config = array();
 	var $m_columnNames = array(
@@ -34,8 +36,7 @@ class SystemPref {
 	 * @return void
 	 */
 	private static function __LoadConfig() {
-		global $Campsite;
-		global $g_ado_db;
+		global $Campsite, $g_ado_db;
 
 		if (isset($Campsite['system_preferences'])
 		|| self::FetchSystemPrefsFromCache()) {
@@ -50,10 +51,6 @@ class SystemPref {
 			foreach ($config as $value) {
 				$Campsite["system_preferences"][$value['varname']] = $value['value'];
 			}
-			CampSession::singleton()->setData(self::SESSION_KEY_CACHE_ENGINE,
-			$Campsite['system_preferences']['CacheEngine']);
-            CampSession::singleton()->setData(self::SESSION_KEY_CACHE_ENABLED,
-            $Campsite['system_preferences']['SiteCacheEnabled']);
 			self::StoreSystemPrefsInCache();
 		}
 	} // fn __LoadConfig
@@ -71,13 +68,6 @@ class SystemPref {
 		global $Campsite;
 
 		if (!isset($Campsite['system_preferences'])) {
-			if ($p_varName == 'CacheEngine') {
-				return CampSession::singleton()->getData(self::SESSION_KEY_CACHE_ENGINE);
-			}
-			if ($p_varName == 'SiteCacheEnabled') {
-				return CampSession::singleton()->getData(self::SESSION_KEY_CACHE_ENABLED);
-			}
-
 			SystemPref::__LoadConfig();
 		}
 		if (isset($Campsite['system_preferences'][$p_varName])) {
@@ -115,50 +105,70 @@ class SystemPref {
 					   ." WHERE varname='".mysql_real_escape_string($p_varName)."'";
 				$g_ado_db->Execute($sql);
 				$Campsite['system_preferences'][$p_varName] = $p_value;
+				self::StoreSystemPrefsInCache();
 			}
 	    } else {
-				$sql = "INSERT INTO SystemPreferences 
-				        (varname, value) VALUES ('".mysql_real_escape_string($p_varName)."', '".mysql_real_escape_string($p_value)."')";
-				$g_ado_db->Execute($sql);
-				$Campsite['system_preferences'][$p_varName] = $p_value;   
+	    	$sql = "INSERT INTO SystemPreferences
+				    (varname, value) VALUES ('".mysql_real_escape_string($p_varName)."', '".mysql_real_escape_string($p_value)."')";
+	    	$g_ado_db->Execute($sql);
+	    	$Campsite['system_preferences'][$p_varName] = $p_value;
+	    	self::StoreSystemPrefsInCache();
 	    }
-	    self::DeleteSystemPrefsFromCache();
 	} // fn Set
 
 
     private static function FetchSystemPrefsFromCache()
     {
     	global $Campsite;
-        if (CampCache::IsEnabled()) {
-            $systemPref = CampCache::singleton()->fetch(self::CACHE_KEY_SYSTEM_PREF);
-            if (is_array($systemPref)) {
-                $Campsite['system_preferences'] = $systemPref;
-                return true;
-            }
-        }
-        return false;
+
+    	$systemPreferences = CampSession::singleton()->getData('system_preferences');
+    	if (is_array($systemPreferences)) {
+    		$Campsite['system_preferences'] = $systemPreferences;
+    		return true;
+    	}
+
+    	if (file_exists($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME)) {
+    		require_once($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME);
+    		return isset($GLOBALS['Campsite']) && is_array($GLOBALS['Campsite'])
+    		&& isset($GLOBALS['Campsite']['system_preferences'])
+    		&& is_array($GLOBALS['Campsite']['system_preferences']);
+    	}
+    	return false;
     }
 
 
     private static function StoreSystemPrefsInCache()
     {
         global $Campsite;
-    	if (CampCache::IsEnabled()) {
-            return CampCache::singleton()->store(self::CACHE_KEY_SYSTEM_PREF,
-            $Campsite['system_preferences']);
+
+        CampSession::singleton()->setData('system_preferences', $Campsite['system_preferences'], 'default', true);
+
+        $cacheFileName = $GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME;
+        $cacheFile = fopen($cacheFileName, 'w+');
+        if (!$cacheFile) {
+        	return false;
         }
-        return false;
+        chmod($cacheFileName, 0600);
+
+        $buffer = "<?php\n\$GLOBALS['Campsite']['system_preferences'] = array(\n";
+        $preferences = array();
+        foreach ($Campsite['system_preferences'] as $key=>$value) {
+        	$preferences[] = "$key => '" . addslashes($value) . "'";
+        }
+        $buffer .= implode(",\n", $preferences) . ");\n?>";
+        $result = fwrite($cacheFile, $buffer, strlen($buffer));
+        fclose($cacheFile);
+        return $result;
     }
 
 
     public static function DeleteSystemPrefsFromCache()
     {
-        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
-        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENABLED, null, 'default', true);
-        if (CampCache::IsEnabled()) {
-            return CampCache::singleton()->delete(self::CACHE_KEY_SYSTEM_PREF);
-        }
-        return false;
+    	CampSession::singleton()->setData('system_preferences', null, 'default', true);
+    	if (file_exists($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME)) {
+    		unlink($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME);
+    	}
+    	return true;
     }
 } // class SystemPref
 

@@ -155,7 +155,7 @@ final class CampInstallationView
                                 );
 
         $hasRewriteModule = CampInstallationViewHelper::CheckRewriteModule();
-        $success = ($hasRewriteModule == 'Yes') ? $success : false;
+        $success = ($hasRewriteModule == 'Yes' || $hasRewriteModule == 'Cannot be checked') ? $success : false;
         $phpFunctions[] = array(
                                 'tag' => 'Rewrite Module',
                                 'exists' => $hasRewriteModule
@@ -213,6 +213,9 @@ final class CampInstallationViewHelper
 
     public static function CheckRewriteModule()
     {
+        if (!function_exists('apache_get_modules')) {
+            return 'Cannot be checked';   
+        }    
         return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
     }
 

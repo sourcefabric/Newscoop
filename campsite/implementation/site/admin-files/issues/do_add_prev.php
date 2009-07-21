@@ -25,7 +25,7 @@ if (!$publicationObj->exists()) {
 $created = false;
 $errorMsgs = array();
 if ( empty($f_issue_number) || !is_numeric($f_issue_number) || ($f_issue_number <= 0) ) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Number').'</B>'));
 }
 
 if (camp_html_has_msgs()) {

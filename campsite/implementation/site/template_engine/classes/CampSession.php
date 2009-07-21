@@ -196,6 +196,7 @@ final class CampSession
      */
     function dataExists($p_name, $p_namespace = 'default')
     {
+    	$data = $_SESSION[$p_namespace][$p_name];
         return isset($_SESSION[$p_namespace][$p_name]);
     } // fn dataExists
 

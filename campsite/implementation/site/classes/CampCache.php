@@ -67,6 +67,10 @@ final class CampCache
         }
 
         $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
+        if (is_null($this->m_cacheEngine)) {
+        	SystemPref::Set('SiteCacheEnabled', 'N');
+        	return;
+        }
 
         if (isset($Campsite['CAMP_SECRET'])) {
 			$this->m_secret = $Campsite['CAMP_SECRET'];
@@ -77,6 +81,12 @@ final class CampCache
                 .$Campsite['WWW_DIR'];
         }
     } // fn __construct
+
+
+    public static function initialized()
+    {
+    	return !is_null(self::$m_instance);
+    }
 
 
     /**
@@ -93,6 +103,9 @@ final class CampCache
         self::$m_enabled = !is_null(self::$m_instance->m_cacheEngine)
         && SystemPref::Get('SiteCacheEnabled') == 'Y'
         && self::$m_instance->m_cacheEngine->isSupported();
+        if (!self::$m_enabled) {
+        	CampSession::singleton()->setData('system_preferences', null, 'default', true);
+        }
 
         return self::$m_instance;
     } // fn singleton
@@ -132,7 +145,7 @@ final class CampCache
      */
     public function fetch($p_key)
     {
-    	if (is_null($this->m_cacheEngine)) {
+    	if (!self::$m_enabled) {
     		return false;
     	}
     	self::$m_fetchRequests ++;
@@ -163,8 +176,8 @@ final class CampCache
      */
     public function store($p_key, $p_data, $p_ttl = 0)
     {
-    	if (is_null($this->m_cacheEngine)) {
-	    return false;
+    	if (!self::$m_enabled) {
+    		return false;
     	}
     	self::$m_storeRequests ++;
         $p_data = $this->serialize($p_data);
@@ -184,7 +197,7 @@ final class CampCache
      */
     public function delete($p_key)
     {
-        if (is_null($this->m_cacheEngine)) {
+        if (!self::$m_enabled) {
             return false;
         }
         if ($p_key == SystemPref::CACHE_KEY_SYSTEM_PREF) {
@@ -206,7 +219,7 @@ final class CampCache
      */
     public function clear($p_type = null)
     {
-        if (is_null($this->m_cacheEngine)) {
+        if (!self::$m_enabled) {
             return false;
         }
         CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
@@ -231,7 +244,7 @@ final class CampCache
      */
     public function info($p_type = null)
     {
-        if (is_null($this->m_cacheEngine)) {
+        if (!self::$m_enabled) {
             return false;
         }
     	$type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
@@ -248,7 +261,7 @@ final class CampCache
      */
     public function meminfo()
     {
-        if (is_null($this->m_cacheEngine)) {
+        if (!self::$m_enabled) {
             return false;
         }
     	return $this->m_cacheEngine->getMemInfo();

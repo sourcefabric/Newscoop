@@ -103,7 +103,7 @@ regGS("Article Template", "Artikel Template");
 regGS("Default Language", "Standaard Taal");
 regGS("Paid Period", "Abonnement Tijd");
 regGS("Preview", "Voorbeeld");
-regGS("You must complete the $1 field.", "Je moet het $1 veld invullen.");
+regGS("You must fill in the $1 field.", "Je moet het $1 veld invullen.");
 regGS("Error", "Fout");
 regGS("Invalid input: $1", "Onjuiste invoer: $1");
 regGS("Language does not exist.", "Taal bestaat niet.");

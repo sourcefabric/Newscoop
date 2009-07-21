@@ -753,14 +753,14 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     }
 
     // Builds ALTER TABLE sql queries for all database tables
-    $sql = "SELECT CONCAT('ALTER TABLE ', table_schema, '.', \n"
-         . "  table_name, ' CONVERT TO CHARACTER SET utf8') \n"
+    $sql = "SELECT CONCAT('ALTER TABLE `', table_schema, '`.`', \n"
+         . "  table_name, '` CONVERT TO CHARACTER SET utf8') \n"
          . "FROM information_schema.tables \n"
-         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "'";
+         . "WHERE table_schema = '" . mysql_real_escape_string($Campsite['DATABASE_NAME']) . "'";
     $sqlSentences = array();
     $res = mysql_query($sql);
     while ($row = mysql_fetch_row($res)) {
-       $sqlSentences[] = $row[0];
+    	$sqlSentences[] = $row[0];
     }
 
     foreach ($sqlSentences as $sentence) {
@@ -775,7 +775,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
          . "  REPLACE(column_type, 'binary', 'char') AS column_type, \n"
          . "is_nullable, column_default \n"
          . "FROM information_schema.columns \n"
-         . "WHERE table_schema = '" . $Campsite['DATABASE_NAME'] . "' \n"
+         . "WHERE table_schema = '" . mysql_real_escape_string($Campsite['DATABASE_NAME']) . "' \n"
          . "  AND data_type LIKE 'varbinary%'";
     $res = mysql_query($sql);
     while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {

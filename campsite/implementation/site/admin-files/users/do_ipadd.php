@@ -27,12 +27,12 @@ $g_cAddresses = Input::Get('cAddresses', 'int', 0);
 
 // check if input was correct
 if ($g_cStartIP1 == -1 || $g_cStartIP2 == -1 || $g_cStartIP3 == -1 || $g_cStartIP4 == -1) {
-	camp_html_display_error(getGS('You must complete the $1 field.', 'Start IP'),
+	camp_html_display_error(getGS('You must fill in the $1 field.', 'Start IP'),
 		$g_backLink);
 	exit;
 }
 if ($g_cAddresses == 0) {
-	$g_errorMsg = getGS('You must complete the $1 field.', 'Number of addresses');
+	$g_errorMsg = getGS('You must fill in the $1 field.', 'Number of addresses');
 	camp_html_display_error($g_errorMsg, $g_backLink);
 	exit;
 }

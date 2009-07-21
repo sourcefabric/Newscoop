@@ -519,22 +519,6 @@ class CampInstallationBase
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'files');
 
-// We use htaccess files instead of links
-//        if ($this->m_os !== 'windows') {
-            // create the symlinks to the index.php file for each language
-//            require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-//            Language::CreateLanguageLinks();
-
-            // create the symlink tpl.php -> index.php, needed for template
-            // path URL processing
-//            $indexFile = $GLOBALS['g_campsiteDir'].DIR_SEP.'index.php';
-//            $tplFile = $GLOBALS['g_campsiteDir'].DIR_SEP.'tpl.php';
-//            if (file_exists($tplFile)) {
-//                @unlink($tplFile);
-//            }
-//            @symlink($indexFile, $tplFile);
-//        }
-
         return true;
     } // fn saveConfiguration
 

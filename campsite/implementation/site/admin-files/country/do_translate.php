@@ -18,7 +18,7 @@ $created = false;
 
 if (empty($f_country_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS("You must complete the $1 field.", "<B>".getGS("Name")."</B>");
+	$errorMsgs[] = getGS("You must fill in the $1 field.", "<B>".getGS("Name")."</B>");
 }
 
 if (!$language->exists()) {

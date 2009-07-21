@@ -157,6 +157,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
+        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
         	if (!isGS('Publication')) {
         		camp_load_translation_strings("globals", $campsite->language->code);
         	}

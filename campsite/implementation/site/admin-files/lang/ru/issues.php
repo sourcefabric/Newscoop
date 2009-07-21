@@ -1,7 +1,7 @@
 <?php 
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Запланированное действие удалено из выпуска #$1: \"$2\" (Издание: $3)");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Запланированное действие $1 для выпуска #$2: \"$3\" (Издание: $4)");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Выпуск \"$1\" ($2) обновлено в издании \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Величины, которые вы пытаетесь установить, конфликтуют с выпуском \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Номер должен быть уникальным для каждого выпуска этого издания на том же языке.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Язык и URL доолжен быть уникальным для каждого выпуска этого издания.");

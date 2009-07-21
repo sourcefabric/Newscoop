@@ -70,11 +70,11 @@ if (!$sectionObj->exists()) {
 }
 
 if ($f_publish_date == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Date').'</B>' ));
 }
 
 if ( ($f_publish_hour == "") || ($f_publish_minute == "") ) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Time').'</B>' ));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Time').'</B>' ));
 }
 
 if ( ($f_publish_action != "P") && ($f_publish_action != "U")

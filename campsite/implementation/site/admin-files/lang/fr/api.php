@@ -1,4 +1,5 @@
 <?php 
+regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
 regGS("User permissions for \"$1\" ($2) changed", "");

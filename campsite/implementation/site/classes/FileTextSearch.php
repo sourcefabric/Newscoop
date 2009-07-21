@@ -95,32 +95,48 @@ class FileTextSearch {
 	 */
 	public function findReplace($p_path)
 	{
-		$this->searchDirFiles($p_path);
+	        return $this->searchDirFiles($p_path);
 	} // fn findReplace
 
 
 	/**
 	 * Runs recursively all into the path.
+	 *
 	 * @param string $p_path
+	 *
+	 * @return array
 	 */
 	public function searchDirFiles($p_path)
 	{
-		$dirHandle = opendir($p_path);
-		while ($file = readdir($dirHandle)) {
-			if (($file == '.') || ($file == '..')) {
-				continue;
+	    $retval = array();
+	    if (substr($p_path, -1) != "/") $p_path .= "/";
+	    $d = @dir($p_path) or die("searchDirFiles: Failed opening directory $dir for reading");
+	    while (false !== ($entry = $d->read())) { 
+	        if ($entry[0] == '.') continue;
+		if (is_dir("$p_path$entry")) {
+		    if (is_readable("$p_path$entry/")) {
+		        $retval = array_unique(array_merge($retval, $this->searchDirFiles("$p_path$entry/")));
+		    } else {
+		        if (!in_array(CAMP_ERROR_READ_DIR, $retval)) {
+			    $retval[] = CAMP_ERROR_READ_DIR;
 			}
-
-			$filePath = $p_path.'/'.$file;
-			if (filetype($filePath) == 'dir') {
-				$this->searchDirFiles($filePath);
-			} elseif ($this->matchedExtension($file)) {
-				if (filesize($filePath)) {
-					$this->searchFileData($filePath);
-				}
+			break;
+		    }
+		} elseif ($this->matchedExtension($entry)) {		  
+		    if (is_readable("$p_path$entry") &&
+			    filesize("$p_path$entry")) {
+		        $r = $this->searchFileData("$p_path$entry");
+			if ($r != true) $retval[] = $r;
+		    } else {
+		        if (!in_array(CAMP_ERROR_READ_FILE, $retval)) {
+			    $retval[] = CAMP_ERROR_READ_FILE;
 			}
+			break;
+		    }
 		}
-		closedir($dirHandle);
+	    }
+	    $d->close();
+	    return $retval;
 	} // fn searchDirFiles
 
 
@@ -158,20 +174,28 @@ class FileTextSearch {
 	 */
 	public function searchFileData($p_file)
 	{
-		$pattern = preg_quote($this->m_searchKey, '/');
-		if ($this->m_caseSensitive) {
-			$pattern = "/$pattern/U";
-		} else {
-			$pattern = "/$pattern/Ui";
+	    if (!is_readable($p_file)) {
+	        return CAMP_ERROR_READ_FILE;
+	    }
+	    $pattern = preg_quote($this->m_searchKey, '/');
+	    if ($this->m_caseSensitive) {
+	        $pattern = "/$pattern/U";
+	    } else {
+	        $pattern = "/$pattern/Ui";
+	    }
+
+	    $content = @file_get_contents($p_file);
+	    $found = 0;
+	    $found = preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
+	    $this->m_totalFound += $found;
+	    if ($this->m_isReplaceEnabled && $this->m_replacementKey && $found) {
+	        if (!is_writeable($p_file)) {
+		    return CAMP_ERROR_WRITE_FILE;
 		}
-		$content = file_get_contents($p_file);
-		$found = 0;
-		$found = preg_match_all($pattern, $content, $matches, PREG_PATTERN_ORDER);
-		$this->m_totalFound += $found;
-		if ($this->m_isReplaceEnabled && $this->m_replacementKey && $found) {
-			$content = preg_replace($pattern, $this->m_replacementKey, $content);
-			$this->filePutContents($p_file, $content);
-		}
+		$content = preg_replace($pattern, $this->m_replacementKey, $content);
+		$this->filePutContents($p_file, $content);
+	    }
+	    return true;
 	} // fn searchFileData
 
 

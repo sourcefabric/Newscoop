@@ -82,7 +82,7 @@ if ($f_publication_id > 0) {
 		}
 		$f_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName());
 		if ($f_issue_urlname == "") {
-			camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('New issue URL name').'"'));
+			camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('New issue URL name').'"'));
 			camp_html_goto_page($backLink);
 		}
 		if (!camp_is_valid_url_name($f_issue_urlname)) {
@@ -118,7 +118,7 @@ if ($f_publication_id > 0) {
 		$f_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName());
 		$f_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName());
 		if ($f_section_urlname == "") {
-			camp_html_add_msg(getGS('You must complete the $1 field.','"'.getGS('New section URL name').'"'));
+			camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('New section URL name').'"'));
 			camp_html_goto_page($backLink);
 		}
 		if (!camp_is_valid_url_name($f_section_urlname)) {

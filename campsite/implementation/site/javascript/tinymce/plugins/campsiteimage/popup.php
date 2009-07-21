@@ -10,9 +10,21 @@ require_once('config.inc.php');
 require_once('classes/ImageManager.php');
 
 $manager = new ImageManager($IMConfig);
-$imageIdParam = '';
+$imageParams = '';
 if (isset($_REQUEST['image_id'])) {
-    $imageIdParam = '&image_id=' . $_REQUEST['image_id'];
+    $imageParams = '&image_id=' . $_REQUEST['image_id'];
+    if (isset($_REQUEST['image_alt'])) {
+        $imageParams .= '&image_alt=' . htmlspecialchars($_REQUEST['image_alt'], ENT_QUOTES);
+    }
+    if (isset($_REQUEST['image_title'])) {
+        $imageParams .= '&image_title=' . htmlspecialchars($_REQUEST['image_title'], ENT_QUOTES);
+    }
+    if (isset($_REQUEST['image_alignment'])) {
+        $imageParams .= '&image_alignment=' . htmlspecialchars($_REQUEST['image_alignment'], ENT_QUOTES);
+    }
+    if (isset($_REQUEST['image_ratio'])) {
+        $imageParams .= '&image_ratio=' . htmlspecialchars($_REQUEST['image_ratio'], ENT_QUOTES);
+    }
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -32,7 +44,7 @@ if (isset($_REQUEST['image_id'])) {
   <form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data">
   <fieldset>
     <div class="dirs">
-      <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageIdParam; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
+      <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageParams; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
     </div>
   </fieldset>
 
@@ -74,7 +86,11 @@ if (isset($_REQUEST['image_id'])) {
     <!--// image properties -->
     <div style="text-align: right;">
       <hr />
+      <?php if (isset($_REQUEST['image_id'])) { ?>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">Edit</button>
+      <?php } else { ?>
       <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">OK</button>
+      <?php } ?>
       <button type="button" class="buttons" onclick="CampsiteImageDialog.close();">Cancel</button>
     </div>
   </form>

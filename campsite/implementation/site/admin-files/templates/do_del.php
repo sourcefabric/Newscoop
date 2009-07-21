@@ -16,13 +16,13 @@ if (!Template::IsValidPath($Path)) {
 
 $backLink = "/$ADMIN/templates/?Path=".urlencode($Path);
 $fileFullName = (!empty($Path)) ? urldecode($Path)."/".urldecode($Name) : urldecode($Name);
-$fileFullPath = Template::GetFullPath(urldecode($Path), $Name);
+$fileFullPath = Template::GetFullPath(urldecode($Path), '');
 $errorMsgs = array();
 
 
 $deleted = false;
-if (!$isFile) {
-	$deleted = rmdir($fileFullPath);
+if (empty($Name)) {
+        $deleted = is_dir($fileFullPath) && rmdir($fileFullPath);
 	if ($deleted) {
 		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($fileFullName));
 		Log::Message($logtext, $g_user->getUserId(), 112);
@@ -31,13 +31,14 @@ if (!$isFile) {
 		camp_html_add_msg(camp_get_error_message(CAMP_ERROR_RMDIR, $fileFullPath));
 	}
 } else {
-	$template_path = Template::GetPath($Path, $Name);
-	if (!Template::InUse($fileFullName)) {
-		$deleted = unlink($fileFullPath);
-		if ($deleted) {
+	$inUse = Template::InUse($fileFullName);
+	if ($inUse == CAMP_ERROR_READ_FILE || $inUse == CAMP_ERROR_READ_DIR) {
+                camp_html_add_msg(getGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", basename($fileFullName)));
+	} elseif ($inUse == false) {
+	        $template = new Template($fileFullName);
+		if ($template->exists() && $template->delete()) {
 			$logtext = getGS('Template object $1 was deleted', mysql_real_escape_string($fileFullName));
 			Log::Message($logtext, $g_user->getUserId(), 112);
-			Template::UpdateStatus();
 			camp_html_add_msg($logtext, "ok");
 		} else {
 			camp_html_add_msg(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileFullName));

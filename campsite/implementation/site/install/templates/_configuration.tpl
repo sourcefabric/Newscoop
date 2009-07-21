@@ -31,7 +31,7 @@ $Campsite['site']['title'] = SystemPref::Get('SiteTitle');
 $Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
 $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
-$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/2.6/';
+$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/3.3/';
 $Campsite['site']['about_url'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['site']['email'] = 'campsite-support@lists.campware.org';
 

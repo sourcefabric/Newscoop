@@ -73,6 +73,8 @@ var domTT_styleClass = 'domTTOverlib';
                 <span class="success">
               {{ elseif $phpfunc.exists eq 'No' }}
                 <span class="error">
+              {{ else }}
+                <span class="other">
               {{ /if }}
                 {{ $phpfunc.exists }}</span>
               </td>

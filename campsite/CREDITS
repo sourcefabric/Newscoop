@@ -1,6 +1,17 @@
 Campsite Credits (by Version Number)
 
 ------------------------------------
+Campsite 3.3.1 Credits
+------------------------------------
+- Holman Romero (holman.romero@gmail.com)
+- Mugurel Rus (mugur.rus@gmail.com)
+- Sebastian Goebel (sebastian.goebel@web.de)
+
+Translations:
+- Russian and Belarusian: Marina Klinova (delinia.dettun@gmail.com)
+
+
+------------------------------------
 Campsite 3.3.0 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
@@ -327,4 +338,7 @@ Former contributors
 
 Thanks to
 - Rossz Vamos-Wentworth (helped with SuSE port)
-- all contributors who helped with bug reports and suggestions
+- All contributors who helped with bug reports and suggestions
+- Third-party open source software we use:
+  * TinyMCE - Javascript WYSIWYG Editor: http://tinymce.moxiecode.com/
+  * EditArea - the code editor in a textarea: http://www.cdolivet.com/index.php?page=editArea

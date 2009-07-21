@@ -124,15 +124,15 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 		);
 		</script>
 		<p>
-		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>">
+		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>">
 		<?php putGS('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text" alt="number|0|0|23" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'"); ?>"> :
-	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text" alt="number|0|0|59" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'"); ?>">
+	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishHour); ?>" class="input_text" alt="number|0|0|23" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Time')."'"); ?>"> :
+	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publishMinute); ?>" class="input_text" alt="number|0|0|59" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Time')."'"); ?>">
 	</TD>
 </TR>
 <TR>

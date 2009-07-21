@@ -96,7 +96,7 @@ class MetaDbObject {
     public function has_property($p_property) {
         $p_property = $this->translateProperty($p_property);
         return (is_array($this->m_properties)
-        && array_key_exists($p_property, $this->m_properties))
+        && array_search($p_property, $this->m_properties))
         || (is_array($this->m_customProperties)
         && array_key_exists($p_property, $this->m_customProperties));
     }

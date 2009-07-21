@@ -39,11 +39,11 @@ if (!Input::IsValid()) {
 $backLink = "/$ADMIN/pub/add.php";
 
 if (empty($f_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 
 if (empty($f_default_alias)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Site').'</B>'));
 }
 
 if (camp_html_has_msgs()) {

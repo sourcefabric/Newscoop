@@ -5,7 +5,7 @@
  */
 
 global $g_bugReporterDefaultServer;
-$g_bugReporterDefaultServer = "http://code.campware.org/projects/campsite/autotrac";
+$g_bugReporterDefaultServer = "http://trac.campware.org/campsite/autotrac";
 
 class BugReporter
 {

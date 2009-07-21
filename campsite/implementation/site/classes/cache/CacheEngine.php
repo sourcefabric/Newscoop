@@ -147,7 +147,11 @@ abstract class CacheEngine
 		if (!class_exists($className)) {
 			throw new InvalidCacheEngine($p_engineName);
 		}
-		return new $className;
+		$cacheObj = new $className;
+		if ($cacheObj->isSupported()) {
+			return $cacheObj;
+		}
+		return null;
 	}
 
 	/**

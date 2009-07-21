@@ -66,7 +66,7 @@ if (!$isNewUser) {
 <?php
 } else {
 ?>
-				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Account name"); ?>"></td>
+				<td><input type="text" class="input_text" name="UName" size="32" maxlength="32" value="<?php p(htmlspecialchars($UName)); ?>" alt="blank" emsg="<?php putGS("You must fill in the $1 field.", "Account name"); ?>"></td>
 			</tr>
 
                 <tr>
@@ -165,7 +165,7 @@ if (!$isNewUser) {
 			</tr>
 			<tr>
 				<td align="right" nowrap><?php putGS("Full Name"); ?>:</td>
-				<td><input type="text" class="input_text" name="Name" VALUE="<?php p(htmlspecialchars($Name)); ?>" size="32" maxlength="128" alt="blank" emsg="<?php putGS("You must complete the $1 field.", "Full Name");?>">
+				<td><input type="text" class="input_text" name="Name" VALUE="<?php p(htmlspecialchars($Name)); ?>" size="32" maxlength="128" alt="blank" emsg="<?php putGS("You must fill in the $1 field.", "Full Name");?>">
 				</td>
 			</tr>
 			<tr>

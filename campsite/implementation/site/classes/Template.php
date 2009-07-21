@@ -153,7 +153,7 @@ class Template extends DatabaseObject {
 		global $g_ado_db;
 
 		$p_templateName = ltrim($p_templateName, '/');
-		// var_dump(pathinfo($p_templateName, PATHINFO_EXTENSION)); exit;
+
 		$queryStr = "SELECT * FROM Templates WHERE Name = '$p_templateName'";
 		$row = $g_ado_db->GetRow($queryStr);
 		if (!$row) {
@@ -181,10 +181,14 @@ class Template extends DatabaseObject {
 		if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
 			$p_templateName = ' ' . $p_templateName;
 		}
+
 		$tplFindObj = new FileTextSearch();
 		$tplFindObj->setExtensions(array('tpl','css'));
 		$tplFindObj->setSearchKey($p_templateName);
-		$tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		if (is_array($result) && sizeof($result) > 0) {
+		        return $result[0];
+		}
 		if ($tplFindObj->m_totalFound > 0) {
 			return true;
 		}
@@ -307,16 +311,22 @@ class Template extends DatabaseObject {
 		$rootDir = $Campsite['TEMPLATE_DIRECTORY'];
 		$dirs[] = $rootDir;
 		while (($currDir = array_pop($dirs)) != "") {
+		        if (!is_readable($currDir)) {
+			        continue;
+			}
 			if (!$dirHandle = opendir($currDir)) {
 				continue;
 			}
 
 			while ($file = readdir($dirHandle)) {
+				$fullPath = $currDir . '/' . $file;
+			        if (!is_readable($fullPath)) {
+				        continue;
+				}
 				if ($file == "." || $file == "..") {
 					continue;
 				}
 
-				$fullPath = $currDir . "/" . $file;
 				$fileType = filetype($fullPath);
 				if ($fileType == "dir") {
 					$dirs[] = $fullPath;
@@ -506,21 +516,20 @@ class Template extends DatabaseObject {
 	public function delete() {
 		global $g_user;
 
-		$deleted = false;
 		$rootDir = '/';
-		if ($this->fileExists()) {
+		if ($this->exists()) {
 			$Path = dirname($rootDir . $this->getName());
 			$Name = basename($this->getName());
 			$fileFullPath = $this->getFullPath($Path, $Name);
 			if (!Template::InUse($this->getName())) {
-				$deleted = unlink($fileFullPath);
-				if($deleted) {
+				if (unlink($fileFullPath)) {
 					$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
 					Log::Message($logtext, $g_user->getUserId(), 112);
+					return true;
 				}
 			}
 		}
-		return $deleted;
+		return false;
 	} // fn delete
 
 

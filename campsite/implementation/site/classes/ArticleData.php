@@ -94,7 +94,7 @@ class ArticleData extends DatabaseObject {
 
 			// Replace <a href="campsite_internal_link?IdPublication=1&..." ...> ... </a>
 			// with <!** Link Internal IdPublication=1&...> ... <!** EndLink>
-			$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i",
+			$text = preg_replace_callback("/(<\s*a\s*(((href\s*=\s*[\"'](\\/admin\\/articles\\/)?campsite_internal_link[?][\w&=;]*[\"'])|(\w+\s*=\s*['\"][_\w]*['\"]))+[\s]*)*[\s\w\"']*>)|(<\s*\/a\s*>)/i",
 			array('ArticleData', "TransformInternalLinks"), $text);
 
 			// Replace <img id=".." src=".." alt=".." title=".." align="..">
@@ -219,7 +219,7 @@ class ArticleData extends DatabaseObject {
 		static $internalLinkStartTag = 0;
 
 		// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
-		$internalLinkStartRegex = "/<\s*a\s*(((href\s*=\s*[\"']campsite_internal_link[?][\w&=;]*[\"'])|(target\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i";
+		$internalLinkStartRegex = "/<\s*a\s*(((href\s*=\s*[\"'](\\/admin\\/articles\\/)?campsite_internal_link[?][\w&=;]*[\"'])|(\w+\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i";
 
 		// This matches '</a>'
 		$internalLinkEndRegex = "/<\s*\/a\s*>/i";
@@ -246,8 +246,8 @@ class ArticleData extends DatabaseObject {
 			}
 		} elseif (preg_match($internalLinkStartRegex, $p_match[0])) {
 			// Get the URL
-			preg_match("/href\s*=\s*[\"'](campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
-			$url = isset($url[1]) ? $url[1] : '';
+			preg_match("/href\s*=\s*[\"'](\\/admin\\/articles\\/)?(campsite_internal_link[?][\w&=;]*)[\"']/i", $p_match[0], $url);
+			$url = isset($url[2]) ? $url[2] : '';
 			$parsedUrl = parse_url($url);
 			$parsedUrl = str_replace("&amp;", "&", $parsedUrl);
 

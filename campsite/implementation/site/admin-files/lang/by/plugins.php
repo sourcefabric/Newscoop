@@ -1,4 +1,5 @@
 <?php 
+regGS("Some plugins have to be updated. Please press the save button.", "");
 regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Калі ласка, пацвердзіце выдаленне ўбудовы $1. Усе дадзеныя ўбудовы будуць выдаленыя!");
 regGS("You do not have the right to manage plugins.", "У Вас няма права доступу для кіравання ўбудовамі.");
 regGS("Version", "Версія");

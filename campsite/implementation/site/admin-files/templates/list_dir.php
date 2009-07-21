@@ -9,6 +9,9 @@ $basedir = $Campsite['TEMPLATE_DIRECTORY'].urldecode($listbasedir);
 $handle = opendir($basedir);
 while (($file = readdir($handle))!=false) {
     $full = "$basedir/$file";
+    if (!is_readable($full)) {
+        continue;
+    }
     $filetype = filetype($full);
     $isDir = false;
     $isFile = false;

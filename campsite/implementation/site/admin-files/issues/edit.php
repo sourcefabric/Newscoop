@@ -114,7 +114,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" value="<?php  p(htmlspecialchars($issueObj->getName())); ?>" alt="blank" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Name')."'"); ?>">
+			<INPUT TYPE="TEXT" class="input_text" NAME="f_issue_name" SIZE="32" value="<?php  p(htmlspecialchars($issueObj->getName())); ?>" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Name')."'"); ?>">
 			</TD>
 		</TR>
 
@@ -308,7 +308,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			<TD>
 				<?php $now = getdate(); ?>
 				<table cellpadding="0" cellspacing="2"><tr>
-					<td><INPUT TYPE="TEXT" class="input_text" NAME="publish_date" id="publish_date" maxlength="10" SIZE="11" VALUE="<?php p($publish_date); ?>" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>"></td>
+					<td><INPUT TYPE="TEXT" class="input_text" NAME="publish_date" id="publish_date" maxlength="10" SIZE="11" VALUE="<?php p($publish_date); ?>" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>"></td>
 					<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
 				    	 style="cursor: pointer; border: 1px solid red;"
 				     	 title="Date selector"
@@ -333,8 +333,8 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" class="input_text" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>" alt="number|0|0|23" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'" ); ?>"> :
-			<INPUT TYPE="TEXT" class="input_text" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>" alt="number|0|0|59" emsg="<?php putGS('You must complete the $1 field.',"'".getGS('Time')."'" ); ?>">
+			<INPUT TYPE="TEXT" class="input_text" NAME="publish_hour" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_hour); ?>" alt="number|0|0|23" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Time')."'" ); ?>"> :
+			<INPUT TYPE="TEXT" class="input_text" NAME="publish_min" SIZE="2" MAXLENGTH="2" VALUE="<?php p($publish_min); ?>" alt="number|0|0|59" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Time')."'" ); ?>">
 			</TD>
 		</TR>
 		<TR>

@@ -45,10 +45,10 @@ $backLink = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 $errorMsgs = array();
 $updated = false;
 if (empty($f_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if (empty($f_default_alias)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Site').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Site').'</B>'));
 }
 
 $publicationObj = new Publication($f_publication_id);

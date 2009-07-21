@@ -43,7 +43,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS("To New Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_name" SIZE="32" alt="blank" emsg="<?php putGS('You must complete the $1 field.','\''.getGS('To New Name').'\''); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_name" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.','\''.getGS('To New Name').'\''); ?>">
 	</TD>
 </TR>
 <TR>

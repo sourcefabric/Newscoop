@@ -24,16 +24,16 @@ if ($f_language_id == 0) {
 	camp_html_add_msg(getGS('You must select a language.'));
 }
 if (empty($f_issue_name)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if ($f_url_name == "") {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('URL Name').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('URL Name').'</B>'));
 }
 if (!camp_is_valid_url_name($f_url_name)) {
 	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '</B>' . getGS('URL Name') . '</B>'));
 }
 if (empty($f_issue_number) || !is_numeric($f_issue_number) || ($f_issue_number <= 0)) {
-	camp_html_add_msg(getGS('You must complete the $1 field.','<B>'.getGS('Number').'</B>'));
+	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Number').'</B>'));
 }
 
 if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f_language_id, $f_url_name, false)) {

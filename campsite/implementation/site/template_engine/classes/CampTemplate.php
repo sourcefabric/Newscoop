@@ -86,6 +86,12 @@ final class CampTemplate extends Smarty
     } // fn singleton
 
 
+    public function contextInitialized()
+    {
+    	return !is_null($this->m_context);
+    }
+
+
     /**
      * Returns the template context object.
      *

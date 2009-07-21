@@ -88,7 +88,11 @@ final class MetaArticle extends MetaDbObject {
 	                continue;
 	            }
 	            $property = substr($property, 1);
-	            $this->m_customProperties[strtolower($property)] = array($property);
+	            $tr_property = strtolower($property);
+	            if (array_key_exists($tr_property, $this->m_customProperties)) {
+	            	continue;
+	            }
+	            $this->m_customProperties[$tr_property] = array($property);
 	        }
         } else {
         	if (!is_null($p_languageId) || !is_null($p_articleId)) {
@@ -182,15 +186,17 @@ final class MetaArticle extends MetaDbObject {
                 $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {
-                        $subtitleId = $this->subtitle_url_id($property);
-                        $subtitleNo = CampTemplate::singleton()->context()->default_url->get_parameter($subtitleId);
+                    	$context = CampTemplate::singleton()->context();
+                    	$subtitleId = $this->subtitle_url_id($property);
+                        $subtitleNo = $context->default_url->get_parameter($subtitleId);
                         if (is_null($subtitleNo)) {
                             $subtitleNo = 0;
                         } elseif ($subtitleNo === 'all') {
                             $subtitleNo = null;
                         }
                         $bodyField = new MetaArticleBodyField($fieldValue, $this,
-                                         $articleFieldType->getPrintName(), $this->name, $subtitleNo);
+                                         $articleFieldType->getPrintName(), $this->name, $subtitleNo,
+                                         '<span class="subtitle"><p>', '</p></span>');
                         $this->setContentCache($property, $bodyField);
                     }
                     $fieldValue = $this->getContentCache($property);
@@ -433,12 +439,16 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function isContentAccessible() {
-        if ($this->m_dbObject->isPublic()) {
+    	if ($this->m_dbObject->isPublic() && $this->getIsPublished()) {
             return (int)true;
         }
-        $user = CampTemplate::singleton()->context()->user;
+        $context = CampTemplate::singleton()->context();
+        if ($context->preview) {
+        	return (int)true;
+        }
+        $user = $context->user;
         return (int)($user->defined && $user->subscription->is_valid
-        && $user->subscription->has_section(CampTemplate::singleton()->context()->section->number));
+        && $user->subscription->has_section($context->section->number));
     }
 
 

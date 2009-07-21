@@ -61,18 +61,24 @@ final class MetaURL
      */
     public function __get($p_property)
     {
-        try {
-            $p_property = strtolower($p_property);
-            $property = 'm_'.$p_property;
-            if (!property_exists($this, $property)) {
-                return $this->getCustomProperty($p_property);
-            }
-            return $this->$property;
-        } catch (InvalidPropertyException $e) {
-            $property = $this->m_uriObj->$p_property;
-            $className = CampContext::ObjectType($p_property);
-            return is_null($property) ? new $className : $property;
-        }
+    	$p_property = strtolower($p_property);
+    	$property = 'm_'.$p_property;
+    	if (property_exists($this, $property)) {
+    		return $this->$property;
+    	}
+    	if (array_key_exists($p_property, $this->m_customProperties)
+    	&& method_exists($this, $this->m_customProperties[$p_property])) {
+    		$methodName = $this->m_customProperties[$p_property];
+    		$value = $this->$methodName();
+    		$this->m_uri_parameter = null;
+    		return $value;
+    	}
+    	$property = $this->m_uriObj->$p_property;
+    	if (is_null($property)) {
+    		$className = CampContext::ObjectType($p_property);
+    		return new $className;
+    	}
+    	return $property;
     } // fn __get
 
 
@@ -229,26 +235,6 @@ final class MetaURL
     {
         return $this->m_uriObj->getRequestURI();
     } // fn getRequestURI
-
-
-    /**
-     *
-     */
-    private function getCustomProperty($p_property)
-    {
-        if (!is_array($this->m_customProperties)
-        || !array_key_exists($p_property, $this->m_customProperties)) {
-            throw new InvalidPropertyException(get_class($this), $p_property);
-        }
-        if (!method_exists($this, $this->m_customProperties[$p_property])) {
-            throw new InvalidPropertyHandlerException(get_class($this), $p_property);
-        }
-        $methodName = $this->m_customProperties[$p_property];
-
-        $value = $this->$methodName();
-        $this->m_uri_parameter = null;
-        return $value;
-    } // fn getCustomProperty
 
 
     /**

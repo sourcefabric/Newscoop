@@ -25,7 +25,7 @@ $created = false;
 $errorMsgs = array();
 if (empty($f_name)) {
     $correct = false;
-    $errorMsgs[] = getGS('You must complete the $1 field.','<B>'.getGS('Name').'</B>');
+    $errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
 } else {
 	$valid = ArticleType::IsValidFieldName($f_name);
 	if (!$valid) {
@@ -46,6 +46,14 @@ if (empty($f_name)) {
 		if ($articleTypeField->exists()) {
 			$correct = false;
 			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
+		}
+	}
+	
+	if ($correct) {
+		$article = new MetaArticle();
+		if ($article->has_property($f_name) || method_exists($article, $f_name)) {
+			$correct = false;
+			$errorMsgs[] = getGS("The property '$1' is already in use.", $f_name);
 		}
 	}
 

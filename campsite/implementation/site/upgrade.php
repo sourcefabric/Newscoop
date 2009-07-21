@@ -45,6 +45,14 @@ $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 // starts the session
 $campsite->initSession();
 
+$session = CampSite::GetSessionInstance();
+$configDb = array('hostname'=>$Campsite['db']['host'],
+                  'hostport'=>$Campsite['db']['port'],
+                  'username'=>$Campsite['db']['user'],
+                  'userpass'=>$Campsite['db']['pass'],
+                  'database'=>$Campsite['db']['name']);
+$session->setData('config.db', $configDb, 'installation');
+
 // upgrading the database
 $res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
 if ($res !== 0) {
@@ -67,7 +75,6 @@ if (!$copyAdmin || !$copyIndex) {
     display_upgrade_error("while upgrading the database: Can't create the index.php file.");
 }
 
-$session = CampSite::GetSessionInstance();
 $forward = $session->getData('forward');
 $session->unsetData('forward');
 header("Location: " . $forward);

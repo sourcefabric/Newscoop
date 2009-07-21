@@ -38,6 +38,12 @@ if (!in_array($fieldType, $validTypes)) {
 	$correct = false;
 }
 
+$article = new MetaArticle();
+if ($article->has_property($fieldName) || method_exists($article, $fieldName)) {
+	$correct = false;
+	$errorMsgs[] = getGS("The property '$1' is already in use.", $fieldName);
+}
+
 if ($correct) {
 	$params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
 	'precision'=>$precision);

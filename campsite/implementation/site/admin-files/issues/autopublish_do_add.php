@@ -72,11 +72,11 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
 	if ( $publish_date == "" ) {
-	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
+	$correct= 0; ?>	<LI><?php putGS('You must fill in the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
 	<?php }
 
     if ( ($publish_hour == "") || ($publish_min == "") ) {
-	$correct= 0; ?>	<LI><?php putGS('You must complete the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
+	$correct= 0; ?>	<LI><?php putGS('You must fill in the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
     <?php }
 
 	if ( ($action != "P") && ($action != "U") ) {
