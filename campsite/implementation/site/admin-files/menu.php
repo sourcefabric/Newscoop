@@ -299,6 +299,7 @@ $menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
     array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
 $menu_help->addItem($menu_item);
 
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 ?>
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -308,7 +309,7 @@ $menu_help->addItem($menu_item);
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
     <?php echo $menu_root->createMenu("myMenu"); ?>
-	<TITLE><?php putGS("Campsite"); ?> <?php p($Campsite['VERSION']); ?></TITLE>
+	<TITLE><?php p($siteTitle); ?></TITLE>
 </HEAD>
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table cellpadding="0" cellspacing="0" bgcolor="#8BAED1" width="100%">
