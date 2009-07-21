@@ -213,7 +213,7 @@ final class CampInstallationViewHelper
 
     public static function CheckRewriteModule()
     {
-        if (function_exists('apache_get_modules')) {
+        if (!function_exists('apache_get_modules')) {
             return 'Cannot be checked';   
         }    
         return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
