@@ -1,10 +1,10 @@
 <?php 
-regGS("Delete all articles written in $1 language from this section", "");
-regGS("Delete all articles and all of their translations", "");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "");
-regGS("Delete only this section ($1)", "");
-regGS("Delete all translations of this section", "");
+regGS("Delete all articles written in $1 language from this section", "Выдаліць усе артыкулы, напісаныя на мове $1, з гэтай рубрыкі");
+regGS("Delete all articles and all of their translations", "Выдаліць усе артыкулы і ўсе пераклады для гэтага артыкула");
+regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Рубрыка \"$1\" была прадублявана ў  $2. \"$3\" of \"$4\"");
+regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Рубрыка \"$1\" ($2) абноўлена. (Выданне: $3, Выпуск: $4)");
+regGS("Delete only this section ($1)", "Выдаліць толькі гэтую рубрыку");
+regGS("Delete all translations of this section", "Выдаліць усе пераклады з гэтай рубрыкі");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Колькасць артыкулаў <BR><SMALL>(Апублікаваных/Агульная)</SMALL>");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "URL павiнны быць унікальны для ўсiх рубрык у гэтым выданьнi.<br> Азначаны URL (\"$1\") канфлiктуе з рубрыкай \"$2$3. $4$5\"");
 regGS("Section updated", "Рубрыка абноўленая");

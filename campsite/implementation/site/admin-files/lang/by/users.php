@@ -1,9 +1,9 @@
 <?php 
-regGS("User account information changed for \"$1\"", "");
-regGS("Permissions changed for user \"$1\"", "");
-regGS("Password Generator", "");
-regGS("Generate", "");
-regGS("Clean", "");
+regGS("User account information changed for \"$1\"", "Інфармацыя пра акаунт карыстальніка зменена  для \"$1\" ");
+regGS("Permissions changed for user \"$1\"", "Зменены правы доступу для карыстальніка  \"$1\" ");
+regGS("Password Generator", "Генератар пароляў");
+regGS("Generate", "Згенераваць");
+regGS("Clean", "Ачысціць");
 regGS("User may use the editor status bar", "Карыстач можа карыстацца радком стану рэдактара");
 regGS("User may clear up the system cache", "Карыстач можа чысціць сістэму кэшавання");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Іншы карыстач зарэгістраваўся пад гэтым электронным адрасам, калі ласка, увядзіце іншы.");

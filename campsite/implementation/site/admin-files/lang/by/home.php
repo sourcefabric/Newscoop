@@ -1,8 +1,8 @@
 <?php 
-regGS("Import XML", "");
-regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
-regGS("Select the field from which to generate the author", "");
-regGS("Invalid or empty field $1. You must select a valid dynamic field.", "");
+regGS("Import XML", "Імпарт XML ");
+regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "У вас павінны быць правы карыстальніка для дадавання/змянення выпускаў і артыкулаў для таго, каб вызначыць аўтара для артыкулаў.");
+regGS("Select the field from which to generate the author", "Выберыце поле са спісу для генерацыі поля аўтар");
+regGS("Invalid or empty field $1. You must select a valid dynamic field.", "Поле $1 – няправільнае альбо пустое. Вы павінны выбраць правільнае дынамічнае поле.");
 regGS("Unable to create author \"$1\" for article no. $2 (\"$3\") of type $4.", "Немагчыма стварыць аўтара \"$1\" для артыкула №$2 (\"$3\") тыпу $4.");
 regGS("There were errors setting the author for articles of type '$1' from the field '$2'.", "Паўсталі памылкі падчас усталёвак аўтара артыкулаў тыпу '$1' з поля '$2'.");
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "Аўтар паспяхова ўсталяваны для артыкулаў тыпу '$1' з поля '$2'.");

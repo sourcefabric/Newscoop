@@ -1,6 +1,6 @@
 <?php 
-regGS("Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)", "");
-regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "");
+regGS("Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)", "Падпіска дададзена для карыстальніка #$1 (Выданне: $2, Дзейнічаючы: $3, Тып: $4)");
+regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "Падпіска #$1 выдалена для карыстальніка #$2 (Выданне: $3)");
 regGS("Please select one or more languages.", "Калі ласка, выбераце адну цi некалькi моў.");
 regGS("Regardless of the language", "Незалежна ад моў");
 regGS("Individual languages", "Iндывiдуальныя мовы");
