@@ -1,5 +1,5 @@
 <?php 
-regGS("Permissions changed for user type \"$1\"", "");
+regGS("Permissions changed for user type \"$1\"", "Зменены правы доступу для карыстальнікаў тыпу \"$1\"");
 regGS("User Type '$1' successfully deleted", "Тып карыстача '$1' паспяхова выдалены");
 regGS("Permissions successfully modified", "Правы доступу паспяхова абноўленыя");
 regGS("User types", "Тыпы карыстальнiкаў");

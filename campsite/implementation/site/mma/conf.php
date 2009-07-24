@@ -31,19 +31,22 @@
  *  </dl>
  */
 
-include("campcaster_version.php");
-
 // these are the default values for the config
 global $CC_CONFIG;
+
+$mmaDir = dirname(__FILE__);
+
+require_once(dirname($mmaDir).'/conf/configuration.php');
+require_once(dirname($mmaDir).'/conf/db_connect.php');
 
 $CC_CONFIG = array(
     /* ================================================== basic configuration */
     'dsn'           => array(
-        'username'      => 'test',
-        'password'      => 'test',
-        'hostspec'      => 'localhost',
-        'phptype'       => 'pgsql',
-        'database'      => 'Campcaster-test',
+        'username'      => $Campsite['db']['user'],
+        'password'      => $Campsite['db']['pass'],
+        'hostspec'      => $Campsite['db']['host'],
+        'phptype'       => $Campsite['db']['type'],
+        'database'      => $Campsite['db']['name'],
     ),
     'tblNamePrefix' => 'ls_',
     /* ================================================ storage configuration */
@@ -52,12 +55,12 @@ $CC_CONFIG = array(
     'StationPrefsGr'=> 'StationPrefs',
     'AllGr'         => 'All',
     'TrashName'     => 'trash_',
-    'storageDir'    =>  dirname(__FILE__).'/../../storageServer/var/stor',
-    'bufferDir'     =>  dirname(__FILE__).'/../../storageServer/var/stor/buffer',
-    'transDir'      =>  dirname(__FILE__).'/../../storageServer/var/trans',
-    'accessDir'     =>  dirname(__FILE__).'/../../storageServer/var/access',
-    'pearPath'      =>  dirname(__FILE__).'/../../../../usr/lib/pear',
-    'cronDir'       =>  dirname(__FILE__).'/../../storageServer/var/cron',
+    'storageDir'    =>  $mmaDir.'/stor',
+    'bufferDir'     =>  $mmaDir.'/stor/buffer',
+    'transDir'      =>  $mmaDir.'/trans',
+    'accessDir'     =>  $mmaDir.'/access',
+    'pearPath'      =>  $mmaDir.'/../include/pear',
+    'cronDir'       =>  $mmaDir.'/cron',
     'isArchive'     =>  FALSE,
     'validate'      =>  TRUE,
     'useTrash'      =>  TRUE,
@@ -65,13 +68,13 @@ $CC_CONFIG = array(
     /* ==================================================== URL configuration */
     'storageUrlPath'        => '/campcasterStorageServer',
     'storageXMLRPC'         => 'xmlrpc/xrLocStor.php',
-    'storageUrlHost'        => 'localhost',
+    'storageUrlHost'        => $Campsite['HOSTNAME'],
     'storageUrlPort'        => 80,
 
     /* ================================================ archive configuration */
     'archiveUrlPath'        => '/campcasterArchiveServer',
     'archiveXMLRPC'         => 'xmlrpc/xrArchive.php',
-    'archiveUrlHost'        => 'localhost',
+    'archiveUrlHost'        => $Campsite['HOSTNAME'],
     'archiveUrlPort'        => 80,
     'archiveAccountLogin'   => 'root',
     'archiveAccountPass'    => 'q',
@@ -79,7 +82,7 @@ $CC_CONFIG = array(
     /* ============================================== scheduler configuration */
     'schedulerUrlPath'        => '',
     'schedulerXMLRPC'         => 'RC2',
-    'schedulerUrlHost'        => 'localhost',
+    'schedulerUrlHost'        => $Campsite['HOSTNAME'],
     'schedulerUrlPort'        => 3344,
     'schedulerPass'           => 'change_me',
 
@@ -111,12 +114,13 @@ $CC_CONFIG = array(
     'tmpRootPass'   => 'q',
 
     /* =================================================== cron configuration */
-    'cronUserName'      => 'www-data',
-#    'lockfile'          => dirname(__FILE__).'/cron/cron.lock',
-    'lockfile'     =>  dirname(__FILE__).'/../../storageServer/var/stor/buffer/cron.lock',
-    'cronfile'          => dirname(__FILE__).'/cron/croncall.php',
-    'paramdir'          => dirname(__FILE__).'/cron/params',
+    'cronUserName'      => $Campsite['APACHE_USER'],
+    'lockfile'     		=> $mmaDir.'/stor/buffer/cron.lock',
+    'cronfile'          => $mmaDir.'/cron/croncall.php',
+    'paramdir'          => $mmaDir.'/cron/params',
 );
+
+unset($mmaDir);
 
 // Add database table names
 $CC_CONFIG['filesTable'] = $CC_CONFIG['tblNamePrefix'].'files';
@@ -142,29 +146,6 @@ $CC_CONFIG['sysSubjs'] = array(
 $old_ip = get_include_path();
 set_include_path('.'.PATH_SEPARATOR.$CC_CONFIG['pearPath'].PATH_SEPARATOR.$old_ip);
 
-// see if a ~/.campcaster/storageServer.conf.php exists, and
-// overwrite the settings from there if any
-
-$this_file = null;
-if (isset($_SERVER["SCRIPT_FILENAME"])) {
-    $this_file = $_SERVER["SCRIPT_FILENAME"];
-} elseif(isset($argv[0])) {
-    $this_file = $argv[0];
-}
-if (!is_null($this_file)) {
-    $fileowner_id = fileowner($this_file);
-    $fileowner_array = posix_getpwuid($fileowner_id);
-    $fileowner_homedir = $fileowner_array['dir'];
-    $fileowner_name = $fileowner_array['name'];
-    $home_conf = $fileowner_homedir . '/.campcaster/storageServer.conf.php';
-    if (file_exists($home_conf)) {
-        $default_config = $CC_CONFIG;
-        $developer_name = $fileowner_name;
-        include($home_conf);
-        $user_config = $CC_CONFIG;
-        $CC_CONFIG = $user_config + $default_config;
-    }
-}
 
 // workaround for missing folders
 foreach (array('storageDir', 'bufferDir', 'transDir', 'accessDir', 'pearPath', 'cronDir') as $d) {

@@ -1,11 +1,11 @@
 <?php 
-regGS("Imagecache Lifetime:", "");
-regGS("Templates filter mask (separated by comma)", "");
-regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "");
-regGS("Image Resizing Ratio:", "");
-regGS("Image Resizing Ratio", "");
-regGS("Editor Settings", "");
-regGS("Cache Engine:", "");
+regGS("Imagecache Lifetime:", "Час жыцця кеш-выявы:");
+regGS("Templates filter mask (separated by comma)", "Час жыцця маскі фільтра (раздзелены коскамі)");
+regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Няправільна: Вам неабходны php-файл $1 для таго, каб выкарыстаць сістэму кэшавання.");
+regGS("Image Resizing Ratio:", "Каэфіцыент змянення памераў:");
+regGS("Image Resizing Ratio", "Каэфіцыент змянення памераў");
+regGS("Editor Settings", "Настройкі рэдактара");
+regGS("Cache Engine:", "Механізм кэшавання:");
 regGS("Session Lifetime", "Час жыцця сесіі");
 regGS("Please enter the site title", "Калі ласка, увядзіце загаловак сайта");
 regGS("Please enter the site meta keywords", "Калі ласка, увядзіце ключавыя словы для сайта");
