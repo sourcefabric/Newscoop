@@ -55,20 +55,23 @@ function set_html_tag(&$p_inHTMLTag, $p_char)
 function parse_kwd($p_kwd, $p_isHTML = true)
 {
     $t = array(
-               0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0,
-               0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
-               0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-               1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+/*             0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 */
+/*  00-19  */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+/*  20-39  */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+/*  40-59  */  0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
+/*  60-79  */  0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/*  80-99  */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1,
+/* 100-119 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 120-139 */  1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 140-159 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 160-179 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 180-199 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1,
+/* 200-219 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 220-239 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 240-255 */  1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                );
+
+    $nonWordForming = array(36, 45, 64, 95, 127);
 
     $inHTMLTag = 0;
     if (!empty($p_kwd)) {
@@ -78,21 +81,30 @@ function parse_kwd($p_kwd, $p_isHTML = true)
         $l = 0;
         for ($q = $p_kwd; $x < $kwd_l;) {
             $w_l = 0;
+            $validWord = false;
             
             while ($x < $kwd_l && $t[ord(substr($q, $x, 1))]) {
             	if ($p_isHTML) {
             		set_html_tag($inHTMLTag, $q[$x]);
             	}
+            	$char = substr($q, $x, 1);
+            	if (array_search(ord($char), $nonWordForming) === false
+            	&& (ord($char) < 128 || ord($char) > 191)) {
+            		$validWord = true;
+            	}
             	$x++;
                 $w_l++;
             }
 
-            if ($w_l > 1) {
+            if ($w_l > 1 && $validWord) {
             	if ($inHTMLTag) {
             		continue;
             	}
                 $word = trim(substr($q, $l, $w_l), ' -');
                 if (is_numeric($word) && $word < 100) {
+                	continue;
+                }
+                if (preg_match('/[\w]/', $word) == 0) {
                 	continue;
                 }
                 add_kwd($word, mymin($w_l, MAX_KWD));
@@ -203,6 +215,7 @@ function gather($p_conf_dir)
 
         init_hash();
         build_kwd_list($article);
+        $existing_words = array();
 
         global $kwd_hash;
 
@@ -212,17 +225,21 @@ function gather($p_conf_dir)
             }
 
             $nr_word++;
+            
+            if (isset($existing_words[$keyword])) {
+            	$kwd_id = $existing_words[$keyword];
+            } else {
+            	$sql_query = 'SELECT Id FROM KeywordIndex '
+            	. "WHERE Keyword = '" . mysql_real_escape_string($keyword) ."'";
+            	$sql_res = mysql_query($sql_query);
+            	if (!$sql_res) {
+            		exit_error('Error getting KeywordId: ' . mysql_error());
+            	}
 
-            $sql_query = 'SELECT Id FROM KeywordIndex '
-                . "WHERE Keyword = '" . mysql_real_escape_string($keyword) ."'";
-            $sql_res = mysql_query($sql_query);
-            if (!$sql_res) {
-                exit_error('Error getting KeywordId: ' . mysql_error());
+            	$drow = mysql_fetch_array($sql_res, MYSQL_ASSOC);
+            	$kwd_id = (!empty($drow) && !empty($drow['Id'])) ? $drow['Id'] : 0;
+            	mysql_free_result($sql_res);
             }
-
-            $drow = mysql_fetch_array($sql_res, MYSQL_ASSOC);
-            $kwd_id = (!empty($drow) && !empty($drow['Id'])) ? $drow['Id'] : 0;
-            mysql_free_result($sql_res);
             if ($kwd_id == 0) {
                 if (!mysql_query('LOCK TABLE KeywordIndex WRITE')) {
                     exit_error('Error locking table KeywordIndex: '
@@ -258,6 +275,7 @@ function gather($p_conf_dir)
 
                 $nr_new++;
             }
+            $existing_words[$keyword] = $kwd_id;
 
             // inserts in article index
             $sql_query = 'INSERT IGNORE INTO ArticleIndex '
