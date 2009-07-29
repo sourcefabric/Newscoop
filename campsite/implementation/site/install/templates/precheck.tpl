@@ -118,10 +118,14 @@ var domTT_styleClass = 'domTTOverlib';
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              These settings are recommended for PHP in order to ensure
+              <p>These settings are recommended for PHP in order to ensure
               <em>Campsite</em> will work quite well. However,
               <em>Campsite</em> will still operate if your settings do not
-              quite match the recommended.
+              quite match the recommended.</p>
+
+	      <p><span class="error">WARNING</span>: Always make sure that
+	      <span class="error"><em>register_globals</em> is OFF</span>,
+	      because it is a big security hole.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
