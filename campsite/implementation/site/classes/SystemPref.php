@@ -153,7 +153,7 @@ class SystemPref {
         $buffer = "<?php\n\$GLOBALS['Campsite']['system_preferences'] = array(\n";
         $preferences = array();
         foreach ($Campsite['system_preferences'] as $key=>$value) {
-        	$preferences[] = "$key => '" . addslashes($value) . "'";
+        	$preferences[] = "'$key' => '" . addslashes($value) . "'";
         }
         $buffer .= implode(",\n", $preferences) . ");\n?>";
         $result = fwrite($cacheFile, $buffer, strlen($buffer));
