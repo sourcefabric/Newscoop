@@ -167,7 +167,8 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 .'<option value="3">' . getGS('Section') . '</option>'
                 .'</select>';
         } elseif ($attribute == 'section') {
-            $constraints = array();
+        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
+        	$constraints = array();
             $operator = new Operator('is', 'integer');
             if ($campsite->publication->defined) {
             	$constraints[] = new ComparisonOperation('IdPublication', $operator, $campsite->publication->identifier);
