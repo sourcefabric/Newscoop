@@ -178,6 +178,12 @@ final class CampInstallationView
                               'rec_state' => 'Off',
                               'cur_state' => $safeModeState
                               );
+	$regGlobalsState = (ini_get('register_globals') == '1') ? 'On' : 'Off';
+	$phpOptions[] = array(
+			      'tag' => 'Register Globals',
+			      'rec_state' => 'Off',
+			      'cur_state' => $regGlobalsState
+			      );
         $fileUploadsState = (ini_get('file_uploads') == '1') ? 'On' : 'Off';
         $phpOptions[] = array(
                               'tag' => 'File Uploads',
