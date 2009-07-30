@@ -531,10 +531,6 @@ abstract class CampURI {
      */
     public function getURI($p_param = null, $p_preview = false)
     {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
         $this->m_buildPath = null;
         $this->m_buildQuery = null;
         $this->m_buildQueryArray = $this->getQueryArray();
@@ -562,10 +558,6 @@ abstract class CampURI {
      */
     public function getURIPath($p_param = null, $p_preview = false)
     {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
         $this->m_buildPath = null;
         $this->m_buildQuery = null;
         $this->m_buildQueryArray = $this->getQueryArray();
@@ -588,10 +580,6 @@ abstract class CampURI {
      */
     public function getURLParameters($p_param = null, $p_preview = false)
     {
-        if (!$this->m_validURI) {
-            return null;
-        }
-
         $this->m_buildPath = null;
         $this->m_buildQuery = null;
         $this->m_buildQueryArray = $this->getQueryArray();
