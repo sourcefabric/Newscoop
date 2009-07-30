@@ -317,7 +317,7 @@ class ArticlesList extends ListObject
                 case 'ignore_issue':
                 case 'ignore_section':
                 case 'ignore_language':
-                    $value = isset($value) && strtolower($value) != 'false';
+                    $value = isset($value) && (strtolower($value) != 'false');
                     $parameters[$parameter] = $value;
                     break;
     		    default:
@@ -327,19 +327,19 @@ class ArticlesList extends ListObject
 
         $operator = new Operator('is', 'integer');
         $context = CampTemplate::singleton()->context();
-        if ($context->publication->defined && !$p_parameters['ignore_publication']) {
+        if ($context->publication->defined && !$parameters['ignore_publication']) {
             $this->m_constraints[] = new ComparisonOperation('IdPublication', $operator,
                                                              $context->publication->identifier);
         }
-        if ($context->language->defined && !$p_parameters['ignore_language']) {
+        if ($context->language->defined && !$parameters['ignore_language']) {
             $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
                                                              $context->language->number);
         }
-        if ($context->issue->defined && !$p_parameters['ignore_issue']) {
+        if ($context->issue->defined && !$parameters['ignore_issue']) {
             $this->m_constraints[] = new ComparisonOperation('NrIssue', $operator,
                                                              $context->issue->number);
         }
-        if ($context->section->defined && !$p_parameters['ignore_section']) {
+        if ($context->section->defined && !$parameters['ignore_section']) {
             $this->m_constraints[] = new ComparisonOperation('NrSection', $operator,
                                                              $context->section->number);
         }

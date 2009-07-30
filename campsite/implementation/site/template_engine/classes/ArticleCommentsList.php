@@ -128,7 +128,7 @@ class ArticleCommentsList extends ListObject
         $operator = new Operator('is', 'integer');
         $context = CampTemplate::singleton()->context();
 
-        if (!$p_parameters['ignore_article']) {
+        if (!$parameters['ignore_article']) {
             if (!$context->article->defined) {
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
                 return false;
@@ -149,7 +149,7 @@ class ArticleCommentsList extends ListObject
             }
         }
 
-        if (!$p_parameters['ignore_language']) {
+        if (!$parameters['ignore_language']) {
             if (!$context->language->defined) {
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_comments");
                 return false;
