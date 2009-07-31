@@ -40,6 +40,9 @@ abstract class CampURI {
      * @var array
      */
     protected $m_parts = array('scheme', 'user', 'password', 'host', 'port', 'path', 'query', 'fragment');
+    
+    static protected $m_objects = array('publication'=>'Publication', 'issue'=>'Issue',
+    'section'=>'Section', 'article'=>'Article', 'language'=>'Language');
 
     /**
      * @var string
@@ -765,6 +768,11 @@ abstract class CampURI {
             return null;
         }
         $memberName = "m_$p_property";
+        if (array_key_exists($p_property, self::$m_objects)
+        && !is_object($this->$memberName)) {
+        	$className = 'Meta'.self::$m_objects[$p_property];
+        	$this->$p_property = new $className;
+        }
         return $this->$memberName;
     } // fn __get
 
@@ -779,8 +787,7 @@ abstract class CampURI {
     public function __set($p_property, $p_value)
     {
         $p_property = strtolower($p_property);
-        $searchResult = array_search($p_property, $this->m_parts);
-        if ($searchResult !== false) {
+        if (!array_key_exists($p_property, self::$m_objects)) {
             return false;
         }
         if (!property_exists($this, "m_$p_property")) {
