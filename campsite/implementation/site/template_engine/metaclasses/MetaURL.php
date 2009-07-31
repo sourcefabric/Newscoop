@@ -73,12 +73,7 @@ final class MetaURL
     		$this->m_uri_parameter = null;
     		return $value;
     	}
-    	$property = $this->m_uriObj->$p_property;
-    	if (is_null($property)) {
-    		$className = CampContext::ObjectType($p_property);
-    		return new $className;
-    	}
-    	return $property;
+    	return $this->m_uriObj->$p_property;
     } // fn __get
 
 
