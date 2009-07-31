@@ -156,7 +156,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				?>
 
 				<?php if ($issueObj->getWorkflowStatus() == 'Y') { ?>
-				<INPUT TYPE="TEXT" class="input_text" NAME="f_publication_date" SIZE="11" MAXLENGTH="10" value="<?php  p(htmlspecialchars($issueObj->getPublicationDate())); ?>">
+				<INPUT TYPE="TEXT" class="input_text" NAME="f_publication_date" SIZE="20" MAXLENGTH="19" value="<?php  p(htmlspecialchars($issueObj->getPublicationDate())); ?>">
 				<?php } ?>
 				<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&f_target=edit.php" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issueObj->getIssueNumber().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
 		');">
