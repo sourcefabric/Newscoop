@@ -499,7 +499,7 @@ class Issue extends DatabaseObject {
 	 * 		Return an array of Language objects.
 	 */
 	public function getLanguages($p_getUnusedLanguagesOnly = false,
-	$p_excludeCurrent = true, array $p_order = array(), $p_allIssues = false,
+	$p_excludeCurrent = false, array $p_order = array(), $p_allIssues = false,
 	$p_published = false)
 	{
 		$tmpLanguage = new Language();
