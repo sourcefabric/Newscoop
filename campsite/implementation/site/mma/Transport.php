@@ -1587,7 +1587,7 @@ class Transport
         $rows = $CC_DBC->getAll("
             SELECT
                 id, trtok, state, trtype, direction,
-                to_hex(gunid)as gunid, to_hex(pdtoken)as pdtoken,
+                CONV(gunid, 10, 16)as gunid, CONV(pdtoken, 10, 16)as pdtoken,
                 fname, localfile, expectedsum, expectedsize, url,
                 uid, target
             FROM ".$CC_CONFIG['transTable']."

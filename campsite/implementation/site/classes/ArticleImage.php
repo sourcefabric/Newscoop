@@ -268,8 +268,9 @@ class ArticleImage extends DatabaseObject {
 		// The REGEX
 		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
 		$alignAttr = "(align\s*=\s*\w*)";
-		$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
-		$matchString = "/<!\*\*\s*Image\s*$p_templateId\s*(($altAttr|$alignAttr|$subAttr)\s*)*>/i";
+		$subAttr = "(title\s*=\s*[\"][^\"]*[\"])";
+		$otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
+		$matchString = "/<!\*\*\s*Image\s*$p_templateId\s*(($altAttr|$alignAttr|$subAttr|$otherAttr)\s*)*>/i";
 
 		// Replace the article tag in each one with the empty string
 		foreach ($articles as $article) {

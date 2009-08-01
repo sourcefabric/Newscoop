@@ -432,7 +432,7 @@ class DataEngine {
         }
 
         if (!$orderby) {
-            $fldsPart = "DISTINCT to_hex(f.gunid)as gunid, f.ftype, f.id ";
+            $fldsPart = "DISTINCT CONV(f.gunid, 10, 16)as gunid, f.ftype, f.id ";
         } else {
             $fldsPart = "DISTINCT f.gunid, f.ftype, f.id ";
         }
@@ -449,7 +449,7 @@ class DataEngine {
 
         // the actual values to fetch
         if ($orderby) {
-            $tmpSql = "SELECT to_hex(sq2.gunid)as gunid, sq2.ftype, sq2.id";
+            $tmpSql = "SELECT CONV(sq2.gunid, 10, 16)as gunid, sq2.ftype, sq2.id";
             $i = 1;
             foreach ($metadataNames as $qname) {
                 // Special case for track number because if we use text

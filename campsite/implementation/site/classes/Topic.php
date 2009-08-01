@@ -291,6 +291,11 @@ class Topic extends DatabaseObject {
 	} // fn getPath
 
 
+    public function isRoot()
+    {
+        return $this->m_data['ParentId'] == 0;
+    }
+
 	/**
 	 * Return true if this topic has subtopics.
 	 *
@@ -382,6 +387,20 @@ class Topic extends DatabaseObject {
 		}
 		return DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
 	} // fn GetTopics
+	
+	
+	public function getSubtopics($p_returnIds = false)
+	{
+        global $g_ado_db;
+
+		$sql = "SELECT DISTINCT Id FROM Topics WHERE ParentId = " . (int)$this->m_data['Id'];
+		$rows = $g_ado_db->GetAll($sql);
+		$topics = array();
+		foreach ($rows as $row) {
+			$topics[] = $p_returnIds ? $row['Id'] : new Topic($row['Id']);
+		}
+		return $topics;
+	}
 
 
 	/**

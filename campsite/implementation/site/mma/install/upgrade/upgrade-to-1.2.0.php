@@ -71,7 +71,7 @@ foreach ($rows as $row) {
 
 // Get MD5 values for all files
 echo " * Computing MD5 sums for all files (this may take a while)...\n";
-$sql = "SELECT to_hex(gunid) as gunid, name FROM ".$CC_CONFIG['filesTable'] ." WHERE ftype='audioclip'";
+$sql = "SELECT CONV(gunid, 10, 16) as gunid, name FROM ".$CC_CONFIG['filesTable'] ." WHERE ftype='audioclip'";
 $rows = $CC_DBC->GetAll($sql);
 $errorFiles = array();
 foreach ($rows as $row) {

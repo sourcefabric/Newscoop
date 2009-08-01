@@ -57,9 +57,9 @@ class AccessRecur {
         global $CC_CONFIG, $CC_DBC;
         $ppa = new AccessRecur($ls, $sessid);
         $r = $CC_DBC->getAll("
-            SELECT to_hex(token)as token2, to_hex(gunid)as gunid
+            SELECT CONV(token, 10, 16)as token2, CONV(gunid, 10, 16)as gunid
             FROM ".$CC_CONFIG['accessTable']."
-            WHERE parent=x'{$token}'::bigint
+            WHERE parent=CONV({$token}, 16, 10)
         ");
         if (PEAR::isError($r)) {
         	return $r;

@@ -304,7 +304,7 @@ class BasicStor {
         global $CC_CONFIG, $CC_DBC;
         $cnt = $CC_DBC->getOne("
             SELECT count(token) FROM ".$CC_CONFIG['accessTable']."
-            WHERE token=x'{$token}'::bigint AND type='$type'
+            WHERE token=CONV({$token}, 16, 10) AND type='$type'
         ");
         if (PEAR::isError($cnt)) {
             return FALSE;
@@ -325,8 +325,8 @@ class BasicStor {
 //    function _gunidFromToken($token, $type='put')
 //    {
 //        $acc = $CC_DBC->getRow("
-//            SELECT to_hex(gunid)as gunid, ext FROM {$this->accessTable}
-//            WHERE token=x'{$token}'::bigint AND type='$type'
+//            SELECT CONV(gunid, 10, 16)as gunid, ext FROM {$this->accessTable}
+//            WHERE token=CONV({$token}, 16, 10) AND type='$type'
 //        ");
 //        if (PEAR::isError($acc)) {
 //            return $acc;
@@ -385,14 +385,14 @@ class BasicStor {
         $escapedExt = pg_escape_string($ext);
         $escapedType = pg_escape_string($type);
         $CC_DBC->query("BEGIN");
-        $gunidSql = (is_null($gunid) ? "NULL" : "x'{$gunid}'::bigint" );
+        $gunidSql = (is_null($gunid) ? "NULL" : "CONV({$gunid}, 16, 10)" );
         $ownerSql = (is_null($owner) ? "NULL" : "$owner" );
         $res = $CC_DBC->query("
             INSERT INTO ".$CC_CONFIG['accessTable']."
                 (gunid, token, ext, type, parent, owner, ts)
             VALUES
-                ($gunidSql, x'$token'::bigint,
-                '$escapedExt', '$escapedType', x'{$parent}'::bigint, $ownerSql, now())
+                ($gunidSql, CONV($token, 16, 10),
+                '$escapedExt', '$escapedType', CONV({$parent}, 16, 10), $ownerSql, now())
         ");
         if (PEAR::isError($res)) {
             $CC_DBC->query("ROLLBACK");
@@ -402,7 +402,7 @@ class BasicStor {
             $res = $CC_DBC->query("
                 UPDATE ".$CC_CONFIG['filesTable']."
                 SET currentlyAccessing=currentlyAccessing+1, mtime=now()
-                WHERE gunid=x'{$gunid}'::bigint
+                WHERE gunid=CONV({$gunid}, 16, 10)
             ");
         }
         if (PEAR::isError($res)) {
@@ -438,8 +438,8 @@ class BasicStor {
             );
         }
         $acc = $CC_DBC->getRow("
-            SELECT to_hex(gunid)as gunid, ext, owner FROM ".$CC_CONFIG['accessTable']."
-            WHERE token=x'{$token}'::bigint AND type='$type'
+            SELECT CONV(gunid, 10, 16)as gunid, ext, owner FROM ".$CC_CONFIG['accessTable']."
+            WHERE token=CONV({$token}, 16, 10) AND type='$type'
         ");
         if (PEAR::isError($acc)) {
             return $acc;
@@ -461,7 +461,7 @@ class BasicStor {
             $res = $CC_DBC->query("
                 UPDATE ".$CC_CONFIG['filesTable']."
                 SET currentlyAccessing=currentlyAccessing-1, mtime=now()
-                WHERE gunid=x'{$gunid}'::bigint AND currentlyAccessing>0
+                WHERE gunid=CONV({$gunid}, 16, 10) AND currentlyAccessing>0
             ");
             if (PEAR::isError($res)) {
                 $CC_DBC->query("ROLLBACK");
@@ -469,7 +469,7 @@ class BasicStor {
             }
         }
         $res = $CC_DBC->query("
-            DELETE FROM ".$CC_CONFIG['accessTable']." WHERE token=x'$token'::bigint
+            DELETE FROM ".$CC_CONFIG['accessTable']." WHERE token=CONV($token, 16, 10)
         ");
         if (PEAR::isError($res)) {
             $CC_DBC->query("ROLLBACK");
@@ -589,17 +589,17 @@ class BasicStor {
         $escapedChsum = pg_escape_string($chsum);
         $token = StoredFile::CreateGunid();
         $res = $CC_DBC->query("DELETE FROM ".$CC_CONFIG['accessTable']
-            ." WHERE token=x'$token'::bigint");
+            ." WHERE token=CONV($token, 16, 10)");
         if (PEAR::isError($res)) {
             return $res;
         }
-        $gunidSql = (is_null($gunid) ? "NULL" : "x'{$gunid}'::bigint" );
+        $gunidSql = (is_null($gunid) ? "NULL" : "CONV({$gunid}, 16, 10)" );
         $ownerSql = (is_null($owner) ? "NULL" : "$owner" );
         $res = $CC_DBC->query("
             INSERT INTO ".$CC_CONFIG['accessTable']."
                 (gunid, token, ext, chsum, type, owner, ts)
             VALUES
-                ($gunidSql, x'$token'::bigint,
+                ($gunidSql, CONV($token, 16, 10),
                     '', '$escapedChsum', 'put', $ownerSql, now())");
         if (PEAR::isError($res)) {
             return $res;
@@ -634,7 +634,7 @@ class BasicStor {
         }
         $row = $CC_DBC->getRow(
             "SELECT chsum, owner FROM ".$CC_CONFIG['accessTable']
-            ." WHERE token=x'{$token}'::bigint");
+            ." WHERE token=CONV({$token}, 16, 10)");
         if (PEAR::isError($row)) {
             return $row;
         }
@@ -665,7 +665,7 @@ class BasicStor {
 
         // Delete entry from access table.
         $res = $CC_DBC->query("DELETE FROM ".$CC_CONFIG['accessTable']
-            ." WHERE token=x'$token'::bigint");
+            ." WHERE token=CONV($token, 16, 10)");
         if (PEAR::isError($error)) {
             return $error;
         } elseif (PEAR::isError($res)) {
@@ -699,7 +699,7 @@ class BasicStor {
         }
         $chsum = $CC_DBC->getOne("
             SELECT chsum FROM ".$CC_CONFIG['accessTable']."
-            WHERE token=x'{$token}'::bigint
+            WHERE token=CONV({$token}, 16, 10)
             ");
         if (PEAR::isError($chsum)) {
             return $chsum;
@@ -744,7 +744,7 @@ class BasicStor {
 //    {
 //        $row = $CC_DBC->getOne("
 //            SELECT owner FROM {$this->accessTable}
-//            WHERE token=x'{$token}'::bigint
+//            WHERE token=CONV({$token}, 16, 10)
 //        ");
 //        if (PEAR::isError($row)) {
 //            return $row;
@@ -765,7 +765,7 @@ class BasicStor {
     {
         global $CC_CONFIG, $CC_DBC;
         $res = $CC_DBC->query(
-            "SELECT TO_HEX(token) AS token FROM ".$CC_CONFIG['accessTable']." WHERE type=?",
+            "SELECT CONV(token, 10, 16) AS token FROM ".$CC_CONFIG['accessTable']." WHERE type=?",
             array($type));
         while ($row = $res->fetchRow()) {
              $r[] = $row['token'];
@@ -1843,7 +1843,7 @@ class BasicStor {
     {
         global $CC_DBC;
         global $CC_CONFIG;
-        return $CC_DBC->getOne("SELECT id FROM ".$CC_CONFIG['filesTable']." WHERE gunid=x'$p_gunid'::bigint");
+        return $CC_DBC->getOne("SELECT id FROM ".$CC_CONFIG['filesTable']." WHERE gunid=CONV($p_gunid, 16, 10)");
     }
 
 
@@ -1863,7 +1863,7 @@ class BasicStor {
             return NULL;
         }
         $gunid = $CC_DBC->getOne("
-            SELECT to_hex(gunid)as gunid FROM ".$CC_CONFIG['filesTable']."
+            SELECT CONV(gunid, 10, 16)as gunid FROM ".$CC_CONFIG['filesTable']."
             WHERE id='$p_id'
         ");
         if (PEAR::isError($gunid)) {
@@ -1889,7 +1889,7 @@ class BasicStor {
         global $CC_DBC;
         $ftype = $CC_DBC->getOne("
             SELECT ftype FROM ".$CC_CONFIG['filesTable']."
-            WHERE gunid=x'$p_gunid'::bigint
+            WHERE gunid=CONV($p_gunid, 16, 10)
         ");
         return $ftype;
     }
@@ -1917,7 +1917,7 @@ class BasicStor {
 //    {
 //        $cnt = $CC_DBC->getOne("
 //            SELECT count(*) FROM {$this->filesTable}
-//            WHERE gunid=x'{$this->gunid}'::bigint
+//            WHERE gunid=CONV({$this->gunid}, 16, 10)
 //        ");
 //        if (PEAR::isError($cnt)) {
 //            return $cnt;

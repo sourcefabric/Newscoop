@@ -122,7 +122,7 @@ class TransportRecord
         $row = $CC_DBC->getRow("
             SELECT
                 id, trtok, state, trtype, direction,
-                to_hex(gunid)as gunid, to_hex(pdtoken)as pdtoken,
+                CONV(gunid, 10, 16)as gunid, CONV(pdtoken, 10, 16)as pdtoken,
                 fname, localfile, url, rtrtok, mdtrtok, uid,
                 expectedsize, realsize, expectedsum, realsum,
                 errmsg, title, jobpid
@@ -366,7 +366,7 @@ class TransportRecord
                 break;
             case 'gunid':
             case 'pdtoken':
-                return "x'$fldVal'::bigint";
+                return "CONV($fldVal, 16, 10)";
                 break;
             default:
                 $fldVal = pg_escape_string($fldVal);
