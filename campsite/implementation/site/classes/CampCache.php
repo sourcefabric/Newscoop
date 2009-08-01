@@ -68,6 +68,7 @@ final class CampCache
 
         $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
         if (is_null($this->m_cacheEngine)) {
+            self::$m_enabled = false;
         	SystemPref::Set('SiteCacheEnabled', 'N');
         	return;
         }
@@ -226,7 +227,7 @@ final class CampCache
     	if ($p_type == 'user') {
             return $this->m_cacheEngine->clearValues();
     	} else {
-	    return $this->m_cacheEngine->clearPages();
+            return $this->m_cacheEngine->clearPages();
     	}
     } // fn clear
 
