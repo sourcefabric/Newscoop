@@ -824,6 +824,28 @@ class DatabaseObject {
 	public static function ProcessOptions($p_queryStr, $p_sqlOptions)
 	{
 		if (!is_null($p_sqlOptions)) {
+            if (isset($p_sqlOptions['GROUP BY'])) {
+                if (!is_array($p_sqlOptions['GROUP BY'])) {
+                    $p_queryStr .= ' GROUP BY '.$p_sqlOptions['GROUP BY'];
+                } else {
+                    $p_queryStr .= ' GROUP BY ';
+                    $tmpItems = array();
+                    foreach ($p_sqlOptions['GROUP BY'] as $key => $orderItem) {
+                        // We assume here that the column name is not numeric
+                        if (is_numeric($key)) {
+                            // Not using the ASC/DESC option
+                            $tmpItems[] = '`'.$orderItem.'`';
+                        } else {
+                            $orderItem = strtoupper($orderItem);
+                            if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
+                                // Using the ASC/DESC option
+                                $tmpItems[] = '`'.$key.'` '.$orderItem;
+                            }
+                        }
+                    }
+                    $p_queryStr .= implode(',', $tmpItems);
+                }
+            }
 			if (isset($p_sqlOptions['ORDER BY'])) {
 				if (!is_array($p_sqlOptions['ORDER BY'])) {
 					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];

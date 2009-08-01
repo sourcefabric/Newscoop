@@ -25,8 +25,10 @@ final class MetaTopic extends MetaDbObject {
         
         $this->m_properties['identifier'] = 'Id';
 
-		$this->m_customProperties['name'] = 'getName';
-		$this->m_customProperties['value'] =  'getValue';
+        $this->m_customProperties['name'] = 'getName';
+        $this->m_customProperties['value'] =  'getValue';
+        $this->m_customProperties['is_root'] = 'isRoot';
+        $this->m_customProperties['parent'] = 'getParent';
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
@@ -52,6 +54,18 @@ final class MetaTopic extends MetaDbObject {
             return null;
         }
         return $name.':'.$language->code;
+    }
+
+
+    protected function isRoot()
+    {
+        return (int)$this->m_dbObject->isRoot();
+    }
+
+
+    protected function getParent()
+    {
+        return new MetaTopic($this->m_dbObject->getParentId());
     }
 
 
