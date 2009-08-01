@@ -2207,10 +2207,15 @@ class Article extends DatabaseObject {
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
-                if ($comparisonOperation['symbol'] == '=') {
-                    $hasTopics[] = $comparisonOperation['right'];
-                } else {
-                    $hasNotTopics[] = $comparisonOperation['right'];
+                $topic = new Topic($comparisonOperation['right']);
+                if ($topic->exists()) {
+                    $topicIds = $topic->getSubtopics(true);
+                    $topicIds[] = $comparisonOperation['right'];
+                    if ($comparisonOperation['symbol'] == '=') {
+                        $hasTopics[] = $topicIds;
+                    } else {
+                        $hasNotTopics[] = $topicIds;
+                    }
                 }
             } elseif ($leftOperand == 'author') {
             	$otherTables['Authors'] = array('fk_default_author_id'=>'id');
@@ -2243,7 +2248,7 @@ class Article extends DatabaseObject {
         if (count($hasTopics) > 0) {
             if ($matchAllTopics) {
                 foreach ($hasTopics as $topicId) {
-                    $sqlQuery = Article::BuildTopicSelectClause(array($topicId), $typeAttributes);
+                    $sqlQuery = Article::BuildTopicSelectClause($topicId, $typeAttributes);
                     $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                     $selectClauseObj->addWhere($whereCondition);
                     $countClauseObj->addWhere($whereCondition);
@@ -2256,8 +2261,8 @@ class Article extends DatabaseObject {
             }
         }
         if (count($hasNotTopics) > 0) {
-            $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes, true);
-            $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
+            $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes);
+            $whereCondition = "Articles.Number NOT IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -2451,22 +2456,30 @@ class Article extends DatabaseObject {
                                                    array $p_typeAttributes,
                                                    $p_negate = false)
     {
-        $notCondition = $p_negate ? ' NOT' : '';
+        $topicIds = array();
+        foreach ($p_TopicIds as $topicId) {
+            if (is_array($topicId)) {
+                $topicIds = array_merge($topicIds, $topicId);
+            } else {
+                $topicIds[] = $topicId;
+            }
+        }
+    	$notCondition = $p_negate ? ' NOT' : '';
         if (!$p_negate) {
         	$selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
-                          . ' IN (' . implode(', ', $p_TopicIds) . ")\n";
+                          . ' IN (' . implode(', ', $topicIds) . ")\n";
         } else {
         	$selectClause = "        SELECT a.Number\n"
         	              . "        FROM Articles AS a LEFT JOIN ArticleTopics AS at\n"
         	              . "          ON a.Number = at.NrArticle\n"
                           . "        WHERE TopicId IS NULL OR TopicId NOT IN ("
-                          . implode(', ', $p_TopicIds) . ")\n";
+                          . implode(', ', $topicIds) . ")\n";
         }
         foreach ($p_typeAttributes as $typeAttribute) {
             $selectClause .= "        UNION\n"
                           . "        SELECT NrArticle FROM `X" . $typeAttribute->getArticleType() . '`'
                           . " WHERE " . $typeAttribute->getName()
-                          . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
+                          . "$notCondition IN (" . implode(', ', $topicIds) . ")\n";
         }
         return $selectClause;
     }
