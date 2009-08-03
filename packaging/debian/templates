@@ -1,0 +1,96 @@
+Template: campsite/url
+Type: string
+Default: campsite
+Description: Campsite Site URL
+ You must define the Campsite site URL
+ Your Campsite site would be accessed http://localhost/<siteurl>
+ By default : http://localhost/campsite
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/dbname
+Type: string
+Default: campsite
+Description: Campsite database Name
+ You must define Campsite database
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/dbusername
+Type: string
+Default: campsiteuser
+Description: Campsite database User
+ You must define Campsite database user
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/db_admname
+Type: string
+Default: root
+Description: Campsite database Administrator
+ You must define Campsite database administrator
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/db_userpassword
+Type: string
+Default: campsitedbuser
+Description: Campsite database User Password
+ You must define Campsite database user password
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/db_admpassword
+Type: string
+Default: campsite
+Description: Campsite database Administrator Password
+ You must define Campsite database administrator password
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/dbserver
+Type: string
+Default: localhost
+Description: Campsite database Server
+ You must define Campsite database Server
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/dbsample
+Type: boolean
+Default: false
+Description: Campsite template demo
+ Do you want to install database for template demo ?
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/email
+Type: string
+Default: youraccount@yourdomain.org
+Description: Campsite Email Address
+ Enter your e-mail address, this will be the e-mail address of the site  Administrator.
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/sitename
+Type: string
+Default: My Campsite Site
+Description: Campsite Site Name
+ Enter the name of your Campsite site name.
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/webserver
+Type: multiselect
+Choices: apache, apache-ssl, apache-perl, apache2
+Default: apache2
+Description: Web server(s) that should be configured automatically:
+ Choose your webserver
+ .
+ If you want to configure it later, you should run 'dpkg-reconfigure campsite'.
+
+Template: campsite/dbremove
+Type: boolean
+Default: true
+Description: Remove Database
+ Do you want to remove database ?
