@@ -606,10 +606,20 @@ function camp_get_calendar_include($p_languageCode = null)
 {
 	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jscalendar';
     $calendarLocalization = "lang/calendar-$p_languageCode.js";
-	if (!file_exists("$calendarPath/$calendarLocalization")) {
-        $p_languageCode = camp_session_get('TOL_Language', 'en');
-		$calendarLocalization = "lang/calendar-$p_languageCode.js";
-	}
+    if (!file_exists("$calendarPath/$calendarLocalization")) {
+        $codeParts = explode('_', $p_languageCode);
+        if (count($codeParts) > 1) {
+            $p_languageCode = $codeParts[0];
+            $calendarLocalization = "lang/calendar-$p_languageCode.js";
+            if (!file_exists("$calendarPath/$calendarLocalization")) {
+                $p_languageCode = 'en';
+                $calendarLocalization = "lang/calendar-$p_languageCode.js";
+            }
+        } else {
+            $p_languageCode = 'en';
+            $calendarLocalization = "lang/calendar-$p_languageCode.js";
+        }
+    }
 	
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
 	$calendarURL = "$websiteURL/javascript/jscalendar";
