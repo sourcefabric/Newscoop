@@ -1,12 +1,245 @@
-#!/bin/sh -e
+#! /bin/sh
+# postinst script for campsite
 
-chmod 640 /var/www/campsite/conf >/dev/null 2>&1 || true
-chmod 640 /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || tru
-chmod 640 /var/www/campsite/templates >/dev/null 2>&1 || true
-chmod 640 /var/www/campsite/templates_c >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/conf >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/templates >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/templates_c >/dev/null 2>&1 || true
+set -e
+
+. /usr/share/debconf/confmodule
+
+# Get all variables 
+
+db_get "campsite/dbserver"  || true
+dbserver="$RET"
+dbserver=`echo $dbserver|sed -e 's/,  */ /g'`
+
+db_get "campsite/dbname"  || true
+dbname="$RET"
+dbname=`echo $dbname|sed -e 's/,  */ /g'`
+
+db_get "campsite/db_admname"  || true
+dbadmin="$RET"
+dbadmin=`echo $dbadmin|sed -e 's/,  */ /g'`
+
+db_get "campsite/db_admpassword"  || true
+dbadmpass="$RET"
+dbadmpass=`echo $dbadmpass|sed -e 's/,  */ /g'`
+
+db_get "campsite/dbusername"  || true
+dbuser="$RET"
+dbuser=`echo $dbuser|sed -e 's/,  */ /g'`
+
+db_get "campsite/db_userpassword"  || true
+dbpass="$RET"
+dbpass=`echo $dbpass|sed -e 's/,  */ /g'`
+
+db_get "campsite/dbsample"  || true
+dbsample="$RET"
+dbsample=`echo $dbsample|sed -e 's/,  */ /g'`
+
+db_get "campsite/url"  || true
+alias="$RET"
+alias=`echo $alias|sed -e 's/,  */ /g'`
+
+db_get "campsite/sitename"  || true
+sitename="$RET"
+sitename=`echo $sitename|sed -e 's/,  */ /g'`
+
+db_get "campsite/email"  || true
+email="$RET"
+email=`echo $email|sed -e 's/,  */ /g'`
+
+db_get "campsite/webserver"  || true
+webserver="$RET"
+webserver=`echo $webserver|sed -e 's/,  */ /g'`
+
+
+alias_config()
+{
+. /usr/share/debconf/confmodule || exit
+db_version 2.0
+db_title campsite
+aliasfile=/etc/campsite/apache.conf
+
+cat > $aliasfile <<campsite_alias_end
+Alias /${alias} /usr/share/campsite
+
+<DirectoryMatch /usr/share/campsite/>
+
+Options -Indexes FollowSymLinks MultiViews
+AllowOverride All
+<IfModule mod_access>
+	Order allow,deny
+	Allow from all
+</IfModule>
+
+<IfModule mod_dir>
+        DirectoryIndex index.php
+</IfModule>
+
+</DirectoryMatch>
+campsite_alias_end
+
+chmod 644 $aliasfile;
+
+}
+
+
+campsite_config()
+{
+
+config_file=/usr/share/campsite/conf/database_conf.php
+cat > $config_file << database_conf.php
+<?php
+/**
+ * @package Campsite
+ *
+ * @author Holman Romero <holman.romero@gmail.com>
+ * @copyright 2009 MDLF, Inc.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @version \$Revision\$
+ * @link http://www.campware.org
+ */
+
+global \$Campsite;
+
+/**
+ * This is only to keep backward compatibility.
+ * further we will implement the use of CampConfig class
+ * in the administrator.
+ */
+\$Campsite['DATABASE_NAME'] = '${dbname}';
+\$Campsite['DATABASE_SERVER_ADDRESS'] = '${dbserver}';
+\$Campsite['DATABASE_SERVER_PORT'] = '3306';
+\$Campsite['DATABASE_USER'] = '${dbuser}';
+\$Campsite['DATABASE_PASSWORD'] = '${dbpass}';
+
+/** Database settings **/
+\$Campsite['db']['type'] = 'mysql';
+\$Campsite['db']['host'] = \$Campsite['DATABASE_SERVER_ADDRESS'];
+\$Campsite['db']['port'] = \$Campsite['DATABASE_SERVER_PORT'];
+\$Campsite['db']['name'] = \$Campsite['DATABASE_NAME'];
+\$Campsite['db']['user'] = \$Campsite['DATABASE_USER'];
+\$Campsite['db']['pass'] = \$Campsite['DATABASE_PASSWORD'];
+
+?>
+database_conf.php
+chmod 644 $config_file;
+
+}
+
+case "$1" in
+	configure)
+			
+			alias_config
+			campsite_config
+
+			find /usr/share/campsite -type d -exec chmod 755 {} \;
+			find /usr/share/campsite -type f -exec chmod 644 {} \;
+			chown -R www-data:www-data /usr/share/campsite
+
+
+
+			if [ ! -e /etc/${webserver}/conf.d/campsite ] && [ -d /etc/${webserver}/conf.d ]
+			then
+	   			ln -s /etc/campsite/apache.conf /etc/${webserver}/conf.d/campsite
+			fi
+			restart="${webserver} $restart"
+
+			server=$webserver
+			servers="apache apache-ssl apache-perl apache2"
+			. /usr/share/wwwconfig-common/restart.sh
+
+			. /usr/share/wwwconfig-common/mysql-createuser.sh
+			err=0
+			if [ "$status" = "error" ]
+			then
+				err=1
+				echo $error
+			fi
+			. /usr/share/wwwconfig-common/mysql-createdb.sh
+			if [ "$status" = "error" ]
+			then
+				err=1
+				echo $error
+			fi
+
+			case $status in
+			create)
+				if [ -f /usr/share/campsite/install/sql/campsite_core.sql ];
+				then
+					cat /usr/share/campsite/install/sql/campsite_core.sql > /tmp/campsite_core.sql
+					echo "UPDATE liveuser_users SET Password = SHA1('${dbpass}'), EMail = '${email}' WHERE Id = 1;" >> /tmp/campsite_core.sql
+					sqlfile=/tmp/campsite_core.sql
+					. /usr/share/wwwconfig-common/mysql-exec.sh
+				fi
+
+				if [ "$dbsample" = "true" ]; then
+					if [ -f /usr/share/campsite/install/sql/campsite_demo_data.sql ];
+					then
+						cat /usr/share/campsite/install/sql/campsite_demo_data.sql > /tmp/campsite_sample_data.sql
+						if [ -f /usr/share/campsite/install/sql/campsite_demo_tables.sql ];
+						then
+							cat /usr/share/campsite/install/sql/campsite_demo_data.sql >> /tmp/campsite_sample_data.sql
+						fi
+						if [ -f /usr/share/campsite/install/sql/campsite_demo_prepare.sql ];
+						then
+							cat /usr/share/campsite/install/sql/campsite_demo_prepare.sql >> /tmp/campsite_sample_data.sql
+						fi
+						sqlfile=/tmp/campsite_sample_data.sql
+						. /usr/share/wwwconfig-common/mysql-exec.sh
+					fi
+				fi
+
+				if [ "$status" = "error" ]
+				then
+					err=1
+					echo "postinst called with unknown argument \`$1'" >&2
+				fi
+
+				if [ -f /tmp/campsite_sample_data.sql ];
+				then				
+					rm /tmp/campsite_sample_data.sql
+				fi	
+				rm /tmp/campsite_core.sql
+			;;
+		
+		nothing)
+			# Don't do anything.
+			;;
+
+		error) # FIXME maybe it should depend on a mysql client
+			err=1
+			;;
+		
+		*)
+			echo "Failed"
+			exit 1
+			;;
+	esac
+db_stop
+
+if [ "$err" = "0" ]
+	then
+		echo "---------------------------------------------------------"
+		echo "Your Campsite site has been successfully installed"
+		echo "administrator user : admin "
+		echo "administrator password : qwerty "
+		echo "Please go to your site http://localhost/${alias}"
+		echo "---------------------------------------------------------"
+	fi
+
+
+	;;
+	abort-upgrade|abort-remove|abort-deconfigure)
+	;;
+	*)
+		echo "postinst called with unknown argument \`$1'" >&2
+		exit 1
+	;;
+esac
+
+# dh_installdeb will replace this with shell code automatically
+# generated by other debhelper scripts.
+
 
 exit 0
+
