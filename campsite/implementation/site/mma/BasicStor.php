@@ -382,8 +382,8 @@ class BasicStor {
         } else {
             $linkFname = NULL;
         }
-        $escapedExt = pg_escape_string($ext);
-        $escapedType = pg_escape_string($type);
+        $escapedExt = $CC_DBC->escape($ext);
+        $escapedType = $CC_DBC->escape($type);
         $CC_DBC->query("BEGIN");
         $gunidSql = (is_null($gunid) ? "NULL" : "CONV({$gunid}, 16, 10)" );
         $ownerSql = (is_null($owner) ? "NULL" : "$owner" );
@@ -586,7 +586,7 @@ class BasicStor {
         if (!is_null($gunid)) {
             $gunid = StoredFile::NormalizeGunid($gunid);
         }
-        $escapedChsum = pg_escape_string($chsum);
+        $escapedChsum = $CC_DBC->escape($chsum);
         $token = StoredFile::CreateGunid();
         $res = $CC_DBC->query("DELETE FROM ".$CC_CONFIG['accessTable']
             ." WHERE token=CONV($token, 16, 10)");

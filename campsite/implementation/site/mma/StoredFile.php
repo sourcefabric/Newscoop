@@ -443,8 +443,8 @@ class StoredFile {
         $emptyState = TRUE;
 
         // Insert record into the database
-        $escapedName = pg_escape_string($storedFile->name);
-        $escapedFtype = pg_escape_string($storedFile->ftype);
+        $escapedName = $CC_DBC->escape($storedFile->name);
+        $escapedFtype = $CC_DBC->escape($storedFile->ftype);
         $CC_DBC->query("BEGIN");
         $sql = "INSERT INTO ".$CC_CONFIG['filesTable']
                 ."(id, name, gunid, mime, state, ftype, mtime, md5)"
@@ -949,7 +949,7 @@ class StoredFile {
     public function setName($p_newname)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedName = pg_escape_string($p_newname);
+        $escapedName = $CC_DBC->escape($p_newname);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET name='$escapedName', mtime=now()"
             ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
@@ -974,7 +974,7 @@ class StoredFile {
     public function setState($p_state, $p_editedby=NULL)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedState = pg_escape_string($p_state);
+        $escapedState = $CC_DBC->escape($p_state);
         $eb = (!is_null($p_editedby) ? ", editedBy=$p_editedby" : '');
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET state='$escapedState'$eb, mtime=now()"
@@ -1002,7 +1002,7 @@ class StoredFile {
         if (!is_string($p_mime)) {
             $p_mime = 'application/octet-stream';
         }
-        $escapedMime = pg_escape_string($p_mime);
+        $escapedMime = $CC_DBC->escape($p_mime);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET mime='$escapedMime', mtime=now()"
             ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
@@ -1024,7 +1024,7 @@ class StoredFile {
     public function setMd5($p_md5sum)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedMd5 = pg_escape_string($p_md5sum);
+        $escapedMd5 = $CC_DBC->escape($p_md5sum);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET md5='$escapedMd5', mtime=now()"
             ." WHERE gunid=CONV({$this->gunid}, 16, 10)";

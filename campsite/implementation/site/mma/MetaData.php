@@ -304,7 +304,7 @@ class MetaData {
         	return $r;
         }
         if (!is_null($p_value)) {
-        	$escapedValue = pg_escape_string($p_value);
+        	$escapedValue = $CC_DBC->escape($p_value);
             $sql = "UPDATE ".$CC_CONFIG['mdataTable']."
                 SET object='$escapedValue', objns='_L'
                 WHERE id={$p_id}";
@@ -796,8 +796,8 @@ class MetaData {
      */
 //    function updateRecord($mdid, $object, $objns='_L')
 //    {
-//    	$object_sql = is_null($object) ? "NULL" : "'".pg_escape_string($object)."'";
-//    	$objns_sql = is_null($objns) ? "NULL" : "'".pg_escape_string($objns)."'";
+//    	$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escape($object)."'";
+//    	$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escape($objns)."'";
 //        $res = $CC_DBC->query("UPDATE {$this->mdataTable}
 //            SET objns = $objns_sql, object = $object_sql
 //            WHERE gunid = CONV({$this->gunid}, 16, 10) AND id='$mdid'
@@ -836,15 +836,12 @@ class MetaData {
         $objns=NULL, $object=NULL)
     {
         global $CC_CONFIG, $CC_DBC;
-        //echo "$subjns, $subject, $predns, $predicate, $predxml, $objns, $object\n";
-        //$predns = strtolower($predns);
-        //$predicate = strtolower($predicate);
-        $subjns_sql = is_null($subjns) ? "NULL" : "'".pg_escape_string($subjns)."'";
-		$subject_sql = is_null($subject) ? "NULL" : "'".pg_escape_string($subject)."'";
-		$predns_sql = is_null($predns) ? "NULL" : "'".pg_escape_string($predns)."'";
-		$predicate_sql = is_null($predicate) ? "NULL" : "'".pg_escape_string($predicate)."'";
-		$objns_sql = is_null($objns) ? "NULL" : "'".pg_escape_string($objns)."'";
-		$object_sql = is_null($object) ? "NULL" : "'".pg_escape_string($object)."'";
+        $subjns_sql = is_null($subjns) ? "NULL" : "'".$CC_DBC->escape($subjns)."'";
+		$subject_sql = is_null($subject) ? "NULL" : "'".$CC_DBC->escape($subject)."'";
+		$predns_sql = is_null($predns) ? "NULL" : "'".$CC_DBC->escape($predns)."'";
+		$predicate_sql = is_null($predicate) ? "NULL" : "'".$CC_DBC->escape($predicate)."'";
+		$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escape($objns)."'";
+		$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escape($object)."'";
         $id = $CC_DBC->nextId($CC_CONFIG['mdataTable']."_id_seq");
         if (PEAR::isError($id)) {
         	return $id;

@@ -1,6 +1,6 @@
 <?php
-if (!function_exists('pg_connect')) {
-    trigger_error("PostgreSQL PHP extension required and not found.", E_USER_ERROR);
+if (!function_exists('mysql_connect')) {
+    trigger_error("MySQL PHP extension required and not found.", E_USER_ERROR);
     exit(2);
 }
 

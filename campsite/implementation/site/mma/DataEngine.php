@@ -83,7 +83,8 @@ class DataEngine {
      */
     private function _makeWhereArr($conditions)
     {
-        $ops = array('full'=>"='%s'", 'partial'=>"like '%%%s%%'",
+        global $CC_DBC;
+    	$ops = array('full'=>"='%s'", 'partial'=>"like '%%%s%%'",
             'prefix'=>"like '%s%%'", '<'=>"< '%s'", '='=>"= '%s'",
             '>'=>"> '%s'", '<='=>"<= '%s'", '>='=>">= '%s'"
         );
@@ -97,7 +98,7 @@ class DataEngine {
                     $splittedQn = XML_Util::splitQualifiedName($catQn);
                     $catNs = $splittedQn['namespace'];
                     $cat = $splittedQn['localPart'];
-                    $opVal = sprintf($ops[$op], pg_escape_string($value));
+                    $opVal = sprintf($ops[$op], $CC_DBC->escape($value));
                     // retype for timestamp value
                     if ($cat == 'mtime') {
                         switch ($op) {

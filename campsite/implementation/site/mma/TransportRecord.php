@@ -369,7 +369,7 @@ class TransportRecord
                 return "CONV($fldVal, 16, 10)";
                 break;
             default:
-                $fldVal = pg_escape_string($fldVal);
+                $fldVal = $CC_DBC->escape($fldVal);
                 return "'$fldVal'";
                 break;
         }
