@@ -179,8 +179,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             if ($campsite->issue->defined) {
             	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
             }
-            $sectionsList = Section::GetList($constraints, array('Number'=>'ASC'),
-                                             0, 0, $count);
+            $sectionsList = Section::GetList($constraints, array('Name'=>'ASC'), 0, 0, $count);
             if (!isGS('-- ALL SECTIONS --')) {
             	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
             }
