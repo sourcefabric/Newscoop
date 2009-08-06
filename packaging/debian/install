@@ -1,3 +1,1 @@
-implementation/site/* var/www/campsite
-implementation/templates usr/share/campsite
-implementation/trac usr/share/campsite
+implementation/* usr/share/campsite

@@ -1,25 +1,23 @@
 #!/bin/sh
-# Campsite package configuration script
 
-# Source debconf library -- we have a Depends line
-# to make sure it is there...
+# Debconf config script for Campsite
 
 set -e
+
+# Source debconf library
 . /usr/share/debconf/confmodule
+
 db_version 2.0
 db_title Campsite
 
-
-if [ "$1" = configure ] || [ "$1" = reconfigure ] ; then
-
 STATE=1
-while [ "$STATE"  != 0 -a "$STATE" != 19 ]
+while [ "$STATE"  != 0 -a "$STATE" != 13 ]
   do
   case "$STATE" in
       1) 
-	  db_input critical campsite/dbserver || true
+	  db_input critical campsite/db_server || true
 	  if db_go; then
-	      db_get  campsite/dbserver || true
+	      db_get campsite/db_server || true
 	      if [ ! -z "$RET" ]; then
 		  STATE=2
 	      fi
@@ -29,44 +27,43 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
 
       2)
-	  db_input critical campsite/dbname || true
-	  if db_go; then
-	      db_get campsite/dbname || true
-	      if [ ! -z "$RET" ]; then
-		  STATE=3
-	      fi
-	  else
-	      STATE=2
-	  fi
-	  ;;
+          db_input critical campsite/db_adm_name || true
+          if db_go; then
+              db_get campsite/db_adm_name || true
+              if [ ! -z "$RET" ]; then
+                  STATE=3
+              fi
+          else
+              STATE=2
+          fi
+          ;;
 
       3)
-	  db_input critical campsite/db_admname || true
-	  if db_go; then
-	      db_get  campsite/db_admname || true
-	      if [ ! -z "$RET" ]; then
-		  STATE=4
-	      fi
-	  else
-	      STATE=3
-	  fi
-	  ;;
+          db_input critical campsite/db_adm_pass || true
+          if db_go; then
+              db_get campsite/db_adm_pass || true
+                 STATE=4
+          else
+              STATE=3
+          fi
+          ;;
 
       4)
-	  db_input critical campsite/db_admpassword || true
+	  db_input critical campsite/cs_db_name || true
 	  if db_go; then
-	      db_get  campsite/db_admpassword || true
-		 STATE=5
+	      db_get campsite/cs_db_name || true
+	      if [ ! -z "$RET" ]; then
+		  STATE=5
+	      fi
 	  else
 	      STATE=2
 	  fi
 	  ;;
 
-      
       5)
-	  db_input critical campsite/dbusername || true
+	  db_input critical campsite/cs_db_uname || true
 	  if db_go; then
-	      db_get  campsite/dbusername || true
+	      db_get campsite/cs_db_uname || true
 		 if [ ! -z "$RET" ]; then
 		      STATE=6
 		fi
@@ -76,9 +73,9 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
 
       6)
-	  db_input critical campsite/db_userpassword || true
+	  db_input critical campsite/cs_db_upass || true
 	  if db_go; then
-	      db_get  campsite/db_userpassword || true
+	      db_get campsite/cs_db_upass || true
 		STATE=7
 		
 	  else
@@ -87,9 +84,9 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
        
       7)
-	  db_input critical campsite/dbsample || true
+	  db_input critical campsite/site_url || true
 	  if db_go; then
-	      db_get  campsite/dbsample || true
+	      db_get campsite/site_url || true
 		 STATE=8
 	  else
 	      STATE=7
@@ -97,9 +94,9 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
 
       8)
-	  db_input critical campsite/url || true
+	  db_input critical campsite/site_name || true
 	  if db_go; then
-	      db_get  campsite/url || true
+	      db_get campsite/site_name || true
 		if [ ! -z "$RET" ]; then
 	      		STATE=9
 		fi
@@ -109,9 +106,9 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
 	
       9)
-	  db_input critical campsite/sitename || true
+	  db_input critical campsite/site_pass || true
 	  if db_go; then
-	      db_get  campsite/sitename || true
+	      db_get campsite/site_pass || true
 		if [ ! -z "$RET" ]; then
 	      		STATE=10
 		fi
@@ -121,31 +118,43 @@ while [ "$STATE"  != 0 -a "$STATE" != 19 ]
 	  ;;
 
      10)
-	  db_input critical campsite/email || true
-	  if db_go; then
-	      db_get  campsite/email || true
-		if [ ! -z "$RET" ]; then
-	      		STATE=11
-		fi
-	  else
-	      STATE=10
-	  fi
-	  ;;
+          db_input critical campsite/site_email || true
+          if db_go; then
+              db_get campsite/site_email || true
+                if [ ! -z "$RET" ]; then
+                        STATE=11
+                fi
+          else
+              STATE=10
+          fi
+          ;;
 
      11)
-          db_input critical campsite/webserver || true
+	  db_input critical campsite/site_demo || true
 	  if db_go; then
-	      	STATE=12
-		
+	      db_get campsite/site_demo || true
+		if [ ! -z "$RET" ]; then
+	      		STATE=12
+		fi
 	  else
 	      STATE=11
 	  fi
 	  ;;
-	
+
+     12)
+          db_input critical campsite/webserver || true
+	  if db_go; then
+              db_get campsite/webserver || true
+                if [ ! -z "$RET" ]; then
+	      	        STATE=13
+                fi
+	  else
+	      STATE=12
+	  fi
+	  ;;
 
   esac
 done
 
-fi
 
 exit

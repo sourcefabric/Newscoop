@@ -8,12 +8,14 @@ install:
 	dh_testdir
 	dh_testroot
 	dh_install
+	dh_installdirs
 	dh_installdocs
 	dh_installchangelogs
 	dh_installexamples
 	dh_compress
 	dh_fixperms
 	dh_installdeb
+	dh_installdebconf
 	dh_link
 	dh_gencontrol
 	dh_md5sums

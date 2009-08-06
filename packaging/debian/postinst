@@ -1,4 +1,5 @@
-#! /bin/sh
+#!/bin/sh
+
 # postinst script for campsite
 
 set -e
@@ -7,49 +8,53 @@ set -e
 
 # Get all variables 
 
-db_get "campsite/dbserver"  || true
+db_get campsite/db_server || true
 dbserver="$RET"
-dbserver=`echo $dbserver|sed -e 's/,  */ /g'`
+#dbserver=`echo $dbserver|sed -e 's/,  */ /g'`
 
-db_get "campsite/dbname"  || true
-dbname="$RET"
-dbname=`echo $dbname|sed -e 's/,  */ /g'`
-
-db_get "campsite/db_admname"  || true
+db_get campsite/db_adm_name || true
 dbadmin="$RET"
-dbadmin=`echo $dbadmin|sed -e 's/,  */ /g'`
+#dbadmin=`echo $dbadmin|sed -e 's/,  */ /g'`
 
-db_get "campsite/db_admpassword"  || true
+db_get campsite/db_adm_pass || true
 dbadmpass="$RET"
-dbadmpass=`echo $dbadmpass|sed -e 's/,  */ /g'`
+#dbadmpass=`echo $dbadmpass|sed -e 's/,  */ /g'`
 
-db_get "campsite/dbusername"  || true
+db_get campsite/cs_db_name || true
+dbname="$RET"
+#dbname=`echo $dbname|sed -e 's/,  */ /g'`
+
+db_get campsite/cs_db_uname || true
 dbuser="$RET"
-dbuser=`echo $dbuser|sed -e 's/,  */ /g'`
+#dbuser=`echo $dbuser|sed -e 's/,  */ /g'`
 
-db_get "campsite/db_userpassword"  || true
+db_get campsite/cs_db_upass || true
 dbpass="$RET"
-dbpass=`echo $dbpass|sed -e 's/,  */ /g'`
+#dbpass=`echo $dbpass|sed -e 's/,  */ /g'`
 
-db_get "campsite/dbsample"  || true
-dbsample="$RET"
-dbsample=`echo $dbsample|sed -e 's/,  */ /g'`
-
-db_get "campsite/url"  || true
+db_get campsite/site_url || true
 alias="$RET"
 alias=`echo $alias|sed -e 's/,  */ /g'`
 
-db_get "campsite/sitename"  || true
+db_get campsite/site_name || true
 sitename="$RET"
-sitename=`echo $sitename|sed -e 's/,  */ /g'`
+#sitename=`echo $sitename|sed -e 's/,  */ /g'`
 
-db_get "campsite/email"  || true
+db_get campsite/site_pass || true
+sitepass="$RET"
+#sitepass=`echo $sitepass|sed -e 's/,  */ /g'`
+
+db_get campsite/site_email || true
 email="$RET"
-email=`echo $email|sed -e 's/,  */ /g'`
+#email=`echo $email|sed -e 's/,  */ /g'`
 
-db_get "campsite/webserver"  || true
+db_get campsite/site_demo || true
+dbsample="$RET"
+#dbsample=`echo $dbsample|sed -e 's/,  */ /g'`
+
+db_get campsite/webserver || true
 webserver="$RET"
-webserver=`echo $webserver|sed -e 's/,  */ /g'`
+#webserver=`echo $webserver|sed -e 's/,  */ /g'`
 
 
 alias_config()
@@ -60,9 +65,9 @@ db_title campsite
 aliasfile=/etc/campsite/apache.conf
 
 cat > $aliasfile <<campsite_alias_end
-Alias /${alias} /usr/share/campsite
+Alias /${alias} /usr/share/campsite/site
 
-<DirectoryMatch /usr/share/campsite/>
+<DirectoryMatch /usr/share/campsite/site/>
 
 Options -Indexes FollowSymLinks MultiViews
 AllowOverride All
@@ -86,7 +91,7 @@ chmod 644 $aliasfile;
 campsite_config()
 {
 
-config_file=/usr/share/campsite/conf/database_conf.php
+config_file=/usr/share/campsite/site/conf/database_conf.php
 cat > $config_file << database_conf.php
 <?php
 /**
@@ -132,9 +137,9 @@ case "$1" in
 			alias_config
 			campsite_config
 
-			find /usr/share/campsite -type d -exec chmod 755 {} \;
-			find /usr/share/campsite -type f -exec chmod 644 {} \;
-			chown -R www-data:www-data /usr/share/campsite
+			find /usr/share/campsite/site -type d -exec chmod 755 {} \;
+			find /usr/share/campsite/site -type f -exec chmod 644 {} \;
+			chown -R www-data:www-data /usr/share/campsite/site
 
 
 
@@ -164,25 +169,26 @@ case "$1" in
 
 			case $status in
 			create)
-				if [ -f /usr/share/campsite/install/sql/campsite_core.sql ];
+				if [ -f /usr/share/campsite/site/install/sql/campsite_core.sql ];
 				then
-					cat /usr/share/campsite/install/sql/campsite_core.sql > /tmp/campsite_core.sql
-					echo "UPDATE liveuser_users SET Password = SHA1('${dbpass}'), EMail = '${email}' WHERE Id = 1;" >> /tmp/campsite_core.sql
+					cat /usr/share/campsite/site/install/sql/campsite_core.sql > /tmp/campsite_core.sql
+					echo "UPDATE liveuser_users SET Password = SHA1('${sitepass}'), EMail = '${email}' WHERE Id = 1;" >> /tmp/campsite_core.sql
+					echo "UPDATE SystemPreferences SET value = '${sitename}' WHERE varname = 'SiteTitle';" >> /tmp/campsite_core.sql
 					sqlfile=/tmp/campsite_core.sql
 					. /usr/share/wwwconfig-common/mysql-exec.sh
 				fi
 
 				if [ "$dbsample" = "true" ]; then
-					if [ -f /usr/share/campsite/install/sql/campsite_demo_data.sql ];
+					if [ -f /usr/share/campsite/site/install/sql/campsite_demo_data.sql ];
 					then
-						cat /usr/share/campsite/install/sql/campsite_demo_data.sql > /tmp/campsite_sample_data.sql
-						if [ -f /usr/share/campsite/install/sql/campsite_demo_tables.sql ];
+						cat /usr/share/campsite/site/install/sql/campsite_demo_data.sql > /tmp/campsite_sample_data.sql
+						if [ -f /usr/share/campsite/site/install/sql/campsite_demo_tables.sql ];
 						then
-							cat /usr/share/campsite/install/sql/campsite_demo_data.sql >> /tmp/campsite_sample_data.sql
+							cat /usr/share/campsite/site/install/sql/campsite_demo_tables.sql >> /tmp/campsite_sample_data.sql
 						fi
-						if [ -f /usr/share/campsite/install/sql/campsite_demo_prepare.sql ];
+						if [ -f /usr/share/campsite/site/install/sql/campsite_demo_prepare.sql ];
 						then
-							cat /usr/share/campsite/install/sql/campsite_demo_prepare.sql >> /tmp/campsite_sample_data.sql
+							cat /usr/share/campsite/site/install/sql/campsite_demo_prepare.sql >> /tmp/campsite_sample_data.sql
 						fi
 						sqlfile=/tmp/campsite_sample_data.sql
 						. /usr/share/wwwconfig-common/mysql-exec.sh
@@ -221,9 +227,10 @@ if [ "$err" = "0" ]
 	then
 		echo "---------------------------------------------------------"
 		echo "Your Campsite site has been successfully installed"
-		echo "administrator user : admin "
-		echo "administrator password : qwerty "
-		echo "Please go to your site http://localhost/${alias}"
+		echo "administrator user : admin"
+		echo "administrator password : ${sitepass}"
+		echo "Visit your site at http://localhost/${alias}"
+                echo "and the Admin Panel at http://localhost/${alias}/admin/"
 		echo "---------------------------------------------------------"
 	fi
 
