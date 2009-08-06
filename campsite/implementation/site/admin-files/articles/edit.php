@@ -586,7 +586,7 @@ if ($f_edit_mode == "edit") { ?>
         					<?php if ($f_edit_mode == "edit") { ?>
         					<input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date" />
         					<table cellpadding="0" cellspacing="2"><tr>
-        						<td><span id="show_date"><?php p($articleObj->getCreationDate()); ?></span></td>
+        						<td><span id="show_c_date"><?php p($articleObj->getCreationDate()); ?></span></td>
         						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
         					    	 style="cursor: pointer; border: 1px solid red;"
         					     	 title="Date selector"
@@ -597,7 +597,7 @@ if ($f_edit_mode == "edit") { ?>
         					    Calendar.setup({
         					        inputField:"f_creation_date",
         					        ifFormat:"%Y-%m-%d %H:%M:00",
-        					        displayArea:"show_date",
+        					        displayArea:"show_c_date",
         					        daFormat:"%Y-%m-%d %H:%M:00",
         					        showsTime:true,
         					        showOthers:true,
@@ -619,8 +619,8 @@ if ($f_edit_mode == "edit") { ?>
         					<?php if ($f_edit_mode == "edit" && $articleObj->isPublished()) { ?>
         					<input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date" />
         					<table cellpadding="0" cellspacing="2"><tr>
-        						<td><span id="show_date"><?php p($articleObj->getPublishDate()); ?></span></td>
-        						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
+        						<td><span id="show_p_date"><?php p($articleObj->getPublishDate()); ?></span></td>
+        						<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_p"
         					    	 style="cursor: pointer; border: 1px solid red;"
         					     	 title="Date selector"
         					     	 onmouseover="this.style.background='red';"
@@ -630,13 +630,13 @@ if ($f_edit_mode == "edit") { ?>
         					    Calendar.setup({
         					        inputField:"f_publish_date",
         					        ifFormat:"%Y-%m-%d %H:%M:00",
-        					        displayArea:"show_date",
+        					        displayArea:"show_p_date",
         					        daFormat:"%Y-%m-%d %H:%M:00",
         					        showsTime:true,
         					        showOthers:true,
         					        weekNumbers:false,
         					        range:new Array(1990, 2020),
-        					        button:"f_trigger_c"
+        					        button:"f_trigger_p"
         					    });
         					</script>
         					<?php } elseif ($articleObj->isPublished()) { ?>
