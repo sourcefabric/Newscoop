@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # postinst script for campsite
 
@@ -62,28 +62,26 @@ alias_config()
 . /usr/share/debconf/confmodule || exit
 db_version 2.0
 db_title campsite
-aliasfile=/etc/campsite/apache.conf
+vhostfile=/etc/campsite/apache.conf
 
-cat > $aliasfile <<campsite_alias_end
-Alias /${alias} /usr/share/campsite/site
+cat > $vhostfile <<campsite_alias_end
+<VirtualHost *>
+    DocumentRoot /usr/share/campsite/site
 
-<DirectoryMatch /usr/share/campsite/site/>
-
-Options -Indexes FollowSymLinks MultiViews
-AllowOverride All
-<IfModule mod_access>
-	Order allow,deny
-	Allow from all
-</IfModule>
-
-<IfModule mod_dir>
-        DirectoryIndex index.php
-</IfModule>
-
-</DirectoryMatch>
+    ServerName ${alias}
+    DirectoryIndex index.php index.html
+    <Directory /usr/share/campsite/site>
+            Options -Indexes FollowSymLinks MultiViews
+            AllowOverride All
+            <IfModule mod_access>
+                Order allow,deny
+                Allow from all
+            </IfModule>
+    </Directory>
+</VirtualHost>
 campsite_alias_end
 
-chmod 644 $aliasfile;
+chmod 644 $vhostfile;
 
 }
 
@@ -131,6 +129,15 @@ chmod 644 $config_file;
 
 }
 
+# Installation directories
+
+package_name="campsite"
+pkgdir="/usr/share/${package_name}/"
+htdocdir="${pkgdir}site/"
+tpldir="${htdocdir}templates/"
+installdir="${htdocdir}install/"
+sampledir="${installdir}sample_templates/campsite_3.0-sample-template-01-v1/"
+
 case "$1" in
 	configure)
 			
@@ -145,7 +152,8 @@ case "$1" in
 
 			if [ ! -e /etc/${webserver}/conf.d/campsite ] && [ -d /etc/${webserver}/conf.d ]
 			then
-	   			ln -s /etc/campsite/apache.conf /etc/${webserver}/conf.d/campsite
+	   			ln -s /etc/campsite/apache.conf /etc/${webserver}/sites-available/${alias}
+				ln -s /etc/${webserver}/sites-available/${alias} /etc/${webserver}/sites-enabled/
 			fi
 			restart="${webserver} $restart"
 
@@ -181,17 +189,27 @@ case "$1" in
 				if [ "$dbsample" = "true" ]; then
 					if [ -f /usr/share/campsite/site/install/sql/campsite_demo_data.sql ];
 					then
-						cat /usr/share/campsite/site/install/sql/campsite_demo_data.sql > /tmp/campsite_sample_data.sql
 						if [ -f /usr/share/campsite/site/install/sql/campsite_demo_tables.sql ];
 						then
-							cat /usr/share/campsite/site/install/sql/campsite_demo_tables.sql >> /tmp/campsite_sample_data.sql
+							cat /usr/share/campsite/site/install/sql/campsite_demo_tables.sql > /tmp/campsite_sample_data.sql
 						fi
 						if [ -f /usr/share/campsite/site/install/sql/campsite_demo_prepare.sql ];
 						then
 							cat /usr/share/campsite/site/install/sql/campsite_demo_prepare.sql >> /tmp/campsite_sample_data.sql
 						fi
+						if [ -f /usr/share/campsite/site/install/sql/campsite_demo_data.sql ];
+						then
+							cat /usr/share/campsite/site/install/sql/campsite_demo_data.sql >> /tmp/campsite_sample_data.sql
+						fi
 						sqlfile=/tmp/campsite_sample_data.sql
 						. /usr/share/wwwconfig-common/mysql-exec.sh
+
+						# Copies demo templates
+						cp -a "${sampledir}templates/" "${htdocdir}"
+
+						# Copies demo files
+						cp -a "${sampledir}data/files/" "${htdocdir}"
+						cp -a "${sampledir}data/images/" "${htdocdir}"
 					fi
 				fi
 
