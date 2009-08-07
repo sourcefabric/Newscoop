@@ -519,7 +519,8 @@ class Image extends DatabaseObject {
     			}
                	chmod($thumbnail, 0644);
     		} elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
-                $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
+                $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.escapeshellarg($target)
+                .' '.escapeshellarg($thumbnail);
                 system($cmd);
                 if (file_exists($thumbnail)) {
                 	chmod($thumbnail, 0644);
@@ -766,8 +767,8 @@ class Image extends DatabaseObject {
 		    }
 
 		    // Create the thumbnail
-            $cmd = $Campsite['THUMBNAIL_COMMAND'].' '
-            	. $tmpname . ' ' . $image->getThumbnailStorageLocation();
+            $cmd = $Campsite['THUMBNAIL_COMMAND'] . ' ' . escapeshellarg($tmpname)
+            	 . ' ' . escapeshellarg($image->getThumbnailStorageLocation());
             system($cmd);
             if (file_exists($image->getThumbnailStorageLocation())) {
             	chmod($image->getThumbnailStorageLocation(), 0644);

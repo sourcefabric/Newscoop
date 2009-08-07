@@ -174,7 +174,7 @@ function transfer_images($p_destDir, $apacheUser, $apacheGroup) {
 		mysql_query($queryStr3);
 		$thumbnailFileName = 'cms-thumb-'.sprintf('%09d', $row['Id']).'.'.$extension;
 		$thumbnailFilePath = $p_destDir.'/thumbnails/'.$thumbnailFileName;
-        $cmd = $thumbnailCommand.' '.$destFilePath.' '.$thumbnailFilePath;
+        $cmd = $thumbnailCommand.' '.escapeshellarg($destFilePath).' '.escapeshellarg($thumbnailFilePath);
         system($cmd);
 		chown($thumbnailFilePath, $apacheUser);
 		chgrp($thumbnailFilePath, $apacheGroup);
