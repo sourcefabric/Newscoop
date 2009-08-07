@@ -446,16 +446,20 @@ class Template extends DatabaseObject {
 	/**
 	 * @param array $p_sqlOptions
 	 * @param boolean $p_update
+	 * @param boolean $p_useFilter 
+	 *		filter templates matching setting in SystemPrefs
+	 *
+	 * @return array
 	 */
-	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true)
+	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true, $p_useFilter = false)
 	{
 		if ($p_update) {
 			Template::UpdateStatus();
 		}
 		$queryStr = 'SELECT * FROM Templates';
 		
-		if ($rexeg = Template::GetTemplateFilterRegex(true)) {
-            $queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
+		if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
+			$queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
 		}
 		    
 		if (!is_null($p_sqlOptions)) {
