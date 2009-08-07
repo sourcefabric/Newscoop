@@ -13,45 +13,6 @@ function camp_is_readable($p_fileName)
 
 
 /**
- * Escape special characters that are going to be passed to the shell
- * in a command line argument.
- *
- * @param string $p_arg
- * @return string
- */
-function camp_escape_shell_arg($p_arg)
-{
-    $arg = str_replace('\\', '\\\\', $p_arg);
-    $arg = str_replace(' ', '\ ', $arg);
-    $arg = str_replace('`', '\`', $arg);
-    $arg = str_replace('!', '\!', $arg);
-    $arg = str_replace('@', '\@', $arg);
-    $arg = str_replace('$', '\$', $arg);
-    $arg = str_replace('%', '%%', $arg);
-    $arg = str_replace('^', '\^', $arg);
-    $arg = str_replace('&', '\&', $arg);
-    $arg = str_replace('*', '\*', $arg);
-    $arg = str_replace('(', '\(', $arg);
-    $arg = str_replace(')', '\)', $arg);
-    $arg = str_replace('=', '\=', $arg);
-    $arg = str_replace('{', '\{', $arg);
-    $arg = str_replace('}', '\}', $arg);
-    $arg = str_replace('[', '\[', $arg);
-    $arg = str_replace(']', '\]', $arg);
-    $arg = str_replace(':', '\:', $arg);
-    $arg = str_replace(';', '\;', $arg);
-    $arg = str_replace('"', '\"', $arg);
-    $arg = str_replace('\'', '\\\'', $arg);
-    $arg = str_replace('<', '\<', $arg);
-    $arg = str_replace('>', '\>', $arg);
-    $arg = str_replace(',', '\,', $arg);
-    $arg = str_replace('?', '\?', $arg);
-    $arg = str_replace('|', '\|', $arg);
-    return $arg;
-} // fn camp_escape_shell_arg
-
-
-/**
  * Execute a command in the shell.
  *
  * @param string $p_cmd
@@ -472,14 +433,14 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         $install_conf_file = $etc_dir . "/install_conf.php";
 
         // run upgrade scripts
-        $cmd_prefix = "cd " . camp_escape_shell_arg($upgrade_dir)
+        $cmd_prefix = "cd " . escapeshellarg($upgrade_dir)
             . " && mysql --user=" . $Campsite['DATABASE_USER']
             . " --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
             . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
         if ($Campsite['DATABASE_PASSWORD'] != "") {
             $cmd_prefix .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
         }
-        $cmd_prefix .= " " . camp_escape_shell_arg($p_dbName) . " < ";
+        $cmd_prefix .= " " . escapeshellarg($p_dbName) . " < ";
         $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
         foreach ($sql_scripts as $index=>$script) {
             if (!is_file($upgrade_dir . $script)) {

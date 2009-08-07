@@ -87,7 +87,7 @@ $backupDirName = 'backup-campsite-'.$timestampStr;
 if ($default_dir) {
 	$adviceOnError = "Please run this script as '".$Campsite['APACHE_USER']."' or as 'root'.";
 	$backupDirFullPath = $CAMPSITE_DIR . "/backup/$backupDirName";
-	camp_exec_command("mkdir -p " . camp_escape_shell_arg($backupDirFullPath),
+	camp_exec_command("mkdir -p " . escapeshellarg($backupDirFullPath),
 				 "Unable to create the default backup directory.\n$adviceOnError", !$silent);
 	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
 			. escapeshellarg($Campsite['APACHE_GROUP']) . " " . escapeshellarg($backupDirFullPath);

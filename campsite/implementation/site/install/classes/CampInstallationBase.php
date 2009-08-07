@@ -466,7 +466,7 @@ class CampInstallationBase
         }
 
         if (file_exists($allAtOnceFile)) {
-            $cmd = 'crontab '.$allAtOnceFile;
+            $cmd = 'crontab '.escapeshellarg($allAtOnceFile);
             system($cmd);
         }
 

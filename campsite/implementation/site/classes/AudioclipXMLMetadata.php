@@ -145,7 +145,16 @@ class AudioclipXMLMetadata {
         if (PEAR::isError($r)) {
         	return $r;
         } else {
-            exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
+        	$fh = fopen($p_filePath, 'r');
+        	$ch = curl_init($r['url']);
+        	curl_setopt($ch, CURLOPT_PUT, true);
+        	curl_setopt($ch, CURLOPT_INFILE, $fh);
+            curl_setopt($ch, CURLOPT_INFILESIZE, filesize($p_filePath));
+            $res = curl_exec($ch);
+            curl_close($ch);
+
+//        	$cmd = trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']);
+//            exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
         $aClipData = $xrcObj->xr_storeAudioClipClose($p_sessId, $r['token']);
         if (PEAR::isError($aClipData)) {

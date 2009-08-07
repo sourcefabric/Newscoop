@@ -407,7 +407,8 @@ class Template extends DatabaseObject {
 			$origFile = "$newname.orig";
 			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $origFile);
 			if ($success) {
-				$command = "iconv -f $p_charset -t UTF-8 \"$origFile\" > \"$newname\"";
+				$command = 'iconv -f ' . escapeshellarg($p_charset) . ' -t UTF-8 '
+				. escapeshellarg($origFile) . ' > ' . escapeshellarg($newname);
 				system($command, $status);
 				if ($status == 0) {
 					$success = unlink($origFile);
