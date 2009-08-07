@@ -124,9 +124,10 @@ class Template extends DatabaseObject {
 	 * Returns true if the template path is valid.
 	 *
 	 * @param string $p_path
+	 * @param boolenan $p_checkIfExists
 	 * @return bool
 	 */
-	public static function IsValidPath($p_path)
+	public static function IsValidPath($p_path, $p_checkIfExists=true)
 	{
 		global $Campsite;
 
@@ -136,7 +137,10 @@ class Template extends DatabaseObject {
 			}
 		}
 
-		if (!is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
+		if ($p_checkIfExists && 
+		      !is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+		      !is_file($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+		      !is_link($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
 			return false;
 		}
 		return true;

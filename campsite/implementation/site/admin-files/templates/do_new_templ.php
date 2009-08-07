@@ -8,10 +8,11 @@ if (!$g_user->hasPermission('ManageTempl')) {
 }
 
 $f_path = Input::Get('f_path', 'string', '');
-if (!Template::IsValidPath($f_path)) {
+$f_name = Input::Get('f_name', 'string', '');
+
+if (!Template::IsValidPath($f_path) || !Template::IsValidPath($f_name, false)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
-$f_name = Input::Get('f_name', 'string', '');
 
 if (trim($f_name) == "") {
 	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));

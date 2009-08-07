@@ -10,19 +10,21 @@ $Path = Input::Get('Path', 'string', '');
 $Name = Input::Get('Name', 'string', '');
 $isFile = Input::Get('What', 'int', 0);
 
-if (!Template::IsValidPath($Path)) {
+$Path = preg_replace('#/+#', '/', $Path);
+
+if (!Template::IsValidPath($Path.DIR_SEP.$Name)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 
 $backLink = "/$ADMIN/templates/?Path=".urlencode($Path);
-$fileFullName = (!empty($Path)) ? urldecode($Path)."/".urldecode($Name) : urldecode($Name);
-$fileFullPath = Template::GetFullPath(urldecode($Path), '');
+$fileFullName = preg_replace('#^/+#', '', (!empty($Path)) ? $Path.DIR_SEP.$Name : $Name);
+$fileFullPath = Template::GetFullPath($Path, '');
 $errorMsgs = array();
 
 
 $deleted = false;
-if (empty($Name)) {
-        $deleted = is_dir($fileFullPath) && rmdir($fileFullPath);
+if (!$isFile) {
+        $deleted = rmdir($fileFullPath.$Name);
 	if ($deleted) {
 		$logtext = getGS('Directory $1 was deleted', mysql_real_escape_string($fileFullName));
 		Log::Message($logtext, $g_user->getUserId(), 112);

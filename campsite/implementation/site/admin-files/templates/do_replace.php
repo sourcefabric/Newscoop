@@ -10,7 +10,7 @@ $f_path = Input::Get('f_path');
 $f_old_name = Input::Get('f_old_name');
 $fileName = isset($_FILES['f_file']['name']) ? $_FILES['f_file']['name'] : '';
 
-if (!Template::IsValidPath($f_path)) {
+if (!Template::IsValidPath($f_path) || !Template::IsValidPath($f_path.DIR_SEP.$f_old_name)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 

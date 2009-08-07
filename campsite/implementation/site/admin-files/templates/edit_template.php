@@ -14,8 +14,6 @@ if ($f_path_name = Input::Get('f_path_name', 'string', '')) {
     $f_name = Input::Get('f_name', 'string', '');
 }
 
-$f_path = preg_replace('#//+#', '/', $f_path);
-
 if ($f_path == '/') {
     $f_path = '';   
 }
@@ -23,7 +21,7 @@ if ($f_path == '/') {
 $f_content = Input::Get('f_content', 'string', '', true);
 
 $backLink  = "/$ADMIN/templates/";
-if (!Template::IsValidPath($f_path)) {
+if (!Template::IsValidPath($f_path.DIR_SEP.$f_name)) {
 	camp_html_goto_page($backLink);
 }
 $filename = Template::GetFullPath($f_path, $f_name);

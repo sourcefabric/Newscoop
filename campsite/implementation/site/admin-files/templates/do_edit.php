@@ -7,10 +7,10 @@ if (!$g_user->hasPermission('ManageTempl')) {
 }
 
 $Path = Input::Get('Path', 'string', '');
-if (!Template::IsValidPath($Path)) {
+$Name = Input::Get('Name', 'string', '');
+if (!Template::IsValidPath($Path.DIR_SEP.$Name)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
-$Name = Input::Get('Name', 'string', '');
 $cField = Input::Get('cField', 'string', '');
 $nField = str_replace("\\r", "\r", $cField);
 $nField = str_replace("\\n", "\n", $nField);
