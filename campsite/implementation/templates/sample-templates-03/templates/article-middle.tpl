@@ -5,7 +5,7 @@
 			  </tr>
 			  <tr>
 			    <td align="left" style="border-top: 1px solid #999999">
-				     {{ if $campsite->image->has_image2 }}
+				     {{ if $campsite->image->has_image(2) }}
 <div class="front-slika">
 <img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"></div>
 {{ /if }}

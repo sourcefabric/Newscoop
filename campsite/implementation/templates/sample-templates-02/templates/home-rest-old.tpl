@@ -5,7 +5,7 @@
 {{ list_articles constraints="type is Article onfrontpage is off onsection is on" }}
         <tr>
           <td valign="top">
-	        {{ if $campsite->image->has_image1 }}
+	        {{ if $campsite->image->has_image(1) }}
                 <div class="front-slika2"><img src="/get_img.php?{{ urlparameters options="image 1" }}" width="72" height="50" border="0"><br><span class="caption">{{ $campsite->image->description }}</span></div>
                  {{ /if }}
 			<p class="nadnaslov2">{{ $campsite->article->deck }}</p>
