@@ -1,5 +1,5 @@
 {{ list_articles constraints="onfrontpage is off type is Article" order="bynumber desc" }}
-		{{ if $campsite->image->has_image2 }}
+		{{ if $campsite->image->has_image(2) }}
 			<div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"></div>
 		{{ /if }}
 				  <p class="nadnaslov-front">{{ $campsite->article->deck }}</p>

@@ -8,7 +8,7 @@
 			  <tr>
 			    <td align="left" style="border-top: 1px solid #999999">
 				{{ list_articles length="1" constraints="type is Article onfrontpage is on onsection is on" order="bynumber desc" }}
-				     {{ if $campsite->image->has_image2 }}
+				     {{ if $campsite->image->has_image(2) }}
 				  <div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"></div>
 				     {{ /if }}
 				  <p class="nadnaslov-front">{{ $campsite->article->deck }}</p>

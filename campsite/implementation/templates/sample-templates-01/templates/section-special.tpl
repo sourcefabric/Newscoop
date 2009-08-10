@@ -13,7 +13,7 @@
 						{{ list_articles constraints="type is Special" }}
 <p class="naslov" style="padding-left:5px;"><a class="naslov" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></p>
 <p class="blok-podnaslov"><i>{{ $campsite->article->byline }}</i></p>
-{{ if $campsite->image->has_image1 }}
+{{ if $campsite->image->has_image(1) }}
             <div align="center"><img src="/get_img.php?{{ urlparameters options="image 1" }}" align="center">
             <span class="caption">{{ $campsite->image1->description }}</span></div>
 {{ /if }}							

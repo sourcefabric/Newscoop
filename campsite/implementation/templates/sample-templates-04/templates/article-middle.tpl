@@ -26,7 +26,7 @@
                   <table width="100%"  border="0" cellspacing="0" cellpadding="0"> 
                     <tr> 
                       <td valign="top">
-{{ if $campsite->image->has_image2 }}
+{{ if $campsite->image->has_image(2) }}
 <div class="front-slika1"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"> 
                           <p class="text">{{ $campsite->image2->description }}</p> 
                         </div> 

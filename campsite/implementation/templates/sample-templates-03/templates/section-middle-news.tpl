@@ -1,7 +1,7 @@
 {{ list_articles constraints="type is Article" }}
 {{ if $campsite->current_list->index == 1 }}
 {{ else }}
-		{{ if $campsite->image->has_image1 }}
+		{{ if $campsite->image->has_image(1) }}
 			<div class="sport-slika"><img src="/get_img.php?{{ urlparameters options="image 1" }}" border="0"></div>
 		{{ /if }}
 				  <p class="nadnaslov-front">{{ $campsite->article->deck }}</p>
