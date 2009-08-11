@@ -73,7 +73,6 @@ camp_html_add_msg(getGS("Audioclip '$1' added.", basename($f_audiofile)), 'ok');
 
 ?>
 <script>
-window.opener.document.forms.article_edit.onsubmit();
 window.opener.document.forms.article_edit.submit();
 window.close();
 </script>

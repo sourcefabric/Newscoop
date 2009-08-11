@@ -9,6 +9,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 camp_load_translation_strings("article_comments");
+if (SystemPref::Get('UseCampcasterAudioclips') == 'Y') {
+	camp_load_translation_strings("article_audioclips");
+}
 camp_load_translation_strings("api");
 
 // These are optional, depending on whether you are in a section
