@@ -76,7 +76,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-        <TITLE><?php p($siteTitle.' - ').putGS("Login"); ?></title>
+        <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 </head>
 <body >
 
@@ -93,7 +93,6 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 	require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
-
 <form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0">
@@ -105,6 +104,11 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 	<tr>
 		<td colspan="2" align="center">
 			<span style="color:#FF0000;">
+                        <noscript>
+                        <?php
+                            putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+                        ?>
+                        </noscript>
 				<?php
 				if ($error_code == "userpass") {
 					putGS("Login failed");
@@ -189,7 +193,12 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 
 	<tr>
 		<td colspan="2" align="center">
-		<input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != '' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?> />
+                <noscript>
+                          <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" disabled />
+                </noscript>
+                <script type="text/javascript" language="JavaScript"><!--
+			  document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?>/>');
+                //--></script>
 		</td>
 	</tr>
 </table>
