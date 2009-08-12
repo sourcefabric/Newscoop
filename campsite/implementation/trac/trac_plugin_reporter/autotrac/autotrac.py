@@ -7,7 +7,7 @@
 #  accept as tickets, and which ones to dismiss.
 
 from trac import util
-from trac.attachment import attachment_to_hdf, Attachment
+from trac.attachment import AttachmentModule
 from trac.core import *
 from trac.web.chrome import add_stylesheet, INavigationContributor
 from trac.web.main import IRequestHandler
@@ -71,6 +71,9 @@ class AutoTrac(Component):
         elif re.compile ("^/autotrac/newreport/?$").match(req.path_info,0)\
         and req.method == "POST":
             self.bug_reporters_post(req)
+
+        elif re.compile ("^/autotrac/ft/?$").match (req.path_info, 0):
+            self.fetch_form_token(req)
 
         # --- User commands ---
         elif re.compile (r'^/autotrac/?$').match (req.path_info):
@@ -334,6 +337,13 @@ class AutoTrac(Component):
     def reply_to_ping (self, req):
         self.print_http_header(req)
         req.write ("pong")
+
+    ## Send back the form token
+    #
+    # @param Request req The HTTP request data
+    def fetch_form_token (self, req):
+        self.print_http_header (req)
+        req.write(req.form_token)
 
     ## Process info and reply to BugReporter
     #

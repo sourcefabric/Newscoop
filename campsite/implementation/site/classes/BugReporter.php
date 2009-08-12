@@ -109,6 +109,7 @@ class BugReporter
     {
         $this->__server = $p_server;
         $this->__ping = "$p_server/ping";
+        $this->__ft = "$p_server/ft";
         $this->m_newReport = "$p_server/newreport";
     } // fn setServer
 
@@ -181,6 +182,28 @@ class BugReporter
 
 
     /**
+     * Get form token to protect against CSRF attacks.
+     *
+     * @return mixed
+     *          String The form token
+     *          False If the no token was get.
+     */
+    public function getFormToken($p_client)
+    {
+        $code = $p_client->get($this->__ft);
+
+        $response = $p_client->currentResponse();
+        $responseBody = $response['body'];
+
+        if (strlen($responseBody) == 24 && $code == 200) {
+            return $responseBody;
+        } else {
+            return false;
+        }
+    } // fn getFormToken
+
+
+    /**
      * Send the error details to the server via HTTP.
      * @return void
      */
@@ -198,6 +221,7 @@ class BugReporter
                                        'f_time' => $this->getTime(),
                                        'f_description' => $this->getDescription(),
                                        'f_email' => $this->getEmail(),
+                                       '__FORM_TOKEN' => $this->getFormToken($client),
                                     ));
 
         $response = $client->currentResponse();
