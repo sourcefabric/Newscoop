@@ -95,6 +95,10 @@ if (isset($_REQUEST["action_button"])) {
 								 . basename($template->getName()));
 				}
 			}
+			// Clear compiled templates
+			require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+			CampTemplate::singleton()->clear_compiled_tpl();
+
 			camp_html_add_msg(getGS("Template(s) moved."), "ok");
 			camp_html_goto_page($url);
 		}

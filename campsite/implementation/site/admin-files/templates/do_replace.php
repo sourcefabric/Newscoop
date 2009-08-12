@@ -20,6 +20,7 @@ $backLink = "/$ADMIN/templates/edit_template.php?f_path=" . urlencode($f_path)."
 $oldFilePath = Template::GetFullPath($f_path, $f_old_name);
 $oldMimeType = (function_exists('mime_content_type')) ? mime_content_type($oldFilePath) :
 							camp_mime_content_type($oldFilePath);
+$oldRelativeFilePath = (!empty($f_path)) ? ltrim($f_path.DIR_SEP.$f_old_name, '/') : $f_old_name;
 $newMimeType = $_FILES['f_file']['type'];
 $equivalentTextTypes = array("text/plain", "text/html", "application/x-php", "application/octet-stream");
 $matched = false;
@@ -34,6 +35,10 @@ if (!$matched && ($oldMimeType != $newMimeType)) {
 // Move the new file it its place
 $success = Template::OnUpload("f_file", $f_path, $f_old_name);
 if ($success) {
+        // Clear compiled template
+        require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+        CampTemplate::singleton()->clear_compiled_tpl($oldRelativeFilePath);
+
 	camp_html_add_msg(getGS('File "$1" replaced.', $f_old_name), "ok");
 } else {
 	camp_html_add_msg(getGS("Unable to save the file '$1' to the path '$2'.", $fileName, $f_path) . " "

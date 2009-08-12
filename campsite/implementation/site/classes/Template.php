@@ -182,12 +182,17 @@ class Template extends DatabaseObject {
 			return true;
 		}
 
+		$tplFindObj = new FileTextSearch();
+		$tplFindObj->setExtensions(array('tpl','css'));
+		$tplFindObj->setSearchKey($p_templateName);
+		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		if (is_array($result) && sizeof($result) > 0) {
+		        return $result[0];
+		}
+
 		if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
 			$p_templateName = ' ' . $p_templateName;
 		}
-
-		$tplFindObj = new FileTextSearch();
-		$tplFindObj->setExtensions(array('tpl','css'));
 		$tplFindObj->setSearchKey($p_templateName);
 		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
 		if (is_array($result) && sizeof($result) > 0) {

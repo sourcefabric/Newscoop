@@ -41,20 +41,29 @@ if (!$exists) {
 	$tpl2_name = urldecode($f_path)."/$f_new_name";
 	$tpl2 = $Campsite['HTML_DIR']."/templates/".$tpl2_name;
 	if (rename($tpl1, $tpl2)) {
+	        $relativeOldFilePath = ltrim($tpl1_name, '/');
+		$relativeNewFilePath = ltrim($tpl2_name, '/');
 		Template::UpdateOnChange($tpl1_name, $tpl2_name);
+		// Clear compiled template
+		require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+		CampTemplate::singleton()->clear_compiled_tpl($relativeOldFilePath);
 		$logtext = getGS('Template object $1 was renamed to $2', $tpl1_name, $tpl2_name);
 		Log::Message($logtext, $g_user->getUserId(), 116);
-		$tpl1_name = ltrim($tpl1_name, '/');
-		$tpl2_name = ltrim($tpl2_name, '/');
-		if ($origExtension == 'tpl') {
-			$tpl1_name = ' ' . $tpl1_name;
-			$tpl2_name = ' ' . $tpl2_name;
-		}
+
+		// Replace template name in other template files
 		$replaceObj = new FileTextSearch();
 		$replaceObj->setExtensions(array('tpl','css'));
+		$replaceObj->setSearchKey($relativeOldFilePath);
+		$replaceObj->setReplacementKey($relativeNewFilePath);
+		$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		if ($origExtension == 'tpl') {
+			$tpl1_name = ' ' . $relativeOldFilePath;
+			$tpl2_name = ' ' . $relativeNewFilePath;
+		}
 		$replaceObj->setSearchKey($tpl1_name);
 		$replaceObj->setReplacementKey($tpl2_name);
 		$replaceObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+
 		if (camp_is_text_file($tpl2) || camp_is_image_file($tpl2)) {
 			// Go into edit mode.
 			camp_html_goto_page("/$ADMIN/templates/edit_template.php"

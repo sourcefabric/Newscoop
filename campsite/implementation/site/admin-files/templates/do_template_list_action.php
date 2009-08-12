@@ -47,6 +47,9 @@ case "delete":
 		}
 	}
 	if ($anyDeleted == 1) {
+	        // Clear compiled templates
+	        require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+		CampTemplate::singleton()->clear_compiled_tpl();
 		camp_html_add_msg(getGS("Template(s) deleted."), "ok");
 	}
 	if ($anyInUse == 1) {
