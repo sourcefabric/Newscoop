@@ -16,7 +16,7 @@ define('GBERR_GUNID', 53);
 define('GBERR_BGERR', 54);
 define('GBERR_NOTIMPL', 69);
 
-require_once(dirname(__FILE__)."/../../alib/var/Alib.php");
+require_once(dirname(__FILE__)."/../include/alib/var/Alib.php");
 require_once("StoredFile.php");
 require_once("Transport.php");
 

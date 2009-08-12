@@ -1,7 +1,7 @@
 <?php
 require_once("MetaData.php");
 require_once("Playlist.php");
-require_once(dirname(__FILE__)."/../../getid3/var/getid3.php");
+require_once(dirname(__FILE__)."/../include/getid3/getid3.php");
 
 /**
  * Track numbers in metadata tags can come in many formats:

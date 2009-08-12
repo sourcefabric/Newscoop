@@ -37,7 +37,7 @@ global $CC_CONFIG;
 $mmaDir = dirname(__FILE__);
 
 require_once(dirname($mmaDir).'/conf/configuration.php');
-require_once(dirname($mmaDir).'/conf/db_connect.php');
+require_once(dirname($mmaDir).'/db_connect.php');
 
 $CC_CONFIG = array(
     /* ================================================== basic configuration */

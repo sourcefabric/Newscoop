@@ -104,14 +104,31 @@ for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
 $browse_category_2_conditions = $category_conditions[1];
 $browse_category_3_conditions = array_merge($category_conditions[1], $category_conditions[2]);
 $category_1_values = Audioclip::BrowseCategory($f_category_1_name);
+if (PEAR::isError($category_1_values)) {
+    camp_html_add_msg($category_1_values->getMessage());
+	$category_1_values = array();
+}
 $category_2_values = Audioclip::BrowseCategory($f_category_2_name, 0, 0, $browse_category_2_conditions);
+if (PEAR::isError($category_2_values)) {
+    camp_html_add_msg($category_2_values->getMessage());
+    $category_2_values = array();
+}
 $category_3_values = Audioclip::BrowseCategory($f_category_3_name, 0, 0, $browse_category_3_conditions);
+if (PEAR::isError($category_3_values)) {
+    camp_html_add_msg($category_3_values->getMessage());
+    $category_3_values = array();
+}
 
-$r = array();
 if ($isCcOnline) {
     $r = Audioclip::SearchAudioclips($f_audioclip_offset, $f_items_per_page, $search_conditions, null, $f_order_by, $f_order_direction);
-    $clipCount = $r[0];
-    $clips = $r[1];
+    if (PEAR::isError($r)) {
+    	$clipCount = 0;
+    	$clips = array();
+    	camp_html_add_msg($r->getMessage());
+    } else {
+    	$clipCount = $r[0];
+    	$clips = $r[1];
+    }
 }
 
 // Build the links for ordering search results
@@ -200,8 +217,10 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 			<select name="f_category_1_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
 			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category_1_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_1_value, $value);
+			if (isset($category_1_values['results'])) {
+				foreach ($category_1_values['results'] as $index=>$value) {
+					camp_html_select_option($value, $f_category_1_value, $value);
+				}
 			}
 			?>
 			</select>
@@ -210,9 +229,11 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 			<select name="f_category_2_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
 			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category_2_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_2_value, $value);
-			}
+            if (isset($category_2_values['results'])) {
+            	foreach ($category_2_values['results'] as $index=>$value) {
+            		camp_html_select_option($value, $f_category_2_value, $value);
+            	}
+            }
 			?>
 			</select>
 		</td>
@@ -220,9 +241,11 @@ for ($catIndex = 1; $catIndex <= 2; $catIndex++) {
 			<select name="f_category_3_value[]" class="input_select" style="width: 180px;" onchange="document.forms.browse.submit();">
 			<option value="<?php echo htmlspecialchars(VALUE_ALL); ?>"></option>
 			<?php
-			foreach ($category_3_values['results'] as $index=>$value) {
-				camp_html_select_option($value, $f_category_3_value, $value);
-			}
+            if (isset($category_3_values['results'])) {
+            	foreach ($category_3_values['results'] as $index=>$value) {
+            		camp_html_select_option($value, $f_category_3_value, $value);
+            	}
+            }
 			?>
 			</select>
 		</td>

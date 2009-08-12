@@ -387,20 +387,41 @@ function camp_html_add_msg($p_errorMsg, $p_type = "error")
 	if (!in_array($p_type, array("error", "ok"))) {
 		return;
 	}
-	if (is_string($p_errorMsg) && (trim($p_errorMsg) != "")) {
-		$g_camp_msg_added = true;
-		$_SESSION["camp_user_msgs"][] = array("msg" => $p_errorMsg,
-											  "type" => $p_type);
-	} elseif (is_array($p_errorMsg)) {
-		foreach ($p_errorMsg as $errorMsg) {
-			if (is_string($errorMsg) && (trim($errorMsg) != "")) {
-				$g_camp_msg_added = true;
-				$_SESSION["camp_user_msgs"][] = array("msg" => $errorMsg,
-													  "type" => $p_type);
+	if (!is_string($p_errorMsg) && !is_array($p_errorMsg)) {
+		return;
+	}
+	if (is_string($p_errorMsg)) {
+		$p_errorMsg = array($p_errorMsg);
+	}
+	foreach ($p_errorMsg as $errorMsg) {
+		if (is_string($errorMsg) && (trim($errorMsg) != "")) {
+			$g_camp_msg_added = true;
+			if (camp_html_has_msg($errorMsg)) {
+				return;
 			}
+			$_SESSION["camp_user_msgs"][] = array("msg" => $errorMsg,
+												  "type" => $p_type);
 		}
 	}
 } // fn camp_html_add_msg
+
+
+/**
+ * Return true if the given message was already to the list
+ * @param string $p_msg
+ * @return boolean
+ */
+function camp_html_has_msg($p_msg)
+{
+	if (isset($_SESSION['camp_user_msgs']) && is_array($_SESSION['camp_user_msgs'])) {
+		foreach ($_SESSION['camp_user_msgs'] as $msg) {
+			if ($msg['msg'] == $p_msg) {
+				return true;
+			}
+		}
+	}
+	return false;
+} // camp_html_has_msg
 
 
 /**
