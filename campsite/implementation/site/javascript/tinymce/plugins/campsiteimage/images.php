@@ -45,6 +45,12 @@ if (isset($_REQUEST['image_id'])) {
     if (isset($_REQUEST['image_ratio'])) {
         $imageRatioOpt = $_REQUEST['image_ratio'];
     }
+    if (isset($_REQUEST['image_resize_width'])) {
+        $imageResizeWidthOpt = $_REQUEST['image_resize_width'];
+    }
+    if (isset($_REQUEST['image_resize_height'])) {
+        $imageResizeHeightOpt = $_REQUEST['image_resize_height'];
+    }
 }
 
 /* ================= OUTPUT/DRAW FUNCTIONS ======================= */
@@ -263,6 +269,8 @@ function drawErrorBase(&$manager)
 	    }
 	    $imageAlign = (!empty($imageAlignOpt)) ? $imageAlignOpt : '';
 	    $imageRatio = (!empty($imageRatioOpt)) ? $imageRatioOpt : '';
+            $imageResizeWidth = (!empty($imageResizeWidthOpt)) ? $imageResizeWidthOpt : '';
+            $imageResizeHeight = (!empty($imageResizeHeightOpt)) ? $imageResizeHeightOpt : '';
 	} else {
 	    $firstImage = array_shift($list[1]);
 	    if (!empty($firstImage)) {
@@ -272,12 +280,14 @@ function drawErrorBase(&$manager)
 		$imageTitle = $imageAlt;
 		$imageAlign = '';
 		$imageRatio = '';
+                $imageResizeWidth = '';
+                $imageResizeHeight = '';
 	    }
 	}
 	?>
 	<!-- automatically select the image -->
 	<script>
-	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>');
+	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
 	</script>
 <?php } else { drawNoResults(); } ?>
 </body>

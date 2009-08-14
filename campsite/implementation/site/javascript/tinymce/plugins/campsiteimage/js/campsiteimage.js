@@ -23,7 +23,9 @@ var CampsiteImageDialog = {
 	    align : topDoc.getElementById('f_align').value,
 	    id : topDoc.getElementById('f_image_template_id').value + shrinkRatio,
 	    title : topDoc.getElementById('f_caption').value,
-	    alt : topDoc.getElementById('f_alt').value
+            alt : topDoc.getElementById('f_alt').value,
+            width : topDoc.getElementById('f_resize_width').value,
+	    height : topDoc.getElementById('f_resize_height').value
 	}));
 
 	tinyMCEPopup.close();
@@ -44,13 +46,15 @@ var CampsiteImageDialog = {
 	    align : topDoc.getElementById('f_align').value,
 	    id : topDoc.getElementById('f_image_template_id').value + shrinkRatio,
 	    title : topDoc.getElementById('f_caption').value,
-	    alt : topDoc.getElementById('f_alt').value
+            alt : topDoc.getElementById('f_alt').value,
+            width : topDoc.getElementById('f_resize_width').value,
+            height : topDoc.getElementById('f_resize_height').value
 	}));
 
 	tinyMCEPopup.close();
     },
 
-    select : function(p_image_template_id, p_filename, p_alt, p_title, p_align, p_ratio) {
+    select : function(p_image_template_id, p_filename, p_alt, p_title, p_align, p_ratio, p_width, p_height) {
 	var topDoc = window.top.document;
 
 	var obj = topDoc.getElementById('f_image_template_id');
@@ -71,6 +75,16 @@ var CampsiteImageDialog = {
 	if (p_ratio != undefined) {
 	    var obj = topDoc.getElementById('f_ratio');
 	    obj.value = p_ratio;
+	}
+
+	if (p_width != undefined) {
+	    var obj = topDoc.getElementById('f_resize_width');
+	    obj.value = p_width;
+	}
+
+	if (p_height != undefined) {
+	    var obj = topDoc.getElementById('f_resize_height');
+	    obj.value = p_height;
 	}
 
 	var allPageTags = new Array();

@@ -33,6 +33,10 @@
 			    url_params += '&image_title=' + escape(ed.dom.getAttrib(elm, 'title'));
 			if (ed.dom.getAttrib(elm, 'align') !== null)
 			    url_params += '&image_alignment=' + escape(ed.dom.getAttrib(elm, 'align'));
+			if (ed.dom.getAttrib(elm, 'resize_width') !== null && ed.dom.getAttrib(elm, 'resize_width') != '')
+			    url_params += '&image_resize_width=' + escape(ed.dom.getAttrib(elm, 'resize_width'));
+			if (ed.dom.getAttrib(elm, 'resize_height') !== null && ed.dom.getAttrib(elm, 'resize_height') != '')
+			    url_params += '&image_resize_height=' + escape(ed.dom.getAttrib(elm, 'resize_height'));
 			if (ed.dom.getAttrib(elm, 'ratio') !== null && ed.dom.getAttrib(elm, 'ratio') != '')
 			    url_params += '&image_ratio=' + escape(ed.dom.getAttrib(elm, 'ratio'));
 			else
@@ -44,7 +48,7 @@
 		ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo + url_params,
 		        width : 580 + parseInt(ed.getLang('campsiteimage.delta_width', 0)),
-			height : 345 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
+			height : 390 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
 			inline : 1
 		    }, {
 		    plugin_url : url
@@ -71,8 +75,8 @@
 		longname : 'Campsite Image',
 		author : 'Campware',
 		authorurl : 'http://www.campware.org',
-		infourl : 'http://code.campware.org/projects/campsite',
-		version : '3.2'
+		infourl : 'http://trac.campware.org/campsite',
+		version : '3.4'
 	    };
 	}
     });

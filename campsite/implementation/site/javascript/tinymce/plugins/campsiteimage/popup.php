@@ -25,6 +25,12 @@ if (isset($_REQUEST['image_id'])) {
     if (isset($_REQUEST['image_ratio'])) {
         $imageParams .= '&image_ratio=' . htmlspecialchars($_REQUEST['image_ratio'], ENT_QUOTES);
     }
+    if (isset($_REQUEST['image_resize_width'])) {
+        $imageParams .= '&image_resize_width=' . htmlspecialchars($_REQUEST['image_resize_width'], ENT_QUOTES);
+    }
+    if (isset($_REQUEST['image_resize_height'])) {
+        $imageParams .= '&image_resize_height=' . htmlspecialchars($_REQUEST['image_resize_height'], ENT_QUOTES);
+    }
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -81,6 +87,14 @@ if (isset($_REQUEST['image_id'])) {
     <tr>
       <td align="right"><label for="f_ratio">Resizing Ratio:</label></td>
       <td><input type="text" id="f_ratio" class="largelWidth" value="" /></td>
+    </tr>
+    <tr>
+      <td align="right"><label for="f_resize_width">Resizing Width:</label></td>
+      <td><input type="text" id="f_resize_width" class="largelWidth" value="" /></td>
+    </tr>
+    <tr>
+      <td align="right"><label for="f_resize_height">Resizing Height:</label></td>
+      <td><input type="text" id="f_resize_height" class="largelWidth" value="" /></td>
     </tr>
     </table>
     <!--// image properties -->
