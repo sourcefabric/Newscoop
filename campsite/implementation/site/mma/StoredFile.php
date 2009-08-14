@@ -443,13 +443,13 @@ class StoredFile {
         $emptyState = TRUE;
 
         // Insert record into the database
-        $escapedName = $CC_DBC->escape($storedFile->name);
-        $escapedFtype = $CC_DBC->escape($storedFile->ftype);
+        $escapedName = $CC_DBC->escapeSimple($storedFile->name);
+        $escapedFtype = $CC_DBC->escapeSimple($storedFile->ftype);
         $CC_DBC->query("BEGIN");
         $sql = "INSERT INTO ".$CC_CONFIG['filesTable']
                 ."(id, name, gunid, mime, state, ftype, mtime, md5)"
                 ."VALUES ('{$storedFile->id}', '{$escapedName}', "
-                ." CONV({$storedFile->gunid}, 16, 10),"
+                ." CONV('{$storedFile->gunid}', 16, 10),"
                 ." '{$storedFile->mime}', 'incomplete', '$escapedFtype',"
                 ." now(), '{$storedFile->md5}')";
         $res = $CC_DBC->query($sql);
@@ -537,7 +537,7 @@ class StoredFile {
         if (!is_null($p_oid)) {
             $cond = "id='".intval($p_oid)."'";
         } elseif (!is_null($p_gunid)) {
-            $cond = "gunid=CONV($p_gunid, 16, 10)";
+            $cond = "gunid=CONV('$p_gunid', 16, 10)";
         } elseif (!is_null($p_md5sum)) {
             $cond = "md5='$p_md5sum'";
         } else {
@@ -619,7 +619,7 @@ class StoredFile {
         global $CC_CONFIG, $CC_DBC;
         $sql = "SELECT CONV(gunid, 10, 16) as gunid"
             ." FROM ".$CC_CONFIG['accessTable']
-            ." WHERE token=CONV($p_token, 16, 10)";
+            ." WHERE token=CONV('$p_token', 16, 10)";
         $gunid = $CC_DBC->getOne($sql);
         if (PEAR::isError($gunid)) {
             return $gunid;
@@ -949,10 +949,10 @@ class StoredFile {
     public function setName($p_newname)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedName = $CC_DBC->escape($p_newname);
+        $escapedName = $CC_DBC->escapeSimple($p_newname);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET name='$escapedName', mtime=now()"
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
@@ -974,11 +974,11 @@ class StoredFile {
     public function setState($p_state, $p_editedby=NULL)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedState = $CC_DBC->escape($p_state);
+        $escapedState = $CC_DBC->escapeSimple($p_state);
         $eb = (!is_null($p_editedby) ? ", editedBy=$p_editedby" : '');
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET state='$escapedState'$eb, mtime=now()"
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
@@ -1002,10 +1002,10 @@ class StoredFile {
         if (!is_string($p_mime)) {
             $p_mime = 'application/octet-stream';
         }
-        $escapedMime = $CC_DBC->escape($p_mime);
+        $escapedMime = $CC_DBC->escapeSimple($p_mime);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET mime='$escapedMime', mtime=now()"
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
@@ -1024,10 +1024,10 @@ class StoredFile {
     public function setMd5($p_md5sum)
     {
         global $CC_CONFIG, $CC_DBC;
-        $escapedMd5 = $CC_DBC->escape($p_md5sum);
+        $escapedMd5 = $CC_DBC->escapeSimple($p_md5sum);
         $sql = "UPDATE ".$CC_CONFIG['filesTable']
             ." SET md5='$escapedMd5', mtime=now()"
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
@@ -1059,7 +1059,7 @@ class StoredFile {
         }
         $sql = "SELECT CONV(token, 10, 16)as token, ext "
             ." FROM ".$CC_CONFIG['accessTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $tokens = $CC_DBC->getAll($sql);
         if (is_array($tokens)) {
             foreach ($tokens as $i => $item) {
@@ -1070,13 +1070,13 @@ class StoredFile {
             }
         }
         $sql = "DELETE FROM ".$CC_CONFIG['accessTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
         }
         $sql = "DELETE FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
             return $res;
@@ -1100,7 +1100,7 @@ class StoredFile {
             return ($this->currentlyaccessing > 0);
         }
         $sql = "SELECT currentlyAccessing FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV($p_gunid, 16, 10)";
+            ." WHERE gunid=CONV('$p_gunid', 16, 10)";
         $ca = $CC_DBC->getOne($sql);
         if (is_null($ca)) {
             return PEAR::raiseError(
@@ -1147,7 +1147,7 @@ class StoredFile {
             $p_playlistId = $this->gunid;
         }
         $sql = "SELECT editedBy FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV($p_playlistId, 16, 10)";
+            ." WHERE gunid=CONV('$p_playlistId', 16, 10)";
         $ca = $CC_DBC->getOne($sql);
         if (PEAR::isError($ca)) {
             return $ca;
@@ -1190,7 +1190,7 @@ class StoredFile {
         global $CC_CONFIG, $CC_DBC;
         $sql = "SELECT CONV(gunid, 10, 16) "
             ." FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $indb = $CC_DBC->getRow($sql);
         if (PEAR::isError($indb)) {
             return $indb;
@@ -1228,7 +1228,7 @@ class StoredFile {
      */
     public static function NormalizeGunid($p_gunid)
     {
-        return str_pad($p_gunid, 16, "0", STR_PAD_LEFT);
+        return strtolower(str_pad($p_gunid, 16, "0", STR_PAD_LEFT));
     }
 
 
@@ -1304,7 +1304,7 @@ class StoredFile {
             return $this->state;
         }
         $sql = "SELECT state FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV($p_gunid, 16, 10)";
+            ." WHERE gunid=CONV('$p_gunid', 16, 10)";
         return $CC_DBC->getOne($sql);
     }
 
@@ -1323,7 +1323,7 @@ class StoredFile {
             return $this->name;
         }
         $sql = "SELECT name FROM ".$CC_CONFIG['filesTable']
-            ." WHERE gunid=CONV($p_gunid, 16, 10)";
+            ." WHERE gunid=CONV('$p_gunid', 16, 10)";
         return $CC_DBC->getOne($sql);
     }
 

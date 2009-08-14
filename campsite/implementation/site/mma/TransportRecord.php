@@ -366,10 +366,10 @@ class TransportRecord
                 break;
             case 'gunid':
             case 'pdtoken':
-                return "CONV($fldVal, 16, 10)";
+                return "CONV('$fldVal', 16, 10)";
                 break;
             default:
-                $fldVal = $CC_DBC->escape($fldVal);
+                $fldVal = $CC_DBC->escapeSimple($fldVal);
                 return "'$fldVal'";
                 break;
         }

@@ -166,7 +166,7 @@ class MetaData {
         	@unlink($this->fname);
         }
         $sql = "DELETE FROM ".$CC_CONFIG['mdataTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
         	return $res;
@@ -205,7 +205,7 @@ class MetaData {
         }
         $sql = "SELECT id, CONV(gunid, 10, 16), subjns, subject, predns, predicate, predxml, objns, object
             	FROM ".$CC_CONFIG['mdataTable']."
-            	WHERE gunid=CONV({$this->gunid}, 16, 10)";
+            	WHERE gunid=CONV('{$this->gunid}', 16, 10)";
         $rows = $CC_DBC->getAll($sql);
         $this->metadata = array();
         foreach ($rows as $row) {
@@ -246,7 +246,7 @@ class MetaData {
         }
         $catNs = $a['namespace'];
         $cat = $a['localPart'];
-        $cond = "gunid=CONV({$this->gunid}, 16, 10) AND predicate='$cat'";
+        $cond = "gunid=CONV('{$this->gunid}', 16, 10) AND predicate='$cat'";
         if (!is_null($catNs)) {
         	$cond .= " AND predns='$catNs'";
         }
@@ -287,7 +287,7 @@ class MetaData {
                 md.predxml, md.predns as chns, md.predicate as chname
             FROM ".$CC_CONFIG['mdataTable']." parmd
             INNER JOIN ".$CC_CONFIG['mdataTable']." md
-                ON parmd.id=md.subject::integer AND md.subjns='_I'
+                ON parmd.id= CAST(md.subject AS SIGNED) AND md.subjns='_I'
             WHERE md.id=$p_id");
         if (PEAR::isError($info)) {
         	return $info;
@@ -304,7 +304,7 @@ class MetaData {
         	return $r;
         }
         if (!is_null($p_value)) {
-        	$escapedValue = $CC_DBC->escape($p_value);
+        	$escapedValue = $CC_DBC->escapeSimple($p_value);
             $sql = "UPDATE ".$CC_CONFIG['mdataTable']."
                 SET object='$escapedValue', objns='_L'
                 WHERE id={$p_id}";
@@ -339,7 +339,7 @@ class MetaData {
         //$p_category = strtolower($p_category);
         $sql = "SELECT predns, predicate, predxml "
             ." FROM ".$CC_CONFIG['mdataTable']
-            ." WHERE gunid=CONV({$this->gunid}, 16, 10) AND id=$parid";
+            ." WHERE gunid=CONV('{$this->gunid}', 16, 10) AND id=$parid";
         $parent = $CC_DBC->getRow($sql);
         if (PEAR::isError($parent)) {
         	return $parent;
@@ -629,7 +629,7 @@ class MetaData {
         $cnt = $CC_DBC->getOne("
             SELECT count(*)as cnt
             FROM ".$CC_CONFIG['mdataTable']."
-            WHERE gunid=CONV($gunid, 16, 10)");
+            WHERE gunid=CONV('$gunid', 16, 10)");
         if (PEAR::isError($cnt)) {
         	return $cnt;
         }
@@ -796,11 +796,11 @@ class MetaData {
      */
 //    function updateRecord($mdid, $object, $objns='_L')
 //    {
-//    	$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escape($object)."'";
-//    	$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escape($objns)."'";
+//    	$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escapeSimple($object)."'";
+//    	$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escapeSimple($objns)."'";
 //        $res = $CC_DBC->query("UPDATE {$this->mdataTable}
 //            SET objns = $objns_sql, object = $object_sql
-//            WHERE gunid = CONV({$this->gunid}, 16, 10) AND id='$mdid'
+//            WHERE gunid = CONV('{$this->gunid}', 16, 10) AND id='$mdid'
 //        ");
 //        if (PEAR::isError($res)) {
 //        	return $res;
@@ -836,12 +836,12 @@ class MetaData {
         $objns=NULL, $object=NULL)
     {
         global $CC_CONFIG, $CC_DBC;
-        $subjns_sql = is_null($subjns) ? "NULL" : "'".$CC_DBC->escape($subjns)."'";
-		$subject_sql = is_null($subject) ? "NULL" : "'".$CC_DBC->escape($subject)."'";
-		$predns_sql = is_null($predns) ? "NULL" : "'".$CC_DBC->escape($predns)."'";
-		$predicate_sql = is_null($predicate) ? "NULL" : "'".$CC_DBC->escape($predicate)."'";
-		$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escape($objns)."'";
-		$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escape($object)."'";
+        $subjns_sql = is_null($subjns) ? "NULL" : "'".$CC_DBC->escapeSimple($subjns)."'";
+		$subject_sql = is_null($subject) ? "NULL" : "'".$CC_DBC->escapeSimple($subject)."'";
+		$predns_sql = is_null($predns) ? "NULL" : "'".$CC_DBC->escapeSimple($predns)."'";
+		$predicate_sql = is_null($predicate) ? "NULL" : "'".$CC_DBC->escapeSimple($predicate)."'";
+		$objns_sql = is_null($objns) ? "NULL" : "'".$CC_DBC->escapeSimple($objns)."'";
+		$object_sql = is_null($object) ? "NULL" : "'".$CC_DBC->escapeSimple($object)."'";
         $id = $CC_DBC->nextId($CC_CONFIG['mdataTable']."_id_seq");
         if (PEAR::isError($id)) {
         	return $id;
@@ -852,7 +852,7 @@ class MetaData {
                     predns, predicate, predxml,
                     objns, object)
             VALUES
-                ($id, CONV({$this->gunid}, 16, 10), $subjns_sql, $subject_sql,
+                ($id, CONV('{$this->gunid}', 16, 10), $subjns_sql, $subject_sql,
                     $predns_sql, $predicate_sql, '$predxml',
                     $objns_sql, $object_sql
                 )");
@@ -875,7 +875,7 @@ class MetaData {
         global $CC_CONFIG, $CC_DBC;
         $sql = "SELECT id FROM ".$CC_CONFIG['mdataTable']."
             	WHERE subjns='_I' AND subject='{$p_id}' AND
-                gunid=CONV({$this->gunid}, 16, 10)";
+                gunid=CONV('{$this->gunid}', 16, 10)";
         $rh = $CC_DBC->query($sql);
         if (PEAR::isError($rh)) {
         	return $rh;
@@ -889,7 +889,7 @@ class MetaData {
         $rh->free();
         $sql = "DELETE FROM ".$CC_CONFIG['mdataTable']."
             	WHERE id={$p_id} AND
-                gunid=CONV({$this->gunid}, 16, 10)";
+                gunid=CONV('{$this->gunid}', 16, 10)";
         $res = $CC_DBC->query($sql);
         if (PEAR::isError($res)) {
         	return $res;
@@ -911,7 +911,7 @@ class MetaData {
         $res = array();
         $row = $CC_DBC->getRow("
             SELECT * FROM ".$CC_CONFIG['mdataTable']."
-            WHERE gunid=CONV({$this->gunid}, 16, 10)
+            WHERE gunid=CONV('{$this->gunid}', 16, 10)
                 AND subjns='_G' AND subject='{$this->gunid}'
         ");
         if (PEAR::isError($row)) {
@@ -941,7 +941,7 @@ class MetaData {
         $res = XML_Util::getXMLDeclaration("1.0", "UTF-8")."\n";
         $row = $CC_DBC->getRow("
             SELECT * FROM ".$CC_CONFIG['mdataTable']."
-            WHERE gunid=CONV({$this->gunid}, 16, 10)
+            WHERE gunid=CONV('{$this->gunid}', 16, 10)
                 AND subjns='_G' AND subject='{$this->gunid}'
         ");
         if (PEAR::isError($row)) {
@@ -961,8 +961,8 @@ class MetaData {
             }
         }
         $res .= $node;
-        require_once("XML/Beautifier.php");
-        $fmt = new XML_Beautifier();
+//        require_once("XML/Beautifier.php");
+//        $fmt = new XML_Beautifier();
         return $res;
     }
 
@@ -1035,7 +1035,7 @@ class MetaData {
         $sql = "SELECT id, predxml, predns, predicate, objns, object"
             ." FROM ".$CC_CONFIG['mdataTable']
             ." WHERE subjns='_I' AND subject='$parid' "
-            ." AND gunid=CONV({$this->gunid}, 16, 10)"
+            ." AND gunid=CONV('{$this->gunid}', 16, 10)"
             ." ORDER BY id";
         $dbResult = $CC_DBC->query($sql);
         if (PEAR::isError($dbResult)) {

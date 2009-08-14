@@ -66,7 +66,7 @@ $CC_CONFIG = array(
     'useTrash'      =>  TRUE,
 
     /* ==================================================== URL configuration */
-    'storageUrlPath'        => '/campcasterStorageServer',
+    'storageUrlPath'        => '/mma',
     'storageXMLRPC'         => 'xmlrpc/xrLocStor.php',
     'storageUrlHost'        => $Campsite['HOSTNAME'],
     'storageUrlPort'        => 80,

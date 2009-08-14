@@ -152,9 +152,6 @@ class AudioclipXMLMetadata {
             curl_setopt($ch, CURLOPT_INFILESIZE, filesize($p_filePath));
             $res = curl_exec($ch);
             curl_close($ch);
-
-//        	$cmd = trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']);
-//            exec(trim('curl -T ' . escapeshellarg($p_filePath) . ' ' . $r['url']));
         }
         $aClipData = $xrcObj->xr_storeAudioClipClose($p_sessId, $r['token']);
         if (PEAR::isError($aClipData)) {

@@ -59,7 +59,7 @@ class AccessRecur {
         $r = $CC_DBC->getAll("
             SELECT CONV(token, 10, 16)as token2, CONV(gunid, 10, 16)as gunid
             FROM ".$CC_CONFIG['accessTable']."
-            WHERE parent=CONV({$token}, 16, 10)
+            WHERE parent=CONV('{$token}', 16, 10)
         ");
         if (PEAR::isError($r)) {
         	return $r;

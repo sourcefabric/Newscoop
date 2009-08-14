@@ -902,7 +902,7 @@ window.location.reload();
 				        ?>
 					<td><textarea name="<?php print($textAreaId); ?>"
 								  id="<?php print($textAreaId); ?>"
-								  rows="20" cols="70" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
+								  rows="20" cols="60" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
 					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td>

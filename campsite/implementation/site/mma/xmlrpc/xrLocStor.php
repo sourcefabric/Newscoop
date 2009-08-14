@@ -33,6 +33,7 @@ require_once('DB.php');
 require_once("XML/RPC/Server.php");
 require_once('XR_LocStor.php');
 
+
 /* ============================================ setting default error handler */
 function errHndl($errno, $errmsg, $filename, $linenum, $vars)
 {
