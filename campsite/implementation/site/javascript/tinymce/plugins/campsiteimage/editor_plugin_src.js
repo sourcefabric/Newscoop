@@ -33,10 +33,10 @@
 			    url_params += '&image_title=' + escape(ed.dom.getAttrib(elm, 'title'));
 			if (ed.dom.getAttrib(elm, 'align') !== null)
 			    url_params += '&image_alignment=' + escape(ed.dom.getAttrib(elm, 'align'));
-			if (ed.dom.getAttrib(elm, 'resize_width') !== null && ed.dom.getAttrib(elm, 'resize_width') != '')
-			    url_params += '&image_resize_width=' + escape(ed.dom.getAttrib(elm, 'resize_width'));
-			if (ed.dom.getAttrib(elm, 'resize_height') !== null && ed.dom.getAttrib(elm, 'resize_height') != '')
-			    url_params += '&image_resize_height=' + escape(ed.dom.getAttrib(elm, 'resize_height'));
+			if (ed.dom.getAttrib(elm, 'width') !== null && ed.dom.getAttrib(elm, 'width') != '')
+			    url_params += '&image_resize_width=' + escape(ed.dom.getAttrib(elm, 'width'));
+			if (ed.dom.getAttrib(elm, 'height') !== null && ed.dom.getAttrib(elm, 'height') != '')
+			    url_params += '&image_resize_height=' + escape(ed.dom.getAttrib(elm, 'height'));
 			if (ed.dom.getAttrib(elm, 'ratio') !== null && ed.dom.getAttrib(elm, 'ratio') != '')
 			    url_params += '&image_ratio=' + escape(ed.dom.getAttrib(elm, 'ratio'));
 			else

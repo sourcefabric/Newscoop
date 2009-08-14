@@ -12,35 +12,46 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php
 class CampGetImage
 {
     /**
-     * @param string $m_imageSource
+     * @var string $m_imageSource
      *      Path to a local file.
      */
     private $m_imageSource = '';
 
     /**
-     * @param string $m_imageTarget
+     * @var string $m_imageTarget
      *      Path to a local derivate file.
      */
     private $m_imageTarget = '';
 
     /**
-     * @param string $m_isLocal
+     * @var string $m_isLocal
      *      Flag if image is local ore remote.
      */
     private $m_isLocal = TRUE;
 
     /**
-     * @param Image $m_image
+     * @var Image $m_image
      *      Consists name, type and url of the image
      */
     private $m_image = null;
 
-
     /**
-     * @param integer $m_ratio
+     * @var integer $m_ratio
      *      resize ratio in percent
      */
     private $m_ratio = 100;
+
+    /**
+     * @var integer $m_resizeWidth
+     *      resize width in pixels
+     */ 
+    private $m_resizeWidth = 0;
+
+    /**
+     * @var integer $m_resizeHeight
+     *      resize height in pixels
+     */
+    private $m_resizeHeight = 0;
 
     /**
      * @param integer $m_ttl
@@ -67,7 +78,7 @@ class CampGetImage
      * @param integer $p_imageRatio
      *      The ratio for image resize
      */
-    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100)
+    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0)
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
         $this->m_ttl = SystemPref::Get('ImagecacheLifetime');
@@ -76,8 +87,14 @@ class CampGetImage
         || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
             $this->ExitError('Invalid parameters');
         }
-        if($p_imageRatio>0 && $p_imageRatio<100){
+        if($p_imageRatio > 0 && $p_imageRatio < 100) {
             $this->m_ratio = $p_imageRatio;
+        }
+        if($p_imageWidth > 0) {
+            $this->m_resizeWidth = $p_imageWidth;
+        }
+        if($p_imageHeight > 0) {
+            $this->m_resizeHeight = $p_imageHeight;
         }
         $this->GetImage($p_imageNr, $p_articleNr);
     }   // fn __construct
@@ -215,7 +232,8 @@ class CampGetImage
         //        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_image->getContentType());
 
-        if ($this->m_isLocal && $this->m_ratio == 100) {
+        if ($this->m_isLocal && $this->m_ratio == 100
+	        && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
             
@@ -234,10 +252,14 @@ class CampGetImage
     {
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
-
-        $ratio = $this->m_ratio/100;
-        $w_dest = round($w_src*$ratio);
-        $h_dest = round($h_src*$ratio);
+	if ($this->m_ratio > 0 && $this->m_ratio < 100) {
+	    $ratio = $this->m_ratio/100;
+	    $w_dest = round($w_src*$ratio);
+	    $h_dest = round($h_src*$ratio);
+	} else {
+	    $w_dest = $this->m_resizeWidth;
+	    $h_dest = $this->m_resizeHeight;
+	}
 
         $dest = imagecreatetruecolor($w_dest,$h_dest);
         imagecopyresized($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);

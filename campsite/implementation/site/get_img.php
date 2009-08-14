@@ -20,7 +20,9 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampGetImage.ph
 $articleNr = (int) CampRequest::GetVar('NrArticle', null, 'get');
 $imageNr = (int) CampRequest::GetVar('NrImage', null, 'get');
 $imageRatio = (int) CampRequest::GetVar('ImageRatio', null, 'get');
+$imageResizeWidth = (int) CampRequest::GetVar('ImageWidth', null, 'get');
+$imageResizeHeight = (int) CampRequest::GetVar('ImageHeight', null, 'get');
 
-$showImage = new CampGetImage($imageNr, $articleNr,$imageRatio);
+$showImage = new CampGetImage($imageNr, $articleNr, $imageRatio, $imageResizeWidth, $imageResizeHeight);
 
 ?>

@@ -259,10 +259,26 @@ final class MetaSubtitle {
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
         . '&amp;NrImage=' . $imageNumber;
         if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
-            $imgString .= '&ImageRatio=' . (int)$detailsArray['ratio'];
-        } elseif ($imgRatio = SystemPref::Get("EditorImageRatio")) {
-	    $imgString .= ($imgRatio > 0 && $imgRatio < 100) ? '&ImageRatio=' . $imgRatio : '';
-        }
+            $imgString .= '&amp;ImageRatio=' . (int)$detailsArray['ratio'];
+        } else {
+	    $imgRatio = SystemPref::Get("EditorImageRatio");
+	    if ($imgRatio > 0 && $imgRatio < 100) {
+	        $imgString .= '&amp;ImageRatio=' . $imgRatio;
+	    } else {
+	        if (isset($detailsArray['width'])
+		        && !empty($detailsArray['width'])) {
+		    $imgString .= '&amp;ImageWidth=' . (int)$detailsArray['width'];
+		} elseif ($imgResizeWidth = SystemPref::Get("EditorImageResizeWidth")) {
+		    $imgString .= ($imgResizeWidth > 0) ? '&amp;ImageWidth=' . $imgResizeWidth : '';
+		}
+		if (isset($detailsArray['height'])
+		        && !empty($detailsArray['height'])) {
+		    $imgString .= '&amp;ImageHeight=' . (int)$detailsArray['height'];
+		} elseif ($imgResizeHeight = SystemPref::Get("EditorImageResizeHeight")) {
+		    $imgString .= ($imgResizeHeight > 0) ? '&amp;ImageHeight=' . $imgResizeHeight : '';
+		}
+	    }
+	}
         $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
