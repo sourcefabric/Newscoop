@@ -253,12 +253,33 @@ class CampGetImage
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
 	if ($this->m_ratio > 0 && $this->m_ratio < 100) {
-	    $ratio = $this->m_ratio/100;
-	    $w_dest = round($w_src*$ratio);
-	    $h_dest = round($h_src*$ratio);
+	    $ratio = $this->m_ratio / 100;
+	    $w_dest = @round($w_src * $ratio);
+	    $h_dest = @round($h_src * $ratio);
 	} else {
-	    $w_dest = $this->m_resizeWidth;
-	    $h_dest = $this->m_resizeHeight;
+	    // if both width and height are set, get the smaller resulting
+	    // image dimension
+	    if ($this->m_resizeWidth > 0 && $this->m_resizeHeight > 0) {
+	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
+		$h_dest = @round($h_src * $h_dest);
+		if ($h_dest < $this->m_resizeHeight) {
+		    $w_dest = $this->m_resizeWidth;
+		} else {
+		    $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
+		    $w_dest = @round($w_src * $w_dest);
+		    $h_dest = $this->m_resizeHeight;
+		}
+	    } elseif ($this->m_resizeWidth > 0 && $this->m_resizeHeight == 0) {
+	        // autocompute height
+	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
+		$h_dest = @round($h_src * $h_dest);
+		$w_dest = $this->m_resizeWidth;
+	    } elseif ($this->m_resizeHeight > 0 && $this->m_resizeWidth == 0) {
+	        // autocompute width
+	        $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
+		$w_dest = @round($w_src * $w_dest);
+		$h_dest = $this->m_resizeHeight;
+	    }
 	}
 
         $dest = imagecreatetruecolor($w_dest,$h_dest);
