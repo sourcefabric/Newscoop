@@ -274,7 +274,7 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
 
 	$user = $Campsite['DATABASE_USER'];
 	$password = $Campsite['DATABASE_PASSWORD'];
-	$cmd = "mysqldump --add-drop-table -c -e -Q --user=$user --host="
+	$cmd = "mysqldump --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
 		. $Campsite['DATABASE_SERVER_ADDRESS']
 		. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
 	if ($password != "") {
