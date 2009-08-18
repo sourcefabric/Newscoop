@@ -1,3 +1,37 @@
+3.3.2 (Aug 18, 2009)
+  Improvements
+  ------------
+  - #2946 - Include Site Name in Admin interface title in the browser
+  - #2947 - campsite-backup should use --skip-extended-insert
+  - #2950 - Installer should warn about register_globals PHP setting to be OFF
+  - #2960 - Expand the topic filtered articles list
+
+  Bugs Fixed
+  ----------
+  - #2914 - Fix the automatic bug reporting in trac
+  - #2930 - Add article topic field trys to clear cache while cache is not enabled
+  - #2941 - Unable to delete an template, if (another one) is not readable
+  - #2942 - Make sure template managment only access within templates folder
+  - #2943 - cgi compatibility: implement bypass for apache_get_modules()
+  - #2948 - System preferences are not saved in proper PHP syntax
+  - #2949 - Using section select field in the search form crashes the template
+  - #2951 - The article indexer does not filter out invalid words
+  - #2954 - The value of the issue date input field can't be modified
+  - #2955 - The URI function returns null if there was no published issue
+  - #2956 - The articles list ignores false values of ignore_* options
+  - #2959 - Warning messages when cache enabled and displaying URL
+  - #2961 - Order the sections by name in the advanced search form popup list
+  - #2962 - Wrong error message on login
+  - #2963 - The calendar doesn't work in the search form when no translation found
+  - #2966 - The publish date calendar in the article edit screen doesn't work
+  - #2967 - Unable to convert the character set of the file
+  - #2968 - Invalid syntax in sample templates
+  - #2969 - The audioclip select window does not close on submit
+
+  Other Tasks
+  -----------
+  - #2964 - clear templates_c on updates
+
 3.3.1 (July 13, 2009)
   Improvements
   ------------
