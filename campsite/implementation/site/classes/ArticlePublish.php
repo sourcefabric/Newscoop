@@ -335,6 +335,10 @@ class ArticlePublish extends DatabaseObject {
     	foreach ($actions as $articlePublishObj) {
     	    $articlePublishObj->doAction();
     	}
+        if (count($actions) > 0) {
+            CampCache::singleton()->clear('user');
+        }
+        return count($actions);
 	} // fn DoPendingActions
 
 

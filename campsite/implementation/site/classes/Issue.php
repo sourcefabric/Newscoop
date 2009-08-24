@@ -436,13 +436,13 @@ class Issue extends DatabaseObject {
 			}
 
 			// Log message
+            if (function_exists("camp_load_translation_strings")) {
+                camp_load_translation_strings("api");
+            }
 			if ($this->getWorkflowStatus() == 'Y') {
 				$status = getGS('Published');
 			} else {
 				$status = getGS('Not published');
-			}
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
 			}
 			$logtext = getGS('Issue $1 changed status to $2',
 					 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',

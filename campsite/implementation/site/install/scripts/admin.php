@@ -129,6 +129,10 @@ if (($extension == '.php') || ($extension == '')) {
 	unset($no_menu_scripts);
 	unset($request_uri);
 
+    if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
+        CampCache::singleton()->clear('user');
+        unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
+    }
 	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
 
 	// Get the main content
