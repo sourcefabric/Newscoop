@@ -13,6 +13,11 @@ $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 
+if (file_exists($GLOBALS['g_campsiteDir'] . '/reset_cache')) {
+    CampCache::singleton()->clear('user');
+    unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
+}
+
 // initializes the campsite object
 $campsite = new CampSite();
 

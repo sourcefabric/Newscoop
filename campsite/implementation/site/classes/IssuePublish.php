@@ -292,6 +292,10 @@ class IssuePublish extends DatabaseObject {
     	foreach ($actions as $issuePublishObj) {
     	    $issuePublishObj->doAction();
     	}
+    	if (count($actions) > 0) {
+    		CampCache::singleton()->clear('user');
+    	}
+        return count($actions);
 	} // fn DoPendingActions
 
 
