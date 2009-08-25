@@ -250,7 +250,7 @@ final class MetaSubtitle {
         	$detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
-        $imgString = '<table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
+        $imgString = '</p><table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
         }
@@ -283,7 +283,7 @@ final class MetaSubtitle {
             $imgString .= '<tr><td align="center" class="caption">'
             . $detailsArray['sub'] . '</td></tr>';
         }
-        $imgString .= '</table>';
+        $imgString .= '</table><p>';
         return $imgString;
     }
 
