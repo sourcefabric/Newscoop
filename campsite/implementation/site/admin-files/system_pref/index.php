@@ -199,7 +199,7 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
                 <?php putGS("Image Resizing Ratio:"); ?>
         </td>
         <td align="left" valign="top">
-                <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
+                <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="3" size="8" class="input_text" alt="number|0|1|100|bok" emsg="<?php putGS("Please enter a valid value (1 - 100) for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
         </td>
 </tr>
 <tr>

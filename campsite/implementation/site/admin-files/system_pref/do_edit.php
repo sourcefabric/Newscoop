@@ -111,6 +111,9 @@ if ($f_smtp_port <= 0) {
 SystemPref::Set('SMTPPort', $f_smtp_port);
 
 // Image resizing ratio for WYSIWYG editor
+if ($f_editor_image_ratio < 1 || $f_editor_image_ratio > 100) {
+    $f_editor_image_ratio = 100;
+}
 SystemPref::Set('EditorImageRatio', $f_editor_image_ratio);
 
 // External subscription management

@@ -374,7 +374,8 @@ class CampInstallationBase
             $this->m_message = 'Error: Could not save the configuration.';
             return false;
         }
-        if (!copy(CS_PATH_SITE . '/htaccess', CS_PATH_SITE . '/.htaccess')) {
+        if (!file_exists(CS_PATH_SITE . '/.htaccess')
+               && !copy(CS_PATH_SITE . '/htaccess', CS_PATH_SITE . '/.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
             return false;
