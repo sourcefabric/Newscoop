@@ -1,0 +1,122 @@
+/*
+	darkest = 432989
+*/
+.photoViewer-viewer{
+	padding:40px;
+	margin:0;
+	background:#432989 url(background.jpg) bottom left;
+	border:solid 2px #432989;
+	overflow:hidden;
+	text-align:left;
+	font-size:small;
+	font-family:"Trebuchet MS", arial, sans-serif;
+}
+.photoViewer-imageCont{
+	padding:6px;
+	margin:0;
+	background:#4a1d7d;
+	border:solid 1px #694296;
+}
+.photoViewer-showcaseImage{
+	padding:0;
+	margin:0;
+	border:solid 1px #ffffff;
+}
+.photoViewer-mask{
+	padding:0;
+	margin:0;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#432989;
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.photoViewer-header{
+	padding:0;
+	margin:0 0 5px 0;
+	background:#371d7d;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+}
+.photoViewer-header h1{
+	padding:8px 8px 2px 8px;
+	margin:0;
+}
+.photoViewer-header a{
+	color:#999999;
+	text-decoration:none;
+}
+.photoViewer-header a:hover{
+	color:#cccccc;
+}
+.photoViewer-title{
+	padding:0;
+	margin:0;
+	font-size:130%;
+	height:32px;
+	width:100%;
+	color:#e3cef0;
+}
+.photoViewer-desc{
+	padding:0;
+	margin:5px 0 5px 0;
+	background:#371d7d;
+	color:#ffffff;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+}
+.photoViewer-desc p{
+	padding:8px;
+	margin:0;
+}
+.photoViewer-next{
+	padding:6px;
+	margin:0;
+	display:block;
+	position:absolute;
+	right:40px;
+	bottom:15px;
+	font-size:120%;
+	background:#432989;
+	color:#ffffff;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+}
+.photoViewer-prev{
+	padding:6px;
+	margin:0;
+	display:block;
+	position:absolute;
+	left:40px;
+	bottom:15px;
+	font-size:120%;
+	background:#432989;
+	color:#ffffff;
+	opacity:0.7;
+	filter:alpha(opacity=70);
+}
+.photoViewer-footer{
+	padding:0;
+	margin:0;
+	height:22px;
+}
+.photoViewer-footer a{
+	color:#999999;
+	text-decoration:none;
+}
+.photoViewer-footer a:hover{
+	color:#cccccc;
+}
+.photoViewer-close{
+	padding:0;
+	margin:0;
+	position:absolute;
+	right:10px;
+	top:10px;
+}
+.photoViewer-loading{
+	padding:0;
+	margin:0;
+	background:transparent url(../assets/loading.gif) center no-repeat;
+}

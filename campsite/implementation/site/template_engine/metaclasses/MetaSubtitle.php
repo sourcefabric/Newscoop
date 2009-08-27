@@ -250,49 +250,88 @@ final class MetaSubtitle {
         	$detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
+	$articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
+	$image = new MetaImage($articleImage->getImageId());
+	$imageSize = @getimagesize($image->imageurl);
+	$imgParams = '';
+	if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
+            $imgParams = '&amp;ImageRatio=' . (int)$detailsArray['ratio'];
+        } else {
+	    $imgRatio = SystemPref::Get("EditorImageRatio");
+	    if ($imgRatio > 0 && $imgRatio < 100) {
+	        $imgParams = '&amp;ImageRatio=' . $imgRatio;
+	    } else {
+	        $widthSet = false;
+		$heightSet = false;
+	        if (isset($detailsArray['width'])
+		        && !empty($detailsArray['width'])) {
+		    if ($detailsArray['width'] < $imageSize[0]) {
+		        $imgParams = '&amp;ImageWidth=' . (int)$detailsArray['width'];
+			$widthSet = true;
+		    }
+		}
+		if (!$widthSet && $imgResizeWidth = SystemPref::Get("EditorImageResizeWidth")) {
+		    $imgParams = ($imgResizeWidth > 0 && $imgResizeWidth < $imageSize[0]) ? '&amp;ImageWidth=' . $imgResizeWidth : '';
+		}
+		if (isset($detailsArray['height'])
+		        && !empty($detailsArray['height'])) {
+		    if ($detailsArray['height'] < $imageSize[1]) {
+		        $imgParams .= '&amp;ImageHeight=' . (int)$detailsArray['height'];
+			$heightSet = true;
+		    }
+		}
+		if (!$heightSet && $imgResizeHeight = SystemPref::Get("EditorImageResizeHeight")) {
+		    $imgParams .= ($imgResizeHeight > 0 && $imgResizeHeight < $imageSize[1]) ? '&amp;ImageHeight=' . $imgResizeHeight : '';
+		}
+	    }
+	}
+
+	$imgZoomLink = '';
+	if (SystemPref::Get("EditorImageZoom") == 'Y' && strlen($imgParams) > 0) {
+	    $imgZoomLink = '<a href="/get_img?NrArticle=' . $uri->article->number
+	        . '&amp;NrImage=' . $imageNumber . '" class="photoViewer" ';
+	    if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
+	        $imgZoomLink .= 'title="' . $detailsArray['sub'] . '">';
+	    } else {
+	        $imgZoomLink .= 'title="">';
+	    }
+	}
+
         $imgString = '</p><table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
         }
         $imgString .= '>';
         $imgString .= '<tr><td align="center">';
+	if (strlen($imgZoomLink) > 0) {
+	    $imgString .= $imgZoomLink;
+	}
         $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
         . '&amp;NrImage=' . $imageNumber;
-        if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
-            $imgString .= '&amp;ImageRatio=' . (int)$detailsArray['ratio'];
-        } else {
-	    $imgRatio = SystemPref::Get("EditorImageRatio");
-	    if ($imgRatio > 0 && $imgRatio < 100) {
-	        $imgString .= '&amp;ImageRatio=' . $imgRatio;
-	    } else {
-	        if (isset($detailsArray['width'])
-		        && !empty($detailsArray['width'])) {
-		    $imgString .= '&amp;ImageWidth=' . (int)$detailsArray['width'];
-		} elseif ($imgResizeWidth = SystemPref::Get("EditorImageResizeWidth")) {
-		    $imgString .= ($imgResizeWidth > 0) ? '&amp;ImageWidth=' . $imgResizeWidth : '';
-		}
-		if (isset($detailsArray['height'])
-		        && !empty($detailsArray['height'])) {
-		    $imgString .= '&amp;ImageHeight=' . (int)$detailsArray['height'];
-		} elseif ($imgResizeHeight = SystemPref::Get("EditorImageResizeHeight")) {
-		    $imgString .= ($imgResizeHeight > 0) ? '&amp;ImageHeight=' . $imgResizeHeight : '';
-		}
-	    }
+	if (strlen($imgParams) > 0) {
+	    $imgString .= $imgParams;
 	}
         $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
-        }
+	}
 	if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
             $imgString .= ' title="' . $detailsArray['sub'] . '"';
 	}
-        if (isset($detailsArray['width']) && !empty($detailsArray['width'])) {
-            $imgString .= ' width="' . $detailsArray['width'] . '"';
-        }
-        if (isset($detailsArray['height']) && !empty($detailsArray['height'])) {
-            $imgString .= ' height="' . $detailsArray['height'] . '"';
-        }
+	if (strpos($imgParams, 'ImageRatio') === false) {
+	    if (isset($detailsArray['width']) && !empty($detailsArray['width'])
+		    && $detailsArray['width'] < $imageSize[0]) {
+	        $imgString .= ' width="' . $detailsArray['width'] . '"';
+	    }
+	    if (isset($detailsArray['height']) && !empty($detailsArray['height'])
+	            && $detailsArray['height'] < $imageSize[1]) {
+	        $imgString .= ' height="' . $detailsArray['height'] . '"';
+	    }
+	}
         $imgString .= ' border="0" hspace="5" vspace="5">';
+	if (strlen($imgZoomLink) > 0) {
+	    $imgString .= '</a>';
+	}
         $imgString .= '</td>';
         $imgString .= '</tr>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {

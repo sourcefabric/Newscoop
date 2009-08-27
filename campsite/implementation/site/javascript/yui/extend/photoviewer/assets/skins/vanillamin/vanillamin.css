@@ -1,0 +1,168 @@
+.photoViewer-viewer{
+	padding:8px;
+	margin:0;
+	background:#ffffff;
+	overflow:hidden;
+	text-align:left;
+	font-size:small;
+	font-family:"Trebuchet", sans-serif;
+}
+.photoViewer-imageCont{
+	padding:0;
+	margin:0;
+	background:#ffffff;
+}
+.photoViewer-showcaseImage{
+	padding:0;
+	margin:0;
+	border:solid 1px #8d8d8d;
+}
+.photoViewer-mask{
+	padding:0;
+	margin:0;
+	position:absolute;
+	top:0;
+	left:0;
+	background:#000000;
+	opacity:0.9;
+	filter:alpha(opacity=90);
+}
+.photoViewer-header a{
+	color:#8d8d8d;
+	text-decoration:none;
+}
+.photoViewer-header a:hover{
+	color:#d8d8d8;
+}
+.photoViewer-title{
+	padding:0;
+	margin:0;
+	font-size:110%;
+	height:22px;
+	width:100%;
+	color:#8d8d8d;
+}
+.photoViewer-desc{
+	padding:0;
+	margin:0;
+	background:#ffffff;
+	color:#8d8d8d;
+}
+.photoViewer-desc p{
+	padding:4px 0 4px 0;
+	margin:0;
+	background:#ffffff;
+	color:#8d8d8d;
+}
+.photoViewer-next{
+	padding:0;
+	margin:0;
+	position:absolute;
+	background:url(clear.gif);
+	width:50%;
+	height:60%;
+	top:60px;
+	right:8px;
+	font-size:100%;
+	display:block;
+	outline:none;
+}
+.photoViewer-prev{
+	padding:0;
+	margin:0;
+	position:absolute;
+	background:url(clear.gif);
+	width:50%;
+	height:60%;
+	top:60px;
+	left:8px;
+	font-size:100%;
+	display:block;
+	outline:none;
+}
+.photoViewer-footer{
+	padding:0;
+	margin:0;
+	height:0;
+}
+.photoViewer-footer a{
+	color:#8d8d8d;
+	text-decoration:none;
+}
+.photoViewer-footer a:hover{
+	color:#d8d8d8;
+}
+a.photoViewer-prev:hover{
+	background:url(prev.gif) no-repeat top left;
+}
+a.photoViewer-next:hover{
+	background:url(next.gif) no-repeat top right;
+}
+.photoViewer-close{
+	padding:0;
+	margin:0;
+	position:absolute;
+	right:10px;
+	top:8px;
+}
+.photoViewer-loading{
+	padding:0;
+	margin:0;
+	background:transparent url(../assets/loading.gif) center no-repeat;
+}
+/* slide show controls */
+.photoViewer-controls{
+	width:auto;
+	height:35px;
+	border:solid 3px #e8e8e8;
+}
+.photoViewer-controls a{
+}
+.photoViewer-controls a:hover{
+}
+.photoViewer-controls-absolute{
+}
+.photoViewer-play{
+	margin-top:10px;
+	width:18px;
+	height:18px;
+	display:block;
+	float:left;
+	background-image:url(play.gif);
+}
+a.photoViewer-play:hover{
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.photoViewer-pause{
+	margin-top:10px;
+	width:18px;
+	height:18px;
+	display:block;
+	float:left;
+	background-image:url(pause.gif);
+}
+a.photoViewer-pause:hover{
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.photoViewer-stop{
+	margin-top:10px;
+	width:18px;
+	height:18px;
+	display:block;
+	float:left;
+	background-image:url(stop.gif);
+}
+a.photoViewer-stop:hover{
+	opacity:0.5;
+	filter:alpha(opacity=50);
+}
+.photoViewer-display{
+	margin-top:10px;
+	font-size:small;
+	color:#999999;
+	display:block;
+	float:left;
+	font-weight:bold;
+}

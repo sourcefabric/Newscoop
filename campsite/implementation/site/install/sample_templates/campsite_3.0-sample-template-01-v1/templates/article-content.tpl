@@ -1,3 +1,39 @@
+<link rel="stylesheet" type="text/css" href="/javascript/yui/build/container/assets/container.css" >
+<link rel="stylesheet" type="text/css" href="/javascript/yui/extend/photoviewer/assets/skins/blackmin/blackmin.css" >
+
+<script type="text/javascript" src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/dragdrop/dragdrop-min.js" ></script>
+<script type="text/javascript" src="/javascript/yui/build/animation/animation-min.js" ></script>
+<script type="text/javascript" src="/javascript/yui/build/container/container-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/connection/connection-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/extend/photoviewer/build/photoviewer_base-min.js"></script>
+
+<script type="text/javascript">
+// config 
+YAHOO.photoViewer.config = {
+    viewers: {
+        "blackmin" : {
+            properties: {
+                id: "blackmin",
+                grow: 0.6,
+                fade: 0.6,
+                modal: true,
+                dragable: false,
+                fixedcenter: true,
+                xy: [0,0],
+                loadFrom: "html",
+                position: "absolute",
+                easing: YAHOO.util.Easing.easeBothStrong,
+                buttonText: {
+                    next: " ",
+                    prev: " ",
+                    close: "Close"
+                }
+            }
+        }
+    }
+};
+</script>
 <table class="article" cellspacing="0" cellpadding="0">
 <tr>
   <td>
@@ -34,7 +70,7 @@
 
     <p class="article_byline">Written by {{ $campsite->article->byline }}</p>
     <p class="article_intro">{{ $campsite->article->intro }}</p>
-    <p class="article_fulltext">{{ $campsite->article->full_text }}</p>
+    <div id="blackmin"><p class="article_fulltext">{{ $campsite->article->full_text }}</p></div>
 
     {{ list_article_attachments name="article_attachments" }}
       {{ if $campsite->current_list->count }}

@@ -96,6 +96,12 @@ table.footer {
     border-top: 2px solid #424242;
 }
 
+td.caption {
+    font-size: 60%;
+    background: #efefef;
+    padding: 2px;
+}
+
 p.footer_text {
     font-size: 65%;
     text-align: center;

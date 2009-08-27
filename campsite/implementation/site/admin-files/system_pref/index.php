@@ -199,7 +199,32 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
                 <?php putGS("Image Resizing Ratio:"); ?>
         </td>
         <td align="left" valign="top">
-                <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
+	  <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="3" size="8" class="input_text" alt="number|0|1|100" emsg="<?php putGS("Please enter a valid number (1 - 100) for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
+        </td>
+</tr>
+<tr>
+        <td align="left" width="400px">
+                <?php putGS("Image Resizing Width:"); ?>
+        </td>
+        <td align="left" valign="top">
+                <input type="text" name="f_editor_image_width" value="<?php p(SystemPref::Get("EditorImageResizeWidth")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Width")); ?>" />&nbsp;pixels
+        </td>
+</tr>
+<tr>
+        <td align="left" width="400px">
+                <?php putGS("Image Resizing Height:"); ?>
+        </td>
+        <td align="left" valign="top">
+                <input type="text" name="f_editor_image_height" value="<?php p(SystemPref::Get("EditorImageResizeHeight")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Height")); ?>" />&nbsp;pixels
+        </td>
+</tr>
+<tr>
+        <td align="left" width="400px">
+                <?php putGS("Zoom enabled for images in article content?"); ?>
+        </td>
+        <td align="left" valign="top">
+                <input type="radio" name="f_editor_image_zoom" value="Y" <?php if (SystemPref::Get("EditorImageZoom") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+                <input type="radio" name="f_editor_image_zoom" value="N" <?php if (SystemPref::Get("EditorImageZoom") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
         </td>
 </tr>
 <tr>
