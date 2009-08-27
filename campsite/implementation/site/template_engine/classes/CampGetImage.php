@@ -235,12 +235,12 @@ class CampGetImage
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
 
-        $ratio = $this->m_ratio/100;
-        $w_dest = round($w_src*$ratio);
-        $h_dest = round($h_src*$ratio);
+        $ratio = $this->m_ratio / 100;
+        $w_dest = round($w_src * $ratio);
+        $h_dest = round($h_src * $ratio);
 
-        $dest = imagecreatetruecolor($w_dest,$h_dest);
-        imagecopyresized($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
+        $dest = @imagecreatetruecolor($w_dest, $h_dest);
+        @imagecopyresampled($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
     }  // fn ResizeImage
     
