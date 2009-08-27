@@ -282,8 +282,8 @@ class CampGetImage
 	    }
 	}
 
-        $dest = imagecreatetruecolor($w_dest,$h_dest);
-        imagecopyresized($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
+        $dest = @imagecreatetruecolor($w_dest, $h_dest);
+        @imagecopyresampled($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
     }  // fn ResizeImage
     
