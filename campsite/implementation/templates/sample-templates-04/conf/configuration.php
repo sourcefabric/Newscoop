@@ -3,7 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2008 MDLF, Inc.
+ * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
@@ -11,20 +11,13 @@
 
 global $Campsite;
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
+$GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
+
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/classes/SystemPref.php');
-
-/**
- * Includes
- *
- * We indirectly reference the DOCUMENT_ROOT so we can enable
- * scripts to use this file from the command line, $_SERVER['DOCUMENT_ROOT']
- * is not defined in these cases.
- */
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 
 /** System settings **/
@@ -38,7 +31,7 @@ $Campsite['site']['title'] = SystemPref::Get('SiteTitle');
 $Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
 $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
-$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/2.6/';
+$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/3.3/';
 $Campsite['site']['about_url'] = 'http://www.campware.org/en/camp/campsite_news/';
 $Campsite['site']['email'] = 'campsite-support@lists.campware.org';
 
@@ -58,8 +51,8 @@ $Campsite['cache']['path'] = null;
 /** Smarty settings **/
 $Campsite['smarty']['caching'] = false;
 $Campsite['smarty']['debugging'] = false;
-$Campsite['smarty']['force_compile'] = true;
-$Campsite['smarty']['compile_check'] = false;
+$Campsite['smarty']['force_compile'] = false;
+$Campsite['smarty']['compile_check'] = true;
 $Campsite['smarty']['use_subdirs'] = false;
 $Campsite['smarty']['left_delimeter'] = '{{';
 $Campsite['smarty']['right_delimeter'] = '}}';
@@ -74,8 +67,8 @@ $Campsite['smtp']['default_port'] = 25;
 $ADMIN_DIR = "admin-files";
 $ADMIN = "admin";
 
-require_once($g_documentRoot.'/conf/database_conf.php');
-require_once($g_documentRoot.'/conf/install_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
 
 
 /**
@@ -86,20 +79,19 @@ require_once($g_documentRoot.'/conf/install_conf.php');
  */
 function __autoload($p_className)
 {
-    global $g_documentRoot, $ADMIN, $ADMIN_DIR;
-    require_once($g_documentRoot.'/classes/CampPlugin.php');
+    global $ADMIN, $ADMIN_DIR;
+    require_once($GLOBALS['g_campsiteDir'].'/classes/CampPlugin.php');
 
+    static $classDirectories = array('classes',
+                              'template_engine/classes',
+                              'template_engine/metaclasses');
+                      
     if (!is_string($p_className)) {
         return;
     }
 
-    $classDirectories = array('classes',
-                              'template_engine',
-                              'template_engine/classes',
-                              'template_engine/metaclasses');
-                      
     foreach ($classDirectories as $dirName) {
-        $fileName = "$g_documentRoot/$dirName/$p_className.php";
+        $fileName = $GLOBALS['g_campsiteDir']."/$dirName/$p_className.php";
         if (file_exists($fileName)) {
             require_once($fileName);
             return;
@@ -112,7 +104,7 @@ function __autoload($p_className)
     }
     foreach ($basePaths as $basePath) {                       
         foreach ($classDirectories as $dirName) {
-            $fileName = "$g_documentRoot/$basePath/$dirName/$p_className.php";
+            $fileName = $GLOBALS['g_campsiteDir']."/$basePath/$dirName/$p_className.php";
             if (file_exists($fileName)) {
                 require_once($fileName);
                 return;

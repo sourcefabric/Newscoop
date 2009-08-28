@@ -6,7 +6,7 @@
                   {{ list_articles constraints="onfrontpage is off onsection is on" order="bynumber desc" }}
                  <tr>
  				  <td>
-					  {{ if $campsite->image->has_image(2) }}
+					  {{ if $campsite->article->has_image(2) }}
 				     <div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 2" }}" width="72"></div>
 					  {{ /if }}
 					 {{ if $campsite->article->has_property("deck") && $campsite->article->deck != "" }}

@@ -4,7 +4,7 @@
  *
  * @author Holman Romero <holman.romero@gmail.com>
  * @author Mugur Rus <mugur.rus@gmail.com>
- * @copyright 2008 MDLF, Inc.
+ * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.campware.org
@@ -12,8 +12,8 @@
 
 $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
-$Campsite['CAMPSITE_DIR'] = (strlen($_SERVER['DOCUMENT_ROOT']) > 0)
-     ? $_SERVER['DOCUMENT_ROOT'] : dirname(dirname(__FILE__));
+$Campsite['CAMPSITE_DIR'] = (strlen($GLOBALS['g_campsiteDir']) > 0)
+     ? $GLOBALS['g_campsiteDir'] : dirname(dirname(__FILE__));
 $Campsite['ETC_DIR'] = $Campsite['CAMPSITE_DIR'].'/conf';
 $Campsite['BIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/bin';
 $Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];
@@ -51,9 +51,9 @@ $Campsite['FILE_DIRECTORY'] = $Campsite['HTML_DIR'].'/files';
 $Campsite['FILE_NUM_DIRS_LEVEL_1'] = "1000";
 $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
-$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.0/';
+$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.3/';
 $Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
-$Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.campware.org';
+$Campsite['SUPPORT_EMAIL'] = 'campsite-support@campware.org';
 $Campsite['DEBUG'] = true;
 
 require_once($Campsite['CAMPSITE_DIR'].'/template_engine/classes/CampVersion.php');
