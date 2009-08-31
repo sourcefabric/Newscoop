@@ -168,6 +168,14 @@ class XR_LocStor extends LocStor {
         }
     }
 
+    public function xr_addSubject($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+    }
+
     /**
      * Logout, destroy session and return status.
      * If session is not valid error message is returned.
