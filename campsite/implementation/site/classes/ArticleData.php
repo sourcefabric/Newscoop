@@ -218,6 +218,13 @@ class ArticleData extends DatabaseObject {
 		static $internalLinkCounter = 0;
 		static $internalLinkStartTag = 0;
 
+		// This matches anchor links
+		$anchorStartRegex = "/<\s*a\s*(name\s*=\s*[\"']\w+[\"'])+[\s]*>/i";
+		if (preg_match($anchorStartRegex, $p_match[0])) {
+		    // Leave the HTML tag as is
+		    return $p_match[0];
+		}
+
 		// This matches '<a href="campsite_internal_link?IdPublication=1&..." ...>'
 		$internalLinkStartRegex = "/<\s*a\s*(((href\s*=\s*[\"'](\\/admin\\/articles\\/)?campsite_internal_link[?][\w&=;]*[\"'])|(\w+\s*=\s*['\"][_\w]*['\"]))[\s]*)*[\s\w\"']*>/i";
 
