@@ -129,6 +129,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "campsiteinternallink";
 	    $toolbar1[] = "link";
+	    $toolbar1[] = "anchor";
 	    if ($p_objectType == 'article') {
 	        $toolbar1[] = "campsiteattachment";
 	    }
@@ -169,8 +170,8 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 
 	$toolbar2 = array();
 	// Slice up the first toolbar if it is too long.
-	if (count($toolbar1) > 33) {
-		$toolbar2 = array_splice($toolbar1, 33);
+	if (count($toolbar1) > 34) {
+		$toolbar2 = array_splice($toolbar1, 34);
 	}
 
 	// This is to put the bulleted and numbered list controls
@@ -179,7 +180,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	    $toolbar1[] = "numlist";
-	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 33) {
+	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 34) {
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "bullist";
 	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
