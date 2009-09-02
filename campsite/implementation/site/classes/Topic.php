@@ -52,6 +52,9 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 		if (!is_null($p_columns)) {
+            if ($this->readFromCache($p_columns) !== false) {
+                return true;
+            }
 			foreach ($p_columns as $columnName => $value) {
 				if (in_array($columnName, $this->m_columnNames)) {
 					$this->m_data[$columnName]  = $value;
@@ -62,6 +65,9 @@ class Topic extends DatabaseObject {
 			}
 			$this->m_exists = true;
 		} else {
+            if ($this->readFromCache() !== false) {
+                return true;
+            }
 			$columnNames = implode(",", $this->m_columnNames);
 			$queryStr = "SELECT $columnNames FROM ".$this->m_dbTableName
 						." WHERE Id=".$this->m_data['Id'];
@@ -75,8 +81,15 @@ class Topic extends DatabaseObject {
 					$this->m_names[$row['LanguageId']] = $row['Name'];
 				}
 				$this->m_exists = true;
+			} else {
+				$this->m_exists = false;
 			}
 		}
+
+		// Write the object to cache
+		$this->writeCache();
+
+        return $this->m_exists;
 	} // fn fetch
 
 
@@ -330,7 +343,7 @@ class Topic extends DatabaseObject {
 	    $name = $components[0];
 	    $languageCode = $components[1];
 
-	    $languages = Language::GetLanguages(null, $languageCode, null, array(), array(), true);
+	    $languages = Language::GetLanguages(null, $languageCode, null, array(), array(), false);
 	    if (count($languages) < 1) {
 	        return null;
 	    }
@@ -358,6 +371,20 @@ class Topic extends DatabaseObject {
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
 					                 $p_parentId = null, $p_sqlOptions = null, $p_order = null)
 	{
+        if (!$p_skipCache && CampCache::IsEnabled()) {
+            $paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
+            $paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+            $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
+            $paramsArray['parent_id'] = (is_null($p_parentId)) ? 'null' : $p_parentId;
+            $paramsArray['sql_options'] = $p_sqlOptions;
+            $paramsArray['order'] = $p_order;
+            $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+            $topics = $cacheListObj->fetchFromCache();
+            if ($topics !== false && is_array($topics)) {
+                return $topics;
+            }
+        }
+
 		$constraints = array();
 		if (!is_null($p_id)) {
 			$constraints[] = array("Id", $p_id);
@@ -385,7 +412,13 @@ class Topic extends DatabaseObject {
 			}
 			$p_sqlOptions['ORDER BY'] = $order;
 		}
-		return DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
+		$topics = DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
+
+        if (!$p_skipCache && CampCache::IsEnabled()) {
+            $cacheListObj->storeInCache($topics);
+        }
+
+        return $topics;
 	} // fn GetTopics
 	
 	

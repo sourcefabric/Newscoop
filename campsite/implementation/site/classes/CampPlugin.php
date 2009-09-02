@@ -63,19 +63,34 @@ class CampPlugin extends DatabaseObject
     {
         global $g_ado_db;
 
-        if ($p_reload || !is_array(self::$m_allPlugins)) {
-            $CampPlugin = new CampPlugin();
-            $query = "SELECT Name FROM `" . $CampPlugin->m_dbTableName . "`";
-            $res = $g_ado_db->execute($query);
-            if (!$res) {
-                return array();
-            }
-
-            self::$m_allPlugins = array();
-            while ($row = $res->FetchRow()) {
-                self::$m_allPlugins[] = new CampPlugin($row['Name']);;
+        if (!$p_reload && is_array(self::$m_allPlugins)) {
+        	return self::$m_allPlugins;
+        }
+        
+        if (!$p_reload && CampCache::IsEnabled()) {
+            $cacheListObj = new CampCacheList(array(), __METHOD__);
+            self::$m_allPlugins = $cacheListObj->fetchFromCache();
+            if (self::$m_allPlugins !== false && is_array(self::$m_allPlugins)) {
+                return self::$m_allPlugins;
             }
         }
+
+        $CampPlugin = new CampPlugin();
+        $query = "SELECT Name FROM `" . $CampPlugin->m_dbTableName . "`";
+        $res = $g_ado_db->execute($query);
+        if (!$res) {
+        	return array();
+        }
+
+        self::$m_allPlugins = array();
+        while ($row = $res->FetchRow()) {
+        	self::$m_allPlugins[] = new CampPlugin($row['Name']);;
+        }
+
+        if (!$p_reload && CampCache::IsEnabled()) {
+            $cacheListObj->storeInCache(self::$m_allPlugins);
+        }
+
         return self::$m_allPlugins;
     }
 
