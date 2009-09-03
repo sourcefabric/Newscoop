@@ -20,25 +20,6 @@ ALTER TABLE `Languages` ADD COLUMN `ShortWDay6` VARCHAR(20);
 ALTER TABLE `Languages` ADD COLUMN `ShortWDay7` VARCHAR(20);
 
 
-DROP TABLE IF EXISTS backup;
-DROP TABLE IF EXISTS ls_access;
-DROP TABLE IF EXISTS ls_classes;
-DROP TABLE IF EXISTS ls_cmemb;
-DROP TABLE IF EXISTS ls_files;
-DROP TABLE IF EXISTS ls_mdata;
-DROP TABLE IF EXISTS ls_mdata_id_seq_seq;
-DROP TABLE IF EXISTS ls_perms;
-DROP TABLE IF EXISTS ls_pref;
-DROP TABLE IF EXISTS ls_sess;
-DROP TABLE IF EXISTS ls_smemb;
-DROP TABLE IF EXISTS ls_struct;
-DROP TABLE IF EXISTS ls_struct_id_seq_seq;
-DROP TABLE IF EXISTS ls_subjs;
-DROP TABLE IF EXISTS ls_trans;
-DROP TABLE IF EXISTS ls_tree;
-DROP TABLE IF EXISTS playlog;
-DROP TABLE IF EXISTS schedule;
-
 
 CREATE TABLE backup (
     token character varying(64) NOT NULL,
