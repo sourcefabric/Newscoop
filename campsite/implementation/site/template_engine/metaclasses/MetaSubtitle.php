@@ -250,7 +250,7 @@ final class MetaSubtitle {
         	$detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
-        $imgString = '</p><table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
+        $imgString = '</p><table width="1" border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
         }
@@ -261,15 +261,15 @@ final class MetaSubtitle {
         if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
             $imgString .= '&ImageRatio=' . (int)$detailsArray['ratio'];
         } elseif ($imgRatio = SystemPref::Get("EditorImageRatio")) {
-	    $imgString .= ($imgRatio > 0 && $imgRatio < 100) ? '&ImageRatio=' . $imgRatio : '';
+        	$imgString .= ($imgRatio > 0 && $imgRatio < 100) ? '&ImageRatio=' . $imgRatio : '';
         }
         $imgString .= '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
         }
-	if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-            $imgString .= ' title="' . $detailsArray['sub'] . '"';
-	}
+        if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
+        	$imgString .= ' title="' . $detailsArray['sub'] . '"';
+        }
         if (isset($detailsArray['width']) && !empty($detailsArray['width'])) {
             $imgString .= ' width="' . $detailsArray['width'] . '"';
         }
