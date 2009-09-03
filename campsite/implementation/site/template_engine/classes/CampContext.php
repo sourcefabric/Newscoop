@@ -240,7 +240,9 @@ final class CampContext
     final public function __get($p_element)
     {
         try {
-            // Verify if an object of this type exists
+            $p_element = CampContext::TranslateProperty($p_element);
+
+        	// Verify if an object of this type exists
             if (!is_null(CampContext::ObjectType($p_element))) {
                 if (!isset($this->m_objects[$p_element])
                 || is_null($this->m_objects[$p_element])) {
@@ -248,8 +250,6 @@ final class CampContext
                 }
                 return $this->m_objects[$p_element];
             }
-
-            $p_element = CampContext::TranslateProperty($p_element);
 
             // Verify if a readonly property with this name exists
             if (is_array($this->m_readonlyProperties)
@@ -299,8 +299,8 @@ final class CampContext
                     $pluginImplementsClassFullPath = false;
 
                     foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                        $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath().
-                                        '/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
+                        $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath()
+                        .'/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
                         if (file_exists($pluginClassFullPath)) {
                             $pluginImplementsClassFullPath = $pluginClassFullPath;   
                         }
@@ -372,6 +372,7 @@ final class CampContext
      */
     public function has_object($p_object)
     {
+    	$p_object = CampContext::TranslateProperty($p_object);
         return !is_null(CampContext::ObjectType($p_object));
     } // fn has_object
 
@@ -646,15 +647,15 @@ final class CampContext
 
         $classFullPath = $GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/'
         . CampContext::ObjectType($p_objectType).'.php';
-        
+
         if (file_exists($classFullPath)) {
             require_once($classFullPath);
         } else {
             $pluginImplementsClassFullPath = false;
-             
+
             foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-                $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath().
-                                '/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
+                $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath()
+                .'/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
                 if (file_exists($pluginClassFullPath)) {
                     $pluginImplementsClassFullPath = $pluginClassFullPath;   
                 }
@@ -1056,10 +1057,8 @@ final class CampContext
      *
      * @param string $p_property
      */
-    public static function ObjectType($p_property)
+    protected static function ObjectType($p_property)
     {
-        $p_property = CampContext::TranslateProperty($p_property);
-
         // Verify if an object of this type exists
         if (array_key_exists($p_property, CampContext::$m_objectTypes)) {
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
