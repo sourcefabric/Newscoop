@@ -297,7 +297,7 @@ final class MetaSubtitle {
 	    }
 	}
 
-        $imgString = '</p><table border="0" cellspacing="0" cellpadding="0" class="cs_img"';
+        $imgString = '</p><table width="1" border="0" cellspacing="0" cellpadding="0" class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             $imgString .= ' align="' . $detailsArray['align'] . '"';
         }
