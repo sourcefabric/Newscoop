@@ -368,10 +368,10 @@ class CampInstallationBase
         $dbData = $session->getData('config.db', 'installation');
         $mcData = $session->getData('config.site', 'installation');
 
-        if (!CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'],
-                                                         $mcData['adminpsswd'])) {
+        if (is_array($mcData) && is_set($mcData['adminemail'])
+        && !CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'], $mcData['adminpsswd'])) {
             $this->m_step = 'mainconfig';
-            $this->m_message = 'Error: Could not save the configuration.';
+            $this->m_message = 'Error: Could not update the admin user credentials.';
             return false;
         }
         if (!file_exists(CS_PATH_SITE . '/.htaccess')
@@ -544,12 +544,16 @@ class CampInstallationBase
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
         require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
-                
+
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             $CampPlugin = new CampPlugin($info['name']);
             $CampPlugin->create($info['name'], $info['version']);
             $CampPlugin->install();
-            $CampPlugin->disable();
+            if ($CampPlugin->isEnabled()) {
+            	$CampPlugin->enable();
+            } else {
+            	$CampPlugin->disable();
+            }
             
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
                 call_user_func("plugin_{$info['name']}_addPermissions");
