@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @param array p_dbColumns
