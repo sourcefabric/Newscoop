@@ -91,6 +91,12 @@ $clearCache = Input::Get('clear_cache', 'string', 'no', true);
 if (($clearCache == 'yes') && $g_user->hasPermission('ClearCache')) {
 	CampCache::singleton()->clear('user');
     CampCache::singleton()->clear();
+    SystemPref::DeleteSystemPrefsFromCache();
+
+    // Clear compiled templates
+    require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+    CampTemplate::singleton()->clear_compiled_tpl();
+
     $actionMsg = getGS('Campsite cache was cleaned up');
     $res = 'OK';
 }
