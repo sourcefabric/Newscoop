@@ -368,7 +368,7 @@ class CampInstallationBase
         $dbData = $session->getData('config.db', 'installation');
         $mcData = $session->getData('config.site', 'installation');
 
-        if (is_array($mcData) && is_set($mcData['adminemail'])
+        if (is_array($mcData) && isset($mcData['adminemail'])
         && !CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'], $mcData['adminpsswd'])) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not update the admin user credentials.';
