@@ -27,8 +27,8 @@ if (!$g_user->hasPermission('AttachImageToArticle')) {
 
 $articleObj = new Article($f_language_selected, $f_article_number);
 $imageObj = new Image($f_image_id);
-
-ArticleImage::RemoveImageFromArticle($f_image_id, $f_article_number, $f_image_template_id);
+$articleImage = new ArticleImage($f_article_number, $f_image_id, $f_image_template_id);
+$articleImage->delete();
 
 camp_html_add_msg(getGS('The image "$1" has been removed from the article.', $imageObj->getDescription()), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));

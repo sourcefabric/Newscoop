@@ -93,6 +93,7 @@ if (CampCache::IsEnabled() && ($clearCache == 'yes')
     // Clear cache engine's cache
     CampCache::singleton()->clear('user');
     CampCache::singleton()->clear();
+    SystemPref::DeleteSystemPrefsFromCache();
 
     // Clear compiled templates
     require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");

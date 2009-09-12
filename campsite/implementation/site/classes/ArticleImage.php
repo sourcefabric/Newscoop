@@ -109,6 +109,30 @@ class ArticleImage extends DatabaseObject {
     } // fn setTemplateId
 
 
+    /**
+     * Remove the linkage between the given image and the given article and remove
+     * the image tags from the article text.
+     *
+     * @return boolean
+     */
+    public function delete()
+    {
+        if (!$this->exists()) {
+            return false;
+        }
+        ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
+        $result = parent::delete();
+        if ($result) {
+        	if (function_exists("camp_load_translation_strings")) {
+        		camp_load_translation_strings("api");
+        	}
+        	$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
+        	Log::Message($logtext, null, 42);
+        }
+        return $result;
+    }
+
+
 	/**
 	 * Get a free Template ID.
 	 * @param int $p_articleNumber
@@ -221,35 +245,6 @@ class ArticleImage extends DatabaseObject {
 		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
 		Log::Message($logtext, null, 41);
 	} // fn AddImageToArticle
-
-
-	/**
-	 * Remove the linkage between the given image and the given article and remove
-	 * the image tags from the article text.
-	 *
-	 * @param int $p_imageId
-	 * @param int $p_articleNumber
-	 * @param int $p_templateId
-	 *
-	 * @return void
-	 */
-	public static function RemoveImageFromArticle($p_imageId, $p_articleNumber,
-	                                              $p_templateId)
-	{
-		global $g_ado_db;
-		ArticleImage::RemoveImageTagsFromArticleText($p_articleNumber, $p_templateId);
-		$queryStr = 'DELETE FROM ArticleImages'
-					.' WHERE NrArticle='.$p_articleNumber
-					.' AND IdImage='.$p_imageId
-					.' AND Number='.$p_templateId
-					.' LIMIT 1';
-		$g_ado_db->Execute($queryStr);
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
-		Log::Message($logtext, null, 42);
-	} // fn RemoveImageFromArticle
 
 
 	/**
