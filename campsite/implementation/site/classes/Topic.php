@@ -31,7 +31,7 @@ class Topic extends DatabaseObject {
 	{
 		parent::DatabaseObject($this->m_columnNames);
 
-		if (preg_match('/[\d]+/', $p_idOrName) > 0) {
+		if (preg_match('/^[\d]+$/', $p_idOrName) > 0) {
             $this->m_data['Id'] = $p_idOrName;
             $this->fetch();
 		} elseif (is_string($p_idOrName) && !empty($p_idOrName)) {
