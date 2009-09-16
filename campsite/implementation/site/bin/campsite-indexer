@@ -54,15 +54,16 @@ function set_html_tag(&$p_inHTMLTag, $p_char)
 
 function parse_kwd($p_kwd, $p_isHTML = true)
 {
-    $t = array(
+	// table of characters that may be part of words (marked by 1)
+    static $t = array(
 /*             0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 */
 /*  00-19  */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-/*  20-39  */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+/*  20-39  */  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1,
 /*  40-59  */  0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0,
 /*  60-79  */  0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 /*  80-99  */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1,
 /* 100-119 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-/* 120-139 */  1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+/* 120-139 */  1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 /* 140-159 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 /* 160-179 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 /* 180-199 */  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1,
@@ -71,54 +72,85 @@ function parse_kwd($p_kwd, $p_isHTML = true)
 /* 240-255 */  1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                );
 
-    $nonWordForming = array(36, 45, 64, 95, 127);
+    // characters that may be part of words but can not make works by themselves
+    static $nonWordForming = array(36, 39, 45, 64, 95);
+
+    if (empty($p_kwd)) {
+    	return false;
+    }
 
     $inHTMLTag = 0;
-    if (!empty($p_kwd)) {
-        $kwd_l = strlen($p_kwd);
-        $q = null;
-        $x = 0;
-        $l = 0;
-        for ($q = $p_kwd; $x < $kwd_l;) {
-            $w_l = 0;
-            $validWord = false;
-            
-            while ($x < $kwd_l && $t[ord(substr($q, $x, 1))]) {
-            	if ($p_isHTML) {
-            		set_html_tag($inHTMLTag, $q[$x]);
-            	}
-            	$char = substr($q, $x, 1);
-            	if (array_search(ord($char), $nonWordForming) === false
-            	&& (ord($char) < 128 || ord($char) > 191)) {
-            		$validWord = true;
-            	}
-            	$x++;
-                $w_l++;
-            }
+    $kwd_l = strlen($p_kwd);
+    $q = $p_kwd;
+    $x = 0;
+    $l = 0;
+    while ($x < $kwd_l) {
+    	$w_l = 0;
+    	$charCount = 0;
+    	$validWord = false;
+    	$splitPoints = array(0);
 
-            if ($w_l > 1 && $validWord) {
-            	if ($inHTMLTag) {
-            		continue;
-            	}
-                $word = trim(substr($q, $l, $w_l), ' -');
-                if (is_numeric($word) && $word < 100) {
-                	continue;
-                }
-                if (preg_match('/[\w]/', $word) == 0) {
-                	continue;
-                }
+    	while ($x < $kwd_l && $t[ord($q[$x])]) {
+            $char = $q[$x];
+    		if ($p_isHTML) {
+    			set_html_tag($inHTMLTag, $char);
+    		}
+    		if ($inHTMLTag) {
+    			// do not process HTML tags
+    			$x++;
+    			$w_l++;
+    			continue;
+    		}
+    		$charOrd = ord($char);
+    		// increment the letter count if an ASCII character
+    		// or start of UTF-8 sequence
+    		if ($charOrd < 128 || ($charOrd >= 194 && $charOrd <= 223)
+    		|| ($charOrd >= 224 && $charOrd <= 239)
+    		|| ($charOrd >= 240 && $charOrd <= 244)) {
+    			$charCount++;
+    		}
+    		if (array_search(ord($char), $nonWordForming) === false
+    		&& (ord($char) < 128 || ord($char) > 191)) {
+    			$validWord = true;
+    		}
+    		if (array_search(ord($char), $nonWordForming) !== false) {
+    			$splitPoints[] = $w_l;
+    		}
+    		$x++;
+    		$w_l++;
+    	}
+
+    	if ($w_l > 1 && $validWord) {
+    		if ($inHTMLTag) {
+    			continue;
+    		}
+    		$splitPoints[] = $w_l;
+    		$word = substr($q, $l, $w_l);
+    		if (is_numeric($word) && $word < 100) {
+    			continue;
+    		}
+            if ($charCount > 1) {
                 add_kwd($word, mymin($w_l, MAX_KWD));
             } else {
-                $l = $x;
-                while ($l < $kwd_l && !$t[ord(substr($q, $l, 1))]) {
-                	if ($p_isHTML) {
-                		set_html_tag($inHTMLTag, $q[$l]);
-                	}
-                	$l++;
-                }
-                $x = $l;
+            	continue;
             }
-        }
+    		for ($i = 0; $i < (count($splitPoints) - 1); $i++) {
+    			$splitStart = $i == 0 ? $splitPoints[0] : $splitPoints[$i] + 1;
+    			$partLen = mymin($splitPoints[$i+1] - $splitStart, MAX_KWD);
+    			if ($partLen > 1) {
+    				add_kwd(substr($word, $splitStart, $partLen), $partLen);
+    			}
+    		}
+    	} else {
+    		$l = $x;
+    		while ($l < $kwd_l && !$t[ord(substr($q, $l, 1))]) {
+    			if ($p_isHTML) {
+    				set_html_tag($inHTMLTag, $q[$l]);
+    			}
+    			$l++;
+    		}
+    		$x = $l;
+    	}
     }
 } // fn parse_kwd
 
@@ -153,10 +185,8 @@ function build_kwd_list($p_article)
         $nr_of_fields = mysql_num_fields($sql_result);
         for ($i = 0; $i < $nr_of_fields; $i++) {
             $field = mysql_fetch_field($sql_result, $i);
-            if (substr($field->name, 0, 1) == 'F') {
-                if ($row[$i]) {
-                    parse_kwd($row[$i]);
-                }
+            if (substr($field->name, 0, 1) == 'F' && !empty($row[$i])) {
+            	parse_kwd($row[$i]);
             }
         }
     }
