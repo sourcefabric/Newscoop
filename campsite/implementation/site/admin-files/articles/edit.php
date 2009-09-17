@@ -848,7 +848,9 @@ if ($f_edit_mode == "edit") { ?>
 				preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
 
 				preg_match_all("/\s*sub=\"(.*?)\"/", $text, $titles);
-				
+
+				preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
+
 				if (isset($imageMatches[1][0])) {
 				        if (isset($titles) && sizeof($titles) > 0) {
 					        for($x = 0; $x < sizeof($titles[0]); $x++) {
@@ -866,7 +868,19 @@ if ($f_edit_mode == "edit") { ?>
 						}
 						$image = new Image($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
-						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
+						unset($fakeTemplateId);
+						if (isset($ratios) && sizeof($ratios) > 0) {
+						    $n = 0;
+						    foreach ($ratios[3] as $ratio) {
+						        if ($ratios[1][$n++] == $templateId) {
+							    $fakeTemplateId = $templateId.'_'.$ratio;
+							}
+						    }
+						}
+						if (!isset($fakeTemplateId)) {
+						    $fakeTemplateId = $templateId;
+						}
+						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$fakeTemplateId.'" ', $text);
 					}
 					if ($formattingErrors) {
 						?>
