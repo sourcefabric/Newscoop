@@ -107,10 +107,7 @@ class CampGetImage
      */
     public function setSourcePath()
     {
-        if (!$this->m_isLocal) {
-            $fetched = $this->m_cache_dir.$this->m_fetch_dir;       
-        }
-        
+        $fetched = !$this->m_isLocal ? $this->m_cache_dir.$this->m_fetch_dir : null;
         if ($this->CheckLocalFile($this->m_basePath.$fetched.$this->getLocalFileName())) {
             $this->m_isLocal = true;
             $this->m_imageSource = $this->m_basePath.$fetched.$this->getLocalFileName();
@@ -141,9 +138,7 @@ class CampGetImage
      */
     public function getTargetPath()
     {
-        if (!$this->m_isLocal) {
-            $fetched = $this->m_fetch_dir;       
-        }
+        $fetched = !$this->m_isLocal ? $this->m_fetch_dir : null;
         if ($this->m_ratio < 100) {
             $derivates = $this->m_derivates_dir.$this->m_ratio.'/';    
         } 

@@ -154,7 +154,11 @@ final class CampCache
         if ($serial !== false) {
         	self::$m_hits ++;
         } else {
-        	self::$m_missKeys[$p_key]++;
+            if (!isset(self::$m_missKeys[$p_key])) {
+                self::$m_missKeys[$p_key] = 1;
+            } else {
+                self::$m_missKeys[$p_key]++;
+            }
         	return false;
         }
 
