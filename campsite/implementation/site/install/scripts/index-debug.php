@@ -50,8 +50,6 @@ if (!is_null($previewLang)) {
 
     // loads translations strings in the proper language for the error messages display
     camp_load_translation_strings('preview', $previewLang);
-} else {
-	set_error_handler(create_function('', 'return true;'));
 }
 
 $start7 = microtime(true);
