@@ -94,7 +94,7 @@ function regGS($p_key, $p_value)
 	global $g_translationStrings;
 	if (isset($g_translationStrings[$p_key])) {
 		if ($p_key!='') {
-			print "The global string is already set in ".$_SERVER[PHP_SELF].": $p_key<BR>";
+			print "The global string is already set in ".$_SERVER['PHP_SELF'].": $p_key<BR>";
 		}
 	}
 	else{
