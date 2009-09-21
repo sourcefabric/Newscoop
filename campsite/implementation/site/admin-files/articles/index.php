@@ -117,7 +117,13 @@ camp_html_content_top(getGS('Article List'), $topArray);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
+<link type="text/css" rel="stylesheet" href="/javascript/yui/build/container/assets/skins/sam/container.css">
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="/javascript/yui/build/container/container-min.js"></script>
+<style type="text/css">
+.yui-skin-sam .yui-tt .bd{position:relative;top:0;left:0;z-index:1;color:#000;padding:2px 5px;border-color:#A35ACF #A35ACF #A35ACF #A35ACF;border-width:1px;border-style:solid;background-color:#D5C3DF;}
+</style>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -315,6 +321,7 @@ if ($numUniqueArticlesDisplayed > 0) {
 	<?php } ?>
 </TR>
 <?php
+$articleTopicNames = array();
 $uniqueArticleCounter = 0;
 foreach ($allArticles as $articleObj) {
 	if ($articleObj->getArticleNumber() != $previousArticleNumber) {
@@ -335,6 +342,28 @@ foreach ($allArticles as $articleObj) {
     	}
 	}
 	$color = !$color;
+
+	// Get article topic list to show up in tooltip
+	$topics = ArticleTopic::GetArticleTopics($articleObj->getArticleNumber());
+	$topicNames = array();
+	foreach($topics as $topic) {
+	    $path = $topic->getPath();
+	    $pathStr = '';
+	    foreach ($path as $element) {
+	        $name = $element->getName($f_language_id);
+		if (empty($name)) {
+		    $name = $element->getName(1);
+		    if (empty($name)) {
+		        $name = "-----";
+		    }
+		}
+		$pathStr .= ' / '. htmlspecialchars($name);
+	    }
+	    $topicNames[] = $pathStr;
+	}
+	if ($topicNames) {
+	    $articleTopicNames[$articleObj->getArticleNumber()] = $topicNames;
+	}
 
 	// Remember the default class so we can restore it when "Select None" is clicked
 	// or the mouse leaves the row after hovering on it.
@@ -453,7 +482,15 @@ foreach ($allArticles as $articleObj) {
 		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onFrontPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
 		<TD align="center"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php p($articleObj->onSectionPage() ? "is_shown.png" : "is_hidden.png"); ?>" border="0"></TD>
 		<TD align="center"><?php echo ArticleImage::GetImagesByArticleNumber($articleObj->getArticleNumber(), true); ?></TD>
-		<TD align="center"><?php echo ArticleTopic::GetArticleTopics($articleObj->getArticleNumber(), true); ?></TD>
+                <?php
+                $nrOfTopics = ArticleTopic::GetArticleTopics($articleObj->getArticleNumber(), true);
+		if ($nrOfTopics) {
+                ?>
+                <TD align="center" id="<?php echo 'ttctx'.$articleObj->getArticleNumber(); ?>" class="ttControl">
+		<? } else { ?>
+                <TD align="center">
+		<?php } echo $nrOfTopics; ?>
+                </TD>
 		<TD align="center"><?php if ($articleObj->commentsEnabled()) { echo ArticleComment::GetArticleComments($articleObj->getArticleNumber(), $articleObj->getLanguageId(), null, true); } else { ?><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/is_hidden.png" border="0"><?php } ?></TD>
 		<TD align="center">
 		<?php
@@ -507,7 +544,25 @@ foreach ($allArticles as $articleObj) {
 </TR>
 </table>
 </form>
-<?php  } else { ?><BLOCKQUOTE>
+<?php
+if (is_array($articleTopicNames) && sizeof($articleTopicNames) > 0) {
+?>
+<script type="text/javascript">
+    YAHOO.namespace("example.container");
+<?php
+    $x = 1;
+    foreach ($articleTopicNames as $articleNr => $articleTopicNameArray) {
+        $articleTopicPath = '';
+	foreach ($articleTopicNameArray as $articleTopicName) {
+	    $articleTopicPath .= $articleTopicName.'<br/>';
+	}
+	echo "YAHOO.example.container.tt$x = new YAHOO.widget.Tooltip('tt$x', { context:'ttctx$articleNr', text:'$articleTopicPath' } );\n";
+	$x++;
+    }
+?>
+</script>
+<?php }
+       } else { ?><BLOCKQUOTE>
 	<LI><?php  putGS('No articles.'); ?></LI>
 	</BLOCKQUOTE>
 <?php  } ?>

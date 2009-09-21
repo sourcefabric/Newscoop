@@ -394,3 +394,6 @@ div.domTTOverlib .contents {
 	padding: 2px;
 	background-color: #d5e2ee;
 }
+.ttControl {
+    cursor: pointer;
+}
