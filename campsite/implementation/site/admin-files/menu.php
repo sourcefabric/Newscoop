@@ -311,7 +311,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
     <?php echo $menu_root->createMenu("myMenu"); ?>
 	<TITLE><?php p($siteTitle); ?></TITLE>
 </HEAD>
-<BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<BODY class="yui-skin-sam" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
 <table cellpadding="0" cellspacing="0" bgcolor="#8BAED1" width="100%">
 <tr>
     <td style="padding-left: 13px; padding-top: 1px; padding-bottom: 2px;">
