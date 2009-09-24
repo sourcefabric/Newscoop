@@ -144,7 +144,6 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Няма такога артыкула.");
 regGS("No such section.", "Няма такой рубрыкі:by ");
 regGS("Reorder", "");
-regGS("Author", "");
 regGS("No such issue.", "Няма такога выпуску");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Назва <BR><SMALL>(націсьніце дзеля праўцы)</SMALL> ");
 regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Немагчыма захаваць артыкул. Ён быў заблякаваны карыстальнікам $1 $2 гадзіны  і $3 хвілін таму.");

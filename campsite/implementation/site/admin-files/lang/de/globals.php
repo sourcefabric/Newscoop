@@ -232,7 +232,6 @@ regGS("Approved", "");
 regGS("Subject", "");
 regGS("IP address:", "");
 regGS("Email:", "");
-regGS("Author:", "");
 regGS("Author", "");
 regGS("Article name", "");
 regGS("Hide article", "");
