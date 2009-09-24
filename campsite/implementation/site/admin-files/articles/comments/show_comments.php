@@ -170,7 +170,7 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 
 <tr>
     <td valign="middle" align="right">
-        <?php putGS("Author:"); ?>
+        <?php putGS("Author"); ?>:
     </td>
 
     <td>

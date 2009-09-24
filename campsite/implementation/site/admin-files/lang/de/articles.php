@@ -138,12 +138,11 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Fehlende Zugriffsrechte für das Löschen von Artikeln.");
 regGS("You must select an article type.", "Ein Artikeltyp muss ausgewählt werden.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Soll das Bild '$1' vom Artikel entkoppelt werden?");
-regGS("Reorder", "Nachbestellen");
-regGS("Author", "AutorIn");
-regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("There was an error reading request parameters.", "Fehler beim Lesen der Anfrage");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Dieser Artikel kann nicht in der Vorschau angezeigt werden. Bitte prüfen, ob eine Template ausgewählt wurde.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Diese Ausgabe kann nicht in der Vorschau angezeigt werden. Bitte prüfen, ob eine Template ausgewählt wurde.");
 regGS("No such article.", "Artikel nicht vorhanden");
 regGS("No such section.", "Rubrik nicht vorhanden");
+regGS("Reorder", "Nachbestellen");
+regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

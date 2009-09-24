@@ -352,7 +352,7 @@ function onSummaryClick(p_messageId)
             </tr>
 
             <tr>
-                <td><b><?php putGS("Author:"); ?></b></td>
+                <td><b><?php putGS("Author"); ?>:</b></td>
                 <td><?php p($comment->getAuthor()); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
             </tr>
 

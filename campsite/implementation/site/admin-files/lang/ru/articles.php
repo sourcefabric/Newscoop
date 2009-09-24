@@ -144,7 +144,6 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Нет такой статьи.");
 regGS("No such section.", "Нет такой рубрики:ru");
 regGS("Reorder", "");
-regGS("Author", "");
 regGS("No such issue.", "Нет такого выпуска");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
 regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.", "Невозможно сохранить статью. Она была заблокирована пользователем $1 $2 часов и $3 минут назад.");

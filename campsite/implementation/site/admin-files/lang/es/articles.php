@@ -144,6 +144,5 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "No existe articulo");
 regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
-regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

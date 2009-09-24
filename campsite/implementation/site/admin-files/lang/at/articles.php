@@ -108,7 +108,6 @@ regGS("Files", "Dateien");
 regGS("Duplicate?", "Duplizieren?");
 regGS("Duplicate to another section", "In andere Rubrik duplizieren");
 regGS("Duplicate articles", "Artikel duplizieren");
-regGS("Author", "AutorIn");
 regGS("Article name ($1)", "Artikelname ($1)");
 regGS("Article List", "Artikelliste");
 regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Soll das Thema '$1' von diesem Artikel entkoppelt werden?");

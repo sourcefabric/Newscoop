@@ -138,10 +138,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Nemáte právo mazat články");
 regGS("You must select an article type.", "Musíte zvolit typ článku");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Opravdu chcete obrázek \'$1\' z článku odstranit?");
-regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "");
+regGS("Are you sure you want to delete this scheduled action?", "");
 ?>
