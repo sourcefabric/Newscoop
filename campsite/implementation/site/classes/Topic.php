@@ -401,7 +401,7 @@ class Topic extends DatabaseObject {
 		if (is_array($p_order) && count($p_order) > 0) {
 			$order = array();
 			foreach ($p_order as $orderCond) {
-				switch ($orderCond['field']) {
+				switch (strtolower($orderCond['field'])) {
                 	case 'byname':
                 		$order['Name'] = $orderCond['dir'];
                 		break;
@@ -410,7 +410,9 @@ class Topic extends DatabaseObject {
                 		break;
                 }
 			}
-			$p_sqlOptions['ORDER BY'] = $order;
+			if (count($order) > 0) {
+				$p_sqlOptions['ORDER BY'] = $order;
+			}
 		}
 		$topics = DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
 
