@@ -338,7 +338,7 @@ class CampPlugin extends DatabaseObject
         }     
                     
         $p_menu_root->addSplit();
-        $menu_modules =& DynMenuItem::Create("Plugins", "",
+        $menu_modules =& DynMenuItem::Create(getGS("Plugins"), "",
         array("icon" => sprintf($p_iconTemplateStr, "plugin.png"), "id" => "plugins"));
         $p_menu_root->addItem($menu_modules);
 
