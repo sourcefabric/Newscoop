@@ -264,7 +264,7 @@ class Localizer {
         
         if (($pos = strpos($p_directory, '*')) === false) {
             $startDirectory = $p_directory;
-            $deepth = 0;
+            $deepth = 1;  /* for some reason the fixed deepth value for next call of File_Find::mapTreeMultiple() was 1, not 0) */ 
         } else {
             $startDirectory = substr($p_directory, 0, $pos-1);
             $deepth = substr_count($p_directory, '*');
@@ -276,7 +276,7 @@ class Localizer {
         $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
         // Get all files in this directory
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, 1);
+        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, $deepth);
 
         // Get all the PHP files
         $filelist = self::CompilePhpFileList($files);

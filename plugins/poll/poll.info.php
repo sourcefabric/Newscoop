@@ -38,7 +38,7 @@ $info = array(
     ),
     'localizer' => array(
         'id' => 'plugin_poll',
-        'path' => '/plugins/poll/admin-files/poll/',
+        'path' => '/plugins/poll/admin-files/*/*',
         'screen_name' => 'Poll'
     ),
     'install' => 'plugin_poll_install',
