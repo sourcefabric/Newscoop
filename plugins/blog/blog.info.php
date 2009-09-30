@@ -55,7 +55,7 @@ $info = array(
     ),
     'localizer' => array(
         'id' => 'plugin_blog',
-        'path' => '/plugins/blog/admin-files/*/*/*',
+        'path' => '/plugins/blog/admin-files/blog/',
         'screen_name' => 'Blogs'
     ),
     'no_menu_scripts' => array(
