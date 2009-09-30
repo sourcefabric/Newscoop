@@ -264,10 +264,10 @@ class Localizer {
         
         if (($pos = strpos($p_directory, '*')) === false) {
             $startDirectory = $p_directory;
-            $deepth = 1;  /* for some reason the fixed deepth value for next call of File_Find::mapTreeMultiple() was 1, not 0) */ 
+            $deepth = 1;  /* 1 means no subdirectories! */ 
         } else {
             $startDirectory = substr($p_directory, 0, $pos-1);
-            $deepth = substr_count($p_directory, '*');
+            $deepth = substr_count($p_directory, '*') + 1;
         }
         
         // like get GS('edit "$1"', ...);  '
