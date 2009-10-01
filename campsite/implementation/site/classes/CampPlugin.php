@@ -206,6 +206,11 @@ class CampPlugin extends DatabaseObject
 
             if (!$p_reload && self::FetchCachePluginsInfo()
             && isset(self::$m_pluginsInfo[$p_selectEnabled])) {
+                foreach (self::$m_pluginsInfo[1] as $entry => $info) {
+                    if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
+                        include_once (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');  
+                    }
+                }
                 return self::$m_pluginsInfo[$p_selectEnabled];
             }
 

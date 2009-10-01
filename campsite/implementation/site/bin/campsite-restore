@@ -342,8 +342,9 @@ $filesDestDir = $CAMPSITE_DIR.'/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates';
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
+$compiledTemplatesDir = $CAMPSITE_DIR.'/templates_c';
 
-$destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir);
+$destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {

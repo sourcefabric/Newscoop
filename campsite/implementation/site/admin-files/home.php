@@ -88,8 +88,10 @@ function on_link_click(id, home_page_links)
 echo $breadcrumbs;
 
 $clearCache = Input::Get('clear_cache', 'string', 'no', true);
-if (($clearCache == 'yes') && $g_user->hasPermission('ClearCache')) {
-	CampCache::singleton()->clear('user');
+if (CampCache::IsEnabled() && ($clearCache == 'yes')
+        && $g_user->hasPermission('ClearCache')) {
+    // Clear cache engine's cache
+    CampCache::singleton()->clear('user');
     CampCache::singleton()->clear();
     SystemPref::DeleteSystemPrefsFromCache();
 

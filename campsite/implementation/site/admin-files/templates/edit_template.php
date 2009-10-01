@@ -23,7 +23,7 @@ if ($f_path == '/') {
 $f_content = Input::Get('f_content', 'string', '', true);
 
 $backLink  = "/$ADMIN/templates/";
-if (!Template::IsValidPath($f_path)) {
+if (!Template::IsValidPath($f_path.DIR_SEP.$f_name)) {
 	camp_html_goto_page($backLink);
 }
 $filename = Template::GetFullPath($f_path, $f_name);

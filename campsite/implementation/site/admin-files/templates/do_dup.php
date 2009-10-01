@@ -7,11 +7,12 @@ if (!$g_user->hasPermission('ManageTempl')) {
 }
 
 $f_path = Input::Get('f_path', 'string', '');
-if (!Template::IsValidPath($f_path)) {
-	camp_html_goto_page("/$ADMIN/templates/");
-}
 $f_new_name = Input::Get('f_new_name', 'string', '');
 $f_orig_name = Input::Get('f_orig_name', 'string', '');
+
+if (!Template::IsValidPath($f_new_name, false) || !Template::IsValidPath($f_path.DIR_SEP.$f_orig_name)) {
+	camp_html_goto_page("/$ADMIN/templates/");
+}
 
 $backLink = "/$ADMIN/templates/dup.php?Path=".urlencode($f_path)."&Name=".urlencode($f_orig_name);
 if (trim($f_new_name) == "") {

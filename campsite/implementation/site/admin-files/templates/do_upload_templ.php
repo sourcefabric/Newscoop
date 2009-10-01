@@ -12,7 +12,7 @@ $fileName = isset($_FILES['f_file']['name']) ? $_FILES['f_file']['name'] : '';
 
 $backLink = "/$ADMIN/templates/upload_templ.php?Path=".urlencode($f_path);
 
-if (!Template::IsValidPath($f_path)) {
+if (!Template::IsValidPath($f_path.DIR_SEP.$fileName, false)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 

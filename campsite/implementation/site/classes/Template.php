@@ -124,9 +124,10 @@ class Template extends DatabaseObject {
 	 * Returns true if the template path is valid.
 	 *
 	 * @param string $p_path
+	 * @param boolenan $p_checkIfExists
 	 * @return bool
 	 */
-	public static function IsValidPath($p_path)
+	public static function IsValidPath($p_path, $p_checkIfExists=true)
 	{
 		global $Campsite;
 
@@ -136,7 +137,10 @@ class Template extends DatabaseObject {
 			}
 		}
 
-		if (!is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
+		if ($p_checkIfExists && 
+		      !is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+		      !is_file($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+		      !is_link($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
 			return false;
 		}
 		return true;
@@ -178,12 +182,17 @@ class Template extends DatabaseObject {
 			return true;
 		}
 
+		$tplFindObj = new FileTextSearch();
+		$tplFindObj->setExtensions(array('tpl','css'));
+		$tplFindObj->setSearchKey($p_templateName);
+		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+		if (is_array($result) && sizeof($result) > 0) {
+		        return $result[0];
+		}
+
 		if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
 			$p_templateName = ' ' . $p_templateName;
 		}
-
-		$tplFindObj = new FileTextSearch();
-		$tplFindObj->setExtensions(array('tpl','css'));
 		$tplFindObj->setSearchKey($p_templateName);
 		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
 		if (is_array($result) && sizeof($result) > 0) {
@@ -442,16 +451,20 @@ class Template extends DatabaseObject {
 	/**
 	 * @param array $p_sqlOptions
 	 * @param boolean $p_update
+	 * @param boolean $p_useFilter 
+	 *		filter templates matching setting in SystemPrefs
+	 *
+	 * @return array
 	 */
-	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true)
+	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true, $p_useFilter = false)
 	{
 		if ($p_update) {
 			Template::UpdateStatus();
 		}
 		$queryStr = 'SELECT * FROM Templates';
 		
-		if ($rexeg = Template::GetTemplateFilterRegex(true)) {
-            $queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
+		if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
+			$queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
 		}
 		    
 		if (!is_null($p_sqlOptions)) {

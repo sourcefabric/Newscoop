@@ -7,6 +7,17 @@ $f_current_folder = Input::Get('f_current_folder', 'string', 0, true);
 $f_action = Input::Get('f_action');
 
 $f_current_folder = urldecode($f_current_folder);
+
+if (!Template::IsValidPath($f_current_folder) || !Template::IsValidPath($f_destination_folder)) {
+	camp_html_goto_page("/$ADMIN/templates/");
+}
+
+foreach ($f_template_code as $name) {
+     if (!Template::IsValidPath($name, false)) {
+    	camp_html_goto_page("/$ADMIN/templates/");
+    }   
+}
+
 //
 // Check permissions
 //
@@ -84,6 +95,10 @@ if (isset($_REQUEST["action_button"])) {
 								 . basename($template->getName()));
 				}
 			}
+			// Clear compiled templates
+			require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
+			CampTemplate::singleton()->clear_compiled_tpl();
+
 			camp_html_add_msg(getGS("Template(s) moved."), "ok");
 			camp_html_goto_page($url);
 		}

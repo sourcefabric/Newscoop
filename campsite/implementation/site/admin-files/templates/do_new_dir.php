@@ -7,7 +7,7 @@ if (!$g_user->hasPermission('ManageTempl')) {
 }
 
 $cPath = Input::Get('cPath', 'string', '');
-if (!Template::IsValidPath($cPath)) {
+if (!Template::IsValidPath($cPath, false)) {
 	camp_html_goto_page("/$ADMIN/templates/");
 }
 $cName = Input::Get('cName', 'string', '');

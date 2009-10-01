@@ -263,7 +263,7 @@ class ArticleImage extends DatabaseObject {
 		// The REGEX
 		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
 		$alignAttr = "(align\s*=\s*\w*)";
-		$subAttr = "(title\s*=\s*[\"][^\"]*[\"])";
+		$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
 		$otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
 		$matchString = "/<!\*\*\s*Image\s*$p_templateId\s*(($altAttr|$alignAttr|$subAttr|$otherAttr)\s*)*>/i";
 
