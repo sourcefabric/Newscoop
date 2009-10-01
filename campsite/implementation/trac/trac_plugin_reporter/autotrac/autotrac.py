@@ -7,7 +7,7 @@
 #  accept as tickets, and which ones to dismiss.
 
 from trac import util
-from trac.attachment import attachment_to_hdf, Attachment
+from trac.attachment import AttachmentModule
 from trac.core import *
 from trac.web.chrome import add_stylesheet, INavigationContributor
 from trac.web.main import IRequestHandler
