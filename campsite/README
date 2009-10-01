@@ -16,10 +16,11 @@ Campsite follows the print-newspaper publishing paradigm, so it
 structures sites by default as Publications > Issues > Sections >
 Articles.
 
-Campsite is available in: Arabic, Chinese, Croatian, Czech, Dutch, English,
-German, Korean, Portuguese, Romanian, Russian, Serbian (Cyrillic),
-Serbo-Croatian (Latin), Spanish, and Swedish. However, the interface can
-easily be localized to new languages using its built-in 'Localizer'.
+Campsite is available in: Arabic, Belarusian, Chinese, Croatian, Czech,
+Dutch, English, German, Korean, Portuguese, Romanian, Russian,
+Serbian (Cyrillic), Serbo-Croatian (Latin), Spanish, and Swedish.
+However, the interface can easily be localized to new languages using
+its built-in 'Localizer'.
 
 With Campsite you can:
 
