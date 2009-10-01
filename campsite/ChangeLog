@@ -1,3 +1,44 @@
+3.3.3 (Oct 1, 2009)
+  Improvementes
+  -------------
+  - #2877 - Add "anchor" button to make html anchors to rich text editor
+  - #3014 - Add Campsite template highlighting to Editarea template editor
+  - #3018 - Show topics attached to an article in a tooltip on mouseover
+            in section view
+
+  Bugs Fixed
+  ----------
+  - #2970 - Error in campsite-autopublish after upgrade to 3.3.2
+  - #2971 - After upgrade to 3.3.2 the file .htaccess is rewrited to default
+            version
+  - #2972 - Table is added within paragraph when inserting images via editor
+  - #2975 - Image resize ratio should not be a mandatory field in System
+            Preferences
+  - #2978 - Text editor filters the anchor tag
+  - #2979 - The Topic object is not cached when referred by name
+  - #2980 - Some campsite properties not recognized if written in capital
+            letters
+  - #2981 - The article embedded image occupies a wide space if the caption
+            was long
+  - #2983 - Remove white spaces from the beginning and end of included files
+  - #2985 - Removing an image from an article leads to the article edit page
+            constantly reloading
+  - #2998 - Upgrading from an earlier version breaks the admin user password
+  - #2999 - Plugins are disabled after upgrade from an earlier version
+  - #3004 - Missing strings for Interview and Blog plugins in Localizer
+  - #3006 - Indexer is not filtering out invalid words and leaves out valid
+            words
+  - #3009 - Image resizing ratio is reset when editing the article
+  - #3010 - Topics having names that contain digits are not recognized in the
+            template language
+  - #3013 - APC cache disturbes blog plugin
+  - #3017 - Remove notice messages from the campsite output
+  - #3019 - The "Author" string is properly localized in the localizer, but
+            localization is not reflected in the UI
+  - #3020 - The topics list returns nothing when order option was used
+  - #3021 - "Plugins" string in the menu is not using the proper localization
+            function
+
 3.3.2 (Aug 18, 2009)
   Improvements
   ------------
