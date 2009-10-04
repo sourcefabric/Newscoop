@@ -274,7 +274,7 @@ class ImageManager
 	{
 		$path_parts = pathinfo($fullpathfile);
 
-		$filenameParts = split("[-.]", $path_parts['basename']);
+		$filenameParts = preg_split("[-.]", $path_parts['basename']);
 		$imageId = $filenameParts[2];
 		$extension = $filenameParts[3];
 		$thumbnail = $this->config['thumbnail_prefix'].$imageId.'.'.$extension;
@@ -311,7 +311,7 @@ class ImageManager
 	function getThumbURL($relative)
 	{
 		$path_parts = pathinfo($relative);
-		$filenameParts = split("[-.]", $path_parts['basename']);
+		$filenameParts = preg_split("[-.]", $path_parts['basename']);
 		$imageId = $filenameParts[2];
 		$extension = $filenameParts[3];
 		$thumbnail = $this->config['thumbnail_prefix'].$imageId.'.'.$extension;

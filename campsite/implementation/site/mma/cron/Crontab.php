@@ -106,13 +106,13 @@ class Crontab
 
             // Checking if this is a special @-entry. check man 5 crontab for more info
             if ($line[0] == '@') {
-                $this->crontabs[] = split("[ \t]", $line, 2);
+                $this->crontabs[] = preg_split("[ \t]", $line, 2);
                 $this->linetypes[] = CRON_SPECIAL;
                 continue;
             }
 
             // It's a regular crontab-entry
-            $ct = split("[ \t]", $line, 6);
+            $ct = preg_split("[ \t]", $line, 6);
             $this->addCron($ct[0], $ct[1], $ct[2], $ct[3], $ct[4], $ct[5], $ct[6]);
         }
     }

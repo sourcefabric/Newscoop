@@ -44,7 +44,7 @@ function camp_template_path_crumbs($p_path)
 		$crumbs[] = array("/", "/$ADMIN/templates/?Path=/");
 		return $crumbs;
 	}
-	$dirs = split("/", $p_path);
+	$dirs = preg_split("/", $p_path);
 	//echo "<pre>";print_r($dirs);echo "</pre>";
 	$tmpPath = "";
 	$numDirs = count($dirs);

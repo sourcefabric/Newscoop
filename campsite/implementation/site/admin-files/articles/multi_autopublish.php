@@ -18,7 +18,7 @@ $f_article_code = Input::Get('f_article_code', 'array', 0);
 $articles = array();
 $errorArticles = array();
 foreach ($f_article_code as $code) {
-	list($articleId, $languageId) = split("_", $code);
+	list($articleId, $languageId) = preg_split("_", $code);
 	$tmpArticle = new Article($languageId, $articleId);
 	if ($tmpArticle->getWorkflowStatus() != 'N') {
 		$articles[] = $tmpArticle;

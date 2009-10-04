@@ -117,9 +117,6 @@ SystemPref::Set('SMTPPort', $f_smtp_port);
 if ($f_editor_image_ratio < 1 || $f_editor_image_ratio > 100) {
     $f_editor_image_ratio = 100;
 }
-if ($f_editor_image_ratio < 1 || $f_editor_image_ratio > 100) {
-    $f_editor_image_ratio = 100;
-}
 SystemPref::Set('EditorImageRatio', $f_editor_image_ratio);
 SystemPref::Set('EditorImageResizeWidth', $f_editor_image_width);
 SystemPref::Set('EditorImageResizeHeight', $f_editor_image_height);

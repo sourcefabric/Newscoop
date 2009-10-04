@@ -23,7 +23,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 // process all comments
 foreach ($_REQUEST as $name => $value) {
     if (strstr($name, "comment_action_")) {
-        $parts = split("_", $name);
+        $parts = preg_split("_", $name);
         $messageId = $parts[2];
         $comment = new Phorum_message($messageId);
         if (!$comment->exists()) {

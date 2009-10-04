@@ -24,7 +24,7 @@ if ($f_isFromInterface && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     $wasSent = false;
 
    	// Remove the code name from the version number.
-    $version = split(" ", $Campsite['VERSION']);
+    $version = preg_split(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
     $reporter = new BugReporter(0, "",  mktime(), "", "Campsite", $version);

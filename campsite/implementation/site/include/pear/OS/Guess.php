@@ -128,7 +128,7 @@ class OS_Guess
         if ($uname === null) {
             $uname = php_uname();
         }
-        $parts = split('[[:space:]]+', trim($uname));
+        $parts = preg_split('[[:space:]]+', trim($uname));
         $n = count($parts);
 
         $release = $machine = $cpu = '';
