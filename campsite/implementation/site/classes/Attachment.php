@@ -368,7 +368,7 @@ class Attachment extends DatabaseObject {
 		$attachment->setProperty('mime_type', $p_fileVar['type'], false);
 		$attachment->setProperty('size_in_bytes', $p_fileVar['size'], false);
 		$extension = "";
-		$fileParts = split('\.', $p_fileVar['name']);
+		$fileParts = preg_split('\.', $p_fileVar['name']);
 		if (count($fileParts) > 1) {
 			$extension = array_pop($fileParts);
 		    $attachment->setProperty('extension', $extension, false);

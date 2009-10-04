@@ -63,7 +63,7 @@ case "copy_interactive":
 $articleCodes = array();
 $groupedArticleCodes = array();
 foreach ($f_article_codes as $code) {
-	list($articleId, $languageId) = split("_", $code);
+	list($articleId, $languageId) = preg_split("_", $code);
 	$articleCodes[] = array("article_id" => $articleId, "language_id" => $languageId);
 	$groupedArticleCodes[$articleId][$languageId] = $languageId;
 }

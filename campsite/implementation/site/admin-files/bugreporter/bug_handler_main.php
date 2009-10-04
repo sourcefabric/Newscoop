@@ -121,7 +121,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 	//     already if this script is an 'include') ---
 
 	// Remove the code name from the version number.
-    $version = split(" ", $Campsite['VERSION']);
+    $version = preg_split(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
 	if (!isset($reporter)) {
