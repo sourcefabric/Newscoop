@@ -1,4 +1,4 @@
-3.3.3 (Oct 1, 2009)
+3.3.3 (Oct 4, 2009)
   Improvementes
   -------------
   - #2877 - Add "anchor" button to make html anchors to rich text editor
@@ -38,6 +38,8 @@
   - #3020 - The topics list returns nothing when order option was used
   - #3021 - "Plugins" string in the menu is not using the proper localization
             function
+  - #3025 - Article type fields of type switch do not work as documented
+  - #3026 - Replace obsolete function split()
 
 3.3.2 (Aug 18, 2009)
   Improvements
