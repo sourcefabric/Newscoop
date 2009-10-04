@@ -2176,11 +2176,16 @@ class Article extends DatabaseObject {
         $articleTable = $tmpArticle->getDbTableName();
         unset($tmpArticle);
 
+        $languageId = null;
+
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param, $otherTables);
             $leftOperand = strtolower($comparisonOperation['left']);
+            if ($leftOperand == 'idlanguage' && $comparisonOperation['symbol'] == '=') {
+                $languageId = $comparisonOperation['right'];
+            }
 
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
                 // regular article field, having a direct correspondent in the
@@ -2232,7 +2237,7 @@ class Article extends DatabaseObject {
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
-                $sqlQuery = self::ProcessCustomField($comparisonOperation);
+                $sqlQuery = self::ProcessCustomField($comparisonOperation, $languageId);
                 if (!is_null($sqlQuery)) {
                     $whereCondition = "Articles.Number in (\n$sqlQuery        )";
                     $selectClauseObj->addWhere($whereCondition);
@@ -2356,7 +2361,7 @@ class Article extends DatabaseObject {
     } // fn GetList
 
 
-    private static function ProcessCustomField(array $p_comparisonOperation)
+    private static function ProcessCustomField(array $p_comparisonOperation, $p_languageId = null)
     {
         global $g_ado_db;
 
@@ -2380,10 +2385,15 @@ class Article extends DatabaseObject {
         }
         $queries = array();
         foreach ($fields as $fieldObj) {
-            $queries[] .= '        SELECT NrArticle FROM ' . $fieldObj->getDbTableName()
-                       . ' WHERE ' . $fieldObj->getName() . ' '
-                       . $p_comparisonOperation['symbol']
-                       . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'\n";
+            $query .= '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
+                   . '` WHERE ' . $fieldObj->getName() . ' '
+                   . $p_comparisonOperation['symbol']
+                   . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";
+            if (!is_null($p_languageId)) {
+                $query .= " AND IdLanguage = '" . $g_ado_db->escape($p_languageId) . "'";
+            }
+            $query .= "\n";
+            $queries[] = $query;
         }
         if (count($queries) == 0) {
             return null;

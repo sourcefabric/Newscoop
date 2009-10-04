@@ -217,6 +217,8 @@ class ArticlesList extends ListObject
                         } else {
                         	$value = $word;
                         }
+       	            } elseif ($type == 'switch') {
+       	            	$value = (int)(strtolower($word) == 'on');
        	            } else {
        	                $value = $word;
        	            }

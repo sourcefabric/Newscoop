@@ -382,6 +382,25 @@ class ArticleTypeField extends DatabaseObject {
 	{
 		return $this->m_data['field_type'];
 	} // fn getType
+	
+	
+	public function getGenericType()
+	{
+		switch ($this->getType()) {
+			case self::TYPE_BODY:
+			case self::TYPE_TEXT:
+				return 'string';
+			case self::TYPE_DATE:
+				return 'date';
+			case self::TYPE_NUMERIC:
+				return 'integer';
+			case self::TYPE_SWITCH:
+				return 'switch';
+			case self::TYPE_TOPIC:
+				return 'topic';
+		}
+		return null;
+	}
 
 
 	/**
@@ -797,6 +816,7 @@ class ArticleTypeField extends DatabaseObject {
 	    	}
 	    }
 
+	    $whereClauses = array();
 	    if (isset($p_name)) {
 	    	$operator = $p_negateName ? '<>' : '=';
 	        $whereClauses[] = "field_name $operator '" . $g_ado_db->escape($p_name) . "'";
@@ -812,8 +832,8 @@ class ArticleTypeField extends DatabaseObject {
 	    if (!$p_selectHidden) {
 	    	$whereClauses[] = 'is_hidden = false';
 	    }
-	    $query = "SELECT * FROM `ArticleTypeMetadata` WHERE "
-	    . implode(' and ', $whereClauses) . ' ORDER BY type_name ASC, field_weight ASC';
+	    $where = count($whereClauses) > 0 ? ' WHERE ' . implode(' and ', $whereClauses) : null;
+	    $query = "SELECT * FROM `ArticleTypeMetadata` $where ORDER BY type_name ASC, field_weight ASC";
 	    $rows = $g_ado_db->GetAll($query);
 	    $fields = array();
 	    foreach ($rows as $row) {

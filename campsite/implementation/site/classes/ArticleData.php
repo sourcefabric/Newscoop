@@ -111,9 +111,9 @@ class ArticleData extends DatabaseObject {
 			$p_value = preg_replace_callback($pattern, array($this, "transformImageTags"), $text);
 		}
 		if ($articleField->getType() == ArticleTypeField::TYPE_SWITCH) {
-			return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'));
+			return parent::setProperty($p_dbColumnName, (int)($p_value == 'on'), $p_commit);
 		}
-        return parent::setProperty($p_dbColumnName, $p_value);
+        return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
 	}
 
 
@@ -296,7 +296,7 @@ class ArticleData extends DatabaseObject {
 		array_shift($p_match);
 		$attrs = array();
 		foreach ($p_match as $attr) {
-			$attr = split('=', $attr);
+			$attr = preg_split('=', $attr);
 			if (isset($attr[0]) && !empty($attr[0])) {
 				$attrName = trim(strtolower($attr[0]));
 				$attrValue = isset($attr[1]) ? $attr[1] : '';
