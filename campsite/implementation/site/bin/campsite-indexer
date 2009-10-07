@@ -37,6 +37,8 @@ function add_kwd($p_kwd, $p_length)
     $p_kwd = trim($p_kwd);
     if (!isset($kwd_hash[$p_kwd])) {
     	$kwd_hash[$p_kwd] = false;
+    } else {
+    	$kwd_hash[$p_kwd] = true;
     }
 } // fn add_kwd
 
@@ -197,7 +199,7 @@ function build_kwd_list($p_article)
 
 function gather($p_conf_dir)
 {
-	global $g_silent, $g_verbose;
+	global $g_silent, $g_verbose, $kwd_hash;
 
     // connects to the database server
     db_connect($p_conf_dir);
@@ -218,6 +220,7 @@ function gather($p_conf_dir)
     $nr_new = 0;
     $nr_word = 0;
 
+    $existing_words = array();
     while($row = mysql_fetch_array($sql_result, MYSQL_ASSOC)) {
         $article['IdPublication'] = ($row['IdPublication']) ? (int)$row['IdPublication'] : 0;
         $article['NrIssue'] = ($row['NrIssue']) ? (int)$row['NrIssue'] : 0;
@@ -245,9 +248,6 @@ function gather($p_conf_dir)
 
         init_hash();
         build_kwd_list($article);
-        $existing_words = array();
-
-        global $kwd_hash;
 
         foreach ($kwd_hash as $keyword=>$isSet) {
             if (empty($keyword)) {
@@ -290,7 +290,7 @@ function gather($p_conf_dir)
                 }
 
                 // inserts in keyword list
-                $sql_query = 'INSERT INTO KeywordIndex '
+                $sql_query = 'INSERT IGNORE INTO KeywordIndex '
                     . "SET Keyword = '".mysql_real_escape_string($keyword)."', "
                     . 'Id = '.$kwd_id;
                 $sql_res = mysql_query($sql_query);
@@ -346,6 +346,7 @@ function gather($p_conf_dir)
 
     return 0;
 } // fn gather
+
 
 
 function db_connect($p_conf_dir)
@@ -447,7 +448,18 @@ if (empty($conf_dir)) {
 }
 $GLOBALS['g_campsiteDir'] = dirname($conf_dir);
 
+$lockFile = fopen($GLOBALS['g_campsiteDir'].'/bin/campsite-indexer.lock', "w+");
+if ($lockFile === false) {
+    exit_error("Unable to create single process lock control!");
+}
+if (!flock($lockFile, LOCK_EX)) { // do an exclusive lock
+	// another campsite-indexer process is already running
+	exit(0);
+}
+
 // runs the script
 gather($conf_dir);
+
+flock($lockFile, LOCK_UN); // release the lock
 
 ?>
