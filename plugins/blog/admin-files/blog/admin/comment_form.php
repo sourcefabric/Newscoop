@@ -1,5 +1,6 @@
 <html>
 <?php
+camp_load_translation_strings("plugin_blog");
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {

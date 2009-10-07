@@ -1,3 +1,7 @@
+<?php
+camp_load_translation_strings("plugin_poll");
+?>
+
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 <script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
 <SCRIPT language="javascript">

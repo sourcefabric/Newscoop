@@ -1,4 +1,5 @@
 <?php
+camp_load_translation_strings("plugin_poll");
 global $issueObj;
 
 $issue_language_id = $issueObj->getLanguageId();

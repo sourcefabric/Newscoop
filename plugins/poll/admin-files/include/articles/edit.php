@@ -1,4 +1,7 @@
-<?php global $articleObj, $f_article_number, $f_edit_mode; ?>
+<?php
+camp_load_translation_strings("plugin_poll");
+global $articleObj, $f_article_number, $f_edit_mode; 
+?>
 
 <tr><td>
   <TABLE width="100%" style="border: 1px solid #EEEEEE;">

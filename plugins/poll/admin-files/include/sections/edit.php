@@ -1,4 +1,5 @@
 <?php
+camp_load_translation_strings("plugin_poll");
 global $sectionObj;
 
 $section_language_id = $sectionObj->getLanguageId();

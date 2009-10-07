@@ -1,4 +1,5 @@
 <?php
+camp_load_translation_strings("plugin_poll");
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {

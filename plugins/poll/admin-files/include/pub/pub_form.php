@@ -1,4 +1,5 @@
-<?php 
+<?php
+camp_load_translation_strings("plugin_poll");
 global $publicationObj;
 
 if (is_object($publicationObj)) {
