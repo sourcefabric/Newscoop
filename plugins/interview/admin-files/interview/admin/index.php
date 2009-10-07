@@ -1,5 +1,21 @@
 <?php
 camp_load_translation_strings("plugin_interview");
+
+// DO NOT DELETE!!! Needed for localizer
+// getGS("Interview");
+// getGS("Administrate Interviews");
+// getGS("Moderate Interviews");
+// getGS("Interview Guest");
+// getGS("draft");
+// getGS("pending");
+// getGS("published");
+// getGS("rejected");
+// getGS("Guest Login");
+// getGS("Guest Email");
+// getGS("Image Description");
+// getGS("Delete Image");
+// getGS("Short Description");
+// getGS("Questions Limit");
 ?>
 
 <script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
