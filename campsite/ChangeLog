@@ -1,4 +1,4 @@
-3.3.3 (Oct 4, 2009)
+3.3.3 (Oct 8, 2009)
   Improvementes
   -------------
   - #2877 - Add "anchor" button to make html anchors to rich text editor
@@ -40,6 +40,8 @@
             function
   - #3025 - Article type fields of type switch do not work as documented
   - #3026 - Replace obsolete function split()
+  - #3029 - The article indexer might crash when two indexing processes run
+            at the same time
 
 3.3.2 (Aug 18, 2009)
   Improvements
