@@ -1,16 +1,16 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "");
-regGS("Unable to add attachment.", "");
-regGS("There was a problem uploading the file.", "");
-regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
-regGS("The maximum file upload size was not configured in Campsite.", "");
-regGS("The file exceeds the allowed max file size.", "");
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Artículo #$1 \"$2\" no está adjuntada al artículo #$3 \"$4\"");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Archivo ");
+regGS("Unable to add attachment.", "Incapaz de añadir archivo adjunto.");
+regGS("There was a problem uploading the file.", "Hubo un problema la subir el archivo.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo subido fue solo parcialmente subido. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "El tamño máximo de un archivo para subir no ha sido configurao en Campsite.");
+regGS("The file exceeds the allowed max file size.", "El archivo sobrepasa el tamaño máximo permitido para un archivo.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
-regGS("Maximum Upload Size", "");
-regGS("File Size", "");
-regGS("File Name", "");
-regGS("Download", "");
+regGS("Maximum Upload Size", "Tamaño máximo para cargar");
+regGS("File Size", "Tamaño de archivo");
+regGS("File Name", "Nombre de archivo");
+regGS("Download", "Descargar");
 regGS("File '$1' updated.", "Se actualizó el archivo '$1' ");
 regGS("File '$1' deleted.", "Se eliminó el artículo '$1' ");
 regGS("File '$1' added.", "Se añadió el artículo '$1' ");

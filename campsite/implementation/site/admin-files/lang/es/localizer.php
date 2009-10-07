@@ -1,9 +1,11 @@
 <?php 
-regGS("Translation status:", "");
+regGS("Translation status:", "Estado de la traducción:");
 regGS("Editor Media Plugin", "");
 regGS("$1 of $2 strings translated", "");
-regGS("Preview Window", "");
-regGS("Article Audioclips", "");
+regGS("Preview Window", "Vista previa");
+regGS("Article Audioclips", "Audioclips de los artículos");
+regGS("Show translated strings", "");
+regGS("Hide translated strings", "Desea ocultar las cadenas de caracteres traducidas");
 regGS("Feedback", "Retroalimentación");
 regGS("You do not have the right to manage the localizer.", "No tiene los privilegios para administrar el traductor.");
 regGS("API", "API");
@@ -16,7 +18,6 @@ regGS("The following strings are missing from the translation files:", "Hacen fa
 regGS("Screen:", "Pantalla:");
 regGS("No source strings found.", "No se encuentran strings de fuente.");
 regGS("No matches found.", "No se encuentran coincidencias.");
-regGS("Hide translated strings", "Desea ocultar las cadenas de caracteres traducidas");
 regGS("Globals", "Globales");
 regGS("Are you sure you want to delete this entry?", "¿Está seguro de querer eliminar esta entrada?");
 regGS("All strings have been translated.", "Todas las cadenas de caracteres han sido traducidas.");

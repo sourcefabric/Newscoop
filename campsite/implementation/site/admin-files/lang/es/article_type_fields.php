@@ -1,11 +1,11 @@
 <?php 
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
-regGS("The property '$1' is already in use.", "");
-regGS("Precision", "");
-regGS("Can not convert the field $1 from $2 to type $3.", "");
-regGS("Are you sure you want to make $1 a $2 field?", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "El campo ya estaba en uso como una propriedad del articulo. El contenido no se mostrará en las plantillas.");
+regGS("The property '$1' is already in use.", "La propiedad '$1' ya estaba en uso.");
+regGS("Precision", "Precisión.");
+regGS("Can not convert the field $1 from $2 to type $3.", "No se pudo convertir el campo $1 de $2 al tipo $3.");
+regGS("Are you sure you want to make $1 a $2 field?", "¿Seguro que desea convertir el campo $1 al $2?");
 regGS("Is Content", "");
-regGS("Back to Article Types List", "");
+regGS("Back to Article Types List", "Regresar a lista de tipos de artículos.");
 regGS("show", "mostrar");
 regGS("hide", "ocultrar");
 regGS("You must enter a name for the field.", "Debe ingresar un nombre para este campo.");

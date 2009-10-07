@@ -138,11 +138,6 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Nemate prava brisati članke.");
 regGS("You must select an article type.", "Morate označiti tip članka.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Jeste li sigurni da želite ukloniti sliku \'$1\' iz članka");
-regGS("There was an error reading request parameters.", "Greška pri čitanju traženih parametra.");
-regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak članka.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak  naslovnice.");
-regGS("No such article.", "Nema tog članka.");
-regGS("No such section.", "Nema te sekcije.");
 regGS("Select None", "Izaberi nijedan");
 regGS("Select All", "Izaberi sve");
 regGS("On Section Page", "Na stranici rubrike");
@@ -151,4 +146,9 @@ regGS("Creation date", "Datum kreiranja");
 regGS("Created by", "Kreirao:");
 regGS("Add Event", "Dodaj događaj");
 regGS("Are you sure you want to delete this scheduled action?", "Jeste li sigurni da želite obrisati zakazanu radnju?");
+regGS("There was an error reading request parameters.", "Greška pri čitanju traženih parametra.");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak članka.");
+regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Članak se ne može pregledati. Provjerite da li ste označili predložak  naslovnice.");
+regGS("No such article.", "Nema tog članka.");
+regGS("No such section.", "Nema te sekcije.");
 ?>

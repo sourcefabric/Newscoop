@@ -138,12 +138,13 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Немате право да бришете текстове.");
 regGS("You must select an article type.", "Морате изабрати тип текста.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Да ли сте сигурни да из текста желите да уклоните слику \'$1\'?");
+regGS("Reorder", "Промени распоред");
+regGS("Author", "аутор");
+regGS("Are you sure you want to delete this scheduled action?", " ");
+regGS("Are you sure you want to remove the image '$1' from the article?", "Да ли сте сигурни да желите да обришете слику  '$1'  из текста? ");
 regGS("There was an error reading request parameters.", "Дошло је до грешке при читању тражених параметара.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Чланак не може бити прегелдан. Проверите да ли је одређен шаблон за приказ чланка.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Овај чланак не може бити приказан. Проверите да ли је одређен шаблон за приказ почетне стране. ");
 regGS("No such article.", "Нема таквог текста.");
 regGS("No such section.", "Нема те рубрике.");
-regGS("Reorder", "Промени распоред");
-regGS("Are you sure you want to delete this scheduled action?", " ");
-regGS("Are you sure you want to remove the image '$1' from the article?", "Да ли сте сигурни да желите да обришете слику  '$1'  из текста? ");
 ?>

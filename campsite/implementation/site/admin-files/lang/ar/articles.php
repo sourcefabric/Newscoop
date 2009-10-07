@@ -138,11 +138,11 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "لا تملك صلاحية إلغاء المقالات");
 regGS("You must select an article type.", "عليك إختيار نوع المقالة");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "هل أنت متأكد من إزالة الصمرة \'$1\' من المقالة؟");
+regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة' /1$/ 'من المقال ؟");
 regGS("There was an error reading request parameters.", "هنالك خطاء في قراءة متغيرات الطلب");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب المقال");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب الصفحة الرئيسية");
 regGS("No such article.", "لا وجود للمقال");
 regGS("No such section.", "لا يوجد هكذا قسم");
-regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة' /1$/ 'من المقال ؟");
 ?>
