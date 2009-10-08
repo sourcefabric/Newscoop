@@ -1524,7 +1524,7 @@ class BasicStor {
         if (substr($relPath, 0, 1)=='/') {
             $nid = $this->storId;
         }
-        $a = preg_split('/', $relPath);
+        $a = explode('/', $relPath);
         foreach ($a as $i => $pathItem) {
             switch ($pathItem) {
                 case ".":

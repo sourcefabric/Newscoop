@@ -18,7 +18,7 @@ $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_article_code = Input::Get('f_article_code', 'string', 0);
 $f_translation_title = trim(Input::Get('f_translation_title'));
 $f_translation_language = Input::Get('f_translation_language');
-list($articleNumber, $languageId) = preg_split("_", $f_article_code);
+list($articleNumber, $languageId) = explode("_", $f_article_code);
 $backLink = "/$ADMIN/articles/translate.php?f_language_id=$f_language_id"
 		. "&f_publication_id=$f_publication_id&f_issue_number=$f_issue_number"
 		. "&f_section_number=$f_section_number&f_article_code=$f_article_code"

@@ -40,9 +40,9 @@ foreach ($cmdLineOptions as $tmpValue) {
             break;
         case "o":
             $optStr = $optionValue;
-            $optArr = preg_split(",", $optStr);
+            $optArr = explode(",", $optStr);
             foreach ($optArr as $opt) {
-                list($k, $v) = preg_split(':', $opt);
+                list($k, $v) = explode(':', $opt);
                 $options[$k] = $v;
             }
 

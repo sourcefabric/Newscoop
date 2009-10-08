@@ -296,7 +296,7 @@ class ArticleData extends DatabaseObject {
 		array_shift($p_match);
 		$attrs = array();
 		foreach ($p_match as $attr) {
-			$attr = preg_split('=', $attr);
+			$attr = explode('=', $attr);
 			if (isset($attr[0]) && !empty($attr[0])) {
 				$attrName = trim(strtolower($attr[0]));
 				$attrValue = isset($attr[1]) ? $attr[1] : '';

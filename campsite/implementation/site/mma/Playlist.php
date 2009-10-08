@@ -650,7 +650,7 @@ class Playlist extends StoredFile {
      */
     public static function playlistTimeToSeconds($plt)
     {
-        $arr = preg_split(':', $plt);
+        $arr = explode(':', $plt);
         if (isset($arr[2])) {
           return (intval($arr[0])*60 + intval($arr[1]))*60 + floatval($arr[2]);
         }

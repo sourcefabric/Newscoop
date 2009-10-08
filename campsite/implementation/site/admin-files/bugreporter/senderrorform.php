@@ -105,7 +105,7 @@ if ($f_isPostFromBugreporter && ($_SERVER['REQUEST_METHOD'] == "POST") ) {
     // was also sent) --
 
     // Remove the code name from the version number.
-    $version = preg_split(" ", $Campsite['VERSION']);
+    $version = explode(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
     $reporter = new BugReporter($f_num, $f_str, $f_file, $f_line,

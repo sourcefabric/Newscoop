@@ -43,7 +43,7 @@ switch($ak){
             $log = $v->serialize();
             if($ak=='test')
             {
-                $log = preg_split('_',$log);
+                $log = explode('_',$log);
                 $log="{$log[0]}\nusername: {$log[1]}\ntoken: {$log[2]}";
             }
             if($ak=='login') $sessid = $v->scalarval();
