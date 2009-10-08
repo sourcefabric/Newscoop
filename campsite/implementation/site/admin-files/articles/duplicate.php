@@ -51,12 +51,12 @@ $doAction = array();
 foreach ($_REQUEST as $key => $value) {
 	if (!strncmp($key, "f_article_name_", strlen("f_article_name_"))) {
 		$tmpCodeStr = str_replace("f_article_name_", "", $key);
-		list($articleId, $languageId) = preg_split("_", $tmpCodeStr);
+		list($articleId, $languageId) = explode("_", $tmpCodeStr);
 		$articleNames[$articleId][$languageId] = Input::Get($key, 'string', '', true);
 	}
 	if (!strncmp($key, "f_do_copy_", strlen("f_do_copy_"))) {
 		$tmpCodeStr = str_replace("f_do_copy_", "", $key);
-		list($articleId, $languageId) = preg_split("_", $tmpCodeStr);
+		list($articleId, $languageId) = explode("_", $tmpCodeStr);
 		$doAction[$articleId][$languageId] = Input::Get($key, 'string', '', true);
 	}
 }
@@ -67,7 +67,7 @@ foreach ($_REQUEST as $key => $value) {
 $articles = array();
 $firstArticle = null;
 foreach ($f_article_code as $code) {
-	list($articleNumber, $languageId) = preg_split("_", $code);
+	list($articleNumber, $languageId) = explode("_", $code);
 	$tmpArticle = new Article($languageId, $articleNumber);
 	if (is_null($firstArticle)) {
 		$firstArticle = $tmpArticle;

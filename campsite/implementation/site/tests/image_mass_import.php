@@ -20,7 +20,7 @@ foreach ($dirs as $dirname) {
 	while (false !== ($entry = $dir->read())) {
 		//echo $entry."<br>";
 		$filename = $dirname.'/'.$entry;
-		$extension = preg_split('\.', $entry);
+		$extension = explode('.', $entry);
 		$extension = array_pop($extension);
 		//echo $extension."<br>";
 		if (@is_file($filename) && (in_array($extension, array('jpg', 'jpeg', 'gif')))) {

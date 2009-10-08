@@ -41,7 +41,7 @@ if (!Input::IsValid()) {
 $articles = array();
 $errorArticles = array();
 foreach ($f_article_code as $code) {
-	list($articleId, $languageId) = preg_split("_", $code);
+	list($articleId, $languageId) = explode("_", $code);
 	$tmpArticle = new Article($languageId, $articleId);
 	if ($tmpArticle->getWorkflowStatus() != 'N') {
 		$articles[] = $tmpArticle;

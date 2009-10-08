@@ -651,7 +651,7 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 			if (strlen($db) == 0) $db = 'template1';
 			$db = adodb_addslashes($db);
 		   	if ($str)  {
-			 	$host = preg_split(":", $str);
+			 	$host = explode(':', $str);
 				if ($host[0]) $str = "host=".adodb_addslashes($host[0]);
 				else $str = 'host=localhost';
 				if (isset($host[1])) $str .= " port=$host[1]";
