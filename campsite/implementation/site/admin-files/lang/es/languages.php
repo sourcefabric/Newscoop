@@ -30,7 +30,7 @@ regGS("Thursday", "Jueves");
 regGS("Friday", "Viernes");
 regGS("Saturday", "Sábado");
 regGS("Sunday", "Domingo");
-regGS("You do not have the right to add new languages.", "No tiene privilegios para añadir un nuevo idioma.");
+regGS("You do not have the right to add new languages.", "No puede añadir un nuevo idioma.");
 regGS("There are $1 issue(s) left.", "Queda(n) $1 edición(es).");
 regGS("Native name", "Nombre local");
 regGS("The language $1 has been successfuly added.", "El idioma $1 ha sido agregado con éxito");

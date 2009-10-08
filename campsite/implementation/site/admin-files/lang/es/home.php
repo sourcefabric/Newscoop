@@ -18,8 +18,8 @@ regGS("There are currently no articles in statistics.", "Actualmento no hay ning
 regGS("Publish date", "Fecha de publicación. ");
 regGS("Most Popular Articles", "Artículos más populares. ");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Incapaz de conectarse al servidor Campcaster, por favor verificar la configuración del servidor Campcaster.");
-regGS("Clear system cache", "");
-regGS("Campsite cache was cleaned up", "");
+regGS("Clear system cache", "Despejar el caché del sistema");
+regGS("Campsite cache was cleaned up", "El caché de campsite fue despejado");
 regGS("The system was unable to upload the file '$1'. ", "El sistema fue incapaz de subir el archivo '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Por favor revisar el archivo que está tratando de subir, puede estar corrompido.");
 regGS("Synchronize Campsite and Phorum users", "Sincronizar Campsita y el foro de los usuarios.");
