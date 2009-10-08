@@ -372,13 +372,13 @@ class CampPlugin extends DatabaseObject
                     }
                 }
 
-                if ($parent_menu) {
+                if ($parent_menu && isset($info['menu'])) {
                     $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
-                    is_null($info['menu']['path']) ? null : "/$ADMIN/".$info['menu']['path'],
+                    isset($info['menu']['path']) ? "/$ADMIN/".$info['menu']['path'] : null,
                     array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$info['menu']['icon'])));
                 }
 
-                if (is_array($info['menu']['sub'])) {
+                if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
                     foreach ($info['menu']['sub'] as $menu_info) {
                         if ($g_user->hasPermission($menu_info['permission'])) {
                             $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
