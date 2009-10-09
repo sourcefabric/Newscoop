@@ -1,5 +1,5 @@
 <?php 
-regGS("You must select a file to upload.", "");
+regGS("You must select a file to upload.", "Вы павінны абраць файл для для загрузкі.");
 regGS("You do not have the right to delete files.", "");
 regGS("You do not have the right to change the article.", "");
 regGS("You do not have the right to change files.", "");
@@ -79,4 +79,5 @@ regGS("Answer $1", "Адказ $1");
 regGS("Add new Poll", "Дадаць новае апытанне");
 regGS("---Select---", "---Абраць--- ");
 regGS("$1/$2 polls assigned/unassigned.", "Апытанні  $1/$2 размеркаваныя /неразмеркаваныя");
+regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "");
 ?>

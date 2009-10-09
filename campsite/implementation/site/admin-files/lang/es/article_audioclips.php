@@ -26,7 +26,7 @@ regGS("Reset Criteria", "Reestablecer los criterios");
 regGS("Report organizations", "Informar sobre organizaciones");
 regGS("Report location", "Informar sobre ubicación");
 regGS("Report date/time", "Informar sobre fecha/hora");
-regGS("Rating", "");
+regGS("Rating", "Rating");
 regGS("Radio station web page", "Página web de la radio estación");
 regGS("Radio station name", "Nombre de la radio estación");
 regGS("Please enter your user name and password", "Por favor ingresar el nombre de usuario y la contraseña");

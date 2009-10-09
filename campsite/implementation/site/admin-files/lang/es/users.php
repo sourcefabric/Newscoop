@@ -5,7 +5,7 @@ regGS("Password Generator", "Generador de contraseñas");
 regGS("Generate", "Generar");
 regGS("Clean", "Remover");
 regGS("User may use the editor status bar", "El usuario puede utilizar la barra de estado de editor.");
-regGS("User may clear up the system cache", "");
+regGS("User may clear up the system cache", "El usuario puede limpiar el caché del sistema.");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Otro usuario ya está registrado con ese e-mail, por favor escoga otro.");
 regGS("You do not have the right to sync Campsite and Phorum users.", "No puedes sincronizar Campsite y el foro de los usuarios.");
 regGS("User may synchronize Campsite and Phorum users", "El usuariop puede sincronizar Campsite con el foro de usuarios.");

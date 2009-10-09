@@ -6,7 +6,7 @@ regGS("There was a problem uploading the file.", "Hubo un problema la subir el a
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo subido fue solo parcialmente subido. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
 regGS("The maximum file upload size was not configured in Campsite.", "El tamño máximo de un archivo para subir no ha sido configurao en Campsite.");
 regGS("The file exceeds the allowed max file size.", "El archivo sobrepasa el tamaño máximo permitido para un archivo.");
-regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Por favor asegúrese de haber actualizado la base de datos correctamente: ejecute $1 en la línea de comandos.");
 regGS("Maximum Upload Size", "Tamaño máximo para cargar");
 regGS("File Size", "Tamaño de archivo");
 regGS("File Name", "Nombre de archivo");

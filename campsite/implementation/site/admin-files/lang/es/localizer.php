@@ -1,11 +1,11 @@
 <?php 
 regGS("Translation status:", "Estado de la traducción:");
 regGS("Editor Media Plugin", "");
-regGS("$1 of $2 strings translated", "");
+regGS("$1 of $2 strings translated", "$1 de $2 cadenas traducidas");
 regGS("Preview Window", "Vista previa");
 regGS("Article Audioclips", "Audioclips de los artículos");
-regGS("Show translated strings", "");
-regGS("Hide translated strings", "Desea ocultar las cadenas de caracteres traducidas");
+regGS("Show translated strings", "Mostrar las cadenas de caracteres traducidas");
+regGS("Hide translated strings", "Ocultar las cadenas de caracteres traducidas");
 regGS("Feedback", "Retroalimentación");
 regGS("You do not have the right to manage the localizer.", "No tiene los privilegios para administrar el traductor.");
 regGS("API", "API");
