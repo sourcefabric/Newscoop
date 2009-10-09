@@ -29,8 +29,6 @@ $allLanguages = Language::GetLanguages();
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-// DO NOT DELETE!!! Needed for localizer
-// getGS("Polls");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 

@@ -5,8 +5,8 @@ $info = array(
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(
-        'name' => 'blog',
-        'label' => 'Blog',
+        'name' => 'blogs',
+        'label' => 'Blogs',
         'icon' => '/css/kedit.png',
         'sub' => array(
             array(

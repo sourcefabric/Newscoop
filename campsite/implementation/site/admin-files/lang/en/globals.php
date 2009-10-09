@@ -1,4 +1,15 @@
-<?php 
+<?php
+regGS("Plugins", "Plugins");
+regGS("Manage Plugins", "Manage Plugins");
+regGS("Blogs", "Blogs");
+regGS("Administer Blogs", "Administer Blogs");
+regGS("Moderate Blogs", "Moderate Blogs");
+regGS("Blog Preferences", "Blog Preferences");
+regGS("Interview", "Interview");
+regGS("Administrate Interviews", "Administrate Interviews");
+regGS("Moderate Interviews", "Moderate Interviews");
+regGS("Interview Guest", "Interview Guest");
+regGS("Polls", "Polls");
 regGS("Account", "Account");
 regGS("Items per page", "Items per page");
 regGS("Add new", "Add new");
@@ -256,5 +267,4 @@ regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '$1'");
 regGS("There was an error logging in to the Campcaster server", "There was an error logging in to the Campcaster server");
 regGS("Reads", "Reads");
-regGS("Plugins", "Plugins");
 ?>
