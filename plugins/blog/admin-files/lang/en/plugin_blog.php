@@ -38,7 +38,6 @@ regGS("Blog mood root", "Blog mood root");
 regGS("Blog comment saved.", "Blog comment saved.");
 regGS("Blog Settings", "Blog Settings");
 regGS("Blog Preferences", "Blog Preferences");
-regGS("Blog", "Blog");
 regGS("Are you sure you want to delete the selected item(s)?", "Are you sure you want to delete the selected item(s)?");
 regGS("Allow post comments to", "Allow post comments to");
 regGS("All posts", "All posts");

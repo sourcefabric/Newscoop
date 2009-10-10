@@ -38,7 +38,6 @@ regGS("Blog mood root", "Основное состояние блога");
 regGS("Blog comment saved.", "Комментарий блога сохранен.");
 regGS("Blog Settings", "Установки блога");
 regGS("Blog Preferences", "Настройки блога");
-regGS("Blog", "Блог");
 regGS("Are you sure you want to delete the selected item(s)?", "Вы уверены, что хотите удалить выделенный(ые) элемент(ы)?");
 regGS("Allow post comments to", "Разрешить отправление комментариев");
 regGS("All posts", "Все сообщения");

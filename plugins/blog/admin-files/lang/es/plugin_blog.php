@@ -38,7 +38,6 @@ regGS("Blog mood root", "");
 regGS("Blog comment saved.", "El comentario del blog ha sido guardado.");
 regGS("Blog Settings", "Ajustes del blog");
 regGS("Blog Preferences", "Preferencias del blog");
-regGS("Blog", "Blog");
 regGS("Are you sure you want to delete the selected item(s)?", "¿Desea borrar los items seleccionados?");
 regGS("Allow post comments to", "");
 regGS("All posts", "");

@@ -2,6 +2,10 @@
 camp_load_translation_strings("plugin_interview");
 
 // DO NOT DELETE!!! Needed for localizer
+// getGS("Interview");
+// getGS("Administrate Interviews");
+// getGS("Moderate Interviews");
+// getGS("Interview Guest");
 // getGS("draft");
 // getGS("pending");
 // getGS("published");
