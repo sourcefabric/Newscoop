@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "");
@@ -143,8 +142,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
 regGS("No such article.", "");
 regGS("No such section.", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "");
 ?>

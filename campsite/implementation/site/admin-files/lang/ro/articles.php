@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "Tip invalid: $1");
 regGS("Hide Comments", "Ascunde comentariile");
 regGS("Enabled", "Activat");
 regGS("Disabled", "Dezactivat");
-regGS("Comments:", "Comentarii:");
 regGS("Comments", "Comentarii");
 regGS("The article has already been translated into $1.", "Articolul a fost deja tradus în $1.");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Trebuie să alegi publicaţia, ediţia şi secţiunea articolului înainte de a-l programa pentru publicare. Mergi la meniul \"$1\" şi selectează \"$2\" pentru a face acest lucru.");

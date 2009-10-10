@@ -195,7 +195,7 @@ regGS("Add new field", "زه مینه ی نوێ زیاد بکه");
 regGS("Article automatic publishing schedule", "به ئۆ تۆ ما تیك بڵاو کرد نه وه ی بابه ت له کاتی دیاری کراو دا");
 regGS("Are you sure you want to delete this scheduled action?", "دڵنیا یت که ئه ته وێ ئه م کرداره دیاریکراوه بسڕیته وه؟");
 regGS("Unlink", "لینکه که بشکێ نه");
-regGS("Are you sure you want to delete the image \'$1\'?", "");
+regGS("Are you sure you want to delete the image \'$1\'?", "دڵنیا یت که ئه ته وێ ئه وێنه یه بسڕیته وه  \'$1\'؟ خ");
 regGS("No such issue.", "با به تی بڵاوکراوه ی وا نی یه");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "د ڵنیا یت که ئه ته وێ ئا بونه ی بڵاوکراوه ی $1 بسریته وه؟");
 regGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.", "ناتوانێ گۆڕانکا رییه کان خه زن بکا ت که له سه ر بابتی بڵاو کراوه ی$1 . تکا یه بزانه ناوی وێبی بابه تی بڵاوکراوه '$2' به کار نه ها توه  پێشتر له بڵاوکراوه ی $3   ");
@@ -258,5 +258,4 @@ regGS("The URL you entered is invalid: '$1'", "ئه د ره سی ئه و وێب�
 regGS("There was an error logging in to the Campcaster server", "هه ڵه یه ك له چونه ژووره وه  بۆ ناو سێر ڤه ری کامکاسته ر");
 regGS("Reads", "بینراوه");
 regGS("Plugins", "چه سپێنه ره کا ن");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "دڵنیا یت که ئه ته وێ ئه وێنه یه بسڕیته وه  \\'$1\\'؟ خ");
 ?>

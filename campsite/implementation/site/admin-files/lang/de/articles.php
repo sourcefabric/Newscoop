@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "Kommentare:");
 regGS("Comments", "Kommentare");
 regGS("The article has already been translated into $1.", "Der Artikel wurde zu $1 übersetzt");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Vor dem Automatisieren müssen Publikation und Rubrik für diesen Artikel bestimmt werden. Gehe dafür zu \"$1\" und dann \"$2\".");
@@ -146,8 +145,4 @@ regGS("No such section.", "Rubrik nicht vorhanden");
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema '$1' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei '$1' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild '$1' vom Artikel entkoppelt werden?");
 ?>

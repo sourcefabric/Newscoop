@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Článek již byl přeložený do $1.");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Před naplánováním publikování článku musíte nastavit publikaci, vydání a sekci, ve které má být článek umístěn. Abyste toho dosáhli, použijte menu \"$1\" a vyberte položku \"$2\".");

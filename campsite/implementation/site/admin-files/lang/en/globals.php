@@ -1,15 +1,6 @@
-<?php
+<?php 
 regGS("Plugins", "Plugins");
 regGS("Manage Plugins", "Manage Plugins");
-regGS("Blogs", "Blogs");
-regGS("Administer Blogs", "Administer Blogs");
-regGS("Moderate Blogs", "Moderate Blogs");
-regGS("Blog Preferences", "Blog Preferences");
-regGS("Interview", "Interview");
-regGS("Administrate Interviews", "Administrate Interviews");
-regGS("Moderate Interviews", "Moderate Interviews");
-regGS("Interview Guest", "Interview Guest");
-regGS("Polls", "Polls");
 regGS("Account", "Account");
 regGS("Items per page", "Items per page");
 regGS("Add new", "Add new");
