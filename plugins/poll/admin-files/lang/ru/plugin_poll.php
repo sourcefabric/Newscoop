@@ -1,4 +1,5 @@
 <?php 
+regGS("Polls", "Опросы");
 regGS("You must select a file to upload.", "Вы должны выбрать файл для загрузки.");
 regGS("You do not have the right to delete files.", "У Вас нет прав доступа для удаления файлов.");
 regGS("You do not have the right to change the article.", "У Вас нет прав доступа для изменений в статье.");
@@ -11,7 +12,6 @@ regGS("The maximum file upload size was not configured in Campsite.", "Разм�
 regGS("The file exceeds the allowed max file size.", "Размер файла превышает максимально-установленный системой размер.");
 regGS("Should this file only be available for this translation, or for all translations?", "Этот файл должен быть доступен только для этого перевода статьи, или для всех переводов?");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Этот файл должен быть доступен только для этого перевода данной статьи, или для всех переводов?");
-regGS("Polls", "Опросы");
 regGS("Poll Answer $1 does not exist.", "Ответ опроса $1 не существует.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Убедитесь, что база данных обновлена корректно: запустите  $1 в оболочке.");
 regGS("Please enter a description for the file.", "Введите описание для этого файла.");
@@ -33,7 +33,7 @@ regGS("Automatically download", "Автоматическая загрузка")
 regGS("Attachments", "Присоединенные файлы");
 regGS("Attachment does not exist.", "Нет приложенных файлов");
 regGS("Attach File to Poll Answer", "Приложить файл к ответу опроса");
-regGS("Are you sure you want to remove the file \'$1\' from the poll answer?", "");
+regGS("Are you sure you want to remove the file \'$1\' from the poll answer?", "Вы уверены, что хотите удалить файл \'$1\' из ответа этого опроса?");
 regGS("All translations", "Все переводы");
 regGS("You need to activate at least 1 answer.", "Вам нужно активировать по меньшей мере 1 ответ.");
 regGS("You must select number of votes per user.", "Вы должны выбрать количество голосований для одного пользователя.");
@@ -79,5 +79,4 @@ regGS("Answer $1", "Ответ $1");
 regGS("Add new Poll", "Добавить новый Опрос");
 regGS("---Select---", "---Выбрать---");
 regGS("$1/$2 polls assigned/unassigned.", "Голосования $1/$2 определены/деактивированы");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Вы уверены, что хотите удалить файл \\'$1\\' из ответа этого опроса?");
 ?>

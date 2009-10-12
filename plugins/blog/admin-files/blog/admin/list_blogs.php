@@ -3,9 +3,9 @@ camp_load_translation_strings("plugin_blog");
 
 // DO NOT DELETE!!! Needed for localizer
 // getGS("Blogs");
-// getGS("Administer Blogs");
-// getGS("Moderate Blogs");
-// getGS("Blog Preferences");
+// getGS("Administer");
+// getGS("Moderate");
+// getGS("Preferences");
 // getGS("pending");
 // getGS("online");
 // getGS("offline");

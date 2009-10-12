@@ -6,19 +6,19 @@ $info = array(
     'description' => 'This plugin provides functionality to perform online interviews.',  
     'menu' => array(
         'name' => 'interview',
-        'label' => 'Interview',
+        'label' => 'Interviews',
         'icon' => '/css/interview.png',
         'sub' => array(
             array(
                 'permission' => 'plugin_interview_admin',
                 'path' => "interview/admin/index.php",
-                'label' => 'Administrate Interviews',
+                'label' => 'Administer',
                 'icon' => 'css/interview.png',
             ),
             array(
                 'permission' => 'plugin_interview_moderator',
                 'path' => "interview/moderator/index.php",
-                'label' => 'Moderate Interviews',
+                'label' => 'Moderate',
                 'icon' => 'css/interview.png',
             ),
             array(

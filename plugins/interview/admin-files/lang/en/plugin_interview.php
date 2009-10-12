@@ -1,4 +1,8 @@
 <?php 
+regGS("Interviews", "Interviews");
+regGS("Administer", "Administer");
+regGS("Moderate", "Moderate");
+regGS("Interview Guest", "Interview Guest");
 regGS("rejected", "rejected");
 regGS("published", "published");
 regGS("pending", "pending");
@@ -21,14 +25,11 @@ regGS("Question", "Question");
 regGS("No interviews.", "No interviews.");
 regGS("No interview items.", "No interview items.");
 regGS("Moderator", "Moderator");
-regGS("Moderate Interviews", "Moderate Interviews");
 regGS("List Items", "List Items");
 regGS("Invite", "Invite");
 regGS("Interview: $1", "Interview: $1");
-regGS("Interview Guest", "Interview Guest");
 regGS("Interview End", "Interview End");
 regGS("Interview Begin", "Interview Begin");
-regGS("Interview", "Interview");
 regGS("Image Description", "Image Description");
 regGS("Guest Login", "Guest Login");
 regGS("Guest Email", "Guest Email");
@@ -40,6 +41,5 @@ regGS("Click to edit", "Click to edit");
 regGS("Click to answer", "Click to answer");
 regGS("Are you sure you want to delete the selected item(s)?", "Are you sure you want to delete the selected item(s)?");
 regGS("Answer", "Answer");
-regGS("Administrate Interviews", "Administrate Interviews");
 regGS("Add new Interview", "Add new Interview");
 ?>

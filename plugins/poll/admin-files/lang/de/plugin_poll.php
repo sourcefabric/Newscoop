@@ -1,4 +1,5 @@
 <?php 
+regGS("Polls", "Umfragen");
 regGS("You must select a file to upload.", "");
 regGS("You do not have the right to delete files.", "");
 regGS("You do not have the right to change the article.", "");
@@ -11,7 +12,6 @@ regGS("The maximum file upload size was not configured in Campsite.", "");
 regGS("The file exceeds the allowed max file size.", "");
 regGS("Should this file only be available for this translation, or for all translations?", "");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Polls", "");
 regGS("Poll Answer $1 does not exist.", "");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
 regGS("Please enter a description for the file.", "");
@@ -79,4 +79,5 @@ regGS("Answer $1", "");
 regGS("Add new Poll", "");
 regGS("---Select---", "");
 regGS("$1/$2 polls assigned/unassigned.", "");
+regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "");
 ?>

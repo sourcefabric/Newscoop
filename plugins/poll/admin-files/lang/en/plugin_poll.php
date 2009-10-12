@@ -1,4 +1,5 @@
 <?php 
+regGS("Polls", "Polls");
 regGS("You must select a file to upload.", "You must select a file to upload.");
 regGS("You do not have the right to delete files.", "You do not have the right to delete files.");
 regGS("You do not have the right to change the article.", "You do not have the right to change the article.");
@@ -11,7 +12,6 @@ regGS("The maximum file upload size was not configured in Campsite.", "The maxim
 regGS("The file exceeds the allowed max file size.", "The file exceeds the allowed max file size.");
 regGS("Should this file only be available for this translation, or for all translations?", "Should this file only be available for this translation, or for all translations?");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Should this file only be available for this translation of the article, or for all translations?");
-regGS("Polls", "Polls");
 regGS("Poll Answer $1 does not exist.", "Poll Answer $1 does not exist.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Please make sure you upgraded the database correctly: run $1 in a shell.");
 regGS("Please enter a description for the file.", "Please enter a description for the file.");

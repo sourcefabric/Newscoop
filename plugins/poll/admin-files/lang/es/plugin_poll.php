@@ -1,4 +1,5 @@
 <?php 
+regGS("Polls", "Encuestas");
 regGS("You must select a file to upload.", "Debes seleccionar un artículo para cargarlo.");
 regGS("You do not have the right to delete files.", "No puedes borrar archivos.");
 regGS("You do not have the right to change the article.", "No puedes cambiar artículos.");
@@ -11,7 +12,6 @@ regGS("The maximum file upload size was not configured in Campsite.", "El tamañ
 regGS("The file exceeds the allowed max file size.", "El archivo sobrepasa el tamaño máximo.");
 regGS("Should this file only be available for this translation, or for all translations?", "¿Desea que este archivo este disponible para esta traducción o para todas?");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "¿Desea que este archivo este disponible para la traducción de este artículo o para todas las traducciones?");
-regGS("Polls", "Encuestas");
 regGS("Poll Answer $1 does not exist.", "La respuesta $1 no existe.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Asegúrese de haber mejorado la base de datos correctamente: ejecute $1 en la linea de comandos.");
 regGS("Please enter a description for the file.", "Ingrese una descripción para el archivo.");
@@ -79,5 +79,4 @@ regGS("Answer $1", "Respuesta $1");
 regGS("Add new Poll", "Añadir nueva encuesta");
 regGS("---Select---", "- - - Seleccionar - - - ");
 regGS("$1/$2 polls assigned/unassigned.", "$1/$2 encuestas asignadas/ no asignadas");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "¿Está seguro de querer remover el archivo \\'$1\\' de l ");
 ?>

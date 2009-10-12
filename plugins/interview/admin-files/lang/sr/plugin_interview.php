@@ -1,4 +1,8 @@
 <?php 
+regGS("Interviews", "");
+regGS("Administer", "");
+regGS("Moderate", "");
+regGS("Interview Guest", "");
 regGS("rejected", "");
 regGS("published", "");
 regGS("pending", "");
@@ -21,14 +25,11 @@ regGS("Question", "");
 regGS("No interviews.", "");
 regGS("No interview items.", "");
 regGS("Moderator", "");
-regGS("Moderate Interviews", "");
 regGS("List Items", "");
 regGS("Invite", "");
 regGS("Interview: $1", "");
-regGS("Interview Guest", "");
 regGS("Interview End", "");
 regGS("Interview Begin", "");
-regGS("Interview", "");
 regGS("Image Description", "");
 regGS("Guest Login", "");
 regGS("Guest Email", "");
@@ -40,6 +41,5 @@ regGS("Click to edit", "");
 regGS("Click to answer", "");
 regGS("Are you sure you want to delete the selected item(s)?", "");
 regGS("Answer", "");
-regGS("Administrate Interviews", "");
 regGS("Add new Interview", "");
 ?>

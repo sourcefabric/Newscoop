@@ -12,19 +12,19 @@ $info = array(
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
-                'label' => 'Administer Blogs',
+                'label' => 'Administer',
                 'icon' => 'css/gear.png',
             ),
             array(
                 'permission' => 'plugin_blog_moderator',
                 'path' => "blog/moderator/list_blogs.php",
-                'label' => 'Moderate Blogs',
+                'label' => 'Moderate',
                 'icon' => 'css/format_increaseindent.png',
             ),
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/blog_prefs.php",
-                'label' => 'Blog Preferences',
+                'label' => 'Preferences',
                 'icon' => 'css/configure.png',
             ),
         ),
