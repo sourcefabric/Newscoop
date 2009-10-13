@@ -2417,13 +2417,13 @@ class Article extends DatabaseObject {
             $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
             break;
         case 'onfrontpage':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            $conditionOperation['right'] = ($p_param->getRightOperand() == 1) ? 'Y' : 'N';
             break;
         case 'onsection':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            $conditionOperation['right'] = ($p_param->getRightOperand() == 1) ? 'Y' : 'N';
             break;
         case 'public':
-            $conditionOperation['right'] = (strtolower($p_param->getRightOperand()) == 'on') ? 'Y' : 'N';
+            $conditionOperation['right'] = ($p_param->getRightOperand() == 1) ? 'Y' : 'N';
             break;
         case 'matchalltopics':
             $conditionOperation['symbol'] = '=';
