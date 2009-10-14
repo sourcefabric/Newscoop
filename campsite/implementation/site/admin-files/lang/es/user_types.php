@@ -1,7 +1,7 @@
 <?php 
-regGS("Permissions changed for user type \"$1\"", "");
-regGS("User Type '$1' successfully deleted", "");
-regGS("Permissions successfully modified", "");
+regGS("Permissions changed for user type \"$1\"", "Se cambiaron los permisos para el usuario tipo \"$1\".");
+regGS("User Type '$1' successfully deleted", "Se borró exitosamente el usuario tipo '$1'.");
+regGS("Permissions successfully modified", "Se modificaron exitosamente los permisos.");
 regGS("User types", "Tipo de usuario");
 regGS("No user types.", "Sin tipo de usuario");
 regGS("Are you sure you want to delete the user type $1?", "¿Esta seguro que desea borrar el tipo de usuario $1?");

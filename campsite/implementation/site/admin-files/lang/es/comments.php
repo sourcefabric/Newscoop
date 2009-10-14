@@ -1,8 +1,8 @@
 <?php 
-regGS("You are connected to the Online server", "");
-regGS("Unable to connect to the Online Server", "");
-regGS("No connected to Online server", "");
-regGS("Comments Disabled: you are either offline or not able to reach the Online server", "");
+regGS("You are connected to the Online server", "Estás conectado al servidor en línea");
+regGS("Unable to connect to the Online Server", "No fue posible contectarse al servidor en línea.");
+regGS("No connected to Online server", "No está conectado al servidor en línea.");
+regGS("Comments Disabled: you are either offline or not able to reach the Online server", "Comentarios deshabilitados: puede que esté desconectado o no ha sido posible conectarse al servidor en línea.");
 regGS("You do not have the right to moderate comments.", "No tiene privilegios para moderar los comentarios.");
 regGS("Thread", "Hilo de discusión");
 regGS("The user is now allowed to post comments.", "A partir de ahora el usuario podrá publicar comentarios.");

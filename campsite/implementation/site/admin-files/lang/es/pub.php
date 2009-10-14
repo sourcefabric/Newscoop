@@ -1,11 +1,11 @@
 <?php 
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
-regGS("Subscription default time for \"$1\":$2 deleted", "");
-regGS("Default subscription time for \"$1\":$2 changed", "");
-regGS("Moderator Address", "");
-regGS("From Address", "");
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "El alias del sitio para publicación \"$1\" ha sido modificado a \"$2\".");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "El alias del sitio \"$1\" ha sido añadido a la publicación \"$2\".");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "El alias \"$1\" ha sido borrado de la publicación \"$2\".");
+regGS("Subscription default time for \"$1\":$2 deleted", "Tiempo de subscripción de la subscripción por defecto por \"$1\":$2 borrada.");
+regGS("Default subscription time for \"$1\":$2 changed", "Tiempo de subscripción por defecto por \"$1\":$2 cambiado ");
+regGS("Moderator Address", "Dirección de moderador");
+regGS("From Address", "De la dirección");
 regGS("Use CAPTCHA to prevent spam?", "¿Desea usar CAPTCHA para prevenir el correo basura?");
 regGS("Public allowed to comment?", "¿Desea permitir comentarios públicos?");
 regGS("Enable spam blocking?", "¿Desea bloquear el correo basura?");

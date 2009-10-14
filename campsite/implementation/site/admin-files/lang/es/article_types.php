@@ -1,6 +1,6 @@
 <?php 
-regGS("Rename article type '$1'", "");
-regGS("Invalid article type '$1'.", "");
+regGS("Rename article type '$1'", "Renombrar artículo tipo '$1'");
+regGS("Invalid article type '$1'.", "El tipo de artículo '$1' es inválido.");
 regGS("You cannot merge the same type into itself.", "No puede combinar el mismo tipo en sí mismo.");
 regGS("View the source ($1) version of $2", "Ver la versión de la fuente ($1) de $2");
 regGS("View of original ($1) $2", "Vista de la original ($1) $2");

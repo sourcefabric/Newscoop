@@ -7,7 +7,7 @@ regGS("In order to help the Campsite team investigate and pinpoint the issue ple
 regGS("Hide error details", "Oculte detalles de erro");
 regGS("Error Report", "Reporte de error");
 regGS("Campsite has encountered a problem.", "Campsite encontró un problema.");
-regGS("Backtrace:", "");
+regGS("Backtrace:", "Backtrace:");
 regGS("Error ID:", "ID del error:");
 regGS("Error Message:", "Mensaje de error:");
 regGS("Error Number:", "Número de error:");

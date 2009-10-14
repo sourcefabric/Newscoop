@@ -1,7 +1,7 @@
 <?php 
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Acción programada borrada de la edición #$1: \"$2\" (Publicación: $3)");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Acción programada $1 para la edición #$2: \"$3\" (Publicación: $4)");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Edición \"$1\" ($2) actualizada en la publicación \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Los valores que intenta establecer tienen conflicto con la edición \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Cada edición en esta publicación del mismo idioma debe tener un número único.");
 regGS("The language and URL name must be unique for each issue in this publication.", "El idioma y el nombre del URL deben ser únicos para cada edición en esta publicación.");

@@ -1,4 +1,15 @@
 <?php 
+regGS("Plugins", "Plugins");
+regGS("Manage Plugins", "Administrar plugins");
+regGS("Blogs", "Blogs");
+regGS("Administer Blogs", "Administrar blogs");
+regGS("Moderate Blogs", "Moderar blogs");
+regGS("Blog Preferences", "Preferencias de blog");
+regGS("Interview", "Entrevista");
+regGS("Administrate Interviews", "Administrar entrevistas");
+regGS("Moderate Interviews", "Moderar entrevistas");
+regGS("Interview Guest", "Entrevistar invitados");
+regGS("Polls", "Encuesta ");
 regGS("Account", "Cuenta");
 regGS("Items per page", "Items por página");
 regGS("Add new", "Agregar nuevo");
@@ -254,9 +265,9 @@ regGS("Thank you.", "Gracias");
 regGS("Please take a minute to send us an email.", "Por favor tome un minuto para enviarnos un mensaje de correo.");
 regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "El URL que ingresó es inválido: '$1'");
-regGS("There was an error logging in to the Campcaster server", "");
-regGS("Reads", "");
-regGS("Plugins", "");
+regGS("There was an error logging in to the Campcaster server", "Hubo un errror al ingresar al servidro de Campcaster");
+regGS("Reads", "Impresiones");
+regGS("Author:", "Autor:");
 regGS("Cuenta", "Cuenta");
 regGS("Items por página", "Items por página");
 regGS("No puede crear el archivo $1\"", "No puede crear el archivo $1\"");
