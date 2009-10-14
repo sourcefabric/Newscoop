@@ -15,7 +15,7 @@
            <span class="dalje"><a class="dalje" href="{{ uri options="reset_subtitle_list" }}">full story</a></span>
          </td>
          <td>
-           {{ if $campsite->image->has_image(2) }}
+           {{ if $campsite->article->has_image(2) }}
            <table><tr><td><img src="/get_img.php?{{ urlparameters options="image 2" }}" align="center"></td></tr><tr><td align="center"><span class="caption">{{ $campsite->image2->description }}</span></td></tr></table>
            {{ /if }}
          </td>

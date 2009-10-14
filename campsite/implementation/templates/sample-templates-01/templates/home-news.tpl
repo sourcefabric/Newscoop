@@ -3,7 +3,7 @@
                   {{ list_articles length="3" constraints="type is Article onfrontpage is off onsection is on" order="bynumber asc" }}
                  <tr>
  				  <td>
-					  {{ if $campsite->image->has_image(1) }}
+					  {{ if $campsite->article->has_image(1) }}
 				     <div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 1" }}" width="72"></div>
 					  {{ /if }}
 					 <p class="naslov"><a class="naslov" href="{{ uri options="reset_subtitle_list" }}">{{ $campsite->article->name }}</a></p>   

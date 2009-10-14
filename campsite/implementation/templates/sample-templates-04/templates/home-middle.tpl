@@ -15,7 +15,7 @@
                     <td onmouseover="this.style.backgroundColor='#DCF6D2'" style="cursor:pointer;cursor: hand;"
                       onclick="document.location.href='{{ uri options="reset_article_list" }}'" 
                       onmouseout="this.style.backgroundColor='#ffffff'" valign="top">
-					  {{ if $campsite->image->has_image(2) }}
+					  {{ if $campsite->article->has_image(2) }}
 					  <div class="front-slika1"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"></div>
 					  {{ /if }}
 					  <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -57,7 +57,7 @@
                        onmouseout="this.style.backgroundColor='#ffffff'">
 					   <p class="nadnaslov">{{ $campsite->article->deck }}</p>
 					   <p class="naslov">{{ $campsite->article->name }}</p> 
-					   {{ if $campsite->image->has_image(1) }}
+					   {{ if $campsite->article->has_image(1) }}
                        <div class="front-slika2"><img src="/get_img.php?{{ urlparameters options="image 1" }}" border="0"></div> 
 					   {{ /if }}
                        <p class="text">{{ $campsite->article->intro }}</p>
@@ -75,7 +75,7 @@
                        onmouseout="this.style.backgroundColor='#ffffff'">
 					   <p class="nadnaslov">{{ $campsite->article->deck }}</p>
 					   <p class="naslov">{{ $campsite->article->name }}</p> 
-					   {{ if $campsite->image->has_image(1) }}
+					   {{ if $campsite->article->has_image(1) }}
                        <div class="front-slika2"><img src="/get_img.php?{{ urlparameters options="image 1" }}" border="0"></div> 
 					   {{ /if }}
                        <p class="text">{{ $campsite->article->intro }}</p>
@@ -94,7 +94,7 @@
                        onmouseout="this.style.backgroundColor='#ffffff'">
 					   <p class="nadnaslov">{{ $campsite->article->deck }}</p>
 					   <p class="naslov">{{ $campsite->article->name }}</p> 
-					   {{ if $campsite->image->has_image(1) }}
+					   {{ if $campsite->article->has_image(1) }}
                        <div class="front-slika2"><img src="/get_img.php?{{ urlparameters options="image 1" }}" border="0"></div> 
 					   {{ /if }}
                        <p class="text">{{ $campsite->article->intro }}</p>

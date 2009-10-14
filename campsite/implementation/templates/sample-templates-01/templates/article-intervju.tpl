@@ -2,7 +2,7 @@
 <p class="nadnaslov">{{ $campsite->article->nadnaslov }}</p>
              <p class="main-naslov">{{ $campsite->article->name }}</p>
              {{ if $campsite->article->podnaslov != "" }}
-             {{ if $campsite->image->has_image(2) }}
+             {{ if $campsite->article->has_image(2) }}
              <div style="float:right; margin: 5px;><img src="/get_img.php?{{ urlparameters options="image 2" }}"><br/><span class="caption">{{ $campsite->image2->description }}</span></div>
              {{ /if }}
              <p class="podnaslov">{{ $campsite->article->podnaslov }}</p>

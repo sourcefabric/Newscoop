@@ -1,7 +1,7 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/include/campsite_constants.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once('DB.php');
 
 // Global permissions array
@@ -19,6 +19,7 @@ $dsn = 'mysql://'.$Campsite['db']['user']
 
 $db = DB::connect($dsn);
 if (PEAR::isError($db)) {
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 ?>
         <font color="red" size="3">
         <p>ERROR connecting to the MySQL server!</p>
