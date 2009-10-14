@@ -1,7 +1,7 @@
 <?php 
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Por favor ingrese un valor válido (1 - 100) para el campo '$1'.");
-regGS("Imagecache Lifetime:", "");
-regGS("Templates filter mask (separated by comma)", "");
+regGS("Imagecache Lifetime:", "Tiempo de vida del caché de la imagen");
+regGS("Templates filter mask (separated by comma)", "Filtro de las plantillas (saparados por una coma)");
 regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Inválido: necesita el PHP $1 habilitado para poder usar el sistema de caché.");
 regGS("Image Resizing Ratio:", "Proporción para redimensionar la imagen:");
 regGS("Image Resizing Ratio", "Proporción para redimensionar la imagen");
@@ -29,7 +29,7 @@ regGS("Enable Campcaster audioclip attachments?", "¿Desea habilitar los archivo
 regGS("XML RPC Path:", "Recorrido XML RPC:");
 regGS("XML RPC File:", "Archivo XML RPC:");
 regGS("System preferences updated", "Las preferencias del sistema han sido actualizadas.");
-regGS("Setting up a Campsite Replication Server?", "");
+regGS("Setting up a Campsite Replication Server?", "¿Desea crear un servidor réplica de Campsite?");
 regGS("Reader subscriptions managed externally?", "¿Desea administrar externamente las subscripciones?");
 regGS("Port:", "Puerto:");
 regGS("Maximum upload file size:", "Tamaño mázximo para cargar un archivo:");
@@ -37,11 +37,11 @@ regGS("Max Upload File Size", "Tamaño mázximo para cargar un archivo:");
 regGS("Invalid Max Upload File Size value submitted", "Ingresó un valor del tamaño del archivo inválido");
 regGS("Hostname / IP Address:", "Nombre de anfitrión/ Dirección IP:");
 regGS("General Settings", "Ajustes generales");
-regGS("Database Replication data incomplete", "");
-regGS("Database Replication User:", "");
-regGS("Database Replication Port:", "");
-regGS("Database Replication Password:", "");
-regGS("Database Replication Host:", "");
+regGS("Database Replication data incomplete", "Replicación de datos incompleta.");
+regGS("Database Replication User:", "Usuario de la base de datos réplica:");
+regGS("Database Replication Port:", "Puerto de la base de datos réplica:");
+regGS("Database Replication Password:", "Contraseña de la base de datos réplica:");
+regGS("Database Replication Host:", "Anfitrión de la base de datos réplica:");
 regGS("Campsite Online Server Database", "Base de datos del servidor en línea de Campsite");
 regGS("Campcaster Server", "Servidor Campcaster");
 regGS("System preferences updated.", "Se actualizó las preferencias del sistema.");

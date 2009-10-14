@@ -4,7 +4,7 @@ regGS("The property '$1' is already in use.", "La propiedad '$1' ya estaba en us
 regGS("Precision", "Precisión.");
 regGS("Can not convert the field $1 from $2 to type $3.", "No se pudo convertir el campo $1 de $2 al tipo $3.");
 regGS("Are you sure you want to make $1 a $2 field?", "¿Seguro que desea convertir el campo $1 al $2?");
-regGS("Is Content", "");
+regGS("Is Content", "Es contenido");
 regGS("Back to Article Types List", "Regresar a lista de tipos de artículos.");
 regGS("show", "mostrar");
 regGS("hide", "ocultrar");

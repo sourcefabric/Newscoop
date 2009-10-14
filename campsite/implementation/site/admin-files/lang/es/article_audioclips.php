@@ -74,7 +74,7 @@ regGS("Catalog number", "Número de catálogo");
 regGS("Campcaster Login", "Ingreso a Campcaster");
 regGS("Buy CD web page", "Comprar el CD de la página web");
 regGS("Browse", "Buscar");
-regGS("Bitrate", "");
+regGS("Bitrate", "Bitrate");
 regGS("BPM", "BPM");
 regGS("Audioclip(s) attached successfully.", "El audioclip fue adjuntado exitosamente.");
 regGS("Audioclip does not exist.", "El audioclip no existe.");
