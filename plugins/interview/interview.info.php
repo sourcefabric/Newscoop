@@ -65,7 +65,7 @@ $info = array(
     'localizer' => array(
             'id' => 'plugin_interview',
             'path' => '/plugins/interview/admin-files/*/*',
-            'screen_name' => 'Interview'
+            'screen_name' => 'Interviews'
     ),
     'install' => 'plugin_interview_install',
     'enable'  => 'plugin_interview_install',
