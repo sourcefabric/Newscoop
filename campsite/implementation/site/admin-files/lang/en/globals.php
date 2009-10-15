@@ -258,4 +258,5 @@ regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '$1'");
 regGS("There was an error logging in to the Campcaster server", "There was an error logging in to the Campcaster server");
 regGS("Reads", "Reads");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Are you sure you want to delete the image \\'$1\\'?");
 ?>
