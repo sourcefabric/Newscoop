@@ -1,7 +1,7 @@
 <?php 
-regGS("Interviews", "");
-regGS("Administer", "");
-regGS("Moderate", "");
+regGS("Interviews", "Интервью");
+regGS("Administer", "Администрировать");
+regGS("Moderate", "Модерировать");
 regGS("Interview Guest", "Приглашенный для интервью");
 regGS("rejected", "отклоненное");
 regGS("published", "опубликованное");

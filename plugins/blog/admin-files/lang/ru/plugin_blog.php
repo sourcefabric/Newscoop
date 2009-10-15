@@ -1,8 +1,8 @@
 <?php 
+regGS("Preferences", "Настройки");
+regGS("Moderate", "Модерировать");
+regGS("Administer", "Администрировать");
 regGS("Blogs", "Блоги");
-regGS("Administer", "");
-regGS("Moderate", "");
-regGS("Preferences", "");
 regGS("readonly", "только для чтения");
 regGS("pending", "незаконченный");
 regGS("online/offline", "в сети / не в сети");

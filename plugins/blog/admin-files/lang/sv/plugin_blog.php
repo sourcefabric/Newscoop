@@ -1,8 +1,8 @@
 <?php 
-regGS("Blogs", "");
-regGS("Administer", "");
-regGS("Moderate", "");
 regGS("Preferences", "");
+regGS("Moderate", "");
+regGS("Administer", "");
+regGS("Blogs", "");
 regGS("readonly", "");
 regGS("pending", "");
 regGS("online/offline", "");
