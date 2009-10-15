@@ -1,4 +1,19 @@
 <?php 
+regGS("Title", "");
+regGS("Sender", "");
+regGS("Reset", "");
+regGS("Questioneer preview text", "");
+regGS("Poll Id $1 created.", "");
+regGS("New Moderator Email", "");
+regGS("Invite Now", "");
+regGS("Invitations to questioneers has already been sent at $1", "");
+regGS("Invitation to interview guest has already been sent at $1", "");
+regGS("Invitation Template for Questioneer", "");
+regGS("Invitation Template for Guest", "");
+regGS("Interview Id $1 created.", "");
+regGS("Interview #$1: \"$2\" ($3) deleted.", "");
+regGS("Guest preview text", "");
+regGS("Create new Moderator", "");
 regGS("Interviews", "Интервью");
 regGS("Administer", "Администрировать");
 regGS("Moderate", "Модерировать");

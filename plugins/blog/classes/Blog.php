@@ -240,7 +240,7 @@ class Blog extends DatabaseObject {
             'language' => array(
                     'element'   => 'Blog[fk_language_id]',
                     'type'      => 'select',
-                    'label'     => 'Language',
+                    'label'     => getGS('Language'),
                     'default'   => $data['fk_language_id'],
                     'options'   => $languageList,
                     'required'  => true
@@ -248,7 +248,7 @@ class Blog extends DatabaseObject {
             'title'     => array(
                 'element'   => 'Blog[title]',
                 'type'      => 'text',
-                'label'     => 'Title',
+                'label'     => getGS('Title'),
                 'default'   => $data['title'],
                 'required'  => true
             ),
@@ -260,7 +260,7 @@ class Blog extends DatabaseObject {
             'info'      => array(
                 'element'   => 'Blog[info]',
                 'type'      => 'textarea',
-                'label'     => 'Info',
+                'label'     => getGS('Info'),
                 'default'   => $data['info'],
                 'required'  => true,
                 'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
@@ -268,48 +268,48 @@ class Blog extends DatabaseObject {
             'feature'     => array(
                 'element'   => 'Blog[feature]',
                 'type'      => 'text',
-                'label'     => 'Feature',
+                'label'     => getGS('Feature'),
                 'default'   => $data['feature'],
             ),
             'status' => array(
                 'element'   => 'Blog[status]',
                 'type'      => 'select',
-                'label'     => 'Status',
+                'label'     => getGS('Status'),
                 'default'   => $data['status'],
                 'required'  => true,
                 'options'   => array(
-                    'online'        => 'online',
-                    'offline'       => 'offline',
-                    'moderated'     => 'moderated',
-                    'readonly'      => 'read only',
+                    'online'        => getGS('online'),
+                    'offline'       => getGS('offline'),
+                    'moderated'     => getGS('moderated'),
+                    'readonly'      => getGS('read only'),
                 ),
                 
             ),
             'admin_status' => array(
                 'element'   => 'Blog[admin_status]',
                 'type'      => 'select',
-                'label'     => 'Admin Status',
+                'label'     => getGS('Admin status'),
                 'default'   => $data['admin_status'],
                 'required'  => true,
                 'options'   => array(
-                    'online'        => 'online',
-                    'offline'       => 'offline',
-                    'pending'       => 'pending',
-                    'moderated'     => 'moderated',
-                    'readonly'      => 'read only',
+                    'online'        => getGS('online'),
+                    'offline'       => getGS('offline'),
+                    'pending'       => getGS('pending'),
+                    'moderated'     => getGS('moderated'),
+                    'readonly'      => getGS('read only'),
                 ),
             ),
             'owner' => array(
                     'element'   => 'Blog[fk_user_id]',
                     'type'      => 'select',
-                    'label'     => 'Owner',
+                    'label'     => getGS('Owner'),
                     'default'   => $data['fk_user_id'],
                     'options'   => $ownerList,
             ),
             'image'     => array(
                 'element'   => 'Blog_Image',
                 'type'      => 'file',
-                'label'     => 'Image (.jpg, .png, .gif)',
+                'label'     => getGS('Image (.jpg, .png, .gif)'),
             ),
             'image_display'  => array(
                 'element'   => 'image_display',
@@ -320,12 +320,12 @@ class Blog extends DatabaseObject {
             'image_remove' => array(
                 'element'   => 'Blog_Image_remove',
                 'type'      => 'checkbox',
-                'label'     => 'Remove this Image',
+                'label'     => getGS('Remove this image'),
                 'groupit'   => true
             ),
             'image_label'  => array(
                 'element'   => 'image_label',
-                'text'      => 'Remove this image',
+                'text'      => getGS('Remove this image'),
                 'type'  => 'static',
                 'groupit'   => true
             ),
@@ -336,27 +336,27 @@ class Blog extends DatabaseObject {
             'admin_remark'      => array(
                 'element'   => 'Blog[admin_remark]',
                 'type'      => 'textarea',
-                'label'     => 'Admin Remark',
+                'label'     => getGS('Admin remark'),
                 'default'   => $data['admin_remark'],
                 'attributes'=> array('cols' => 86, 'rows' => 10)
             ),
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
-                'label'     => 'Reset',
+                'label'     => getGS('Reset'),
                 'groupit'   => true
             ),
             'xsubmit'     => array(
                 'element'   => 'xsubmit',
                 'type'      => 'button',
-                'label'     => 'Submit',
+                'label'     => getGS('Submit'),
                 'attributes'=> array('onclick' => 'tinyMCE.triggerSave(); if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
             ),
             'cancel'     => array(
                 'element'   => 'cancel',
                 'type'      => 'button',
-                'label'     => 'Cancel',
+                'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ),

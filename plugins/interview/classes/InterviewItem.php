@@ -146,7 +146,7 @@ class InterviewItem extends DatabaseObject {
         global $g_ado_db;
 
         // Get the item that is in the final position where this
-        // article will be moved to.
+        // interview will be moved to.
         $compareOperator = ($p_direction == 'up') ? '<' : '>';
         $order = ($p_direction == 'up') ? 'desc' : 'asc';
         $queryStr = "   SELECT  position
@@ -181,7 +181,7 @@ class InterviewItem extends DatabaseObject {
 
 
     /**
-     * Move the article to the given position (i.e. reorder the article).
+     * Move the interview to the given position (i.e. reorder the interview).
      * @param int $p_moveToPosition
      * @return boolean
      */
@@ -257,7 +257,7 @@ class InterviewItem extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Article #$1: "$2" ($3) deleted.',
+            $logtext = getGS('Interview #$1: "$2" ($3) deleted.',
                 $this->m_data['Number'], $this->m_data['Name'],    $this->getLanguageName())
                 ." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
                 ." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "

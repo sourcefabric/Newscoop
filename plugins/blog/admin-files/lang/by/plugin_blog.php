@@ -1,4 +1,21 @@
 <?php 
+regGS("read only", "");
+regGS("You are not allowed to edit this blog.", "");
+regGS("Titel", "");
+regGS("Reset", "");
+regGS("Remove this image", "");
+regGS("Remove this Image", "");
+regGS("Poster name", "");
+regGS("Owner", "");
+regGS("Only registered users are allowed to blog.", "");
+regGS("Mood", "");
+regGS("Info", "");
+regGS("Image (.jpg, .png, .gif)", "");
+regGS("Failed to create image derivate(s): $1", "");
+regGS("EMail", "");
+regGS("Created image derivate(s): $1", "");
+regGS("Admin status", "");
+regGS("Admin remark", "");
 regGS("Preferences", "Настройкі");
 regGS("Moderate", "Мадэраваць");
 regGS("Administer", "Кіраваць");

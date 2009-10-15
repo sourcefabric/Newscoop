@@ -1,4 +1,21 @@
 <?php 
+regGS("read only", "read only");
+regGS("You are not allowed to edit this blog.", "You are not allowed to edit this blog.");
+regGS("Titel", "Titel");
+regGS("Reset", "Reset");
+regGS("Remove this image", "Remove this image");
+regGS("Remove this Image", "Remove this Image");
+regGS("Poster name", "Poster name");
+regGS("Owner", "Owner");
+regGS("Only registered users are allowed to blog.", "Only registered users are allowed to blog.");
+regGS("Mood", "Mood");
+regGS("Info", "Info");
+regGS("Image (.jpg, .png, .gif)", "Image (.jpg, .png, .gif)");
+regGS("Failed to create image derivate(s): $1", "Failed to create image derivate(s): $1");
+regGS("EMail", "EMail");
+regGS("Created image derivate(s): $1", "Created image derivate(s): $1");
+regGS("Admin status", "Admin status");
+regGS("Admin remark", "Admin remark");
 regGS("Preferences", "Preferences");
 regGS("Moderate", "Moderate");
 regGS("Administer", "Administer");

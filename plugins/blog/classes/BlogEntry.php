@@ -329,14 +329,14 @@ class BlogEntry extends DatabaseObject {
             'title'     => array(
                 'element'   => 'BlogEntry[title]',
                 'type'      => 'text',
-                'label'     => 'Title',
+                'label'     => getGS('Title'),
                 'default'   => $data['title'],
                 'required'  => true
             ),
             'content'      => array(
                 'element'   => 'BlogEntry[content]',
                 'type'      => 'textarea',
-                'label'     => 'Content',
+                'label'     => getGS('Content'),
                 'default'   => $data['content'],
                 'required'  => true,
                 'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
@@ -344,7 +344,7 @@ class BlogEntry extends DatabaseObject {
             'status' => array(
                 'element'   => 'BlogEntry[status]',
                 'type'      => 'select',
-                'label'     => 'status',
+                'label'     => getGS('Status'),
                 'default'   => $data['status'],
                 'options'   => array(
                     'online'    => 'online',
@@ -355,7 +355,7 @@ class BlogEntry extends DatabaseObject {
             'admin_status' => array(
                 'element'   => 'BlogEntry[admin_status]',
                 'type'      => 'select',
-                'label'     => 'Admin status',
+                'label'     => getGS('Admin status'),
                 'default'   => $data['admin_status'],
                 'options'   => array(
                     'online'    => 'online',
@@ -367,14 +367,14 @@ class BlogEntry extends DatabaseObject {
             'mood'      => array(
                 'element'   => 'BlogEntry[fk_mood_id]',
                 'type'      => 'radio',
-                'label'     => 'mood',
+                'label'     => getGS('Mood'),
                 'default'   => $data['fk_mood_id'],
                 'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : Blog::GetBlogLanguageId($data['fk_blog_id']))
             ),
             'image'     => array(
                 'element'   => 'BlogEntry_Image',
                 'type'      => 'file',
-                'label'     => 'Image (.jpg, .png, .gif)',
+                'label'     => getGS('Image (.jpg, .png, .gif)'),
             ),
             'image_display'  => array(
                 'element'   => 'image_display',
@@ -385,13 +385,13 @@ class BlogEntry extends DatabaseObject {
             'image_remove' => array(
                 'element'   => 'BlogEntry_Image_remove',
                 'type'      => 'checkbox',
-                'label'     => 'Remove this Image',
+                'label'     => getGS('Remove this Image'),
                 'groupit'   => true
             ),
             'image_label'  => array(
                 'element'   => 'image_label',
-                'text'      => 'Remove this image',
-                'type'  => 'static',
+                'text'      => getGS('Remove this image'),
+                'type'      => 'static',
                 'groupit'   => true
             ),
             'image_group' =>  isset($data['images']['100x100']) ? array(
@@ -401,20 +401,20 @@ class BlogEntry extends DatabaseObject {
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
-                'label'     => 'Reset',
+                'label'     => getGS('Reset'),
                 'groupit'   => true
             ),
             'xsubmit'     => array(
                 'element'   => 'xsubmit',
                 'type'      => 'button',
-                'label'     => 'Submit',
+                'label'     => getGS('Submit'),
                 'attributes'=> array('onclick' => 'tinyMCE.triggerSave(); if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
             ),
             'cancel'     => array(
                 'element'   => 'cancel',
                 'type'      => 'button',
-                'label'     => 'Cancel',
+                'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ),
