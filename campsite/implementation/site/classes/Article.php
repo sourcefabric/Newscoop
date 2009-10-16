@@ -2175,7 +2175,7 @@ class Article extends DatabaseObject {
         $countClauseObj->setTable($tmpArticle->getDbTableName());
         $articleTable = $tmpArticle->getDbTableName();
         unset($tmpArticle);
-
+        
         $languageId = null;
 
         // parses the given parameters in order to build the WHERE part of

@@ -127,12 +127,12 @@ function translationForm($p_request)
     $mapPrefixToDisplay["bug_reporting"] = getGS("Bug Reporting");
     $mapPrefixToDisplay["feedback"] = getGS("Feedback");
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
-    $mapPrefixToDisplay["plugins"] = getGS("Plugins");
     $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
+    $mapPrefixToDisplay["plugins"] = getGS("Plugins");
 
     foreach (CampPlugin::GetPluginsInfo(true) as $info) {
     	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
-    		$mapPrefixToDisplay[$info['localizer']['id']] = $info['localizer']['screen_name'];
+    		$mapPrefixToDisplay[$info['localizer']['id']] = getGS($info['localizer']['screen_name']);
     	}
     }
 

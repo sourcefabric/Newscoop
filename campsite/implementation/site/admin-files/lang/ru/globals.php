@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "Утилиты");
+regGS("Manage Plugins", "Управление плагинами");
 regGS("Account", "Учетная запись");
 regGS("Items per page", "Объектов на странице");
 regGS("Add new", "Добавить");
@@ -256,7 +258,7 @@ regGS("(optional)", "(дополнительно)");
 regGS("The URL you entered is invalid: '$1'", "Введенный URL неверен: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Произошла ошибка входа в административный интерфейс Campsite");
 regGS("Reads", "Количество просмотров");
-regGS("Plugins", "Утилиты");
+regGS("Author:", "Автор:");
 regGS("User name", "Пользователь");
 regGS("User Types", "Типы пользователей");
 regGS("Add new user account", "Добавить новую учетную запись пользователя");

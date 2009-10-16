@@ -29,6 +29,10 @@ set_include_path(get_include_path() . PATH_SEPARATOR
 camp_set_error_handler("camp_report_bug");
 
 camp_load_translation_strings("api");
+$plugins = CampPlugin::GetEnabled(true);
+foreach ($plugins as $plugin) {
+	camp_load_translation_strings("plugin_".$plugin->getName());
+}
 
 $no_menu_scripts = array(
     '/login.php',

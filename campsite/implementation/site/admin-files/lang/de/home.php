@@ -1,4 +1,5 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "");
 regGS("Import XML", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
@@ -21,7 +22,7 @@ regGS("Clear system cache", "");
 regGS("Campsite cache was cleaned up", "");
 regGS("The system was unable to upload the file '$1'. ", "");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "");
-regGS("Synchronize Campsite and Phorum users", "");
+regGS("Synchronize Campsite and Phorum users", "Campsite und Phorum Benutzer synchronisieren");
 regGS("Campsite and Phorum users were synchronized", "");
 regGS("Your user is not a valid Campcaster user", "");
 regGS("Connection refused", "");

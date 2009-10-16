@@ -90,10 +90,8 @@ $mapPrefixToDir["user_types"] = "/admin-files/user_types";
 $mapPrefixToDir["bug_reporting"] = "/admin-files/bugreporter";
 $mapPrefixToDir["feedback"] = "/admin-files/feedback";
 $mapPrefixToDir["preview"] = "/template_engine/classes";
-$mapPrefixToDir["plugins"] = "/admin-files/plugins";
-$mapPrefixToDir["plugin_interview"] = "/plugins/interview/admin-files/interview/admin";
-$mapPrefixToDir["plugin_poll"] = "/plugins/poll/admin-files/poll";
 $mapPrefixToDir["tiny_media_plugin"] = "/javascript/tinymce/plugins/campsitemedia";
+$mapPrefixToDir["plugins"] = "/admin-files/plugins";
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {
 	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {

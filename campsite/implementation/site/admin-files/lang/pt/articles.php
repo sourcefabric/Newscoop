@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Este artigo ja foi traduzido para $1");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Tem de escolher a publicação, numero e secção para este artigo antes de agendar a sua publicação. Vá ao menu $1 e escolha a opção $2 para fazê-lo");
@@ -138,10 +137,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Não tem permissões para eliminar artigos. ");
 regGS("You must select an article type.", "Tem de escolher o tipo de artigo.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Confirma a eliminação da imagem \'$1\' do artigo?");
+regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("There was an error reading request parameters.", "Ocorreu um erro na leitura do parametro solicitado.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à visualização de artigos.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à página principal");
 regGS("No such article.", "Artigo Desconhecido.");
 regGS("No such section.", "Secção Desconhecida.");
-regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

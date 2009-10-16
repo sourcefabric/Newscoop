@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Článek již byl přeložený do $1.");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Před naplánováním publikování článku musíte nastavit publikaci, vydání a sekci, ve které má být článek umístěn. Abyste toho dosáhli, použijte menu \"$1\" a vyberte položku \"$2\".");
@@ -138,10 +137,10 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Nemáte právo mazat články");
 regGS("You must select an article type.", "Musíte zvolit typ článku");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Opravdu chcete obrázek \'$1\' z článku odstranit?");
+regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "");
-regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

@@ -1,4 +1,5 @@
 <?php 
+regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Please enter a valid value (1 - 100) for the '$1' field.");
 regGS("Imagecache Lifetime:", "Imagecache Lifetime:");
 regGS("Templates filter mask (separated by comma)", "Templates filter mask (separated by comma)");
 regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Invalid: You need PHP $1 enabled in order to use the caching system.");

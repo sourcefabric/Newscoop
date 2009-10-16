@@ -1,4 +1,5 @@
 <?php 
+regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Увядзіце патрэбнае значэнне (ад 1 да 100) для поля '$1'");
 regGS("Imagecache Lifetime:", "Час жыцця кеш-выявы:");
 regGS("Templates filter mask (separated by comma)", "Час жыцця маскі фільтра (раздзелены коскамі)");
 regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Няправільна: Вам неабходны php-файл $1 для таго, каб выкарыстаць сістэму кэшавання.");

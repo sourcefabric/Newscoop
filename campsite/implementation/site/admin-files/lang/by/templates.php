@@ -1,4 +1,8 @@
 <?php 
+regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Некалькі файлаў непрачытаныя, таму Campsite не можа выявіць, ци выкарыставаны '$1'.");
+regGS("Replace current with:", "Замяніць сучасны на");
+regGS("Edit template:", "Рэдагаваць шаблён");
+regGS("Changes have not been saved. Load new template without saving the current one?", "Змянення не былі захаваныя. Жадаеце загрузіць новы шаблён без захавання старога?");
 regGS("to folder", "да тэчкі");
 regGS("You must select at least one template to perform an action.", "Вы павінны абраць па меншай меры адзін шаблон каб вырабіць дзеянне.");
 regGS("You must select a destination folder", "Вы павінны абраць тэчку прызначэння");
@@ -38,7 +42,6 @@ regGS("Directory $1 created.", " Папка $1 была створаная.");
 regGS("You must select a file to upload.", "Вы павiнны азначыць файл для загрузкі.");
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Вы можаце толькi замяніць файл файлам таго жа тыпу. Арыгінальны файл мае тып \"$1\", а загружаны - \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Немагчыма захаваць файл '$1' у '$2'.");
-regGS("Replace file:", "Замянiць файл:");
 regGS("Replace", "Замянiць:");
 regGS("File \"$1\" uploaded.", "Файл \"$1\" загружаны.");
 regGS("File \"$1\" replaced.", "Файл \"$1\" заменены.");

@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "Artikeln har redan översatts till $1.");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Du måste välja publication, utgåva och sektion för den här artikeln innan du kan schemalägga den för publicering. Gå till \"$1\"-menyn och välj \"$2\" för att göra detta.");
@@ -138,11 +137,11 @@ regGS("You do not have the right to change this article status. Once submitted a
 regGS("You do not have the right to delete articles.", "Du har inte rätt att radera artiklar");
 regGS("You must select an article type.", "Du måste välja en artikeltyp");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Är du säker att du vill ta bort bilden \'$1\' från artikeln?");
+regGS("Select None", "Avmarkera alla");
+regGS("Select All", "Markera alla");
 regGS("There was an error reading request parameters.", "Ett fel uppstod vid läsning av förfrågningsparametern.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Denna artikel kunde inte förhandsgranskas. Var god kontrollera att den har den valda mallen.");
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Denna artikel kunde inte förhandsgranskas. Var god kontrollera att den har den valda framsidesmallen.");
 regGS("No such article.", "Artikeln finns inte.");
 regGS("No such section.", "Sektionen finns inte.");
-regGS("Select None", "Avmarkera alla");
-regGS("Select All", "Markera alla");
 ?>

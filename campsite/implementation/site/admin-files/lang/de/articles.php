@@ -13,7 +13,7 @@ regGS("The file exceeds the allowed max file size.", "");
 regGS("Overwrite existing articles", "");
 regGS("Optional", "");
 regGS("Input File", "");
-regGS("Import XML", "");
+regGS("Import XML", "XML Importieren");
 regGS("File is not a valid XML file.", "");
 regGS("File does not exist.", "");
 regGS("File could not be uploaded.", "");
@@ -63,8 +63,7 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
-regGS("Comments", "");
+regGS("Comments", "Kommentare");
 regGS("The article has already been translated into $1.", "Der Artikel wurde zu $1 übersetzt");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Vor dem Automatisieren müssen Publikation und Rubrik für diesen Artikel bestimmt werden. Gehe dafür zu \"$1\" und dann \"$2\".");
 regGS("You do not have the right to translate articles.", "Keine Berechtigung diesen Artikel zu übersetzen.");
@@ -144,5 +143,6 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Artikel nicht vorhanden");
 regGS("No such section.", "Rubrik nicht vorhanden");
 regGS("Reorder", "Nachbestellen");
+regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
 ?>

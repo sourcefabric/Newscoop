@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "");
 regGS("Hide Comments", "");
 regGS("Enabled", "");
 regGS("Disabled", "");
-regGS("Comments:", "");
 regGS("Comments", "");
 regGS("The article has already been translated into $1.", "기사가 이미 $1 으로 번역되었습니다. ");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "스케쥴하기전에 이 기사에 대해 출판사이트, 이슈, 섹션을 설정해야 합니다. \"$1\" 메뉴로 가서 \"$2\" 를 선택하시오.");

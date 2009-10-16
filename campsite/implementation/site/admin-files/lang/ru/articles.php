@@ -63,7 +63,6 @@ regGS("Invalid type: $1", "Неправильный тип: $1");
 regGS("Hide Comments", "Спрятать комментарии");
 regGS("Enabled", "Разрешено");
 regGS("Disabled", "Запрещено");
-regGS("Comments:", "Комментарии:");
 regGS("Comments", "Комментарии");
 regGS("The article has already been translated into $1.", "Статья уже была переведена на $1.");
 regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "Вы должны установить издание, выпуск и секцию для этой статьи до планирования ее к публикации. Перейдите к меню \"$1\" и выберите \"$2\", чтобы сделать это.");
@@ -150,8 +149,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы уверены, что хотите удалить этот аудио файл из этой статьи");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>

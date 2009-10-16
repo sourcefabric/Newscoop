@@ -73,8 +73,8 @@ regGS("The alias $1 could not be deleted.", "Alias $1 konnte nicht gelöscht wer
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 ist der voreingestellte Alias der Publikation und kann nicht gelöscht werden.");
 regGS("You do not have the right to add publications.", "Keine Zugriffsrechte eine neue Publikation zu erstellen.");
 regGS("There are $1 issue(s) left.", "$1 Ausgaben sind übrig.");
-regGS("Change publication information", "Information der Publikation ändern");
 regGS("Time Unit", "Zeiteinheit");
 regGS("Currency", "Währung");
 regGS("Edit languages", "Sprachen bearbeiten");
+regGS("Change publication information", "Information der Publikation ändern");
 ?>

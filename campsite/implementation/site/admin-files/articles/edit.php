@@ -686,7 +686,7 @@ if ($f_edit_mode == "edit") { ?>
 				    ?>
 				    <tr>
 				        <td align="left" colspan="2" style="padding-top: 0.25em;">
-				            <?php putGS("Comments:"); ?>
+				            <?php putGS("Comments"); ?>:
 				            <select name="f_comment_status" id="f_comment_status" class="input_select" <?php if ($f_edit_mode == "view") { ?>disabled<?php } ?>>
 				            <?php
 				            if ($articleObj->commentsEnabled()) {

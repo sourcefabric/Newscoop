@@ -1,4 +1,8 @@
 <?php 
+regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
+regGS("Replace current with:", "");
+regGS("Edit template:", "");
+regGS("Changes have not been saved. Load new template without saving the current one?", "");
 regGS("to folder", "u folder");
 regGS("You must select at least one template to perform an action.", "Morate izabrati najmanje jedan šablon da bi se mogla izvesti akcija.");
 regGS("You must select a destination folder", "Morate izabrati destinacioni folder");
@@ -38,7 +42,6 @@ regGS("Directory $1 created.", "direktorijum $1 je napravljen.");
 regGS("You must select a file to upload.", "Morate izabrati fajl za upload.");
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "fajl možete zameniti jedino fajlom istog tipa. Originalni tip fajla je \"$1\", a fajl koji ste uploadovali je tipa \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Nije moguće snimiti fajl '$1' na putanju '$2'.");
-regGS("Replace file:", "Zameni fajl:");
 regGS("Replace", "Zameni");
 regGS("File \"$1\" uploaded.", "fajl '$1' uploadovan.");
 regGS("File \"$1\" replaced.", "Fajl '$1' zamenjen.");

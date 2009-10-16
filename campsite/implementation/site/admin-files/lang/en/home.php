@@ -1,4 +1,5 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.");
 regGS("Import XML", "Import XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "You must have the permissions to add/change issues and articles in order to set the author for all articles.");
 regGS("Select the field from which to generate the author", "Select the field from which to generate the author");
