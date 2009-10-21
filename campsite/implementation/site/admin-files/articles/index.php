@@ -554,7 +554,7 @@ if (is_array($articleTopicNames) && sizeof($articleTopicNames) > 0) {
     foreach ($articleTopicNames as $articleNr => $articleTopicNameArray) {
         $articleTopicPath = '';
 	foreach ($articleTopicNameArray as $articleTopicName) {
-	    $articleTopicPath .= $articleTopicName.'<br/>';
+	    $articleTopicPath .= addslashes($articleTopicName).'<br/>';
 	}
 	echo "YAHOO.example.container.tt$x = new YAHOO.widget.Tooltip('tt$x', { context:'ttctx$articleNr', text:'$articleTopicPath' } );\n";
 	$x++;
