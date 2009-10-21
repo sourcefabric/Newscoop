@@ -2489,7 +2489,7 @@ class Article extends DatabaseObject {
         $selectClauseObj->setTable('Articles');
 
         // set search keywords
-        if ($p_matchAll) {
+        if ($p_matchAll && count($p_keywords) > 1) {
             foreach ($p_keywords as $keyword) {
                 $selectKeywordClauseObj = new SQLSelectClause();
                 $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
