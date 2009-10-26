@@ -28,7 +28,7 @@ CREATE TABLE backup (
     fromtime timestamp NOT NULL,
     totime timestamp NOT NULL,
     PRIMARY KEY (token)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_access (
@@ -43,7 +43,7 @@ CREATE TABLE ls_access (
     INDEX ls_access_gunid_idx (gunid),
     INDEX ls_access_parent_idx (parent),
     INDEX ls_access_token_idx (token)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_classes (
@@ -52,14 +52,14 @@ CREATE TABLE ls_classes (
     PRIMARY KEY (id),
     UNIQUE ls_classes_cname_idx (cname),
     UNIQUE ls_classes_id_idx (id)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_cmemb (
     objid integer NOT NULL,
     cid integer NOT NULL,
     UNIQUE ls_cmemb_idx (objid, cid)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_files (
@@ -77,7 +77,7 @@ CREATE TABLE ls_files (
     UNIQUE ls_files_id_idx (id),
     INDEX ls_files_md5_idx (md5),
     INDEX ls_files_name_idx (name)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_mdata (
@@ -94,13 +94,13 @@ CREATE TABLE ls_mdata (
     UNIQUE ls_mdata_id_idx (id),
     INDEX ls_mdata_pred_idx (predns, predicate),
     INDEX ls_mdata_subj_idx (subjns, subject)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE  `ls_mdata_id_seq_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_perms (
@@ -113,7 +113,13 @@ CREATE TABLE ls_perms (
     UNIQUE ls_perms_all_idx (subj, `action`, obj),
     UNIQUE ls_perms_permid_idx (permid),
     INDEX ls_perms_subj_obj_idx (subj, obj)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  ls_perms_id_seq_seq (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_pref (
@@ -124,7 +130,7 @@ CREATE TABLE ls_pref (
     UNIQUE ls_pref_id_idx (id),
     UNIQUE ls_pref_subj_key_idx (subjid, keystr),
     INDEX ls_pref_subjid_idx (subjid)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_sess (
@@ -136,7 +142,7 @@ CREATE TABLE ls_sess (
     INDEX ls_sess_login_idx (`login`),
     UNIQUE ls_sess_sessid_idx (sessid),
     INDEX ls_sess_userid_idx (userid)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_smemb (
@@ -146,7 +152,13 @@ CREATE TABLE ls_smemb (
     `level` integer DEFAULT 0 NOT NULL,
     mid integer,
     PRIMARY KEY (id)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `ls_smemb_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_struct (
@@ -161,13 +173,13 @@ CREATE TABLE ls_struct (
     UNIQUE ls_struct_objid_parid_idx (objid, parid),
     INDEX ls_struct_parid_idx (parid),
     UNIQUE ls_struct_rid_idx (rid)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE  `ls_struct_id_seq_seq` (
   `id` int(10) unsigned NOT NULL auto_increment,
   PRIMARY KEY  (`id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_subjs (
@@ -180,7 +192,13 @@ CREATE TABLE ls_subjs (
     lastfail timestamp,
     PRIMARY KEY (id),
     UNIQUE ls_subjs_login_idx (`login`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `ls_subjs_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_trans (
@@ -213,7 +231,7 @@ CREATE TABLE ls_trans (
     INDEX ls_trans_state_idx (state),
     UNIQUE ls_trans_token_idx (pdtoken),
     UNIQUE ls_trans_trtok_idx (trtok)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE ls_tree (
@@ -223,13 +241,13 @@ CREATE TABLE ls_tree (
     param character varying(255),
     PRIMARY KEY (id),
     INDEX ls_tree_name_idx (name)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE  `ls_tree_id_seq_seq` (
     `id` int(10) unsigned NOT NULL auto_increment,
     PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE playlog (
@@ -237,7 +255,7 @@ CREATE TABLE playlog (
     audioclipid bigint NOT NULL,
     `timestamp` timestamp NOT NULL,
     PRIMARY KEY (id)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE schedule (
@@ -246,7 +264,7 @@ CREATE TABLE schedule (
     starts timestamp NOT NULL,
     ends timestamp NOT NULL,
     PRIMARY KEY (id)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 ALTER TABLE ls_access

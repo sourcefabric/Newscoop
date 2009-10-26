@@ -1651,10 +1651,10 @@ class BasicStor {
             if (PEAR::isError($fid)) {
                 return $fid;
             }
-            $res = Alib::AddPerm($uid, '_all', $fid, 'A');
-            if (PEAR::isError($res)) {
-                return $res;
-            }
+//            $res = Alib::AddPerm($uid, '_all', $fid, 'A');
+//            if (PEAR::isError($res)) {
+//                return $res;
+//            }
             if (!$CC_CONFIG['isArchive']) {
                 $res = Subjects::AddSubjectToGroup($login, $CC_CONFIG['StationPrefsGr']);
                 if (PEAR::isError($res)) {
