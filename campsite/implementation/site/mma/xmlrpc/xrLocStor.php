@@ -132,6 +132,11 @@ $methods = array(
     'restoreBackupCheck' => 'Restore a backup file (check results)',
     'restoreBackupClose' => 'Restore a backup file (close handle)',
 
+    'createUser'              => 'Create a new archive user.',
+    'deleteUser'              => 'Delete a user from the archive.',
+    'changePassword'          => 'Change the password for the given group.',
+    'addToGroup'              => 'Add the specified user to the given group.',
+    'removeFromGroup'         => 'Remove the specified user from the given group.',
     'loadPref'                => 'Load user preference value.',
     'savePref'                => 'Save user preference value.',
     'delPref'                 => 'Delete user preference record.',

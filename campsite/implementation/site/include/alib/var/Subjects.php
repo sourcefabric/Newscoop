@@ -549,7 +549,7 @@ class Subjects {
     {
         global $CC_CONFIG, $CC_DBC;
         $CC_DBC->query("BEGIN");
-        $r = $CC_DBC->query("LOCK TABLE ".$CC_CONFIG['smembTable']);
+        $r = $CC_DBC->query("LOCK TABLES ".$CC_CONFIG['smembTable'] . ' WRITE');
         if (PEAR::isError($r)) {
             return $r;
         }
@@ -578,6 +578,7 @@ class Subjects {
                 }
             }
         }
+        $CC_DBC->query("UNLOCK TABLES");
         $r = $CC_DBC->query("COMMIT");
         if (PEAR::isError($r)) {
             return $r;

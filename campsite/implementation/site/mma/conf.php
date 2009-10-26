@@ -63,7 +63,7 @@ $CC_CONFIG = array(
     'cronDir'       =>  $mmaDir.'/cron',
     'isArchive'     =>  FALSE,
     'validate'      =>  TRUE,
-    'useTrash'      =>  TRUE,
+    'useTrash'      =>  FALSE,
 
     /* ==================================================== URL configuration */
     'storageUrlPath'        => '/mma',

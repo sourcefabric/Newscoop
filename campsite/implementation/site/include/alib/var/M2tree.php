@@ -136,13 +136,11 @@ class M2tree {
         if (PEAR::isError($r)) {
             return $r;
         }
-        /* done by automatic reference trigger:
-        $r = $CC_DBC->query("
-            DELETE FROM ".$CC_CONFIG['structTable']."
-            WHERE objid=$oid
-        ");
-        if (PEAR::isError($r)) return $r;
-        */
+        $r = $CC_DBC->query("DELETE FROM ".$CC_CONFIG['structTable']
+                            ." WHERE objid=$oid");
+        if (PEAR::isError($r)) {
+        	return $r;
+        }
         return TRUE;
     } // fn removeObj
 
@@ -636,16 +634,22 @@ class M2tree {
         }
         $lvl = $lvl['level'];
         // release downside structure
-        $sql = "DELETE FROM ".$CC_CONFIG['structTable']
-            ." WHERE rid IN ("
-            ." SELECT s3.rid FROM ".$CC_CONFIG['structTable']." s1"
+        $sql = "SELECT DISTINCT s3.rid FROM ".$CC_CONFIG['structTable']." s1"
             ." INNER JOIN ".$CC_CONFIG['structTable']." s2 ON s1.objid=s2.objid"
             ." INNER JOIN ".$CC_CONFIG['structTable']." s3 ON s3.objid=s1.objid"
             ." WHERE (s1.parid=$oid OR s1.objid=$oid)"
-            ." AND s2.parid=1 AND s3.level>(s2.level-$lvl) )";
-        $r = $CC_DBC->query($sql);
-        if (PEAR::isError($r)) {
-            return $r;
+            ." AND s2.parid=1 AND s3.level>(s2.level-$lvl)";
+        $res = $CC_DBC->query($sql);
+        if (PEAR::isError($res)) {
+        	return $res;
+        }
+        while ($row = $res->fetchRow()) {
+        	$sql = "DELETE FROM ".$CC_CONFIG['structTable']
+        	." WHERE rid = " . $row['rid'];
+        	$r = $CC_DBC->query($sql);
+        	if (PEAR::isError($r)) {
+        		return $r;
+        	}
         }
         return TRUE;
     } // fn _cutSubtree

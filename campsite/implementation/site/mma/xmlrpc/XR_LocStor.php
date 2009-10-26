@@ -2538,6 +2538,345 @@ class XR_LocStor extends LocStor {
     }
 
     /* ============================================== methods for preferences */
+    
+    /**
+     * Create a new archive user.
+     *
+     * The XML-RPC name of this method is "locstor.createUser".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid : string - session id </li>
+     *      <li> login  : string - login name </li>
+     *      <li> passwd : string - password </li>
+     *      <li> name   : string - user real name </li>
+     *      <li> group  : string - make the user part of the group (optional) </li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> uid : integer </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 806  -  login name already exists</li>
+     *      <li> 805  -  xr_createUser:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 848  -  invalid session id.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see BasicStor::addSubj
+     */
+    public function xr_createUser($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        
+        if (!isset($r['sessid']) || empty($r['sessid'])
+        || !isset($r['login']) || empty($r['login'])
+        || !isset($r['passwd']) || empty($r['passwd'])
+        || !isset($r['name'])) {
+            return new XML_RPC_Response(0, 3, "xr_createUser: invalid parameters");
+        }
+        
+        if (($res = BasicStor::Authorize('write', null, $r['sessid'])) !== TRUE) {
+            return new XML_RPC_Response(0, 848,
+                "xr_createUser: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        require_once(dirname(__FILE__).'/../BasicStor.php');
+        $basicStor = new BasicStor();
+        $res = $basicStor->addSubj($r['login'], $r['passwd'], $r['name']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                "xr_createUser: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        $uid = $res;
+        
+        if (isset($r['group']) && !empty($r['group'])) {
+        	$res = Subjects::AddSubjectToGroup($login, $r['group']);
+            return new XML_RPC_Response(0, 805,
+                "xr_createUser: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        return new XML_RPC_Response(XML_RPC_encode(array('uid'=>$uid)));
+    }
+
+    /**
+     * Delete an archive user.
+     *
+     * The XML-RPC name of this method is "locstor.deleteUser".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid : string - session id </li>
+     *      <li> login  : string - login name </li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> delete : boolean </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 805  -  xr_deleteUser:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 848  -  invalid session id.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see BasicStor::removeSubj
+     */
+    public function xr_deleteUser($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        
+        if (!isset($r['sessid']) || empty($r['sessid'])
+        || !isset($r['login']) || empty($r['login'])) {
+            return new XML_RPC_Response(0, 3, "xr_deleteUser: invalid parameters");
+        }
+        
+        if (($res = BasicStor::Authorize('write', null, $r['sessid'])) !== TRUE) {
+            return new XML_RPC_Response(0, 848,
+                "xr_deleteUser: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        require_once(dirname(__FILE__).'/../BasicStor.php');
+        $basicStor = new BasicStor();
+        $res = $basicStor->removeSubj($r['login']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                "xr_deleteUser: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        return new XML_RPC_Response(XML_RPC_encode(array('delete'=>$res)));
+    }
+
+    /**
+     * Change the password for the archive user.
+     *
+     * The XML-RPC name of this method is "locstor.changePassword".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid : string - session id </li>
+     *      <li> login  : string - login name </li>
+     *      <li> old_passwd : string - old password </li>
+     *      <li> passwd : string - password </li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> change_password : boolean </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 805  -  xr_changePassword:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 848  -  invalid session id.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see Subjects::Passwd
+     */
+    public function xr_changePassword($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        
+        if (!isset($r['sessid']) || empty($r['sessid'])
+        || !isset($r['login']) || empty($r['login'])
+        || !isset($r['passwd']) || empty($r['passwd'])) {
+            return new XML_RPC_Response(0, 3, "xr_changePassword: invalid parameters");
+        }
+        
+        require_once(dirname(__FILE__).'/../BasicStor.php');
+        $res = Alib::GetSessLogin($r['sessid']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 848,
+                "xr_changePassword: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        if ($res == $r['login']) {
+        	if (isset($r['old_passwd']) && !is_null($r['old_passwd'])) {
+        		$oldPassword = $r['old_passwd'];
+        	} else {
+        		$oldPassword = '';
+        	}
+        } else {
+        	if (($res = BasicStor::Authorize('write', null, $r['sessid'])) !== TRUE) {
+        		return new XML_RPC_Response(0, 848,
+                    "xr_changePassword: ".$res->getMessage()." ".$res->getUserInfo()
+        		);
+        	}
+        	$oldPassword = null;
+        }
+        
+        $res = Subjects::Passwd($r['login'], $oldPassword, $r['passwd']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                "xr_changePassword: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        return new XML_RPC_Response(XML_RPC_encode(array('change_password'=>$res)));
+    }
+
+    /**
+     * Add the archive user to the specified group.
+     *
+     * The XML-RPC name of this method is "locstor.addToGroup".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid : string - session id </li>
+     *      <li> login  : string - login name </li>
+     *      <li> group  : string - group </li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> add_to_group : boolean </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 805  -  xr_addToGroup:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 848  -  invalid session id.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see Subjects::AddSubjectToGroup
+     */
+    public function xr_addToGroup($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        
+        if (!isset($r['sessid']) || empty($r['sessid'])
+        || !isset($r['login']) || empty($r['login'])
+        || !isset($r['group']) || empty($r['group'])) {
+            return new XML_RPC_Response(0, 3, "xr_addToGroup: invalid parameters");
+        }
+        
+        require_once(dirname(__FILE__).'/../BasicStor.php');
+        if (($res = BasicStor::Authorize('write', null, $r['sessid'])) !== TRUE) {
+        	return new XML_RPC_Response(0, 848,
+                    "xr_addToGroup: ".$res->getMessage()." ".$res->getUserInfo()
+        	);
+        }
+
+        $res = Subjects::AddSubjectToGroup($r['login'], $r['group']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                    "xr_addToGroup: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        return new XML_RPC_Response(XML_RPC_encode(array('add_to_group'=>$res)));
+    }
+
+    /**
+     * Remove the archive user from the specified group.
+     *
+     * The XML-RPC name of this method is "locstor.addToGroup".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid : string - session id </li>
+     *      <li> login  : string - login name </li>
+     *      <li> group  : string - group </li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> remove_from_group : boolean </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 805  -  xr_removeFromGroup:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 848  -  invalid session id.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see Subjects::RemoveSubjectFromGroup
+     */
+    public function xr_removeFromGroup($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        
+        if (!isset($r['sessid']) || empty($r['sessid'])
+        || !isset($r['login']) || empty($r['login'])
+        || !isset($r['group']) || empty($r['group'])) {
+            return new XML_RPC_Response(0, 3, "xr_removeFromGroup: invalid parameters");
+        }
+        
+        require_once(dirname(__FILE__).'/../BasicStor.php');
+        if (($res = BasicStor::Authorize('write', null, $r['sessid'])) !== TRUE) {
+            return new XML_RPC_Response(0, 848,
+                    "xr_removeFromGroup: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+
+        $res = Subjects::RemoveSubjectFromGroup($r['login'], $r['group']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                    "xr_removeFromGroup: ".$res->getMessage()." ".$res->getUserInfo()
+            );
+        }
+        
+        return new XML_RPC_Response(XML_RPC_encode(array('remove_from_group'=>$res)));
+    }
+    
     /**
      * Load user preference value
      *
@@ -2585,7 +2924,6 @@ class XR_LocStor extends LocStor {
             $ec  = ($ec0 == GBERR_SESS || $ec0 == GBERR_PREF ? 800+$ec0 : 805 );
             return new XML_RPC_Response(0, $ec,
                 "xr_getAudioClip: ".$res->getMessage()." ".$res->getUserInfo()
-
             );
         }
         return new XML_RPC_Response(XML_RPC_encode(array('value'=>$res)));

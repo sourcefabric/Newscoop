@@ -1639,7 +1639,7 @@ class BasicStor {
      * @param string $realname
      * @return int|PEAR_Error
      */
-    public function addSubj($login, $pass=NULL, $realname='')
+    public function addSubj($login, $pass=NULL, $realname='', $isAdmin = false)
     {
         global $CC_CONFIG;
         $uid = Subjects::AddSubj($login, $pass, $realname);
@@ -1663,6 +1663,12 @@ class BasicStor {
                 $res = Subjects::AddSubjectToGroup($login, $CC_CONFIG['AllGr']);
                 if (PEAR::isError($res)) {
                     return $res;
+                }
+                if ($isAdmin) {
+                	$res = Subjects::AddSubjectToGroup($login, $CC_CONFIG['AdminsGr']);
+                	if (PEAR::isError($res)) {
+                		return $res;
+                	}
                 }
                 //$pfid = BasicStor::bsCreateFolder($fid, 'public');
                 //if (PEAR::isError($pfid)) {
@@ -1771,13 +1777,14 @@ class BasicStor {
             $acts = array($acts);
         }
         $perm = true;
-//        foreach ($acts as $i => $action) {
-//            $res = Alib::CheckPerm($userid, $action, $pars[$i]);
-//            if (PEAR::isError($res)) {
-//                return $res;
-//            }
-//            $perm = $perm && $res;
-//        }
+        foreach ($acts as $i => $action) {
+        	$action = strtolower($action == 'write') ? '_all' : $action;
+            $res = Alib::CheckPerm($userid, $action, $pars[$i]);
+            if (PEAR::isError($res)) {
+                return $res;
+            }
+            $perm = $perm && $res;
+        }
         if ($perm) {
             return TRUE;
         }
