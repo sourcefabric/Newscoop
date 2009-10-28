@@ -11,6 +11,9 @@ INSERT INTO ls_perms VALUES (4, 4, 'read', 1, 'A');
 INSERT INTO ls_perms VALUES (6, 7, '_all', 7, 'A');
 
 
+INSERT INTO ls_perms_id_seq_seq VALUES (6);
+
+
 INSERT INTO ls_pref VALUES (1, 3, 'stationName', 'Radio Station 1');
 INSERT INTO ls_pref VALUES (2, 3, 'genres', '<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE options [
@@ -156,6 +159,9 @@ INSERT INTO ls_pref VALUES (6, 3, 'scratchpadMaxlength', '10');
 INSERT INTO ls_pref VALUES (7, 4, 'scratchpadContents', '');
 
 
+INSERT INTO ls_pref_id_seq_seq VALUES (7);
+
+
 INSERT INTO ls_smemb VALUES (1, 4, 3, 0, NULL);
 INSERT INTO ls_smemb VALUES (2, 4, 2, 0, NULL);
 INSERT INTO ls_smemb VALUES (3, 4, 1, 0, NULL);
@@ -163,6 +169,9 @@ INSERT INTO ls_smemb VALUES (4, 5, 2, 0, NULL);
 INSERT INTO ls_smemb VALUES (7, 7, 3, 0, NULL);
 INSERT INTO ls_smemb VALUES (8, 7, 2, 0, NULL);
 INSERT INTO ls_smemb VALUES (9, 7, 1, 0, NULL);
+
+
+INSERT INTO ls_smemb_id_seq_seq VALUES (9);
 
 
 INSERT INTO ls_struct VALUES (1, 2, 1, 1);
@@ -191,12 +200,14 @@ INSERT INTO ls_subjs VALUES (4, 'root', '7694f4a66316e53c8cdd9d9954bd611d', 'U',
 INSERT INTO ls_subjs VALUES (7, 'admin', '5e8f0b702f365224d31084ee4f74b576', 'U', '', '2009-07-26 21:26:03.253313', NULL);
 
 
+INSERT INTO ls_subjs_id_seq_seq VALUES (7);
+
+
 INSERT INTO ls_tree VALUES (1, 'RootNode', 'RootNode', NULL);
 INSERT INTO ls_tree VALUES (2, 'StorageRoot', 'Folder', NULL);
 INSERT INTO ls_tree VALUES (3, 'root', 'Folder', NULL);
 INSERT INTO ls_tree VALUES (4, 'trash_', 'Folder', NULL);
 INSERT INTO ls_tree VALUES (5, '04. Vangelis - Song Of White.mp3', 'audioclip', NULL);
-INSERT INTO ls_tree VALUES (6, 'admin', 'Folder', NULL);
 INSERT INTO ls_tree VALUES (7, 'admin', 'Folder', NULL);
 
 

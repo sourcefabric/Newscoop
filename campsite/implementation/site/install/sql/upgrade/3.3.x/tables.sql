@@ -55,6 +55,12 @@ CREATE TABLE ls_classes (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE  `ls_classes_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE ls_cmemb (
     objid integer NOT NULL,
     cid integer NOT NULL,
@@ -130,6 +136,12 @@ CREATE TABLE ls_pref (
     UNIQUE ls_pref_id_idx (id),
     UNIQUE ls_pref_subj_key_idx (subjid, keystr),
     INDEX ls_pref_subjid_idx (subjid)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE  `ls_pref_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
