@@ -4,6 +4,30 @@ require_once("Playlist.php");
 require_once(dirname(__FILE__)."/../include/getid3/getid3.php");
 
 /**
+ * @param string $p_fileName
+ * @return array
+ */
+function camp_get_file_format_info($p_fileName)
+{
+    $getID3 = new getID3;
+    if ($fp = fopen($p_fileName, 'rb')) {
+        $ThisFileInfo = array('avdataoffset'=>0, 'avdataend'=>0);
+
+        getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE__, true);
+        $tag = new getid3_id3v2($fp, $ThisFileInfo);
+
+        fseek($fp, $ThisFileInfo['avdataoffset'], SEEK_SET);
+        $formattest = fread($fp, 32774);
+        fclose($fp);
+
+        $formatInfo = $getID3->GetFileFormat($formattest);
+    }
+
+    return $formatInfo;
+} // fn camp_get_file_format_info
+
+
+/**
  * Track numbers in metadata tags can come in many formats:
  * "1 of 20", "1/20", "20/1".  This function parses the track
  * number and gets the real number so that we can sort by it
@@ -67,6 +91,243 @@ function camp_add_metadata(&$p_mdata, $p_key, $p_val, $p_inputEncoding='iso-8859
         $p_mdata[$p_key] = trim($data);
     }
 }
+
+
+/**
+ * @param array $p_infoFromFile
+ * @param array $p_typeFields
+ */
+function camp_read_metadata($p_infoFromFile, $p_typeFields)
+{
+    $mdata = array();
+    if (isset($p_infoFromFile['audio'])) {
+        $mdata['audio'] = $p_infoFromFile['audio'];
+    }
+    if (isset($p_infoFromFile['video'])) {
+        $mdata['video'] = $p_infoFromFile['video'];
+    }
+    if (isset($p_infoFromFile['playtime_seconds'])) {
+        $mdata['playtime_seconds'] = $p_infoFromFile['playtime_seconds'];
+    }
+
+    $titleHaveSet = FALSE;
+    $titleKey = 'dc:title';
+    foreach ($p_typeFields as $key => $getid3keys) {
+        foreach ($getid3keys as $getid3key) {
+            $path = $getid3key['path'];
+            $ignoreEnc = isset($getid3key['ignoreEnc']) ?
+                $getid3key['ignoreEnc'] : FALSE;
+            $dataPath = isset($getid3key['dataPath']) ? $getid3key['dataPath'] : '';
+            $encPath = isset($getid3key['encPath']) ? $getid3key['encPath'] : '';
+            $enc = 'UTF-8';
+
+            $tagElement = "\$p_infoFromFile$path$dataPath";
+            eval("\$tagExists = isset($tagElement);");
+            if ($tagExists) {
+                //echo "ignore encoding: ".($ignoreEnc?"yes":"no")."\n";
+                //echo "tag exists\n";
+                //echo "encode path: $encPath\n";
+                eval("\$data = $tagElement;");
+                if (!$ignoreEnc && $encPath != '') {
+                    $encodedElement = "\$p_infoFromFile$path$encPath";
+                    eval("\$encodedElementExists = isset($encodedElement);");
+                    if ($encodedElementExists) {
+                        eval("\$enc = $encodedElement;");
+                    }
+                }
+
+                // Special case handling for track number
+                if ($key == "ls:track_num") {
+                    $data = camp_parse_track_number($data);
+                }
+                camp_add_metadata($mdata, $key, $data, $enc);
+                if ($key == $titleKey) {
+                    $titleHaveSet = TRUE;
+                }
+                break;
+            }
+        }
+    }
+
+    if (!$titleHaveSet || trim($mdata[$titleKey]) == '') {
+        camp_add_metadata($mdata, $titleKey, $p_infoFromFile['filename']);
+    }
+
+    return $mdata;
+} // fn camp_read_metadata
+
+
+/**
+ * @param string $p_filename
+ * @param bool $p_testonly
+ */
+function camp_get_metadata($p_fileName, $p_testOnly = false)
+{
+    $getID3 = new getID3();
+    $infoFromFile = $getID3->analyze($p_fileName);
+
+    if (PEAR::isError($infoFromFile)) {
+        return $infoFromFile;
+    }
+    if (isset($infoFromFile['error'])) {
+        return new PEAR_Error(array_pop($infoFromFile['error']));
+    }
+
+    if ($p_testOnly) {
+        print_r($infoFromFile);
+    }
+
+    $mdata = array();
+    $fileFormat = camp_get_file_format_info($p_fileName);
+    switch ($fileFormat['group']) {
+    case 'audio':
+        $mdata = camp_get_audio_metadata($infoFromFile);
+        break;
+    case 'graphic':
+        $mdata = camp_get_image_metadata($infoFromFile);
+        break;
+    case 'audio-video':
+        $mdata = camp_get_video_metadata($infoFromFile);
+        break;
+    case 'archive':
+        break;
+    case 'misc':
+        break;
+    }
+
+    return $mdata;
+} // fn camp_get_metadata
+
+
+/**
+ * @param array $p_infoFromFile
+ */
+function camp_get_image_metadata($p_infoFromFile)
+{
+    if (!isset($p_infoFromFile['video'])) {
+        return new PEAR_Error("File given is not an image file.");
+    }
+
+    $flds = array(
+        'dc:format' => array(
+            array('path'=>"['mime_type']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:description' => array(
+            array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['ImageDescription']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:maker' => array(
+            array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['Make']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:maker_model' => array(
+            array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['Model']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:filename' => array(
+            array('path'=>"['filename']"),
+        ),
+        'ls:width' => array(
+            array('path'=>"['video']['resolution_x']"),
+        ),
+        'ls:height' => array(
+            array('path'=>"['video']['resolution_y']"),
+        ),
+    );
+
+    $mdata = camp_read_metadata($p_infoFromFile, $flds);
+
+    return $mdata;
+} // fn camp_get_image_metadata
+
+
+/**
+ * @param array $p_infoFromFile
+ */
+function camp_get_video_metadata($p_infoFromFile)
+{
+    //if (!isset($p_infoFromFile['video'])) {
+    //    return new PEAR_Error("File given is not a video file.");
+    //}
+
+    $flds = array(
+        'dc:format' => array(
+            array('path'=>"['mime_type']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:title' => array(
+            array('path'=>"['tags']['asf']['title']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['asf']['comments']['title']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['tags']['quicktime']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:creator' => array(
+            array('path'=>"['tags']['asf']['artist']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['asf']['comments']['artist']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['tags']['quicktime']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:type' => array(
+            array('path'=>"['tags']['quicktime']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:source' => array(
+            array('path'=>"['tags']['quicktime']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:description'=> array(
+            array('path'=>"['tags']['quicktime']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:playtime_string' => array(
+            array('path'=>"['playtime_string']", 'ignoreEnc'=>TRUE),
+        ),
+        'dcterms:extent'=> array(
+            array('path'=>"['playtime_seconds']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:composer'=> array(
+            array('path'=>"['tags']['quicktime']['writer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:bitrate' => array(
+            array('path'=>"['bitrate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:year' => array(
+            array('path'=>"['tags']['quicktime']['creation_date']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:video_bitrate' => array(
+            array('path'=>"['video']['bitrate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_encoder' => array(
+            array('path'=>"['video']['codec']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_total_frames' => array(
+            array('path'=>"['video']['total_frames']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['riff']['video'][0]", 'dataPath'=>"['total_frames']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['quicktime']['video']['frame_count']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_frame_rate' => array(
+            array('path'=>"['video']['frame_rate']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['riff']['video'][0]", 'dataPath'=>"['frame_rate']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['quicktime']['video']['frame_rate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_frame_width' => array(
+            array('path'=>"['video']['resolution_x']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_frame_height' => array(
+            array('path'=>"['video']['resolution_y']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:audio_bitrate' => array(
+            array('path'=>"['audio']['bitrate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:audio_samplerate' => array(
+            array('path'=>"['audio']['sample_rate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:audio_encoder' => array(
+            array('path'=>"['audio']['codec']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:audio_channels' => array(
+            array('path'=>"['audio']['channels']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:audio_encoded_by' => array(
+            array('path'=>"['audio']['encoder']", 'ignoreEnc'=>TRUE),
+        ),
+    );
+
+    $mdata = camp_read_metadata($p_infoFromFile, $flds);
+
+    return $mdata;
+} // fn camp_get_video_metadata
 
 
 /**
