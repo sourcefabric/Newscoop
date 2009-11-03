@@ -3,6 +3,11 @@ require_once("MetaData.php");
 require_once("Playlist.php");
 require_once(dirname(__FILE__)."/../include/getid3/getid3.php");
 
+define('AUDIO_GROUP_NAME','audio');
+define('IMAGE_GROUP_NAME','graphic');
+define('VIDEO_GROUP_NAME','audio-video');
+
+
 /**
  * @param string $p_fileName
  * @return array
@@ -55,7 +60,7 @@ function camp_parse_track_number($p_trackNumber)
         $trackNum = $num;
     }
     return $trackNum;
-}
+} // fn camp_parse_track_number
 
 
 /**
@@ -90,14 +95,14 @@ function camp_add_metadata(&$p_mdata, $p_key, $p_val, $p_inputEncoding='iso-8859
         }
         $p_mdata[$p_key] = trim($data);
     }
-}
+} // fn camp_add_metadata
 
 
 /**
  * @param array $p_infoFromFile
  * @param array $p_typeFields
  */
-function camp_read_metadata($p_infoFromFile, $p_typeFields)
+function camp_read_metadata($p_infoFromFile, $p_typeFields, $p_group)
 {
     $mdata = array();
     if (isset($p_infoFromFile['audio'])) {
@@ -148,8 +153,7 @@ function camp_read_metadata($p_infoFromFile, $p_typeFields)
             }
         }
     }
-
-    if (!$titleHaveSet || trim($mdata[$titleKey]) == '') {
+    if ($p_group != IMAGE_GROUP_NAME && (!$titleHaveSet || trim($mdata[$titleKey]) == '')) {
         camp_add_metadata($mdata, $titleKey, $p_infoFromFile['filename']);
     }
 
@@ -180,13 +184,13 @@ function camp_get_metadata($p_fileName, $p_testOnly = false)
     $mdata = array();
     $fileFormat = camp_get_file_format_info($p_fileName);
     switch ($fileFormat['group']) {
-    case 'audio':
+    case AUDIO_GROUP_NAME:
         $mdata = camp_get_audio_metadata($infoFromFile);
         break;
-    case 'graphic':
+    case IMAGE_GROUP_NAME:
         $mdata = camp_get_image_metadata($infoFromFile);
         break;
-    case 'audio-video':
+    case VIDEO_GROUP_NAME:
         $mdata = camp_get_video_metadata($infoFromFile);
         break;
     case 'archive':
@@ -214,6 +218,7 @@ function camp_get_image_metadata($p_infoFromFile)
         ),
         'dc:description' => array(
             array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['ImageDescription']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['tiff']['comments']['imagedescription']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
         ),
         'dc:maker' => array(
             array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['Make']", 'ignoreEnc'=>TRUE),
@@ -221,18 +226,30 @@ function camp_get_image_metadata($p_infoFromFile)
         'dc:maker_model' => array(
             array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['Model']", 'ignoreEnc'=>TRUE),
         ),
+        'dc:date_time' => array(
+            array('path'=>"['jpg']['exif']['IFD0']", 'dataPath'=>"['DateTime']", 'ignoreEnc'=>TRUE),
+        ),
         'ls:filename' => array(
             array('path'=>"['filename']"),
         ),
-        'ls:width' => array(
+        'ls:filesize' => array(
+            array('path'=>"['filesize']"),
+        ),
+        'ls:filetype' => array(
+            array('path'=>"['fileformat']"),
+        ),
+        'ls:image_width' => array(
             array('path'=>"['video']['resolution_x']"),
         ),
-        'ls:height' => array(
+        'ls:image_height' => array(
             array('path'=>"['video']['resolution_y']"),
+        ),
+        'ls:bitspersample' => array(
+            array('path'=>"['video']['bits_per_sample']"),
         ),
     );
 
-    $mdata = camp_read_metadata($p_infoFromFile, $flds);
+    $mdata = camp_read_metadata($p_infoFromFile, $flds, IMAGE_GROUP_NAME);
 
     return $mdata;
 } // fn camp_get_image_metadata
@@ -324,7 +341,7 @@ function camp_get_video_metadata($p_infoFromFile)
         ),
     );
 
-    $mdata = camp_read_metadata($p_infoFromFile, $flds);
+    $mdata = camp_read_metadata($p_infoFromFile, $flds, VIDEO_GROUP_NAME);
 
     return $mdata;
 } // fn camp_get_video_metadata
@@ -519,7 +536,7 @@ function camp_get_audio_metadata($p_filename, $p_testonly = false)
     	camp_add_metadata($mdata, $titleKey, basename($p_filename));
     }
     return $mdata;
-}
+} // fn camp_get_audio_metadata
 
 
 /**
