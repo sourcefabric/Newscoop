@@ -6,6 +6,8 @@ require_once(dirname(__FILE__)."/../include/getid3/getid3.php");
 define('AUDIO_GROUP_NAME','audio');
 define('IMAGE_GROUP_NAME','graphic');
 define('VIDEO_GROUP_NAME','audio-video');
+define('ARCHIVE_GROUP_NAME','archive');
+define('UNPARSED_GROUP_NAME','misc');
 
 
 /**
@@ -193,9 +195,11 @@ function camp_get_metadata($p_fileName, $p_testOnly = false)
     case VIDEO_GROUP_NAME:
         $mdata = camp_get_video_metadata($infoFromFile);
         break;
-    case 'archive':
+    case ARCHIVE_GROUP_NAME:
+        $mdata = camp_get_archive_metadata($infoFromFile);
         break;
-    case 'misc':
+    case UNPARSED_GROUP_NAME:
+        $mdata = camp_get_misc_metadata($infoFromFile);
         break;
     }
 
@@ -293,6 +297,15 @@ function camp_get_video_metadata($p_infoFromFile)
         'dcterms:extent'=> array(
             array('path'=>"['playtime_seconds']", 'ignoreEnc'=>TRUE),
         ),
+        'ls:filename' => array(
+            array('path'=>"['filename']"),
+        ),
+        'ls:filesize' => array(
+            array('path'=>"['filesize']"),
+        ),
+        'ls:filetype' => array(
+            array('path'=>"['fileformat']"),
+        ),
         'ls:composer'=> array(
             array('path'=>"['tags']['quicktime']['writer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
         ),
@@ -312,6 +325,7 @@ function camp_get_video_metadata($p_infoFromFile)
             array('path'=>"['video']['total_frames']", 'ignoreEnc'=>TRUE),
             array('path'=>"['riff']['video'][0]", 'dataPath'=>"['total_frames']", 'ignoreEnc'=>TRUE),
             array('path'=>"['quicktime']['video']['frame_count']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['swf']['header']['frame_count']", 'ignoreEnc'=>TRUE),
         ),
         'ls:video_frame_rate' => array(
             array('path'=>"['video']['frame_rate']", 'ignoreEnc'=>TRUE),
@@ -323,6 +337,9 @@ function camp_get_video_metadata($p_infoFromFile)
         ),
         'ls:video_frame_height' => array(
             array('path'=>"['video']['resolution_y']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:video_bgcolor' => array(
+            array('path'=>"['swf']['bgcolor']", 'ignoreEnc'=>TRUE),
         ),
         'ls:audio_bitrate' => array(
             array('path'=>"['audio']['bitrate']", 'ignoreEnc'=>TRUE),
@@ -345,6 +362,50 @@ function camp_get_video_metadata($p_infoFromFile)
 
     return $mdata;
 } // fn camp_get_video_metadata
+
+
+/**
+ * @param array $p_infoFromFile
+ * @return array
+ */
+function camp_get_archive_metadata($p_infoFromFile)
+{
+    $flds = array(
+        'dc:format' => array(
+            array('path'=>"['mime_type']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:description'=> array(
+            array('path'=>"['tags']['zip']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:filename' => array(
+            array('path'=>"['filename']"),
+        ),
+        'ls:filesize' => array(
+            array('path'=>"['filesize']"),
+        ),
+        'ls:filetype' => array(
+            array('path'=>"['fileformat']"),
+        ),
+        'ls:compressed_size' => array(
+            array('path'=>"['zip']['compressed_size']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:uncompressed_size' => array(
+            array('path'=>"['zip']['uncompressed_size']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:compression_method' => array(
+            array('path'=>"['zip']['compression_method']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:compression_speed' => array(
+            array('path'=>"['zip']['compression_speed']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:files_count' => array(
+            array('path'=>"['zip']['entries_count']", 'ignoreEnc'=>TRUE),
+        ),
+    );
+
+    $mdata = camp_read_metadata($p_infoFromFile, $flds, ARCHIVE_GROUP_NAME);
+    return $mdata;
+} // fn camp_get_archive_metadata
 
 
 /**
