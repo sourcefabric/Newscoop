@@ -481,13 +481,12 @@ class Section extends DatabaseObject {
 	 * @param int $p_languageId
 	 * @return int
 	 */
-	public static function GetUnusedSectionNumber($p_publicationId, $p_issueNumber,
-	                                              $p_languageId)
+	public static function GetUnusedSectionNumber($p_publicationId, $p_issueNumber)
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Sections "
 					." WHERE IdPublication=$p_publicationId "
-					." AND NrIssue=$p_issueNumber AND IdLanguage=$p_languageId";
+					." AND NrIssue=$p_issueNumber";
 		$number = 0 + $g_ado_db->GetOne($queryStr);
 		if ($number <= 0) {
 			$number++;
