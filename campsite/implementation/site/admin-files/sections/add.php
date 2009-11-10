@@ -17,7 +17,7 @@ if (!Input::IsValid()) {
 }
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_number, $f_language_id);
+$newSectionNumber = Section::GetUnusedSectionNumber($f_publication_id, $f_issue_number);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
 camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(getGS("Sections") => "/$ADMIN/sections/?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id"));

@@ -54,6 +54,13 @@ if (!$isValidShortName && trim($f_url_name) != "") {
 	$correct = false;
 	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
+$sectionsConstraints = array(new ComparisonOperation('idpublication', new Operator('is'), $f_publication_id),
+new ComparisonOperation('nrissue', new Operator('is'), $f_issue_number));
+$sections = Section::GetList($sectionsConstraints, null, 0, 0, $sectionsCount, true);
+if ($sectionsCount > 0) {
+	$correct = false;
+	$errors[] = getGS('The section number $1 was already in use.', $f_number);
+}
 if ($correct) {
     $newSection = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_number);
     $columns = array();
