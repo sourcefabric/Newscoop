@@ -519,6 +519,8 @@ function camp_get_audio_metadata($p_filename, $p_testonly = false)
 	    ),
             'dc:original_creator' => array(
                 array('path'=>"['tags']['id3v2']['original_artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+                array('path'=>"['ogg']['comments']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+                array('path'=>"['tags']['vorbiscomment']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
             ),
 	    'dc:source' => array(
 	        array('path'=>"['id3v2']['comments']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
@@ -531,6 +533,8 @@ function camp_get_audio_metadata($p_filename, $p_testonly = false)
 	    ),
             'dc:copyright' => array(
                 array('path'=>"['tags']['id3v2']['copyright_message']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+                array('path'=>"['ogg']['comments']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+                array('path'=>"['tags']['vorbiscomment']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
             ),
 	    'ls:encoded_by'	=> array(
                 array('path'=>"['tags']['id3v2']['encoded_by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
@@ -565,6 +569,9 @@ function camp_get_audio_metadata($p_filename, $p_testonly = false)
             ),
             'ls:filetype' => array(
                 array('path'=>"['fileformat']"),
+            ),
+            'ls:data_format' => array(
+                array('path'=>"['audio']['dataformat']"),
             ),
 	);
     $mdata = array();
