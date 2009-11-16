@@ -28,9 +28,9 @@
 			var elmId = ed.dom.getAttrib(elm, 'id');
 			url_params = '&image_id=' + elmId;
 			if (ed.dom.getAttrib(elm, 'alt') !== null)
-			    url_params += '&image_alt=' + escape(ed.dom.getAttrib(elm, 'alt'));
+			    url_params += '&image_alt=' + encodeURIComponent(ed.dom.getAttrib(elm, 'alt'));
 			if (ed.dom.getAttrib(elm, 'title') !== null)
-			    url_params += '&image_title=' + escape(ed.dom.getAttrib(elm, 'title'));
+			    url_params += '&image_title=' + encodeURIComponent(ed.dom.getAttrib(elm, 'title'));
 			if (ed.dom.getAttrib(elm, 'align') !== null)
 			    url_params += '&image_alignment=' + escape(ed.dom.getAttrib(elm, 'align'));
 			if (ed.dom.getAttrib(elm, 'ratio') !== null && ed.dom.getAttrib(elm, 'ratio') != '')
