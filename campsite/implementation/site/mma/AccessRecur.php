@@ -74,7 +74,7 @@ class AccessRecur {
             $ftype = $r;
             # echo "$ftype/$token2\n";
             switch (strtolower($ftype)) {
-                case "audioclip":
+                case "audio":
                     $r = $ppa->ls->releaseRawAudioData($ppa->sessid, $token2);
                     if (PEAR::isError($r)) {
                     	return $r;
@@ -133,7 +133,7 @@ class AccessRecur {
     {
         foreach ($ple['children'] as $ac) {
             switch ($ac['elementname']) {
-                case "audioClip":
+                case "audio":
                     $r = $this->processAudioClip($ac['attrs']['id'], $parent);
                     if (PEAR::isError($r)) {
                     	return $r;

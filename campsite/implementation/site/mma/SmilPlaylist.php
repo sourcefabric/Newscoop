@@ -247,7 +247,7 @@ class SmilPlaylistAudioElement {
         }
         $plElGunid  = StoredFile::CreateGunid();
         $acGunid     = $gunid;
-        $type = 'audioClip';
+        $type = 'audio';
         if (preg_match("|\.([a-zA-Z0-9]+)$|", $uri, $va)) {
             switch (strtolower($ext = $va[1])) {
                 case "lspl":

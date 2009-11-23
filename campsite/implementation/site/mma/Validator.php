@@ -66,7 +66,15 @@ class Validator {
         $this->format = $format;
         $this->gunid = $gunid;
         $formats = array(
-            'audioclip' => "audioClipFormat",
+            'application' => "applicationFormat",
+            'audio' => "audioFormat",
+            'example' => "exampleFormat",
+            'image' => "imageFormat",
+            'message' => "messageFormat",
+            'model' => "modelFormat",
+            'multipart' => "multipartFormat",
+            'text' => "textFormat",
+            'video' => "videoFormat",
             'playlist'  => "playlistFormat",
             'webstream' => "webstreamFormat",
         );

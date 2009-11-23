@@ -81,7 +81,9 @@ class MetaData {
      * 		location: 'file'|'string'
      * @param string $format
      * 		Metadata format for validation
-     *      ('audioclip' | 'playlist' | 'webstream' | NULL)
+     *      meaningful values: 'application', 'audio', 'example', 'image',
+     *      'message', 'model', 'multipart', 'text', 'video', 'webstream',
+     *      'playlist', NULL
      *      (NULL = no validation)
      * @return true|PEAR_Error
      */
@@ -121,7 +123,9 @@ class MetaData {
      * 		'file'|'string'
      * @param string $format
      * 		metadata format for validation
-     *      ('audioclip' | 'playlist' | 'webstream' | NULL)
+     *      meaningful values: 'application', 'audio', 'example', 'image',
+     *      'message', 'model', 'multipart', 'text', 'video', 'webstream',
+     *      'playlist', NULL
      *      (NULL = no validation)
      * @return true or PEAR::error
      */

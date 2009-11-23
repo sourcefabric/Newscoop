@@ -368,12 +368,14 @@ class Backup
                 # get the filename from full path
                 $fn = substr($v['filename'],strrpos($v['filename'],'/'));
                 switch (strtolower($v['format'])) {
+                	case 'webstream':
+                		break;
                     case 'playlist':
                         # if playlist then copy to the playlist dir
                         copy($v['filename'],$this->tmpDirPlaylist.$fn);
                         break;
-                    case 'audioclip':
-                        # if audioclip then copy to the audioclip dir
+                    default:
+                        # if other media type then copy to the audioclip dir
                         copy($v['filename'],$this->tmpDirClip.$fn);
                         break;
                 }

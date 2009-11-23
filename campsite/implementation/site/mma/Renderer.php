@@ -236,7 +236,7 @@ class Renderer
             "filename" => $fileName,
             "filepath" => $realOgg,
             "metadata" => $mdata,
-            "filetype" => "audioclip"
+            "filetype" => "audio"
         );
         $storedFile = $gb->bsPutFile($parid, $values);
         if (PEAR::isError($storedFile)) {

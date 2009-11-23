@@ -82,8 +82,16 @@ if (PEAR::isError($ftype)) {
     http_error(500, $ftype->getMessage());
 }
 switch ($ftype) {
-    case "audioclip":
-        $realFname  = $ac->getRealFileName();
+	case 'application':
+    case 'audio':
+    case 'example':
+    case 'image':
+    case 'message':
+    case 'model':
+    case 'multipart':
+    case 'text':
+    case 'video':
+    	$realFname  = $ac->getRealFileName();
         $mime = $ac->getMime();
         header("Content-type: $mime");
         header("Content-length: ".filesize($realFname));

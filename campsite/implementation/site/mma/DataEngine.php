@@ -9,7 +9,9 @@ require_once("XML/Util.php");
  *  Format of search criteria: hash, with following structure:<br>
  *   <ul>
  *     <li>filetype - string, type of searched files,
- *       meaningful values: 'audioclip', 'webstream', 'playlist', 'all'</li>
+ *       meaningful values: 'application', 'audio', 'example', 'image',
+ *       'message', 'model', 'multipart', 'text', 'video', 'webstream',
+ *       'playlist', 'all'</li>
  *     <li>operator - string, type of conditions join
  *       (any condition matches / all conditions match),
  *       meaningful values: 'and', 'or', ''
@@ -63,12 +65,26 @@ class DataEngine {
     public function __construct(&$gb)
     {
         $this->gb =& $gb;
+//        $this->filetypes = array(
+//            'all'=>NULL,
+//            'audioclip'=>'audioclip',
+//            'webstream'=>'webstream',
+//            'playlist'=>'playlist',
+//        );
         $this->filetypes = array(
             'all'=>NULL,
-            'audioclip'=>'audioclip',
+            'application'=>'application',
+            'audio'=>'audio',
+            'example'=>'example',
+            'image'=>'image',
+            'message'=>'message',
+            'model'=>'model',
+            'multipart'=>'multipart',
+            'text'=>'text',
+            'video'=>'video',
             'webstream'=>'webstream',
-            'playlist'=>'playlist',
-        );
+            'playlist'=>'playlist'
+            );
     }
 
 

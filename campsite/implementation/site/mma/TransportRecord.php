@@ -390,7 +390,15 @@ class TransportRecord
         	return $trtype;
         }
         switch ($trtype) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "playlist":
             case "playlistPkg":
             case "metadata":

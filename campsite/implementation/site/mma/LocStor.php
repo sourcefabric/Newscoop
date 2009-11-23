@@ -44,7 +44,7 @@ class LocStor extends BasicStor {
      * 		{url:writable URL for HTTP PUT, token:access token}
      */
     protected function storeAudioClipOpen($sessid, $gunid, $metadata,
-        $fname, $chsum, $ftype='audioclip')
+        $fname, $chsum, $ftype='audio')
     {
         // Check the gunid format
         if (!BasicStor::CheckGunid($gunid)) {
@@ -123,6 +123,109 @@ class LocStor extends BasicStor {
 
 
     /**
+     * Store or replace existing media file.
+     *
+     * Sending a file to the storage server is a 3 step process:
+     * 1) Call storeMediaFileOpen
+     * 2) Upload the file to the URL specified
+     * 3) Call storeMediaFileClose
+     *
+     * @param string $sessid
+     *      session id
+     * @param string $gunid
+     *      global unique id
+     * @param string $metadata
+     *      metadata XML string
+     * @param string $fname
+     *      human readable menmonic file name
+     *      with extension corresponding to filetype
+     * @param string $chsum
+     *      md5 checksum of media file
+     * @param string $ftype
+     *      audioclip | playlist | webstream
+     * @return array
+     *      {url:writable URL for HTTP PUT, token:access token}
+     */
+    protected function storeMediaFileOpen($sessid, $gunid, $metadata,
+        $fname, $chsum, $ftype)
+    {
+        // Check the gunid format
+        if (!BasicStor::CheckGunid($gunid)) {
+            return PEAR::raiseError(
+                "LocStor::storeMediaFileOpen: Wrong gunid ($gunid)"
+            );
+        }
+
+        // Check if we already have this file.
+        $duplicate = StoredFile::RecallByMd5($chsum);
+        if (!empty($chsum) && $duplicate) {
+            return PEAR::raiseError(
+                "LocStor::storeMediaFileOpen: Duplicate file"
+                ." - Matched MD5 ($chsum) against '".$duplicate->getName()."'",
+                888);
+        }
+
+        // Check if specified gunid exists.
+        $storedFile =& StoredFile::RecallByGunid($gunid);
+        if (!is_null($storedFile) && !PEAR::isError($storedFile)) {
+            // gunid exists - do replace
+            $oid = $storedFile->getId();
+            if (($res = BasicStor::Authorize('write', $oid, $sessid)) !== TRUE) {
+                return $res;
+            }
+            if ($storedFile->isAccessed()) {
+                return PEAR::raiseError(
+                    'LocStor::storeMediaFileOpen: is accessed'
+                );
+            }
+            $res = $storedFile->replace($oid, $storedFile->getName(), '', $metadata, 'string');
+            if (PEAR::isError($res)) {
+                return $res;
+            }
+        } else {
+            // gunid doesn't exist - do insert:
+            $tmpFname = uniqid();
+            $parid = $this->_getHomeDirIdFromSess($sessid);
+            if (PEAR::isError($parid)) {
+                return $parid;
+            }
+            if (($res = BasicStor::Authorize('write', $parid, $sessid)) !== TRUE) {
+                return $res;
+            }
+            $oid = BasicStor::AddObj($tmpFname, $ftype, $parid);
+            if (PEAR::isError($oid)) {
+                return $oid;
+            }
+            $values = array(
+                "id" => $oid,
+                "metadata" => $metadata,
+                "gunid" => $gunid,
+                "filetype" => $ftype);
+            $storedFile =& StoredFile::Insert($values);
+            if (PEAR::isError($storedFile)) {
+                $res = BasicStor::RemoveObj($oid);
+                return $storedFile;
+            }
+            if (PEAR::isError($res)) {
+                return $res;
+            }
+        }
+        $res = $storedFile->setState('incomplete');
+        if (PEAR::isError($res)) {
+            return $res;
+        }
+        if ($fname == '') {
+            $fname = "newFile";
+        }
+        $res = $this->bsRenameFile($oid, $fname);
+        if (PEAR::isError($res)) {
+            return $res;
+        }
+        return $this->bsOpenPut($chsum, $storedFile->gunid);
+    }
+
+
+    /**
      * Store or replace existing audio clip
      *
      * @param string $sessid
@@ -130,6 +233,40 @@ class LocStor extends BasicStor {
      * @return string gunid|PEAR_Error
      */
     protected function storeAudioClipClose($sessid, $token)
+    {
+        $storedFile =& StoredFile::RecallByToken($token);
+        if (is_null($storedFile) || PEAR::isError($storedFile)) {
+            return $storedFile;
+        }
+        $arr = $this->bsClosePut($token);
+        if (PEAR::isError($arr)) {
+            $storedFile->delete();
+            return $arr;
+        }
+        $fname = $arr['fname'];
+        $res = $storedFile->setRawMediaData($fname);
+        if (PEAR::isError($res)) {
+            return $res;
+        }
+        if (file_exists($fname)) {
+            @unlink($fname);
+        }
+        $res = $storedFile->setState('ready');
+        if (PEAR::isError($res)) {
+            return $res;
+        }
+        return $storedFile->gunid;
+    }
+
+
+    /**
+     * Store or replace existing media file
+     *
+     * @param string $sessid
+     * @param string $token
+     * @return string gunid|PEAR_Error
+     */
+    protected function storeMediaFileClose($sessid, $token)
     {
         $storedFile =& StoredFile::RecallByToken($token);
         if (is_null($storedFile) || PEAR::isError($storedFile)) {
@@ -377,7 +514,9 @@ class LocStor extends BasicStor {
      * 	with following structure:<br>
      *   <ul>
      *     <li>filetype - string, type of searched files,
-     *       meaningful values: 'audioclip', 'webstream', 'playlist', 'all'</li>
+     *       meaningful values: 'application', 'audio', 'example', 'image',
+     *       'message', 'model', 'multipart', 'text', 'video', 'webstream',
+     *       'playlist', 'all'</li>
      *     <li>operator - string, type of conditions join
      *       (any condition matches / all conditions match),
      *       meaningful values: 'and', 'or', ''
@@ -482,7 +621,7 @@ class LocStor extends BasicStor {
      */
     protected function existsAudioClip($sessid, $gunid)
     {
-        $ex = $this->existsFile($sessid, $gunid, 'audioclip');
+        $ex = $this->existsFile($sessid, $gunid, 'audio');
         // webstreams are subset of audioclips - moved to BasicStor
         // if($ex === FALSE ){
         //    $ex = $this->existsFile($sessid, $gunid, 'webstream');

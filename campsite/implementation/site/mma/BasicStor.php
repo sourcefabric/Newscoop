@@ -115,8 +115,16 @@ class BasicStor {
     {
         $parid = M2tree::GetParent($id);
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
-            case "playlist":
+        	case 'application':
+        	case 'audio':
+        	case 'example':
+        	case 'image':
+        	case 'message':
+        	case 'model':
+        	case 'multipart':
+        	case 'text':
+        	case 'video':
+        	case "playlist":
             case "webstream":
                 $storedFile = StoredFile::Recall($id);
                 if (is_null($storedFile) || PEAR::isError($storedFile)) {
@@ -155,8 +163,16 @@ class BasicStor {
             );
         }
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
-            case "playlist":
+        	case 'application':
+        	case 'audio':
+        	case 'example':
+        	case 'image':
+        	case 'message':
+        	case 'model':
+        	case 'multipart':
+        	case 'text':
+        	case 'video':
+        	case "playlist":
             case "webstream":
             case "File":
             case "Folder":
@@ -190,7 +206,15 @@ class BasicStor {
             );
         }
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "playlist":
             case "webstream":
             case "File":
@@ -266,7 +290,15 @@ class BasicStor {
             return $did;
         }
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "playlist":
             case "webstream":
                 $storedFile = StoredFile::Recall($id);
@@ -1032,7 +1064,9 @@ class BasicStor {
      * 	 has the following structure:<br>
      *   <ul>
      *     <li>filetype - string, type of searched files,
-     *       meaningful values: 'audioclip', 'webstream', 'playlist', 'all'</li>
+     *       meaningful values: 'all', 'application', 'audio', 'example',
+     *       'image', 'message', 'model', 'multipart', 'text', 'video',
+     *       'webstream', 'playlist'</li>
      *     <li>operator - string, type of conditions join
      *       (any condition matches / all conditions match),
      *       meaningful values: 'and', 'or', ''
@@ -1397,7 +1431,7 @@ class BasicStor {
                     "filepath" => $rawMedia,
                     "metadata" => $metadata,
                     "gunid" => $gunid,
-                    "filetype" => "audioclip"
+                    "filetype" => "audio"
                 );
                 $storedFile = $this->bsPutFile($parid, $values);
                 $res = $storedFile->getId();
@@ -1594,7 +1628,7 @@ class BasicStor {
         if (!is_null($ftype) && (
             (strtolower($realFtype) != strtolower($ftype))
             // webstreams are subset of audioclips
-            && !($realFtype == 'webstream' && $ftype == 'audioclip')
+            && !($realFtype == 'webstream' && $ftype == 'audio')
         )) {
             return FALSE;
         }
@@ -2012,7 +2046,15 @@ class BasicStor {
             return $nid;
         }
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
+        	case 'application':
+        	case 'audio':
+        	case 'example':
+        	case 'image':
+        	case 'message':
+        	case 'model':
+        	case 'multipart':
+        	case 'text':
+        	case 'video':
             case "playlist":
             case "webstream":
                 $storedFile = StoredFile::Recall($id);
@@ -2039,8 +2081,16 @@ class BasicStor {
     {
         $parid = M2tree::GetParent($id);
         switch (BasicStor::GetObjType($id)) {
-            case "audioclip":
-            case "playlist":
+        	case 'application':
+        	case 'audio':
+        	case 'example':
+        	case 'image':
+        	case 'message':
+        	case 'model':
+        	case 'multipart':
+        	case 'text':
+        	case 'video':
+        	case "playlist":
             case "webstream":
                 $storedFile = StoredFile::Recall($id);
                 if (is_null($storedFile) || PEAR::isError($storedFile)) {
@@ -2107,8 +2157,16 @@ class BasicStor {
             return $ot;
         }
         switch ($ot) {
-            case "audioclip":
-            case "playlist":
+        	case 'application':
+        	case 'audio':
+        	case 'example':
+        	case 'image':
+        	case 'message':
+        	case 'model':
+        	case 'multipart':
+        	case 'text':
+        	case 'video':
+        	case "playlist":
             case "webstream":
                 $storedFile = StoredFile::Recall($id);
                 if (is_null($storedFile)) {
@@ -2222,8 +2280,16 @@ class BasicStor {
                 $gunid = '';
             }
             switch($type){
-                case "audioclip":
-                    $media = $it['media'];
+            	case 'application':
+            	case 'audio':
+            	case 'example':
+            	case 'image':
+            	case 'message':
+            	case 'model':
+            	case 'multipart':
+            	case 'text':
+            	case 'video':
+            		$media = $it['media'];
                     $fname = basename($media);
                     break;
                 case "playlist":

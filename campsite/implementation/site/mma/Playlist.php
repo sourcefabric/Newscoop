@@ -202,7 +202,7 @@ class Playlist extends StoredFile {
             }
             // select playlist element to remove
             if ($plElGunidArr[0]['value'] == $plElGunid) {
-                $acArr = $this->md->getMetadataElement('audioClip', $el['mid']);
+                $acArr = $this->md->getMetadataElement('audio', $el['mid']);
                 if (PEAR::isError($acArr)) {
                 	return $acArr;
                 }
@@ -342,7 +342,7 @@ class Playlist extends StoredFile {
             $fadeOut = NULL;
             foreach ($el['children'] as $j => $af) {
                 switch ($af['elementname']) {
-                    case "audioClip":
+                    case "audio":
                     case "playlist":
                         $acGunid = $af['attrs']['id'];
                         break;
@@ -417,7 +417,7 @@ class Playlist extends StoredFile {
             $offsetId = $offArr[0]['mid'];
             $offset = $offArr[0]['value'];
             // get audioClip:
-            $acArr = $this->md->getMetadataElement('audioClip', $elId);
+            $acArr = $this->md->getMetadataElement('audio', $elId);
             if (is_array($acArr) && (!isset($acArr[0]) || is_null($acArr[0]))) {
                 $acArr = $this->md->getMetadataElement('playlist', $elId);
             }
@@ -563,7 +563,7 @@ class Playlist extends StoredFile {
                     }
                     $dd += $res2['dd'];
                     break;
-                case "audioClip":
+                case "audio":
                     if ($dd == $distance) {
                         $playedS = $offsetS - $elOffsetS;
                         if ($playedS < 0) {
@@ -893,11 +893,11 @@ class Playlist extends StoredFile {
         	$acTit = $acGunid;
         }
         $elType = BasicStor::GetObjType($acId);
-        $trTbl = array('audioclip'=>'audioClip', 'webstream'=>'audioClip',
+        $trTbl = array('audio'=>'audio', 'webstream'=>'audio',
             'playlist'=>'playlist');
         $elType = $trTbl[$elType];
         if ($elType == 'webstream') {
-        	$elType = 'audioClip';
+        	$elType = 'audio';
         }
         return compact('acGunid', 'acLen', 'acTit', 'elType');
     }
@@ -1005,7 +1005,7 @@ class Playlist extends StoredFile {
      * @param string $plElGunid
      * 		optional playlist element gunid
      * @param string $elType
-     * 		optional 'audioClip' | 'playlist'
+     * 		optional 'audio' | 'playlist'
      * @return array with fields:
      *  <ul>
      *   <li>plElId int - record id of playlistElement</li>
@@ -1015,7 +1015,7 @@ class Playlist extends StoredFile {
      *  </ul>
      */
     private function insertPlaylistElement($parid, $offset, $acGunid, $acLen, $acTit,
-        $fadeIn=NULL, $fadeOut=NULL, $plElGunid=NULL, $elType='audioClip')
+        $fadeIn=NULL, $fadeOut=NULL, $plElGunid=NULL, $elType='audio')
     {
         // insert playlistElement
         $r = $this->md->insertMetadataElement($parid, 'playlistElement');
@@ -1224,13 +1224,13 @@ class PlaylistElement {
 	            case "playlist":
 	                $plInfo['type'] = 'playlist';
 	                break;
-	            case "audioClip":
-	                $plInfo['type'] = 'audioClip';
+	            case "audio":
+	                $plInfo['type'] = 'audio';
 	                break;
 	        }
 	        switch ($acFi['elementname']) {
 	            case "playlist":
-	            case "audioClip":
+	            case "audio":
 	                $plInfo['acLen'] = $acFi['attrs']['playlength'];
 	                $plInfo['acLenS'] = Playlist::playlistTimeToSeconds($plInfo['acLen']);
 	                $plInfo['acGunid'] = $acFi['attrs']['id'];
@@ -1382,7 +1382,7 @@ class PlaylistElementExport {
         $anim = '';
         foreach ($ple['children'] as $ac) {
             switch ($ac['elementname']) {
-                case "audioClip":
+                case "audio":
                     $r = PlaylistAudioClipExport::OutputToSmil($pl, $ac, $ind2);
                     if (PEAR::isError($r)) {
                     	return $r;
@@ -1455,7 +1455,7 @@ class PlaylistElementExport {
         $acOrPl = NULL;
         foreach ($ple['children'] as $ac) {
             switch ($ac['elementname']) {
-                case "audioClip":
+                case "audio":
                     $r = PlaylistAudioClipExport::OutputToM3u($pl, $ac);
                     if (PEAR::isError($r)) {
                     	return $r;
@@ -1499,7 +1499,7 @@ class PlaylistElementExport {
         $anim = '';
         foreach ($ple['children'] as $ac) {
             switch ($ac['elementname']) {
-                case "audioClip":
+                case "audio":
                     $r = PlaylistAudioClipExport::OutputToRss($pl, $ac, $ind2);
                     if (PEAR::isError($r)) {
                     	return $r;
@@ -1570,7 +1570,7 @@ class PlaylistAudioClipExport
         	return $RADext;
         }
         return array(
-            'type'       => 'audioclip',
+            'type'       => 'audio',
             'gunid'      => $gunid,
             'src'        => AC_URL_RELPATH."$gunid.$RADext",
             'playlength' => $plac['attrs']['playlength'],
@@ -1611,7 +1611,7 @@ class PlaylistAudioClipExport
         $title = $pl->gb->bsGetMetadataValue($ac->getId(), 'dc:title');
         $desc = $pl->gb->bsGetMetadataValue($ac->getId(), 'dc:description');
         return array(
-            'type'       => 'audioclip',
+            'type'       => 'audio',
             'gunid'      => $gunid,
             'src'        => "http://XXX/YY/$gunid.$RADext",
             'playlength' => $plac['attrs']['playlength'],

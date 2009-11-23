@@ -242,7 +242,7 @@ class Restore {
         for ($i = 0; $i < count($audioclips); $i++) {
             if (strpos($audioclips[$i],'xml')!==false)
                 $r[] = array('file' => $this->tmpDir.'audioClip/'.$audioclips[$i],
-                             'type' => 'audioClip',
+                             'type' => 'audio',
                              'id'   => str_replace('.xml','',$audioclips[$i]));
         }
         for ($i = 0; $i < count($playlists); $i++) {
@@ -276,7 +276,7 @@ class Restore {
         require_once("XmlParser.php");
         $tree = XmlParser::parse($file);
         $mediaFileLP = str_replace('.xml','',$file);
-        $mediaFileLP = ($type=='audioClip' && is_file($mediaFileLP))?$mediaFileLP:'';
+        $mediaFileLP = ($type=='audio' && is_file($mediaFileLP))?$mediaFileLP:'';
         $ex = $this->gb->existsFile($this->sessid,$gunid);
         if (PEAR::isError($ex)) {
             $this->addLogItem("-E- ".date("Ymd-H:i:s").

@@ -274,7 +274,7 @@ if (isset($_REQUEST['go_button'])) {
                     $plGunids = array();
                     $fld = (isset($options['category']) ? $options['category'] : 'gunid' );
                     foreach ($xmlResponse['results'] as $k => $v) {
-                        if ($v['type']=='audioclip') {
+                        if ($v['type']=='audio') {
                             $acCnt++;
                             $acGunids[] = $v[$fld];
                         }

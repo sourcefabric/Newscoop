@@ -288,6 +288,76 @@ class XR_LocStor extends LocStor {
         }
         return new XML_RPC_Response(XML_RPC_encode($res));
     }
+    
+    
+    /**
+     * Open writable URL for store new media file or replace existing one.
+     * Writing to returned URL is possible using HTTP PUT method
+     * (as e.g. curl -T &lt;filename&gt; command does)
+     *
+     * The XML-RPC name of this method is "locstor.storeMediaFileOpen".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     * <ul>
+     *      <li> sessid   :  string  -  session id </li>
+     *      <li> gunid    :  string  -  global unique id of AudioCLip,
+     *          if gunid is empty string, new one is generated
+     *          (returned by subsequent storeAudioClipClose call)
+     *      </li>
+     *      <li> metadata : string -  metadata XML string
+     *          (as defined in Campcaster::Core::AudioClip Class Reference,
+     *          examples are in storageServer/var/tests/*.xml)
+     *      </li>
+     *      <li> fname    :  string - human readable mnemonic file name
+     *                      with extension corresponding to filetype</li>
+     *      <li> chsum    :  string - md5 checksum of media file</li>
+     *      <li> type     :  string - file mime type as in
+     *          http://www.iana.org/assignments/media-types/</li>
+     * </ul>
+     *
+     * On success, returns a XML-RPC struct:
+     * <ul>
+     *      <li> url : string - writable URL for HTTP PUT</li>
+     *      <li> token : string - access token</li>
+     * </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     * <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 801  -  wrong 1st parameter, struct expected.</li>
+     *      <li> 805  -  xr_storeAudioClipOpen:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 888  -  If the file being uploaded is a duplicate of
+     *          a file already in the system.</li>
+     * </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see LocStor::storeAudioClipOpen
+     */
+    public function xr_storeMediaFileOpen($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        $res = $this->storeMediaFileOpen($r['sessid'], $r['gunid'],
+            $r['metadata'], $r['fname'], $r['chsum'], $r['type']);
+        if (PEAR::isError($res)) {
+            $code = 805;
+            if ($res->getCode() == 888) {
+                $code = 888;
+            }
+            return new XML_RPC_Response(0, $code,
+                "xr_storeMediaFileOpen: ".$res->getMessage().
+                " ".$res->getUserInfo()
+            );
+        }
+        return new XML_RPC_Response(XML_RPC_encode($res));
+    }
 
     /**
      * Close writable URL for store new AudioClip or replace existing one.
@@ -338,6 +408,58 @@ class XR_LocStor extends LocStor {
         }
         return new XML_RPC_Response(XML_RPC_encode(array('gunid'=>$res)));
     }
+
+
+    /**
+     * Close writable URL for store new MediaFile or replace existing one.
+     *
+     * The XML-RPC name of this method is "locstor.storeMediaFileClose".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     * <ul>
+     *      <li> sessid  :  string  -  session id </li>
+     *      <li> token  :  string  -  access token</li>
+     * </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     * <ul>
+     *      <li> gunid : string - gunid of stored file</li>
+     * </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     * <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 801  -  wrong 1st parameter, struct expected.</li>
+     *      <li> 805  -  xr_storeMediaFileClose:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 850  -  wrong 1st parameter, struct expected.</li>
+     * </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see LocStor::storeMediaFileClose
+     */
+    public function xr_storeMediaFileClose($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        $res = $this->storeMediaFileClose($r['sessid'], $r['token']);
+        if (PEAR::isError($res)) {
+            $ec0 = intval($res->getCode());
+            $ec  = ($ec0 == GBERR_TOKEN ? 800+$ec0 : 805 );
+            return new XML_RPC_Response(0, $ec,
+                "xr_storeMediaFileClose: ".$res->getMessage().
+                " ".$res->getUserInfo()
+            );
+        }
+        return new XML_RPC_Response(XML_RPC_encode(array('gunid'=>$res)));
+    }
+
 
     /**
      * Store audio stream identified by URL - no raw audio data
@@ -2387,7 +2509,8 @@ class XR_LocStor extends LocStor {
      *      <li> criteria : struct, with following fields:<br>
      *   <ul>
      *     <li>filetype : string - type of searched files,
-     *       meaningful values: 'audioclip', 'webstream', 'playlist', 'all'</li>
+     *       meaningful values: 'all', 'application', 'audio', 'example', 'image',
+     *       'message', 'model', 'multipart', 'text', 'video', 'webstream', 'playlist'</li>
      *     <li>operator : string - type of conditions join
      *       (any condition matches / all conditions match),
      *       meaningful values: 'and', 'or', ''

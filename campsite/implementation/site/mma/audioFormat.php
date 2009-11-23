@@ -5,9 +5,9 @@
  *
  */
 
-$audioClipFormat = array(
-    '_root'=>'audioClip',
-    'audioClip'=>array(
+$audioFormat = array(
+    '_root'=>'audio',
+    'audio'=>array(
         'childs'=>array(
             'required'=>array('metadata'),
         ),

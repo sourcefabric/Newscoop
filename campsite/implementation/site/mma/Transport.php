@@ -292,7 +292,15 @@ class Transport
         global $CC_CONFIG, $CC_DBC;
         $this->trLog("upload2Hub start: ".strftime("%H:%M:%S"));
         switch ($ftype = BasicStor::GetType($gunid)) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "webstream":
                 $storedFile = StoredFile::RecallByGunid($gunid);
                 if (is_null($storedFile) || PEAR::isError($storedFile)) {
@@ -318,7 +326,7 @@ class Transport
                 if (PEAR::isError($fname)) {
                 	return $fname;
                 }
-                $trec = $this->_uploadGeneralFileToHub($fpath, 'audioclip',
+                $trec = $this->_uploadGeneralFileToHub($fpath, 'audio',
                     array_merge(array(
                         'gunid'=>$gunid, 'fname'=>$fname, 'mdtrtok'=>$mdtrec->trtok,
                     ), $pars)
@@ -637,7 +645,15 @@ class Transport
         switch ($direction) {
         case "up":
             switch ($ta['trtype']) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "playlist":
             case "playlistPkg":
                 $trtok = $this->upload2Hub($gunid, TRUE,
@@ -658,7 +674,15 @@ class Transport
             break;
         case "down":
             switch ($ta['trtype']) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "playlist":
             case "playlistPkg":
                 $trtok = $this->downloadFromHub($uid, $gunid, TRUE,
@@ -1025,7 +1049,15 @@ class Transport
 	                'localfile'=>$CC_CONFIG['transDir']."/$trtok",
 	            )));
 	            break;
-	        case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
 	            $mdtrec = TransportRecord::create($this, 'metadata', 'down',
 	                array('gunid'=>$row['gunid'], 'uid'=>$row['uid'], )
 	            );
@@ -1257,7 +1289,11 @@ class Transport
         	return TRUE;
         }
         // handle metadata transport on audioclip trtype:
-        if ($row['trtype'] == 'audioclip') {
+        if ($row['trtype'] == 'application' || $row['trtype'] == 'audio'
+        || $row['trtype'] == 'example' || $row['trtype'] == 'image'
+        || $row['trtype'] == 'message' || $row['trtype'] == 'model'
+        || $row['trtype'] == 'multipart' || $row['trtype'] == 'text'
+        || $row['trtype'] == 'video') {
             $mdtrec = TransportRecord::recall($this, $trec->row['mdtrtok']);
             if (PEAR::isError($mdtrec)) {
             	return $mdtrec;
@@ -1293,7 +1329,11 @@ class Transport
                 ),
             ));
         if (PEAR::isError($ret)) {
-            if ($row['trtype'] == 'audioclip') {
+            if ($row['trtype'] == 'application' || $row['trtype'] == 'audio'
+            || $row['trtype'] == 'example' || $row['trtype'] == 'image'
+            || $row['trtype'] == 'message' || $row['trtype'] == 'model'
+            || $row['trtype'] == 'multipart' || $row['trtype'] == 'text'
+            || $row['trtype'] == 'video') {
                 $r2 = $mdtrec->close();
             }
             return $ret;
@@ -1317,7 +1357,15 @@ class Transport
         	return $r;
         }
         switch ($row['trtype']) {
-            case 'audioclip':
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
                 // close metadata transport:
                 $r = $mdtrec->close();
                 if (PEAR::isError($r)) {
@@ -1361,7 +1409,15 @@ class Transport
         	return $trec;
         }
         switch ($row['trtype']) {
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
                 $mdtrtok = $trec->row['mdtrtok'];
                 $mdtrec = TransportRecord::recall($this, $mdtrtok);
                 if (PEAR::isError($mdtrec)) {
@@ -1394,7 +1450,7 @@ class Transport
                             "filepath" => $trec->row['localfile'],
                             "metadata" => $mdtrec->row['localfile'],
                             "gunid" => $row['gunid'],
-                            "filetype" => "audioclip"
+                            "filetype" => "audio"
                         );
                         $storedFile = $this->gb->bsPutFile($parid, $values);
                         if (PEAR::isError($storedFile)) {
@@ -1476,7 +1532,15 @@ class Transport
                 }
                 @unlink($fname);
                 break;
-            case "audioclip":
+            case 'application':
+            case 'audio':
+            case 'example':
+            case 'image':
+            case 'message':
+            case 'model':
+            case 'multipart':
+            case 'text':
+            case 'video':
             case "metadata":
             case "searchjob":
             case "file":

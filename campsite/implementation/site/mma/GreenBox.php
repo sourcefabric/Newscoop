@@ -443,7 +443,9 @@ class GreenBox extends BasicStor {
      *      with following structure:<br>
      *   <ul>
      *     <li>filetype - string, type of searched files,
-     *       meaningful values: 'audioclip', 'webstream', 'playlist', 'all'</li>
+     *       meaningful values: 'application', 'audio', 'example', 'image',
+     *       'message', 'model', 'multipart', 'text', 'video', 'webstream',
+     *       'playlist', 'all'</li>
      *     <li>operator - string, type of conditions join
      *       (any condition matches / all conditions match),
      *       meaningful values: 'and', 'or', ''

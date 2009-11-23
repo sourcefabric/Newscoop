@@ -25,14 +25,14 @@ $playlistFormat = array(
     ),
     'playlistElement'=>array(
         'childs'=>array(
-            'oneof'=>array('audioClip', 'playlist'),
+            'oneof'=>array('audio', 'playlist'),
             'optional'=>array('fadeInfo'),
         ),
         'attrs'=>array(
             'required'=>array('id', 'relativeOffset'),
         ),
     ),
-    'audioClip'=>array(
+    'audio'=>array(
         'childs'=>array(
             'optional'=>array('metadata'),
         ),

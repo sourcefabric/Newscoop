@@ -233,7 +233,7 @@ switch ($method) {
         $parr = array(
             'sessid'=>$pars[0],
             'criteria'=>array(
-                'filetype'=>'audioclip',
+                'filetype'=>'audio',
                 'operator'=>'and',
                 'limit'=> 0,
                 'offset'=> 0,
@@ -248,7 +248,7 @@ switch ($method) {
             'sessid'=>$pars[0],
             'category'=>$pars[1],
             'criteria'=>array(
-                'filetype'=>'audioclip',
+                'filetype'=>'audio',
                 'operator'=>'and',
                 'limit'=> 0,
                 'offset'=> 0,
@@ -333,7 +333,7 @@ if (isset($infos[$method]['r'])) {
             $plGunids = array();
             $fld = (isset($options['category']) ? $options['category'] : 'gunid' );
             foreach ($resp['results'] as $k => $v) {
-                if ($v['type']=='audioclip') {
+                if ($v['type']=='audio') {
                     $acCnt++;
                     $acGunids[] = $v[$fld];
                 }

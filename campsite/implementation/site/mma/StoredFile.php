@@ -687,7 +687,8 @@ class StoredFile {
 	private $mime;
 
 	/**
-	 * Can be 'playlist' or 'audioclip'.
+	 * Can be 'playlist', 'application', 'audio', 'example', 'image',
+	 * 'message', 'model', 'multipart', 'text', 'video'
 	 *
 	 * @var string
 	 */
@@ -925,7 +926,7 @@ class StoredFile {
             return null;
         }
         $gunid = StoredFile::NormalizeGunid($row['gunid']);
-        if ($row['ftype'] == 'audioclip') {
+        if ($row['ftype'] == 'audio') {
             $storedFile = new StoredFile($gunid);
         } elseif ($row['ftype'] == 'playlist') {
             $storedFile = new Playlist($gunid);
@@ -1271,7 +1272,9 @@ class StoredFile {
      * 		'file'|'string'
      * @param string $p_format
      * 		metadata format for validation
-     *      ('audioclip' | 'playlist' | 'webstream' | NULL)
+     *      meaningful values: 'application', 'audio', 'example', 'image',
+     *      'message', 'model', 'multipart', 'text', 'video', 'webstream',
+     *      'playlist', NULL
      *      (NULL = no validation)
      * @return boolean
      */
@@ -1567,7 +1570,10 @@ class StoredFile {
         if (is_null($indb)) {
             return FALSE;
         }
-        if (BasicStor::GetType($this->gunid) == 'audioclip') {
+        $ftype = BasicStor::GetType($this->gunid);
+        if ($ftype == 'application' || $ftype == 'audio' || $ftype == 'example'
+        || $ftype == 'image' || $ftype == 'message' || $ftype == 'model'
+        || $ftype == 'multipart' || $ftype == 'text' || $ftype == 'video') {
             return $this->existsFile();
         }
         return TRUE;

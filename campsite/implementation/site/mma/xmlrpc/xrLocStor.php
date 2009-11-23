@@ -77,6 +77,10 @@ $methods = array(
                                     'or replace an existing one.',
     'storeAudioClipClose'     => 'Close channel to store a new audio clip'.
                                     ' or replace an existing one.',
+    'storeMediaFileOpen'      => 'Open channel to store a new media file '.
+                                    'or replace an existing one.',
+    'storeMediaFileClose'     => 'Close channel to store a new media file'.
+                                    ' or replace an existing one.',
     'downloadRawAudioDataOpen'=> 'Create and return downloadable URL'.
                                     'for audio file',
     'downloadRawAudioDataClose'=>'Discard downloadable URL for audio file',

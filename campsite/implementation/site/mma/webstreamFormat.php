@@ -9,8 +9,8 @@
  */
 
 $webstreamFormat = array(
-    '_root'=>'audioClip',
-    'audioClip'=>array(
+    '_root'=>'audio',
+    'audio'=>array(
         'childs'=>array(
             'required'=>array('metadata'),
         ),
