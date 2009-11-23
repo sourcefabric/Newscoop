@@ -143,11 +143,12 @@ class ArticleComment
      * @return array
      */
     public static function GetArticleComments($p_articleNumber, $p_languageId,
-                                              $p_status = null, $p_countOnly = false)
+                                              $p_status = null, $p_countOnly = false,
+                                              $p_skipCache = true)
     {
         global $PHORUM, $g_ado_db;
 
-        if (CampCache::IsEnabled()) {
+        if (CampCache::IsEnabled() && !$p_skipCache) {
         	$cacheKey = __METHOD__ . '_' . (int)$p_articleNumber . '_'
         	. (int)$p_languageId . '_' . $p_status . '_' . (int)$p_count_only;
         	$result = CampCache::singleton()->fetch($cacheKey);
@@ -191,8 +192,8 @@ class ArticleComment
         } else {
 	        $result = DbObjectArray::Create("Phorum_message", $queryStr);
         }
-        if (CampCache::IsEnabled()) {
-        	CampCache::singleton()->store($cacheKey, $result);
+        if (CampCache::IsEnabled() && !$p_skipCache) {
+        	CampCache::singleton()->store($cacheKey, $result, self::DEFAULT_TTL);
         }
         return $result;
     } // fn GetArticleComments

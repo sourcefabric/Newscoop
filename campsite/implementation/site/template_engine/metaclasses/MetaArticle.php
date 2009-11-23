@@ -434,7 +434,7 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getCommentCount() {
         return ArticleComment::GetArticleComments($this->m_dbObject->getArticleNumber(),
-        $this->m_dbObject->getLanguageId(), 'approved', true);
+        $this->m_dbObject->getLanguageId(), 'approved', true, false);
     }
 
 
