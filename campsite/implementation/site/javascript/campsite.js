@@ -229,3 +229,71 @@ function update_subscription_payment() {
 	}
 	my_form.suma.value = Math.round(100 * sum * unitcost * lang_count) / 100
 }
+
+/**
+ * @param area
+ * @param field
+ * @param value
+ * @param style
+ */
+function addInputTextField(area, field, value) {
+    if (!document.getElementById) return;
+
+    var field_area = document.getElementById(area);
+    var all_inputs = field_area.getElementsByTagName('input');
+
+    if (document.createElement) {
+	var tr = document.createElement('tr');
+	var td = document.createElement('td');
+	var input = document.createElement('input');
+
+	td = document.createElement('td');
+	td.style.textAlign = 'right';
+	td.appendChild(document.createTextNode(field+': '));
+	tr.appendChild(td);
+	input.id = field;
+	input.name = field;
+	input.type = 'text';
+	input.value = (value != undefined) ? value : '';
+	td = document.createElement('td');
+	td.appendChild(input);
+	tr.appendChild(td);
+	field_area.appendChild(tr);
+    } else {
+	field_area.innerHTML += '<tr><td align="right">'+field+': '+'</td><td><input name="'+field+'" id="'+field+'" type="text" class="input_text" /></td></tr>';
+    }
+}
+
+/**
+ * @param number
+ * @param decimals
+ * @param dec_point
+ * @param thousands_sep
+ */
+function number_format(number, decimals, dec_point, thousands_sep) {
+    var n = number, c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+    var d = dec_point == undefined ? "," : dec_point;
+    var t = thousands_sep == undefined ? "." : thousands_sep, s = n < 0 ? "-" : "";
+    var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+}
+
+/**
+ *
+ *
+ * @param int p_size
+ *      the total number of tabs
+ */
+function formatBytes(p_size) {
+    if (p_size >= 1073741824) {
+	p_size = number_format(p_size / 1073741824, 2, '.', '') + ' GB';
+    } else if (p_size >= 1048576) {
+	p_size = number_format(p_size / 1048576, 2, '.', '') + ' MB';
+    } else if (p_size >= 1024) {
+	p_size = number_format(p_size / 1024, 0) + ' KB';
+    } else {
+	p_size = number_format(p_size, 0) + ' bytes';
+    }
+    return p_size;
+}

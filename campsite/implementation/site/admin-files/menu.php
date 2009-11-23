@@ -170,6 +170,14 @@ if ($g_user->hasPermission("ManageLanguages")) {
     $menu_actions->addItem($menu_item);
 }
 
+// TODO: create new permission for handling file archive or reuse?
+if ($g_user->hasPermission("ManageLanguages")) {
+    $menu_item =& DynMenuItem::Create(getGS("Add new file"),
+        "/$ADMIN/filearchive/file.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_mediafile.png")));
+    $menu_actions->addItem($menu_item);
+}
+
 $menu_item =& DynMenuItem::Create(getGS("Change your password"),
     "/$ADMIN/users/edit.php?uType=Staff&User=".$g_user->getUserId(),
     array("icon" => sprintf($iconTemplateStr, "change_password.png")));

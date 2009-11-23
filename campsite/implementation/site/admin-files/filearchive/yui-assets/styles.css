@@ -1,0 +1,19 @@
+div#camp-message {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.75em;
+    font-size: 12pt;
+    font-weight: bold;
+}
+fieldset#pushbuttonsfrommarkup,
+fieldset#pushbuttonsfrommarkup div {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+table#mdata_fields input {
+    border: 1px solid #777;
+    background-color: #f0f0ff;
+    text-indent: 3px;
+    font-size: 9pt;
+}
