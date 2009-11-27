@@ -254,6 +254,7 @@ function addInputTextField(area, field, value) {
 	input.id = field;
 	input.name = field;
 	input.type = 'text';
+	input.size = '50';
 	input.value = (value != undefined) ? value : '';
 	td = document.createElement('td');
 	td.appendChild(input);

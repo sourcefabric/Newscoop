@@ -1,9 +1,31 @@
 <?php
 
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+
 $crumbs = array();
 $crumbs[] = array(getGS("File Archive"), "/$ADMIN/filearchive/");
 $crumbs[] = array(getGS("Add new file"), "");
 echo camp_html_breadcrumbs($crumbs);
+
+$sessid = camp_session_get('cc_sessid', '');
+if (empty($sessid)) {
+    // Error
+}
+
+$xrc =& XR_CcClient::Factory($mdefs);
+$resp = $xrc->ping($sessid);
+if (PEAR::isError($resp)) {
+    switch ($resp->getCode()) {
+        case '805':
+            camp_html_goto_page('campcaster_login.php');
+            break;
+        case '804':
+        default:
+            camp_html_add_msg(getGS("Unable to reach the storage server."));
+            break;
+    }
+}
 
 ?>
 
@@ -38,13 +60,14 @@ echo camp_html_breadcrumbs($crumbs);
   <tr>
     <td align="right"><?php putGS('Name'); ?>:</td>
     <td align="left">
-      <input type="text" id="f_file_title" name="f_file_title" value="<?php echo Image::GetMaxId(); ?>" size="32" class="input_text"/>
+      <input type="text" id="f_file_title" name="f_file_title" value="<?php echo Image::GetMaxId(); ?>" size="32" class="input_text" />
     </td>
   </tr>
   <tr>
     <td align="right" ><?php putGS('File'); ?>:</td>
     <td align="left">
-      <input type="file" id="f_file_name" name="f_file_name" size="32" class="input_file"/>
+      <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
+      <input type="file" id="f_file_name" name="f_file_name" size="32" class="input_file" />
     </td>
   </tr>
   <tr>
@@ -138,8 +161,9 @@ function init() {
 	var uploadHandler = {
 	    upload: function(o) {
 	        var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
+		//alert(json);
 		var data = eval('(' + json + ')');
-
+		//alert(data);
 		mesg.style.display = 'inline';
 		if (data.Results.upload_success == undefined) {
 		    mesg.style.color = 'red';
@@ -195,7 +219,6 @@ function init() {
 	YAHOO.camp.container.wait.render(document.body);
 
 	var yFileTitle = document.getElementById('f_file_title').value;
-
 	var postData = "file_title=" + encodeURIComponent(yFileTitle);
 
 	// Show the saving panel

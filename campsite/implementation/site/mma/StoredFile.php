@@ -409,223 +409,143 @@ function camp_get_archive_metadata($p_infoFromFile)
 
 
 /**
- * Return an array with the given audio file's ID3 tags.  The keys in the
- * array can be:
- * <pre>
- * 		dc:format ("mime type")
- * 		dcterms:extent ("duration")
- * 		dc:title
- * 		dc:creator ("artist")
- * 		dc:source ("album")
- *      dc:type ("genre")
- * 		ls:bitrate
- * 		ls:encoded_by
- * 		ls:track_num
- * 		ls:channels
- * 		ls:year
- * 		ls:filename
- * </pre>
- *
+ * @param array $p_infoFromFile
  * @param string $p_filename
- * @param boolean $p_testonly
- * 		For diagnostic and debugging purposes - setting this to TRUE
- * 		will print out the values found in the file and the ones assigned
- * 		to the return array.
- * @return array|PEAR_Error
+ *
+ * @return array
  */
-function camp_get_audio_metadata($p_filename, $p_testonly = false)
+function camp_get_audio_metadata($p_infoFromFile)
 {
-    $getID3 = new getID3();
-    $infoFromFile = $getID3->analyze($p_filename);
-    if (PEAR::isError($infoFromFile)) {
-    	return $infoFromFile;
-    }
-    if (isset($infoFromFile['error'])) {
-    	return new PEAR_Error(array_pop($infoFromFile['error']));
-    }
-    if (!$infoFromFile['bitrate']) {
-    	return new PEAR_Error("File given is not an audio file.");
+    if (!isset($p_infoFromFile['audio'])) {
+        return new PEAR_Error("File given is not an audio file.");
     }
 
-    if ($p_testonly) {
-    	print_r($infoFromFile);
-    }
-	$titleKey = 'dc:title';
-	$flds = array(
-	    'dc:format' => array(
-	        array('path'=>"['mime_type']", 'ignoreEnc'=>TRUE),
-	    ),
-	    'ls:bitrate' => array(
-	        array('path'=>"['bitrate']", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['audio']['bitrate']", 'ignoreEnc'=>TRUE),
-	    ),
-	    'ls:samplerate' => array(
-	       array('path'=>"['audio']['sample_rate']", 'ignoreEnc'=>TRUE),
-	    ),
-	    'ls:encoder' => array(
-	       array('path'=>"['audio']['codec']", 'ignoreEnc'=>TRUE),
-               array('path'=>"['audio']['encoder']", 'ignoreEnc'=>TRUE),
-	    ),
-	    'dcterms:extent'=> array(
-	        array('path'=>"['playtime_seconds']", 'ignoreEnc'=>TRUE),
-	    ),
-            'dc:playtime_string' => array(
-                array('path'=>"['playtime_string']", 'ignoreEnc'=>TRUE),
-            ),
-	    'ls:composer'=> array(
-	        array('path'=>"['id3v2']['comments']['composer']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['id3v2']['TCOM'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['id3v2']['composer']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['ogg']['comments']['composer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['composer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'dc:description'=> array(
-	        array('path'=>"['id3v1']['comments']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['comments']['comments']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['id3v2']['COMM'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['id3v2']['comments']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-                array('path'=>"['tags']['id3v1']['comment']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['ogg']['comments']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'dc:type'=> array(
-	        array('path'=>"['id3v1']", 'dataPath'=>"['genre']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['comments']['content_type']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
-	        array('path'=>"['id3v2']['TCON'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v2']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'dc:title' => array(
-	        array('path'=>"['id3v2']['comments']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TIT2'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TT2'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v2']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v1']", 'dataPath'=>"['title']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'dc:creator' => array(
-	        array('path'=>"['id3v2']['comments']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TPE1'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TP1'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v2']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v1']", 'dataPath'=>"['artist']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-            'dc:original_creator' => array(
-                array('path'=>"['tags']['id3v2']['original_artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['ogg']['comments']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['vorbiscomment']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-            ),
-	    'dc:source' => array(
-	        array('path'=>"['id3v2']['comments']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v2']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TALB'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TAL'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-            'dc:copyright' => array(
-                array('path'=>"['tags']['id3v2']['copyright_message']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['ogg']['comments']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['vorbiscomment']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-            ),
-	    'ls:encoded_by'	=> array(
-                array('path'=>"['tags']['id3v2']['encoded_by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TENC'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TEN'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['encoded-by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['encoded-by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'ls:track_num' => array(
-                array('path'=>"['tags']['id3v2']['track_number']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TRCK'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-	        array('path'=>"['id3v2']['TRK'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['track']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['ogg']['comments']['tracknumber']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['tracknumber']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'ls:channels' => array(
-	        array('path'=>"['audio']['channels']", 'ignoreEnc'=>TRUE),
-	    ),
-	    'ls:year' => array(
-                array('path'=>"['tags']['id3v2']['year']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-                array('path'=>"['tags']['id3v1']['year']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    	array('path'=>"['comments']['date']"),
-	        array('path'=>"['ogg']['comments']['date']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	        array('path'=>"['tags']['vorbiscomment']['date']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
-	    ),
-	    'ls:filename' => array(
-	        array('path'=>"['filename']"),
-	    ),
-            'ls:filesize' => array(
-                array('path'=>"['filesize']"),
-            ),
-            'ls:filetype' => array(
-                array('path'=>"['fileformat']"),
-            ),
-            'ls:data_format' => array(
-                array('path'=>"['audio']['dataformat']"),
-            ),
-	);
-    $mdata = array();
-    if (isset($infoFromFile['audio'])) {
-    	$mdata['audio'] = $infoFromFile['audio'];
-    }
-    if (isset($infoFromFile['playtime_seconds'])) {
-		$mdata['playtime_seconds'] = $infoFromFile['playtime_seconds'];
-    }
+    $flds = array(
+        'dc:format' => array(
+            array('path'=>"['mime_type']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:bitrate' => array(
+            array('path'=>"['bitrate']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['audio']['bitrate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:samplerate' => array(
+            array('path'=>"['audio']['sample_rate']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:encoder' => array(
+            array('path'=>"['audio']['codec']", 'ignoreEnc'=>TRUE),
+            array('path'=>"['audio']['encoder']", 'ignoreEnc'=>TRUE),
+        ),
+        'dc:playtime_string' => array(
+            array('path'=>"['playtime_string']", 'ignoreEnc'=>TRUE),
+        ),
+        'dcterms:extent'=> array(
+            array('path'=>"['playtime_seconds']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:composer'=> array(
+            array('path'=>"['id3v2']['comments']['composer']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['id3v2']['TCOM'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['composer']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['ogg']['comments']['composer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['composer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:description'=> array(
+            array('path'=>"['id3v1']['comments']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['comments']['comments']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['id3v2']['COMM'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['comments']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['tags']['id3v1']['comment']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['ogg']['comments']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['comment']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:type'=> array(
+            array('path'=>"['id3v1']", 'dataPath'=>"['genre']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['comments']['content_type']", 'dataPath'=>"[0]", 'ignoreEnc'=>TRUE),
+            array('path'=>"['id3v2']['TCON'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['genre']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:title' => array(
+            array('path'=>"['id3v2']['comments']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TIT2'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TT2'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v1']", 'dataPath'=>"['title']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['title']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:creator' => array(
+            array('path'=>"['id3v2']['comments']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TPE1'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TP1'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v1']", 'dataPath'=>"['artist']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:original_creator' => array(
+            array('path'=>"['tags']['id3v2']['original_artist']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['performer']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:source' => array(
+            array('path'=>"['id3v2']['comments']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v2']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TALB'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TAL'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['album']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'dc:copyright' => array(
+            array('path'=>"['tags']['id3v2']['copyright_message']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['copyright']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:encoded_by'     => array(
+            array('path'=>"['tags']['id3v2']['encoded_by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TENC'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TEN'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['encoded-by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['encoded-by']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:track_num' => array(
+            array('path'=>"['tags']['id3v2']['track_number']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TRCK'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['id3v2']['TRK'][0]", 'dataPath'=>"['data']", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['track']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['ogg']['comments']['tracknumber']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['tracknumber']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:channels' => array(
+            array('path'=>"['audio']['channels']", 'ignoreEnc'=>TRUE),
+        ),
+        'ls:year' => array(
+            array('path'=>"['tags']['id3v2']['year']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['id3v1']['year']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['comments']['date']"),
+            array('path'=>"['ogg']['comments']['date']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+            array('path'=>"['tags']['vorbiscomment']['date']", 'dataPath'=>"[0]", 'encPath'=>"['encoding']"),
+        ),
+        'ls:filename' => array(
+            array('path'=>"['filename']"),
+        ),
+        'ls:filesize' => array(
+            array('path'=>"['filesize']"),
+        ),
+        'ls:filetype' => array(
+            array('path'=>"['fileformat']"),
+        ),
+        'ls:data_format' => array(
+            array('path'=>"['audio']['dataformat']"),
+        ),
+    );
 
-    $titleHaveSet = FALSE;
-    foreach ($flds as $key => $getid3keys) {
-        foreach ($getid3keys as $getid3key) {
-            $path = $getid3key["path"];
-            $ignoreEnc = isset($getid3key["ignoreEnc"])?
-                $getid3key["ignoreEnc"]:FALSE;
-            $dataPath = isset($getid3key["dataPath"])?$getid3key["dataPath"]:"";
-            $encPath = isset($getid3key["encPath"])?$getid3key["encPath"]:"";
-            $enc = "UTF-8";
+    $mdata = camp_read_metadata($p_infoFromFile, $flds, AUDIO_GROUP_NAME);
 
-            $tagElement = "\$infoFromFile$path$dataPath";
-            eval("\$tagExists = isset($tagElement);");
-            if ($tagExists) {
-                //echo "ignore encoding: ".($ignoreEnc?"yes":"no")."\n";
-                //echo "tag exists\n";
-                //echo "encode path: $encPath\n";
-                eval("\$data = $tagElement;");
-                if (!$ignoreEnc && $encPath != "") {
-                    $encodedElement = "\$infoFromFile$path$encPath";
-                    eval("\$encodedElementExists = isset($encodedElement);");
-                    if ($encodedElementExists) {
-                    	eval("\$enc = $encodedElement;");
-                    }
-                }
-
-                // Special case handling for track number
-                if ($key == "ls:track_num") {
-                    $data = camp_parse_track_number($data);
-                }
-                camp_add_metadata($mdata, $key, $data, $enc);
-		        if ($key == $titleKey) {
-		        	$titleHaveSet = TRUE;
-		        }
-                break;
-            }
-        }
-    }
-    if ($p_testonly) {
-    	var_dump($mdata);
-    }
-
-    if (!$titleHaveSet || trim($mdata[$titleKey]) == '') {
-    	camp_add_metadata($mdata, $titleKey, basename($p_filename));
-    }
     return $mdata;
 } // fn camp_get_audio_metadata
 
