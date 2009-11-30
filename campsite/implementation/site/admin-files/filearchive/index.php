@@ -1,0 +1,154 @@
+<?php
+
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+
+
+$sessid = camp_session_get('cc_sessid', '');
+if (empty($sessid)) {
+    // Error
+}
+
+$xrc =& XR_CcClient::Factory($mdefs);
+$resp = $xrc->ping($sessid);
+if (PEAR::isError($resp)) {
+    switch ($resp->getCode()) {
+        case '805':
+            camp_html_goto_page('campcaster_login.php');
+            break;
+        case '804':
+        default:
+            camp_html_add_msg(getGS("Unable to reach the storage server."));
+            break;
+    }
+}
+
+require_once($GLOBALS['g_campsiteDir']."/classes/Archive_AudioFile.php");
+
+$criteria = array('filetype' => 'all',
+		  'operator' => 'and',
+		  'limit' => 0,
+		  'offset' => 0,
+		  'orderby' => 'dc:title',
+		  'desc' => false,
+		  'conditions' => array()
+		  );
+$result = Archive_File::SearchFiles($criteria);
+if (PEAR::isError($result)) {
+    $files = array();
+    $filesCount = 0;
+    // error
+} else {
+    $files = $result[1];
+    $filesCount = $result[0];
+}
+
+$crumbs = array();
+$crumbs[] = array(getGS("Content"), "/$ADMIN/filearchive/");
+$crumbs[] = array(getGS("File Archive"), "");
+echo camp_html_breadcrumbs($crumbs);
+?>
+<link rel="stylesheet" type="text/css" href="/javascript/yui/build/paginator/assets/skins/sam/paginator.css" />
+<link rel="stylesheet" type="text/css" href="/javascript/yui/build/datatable/assets/skins/sam/datatable.css" />
+
+<script type="text/javascript" src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/dragdrop/dragdrop-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/animation/animation-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/element/element-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/paginator/paginator-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/datasource/datasource-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/datatable/datatable-min.js"></script>
+
+<!-- YUI Code -->
+<script type="text/javascript">
+YAHOO.namespace("camp");
+// Generates data hash
+YAHOO.camp.Data = {
+  files: [
+  <?php
+  foreach ($files as $file) {
+  ?>
+    {filename:"<?php echo $file->getGunId().'_'.htmlspecialchars($file->getMetatagValue('title')); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getMetatagValue('mtime')); ?>"},
+  <?php
+  }
+  ?>
+  ]
+};
+</script>
+<!-- End YUI Code -->
+
+<!--
+<div id="fileTypeSelector">
+  <input type="button" class="menuButton" id="type" value="Type" />
+  <select id="typeSelect"> 
+    <option value="1">Audio</option>
+    <option value="2">Video</option>
+  </select>
+</div> -->
+<div id="datatable_paginator"></div>
+<div id="fileindex"></div>
+
+<!-- YUI Code -->
+<script type="text/javascript">
+YAHOO.util.Event.addListener(window, "load", function() {
+  YAHOO.camp.FileArchiveDataTable = function() {
+    // Override the built-in formatter
+    YAHOO.widget.DataTable.formatLink = function(elLiner, oRecord, oColumn, oData) {
+      var file = oData.substring(oData.indexOf('_')+1);
+      var gunid = oData.substring(0, oData.indexOf('_'));
+      elLiner.innerHTML = "<a href=\"edit.php?gunid=" + gunid + "\">" + file + "</a>";
+    };
+
+    // Columns definition
+    var myColumnDefs = [
+      {key:"filename",label:"<?php putGS('Name'); ?>",width:300,resizeable:true,sortable:true, formatter:YAHOO.widget.DataTable.formatLink},
+      {key:"filesize",label:"<?php putGS('Size'); ?>",width:"auto",sortable:true},
+      {key:"filetype",label:"<?php putGS('Type'); ?>",width:"auto",sortable:true},
+      {key:"filedate",label:"<?php putGS('Date Modified'); ?>",width:"auto",sortable:true},
+      {key:"fileiuse",label:"<?php putGS('In Use'); ?>"},
+      {key:"filedele",label:"<?php putGS('Delete'); ?>"},
+    ];
+
+    // Data source definition
+    var myDataSource = new YAHOO.util.DataSource(YAHOO.camp.Data.files);
+      myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+      myDataSource.responseSchema = {
+      fields: [
+        {key:"filename", parser:"string"},
+        {key:"filesize", parser:"string"},
+        {key:"filetype", parser:"string"},
+        {key:"filedate", parser:"string"}
+      ]
+    };
+
+    // Data table configuration
+    var myConfigs = {
+      sortedBy:{key:"filename",dir:"asc"},
+      paginator: new YAHOO.widget.Paginator({
+        rowsPerPage: 25,
+        totalRecords: myDataSource.length,
+        containers: ['datatable_paginator'],
+        template: "{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}",
+        pageReportTemplate: "<strong>{startRecord}</strong> - <strong>{endRecord}</strong> of <strong>{totalRecords}</strong>",
+        rowsPerPageOptions: [10,25,50],
+        pageLinks: 5
+      }),
+      draggableColumns:false
+    }
+
+    var myDataTable = new YAHOO.widget.DataTable("fileindex", myColumnDefs, myDataSource, myConfigs);
+
+    // Enable row highlighting
+    myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
+    myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+    // Enable row selection
+    myDataTable.subscribe("rowClickEvent",myDataTable.onEventSelectRow);
+        
+    return {
+      oDS: myDataSource,
+      oDT: myDataTable
+    };
+  }();
+});
+</script>
+<!-- End YUI Code -->

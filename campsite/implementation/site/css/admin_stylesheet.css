@@ -397,3 +397,8 @@ div.domTTOverlib .contents {
 .ttControl {
     cursor: pointer;
 }
+
+/* File Archive data table */
+div#fileindex, div#datatable_paginator {
+    margin-left: 20px;
+}

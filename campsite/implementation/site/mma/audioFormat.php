@@ -36,7 +36,7 @@ $audioFormat = array(
                 'dcterms:isPartOf', 'dc:date',
                 'dc:publisher',
                 // extra
-                'dcterms:alternative', 'ls:filename', 'ls:mtime',
+                'dcterms:alternative', 'ls:filename', 'ls:filesize', 'ls:mtime',
                 // added lately by sebastian
                 'ls:mood',
             ),
@@ -324,6 +324,10 @@ $audioFormat = array(
     'ls:filename'=>array(
         'type'=>'Text',
         'attrs'=>array('implied'=>array('xml:lang')),
+    ),
+    'ls:filesize'=>array(
+	'type'=>'Int',
+	'attrs'=>array('implied'=>array('xml:lang')),
     ),
     'ls:mtime'=>array(
         'type'=>'Int',

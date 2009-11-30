@@ -75,7 +75,8 @@ class Archive_AudioFile extends Archive_File
 	'dcterms:extent' => 'Length',
 	'dc:description' => 'Description',
 	'ls:url' => 'Stream URL',
-	'ls:mtime' => 'Modified time'
+	'ls:mtime' => 'Modified time',
+	'ls:filesize' => 'File size'
     );
 
     protected $m_mask = array(
@@ -108,6 +109,11 @@ class Archive_AudioFile extends Archive_File
 		),
 		array(
 		    'element' => 'dcterms:extent',
+		    'type' => 'text',
+		    'attributes' => array('disabled' => 'on'),
+		),
+		array(
+		    'element' => 'ls:filesize',
 		    'type' => 'text',
 		    'attributes' => array('disabled' => 'on'),
 		),
