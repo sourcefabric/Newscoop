@@ -120,18 +120,18 @@ class Archive_FileXMLMetadata
 
 
     /**
-     * Uploads an audioclip to the storage server
+     * Uploads a file to the storage server
      *
      * @param string $p_sessId
-     *      The session Id on the Campcaster storage server
+     *      The session Id on the storage server
      * @param string $p_gunId
-     *      The audioclip global unique identifier
+     *      The file global unique identifier
      * @param string $p_metaData
-     *      A XML string of audioclip metadata
+     *      A XML string of file metadata
      * @param string $p_filePath
-     *      The full path to the audioclip file
+     *      The full path to the file
      * @param string $p_checkSum
-     *      The md5 check sum of the audioclip file
+     *      The md5 check sum of the file
      *
      * @return string|PEAR_Error
      *		Audioclip gunid on success, PEAR_Error on failure

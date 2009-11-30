@@ -45,16 +45,19 @@ if ($uploadFile) {
 	  foreach($mask['pages'][$key] as $k => $v) {
 	        $element = $v['element'];
                 $metaTagValue = (isset($metaData[$element])) ? $metaData[$element] : null;
+		if ($element == 'dcterms:extent') {
+		    $metaTagValue = (string) round((float) $metaTagValue, 6);
+		}
                 if (!is_null($metaTagValue) && $metaTagValue != '') {
 		    $metaDataArray[$v['element']] = $metaTagValue;
                 }
 	    }
 	}
 
-	$fileGunid = eval($fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
+	eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
 	//$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
 	if (PEAR::isError($fileGunid)) {
-	    $data->Results->camp_error = camp_get_error_message(getGS('There was an error while saving the audioclip: $1', $fileGunid->getMessage()), null, true);
+	    $data->Results->camp_error = camp_get_error_message(getGS('There was an error while saving the file: $1', $fileGunid->getMessage()), null, true);
 	    eval($fileClassName."::DeleteTemporaryFile('$filePath');");
 	    //$fileClassName::DeleteTemporaryFile($filePath);
 	} else {

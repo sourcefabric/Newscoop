@@ -61,12 +61,12 @@ class Archive_File
     public function __construct($p_gunId = null)
     {
         if (!is_null($p_gunId)) {
-            $fileDbMetadataObj = new Archive_FileDbMetadata($p_gunId);
+            $fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
             $this->m_metaData = $fileDbMetadataObj->fetch();
             if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
                 $fileXMLMetadataObj = new Archive_FileXMLMetadata($p_gunId);
                 $this->m_metaData = $fileXMLMetadataObj->m_metaData;
-                if ($fileXMLMdataObj->exists()) {
+                if ($fileXMLMetadataObj->exists()) {
 		    $this->m_gunId = $p_gunId;
 		    $this->m_exists = true;
 		    $fileDbMetadataObj->create($this->m_metaData);

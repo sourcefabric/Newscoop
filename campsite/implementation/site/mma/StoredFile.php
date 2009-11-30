@@ -1033,7 +1033,7 @@ class StoredFile {
         if (!$this->exists) {
         	return FALSE;
         }
-        $ia = camp_get_audio_metadata($this->filepath);
+        $ia = camp_get_metadata($this->filepath);
         return $ia;
     }
 

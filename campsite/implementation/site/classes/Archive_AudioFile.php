@@ -447,7 +447,7 @@ class Archive_AudioFile extends Archive_File
 					    $orderby = 'dc:creator, dc:source, dc:title',
                                             $desc = false)
     {
-      	$criteria = array('filetype' => 'audioclip',
+      	$criteria = array('filetype' => 'audio',
 			  'operator' => $operator,
 			  'limit' => $limit,
 			  'offset' => $offset,
