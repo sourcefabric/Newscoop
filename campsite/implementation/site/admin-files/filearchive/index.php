@@ -23,7 +23,7 @@ if (PEAR::isError($resp)) {
     }
 }
 
-require_once($GLOBALS['g_campsiteDir']."/classes/Archive_AudioFile.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Archive_FileBase.php");
 
 $criteria = array('filetype' => 'all',
 		  'operator' => 'and',
@@ -33,7 +33,7 @@ $criteria = array('filetype' => 'all',
 		  'desc' => false,
 		  'conditions' => array()
 		  );
-$result = Archive_File::SearchFiles($criteria);
+$result = Archive_FileBase::SearchFiles($criteria);
 if (PEAR::isError($result)) {
     $files = array();
     $filesCount = 0;
@@ -59,49 +59,83 @@ echo camp_html_breadcrumbs($crumbs);
 <script type="text/javascript" src="/javascript/yui/build/datasource/datasource-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/datatable/datatable-min.js"></script>
 
+<div id="datatable_paginator"></div>
+<div id="fileindex"></div>
+
 <!-- YUI Code -->
 <script type="text/javascript">
 YAHOO.namespace("camp");
+
 // Generates data hash
 YAHOO.camp.Data = {
   files: [
   <?php
   foreach ($files as $file) {
   ?>
-    {filename:"<?php echo $file->getGunId().'_'.htmlspecialchars($file->getMetatagValue('title')); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getMetatagValue('mtime')); ?>"},
+    {filecheck:"<?php echo $file->getGunId(); ?>", filename:"<?php echo htmlspecialchars($file->getMetatagValue('title').'_'.$file->getGunId()); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getMetatagValue('mtime')); ?>"},
   <?php
   }
   ?>
   ]
 };
-</script>
-<!-- End YUI Code -->
 
-<!--
-<div id="fileTypeSelector">
-  <input type="button" class="menuButton" id="type" value="Type" />
-  <select id="typeSelect"> 
-    <option value="1">Audio</option>
-    <option value="2">Video</option>
-  </select>
-</div> -->
-<div id="datatable_paginator"></div>
-<div id="fileindex"></div>
-
-<!-- YUI Code -->
-<script type="text/javascript">
 YAHOO.util.Event.addListener(window, "load", function() {
+
   YAHOO.camp.FileArchiveDataTable = function() {
+
+    // Extend YUI DataTable which is missing a selectAllRows method
+    YAHOO.lang.augmentObject(
+      YAHOO.widget.DataTable.prototype, {
+
+        _selectAllTrEls : function() {
+          var selectedRowsEven = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_EVEN, "tr",this._elTbody);
+          YAHOO.util.Dom.addClass( selectedRowsEven , YAHOO.widget.DataTable.CLASS_SELECTED);
+
+          var selectedRowsOdd = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_ODD, "tr",this._elTbody);
+          YAHOO.util.Dom.addClass( selectedRowsOdd, YAHOO.widget.DataTable.CLASS_SELECTED);
+        },
+
+	/* Selects all rows. * * @method selectAllRows */
+        selectAllRows : function() {
+          // Remove all rows from tracker
+          var tracker = this._aSelections || [];
+          for(var j=tracker.length- 1; j>-1; j--) {
+            if(YAHOO.lang.isString( tracker[j] )){
+              tracker.splice( j,1);
+            }
+          }
+          // Update tracker
+          this._aSelections = tracker;
+          // Update UI
+          this._selectAllTrEls();
+          // Get all highlighted rows and make yahoo aware they are selected
+          var selectedRowsEven = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_SELECTED, "tr",this._elTbody);
+          for (i=0;i<selectedRowsEven.length; i++){
+            this.selectRow(i);
+          }
+        }
+      }
+    );
+    // End YUI Datatable extension
+
+    // Keep record of the checkbox states to handle column sorting
+    var checked = [];
+
     // Override the built-in formatter
     YAHOO.widget.DataTable.formatLink = function(elLiner, oRecord, oColumn, oData) {
-      var file = oData.substring(oData.indexOf('_')+1);
-      var gunid = oData.substring(0, oData.indexOf('_'));
+      var file = oData.substring(0, oData.lastIndexOf('_'));
+      var gunid = oData.substring(oData.lastIndexOf('_')+1);
       elLiner.innerHTML = "<a href=\"edit.php?gunid=" + gunid + "\">" + file + "</a>";
+    };
+
+    YAHOO.widget.DataTable.Formatter.check = function (elLiner, oRecord, oColumn, oData) {
+      elLiner.innerHTML = '<input type="checkbox" name="filerow" value="'+ oData +'"' + (checked[oData] ? ' checked="checked">' : '>');
     };
 
     // Columns definition
     var myColumnDefs = [
-      {key:"filename",label:"<?php putGS('Name'); ?>",width:300,resizeable:true,sortable:true, formatter:YAHOO.widget.DataTable.formatLink},
+      {key:"filecheck",label:"<input id=\"chkall\" name=\"chkall\" value=\"\" type=\"checkbox\">",formatter:"check"},
+      {key:"filename",label:"<?php putGS('Name'); ?>",width:300,resizeable:true,sortable:true,formatter:YAHOO.widget.DataTable.formatLink},
       {key:"filesize",label:"<?php putGS('Size'); ?>",width:"auto",sortable:true},
       {key:"filetype",label:"<?php putGS('Type'); ?>",width:"auto",sortable:true},
       {key:"filedate",label:"<?php putGS('Date Modified'); ?>",width:"auto",sortable:true},
@@ -114,6 +148,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
       myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
       myDataSource.responseSchema = {
       fields: [
+	{key:"filecheck"},
         {key:"filename", parser:"string"},
         {key:"filesize", parser:"string"},
         {key:"filetype", parser:"string"},
@@ -141,9 +176,48 @@ YAHOO.util.Event.addListener(window, "load", function() {
     // Enable row highlighting
     myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
     myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
+    myDataTable.subscribe("initEvent", function() {
+      var chkall = YAHOO.util.Dom.get('chkall');
+      if (chkall) {
+	YAHOO.util.Event.on(chkall,'click',function (e) {
+          var checks = document.getElementsByName('filerow');
+	  var i = 0, l = checks.length;
+	  for (;i<l;++i) {
+	    checked[i] = checks[i].checked = this.checked;
+	  }
+	  if (this.checked) {
+	    myDataTable.selectAllRows();
+	  } else {
+	    myDataTable.unselectAllRows();
+	  }
+	});
+      }
+    });
+
+    myDataTable.subscribe("checkboxClickEvent", function(e) {
+      var id = parseInt(e.target.value, 10);
+      checked[id] = e.target.checked;
+      if (!e.target.checked) {
+        YAHOO.util.Dom.get('chkall').checked = false;
+      }
+    });
+
     // Enable row selection
-    myDataTable.subscribe("rowClickEvent",myDataTable.onEventSelectRow);
-        
+    myDataTable.subscribe("rowClickEvent",
+      function(ev) {
+	var target = YAHOO.util.Event.getTarget(ev);
+	// Unselect row
+	if (myDataTable.isSelected(target)) {
+	  myDataTable.unselectRow(target);
+	}
+	// Select row
+	else {
+	  myDataTable.selectRow(target);
+	}
+	myDataTable.checkboxClickEvent.fire;
+      }
+    );
+
     return {
       oDS: myDataSource,
       oDT: myDataTable
@@ -152,3 +226,4 @@ YAHOO.util.Event.addListener(window, "load", function() {
 });
 </script>
 <!-- End YUI Code -->
+<?php camp_html_copyright_notice(); ?>

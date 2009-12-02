@@ -6,17 +6,17 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_File.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_FileBase.php');
 
 
 /**
  * @package Campsite
  */
-class Archive_AudioFile extends Archive_File
+class Archive_AudioFile extends Archive_FileBase
 {
     protected $m_fileType = 'audio';
 
-    private static $m_metatagLabels = array(
+    protected $m_metatagLabels = array(
         'dc:title' => 'Title',
 	'dc:creator' => 'Creator',
 	'dc:type' => 'Genre',
@@ -400,9 +400,9 @@ class Archive_AudioFile extends Archive_File
     /**
      *
      */
-    public static function GetMetatagLabels()
+    public function getMetatagLabels()
     {
-        return self::m_metatagLabels;
+        return $this->m_metatagLabels;
     }
 
 
