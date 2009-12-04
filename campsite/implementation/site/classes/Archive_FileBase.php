@@ -332,13 +332,13 @@ class Archive_FileBase
     {
         global $mdefs;
 
-        $xrc = XR_CcClient::Factory($mdefs);
+        $xrc = XR_CcClient::Factory($mdefs, true);
 	if (PEAR::isError($xrc)) {
 	    return $xrc;
 	}
 
 	// TODO: get the proper session id
-        $sessid = camp_session_get('cc_sessid', '');
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 	$result = $xrc->xr_searchMetadata($sessid, $p_criteria);
 	if (PEAR::isError($result)) {
 	    return $result;
@@ -389,27 +389,27 @@ class Archive_FileBase
      *      Array of Audioclip objects
      */
     public static function BrowseCategory($p_category, $offset = 0, $limit = 0,
-    						              $conditions = array(),
+					  $conditions = array(),
                                           $operator = 'and',
-    						              $orderby = 'dc:creator, dc:source, dc:title',
+					  $orderby = 'dc:creator, dc:source, dc:title',
                                           $desc = false)
     {
         global $mdefs;
 
-        $xrc = XR_CcClient::Factory($mdefs);
-		if (PEAR::isError($xrc)) {
-			return $xrc;
-		}
-        $sessid = camp_session_get('cc_sessid', '');
-		$criteria = array('filetype' => 'audioclip',
-						  'operator' => $operator,
-						  'limit' => $limit,
-						  'offset' => $offset,
-						  'orderby' => $orderby,
-						  'desc' => $desc,
-						  'conditions' => $conditions
-						  );
-		return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+        $xrc = XR_CcClient::Factory($mdefs, true);
+	if (PEAR::isError($xrc)) {
+	    return $xrc;
+	}
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
+	$criteria = array('filetype' => 'audioclip',
+			  'operator' => $operator,
+			  'limit' => $limit,
+			  'offset' => $offset,
+			  'orderby' => $orderby,
+			  'desc' => $desc,
+			  'conditions' => $conditions
+			  );
+	return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
     } // fn BrowseCategory
 
 
@@ -505,14 +505,14 @@ class Archive_FileBase
     {
 	// TODO: change audioClip tag to fit file type, if necessary
         $xmlTextFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-        			  ."<$p_fileType>\n"
-        			  ."\t<metadata\n"
-            			  ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-            			  ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-            			  ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-            			  ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
-            			  ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
-        			  ."\t>\n";
+	    ."<$p_fileType>\n"
+	    ."\t<metadata\n"
+	    ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+	    ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+	    ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+	    ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+	    ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+	    ."\t>\n";
 
         foreach($p_metaData as $key => $val) {
 	    $xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";

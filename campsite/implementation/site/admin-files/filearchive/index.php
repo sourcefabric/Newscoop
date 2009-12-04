@@ -4,12 +4,12 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 
 
-$sessid = camp_session_get('cc_sessid', '');
+$sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 if (empty($sessid)) {
     // Error
 }
 
-$xrc =& XR_CcClient::Factory($mdefs);
+$xrc =& XR_CcClient::Factory($mdefs, true);
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
     switch ($resp->getCode()) {

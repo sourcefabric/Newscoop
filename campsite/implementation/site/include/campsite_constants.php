@@ -29,6 +29,10 @@ define('CS_PATH_SMARTY_SYS_TEMPLATES', 'sys-templates');
 define('CS_PLUGINS_DIR', 'plugins');
 define('CS_PATH_PLUGINS', CS_PATH_SITE.DIR_SEP.CS_PLUGINS_DIR);
 
+// Campsite session var names for campcaster and file archive storages
+define('CS_CAMPCASTER_SESSION_VAR_NAME', 'cc_sessid');
+define('CS_FILEARCHIVE_SESSION_VAR_NAME', 'fa_sessid');
+
 // Campsite exception strings
 define('INVALID_OBJECT_STRING', 'invalid object');
 define('INVALID_PROPERTY_STRING', 'invalid property');

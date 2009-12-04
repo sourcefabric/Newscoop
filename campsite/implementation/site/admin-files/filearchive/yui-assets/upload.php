@@ -36,7 +36,7 @@ if ($uploadFile) {
     }
 
     if ($uploadSuccess) {
-        $sessId = camp_session_get('cc_sessid', '');
+        $sessId = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 	$metaDataArray = array();
 	$mask = $fileObj->getMask();
 	$metaData = camp_get_metadata($filePath);

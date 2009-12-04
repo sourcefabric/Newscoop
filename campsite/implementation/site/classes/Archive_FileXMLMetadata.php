@@ -36,7 +36,7 @@ class Archive_FileXMLMetadata
     {
         global $mdefs;
 
-        $this->xrc = XR_CcClient::Factory($mdefs);
+        $this->xrc = XR_CcClient::Factory($mdefs, true);
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
             $this->fetch();
@@ -85,7 +85,7 @@ class Archive_FileXMLMetadata
         }
 
 	// TODO: set the proper session name here
-        $sessid = camp_session_get('cc_sessid', '');
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         if (empty($sessid)) {
             return new PEAR_Error(getGS('Can not fetch audioclip metadata: the connection to Campcaster was not established.'));
         }
@@ -141,7 +141,7 @@ class Archive_FileXMLMetadata
     {
         global $mdefs;
 
-        $xrcObj = XR_CcClient::Factory($mdefs);
+        $xrcObj = XR_CcClient::Factory($mdefs, true);
         $r = $xrcObj->xr_storeMediaFileOpen($p_sessId, $p_gunId, $p_metaData,
                                             basename($p_filePath), $p_checkSum,
 					    $p_type);
@@ -191,7 +191,7 @@ class Archive_FileXMLMetadata
         </audioClip>';
 
 	// TODO: set the proper session name here
-        $sessid = camp_session_get('cc_sessid', '');
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
         if (PEAR::isError($res)) {
 	    return $res;

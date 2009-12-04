@@ -57,6 +57,10 @@ $Campsite['smarty']['use_subdirs'] = false;
 $Campsite['smarty']['left_delimeter'] = '#{#{';
 $Campsite['smarty']['right_delimeter'] = '#}#}';
 
+/** File Archive Storage Server settings **/
+$Campsite['xmlrpc_storage']['path'] = '/mma/xmlrpc/';
+$Campsite['xmlrpc_storage']['file'] = 'xrLocStor.php';
+
 /** Mailer settings **/
 $Campsite['smtp']['host'] = SystemPref::Get('SMTPHost');
 $Campsite['smtp']['port'] = SystemPref::Get('SMTPPort');

@@ -850,22 +850,31 @@ class XR_CcClient {
      *  Constructor - pelase DON'T CALL IT, use factory method instead
      *
      *  @param mdefs array, hash array with methods description
+     *  @param local boolean, whether the storage server is local or remote
      *  @param debug int, XMLRPC debug flag
      *  @param verbose boolean, verbosity flag
      *
      *  @return this
      */
-    public function XR_CcClient ($mdefs, $debug=0, $verbose=FALSE)
+    public function XR_CcClient ($mdefs, $local=FALSE, $debug=0, $verbose=FALSE)
     {
         $this->mdefs = $mdefs;
         $this->debug = $debug;
         $this->verbose = $verbose;
 
-        $serverPath = "http://"
-            . SystemPref::Get('CampcasterHostName') . ":"
-            . SystemPref::Get('CampcasterHostPort')
-            . SystemPref::Get('CampcasterXRPCPath')
-            . SystemPref::Get('CampcasterXRPCFile');
+	if (!$local) {
+	    $serverPath = "http://"
+	        . SystemPref::Get('CampcasterHostName') . ":"
+	        . SystemPref::Get('CampcasterHostPort')
+	        . SystemPref::Get('CampcasterXRPCPath')
+	        . SystemPref::Get('CampcasterXRPCFile');
+	} else {
+	    global $Campsite;
+	    $serverPath = $_SERVER['HTTPS'] == 'on' ? 'https://' : 'http://';
+	    $serverPath.= $_SERVER["SERVER_NAME"].':'.$_SERVER["SERVER_PORT"]
+	        . $Campsite['xmlrpc_storage']['path']
+	        . $Campsite['xmlrpc_storage']['file'];
+	}
 
         if($this->verbose) echo "serverPath: $serverPath\n";
         $url = parse_url($serverPath);
@@ -889,15 +898,16 @@ class XR_CcClient {
      *  result.
      *
      *  @param mdefs array, hash array with methods description
+     *  @param local boolean, whether connection is local or remote
      *  @param debug int, XMLRPC debug flag
      *  @param verbose boolean, verbosity flag
      *
      *  @return object, created object instance
      */
-    public static function &Factory($mdefs, $debug=0, $verbose=FALSE)
+    public static function &Factory($mdefs, $local=FALSE, $debug=0, $verbose=FALSE)
     {
     	if (class_exists('XR_CcClientCore')) {
-    		$xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
+	        $xrc = new XR_CcClientCore($mdefs, $local, $debug, $verbose);
     		return $xrc;
     	}
     	if (!is_array($mdefs)) {
@@ -922,7 +932,7 @@ class XR_CcClient {
             $result = new PEAR_Error(getGS("There was a problem trying to execute the XML RPC function."));
         	return $result;
         }
-        $xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
+        $xrc = new XR_CcClientCore($mdefs, $local, $debug, $verbose);
         if (is_null($xrc->client)) {
         	$result = new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
         	return $result;

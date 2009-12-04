@@ -94,6 +94,14 @@ if ($LiveUser->isLoggedIn()) {
     if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
         // if user valid, password valid, encrypted, no CAPTCHA -> login
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
+
+        // auth the local file archive storage server
+        $faLogin = camp_filearchive_login($f_user_name, $t_password);
+	if (PEAR::isError($ccLogin)) {
+	    camp_html_add_msg(getGS("There was an error logging in to the file archive storage server"));
+	}
+
+	// login to campcaster if integration is enabled
         if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') {
             $ccLogin = camp_campcaster_login($f_user_name, $t_password);
             if (PEAR::isError($ccLogin)) {

@@ -8,12 +8,12 @@ $crumbs[] = array(getGS("File Archive"), "/$ADMIN/filearchive/");
 $crumbs[] = array(getGS("Add new file"), "");
 echo camp_html_breadcrumbs($crumbs);
 
-$sessid = camp_session_get('cc_sessid', '');
+$sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 if (empty($sessid)) {
     // Error
 }
 
-$xrc =& XR_CcClient::Factory($mdefs);
+$xrc =& XR_CcClient::Factory($mdefs, true);
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
     switch ($resp->getCode()) {

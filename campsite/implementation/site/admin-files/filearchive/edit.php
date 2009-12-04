@@ -12,10 +12,11 @@ if (empty($fileGunId)) {
 
 $file = Archive_File::Get($fileGunId);
 $mask = $file->getMask();
+$fileTypeTitle = ucwords($file->getFileType());
 
 $crumbs = array();
 $crumbs[] = array(getGS("File Archive"), "/$ADMIN/filearchive/");
-$crumbs[] = array(getGS("Edit file"), "");
+$crumbs[] = array(getGS("Edit $fileTypeTitle file"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>

@@ -62,7 +62,7 @@ if (!Input::IsValid()) {
 // the login form if necessary
 $isCcOnline = true;
 $sessid = null;
-$sessid = camp_session_get('cc_sessid', '');
+$sessid = camp_session_get(CS_CAMPCASTER_SESSION_VAR_NAME, '');
 if (empty($sessid)) {
     camp_html_goto_page('campcaster_login.php');
 }

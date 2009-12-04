@@ -392,17 +392,18 @@ function camp_session_unset($p_name)
  *
  * @param string $f_cc_username
  * @param string $f_cc_password
+ * @param boolean $f_local
  * @return boolean true or PEAR_Error
  */
-function camp_campcaster_login($f_cc_username, $f_cc_password)
+function camp_campcaster_login($f_username, $f_password, $f_local = false, $f_session_var = CS_CAMPCASTER_SESSION_VAR_NAME)
 {
     global $mdefs;
 
-    $xrc =& XR_CcClient::Factory($mdefs);
+    $xrc =& XR_CcClient::Factory($mdefs, $f_local);
     if (PEAR::isError($xrc)) {
     	return $xrc;
     }
-    $r = $xrc->xr_login($f_cc_username, $f_cc_password);
+    $r = $xrc->xr_login($f_username, $f_password);
     if (is_string($r) && $r == 'Connection refused') {
         $r = new PEAR_Error(getGS("Connection refused"));
     }
@@ -412,9 +413,23 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
     if (!is_array($r) && !isset($r['sessid'])) {
         return new PEAR_Error(getGS('Unable to connect to the Campcaster server, please verify the Campcaster server settings.'));
     }
-    camp_session_set('cc_sessid', $r['sessid']);
+    camp_session_set($f_session_var, $r['sessid']);
     return true;
 } // fn camp_campcaster_login
+
+
+/**
+ * Performs authentication for the local file archive storage server.
+ *
+ * @param string $f_cc_username
+ * @param string $f_cc_password
+ * @param boolean $f_local
+ * @return boolean true or PEAR_Error
+ */
+function camp_filearchive_login($f_username, $f_password)
+{
+    return camp_campcaster_login($f_username, $f_password, true, CS_FILEARCHIVE_SESSION_VAR_NAME);
+} // fn camp_filearchive_login
 
 
 /**

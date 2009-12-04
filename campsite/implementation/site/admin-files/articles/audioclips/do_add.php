@@ -41,7 +41,7 @@ if (empty($f_audiofile)) {
 	exit(0);
 }
 
-$sessId = camp_session_get('cc_sessid', '');
+$sessId = camp_session_get(CS_CAMPCASTER_SESSION_VAR_NAME, '');
 $metaData = array();
 foreach($mask['pages'] as $key => $val) {
 	foreach($mask['pages'][$key] as $k => $v) {

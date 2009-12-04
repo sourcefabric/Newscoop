@@ -397,6 +397,12 @@ class Archive_AudioFile extends Archive_FileBase
     } // constructor
 
 
+    public function getFileType()
+    {
+      return $this->m_fileType;
+    }
+
+
     /**
      *
      */
@@ -507,11 +513,11 @@ class Archive_AudioFile extends Archive_FileBase
     {
         global $mdefs;
 
-        $xrc = XR_CcClient::Factory($mdefs);
+        $xrc = XR_CcClient::Factory($mdefs, true);
 	if (PEAR::isError($xrc)) {
 	    return $xrc;
 	}
-        $sessid = camp_session_get('cc_sessid', '');
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 	$criteria = array('filetype' => 'audioclip',
 			  'operator' => $operator,
 			  'limit' => $limit,
