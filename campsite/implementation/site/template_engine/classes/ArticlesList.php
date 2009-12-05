@@ -32,7 +32,9 @@ class ArticlesList extends ListObject
                                          'topic'=>array('field'=>null,
                                                         'type'=>'topic'),
                                          'reads'=>array('field'=>null, 'type'=>'integer'),
-                                         'author'=>array('field'=>null, 'type'=>'string')
+                                         'author'=>array('field'=>null, 'type'=>'string'),
+                                         'section'=>array('field'=>'NrSection', 'type'=>'integer'),
+                                         'issue'=>array('field'=>'NrIssue', 'type'=>'integer')
                                    );
 
     private static $s_orderFields = array(
@@ -62,6 +64,11 @@ class ArticlesList extends ListObject
     const CONSTRAINT_DYNAMIC_FIELD = 4;
     const CONSTRAINT_OPERATOR = 2;
     const CONSTRAINT_VALUE = 3;
+    
+    
+    private $m_ignoreIssue = false;
+
+    private $m_ignoreSection = false;
 
     
     /**
@@ -103,6 +110,7 @@ class ArticlesList extends ListObject
 	    $articleTypeName = null;
 	    $operator = null;
 	    $value = null;
+	    $context = CampTemplate::singleton()->context();
 	    foreach ($p_constraints as $index=>$word) {
 	    	switch ($state) {
 	    		case self::CONSTRAINT_ATTRIBUTE_NAME: // reading the parameter name
@@ -147,6 +155,9 @@ class ArticlesList extends ListObject
 	                } else {
                         $state = self::CONSTRAINT_OPERATOR;
 	                }
+	                $this->m_ignoreIssue = $this->m_ignoreIssue || $attribute == 'issue';
+	                $this->m_ignoreSection = $this->m_ignoreSection || $attribute == 'section';
+	                
 	                if ($attribute == 'onfrontpage' || $attribute == 'onsection') {
 	                    if (($index + 1) < count($p_constraints)) {
 	                        try {
@@ -212,7 +223,6 @@ class ArticlesList extends ListObject
                         }
                     } elseif ($attribute == 'author') {
                         if (strtolower($word) == '__current') {
-                        	$context = CampTemplate::singleton()->context();
                         	$value = $context->article->author->name;
                         } else {
                         	$value = $word;
@@ -239,7 +249,16 @@ class ArticlesList extends ListObject
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_articles");
             return false;
 	    }
-
+	    
+	    if (!$this->m_ignoreIssue) {
+            $this->m_constraints[] = new ComparisonOperation('NrIssue', new Operator('is', 'integer'),
+                                                             $context->issue->number);
+        }
+        if (!$this->m_ignoreSection) {
+            $this->m_constraints[] = new ComparisonOperation('NrSection', new Operator('is', 'integer'),
+                                                             $context->section->number);
+        }
+        
 	    return $parameters;
 	}
 
@@ -337,14 +356,8 @@ class ArticlesList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
                                                              $context->language->number);
         }
-        if ($context->issue->defined && !$parameters['ignore_issue']) {
-            $this->m_constraints[] = new ComparisonOperation('NrIssue', $operator,
-                                                             $context->issue->number);
-        }
-        if ($context->section->defined && !$parameters['ignore_section']) {
-            $this->m_constraints[] = new ComparisonOperation('NrSection', $operator,
-                                                             $context->section->number);
-        }
+        $this->m_ignoreIssue = $context->issue->defined && $parameters['ignore_issue'];
+        $this->m_ignoreSection = $context->section->defined && $parameters['ignore_section'];
         if ($context->topic->defined) {
             $this->m_constraints[] = new ComparisonOperation('topic', $operator,
                                                              $context->topic->identifier);
