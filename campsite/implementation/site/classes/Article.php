@@ -89,7 +89,9 @@ class Article extends DatabaseObject {
 
     private static $s_regularParameters = array('idpublication'=>'IdPublication',
                                                 'nrissue'=>'NrIssue',
+                                                'issue'=>'NrIssue',
                                                 'nrsection'=>'NrSection',
+                                                'section'=>'NrSection',
                                                 'idlanguage'=>'IdLanguage',
                                                 'name'=>'Name',
                                                 'number'=>'Number',
@@ -770,6 +772,8 @@ class Article extends DatabaseObject {
 	{
 		global $g_ado_db;
 
+		CampCache::singleton()->clear('user');
+		$this->fetch();
 		// Get the article that is in the final position where this
 		// article will be moved to.
 		$compareOperator = ($p_direction == 'up') ? '<' : '>';
@@ -821,6 +825,7 @@ class Article extends DatabaseObject {
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND Number = ' . $this->m_data['Number'];
 		$g_ado_db->Execute($queryStr3);
+		CampCache::singleton()->clear('user');
 
 		// Re-fetch this article to get the updated article order.
 		$this->fetch();
@@ -836,6 +841,9 @@ class Article extends DatabaseObject {
 	public function positionAbsolute($p_moveToPosition = 1)
 	{
 		global $g_ado_db;
+		
+		CampCache::singleton()->clear('user');
+		$this->fetch();
 		// Get the article that is in the location we are moving
 		// this one to.
 		$queryStr = 'SELECT Number, IdLanguage, ArticleOrder FROM Articles '
@@ -878,6 +886,7 @@ class Article extends DatabaseObject {
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' AND Number='.$this->m_data['Number'];
 		$g_ado_db->Execute($queryStr);
+		CampCache::singleton()->clear('user');
 
 		$this->fetch();
 		return true;
@@ -1263,7 +1272,10 @@ class Article extends DatabaseObject {
 		if ( $this->getWorkflowStatus() != $p_value ) {
 			$this->setIsLocked(false);
 		}
-		$changed = parent::setProperty('Published', $p_value);
+		if (!parent::setProperty('Published', $p_value)) {
+			return false;
+		}
+		CampCache::singleton()->clear('user');
 		if (function_exists("camp_load_translation_strings")) {
 		    camp_load_translation_strings("api");
 		}
@@ -1274,7 +1286,7 @@ class Article extends DatabaseObject {
 			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
 			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
 		Log::Message($logtext, null, 35);
-		return $changed;
+		return true;
 	} // fn setWorkflowStatus
 
 
