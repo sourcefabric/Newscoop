@@ -122,9 +122,10 @@ class CampGetImage
     public function getTargetPath()
     {
     	$fetched = !$this->m_isLocal ? $this->m_fetch_dir : null;
+    	$derivates = null;
         if ($this->m_ratio < 100) {
             $derivates = $this->m_derivates_dir.$this->m_ratio.'/';    
-        } 
+        }
         
         $path = $this->m_basePath.$this->m_cache_dir.$fetched.$derivates.$this->getLocalFileName();
         return $path;
