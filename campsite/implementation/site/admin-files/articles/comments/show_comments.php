@@ -184,7 +184,7 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
     </td>
 
     <td>
-        <input type="text" name="f_comment_subject" value="" class="input_text" size="41">
+        <input type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?>>
     </td>
 </tr>
 
@@ -194,7 +194,7 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
     </td>
 
     <td>
-        <textarea name="f_comment_body" class="input_text" rows="7" cols="60"></textarea>
+        <textarea name="f_comment_body" class="input_text" rows="7" cols="60" <?php print $spellcheck ?>></textarea>
     </td>
 </tr>
 

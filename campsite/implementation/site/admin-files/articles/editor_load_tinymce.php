@@ -269,6 +269,10 @@ tinyMCE.init({
     paste_convert_headers_to_strong: true,
     paste_remove_spans: true,
     paste_remove_styles: true,
+    
+    <?php if ($p_user->hasPermission('EditorSpellcheckerEnabled')): ?>
+        gecko_spellcheck : true,
+    <?php endif; ?>
 
     setup : function(ed) {
         ed.onKeyUp.add(function(ed, l) {

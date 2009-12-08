@@ -178,6 +178,12 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
     $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
+
+if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
+    $spellcheck = 'spellcheck="true"';   
+} else {
+    $spellcheck = 'spellcheck="false"';   
+}
 ?>
 <!-- YUI dependencies -->
 <script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
@@ -505,7 +511,7 @@ if ($f_edit_mode == "edit") { ?>
                           <td align="right" valign="top"><b><?php  putGS("Name"); ?>:</b></td>
                           <td align="left" valign="top" colspan="2">
                           <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" onkeyup="buttonEnable('save_f_article_title');" />
+                            <input type="text" name="f_article_title" id="f_article_title" size="55" class="input_text" value="<?php  print htmlspecialchars($articleObj->getTitle()); ?>" onkeyup="buttonEnable('save_f_article_title');" <?php print $spellcheck ?> />
                           <?php } else {
                               print wordwrap(htmlspecialchars($articleObj->getTitle()), 60, "<br>");
                                 }
@@ -725,7 +731,7 @@ if ($f_edit_mode == "edit") { ?>
 				<td align="right" ><?php  putGS("Keywords"); ?>:</td>
 				<td>
 					<?php if ($f_edit_mode == "edit") { ?>
-					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" onkeyup="buttonEnable('save_f_keywords');" />
+					<input type="TEXT" name="f_keywords" id="f_keywords" value="<?php print htmlspecialchars($articleObj->getKeywords()); ?>" class="input_text" size="50" maxlength="255" onkeyup="buttonEnable('save_f_keywords');" <?php print $spellcheck ?> />
 					<?php } else {
 						print htmlspecialchars($articleObj->getKeywords());
 					}
@@ -764,14 +770,15 @@ if ($f_edit_mode == "edit") { ?>
 				if ($f_edit_mode == "edit") {
 				    $fCustomFields[] = $dbColumn->getName();
 				?>
-		                  <input name="<?php echo $dbColumn->getName(); ?>"
-				    id="<?php echo $dbColumn->getName(); ?>"
+		        <input name="<?php echo $dbColumn->getName(); ?>"
+				       id="<?php echo $dbColumn->getName(); ?>"
 					   type="TEXT"
 					   value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
 					   class="input_text"
 					   size="50"
 					   maxlength="255"
-			                   onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
+			           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" 
+			           <?php print $spellcheck ?> />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
 		        }
@@ -1025,12 +1032,12 @@ window.location.reload();
                 <?php echo $dbColumn->getDisplayName(); ?>:
             </td>
             <td>
-            <input type="text" class="input_text" size="20" maxlength="20"
+            <input type="text" class="input_text" size="20" maxlength="20" <?php print $spellcheck ?>
                    name="<?php echo $dbColumn->getName(); ?>"
                    value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
                    id="<?php echo $dbColumn->getName(); ?>"
                    <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> 
-                   onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+                   onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
             </td>
             </tr>
             <?php

@@ -94,7 +94,8 @@ function camp_get_permission_list()
 	'EditorHorizontalRule'=>getGS('User may insert horizontal rules'),
 	'EditorFontColor'=>getGS('User may change the font color'),
 	'EditorSuperscript'=>getGS('User may use superscripts'),
-	'EditorSubscript'=>getGS('User may use subscripts'));
+	'EditorSubscript'=>getGS('User may use subscripts'),
+	'EditorSpellcheckerEnabled'=>getGS('Enable Firefox spell checking by default'));
 
     $rights = array(getGS('Content')=>$content_group,
 		    getGS('Templates')=>$templates_group,
