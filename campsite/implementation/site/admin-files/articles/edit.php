@@ -852,9 +852,10 @@ if ($f_edit_mode == "edit") { ?>
 				preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
 
 				if (isset($imageMatches[1][0])) {
-				        if (isset($titles) && sizeof($titles) > 0) {
-					        for($x = 0; $x < sizeof($titles[0]); $x++) {
-						        $text = preg_replace("/\s*".$titles[0][$x]."/", ' title="'.$titles[1][$x].'"', $text);
+					if (isset($titles) && sizeof($titles) > 0) {
+						for($x = 0; $x < sizeof($titles[0]); $x++) {
+							$text = preg_replace("/\s*".preg_replace('~\/~', '\/',
+							$titles[0][$x])."/", ' title="'.$titles[1][$x].'"', $text);
 						}
 					}
 					$formattingErrors = false;
