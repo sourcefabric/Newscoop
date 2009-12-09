@@ -59,6 +59,22 @@ echo camp_html_breadcrumbs($crumbs);
 <script type="text/javascript" src="/javascript/yui/build/datasource/datasource-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/datatable/datatable-min.js"></script>
 
+<p>
+<table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
+<tr>
+<?php
+// TODO: add proper right
+if ($g_user->hasPermission('AddImage')) { ?>
+  <td>
+    <a href="file.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" alt="<?php putGS('Add new file'); ?>" /></a>
+  </td>
+  <td style="padding-left: 3px;">
+    <a href="file.php"><b><?php putGS('Add new file'); ?></b></a>
+  </td>
+<?php } ?>
+</tr>
+</table>
+
 <div id="datatable_paginator"></div>
 <div id="fileindex"></div>
 

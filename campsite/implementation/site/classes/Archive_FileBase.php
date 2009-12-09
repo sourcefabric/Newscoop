@@ -210,12 +210,17 @@ class Archive_FileBase
         foreach ($this->m_mask['pages'] as $key => $val) {
 	    foreach ($this->m_mask['pages'][$key] as $k => $v) {
                 $element_encode = str_replace(':','_',$v['element']);
-                if ($p_formData['f_'.$key.'_'.$element_encode]) {
+                if (isset($p_formData['f_'.$key.'_'.$element_encode])
+		      && !empty($p_formData['f_'.$key.'_'.$element_encode])) {
                     list($predicate_ns, $predicate) = explode(':', $v['element']);
                     $recordSet['gunid'] = $this->m_gunId;
                     $recordSet['predicate_ns'] = $predicate_ns;
                     $recordSet['predicate'] = $predicate;
-                    $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
+		    if ($predicate == 'mtime') {
+		        $recordSet['object'] = date('c');
+		    } else {
+		        $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
+		    }
                     $tmpMetadataObj = new Archive_FileMetadataEntry($recordSet);
                     $metaData[strtolower($v['element'])] = $tmpMetadataObj;
                 }

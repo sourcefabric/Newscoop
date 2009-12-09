@@ -51,6 +51,11 @@ if ($g_user->hasPermission('CommentModerate')) {
     $menu_content->addItem($menu_item);
 }
 
+// TODO: do we need a right?
+$menu_item =& DynMenuItem::Create(getGS('File Archive'), "/$ADMIN/filearchive/index.php",
+		array('icon' => sprintf($iconTemplateStr, 'add_mediafile.png'), 'id' => 'file_archive'));
+$menu_content->addItem($menu_item);
+
 $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
@@ -167,14 +172,6 @@ if ($g_user->hasPermission("ManageLanguages")) {
     $menu_item =& DynMenuItem::Create(getGS("Add new language"),
         "/$ADMIN/languages/add_modify.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_language.png")));
-    $menu_actions->addItem($menu_item);
-}
-
-// TODO: create new permission for handling file archive or reuse?
-if ($g_user->hasPermission("ManageLanguages")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new file"),
-        "/$ADMIN/filearchive/file.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_mediafile.png")));
     $menu_actions->addItem($menu_item);
 }
 

@@ -190,7 +190,6 @@ class Archive_FileXMLMetadata
         $xmlStr .= '</metadata>
         </audioClip>';
 
-	// TODO: set the proper session name here
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
         if (PEAR::isError($res)) {

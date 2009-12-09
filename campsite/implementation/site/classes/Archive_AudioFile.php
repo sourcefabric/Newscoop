@@ -117,6 +117,11 @@ class Archive_AudioFile extends Archive_FileBase
 		    'type' => 'text',
 		    'attributes' => array('disabled' => 'on'),
 		),
+		array(
+		    'element' => 'ls:mtime',
+		    'type' => 'text',
+		    'attributes' => array('disabled' => 'on'),
+		),
 	    ),
 	    'Music'  => array(
 	        array(
@@ -254,56 +259,56 @@ class Archive_AudioFile extends Archive_FileBase
 		    'type' => 'text',
 		    'attributes' => array('maxlength' => 256)
 	        ),
-		array(
-		    'rule' => 'regex',
-		    'element' => 'ls:audiofileinfourl',
-		    'format' => '', //UI_REGEX_URL,
-		    'rulemsg' => 'Audio file information web page seems not to be valid URL'
-		),
+		//array(
+		//    'rule' => 'regex',
+		//    'element' => 'ls:audiofileinfourl',
+		//    'format' => '', //UI_REGEX_URL,
+		//    'rulemsg' => 'Audio file information web page seems not to be valid URL'
+		//),
 		array(
 		    'element' => 'ls:artisturl',
 		    'type' => 'text',
 		    'attributes' => array('maxlength' => 256)
 		),
-		array(
-		    'rule' => 'regex',
-		    'element' => 'ls:artisturl',
-		    'format' => '', //UI_REGEX_URL,
-		    'rulemsg' => 'Artist web page seems not to be valid URL'
-		),
+		//array(
+		//    'rule' => 'regex',
+		//    'element' => 'ls:artisturl',
+		//    'format' => '', //UI_REGEX_URL,
+		//    'rulemsg' => 'Artist web page seems not to be valid URL'
+		//),
 		array(
 		    'element' => 'ls:audiosourceurl',
 		    'type' => 'text',
 		    'attributes' => array('maxlength' => 256)
 		),
-		array(
-		    'rule' => 'regex',
-		    'element' => 'ls:audiosourceurl',
-		    'format' => '', //UI_REGEX_URL,
-		    'rulemsg' => 'Audio source web page seems not to be valid URL'
-		),
+		//array(
+		//    'rule' => 'regex',
+		//    'element' => 'ls:audiosourceurl',
+		//    'format' => '', //UI_REGEX_URL,
+		//    'rulemsg' => 'Audio source web page seems not to be valid URL'
+		//),
 		array(
 		    'element' => 'ls:radiostationurl',
 		    'type' => 'text',
 		    'attributes' => array('maxlength' => 256)
 		),
-		array(
-		    'rule' => 'regex',
-		    'element' => 'ls:radiostationurl',
-		    'format' => '', //UI_REGEX_URL,
-		    'rulemsg' => 'Radio station web page seems not to be valid URL'
-		),
+		//array(
+		//    'rule' => 'regex',
+		//    'element' => 'ls:radiostationurl',
+		//    'format' => '', //UI_REGEX_URL,
+		//    'rulemsg' => 'Radio station web page seems not to be valid URL'
+		//),
 		array(
 		    'element' => 'ls:buycdurl',
 		    'type' => 'text',
 		    'attributes' => array('maxlength' => 256)
 	        ),
-		array(
-		    'rule' => 'regex',
-		    'element' => 'ls:buycdurl',
-		    'format' => '', //UI_REGEX_URL,
-		    'rulemsg' => 'Buy CD web page seems not to be valid URL'
-		),
+		//array(
+		//    'rule' => 'regex',
+		//    'element' => 'ls:buycdurl',
+		//    'format' => '', //UI_REGEX_URL,
+		//    'rulemsg' => 'Buy CD web page seems not to be valid URL'
+		//),
 		array(
 		    'element' => 'ls:isrcnumber',
 		    'type' => 'text',

@@ -29,7 +29,7 @@ if ($uploadFile) {
 
     if (PEAR::isError($filePath)) {
         $uploadSuccess = false;
-	$data->Results->camp_error = camp_get_error_message($filePath->getMessage(), $filePath->getMessage(), null, true);
+	$data->Results->camp_error = getGS($filePath->getMessage());
 	eval($fileClassName."::DeleteTemporaryFile('$filePath');");
 	// php >= 5.3.0
 	//$fileClassName::DeleteTemporaryFile($uploadFile['tmp_name']);
@@ -57,7 +57,7 @@ if ($uploadFile) {
 	eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
 	//$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
 	if (PEAR::isError($fileGunid)) {
-	    $data->Results->camp_error = camp_get_error_message(getGS('There was an error while saving the file: $1', $fileGunid->getMessage()), null, true);
+	    $data->Results->camp_error = getGS('There was an error while saving the file: $1', $fileGunid->getMessage());
 	    eval($fileClassName."::DeleteTemporaryFile('$filePath');");
 	    //$fileClassName::DeleteTemporaryFile($filePath);
 	} else {
