@@ -68,6 +68,8 @@ class BlogComment extends DatabaseObject {
             BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));   
         }
         
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return $result; 
     }
     
@@ -126,7 +128,8 @@ class BlogComment extends DatabaseObject {
         }
                 
 		$this->fetch();
-
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true; 
     }
     
@@ -134,7 +137,9 @@ class BlogComment extends DatabaseObject {
     {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-        BlogEntry::TriggerCounters($entry_id);   
+        BlogEntry::TriggerCounters($entry_id);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');   
     }
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
@@ -420,8 +425,7 @@ class BlogComment extends DatabaseObject {
                     $this->setProperty('status', $data['BlogComment']['status']);
                 }
                 
-                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
-                  
+                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id')); 
                 return true;    
             }
         }  

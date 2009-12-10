@@ -71,7 +71,8 @@ class BlogentryTopic extends DatabaseObject {
         if (!$success) {
             return;
         }
-        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true;
     } // fn create
 
@@ -84,6 +85,8 @@ class BlogentryTopic extends DatabaseObject {
     {        
         // Delete record from the database
         $deleted = parent::delete();
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return $deleted;
     } // fn delete
     
@@ -94,7 +97,10 @@ class BlogentryTopic extends DatabaseObject {
         $query = "DELETE FROM ".BlogentryTopic::$s_dbTableName."
                   WHERE fk_entry_id = $p_blogentry_id";
          
-        return $g_ado_db->execute($query);  
+        $return = $g_ado_db->execute($query);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        return $return;  
     }
     
     /**

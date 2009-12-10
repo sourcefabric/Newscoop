@@ -65,7 +65,10 @@ class BlogEntry extends DatabaseObject {
     function setProperty($p_name, $p_value)
     {
         if ($p_name == 'topics') {
-            return $this->setTopics($p_value);   
+            $return = $this->setTopics($p_value);
+            $CampCache = CampCache::singleton();
+            $CampCache->clear('user');
+            return $return;  
         }
         
         /*
@@ -91,7 +94,9 @@ class BlogEntry extends DatabaseObject {
             require_once 'Blog.php';
             Blog::TriggerCounters($this->getProperty('fk_blog_id'));
         }
-        
+
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return $result;
     }
     
@@ -133,10 +138,10 @@ class BlogEntry extends DatabaseObject {
         }
 
         $this->fetch();
-
         require_once 'Blog.php';
         Blog::TriggerCounters($p_blog_id);
-
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true;
     }
 
@@ -151,10 +156,11 @@ class BlogEntry extends DatabaseObject {
         }
 
         parent::delete();
-
         BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
         BlogentryTopic::OnBlogentryDelete($entry_id);
         Blog::TriggerCounters($blog_id);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
     }
 
     function getData()
@@ -509,7 +515,6 @@ class BlogEntry extends DatabaseObject {
                 }
                 
                 Blog::TriggerCounters($this->getProperty('fk_blog_id'));
-
                 return true;
             }
         }

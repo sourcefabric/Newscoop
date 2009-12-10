@@ -86,7 +86,8 @@ class Blog extends DatabaseObject {
         }
 
         $this->fetch();
-        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true;
     }
 
@@ -101,6 +102,8 @@ class Blog extends DatabaseObject {
         parent::delete();
         BlogImageHelper::RemoveImageDerivates('entry', $entry_id);
         BlogTopic::OnBlogDelete($blog_id);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
     }
 
     function getData()
@@ -571,14 +574,20 @@ class Blog extends DatabaseObject {
         */
         
         if ($p_name == 'topics') {
-            return $this->setTopics($p_value);   
+            $return = $this->setTopics($p_value);
+            $CampCache = CampCache::singleton();
+            $CampCache->clear('user');
+            return $return; 
         }
         
         if ($p_name == 'fk_language_id') {
             $this->onSetLanguage($p_value);
         }
         
-        return parent::setProperty($p_name, $p_value);
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        return $return;
     }
     
     private function onSetLanguage($p_language_id)
@@ -601,6 +610,9 @@ class Blog extends DatabaseObject {
                       SET fk_language_id = $p_language_id
                       WHERE fk_blog_id = {$this->getId()}";
         $g_ado_db->Execute($queryStr1);
+        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
     }
 
     /**
