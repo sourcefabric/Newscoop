@@ -13,6 +13,7 @@ if (empty($sessid)) {
     // Error
 }
 
+// TODO: check this out
 $xrc =& XR_CcClient::Factory($mdefs, true);
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
@@ -215,7 +216,7 @@ function init() {
 				  );
 
 	YAHOO.camp.container.wait.setHeader("<?php putGS('Uploading, please wait...'); ?>");
-	YAHOO.camp.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
+	YAHOO.camp.container.wait.setBody("<img src=\"/css/rel_interstitial_loading.gif\"/>");
 	YAHOO.camp.container.wait.render(document.body);
 
 	var yFileTitle = document.getElementById('f_file_title').value;
@@ -225,7 +226,7 @@ function init() {
 	YAHOO.camp.container.wait.show();
 
 	var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, uploadHandler, postData);
-	setTimeout(function() { YAHOO.util.Connect.abort(request, callback) }, 30000);
+	setTimeout(function() { YAHOO.util.Connect.abort(request, uploadHandler) }, 30000);
     };
 
     var onEditButtonClick = function(e){

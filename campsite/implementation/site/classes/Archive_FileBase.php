@@ -197,8 +197,8 @@ class Archive_FileBase
      * @param array $p_formData
      *      The form data submitted with all the file metadata
      *
-     * @return boolean|PEAR_Error
-     *      TRUE on success, PEAR Error on failure
+     * @return string|PEAR_Error
+     *      Modified time on success, PEAR Error on failure
      */
     public function editMetadata($p_formData)
     {
@@ -217,7 +217,8 @@ class Archive_FileBase
                     $recordSet['predicate_ns'] = $predicate_ns;
                     $recordSet['predicate'] = $predicate;
 		    if ($predicate == 'mtime') {
-		        $recordSet['object'] = date('c');
+		        $mtime = date('c');
+		        $recordSet['object'] = $mtime;
 		    } else {
 		        $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
 		    }
@@ -237,7 +238,7 @@ class Archive_FileBase
         if ($fileDbMetadataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update file metadata on Campsite'));
         }
-        return true;
+        return $mtime;
     } // fn editMetadata
 
 

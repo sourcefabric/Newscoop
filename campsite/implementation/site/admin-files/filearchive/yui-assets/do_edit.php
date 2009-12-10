@@ -29,11 +29,11 @@ if ($data->Results->success
 if ($data->Results->success) {
     $file = Archive_File::Get($file_gunid);
     $res = $file->editMetadata($form_data);
-    print_r($res); echo "<br><br><br><br>";
     if (PEAR::isError($res)) {
         $data->Results->success = false;
 	$data->Results->camp_error = getGS('Failed to update file information.');
     } else {
+        $data->Results->mtime = $res;
         $data->Results->success = true;
     }
 }
