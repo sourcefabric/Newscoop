@@ -125,6 +125,8 @@ class InterviewItem extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
         
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return true;
     } // fn create
     
@@ -174,7 +176,8 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr3);
 
-        // Re-fetch this item to get the updated order.
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionRelative
@@ -226,6 +229,8 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr);
 
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionAbsolute
@@ -265,6 +270,9 @@ class InterviewItem extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+        
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return $deleted;
     } // fn delete
 
@@ -570,7 +578,10 @@ class InterviewItem extends DatabaseObject {
                 }
             break;  
         }   
-        parent::setProperty($p_name, $p_value);
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
+        return $return;
     }
 
     /////////////////// Special template engine methods below here /////////////////////////////
