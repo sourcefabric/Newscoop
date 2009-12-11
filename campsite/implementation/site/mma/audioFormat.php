@@ -320,7 +320,6 @@ $audioFormat = array(
         'area'=>'Talk',
         'attrs'=>array('implied'=>array('xml:lang')),
     ),
-
     'ls:filename'=>array(
         'type'=>'Text',
         'attrs'=>array('implied'=>array('xml:lang')),

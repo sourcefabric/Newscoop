@@ -500,6 +500,28 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 } // fn camp_get_error_message
 
 
+function camp_get_file_upload_error($p_errorCode)
+{
+    switch ($error_code) {
+    case UPLOAD_ERR_INI_SIZE:
+    case UPLOAD_ERR_FORM_SIZE:
+        return getGS('The uploaded file exceeds the allowed max file size.');
+    case UPLOAD_ERR_PARTIAL:
+        return getGS('The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in \'php.ini\'.');
+    case UPLOAD_ERR_NO_FILE:
+        return getGS('No file was uploaded.');
+    case UPLOAD_ERR_NO_TMP_DIR:
+        return getGS('There was a problem uploading the file. Missing a temporary folder.');
+    case UPLOAD_ERR_CANT_WRITE:
+        return getGS('There was a problem uploading the file. Failed to write file to disk.');
+    case UPLOAD_ERR_EXTENSION:
+        return getGS('File upload stopped by extension.');
+    default:
+        return getGS('Unknown upload error.');
+    } 
+} // fn camp_get_file_upload_error
+
+
 function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
 {
     global $ADMIN_DIR;

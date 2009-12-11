@@ -49,7 +49,7 @@ if (PEAR::isError($resp)) {
 <div id="camp-message"></div>
 <p>
 <div id="form_upload">
-  <form name="file_upload" id="file_upload" method="POST" action="#" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
+  <form name="file_upload" id="file_upload" method="post" action="#" enctype="multipart/form-data">
   <fieldset id="pushbuttonsfrommarkup" class="yui-skin-sam">
   <table border="0" cellspacing="0" cellpadding="6" class="table_input">
   <tr>
@@ -128,6 +128,7 @@ if (PEAR::isError($resp)) {
       <input type="button" name="editButton" id="editButton" value="<?php putGS('Save'); ?>" class="button" />
     </td>
   </tr>
+  </form>
   </table>
 </div>
 
@@ -166,12 +167,9 @@ function init() {
 		var data = eval('(' + json + ')');
 		//alert(data);
 		mesg.style.display = 'inline';
-		if (data.Results.upload_success == undefined) {
+		if (data.Results.success == false) {
 		    mesg.style.color = 'red';
-		    if (data.Results.file_error != undefined) {
-		        mesg.innerHTML = '<?php putGS("Error"); ?>' + ': '
-			    + data.Results.file_error;
-		    } else if (data.Results.camp_error != undefined) {
+		    if (data.Results.camp_error != undefined) {
 		        mesg.innerHTML = '<?php putGS("Error"); ?>' + ': '
 			    + data.Results.camp_error;
 		    }

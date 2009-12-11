@@ -25,6 +25,7 @@ class Archive_VideoFile extends Archive_FileBase
 	'dc:title' => 'Title',
 	'dc:creator' => 'Creator',
 	'dc:source' => 'Album',
+	'dc:playtime_string' => 'Play time',
 	'ls:year' => 'Year',
 	'dc:type' => 'Genre',
 	'dc:description' => 'Description',
@@ -49,7 +50,6 @@ class Archive_VideoFile extends Archive_FileBase
 	'dc:creator' => 'Creator',
 	'dcterms:extent' => 'Length',
 	'dc:description' => 'Description',
-	'ls:url' => 'Stream URL',
 	'ls:mtime' => 'Modified time',
 	'ls:filesize' => 'File size',
 	'ls:video_total_frames',
@@ -108,13 +108,43 @@ class Archive_VideoFile extends Archive_FileBase
 		    'type' => 'text',
 		),
 		array(
-		    'element' => 'dc:creator',
-		    'type' => 'text',
-		),
-		array(
 		    'element' => 'dc:source',
 		    'type' => 'text',
 		    'id3' => array('Album')
+		),
+		array(
+		    'element' => 'dc:type',
+		    'type' => 'text',
+		),
+		array(
+		    'element' => 'ls:audio_encoded_by',
+		    'type' => 'text',
+		),
+		array(
+		    'element' => 'ls:audio_bitrate',
+		    'type' => 'text',
+		    'rule' => 'numeric',
+		    'attributes'=> array('disabled' => 'on'),
+		),
+		array(
+		    'element' => 'ls:audio_channels',
+		    'type' => 'text',
+		),
+		array(
+                    'element' => 'ls:audio_samplerate',
+                    'type' => 'text',
+                    'rule' => 'numeric',
+                    'attributes'=> array('disabled' => 'on'),
+                ),
+		array(
+		    'element' => 'ls:audio_encoder',
+		    'type' => 'text',
+		),
+	    ),
+	    'Video' => array(
+	        array(
+		    'element' => 'dc:title',
+		    'type' => 'text',
 		),
 		array(
 		    'element' => 'ls:year',
@@ -122,26 +152,19 @@ class Archive_VideoFile extends Archive_FileBase
 		    'options' => '', //_getNumArr(1900, date('Y')+5),
 		),
 		array(
-		    'element' => 'dc:type',
+		    'element' => 'dc:playtime_string',
 		    'type' => 'text',
+		    'attributes' => array('disabled' => 'on'),
 		),
 		array(
 		    'element' => 'dc:description',
 		    'type' => 'textarea',
 		),
 		array(
-		    'element' => 'dc:format',
-		    'type' => 'select',
-		    'options' => array(
-		        'File' => 'Video',
-		    ),
-		    'attributes'=> array('disabled' => 'on'),
-	        ),
-	    ),
-	    'Video' => array(
-	        array(
-		    'element' => 'dc:title',
+		    'element' => 'ls:bitrate',
 		    'type' => 'text',
+		    'rule' => 'numeric',
+		    'attributes'=> array('disabled' => 'on'),
 		),
 		array(
 		    'element' => 'ls:video_bitrate',
