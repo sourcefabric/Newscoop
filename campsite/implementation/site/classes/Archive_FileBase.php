@@ -230,7 +230,8 @@ class Archive_FileBase
 
         if (sizeof($metaData) == 0) return false;
 
-        $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId);
+        $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId,
+							  $this->m_fileType);
         if ($fileXMLMetadataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update file metadata on storage server'));
         }
@@ -447,7 +448,7 @@ class Archive_FileBase
             return $gunId;
         }
 
-        $fileXMLMetadata = new Archive_FileXMLMetadata($gunId);
+        $fileXMLMetadata = new Archive_FileXMLMetadata($gunId, $p_fileType);
         $fileDbMetadata = new Archive_FileDatabaseMetadata();
         $fileDbMetadata->create($fileXMLMetadata->m_metaData);
         return $gunId;
@@ -509,7 +510,6 @@ class Archive_FileBase
      */
     public static function CreateXMLTextFile($p_metaData, $p_fileType)
     {
-	// TODO: change audioClip tag to fit file type, if necessary
         $xmlTextFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
 	    ."<$p_fileType>\n"
 	    ."\t<metadata\n"

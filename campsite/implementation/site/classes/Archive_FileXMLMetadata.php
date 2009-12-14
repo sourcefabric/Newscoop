@@ -22,6 +22,7 @@ class Archive_FileXMLMetadata
      * The gunid (Global Unique ID) of the file
      */
     var $m_gunId = null;
+    var $m_fileType = null;
     var $m_metaData = array();
     var $m_exists = false;
 
@@ -31,14 +32,17 @@ class Archive_FileXMLMetadata
      *
      * @param string $p_gunId
      *      The file global unique identifier
+     * @param string $p_fileType
+     *      The file type format
      */
-    public function __construct($p_gunId = null)
+    public function __construct($p_gunId = null, $p_fileType = null)
     {
         global $mdefs;
 
         $this->xrc = XR_CcClient::Factory($mdefs, true);
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
+	    $this->m_fileType = $p_fileType;
             $this->fetch();
         }
     } // constructor
@@ -84,12 +88,11 @@ class Archive_FileXMLMetadata
             return false;
         }
 
-	// TODO: set the proper session name here
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         if (empty($sessid)) {
-            return new PEAR_Error(getGS('Can not fetch audioclip metadata: the connection to Campcaster was not established.'));
+            return new PEAR_Error(getGS('Can not fetch file metadata: the connection to the File Archive was not established.'));
         }
-        $res = $this->xrc->xr_existsAudioClip($sessid, $this->m_gunId);
+        $res = $this->xrc->xr_existsMediaFile($sessid, $this->m_gunId, $this->m_fileType);
         if (PEAR::isError($res)) {
             return $res;
         }
@@ -169,26 +172,27 @@ class Archive_FileXMLMetadata
      *
      * @param array $p_metaData
      *      An array of Archive_FileMetadataEntry objects
+     * @param string $p_fileType
+     *      File type format
      *
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function update($p_metaData)
+    public function update($p_metaData, $p_fileType)
     {
-        $xmlStr = '<?xml version="1.0" encoding="utf-8"?>
-        <audioClip>
-            <metadata
-                xmlns="http://mdlf.org/campcaster/elements/1.0/"
-                xmlns:ls="http://mdlf.org/campcaster/elements/1.0/"
-                xmlns:dc="http://purl.org/dc/elements/1.1/"
-                xmlns:dcterms="http://purl.org/dc/terms/"
-                xmlns:xml="http://www.w3.org/XML/1998/namespace"
-            >';
+        $xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+	    ."<$p_fileType>\n"
+	    ."\t<metadata\n"
+	    ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+	    ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+	    ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+	    ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+	    ."xmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+	    ."\t>\n";
         foreach($p_metaData as $key => $metaDataEntry) {
-            $xmlStr .= '<'.$key.'>'.$metaDataEntry->getValue().'</'.$key.'>';
+            $xmlStr .= "\t\t<$key>".$metaDataEntry->getValue()."</$key>\n";
         }
-        $xmlStr .= '</metadata>
-        </audioClip>';
+	$xmlStr .= "\t</metadata>\n</$p_fileType>\n";
 
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);

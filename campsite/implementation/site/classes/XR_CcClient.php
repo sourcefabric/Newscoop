@@ -522,6 +522,17 @@ $GLOBALS['mdefs'] = array(
             '805'=>'message from lower later'
         )
     ),
+    "xr_existsMediaFile" => array(
+        'm'=>'locstor.existsMediaFile',
+        'p'=>array('sessid'/*string*/, 'gunid'/*string*/, 'ftype'/*string*/),
+        't'=>array('string', 'string', 'string'),
+        'r'=>array('exists'/*bool*/),
+        'e'=>array(
+            '3'=>'incorrect parameters',
+            '801'=>'bad params',
+            '805'=>'message from lower later'
+        )
+    ),
     "xr_getAudioClip" => array(
         'm'=>'locstor.getAudioClip',
         'p'=>array('sessid'/*string*/, 'gunid'/*string*/),

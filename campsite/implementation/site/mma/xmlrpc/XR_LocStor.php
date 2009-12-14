@@ -2400,6 +2400,57 @@ class XR_LocStor extends LocStor {
         return new XML_RPC_Response(XML_RPC_encode(array('exists'=>$res)));
     }
 
+
+    /**
+     * Check if file exists and return TRUE/FALSE
+     *
+     * The XML-RPC name of this method is "locstor.existsMediaFile".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid  :  string  -  session id </li>
+     *      <li> gunid  :  string  -  global unique id of AudioCLip</li>
+     *      <li> ftype  :  string  -  file type format</li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> exists : boolean  </li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 801  -  wrong 1st parameter, struct expected.</li>
+     *      <li> 805  -  xr_existsMediaFile:
+     *                      &lt;message from lower layer&gt; </li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see LocStor::existsMediaFile
+     */
+    public function xr_existsMediaFile($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        #$this->debugLog(join(', ', $r));
+        $res = $this->existsMediaFile($r['sessid'], $r['gunid'], $r['ftype']);
+        #$this->debugLog($res);
+        if (PEAR::isError($res))
+            return new XML_RPC_Response(0, 805,
+                "xr_existsFile: ".$res->getMessage().
+                " ".$res->getUserInfo()
+            );
+        return new XML_RPC_Response(XML_RPC_encode(array('exists'=>$res)));
+    }
+
+
     /*====================================================== metadata methods */
     /**
      * Return all file's metadata as XML string

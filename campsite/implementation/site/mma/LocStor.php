@@ -641,6 +641,31 @@ class LocStor extends BasicStor {
 
 
     /**
+     * Check if file exists
+     *
+     * @param string $sessid
+     * @param string $gunid
+     * @param string $ftype
+     * @return boolean
+     */
+    protected function existsMediaFile($sessid, $gunid, $ftype)
+    {
+        $ex = $this->existsFile($sessid, $gunid, $ftype);
+        if ($ex === FALSE ) {
+            return FALSE;
+        }
+        if (PEAR::isError($ex)) {
+            return $ex;
+        }
+        $storedFile =& StoredFile::RecallByGunid($gunid);
+        if (is_null($storedFile) || PEAR::isError($storedFile)) {
+            return $storedFile;
+        }
+        return $storedFile->exists();
+    }
+
+
+    /**
      * Check if file exists in the storage
      *
      * @param string $sessid

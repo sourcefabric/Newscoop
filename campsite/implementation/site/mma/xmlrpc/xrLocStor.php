@@ -77,6 +77,8 @@ $methods = array(
                                     'or replace an existing one.',
     'storeAudioClipClose'     => 'Close channel to store a new audio clip'.
                                     ' or replace an existing one.',
+    'existsMediaFile'         => 'Checks if a File with the specified id is '.
+                                 'stored in local storage.',
     'storeMediaFileOpen'      => 'Open channel to store a new media file '.
                                     'or replace an existing one.',
     'storeMediaFileClose'     => 'Close channel to store a new media file'.
