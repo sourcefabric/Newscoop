@@ -52,11 +52,11 @@ class Archive_VideoFile extends Archive_FileBase
 	'dc:description' => 'Description',
 	'ls:mtime' => 'Modified time',
 	'ls:filesize' => 'File size',
-	'ls:video_total_frames',
-	'ls:video_frame_rate',
-	'ls:video_frame_width',
-	'ls:video_frame_height',
-	'ls:video_bgcolor'
+	'ls:video_total_frames' => 'Total frames',
+	'ls:video_frame_rate' => 'Frame rate',
+	'ls:video_frame_width' => 'Frame width',
+	'ls:video_frame_height' => 'Frame height',
+	'ls:video_bgcolor' => 'Background color'
     );
 
     protected $m_mask = array(

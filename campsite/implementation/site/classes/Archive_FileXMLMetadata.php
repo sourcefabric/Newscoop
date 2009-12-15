@@ -172,16 +172,14 @@ class Archive_FileXMLMetadata
      *
      * @param array $p_metaData
      *      An array of Archive_FileMetadataEntry objects
-     * @param string $p_fileType
-     *      File type format
      *
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function update($p_metaData, $p_fileType)
+    public function update($p_metaData)
     {
         $xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-	    ."<$p_fileType>\n"
+	    ."<".$this->m_fileType.">\n"
 	    ."\t<metadata\n"
 	    ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
 	    ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
@@ -192,7 +190,7 @@ class Archive_FileXMLMetadata
         foreach($p_metaData as $key => $metaDataEntry) {
             $xmlStr .= "\t\t<$key>".$metaDataEntry->getValue()."</$key>\n";
         }
-	$xmlStr .= "\t</metadata>\n</$p_fileType>\n";
+	$xmlStr .= "\t</metadata>\n</".$this->m_fileType.">\n";
 
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
