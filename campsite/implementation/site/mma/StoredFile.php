@@ -155,7 +155,7 @@ function camp_read_metadata($p_infoFromFile, $p_typeFields, $p_group)
             }
         }
     }
-    if ($p_group != IMAGE_GROUP_NAME && (!$titleHaveSet || trim($mdata[$titleKey]) == '')) {
+    if (!$titleHaveSet || trim($mdata[$titleKey]) == '') {
         camp_add_metadata($mdata, $titleKey, $p_infoFromFile['filename']);
     }
 
