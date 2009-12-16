@@ -50,7 +50,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image description" SIZE="32" class="input_text">
 	</TD>
 </TR>
 <TR>

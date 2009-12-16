@@ -21,7 +21,7 @@ $imageFormat = array(
 	        'dc:format','dc:description','dc:maker','dc:maker_model',
 		'dc:date_time','ls:filename','ls:filesize','ls:filetype',
 		'ls:image_width','ls:image_height','ls:bitspersample',
-		'ls:mtime',
+		'ls:mtime', 'ls:photographer', 'ls:place', 'ls:url'
 	    ),
         ),
         'namespaces'=>array(
@@ -96,6 +96,15 @@ $imageFormat = array(
         'type'=>'Int',
 //        'regexp'=>'^\d{4}(-\d{2}(-\d{2}(T\d{2}:\d{2}(:\d{2}\.\d+)?(Z)|([\+\-]?\d{2}:\d{2}))?)?)?$',
     ),
+    'ls:photographer'=>array(
+        'type'=>'Text'
+    ),
+    'ls:place'=>array(
+        'type'=>'Text'
+    ),
+    'ls:url'=>array(
+        'type'=>'Text'
+    )
 );
 
 ?>

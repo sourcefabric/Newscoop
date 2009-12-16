@@ -107,7 +107,13 @@ class Archive_FileBase
     public function getType()
     {
         $format = explode('/', $this->getMetatagValue('format'));
-	return $format[0];
+        return $format[0];
+    }
+
+
+    public function getMimeType()
+    {
+        return $this->getMetatagValue('format');
     }
 
 
@@ -130,7 +136,7 @@ class Archive_FileBase
     {
     	$namespaces = array('dc', 'ls', 'dcterms');
 
-	$p_tagName = trim(strtolower($p_tagName));
+    	$p_tagName = trim(strtolower($p_tagName));
     	if (is_null($this->m_gunId) || sizeof($this->m_metaData) == 0) {
     		return null;
     	}
@@ -208,24 +214,24 @@ class Archive_FileBase
 
         $metaData = array();
         foreach ($this->m_mask['pages'] as $key => $val) {
-	    foreach ($this->m_mask['pages'][$key] as $k => $v) {
-                $element_encode = str_replace(':','_',$v['element']);
-                if (isset($p_formData['f_'.$key.'_'.$element_encode])
-		      && !empty($p_formData['f_'.$key.'_'.$element_encode])) {
-                    list($predicate_ns, $predicate) = explode(':', $v['element']);
-                    $recordSet['gunid'] = $this->m_gunId;
-                    $recordSet['predicate_ns'] = $predicate_ns;
-                    $recordSet['predicate'] = $predicate;
-		    if ($predicate == 'mtime') {
-		        $mtime = date('c');
-		        $recordSet['object'] = $mtime;
-		    } else {
-		        $recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
-		    }
-                    $tmpMetadataObj = new Archive_FileMetadataEntry($recordSet);
-                    $metaData[strtolower($v['element'])] = $tmpMetadataObj;
-                }
-            }
+        	foreach ($this->m_mask['pages'][$key] as $k => $v) {
+        		$element_encode = str_replace(':','_',$v['element']);
+        		if (isset($p_formData['f_'.$key.'_'.$element_encode])
+        		&& !empty($p_formData['f_'.$key.'_'.$element_encode])) {
+        			list($predicate_ns, $predicate) = explode(':', $v['element']);
+        			$recordSet['gunid'] = $this->m_gunId;
+        			$recordSet['predicate_ns'] = $predicate_ns;
+        			$recordSet['predicate'] = $predicate;
+        			if ($predicate == 'mtime') {
+        				$mtime = date('c');
+        				$recordSet['object'] = $mtime;
+        			} else {
+        				$recordSet['object'] = $p_formData['f_'.$key.'_'.$element_encode];
+        			}
+        			$tmpMetadataObj = new Archive_FileMetadataEntry($recordSet);
+        			$metaData[strtolower($v['element'])] = $tmpMetadataObj;
+        		}
+        	}
         }
 
         if (sizeof($metaData) == 0) return false;

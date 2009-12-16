@@ -61,7 +61,7 @@ if (PEAR::isError($resp)) {
   <tr>
     <td align="right"><?php putGS('Name'); ?>:</td>
     <td align="left">
-      <input type="text" id="f_file_title" name="f_file_title" value="<?php echo Image::GetMaxId(); ?>" size="32" class="input_text" />
+      <input type="text" id="f_file_title" name="f_file_title" value="Title" size="32" class="input_text" />
     </td>
   </tr>
   <tr>

@@ -36,7 +36,8 @@ $audioFormat = array(
                 'dcterms:isPartOf', 'dc:date',
                 'dc:publisher',
                 // extra
-                'dcterms:alternative', 'ls:filename', 'ls:filesize', 'ls:mtime',
+                'dcterms:alternative', 'ls:filename', 'ls:filetype', 'ls:filesize',
+                'ls:mtime', 'dc:playtime_string',
                 // added lately by sebastian
                 'ls:mood',
             ),
@@ -64,7 +65,7 @@ $audioFormat = array(
     'dcterms:extent'=>array(
         'type'=>'Time',
 //        'regexp'=>'^\d{2}:\d{2}:\d{2}.\d{6}$',
-        'regexp'=>'^((\d{1,2}:)?\d{1,2}:)?\d{1,20}(.\d{1,6})?$',
+        'regexp'=>'^((\d{1,2}:)?\d{1,2}:)?\d{1,20}(.\d{1,7})?$',
     ),
     'dc:creator'=>array(
         'type'=>'Text',
@@ -324,6 +325,9 @@ $audioFormat = array(
         'type'=>'Text',
         'attrs'=>array('implied'=>array('xml:lang')),
     ),
+    'ls:filetype'=>array(
+        'type'=>'Text'
+    ),
     'ls:filesize'=>array(
 	'type'=>'Int',
 	'attrs'=>array('implied'=>array('xml:lang')),
@@ -332,6 +336,9 @@ $audioFormat = array(
         'type'=>'Int',
 //        'regexp'=>'^\d{4}(-\d{2}(-\d{2}(T\d{2}:\d{2}(:\d{2}\.\d+)?(Z)|([\+\-]?\d{2}:\d{2}))?)?)?$',
     ),
+    'dc:playtime_string'=>array(
+        'type'=>'Text'
+    )
 );
 
 ?>

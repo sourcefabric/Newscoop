@@ -16,10 +16,7 @@ require_once('HTTP/Client.php');
 /**
  * @package Campsite
  */
-class Image extends DatabaseObject {
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_dbTableName = 'Images';
+class Image extends Archive_FileBase {
 	var $m_columnNames = array(
 		'Id',
 		'Description',
@@ -35,6 +32,13 @@ class Image extends DatabaseObject {
 		'UploadedByUser',
 		'LastModified',
 		'TimeCreated');
+	private $m_metadataTranslation = array(
+        'description'=>'dc:description',
+        'photographer'=>'ls:photographer',
+        'place'=>'ls:place',
+        'date'=>'dc:date_time',
+        'url'=>'ls:url'
+	);
 
 	/**
 	 * An image is both the orginal image, plus a thumbnail image,
@@ -42,18 +46,14 @@ class Image extends DatabaseObject {
 	 *
 	 * @param int $p_imageId
 	 */
-	public function Image($p_imageId = null)
+	public function __construct($p_gunId = null)
 	{
-		parent::DatabaseObject($this->m_columnNames);
-		$this->m_data['Id'] = $p_imageId;
-		if ($this->keyValuesExist()) {
-			$this->fetch();
-		}
+		parent::__construct($p_gunId);
 	} // constructor
 
 
 	/**
-	 * Update the image data in the database.
+	 * Update the image metadata.
 	 *
 	 * @param array $p_columns
 	 * @param boolean $p_commit
@@ -62,12 +62,19 @@ class Image extends DatabaseObject {
 	 */
 	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
-		$success = parent::update($p_columns, $p_commit, $p_isSql);
+		foreach ($p_columns as $key=>$value) {
+			$key = strtolower($key);
+			if (array_key_exists($key, $this->m_metadataTranslation)) {
+				$formData[$this->m_metadataTranslation[$key]] = $value;
+			}
+		}
+		$success = parent::editMetadata($formData);
 		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Changed properties for image "$1" ($2)', $this->m_data['Description'], $this->m_data['Id']);
+			$logtext = getGS('Changed properties for image "$1" ($2)',
+			$this->getMetatagValue('dc:description'), $this->getGunId());
 			Log::Message($logtext, null, 43);
 		}
 		return $success;
@@ -125,19 +132,6 @@ class Image extends DatabaseObject {
 
 
 	/**
-	 * Commit current values to the database.
-	 * The values "TimeCreated" and "LastModified" are ignored.
-	 *
-	 * @return boolean
-	 *		Return TRUE if the database was updated, false otherwise.
-	 */
-	public function commit()
-	{
-		return parent::commit(array("TimeCreated", "LastModified"));
-	} // fn commit
-
-
-	/**
 	 * Return true if the image is being used by an article.
 	 *
 	 * @return boolean
@@ -163,7 +157,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getImageId()
 	{
-		return $this->m_data['Id'];
+		return $this->getGunId();
 	} // fn getImageId
 
 
@@ -172,7 +166,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getDescription()
 	{
-		return $this->m_data['Description'];
+		return $this->getMetatagValue('dc:description');
 	} // fn getDescription
 
 
@@ -181,7 +175,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getPhotographer()
 	{
-		return $this->m_data['Photographer'];
+        return $this->getMetatagValue('ls:photographer');
 	} // fn getPhotographer
 
 
@@ -190,7 +184,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getPlace()
 	{
-		return $this->m_data['Place'];
+        return $this->getMetatagValue('ls:place');
 	} // fn getPlace
 
 
@@ -199,7 +193,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getDate()
 	{
-		return $this->m_data['Date'];
+        return $this->getMetatagValue('dc:date_time');
 	} // fn getDate
 
 
@@ -208,6 +202,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getLocation()
 	{
+        return $this->getMetatagValue('dc:description');
 		return $this->m_data['Location'];
 	} // fn getLocation
 
@@ -217,7 +212,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getUrl()
 	{
-		return $this->m_data['URL'];
+        return $this->getMetatagValue('ls:url');
 	} // fn getUrl
 
 
@@ -226,7 +221,7 @@ class Image extends DatabaseObject {
 	 */
 	public function getContentType()
 	{
-		return $this->m_data['ContentType'];
+		return $this->getMimeType();
 	} // fn getContentType
 
 
@@ -312,18 +307,6 @@ class Image extends DatabaseObject {
 		global $Campsite;
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
-
-
-	/**
-	 * @return int
-	 */
-	public static function GetMaxId()
-	{
-		global $g_ado_db;
-		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
-		$result = $g_ado_db->GetRow($queryStr);
-		return $result['Auto_increment'];
-	} // fn GetMaxId
 
 
 	/**
@@ -840,35 +823,6 @@ class Image extends DatabaseObject {
 		$template['thumbnail_url'] = $this->getThumbnailUrl();
 		return $template;
 	} // fn toTemplate
-
-
-    /**
-     * Returns an images list based on the given parameters.
-     *
-     * @param array $p_parameters
-     *    An array of ComparionOperation objects
-     * @param string $p_order
-     *    An array of columns and directions to order by
-     * @param integer $p_start
-     *    The record number to start the list
-     * @param integer $p_limit
-     *    The offset. How many records from $p_start will be retrieved.
-     *
-     * @return array $issueList
-     *    An array of Issue objects
-     */
-    public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
-    {
-        global $g_ado_db;
-
-        if (!is_array($p_parameters)) {
-            return null;
-        }
-
-        $sqlClauseObj = new SQLSelectClause();
-
-    } // fn GetList
 
 } // class Image
 ?>

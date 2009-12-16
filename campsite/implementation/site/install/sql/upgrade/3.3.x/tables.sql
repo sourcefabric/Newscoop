@@ -20,6 +20,16 @@ ALTER TABLE `Languages` ADD COLUMN `ShortWDay6` VARCHAR(20);
 ALTER TABLE `Languages` ADD COLUMN `ShortWDay7` VARCHAR(20);
 
 
+CREATE TABLE `Archive_FileMetadata` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `gunid` varchar(20) NOT NULL default '0',
+  `predicate_ns` varchar(10) default '',
+  `predicate` varchar(30) NOT NULL default '',
+  `object` text,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `gunid_tag_id` (`gunid`,`predicate_ns`,`predicate`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 CREATE TABLE backup (
     token character varying(64) NOT NULL,
