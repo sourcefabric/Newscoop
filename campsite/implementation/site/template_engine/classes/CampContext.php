@@ -161,6 +161,13 @@ final class CampContext
                 $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
                 && $this->m_objects['user']->is_admin;
             }
+        } else {
+        	$ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
+        	if (count($ipUsers) > 0) {
+        		$this->m_objects['user'] = new MetaUser($ipUsers[0]->getUserId());
+                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
+                && $this->m_objects['user']->is_admin;
+        	}
         }
 
         $this->m_readonlyProperties['default_url'] = new MetaURL();
