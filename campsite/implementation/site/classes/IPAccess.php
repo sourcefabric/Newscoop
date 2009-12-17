@@ -172,5 +172,20 @@ class IPAccess extends DatabaseObject {
 		return $IPAccessList;
 	}
 
+	public static function GetUsersHavingIP($p_ipAddress)
+	{
+        global $g_ado_db;
+
+        $ipObj = new IPAccess();
+        $intIPAddress = $ipObj->__array2int($ipObj->__string2array($p_ipAddress));
+        $queryStr = "SELECT DISTINCT(IdUser) FROM SubsByIP WHERE StartIP <= $intIPAddress "
+        . "AND $intIPAddress <= (StartIP + Addresses - 1)";
+        $rows = $g_ado_db->GetAll($queryStr);
+        $users = array();
+		foreach ($rows as $row) {
+			$users[] = new User($row['IdUser']);
+		}
+		return $users;
+	}
 }
 ?>
