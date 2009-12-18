@@ -55,7 +55,8 @@ if (!$isValidShortName && trim($f_url_name) != "") {
 	$errors[] = getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"');
 }
 $sectionsConstraints = array(new ComparisonOperation('idpublication', new Operator('is'), $f_publication_id),
-new ComparisonOperation('nrissue', new Operator('is'), $f_issue_number));
+new ComparisonOperation('nrissue', new Operator('is'), $f_issue_number),
+new ComparisonOperation('number', new Operator('is'), $f_number));
 $sections = Section::GetList($sectionsConstraints, null, 0, 0, $sectionsCount, true);
 if ($sectionsCount > 0) {
 	$correct = false;
