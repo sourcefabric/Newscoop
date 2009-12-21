@@ -88,7 +88,7 @@ YAHOO.camp.Data = {
   <?php
   foreach ($files as $file) {
   ?>
-    {filecheck:"<?php echo $file->getGunId(); ?>", filename:"<?php echo htmlspecialchars($file->getMetatagValue('title').'_'.$file->getGunId()); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getMetatagValue('mtime')); ?>"},
+    {filecheck:"<?php echo $file->getGunId(); ?>", filename:"<?php echo htmlspecialchars($file->getMetatagValue('title').'_'.$file->getGunId()); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getModifiedTime()); ?>"},
   <?php
   }
   ?>

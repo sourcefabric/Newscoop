@@ -68,12 +68,12 @@ class Archive_FileBase
                 $fileXMLMetadataObj = new Archive_FileXMLMetadata($p_gunId);
                 $this->m_metaData = $fileXMLMetadataObj->m_metaData;
                 if ($fileXMLMetadataObj->exists()) {
-		    $this->m_gunId = $p_gunId;
-		    $this->m_exists = true;
-		    $fileDbMetadataObj->create($this->m_metaData);
+                    $this->m_gunId = $p_gunId;
+                    $this->m_exists = true;
+                    $fileDbMetadataObj->create($this->m_metaData);
                 }
             } else {
-	        $this->m_gunId = $p_gunId;
+                $this->m_gunId = $p_gunId;
     	        $this->m_exists = true;
             }
         }
@@ -115,6 +115,31 @@ class Archive_FileBase
     {
         return $this->getMetatagValue('format');
     }
+
+
+    /**
+     * Get modified time in a more human-readable form.
+     *
+     * @return string
+     *      Formatted date/time
+    */
+    public function getModifiedTime()
+    {
+        if (!$this->getMetatagValue('mtime')) {
+            return false;
+        }
+
+        $mtimeStr = '';
+        list($date, $timeNzone) = explode('T', $this->getMetatagValue('mtime'));
+        $time = substr($timeNzone, 0, 8);
+        $zone = substr($timeNzone, 8);
+        if ($date == date('Y-m-d')) {
+            $mtimeStr = getGS('Today') . ', ' . $time;
+        } else {
+            $mtimeStr = $date . ' ' . $time;
+        }
+        return $mtimeStr;
+    } // fn getModifiedTime
 
 
     public function getMetatagLabel($p_tagName)
@@ -237,7 +262,7 @@ class Archive_FileBase
         if (sizeof($metaData) == 0) return false;
 
         $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId,
-							  $this->m_fileType);
+                                                          $this->m_fileType);
         if ($fileXMLMetadataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update file metadata on storage server'));
         }
@@ -245,6 +270,13 @@ class Archive_FileBase
         if ($fileDbMetadataObj->update($metaData) == false) {
             return new PEAR_Error(getGS('Cannot update file metadata on Campsite'));
         }
+        // Update file metadata for the current object instance
+        $this->m_metaData = $metaData;
+        // Logging
+        $logtext = getGS('The file "$1" has been modified (gunid = $2)',
+            $metaData['dc:title']->getValue(), $this->m_gunId);
+        Log::Message($logtext, null, 183);
+
         return $mtime;
     } // fn editMetadata
 
@@ -265,18 +297,18 @@ class Archive_FileBase
         global $Campsite;
 
         if (!is_array($p_fileVar)) {
-	    return false;
-	}
+            return false;
+        }
 
-	$filesize = filesize($p_fileVar['tmp_name']);
-	if ($filesize === false) {
-	    return new PEAR_Error("Archive_FileBase::OnFileUpload(): invalid parameters received.");
-	}
-	if (get_magic_quotes_gpc()) {
-	    $fileName = stripslashes($p_fileVar['name']);
-	} else {
-	    $fileName = $p_fileVar['name'];
-	}
+        $filesize = filesize($p_fileVar['tmp_name']);
+        if ($filesize === false) {
+            return new PEAR_Error("Archive_FileBase::OnFileUpload(): invalid parameters received.");
+        }
+        if (get_magic_quotes_gpc()) {
+            $fileName = stripslashes($p_fileVar['name']);
+        } else {
+            $fileName = $p_fileVar['name'];
+        }
         if ($this->isValidFileType($fileName) == FALSE) {
             return new PEAR_Error("Archive_FileBase::OnFileUpload(): invalid file type.");
         }
@@ -351,7 +383,7 @@ class Archive_FileBase
 	}
 
 	// TODO: get the proper session id
-        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
+    $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 	$result = $xrc->xr_searchMetadata($sessid, $p_criteria);
 	if (PEAR::isError($result)) {
 	    return $result;
@@ -402,27 +434,27 @@ class Archive_FileBase
      *      Array of Audioclip objects
      */
     public static function BrowseCategory($p_category, $offset = 0, $limit = 0,
-					  $conditions = array(),
+                                          $conditions = array(),
                                           $operator = 'and',
-					  $orderby = 'dc:creator, dc:source, dc:title',
+                                          $orderby = 'dc:creator, dc:source, dc:title',
                                           $desc = false)
     {
         global $mdefs;
 
         $xrc = XR_CcClient::Factory($mdefs, true);
-	if (PEAR::isError($xrc)) {
-	    return $xrc;
-	}
+        if (PEAR::isError($xrc)) {
+            return $xrc;
+        }
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-	$criteria = array('filetype' => 'audioclip',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+        $criteria = array('filetype' => 'audioclip',
+                          'operator' => $operator,
+                          'limit' => $limit,
+                          'offset' => $offset,
+                          'orderby' => $orderby,
+                          'desc' => $desc,
+                          'conditions' => $conditions
+                         );
+        return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
     } // fn BrowseCategory
 
 
@@ -443,7 +475,7 @@ class Archive_FileBase
 				 $p_metaData, $p_fileType)
     {
         if (file_exists($p_filePath) == false) {
-            return new PEAR_Error(getGS('File $1 does not exist', $p_fileName));
+            return new PEAR_Error(getGS('File $1 does not exist', $p_filePath));
         }
         $gunId = null;
         $checkSum = md5_file($p_filePath);
@@ -457,6 +489,11 @@ class Archive_FileBase
         $fileXMLMetadata = new Archive_FileXMLMetadata($gunId, $p_fileType);
         $fileDbMetadata = new Archive_FileDatabaseMetadata();
         $fileDbMetadata->create($fileXMLMetadata->m_metaData);
+        // Logging
+        $logtext = getGS('The file "$1" has been added (gunid = $2)',
+            $p_metaData['dc:title'], $gunId);
+        Log::Message($logtext, null, 181);
+
         return $gunId;
     } // fn Store
 
@@ -517,17 +554,17 @@ class Archive_FileBase
     public static function CreateXMLTextFile($p_metaData, $p_fileType)
     {
         $xmlTextFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-	    ."<$p_fileType>\n"
-	    ."\t<metadata\n"
-	    ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-	    ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-	    ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-	    ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
-	    ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
-	    ."\t>\n";
+            ."<$p_fileType>\n"
+            ."\t<metadata\n"
+            ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+            ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+            ."\t\txmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+            ."\t>\n";
 
         foreach($p_metaData as $key => $val) {
-	    $xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";
+            $xmlTextFile .= "\t\t" . XML_Util::createTag($key, array(), $val) . "\n";
         }
         $xmlTextFile .= "\t</metadata>\n</$p_fileType>\n";
         return $xmlTextFile;
