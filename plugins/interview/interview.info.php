@@ -57,8 +57,8 @@ $info = array(
             array('interviewitem' => array('class' => 'InterviewItem')),
         ),
         'listobjects' => array(
-            array('interviews' => array('class' => 'Interviews', 'list' => 'interviews')),
-            array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems')),
+            array('interviews' => array('class' => 'Interviews', 'list' => 'interviews', 'url_id'=>'inv')),
+            array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems', 'url_id'=>'inv_it')),
         ),
         'init' => 'plugin_interview_init'
     ),

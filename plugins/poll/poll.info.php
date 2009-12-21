@@ -30,9 +30,9 @@ $info = array(
             array('pollanswerattachment' => array('class' => 'PollAnswerAttachment'))
         ),
         'listobjects' => array(
-            array('polls' => array('class' => 'Polls', 'list' => 'polls')),
-            array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers')),
-            array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments'))
+            array('polls' => array('class' => 'Polls', 'list' => 'polls', 'url_id'=>'pls')),
+            array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers', 'url_id'=>'pl_ans')),
+            array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments', 'url_id'=>'pl_ans_att'))
         ),
         'init' => 'plugin_poll_init'
     ),

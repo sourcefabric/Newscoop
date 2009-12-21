@@ -45,11 +45,11 @@ $info = array(
             array('blogentrytopic' => array('class' => 'BlogentryTopic'))
         ),
         'listobjects' => array(
-            array('blogs' => array('class' => 'Blogs', 'list' => 'blogs')),
-            array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries')),
-            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments')),
-            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics')),
-            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics'))
+            array('blogs' => array('class' => 'Blogs', 'list' => 'blogs', 'url_id'=>'blg')),
+            array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries', 'url_id'=>'blg_ent')),
+            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments', 'url_id'=>'blg_cmt')),
+            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics', 'url_id'=>'blg_tp')),
+            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics', 'url_id'=>'blg_ent_tp'))
         ),
         'init' => 'plugin_blog_init'
     ),
