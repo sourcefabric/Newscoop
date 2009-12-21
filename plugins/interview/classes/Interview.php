@@ -177,7 +177,8 @@ class Interview extends DatabaseObject {
         $logtext = getGS('Interview Id $1 created.', $this->m_data['IdInterview']);
         Log::Message($logtext, null, 31);
         */
-        
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return true;
     } // fn create
 
@@ -200,7 +201,7 @@ class Interview extends DatabaseObject {
         global $g_ado_db;
 
         // Get the item that is in the final position where this
-        // article will be moved to.
+        // interview will be moved to.
         $compareOperator = ($p_direction == 'up') ? '<' : '>';
         $order = ($p_direction == 'up') ? 'desc' : 'asc';
         $queryStr = "   SELECT  position
@@ -226,14 +227,15 @@ class Interview extends DatabaseObject {
                         WHERE   interview_id = {$this->m_data['interview_id']}";
         $g_ado_db->Execute($queryStr3);
 
-        // Re-fetch this item to get the updated order.
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionRelative
 
 
     /**
-     * Move the article to the given position (i.e. reorder the article).
+     * Move the interview to the given position (i.e. reorder the interview).
      * @param int $p_moveToPosition
      * @return boolean
      */
@@ -276,6 +278,8 @@ class Interview extends DatabaseObject {
                         WHERE   interview_id = {$this->m_data['interview_id']}";
         $g_ado_db->Execute($queryStr);
 
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionAbsolute
@@ -308,7 +312,7 @@ class Interview extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Article #$1: "$2" ($3) deleted.',
+            $logtext = getGS('Interview #$1: "$2" ($3) deleted.',
                 $this->m_data['Number'], $this->m_data['Name'],    $this->getLanguageName())
                 ." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
                 ." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
@@ -316,9 +320,24 @@ class Interview extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return $deleted;
     } // fn delete
-
+    
+    /**
+     * Overload setProperty() to clear cache on updates.
+     *
+     * @param string $p_name
+     * @param string $p_value
+     */
+    public function setProperty($p_name, $p_value)
+    {
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
+        return $return;   
+    }
 
     /**
      * Construct query to recive interviews from database
@@ -562,8 +581,9 @@ class Interview extends DatabaseObject {
                 'type'      => 'select',
                 'label'     => getGS('Guest'),
                 'default'   => $data['fk_guest_user_id'],
-                'options'   => self::getUsersHavePermission('plugin_interview_guest')
-                                + array('__new__' => 'Cretae new one...'),
+                'options'   =>  array('' => getGS('Please select:'))
+                                + self::getUsersHavePermission('plugin_interview_guest')
+                                + array('__new__' => getGS('Create new one...')),
                 'required'  => true,
                 'attributes' => array('onChange' => 'activate_fields("guest")')
             ),

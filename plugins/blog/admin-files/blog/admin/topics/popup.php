@@ -1,4 +1,5 @@
 <?PHP
+camp_load_translation_strings("plugin_blog");
 $f_mode = Input::Get('f_mode', 'string');
 
 

@@ -125,6 +125,8 @@ class InterviewItem extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
         
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return true;
     } // fn create
     
@@ -146,7 +148,7 @@ class InterviewItem extends DatabaseObject {
         global $g_ado_db;
 
         // Get the item that is in the final position where this
-        // article will be moved to.
+        // interview will be moved to.
         $compareOperator = ($p_direction == 'up') ? '<' : '>';
         $order = ($p_direction == 'up') ? 'desc' : 'asc';
         $queryStr = "   SELECT  position
@@ -174,14 +176,15 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr3);
 
-        // Re-fetch this item to get the updated order.
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionRelative
 
 
     /**
-     * Move the article to the given position (i.e. reorder the article).
+     * Move the interview to the given position (i.e. reorder the interview).
      * @param int $p_moveToPosition
      * @return boolean
      */
@@ -226,6 +229,8 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr);
 
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionAbsolute
@@ -257,7 +262,7 @@ class InterviewItem extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Article #$1: "$2" ($3) deleted.',
+            $logtext = getGS('Interview #$1: "$2" ($3) deleted.',
                 $this->m_data['Number'], $this->m_data['Name'],    $this->getLanguageName())
                 ." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
                 ." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
@@ -265,6 +270,9 @@ class InterviewItem extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+        
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
         return $deleted;
     } // fn delete
 
@@ -570,7 +578,10 @@ class InterviewItem extends DatabaseObject {
                 }
             break;  
         }   
-        parent::setProperty($p_name, $p_value);
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton(); 
+        $CampCache->clear('user');
+        return $return;
     }
 
     /////////////////// Special template engine methods below here /////////////////////////////

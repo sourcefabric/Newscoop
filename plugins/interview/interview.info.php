@@ -6,19 +6,19 @@ $info = array(
     'description' => 'This plugin provides functionality to perform online interviews.',  
     'menu' => array(
         'name' => 'interview',
-        'label' => 'Interview',
+        'label' => 'Interviews',
         'icon' => '/css/interview.png',
         'sub' => array(
             array(
                 'permission' => 'plugin_interview_admin',
                 'path' => "interview/admin/index.php",
-                'label' => 'Administrate Interviews',
+                'label' => 'Administer',
                 'icon' => 'css/interview.png',
             ),
             array(
                 'permission' => 'plugin_interview_moderator',
                 'path' => "interview/moderator/index.php",
-                'label' => 'Moderate Interviews',
+                'label' => 'Moderate',
                 'icon' => 'css/interview.png',
             ),
             array(
@@ -57,15 +57,15 @@ $info = array(
             array('interviewitem' => array('class' => 'InterviewItem')),
         ),
         'listobjects' => array(
-            array('interviews' => array('class' => 'Interviews', 'list' => 'interviews')),
-            array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems')),
+            array('interviews' => array('class' => 'Interviews', 'list' => 'interviews', 'url_id'=>'inv')),
+            array('interviewitems' => array('class' => 'InterviewItems', 'list' => 'interviewitems', 'url_id'=>'inv_it')),
         ),
         'init' => 'plugin_interview_init'
     ),
     'localizer' => array(
             'id' => 'plugin_interview',
-            'path' => '/plugins/interview/admin-files/*/*',
-            'screen_name' => 'Interview'
+            'path' => '/plugins/interview/*/*/*',
+            'screen_name' => 'Interviews'
     ),
     'install' => 'plugin_interview_install',
     'enable'  => 'plugin_interview_install',

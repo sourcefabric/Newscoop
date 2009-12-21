@@ -71,7 +71,8 @@ class BlogTopic extends DatabaseObject {
         if (!$success) {
             return;
         }
-        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true;
     } // fn create
 
@@ -84,6 +85,8 @@ class BlogTopic extends DatabaseObject {
     {        
         // Delete record from the database
         $deleted = parent::delete();
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return $deleted;
     } // fn delete
     

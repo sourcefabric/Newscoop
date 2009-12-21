@@ -1,3 +1,17 @@
+<?php
+camp_load_translation_strings("plugin_blog");
+
+// DO NOT DELETE!!! Needed for localizer
+// getGS("Blogs");
+// getGS("Administer");
+// getGS("Moderate");
+// getGS("Preferences");
+// getGS("pending");
+// getGS("online");
+// getGS("offline");
+// getGS("moderated");
+// getGS("readonly");
+?>
 <script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
 <SCRIPT language="javascript">
 function ajax_action(action)

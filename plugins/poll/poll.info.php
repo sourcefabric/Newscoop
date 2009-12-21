@@ -1,7 +1,7 @@
 <?php
 $info = array( 
     'name' => 'poll',
-    'version' => '3.3.x-0.2',
+    'version' => '3.3.x-0.2.1',
     'label' => 'Polls',
     'description' => 'This plugin provides functionality to perform polls (standard and advanced).',  
     'menu' => array(
@@ -30,16 +30,16 @@ $info = array(
             array('pollanswerattachment' => array('class' => 'PollAnswerAttachment'))
         ),
         'listobjects' => array(
-            array('polls' => array('class' => 'Polls', 'list' => 'polls')),
-            array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers')),
-            array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments'))
+            array('polls' => array('class' => 'Polls', 'list' => 'polls', 'url_id'=>'pls')),
+            array('pollanswers' => array('class' => 'PollAnswers', 'list' => 'pollanswers', 'url_id'=>'pl_ans')),
+            array('pollanswerattachments' => array('class' => 'PollAnswerAttachments', 'list' => 'attachments', 'url_id'=>'pl_ans_att'))
         ),
         'init' => 'plugin_poll_init'
     ),
     'localizer' => array(
         'id' => 'plugin_poll',
-        'path' => '/plugins/poll/admin-files/poll/',
-        'screen_name' => 'Poll'
+        'path' => '/plugins/poll/admin-files/poll/*/*',
+        'screen_name' => 'Polls'
     ),
     'install' => 'plugin_poll_install',
     'enable' => 'plugin_poll_install',

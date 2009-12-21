@@ -1,3 +1,6 @@
+<?php
+camp_load_translation_strings("plugin_interview");
+?>
 <html>
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">

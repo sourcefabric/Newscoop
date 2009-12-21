@@ -1,30 +1,30 @@
 <?php
 $info = array( 
     'name' => 'blog',
-    'version' => '3.3.x-0.2',
+    'version' => '3.3.x-0.2.1',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(
-        'name' => 'blog',
-        'label' => 'Blog',
+        'name' => 'blogs',
+        'label' => 'Blogs',
         'icon' => '/css/kedit.png',
         'sub' => array(
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
-                'label' => 'Administrate Blogs',
+                'label' => 'Administer',
                 'icon' => 'css/gear.png',
             ),
             array(
                 'permission' => 'plugin_blog_moderator',
                 'path' => "blog/moderator/list_blogs.php",
-                'label' => 'Moderate Blogs',
+                'label' => 'Moderate',
                 'icon' => 'css/format_increaseindent.png',
             ),
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/blog_prefs.php",
-                'label' => 'Blog Preferences',
+                'label' => 'Preferences',
                 'icon' => 'css/configure.png',
             ),
         ),
@@ -45,17 +45,17 @@ $info = array(
             array('blogentrytopic' => array('class' => 'BlogentryTopic'))
         ),
         'listobjects' => array(
-            array('blogs' => array('class' => 'Blogs', 'list' => 'blogs')),
-            array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries')),
-            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments')),
-            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics')),
-            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics'))
+            array('blogs' => array('class' => 'Blogs', 'list' => 'blogs', 'url_id'=>'blg')),
+            array('blogentries' => array('class' => 'BlogEntries', 'list' => 'blogentries', 'url_id'=>'blg_ent')),
+            array('blogcomments' => array('class' => 'BlogComments', 'list' => 'blogcomments', 'url_id'=>'blg_cmt')),
+            array('blogtopics' => array('class' => 'BlogTopics', 'list' => 'blogtopics', 'url_id'=>'blg_tp')),
+            array('blogentrytopics' => array('class' => 'BlogentryTopics', 'list' => 'blogentrytopics', 'url_id'=>'blg_ent_tp'))
         ),
         'init' => 'plugin_blog_init'
     ),
     'localizer' => array(
         'id' => 'plugin_blog',
-        'path' => '/plugins/blog/admin-files/blog/',
+        'path' => '/plugins/blog/*/*/*/*/*',
         'screen_name' => 'Blogs'
     ),
     'no_menu_scripts' => array(

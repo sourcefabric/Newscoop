@@ -1,3 +1,6 @@
+<?php
+camp_load_translation_strings("plugin_interview");
+?>
 <script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
 <SCRIPT language="javascript">
 function ajax_action(action)

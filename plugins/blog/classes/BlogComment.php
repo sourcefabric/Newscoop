@@ -68,6 +68,8 @@ class BlogComment extends DatabaseObject {
             BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));   
         }
         
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return $result; 
     }
     
@@ -126,7 +128,8 @@ class BlogComment extends DatabaseObject {
         }
                 
 		$this->fetch();
-
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
         return true; 
     }
     
@@ -134,7 +137,9 @@ class BlogComment extends DatabaseObject {
     {
         $entry_id = $this->getProperty('fk_entry_id');
         parent::delete();
-        BlogEntry::TriggerCounters($entry_id);   
+        BlogEntry::TriggerCounters($entry_id);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');   
     }
     
     function _buildQueryStr($p_cond, $p_checkParent, $p_order=null)
@@ -265,25 +270,25 @@ class BlogComment extends DatabaseObject {
             'title'     => array(
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
-                'label'     => 'Titel',
+                'label'     => getGS('Titel'),
                 'default'   => html_entity_decode($this->getProperty('title'))           
             ),
             'user_name'     => array(
                 'element'   => 'BlogComment[user_name]',
                 'type'      => 'text',
-                'label'     => 'Poster Name',
+                'label'     => getGS('Poster name'),
                 'default'   => html_entity_decode($this->getProperty('user_name'))           
             ),
             'user_email'     => array(
                 'element'   => 'BlogComment[user_email]',
                 'type'      => 'text',
-                'label'     => 'EMail',
+                'label'     => getGS('EMail'),
                 'default'   => html_entity_decode($this->getProperty('user_email'))           
             ),
             'content'      => array(
                 'element'   => 'BlogComment[content]',
                 'type'      => 'textarea',
-                'label'     => 'Kommentar',
+                'label'     => getGS('Comment'),
                 'default'   => $this->getProperty('content'),
                 'required'  => true,
                 'attributes'=> array('cols' => 60, 'rows' => 8, 'id' => 'tiny_mce_box')            
@@ -291,7 +296,7 @@ class BlogComment extends DatabaseObject {
             'mood'      => array(
                 'element'   => 'BlogComment[fk_mood_id]',
                 'type'      => 'radio',
-                'label'     => 'mood',
+                'label'     => getGS('Mood'),
                 'default'   => $this->getProperty('fk_mood_id'),
                 'options'   => Blog::GetMoodList($this->getProperty('fk_language_id') ? 
                                     $this->getProperty('fk_language_id') : 
@@ -300,44 +305,44 @@ class BlogComment extends DatabaseObject {
             'status' => array(
                 'element'   => 'BlogComment[status]',
                 'type'      => 'select',
-                'label'     => 'status',
+                'label'     => getGS('Status'),
                 'default'   => $this->getProperty('status'),
                 'options'   => array(
-                                'online'    => 'online',
-                                'offline'   => 'offline',
-                                'pending'   => 'pending'
+                                'online'    => getGS('online'),
+                                'offline'   => getGS('offline'),
+                                'pending'   => getGS('pending')
                                ),
                 'required'  => true            
             ),          
             'admin_status' => array(
                 'element'   => 'BlogComment[admin_status]',
                 'type'      => 'select',
-                'label'     => 'Admin status',
+                'label'     => getGS('Admin status'),
                 'default'   => $this->getProperty('admin_status'),
                 'options'   => array(
-                                'pending'   => 'pending',
-                                'online'    => 'online',
-                                'offline'   => 'offline',
+                                'pending'   => getGS('pending'),
+                                'online'    => getGS('online'),
+                                'offline'   => getGS('offline'),
                                ),
                 'required'  => true            
             ),
             'reset'     => array(
                 'element'   => 'reset',
                 'type'      => 'reset',
-                'label'     => 'Reset',
+                'label'     => getGS('Reset'),
                 'groupit'   => true
             ),
             'xsubmit'     => array(
                 'element'   => 'xsubmit',
                 'type'      => 'button',
-                'label'     => 'Submit',
+                'label'     => getGS('Submit'),
                 'attributes'=> array('onclick' => 'if (this.form.onsubmit()) this.form.submit()'),
                 'groupit'   => true
             ),
             'cancel'     => array(
                 'element'   => 'cancel',
                 'type'      => 'button',
-                'label'     => 'Cancel',
+                'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ),
@@ -420,8 +425,7 @@ class BlogComment extends DatabaseObject {
                     $this->setProperty('status', $data['BlogComment']['status']);
                 }
                 
-                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id'));  
-                  
+                BlogEntry::TriggerCounters($this->getProperty('fk_entry_id')); 
                 return true;    
             }
         }  
