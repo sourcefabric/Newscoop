@@ -254,12 +254,12 @@ function drawErrorBase(&$manager)
 	    if (!empty($imageAltOpt)) {
 	        $imageAlt = $imageAltOpt;
 	    } else {
-	        $imageAlt = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	        $imageAlt = $image->getDescription();
 	    }
 	    if (!empty($imageTitleOpt)) {
 	        $imageTitle = $imageTitleOpt;
 	    } else {
-	        $imageTitle = htmlspecialchars($image->getDescription(), ENT_QUOTES);
+	        $imageTitle = $image->getDescription();
 	    }
 	    $imageAlign = (!empty($imageAlignOpt)) ? $imageAlignOpt : '';
 	    $imageRatio = (!empty($imageRatioOpt)) ? $imageRatioOpt : '';
@@ -267,11 +267,11 @@ function drawErrorBase(&$manager)
 	    $firstImage = array_shift($list[1]);
 	    if (!empty($firstImage)) {
 	        $templateId = $firstImage['template_id'];
-		$imageUrl = $firstImage['image_object']->getImageUrl();
-		$imageAlt = $firstImage['alt'];
-		$imageTitle = $imageAlt;
-		$imageAlign = '';
-		$imageRatio = '';
+            $imageUrl = $firstImage['image_object']->getImageUrl();
+            $imageAlt = $firstImage['alt'];
+            $imageTitle = $imageAlt;
+            $imageAlign = '';
+            $imageRatio = '';
 	    }
 	}
 	?>
