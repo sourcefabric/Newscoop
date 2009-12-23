@@ -250,13 +250,12 @@ final class MetaSubtitle {
         	$detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
-        $imgString = '</p><table width="1" border="0" cellspacing="0" cellpadding="0" class="cs_img"';
+        $imgString = '</p><div class="cs_img"';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
-            $imgString .= ' align="' . $detailsArray['align'] . '"';
+            $imgString .= ' style="float:' . $detailsArray['align'] . ';"';
         }
         $imgString .= '>';
-        $imgString .= '<tr><td align="center">';
-        $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
+        $imgString .= '<p><img src="/get_img?NrArticle=' . $uri->article->number
         . '&amp;NrImage=' . $imageNumber;
         if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
             $imgString .= '&ImageRatio=' . (int)$detailsArray['ratio'];
@@ -268,7 +267,7 @@ final class MetaSubtitle {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
         }
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-        	$imgString .= ' title="' . $detailsArray['sub'] . '"';
+            $imgString .= ' title="' . $detailsArray['sub'] . '"';
         }
         if (isset($detailsArray['width']) && !empty($detailsArray['width'])) {
             $imgString .= ' width="' . $detailsArray['width'] . '"';
@@ -276,14 +275,11 @@ final class MetaSubtitle {
         if (isset($detailsArray['height']) && !empty($detailsArray['height'])) {
             $imgString .= ' height="' . $detailsArray['height'] . '"';
         }
-        $imgString .= ' border="0" hspace="5" vspace="5">';
-        $imgString .= '</td>';
-        $imgString .= '</tr>';
+        $imgString .= ' border="0"/></p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-            $imgString .= '<tr><td align="center" class="caption">'
-            . $detailsArray['sub'] . '</td></tr>';
+            $imgString .= '<p class="cs_img_caption">' . $detailsArray['sub'] . '</p>';
         }
-        $imgString .= '</table><p>';
+        $imgString .= '</div><p>';
         return $imgString;
     }
 
