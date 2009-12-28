@@ -1,0 +1,7 @@
+1. The upload/installation of the plugin can be done using admin interface, or manually unpack it to campsite/implementation/site/plugins folder.
+
+2. Enable the plugin, and set sufficient admin rights via the stuff management screen to manage it.
+
+3. If you have the demo installation, you can add the interview templates in this package (interview/install/sample_templates) by copying them to templates folder. You will need to go to Campsite admin -> templates afterwards to register them.
+
+Create an section "Interviews" using number 80. Use interview/section-interview.tpl as section and article template. Create an new Interview n admin and check the Interviews section in frontend.

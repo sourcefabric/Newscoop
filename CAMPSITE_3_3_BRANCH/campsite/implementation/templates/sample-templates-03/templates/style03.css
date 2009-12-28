@@ -1,0 +1,483 @@
+body{
+margin: 0;
+}
+.info{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+        color: #fff;
+text-align:left;
+margin: 5px 0 5px 5px;
+}
+.info a{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+        color: #fff;
+text-decoration:none;
+}
+.info a:visited{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+        color: #fff;
+text-decoration:none;
+}
+.info a:hover{
+font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+        color: #fff;
+text-decoration:underline;
+}
+
+.subscribe{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+        color: #333;
+}
+.articleComment-text{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form input {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+	border: 1px solid #333;
+	width: 200px; 
+        margin: 2px 0 2px 0;
+}
+#articleComment form p{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#articleComment form textarea {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	background-color: white;
+	border: 1px solid #333;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 2px 0px 2px;
+}
+#login form input{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+	border: 1px solid #333;
+	width: 115px; 
+        margin: 2px 0 2px 0;
+}
+#login form p{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	margin: 2px 0 0 0;
+}
+#search{
+margin: 0 0 0 0;
+padding: 3px 0 3px 0;
+}
+#search form{
+margin:0;
+padding:0;
+}
+#search form .text{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+        color: #fff;
+}
+#search form .search input{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #000;
+        background-color:#fff;
+	border: 1px solid #333;
+	width: 82px; 
+}
+#search form input{
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #000;
+        background-color:#a9a8a8;
+        border-style: outset;
+        height: 18px;
+        margin-top: 2px;
+}
+.iznad-headera {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #000000;
+	margin: 2px 2px 0px 2px;
+}
+
+a.crno-podvuceno:link {
+	color: #000000;
+	text-decoration: none;
+}
+
+a.crno-podvuceno:active {
+	color: #000000;
+	text-decoration: none;
+}
+
+a.crno-podvuceno:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+a.crno-podvuceno:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+
+.belo {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #FFFFFF;
+	margin: 1px 0px 1px 0px;
+}
+
+.form {
+	margin: 0px 0px 0px 0px;
+}
+
+.field {
+	width: 80px;
+	border: 1px solid #000000;
+	background: #FFFFFF;
+}
+
+.button {
+	margin: 2px 0px 0px 1px;
+}
+
+.hor-bar {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #333333;
+	margin: 1px 5px 1px 5px;
+}
+
+a.hor-bar:link {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.hor-bar:active {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.hor-bar:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.hor-bar:hover {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+p.servis {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #888888;
+	margin: 1px 1px 1px 5px;
+}
+
+a.servis:link {
+	color: #888888;
+	text-decoration: none;
+}
+
+a.servis:active {
+	color: #888888;
+	text-decoration: none;
+}
+
+a.servis:visited {
+	color: #888888;
+	text-decoration: none;
+}
+
+a.servis:hover {
+	color: #333333;
+	text-decoration: none;
+}
+
+td.servis {
+	padding: 0px 0px 0px 3px;
+	border-right: #DDDDDD solid 5px;
+}
+
+
+p.navig-belo {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin: 2px 2px 2px 4px;
+	text-transform: uppercase;
+}
+
+p.navig-crno {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	font-weight: bold;
+	color: #333333;
+	margin: 2px 2px 2px 8px;
+}
+
+a.navig:link {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.navig:active {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.navig:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.navig:hover {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+p.link {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #333333;
+	margin: 3px 3px 3px 8px;
+}
+
+p.datum-front {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #CC0000;
+	margin: 2px 0px 2px 0px;
+}
+
+div.front-slika {
+	width: 160px;
+	margin: 0px 10px 10px 0px;
+	padding: 0px 0px 0px 0px;
+	border-left: 1px solid #999999;
+	border-right: 1px solid #999999;
+	border-bottom: 1px solid #999999;
+	float: left;
+	text-align: center;
+}
+
+p.nadnaslov-front {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	margin: 1px 0px 1px 0px;
+}
+
+p.big-naslov {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #333333;
+	margin: 1px 0px 5px 0px;
+}
+
+p.tekst-front {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	margin: 1px 0px 5px 0px;
+	line-height: 150%;
+}
+
+.dalje {
+	font-weight: bold;
+	color: #CC0000; 
+}
+
+a.dalje:link {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+a.dalje:active {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+a.dalje:visited {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+a.dalje:hover {
+	color: #CC0000;
+	text-decoration: underline;
+}
+
+div.tizeri {
+	width: 100%;
+	float: left;
+	margin: 0px 0px 0px 0px;
+}
+
+ul.tizeri {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 9px;
+	color: #333333;
+	list-style-image: url(img/list.gif);
+	list-style-position: outside;
+	text-indent: 2px;
+	margin: 1px 0px 5px 0px;
+	padding: 0px 0px 0px 13px;
+}
+
+li.tizer {
+	margin: 1px 0px 0px 0px;
+}
+li.tizer a{
+color: #333;
+text-decoration:none;
+}
+li.tizer a:visited{
+color: #333;
+text-decoration:none;
+}
+li.tizer a:hover{
+color: #333;
+text-decoration:underline;
+}
+a.naslov:link {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.naslov:active {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.naslov:visited {
+	color: #333333;
+	text-decoration: none;
+}
+
+a.naslov:hover {
+	color: #333333;
+	text-decoration: underline;
+}
+
+div.sport-slika {
+	width: 72px;
+	margin: 0px 5px 5px 0px;
+	_margin: 0px 5px -5px 0px;
+	padding: 0px 0px 0px 0px;
+	border: 1px solid #999999;
+	float: left;
+	text-align: center;
+}
+
+p.prog-shema {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	margin: 0px 4px 0px 4px;
+}
+
+p.pesma-dana {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	margin: 3px 8px 3px 8px;
+	line-height: 120%;
+}
+
+p.pesma-dana1 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #CC0000;
+	margin: 1px 8px 20px 1px;
+}
+
+a.pesma {
+	color: #CC0000;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+p.pitanje {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	margin: 1px 2px 2px 10px;
+	line-height: 120%;
+}
+
+p.odgovor {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	margin: 3px 2px 2px 10px;
+}
+
+a.rezultat {
+	color: #CC0000;
+	text-decoration: none;
+}
+
+a.rezultat:hover {
+	color: #CC0000;
+	text-decoration: underline;
+}
+
+p.footer {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+}
+
+p.title {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	color: #333333;
+	font-weight: bold;
+	margin: 5px 0px 0px 2px;
+}
+
+p.printer-friendly {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #CC0000;
+	margin: 5px 0px 0px 0px;
+}
+
+a.printer {
+	color: #CC0000;
+	text-decoration: underline;
+}
+
+p.marketing {
+	font-family:  Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	color: #CC0000;
+	margin: 0px 0px 0px 0px;
+}
+
+p.marketing1 {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #333333;
+	margin: 5px 0px 5px 0px;
+}
+td.navigacija{
+	background-image: url(img/hor-tack-sivo-crno.gif);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}

@@ -1,0 +1,36 @@
+<?php 
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "");
+regGS("Unable to add attachment.", "");
+regGS("There was a problem uploading the file.", "");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
+regGS("The maximum file upload size was not configured in Campsite.", "");
+regGS("The file exceeds the allowed max file size.", "");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
+regGS("Maximum Upload Size", "");
+regGS("File Size", "");
+regGS("File Name", "");
+regGS("Download", "");
+regGS("File '$1' updated.", "");
+regGS("File '$1' deleted.", "");
+regGS("File '$1' added.", "");
+regGS("Edit article", "Uredi članak");
+regGS("You do not have the right to delete file attachments.", "Nemate prava brisati zakačene datoteke.");
+regGS("You must select a file to upload.", "Morate označiti datoteku za postavljanje.");
+regGS("You do not have the right to delete files.", "Nemate prava brisati datoteke.");
+regGS("You do not have the right to change the article.", "Nemate ovlasti mijenjati članak.");
+regGS("You do not have the right to change files.", "Nemate ovlasti mijenjati datoteke.");
+regGS("You do not have the right to add files.", "Nemate ovlasti dodavati datoteke.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Da li ova Datoteka treba biti dostupna za ovaj prijevod članka, ili za sve prijevode?");
+regGS("Please enter a description for the file.", "Unesite opis datoteke.");
+regGS("Open in the browser", "Otvori u pretraživaču");
+regGS("Only this translation", "Samo ovaj prijevod");
+regGS("File information", "Podaci o datoteci");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Da li želite da se ova datoteka otvara u pretraživaču korisnika, ili da se automatski preuzme?");
+regGS("Change file information", "Promijeni informacije o datoteci");
+regGS("Automatically download", "Automatsko preuzimanje");
+regGS("Attachments", "Privitci");
+regGS("Attachment does not exist.", "Privitak ne postoji.");
+regGS("Attach File to Article", "Priloži datoteku uz članak");
+regGS("All translations", "Svi prijevodi");
+?>

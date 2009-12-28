@@ -1,0 +1,138 @@
+Creating custom fields for user profiles
+========================================
+
+*** THIS DOCUMENT IS UNDER DEVELOPMENT, SO IT'S NOT YET COMPLETE ***
+
+This documents describes how you can create your own custom fields
+within the profiles of Phorum users. 
+
+
+Table of contents:
+
+1. Introduction
+2. Creating the custom field
+3. Using the custom field
+   3.1 From the registration process
+   3.2 From the user's control center
+   3.3 From a module
+
+
+1. Introduction
+-------------------------------------------------------------------------------
+
+   Phorum users all have their own profile. In this profile, data about
+   the user is stored. By default, Phorum stores for example the
+   username, email address and signature in the user profile. Also
+   user settings like the privacy options are stored in there.
+
+   You might want to add additional fields to the user profile. Example
+   applications for this are adding extra information that will be
+   displayed in user profile screens or storing data and settings for
+   your mods (see also docs/creating_mods.txt, section 2.5).
+
+   Phorum has an easy, built-in system to extend the profile fields,
+   without requiring you to change the structure of the database. So there's
+   no need to actually add columns to the table in which Phorum users are
+   stored in the database.
+
+   This document will explain how to use the custom profile field system.
+
+
+2. Creating the custom field
+-------------------------------------------------------------------------------
+
+
+   Go to the admin for your Phorum installation ({phorum url}/admin.php).
+   There you go to "Custom Profiles" under "Users/Groups". In this screen
+   you can create, update and delete custom user profile fields.
+
+   To add a field, you will have to enter the following data:
+
+   * Field Name
+
+     This is the name that you are going to use for your custom field. 
+     It is not the display name for your field, but the internal name,
+     which is used to reference the field from your code and HTML form
+     elements. You are only allowed to use letters, numbers and
+     underscores (_) for this. So if you want to store the users's shoe
+     size, you could for example use the field name "shoe_size".
+
+     Remark:
+     If you are creating a field for a mod, we recommend you to prefix
+     the field name with mod_<module name>, to prevent collisions with
+     Phorum and other mods. So if you add the shoe_size for a module
+     named "foo", you would name the field "mod_foo_shoe_size".
+     (see also creating_mods.txt, section 3.7.4).
+
+   * Field Length
+
+     This determines the length of the data that can be stored in the
+     database for the custom field. Data which is longer than this
+     value will be automatically truncated to the configured length
+     before being stored in the database.
+
+   * Disable HTML
+
+     If this checkbox is enabled, all characters that have a special
+     meaning in HTML will be automatically escaped when the field is
+     retrieved from the database. This checkbox should always be 
+     checked in case you are directly displaying the field data,
+     without doing any data processing yourself. If you do not follow
+     this rule, it might result in a XSS security problem (see also
+     creating_mods.txt, section 3.6).
+
+     If this checkbox is disabled, you will get the data exactly
+     as it is stored in the database. If you want to display the
+     data, you should take care of properly escaping HTML code
+     yourself.
+
+
+3. Using the custom field
+-------------------------------------------------------------------------------
+
+
+ 3.1 From the registration process
+ ---------------------------------
+
+   If you want to let the user fill in the data for your custom
+   field during registration, you will have to add an input field to
+   the registration template file, which can be found in
+   templates/default/register.tpl (or of course in your own template
+   directory if you are using a custom template).
+   
+   All you have to do is create a standard HTML input field and give it
+   the name of your custom field. Phorum will automatically take care
+   of storing the field's data in the database.
+   
+   In the template you can make use of {REGISTER->fieldname} to get
+   the value of the field "fieldname". This can be used to let your
+   field remember its value during requests.
+
+   Example:
+   To add the shoe_size field to the registration page, you could
+   add the following code to the register.tpl at an appropriate place:
+
+      <input type="text" name="shoe_size" value="{REGISTER->shoe_size}"/>
+
+
+ 3.2 From the user's control center
+ ----------------------------------
+
+   If you want to give the user an option to change the value of your
+   custom field from the control center, you will have to put an input
+   field to the user settings template file, which can be found in
+   templates/default/cc_usersettings.tpl.
+
+
+ 3.3 From a module
+ -----------------
+
+
+======================================================================
+Bits and pieces:
+
+   You can use all HTML field types, but we 
+   recommend not to use checkboxes, because you will have to write
+   special code to handle them. Instead you could use a <select>
+   list with two options ("on" and "off").
+

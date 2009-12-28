@@ -1,0 +1,518 @@
+#!/usr/bin/php
+<?php
+
+if (!is_array($GLOBALS['argv'])) {
+    echo "Can't read command line arguments\n";
+    exit(1);
+}
+
+$CAMPSITE_DIR = dirname(dirname(__FILE__));
+$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
+$ETC_DIR = $CAMPSITE_DIR . '/conf';
+
+$archive_file = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : '';
+$options = getopt("t:efc:slh");
+
+
+// define the cleanup function
+function __exit_cleanup()
+{
+    global $tempDirName;
+    
+    if (!empty($tempDirName)) {
+        camp_remove_dir($tempDirName);
+    }
+}
+
+
+echo "\nCampsite Restore Utility\n";
+echo "------------------------\n";
+
+$usage =
+"  Usage:
+  campsite-restore <backup_file> [-t <destination_database_name>] [-e] [-f] \
+                   [-c <charset>]|[-s]
+  campsite-restore -l
+  campsite-restore -h
+
+  This script will replace existing data installation with that in the
+  backup file.  You must run this script from a directory that you
+  have write access to because this script needs to create a temporary
+  directory.  Note that your backup database and files will automatically
+  be upgraded if they are older than the currently installed version
+  of Campsite.
+
+  Note: For multiple installations of Campsite on a single server, you
+  must run this script from the installation directory where you want to
+  restore the data.  For example, if you have installed Campsite
+  in two locations: /var/www/cs1 and /var/www/cs2, and you want to
+  restore the data for the 'foo' installation, you must run
+  /var/www/cs1/bin/campsite-restore,
+  and NOT /var/www/cs2/bin/campsite-restore.
+
+  Parameters:
+    <backup_file>
+        The tarball created by the 'campsite-backup' script.
+        Give the full or relative path to the file.
+
+    [-t <destination_database_name>]
+        If this is specified, the script will use the database name
+        specified instead of the one specified in the backup file.
+        This is useful for site-to-site transfer of a website, that is,
+        moving your website from one server to another.
+
+    [-e]
+        Use the existing configuration files instead of the ones in the
+        backup file. In other words, the existing config files in the
+        current installation will not be replaced. This parameter takes
+        precedence over -t parameter. E.g.: the database name will be
+        read from the existing database configuration file, not from the
+        -t option.
+
+    [-c <charset>]
+        Convert the database data from <charset> to UTF-8.
+
+    [-s]
+        Convert the database data from the database server character set
+        to UTF-8.
+
+    [-l]
+        List all available charsets and exit.
+
+    [-f]
+        Dont prompt, assume 'yes' to questions.
+    
+    [-h]
+        Show this help and exit.
+
+  See also:
+      campsite-backup
+
+";
+
+// display help if -h parameter was supplied
+if (isset($options['h'])) {
+    echo $usage;
+    exit(0);
+}
+
+// initialize options variables from command line parameters
+$useExistingConfig = isset($options['e']);
+$doPrompt = !isset($options['f']);
+$destDbSpecified = isset($options['t']);
+$destDbName = isset($options['t']) ? $options['t'] : "";
+$convertToUTF = isset($options['c']) || isset($options['s']);
+
+
+// include the utils library
+require_once("cli_script_lib.php");
+
+// include the install configuration script
+if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+    camp_exit_with_error("Unable to read the install configuration file!");
+}
+// include install configuration file
+require_once("$ETC_DIR/install_conf.php");
+
+if ($useExistingConfig || isset($options['l'])) {
+    if (!file_exists($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File 'database_conf.php' does not exist. Is Campsite installed?\n\n";
+        exit(1);
+    }
+    if (!is_writable($ETC_DIR.'/database_conf.php')) {
+        echo "ERROR! File 'database_conf.php' is not writable by this script.\n\n";
+        exit(1);
+    }
+}
+
+
+// display the list of available character sets if the option -l was supplied
+if (isset($options['l'])) {
+    require_once("$ETC_DIR/database_conf.php");
+    camp_connect_to_database();
+    echo "The list of available charsets:\n";
+    $charsetsList = camp_get_all_charsets();
+    foreach ($charsetsList as $charsetName=>$charsetDescription) {
+        echo "- $charsetName: $charsetDescription\n";
+    }
+    exit(0);
+}
+
+
+// verify if the command line parameters were valid
+if (empty($archive_file) || ($destDbSpecified && $destDbName == "")
+|| (array_search('-c', $GLOBALS['argv']) !== false && empty($options['c']))) {
+    echo $usage;
+    camp_exit_with_error("Invalid parameters; please read the usage description above.");
+}
+
+if (!file_exists($archive_file)) {
+    camp_exit_with_error("The backup file you specified does not exist.");
+}
+
+if (!is_writable(getcwd())) {
+    camp_exit_with_error("You do not have permissions to the currect directory.");
+}
+
+// If convert to UTF-8 verify if the source character set was valid.
+if ($convertToUTF) {
+    require_once("$ETC_DIR/database_conf.php");
+    camp_connect_to_database();
+    $fromCharset = isset($options['c']) ? $options['c'] : camp_get_server_charset();
+    if (!camp_valid_charset($fromCharset)) {
+        camp_exit_with_error("Invalid charset '$fromCharset'!");
+    }
+    if ($doPrompt) {
+        echo "\nWARNING! The conversion to UTF-8 may break your database content!\n";
+        echo "If you broke your database content it can not be recovered unless\n";
+        echo "you restore the database from a backup!\n\n";
+        echo "Do you want to continue the conversion now? (y/N): ";
+        if (strtolower(trim(camp_readline())) != 'y') {
+            echo "Restore operation aborted by the user!\n";
+            exit(1);
+        }
+    }
+    mysql_close();
+}
+
+
+/*
+ * Start the restore operation.
+ */
+
+$adviceOnError = "Please run this script as '" . $Campsite['APACHE_USER'] . "' or as 'root'.";
+
+//
+// Get the name of the directory that will be untarred.
+//
+echo " * Initializing...\n";
+$archiveExtension = pathinfo($archive_file, PATHINFO_EXTENSION);
+if ($archiveExtension == "gz") {
+    $tarGzOption = "z";
+} else {
+    $tarGzOption = "";
+}
+$isNewBackupFormat = true;
+$cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file)." | grep sql";
+exec($cmd, $output);
+if (count($output) == 0) {
+    $isNewBackupFormat = false;
+    $cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file);
+    exec($cmd, $output);
+    if (count($output) == 0) {
+        camp_exit_with_error("Invalid backup file.");
+    }
+    echo "   * Old backup file detected (pre-2.6.0)\n";
+}
+$output = array_pop($output);
+if ($isNewBackupFormat) {
+    $parts = split("/", $output);
+    $tempDirName = array_shift($parts);
+} else {
+    $tempDirName = "backup-temp-".date("Y-m-d-H-i-s");
+}
+echo "   * Temp directory: $tempDirName\n";
+echo "   * Initialization done.\n";
+
+if (file_exists($tempDirName)) {
+    echo "\nThis script needs to create a temporary directory named '$tempDirName',\n";
+    echo "but the directory already exists.  Please delete the existing directory or move it out of the way.\n\n";
+    exit(1);
+}
+
+//
+// Untar the backup
+//
+echo " * Extracting files into temp directory...";
+if ($isNewBackupFormat) {
+    $cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file);
+    camp_exec_command($cmd, $adviceOnError);
+} else {
+    camp_create_dir($tempDirName);
+    $currentDir = getcwd();
+    chdir($tempDirName);
+    $cmd = "tar xf$tarGzOption " . escapeshellarg("../".$archive_file) . " &> /dev/null";
+    camp_exec_command($cmd, $adviceOnError);
+    chdir($currentDir);
+}
+
+if (!file_exists($tempDirName)) {
+    echo "ERROR! Could not extract archive.\n\n";
+    exit(1);
+}
+
+//
+// Get the original database name from the extracted files.
+//
+$database_dump_file = glob("$tempDirName/*-database*");
+if (sizeof($database_dump_file) != 1) {
+    camp_exit_with_error("Archive $archive_file is invalid.");
+}
+$db_file_name = basename($database_dump_file[0]);
+$origDbName = substr($db_file_name, 0, strrpos($db_file_name, '-'));
+
+if (!$destDbSpecified) {
+    // Use the config parameters specified in the backup file.
+    $destDbName = $origDbName;
+}
+
+// If old backup format, extract the tar files inside the tar file.
+if (!$isNewBackupFormat) {
+    $packages = glob("$tempDirName/$origInstanceName-*.tar.gz");
+    foreach ($packages as $index => $package) {
+        $package_name = basename($package);
+        if ($package == "") {
+            continue;
+        }
+        $currentDir = getcwd();
+        chdir($tempDirName);
+        camp_exec_command("tar xzf " . escapeshellarg($package_name), $adviceOnError);
+        chdir($currentDir);
+    }
+}
+echo "done.\n";
+
+//
+// Get the version from the backup archive.
+//
+$backup_version_file = glob("$tempDirName/BACKUP-VERSION*");
+if (sizeof($backup_version_file) != 1) {
+    camp_exit_with_error("Archive $archive_file is invalid.");
+}
+$bversion_file_name = basename($backup_version_file[0]);
+$backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
+
+if ($useExistingConfig) {
+    $includeFile = "$ETC_DIR/database_conf.php";
+} else {
+    if ($backupVersion < 3) { 
+        $includeFile = "$tempDirName/$origDbName/database_conf.php";
+    } else {
+        $includeFile = "$tempDirName/conf/database_conf.php";
+    }
+}
+
+// Check if the database configuration file exists.
+if (!file_exists($includeFile)) {
+    echo "\nThe database configuration file '$includeFile' does not exist.\n";
+    echo "It is likely because Campsite is not properly installed.\n";
+    echo "Please run the Web installer and try restoring from the backup after that.\n\n";
+    echo " * Cleaning up...";
+    camp_remove_dir($tempDirName);
+    echo "done.\n\n";
+    exit(1);
+}
+
+// Check if configuration file is readable.
+if (!camp_is_readable($includeFile)) {
+    echo " * Cleaning up...";
+    camp_remove_dir($tempDirName);
+    echo "done.\n\n";
+    exit(1);
+}
+require($includeFile);
+$destDbName = $Campsite['DATABASE_NAME'];
+camp_connect_to_database();
+
+echo " * Backup database name is '$origDbName'.\n";
+echo " * Destination database name (to be replaced) is '$destDbName'.\n";
+
+
+//
+// Restore the backup files
+//
+if ($backupVersion < 3) {
+    if (!camp_is_empty_dir("$tempDirName/look")) {
+        $templatesSrcDir = "$tempDirName/look";
+        $packageTemplatesDirName = 'look';
+    } else {
+        $templatesSrcDir = null;
+    }
+    $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
+} else {
+    $templatesSrcDir = "$tempDirName/templates";
+    $packageTemplatesDirName = 'templates';
+    $configSrcDir = "$tempDirName/conf/database_conf.php";
+}
+
+$fileSrcDir = "$tempDirName/files";
+$imagesSrcDir = "$tempDirName/images";
+$configDestDir = $ETC_DIR;
+$filesDestDir = $CAMPSITE_DIR.'/files';
+$imagesDestDir = $CAMPSITE_DIR.'/images';
+$templatesDirName = 'templates';
+$templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
+$compiledTemplatesDir = $CAMPSITE_DIR.'/templates_c';
+
+$destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
+
+foreach ($destDirs as $dir) {
+    if (!file_exists($dir)) {
+        echo "ERROR! Directory $dir does not exist. Is Campsite installed?\n\n";
+        exit(1);
+    }
+    if (!is_writable($dir)) {
+        echo "ERROR! Directory $dir is not writable by this script.\n\n";
+        exit(1);
+    }
+}
+
+if ($doPrompt) {
+    // Clear out all files currently residing in these directories
+    echo "\n All files in the following directories will be deleted.\n";
+    echo " (The backup files will be copied to these locations)\n";
+    foreach ($destDirs as $dir) {
+        echo "    ".$dir."\n";
+    }
+    $answer = "dummy_value";
+    while (!in_array($answer, array('y','n', ''))) {
+        echo " Are you sure you want to continue? (y/N) ";
+        $answer = camp_readline();
+        $answer = strtolower(trim($answer));
+    }
+    if ($answer == 'n' || $answer == '') {
+        echo "\n Restore cancelled.\n";
+        echo " * Cleaning up...";
+        camp_remove_dir($tempDirName);
+        echo "done.\n\n";
+        exit(0);
+    }
+}
+
+//
+// Remove all existing files...
+//
+foreach ($destDirs as $dir) {
+    echo " * Removing files in $dir...";
+    camp_remove_dir($dir."/*");
+    echo "done.\n";
+}
+
+//
+// Restore files from backup...
+//
+echo " * Restoring templates...";
+if (!is_null($templatesSrcDir)) {
+    camp_copy_files($templatesSrcDir, $CAMPSITE_DIR);
+    if ($packageTemplatesDirName != $templatesDirName) {
+        camp_remove_dir($templatesDestDir);
+        rename($CAMPSITE_DIR.'/'.$packageTemplatesDirName, $templatesDestDir);
+    }
+}
+echo "done.\n";
+
+echo " * Restoring images...";
+camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
+echo "done.\n";
+
+echo " * Restoring file attachments...";
+camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
+echo "done.\n";
+
+if (!$useExistingConfig) {
+    if ($backupVersion < 3) {
+        echo " * Restoring configuration...";
+        $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
+        $newConfigFile = camp_migrate_config_file($configFile);
+        @file_put_contents("$ETC_DIR/database_conf.php", $newConfigFile);
+    } else {
+        camp_copy_files($configSrcDir, $CAMPSITE_DIR);
+    }
+    echo "done.\n";
+}
+
+//
+// Converting template files if necessary
+//
+if ($backupVersion < 3) {
+    echo " * Converting templates...";
+    require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
+    $template_files = camp_read_files($CAMPSITE_DIR.'/templates');
+    $converter = new TemplateConverter();
+    foreach($template_files as $template_file) {
+        $converter->read($template_file);
+        $converter->parse();
+        $converter->write();
+    }
+    echo "done.\n";
+}
+
+//
+// Restore the database...
+//
+echo " * Restoring the database...";
+if (camp_database_exists($destDbName)) {
+    camp_clean_database($destDbName);
+} else {
+    if (!mysql_query("CREATE DATABASE `$destDbName` CHARACTER SET utf8")) {
+        camp_exit_with_error("Can't create database $destDbName");
+    }
+}
+
+$sqlFile = "$tempDirName/$origDbName-database.sql";
+camp_restore_database($sqlFile);
+$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+    . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+    . $Campsite['DATABASE_SERVER_PORT'];
+echo "done.\n";
+
+// If database version is minor than 2.6.0 we do nothing but exit the
+// script as we only care about upgrading newer Campsites.
+camp_detect_database_version($destDbName, $dbVersion);
+if ($dbVersion < '2.6.0') {
+    echo "\n You must upgrade to Campsite 2.6 or 2.7 first, after that";
+    echo "\n run this script again to upgrade to 3.0.\n\n";
+    echo " * Cleaning up...";
+    camp_clean_database($destDbName);
+    @mysql_query("DROP DATABASE `$destDbName`");
+    camp_remove_dir($tempDirName);
+    echo "done.\n\n";
+    exit(1);
+}
+
+// Upgrade the database
+echo " * Upgrading (if necessary)...";
+$res = camp_upgrade_database($destDbName);
+if ($res !== 0) {
+    camp_exit_with_error($res);
+}
+echo "   done.\n";
+
+if ($convertToUTF) {
+    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
+
+    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
+    if (camp_backup_database($destDbName, $dumpFile, $output,
+    array("--default-character-set=$fromCharset")) != 0) {
+        camp_exit_with_error("Unable to backup the database $destDbName\n"
+        . implode("\n", $output));
+    }
+    $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
+    camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
+    camp_restore_database($outDumpFile);
+    unlink($dumpFile);
+    unlink($outDumpFile);
+
+    echo "   done.\n";
+}
+
+//
+// Remove the temp dir.
+//
+echo " * Cleaning up...";
+camp_remove_dir($tempDirName);
+echo "done.\n\n";
+
+if ($useExistingConfig || $destDbSpecified) {
+    echo
+"Note: If you are doing a site-to-site transfer you may have to fix the
+aliases in your publications before the frontend will work.  An alias
+is the base URL for your publication. To change an alias, login to the
+administration interface and go to the publication configure screen.\n\n";
+}
+
+echo "IMPORTANT!\n";
+echo "You must restart the apache server for the changes to take effect!\n";
+exit;
+
+?>
