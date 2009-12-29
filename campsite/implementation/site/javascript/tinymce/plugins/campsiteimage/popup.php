@@ -14,22 +14,24 @@ $imageParams = '';
 if (isset($_REQUEST['image_id'])) {
     $imageParams = '&image_id=' . $_REQUEST['image_id'];
     if (isset($_REQUEST['image_alt'])) {
-        $imageParams .= '&image_alt=' . htmlspecialchars($_REQUEST['image_alt'], ENT_QUOTES);
+        $imageParams .= '&image_alt=' . str_replace('\\', '', $_REQUEST['image_alt']);
     }
     if (isset($_REQUEST['image_title'])) {
-        $imageParams .= '&image_title=' . htmlspecialchars($_REQUEST['image_title'], ENT_QUOTES);
+        $imageParams .= '&image_title=' . str_replace('\\', '', $_REQUEST['image_title']);
     }
     if (isset($_REQUEST['image_alignment'])) {
-        $imageParams .= '&image_alignment=' . htmlspecialchars($_REQUEST['image_alignment'], ENT_QUOTES);
+        if (in_array($_REQUEST['image_alignment'], array('left','right','middle'))) {
+            $imageParams .= '&image_alignment=' . $_REQUEST['image_alignment'];
+        }
     }
     if (isset($_REQUEST['image_ratio'])) {
-        $imageParams .= '&image_ratio=' . htmlspecialchars($_REQUEST['image_ratio'], ENT_QUOTES);
+        $imageParams .= '&image_ratio=' . (int) $_REQUEST['image_ratio'];
     }
     if (isset($_REQUEST['image_resize_width'])) {
-        $imageParams .= '&image_resize_width=' . htmlspecialchars($_REQUEST['image_resize_width'], ENT_QUOTES);
+        $imageParams .= '&image_resize_width=' . (int) $_REQUEST['image_resize_width'];
     }
     if (isset($_REQUEST['image_resize_height'])) {
-        $imageParams .= '&image_resize_height=' . htmlspecialchars($_REQUEST['image_resize_height'], ENT_QUOTES);
+        $imageParams .= '&image_resize_height=' . (int) $_REQUEST['image_resize_height'];
     }
 }
 ?>
