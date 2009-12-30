@@ -26,6 +26,11 @@ if (PEAR::isError($resp)) {
 }
 
 $file = Archive_File::Get($fileGunId);
+if ($file == false || $file->exists() == false) {
+    echo 'File does not exist';
+    exit;
+}
+
 $mask = $file->getMask();
 $fileTypeTitle = ucwords($file->getFileType());
 

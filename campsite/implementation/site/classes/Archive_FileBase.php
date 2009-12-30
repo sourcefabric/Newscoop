@@ -242,7 +242,7 @@ class Archive_FileBase
         	foreach ($this->m_mask['pages'][$key] as $k => $v) {
         		$element_encode = str_replace(':','_',$v['element']);
         		if (isset($p_formData['f_'.$key.'_'.$element_encode])
-        		&& !empty($p_formData['f_'.$key.'_'.$element_encode])) {
+                        && !empty($p_formData['f_'.$key.'_'.$element_encode])) {
         			list($predicate_ns, $predicate) = explode(':', $v['element']);
         			$recordSet['gunid'] = $this->m_gunId;
         			$recordSet['predicate_ns'] = $predicate_ns;
@@ -323,7 +323,7 @@ class Archive_FileBase
 
 
     /**
-     * Validates an audioclip file by its extension.
+     * Validates an audioclip file by extension.
      *
      * @param $p_fileName
      *      The name of the audioclip file
@@ -333,9 +333,9 @@ class Archive_FileBase
      */
     public function isValidFileType($p_fileName)
     {
-        foreach ($this->m_fileTypes as $t) {
-            if (preg_match('/'.str_replace('/', '\/', $t).'$/i', $p_fileName))
-                return true;
+        $ext = strrchr($p_fileName, '.');
+        if (in_array($ext, $this->m_fileTypes)) {
+            return true;
         }
         return false;
     } // fn isValidFileType
@@ -378,24 +378,24 @@ class Archive_FileBase
         global $mdefs;
 
         $xrc = XR_CcClient::Factory($mdefs, true);
-	if (PEAR::isError($xrc)) {
-	    return $xrc;
-	}
+        if (PEAR::isError($xrc)) {
+            return $xrc;
+        }
 
-	// TODO: get the proper session id
-    $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-	$result = $xrc->xr_searchMetadata($sessid, $p_criteria);
-	if (PEAR::isError($result)) {
-	    return $result;
-	}
-	$files = array();
-	foreach ($result['results'] as $fileMetaData) {
-	    $file = new Archive_FileBase($fileMetaData['gunid']);
-	    if ($file->exists()) {
-	        $files[] = $file;
-	    }
-	}
-    	return array($result['cnt'], $files);
+        // TODO: get the proper session id
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
+        $result = $xrc->xr_searchMetadata($sessid, $p_criteria);
+        if (PEAR::isError($result)) {
+            return $result;
+        }
+        $files = array();
+        foreach ($result['results'] as $fileMetaData) {
+            $file = new Archive_FileBase($fileMetaData['gunid']);
+            if ($file->exists()) {
+                $files[] = $file;
+            }
+        }
+        return array($result['cnt'], $files);
     } // fn SearchFiles
 
 
@@ -472,7 +472,7 @@ class Archive_FileBase
      *      The gunid on success, PEAR Error on failure
      */
     public static function Store($p_sessId, $p_filePath,
-				 $p_metaData, $p_fileType)
+                                 $p_metaData, $p_fileType)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_filePath));
@@ -481,7 +481,7 @@ class Archive_FileBase
         $checkSum = md5_file($p_filePath);
         $xmlString = self::CreateXMLTextFile($p_metaData, $p_fileType);
         $gunId = Archive_FileXMLMetadata::Upload($p_sessId, $p_filePath, $gunId,
-						 $xmlString, $checkSum, $p_fileType);
+            $xmlString, $checkSum, $p_fileType);
         if (PEAR::isError($gunId)) {
             return $gunId;
         }

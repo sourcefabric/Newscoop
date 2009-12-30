@@ -88,7 +88,7 @@ YAHOO.camp.Data = {
   <?php
   foreach ($files as $file) {
   ?>
-    {filecheck:"<?php echo $file->getGunId(); ?>", filename:"<?php echo htmlspecialchars($file->getMetatagValue('title').'_'.$file->getGunId()); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getModifiedTime()); ?>"},
+    {filecheck:"<?php echo $file->getGunId(); ?>", fileicon:"<?php echo $file->getType(); ?>", filename:"<?php echo htmlspecialchars($file->getMetatagValue('title').'_'.$file->getGunId()); ?>", filesize:"<?php echo htmlspecialchars(camp_format_bytes($file->getMetatagValue('filesize'))); ?>", filetype:"<?php echo htmlspecialchars($file->getMetatagValue('format')); ?>", filedate:"<?php echo htmlspecialchars($file->getModifiedTime()); ?>"},
   <?php
   }
   ?>
@@ -145,12 +145,17 @@ YAHOO.util.Event.addListener(window, "load", function() {
     };
 
     YAHOO.widget.DataTable.Formatter.check = function (elLiner, oRecord, oColumn, oData) {
-      elLiner.innerHTML = '<input type="checkbox" name="filerow" value="'+ oData +'"' + (checked[oData] ? ' checked="checked">' : '>');
+      elLiner.innerHTML = '<input type="checkbox" name="filerow" value="'+ oData + '"' + (checked[oData] ? ' checked="checked">' : '>');
+    };
+
+    YAHOO.widget.DataTable.Formatter.icon = function (elLiner, oRecord, oColumn, oData) {
+      elLiner.innerHTML = '<img src="/css/filearchive_' + oData + '.png" />';
     };
 
     // Columns definition
     var myColumnDefs = [
       {key:"filecheck",label:"<input id=\"chkall\" name=\"chkall\" value=\"\" type=\"checkbox\">",formatter:"check"},
+      {key:"fileicon", label:"",width:"auto",formatter:"icon"},
       {key:"filename",label:"<?php putGS('Name'); ?>",width:300,resizeable:true,sortable:true,formatter:YAHOO.widget.DataTable.formatLink},
       {key:"filesize",label:"<?php putGS('Size'); ?>",width:"auto",sortable:true},
       {key:"filetype",label:"<?php putGS('Type'); ?>",width:"auto",sortable:true},
@@ -164,7 +169,8 @@ YAHOO.util.Event.addListener(window, "load", function() {
       myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
       myDataSource.responseSchema = {
       fields: [
-	{key:"filecheck"},
+        {key:"filecheck"},
+        {key:"fileicon", parser:"string"},
         {key:"filename", parser:"string"},
         {key:"filesize", parser:"string"},
         {key:"filetype", parser:"string"},

@@ -41,49 +41,49 @@ if ($data->Results->success) {
 
     if (PEAR::isError($filePath)) {
         $data->Results->success = false;
-	$data->Results->camp_error = getGS($filePath->getMessage());
-	eval($fileClassName."::DeleteTemporaryFile('$filePath');");
-	// php >= 5.3.0
-	//$fileClassName::DeleteTemporaryFile($uploadFile['tmp_name']);
+        $data->Results->camp_error = getGS($filePath->getMessage());
+        eval($fileClassName."::DeleteTemporaryFile('$filePath');");
+        // php >= 5.3.0
+        //$fileClassName::DeleteTemporaryFile($uploadFile['tmp_name']);
     }
 
     if ($data->Results->success) {
         $sessId = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-	$metaDataArray = array();
-	$mask = $fileObj->getMask();
-	$metaData = camp_get_metadata($filePath);
+        $metaDataArray = array();
+        $mask = $fileObj->getMask();
+        $metaData = camp_get_metadata($filePath);
 
-	foreach($mask['pages'] as $key => $val) {
-	  foreach($mask['pages'][$key] as $k => $v) {
-	        $element = $v['element'];
+        foreach($mask['pages'] as $key => $val) {
+            foreach($mask['pages'][$key] as $k => $v) {
+                $element = $v['element'];
                 $metaTagValue = (isset($metaData[$element])) ? $metaData[$element] : null;
-		if ($element == 'dcterms:extent') {
-		    $metaTagValue = (string) round((float) $metaTagValue, 6);
-		}
-                if (!is_null($metaTagValue) && $metaTagValue != '') {
-		    $metaDataArray[$v['element']] = $metaTagValue;
+                if ($element == 'dcterms:extent') {
+                    $metaTagValue = (string) round((float) $metaTagValue, 6);
                 }
-	    }
-	}
+                if (!is_null($metaTagValue) && $metaTagValue != '') {
+                    $metaDataArray[$v['element']] = $metaTagValue;
+                }
+            }
+        }
 
-	eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
-	//$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
-	if (PEAR::isError($fileGunid)) {
-	    $data->Results->success = false;
-	    $data->Results->camp_error = getGS('There was an error while saving the file: $1', $fileGunid->getMessage());
-	    eval($fileClassName."::DeleteTemporaryFile('$filePath');");
-	    //$fileClassName::DeleteTemporaryFile($filePath);
-	} else {
-	    eval($fileClassName."::OnFileStore('$filePath');");
-	    //$fileClassName::OnFileStore($filePath);
+        eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
+        //$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
+        if (PEAR::isError($fileGunid)) {
+            $data->Results->success = false;
+            $data->Results->camp_error = getGS('There was an error while saving the file: $1', $fileGunid->getMessage());
+            eval($fileClassName."::DeleteTemporaryFile('$filePath');");
+            //$fileClassName::DeleteTemporaryFile($filePath);
+        } else {
+            eval($fileClassName."::OnFileStore('$filePath');");
+            //$fileClassName::OnFileStore($filePath);
 
-	    $data->Results->file_desc = $file_title;
-	    $data->Results->file_type = $uploadFile['type'];
-	    $data->Results->file_name = $uploadFile['name'];
-	    $data->Results->file_size = $uploadFile['size'];
-	    $data->Results->file_error = $uploadFile['error'];
-	    $data->Results->file_mdata = $metaData;
-	}
+            $data->Results->file_desc = $file_title;
+            $data->Results->file_type = $uploadFile['type'];
+            $data->Results->file_name = $uploadFile['name'];
+            $data->Results->file_size = $uploadFile['size'];
+            $data->Results->file_error = $uploadFile['error'];
+            $data->Results->file_mdata = $metaData;
+        }
     }
 }
 
