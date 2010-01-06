@@ -18,45 +18,45 @@ class Archive_VideoFile extends Archive_FileBase
 
     protected $m_metatagLabels = array(
         'dc:title' => 'Title',
-	'dc:creator' => 'Creator',
-	'dc:type' => 'Genre',
-	'dc:format' => 'File format',
-	'dcterms:extent' => 'Length',
-	'dc:title' => 'Title',
-	'dc:creator' => 'Creator',
-	'dc:source' => 'Album',
-	'dc:playtime_string' => 'Play time',
-	'ls:year' => 'Year',
-	'dc:type' => 'Genre',
-	'dc:description' => 'Description',
-	'dc:format' => 'Format',
-	'dcterms:extent' => 'Length',
-	'ls:audio_encoded_by' => 'Encoded by',
-	'ls:composer' => 'Composer',
-	'ls:bitrate' => 'Bitrate',
-	'ls:video_bitrate' => 'Video Bitrate',
-	'ls:audio_bitrate' => 'Audio Bitrate',
-	'ls:audio_channels' => 'Channels',
-	'ls:audio_samplerate' => 'Sample rate',
-	'ls:video_encoder' => 'Video encoder software used',
-	'ls:audio_encoder' => 'Audio encoder software used',
-	'dc:title' => 'Title',
-	'dc:description' => 'Description',
-	'dc:creator' => 'Creator',
-	'dc:subject' => 'Subject',
-	'dc:type' => 'Genre',
-	'dc:format' => 'Format',
-	'dc:title' => 'Title',
-	'dc:creator' => 'Creator',
-	'dcterms:extent' => 'Length',
-	'dc:description' => 'Description',
-	'ls:mtime' => 'Modified time',
-	'ls:filesize' => 'File size',
-	'ls:video_total_frames' => 'Total frames',
-	'ls:video_frame_rate' => 'Frame rate',
-	'ls:video_frame_width' => 'Frame width',
-	'ls:video_frame_height' => 'Frame height',
-	'ls:video_bgcolor' => 'Background color'
+        'dc:creator' => 'Creator',
+        'dc:type' => 'Genre',
+        'dc:format' => 'File format',
+        'dcterms:extent' => 'Length',
+        'dc:title' => 'Title',
+        'dc:creator' => 'Creator',
+        'dc:source' => 'Album',
+        'dc:playtime_string' => 'Play time',
+        'ls:year' => 'Year',
+        'dc:type' => 'Genre',
+        'dc:description' => 'Description',
+        'dc:format' => 'Format',
+        'dcterms:extent' => 'Length',
+        'ls:audio_encoded_by' => 'Encoded by',
+        'ls:composer' => 'Composer',
+        'ls:bitrate' => 'Bitrate',
+        'ls:video_bitrate' => 'Video Bitrate',
+        'ls:audio_bitrate' => 'Audio Bitrate',
+        'ls:audio_channels' => 'Channels',
+        'ls:audio_samplerate' => 'Sample rate',
+        'ls:video_encoder' => 'Video encoder software used',
+        'ls:audio_encoder' => 'Audio encoder software used',
+        'dc:title' => 'Title',
+        'dc:description' => 'Description',
+        'dc:creator' => 'Creator',
+        'dc:subject' => 'Subject',
+        'dc:type' => 'Genre',
+        'dc:format' => 'Format',
+        'dc:title' => 'Title',
+        'dc:creator' => 'Creator',
+        'dcterms:extent' => 'Length',
+        'dc:description' => 'Description',
+        'ls:mtime' => 'Modified time',
+        'ls:filesize' => 'File size',
+        'ls:video_total_frames' => 'Total frames',
+        'ls:video_frame_rate' => 'Frame rate',
+        'ls:video_frame_width' => 'Frame width',
+        'ls:video_frame_height' => 'Frame height',
+        'ls:video_bgcolor' => 'Background color'
     );
 
     protected $m_mask = array(
@@ -204,8 +204,30 @@ class Archive_VideoFile extends Archive_FileBase
 	)
     );
 
-    protected $m_fileTypes = array('.avi','.wmv','.wma','.mpg','.mpeg',
-				   '.mov','.rm','.mp4','.mkv','.nsv');
+    protected $m_fileTypes = array(
+        '.avi'  => array('name' => 'Microsoft Video',
+                         'icon' => 'filearchive_video.png'),
+        '.wmv'  => array('name' => 'Windows Media Video',
+                         'icon' => 'filearchive_video.png'),
+        '.wma'  => array('name' => 'Windows Media Audio',
+                         'icon' => 'filearchive_video.png'),
+        '.mpg'  => array('name' => 'MPEG video',
+                         'icon' => 'filearchive_video.png'),
+        '.mpeg' => array('name' => 'MPEG video',
+                         'icon' => 'filearchive_video.png'),
+        '.mov'  => array('name' => 'Macintosh Quicktime',
+                         'icon' => 'filearchive_video.png'),
+        '.qt'   => array('name' => 'Macintosh Quicktime',
+                         'icon' => 'filearchive_video.png'),
+        '.rm'   => array('name' => 'RealMedia',
+                         'icon' => 'filearchive_video.png'),
+        '.mp4'  => array('name' => 'MPEG-4 format',
+                         'icon' => 'filearchive_video.png'),
+        '.mkv'  => array('name' => 'Matroska Video',
+                         'icon' => 'filearchive_video.png'),
+        '.nsv'  => array('name' => 'Nullsoft Streaming Video',
+                         'icon' => 'filearchive_video.png')
+    );
 
 
     /**
@@ -220,14 +242,17 @@ class Archive_VideoFile extends Archive_FileBase
     } // constructor
 
 
+    /**
+     * @return string
+     */
     public function getFileType()
     {
-      return $this->m_fileType;
+        return $this->m_fileType;
     }
 
 
     /**
-     *
+     * @return array
      */
     public function getMetatagLabels()
     {
@@ -236,7 +261,7 @@ class Archive_VideoFile extends Archive_FileBase
 
 
     /**
-     *
+     * @return array
      */
     public function getMask()
     {
@@ -279,18 +304,19 @@ class Archive_VideoFile extends Archive_FileBase
     public static function SearchAudioFiles($offset = 0, $limit = 0,
                                             $conditions = array(),
                                             $operator = 'and',
-					    $orderby = 'dc:creator, dc:source, dc:title',
+                                            $orderby = 'dc:creator, dc:source, dc:title',
                                             $desc = false)
     {
-      	$criteria = array('filetype' => 'video',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return parent::SearchFiles($criteria);
+      	$criteria = array(
+      	    'filetype' => 'video',
+            'operator' => $operator,
+            'limit' => $limit,
+            'offset' => $offset,
+            'orderby' => $orderby,
+            'desc' => $desc,
+            'conditions' => $conditions
+        );
+        return parent::SearchFiles($criteria);
     } // fn SearchAudioFile
 
 
@@ -329,27 +355,28 @@ class Archive_VideoFile extends Archive_FileBase
      *      Array of Audioclip objects
      */
     public static function BrowseCategory($p_category, $offset = 0, $limit = 0,
-					  $conditions = array(),
+                                          $conditions = array(),
                                           $operator = 'and',
-					  $orderby = 'dc:creator, dc:source, dc:title',
+                                          $orderby = 'dc:creator, dc:source, dc:title',
                                           $desc = false)
     {
         global $mdefs;
 
         $xrc = XR_CcClient::Factory($mdefs, true);
-	if (PEAR::isError($xrc)) {
-	    return $xrc;
-	}
+        if (PEAR::isError($xrc)) {
+            return $xrc;
+        }
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-	$criteria = array('filetype' => 'video',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+        $criteria = array(
+            'filetype' => 'video',
+            'operator' => $operator,
+            'limit' => $limit,
+            'offset' => $offset,
+            'orderby' => $orderby,
+            'desc' => $desc,
+            'conditions' => $conditions
+        );
+        return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
     } // fn BrowseCategory
 
 

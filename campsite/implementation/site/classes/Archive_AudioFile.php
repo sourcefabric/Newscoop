@@ -99,12 +99,8 @@ class Archive_AudioFile extends Archive_FileBase
                 ),
                 array(
                     'element' => 'dc:format',
-                    'type' => 'select',
+                    'type' => 'text',
                     'required' => TRUE,
-                    'options' => array(
-                        'File' => 'Audioclip',
-                        'live stream' => 'Webstream'
-                    ),
                     'attributes'=> array('disabled' => 'on'),
                 ),
                 array(
@@ -152,11 +148,7 @@ class Archive_AudioFile extends Archive_FileBase
                 ),
                 array(
                     'element' => 'dc:format',
-                    'type' => 'select',
-                    'options' => array(
-                        'File' => 'Audioclip',
-                        'live stream' => 'Webtream'
-                    ),
+                    'type' => 'text',
                     'attributes'=> array('disabled' => 'on'),
                 ),
                 array(
@@ -386,29 +378,30 @@ class Archive_AudioFile extends Archive_FileBase
         )
     );
 
-    protected $m_fileTypes = array('.mp3' => array('name' => 'MP3 audio',
-                                                   'icon' => 'sound.png'),
-                                   '.ogg' => array('name' => 'Ogg Vorbis audio',
-                                                   'icon' => 'sound.png'),
-                                   '.wav' => array('name' => 'WAV audio',
-                                                   'icon' => 'sound.png'),
-                                   '.aiff' => array('name' => 'AIFF/Amiga/Mac audio',
-                                                    'icon' => 'sound.png'),
-                                   '.aif' => array('name' => 'AIFF/Amiga/Mac audio',
-                                                   'icon' => 'sound.png'),
-                                   '.flac' => array('name' => 'FLAC audio',
-                                                    'icon' => 'sound.png'),
-                                   '.mid' => array('name' => 'MIDI audio',
-                                                   'icon' => 'sound.png'),
-                                   '.au' => array('name' => 'ULAW (Sun) audio',
-                                                  'icon' => 'sound.png'),
-                                   '.aac' => array('name' => 'MPEG-4 audio',
-                                                   'icon' => 'sound.png'),
-                                   '.ra' => array('name' => 'RealAudio document',
-                                                  'icon' => 'sound.png'),
-                                   '.spx' => array('name' => 'Speex audio',
-                                                   'icon' => 'sound.png')
-                                  );
+    protected $m_fileTypes = array(
+        '.mp3'  => array('name' => 'MP3 audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.ogg'  => array('name' => 'Ogg Vorbis audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.wav'  => array('name' => 'WAV audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.aiff' => array('name' => 'AIFF/Amiga/Mac audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.aif'  => array('name' => 'AIFF/Amiga/Mac audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.flac' => array('name' => 'FLAC audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.mid'  => array('name' => 'MIDI audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.au'   => array('name' => 'ULAW (Sun) audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.aac'  => array('name' => 'MPEG-4 audio',
+                         'icon' => 'filearchive_sound.png'),
+        '.ra'   => array('name' => 'RealAudio document',
+                         'icon' => 'filearchive_sound.png'),
+        '.spx'  => array('name' => 'Speex audio',
+                         'icon' => 'filearchive_sound.png')
+    );
 
 
     /**
@@ -423,14 +416,17 @@ class Archive_AudioFile extends Archive_FileBase
     } // constructor
 
 
+    /**
+     * @return string
+     */
     public function getFileType()
     {
-      return $this->m_fileType;
+        return $this->m_fileType;
     }
 
 
     /**
-     *
+     * @return array
      */
     public function getMetatagLabels()
     {
@@ -439,7 +435,7 @@ class Archive_AudioFile extends Archive_FileBase
 
 
     /**
-     *
+     * @return array
      */
     public function getMask()
     {
@@ -485,15 +481,16 @@ class Archive_AudioFile extends Archive_FileBase
                                             $orderby = 'dc:creator, dc:source, dc:title',
                                             $desc = false)
     {
-      	$criteria = array('filetype' => 'audio',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return parent::SearchFiles($criteria);
+      	$criteria = array(
+            'filetype' => 'audio',
+            'operator' => $operator,
+            'limit' => $limit,
+            'offset' => $offset,
+            'orderby' => $orderby,
+            'desc' => $desc,
+            'conditions' => $conditions
+        );
+        return parent::SearchFiles($criteria);
     } // fn SearchAudioFile
 
 
@@ -544,7 +541,8 @@ class Archive_AudioFile extends Archive_FileBase
             return $xrc;
         }
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-        $criteria = array('filetype' => 'audioclip',
+        $criteria = array(
+            'filetype' => 'audioclip',
             'operator' => $operator,
             'limit' => $limit,
             'offset' => $offset,

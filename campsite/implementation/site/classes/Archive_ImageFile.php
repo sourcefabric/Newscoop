@@ -17,116 +17,134 @@ class Archive_ImageFile extends Archive_FileBase
     protected $m_fileType = 'image';
 
     protected $m_metatagLabels = array(
-	'dc:title' => 'File name',
-	'dc:format' => 'File format',
-	'dc:description' => 'Description',
-	'dc:format' => 'Format',
-	'dc:maker' => 'Camera maker',
-	'dc:maker_model' => 'Camera model',
-	'dc:date_time' => 'Date/Time original',
-	'ls:filename' => 'File name',
-	'ls:filesize' => 'File size',
-	'ls:filetype' => 'File type',
-	'ls:image_width' => 'Image width size',
-	'ls:image_height' => 'Image height size',
-	'ls:bitspersample' => 'Bits per sample',
-	'ls:mtime' => 'Modified time',
-	'ls:photographer' => 'Photographer',
-	'ls:place' => 'Place',
-	'ls:url' => 'URL'
+        'dc:title' => 'File name',
+        'dc:format' => 'File format',
+        'dc:description' => 'Description',
+        'dc:format' => 'Format',
+        'dc:maker' => 'Camera maker',
+        'dc:maker_model' => 'Camera model',
+        'dc:date_time' => 'Date/Time original',
+        'ls:filename' => 'File name',
+        'ls:filesize' => 'File size',
+        'ls:filetype' => 'File type',
+        'ls:image_width' => 'Image width size',
+        'ls:image_height' => 'Image height size',
+        'ls:bitspersample' => 'Bits per sample',
+        'ls:mtime' => 'Modified time',
+        'ls:photographer' => 'Photographer',
+        'ls:place' => 'Place',
+        'ls:url' => 'URL'
     );
 
     protected $m_mask = array(
         'pages' => array(
-	    'Main'  => array(
-	        array(
-		    'element' => 'dc:title',
-		    'type' => 'text',
-		    'required' => TRUE,
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'dc:description',
-		    'type' => 'textarea',
-		),
-		array(
-		    'element' => 'ls:photographer',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'dc:format',
-		    'type' => 'select',
-		    'required' => TRUE,
-		    'options' => array(
-		        'File' => 'Audioclip',
-			'live stream' => 'Webstream'
-		    ),
-		    'attributes'=> array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:filesize',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:mtime',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-	    ),
-	    'Image'  => array(
-	        array(
-		    'element' => 'ls:filename',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:photographer',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'ls:place',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'ls:url',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'dc:maker',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'dc:maker_model',
-		    'type' => 'text',
-		),
-		array(
-		    'element' => 'dc:date_time',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:image_width',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:image_height',
-		    'type' => 'text',
-		    'attributes' => array('disabled' => 'on'),
-		),
-		array(
-		    'element' => 'ls:bitspersample',
-		    'type' => 'text',
-		    'rule' => 'numeric',
-		    'attributes' => array('disabled' => 'on'),
-		),
-	    )
-	)
+            'Main'  => array(
+                array(
+                    'element' => 'dc:title',
+                    'type' => 'text',
+                    'required' => TRUE,
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'dc:description',
+                    'type' => 'textarea',
+                ),
+                array(
+                    'element' => 'ls:photographer',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'dc:format',
+                    'type' => 'select',
+                    'required' => TRUE,
+                    'options' => array(
+                        'File' => 'Audioclip',
+                        'live stream' => 'Webstream'
+                    ),
+                    'attributes'=> array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:filesize',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:mtime',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+            ),
+	        'Image'  => array(
+                array(
+                    'element' => 'ls:filename',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:photographer',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'ls:place',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'ls:url',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'dc:maker',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'dc:maker_model',
+                    'type' => 'text',
+                ),
+                array(
+                    'element' => 'dc:date_time',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:image_width',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:image_height',
+                    'type' => 'text',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+                array(
+                    'element' => 'ls:bitspersample',
+                    'type' => 'text',
+                    'rule' => 'numeric',
+                    'attributes' => array('disabled' => 'on'),
+                ),
+            )
+        )
     );
 
-    protected $m_fileTypes = array('.jpeg','.jpg','.png','.gif','.bmp',
-				   '.tiff','.tif','.swf','.pcd');
+    protected $m_fileTypes = array(
+        '.jpeg' => array('name' => 'JPEG',
+                         'icon' => 'filearchive_image.png'),
+        '.jpg'  => array('name' => 'JPEG',
+                         'icon' => 'filearchive_image.png'),
+        '.png'  => array('name' => 'PNG (Portable Network Graphics)',
+                         'icon' => 'filearchive_image.png'),
+        '.gif'  => array('name' => 'GIF',
+                         'icon' => 'filearchive_image.png'),
+        '.bmp'  => array('name' => 'Microsoft Windows bitmap',
+                         'icon' => 'filearchive_image.png'),
+        '.tiff' => array('name' => 'TIFF',
+                         'icon' => 'filearchive_image.png'),
+        '.tif'  => array('name' => 'TIFF',
+                         'icon' => 'filearchive_image.png'),
+        '.swf'  => array('name' => 'SWF (Small Web Format)',
+                         'icon' => 'filearchive_image.png'),
+        '.pcd'  => array('name' => 'Kodak Photo-CD',
+                         'icon' => 'filearchive_image.png')
+    );
 
 
     /**
@@ -141,14 +159,17 @@ class Archive_ImageFile extends Archive_FileBase
     } // constructor
 
 
+    /**
+     * @return string
+     */
     public function getFileType()
     {
-      return $this->m_fileType;
+        return $this->m_fileType;
     }
 
 
     /**
-     *
+     * @return array
      */
     public function getMetatagLabels()
     {
@@ -157,7 +178,7 @@ class Archive_ImageFile extends Archive_FileBase
 
 
     /**
-     *
+     * @return array
      */
     public function getMask()
     {
@@ -200,18 +221,19 @@ class Archive_ImageFile extends Archive_FileBase
     public static function SearchImageFiles($offset = 0, $limit = 0,
                                             $conditions = array(),
                                             $operator = 'and',
-					    $orderby = 'dc:creator, dc:source, dc:title',
+                                            $orderby = 'dc:creator, dc:source, dc:title',
                                             $desc = false)
     {
-      	$criteria = array('filetype' => 'image',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return parent::SearchFiles($criteria);
+      	$criteria = array(
+      	    'filetype' => 'image',
+            'operator' => $operator,
+            'limit' => $limit,
+            'offset' => $offset,
+            'orderby' => $orderby,
+            'desc' => $desc,
+            'conditions' => $conditions
+        );
+        return parent::SearchFiles($criteria);
     } // fn SearchImageFile
 
 
@@ -251,27 +273,28 @@ class Archive_ImageFile extends Archive_FileBase
      *      Array of Audioclip objects
      */
     public static function BrowseCategory($p_category, $offset = 0, $limit = 0,
-					  $conditions = array(),
+                                          $conditions = array(),
                                           $operator = 'and',
-					  $orderby = 'dc:creator, dc:source, dc:title',
+                                          $orderby = 'dc:creator, dc:source, dc:title',
                                           $desc = false)
     {
         global $mdefs;
 
         $xrc = XR_CcClient::Factory($mdefs, true);
-	if (PEAR::isError($xrc)) {
-	    return $xrc;
-	}
+        if (PEAR::isError($xrc)) {
+            return $xrc;
+        }
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-	$criteria = array('filetype' => 'audioclip',
-			  'operator' => $operator,
-			  'limit' => $limit,
-			  'offset' => $offset,
-			  'orderby' => $orderby,
-			  'desc' => $desc,
-			  'conditions' => $conditions
-			  );
-	return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
+        $criteria = array(
+            'filetype' => 'audioclip',
+            'operator' => $operator,
+            'limit' => $limit,
+            'offset' => $offset,
+            'orderby' => $orderby,
+            'desc' => $desc,
+            'conditions' => $conditions
+        );
+        return $xrc->xr_browseCategory($sessid, $p_category, $criteria);
     } // fn BrowseCategory
 
 
