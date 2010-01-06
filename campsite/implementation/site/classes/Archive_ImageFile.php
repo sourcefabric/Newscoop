@@ -17,23 +17,26 @@ class Archive_ImageFile extends Archive_FileBase
     protected $m_fileType = 'image';
 
     protected $m_metatagLabels = array(
+        // generic tags for all file types
         'dc:title' => 'File name',
         'dc:format' => 'File format',
         'dc:description' => 'Description',
-        'dc:format' => 'Format',
-        'dc:maker' => 'Camera maker',
-        'dc:maker_model' => 'Camera model',
-        'dc:date_time' => 'Date/Time original',
+        'dc:rights' => 'Copyright',
+        'ls:crc' => 'Checksum',
         'ls:filename' => 'File name',
         'ls:filesize' => 'File size',
         'ls:filetype' => 'File type',
+        'ls:mtime' => 'Modified time',
+        'ls:url' => 'URL',
+        // special tags
+        'dc:maker' => 'Camera maker',
+        'dc:maker_model' => 'Camera model',
+        'dc:date_time' => 'Date/Time original',
         'ls:image_width' => 'Image width size',
         'ls:image_height' => 'Image height size',
         'ls:bitspersample' => 'Bits per sample',
-        'ls:mtime' => 'Modified time',
         'ls:photographer' => 'Photographer',
         'ls:place' => 'Place',
-        'ls:url' => 'URL'
     );
 
     protected $m_mask = array(

@@ -61,6 +61,15 @@ if ($data->Results->success) {
         $metaDataArray = array();
         $mask = $fileObj->getMask();
         $metaData = camp_get_metadata($filePath);
+        if (PEAR::isError($metaData)) {
+            $data->Results->success = false;
+            $data->Results->camp_error = getGS('There was an error parsing the file: $1', $metaData->getMessage());
+            eval($fileClassName."::DeleteTemporaryFile('$filePath');");
+            //$fileClassName::DeleteTemporaryFile($filePath);
+        }
+    }
+
+    if ($data->Results->success) {
         foreach($mask['pages'] as $key => $val) {
             foreach($mask['pages'][$key] as $k => $v) {
                 $element = $v['element'];

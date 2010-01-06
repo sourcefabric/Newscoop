@@ -19,17 +19,15 @@ class Archive_ApplicationFile extends Archive_FileBase
     protected $m_metatagLabels = array(
         // generic tags for all file types
         'dc:title' => 'Title',
-        'dc:creator' => 'Creator',
         'dc:format' => 'File format',
-        'dc:creator' => 'Creator',
         'dc:description' => 'Description',
-        'dc:format' => 'Format',
-        'ls:crc' => 'Checksum',
         'dc:rights' => 'Copyright',
-        'dc:subject' => 'Subject',
-        'ls:url' => 'Stream URL',
+        'ls:crc' => 'Checksum',
+        'ls:filename' => 'File name',
+        'ls:filesize' => 'File size',
+        'ls:filetype' => 'File type',
         'ls:mtime' => 'Modified time',
-        'ls:filesize' => 'File size'
+        'ls:url' => 'URL',
     );
 
     protected $m_mask = array(
@@ -37,11 +35,6 @@ class Archive_ApplicationFile extends Archive_FileBase
             'Main'  => array(
                 array(
                     'element' => 'dc:title',
-                    'type' => 'text',
-                    'required' => TRUE,
-                ),
-                array(
-                    'element' => 'dc:creator',
                     'type' => 'text',
                     'required' => TRUE,
                 ),
@@ -82,10 +75,6 @@ class Archive_ApplicationFile extends Archive_FileBase
                     'rule' => 'numeric',
                 ),
                 array(
-                    'element' => 'dc:subject',
-                    'type' => 'text',
-                ),
-                array(
                     'element' => 'dc:rights',
                     'type' => 'text',
                 ),
@@ -119,6 +108,8 @@ class Archive_ApplicationFile extends Archive_FileBase
         '.texi' => array('name' => 'GNU Texinfo document',
                          'icon' => 'filearchive_application.png'),
         '.dvi' => array('name' => 'TeX dvi format',
+                        'icon' => 'filearchive_application.png'),
+        '.rar' => array('name' => 'RAR Archive',
                         'icon' => 'filearchive_application.png'),
         '.gtar' => array('name' => 'GNU tar format',
                          'icon' => 'filearchive_application.png'),
