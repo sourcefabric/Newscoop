@@ -140,21 +140,21 @@ class Archive_FileXMLMetadata
      *		Audioclip gunid on success, PEAR_Error on failure
      */
     public static function Upload($p_sessId, $p_filePath, $p_gunId,
-				  $p_metaData, $p_checkSum, $p_type)
+                                  $p_metaData, $p_checkSum, $p_type)
     {
         global $mdefs;
 
         $xrcObj = XR_CcClient::Factory($mdefs, true);
         $r = $xrcObj->xr_storeMediaFileOpen($p_sessId, $p_gunId, $p_metaData,
                                             basename($p_filePath), $p_checkSum,
-					    $p_type);
+                                            $p_type);
         if (PEAR::isError($r)) {
-	    return $r;
+            return $r;
         } else {
-	    $fh = fopen($p_filePath, 'r');
-	    $ch = curl_init($r['url']);
-	    curl_setopt($ch, CURLOPT_PUT, true);
-	    curl_setopt($ch, CURLOPT_INFILE, $fh);
+            $fh = fopen($p_filePath, 'r');
+            $ch = curl_init($r['url']);
+            curl_setopt($ch, CURLOPT_PUT, true);
+            curl_setopt($ch, CURLOPT_INFILE, $fh);
             curl_setopt($ch, CURLOPT_INFILESIZE, filesize($p_filePath));
             $res = curl_exec($ch);
             curl_close($ch);

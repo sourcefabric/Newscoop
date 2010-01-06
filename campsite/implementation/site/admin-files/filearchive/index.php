@@ -1,5 +1,4 @@
 <?php
-
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 
@@ -26,13 +25,13 @@ if (PEAR::isError($resp)) {
 require_once($GLOBALS['g_campsiteDir']."/classes/Archive_FileBase.php");
 
 $criteria = array('filetype' => 'all',
-		  'operator' => 'and',
-		  'limit' => 0,
-		  'offset' => 0,
-		  'orderby' => 'dc:title',
-		  'desc' => false,
-		  'conditions' => array()
-		  );
+                  'operator' => 'and',
+                  'limit' => 0,
+                  'offset' => 0,
+                  'orderby' => 'dc:title',
+                  'desc' => false,
+                  'conditions' => array()
+                 );
 $result = Archive_FileBase::SearchFiles($criteria);
 if (PEAR::isError($result)) {
     $files = array();
@@ -98,7 +97,6 @@ YAHOO.camp.Data = {
 YAHOO.util.Event.addListener(window, "load", function() {
 
   YAHOO.camp.FileArchiveDataTable = function() {
-
     // Extend YUI DataTable which is missing a selectAllRows method
     YAHOO.lang.augmentObject(
       YAHOO.widget.DataTable.prototype, {
@@ -111,7 +109,7 @@ YAHOO.util.Event.addListener(window, "load", function() {
           YAHOO.util.Dom.addClass( selectedRowsOdd, YAHOO.widget.DataTable.CLASS_SELECTED);
         },
 
-	/* Selects all rows. * * @method selectAllRows */
+        /* Selects all rows. * * @method selectAllRows */
         selectAllRows : function() {
           // Remove all rows from tracker
           var tracker = this._aSelections || [];
@@ -201,18 +199,18 @@ YAHOO.util.Event.addListener(window, "load", function() {
     myDataTable.subscribe("initEvent", function() {
       var chkall = YAHOO.util.Dom.get('chkall');
       if (chkall) {
-	YAHOO.util.Event.on(chkall,'click',function (e) {
+        YAHOO.util.Event.on(chkall,'click',function (e) {
           var checks = document.getElementsByName('filerow');
-	  var i = 0, l = checks.length;
-	  for (;i<l;++i) {
-	    checked[i] = checks[i].checked = this.checked;
-	  }
-	  if (this.checked) {
-	    myDataTable.selectAllRows();
-	  } else {
-	    myDataTable.unselectAllRows();
-	  }
-	});
+          var i = 0, l = checks.length;
+          for (;i<l;++i) {
+            checked[i] = checks[i].checked = this.checked;
+          }
+          if (this.checked) {
+            myDataTable.selectAllRows();
+          } else {
+            myDataTable.unselectAllRows();
+          }
+        });
       }
     });
 
@@ -227,16 +225,16 @@ YAHOO.util.Event.addListener(window, "load", function() {
     // Enable row selection
     myDataTable.subscribe("rowClickEvent",
       function(ev) {
-	var target = YAHOO.util.Event.getTarget(ev);
-	// Unselect row
-	if (myDataTable.isSelected(target)) {
-	  myDataTable.unselectRow(target);
-	}
-	// Select row
-	else {
-	  myDataTable.selectRow(target);
-	}
-	myDataTable.checkboxClickEvent.fire;
+        var target = YAHOO.util.Event.getTarget(ev);
+        // Unselect row
+        if (myDataTable.isSelected(target)) {
+          myDataTable.unselectRow(target);
+        }
+        // Select row
+        else {
+          myDataTable.selectRow(target);
+        }
+        myDataTable.checkboxClickEvent.fire;
       }
     );
 

@@ -31,18 +31,27 @@ if ($data->Results->success
 // in the file archive.
 if ($data->Results->success) {
     $uploadFile = $_FILES['f_file_name'];
+    // Try to get proper mime type via getID3. If file type is not supported
+    // by getID3 then get it from global FILES. 
+    $fileFormatInfo_GetID3 = camp_get_file_format_info($uploadFile['tmp_name']);
+    if (isset($fileFormatInfo_GetID3['mime_type'])
+            && !empty($fileFormatInfo_GetID3['mime_type'])) {
+        $fileFormat = explode('/', $fileFormatInfo_GetID3['mime_type']);
+    } else {
+        $fileFormat = explode('/', $uploadFile['type']);
+    }
+    $fileContentType = $fileFormat[0];
 
-    list($fileGroup, $fileFormat) = explode('/', $uploadFile['type']);
-    $fileClassName = 'Archive_'.ucwords($fileGroup).'File';
-
+    // Instance an object for the file depending on type.
+    $fileClassName = 'Archive_'.ucwords($fileContentType).'File';
     require_once($GLOBALS['g_campsiteDir']."/classes/$fileClassName.php");
     $fileObj = new $fileClassName();
     $filePath = $fileObj->onFileUpload($uploadFile);
-
     if (PEAR::isError($filePath)) {
         $data->Results->success = false;
         $data->Results->camp_error = getGS($filePath->getMessage());
-        eval($fileClassName."::DeleteTemporaryFile('$filePath');");
+        $tmpFile = $uploadFile['tmp_name'];
+        eval($fileClassName."::DeleteTemporaryFile('$tmpFile');");
         // php >= 5.3.0
         //$fileClassName::DeleteTemporaryFile($uploadFile['tmp_name']);
     }
@@ -52,7 +61,6 @@ if ($data->Results->success) {
         $metaDataArray = array();
         $mask = $fileObj->getMask();
         $metaData = camp_get_metadata($filePath);
-
         foreach($mask['pages'] as $key => $val) {
             foreach($mask['pages'][$key] as $k => $v) {
                 $element = $v['element'];
@@ -66,7 +74,7 @@ if ($data->Results->success) {
             }
         }
 
-        eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileGroup');");
+        eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileContentType');");
         //$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
         if (PEAR::isError($fileGunid)) {
             $data->Results->success = false;

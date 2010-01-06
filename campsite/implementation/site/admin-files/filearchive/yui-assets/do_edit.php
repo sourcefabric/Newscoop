@@ -21,7 +21,7 @@ if (!Input::IsValid()) {
 
 // TODO: check for permission
 if ($data->Results->success
-      && !$g_user->hasPermission('AttachAudioclipToArticle')) {
+        && !$g_user->hasPermission('AttachAudioclipToArticle')) {
     $data->Results->success = false;
     $data->Results->camp_error = getGS('You do not have the right to change file information.');
 }
@@ -31,13 +31,13 @@ if ($data->Results->success) {
     $res = $file->editMetadata($form_data);
     if (PEAR::isError($res)) {
         $data->Results->success = false;
-	$data->Results->camp_error = getGS('Failed to update file information.');
+        $data->Results->camp_error = getGS('Failed to update file information.');
     } else {
-        $data->Results->mtime = $res;
+        $data->Results->mtime = $file->getModifiedTime();
         $data->Results->success = true;
     }
 }
 
-//
+// JSON encoded result
 echo($json->encode($data));
 ?>

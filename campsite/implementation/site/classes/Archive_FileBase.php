@@ -104,6 +104,10 @@ class Archive_FileBase
     } // fn getGunId
 
 
+    /**
+     * @return string
+     *      The file group format (image, audio, video, application, etc.)
+     */
     public function getType()
     {
         $format = explode('/', $this->getMetatagValue('format'));
@@ -111,6 +115,10 @@ class Archive_FileBase
     }
 
 
+    /**
+     * @return string
+     *      The file mime type
+     */
     public function getMimeType()
     {
         return $this->getMetatagValue('format');
@@ -142,6 +150,9 @@ class Archive_FileBase
     } // fn getModifiedTime
 
 
+    /**
+     * @return
+     */
     public function getMetatagLabel($p_tagName)
     {
         return $this->m_metatagLabels[$p_tagName];
@@ -333,8 +344,8 @@ class Archive_FileBase
      */
     public function isValidFileType($p_fileName)
     {
-        $ext = strrchr($p_fileName, '.');
-        if (in_array($ext, $this->m_fileTypes)) {
+        $ext = strtolower(strrchr($p_fileName, '.'));
+        if (array_key_exists($ext, $this->m_fileTypes)) {
             return true;
         }
         return false;
@@ -382,7 +393,6 @@ class Archive_FileBase
             return $xrc;
         }
 
-        // TODO: get the proper session id
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $result = $xrc->xr_searchMetadata($sessid, $p_criteria);
         if (PEAR::isError($result)) {
