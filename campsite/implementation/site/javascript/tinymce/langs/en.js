@@ -15,18 +15,6 @@ popup_blocked:"Sorry, but we have noticed that your popup-blocker has disabled a
 invalid_data:"Error: Invalid values entered, these are marked in red.",
 more_colors:"More colors"
 },
-campsiteattachment:{
-campsiteattachment_desc:"Insert attachment"
-},
-campsiteimage:{
-campsiteimage_desc:"Insert image"
-},
-campsiteinternallink:{
-campsiteinternallink_desc:"Insert/edit internal link"
-},
-campsitesubhead:{
-campsitesubhead_desc:"Insert subhead"
-},
 contextmenu:{
 align:"Alignment",
 left:"Left",
@@ -86,7 +74,7 @@ advimage:{
 image_desc:"Insert/edit image"
 },
 advlink:{
-link_desc:"Insert/edit external link"
+link_desc:"Insert/edit link"
 },
 xhtmlxtras:{
 cite_desc:"Citation",
@@ -138,7 +126,7 @@ fullscreen:{
 desc:"Toggle fullscreen mode"
 },
 media:{
-desc:"Insert/edit embedded media",
+desc:"Insert / edit embedded media",
 edit:"Edit embedded media"
 },
 fullpage:{
