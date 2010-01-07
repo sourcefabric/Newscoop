@@ -32,10 +32,12 @@ if ($data->Results->success
 if ($data->Results->success) {
     $uploadFile = $_FILES['f_file_name'];
     // Try to get proper mime type via getID3. If file type is not supported
-    // by getID3 then get it from global FILES. 
+    // by getID3 then get it from global FILES.
+    $isGetID3SupportedFormat = false;
     $fileFormatInfo_GetID3 = camp_get_file_format_info($uploadFile['tmp_name']);
     if (isset($fileFormatInfo_GetID3['mime_type'])
             && !empty($fileFormatInfo_GetID3['mime_type'])) {
+        $isGetID3SupportedFormat = true;
         $fileFormat = explode('/', $fileFormatInfo_GetID3['mime_type']);
     } else {
         $fileFormat = explode('/', $uploadFile['type']);
@@ -60,7 +62,11 @@ if ($data->Results->success) {
         $sessId = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $metaDataArray = array();
         $mask = $fileObj->getMask();
-        $metaData = camp_get_metadata($filePath);
+        if ($isGetID3SupportedFormat) {
+            $metaData = camp_get_metadata($filePath);
+        } else {
+            eval('$metaData='.$fileClassName."::GetBasicMetadata(\$uploadFile);");
+        }
         if (PEAR::isError($metaData)) {
             $data->Results->success = false;
             $data->Results->camp_error = getGS('There was an error parsing the file: $1', $metaData->getMessage());

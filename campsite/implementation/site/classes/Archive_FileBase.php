@@ -353,6 +353,21 @@ class Archive_FileBase
 
 
     /**
+     * @return array
+     */
+    public static function GetBasicMetadata($p_fileInfo)
+    {
+        $metaData = array(
+            'dc:title' => $p_fileInfo['name'],
+            'dc:format' => $p_fileInfo['type'],
+            'ls:filename' => $p_fileInfo['name'],
+            'ls:filesize' => $p_fileInfo['size']
+        );
+        return $metaData;
+    } // fn GetBasicMetadata
+
+
+    /**
      * Retrieve a list of Audioclip objects based on the given constraints
      *
      * @param array $conditions

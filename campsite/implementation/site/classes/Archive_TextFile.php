@@ -12,9 +12,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_FileBase.php');
 /**
  * @package Campsite
  */
-class Archive_ApplicationFile extends Archive_FileBase
+class Archive_TextFile extends Archive_FileBase
 {
-    protected $m_fileType = 'application';
+    protected $m_fileType = 'text';
 
     protected $m_metatagLabels = array(
         // generic tags for all file types
@@ -55,7 +55,7 @@ class Archive_ApplicationFile extends Archive_FileBase
                     'attributes' => array('disabled' => 'on'),
                 ),
             ),
-            'Application'  => array(
+            'Text'  => array(
                 array(
                     'element' => 'dc:title',
                     'type' => 'text',
@@ -87,72 +87,22 @@ class Archive_ApplicationFile extends Archive_FileBase
     );
 
     protected $m_fileTypes = array(
-        '.mp3' => array('name' => 'MP3 audio',
-                        'icon' => 'filearchive_application.png'),
-        '.ai' => array('name' => 'PostScript',
-                       'icon' => 'filearchive_application.png'),
-        '.eps' => array('name' => 'PostScript',
-                        'icon' => 'filearchive_application.png'),
-        '.ps' => array('name' => 'PostScript',
-                       'icon' => 'filearchive_application.png'),
-        '.rtf' => array('name' => 'Rich Text Format',
-                        'icon' => 'filearchive_application.png'),
-        '.pdf' => array('name' => 'PDF',
-                        'icon' => 'filearchive_application.png'),
-        '.latex' => array('name' => 'LaTeX document',
-                          'icon' => 'filearchive_application.png'),
-        '.tex' => array('name' => 'Tex/LateX document',
-                        'icon' => 'filearchive_application.png'),
-        '.texinfo' => array('name' => 'GNU Texinfo document',
-                            'icon' => 'filearchive_application.png'),
-        '.texi' => array('name' => 'GNU Texinfo document',
-                         'icon' => 'filearchive_application.png'),
-        '.dvi' => array('name' => 'TeX dvi format',
-                        'icon' => 'filearchive_application.png'),
-        '.rar' => array('name' => 'RAR Archive',
-                        'icon' => 'filearchive_application.png'),
-        '.gtar' => array('name' => 'GNU tar format',
-                         'icon' => 'filearchive_application.png'),
-        '.tar' => array('name' => 'BSD tar format',
-                        'icon' => 'filearchive_application.png'),
-        '.ustar' => array('name' => 'POSIX tar format',
-                          'icon' => 'filearchive_application.png'),
-        '.bcpio' => array('name' => 'Old CPIO format',
-                          'icon' => 'filearchive_application.png'),
-        '.cpio' => array('name' => 'POSIX CPIO format',
-                         'icon' => 'filearchive_application.png'),
-        '.shar' => array('name' => 'UNIX sh shell archive',
-                         'icon' => 'filearchive_application.png'),
-        '.zip' => array('name' => 'DOS/PC Pkzipped archive',
-                        'icon' => 'filearchive_application.png'),
-        '.gz' => array('name' => 'GNU Zip',
-                       'icon' => 'filearchive_application.png'),
-        '.hqx' => array('name' => 'Mac binhexed archive',
-                        'icon' => 'filearchive_application.png'),
-        '.sti' => array('name' => 'Mac Stuffit archive',
-                        'icon' => 'filearchive_application.png'),
-        '.sea' => array('name' => 'Mac Stuffit archive',
-                        'icon' => 'filearchive_application.png'),
-        '.fif' => array('name' => 'Fractal Image format',
-                        'icon' => 'filearchive_application.png'),
-        '.bin' => array('name' => 'Binary',
-                        'icon' => 'filearchive_application.png'),
-        '.uu' => array('name' => 'UUencoded',
-                       'icon' => 'filearchive_application.png'),
-        '.exe' => array('name' => 'PC executable',
-                        'icon' => 'filearchive_application.png'),
-        '.hdf' => array('name' => 'NCSA HDF data format',
-                        'icon' => 'filearchive_application.png'),
-        '.js' => array('name' => 'Javascript program',
-                       'icon' => 'filearchive_application.png'),
-        '.sh' => array('name' => 'UNIX bourne shell program',
-                       'icon' => 'filearchive_application.png'),
-        '.csh' => array('name' => 'UNIX c-shell program',
-                        'icon' => 'filearchive_application.png'),
-        '.pl' => array('name' => 'Perl program',
-                       'icon' => 'filearchive_application.png'),
-        '.tcl' => array('name' => 'Tcl program',
-                        'icon' => 'filearchive_application.png'),
+        '.css'  => array('name' => 'CSS text file',
+                         'icon' => 'filearchive_text.png'),
+        '.htm'  => array('name' => 'HTML',
+                         'icon' => 'filearchive_text.png'),
+        '.html' => array('name' => 'HTML',
+                         'icon' => 'filearchive_text.png'),
+        '.asc'  => array('name' => 'Plain Text',
+                         'icon' => 'filearchive_text.png'),
+        '.txt'  => array('name' => 'Plain Text',
+                         'icon' => 'filearchive_text.png'),
+        '.sgm'  => array('name' => 'SGML',
+                         'icon' => 'filearchive_text.png'),
+        '.sgml' => array('name' => 'SGML',
+                         'icon' => 'filearchive_text.png'),
+        '.xml'  => array('name' => 'XML document',
+                         'icon' => 'filearchive_text.png'),
         '.*'
     );
 
@@ -235,7 +185,7 @@ class Archive_ApplicationFile extends Archive_FileBase
                                                   $desc = false)
     {
         $criteria = array(
-            'filetype' => 'application',
+            'filetype' => 'text',
             'operator' => $operator,
             'limit' => $limit,
             'offset' => $offset,
@@ -295,7 +245,7 @@ class Archive_ApplicationFile extends Archive_FileBase
         }
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $criteria = array(
-            'filetype' => 'audioclip',
+            'filetype' => 'text',
             'operator' => $operator,
             'limit' => $limit,
             'offset' => $offset,
@@ -324,6 +274,6 @@ class Archive_ApplicationFile extends Archive_FileBase
         return $getid3Obj->analyze($p_file);
     } // fn AnalyzeFile
 
-} // class Archive_ApplicationFile
+} // class Archive_TextFile
 
 ?>
