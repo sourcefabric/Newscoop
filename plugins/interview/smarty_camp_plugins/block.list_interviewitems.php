@@ -37,7 +37,7 @@ function smarty_block_list_interviewitems($p_params, $p_content, &$p_smarty, &$p
     }
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = $campContext->next_list_start('InterviewItemsList');
     	$interviewItemsList = new InterviewItemsList($start, $p_params);
     	$campContext->setCurrentList($interviewItemsList, array('interviewitem'));
     }

@@ -33,7 +33,7 @@ function smarty_block_list_pollanswer_attachments($p_params, $p_content, &$p_sma
     $html = '';
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = $campContext->next_list_start('PollAnswerAttachmentsList');
     	$pollAnswerAttachmentsList = new PollAnswerAttachmentsList($start, $p_params);
     	$campContext->setCurrentList($pollAnswerAttachmentsList, array('attachment'));
     }

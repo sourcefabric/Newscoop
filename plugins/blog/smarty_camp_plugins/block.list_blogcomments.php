@@ -37,7 +37,7 @@ function smarty_block_list_blogcomments($p_params, $p_content, &$p_smarty, &$p_r
     $html = '';
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = $campContext->next_list_start('BlogCommentsList');
     	$blogCommentsList = new BlogCommentsList($start, $p_params);
     	$campContext->setCurrentList($blogCommentsList, array('blogcomment'));
     }

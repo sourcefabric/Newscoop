@@ -37,7 +37,7 @@ function smarty_block_list_blogs($p_params, $p_content, &$p_smarty, &$p_repeat)
     $html = '';
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = $campContext->next_list_start('BlogsList');
     	$blogsList = new BlogsList($start, $p_params);
     	$campContext->setCurrentList($blogsList, array('blog'));
     }
