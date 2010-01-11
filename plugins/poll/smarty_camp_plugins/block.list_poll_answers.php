@@ -33,7 +33,7 @@ function smarty_block_list_poll_answers($p_params, $p_content, &$p_smarty, &$p_r
     $html = '';
 
     if (!isset($p_content)) {
-        $start = 0;
+        $start = $campContext->next_list_start('PollAnswersList');
     	$pollAnswersList = new PollAnswersList($start, $p_params);
     	$campContext->setCurrentList($pollAnswersList, array('pollanswer'));
     }
