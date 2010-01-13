@@ -250,11 +250,11 @@ class ArticlesList extends ListObject
             return false;
 	    }
 	    
-	    if (!$this->m_ignoreIssue) {
+	    if (!$this->m_ignoreIssue && $context->issue->defined) {
             $this->m_constraints[] = new ComparisonOperation('NrIssue', new Operator('is', 'integer'),
                                                              $context->issue->number);
         }
-        if (!$this->m_ignoreSection) {
+        if (!$this->m_ignoreSection && $context->section->defined) {
             $this->m_constraints[] = new ComparisonOperation('NrSection', new Operator('is', 'integer'),
                                                              $context->section->number);
         }
@@ -356,8 +356,8 @@ class ArticlesList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
                                                              $context->language->number);
         }
-        $this->m_ignoreIssue = $context->issue->defined && $parameters['ignore_issue'];
-        $this->m_ignoreSection = $context->section->defined && $parameters['ignore_section'];
+        $this->m_ignoreIssue = $parameters['ignore_issue'];
+        $this->m_ignoreSection = $parameters['ignore_section'];
         if ($context->topic->defined) {
             $this->m_constraints[] = new ComparisonOperation('topic', $operator,
                                                              $context->topic->identifier);
