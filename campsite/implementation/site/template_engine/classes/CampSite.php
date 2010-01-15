@@ -251,7 +251,7 @@ final class CampSite extends CampSystem
         }
 
         // sets url type to default if necessary
-        if (!$urlType) {
+        if (!isset($urlType)) {
         	$config = self::GetConfigInstance();
         	$urlType = $config->getSetting('campsite.url_default_type');
         }
