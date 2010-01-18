@@ -2,7 +2,6 @@
 camp_load_translation_strings("imagearchive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 
 if (!$g_user->hasPermission('AddImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");

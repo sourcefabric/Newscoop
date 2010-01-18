@@ -8,7 +8,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);

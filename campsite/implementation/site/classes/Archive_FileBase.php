@@ -52,6 +52,19 @@ class Archive_FileBase
      */
     protected $m_exists = false;
 
+    /**
+     * If true it will use the caching feature
+     *
+     * @var bool
+     */
+    private static $m_useCache = null;
+    
+    /**
+     * The default engine to use
+     * @var string
+     */
+    private static $m_cacheEngine = null;
+    
 
     /**
      * Constructor
@@ -61,23 +74,78 @@ class Archive_FileBase
      */
     public function __construct($p_gunId = null)
     {
-        if (!is_null($p_gunId)) {
-            $fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
-            $this->m_metaData = $fileDbMetadataObj->fetch();
-            if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
-                $fileXMLMetadataObj = new Archive_FileXMLMetadata($p_gunId);
-                $this->m_metaData = $fileXMLMetadataObj->m_metaData;
-                if ($fileXMLMetadataObj->exists()) {
-                    $this->m_gunId = $p_gunId;
-                    $this->m_exists = true;
-                    $fileDbMetadataObj->create($this->m_metaData);
-                }
-            } else {
-                $this->m_gunId = $p_gunId;
-    	        $this->m_exists = true;
+    	$this->fetch($p_gunId);
+    }
+
+
+    public function fetch($p_gunId)
+    {
+    	if (empty($p_gunId)) {
+    		$this->m_gunId = null;
+    		$this->m_fileType = null;
+    		$this->m_mask = array();
+            $this->m_metaData = array();
+            $this->m_fileTypes = array();
+            $this->m_exists = false;
+            return false;
+    	}
+    	
+    	$fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
+    	$this->m_metaData = $fileDbMetadataObj->fetch();
+    	if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
+    		$fileXMLMetadataObj = new Archive_FileXMLMetadata($p_gunId);
+    		$this->m_metaData = $fileXMLMetadataObj->m_metaData;
+    		if ($fileXMLMetadataObj->exists()) {
+    			$this->m_gunId = $p_gunId;
+    			$this->m_exists = true;
+    			$fileDbMetadataObj->create($this->m_metaData);
+    		}
+    	} else {
+    		$this->m_gunId = $p_gunId;
+    		$this->m_exists = true;
+    	}
+    	return $this->m_exists;
+    } // constructor
+
+
+    /**
+     * Returns true if the current object is the same type as the given
+     * object then has the same value.
+     * @param mix $p_otherObject
+     * @return boolean
+     */
+    public function sameAs($p_otherObject)
+    {
+        if (get_class($this) != get_class($p_otherObject)
+        || $this->m_dbTableName != $p_otherObject->m_dbTableName) {
+            return false;
+        }
+        if (!$this->m_exists && !$p_otherObject->m_exists) {
+            return true;
+        }
+        foreach ($this->m_keyColumnNames as $keyColumnName) {
+            if ($this->m_data[$keyColumnName] != $p_otherObject->m_data[$keyColumnName]) {
+                return false;
             }
         }
-    } // constructor
+        return true;
+    }
+
+
+    /**
+     * Copies the given object
+     *
+     * @param object $p_source
+     * @return object
+     */
+    public function duplicateObject($p_source)
+    {
+        foreach ($p_source as $key=>$value) {
+            $this->$key = $value;
+        }
+
+        return $this;
+    }
 
 
     /**
@@ -90,6 +158,36 @@ class Archive_FileBase
     {
         return $this->m_exists;
     } // fn exists
+
+
+    /**
+     * Return true if the object has all the values required
+     * to fetch a unique object from the file archive.
+     *
+     * @return boolean
+     */
+    public function keyValuesExist()
+    {
+    	return !empty($this->m_gunId);
+    }
+    
+    
+    /**
+     * Delete the file from the multimedia archive.
+     * Returns true if the object was found and deleted, false otherwise.
+     * 
+     * @return boolean
+     */
+    public function delete()
+    {
+    	$fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId);
+    	if ($fileXMLMetadataObj->delete()) {
+    		$fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
+    		$fileDbMetadataObj->delete();
+    		return true;
+    	}
+    	return false;
+    }
 
 
     /**
@@ -156,6 +254,21 @@ class Archive_FileBase
     public function getMetatagLabel($p_tagName)
     {
         return $this->m_metatagLabels[$p_tagName];
+    }
+
+
+    /**
+     * Returns the value of the given meta tag
+     *
+     * @param string $p_tagName
+     *      The name of the meta tag
+     *
+     * @return string
+     *      The meta tag value
+     */
+    public function getProperty($p_property)
+    {
+    	return $this->getMetatagValue($p_property);
     }
 
 
@@ -293,6 +406,63 @@ class Archive_FileBase
 
 
     /**
+     * Updates metadata on the archive server
+     *
+     * @param array $p_metaData
+     *      An array of Archive_FileMetadataEntry objects
+     *
+     * @return boolean
+     *      TRUE on success, FALSE on failure
+     */
+    public function update($p_metadata, $p_commit = true)
+    {
+    	if (!is_array($p_metadata)) {
+    		return false;
+    	}
+    	foreach ($p_metadata as $element=>$value) {
+    		if (count(explode(':', $v['element'])) < 2) {
+    			return false;
+    		}
+    		if (!is_object($value)) {
+    			return false;
+    		}
+    	}
+    	$this->m_metaData = $p_metadata;
+    	if ($p_commit) {
+    		return $this->commit();
+    	}
+    	return true;
+    }
+
+
+    /**
+     * Commit the data stored in memory to the archive.
+     * This is useful if you make a bunch of setProperty() calls at once
+     * and you dont want to update the database every time.  Instead you
+     * can set all the variables without committing them, then call this function.
+     *
+     * @param array $p_ignoreColumns
+     *      Specify column names to ignore when doing the commit.
+     *
+     * @return boolean
+     *      Return TRUE if the database was updated, false otherwise.
+     */
+    public function commit()
+    {
+    	if (!$this->exists()) {
+    		return false;
+    	}
+        $fileXMLMetadata = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
+        $fileDbMetadata = new Archive_FileDatabaseMetadata($this->m_gunId);
+        if ($fileXMLMetadata->update($this->m_metaData)) {
+        	$fileDbMetadata->update($this->m_metaData);
+        	return true;
+        }
+        return false;
+    }
+
+
+    /**
      * This function should be called when a file is uploaded.
      * It will save the file to the temporary directory on
      * the disk before to be sent to the storage server.
@@ -350,6 +520,19 @@ class Archive_FileBase
         }
         return false;
     } // fn isValidFileType
+
+
+    /**
+     * Output the raw values of this object so that it displays nice in HTML.
+     * @return void
+     */
+    public function dumpToHtml()
+    {
+        echo "<pre>";
+        echo $this->m_gunId . "\n";
+        print_r($this->m_metaData);
+        echo "</pre>";
+    } // fn dumpToHtml
 
 
     /**
@@ -595,6 +778,108 @@ class Archive_FileBase
         return $xmlTextFile;
     } // fn CreateXMLTextFile
 
+
+    /**
+     * Generates the cache key for the object.
+     *
+     * @param array optional
+     *    $p_recordSet The object data
+     */
+    public function getCacheKey($p_gunId = null)
+    {
+        if (empty($p_gunId)) {
+        	$gunId = $p_gunId;
+        } else {
+        	$gunId = $this->m_gunId;
+        }
+        if (empty($gunId)) {
+        	return null;
+        }
+
+        $cacheKey = $gunId . '_' . get_class($this);
+
+        return $cacheKey.'_'.get_class($this);
+    } // fn getCacheKey
+    
+
+    /**
+     * Returns true if cache use was enabled
+     *
+     * @return bool
+     */
+    public function GetUseCache()
+    {
+        return self::$m_useCache;
+    }
+
+
+    /**
+     * Sets cache enabled/disabled
+     *
+     * @param bool $p_useCache
+     *
+     * @return void
+     */
+    public function SetUseCache($p_useCache)
+    {
+        self::$m_useCache = $p_useCache;
+    }
+
+
+    /**
+     * Initializes the current object from cache if it exists
+     *
+     * @param array $p_recordSet
+     *
+     * @return mixed
+     *    object The cached object on success
+     *    boolean FALSE if the object did not exist
+     */
+    public function readFromCache($p_gunId = null)
+    {
+        if (!self::GetUseCache()) {
+            return false;
+        }
+
+        $cacheKey = '';
+        if (empty($p_gunId) || !$this->keyValuesExist()) {
+        	return false;
+        }
+
+        $cacheKey = $this->getCacheKey($p_gunId);
+        $cacheObj = CampCache::singleton();
+        $object = $cacheObj->fetch($cacheKey);
+
+        if ($object === false) {
+            return false;
+        }
+
+        $this->duplicateObject($object);
+
+        return $this;
+    }
+
+
+    /**
+     * Writes the object to cache.
+     *
+     * @return bool
+     *    TRUE on success, FALSE on failure
+     */
+    public function writeCache()
+    {
+        if (!self::GetUseCache()) {
+            return false;
+        }
+
+        $cacheKey = $this->getCacheKey();
+        if ($cacheKey === false) {
+            return false;
+        }
+        $cacheObj = CampCache::singleton();
+
+        return $cacheObj->add($cacheKey, $this);
+    } // fn writeCache
 } // class Archive_FileBase
 
 ?>

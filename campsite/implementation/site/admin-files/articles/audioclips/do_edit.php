@@ -8,7 +8,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 
 if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
     camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);

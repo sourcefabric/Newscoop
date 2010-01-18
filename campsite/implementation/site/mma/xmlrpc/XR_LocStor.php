@@ -2633,7 +2633,7 @@ class XR_LocStor extends LocStor {
         $res = $this->searchMetadata($r['sessid'], $r['criteria']);
         if (PEAR::isError($res)) {
             return new XML_RPC_Response(0, 805,
-                "xr_searchAudioClip: ".$res->getMessage().
+                "xr_searchMetadata: ".$res->getMessage().
                 " ".$res->getUserInfo()
             );
         }

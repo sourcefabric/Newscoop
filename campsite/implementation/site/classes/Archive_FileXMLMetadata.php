@@ -57,6 +57,20 @@ class Archive_FileXMLMetadata
     {
     	return $this->m_exists;
     }
+    
+    
+    /**
+     * Delete the file from the multimedia archive.
+     * Returns true if the object was found and deleted, false otherwise.
+     * 
+     * @return boolean
+     */
+    public function delete()
+    {
+    	if (!$this->exists()) {
+    		return false;
+    	}
+    }
 
 
     /**
