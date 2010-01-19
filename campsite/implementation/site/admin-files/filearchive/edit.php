@@ -7,11 +7,12 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_File.php');
 $fileGunId = Input::Get('gunid', 'string', '');
 
 if (empty($fileGunId)) {
-  // return error
+    // return error
 }
 
 // TODO: check this out
 $xrc =& XR_CcClient::Factory($mdefs, true);
+$sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
     switch ($resp->getCode()) {
@@ -49,6 +50,15 @@ echo camp_html_breadcrumbs($crumbs);
 <script type="text/javascript" src="/javascript/yui/build/tabview/tabview-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/container/container-min.js"></script>
 
+<?php
+$response = $xrc->xr_downloadRawMediaDataOpen($sessid, $fileGunId);
+$fileTypeName = null;
+if (!PEAR::isError($response)) {
+    $release = $xrc->xr_downloadRawMediaDataClose($sessid, $response['token']);
+    $fileTypeInfo = $file->getFileTypeInfo($response['filename']);
+}
+?>
+
 <div id="camp-message"></div>
 <p>
 <form id="file_edit" name="file_edit" method="post" action="#">
@@ -61,7 +71,7 @@ echo camp_html_breadcrumbs($crumbs);
   foreach($mask['pages'] as $key => $val) {
       $selected = ($cnt == 1) ? ' class="selected"' : '';
       echo '<li'.$selected.'><a href="#tab'.$cnt++.'"><em>'
-	.$key.'</em></a></li>';
+          .$key.'</em></a></li>';
   }
   ?>
   </ul>
@@ -73,25 +83,36 @@ echo camp_html_breadcrumbs($crumbs);
   ?>
       <table border="0" cellspacing="0" cellpadding="6" class="table_input">
   <?php
+      $hasIcon = false;
       foreach($mask['pages'][$key] as $k => $v) {
           $element = $v['element'];
-	  $element_encode = str_replace(':','_',$v['element']);
-	  $element_form_name = 'f_' . $key . '_' . $element_encode;
-	  $isDisabled = (isset($v['attributes']['disabled'])) ? $v['attributes']['disabled'] : 'off';
+          $element_encode = str_replace(':','_',$v['element']);
+          $element_form_name = 'f_' . $key . '_' . $element_encode;
+          $isDisabled = (isset($v['attributes']['disabled'])) ? $v['attributes']['disabled'] : 'off';
+          if (!$hasIcon && $key == 'Main' && !is_null($fileTypeInfo)) {
+              $hasIcon = true;
   ?>
+      <tr>
+        <td colspan="2"><img src="/css/<?php echo $fileTypeInfo['icon']; ?>" /><br /></td>
+      </tr>
+      <?php
+      }
+      ?>
       <tr>
         <td align="right"><?php echo htmlspecialchars($file->getMetatagLabel($element)); ?>:</td>
         <td>
         <?php
         if ($isDisabled == 'on') {
-	    $tagValue = htmlspecialchars($file->getMetatagValue($element));
-	    if ($element == 'ls:mtime') {
-	        echo '<div id="f_mtime">'.$tagValue . "</div>\n";
-	    } elseif ($element == 'ls:filesize') {
-	        echo camp_format_bytes($tagValue) . "\n";
-	    } else {
-	        echo $tagValue ."\n";
-	    }
+            $tagValue = htmlspecialchars($file->getMetatagValue($element));
+            if ($element == 'dc:format' && !is_null($fileTypeInfo)) {
+                echo $fileTypeInfo['name'] . ', mime-type: ' . $tagValue;
+            } elseif ($element == 'ls:mtime') {
+                echo '<div id="f_mtime">'.$file->getModifiedTime()."</div>\n";
+            } elseif ($element == 'ls:filesize') {
+                echo camp_format_bytes($tagValue) . "\n";
+            } else {
+                echo $tagValue ."\n";
+            }
         ?>
           <input type="hidden" id="<?php echo $element_form_name; ?>" name="<?php echo $element_form_name; ?>" value="<?php echo $tagValue; ?>" />
         <?php
@@ -126,8 +147,8 @@ $jsArrayFields = array();
 foreach($mask['pages'] as $key => $val) {
     foreach($mask['pages'][$key] as $k => $v) {
         $element = $v['element'];
-	$element_encode = str_replace(':','_',$v['element']);
-	$jsArrayFields[] = "'".addslashes('f_'.$key.'_'.$element_encode)."'";
+        $element_encode = str_replace(':','_',$v['element']);
+        $jsArrayFields[] = "'".addslashes('f_'.$key.'_'.$element_encode)."'";
     }
     $jsArrayPages[] = "'".addslashes($key)."'";
 }

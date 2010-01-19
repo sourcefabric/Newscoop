@@ -19,7 +19,7 @@ class Archive_TextFile extends Archive_FileBase
     protected $m_metatagLabels = array(
         // generic tags for all file types
         'dc:title' => 'Title',
-        'dc:format' => 'File format',
+        'dc:format' => 'File type',
         'dc:description' => 'Description',
         'dc:rights' => 'Copyright',
         'ls:crc' => 'Checksum',
@@ -88,22 +88,23 @@ class Archive_TextFile extends Archive_FileBase
 
     protected $m_fileTypes = array(
         '.css'  => array('name' => 'CSS text file',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.htm'  => array('name' => 'HTML',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.html' => array('name' => 'HTML',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.asc'  => array('name' => 'Plain Text',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.txt'  => array('name' => 'Plain Text',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.sgm'  => array('name' => 'SGML',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.sgml' => array('name' => 'SGML',
-                         'icon' => 'filearchive_text.png'),
+                         'icon' => 'filearchive_text_48x48.png'),
         '.xml'  => array('name' => 'XML document',
-                         'icon' => 'filearchive_text.png'),
-        '.*'
+                         'icon' => 'filearchive_text_48x48.png'),
+        '.*'    => array('name' => 'Unknown',
+                         'icon' => 'filearchive_unknown_48x48.png'),
     );
 
 

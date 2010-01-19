@@ -19,7 +19,7 @@ class Archive_AudioFile extends Archive_FileBase
     protected $m_metatagLabels = array(
         // generic tags for all file types
         'dc:title' => 'Title',
-        'dc:format' => 'File format',
+        'dc:format' => 'File type',
         'dc:description' => 'Description',
         'dc:rights' => 'Copyright',
         'ls:crc' => 'Checksum',
@@ -369,27 +369,29 @@ class Archive_AudioFile extends Archive_FileBase
 
     protected $m_fileTypes = array(
         '.mp3'  => array('name' => 'MP3 audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.ogg'  => array('name' => 'Ogg Vorbis audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.wav'  => array('name' => 'WAV audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.aiff' => array('name' => 'AIFF/Amiga/Mac audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.aif'  => array('name' => 'AIFF/Amiga/Mac audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.flac' => array('name' => 'FLAC audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.mid'  => array('name' => 'MIDI audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.au'   => array('name' => 'ULAW (Sun) audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.aac'  => array('name' => 'MPEG-4 audio',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.ra'   => array('name' => 'RealAudio document',
-                         'icon' => 'filearchive_sound.png'),
+                         'icon' => 'filearchive_audio_48x48.png'),
         '.spx'  => array('name' => 'Speex audio',
-                         'icon' => 'filearchive_sound.png')
+                         'icon' => 'filearchive_audio_48x48.png'),
+        '.*'    => array('name' => 'Unknown',
+                         'icon' => 'filearchive_unknown_48x48.png'),
     );
 
 

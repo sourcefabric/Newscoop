@@ -130,23 +130,25 @@ class Archive_ImageFile extends Archive_FileBase
 
     protected $m_fileTypes = array(
         '.jpeg' => array('name' => 'JPEG',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.jpg'  => array('name' => 'JPEG',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.png'  => array('name' => 'PNG (Portable Network Graphics)',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.gif'  => array('name' => 'GIF',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.bmp'  => array('name' => 'Microsoft Windows bitmap',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.tiff' => array('name' => 'TIFF',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.tif'  => array('name' => 'TIFF',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.swf'  => array('name' => 'SWF (Small Web Format)',
-                         'icon' => 'filearchive_image.png'),
+                         'icon' => 'filearchive_image_48x48.png'),
         '.pcd'  => array('name' => 'Kodak Photo-CD',
-                         'icon' => 'filearchive_image.png')
+                         'icon' => 'filearchive_image_48x48.png'),
+        '.*'    => array('name' => 'Unknown',
+                         'icon' => 'filearchive_unknown_48x48.png'),
     );
 
 

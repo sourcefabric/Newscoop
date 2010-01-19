@@ -87,73 +87,108 @@ class Archive_ApplicationFile extends Archive_FileBase
     );
 
     protected $m_fileTypes = array(
-        '.mp3' => array('name' => 'MP3 audio',
-                        'icon' => 'filearchive_application.png'),
-        '.ai' => array('name' => 'PostScript',
-                       'icon' => 'filearchive_application.png'),
-        '.eps' => array('name' => 'PostScript',
-                        'icon' => 'filearchive_application.png'),
-        '.ps' => array('name' => 'PostScript',
-                       'icon' => 'filearchive_application.png'),
-        '.rtf' => array('name' => 'Rich Text Format',
-                        'icon' => 'filearchive_application.png'),
-        '.pdf' => array('name' => 'PDF',
-                        'icon' => 'filearchive_application.png'),
-        '.latex' => array('name' => 'LaTeX document',
-                          'icon' => 'filearchive_application.png'),
-        '.tex' => array('name' => 'Tex/LateX document',
-                        'icon' => 'filearchive_application.png'),
-        '.texinfo' => array('name' => 'GNU Texinfo document',
-                            'icon' => 'filearchive_application.png'),
-        '.texi' => array('name' => 'GNU Texinfo document',
-                         'icon' => 'filearchive_application.png'),
-        '.dvi' => array('name' => 'TeX dvi format',
-                        'icon' => 'filearchive_application.png'),
-        '.rar' => array('name' => 'RAR Archive',
-                        'icon' => 'filearchive_application.png'),
-        '.gtar' => array('name' => 'GNU tar format',
-                         'icon' => 'filearchive_application.png'),
-        '.tar' => array('name' => 'BSD tar format',
-                        'icon' => 'filearchive_application.png'),
-        '.ustar' => array('name' => 'POSIX tar format',
-                          'icon' => 'filearchive_application.png'),
-        '.bcpio' => array('name' => 'Old CPIO format',
-                          'icon' => 'filearchive_application.png'),
-        '.cpio' => array('name' => 'POSIX CPIO format',
-                         'icon' => 'filearchive_application.png'),
-        '.shar' => array('name' => 'UNIX sh shell archive',
-                         'icon' => 'filearchive_application.png'),
-        '.zip' => array('name' => 'DOS/PC Pkzipped archive',
-                        'icon' => 'filearchive_application.png'),
-        '.gz' => array('name' => 'GNU Zip',
-                       'icon' => 'filearchive_application.png'),
-        '.hqx' => array('name' => 'Mac binhexed archive',
-                        'icon' => 'filearchive_application.png'),
-        '.sti' => array('name' => 'Mac Stuffit archive',
-                        'icon' => 'filearchive_application.png'),
-        '.sea' => array('name' => 'Mac Stuffit archive',
-                        'icon' => 'filearchive_application.png'),
-        '.fif' => array('name' => 'Fractal Image format',
-                        'icon' => 'filearchive_application.png'),
-        '.bin' => array('name' => 'Binary',
-                        'icon' => 'filearchive_application.png'),
-        '.uu' => array('name' => 'UUencoded',
-                       'icon' => 'filearchive_application.png'),
-        '.exe' => array('name' => 'PC executable',
-                        'icon' => 'filearchive_application.png'),
-        '.hdf' => array('name' => 'NCSA HDF data format',
-                        'icon' => 'filearchive_application.png'),
-        '.js' => array('name' => 'Javascript program',
-                       'icon' => 'filearchive_application.png'),
-        '.sh' => array('name' => 'UNIX bourne shell program',
-                       'icon' => 'filearchive_application.png'),
-        '.csh' => array('name' => 'UNIX c-shell program',
-                        'icon' => 'filearchive_application.png'),
-        '.pl' => array('name' => 'Perl program',
-                       'icon' => 'filearchive_application.png'),
-        '.tcl' => array('name' => 'Tcl program',
-                        'icon' => 'filearchive_application.png'),
-        '.*'
+        '.mp3' => array(
+            'name' => 'MP3 audio',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.ai' => array(
+            'name' => 'PostScript',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.eps' => array(
+            'name' => 'PostScript',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.ps' => array(
+            'name' => 'PostScript',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.rtf' => array(
+            'name' => 'Rich Text Format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.pdf' => array(
+            'name' => 'PDF',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.latex' => array(
+            'name' => 'LaTeX document',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.tex' => array(
+            'name' => 'Tex/LateX document',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.texinfo' => array(
+            'name' => 'GNU Texinfo document',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.texi' => array(
+            'name' => 'GNU Texinfo document',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.dvi' => array(
+            'name' => 'TeX dvi format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.rar' => array(
+            'name' => 'RAR Archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.gtar' => array(
+            'name' => 'GNU tar format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.tar' => array(
+            'name' => 'BSD tar format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.ustar' => array(
+            'name' => 'POSIX tar format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.bcpio' => array(
+            'name' => 'Old CPIO format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.cpio' => array(
+            'name' => 'POSIX CPIO format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.shar' => array(
+            'name' => 'UNIX sh shell archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.zip' => array(
+            'name' => 'DOS/PC Pkzipped archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.gz' => array(
+            'name' => 'GNU Zip',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.hqx' => array(
+            'name' => 'Mac binhexed archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.sti' => array(
+            'name' => 'Mac Stuffit archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.sea' => array(
+            'name' => 'Mac Stuffit archive',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.fif' => array(
+            'name' => 'Fractal Image format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.bin' => array(
+            'name' => 'Binary',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.uu' => array(
+            'name' => 'UUencoded',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.exe' => array(
+            'name' => 'PC executable',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.hdf' => array(
+            'name' => 'NCSA HDF data format',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.js' => array(
+            'name' => 'Javascript program',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.sh' => array(
+            'name' => 'UNIX bourne shell program',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.csh' => array(
+            'name' => 'UNIX c-shell program',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.pl' => array(
+            'name' => 'Perl program',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.tcl' => array(
+            'name' => 'Tcl program',
+            'icon' => 'filearchive_application_48x48.png'),
+        '.*'   => array(
+            'name' => 'Unknown',
+            'icon' => 'filearchive_unknown_48x48.png'),
     );
 
 

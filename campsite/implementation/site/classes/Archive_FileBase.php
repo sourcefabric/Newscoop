@@ -74,22 +74,30 @@ class Archive_FileBase
      */
     public function __construct($p_gunId = null)
     {
-    	$this->fetch($p_gunId);
+        if (!empty($p_gunId)) {
+        	$this->fetch($p_gunId);
+        }
     }
 
 
+    /**
+     * @param string $p_gunId
+     *      The file gunid
+     * @return boolen
+     *      TRUE on success, FALSE on failure
+     */
     public function fetch($p_gunId)
     {
-    	if (empty($p_gunId)) {
-    		$this->m_gunId = null;
-    		$this->m_fileType = null;
-    		$this->m_mask = array();
+        if (empty($p_gunId)) {
+            $this->m_gunId = null;
+            $this->m_fileType = null;
+            $this->m_mask = array();
             $this->m_metaData = array();
             $this->m_fileTypes = array();
             $this->m_exists = false;
             return false;
-    	}
-    	
+        }
+
     	$fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
     	$this->m_metaData = $fileDbMetadataObj->fetch();
     	if ($this->m_metaData == false || sizeof($this->m_metaData) == 0) {
@@ -105,7 +113,7 @@ class Archive_FileBase
     		$this->m_exists = true;
     	}
     	return $this->m_exists;
-    } // constructor
+    } // fn fetch
 
 
     /**
@@ -117,7 +125,7 @@ class Archive_FileBase
     public function sameAs($p_otherObject)
     {
         if (get_class($this) != get_class($p_otherObject)
-        || $this->m_dbTableName != $p_otherObject->m_dbTableName) {
+                || $this->m_dbTableName != $p_otherObject->m_dbTableName) {
             return false;
         }
         if (!$this->m_exists && !$p_otherObject->m_exists) {
@@ -180,9 +188,9 @@ class Archive_FileBase
      */
     public function delete()
     {
-    	$fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId);
+    	$fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
     	if ($fileXMLMetadataObj->delete()) {
-    		$fileDbMetadataObj = new Archive_FileDatabaseMetadata($p_gunId);
+    		$fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
     		$fileDbMetadataObj->delete();
     		return true;
     	}
@@ -323,6 +331,21 @@ class Archive_FileBase
     	}
     	return array_keys($this->m_metaData);
     } // fn getAvailableMetaTags
+
+
+    /**
+     * @param string
+     *
+     * @return array
+     */
+    public function getFileTypeInfo($p_fileName)
+    {
+        if (!$this->isValidFileType($p_fileName)) {
+            return false;
+        }
+        $fileExtension = self::GetFileExtension($p_fileName);
+        return $this->m_fileTypes[$fileExtension];
+    } // fn getFileTypeInfo
 
 
     /**
@@ -520,6 +543,21 @@ class Archive_FileBase
         }
         return false;
     } // fn isValidFileType
+
+
+    /**
+     * @param string
+     *
+     * @return mixed
+     */
+    public static function GetFileExtension($p_fileName)
+    {
+        $ext = strtolower(strrchr($p_fileName, '.'));
+        if (empty($ext)) {
+            return false;
+        }
+        return $ext;
+    } // fn GetFileExtension
 
 
     /**
