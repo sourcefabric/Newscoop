@@ -188,13 +188,17 @@ class Archive_FileBase
      */
     public function delete()
     {
-    	$fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
-    	if ($fileXMLMetadataObj->delete()) {
-    		$fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
-    		$fileDbMetadataObj->delete();
-    		return true;
-    	}
-    	return false;
+        $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
+        if ($fileXMLMetadataObj->delete()) {
+            $fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
+            $fileDbMetadataObj->delete();
+            // Logging
+            $logtext = getGS('File "$1" (gunid = $2) deleted.',
+                $this->getMetatagValue('title'), $this->m_gunId);
+            Log::Message($logtext, null, 182);
+            return true;
+        }
+        return false;
     }
 
 
