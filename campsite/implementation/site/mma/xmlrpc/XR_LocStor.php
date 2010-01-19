@@ -666,6 +666,60 @@ class XR_LocStor extends LocStor {
     }
 
     /**
+     * Create downlodable URL for stored file
+     *
+     * The XML-RPC name of this method is "locstor.downloadRawMediaDataOpen".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid  :  string  -  session id </li>
+     *      <li> gunid  :  string  -  global unique id of Media file</li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct:
+     *  <ul>
+     *      <li> url : string - downloadable url</li>
+     *      <li> token : string - download token</li>
+     *      <li> chsum : string - md5 checksum</li>
+     *      <li> size : int - file size</li>
+     *      <li> filename : string - human readable mnemonic file name</li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 801  -  wrong 1st parameter, struct expected.</li>
+     *      <li> 805  -  xr_accessRawMediaDataOpen:
+     *                      &lt;message from lower layer&gt; </li>
+     *      <li> 847  -  invalid gunid.</li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see LocStor::downloadRawMediaDataOpen
+     */
+    public function xr_downloadRawMediaDataOpen($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        $res = $this->downloadRawMediaDataOpen($r['sessid'], $r['gunid']);
+        if (PEAR::isError($res)) {
+            $ec0 = intval($res->getCode());
+            $ec  = ($ec0 == GBERR_NOTF ? 800+$ec0 : 805 );
+            return new XML_RPC_Response(0, $ec,
+                "xr_downloadRawMediaDataOpen: ".$res->getMessage().
+                " ".$res->getUserInfo()
+            );
+        }
+        return new XML_RPC_Response(XML_RPC_encode($res));
+    }
+
+    /**
      * Delete downlodable URL with media file.
      *
      * The XML-RPC name of this method is "locstor.downloadRawAudioDataClose".
@@ -707,6 +761,54 @@ class XR_LocStor extends LocStor {
         if (PEAR::isError($res)) {
             return new XML_RPC_Response(0, 805,
                 "xr_downloadRawAudioDataClose: ".$res->getMessage().
+                " ".$res->getUserInfo()
+            );
+        }
+        return new XML_RPC_Response(XML_RPC_encode(array('gunid'=>$res)));
+    }
+
+    /**
+     * Delete downlodable URL with media file.
+     *
+     * The XML-RPC name of this method is "locstor.downloadRawMediaDataClose".
+     *
+     * The input parameters are an XML-RPC struct with the following
+     * fields:
+     *  <ul>
+     *      <li> sessid  :  string  -  session id </li>
+     *      <li> token   :  string  -  download token
+     *              returned by locstor.downloadRawMediaDataOpen</li>
+     *  </ul>
+     *
+     * On success, returns a XML-RPC struct with single field:
+     *  <ul>
+     *      <li> gunid : string - global unique ID</li>
+     *  </ul>
+     *
+     * On errors, returns an XML-RPC error response.
+     * The possible error codes and error message are:
+     *  <ul>
+     *      <li> 3    -  Incorrect parameters passed to method:
+     *                      Wanted ... , got ... at param </li>
+     *      <li> 801  -  wrong 1st parameter, struct expected.</li>
+     *      <li> 805  -  xr_releaseRawMediaDataClose:
+     *                      &lt;message from lower layer&gt; </li>
+     *  </ul>
+     *
+     * @param XML_RPC_Message $input
+     * @return XML_RPC_Response
+     * @see LocStor::downloadRawMediaDataClose
+     */
+    public function xr_downloadRawMediaDataClose($input)
+    {
+        list($ok, $r) = XR_LocStor::xr_getParams($input);
+        if (!$ok) {
+            return $r;
+        }
+        $res = $this->downloadRawMediaDataClose($r['token']);
+        if (PEAR::isError($res)) {
+            return new XML_RPC_Response(0, 805,
+                "xr_downloadRawMediaDataClose: ".$res->getMessage().
                 " ".$res->getUserInfo()
             );
         }

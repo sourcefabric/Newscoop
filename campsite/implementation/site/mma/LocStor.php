@@ -423,6 +423,37 @@ class LocStor extends BasicStor {
 
 
     /**
+     * Create and return downloadable URL for media file
+     *
+     * @param string $sessid
+     * 		session id
+     * @param string $gunid
+     * 		global unique id
+     * @return array
+     * 		array with strings:
+     *      downloadable URL, download token, chsum, size, filename
+     */
+    protected function downloadRawMediaDataOpen($sessid, $gunid)
+    {
+        $ex = $this->existsMediaFile($sessid, $gunid);
+        if (PEAR::isError($ex)) {
+            return $ex;
+        }
+        $id = BasicStor::IdFromGunid($gunid);
+        if (is_null($id) || !$ex) {
+            return PEAR::raiseError(
+                "LocStor::downloadRawMediaDataOpen: gunid not found ($gunid)",
+                GBERR_NOTF
+            );
+        }
+        if (($res = BasicStor::Authorize('read', $id, $sessid)) !== TRUE) {
+            return $res;
+        }
+        return $this->bsOpenDownload($id);
+    }
+
+
+    /**
      * Discard downloadable URL for audio file
      *
      * @param string $token
@@ -435,6 +466,19 @@ class LocStor extends BasicStor {
         return $this->bsCloseDownload($token);
     }
 
+
+    /**
+     * Discard downloadable URL for media file
+     *
+     * @param string $token
+     * 		download token
+     * @return string
+     * 		gunid
+     */
+    protected function downloadRawMediaDataClose($token)
+    {
+        return $this->bsCloseDownload($token);
+    }
 
     /**
      * Create and return downloadable URL for metadata
