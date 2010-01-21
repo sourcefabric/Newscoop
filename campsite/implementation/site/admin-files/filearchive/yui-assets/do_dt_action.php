@@ -6,6 +6,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_File.php');
 require_once($GLOBALS['g_campsiteDir'].'/mma/StoredFile.php');
 
 
+$json = new Services_JSON();
+$data = new stdclass();
+$data->Results = new stdclass();
+
 $task = Input::Get('task', 'string', '');
 $fileGunids = $_POST;
 
@@ -14,6 +18,11 @@ $affectedFiles = 0;
 $totalFiles = is_array($fileGunids) ? count($fileGunids) : 0;
 switch($task) {
     case 'delete':
+        if (!$g_user->hasPermission('DeleteFile')) {
+            $success = false;
+            $data->Results->error = getGS('You do not have the right to delete the file.');
+            break;
+        }
         foreach($fileGunids as $param => $fileGunid) {
             if ($param == 'task') continue;
             $file = Archive_File::Get($fileGunid);
@@ -23,11 +32,9 @@ switch($task) {
             }
         }
         break;
+    default:
+        break;
 }
-
-$json = new Services_JSON();
-$data = new stdclass();
-$data->Results = new stdclass();
 
 $data->Results->total_files = $affectedFiles;
 $data->Results->success = $success;

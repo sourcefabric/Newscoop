@@ -51,9 +51,8 @@ if ($g_user->hasPermission('CommentModerate')) {
     $menu_content->addItem($menu_item);
 }
 
-// TODO: do we need a right?
 $menu_item =& DynMenuItem::Create(getGS('File Archive'), "/$ADMIN/filearchive/index.php",
-		array('icon' => sprintf($iconTemplateStr, 'add_mediafile.png'), 'id' => 'file_archive'));
+    array('icon' => sprintf($iconTemplateStr, 'add_mediafile.png'), 'id' => 'file_archive'));
 $menu_content->addItem($menu_item);
 
 $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php",

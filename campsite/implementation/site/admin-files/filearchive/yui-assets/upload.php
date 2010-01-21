@@ -10,15 +10,18 @@ $data = new stdclass();
 $data->Results = new stdclass();
 $data->Results->success = true;
 
+if (!$g_user->hasPermission('AddFile')) {
+    $data->Results->success = false;
+    $data->Results->camp_error = getGS('You do not have the right to add new files.');
+}
+
 // Check if form was posted. $_POST and $_FILES are empty usually when
 // post_max_size in php.ini is not set properly.
-if (empty($_POST) && empty($_FILES)) {
+if ($data->Results->success && empty($_POST) && empty($_FILES)) {
     $data->Results->success = false;
     // TODO: more informative err message?
     $data->Results->camp_error = getGS('Form could not be posted.');
 }
-
-$file_title = Input::Get('file_title', 'string', '');
 
 // Check for file upload error
 if ($data->Results->success
@@ -99,6 +102,7 @@ if ($data->Results->success) {
         } else {
             eval($fileClassName."::OnFileStore('$filePath');");
             //$fileClassName::OnFileStore($filePath);
+            $file_title = Input::Get('file_title', 'string', '');
 
             $data->Results->file_desc = $file_title;
             $data->Results->file_type = $uploadFile['type'];

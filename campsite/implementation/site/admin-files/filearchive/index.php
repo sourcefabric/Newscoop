@@ -70,8 +70,7 @@ echo camp_html_breadcrumbs($crumbs);
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
 <tr>
 <?php
-// TODO: add proper right
-if ($g_user->hasPermission('AddImage')) { ?>
+if ($g_user->hasPermission('AddFile')) { ?>
   <td>
     <a href="file.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" alt="<?php putGS('Add new file'); ?>" /></a>
   </td>

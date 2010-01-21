@@ -19,9 +19,8 @@ if (!Input::IsValid()) {
     $data->Results->camp_error = getGS('Invalid input: $1', Input::GetErrorString());
 }
 
-// TODO: check for permission
 if ($data->Results->success
-        && !$g_user->hasPermission('AttachAudioclipToArticle')) {
+        && !$g_user->hasPermission('ChangeFile')) {
     $data->Results->success = false;
     $data->Results->camp_error = getGS('You do not have the right to change file information.');
 }
