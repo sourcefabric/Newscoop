@@ -1022,7 +1022,7 @@ class DatabaseObject {
 				return false;
 			}
 			$cacheKey .= (strlen($cacheKey) < 1) ? '' : '_';
-            $cacheKey .= $recordSet[$key];
+            $cacheKey .= strtolower($recordSet[$key]);
 		}
 
         return $cacheKey.'_'.get_class($this);
