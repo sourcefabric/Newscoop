@@ -291,7 +291,14 @@ YAHOO.util.Event.addListener(window, "load", function() {
                 var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
                 var data = eval('(' + json + ')');
 
-                // if ok
+                if (data.Results.success == false) {
+                    mesg.style.color = 'red';
+                    if (data.Results.error != undefined) {
+                        mesg.innerHTML = '<?php putGS("Error"); ?>' + ': '
+                            + data.Results.error;
+                    }
+                    return false;
+                }
                 for (x in selRows) {
                     myDataTable.deleteRow(selRows[x]);
                 }

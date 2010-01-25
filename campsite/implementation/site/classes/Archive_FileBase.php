@@ -542,7 +542,8 @@ class Archive_FileBase
     public function isValidFileType($p_fileName)
     {
         $ext = strtolower(strrchr($p_fileName, '.'));
-        if (array_key_exists($ext, $this->m_fileTypes)) {
+        if (array_key_exists($ext, $this->m_fileTypes)
+                || array_key_exists('.*', $this->m_fileTypes)) {
             return true;
         }
         return false;

@@ -57,7 +57,34 @@ if (!PEAR::isError($response)) {
     $release = $xrc->xr_downloadRawMediaDataClose($sessid, $response['token']);
     $fileTypeInfo = $file->getFileTypeInfo($response['filename']);
 }
+
+$cnt = 1;
+$divPages = '';
+$jsSpreadStr = '';
+$jsArrayPages = array();
+$jsArrayFields = array();
+foreach($mask['pages'] as $key => $val) {
+    $selected = ($cnt == 1) ? ' class="selected"' : '';
+    $divPages .= "\t<li".$selected.'><a href="#tab'.$cnt++.'"><em>'
+        .$key."</em></a></li>\n";
+    $jsSpreadStr .= "\tif (document.forms['file_edit'].elements['f_".$key."_'+name]) document.forms['file_edit'].elements['f_".$key."_'+name].value = element.value;\n";
+    foreach($mask['pages'][$key] as $k => $v) {
+        $element = $v['element'];
+        $element_encode = str_replace(':','_',$v['element']);
+        $jsArrayFields[] = "'".addslashes('f_'.$key.'_'.$element_encode)."'";
+    }
+    $jsArrayPages[] = "'".addslashes($key)."'";
+}
+$jsArrayPagesStr = implode(',', $jsArrayPages);
+$jsArrayFieldsStr = implode(',', $jsArrayFields);
 ?>
+
+<script type="text/javascript">
+function spread(element, name)
+{
+<?php print($jsSpreadStr); ?>
+}
+</script>
 
 <div id="camp-message"></div>
 <p>
@@ -66,14 +93,7 @@ if (!PEAR::isError($response)) {
 <input type="hidden" name="file_type" value="<?php echo $file->getFileType(); ?>" />
 <div id="file_md" class="yui-navset">
   <ul class="yui-nav">
-  <?php
-  $cnt = 1;
-  foreach($mask['pages'] as $key => $val) {
-      $selected = ($cnt == 1) ? ' class="selected"' : '';
-      echo '<li'.$selected.'><a href="#tab'.$cnt++.'"><em>'
-          .$key.'</em></a></li>';
-  }
-  ?>
+  <?php print($divPages); ?>
   </ul>
   <div class="yui-content">
   <?php
@@ -117,8 +137,9 @@ if (!PEAR::isError($response)) {
           <input type="hidden" id="<?php echo $element_form_name; ?>" name="<?php echo $element_form_name; ?>" value="<?php echo $tagValue; ?>" />
         <?php
         } else {
+            $el = str_replace(':', '_', $element);
         ?>
-          <input type="text" class="input_text" id="<?php echo $element_form_name; ?>" name="<?php echo $element_form_name; ?>" size="50" value="<?php echo $file->getMetatagValue($element); ?>" />
+          <input type="text" class="input_text" id="<?php echo $element_form_name; ?>" name="<?php echo $element_form_name; ?>" size="50" value="<?php echo $file->getMetatagValue($element); ?>" onchange="spread(this, '<?php echo $el; ?>')" />
         <?php
         }
         ?>
@@ -140,21 +161,7 @@ if (!PEAR::isError($response)) {
   ?>
 </div>
 </form>
-<?php
-//
-$jsArrayPages = array();
-$jsArrayFields = array();
-foreach($mask['pages'] as $key => $val) {
-    foreach($mask['pages'][$key] as $k => $v) {
-        $element = $v['element'];
-        $element_encode = str_replace(':','_',$v['element']);
-        $jsArrayFields[] = "'".addslashes('f_'.$key.'_'.$element_encode)."'";
-    }
-    $jsArrayPages[] = "'".addslashes($key)."'";
-}
-$jsArrayPagesStr = implode(',', $jsArrayPages);
-$jsArrayFieldsStr = implode(',', $jsArrayFields);
-?>
+
 <!-- YUI code //-->
 <script type="text/javascript">
 YAHOO.namespace("camp.container");
@@ -171,78 +178,74 @@ function init() {
     var onEditButtonClick = function(e){
         YAHOO.util.Connect.setForm('file_edit');
 
-	var editHandler = {
-	    success: function(o) {
-	        var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
-		var data = eval('(' + json + ')');
+        var editHandler = {
+            success: function(o) {
+                var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
+                var data = eval('(' + json + ')');
 
-		mesg.style.display = 'inline';
-		if (data.Results.success == false) {
-		    mesg.style.color = 'red';
-		    if (data.Results.camp_error != undefined) {
-		        mesg.innerHTML = '<?php putGS("Error"); ?>' + ': '
-			    + data.Results.camp_error;
-		    }
-		    YAHOO.camp.container.wait.hide();
-		    return false;
-		}
+                mesg.style.display = 'inline';
+                if (data.Results.success == false) {
+                    mesg.style.color = 'red';
+                    if (data.Results.camp_error != undefined) {
+                        mesg.innerHTML = '<?php putGS("Error"); ?>' + ': '
+                            + data.Results.camp_error;
+                    }
+                    YAHOO.camp.container.wait.hide();
+                    return false;
+                }
 
-		// now we are pretty sure editing went ok
-		mesg.style.color = 'green';
-		mesg.innerHTML = '<?php putGS("File data was edited successfully"); ?>';
+                // now we are pretty sure editing went ok
+                mesg.style.color = 'green';
+                mesg.innerHTML = '<?php putGS("File data was edited successfully"); ?>';
 
-		elmMtime = document.getElementById('f_mtime');
-		elmMtime.style.fontWeight = 'bold';
-		elmMtime.innerHTML = data.Results.mtime;
-		YAHOO.camp.container.wait.hide();
-	    },
-	    failure: function(o) {
-	        if(o.status == 0 || o.status == -1) {
-		    mesg.style.display = 'inline';
-		    mesg.style.color = 'red';
-		    mesg.innerHTML = '<?php putGS("Error: Campsite was unable to edit the file."); ?>';
-		    YAHOO.example.container.wait.hide();
-		}
-	    }
-	};
+                elmMtime = document.getElementById('f_mtime');
+                elmMtime.style.fontWeight = 'bold';
+                elmMtime.innerHTML = data.Results.mtime;
+                YAHOO.camp.container.wait.hide();
+	        },
+	        failure: function(o) {
+	            if(o.status == 0 || o.status == -1) {
+                    mesg.style.display = 'inline';
+                    mesg.style.color = 'red';
+                    mesg.innerHTML = '<?php putGS("Error: Campsite was unable to edit the file."); ?>';
+                    YAHOO.example.container.wait.hide();
+                }
+	        }
+	    };
 
-	// Initialize the temporary Panel to display while waiting
-	// for file upload
-	YAHOO.camp.container.wait = 
+	    // Initialize the temporary Panel to display while waiting
+	    // for file upload
+	    YAHOO.camp.container.wait = 
             new YAHOO.widget.Panel("wait",
-                                   { width:"240px",
-				     fixedcenter:true,
-				     close:false,
-				     draggable:false,
-				     zindex: 4,
-				     modal:true,
-				     visible:false
-				   }
-				  );
+                {width:"240px",
+                 fixedcenter:true,
+                 close:false,
+                 draggable:false,
+                 zindex: 4,
+                 modal:true,
+                 visible:false
+                }
+            );
 
-	YAHOO.camp.container.wait.setHeader("<?php putGS('Saving, please wait...'); ?>");
-	YAHOO.camp.container.wait.setBody("<img src=\"/css/rel_interstitial_loading.gif\" />");
-	YAHOO.camp.container.wait.render(document.body);
+	    YAHOO.camp.container.wait.setHeader("<?php putGS('Saving, please wait...'); ?>");
+	    YAHOO.camp.container.wait.setBody("<img src=\"/css/rel_interstitial_loading.gif\" />");
+	    YAHOO.camp.container.wait.render(document.body);
 
-	//
-	var formFields = [<?php print($jsArrayFieldsStr); ?>];
+	    //
+	    var formFields = [<?php print($jsArrayFieldsStr); ?>];
 
-	//
-	var postData = '';
-	for (i = 0; i < formFields.length; i++) {
-	    postData += '&' + formFields[i] + '=' + encodeURIComponent(document.getElementById(formFields[i]).value);
-	}
+	    //
+	    var postData = '';
+	    for (i = 0; i < formFields.length; i++) {
+	        postData += '&' + formFields[i] + '=' + encodeURIComponent(document.getElementById(formFields[i]).value);
+	    }
 
-	// Show the saving panel
-	YAHOO.camp.container.wait.show();
+	    // Show the saving panel
+	    YAHOO.camp.container.wait.show();
 
-	var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, editHandler, postData);
-	setTimeout(function() { YAHOO.util.Connect.abort(request, editHandler) }, 30000);
+        var request = YAHOO.util.Connect.asyncRequest('POST', sUrl, editHandler, postData);
+        setTimeout(function() { YAHOO.util.Connect.abort(request, editHandler) }, 30000);
     };
-
-    //var onEditButtonClick = function(e){
-    //    YAHOO.util.Connect.setForm('file_mdata');
-    //}
 
     var editButtonName = '';
     for (i = 0; i < formPages.length; i++) {
