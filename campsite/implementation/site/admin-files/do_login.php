@@ -73,10 +73,8 @@ if (!$LiveUser->isLoggedIn() ||
         ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
     if (!$f_user_name) {
         $LiveUser->login(null, null, true);
-    } else {
-        if (!$LiveUser->login($f_user_name, $t_password, false)) {
-            camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
-        }
+    } elseif (!$LiveUser->login($f_user_name, $t_password, false)) {
+    	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
     }
 }
 

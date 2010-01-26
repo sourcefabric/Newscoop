@@ -65,7 +65,7 @@ if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl
 	// Show single pane for everyone else.
 ?>
 	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print $url; ?>" NAME="body" FRAMEBORDER="1">
+		<FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
 	</FRAMESET>
 <?php
 }
