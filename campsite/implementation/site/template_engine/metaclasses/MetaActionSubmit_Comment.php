@@ -127,7 +127,7 @@ class MetaActionSubmit_Comment extends MetaAction
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
         if ($publicationObj->isCaptchaEnabled()) {
-            session_start();
+            @session_start();
             $f_captcha_code = CampRequest::GetVar('f_captcha_code');
             if (is_null($f_captcha_code) || empty($f_captcha_code)) {
                 $this->m_error = new PEAR_Error('Please enter the code shown in the image.',

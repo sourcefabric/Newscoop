@@ -73,10 +73,8 @@ if (!$LiveUser->isLoggedIn() ||
         ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
     if (!$f_user_name) {
         $LiveUser->login(null, null, true);
-    } else {
-        if (!$LiveUser->login($f_user_name, $t_password, false)) {
-            camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
-        }
+    } elseif (!$LiveUser->login($f_user_name, $t_password, false)) {
+    	camp_html_goto_page("/$ADMIN/login.php?error_code=userpass");
     }
 }
 
@@ -94,14 +92,6 @@ if ($LiveUser->isLoggedIn()) {
     if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
         // if user valid, password valid, encrypted, no CAPTCHA -> login
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
-
-        // auth the local file archive storage server
-        $faLogin = camp_filearchive_login($f_user_name, $t_password);
-	if (PEAR::isError($ccLogin)) {
-	    camp_html_add_msg(getGS("There was an error logging in to the file archive storage server"));
-	}
-
-	// login to campcaster if integration is enabled
         if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') {
             $ccLogin = camp_campcaster_login($f_user_name, $t_password);
             if (PEAR::isError($ccLogin)) {
