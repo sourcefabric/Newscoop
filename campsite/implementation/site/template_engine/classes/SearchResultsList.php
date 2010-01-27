@@ -14,7 +14,8 @@ class SearchResultsList extends ListObject
                                           'byname',
                                           'bydate',
                                           'bycreationdate',
-                                          'bypublishdate'
+                                          'bypublishdate',
+                                          'bylanguage'
                                     );
 
 	/**
