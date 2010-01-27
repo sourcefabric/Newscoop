@@ -43,7 +43,7 @@ class MetaActionSubmit_Blogcomment extends MetaAction
             return;
         }
         if (SystemPref::Get('PLUGIN_BLOGCOMMENT_USE_CAPTCHA') == 'Y') {
-            session_start();
+            @session_start();
             $f_captcha_code = $p_input['f_captcha_code'];
             if (is_null($f_captcha_code) || empty($f_captcha_code)) {
                 $this->m_error = new PEAR_Error('Please enter the code shown in the image.', ACTION_BLOGCOMMENT_ERR_NO_CAPTCHA_CODE);
