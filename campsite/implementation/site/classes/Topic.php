@@ -369,34 +369,37 @@ class Topic extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
-					                 $p_parentId = null, $p_sqlOptions = null, $p_order = null)
+					                 $p_parentId = null, $p_sqlOptions = null,
+					                 $p_order = null, $p_countOnly = false)
 	{
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-            $paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
-            $paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
-            $paramsArray['name'] = (is_null($p_name)) ? 'null' : $p_name;
-            $paramsArray['parent_id'] = (is_null($p_parentId)) ? 'null' : $p_parentId;
+        global $g_ado_db;
+		if (!$p_skipCache && CampCache::IsEnabled()) {
+            $paramsArray['id'] = (is_null($p_id)) ? '' : $p_id;
+            $paramsArray['language_id'] = (is_null($p_languageId)) ? '' : $p_languageId;
+            $paramsArray['name'] = (is_null($p_name)) ? '' : $p_name;
+            $paramsArray['parent_id'] = (is_null($p_parentId)) ? '' : $p_parentId;
             $paramsArray['sql_options'] = $p_sqlOptions;
             $paramsArray['order'] = $p_order;
+            $paramsArray['count_only'] = (int)$p_countOnly;
             $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
             $topics = $cacheListObj->fetchFromCache();
             if ($topics !== false && is_array($topics)) {
-                return $topics;
+                return $p_countOnly ? $topics['count'] : $topics;
             }
         }
 
 		$constraints = array();
 		if (!is_null($p_id)) {
-			$constraints[] = array("Id", $p_id);
+			$constraints[] = "`Id` = '$p_id'";
 		}
 		if (!is_null($p_languageId)) {
-			$constraints[] = array("LanguageId", $p_languageId);
+			$constraints[] = "`LanguageId` = '$p_languageId'";
 		}
 		if (!is_null($p_name)) {
-			$constraints[] = array("Name", $p_name);
+			$constraints[] = "`Name` = '$p_name'";
 		}
 		if (!is_null($p_parentId)) {
-			$constraints[] = array("ParentId", $p_parentId);
+			$constraints[] = "`ParentId` = '$p_parentId'";
 		}
 		if (is_array($p_order) && count($p_order) > 0) {
 			$order = array();
@@ -414,7 +417,22 @@ class Topic extends DatabaseObject {
 				$p_sqlOptions['ORDER BY'] = $order;
 			}
 		}
-		$topics = DatabaseObject::Search('Topic', $constraints, $p_sqlOptions);
+		$tmpObj = new Topic();
+        $queryStr = "SELECT DISTINCT Id FROM ".$tmpObj->m_dbTableName;
+        if (count($constraints) > 0) {
+        	$queryStr .= " WHERE ".implode(" AND ", $constraints);
+        }
+        $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+        if ($p_countOnly) {
+        	$queryStr = "SELECT COUNT(*) FROM ($queryStr) AS topics";
+        	$topics['count'] = $g_ado_db->GetOne($queryStr);
+        } else {
+        	$topics = array();
+        	$rows = $g_ado_db->GetAll($queryStr);
+        	foreach ($rows as $row) {
+        		$topics[] = new Topic($row['Id']);
+        	}
+        }
 
         if (!$p_skipCache && CampCache::IsEnabled()) {
             $cacheListObj->storeInCache($topics);

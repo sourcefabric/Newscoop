@@ -28,8 +28,7 @@ class SubtopicsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $context = CampTemplate::singleton()->context();
-	    $rootTopicId = $context->topic->defined ? $context->topic->identifier : 0;
+	    $rootTopicId = $p_parameters['topic_identifier'];
 
 	    if ($p_start > 0 || $p_limit > 0) {
 	        $sqlOptions = array('LIMIT'=>array('START'=>$p_start,
@@ -39,10 +38,11 @@ class SubtopicsList extends ListObject
 	    } else {
 	        $sqlOptions = null;
 	    }
-        $languageId = $context->language->defined ? $context->language->number : null;
 
-	    $topicsList = Topic::GetTopics(null, $languageId, null, $rootTopicId, $sqlOptions, $this->m_order);
-	    $allTopicsList = Topic::GetTopics(null, $languageId, null, $rootTopicId, null);
+	    $topicsList = Topic::GetTopics(null, $p_parameters['language_id'], null, 
+	                                   $rootTopicId, $sqlOptions, $this->m_order);
+	    $p_count = Topic::GetTopics(null, $p_parameters['language_id'], null, 
+	                                $rootTopicId, null, null, true);
 	    $metaTopicsList = array();
 	    $index = 0;
 	    foreach ($topicsList as $topic) {
@@ -51,7 +51,6 @@ class SubtopicsList extends ListObject
     	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
 	        }
 	    }
-	    $p_count = count($allTopicsList);
 	    return $metaTopicsList;
 	}
 
@@ -135,7 +134,10 @@ class SubtopicsList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_subtopics", $p_smarty);
     		}
     	}
-        $parameters['topic_identifier'] = CampTemplate::singleton()->context()->topic->identifier;
+    	// 'topic_identifier' and 'language_id' parameters are needed for the cache key
+    	$context = CampTemplate::singleton()->context();
+    	$parameters['topic_identifier'] = $context->topic->identifier;
+        $parameters['language_id'] = $context->language->number;
     	return $parameters;
 	}
 
