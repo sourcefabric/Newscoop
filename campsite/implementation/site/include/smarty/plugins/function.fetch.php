@@ -186,7 +186,7 @@ function smarty_function_fetch($params, &$smarty)
                     $content = $csplit[1];
 
                     if(!empty($params['assign_headers'])) {
-                        $smarty->assign($params['assign_headers'],split("\r\n",$csplit[0]));
+                        $smarty->assign($params['assign_headers'],explode("\r\n",$csplit[0]));
                     }
                 }
             } else {
