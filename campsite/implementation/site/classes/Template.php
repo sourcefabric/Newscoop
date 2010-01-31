@@ -131,7 +131,7 @@ class Template extends DatabaseObject {
 	{
 		global $Campsite;
 
-		foreach (split("/", $p_path) as $index=>$dir) {
+		foreach (explode("/", $p_path) as $index=>$dir) {
 			if ($dir == "..") {
 				return false;
 			}
