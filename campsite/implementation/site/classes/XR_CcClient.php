@@ -158,8 +158,31 @@ $GLOBALS['mdefs'] = array(
             '847'=>'invalid gunid'
         )
     ),
+    "xr_downloadRawMediaDataOpen" => array(
+        'm'=>'locstor.downloadRawMediaDataOpen',
+        'p'=>array('sessid'/*string*/, 'gunid'/*string*/),
+        't'=>array('string', 'string'),
+        'r'=>array('url'/*string*/, 'token'/*string*/, 'chsum'/*string*/, 'size'/*int*/, 'filename'/*string*/),
+        'e'=>array(
+            '3'=>'incorrect parameters',
+            '801'=>'bad params',
+            '805'=>'message from lower later',
+            '847'=>'invalid gunid'
+        )
+    ),
     "xr_downloadRawAudioDataClose" => array(
         'm'=>'locstor.downloadRawAudioDataClose',
+        'p'=>array('sessid'/*string*/, 'token'/*string*/),
+        't'=>array('string', 'string'),
+        'r'=>array('gunid'/*string*/),
+        'e'=>array(
+            '3'=>'incorrect parameters',
+            '801'=>'bad params',
+            '805'=>'message from lower later'
+        )
+    ),
+    "xr_downloadRawMediaDataClose" => array(
+        'm'=>'locstor.downloadRawMediaDataClose',
         'p'=>array('sessid'/*string*/, 'token'/*string*/),
         't'=>array('string', 'string'),
         'r'=>array('gunid'/*string*/),
