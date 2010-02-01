@@ -104,6 +104,7 @@ if ($data->Results->success) {
             //$fileClassName::OnFileStore($filePath);
             $file_title = Input::Get('file_title', 'string', '');
 
+            $data->Results->file_gunid = $fileGunid;
             $data->Results->file_desc = $file_title;
             $data->Results->file_type = $uploadFile['type'];
             $data->Results->file_name = $uploadFile['name'];
