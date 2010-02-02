@@ -56,10 +56,11 @@ echo camp_html_breadcrumbs($crumbs);
 <script type="text/javascript" src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/connection/connection-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/container/container_core-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/json/json-min.js"></script>
+<script type="text/javascript" src="/javascript/yui/build/element/element-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/dragdrop/dragdrop-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/animation/animation-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/menu/menu-min.js"></script>
-<script type="text/javascript" src="/javascript/yui/build/element/element-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/button/button-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/paginator/paginator-min.js"></script>
 <script type="text/javascript" src="/javascript/yui/build/datasource/datasource-min.js"></script>
@@ -290,7 +291,6 @@ YAHOO.util.Event.addListener(window, "load", function() {
             success: function(o) {
                 var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
                 var data = eval('(' + json + ')');
-
                 if (data.Results.success == false) {
                     mesg.style.color = 'red';
                     if (data.Results.error != undefined) {

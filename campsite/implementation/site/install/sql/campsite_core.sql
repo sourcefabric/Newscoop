@@ -41,6 +41,30 @@ LOCK TABLES `Aliases` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Archive_FileMetadata`
+--
+
+CREATE TABLE `Archive_FileMetadata` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `gunid` varchar(20) NOT NULL default '0',
+  `predicate_ns` varchar(10) default '',
+  `predicate` varchar(30) NOT NULL default '',
+  `object` text,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `gunid_tag_id` (`gunid`,`predicate_ns`,`predicate`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `Archive_FileMetadata`
+--
+
+LOCK TABLES `Archive_FileMetadata` WRITE;
+/*!40000 ALTER TABLE `Archive_FileMetadata` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Archive_FileMetadata` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ArticleAttachments`
 --
 
@@ -2601,6 +2625,532 @@ LOCK TABLES `phorum_users` WRITE;
 /*!40000 ALTER TABLE `phorum_users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `backup`
+--
+CREATE TABLE `backup` (
+  `token` varchar(64) NOT NULL,
+  `sessionid` varchar(64) NOT NULL,
+  `status` varchar(32) NOT NULL,
+  `fromtime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `totime` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`token`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `backup`
+--
+
+LOCK TABLES `backup` WRITE;
+/*!40000 ALTER TABLE `backup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `backup` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_access`
+--
+
+DROP TABLE IF EXISTS `ls_access`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `ls_access` (
+  `gunid` bigint(20) default NULL,
+  `token` bigint(20) default NULL,
+  `chsum` char(32) NOT NULL default '',
+  `ext` varchar(128) NOT NULL default '',
+  `type` varchar(20) NOT NULL default '',
+  `parent` bigint(20) default NULL,
+  `owner` int(11) default NULL,
+  `ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  KEY `ls_access_gunid_idx` (`gunid`),
+  KEY `ls_access_parent_idx` (`parent`),
+  KEY `ls_access_token_idx` (`token`),
+  KEY `ls_access_owner_fkey` (`owner`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_access`
+--
+
+LOCK TABLES `ls_access` WRITE;
+/*!40000 ALTER TABLE `ls_access` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_access` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_classes`
+--
+
+CREATE TABLE `ls_classes` (
+  `id` int(11) NOT NULL,
+  `cname` varchar(20) default NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `ls_classes_id_idx` (`id`),
+  UNIQUE KEY `ls_classes_cname_idx` (`cname`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_classes`
+--
+
+LOCK TABLES `ls_classes` WRITE;
+/*!40000 ALTER TABLE `ls_classes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_classes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_cmemb`
+--
+
+CREATE TABLE `ls_cmemb` (
+  `objid` int(11) NOT NULL,
+  `cid` int(11) NOT NULL,
+  UNIQUE KEY `ls_cmemb_idx` (`objid`,`cid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_cmemb`
+--
+
+LOCK TABLES `ls_cmemb` WRITE;
+/*!40000 ALTER TABLE `ls_cmemb` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_cmemb` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_files`
+--
+
+CREATE TABLE `ls_files` (
+  `id` int(11) NOT NULL,
+  `gunid` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL default '',
+  `mime` varchar(255) NOT NULL default '',
+  `ftype` varchar(128) NOT NULL default '',
+  `state` varchar(128) NOT NULL default 'empty',
+  `currentlyaccessing` int(11) NOT NULL default '0',
+  `editedby` int(11) default NULL,
+  `mtime` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `md5` char(32) default NULL,
+  UNIQUE KEY `ls_files_gunid_idx` (`gunid`),
+  UNIQUE KEY `ls_files_id_idx` (`id`),
+  KEY `ls_files_md5_idx` (`md5`),
+  KEY `ls_files_name_idx` (`name`),
+  KEY `ls_files_editedby_fkey` (`editedby`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_files`
+--
+
+LOCK TABLES `ls_files` WRITE;
+/*!40000 ALTER TABLE `ls_files` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_files` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_mdata`
+--
+
+CREATE TABLE `ls_mdata` (
+  `id` int(11) NOT NULL auto_increment,
+  `gunid` bigint(20) default NULL,
+  `subjns` varchar(121) default NULL,
+  `subject` varchar(212) NOT NULL default '',
+  `predns` varchar(121) default NULL,
+  `predicate` varchar(212) NOT NULL,
+  `predxml` char(1) NOT NULL default 'T',
+  `objns` varchar(255) default NULL,
+  `object` text,
+  UNIQUE KEY `ls_mdata_id_idx` (`id`),
+  KEY `ls_mdata_gunid_idx` (`gunid`),
+  KEY `ls_mdata_pred_idx` (`predns`,`predicate`),
+  KEY `ls_mdata_subj_idx` (`subjns`,`subject`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_mdata`
+--
+
+LOCK TABLES `ls_mdata` WRITE;
+/*!40000 ALTER TABLE `ls_mdata` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_mdata` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_perms`
+--
+
+CREATE TABLE `ls_perms` (
+  `permid` int(11) NOT NULL auto_increment,
+  `subj` int(11) default NULL,
+  `action` varchar(20) default NULL,
+  `obj` int(11) default NULL,
+  `type` char(1) default NULL,
+  PRIMARY KEY  (`permid`),
+  UNIQUE KEY `ls_perms_permid_idx` (`permid`),
+  UNIQUE KEY `ls_perms_all_idx` (`subj`,`action`,`obj`),
+  KEY `ls_perms_subj_obj_idx` (`subj`,`obj`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_perms`
+--
+
+LOCK TABLES `ls_perms` WRITE;
+/*!40000 ALTER TABLE `ls_perms` DISABLE KEYS */;
+INSERT INTO `ls_perms` VALUES (1, 1, '_all', 1, 'A'),(2, 2, 'read', 1, 'A'),(3, 4, '_all', 4, 'A');
+/*!40000 ALTER TABLE `ls_perms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_perms_id_seq_seq`
+--
+
+CREATE TABLE `ls_perms_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_perms_id_seq_seq`
+--
+
+LOCK TABLES `ls_perms_id_seq_seq` WRITE;
+/*!40000 ALTER TABLE `ls_perms_id_seq_seq` DISABLE KEYS */;
+INSERT INTO `ls_perms_id_seq_seq` VALUES (3);
+/*!40000 ALTER TABLE `ls_perms_id_seq_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_pref`
+--
+
+CREATE TABLE `ls_pref` (
+  `id` int(11) NOT NULL auto_increment,
+  `subjid` int(11) default NULL,
+  `keystr` varchar(255) default NULL,
+  `valstr` text,
+  UNIQUE KEY `ls_pref_id_idx` (`id`),
+  UNIQUE KEY `ls_pref_subj_key_idx` (`subjid`,`keystr`),
+  KEY `ls_pref_subjid_idx` (`subjid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_pref`
+--
+
+LOCK TABLES `ls_pref` WRITE;
+/*!40000 ALTER TABLE `ls_pref` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_pref` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_sess`
+--
+
+CREATE TABLE `ls_sess` (
+  `sessid` char(32) NOT NULL,
+  `userid` int(11) default NULL,
+  `login` varchar(255) default NULL,
+  `ts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`sessid`),
+  UNIQUE KEY `ls_sess_sessid_idx` (`sessid`),
+  KEY `ls_sess_login_idx` (`login`),
+  KEY `ls_sess_userid_idx` (`userid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_sess`
+--
+
+LOCK TABLES `ls_sess` WRITE;
+/*!40000 ALTER TABLE `ls_sess` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_sess` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_smemb`
+--
+
+CREATE TABLE `ls_smemb` (
+  `id` int(11) NOT NULL auto_increment,
+  `uid` int(11) NOT NULL default '0',
+  `gid` int(11) NOT NULL default '0',
+  `level` int(11) NOT NULL default '0',
+  `mid` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_smemb`
+--
+
+LOCK TABLES `ls_smemb` WRITE;
+/*!40000 ALTER TABLE `ls_smemb` DISABLE KEYS */;
+INSERT INTO `ls_smemb` VALUES (1, 4, 3, 0, NULL),(2, 4, 2, 0, NULL),(3, 4, 1, 0, NULL);
+/*!40000 ALTER TABLE `ls_smemb` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_smemb_id_seq_seq`
+--
+
+CREATE TABLE `ls_smemb_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_smemb_id_seq_seq`
+--
+
+LOCK TABLES `ls_smemb_id_seq_seq` WRITE;
+/*!40000 ALTER TABLE `ls_smemb_id_seq_seq` DISABLE KEYS */;
+INSERT INTO `ls_smemb_id_seq_seq` VALUES (3);
+/*!40000 ALTER TABLE `ls_smemb_id_seq_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_struct`
+--
+
+CREATE TABLE `ls_struct` (
+  `rid` int(11) NOT NULL auto_increment,
+  `objid` int(11) NOT NULL,
+  `parid` int(11) NOT NULL,
+  `level` int(11) default NULL,
+  PRIMARY KEY  (`rid`),
+  UNIQUE KEY `ls_struct_objid_parid_idx` (`objid`,`parid`),
+  UNIQUE KEY `ls_struct_rid_idx` (`rid`),
+  UNIQUE KEY `ls_struct_objid_level_idx` (`objid`,`level`),
+  KEY `ls_struct_level_idx` (`level`),
+  KEY `ls_struct_objid_idx` (`objid`),
+  KEY `ls_struct_parid_idx` (`parid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_struct`
+--
+
+LOCK TABLES `ls_struct` WRITE;
+/*!40000 ALTER TABLE `ls_struct` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_struct` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_struct_id_seq_seq`
+--
+
+CREATE TABLE `ls_struct_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_struct_id_seq_seq`
+--
+
+LOCK TABLES `ls_struct_id_seq_seq` WRITE;
+/*!40000 ALTER TABLE `ls_struct_id_seq_seq` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_struct_id_seq_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_subjs`
+--
+
+CREATE TABLE `ls_subjs` (
+  `id` int(11) NOT NULL auto_increment,
+  `login` varchar(255) NOT NULL default '',
+  `pass` varchar(255) NOT NULL default '',
+  `type` char(1) NOT NULL default 'U',
+  `realname` varchar(255) NOT NULL default '',
+  `lastlogin` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `lastfail` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `ls_subjs_login_idx` (`login`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_subjs`
+--
+
+LOCK TABLES `ls_subjs` WRITE;
+/*!40000 ALTER TABLE `ls_subjs` DISABLE KEYS */;
+INSERT INTO `ls_subjs` VALUES (1, 'Admins', '!', 'G', '', NOW(), NOW()),(2, 'All', '!', 'G', '', NOW(), NOW()),(3, 'StationPrefs', '!', 'G', '', NOW(), NOW()),(4, 'admin', MD5('admn00'), 'U', '', NOW(), NOW());
+/*!40000 ALTER TABLE `ls_subjs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_subjs_id_seq_seq`
+--
+
+CREATE TABLE `ls_subjs_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_subjs_id_seq_seq`
+--
+
+LOCK TABLES `ls_subjs_id_seq_seq` WRITE;
+/*!40000 ALTER TABLE `ls_subjs_id_seq_seq` DISABLE KEYS */;
+INSERT INTO `ls_subjs_id_seq_seq` VALUES (4);
+/*!40000 ALTER TABLE `ls_subjs_id_seq_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_trans`
+--
+
+CREATE TABLE `ls_trans` (
+  `id` int(11) NOT NULL auto_increment,
+  `trtok` char(16) NOT NULL,
+  `direction` varchar(128) NOT NULL,
+  `state` varchar(128) NOT NULL,
+  `trtype` varchar(128) NOT NULL,
+  `lock` char(1) NOT NULL default 'N',
+  `target` varchar(255) default NULL,
+  `rtrtok` char(16) default NULL,
+  `mdtrtok` char(16) default NULL,
+  `gunid` bigint(20) default NULL,
+  `pdtoken` bigint(20) default NULL,
+  `url` varchar(255) default NULL,
+  `localfile` varchar(255) default NULL,
+  `fname` varchar(255) default NULL,
+  `title` varchar(255) default NULL,
+  `expectedsum` char(32) default NULL,
+  `realsum` char(32) default NULL,
+  `expectedsize` int(11) default NULL,
+  `realsize` int(11) default NULL,
+  `uid` int(11) default NULL,
+  `errmsg` varchar(255) default NULL,
+  `jobpid` int(11) default NULL,
+  `start` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `ts` timestamp NOT NULL default '0000-00-00 00:00:00',
+  UNIQUE KEY `ls_trans_id_idx` (`id`),
+  UNIQUE KEY `ls_trans_trtok_idx` (`trtok`),
+  UNIQUE KEY `ls_trans_token_idx` (`pdtoken`),
+  KEY `ls_trans_gunid_idx` (`gunid`),
+  KEY `ls_trans_state_idx` (`state`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_trans`
+--
+
+LOCK TABLES `ls_trans` WRITE;
+/*!40000 ALTER TABLE `ls_trans` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ls_trans` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_tree`
+--
+
+CREATE TABLE `ls_tree` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL default '',
+  `type` varchar(255) NOT NULL default '',
+  `param` varchar(255) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `ls_tree_name_idx` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_tree`
+--
+
+LOCK TABLES `ls_tree` WRITE;
+/*!40000 ALTER TABLE `ls_tree` DISABLE KEYS */;
+INSERT INTO `ls_tree` VALUES (1, 'RootNode', 'RootNode', NULL),(2, 'StorageRoot', 'Folder', NULL),(3, 'trash_', 'Folder', NULL),(4, 'admin', 'Folder', NULL);
+/*!40000 ALTER TABLE `ls_tree` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ls_tree_id_seq_seq`
+--
+
+CREATE TABLE `ls_tree_id_seq_seq` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `ls_tree_id_seq_seq`
+--
+
+LOCK TABLES `ls_tree_id_seq_seq` WRITE;
+/*!40000 ALTER TABLE `ls_tree_id_seq_seq` DISABLE KEYS */;
+INSERT INTO `ls_tree_id_seq_seq` VALUES (4);
+/*!40000 ALTER TABLE `ls_tree_id_seq_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `playlog`
+--
+
+CREATE TABLE `playlog` (
+  `id` bigint(20) NOT NULL,
+  `audioclipid` bigint(20) NOT NULL,
+  `timestamp` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `playlog`
+--
+
+LOCK TABLES `playlog` WRITE;
+/*!40000 ALTER TABLE `playlog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `playlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `id` bigint(20) NOT NULL,
+  `playlist` bigint(20) NOT NULL,
+  `starts` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `ends` timestamp NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `schedule`
+--
+
+LOCK TABLES `schedule` WRITE;
+/*!40000 ALTER TABLE `schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `schedule` ENABLE KEYS */;
+UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

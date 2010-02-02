@@ -42,7 +42,7 @@ class Archive_FileXMLMetadata
         $this->xrc = XR_CcClient::Factory($mdefs, true);
         if (!is_null($p_gunId)) {
             $this->m_gunId = $p_gunId;
-	    $this->m_fileType = $p_fileType;
+            $this->m_fileType = $p_fileType;
             $this->fetch();
         }
     } // constructor
@@ -70,7 +70,17 @@ class Archive_FileXMLMetadata
     	if (!$this->exists()) {
     		return false;
     	}
-    }
+
+        $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
+        if (empty($sessid)) {
+            return false;
+        }
+        $r = $this->xrc->xr_deleteAudioClip($sessid, $this->m_gunId);
+        if (PEAR::isError($r)) {
+            return $r;
+        }
+        return true;
+    } // fn delete
 
 
     /**
@@ -193,23 +203,23 @@ class Archive_FileXMLMetadata
     public function update($p_metaData)
     {
         $xmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
-	    ."<".$this->m_fileType.">\n"
-	    ."\t<metadata\n"
-	    ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-	    ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
-	    ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
-	    ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
-	    ."xmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
-	    ."\t>\n";
+            ."<".$this->m_fileType.">\n"
+            ."\t<metadata\n"
+            ."\t\txmlns=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            ."\t\txmlns:ls=\"http://mdlf.org/campcaster/elements/1.0/\"\n"
+            ."\t\txmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n"
+            ."\t\txmlns:dcterms=\"http://purl.org/dc/terms/\"\n"
+            ."xmlns:xml=\"http://www.w3.org/XML/1998/namespace\"\n"
+            ."\t>\n";
         foreach($p_metaData as $key => $metaDataEntry) {
             $xmlStr .= "\t\t<$key>".$metaDataEntry->getValue()."</$key>\n";
         }
-	$xmlStr .= "\t</metadata>\n</".$this->m_fileType.">\n";
+        $xmlStr .= "\t</metadata>\n</".$this->m_fileType.">\n";
 
         $sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
         $res = $this->xrc->xr_updateAudioClipMetadata($sessid, $this->m_gunId, $xmlStr);
         if (PEAR::isError($res)) {
-	    return $res;
+            return $res;
         }
         return $res['status'];
     } // fn update
