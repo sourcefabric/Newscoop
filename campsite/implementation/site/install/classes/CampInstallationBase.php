@@ -605,13 +605,16 @@ class CampInstallationBaseHelper
             ."Password = SHA1('".$g_db->Escape($p_password)."'), "
             ."EMail = '".$g_db->Escape($p_email)."' "
             .'WHERE Id = 1';
-
         $sqlQuery2 = 'UPDATE phorum_users SET '
             ."password = SHA1('".$g_db->Escape($p_password)."'), "
             ."email = '".$g_db->Escape($p_email)."' "
             .'WHERE user_id = 1';
-        if (!$g_db->Execute($sqlQuery1)
-                || !$g_db->Execute($sqlQuery2)) {
+        $sqlQuery3 = 'UPDATE ls_subjs SET '
+            . "pass = MD5('" . $g_db->Escape($p_password) . "'), "
+            . "realname = '" . $g_db->Escape($p_email) . "' "
+            . 'WHERE id = 4';
+        if (!$g_db->Execute($sqlQuery1) || !$g_db->Execute($sqlQuery2)
+                || !$g_db->Execute($sqlQuery3)) {
             return false;
         }
 
