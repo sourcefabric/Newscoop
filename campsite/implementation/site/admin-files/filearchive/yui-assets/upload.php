@@ -92,7 +92,7 @@ if ($data->Results->success) {
             }
         }
 
-        eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileContentType');");
+        eval('$fileGunid='.$fileClassName."::Store('$sessId','$filePath',\$metaDataArray,'$fileContentType','".$g_user->getUserId()."');");
         //$fileGunid = $fileClassName::Store($sessId, $filePath, $metaData);
         if (PEAR::isError($fileGunid)) {
             $data->Results->success = false;

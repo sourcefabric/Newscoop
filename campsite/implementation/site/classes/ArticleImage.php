@@ -17,9 +17,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
  * @package Campsite
  */
 class ArticleImage extends DatabaseObject {
-	var $m_keyColumnNames = array('NrArticle','IdImage');
+	var $m_keyColumnNames = array('fk_article_number','fk_file_gunid');
 	var $m_dbTableName = 'ArticleImages';
-	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
+	var $m_columnNames = array('fk_article_number', 'fk_file_gunid', 'image_index');
 	var $m_image = null;
 
 	/**
@@ -34,15 +34,15 @@ class ArticleImage extends DatabaseObject {
 	                             $p_templateId = null)
 	{
 		if (!is_null($p_articleNumber) && !is_null($p_imageId)) {
-			$this->m_data['NrArticle'] = $p_articleNumber;
-			$this->m_data['IdImage'] = $p_imageId;
+			$this->m_data['fk_article_number'] = $p_articleNumber;
+			$this->m_data['fk_file_gunid'] = $p_imageId;
 			$this->fetch();
 		} elseif (!is_null($p_articleNumber) && !is_null($p_templateId)) {
-			$this->m_data['NrArticle'] = $p_articleNumber;
-			$this->m_data['Number'] = $p_templateId;
-			$this->m_keyColumnNames = array('NrArticle', 'Number');
+			$this->m_data['fk_article_number'] = $p_articleNumber;
+			$this->m_data['image_index'] = $p_templateId;
+			$this->m_keyColumnNames = array('fk_article_number', 'image_index');
 			$this->fetch();
-			$this->m_keyColumnNames = array('NrArticle', 'IdImage');
+			$this->m_keyColumnNames = array('fk_article_number', 'fk_file_gunid');
 		}
 	} // constructor
 
@@ -52,7 +52,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	public function getImageId()
 	{
-		return $this->m_data['IdImage'];
+		return $this->m_data['fk_file_gunid'];
 	} // fn getImageId
 	
 	
@@ -61,7 +61,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	public function getImageArticleIndex()
 	{
-	    return $this->m_data['Number'];
+	    return $this->m_data['image_index'];
 	}
 
 
@@ -70,7 +70,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	public function getArticleNumber()
 	{
-		return $this->m_data['NrArticle'];
+		return $this->m_data['fk_article_number'];
 	} // fn getArticleNumber
 
 
@@ -79,7 +79,7 @@ class ArticleImage extends DatabaseObject {
 	 */
 	public function getTemplateId()
 	{
-		return $this->m_data['Number'];
+		return $this->m_data['image_index'];
 	} // fn getTemplateId
 
 
@@ -91,7 +91,7 @@ class ArticleImage extends DatabaseObject {
 		if (is_object($this->m_image)) {
 			return $this->m_image;
 		} else {
-			return new Image($this->m_data['IdImage']);
+			return new Image($this->m_data['fk_file_gunid']);
 		}
 	} // fn getImage
 
@@ -105,7 +105,7 @@ class ArticleImage extends DatabaseObject {
      */
     public function setTemplateId($p_templateId)
     {
-        return $this->setProperty('Number', $p_templateId);
+        return $this->setProperty('image_index', $p_templateId);
     } // fn setTemplateId
 
 
@@ -140,8 +140,9 @@ class ArticleImage extends DatabaseObject {
 	public static function GetUnusedTemplateId($p_articleNumber)
 	{
 		global $g_ado_db;
+		settype($p_articleNumber, 'integer');
 		// Get the highest template ID and add one.
-		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleNumber";
+		$queryStr = "SELECT MAX(image_index)+1 FROM ArticleImages WHERE fk_article_number = $p_articleNumber";
 		$templateId = $g_ado_db->GetOne($queryStr);
 		if (!$templateId) {
 			$templateId = 1;
@@ -161,8 +162,10 @@ class ArticleImage extends DatabaseObject {
 	public static function TemplateIdInUse($p_articleNumber, $p_templateId)
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT Number FROM ArticleImages"
-					." WHERE NrArticle=$p_articleNumber AND Number=$p_templateId";
+		settype($p_articleNumber, 'integer');
+        settype($p_templateId, 'integer');
+		$queryStr = "SELECT image_index FROM ArticleImages"
+				  . " WHERE fk_article_number = $p_articleNumber AND image_index = $p_templateId";
 		$value = $g_ado_db->GetOne($queryStr);
 		if ($value !== false) {
 			return true;
@@ -178,7 +181,7 @@ class ArticleImage extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * 		The specific article you want the images from.
 	 * @param boolean $p_countOnly
-	 * 		Only return the number of images in the article.
+	 * 		Only return the image_index of images in the article.
 	 * @return mixed
 	 * 		Return either an array or an int.
 	 */
@@ -186,18 +189,15 @@ class ArticleImage extends DatabaseObject {
 	{
 		global $g_ado_db;
 
+		settype($p_articleNumber, 'integer');
 		if ($p_countOnly) {
 			$selectStr = "COUNT(*)";
 		} else {
-			$tmpImage = new Image();
-			$selectStr = implode(',', $tmpImage->getColumnNames());
-			$selectStr .= ', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage';
+			$selectStr = "*";
 		}
-		$queryStr = 'SELECT '.$selectStr
-					.' FROM Images, ArticleImages'
-					.' WHERE ArticleImages.NrArticle='.$p_articleNumber
-					.' AND ArticleImages.IdImage=Images.Id'
-					.' ORDER BY ArticleImages.Number';
+		$queryStr = "SELECT $selectStr FROM ArticleImages"
+				  . " WHERE fk_article_number = $p_articleNumber"
+				  . ' ORDER BY image_index';
 		if ($p_countOnly) {
 			return $g_ado_db->GetOne($queryStr);
 		} else {
@@ -207,8 +207,6 @@ class ArticleImage extends DatabaseObject {
 				foreach ($rows as $row) {
 					$tmpArticleImage = new ArticleImage();
 					$tmpArticleImage->fetch($row);
-					$tmpArticleImage->m_image = new Image();
-					$tmpArticleImage->m_image->fetch($row);
 					$returnArray[] = $tmpArticleImage;
 				}
 			}
@@ -233,11 +231,14 @@ class ArticleImage extends DatabaseObject {
 	                                         $p_templateId = null)
 	{
 		global $g_ado_db;
+		settype($p_articleNumber, 'integer');
 		if (is_null($p_templateId)) {
 			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleNumber);
+		} else {
+			settype($p_templateId, 'integer');
 		}
-		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
+		$queryStr = 'INSERT IGNORE INTO ArticleImages(fk_article_number, fk_file_gunid, image_index)'
+				  . " VALUES($p_articleNumber, $p_imageId, $p_templateId)";
 		$g_ado_db->Execute($queryStr);
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
@@ -293,13 +294,13 @@ class ArticleImage extends DatabaseObject {
 	{
 		global $g_ado_db;
 		// Get the articles that use this image.
-		$queryStr = "SELECT * FROM ArticleImages WHERE IdImage=$p_imageId";
+		$queryStr = "SELECT * FROM ArticleImages WHERE fk_file_gunid = '" . $g_ado_db->escape($p_imageId) . "'";
 		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				ArticleImage::RemoveImageTagsFromArticleText($row['NrArticle'], $row['Number']);
+				ArticleImage::RemoveImageTagsFromArticleText($row['fk_article_number'], $row['image_index']);
 			}
-			$queryStr = "DELETE FROM ArticleImages WHERE IdImage=$p_imageId";
+			$queryStr = "DELETE FROM ArticleImages WHERE fk_file_gunid = '" . $g_ado_db->escape($p_imageId) . "'";
 			$g_ado_db->Execute($queryStr);
 		}
 	} // fn OnImageDelete
@@ -313,8 +314,9 @@ class ArticleImage extends DatabaseObject {
 	public static function OnArticleDelete($p_articleNumber)
 	{
 		global $g_ado_db;
+		settype($p_articleNumber, 'integer');
 		$queryStr = 'DELETE FROM ArticleImages'
-					." WHERE NrArticle='".$p_articleNumber."'";
+					." WHERE fk_article_number = '$p_articleNumber'";
 		$g_ado_db->Execute($queryStr);
 	} // fn OnArticleDelete
 
@@ -328,11 +330,13 @@ class ArticleImage extends DatabaseObject {
 	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
 		global $g_ado_db;
-		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleNumber;
+		settype($p_srcArticleNumber, 'integer');
+        settype($p_destArticleNumber, 'integer');
+		$queryStr = 'SELECT * FROM ArticleImages WHERE fk_article_number='.$p_srcArticleNumber;
 		$rows = $g_ado_db->GetAll($queryStr);
 		foreach ($rows as $row) {
-			$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
-						." VALUES($p_destArticleNumber, ".$row['IdImage'].",".$row['Number'].")";
+			$queryStr = 'INSERT IGNORE INTO ArticleImages(fk_article_number, fk_file_gunid, image_index)'
+						." VALUES($p_destArticleNumber, ".$row['fk_file_gunid'].",".$row['image_index'].")";
 			$g_ado_db->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
@@ -355,9 +359,9 @@ class ArticleImage extends DatabaseObject {
 		}
 		$columnQuery = implode(',', $columnQuery);
 		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleImages '
-					.' WHERE ArticleImages.IdImage='.$p_imageId
-					.' AND ArticleImages.NrArticle=Articles.Number'
-					.' ORDER BY Articles.Number, Articles.IdLanguage';
+					." WHERE ArticleImages.fk_file_gunid='" . $g_ado_db->escape($p_imageId) . "'"
+					.' AND ArticleImages.fk_article_number=Articles.image_index'
+					.' ORDER BY Articles.image_index, Articles.IdLanguage';
 		$rows = $g_ado_db->GetAll($queryStr);
 		$articles = array();
 		if (is_array($rows)) {
@@ -417,7 +421,7 @@ class ArticleImage extends DatabaseObject {
                 break;
             }
 
-            if (strpos($comparisonOperation['left'], 'NrArticle')) {
+            if (strpos($comparisonOperation['left'], 'fk_article_number')) {
                 $hasArticleNr = true;
             }
             $whereCondition = $comparisonOperation['left'] . ' '
@@ -449,9 +453,9 @@ class ArticleImage extends DatabaseObject {
 
         // adds the ArticleImages join and condition to the query
         $selectClauseObj->addTableFrom('ArticleImages');
-        $selectClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+        $selectClauseObj->addWhere('ArticleImages.fk_file_gunid = Images.Id');
         $countClauseObj->addTableFrom('ArticleImages');
-        $countClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+        $countClauseObj->addWhere('ArticleImages.fk_file_gunid = Images.Id');
 
         if (!is_array($p_order)) {
             $p_order = array();
@@ -506,8 +510,8 @@ class ArticleImage extends DatabaseObject {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'nrarticle':
-            $comparisonOperation['left'] = 'ArticleImages.NrArticle';
+        case 'fk_article_number':
+            $comparisonOperation['left'] = 'ArticleImages.fk_article_number';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
         }

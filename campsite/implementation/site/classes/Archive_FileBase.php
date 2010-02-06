@@ -51,6 +51,12 @@ class Archive_FileBase
      *
      */
     protected $m_exists = false;
+    
+    /**
+     * used to cache the file metadata locally
+     * @var object
+     */
+    protected $m_attachmentObj = null;
 
     /**
      * If true it will use the caching feature
@@ -77,7 +83,7 @@ class Archive_FileBase
         if (!empty($p_gunId)) {
         	$this->fetch($p_gunId);
         }
-    }
+    } // fn __construct
 
 
     /**
@@ -95,6 +101,7 @@ class Archive_FileBase
             $this->m_metaData = array();
             $this->m_fileTypes = array();
             $this->m_exists = false;
+            $this->m_attachmentObj = null;
             return false;
         }
 
@@ -107,10 +114,18 @@ class Archive_FileBase
     			$this->m_gunId = $p_gunId;
     			$this->m_exists = true;
     			$fileDbMetadataObj->create($this->m_metaData);
+    		} else {
+    			return false;
     		}
     	} else {
     		$this->m_gunId = $p_gunId;
     		$this->m_exists = true;
+    	}
+    	$this->m_attachmentObj = new Attachment($this->m_gunId);
+    	if (!$this->m_attachmentObj->exists()) {
+    		$fileName = isset($this->m_metaData['ls:filename']) ?
+    		$this->m_metaData['ls:filename']->getValue() : null;
+    		$this->m_attachmentObj = self::CreateLocalDataObj($p_gunId, $fileName, $this->m_metaData);
     	}
     	return $this->m_exists;
     } // fn fetch
@@ -131,13 +146,16 @@ class Archive_FileBase
         if (!$this->m_exists && !$p_otherObject->m_exists) {
             return true;
         }
-        foreach ($this->m_keyColumnNames as $keyColumnName) {
-            if ($this->m_data[$keyColumnName] != $p_otherObject->m_data[$keyColumnName]) {
+        if (!$this->m_attachmentObj->sameAs($p_otherObject->m_attachmentObj)) {
+        	return false;
+        }
+        foreach ($this->m_metaData as $key=>$value) {
+            if ($this->m_metaData[$key] != $p_otherObject->m_metaData[$key]) {
                 return false;
             }
         }
         return true;
-    }
+    } // fn sameAs
 
 
     /**
@@ -153,7 +171,7 @@ class Archive_FileBase
         }
 
         return $this;
-    }
+    } // fn duplicateObject
 
 
     /**
@@ -177,7 +195,7 @@ class Archive_FileBase
     public function keyValuesExist()
     {
     	return !empty($this->m_gunId);
-    }
+    } // fn keyValuesExist
     
     
     /**
@@ -192,6 +210,7 @@ class Archive_FileBase
         if ($fileXMLMetadataObj->delete()) {
             $fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
             $fileDbMetadataObj->delete();
+            $this->m_attachmentObj->delete();
             // Logging
             $logtext = getGS('File "$1" (gunid = $2) deleted.',
                 $this->getMetatagValue('title'), $this->m_gunId);
@@ -199,7 +218,7 @@ class Archive_FileBase
             return true;
         }
         return false;
-    }
+    } // fn delete
 
 
     /**
@@ -222,7 +241,7 @@ class Archive_FileBase
     {
         $format = explode('/', $this->getMetatagValue('format'));
         return $format[0];
-    }
+    } // fn getType
 
 
     /**
@@ -232,7 +251,7 @@ class Archive_FileBase
     public function getMimeType()
     {
         return $this->getMetatagValue('format');
-    }
+    } // fn getMimeType
 
 
     /**
@@ -266,7 +285,7 @@ class Archive_FileBase
     public function getMetatagLabel($p_tagName)
     {
         return $this->m_metatagLabels[$p_tagName];
-    }
+    } // fn getMetataglabel
 
 
     /**
@@ -281,7 +300,7 @@ class Archive_FileBase
     public function getProperty($p_property)
     {
     	return $this->getMetatagValue($p_property);
-    }
+    } // fn getProperty
 
 
     /**
@@ -366,14 +385,15 @@ class Archive_FileBase
             return false;
         }
         $fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
-        if ($fileDbMetadataObj->inUse() == false) {
+        if (!$fileDbMetadataObj->inUse()) {
+        	$this->m_attachmentObj->delete();
             return $fileDbMetadataObj->delete();
         }
         return true;
     } // fn deleteMetadata
 
 
-    /**
+    /*
      * Changes file metadata on both storage and local servers.
      *
      * @param array $p_formData
@@ -459,7 +479,8 @@ class Archive_FileBase
     		return $this->commit();
     	}
     	return true;
-    }
+    } // fn update
+
 
 
     /**
@@ -482,11 +503,13 @@ class Archive_FileBase
         $fileXMLMetadata = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
         $fileDbMetadata = new Archive_FileDatabaseMetadata($this->m_gunId);
         if ($fileXMLMetadata->update($this->m_metaData)) {
+        	$this->m_attachmentObj->update();
         	$fileDbMetadata->update($this->m_metaData);
         	return true;
         }
         return false;
-    }
+    } // fn commit
+
 
 
     /**
@@ -548,6 +571,27 @@ class Archive_FileBase
         }
         return false;
     } // fn isValidFileType
+
+
+    private static function CreateLocalDataObj($p_gunId, $p_fileName, array $p_metadata, $p_userId = null)
+    {
+        $fileParts = explode('.', $p_fileName);
+        $extension = count($fileParts) > 1 ? array_pop($fileParts) : null;
+        $time = date("Y-m-d H:i:s");
+        $mimeType = isset($p_metadata['dc:format']) ? $p_metadata['dc:format']->getValue() : null;
+        $fileSize = isset($p_metadata['ls:filesize']) ? $p_metadata['ls:filesize']->getValue() : null;
+
+        $attachmentData = array('gunid'=>$p_gunId, 'file_name'=>$p_fileName,
+        'extension'=>$extension, 'mime_type'=>$mimeType, 'size_in_bytes'=>$fileSize,
+        'last_modified'=>$time, 'time_created'=>$time);
+        if (!is_null($p_userId)) {
+        	$attachmentData['fk_user_id'] = $p_userId;
+        }
+
+        $attachment = new Attachment();
+        $attachment->create($attachmentData);
+        return $attachment;
+    }
 
 
     /**
@@ -723,7 +767,7 @@ class Archive_FileBase
      *      The gunid on success, PEAR Error on failure
      */
     public static function Store($p_sessId, $p_filePath,
-                                 $p_metaData, $p_fileType)
+                                 $p_metaData, $p_fileType, $p_userId)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_filePath));
@@ -732,7 +776,7 @@ class Archive_FileBase
         $checkSum = md5_file($p_filePath);
         $xmlString = self::CreateXMLTextFile($p_metaData, $p_fileType);
         $gunId = Archive_FileXMLMetadata::Upload($p_sessId, $p_filePath, $gunId,
-            $xmlString, $checkSum, $p_fileType);
+                                                 $xmlString, $checkSum, $p_fileType);
         if (PEAR::isError($gunId)) {
             return $gunId;
         }
@@ -740,6 +784,10 @@ class Archive_FileBase
         $fileXMLMetadata = new Archive_FileXMLMetadata($gunId, $p_fileType);
         $fileDbMetadata = new Archive_FileDatabaseMetadata();
         $fileDbMetadata->create($fileXMLMetadata->m_metaData);
+        
+        $attachment = self::CreateLocalDataObj($gunId, basename($p_filePath),
+        $fileXMLMetadata->m_metaData, $p_userId);
+
         // Logging
         $logtext = getGS('The file "$1" has been added (gunid = $2)',
             $p_metaData['dc:title'], $gunId);
@@ -853,7 +901,8 @@ class Archive_FileBase
     public function GetUseCache()
     {
         return self::$m_useCache;
-    }
+    } // fn GetUseCache
+
 
 
     /**
@@ -866,7 +915,8 @@ class Archive_FileBase
     public function SetUseCache($p_useCache)
     {
         self::$m_useCache = $p_useCache;
-    }
+    } // fn SetUseCache
+
 
 
     /**
@@ -900,7 +950,8 @@ class Archive_FileBase
         $this->duplicateObject($object);
 
         return $this;
-    }
+    } // fn readFromCache
+
 
 
     /**

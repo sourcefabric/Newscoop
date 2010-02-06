@@ -16,35 +16,33 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.ph
  * @package Campsite
  */
 class ArticleAttachment extends DatabaseObject {
-	var $m_keyColumnNames = array('fk_article_number', 'fk_attachment_id');
+	var $m_keyColumnNames = array('fk_article_number', 'fk_file_gunid');
 	var $m_dbTableName = 'ArticleAttachments';
-	var $m_columnNames = array('fk_article_number', 'fk_attachment_id');
+	var $m_columnNames = array('fk_article_number', 'fk_file_gunid', 'fk_language_id');
 
 	/**
 	 * The article attachment table links together articles with Attachments.
 	 *
 	 * @param int $p_articleNumber
-	 * @param int $p_attachmentId
+	 * @param int $p_fileGunId
 	 * @return ArticleAttachment
 	 */
-	public function ArticleAttachment($p_articleNumber = null, $p_attachmentId = null)
+	public function ArticleAttachment($p_articleNumber = null, $p_fileGunId = null)
 	{
 		if (is_numeric($p_articleNumber)) {
 			$this->m_data['fk_article_number'] = $p_articleNumber;
 		}
-		if (is_numeric($p_attachmentId)) {
-			$this->m_data['fk_attachment_id'] = $p_attachmentId;
-		}
+		$this->m_data['fk_file_gunid'] = $p_fileGunId;
 	} // constructor
 
 
 	/**
 	 * @return int
 	 */
-	public function getAttachmentId()
+	public function getFileGunId()
 	{
-		return $this->m_data['fk_attachment_id'];
-	} // fn getAttachmentId
+		return $this->m_data['fk_file_gunid'];
+	} // fn getFileGunId
 
 
 	/**
@@ -56,19 +54,28 @@ class ArticleAttachment extends DatabaseObject {
 	} // fn getArticleNumber
 
 
+    /**
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->m_data['fk_language_id'];
+    } // fn getLanguageId
+
+
 	/**
 	 * Link the given file with the given article.
 	 *
-	 * @param int $p_attachmentId
+	 * @param int $p_fileGunId
 	 * @param int $p_articleNumber
 	 *
 	 * @return void
 	 */
-	public static function AddFileToArticle($p_attachmentId, $p_articleNumber)
+	public static function AddFileToArticle($p_fileGunId, $p_articleNumber)
 	{
 		global $g_ado_db;
-		$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
-					.' VALUES('.$p_articleNumber.', '.$p_attachmentId.')';
+		$queryStr = "INSERT IGNORE INTO ArticleAttachments (fk_article_number, fk_file_gunid)"
+				  . " VALUES($p_articleNumber, $p_fileGunId)";
 		$g_ado_db->Execute($queryStr);
 	} // fn AddFileToArticle
 
@@ -88,14 +95,14 @@ class ArticleAttachment extends DatabaseObject {
 		if (is_null($p_languageId)) {
 			$langConstraint = "FALSE";
 		} else {
-			$langConstraint = "Attachments.fk_language_id=$p_languageId";
+			$langConstraint = "Attachments.fk_language_id = $p_languageId";
 		}
-		$queryStr = 'SELECT '.$columnNames
-					.' FROM Attachments, ArticleAttachments'
-					.' WHERE ArticleAttachments.fk_article_number='.$p_articleNumber
-					.' AND ArticleAttachments.fk_attachment_id=Attachments.id'
-					." AND (Attachments.fk_language_id IS NULL OR $langConstraint)"
-					.' ORDER BY Attachments.time_created asc, Attachments.file_name asc';
+		$queryStr = "SELECT $columnNames"
+				  . ' FROM Attachments, ArticleAttachments'
+				  . " WHERE ArticleAttachments.fk_article_number = $p_articleNumber"
+				  . ' AND ArticleAttachments.fk_file_gunid = Attachments.id'
+				  . " AND (Attachments.fk_language_id IS NULL OR $langConstraint)"
+				  . ' ORDER BY Attachments.time_created asc, Attachments.file_name asc';
 		$rows = $g_ado_db->GetAll($queryStr);
 		$returnArray = array();
 		if (is_array($rows)) {
@@ -113,13 +120,13 @@ class ArticleAttachment extends DatabaseObject {
 	 * This is called when an attachment is deleted.
 	 * It will disassociate the file from all articles.
 	 *
-	 * @param int $p_attachmentId
+	 * @param int $p_fileGunId
 	 * @return void
 	 */
-	public static function OnAttachmentDelete($p_attachmentId)
+	public static function OnAttachmentDelete($p_fileGunId)
 	{
 		global $g_ado_db;
-		$queryStr = "DELETE FROM ArticleAttachments WHERE fk_attachment_id=$p_attachmentId";
+		$queryStr = "DELETE FROM ArticleAttachments WHERE fk_file_gunid = $p_fileGunId";
 		$g_ado_db->Execute($queryStr);
 	} // fn OnAttachmentDelete
 
@@ -147,11 +154,11 @@ class ArticleAttachment extends DatabaseObject {
 	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
 	{
 		global $g_ado_db;
-		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
+		$queryStr = 'SELECT fk_file_gunid FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
 		$rows = $g_ado_db->GetAll($queryStr);
 		foreach ($rows as $row) {
-			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
-						." VALUES($p_destArticleNumber, ".$row['fk_attachment_id'].")";
+			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_file_gunid)'
+						." VALUES($p_destArticleNumber, ".$row['fk_file_gunid'].")";
 			$g_ado_db->Execute($queryStr);
 		}
 	} // fn OnArticleCopy
@@ -160,17 +167,17 @@ class ArticleAttachment extends DatabaseObject {
 	/**
 	 * Remove the linkage between the given attachment and the given article.
 	 *
-	 * @param int $p_attachmentId
+	 * @param int $p_fileGunId
 	 * @param int $p_articleNumber
 	 *
 	 * @return void
 	 */
-	public static function RemoveAttachmentFromArticle($p_attachmentId, $p_articleNumber)
+	public static function RemoveAttachmentFromArticle($p_fileGunId, $p_articleNumber)
 	{
 		global $g_ado_db;
 		$queryStr = 'DELETE FROM ArticleAttachments'
-					.' WHERE fk_article_number='.$p_articleNumber
-					.' AND fk_attachment_id='.$p_attachmentId
+					.' WHERE fk_article_number = '.$p_articleNumber
+					.' AND fk_file_gunid = '.$p_fileGunId
 					.' LIMIT 1';
 		$g_ado_db->Execute($queryStr);
 	} // fn RemoveAttachmentFromArticle

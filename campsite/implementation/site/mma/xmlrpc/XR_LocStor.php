@@ -2542,6 +2542,9 @@ class XR_LocStor extends LocStor {
             return $r;
         }
         #$this->debugLog(join(', ', $r));
+        if (empty($r['ftype'])) {
+        	$r['ftype'] = null;
+        }
         $res = $this->existsMediaFile($r['sessid'], $r['gunid'], $r['ftype']);
         #$this->debugLog($res);
         if (PEAR::isError($res))
