@@ -78,6 +78,9 @@ if ($LiveUserAdmin->updateUser($liveUserValues, $editUser->getPermUserId()) === 
     $editUser->commit();
 }
 
+// update password for the file archive user
+Archive_User::ChangePassword($editUser->getUserName(), $oldPassword, $password);
+
 $logtext = getGS('User account information changed for "$1"', $editUser->getUserName());
 Log::Message($logtext, $g_user->getUserId(), 56);
 
