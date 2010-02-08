@@ -2949,6 +2949,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `ls_struct` WRITE;
 /*!40000 ALTER TABLE `ls_struct` DISABLE KEYS */;
+INSERT INTO `ls_struct` VALUES (1, 2, 1, 1),(2, 3, 2, 1),(3, 3, 1, 2),(4, 4, 2, 1),(5, 4, 1, 2);
 /*!40000 ALTER TABLE `ls_struct` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2968,6 +2969,7 @@ SET character_set_client = @saved_cs_client;
 
 LOCK TABLES `ls_struct_id_seq_seq` WRITE;
 /*!40000 ALTER TABLE `ls_struct_id_seq_seq` DISABLE KEYS */;
+INSERT INTO `ls_struct_id_seq_seq` VALUES (5);
 /*!40000 ALTER TABLE `ls_struct_id_seq_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 

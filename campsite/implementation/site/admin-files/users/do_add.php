@@ -74,16 +74,20 @@ $fieldValues['passwd'] = $password;
 $editUser = new User();
 $phorumUser = new Phorum_user();
 if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
-			$editUser->create($fieldValues)) {
-	if ($uType == 'Staff') {
-		$editUser->setUserType($Type);
-	}
-	$phorumUser->create($fieldValues['UName'], $password, $fieldValues['EMail'], $editUser->getUserId());
-	camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
-	camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
+        $editUser->create($fieldValues)) {
+    if ($uType == 'Staff') {
+        $editUser->setUserType($Type);
+    }
+    $archiveUser = Archive_User::Create($fieldValues['UName'], $password, $editUser->getRealName());
+    if (PEAR::isError($archiveUser)) {
+        camp_html_add_msg(getGS('File archive account for the user account $1 could not be created.', $editUser->getUserName()));
+    }
+    $phorumUser->create($fieldValues['UName'], $password, $fieldValues['EMail'], $editUser->getUserId());
+    camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
+    camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
 } else {
-	camp_html_add_msg(getGS('The user account could not be created.'));
-	camp_html_goto_page($backLink);
+    camp_html_add_msg(getGS('The user account could not be created.'));
+    camp_html_goto_page($backLink);
 }
 
 ?>

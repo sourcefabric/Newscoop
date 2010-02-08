@@ -17,9 +17,9 @@ if (!$editUser->exists()) {
 	camp_html_display_error(getGS('No such user account.'));
 	exit;
 }
-$editUser->delete();
-
 $uName = $editUser->getUserName();
+$editUser->delete();
+Archive_User::Delete($uName);
 if ($phorumUser = Phorum_user::GetByUserName($uName)) {
 	$phorumUser->delete();
 }

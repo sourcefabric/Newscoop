@@ -1,7 +1,5 @@
 div#camp-message {
-    padding-top: 0.25em;
-    padding-bottom: 0.25em;
-    padding-left: 0.75em;
+    margin-left: 1.2em;
     font-size: 12pt;
     font-weight: bold;
 }
