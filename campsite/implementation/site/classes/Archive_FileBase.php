@@ -123,9 +123,8 @@ class Archive_FileBase
     	}
     	$this->m_attachmentObj = new Attachment($this->m_gunId);
     	if (!$this->m_attachmentObj->exists()) {
-    		$fileName = isset($this->m_metaData['ls:filename']) ?
-    		$this->m_metaData['ls:filename']->getValue() : null;
-    		$this->m_attachmentObj = self::CreateLocalDataObj($p_gunId, $fileName, $this->m_metaData);
+    		$localMetadata = self::External2LocalMetadata($this->m_metaData);
+    		$this->m_attachmentObj = self::CreateLocalDataObj($p_gunId, $localMetadata);
     	}
     	return $this->m_exists;
     } // fn fetch
@@ -573,15 +572,16 @@ class Archive_FileBase
     } // fn isValidFileType
 
 
-    private static function CreateLocalDataObj($p_gunId, $p_fileName, array $p_metadata, $p_userId = null)
+    private static function CreateLocalDataObj($p_gunId, array $p_metadata, $p_userId = null)
     {
-        $fileParts = explode('.', $p_fileName);
-        $extension = count($fileParts) > 1 ? array_pop($fileParts) : null;
         $time = date("Y-m-d H:i:s");
-        $mimeType = isset($p_metadata['dc:format']) ? $p_metadata['dc:format']->getValue() : null;
-        $fileSize = isset($p_metadata['ls:filesize']) ? $p_metadata['ls:filesize']->getValue() : null;
-
-        $attachmentData = array('gunid'=>$p_gunId, 'file_name'=>$p_fileName,
+        $fileName = isset($p_metadata['file_name']) ? $p_metadata['file_name'] : null;
+        $mimeType = isset($p_metadata['mime_type']) ? $p_metadata['mime_type'] : null;
+        $fileSize = isset($p_metadata['size_in_bytes']) ? $p_metadata['size_in_bytes'] : null;
+        $fileParts = explode('.', $fileName);
+        $extension = count($fileParts) > 1 ? array_pop($fileParts) : null;
+        
+        $attachmentData = array('gunid'=>$p_gunId, 'file_name'=>$fileName,
         'extension'=>$extension, 'mime_type'=>$mimeType, 'size_in_bytes'=>$fileSize,
         'last_modified'=>$time, 'time_created'=>$time);
         if (!is_null($p_userId)) {
@@ -591,6 +591,22 @@ class Archive_FileBase
         $attachment = new Attachment();
         $attachment->create($attachmentData);
         return $attachment;
+    }
+    
+    
+    private static function External2LocalMetadata(array $p_metadata)
+    {
+    	static $external2LocalTags = array('dc:format'=>'mime_type',
+    	'ls:filesize'=>'size_in_bytes', 'ls:filename'=>'file_name');
+    	
+    	$localMetadata = array();
+    	foreach ($p_metadata as $tag=>$value) {
+    		$tag = strtolower($tag);
+    		if (isset($external2LocalTags[$tag])) {
+    			$localMetadata[$external2LocalTags[$tag]] = $value->getValue();
+    		}
+    	}
+    	return $localMetadata;
     }
 
 
@@ -784,9 +800,10 @@ class Archive_FileBase
         $fileXMLMetadata = new Archive_FileXMLMetadata($gunId, $p_fileType);
         $fileDbMetadata = new Archive_FileDatabaseMetadata();
         $fileDbMetadata->create($fileXMLMetadata->m_metaData);
-        
-        $attachment = self::CreateLocalDataObj($gunId, basename($p_filePath),
-        $fileXMLMetadata->m_metaData, $p_userId);
+
+        $localMetadata = self::External2LocalMetadata($fileXMLMetadata->m_metaData);
+        $localMetadata['file_name'] = basename($p_filePath);
+        $attachment = self::CreateLocalDataObj($gunId, $localMetadata, $p_userId);
 
         // Logging
         $logtext = getGS('The file "$1" has been added (gunid = $2)',
