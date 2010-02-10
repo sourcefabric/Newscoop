@@ -26,7 +26,7 @@
           <option value="">&nbsp;</option>
           {{ unset_topic }}
           {{ list_subtopics }}
-            <option value="{{ $campsite->topic->identifier }}>">
+            <option value="{{ $campsite->topic->identifier }}">
               {{ $campsite->topic->name }}
             </option>
           {{ /list_subtopics }}

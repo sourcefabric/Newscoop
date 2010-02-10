@@ -87,22 +87,23 @@ class Article extends DatabaseObject {
                                            array('field'=>'bySection', 'dir'=>'asc'),
                                            array('field'=>'bySectionOrder', 'dir'=>'asc'));
 
-    private static $s_regularParameters = array('idpublication'=>'IdPublication',
-                                                'nrissue'=>'NrIssue',
-                                                'issue'=>'NrIssue',
-                                                'nrsection'=>'NrSection',
-                                                'section'=>'NrSection',
-                                                'idlanguage'=>'IdLanguage',
-                                                'name'=>'Name',
-                                                'number'=>'Number',
-                                                'upload_date'=>'DATE(UploadDate)',
-                                                'publish_date'=>'DATE(PublishDate)',
-                                                'type'=>'Type',
-                                                'keyword'=>'Keywords',
-                                                'onfrontpage'=>'OnFrontPage',
-                                                'onsection'=>'OnSection',
-                                                'public'=>'Public',
-                                                'published'=>'Published',
+    private static $s_regularParameters = array('idpublication'=>'Articles.IdPublication',
+                                                'nrissue'=>'Articles.NrIssue',
+                                                'issue'=>'Articles.NrIssue',
+                                                'nrsection'=>'Articles.NrSection',
+                                                'section'=>'Articles.NrSection',
+                                                'idlanguage'=>'Articles.IdLanguage',
+                                                'name'=>'Articles.Name',
+                                                'number'=>'Articles.Number',
+                                                'upload_date'=>'DATE(Articles.UploadDate)',
+                                                'publish_date'=>'DATE(Articles.PublishDate)',
+                                                'type'=>'Articles.Type',
+                                                'keyword'=>'Articles.Keywords',
+                                                'onfrontpage'=>'Articles.OnFrontPage',
+                                                'onsection'=>'Articles.OnSection',
+                                                'public'=>'Articles.Public',
+                                                'published'=>'Articles.Published',
+                                                'issue_published'=>'Issues.Published',
                                                 'reads'=>'RequestObjects.request_count');
 
 	/**
@@ -2412,6 +2413,12 @@ class Article extends DatabaseObject {
                 $conditionOperation['right'] =  'Y';
             }
             break;
+        case 'issue_published':
+        	$p_otherTables['Issues'] = array('IdPublication'=>'IdPublication', 
+        	'NrIssue'=>'Number', 'IdLanguage'=>'IdLanguage');
+        	$conditionOperation['symbol'] = '=';
+        	$conditionOperation['right'] = 'Y';
+        	break;
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
