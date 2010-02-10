@@ -112,7 +112,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $html .= "<input type=\"submit\" name=\"f_edit_subscription\" "
     ."id=\"subscriptionEdit\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
-    ."\" ".$p_params['button_html_code']."/>\n";
+    ."\" ".$p_params['button_html_code']." />\n";
     $html .= "</form>\n";
 
 ?>
