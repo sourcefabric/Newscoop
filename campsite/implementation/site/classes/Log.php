@@ -45,12 +45,17 @@ class Log extends DatabaseObject {
 				$p_userId = $_REQUEST['LoginUserId'];
 			}
 		}
+		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$userIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+			$userIP = $_SERVER['REMOTE_ADDR'];
+		}
 		$queryStr = "INSERT INTO Log SET "
 					." time_created=NOW(), "
 					." fk_event_id=$p_eventId,"
 					." fk_user_id=$p_userId, "
 					." text='".mysql_real_escape_string($p_text)."',"
-		                        ." user_ip=INET_ATON('".$_SERVER['REMOTE_ADDR']."')";
+		            ." user_ip=INET_ATON('$userIP')";
 		$g_ado_db->Execute($queryStr);
 	} // fn Message
 
