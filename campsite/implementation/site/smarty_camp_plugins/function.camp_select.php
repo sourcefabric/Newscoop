@@ -55,7 +55,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 .smarty_function_escape_special_chars($p_params['male_name'])
                 .' <input type="radio" name="f_user_'.$attribute
                 .'" value="F" '.(($fieldValue == 'F') ? 'checked' : '').' '
-                . $p_params['html_code'] . '/> '
+                . $p_params['html_code'] . ' /> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
             if (is_null($fieldValue)) {
@@ -142,12 +142,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         } elseif ($attribute == 'section') {
             if ($campsite->subs_by_type == 'publication') {
                 $html = '<input type="hidden" name="cb_subs[]" value="'
-                    .$campsite->section->number.'" >';
+                    .$campsite->section->number.'" />';
             } elseif ($campsite->subs_by_type == 'section') {
                 $html = '<input type="checkbox" name="cb_subs[]" value="'
                     .$campsite->section->number.'" '
                     .'onchange="update_subscription_payment();" '
-                    . $p_params['html_code'] . '>';
+                    . $p_params['html_code'] . ' />';
             }
         }
         break;
@@ -162,7 +162,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
         		camp_load_translation_strings("globals", $campsite->language->code);
         	}
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
-                .'<option value="1" selected>' . getGS('Publication') . '</option>'
+                .'<option value="1" selected="selected">' . getGS('Publication') . '</option>'
                 .'<option value="2">' . getGS('Issue') . '</option>'
                 .'<option value="3">' . getGS('Section') . '</option>'
                 .'</select>';
@@ -184,7 +184,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
             }
             $html = '<select name="f_search_section" ' . $p_params['html_code'] . '>';
-            $html .= '<option value="0" selected>' . getGS('-- ALL SECTIONS --') . '</option>';
+            $html .= '<option value="0" selected="selected">' . getGS('-- ALL SECTIONS --') . '</option>';
             foreach ($sectionsList as $section) {
             	$html .= '<option value="' . $section->getSectionNumber() . '">'
             	      . htmlspecialchars($section->getName()) . '</option>';
@@ -204,7 +204,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                                          array(array('field'=>'bynumber', 'dir'=>'DESC')),
                                          0, 0, $count);
             $html = '<select name="f_search_issue" ' . $p_params['html_code'] . '>';
-            $html .= '<option value="0" selected>&nbsp;</option>';
+            $html .= '<option value="0" selected="selected">&nbsp;</option>';
             foreach ($issuesList as $issue) {
             	$issueDesc = $issue->getIssueNumber() . '. '
             	           . $issue->getName()

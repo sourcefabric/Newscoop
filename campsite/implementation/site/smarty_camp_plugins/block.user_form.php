@@ -82,7 +82,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     $html.= $p_content;
     $html.= "<input type=\"submit\" name=\"f_edit_user\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
-    ."\" ".$p_params['button_html_code']."/>\n</form>\n";
+    ."\" ".$p_params['button_html_code']." />\n</form>\n";
 
     return $html;
 } // fn smarty_block_user_form
