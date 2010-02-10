@@ -18,6 +18,9 @@ ALTER TABLE `Languages` ADD COLUMN `ShortWDay4` VARCHAR(20);
 ALTER TABLE `Languages` ADD COLUMN `ShortWDay5` VARCHAR(20);
 ALTER TABLE `Languages` ADD COLUMN `ShortWDay6` VARCHAR(20);
 ALTER TABLE `Languages` ADD COLUMN `ShortWDay7` VARCHAR(20);
+ALTER TABLE `ArticleTopics`
+  ADD INDEX `article_topics_nrarticle_idx`(`NrArticle`),
+  ADD INDEX `article_topics_topicid_idx`(`TopicId`);
 
 
 CREATE TABLE `Archive_FileMetadata` (
@@ -63,7 +66,7 @@ ALTER TABLE `ArticleImages` RENAME `ArticleImages_Old`;
 
 CREATE TABLE  `ArticleImages` (
   `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_file_gunid` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_file_gunid` VARCHAR(20) NOT NULL,
   `image_index` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`fk_article_number`,`fk_file_gunid`),
   UNIQUE KEY `ArticleImage` (`fk_article_number`,`image_index`),

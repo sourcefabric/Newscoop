@@ -87,22 +87,23 @@ class Article extends DatabaseObject {
                                            array('field'=>'bySection', 'dir'=>'asc'),
                                            array('field'=>'bySectionOrder', 'dir'=>'asc'));
 
-    private static $s_regularParameters = array('idpublication'=>'IdPublication',
-                                                'nrissue'=>'NrIssue',
-                                                'issue'=>'NrIssue',
-                                                'nrsection'=>'NrSection',
-                                                'section'=>'NrSection',
-                                                'idlanguage'=>'IdLanguage',
-                                                'name'=>'Name',
-                                                'number'=>'Number',
-                                                'upload_date'=>'DATE(UploadDate)',
-                                                'publish_date'=>'DATE(PublishDate)',
-                                                'type'=>'Type',
-                                                'keyword'=>'Keywords',
-                                                'onfrontpage'=>'OnFrontPage',
-                                                'onsection'=>'OnSection',
-                                                'public'=>'Public',
-                                                'published'=>'Published',
+    private static $s_regularParameters = array('idpublication'=>'Articles.IdPublication',
+                                                'nrissue'=>'Articles.NrIssue',
+                                                'issue'=>'Articles.NrIssue',
+                                                'nrsection'=>'Articles.NrSection',
+                                                'section'=>'Articles.NrSection',
+                                                'idlanguage'=>'Articles.IdLanguage',
+                                                'name'=>'Articles.Name',
+                                                'number'=>'Articles.Number',
+                                                'upload_date'=>'DATE(Articles.UploadDate)',
+                                                'publish_date'=>'DATE(Articles.PublishDate)',
+                                                'type'=>'Articles.Type',
+                                                'keyword'=>'Articles.Keywords',
+                                                'onfrontpage'=>'Articles.OnFrontPage',
+                                                'onsection'=>'Articles.OnSection',
+                                                'public'=>'Articles.Public',
+                                                'published'=>'Articles.Published',
+                                                'issue_published'=>'Issues.Published',
                                                 'reads'=>'RequestObjects.request_count');
 
 	/**
@@ -2083,44 +2084,44 @@ class Article extends DatabaseObject {
 	} // fn GetRecentlyModifiedArticles
 
 
-	/**
-	 * @param int $p_publicationId
-	 *
-	 * @param int $p_languageId
-	 *
-	 *
-	 * @return mixed
-	 *      array of issue publication dates
-	 *      null if query does not match any issue
-	 */
-	public static function GetPublicationDates($p_publicationId,
-						   $p_languageId,
-						   $p_skipCache = false)
-	{
-	    global $g_ado_db;
-	    $queryStr = 'SELECT Number FROM Articles '
-	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
-	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y' "
-	        . 'GROUP BY PublishDate ORDER BY PublishDate';
-	    $rows = $g_ado_db->GetAll($queryStr);
+    /**
+     * @param int $p_publicationId
+     *
+     * @param int $p_languageId
+     *
+     *
+     * @return mixed
+     *      array of issue publication dates
+     *      null if query does not match any issue
+     */
+    public static function GetPublicationDates($p_publicationId,
+                           $p_languageId,
+                           $p_skipCache = false)
+    {
+        global $g_ado_db;
+        $queryStr = 'SELECT Number FROM Articles '
+            . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
+            . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y' "
+            . 'GROUP BY PublishDate ORDER BY PublishDate';
+        $rows = $g_ado_db->GetAll($queryStr);
 
-	    $dates = array();
-	    if (is_array($rows)) {
-	    	foreach ($rows as $row) {
-		    $tmpObj = new Article($p_languageId, $row['Number']);
-		    if ($tmpObj->exists()) {
-		        $dates[] = $tmpObj->getPublishDate();
-		    }
-	    	}
-	    }
-	    if (empty($dates)) {
-	        return null;
-	    }
+        $dates = array();
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+            $tmpObj = new Article($p_languageId, $row['Number']);
+            if ($tmpObj->exists()) {
+                $dates[] = $tmpObj->getPublishDate();
+            }
+            }
+        }
+        if (empty($dates)) {
+            return null;
+        }
 
-	    return array_unique($dates);
-	} // fn GetPublicationDates
+        return array_unique($dates);
+    } // fn GetPublicationDates
 
-	
+
 	/**
 	 * Unlock all articles by the given user.
 	 * @param int $p_userId
@@ -2196,7 +2197,7 @@ class Article extends DatabaseObject {
             $comparisonOperation = self::ProcessListParameters($param, $otherTables);
             $leftOperand = strtolower($comparisonOperation['left']);
             if ($leftOperand == 'idlanguage' && $comparisonOperation['symbol'] == '=') {
-                $languageId = $comparisonOperation['right'];
+            	$languageId = $comparisonOperation['right'];
             }
 
             if (array_key_exists($leftOperand, Article::$s_regularParameters)) {
@@ -2226,13 +2227,13 @@ class Article extends DatabaseObject {
                 // on the operator
                 $topic = new Topic($comparisonOperation['right']);
                 if ($topic->exists()) {
-                    $topicIds = $topic->getSubtopics(true);
-                    $topicIds[] = $comparisonOperation['right'];
-                    if ($comparisonOperation['symbol'] == '=') {
-                        $hasTopics[] = $topicIds;
-                    } else {
-                        $hasNotTopics[] = $topicIds;
-                    }
+                	$topicIds = $topic->getSubtopics(true);
+                	$topicIds[] = $comparisonOperation['right'];
+                	if ($comparisonOperation['symbol'] == '=') {
+                		$hasTopics[] = $topicIds;
+                	} else {
+                		$hasNotTopics[] = $topicIds;
+                	}
                 }
             } elseif ($leftOperand == 'author') {
             	$otherTables['Authors'] = array('fk_default_author_id'=>'id');
@@ -2402,7 +2403,7 @@ class Article extends DatabaseObject {
                    . $p_comparisonOperation['symbol']
                    . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";
             if (!is_null($p_languageId)) {
-                $query .= " AND IdLanguage = '" . $g_ado_db->escape($p_languageId) . "'";
+            	$query .= " AND IdLanguage = '" . $g_ado_db->escape($p_languageId) . "'";
             }
             $query .= "\n";
             $queries[] = $query;
@@ -2450,6 +2451,12 @@ class Article extends DatabaseObject {
                 $conditionOperation['right'] =  'Y';
             }
             break;
+        case 'issue_published':
+        	$p_otherTables['Issues'] = array('IdPublication'=>'IdPublication', 
+        	'NrIssue'=>'Number', 'IdLanguage'=>'IdLanguage');
+        	$conditionOperation['symbol'] = '=';
+        	$conditionOperation['right'] = 'Y';
+        	break;
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
@@ -2480,13 +2487,13 @@ class Article extends DatabaseObject {
     {
         $topicIds = array();
         foreach ($p_TopicIds as $topicId) {
-            if (is_array($topicId)) {
-                $topicIds = array_merge($topicIds, $topicId);
-            } else {
-                $topicIds[] = $topicId;
-            }
+        	if (is_array($topicId)) {
+        		$topicIds = array_merge($topicIds, $topicId);
+        	} else {
+        		$topicIds[] = $topicId;
+        	}
         }
-    	$notCondition = $p_negate ? ' NOT' : '';
+        $notCondition = $p_negate ? ' NOT' : '';
         if (!$p_negate) {
         	$selectClause = '        SELECT NrArticle FROM ArticleTopics WHERE TopicId'
                           . ' IN (' . implode(', ', $topicIds) . ")\n";

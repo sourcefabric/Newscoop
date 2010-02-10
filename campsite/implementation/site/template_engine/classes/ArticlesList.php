@@ -364,6 +364,7 @@ class ArticlesList extends ListObject
         }
         if (!$context->preview) {
             $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
+            $this->m_constraints[] = new ComparisonOperation('issue_published', $operator, 'true');
         }
 
     	return $parameters;
