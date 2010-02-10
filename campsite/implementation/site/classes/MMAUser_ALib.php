@@ -39,7 +39,7 @@ class MMAUser_ALib extends MMAUser
     {
         global $mdefs;
 
-        $this->m_xrc = XR_CcClient::Factory($mdefs);
+        $this->m_xrc = XR_CcClient::Factory($mdefs, true);
         if (!is_null($p_userName)) {
             $this->m_userName = $p_userName;
         }
@@ -53,7 +53,7 @@ class MMAUser_ALib extends MMAUser
      * @param boolean $p_isAdmin
      *
      * @return mixed
-     *      int uid - The user identifier, on success
+     *      array The user identifier, on success
      *      PEAR Error on failure
      */
     public function create($p_userName, $p_password, $p_realName, $p_isAdmin = false)
@@ -70,8 +70,14 @@ class MMAUser_ALib extends MMAUser
             return new PEAR_Error(getGS('Can not $1 the archive user', getGS('create'))
                 .': '.getGS('the connection to $1 was not established.', 'File Archive'));
         }
-        $group = $p_isAdmin ? 'Admins' : null;
-        return $this->m_xrc->xr_createUser($sessid, $this->m_userName, $p_password, $p_realName, $group);
+        $result = $this->m_xrc->xr_createUser($sessid, $this->m_userName, $p_password, $p_realName);
+        if (PEAR::isError($result)) {
+            return $result;
+        }
+        if ($p_isAdmin) {
+            $this->m_xrc->xr_addToGroup($sessid, $this->m_userName, 'Admins');
+        }
+        return $result;
     } // fn create
 
 
