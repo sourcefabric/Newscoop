@@ -39,10 +39,12 @@ ALTER TABLE `Attachments` RENAME `Attachments_Old`;
 
 CREATE TABLE `Attachments` (
   `gunid` VARCHAR(20)  NOT NULL,
-  `file_name` varchar(255) default NULL,
-  `extension` varchar(50) default NULL,
-  `mime_type` varchar(255) default NULL,
+  `file_name` varchar(255) NOT NULL,
+  `extension` varchar(50) NOT NULL,
+  `type` varchar(100) NOT NULL,
+  `mime_type` varchar(255) NOT NULL,
   `size_in_bytes` bigint(20) unsigned default NULL,
+  `content_disposition` enum('attachment') default NULL,
   `fk_user_id` int(10) unsigned default NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
@@ -56,21 +58,11 @@ ALTER TABLE `ArticleAttachments` RENAME `ArticleAttachments_Old`;
 CREATE TABLE `ArticleAttachments` (
   `fk_article_number` INTEGER UNSIGNED NOT NULL,
   `fk_file_gunid` VARCHAR(20)  NOT NULL,
-  `fk_language_id` INTEGER UNSIGNED,
+  `fk_language_id` INTEGER UNSIGNED default NULL,
+  `text_embedded` BOOLEAN  NOT NULL default FALSE,
+  `content_disposition` enum('attachment') default NULL,
+  `file_index` INTEGER UNSIGNED default NULL,
   PRIMARY KEY (`fk_article_number`, `fk_file_gunid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-ALTER TABLE `ArticleImages` RENAME `ArticleImages_Old`;
-
-
-CREATE TABLE  `ArticleImages` (
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_file_gunid` VARCHAR(20) NOT NULL,
-  `image_index` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fk_article_number`,`fk_file_gunid`),
-  UNIQUE KEY `ArticleImage` (`fk_article_number`,`image_index`),
-  KEY `ArticleImages_file_gunid_idx` (`fk_file_gunid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 

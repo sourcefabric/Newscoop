@@ -20,11 +20,14 @@ class Attachment extends DatabaseObject {
 	var $m_columnNames = array('gunid',
 							   'file_name',
 							   'extension',
+	                           'type',
 							   'mime_type',
 							   'size_in_bytes',
+	                           'content_disposition',
 							   'fk_user_id',
 							   'last_modified',
 							   'time_created');
+
 
 	public function Attachment($p_id = null)
 	{
@@ -44,21 +47,12 @@ class Attachment extends DatabaseObject {
 		// Delete all the references to this image.
 		ArticleAttachment::OnAttachmentDelete($this->m_data['gunid']);
 
-		// Delete the description
-		Translation::deletePhrase($this->m_data['fk_description_id']);
-
 		$tmpData = $this->m_data;
 
 		// Delete the record in the database
 		$success = parent::delete();
 
-		// Delete the images from disk
-		$file = $this->getStorageLocation();
-		if (file_exists($file) && is_file($file)) {
-			unlink($file);
-		}
-
-		$logtext = getGS('File #$1 "$2" deleted.', $tmpData['id'], $tmpData['file_name']);
+		$logtext = getGS('File "$2" deleted.', $tmpData['file_name']);
 		Log::Message($logtext, null, 39);
 		return $success;
 	} // fn delete
@@ -93,6 +87,17 @@ class Attachment extends DatabaseObject {
 	} // fn getExtension
 
 
+    /**
+     * Return the file type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->m_data['type'];
+    } // fn getType
+
+
 	/**
 	 * Return the MIME type which should be set in the HTTP header
 	 * to the downloader.
@@ -114,6 +119,17 @@ class Attachment extends DatabaseObject {
 	{
 		return $this->m_data['size_in_bytes'];
 	} // fn getSizeInBytes
+
+
+    /**
+     * Returns the file output method: attachment or inline
+     *
+     * @return string
+     */
+    public function getContentDisposition()
+    {
+        return $this->m_data['content_disposition'];
+    } // fn getContentDisposition
 
 
 	public function getLastModified()

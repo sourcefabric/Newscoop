@@ -54,7 +54,7 @@ class Archive_FileBase
     
     /**
      * used to cache the file metadata locally
-     * @var object
+     * @var Attachment
      */
     protected $m_attachmentObj = null;
 
@@ -70,7 +70,7 @@ class Archive_FileBase
      * @var string
      */
     private static $m_cacheEngine = null;
-    
+
 
     /**
      * Constructor
@@ -404,7 +404,7 @@ class Archive_FileBase
     public function editMetadata($p_formData)
     {
         if (!is_array($p_formData)) {
-            return new PEAR_Error(getGS('Invalid parameter given to Archive_FileBase::editMetadata()'));
+            return new PEAR_Error(getGS('Did not receive the audioclip metadata.'));
         }
 
         $metaData = array();
@@ -429,7 +429,9 @@ class Archive_FileBase
         	}
         }
 
-        if (sizeof($metaData) == 0) return false;
+        if (sizeof($metaData) == 0) {
+        	return false;
+        }
 
         $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId,
                                                           $this->m_fileType);
@@ -442,6 +444,10 @@ class Archive_FileBase
         }
         // Update file metadata for the current object instance
         $this->m_metaData = $metaData;
+        
+        $localMetadata = self::External2LocalMetadata($this->m_metaData);
+        $this->m_attachmentObj->update($localMetadata);
+        
         // Logging
         $logtext = getGS('The file "$1" has been modified (gunid = $2)',
             $metaData['dc:title']->getValue(), $this->m_gunId);
@@ -474,12 +480,15 @@ class Archive_FileBase
     		}
     	}
     	$this->m_metaData = $p_metadata;
-    	if ($p_commit) {
+        
+    	$localMetadata = self::External2LocalMetadata($this->m_metaData);
+        $this->m_attachmentObj->update($localMetadata, $p_commit);
+    	
+        if ($p_commit) {
     		return $this->commit();
     	}
     	return true;
     } // fn update
-
 
 
     /**
@@ -504,11 +513,11 @@ class Archive_FileBase
         if ($fileXMLMetadata->update($this->m_metaData)) {
         	$this->m_attachmentObj->update();
         	$fileDbMetadata->update($this->m_metaData);
+        	$this->m_attachmentObj->commit();
         	return true;
         }
         return false;
     } // fn commit
-
 
 
     /**
@@ -591,7 +600,7 @@ class Archive_FileBase
         $attachment = new Attachment();
         $attachment->create($attachmentData);
         return $attachment;
-    }
+    } // fn CreateLocalDataObj
     
     
     private static function External2LocalMetadata(array $p_metadata)
@@ -607,7 +616,7 @@ class Archive_FileBase
     		}
     	}
     	return $localMetadata;
-    }
+    } // fn External2LocalMetadata
 
 
     /**
@@ -921,7 +930,6 @@ class Archive_FileBase
     } // fn GetUseCache
 
 
-
     /**
      * Sets cache enabled/disabled
      *
@@ -933,7 +941,6 @@ class Archive_FileBase
     {
         self::$m_useCache = $p_useCache;
     } // fn SetUseCache
-
 
 
     /**
@@ -970,7 +977,6 @@ class Archive_FileBase
     } // fn readFromCache
 
 
-
     /**
      * Writes the object to cache.
      *
@@ -991,6 +997,7 @@ class Archive_FileBase
 
         return $cacheObj->add($cacheKey, $this);
     } // fn writeCache
+
 } // class Archive_FileBase
 
 ?>
