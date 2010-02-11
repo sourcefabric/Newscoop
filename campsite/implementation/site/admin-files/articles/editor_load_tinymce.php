@@ -64,9 +64,10 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorImage')) {
 	    if ($p_objectType == 'article') {
 	        $plugins[] = 'campsiteimage';
-		$plugins[] = 'media';
+            $plugins[] = 'media';
 	    }
 	}
+	$plugins[] = 'iframe';
 	$plugins_list = implode(",", $plugins);
 
 	$statusbar_location = "none";
@@ -213,6 +214,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorTable')) {
 	    $toolbar3[] = "tablecontrols";
 	}
+	$toolbar3[] = 'iframe';
 
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
@@ -243,6 +245,7 @@ tinyMCE.init({
     file_browser_callback : "campsitemedia",
     forced_root_block : "",
     relative_urls : false,
+    extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
     // Theme options
     theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
