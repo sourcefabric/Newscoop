@@ -944,8 +944,9 @@ class Issue extends DatabaseObject {
         case 'number':
             $comparisonOperation['left'] = 'Number';
             break;
+        case 'publish_date':
         case 'publicationdate':
-            $comparisonOperation['left'] = 'PublicationDate';
+            $comparisonOperation['left'] = 'DATE(PublicationDate)';
             break;
         case 'idpublication':
             $comparisonOperation['left'] = 'IdPublication';
