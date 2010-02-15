@@ -86,7 +86,7 @@ class AttachmentManager
 
 	$articleAttachments = ArticleAttachment::GetAttachmentsByArticleNumber($p_articleId, $p_languageId);
 	foreach ($articleAttachments as $articleAttachment) {
-	    if (!$this->config['validate_files']) {
+	    if (!$this->m_config['validate_files']) {
 	        $file['attachment'] = $articleAttachment;
 		$file['url'] = $articleAttachment->getAttachmentUrl();
 		$file['storage'] = $articleAttachment->getStorageLocation();
@@ -132,8 +132,8 @@ class AttachmentManager
      */
     function isTmpFile($file)
     {
-        $len = strlen($this->config['tmp_prefix']);
-	if (substr($file,0,$len) == $this->config['tmp_prefix'])
+        $len = strlen($this->m_config['tmp_prefix']);
+	if (substr($file,0,$len) == $this->m_config['tmp_prefix'])
 	    return true;
 	else
 	    return false;
@@ -196,8 +196,8 @@ class AttachmentManager
      */
     function getDefaultThumb()
     {
-      if (is_file($this->config['default_thumbnail']))
-	  return $this->config['default_thumbnail'];
+      if (is_file($this->m_config['default_thumbnail']))
+	  return $this->m_config['default_thumbnail'];
       else
 	  return '';
     }

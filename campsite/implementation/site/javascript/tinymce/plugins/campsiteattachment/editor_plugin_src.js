@@ -6,6 +6,7 @@
  */
 
 (function() {
+    tinymce.PluginManager.requireLangPack('campsiteattachment');
     tinymce.create('tinymce.plugins.CampsiteAttachment', {
         init : function(ed, url) {
             this.editor = ed;
