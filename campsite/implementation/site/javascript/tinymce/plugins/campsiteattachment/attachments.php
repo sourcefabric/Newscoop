@@ -6,6 +6,7 @@
  */
 
 require_once('config.inc.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once('classes/AttachmentManager.php');
 
 $manager = new AttachmentManager($AMConfig);
@@ -33,8 +34,8 @@ function drawFiles($list, &$manager)
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="block" id="block_<?php echo $counter; ?>" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>', '<?php echo $counter; ?>');">
-          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
+        <td class="block" id="block_<?php echo $counter; ?>" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo camp_javascriptspecialchars($file["attachment"]->getDescription($languageId)); ?>', '<?php echo $counter; ?>');">
+          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo camp_javascriptspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo addslashes($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
        <?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>
         </td>
       </tr>
