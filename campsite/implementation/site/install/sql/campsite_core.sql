@@ -427,8 +427,8 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `Authors` (
   `id` int(10) unsigned NOT NULL auto_increment,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
+  `first_name` varchar(100) NOT NULL default '',
+  `last_name` varchar(100) NOT NULL default '',
   `email` varchar(255) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `authors_name_ukey` (`first_name`,`last_name`),
@@ -917,7 +917,7 @@ SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `ObjectTypes` (
   `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `OBJECTTYPES_NAME` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -1008,7 +1008,7 @@ SET character_set_client = utf8;
 CREATE TABLE `RequestObjects` (
   `object_id` int(11) NOT NULL auto_increment,
   `object_type_id` int(11) NOT NULL,
-  `request_count` int(11) NOT NULL,
+  `request_count` int(11) NOT NULL default 0,
   `last_update_time` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`object_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1404,7 +1404,7 @@ CREATE TABLE `Translations` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `phrase_id` int(10) unsigned NOT NULL default '0',
   `fk_language_id` int(10) unsigned NOT NULL default '0',
-  `translation_text` text NOT NULL,
+  `translation_text` text NOT NULL default '',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `phrase_language_index` (`phrase_id`,`fk_language_id`),
   KEY `phrase_id` (`phrase_id`)
@@ -1431,7 +1431,7 @@ SET character_set_client = utf8;
 CREATE TABLE `URLTypes` (
   `Id` int(10) unsigned NOT NULL auto_increment,
   `Name` varchar(15) NOT NULL default '',
-  `Description` mediumblob NOT NULL,
+  `Description` mediumblob NOT NULL default '',
   PRIMARY KEY  (`Id`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -2006,7 +2006,7 @@ CREATE TABLE `liveuser_users` (
   `Interests` mediumblob NOT NULL,
   `How` varchar(255) NOT NULL default '',
   `Languages` varchar(100) NOT NULL default '',
-  `Improvements` mediumblob NOT NULL,
+  `Improvements` mediumblob NOT NULL default '',
   `Pref1` enum('N','Y') NOT NULL default 'N',
   `Pref2` enum('N','Y') NOT NULL default 'N',
   `Pref3` enum('N','Y') NOT NULL default 'N',
@@ -2016,9 +2016,9 @@ CREATE TABLE `liveuser_users` (
   `Field3` varchar(150) NOT NULL default '',
   `Field4` varchar(150) NOT NULL default '',
   `Field5` varchar(150) NOT NULL default '',
-  `Text1` mediumblob NOT NULL,
-  `Text2` mediumblob NOT NULL,
-  `Text3` mediumblob NOT NULL,
+  `Text1` mediumblob NOT NULL default '',
+  `Text2` mediumblob NOT NULL default '',
+  `Text3` mediumblob NOT NULL default '',
   `time_updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL default '0000-00-00 00:00:00',
   `lastLogin` datetime default '1970-01-01 00:00:00',
@@ -2100,7 +2100,7 @@ CREATE TABLE `phorum_files` (
   `user_id` int(11) NOT NULL default '0',
   `filename` varchar(255) NOT NULL default '',
   `filesize` int(11) NOT NULL default '0',
-  `file_data` mediumtext NOT NULL,
+  `file_data` mediumtext NOT NULL default '',
   `add_datetime` int(10) unsigned NOT NULL default '0',
   `message_id` int(10) unsigned NOT NULL default '0',
   `link` varchar(10) NOT NULL default '',
@@ -2154,7 +2154,7 @@ CREATE TABLE `phorum_forums` (
   `forum_id` int(10) unsigned NOT NULL auto_increment,
   `name` varchar(50) NOT NULL default '',
   `active` smallint(6) NOT NULL default '0',
-  `description` text NOT NULL,
+  `description` text NOT NULL default '',
   `template` varchar(50) NOT NULL default '',
   `folder_flag` tinyint(1) NOT NULL default '0',
   `parent_id` int(10) unsigned NOT NULL default '0',
@@ -2183,7 +2183,7 @@ CREATE TABLE `phorum_forums` (
   `read_length` int(10) unsigned NOT NULL default '0',
   `vroot` int(10) unsigned NOT NULL default '0',
   `edit_post` tinyint(1) NOT NULL default '1',
-  `template_settings` text NOT NULL,
+  `template_settings` text NOT NULL default '',
   `count_views` tinyint(1) unsigned NOT NULL default '0',
   `display_fixed` tinyint(1) unsigned NOT NULL default '0',
   `reverse_threading` tinyint(1) NOT NULL default '0',
@@ -2242,7 +2242,7 @@ CREATE TABLE `phorum_messages` (
   `parent_id` int(10) unsigned NOT NULL default '0',
   `author` varchar(37) NOT NULL default '',
   `subject` varchar(255) NOT NULL default '',
-  `body` text NOT NULL,
+  `body` text NOT NULL default '',
   `email` varchar(100) NOT NULL default '',
   `ip` varchar(255) NOT NULL default '',
   `status` tinyint(4) NOT NULL default '2',
@@ -2253,7 +2253,7 @@ CREATE TABLE `phorum_messages` (
   `moderator_post` tinyint(3) unsigned NOT NULL default '0',
   `sort` tinyint(4) NOT NULL default '2',
   `datestamp` int(10) unsigned NOT NULL default '0',
-  `meta` mediumtext NOT NULL,
+  `meta` mediumtext NOT NULL default '',
   `viewcount` int(10) unsigned NOT NULL default '0',
   `closed` tinyint(4) NOT NULL default '0',
   `thread_depth` tinyint(3) unsigned NOT NULL default '0',
@@ -2345,9 +2345,9 @@ CREATE TABLE `phorum_pm_messages` (
   `from_user_id` int(10) unsigned NOT NULL default '0',
   `from_username` varchar(50) NOT NULL default '',
   `subject` varchar(100) NOT NULL default '',
-  `message` text NOT NULL,
+  `message` text NOT NULL default '',
   `datestamp` int(10) unsigned NOT NULL default '0',
-  `meta` mediumtext NOT NULL,
+  `meta` mediumtext NOT NULL default '',
   PRIMARY KEY  (`pm_message_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -2401,7 +2401,7 @@ SET character_set_client = utf8;
 CREATE TABLE `phorum_search` (
   `message_id` int(10) unsigned NOT NULL default '0',
   `forum_id` int(10) unsigned NOT NULL default '0',
-  `search_text` mediumtext NOT NULL,
+  `search_text` mediumtext NOT NULL default '',
   PRIMARY KEY  (`message_id`),
   KEY `forum_id` (`forum_id`),
   FULLTEXT KEY `search_text` (`search_text`)
@@ -2427,7 +2427,7 @@ SET character_set_client = utf8;
 CREATE TABLE `phorum_settings` (
   `name` varchar(255) NOT NULL default '',
   `type` enum('V','S') NOT NULL default 'V',
-  `data` text NOT NULL,
+  `data` text NOT NULL default '',
   PRIMARY KEY  (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -2478,7 +2478,7 @@ SET character_set_client = utf8;
 CREATE TABLE `phorum_user_custom_fields` (
   `user_id` int(11) NOT NULL default '0',
   `type` int(11) NOT NULL default '0',
-  `data` text NOT NULL,
+  `data` text NOT NULL default '',
   PRIMARY KEY  (`user_id`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
@@ -2585,8 +2585,8 @@ CREATE TABLE `phorum_users` (
   `email_temp` varchar(110) NOT NULL default '',
   `hide_email` tinyint(1) NOT NULL default '0',
   `active` tinyint(1) NOT NULL default '0',
-  `user_data` text NOT NULL,
-  `signature` text NOT NULL,
+  `user_data` text NOT NULL default '',
+  `signature` text NOT NULL default '',
   `threaded_list` tinyint(4) NOT NULL default '0',
   `posts` int(10) NOT NULL default '0',
   `admin` tinyint(1) NOT NULL default '0',
@@ -2602,7 +2602,7 @@ CREATE TABLE `phorum_users` (
   `is_dst` tinyint(1) NOT NULL default '0',
   `user_language` varchar(100) NOT NULL default '',
   `user_template` varchar(100) NOT NULL default '',
-  `moderator_data` text NOT NULL,
+  `moderator_data` text NOT NULL default '',
   `moderation_email` tinyint(2) unsigned NOT NULL default '1',
   PRIMARY KEY  (`user_id`),
   UNIQUE KEY `fk_campsite_user_id` (`fk_campsite_user_id`),

@@ -294,21 +294,29 @@ class ArticleImage extends ArticleAttachment {
 	 *
 	 * @return array
 	 */
-	public static function GetArticlesThatUseImage($p_gunId)
+	public static function GetArticlesThatUseImage($p_gunId, $p_count = false)
 	{
 		global $g_ado_db;
-		$article = new Article();
-		$columnNames = $article->getColumnNames();
-		$columnQuery = array();
-		foreach ($columnNames as $columnName) {
-			$columnQuery[] = 'Articles.'.$columnName;
+		
+		if ($p_count) {
+			$columnQuery = 'COUNT(*)';
+		} else {
+			$article = new Article();
+			$columnNames = $article->getColumnNames();
+			$columnQuery = array();
+			foreach ($columnNames as $columnName) {
+				$columnQuery[] = 'Articles.'.$columnName;
+			}
+			$columnQuery = implode(',', $columnQuery);
 		}
-		$columnQuery = implode(',', $columnQuery);
 		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleAttachments '
 					." WHERE ArticleAttachments.fk_file_gunid='" . $g_ado_db->escape($p_gunId) . "'"
 					.' AND ArticleAttachments.fk_article_number=Articles.Number'
 					.' ORDER BY Articles.Number desc, Articles.IdLanguage';
 		$rows = $g_ado_db->GetAll($queryStr);
+		if ($p_count) {
+			return $g_ado_db->GetOne();
+		}
 		$articles = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {

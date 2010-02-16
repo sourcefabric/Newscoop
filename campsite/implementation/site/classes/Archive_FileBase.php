@@ -22,6 +22,8 @@ require_once('HTTP/Client.php');
  */
 class Archive_FileBase
 {
+	private static $s_localArchiveDir = 'archive';
+
     /**
      *
      */
@@ -205,11 +207,16 @@ class Archive_FileBase
      */
     public function delete()
     {
-        $fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
+    	$res = self::DeleteLocalFiles($this->m_gunId);
+    	if (PEAR::isError($res)) {
+    		return $res;
+    	}
+    	$fileXMLMetadataObj = new Archive_FileXMLMetadata($this->m_gunId, $this->m_fileType);
         if ($fileXMLMetadataObj->delete()) {
             $fileDbMetadataObj = new Archive_FileDatabaseMetadata($this->m_gunId);
             $fileDbMetadataObj->delete();
             $this->m_attachmentObj->delete();
+            
             // Logging
             $logtext = getGS('File "$1" (gunid = $2) deleted.',
                 $this->getMetatagValue('title'), $this->m_gunId);
@@ -791,8 +798,8 @@ class Archive_FileBase
      * @return int|PEAR_Error
      *      The gunid on success, PEAR Error on failure
      */
-    public static function Store($p_sessId, $p_filePath,
-                                 $p_metaData, $p_fileType, $p_userId)
+    public static function Store($p_sessId, $p_filePath, $p_metaData, $p_fileType,
+                                 $p_userId, $p_storeLocal = false)
     {
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_filePath));
@@ -813,14 +820,52 @@ class Archive_FileBase
         $localMetadata = self::External2LocalMetadata($fileXMLMetadata->m_metaData);
         $localMetadata['file_name'] = basename($p_filePath);
         $attachment = self::CreateLocalDataObj($gunId, $localMetadata, $p_userId);
+        
+        if ($p_storeLocal) {
+        	self::StoreLocal($p_filePath, $gunId);
+        }
 
         // Logging
-        $logtext = getGS('The file "$1" has been added (gunid = $2)',
+        $logtext = getGS('The file "$1" has been added to the archive (unique id: $2)',
             $p_metaData['dc:title'], $gunId);
         Log::Message($logtext, null, 181);
 
         return $gunId;
     } // fn Store
+
+
+    private static function StoreLocal($p_filePath, $p_gunId, $p_postfix = null)
+    {
+    	$extension = self::GetFileExtension($p_filePath);
+    	$localPath = self::GetLocalFilePath($p_gunId, $extension, $p_postfix);
+    	return copy($p_filePath, $localPath);
+    }
+
+
+    public static function GetLocalPath($p_gunId, $p_extension, $p_postfix = null)
+    {
+        $localDir = self::GetLocalFileDir($p_gunId);
+        $p_postfix = trim($p_postfix, DIR_SEP);
+        $localFileName = $p_gunId;
+        if (!empty($p_postfix)) {
+        	$localFileName .= '__' . $p_postfix;
+        }
+        if (!empty($p_extension)) {
+        	$localFileName .= '.' . $p_extension;
+        }
+        $localPath = $localDir . DIR_SEP . $localFileName;
+        return $localPath;
+    }
+
+
+    public static function GetLocalDir($p_gunId)
+    {
+    	set_type($p_gunId, 'string');
+    	if (strlen($p_gunId) < 3) {
+    		return false;
+    	}
+    	return self::$s_localArchiveDir . DIR_SEP . substr($p_gunId, 0, 3);
+    }
 
 
     /**
@@ -865,6 +910,31 @@ class Archive_FileBase
     {
         self::OnFileStore($p_fileName);
     } // fn DeleteTemporaryFile
+
+
+    protected static function DeleteLocalFiles($p_gunId)
+    {
+    	require_once('File/Find.php');
+
+    	$localDir = self::GetLocalDir($p_gunId);
+    	if (!is_dir($localDir)) {
+    		return false;
+    	}
+    	
+    	$patterns = array("/{$p_gunId}\.[^.]*/", "/{$p_gunId}_[^.]*\.[^.]*/");
+    	foreach ($patterns as $pattern) {
+    		$filesList = File_Find::search($pattern, $localDir, 'perl');
+    		foreach ($filesList as $file) {
+    			$fileName = basename($file);
+    			if (file_exists($fileName) && !is_writable($fileName)) {
+    				$errMsg = camp_get_error_message(CAMP_ERROR_DELETE_FILE, $fileName);
+    				return new PEAR_Error($errMsg, CAMP_ERROR_DELETE_FILE);
+    			}
+    			@unlink($file);
+    		}
+    	}
+    	return true;
+    } // DeleteLocalFiles
 
 
     /**

@@ -36,6 +36,18 @@ class Attachment extends DatabaseObject {
 			$this->fetch();
 		}
 	} // constructor
+	
+	
+	public function create($p_values = null)
+	{
+		if (is_array($p_values) && isset($p_values['mime_type'])) {
+			$typeParts = explode('/', $p_values['mime_type']);
+			if (count($typeParts) > 1) {
+				$p_values['type'] = $typeParts[0];
+			}
+		}
+		return parent::create($p_values);
+	}
 
 
 	public function delete()

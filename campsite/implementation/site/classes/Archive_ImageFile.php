@@ -7,6 +7,7 @@
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/Archive_FileBase.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
 
 /**
@@ -165,12 +166,21 @@ class Archive_ImageFile extends Archive_FileBase
 
 
     /**
+     * @return int
+     */
+    public function getImageId()
+    {
+        return $this->getGunId();
+    } // fn getImageId
+
+
+    /**
      * @return string
      */
     public function getFileType()
     {
         return $this->m_fileType;
-    }
+    } // fn getFileType
 
 
     /**
@@ -179,7 +189,7 @@ class Archive_ImageFile extends Archive_FileBase
     public function getMetatagLabels()
     {
         return $this->m_metatagLabels;
-    }
+    } // fn getMetatagLabels
 
 
     /**
@@ -188,7 +198,81 @@ class Archive_ImageFile extends Archive_FileBase
     public function getMask()
     {
         return $this->m_mask;
-    }
+    } // fn getMask
+
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->getMetatagValue('dc:description');
+    } // fn getDescription
+
+
+    /**
+     * @return string
+     */
+    public function getPhotographer()
+    {
+        return $this->getMetatagValue('ls:photographer');
+    } // fn getPhotographer
+
+
+    /**
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->getMetatagValue('ls:place');
+    } // fn getPlace
+
+
+    /**
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->getMetatagValue('dc:date_time');
+    } // fn getDate
+
+
+    /**
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->getMetatagValue('dc:description');
+    } // fn getLocation
+
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->getMetatagValue('ls:url');
+    } // fn getUrl
+
+
+    /**
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->getMimeType();
+    } // fn getContentType
+
+
+    /**
+     * Return true if the image is being used by an article.
+     *
+     * @return boolean
+     */
+    public function inUse()
+    {
+        return ArticleImage::GetArticlesThatUseImage($this->getImageId(), true) > 0;
+    } // fn inUse
 
 
     /**
@@ -319,6 +403,152 @@ class Archive_ImageFile extends Archive_FileBase
         $getid3Obj = new getID3;
         return $getid3Obj->analyze($p_file);
     } // fn AnalyzeFile
+    
+    
+    public static function Store($p_sessId, $p_filePath, $p_metaData, $p_fileType,
+                                 $p_userId, $p_storeLocal = false)
+    {
+    	$gunId = parent::Store($p_sessId, $p_filePath, $p_metaData, $p_filePath, $p_userId, true);
+    	if (PEAR::isError($gunId)) {
+    		return $gunId;
+    	}
+    }
+
+
+    private function __ImageTypeToExtension($p_imageType)
+    {
+        $extension = '';
+        switch($p_imageType) {
+           case IMAGETYPE_GIF: $extension = 'gif'; break;
+           case IMAGETYPE_JPEG: $extension = 'jpg'; break;
+           case IMAGETYPE_PNG: $extension = 'png'; break;
+           case IMAGETYPE_SWF: $extension = 'swf'; break;
+           case IMAGETYPE_PSD: $extension = 'psd'; break;
+           case IMAGETYPE_BMP: $extension = 'bmp'; break;
+           case IMAGETYPE_TIFF_II: $extension = 'tiff'; break;
+           case IMAGETYPE_TIFF_MM: $extension = 'tiff'; break;
+           case IMAGETYPE_JPC: $extension = 'jpc'; break;
+           case IMAGETYPE_JP2: $extension = 'jp2'; break;
+           case IMAGETYPE_JPX: $extension = 'jpx'; break;
+           case IMAGETYPE_JB2: $extension = 'jb2'; break;
+           case IMAGETYPE_SWC: $extension = 'swc'; break;
+           case IMAGETYPE_IFF: $extension = 'aiff'; break;
+           case IMAGETYPE_WBMP: $extension = 'wbmp'; break;
+           case IMAGETYPE_XBM: $extension = 'xbm'; break;
+        }
+        return $extension;
+    } // fn __ImageTypeToExtension
+
+
+    private function __GetImageTypeCreateMethod($p_imageType)
+    {
+        $method = null;
+        switch ($p_imageType) {
+           case IMAGETYPE_GIF: $method = 'imagecreatefromgif'; break;
+           case IMAGETYPE_JPEG: $method = 'imagecreatefromjpeg'; break;
+           case IMAGETYPE_PNG: $method = 'imagecreatefrompng'; break;
+           case IMAGETYPE_SWF: $method = null; break;
+           case IMAGETYPE_PSD: $method = null; break;
+           case IMAGETYPE_BMP: $method = null; break;
+           case IMAGETYPE_TIFF_II: $method = null; break;
+           case IMAGETYPE_TIFF_MM: $method = null; break;
+           case IMAGETYPE_JPC: $method = null; break;
+           case IMAGETYPE_JP2: $method = null; break;
+           case IMAGETYPE_JPX: $method = null; break;
+           case IMAGETYPE_JB2: $method = null; break;
+           case IMAGETYPE_SWC: $method = null; break;
+           case IMAGETYPE_IFF: $method = null; break;
+           case IMAGETYPE_WBMP: $method = 'imagecreatefromwbmp'; break;
+           case IMAGETYPE_XBM: $method = 'imagecreatefromxbm'; break;
+        }
+        return $method;
+    } // fn __GetImageTypeCreateMethod
+
+
+    /**
+     * Resizes the given image
+     *
+     * @param resource $p_image
+     *      The image resource handler
+     * @param int $p_maxWidth
+     *      The maximum width of the resized image
+     * @param int $p_maxHeight
+     *      The maximum height of the resized image
+     * @param bool $p_keepRatio
+     *      If true keep the image ratio
+     * @return int
+     *      Return the new image resource handler.
+     */
+    public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
+                                       $p_keepRatio = true)
+    {
+        $origImageWidth = imagesx($p_image);
+        $origImageHeight = imagesy($p_image);
+        if ($origImageWidth <= 0 || $origImageHeight <= 0) {
+            return new PEAR_Error(getGS("The file uploaded is not an image."));
+        }
+
+        $p_maxWidth = is_numeric($p_maxWidth) ? (int) $p_maxWidth : 0;
+        $p_maxHeight = is_numeric($p_maxHeight) ? (int) $p_maxHeight : 0;
+        if ($p_maxWidth <= 0 || $p_maxHeight <= 0) {
+            return new PEAR_Error(getGS("Invalid resize width/height."));
+        }
+        if ($p_keepRatio) {
+            $ratioOrig = $origImageWidth / $origImageHeight;
+            $ratioNew = $p_maxWidth / $p_maxHeight;
+            if ($ratioNew > $ratioOrig) {
+                $newImageWidth = $p_maxHeight * $ratioOrig;
+                $newImageHeight = $p_maxHeight;
+            } else {
+                $newImageWidth = $p_maxWidth;
+                $newImageHeight = $p_maxWidth / $ratioOrig;
+            }
+        } else {
+            $newImageWidth = $p_maxWidth;
+            $newImageHeight = $p_maxHeight;
+        }
+        $newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
+        imagecopyresampled($newImage, $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
+                           $origImageWidth, $origImageHeight);
+        return $newImage;
+    } // fn ResizeImage
+
+
+    /**
+     * Saves the image refered by the resource handler to a file
+     *
+     * @param resource $p_image
+     *      Image resource handler
+     * @param string $p_fileName
+     *      The full path of the file
+     * @param int $p_type
+     *      The image type
+     * @param bool $p_addExtension
+     *      If true it will add the proper extension to the file name.
+     * @return mixed
+     *      true if successful, PEAR_Error object in case of error
+     */
+    public static function SaveImageToFile($p_image, $p_fileName,
+                                           $p_imageType, $p_addExtension = true)
+    {
+        $method = null;
+        switch ($p_imageType) {
+           case IMAGETYPE_GIF: $method = 'imagegif'; break;
+           case IMAGETYPE_JPEG: $method = 'imagejpeg'; break;
+           case IMAGETYPE_PNG: $method = 'imagepng'; break;
+           case IMAGETYPE_WBMP: $method = 'imagewbmp'; break;
+           case IMAGETYPE_XBM: $method = 'imagexbm'; break;
+        } // these are the supported image types
+        if ($method == null) {
+            return new PEAR_Error(getGS("Image type $1 is not supported.",
+                                  image_type_to_mime_type($p_imageType)));
+        }
+        if (!$method($p_image, $p_fileName)) {
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $p_fileName),
+                                  CAMP_ERROR_CREATE_FILE);
+        }
+        return true;
+    } // SaveImageToFile
 
 } // class Archive_ImageFile
 
