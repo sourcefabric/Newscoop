@@ -35,7 +35,7 @@ class ArticleAttachment extends DatabaseObject {
 	 */
 	public function ArticleAttachment($p_articleNumber = null, $p_fileGunId = null)
 	{
-		set_type($p_articleNumber, 'integer');
+		settype($p_articleNumber, 'integer');
 		$this->m_data['fk_article_number'] = $p_articleNumber;
 		$this->m_data['fk_file_gunid'] = $p_fileGunId;
 	} // constructor
@@ -112,7 +112,7 @@ class ArticleAttachment extends DatabaseObject {
 		global $g_ado_db;
 		
         $p_fileGunId = "'" . $g_ado_db->escape($p_fileGunId) . "'";
-		set_type($p_articleNumber, 'integer');
+		settype($p_articleNumber, 'integer');
 		$p_languageId = is_null($p_languageId) ? 'NULL' : (int)$p_languageId;
 		$p_textEmbedded = $p_textEmbedded ? 'true' : 'false';
 		$p_contentDisposition = is_null($p_contentDisposition) ? 'NULL'
@@ -189,7 +189,7 @@ class ArticleAttachment extends DatabaseObject {
 	{
 		global $g_ado_db;
 		
-		set_type($p_articleNumber, 'integer');
+		settype($p_articleNumber, 'integer');
 		$queryStr = 'DELETE FROM ArticleAttachments '
 				  . "WHERE fk_article_number = '$p_articleNumber'";
 		$g_ado_db->Execute($queryStr);
@@ -206,8 +206,8 @@ class ArticleAttachment extends DatabaseObject {
 	{
 		global $g_ado_db;
 		
-		set_type($p_srcArticleNumber, 'integer');
-		set_type($p_destArticleNumber, 'integer');
+		settype($p_srcArticleNumber, 'integer');
+		settype($p_destArticleNumber, 'integer');
 		$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_file_gunid, '
 		          . '    fk_language_id, text_embedded, content_disposition, file_index)'
 		          . "SELECT $p_destArticleNumber, fk_file_gunid, "

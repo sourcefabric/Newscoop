@@ -373,7 +373,7 @@ class Archive_FileBase
             return false;
         }
         $fileExtension = self::GetFileExtension($p_fileName);
-        return $this->m_fileTypes[$fileExtension];
+        return $this->m_fileTypes[".$fileExtension"];
     } // fn getFileTypeInfo
 
 
@@ -637,7 +637,7 @@ class Archive_FileBase
         if (empty($ext)) {
             return false;
         }
-        return $ext;
+        return substr($ext, 1);
     } // fn GetFileExtension
 
 
@@ -804,6 +804,7 @@ class Archive_FileBase
         if (file_exists($p_filePath) == false) {
             return new PEAR_Error(getGS('File $1 does not exist', $p_filePath));
         }
+        
         $gunId = null;
         $checkSum = md5_file($p_filePath);
         $xmlString = self::CreateXMLTextFile($p_metaData, $p_fileType);
@@ -837,14 +838,18 @@ class Archive_FileBase
     private static function StoreLocal($p_filePath, $p_gunId, $p_postfix = null)
     {
     	$extension = self::GetFileExtension($p_filePath);
-    	$localPath = self::GetLocalFilePath($p_gunId, $extension, $p_postfix);
+    	$localPath = self::GetLocalPath($p_gunId, $extension, $p_postfix);
+    	$dirName = dirname($localPath);
+    	if (!is_dir($dirName) && !mkdir($dirName, 0777, true)) {
+    		return false;
+    	}
     	return copy($p_filePath, $localPath);
-    }
+    } // fn StoreLocal
 
 
     public static function GetLocalPath($p_gunId, $p_extension, $p_postfix = null)
     {
-        $localDir = self::GetLocalFileDir($p_gunId);
+        $localDir = self::GetLocalDir($p_gunId);
         $p_postfix = trim($p_postfix, DIR_SEP);
         $localFileName = $p_gunId;
         if (!empty($p_postfix)) {
@@ -855,17 +860,17 @@ class Archive_FileBase
         }
         $localPath = $localDir . DIR_SEP . $localFileName;
         return $localPath;
-    }
+    } // fn GetLocalPath
 
 
     public static function GetLocalDir($p_gunId)
     {
-    	set_type($p_gunId, 'string');
+    	settype($p_gunId, 'string');
     	if (strlen($p_gunId) < 3) {
     		return false;
     	}
     	return self::$s_localArchiveDir . DIR_SEP . substr($p_gunId, 0, 3);
-    }
+    } // fn GetLocalDir
 
 
     /**

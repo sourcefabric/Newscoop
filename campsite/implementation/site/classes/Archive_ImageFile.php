@@ -408,11 +408,88 @@ class Archive_ImageFile extends Archive_FileBase
     public static function Store($p_sessId, $p_filePath, $p_metaData, $p_fileType,
                                  $p_userId, $p_storeLocal = false)
     {
-    	$gunId = parent::Store($p_sessId, $p_filePath, $p_metaData, $p_filePath, $p_userId, true);
+        if (function_exists("camp_load_translation_strings")) {
+            camp_load_translation_strings("api");
+        }
+        
+    	// Verify its a valid image file.
+        $imageInfo = @getimagesize($p_filePath);
+        if ($imageInfo === false) {
+            return new PEAR_Error(getGS("The uploaded file is not an image."));
+        }
+    	
+        $gunId = parent::Store($p_sessId, $p_filePath, $p_metaData, $p_fileType, $p_userId, true);
     	if (PEAR::isError($gunId)) {
     		return $gunId;
     	}
-    }
+    	
+    	$res = self::CreateThumbnail($gunId, $p_filePath);
+    	if (PEAR::isError($res)) {
+    		$imageObj = new Archive_ImageFile($gunId);
+    		$imageObj->delete();
+    		return $res;
+    	}
+
+    	return $gunId;
+    } // fn Store
+
+
+    public static function CreateThumbnail($p_gunId, $p_filePath, $p_width = null, $p_height = null)
+    {
+    	global $Campsite;
+    	
+        if (function_exists("camp_load_translation_strings")) {
+            camp_load_translation_strings("api");
+        }
+        
+    	// Verify its a valid image file.
+        $imageInfo = @getimagesize($p_filePath);
+        if ($imageInfo === false) {
+            return new PEAR_Error(getGS("The uploaded file is not an image."));
+        }
+        $imageType = $imageInfo[2];
+        $extension = self::__ImageTypeToExtension($imageType);
+        
+        $width = is_null($p_width) ? $Campsite['THUMBNAIL_MAX_SIZE'] : $p_width;
+        $height = is_null($p_width) ? $Campsite['THUMBNAIL_MAX_SIZE'] : $p_height;
+        settype($width, 'integer');
+        settype($height, 'integer');
+        
+        $thumbnail = self::GetLocalPath($p_gunId, $extension, "{$width}x{$height}");
+        
+        $fileName = basename($p_filePath);
+        $createMethodName = self::__GetImageTypeCreateMethod($imageType);
+        if ($createMethodName != null) {
+        	$imageHandler = $createMethodName($p_filePath);
+        	if ($imageHandler == false) {
+        		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $fileName),
+        		CAMP_ERROR_UPLOAD_FILE);
+        	}
+        	$thumbnailImage = self::ResizeImage($imageHandler, $width, $height);
+        	if (PEAR::isError($thumbnailImage)) {
+        		return $thumbnailImage;
+        	}
+        	$result = self::SaveImageToFile($thumbnailImage, $thumbnail, $imageType);
+        	if (PEAR::isError($result)) {
+        		return $result;
+        	}
+        	chmod($thumbnail, 0644);
+        } elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
+        	$cmd = $Campsite['THUMBNAIL_COMMAND'].' '.escapeshellarg($target)
+        	.' '.escapeshellarg($thumbnail);
+        	system($cmd);
+        	if (file_exists($thumbnail)) {
+        		chmod($thumbnail, 0644);
+        	} else {
+        		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail),
+        		CAMP_ERROR_CREATE_FILE);
+        	}
+        } else {
+        	return new PEAR_Error(getGS("Image type $1 is not supported.",
+        	image_type_to_mime_type($imageType)));
+        }
+        return true;
+    } // fn CreateThumbnail
 
 
     private function __ImageTypeToExtension($p_imageType)
