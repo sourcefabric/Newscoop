@@ -1,0 +1,104 @@
+/*
+styling for 
+- individual articles
+- archive list
+- topics list
+- blogs
+- image and image caption
+*/
+
+/* ARTICLE */
+div.articlecontent {
+  padding-left: 7px;
+}
+div.articlecontent h1 {
+  margin-top: 5px;
+  line-height: 1em;
+}
+div.articlecontent div.byline {
+  color: #aaa;
+}
+
+h3.deck {
+  font-family: sans-serif, serif;
+  font-weight: bold;
+  font-size: 1em;
+  margin-bottom: 5px;
+  color: #666;
+}
+h3.deck a {
+  color: #666;
+  text-decoration: none;
+}
+h3.deck a:hover {
+  text-decoration: underline;
+}
+
+/* ARCHIVE */
+body#archive div#archive-tree a {
+  text-decoration: none;
+}
+body#archive div.list-article-published,
+body#archive div.relatedtopics {
+  display: inline;
+  color: #aaa;
+}
+body#archive h4 {
+  margin-bottom: 0px;
+  margin-top: 6px;
+}
+body#archive div#archive-tree ul,
+body#archive div#archive-tree li {
+  list-style: none;
+}
+
+/*** TOPICS ***/
+a.topic {
+  text-decoration: none;
+}
+body#section a.topic,
+body#article a.topic {
+  color: #999;
+}
+/* topic tree */
+div#topics-tree a {
+  text-decoration: underline;
+}
+div.topicblocktitle {
+  font-size: 1.6em;
+  display: block;
+  margin-top: 12px;
+}
+div.topicblocktitle a.toggleshowhide {
+  color: #aaa !important;
+  font-size: 0.5em;
+}
+div.topicblockitems {
+  margin-bottom: 6px;
+  padding: 12px;
+}
+/* BLOGS */
+/* permalink */
+form#Permform {
+  color: #999;
+}
+form#Permform input {
+  width: 380px;
+  font-size: 0.8em;
+  border: 1px solid #ccc;
+  background: #f0f0f0;
+  color: #999;
+}
+div#permalinkURI {
+	display: none;
+}
+/* image and image caption */
+table.cs_img td img {
+  padding: 0px;
+  margin: 0px;
+}
+td.caption {
+  font-size: 0.8em;
+  color: #666;
+  text-align: left;
+}

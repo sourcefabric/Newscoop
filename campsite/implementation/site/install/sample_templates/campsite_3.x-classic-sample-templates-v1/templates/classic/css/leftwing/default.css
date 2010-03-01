@@ -1,0 +1,24 @@
+body {
+  padding:0px;
+  border: 0; /* This removes the border around the viewport in old versions of IE */
+  font-family:verdana,helvetica,arial,sans-serif;
+  line-height: 1.2em;
+  font-size: 11px;
+  color: #333;
+}
+#wrapper {
+  margin: 0 auto;
+  width:970px;
+}
+h1, h2, h3, h4 {
+  font-family:verdana,helvetica,arial,sans-serif;
+  color: #b33;
+}
+a, a:visited {
+  color: #f33;
+  text-decoration: underline;
+}
+a:hover, a:active {
+  color: #f33;
+  text-decoration: none;
+}

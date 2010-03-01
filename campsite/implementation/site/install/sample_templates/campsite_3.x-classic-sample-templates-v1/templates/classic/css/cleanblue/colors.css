@@ -1,0 +1,34 @@
+/* this overwrites the color information already set with custom colors according to section numbers */
+
+/* colors and sections 
+
+Logo:
+green       | Hex: #649C13
+
+Sections:
+10 News      green       | Hex: #649C13
+20 Business  dodger blue | Hex: #004C80
+30 Sports    red         | Hex: #D1162B
+40 Lifestyle apricot     | Hex: #F7C081
+50 Cars      orange      | Hex: #F28800
+60 Homes     teal blue   | Hex: #0073B2
+*/
+
+/* SECTION NUMBER 10 #649C13 */
+/*body#index div.teaserframe-10 .teaserhead,
+body#system div.teaserframe-10 .teaserhead,
+div.block-mostpopular-section-10 {
+ 	background: #649C13;
+}
+div.teaserframe-10 .teasercontent h2 a,
+body.section-10 div.articlecontent h1,
+div.teaserframe-10 ul.links li a,
+div.sectionheader-10,
+div.block-mostpopular-section-10,
+body#archive a.linksection-10 {
+ 	color: #649C13; 
+}
+div.sectionheader-10 {
+	border-bottom: 1px solid #649C13;
+}*/
+/* *************************************** */

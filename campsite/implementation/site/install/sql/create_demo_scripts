@@ -16,6 +16,7 @@ TABLES_TO_FILL="
  ArticleAuthors\
  ArticleImages\
  ArticleIndex\
+ ArticlePublish\
  ArticleTopics\
  ArticleTypeMetadata\
  Articles\
@@ -24,26 +25,32 @@ TABLES_TO_FILL="
  Images\
  Issues\
  KeywordIndex\
+ Plugins\
  Publications\
  Sections\
+ SystemPreferences\
  Templates\
  Topics\
  Translations\
- XArticle\
- XLink\
- XService\
- liveuser_groupusers\
+ Xnews_article\
  liveuser_perm_users\
  liveuser_perm_users_perm_user_id_seq\
  liveuser_users\
  liveuser_users_auth_user_id_seq\
  liveuser_rights\
  liveuser_rights_right_id_seq\
+ liveuser_userrights\
  liveuser_grouprights\
  phorum_forums\
- phorum_users"
+ phorum_users\
+ plugin_blog_blog\
+ plugin_blog_comment\
+ plugin_blog_entry\
+ plugin_blog_topic\
+ plugin_poll\
+ plugin_poll_answer"
 
-CUSTOM_TABLES="XArticle XLink XService"
+CUSTOM_TABLES="Xnews_article"
 
 mysqldump -u $DATABASE_USER $password_string -t --insert-ignore \
   $DATABASE_NAME $TABLES_TO_FILL > campsite_demo_data.sql

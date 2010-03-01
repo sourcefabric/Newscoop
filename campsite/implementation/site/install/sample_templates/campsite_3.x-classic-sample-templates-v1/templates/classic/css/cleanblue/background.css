@@ -1,0 +1,19 @@
+body {
+  background: #f0f0f0 url(bg.jpg);
+/* background: #646464 url(bg-stripes-dark.png) repeat-x; */
+  margin: 0px;
+}
+
+/* white backgrounds */
+#header,
+div.colmask,
+#footer {
+  background: white;
+}
+/* get rid off lines */
+div#navmain ul {
+  border-top: 0px solid #ddd;
+}
+.colmask {
+  border-right: 0px solid #ddd;
+}
