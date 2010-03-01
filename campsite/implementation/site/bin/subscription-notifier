@@ -250,7 +250,7 @@ function send_email($p_message)
     $headers = "From: ".$p_message['reply']."\r\n" .
         'X-Mailer: PHP/' . phpversion() . "\r\n" .
         "MIME-Version: 1.0\r\n" .
-        "Content-Type: text/text; charset=utf-8\r\n" .
+        "Content-Type: text/plain; charset=utf-8\r\n" .
         "Content-Transfer-Encoding: 8bit\r\n\r\n";
 
     // sends the email message
