@@ -152,7 +152,7 @@ switch ($f_poll_item) {
     $polls = Poll::getPolls($constraints, $f_poll_assigned, $f_poll_offset, $f_poll_limit, $f_poll_order);
     
     $param_string = "f_poll_item=$f_poll_item&amp;f_issue_nr=$f_issue_nr&amp;f_language_id=$f_language_id&amp;f_publication_id=$f_publication_id";
-    $pager_params = "?$params_string&amp;f_poll_order=$f_poll_order&amp;";
+    $pager_params = "?$param_string&amp;f_poll_order=$f_poll_order&amp;";
     $pager =& new SimplePager(Poll::countPolls($f_language_id), $f_poll_limit, "f_poll_offset", $pager_params, false);
     
     Poll::countPolls($f_language_id)
