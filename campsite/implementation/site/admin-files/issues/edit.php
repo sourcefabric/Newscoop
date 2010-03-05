@@ -36,7 +36,7 @@ $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true)
 $issueTranslations = Issue::GetIssues($Pub, null, $Issue, null, null, null, true);
 $excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage');
 
-$allTemplates = Template::GetAllTemplates(null, true, true);
+$allTemplates = Template::GetAllTemplates(null, true, true, true);
 $allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
 $publish_date = date("Y-m-d");
