@@ -448,33 +448,39 @@ class Template extends DatabaseObject {
 	} // fn OnUpload
 
 
-	/**
-	 * @param array $p_sqlOptions
-	 * @param boolean $p_update
-	 * @param boolean $p_useFilter 
-	 *		filter templates matching setting in SystemPrefs
-	 *
-	 * @return array
-	 */
-	public static function GetAllTemplates($p_sqlOptions = null, $p_update = true, $p_useFilter = false)
-	{
-		if ($p_update) {
-			Template::UpdateStatus();
-		}
-		$queryStr = 'SELECT * FROM Templates';
-		
-		if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
-			$queryStr .= ' WHERE Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';  
-		}
-		    
-		if (!is_null($p_sqlOptions)) {
-			$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-		} else {
-			$queryStr .= ' ORDER BY Level ASC, Name ASC';
-		}
-		$templates = DbObjectArray::Create('Template', $queryStr);
-		return $templates;
-	} // fn GetAllTemplates
+    /**
+     * @param array $p_sqlOptions
+     * @param boolean $p_update
+     * @param boolean $p_useFilter
+     *      filter templates matching setting in SystemPrefs
+     * @param boolean $p_strict
+     *      if true, retrieves only template (tpl) files
+     * @return array
+     */
+    public static function GetAllTemplates($p_sqlOptions = null, $p_update = true, $p_useFilter = false,
+                                           $p_strict = false)
+    {
+        if ($p_update) {
+            Template::UpdateStatus();
+        }
+        $queryStr = 'SELECT * FROM Templates';
+
+        if ($p_strict) {
+            $queryStr .= ' WHERE Type < 5';
+        }
+        if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
+            $queryStr .= ($p_strict == false) ? ' WHERE ' : ' ';
+            $queryStr .= 'Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';
+        }
+
+        if (!is_null($p_sqlOptions)) {
+            $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+        } else {
+            $queryStr .= ' ORDER BY Level ASC, Name ASC';
+        }
+        $templates = DbObjectArray::Create('Template', $queryStr);
+        return $templates;
+    } // fn GetAllTemplates
 
 
 	/**
