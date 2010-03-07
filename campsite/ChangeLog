@@ -1,3 +1,28 @@
+3.3.5 (Mar 8, 2010)
+  Improvements
+  ------------
+  - #3040 - Added support for the <iframe> tag and iframe plugin to TinyMCE
+  - #3066 - Implemented language based ordering in the article search results list
+  - #3069 - Improved IP logging for comments when cache is used
+  - #3072 - Elements automatically created by camp_edit, camp_select etc. validate in XHTML
+  - #3082 - Classic templates default in Campsite installation
+  - #3085 - Only files with the .tpl extension are displayed in template selection dropdowns
+
+  Bugs Fixed
+  ----------
+  - #3046 - URI options "next_items" and "previous_items" not working in plugins lists
+  - #3062 - The articles list is empty when issue or section not defined
+  - #3063 - Cache keys for database objects do not match when using different character cases
+  - #3065 - Preview does not work when switching the user in the same browser
+  - #3067 - Topics list does not work properly when multiple languages were used and cache was on
+  - #3068 - Replace obsolete function split() for future PHP compatibility
+  - #3070 - Wrong PHP version is checked during installation process
+  - #3071 - "Published" articles from "Not published" issue are listed in "list_articles" when ignore_issue or issue constraints used
+  - #3075 - The list of issues does not accept the publish_date parameter
+  - #3077 - Cannot select attachment file when description has quotes
+  - #3083 - Email notifiers set invalid content type for email
+  - #3084 - Bad pagination in poll plugin
+
 3.3.4 (Dec 24, 2009)
   Improvements
   ------------
