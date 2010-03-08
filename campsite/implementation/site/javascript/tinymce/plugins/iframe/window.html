@@ -13,24 +13,12 @@
 
 	function insertiframe() {
 		var iframetext;
-
 		var iframeUrl = document.getElementById('iframeUrl').value;
-		var iframeWidth = document.getElementById('iframeWidth').value;
-		var iframeHeight = document.getElementById('iframeHeight').value;
 
 		if(iframeUrl == '') {
 			alert('{#iframe.error}');
 		} else {
-
-			if(iframeWidth == '') {
-				iframeWidth = '100%';
-			}
-
-			if(iframeHeight == '') {
-				iframeHeight = '200';
-			}
-
-			iframetext = '<br style="clear: both;" /><iframe src="'+ iframeUrl +'" width="'+ iframeWidth +'" height="'+ iframeHeight +'" frameborder="0"></iframe><br style="clear: both;" />';
+			iframetext = '<br style="clear:both;" />' + iframeUrl + '<br style="clear: both;" />';
 
 			if(window.tinyMCE) {
 				tinyMCEPopup.editor.execCommand('mceInsertContent', false, iframetext);
@@ -58,28 +46,14 @@
 		<br />
 		<table border="0" cellpadding="4" cellspacing="0">
          <tr>
-            <td nowrap="nowrap"><label for="iframeUrl">{#iframe.url}</label></td>
-            <td><input type="text" id="iframeUrl" name="iframeUrl" style="width: 190px" />
+            <td nowrap="nowrap"><label for="iframeUrl">{#iframe.code}</label></td>
+            <td><input type="text" id="iframeUrl" name="iframeUrl" style="width:280px" />
             </td>
           </tr>
-         <tr>
-            <td nowrap="nowrap"><label for="iframeWidth">{#iframe.width}</label></td>
-            <td><input type="text" id="iframeWidth" name="iframeWidth" style="width: 190px" />
-            </td>
-          </tr>
-         <tr>
-            <td nowrap="nowrap"><label for="iframeHeight">{#iframe.height}</label></td>
-            <td><input type="text" id="iframeHeight" name="iframeHeight" style="width: 190px" />
-            </td>
-          </tr>
-
         </table>
 		</div>
 		<!-- end iframe panel -->
-
-
 	</div>
-
 	<div class="mceActionPanel">
 		<div style="float: left">
 			<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />

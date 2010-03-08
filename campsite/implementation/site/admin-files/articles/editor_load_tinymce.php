@@ -245,7 +245,7 @@ tinyMCE.init({
     file_browser_callback : "campsitemedia",
     forced_root_block : "",
     relative_urls : false,
-    extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
+    extended_valid_elements : "iframe[src|width|height|style|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
     // Theme options
     theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
