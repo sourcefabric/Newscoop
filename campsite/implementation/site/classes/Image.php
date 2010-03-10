@@ -3,18 +3,6 @@
 class Image extends Archive_FileBase {
 
 	/**
-	 * @return int
-	 */
-	public static function GetTotalImages()
-	{
-		global $g_ado_db;
-		$queryStr = 'SHOW TABLE STATUS LIKE "Images"';
-		$result = $g_ado_db->GetRow($queryStr);
-		return $result['Rows'];
-	} // fn GetTotalImages
-
-
-	/**
 	 * Download the remote file and save it to disk, create a thumbnail for it,
 	 * and create a database entry for the file.
 	 *
@@ -161,27 +149,6 @@ class Image extends Archive_FileBase {
 
 
 	/**
-	 * Get an array of users who have uploaded images.
-	 * @return array
-	 */
-	public static function GetUploadUsers()
-	{
-		$tmpUser = new User();
-		$columnNames = $tmpUser->getColumnNames();
-		$queryColumnNames = array();
-		foreach ($columnNames as $columnName) {
-			$queryColumnNames[] = 'liveuser_users.'.$columnName;
-		}
-		$queryColumnNames = implode(",", $queryColumnNames);
-		$queryStr = 'SELECT DISTINCT liveuser_users.Id, '.$queryColumnNames
-					.' FROM Images, liveuser_users '
-                    .' WHERE Images.UploadedByUser = liveuser_users.Id';
-		$users = DbObjectArray::Create('User', $queryStr);
-		return $users;
-	} // fn GetUploadUsers
-
-
-	/**
 	 * Fetch an image object by matching the URL.
 	 * @param string $p_url
 	 * @return Image
@@ -195,26 +162,6 @@ class Image extends Archive_FileBase {
 		$image->fetch($row);
 		return $image;
 	} // fn GetByUrl
-
-
-	/**
-	 * Return an array that can be used in a template.
-	 *
-	 * @return array
-	 */
-	public function toTemplate()
-	{
-		$template = array();
-		$template['id'] = $this->getImageId();
-		$template['description'] = $this->getDescription();
-		$template['photographer'] = $this->getPhotographer();
-		$template['place'] = $this->getPlace();
-		$template['date'] = $this->getDate();
-		$template['content_type'] = $this->getContentType();
-		$template['image_url'] = $this->getImageUrl();
-		$template['thumbnail_url'] = $this->getThumbnailUrl();
-		return $template;
-	} // fn toTemplate
 
 } // class Image
 ?>
