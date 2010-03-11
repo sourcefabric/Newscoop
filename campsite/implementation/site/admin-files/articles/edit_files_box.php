@@ -4,7 +4,7 @@
 					<TABLE width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
 					<TR>
 						<TD align="left">
-						<STRONG><?php putGS("Files"); ?></STRONG>
+						<STRONG><?php putGS("Media Files"); ?></STRONG>
 						</TD>
 						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AddFile')) {  ?>
 						<TD align="right">

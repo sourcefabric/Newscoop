@@ -54,7 +54,6 @@ echo camp_html_breadcrumbs($crumbs);
 $response = $xrc->xr_downloadRawMediaDataOpen($sessid, $fileGunId);
 $fileTypeName = null;
 if (!PEAR::isError($response)) {
-    $release = $xrc->xr_downloadRawMediaDataClose($sessid, $response['token']);
     $fileTypeInfo = $file->getFileTypeInfo($response['filename']);
 }
 
@@ -74,6 +73,11 @@ foreach($mask['pages'] as $key => $val) {
         $jsArrayFields[] = "'".addslashes('f_'.$key.'_'.$element_encode)."'";
     }
     $jsArrayPages[] = "'".addslashes($key)."'";
+}
+
+$isViewable = ($file->getFileType() == 'image') ? true : false;
+if ($isViewable) {
+    $divPages .= "\t<li><a href=\"#tab".$cnt.'"><em>'.getGS('Preview')."</em></a></li>\n";
 }
 $jsArrayPagesStr = implode(',', $jsArrayPages);
 $jsArrayFieldsStr = implode(',', $jsArrayFields);
@@ -99,7 +103,7 @@ function spread(element, name)
   <?php
   $cnt = 1;
   foreach($mask['pages'] as $key => $val) {
-      echo '<div id="tab'.$cnt.'">';
+      echo '<div id="tab'.$cnt++.'">';
   ?>
       <table border="0" cellspacing="0" cellpadding="6" class="table_input">
   <?php
@@ -158,6 +162,18 @@ function spread(element, name)
       </div>
   <?php
   }
+  // Content tab for objects visualization
+  if ($isViewable) {
+      // TODO: URL should be retrieved properly once access interface to image is defined
+      $fileUrl = $response['url'];
+  ?>
+      <div id="tab<?php echo $cnt; ?>">
+          <img src="<?php print($fileUrl); ?>" />
+      </div>
+  <?php
+  }
+
+  //$release = $xrc->xr_downloadRawMediaDataClose($sessid, $response['token']);
   ?>
 </div>
 </form>
