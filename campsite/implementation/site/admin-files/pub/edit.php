@@ -28,6 +28,7 @@ $urlTypes = UrlType::GetUrlTypes();
 $timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
 $publicationObj = new Publication($f_publication_id);
 $aliases = Alias::GetAliases(null, $f_publication_id);
+$forum = new Phorum_forum($publicationObj->getForumId());
 
 $pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
 if (!$pubTimeUnit->exists()) {
