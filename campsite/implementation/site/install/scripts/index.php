@@ -9,6 +9,8 @@
  * @link http://www.campware.org
  */
 
+header("Content-type: text/html; charset=UTF-8");
+
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
