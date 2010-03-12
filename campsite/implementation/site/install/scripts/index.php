@@ -11,6 +11,8 @@
 
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
+header("Content-type: text/html; charset=UTF-8");
+
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 
 if (file_exists($GLOBALS['g_campsiteDir'] . '/reset_cache')) {
