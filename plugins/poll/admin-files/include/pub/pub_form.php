@@ -16,20 +16,20 @@ if (is_object($publicationObj)) {
 
     	<TD align="right">
     		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">
-    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=publication&amp;f_publication_id=$f_publication_id&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
+    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=publication&amp;f_publication_id=" . $publicationObj->getPublicationId() . "&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
     	</TD>
     	<?php } ?>
     </TR>
-    
+
     <TR>
-    	<TD colspan="2" align="left" valign="top" width="100%">  
-    	<div style="overflow: auto; max-height: 50px">  
+    	<TD colspan="2" align="left" valign="top" width="100%">
+    	<div style="overflow: auto; max-height: 50px">
         <?php
-        foreach (PollPublication::getAssignments(null, $f_publication_id) as $pollPublication) {
-            $poll = $pollPublication->getPoll($publicationObj->getLanguageId());	
+        foreach (PollPublication::getAssignments(null, $publicationObj->getPublicationId()) as $pollPublication) {
+            $poll = $pollPublication->getPoll($publicationObj->getLanguageId());
             p($poll->getName());
     		p("&nbsp;({$poll->getLanguageName()})<br>");
-    	} 
+    	}
     	?>
     	</div>
         </TD>
