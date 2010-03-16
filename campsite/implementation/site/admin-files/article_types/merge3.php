@@ -361,7 +361,7 @@ if ($ok) {
         					foreach ($imageMatches[1] as $templateId) {
         						// Get the image URL
         						$articleImage = new ArticleImage($srcArticleData->getProperty('NrArticle'), null, $templateId);
-        						$image = new Image($articleImage->getImageId());
+        						$image = new Archive_ImageFile($articleImage->getImageId());
         						$imageUrl = $image->getImageUrl();
         						$text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$templateId.'" ', $text);
         					}

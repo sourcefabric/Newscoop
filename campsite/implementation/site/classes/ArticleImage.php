@@ -18,7 +18,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
  */
 class ArticleImage extends ArticleAttachment {
 	var $m_image = null;
-	
+
     private static $s_defaultOrder = array(array('field'=>'byIndex', 'dir'=>'asc'));
 
 	/**
@@ -72,7 +72,7 @@ class ArticleImage extends ArticleAttachment {
 		if (is_object($this->m_image)) {
 			return $this->m_image;
 		} else {
-			return new Image($this->m_data['fk_file_gunid']);
+			return new Archive_ImageFile($this->m_data['fk_file_gunid']);
 		}
 	} // fn getImage
 
@@ -121,7 +121,7 @@ class ArticleImage extends ArticleAttachment {
 	public static function GetUnusedTemplateId($p_articleNumber)
 	{
 		global $g_ado_db;
-		
+
 		settype($p_articleNumber, 'integer');
 		// Get the highest template ID and add one.
 		$queryStr = "SELECT MAX(file_index)+1 FROM ArticleAttachments WHERE fk_article_number = $p_articleNumber";
@@ -144,7 +144,7 @@ class ArticleImage extends ArticleAttachment {
 	public static function TemplateIdInUse($p_articleNumber, $p_templateId)
 	{
 		global $g_ado_db;
-		
+
 		settype($p_articleNumber, 'integer');
         settype($p_templateId, 'integer');
 		$queryStr = "SELECT fk_file_gunid FROM ArticleAttachments "
@@ -213,7 +213,7 @@ class ArticleImage extends ArticleAttachment {
 	public static function AddImageToArticle($p_gunId, $p_articleNumber, $p_templateId = null)
 	{
 		global $g_ado_db;
-		
+
 		settype($p_articleNumber, 'integer');
 		if (is_null($p_templateId)) {
 			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleNumber);
@@ -221,7 +221,7 @@ class ArticleImage extends ArticleAttachment {
 			settype($p_templateId, 'integer');
 		}
 		self::AddFileToArticle($p_gunId, $p_articleNumber, null, true, null, $p_templateId);
-		
+
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
@@ -275,7 +275,7 @@ class ArticleImage extends ArticleAttachment {
 	public static function OnImageDelete($p_gunId)
 	{
 		global $g_ado_db;
-		
+
 		// Get the articles that use this image.
 		$queryStr = "SELECT * FROM ArticleAttachments WHERE fk_file_gunid = '" . $g_ado_db->escape($p_gunId) . "'";
 		$rows = $g_ado_db->GetAll($queryStr);
@@ -297,7 +297,7 @@ class ArticleImage extends ArticleAttachment {
 	public static function GetArticlesThatUseImage($p_gunId, $p_count = false)
 	{
 		global $g_ado_db;
-		
+
 		if ($p_count) {
 			$columnQuery = 'COUNT(*)';
 		} else {
@@ -384,7 +384,7 @@ class ArticleImage extends ArticleAttachment {
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
-        
+
         // validates whether article number was given
         if ($hasArticleNr === false) {
             CampTemplate::singleton()->trigger_error('missed parameter Article '
@@ -412,7 +412,7 @@ class ArticleImage extends ArticleAttachment {
         $countClauseObj->addWhere('ArticleAttachments.fk_file_gunid = Attachments.gunid');
         $selectClauseObj->addWhere("Attachments.type = 'image'");
         $countClauseObj->addWhere("Attachments.type = 'image'");
-        
+
         // sets the order condition if any
         $p_order = array_merge($p_order, self::$s_defaultOrder);
         $order = self::ProcessListOrder($p_order);
@@ -433,7 +433,7 @@ class ArticleImage extends ArticleAttachment {
         	// builds the array of image objects
         	$articleImagesList = array();
         	foreach ($images as $image) {
-        		$imgObj = new Image($image['gunid']);
+        		$imgObj = new Archive_ImageFile($image['gunid']);
         		if ($imgObj->exists()) {
         			$articleImagesList[] = $imgObj;
         		}
@@ -477,8 +477,8 @@ class ArticleImage extends ArticleAttachment {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-    
-    
+
+
     private static function ProcessListOrder($p_order)
     {
         $order = array();

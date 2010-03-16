@@ -44,7 +44,7 @@ class CampGetImage
     /**
      * @var integer $m_resizeWidth
      *      resize width in pixels
-     */ 
+     */
     private $m_resizeWidth = 0;
 
     /**
@@ -60,11 +60,11 @@ class CampGetImage
     private $m_ttl = 0;
 
     private $m_basePath;
-    
+
     private $m_cache_dir = '/image_cache/';
-    
+
     private $m_derivates_dir = '/derivates/';
-    
+
     private $m_fetch_dir = '/fetched/';
 
 
@@ -111,13 +111,13 @@ class CampGetImage
         if ($this->CheckLocalFile($this->m_basePath.$fetched.$this->getLocalFileName())) {
             $this->m_isLocal = true;
             $this->m_imageSource = $this->m_basePath.$fetched.$this->getLocalFileName();
-            
+
         } elseif ($this->CheckRemoteFile($this->m_image->getUrl())) {
             $this->m_isLocal = false;
             $this->m_imageSource = $this->m_image->getUrl();
-            
+
         } else {
-            return false;   
+            return false;
         }
         return true;
     }   // fn setSourcePath
@@ -141,9 +141,9 @@ class CampGetImage
         $fetched = !$this->m_isLocal ? $this->m_fetch_dir : null;
         $derivates = null;
         if ($this->m_ratio < 100) {
-            $derivates = $this->m_derivates_dir.$this->m_ratio.'/';    
-        } 
-        
+            $derivates = $this->m_derivates_dir.$this->m_ratio.'/';
+        }
+
         $path = $this->m_basePath.$this->m_cache_dir.$fetched.$derivates.$this->getLocalFileName();
         return $path;
     }   // fn getTargetPath
@@ -196,8 +196,8 @@ class CampGetImage
         $func = 'imagecreatefrom'.$p_ending;;
         return $func($this->getSourcePath());
     }  // fn ReadImage
-    
-    
+
+
     /**
      * Create an proper file ending for given ContenType
      *
@@ -232,7 +232,7 @@ class CampGetImage
 	        && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
-            
+
         } else {
             $this->imageCacheHandler();
         }
@@ -282,8 +282,8 @@ class CampGetImage
         @imagecopyresampled($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
     }  // fn ResizeImage
-    
-    
+
+
     /**
      * Return an local filename.
      * For the url's, use md5 hash for it.
@@ -312,8 +312,8 @@ class CampGetImage
         if (!$articleImage->exists()) {
         	$this->ExitError('Image not found');
         }
-        $this->m_image = new Image($articleImage->getImageId());
-        
+        $this->m_image = new Archive_ImageFile($articleImage->getImageId());
+
         if (!$this->m_image->exists()) {
             $this->ExitError('Image not found');
         }
@@ -332,16 +332,16 @@ class CampGetImage
      * @return unknown
      */
     private function imageCacheHandler()
-    {       
+    {
         if ($this->m_ttl == 0) {
             // cache disabled
-            return $this->createImage();      
+            return $this->createImage();
         }
 
         if (is_readable($this->getTargetPath())) {
             if ($this->cacheHasExpired()) {
                 // remove cached version
-                $this->removeCachedImage();   
+                $this->removeCachedImage();
             } else {
                 // use the cached image
                 return $this->sendCachedImage();
@@ -358,53 +358,53 @@ class CampGetImage
                 return $this->createImage();
             }
         }
-        
+
         if (!$this->createImage($this->getTargetPath())) {
             // fallback without caching
             return $this->createImage();
         }
     }
-    
+
     private function sendCachedImage()
     {
         header('Campsite-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
         readfile($this->getTargetPath());
     }
-    
+
     private function createImage($p_target=null)
     {
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
         $t = $this->ResizeImage($t);
         $function = 'image'.$func_ending;
-        
+
         if (!$p_target) {
             header('Campsite-Image-Cache: disabled');
             return $function($t);
         } else {
             $function($t, $p_target);
-            return $this->sendCachedImage();  
+            return $this->sendCachedImage();
         }
     }
-    
+
     private function cacheHasExpired()
     {
         if ($this->m_ttl == -1) {
             // infinite cache
-            return false;    
+            return false;
         }
-        
+
         $mtime = filemtime($this->getTargetPath());
-        
+
         if (time() > $mtime + $this->m_ttl) {
-            return true;   
+            return true;
         }
         return false;
     }
-    
+
     private function removeCachedImage()
     {
-        unlink($this->getTargetPath());    
+        unlink($this->getTargetPath());
     }
 
 

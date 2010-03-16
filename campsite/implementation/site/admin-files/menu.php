@@ -55,6 +55,8 @@ $menu_item =& DynMenuItem::Create(getGS('File Archive'), "/$ADMIN/filearchive/in
     array('icon' => sprintf($iconTemplateStr, 'add_mediafile.png'), 'id' => 'file_archive'));
 $menu_content->addItem($menu_item);
 
+$menu_content->addSplit();
+
 $icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();

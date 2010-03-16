@@ -872,7 +872,7 @@ if ($f_edit_mode == "edit") { ?>
 							$formattingErrors = true;
 							continue;
 						}
-						$image = new Image($articleImage->getImageId());
+						$image = new Archive_ImageFile($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
 						unset($fakeTemplateId);
 						if (isset($ratios) && sizeof($ratios) > 0) {

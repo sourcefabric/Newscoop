@@ -79,7 +79,7 @@ class ArticleImageTest extends PHPUnit_Framework_TestCase
         $sql = 'SELECT Images.* FROM Images, ArticleImages WHERE ArticleImages.IdImage = Images.Id AND ArticleImages.NrArticle = 34 ORDER BY Number DESC';
         $images = $g_ado_db->GetAll($sql);
         foreach ($images as $image) {
-            $iList[] = new Image($image['Id']);
+            $iList[] = new Archive_ImageFile($image['Id']);
         }
 
         $this->assertEquals(sizeof($iList), sizeof($imagesList));
