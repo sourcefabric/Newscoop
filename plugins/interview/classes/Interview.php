@@ -8,7 +8,7 @@ class Interview extends DatabaseObject {
      * @var array
      */
     var $m_keyColumnNames = array('interview_id');
-    
+
     var $m_keyIsAutoIncrement = true;
 
     var $m_dbTableName = 'plugin_interview_interviews';
@@ -16,19 +16,19 @@ class Interview extends DatabaseObject {
     var $m_columnNames = array(
         // int - interview id
         'interview_id',
-    
+
         // int - language id
         'fk_language_id',
 
         // int - moderator user id
         'fk_moderator_user_id',
-        
+
         // int - guest user id
         'fk_guest_user_id',
-             
+
         // string - title in given language
         'title',
-        
+
         // boolean - the id of campsite image to access logo and thumbnail
         'fk_image_id',
 
@@ -40,19 +40,19 @@ class Interview extends DatabaseObject {
 
         // datetime - when does interview start
         'interview_begin',
-        
+
         // datetime - when does interview end
         'interview_end',
-        
+
         // datetime - questions start
         'questions_begin',
-        
+
         // datetime - questions end
         'questions_end',
-        
+
         // int - question max quantity
         'questions_limit',
-        
+
         // string - draft, published
         'status',
 
@@ -61,30 +61,30 @@ class Interview extends DatabaseObject {
 
         // text - email subject
         'invitation_subject',
-        
+
         // text - template to build message
         'invitation_template_guest',
-        
+
         // text - template to build message
         'invitation_template_questioneer',
 
         // datetime
         'guest_invitation_sent',
-        
+
         // datetime
         'questioneer_invitation_sent',
-        
+
         // string
         'invitation_password',
-        
+
         // int - custom list position
         'position',
-        
+
         // timestamp - last_modified
         'last_modified'
         );
-        
-    
+
+
     /**
      * Construct by passing in the primary key to access the interview in
      * the database.
@@ -95,9 +95,9 @@ class Interview extends DatabaseObject {
     public function __construct($p_interview_id = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        
+
         $this->m_data['interview_id'] = $p_interview_id;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -109,8 +109,8 @@ class Interview extends DatabaseObject {
      * @param array $p_values
      */
     private function __create($p_values = null) { return parent::create($p_values); }
-    
-    
+
+
     /**
      * Create an interview in the database. Use the SET functions to
      * change individual values.
@@ -122,7 +122,7 @@ class Interview extends DatabaseObject {
      * @return void
      */
     public function create($p_fk_language_id, $p_fk_moderator_user_id, $p_fk_guest_user_id,
-                           $p_title, $p_fk_image_id, 
+                           $p_title, $p_fk_image_id,
                            $p_description_short, $p_description,
                            $p_interview_begin, $p_interview_end,
                            $p_questions_begin, $p_questions_end,
@@ -130,13 +130,13 @@ class Interview extends DatabaseObject {
                            $p_status = 'draft')
         {
         global $g_ado_db;
-       
-        /* 
+
+        /*
         if (!strlen($p_title) || !strlen($p_question) || !$p_date_begin || !$p_date_end || !$p_nr_of_answers) {
-            return false;   
+            return false;
         }
         */
-        
+
         // Create the record
         $values = array(
             'fk_language_id' => $p_fk_language_id,
@@ -151,7 +151,7 @@ class Interview extends DatabaseObject {
             'questions_begin' => $p_questions_begin,
             'questions_end' => $p_questions_end,
             'questions_limit' => $p_questions_limit,
-            'status' => $p_status 
+            'status' => $p_status
         );
 
 
@@ -159,16 +159,16 @@ class Interview extends DatabaseObject {
         if (!$success) {
             return false;
         }
-        
+
         $query = "  SELECT  MAX(position) + 1 AS next
                     FROM    {$this->m_dbTableName}";
         $max = $g_ado_db->getRow($query);
-        
+
         // Set position
         $query = "  UPDATE  {$this->m_dbTableName}
                     SET     position = {$max['next']}
                     WHERE   interview_id = {$this->m_data['interview_id']}";
-        $res = $g_ado_db->execute($query); 
+        $res = $g_ado_db->execute($query);
 
         /*
         if (function_exists("camp_load_translation_strings")) {
@@ -177,12 +177,12 @@ class Interview extends DatabaseObject {
         $logtext = getGS('Interview Id $1 created.', $this->m_data['IdInterview']);
         Log::Message($logtext, null, 31);
         */
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return true;
     } // fn create
 
-    
+
     /**
      * Change the iterview position in the order sequence
      * relative to its current position.
@@ -210,12 +210,12 @@ class Interview extends DatabaseObject {
                         ORDER BY position $order
                         LIMIT ".($p_spacesToMove-1).", 1";
         $destRow = $g_ado_db->GetRow($queryStr);
-        
+
         // Shift all items one space between the source and destination item.
         $operator = ($p_direction == 'up') ? '+' : '-';
         $minItemOrder = min($destRow['position'], $this->m_data['position']);
         $maxItemOrder = max($destRow['position'], $this->m_data['position']);
-        $queryStr2 = "  UPDATE  {$this->m_dbTableName} 
+        $queryStr2 = "  UPDATE  {$this->m_dbTableName}
                         SET     position = position $operator 1
                         WHERE   position >= $minItemOrder
                                 AND position <= $maxItemOrder";
@@ -227,7 +227,7 @@ class Interview extends DatabaseObject {
                         WHERE   interview_id = {$this->m_data['interview_id']}";
         $g_ado_db->Execute($queryStr3);
 
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         $this->fetch();
         return true;
@@ -246,7 +246,7 @@ class Interview extends DatabaseObject {
         // this one to.
         $queryStr = "   SELECT  position, interview_id
                         FROM    {$this->m_dbTableName}
-                        ORDER BY position ASC 
+                        ORDER BY position ASC
                         LIMIT   ".($p_moveToPosition - 1).', 1';
         $destRow = $g_ado_db->GetRow($queryStr);
         if (!$destRow) {
@@ -278,32 +278,32 @@ class Interview extends DatabaseObject {
                         WHERE   interview_id = {$this->m_data['interview_id']}";
         $g_ado_db->Execute($queryStr);
 
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         $this->fetch();
         return true;
     } // fn positionAbsolute
-    
-    
+
+
     /**
      * Delete interview from database.
      *
      * @return boolean
      */
     public function delete()
-    {    
+    {
         global $g_ado_db;
-           
+
         // Delete from InterviewItems table
         InterviewItem::OnInterviewDelete($this->m_data['interview_id']);
-        
+
         // reduce order of all following items minus 1
         $currItemOrder = $this->getProperty('position');
         $queryStr = "   UPDATE  {$this->m_dbTableName}
                         SET     position = position - 1
                         WHERE   position > $currItemOrder";
         $g_ado_db->Execute($queryStr);
-        
+
         // finally delete from main table
         $deleted = parent::delete();
 
@@ -320,11 +320,11 @@ class Interview extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $deleted;
     } // fn delete
-    
+
     /**
      * Overload setProperty() to clear cache on updates.
      *
@@ -334,9 +334,9 @@ class Interview extends DatabaseObject {
     public function setProperty($p_name, $p_value)
     {
         $return = parent::setProperty($p_name, $p_value);
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        return $return;   
+        return $return;
     }
 
     /**
@@ -346,35 +346,35 @@ class Interview extends DatabaseObject {
      * @return string
      */
     static private function GetQuery($p_fk_language = null, array $p_order_by = null)
-    {   
+    {
         $Interview = new Interview();
-        
+
         if (!empty($p_fk_language)) {
-            $query = "SELECT    interview_id  
+            $query = "SELECT    interview_id
                       FROM      {$Interview->m_dbTableName}
-                      WHERE     fk_language_id = $p_fk_language ";  
+                      WHERE     fk_language_id = $p_fk_language ";
         } else {
             $query = "SELECT    interview_id
                       FROM      {$Interview->m_dbTableName} ";
         }
-        
+
         if (!count($p_order_by)) {
-            $p_order_by = array('interview_id' => 'DESC');   
+            $p_order_by = array('interview_id' => 'DESC');
         }
-        
+
         foreach ($p_order_by as $col => $dir) {
             if (in_array($col, $Interview->m_columnNames)) {
-                $order .= "$col $dir , ";   
+                $order .= "$col $dir , ";
             }
         }
-        
-        $query .= "ORDER BY ".substr($order, 0, -2);   
-        
+
+        $query .= "ORDER BY ".substr($order, 0, -2);
+
         return $query;
     }
-    
+
     /**
-     * Get an array of interview objects 
+     * Get an array of interview objects
      * You may specify the language
      *
      * @param unknown_type $p_fk_language_id
@@ -385,29 +385,29 @@ class Interview extends DatabaseObject {
     static public function GetInterviews($p_fk_language_id = null, $p_offset = null, $p_limit = null, array $p_order_by = null)
     {
         global $g_ado_db;
-        
+
         if (empty($p_offset)) {
-            $p_offset = 0;   
+            $p_offset = 0;
         }
-        
+
         if (empty($p_limit)) {
-            $p_limit = 20;   
+            $p_limit = 20;
         }
-        
+
         $query = self::GetQuery($p_fk_language_id, $p_order_by);
-        
-        $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);		
+
+        $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);
 		$interviews = array();
-		
-		while ($row = $res->FetchRow()) { 
+
+		while ($row = $res->FetchRow()) {
 		    $tmp_interview = new Interview($row['interview_id']);
-            $interviews[] = $tmp_interview;  
+            $interviews[] = $tmp_interview;
 		}
-		
+
 		return $interviews;
     }
 
-    
+
     /**
      * Get the count for available interviews
      *
@@ -416,14 +416,14 @@ class Interview extends DatabaseObject {
     public static function countInterviews()
     {
         global $g_ado_db;;
-        
-        $query   = self::getQuery(); 
+
+        $query   = self::getQuery();
         $res     = $g_ado_db->Execute($query);
-        
-        return $res->RecordCount();  
+
+        return $res->RecordCount();
     }
-    
-        
+
+
     /**
      * Get answer object for this interview by given number
      *
@@ -433,10 +433,10 @@ class Interview extends DatabaseObject {
     public function getInterviewItems()
     {
         $InterviewItems = InterviewItem::GetInterviewItems($this->m_data['interview_id']);
-        
-        return $InterviewItems;   
+
+        return $InterviewItems;
     }
-    
+
     /**
      * Get the interview id
      *
@@ -444,9 +444,9 @@ class Interview extends DatabaseObject {
      */
     public function getId()
     {
-        return $this->getProperty('interview_id');   
+        return $this->getProperty('interview_id');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -454,9 +454,9 @@ class Interview extends DatabaseObject {
      */
     public function getName()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -464,9 +464,9 @@ class Interview extends DatabaseObject {
      */
     public function getTitle()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
-    
+
     /**
      * Get the language id
      *
@@ -474,9 +474,9 @@ class Interview extends DatabaseObject {
      */
     public function getLanguageId()
     {
-        return $this->getProperty('fk_language_id');   
+        return $this->getProperty('fk_language_id');
     }
-    
+
     /**
      * Get the english language name
      *
@@ -485,53 +485,53 @@ class Interview extends DatabaseObject {
     public function getLanguageName()
     {
         $language = new Language($this->m_data['fk_language_id']);
-        
-        return $language->getName(); 
+
+        return $language->getName();
     }
-    
+
    public function getForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
-              
+
         $mask = self::getFormMask();
 
         if (is_array($p_add_hidden_vars)) {
-            foreach ($p_add_hidden_vars as $k => $v) {       
+            foreach ($p_add_hidden_vars as $k => $v) {
                 $mask[] = array(
                     'element'   => $k,
                     'type'      => 'hidden',
                     'constant'  => $v
-                );   
-            } 
+                );
+            }
         }
-        
+
         $form =& new html_QuickForm('interview', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask); 
-        
+        FormProcessor::parseArr2Form(&$form, &$mask);
+
         if ($p_html) {
-            return $form->toHTML();    
+            return $form->toHTML();
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
-            
+
             $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
-            
+
             return $renderer->toArray();
-        } 
+        }
     }
-    
+
     private function getFormMask()
     {
         global $Campsite;
-        
+
         $data = $this->m_data;
         $exists = $this->exists();
-       
+
         if (!empty($data['fk_image_id'])) {
-            $Image = new Image($data['fk_image_id']);
-            $image_description = $Image->getDescription();    
+            $Image = new Archive_ImageFile($data['fk_image_id']);
+            $image_description = $Image->getDescription();
         }
-         
+
         $mask = array(
             array(
                 'element'   => 'action',
@@ -623,7 +623,7 @@ class Interview extends DatabaseObject {
                 'element'   => 'f_image_delete',
                 'type'      => 'checkbox',
                 'label'     => getGS('Delete Image')
-            ),            
+            ),
             array(
                 'element'   => 'f_description_short',
                 'type'      => 'text',
@@ -637,7 +637,7 @@ class Interview extends DatabaseObject {
                 'label'     => getGS('Description'),
                 'default'   => $data['description'],
                 'required'  => true,
-                'attributes'=> array('cols' => 40, 'rows' => 5) 
+                'attributes'=> array('cols' => 40, 'rows' => 5)
             ),
             array(
                 'element'   => 'f_interview_begin',
@@ -645,7 +645,7 @@ class Interview extends DatabaseObject {
                 'default'   => substr($data['interview_begin'], 0, 16),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_interview_begin', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true          
+                'groupit'   => true
             ),
             array(
                 'element'   => 'f_calendar_interview_begin',
@@ -668,7 +668,7 @@ class Interview extends DatabaseObject {
                         });
                     </script>',
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_interview_begin' , 'f_calendar_interview_begin'),
                 'label'     => getGS('Interview Begin'),
@@ -679,7 +679,7 @@ class Interview extends DatabaseObject {
                 'default'   => substr($data['interview_end'], 0, 16),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_interview_end', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true          
+                'groupit'   => true
             ),
             array(
                 'element'   => 'f_calendar_interview_end',
@@ -702,7 +702,7 @@ class Interview extends DatabaseObject {
                         });
                     </script>',
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_interview_end' , 'f_calendar_interview_end'),
                 'label'     => getGS('Interview End'),
@@ -713,7 +713,7 @@ class Interview extends DatabaseObject {
                 'default'   => substr($data['questions_begin'], 0, 16),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_questions_begin', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true         
+                'groupit'   => true
             ),
             array(
                 'element'   => 'f_calendar_questions_begin',
@@ -736,7 +736,7 @@ class Interview extends DatabaseObject {
                         });
                     </script>',
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_questions_begin' , 'f_calendar_questions_begin'),
                 'label'     => getGS('Questions Begin'),
@@ -747,7 +747,7 @@ class Interview extends DatabaseObject {
                 'default'   => substr($data['questions_end'], 0, 16),
                 'required'  => true,
                 'attributes'    => array('id' => 'f_questions_end', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true          
+                'groupit'   => true
             ),
             array(
                 'element'   => 'f_calendar_questions_end',
@@ -770,7 +770,7 @@ class Interview extends DatabaseObject {
                         });
                     </script>',
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_questions_end' , 'f_calendar_questions_end'),
                 'label'     => getGS('Questions End'),
@@ -785,8 +785,8 @@ class Interview extends DatabaseObject {
                 'element'   => 'f_status',
                 'type'      => 'select',
                 'options'   => array(
-                    'draft'     => getGS('draft'), 
-                    'pending'   => getGS('pending'), 
+                    'draft'     => getGS('draft'),
+                    'pending'   => getGS('pending'),
                     'published' => getGS('published'),
                     'rejected'   => getGS('rejected')
                 ),
@@ -811,32 +811,32 @@ class Interview extends DatabaseObject {
                 'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_reset', 'f_cancel', 'f_submit')
-            )       
+            )
         );
-        
-        return $mask;   
+
+        return $mask;
     }
-    
+
     public function store($p_user_id = null)
     {
         require_once 'HTML/QuickForm.php';
-              
-        $mask = self::getFormMask($p_owner, $p_admin);        
+
+        $mask = self::getFormMask($p_owner, $p_admin);
         $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask);   
-           
+        FormProcessor::parseArr2Form(&$form, &$mask);
+
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-                         
+
             $image_id = $this->getProperty('fk_image_id');
-            
+
             if ($data['f_image_delete'] && $image_id) {
-                $Image = new Image($this->getProperty('fk_image_id'));
+                $Image = new Archive_ImageFile($this->getProperty('fk_image_id'));
                 $Image->delete();
-                $image_id = null;    
+                $image_id = null;
             } else {
                 $file = $form->getElementValue('f_image');
                 if (strlen($file['name'])) {
@@ -845,53 +845,53 @@ class Interview extends DatabaseObject {
                     );
                     $Image = Image::OnImageUpload($file, $attributes, $p_user_id, !empty($image_id) ? $image_id : null);
                     if (is_a($Image, 'Image')) {
-                        $image_id = $Image->getProperty('Id');   
+                        $image_id = $Image->getProperty('Id');
                     } else {
-                        return false;    
+                        return false;
                     }
                 }
             }
-            
+
             // may have to create new user account for guest
             foreach (array('guest') as $type) {
                 if ($data['f_'.$type.'_user_id'] == '__new__') {
                     global $ADMIN_DIR;
                     require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
-                    
+
                     $passwd = substr(sha1(rand()), 0, 10);
-                    
+
                     $fieldValues = array(
                         'UName' => $data['f_'.$type.'_new_user_login'],
                         'Name'  => $data['f_'.$type.'_new_user_login'].' (interview guest)',
                         'EMail' => $data['f_'.$type.'_new_user_email'],
                         'passwd' => $passwd,
                         'Reader' => 'N'
-                    ); 
+                    );
                     // create user
                     $editUser = new User();
                     $phorumUser = new Phorum_user();
-                    
+
                     if ($phorumUser->UserNameExists($fieldValues['UName']) || User::UserNameExists($fieldValues['UName'])) {
-                        return false;   
+                        return false;
                     }
-                    
+
                     if (!$editUser->create($fieldValues)) {
-                        return false;   
+                        return false;
                     }
-                    
+
                 	$editUser->setUserType('Staff');
                 	$editUser->setPermission('plugin_interview_'.$type, true);
-                	
+
                 	$phorumUser->create($fieldValues['UName'], $passwd, $fieldValues['EMail'], $editUser->getUserId());
-                	
+
                     $userid[$type] = $editUser->getUserId();
                 } else {
-                     $userid[$type] = $data['f_'.$type.'_user_id'];   
+                     $userid[$type] = $data['f_'.$type.'_user_id'];
                 }
             }
-            
+
             if ($this->exists()) {
-                // edit existing interview    
+                // edit existing interview
                 $this->setProperty('fk_language_id', $data['f_language_id']);
                 $this->setProperty('title', $data['f_title']);
                 $this->setProperty('fk_image_id', $image_id);
@@ -905,103 +905,103 @@ class Interview extends DatabaseObject {
                 $this->setProperty('status', $data['f_status']);
                 $this->setProperty('fk_moderator_user_id', $data['f_moderator_user_id']);
                 $this->setProperty('fk_guest_user_id', $userid['guest']);
-                
+
                 if (strlen($passwd)) {
                     $this->setProperty('invitation_password', $passwd);
                 }
-                
+
                 return true;
-                
+
             } else {
                 // create new interview
                 $created = $this->create(
-                    $data['f_language_id'], 
-                    $data['f_moderator_user_id'], 
+                    $data['f_language_id'],
+                    $data['f_moderator_user_id'],
                     $userid['guest'],
-                    $data['f_title'], 
-                    $image_id, 
-                    $data['f_description_short'], 
+                    $data['f_title'],
+                    $image_id,
+                    $data['f_description_short'],
                     $data['f_description'],
-                    $data['f_interview_begin'], 
+                    $data['f_interview_begin'],
                     $data['f_interview_end'],
                     $data['f_questions_begin'],
                     $data['f_questions_end'],
                     $data['f_questions_limit'],
                     $data['f_status']
                 );
-                
+
                 if (strlen($passwd)) {
                     $this->setProperty('invitation_password', $passwd);
                 }
-                
+
                 return $created;
-            }            
+            }
         }
         return false;
     }
-    
+
     public function getInvitationForm($p_target='index.php', $p_add_hidden_vars=array(), $p_html=false, $p_userid)
     {
         require_once 'HTML/QuickForm.php';
-              
+
         $mask = self::getInvitationFormMask($_REQUEST['f_preview'], $p_userid);
 
         if (is_array($p_add_hidden_vars)) {
-            foreach ($p_add_hidden_vars as $k => $v) {       
+            foreach ($p_add_hidden_vars as $k => $v) {
                 $mask[] = array(
                     'element'   => $k,
                     'type'      => 'hidden',
                     'constant'  => $v
-                );   
-            } 
+                );
+            }
         }
-        
+
         $form =& new html_QuickForm('invitation', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask); 
-        
+        FormProcessor::parseArr2Form(&$form, &$mask);
+
         if ($p_html) {
-            return $form->toHTML();    
+            return $form->toHTML();
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
-            
+
             $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
-            
+
             return $renderer->toArray();
-        } 
+        }
     }
-    
-    
+
+
     function smarty_get_guest_template($p_void, &$tpl_source, &$smarty_obj)
     {
         $tpl_source = $this->getProperty('invitation_template_guest');
-        
+
         return true;
     }
-    
+
     function smarty_get_questioneer_template($p_void, &$tpl_source, &$smarty_obj)
     {
         $tpl_source = $this->getProperty('invitation_template_questioneer');
-        
+
         return true;
     }
-    
+
     function smarty_get_timestamp($tpl_name, &$tpl_timestamp, &$smarty_obj)
     {
         $tpl_timestamp = time();
         return true;
     }
-    
+
     function smarty_get_secure($tpl_name, &$smarty_obj)
     {
         return true;
     }
-    
+
     function smarty_get_trusted($tpl_name, &$smarty_obj)
     {
-    
+
     }
-    
+
     private function smarty_parse_inviation_template(MetaInterview $p_metainterview, MetaUser $p_metauser, $p_type)
     {
         $smarty = CampTemplate::singleton();
@@ -1010,8 +1010,8 @@ class Interview extends DatabaseObject {
         $campsite->user = $p_metauser;
         $campsite->WEBSITE_URL = $GLOBALS['Campsite']['WEBSITE_URL'];
         $smarty->assign_by_ref('campsite', $campsite);
-        
-        $smarty->register_resource("interview", 
+
+        $smarty->register_resource("interview",
             array(
                 array(&$this, "smarty_get_{$p_type}_template"),
                 array(&$this, "smarty_get_timestamp"),
@@ -1019,35 +1019,35 @@ class Interview extends DatabaseObject {
                 array(&$this, "smarty_get_trusted")
             )
         );
-       
-        // need to deactivate the error reporting for parsing the template which could have errors 
+
+        // need to deactivate the error reporting for parsing the template which could have errors
         $old_error_handler = set_error_handler(array('Interview' , 'my_error_handler'));
         $old_error_level = error_reporting();
         $parsed = $smarty->fetch("interview:void");
         set_error_handler($old_error_handler, $old_error_level);
-        
-        return $parsed;   
+
+        return $parsed;
     }
-    
+
     public function my_error_handler()
     {
-        // do nothing   
+        // do nothing
     }
-    
+
     private function getInvitationFormMask($p_preview = false, &$p_userid = null)
     {
         global $Campsite;
-        
+
         $data = $this->m_data;
-        
+
         if ($p_preview) {
-            
-            $MetaInterview = new MetaInterview($this->getId()); 
-            $MetaUser = new MetaUser($p_userid);           
+
+            $MetaInterview = new MetaInterview($this->getId());
+            $MetaUser = new MetaUser($p_userid);
             $guest_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'guest');
             $questioneer_text = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'questioneer');
         }
-         
+
         $mask = array(
             array(
                     'element'   => 'f_interview_id',
@@ -1121,7 +1121,7 @@ class Interview extends DatabaseObject {
                                '        theme_advanced_buttons3 : "" '.
                                '     });'.
                                '</script>',
-                'type'      => 'static'           
+                'type'      => 'static'
             ),
             isset($p_preview) ? null :
                 array(
@@ -1184,101 +1184,101 @@ class Interview extends DatabaseObject {
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
             ),
-            isset($p_preview) ? 
+            isset($p_preview) ?
                 array(
                     'group'     => array('f_cancel', 'f_edit', 'f_invite_now')
-                )    
+                )
                 :
                 array(
                     'group'     => array('f_cancel', 'f_reset', 'f_preview')
-                )      
+                )
         );
-        
-        return $mask;   
+
+        return $mask;
     }
-    
+
     public function storeInvitation()
     {
         require_once 'HTML/QuickForm.php';
-              
-        $mask = self::getInvitationFormMask();        
+
+        $mask = self::getInvitationFormMask();
         $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask);   
+        FormProcessor::parseArr2Form(&$form, &$mask);
 
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-            
+
             $data['f_invitation_template_guest'] = preg_replace_callback('/(%7B%7B.*%7D%7D)/u', create_function('$input', 'return urldecode($input[0]);'), $data['f_invitation_template_guest']);
             $data['f_invitation_template_guest'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template_guest']);
             $data['f_invitation_template_questioneer'] = preg_replace_callback('/(%7B%7B.*%7D%7D)/u', create_function('$input', 'return urldecode($input[0]);'), $data['f_invitation_template_questioneer']);
             $data['f_invitation_template_questioneer'] = preg_replace_callback('/{{[^}]*}}/', create_function('$input', 'return html_entity_decode($input[0]);'), $data['f_invitation_template_questioneer']);
 
             $this->setProperty('invitation_sender', $data['f_invitation_sender']);
-            $this->setProperty('invitation_subject', $data['f_invitation_subject']);            
+            $this->setProperty('invitation_subject', $data['f_invitation_subject']);
             $this->setProperty('invitation_template_guest', $data['f_invitation_template_guest']);
             $this->setProperty('invitation_template_questioneer', $data['f_invitation_template_questioneer']);
-            
+
             return true;
         }
     }
-    
+
     public function getQuestioneersWantInvitation()
     {
         $Questioneers = array();
-        
+
         foreach (User::GetUsers() as $User) {
             if ($User->hasPermission('plugin_interview_notify')) {
-                $Questioneer[] = $User; 
+                $Questioneer[] = $User;
             }
         }
-        return $Questioneer;  
+        return $Questioneer;
     }
-    
+
     public function sendGuestInvitation()
-    {   
+    {
         $MetaInterview = new MetaInterview($this->getId());
 
         $headers = array(
             'From' => $this->getProperty('invitation_sender'),
-            'Subject' =>  $this->getProperty('invitation_subject') 
+            'Subject' =>  $this->getProperty('invitation_subject')
         );
-        
-        // invite the guest       
+
+        // invite the guest
         $MetaUser = new MetaUser($this->getProperty('fk_guest_user_id'));
-         
+
         $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'guest');
         $parsed = str_replace("\r\n",  "\n", $parsed);
         #$parsed = str_replace("\n",  "\r\n", $parsed);
-                    
+
         CampMail::MailMime($MetaUser->email, null, $parsed, $headers);
-        
+
         $this->setProperty('guest_invitation_sent', strftime('%Y-%m-%d %H:%M:%S'));
     }
-    
+
     public function sendQuestioneerInvitation()
-    {   
+    {
         $MetaInterview = new MetaInterview($this->getId());
 
         $headers = array(
             'From' => $this->getProperty('invitation_sender'),
-            'Subject' =>  $this->getProperty('invitation_subject') 
+            'Subject' =>  $this->getProperty('invitation_subject')
         );
-            
+
         // invite questioneers
         foreach (self::getQuestioneersWantInvitation() as $Questioneer) {
             $MetaUser = new MetaUser($Questioneer->getUserId());
-             
+
             $parsed = $this->smarty_parse_inviation_template($MetaInterview, $MetaUser, 'questioneer');
             $parsed = str_replace("\r\n",  "\n", $parsed);
             #$parsed = str_replace("\n",  "\r\n", $parsed);
-                        
+
             CampMail::MailMime($Questioneer->getEmail(), null, $parsed, $headers);
         }
         $this->setProperty('questioneer_invitation_sent', strftime('%Y-%m-%d %H:%M:%S'));
-    }    
-    
+    }
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an issue list based on the given parameters.
      *
@@ -1300,16 +1300,16 @@ class Interview extends DatabaseObject {
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
-        
+
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
@@ -1318,13 +1318,13 @@ class Interview extends DatabaseObject {
             if (empty($comparisonOperation)) {
                 continue;
             }
-            
+
             $whereCondition = $comparisonOperation['left'] . ' '
             . $comparisonOperation['symbol'] . " '"
             . $comparisonOperation['right'] . "' ";
             $selectClauseObj->addWhere($whereCondition);
         }
-        
+
         // sets the columns to be fetched
         $tmpInterview = new Interview();
 		$columnNames = $tmpInterview->getColumnNames(true);
@@ -1336,7 +1336,7 @@ class Interview extends DatabaseObject {
         $mainTblName = $tmpInterview->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpInterview);
-                
+
         if (is_array($p_order)) {
             $order = self::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -1344,16 +1344,16 @@ class Interview extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-       
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get tlimited rows
         $interviewRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
-        
+
         // builds the array of interview objects
         $interviewsList = array();
         while ($interview = $interviewRes->FetchRow()) {
@@ -1365,7 +1365,7 @@ class Interview extends DatabaseObject {
 
         return $interviewsList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -1447,27 +1447,27 @@ class Interview extends DatabaseObject {
         }
         return $order;
     }
-       
+
     public function getUsersHavePermission($p_permission)
     {
         $users = array();
-        
+
         foreach (User::getUsers() as $User) {
             if ($User->hasPermission($p_permission)) {
-                $users[$User->m_data['Id']] = $User->m_data['Name'];   
-            }       
+                $users[$User->m_data['Id']] = $User->m_data['Name'];
+            }
         }
         return $users;
-               
+
     }
-    
+
     public static function GetCampLanguagesList()
     {
         foreach (Language::GetLanguages() as $Language) {
-            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+            $languageList[$Language->getLanguageId()] = $Language->getNativeName();
         }
         asort($languageList);
-        return $languageList;   
+        return $languageList;
     }
 
 } // class Interview
