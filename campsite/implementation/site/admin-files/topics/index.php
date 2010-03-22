@@ -24,6 +24,8 @@ $crumbs[] = array(getGS("Topics"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
+
+camp_html_display_msgs("0.5em", 0);
 ?>
 <script>
 function checkAllLang()
@@ -132,17 +134,35 @@ var topic_ids = new Array;
 <TR class="table_list_header">
 	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
+	<TD ALIGN="center" VALIGN="TOP" style="padding-left: 10px; padding-right: 10px;"><?php  putGS("Order"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP" style="padding-left: 10px; padding-right: 10px;"><?php  putGS("Language"); ?></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Topic"); ?></TD>
 	<TD ALIGN="center" VALIGN="TOP"></TD>
 </TR>
 
 <?php
+
+$counter = 0;
 $color= 0;
 $isFirstTopic = true;
+$aTopicOrder = array();
+
+//$t = new Topic(1);
+//$t->fetch();
+//var_dump($topics[0]);
+//die;
 foreach ($topics as $topicPath) {
 	$currentTopic = camp_array_peek($topicPath, false, -1);
-	$topicTranslations = $currentTopic->getTranslations();
+
+	$parentId = $currentTopic->getParentId();
+	if (!isset($aTopicOrder[$parentId])) {
+	    $sql = 'SELECT DISTINCT(TopicOrder) FROM Topics'
+	        .' WHERE ParentId = '.$parentId
+	        .' ORDER BY TopicOrder ASC, LanguageId ASC';
+	    $aTopicOrder[$parentId] = $g_ado_db->GetCol($sql);
+    }
+	
+    $topicTranslations = $currentTopic->getTranslations();
 	$isFirstTranslation = true;
 	foreach ($topicTranslations as $topicLanguageId => $topicName) {
 		if (!in_array($topicLanguageId, $f_show_languages)) {
@@ -161,32 +181,103 @@ foreach ($topics as $topicPath) {
 		}
 		?>
 		</td>
+		
+		<?php if ($isFirstTranslation && count($aTopicOrder[$parentId]) > 1) { ?>
+		<TD ALIGN="right" valign="middle" NOWRAP <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
+		<?php
+		    $topicOrder = $currentTopic->getProperty('TopicOrder');
+		    $topicPosition =  array_search($topicOrder, $aTopicOrder[$parentId]);
+	    ?>
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td width="18px">
+					<?php if ($topicPosition > 0) { ?>
+						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+					<?php } ?>
+				</td>
+				<td width="20px">
+					<?php if ($topicOrder < camp_array_peek($aTopicOrder[$parentId], false, -1)) { ?>
+						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+					<?php } ?>
+				</td>
+
+				<td>
+					<select name="f_position_<?php p($counter);?>" onChange="positionValue = this.options[this.selectedIndex].value; url = '/<?php p($ADMIN);?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId());?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
+					<?php
+					for ($j = 0; $j < count($aTopicOrder[$parentId]); $j++) {
+						if ($topicPosition == $j) {
+							echo "<option value=\"{$aTopicOrder[$parentId][$j]}\" selected>" . ($j + 1) . "</option>\n";
+						} else {
+							echo "<option value=\"{$aTopicOrder[$parentId][$j]}\">" . ($j + 1) . "</option>\n";
+						}
+					}
+					?>
+					</select>
+				</td>
+
+			</tr>
+			</table>
+		</TD>
+		<?php } else { ?>
+			<TD ALIGN="right" valign="middle" NOWRAP <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>&nbsp;</TD>
+		<?php } ?>
 		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
 			<?php
 			$topicLanguage = new Language($topicLanguageId);
 			p($topicLanguage->getCode());
 			?>
 		</TD>
+
 		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
 			<?php
-			$printTopic = array();
-			// pop off the last topic because we want to make it a hyperlink.
-			$lastTopic = array_pop($topicPath);
-			foreach ($topicPath as $topicId => $topic) {
-				$translations = $topic->getTranslations();
-				if (isset($translations[$topicLanguageId])) {
-					$printTopic[] = $translations[$topicLanguageId];
-				} else {
-					$printTopic[] = "-----";
-				}
+			// Append decoration of tree
+			//			
+			// It's hasn't got sense to describe relations between root topics
+		    if ($parentId != 0) {
+		        // Drawing parent parts
+			    foreach ($topicPath as $topicId => $topic) {
+			        // Skip root topic and current topic
+			        if ($topic->getParentId() == 0 || $topicId == $currentTopic->getTopicId()) {
+			            continue;
+			        }
+			        
+			        // Is last?
+			        $parentTopicPosition = array_search($topic->getProperty('TopicOrder'), $aTopicOrder[$topic->getParentId()]);
+			        $lastTopicOrder = camp_array_peek($aTopicOrder[$topic->getParentId()], false, -1);
+			        $isLast = $aTopicOrder[$topic->getParentId()][$parentTopicPosition] == $lastTopicOrder;
+			        
+		            if (!$isLast && count($aTopicOrder[$topic->getParentId()]) > 1) {
+		                // If previous topic wasn't last...
+		                echo '<img alt="" src="/css/tree-I.png">';
+			        } else {
+			            echo '<img alt="" src="/css/tree-blank.png">';
+			        }
+			    }
+
+			    // Drawing for current topic
+			    $lastTopicOrder = camp_array_peek($aTopicOrder[$parentId], false, -1);
+			    $isLast = ($aTopicOrder[$parentId][$topicPosition] == $lastTopicOrder);
+			    if ($isFirstTranslation) {
+    			    if ($isLast || count($aTopicOrder[$parentId]) == 1) {
+    			        // If last or only
+    			        echo '<img alt="" src="/css/tree-L.png">';
+    			    } else {
+    			        // If non-last and non-only
+    			        echo '<img alt="" src="/css/tree-T.png">';
+    			    }
+			    } else {
+			        if (!$isLast) {
+    			        // Non-first translations should be marked with I
+        			    echo '<img alt="" src="/css/tree-I.png">';
+			        } else {
+			            // Non-first translations should be ident
+			            // if topic in branch is last
+			            echo '<img alt="" src="/css/tree-blank.png">';
+			        }
+    			}
 			}
-			// put it back on for other translations to use it.
-			array_push($topicPath, $lastTopic);
-			if (count($topicPath) > 1) {
-				echo " / ";
-			}
-			echo htmlspecialchars(implode(" / ", $printTopic));
-			echo " / <a href='/$ADMIN/topics/edit.php"
+
+			echo " <a href='/$ADMIN/topics/edit.php"
 				 ."?f_topic_edit_id=".$currentTopic->getTopicId()
 				 ."&f_topic_language_id=$topicLanguageId'>"
 				.htmlspecialchars($topicName)."</a>";
@@ -199,7 +290,7 @@ foreach ($topics as $topicPath) {
 
 	    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>" style="display: none;">
 	    	<td colspan="2"></td>
-	    	<td colspan="3">
+	    	<td colspan="4">
 	    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
 	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
@@ -230,7 +321,7 @@ foreach ($topics as $topicPath) {
 	?>
     <tr id="translate_topic_<?php p($currentTopic->getTopicId()); ?>" style="display: none;">
     	<td colspan="2"></td>
-    	<td colspan="3">
+    	<td colspan="4">
     		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
     		<input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
@@ -266,6 +357,7 @@ foreach ($topics as $topicPath) {
 		</script>
     <?php
     $isFirstTopic = false;
+    $counter++;
 }
 ?>
 <?php } ?>

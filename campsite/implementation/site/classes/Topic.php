@@ -15,7 +15,7 @@ class Topic extends DatabaseObject {
 
 	var $m_dbTableName = 'Topics';
 
-	var $m_columnNames = array('Id', 'LanguageId', 'Name', 'ParentId');
+	var $m_columnNames = array('Id', 'LanguageId', 'Name', 'ParentId', 'TopicOrder');
 
 	var $m_hasSubtopics = null;
 
@@ -76,6 +76,7 @@ class Topic extends DatabaseObject {
 				$row = array_pop($rows);
 				$this->m_data['Id'] = $row['Id'];
 				$this->m_data['ParentId'] = $row['ParentId'];
+				$this->m_data['TopicOrder'] = $row['TopicOrder'];
 				$this->m_names[$row['LanguageId']] = $row['Name'];
 				foreach ($rows as $row) {
 					$this->m_names[$row['LanguageId']] = $row['Name'];
@@ -113,6 +114,20 @@ class Topic extends DatabaseObject {
 		if (isset($p_values['Name'])) {
 			$this->m_names[$this->m_data['LanguageId']] = $p_values['Name'];
 		}
+		
+		// compute topic order number
+		$queryStr = "SELECT MIN(TopicOrder) AS min FROM Topics";
+		$topicOrder = $g_ado_db->GetOne($queryStr) - 1;
+		if ($topicOrder < 0) {
+			$topicOrder = $this->m_data['Id'];
+		}
+		if ($topicOrder == 0) {
+			$queryStr = "UPDATE Topics SET TopicOrder = TopicOrder + 1";
+			$g_ado_db->Execute($queryStr);
+			$topicOrder = 1;
+		}
+		$p_values['TopicOrder'] = $topicOrder;
+		
 		$success = parent::create($p_values);
 		if ($success) {
 			$this->m_exists = true;
@@ -122,6 +137,7 @@ class Topic extends DatabaseObject {
 			$logtext = getGS('Topic "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
 			Log::Message($logtext, null, 141);
 		}
+		CampCache::singleton()->clear('user');
 		return $success;
 	} // fn create
 
@@ -143,6 +159,17 @@ class Topic extends DatabaseObject {
 			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".$p_languageId;
 			$deleted = $g_ado_db->Execute($sql);
 		}
+
+		// Change TopicOrder of another topics 
+		// if all translations of this topic removed
+		if ($deleted) {
+		    $sql = "SELECT COUNT(*) FROM Topics WHERE Id=".$this->m_data['Id'];
+		    $qty = (int)$g_ado_db->GetOne($sql);
+		    if (!$qty) {
+    		    $sql = 'UPDATE Topics SET TopicOrder = TopicOrder - 1 WHERE TopicOrder > '.$this->m_data['TopicOrder'];
+                $g_ado_db->Execute($sql);
+		    }
+        }
 
 		// Delete the ATF metadata
         if ($deleted) {
@@ -169,6 +196,7 @@ class Topic extends DatabaseObject {
 			$logtext = getGS('Topic "$1" ($2) deleted', $name, $this->m_data['Id']);
 			Log::Message($logtext, null, 142);
 		}
+		CampCache::singleton()->clear('user');
 		return $deleted;
 	} // fn delete
 
@@ -215,6 +243,7 @@ class Topic extends DatabaseObject {
 			$sql = "INSERT INTO Topics SET Name='".mysql_real_escape_string($p_value)."' "
 					.", Id=".$this->m_data['Id']
 					.", LanguageId=$p_languageId"
+					.", TopicOrder=".$this->m_data['TopicOrder']
 					.", ParentId=".$this->m_data['ParentId'];
 			$changed = $g_ado_db->Execute($sql);
 		}
@@ -270,6 +299,13 @@ class Topic extends DatabaseObject {
 		return $this->m_data['ParentId'];
 	} // fn getParentId
 
+	/**
+	 * @return int
+	 */
+	public function getTopicOrder()
+	{
+		return $this->m_data['TopicOrder'];
+	} // fn getTopicOrder
 
 	/**
 	 * Return an array of Topics starting from the root down
@@ -302,7 +338,6 @@ class Topic extends DatabaseObject {
 		}
 		return $stack;
 	} // fn getPath
-
 
     public function isRoot()
     {
@@ -467,7 +502,7 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$sql = "SELECT * FROM Topics WHERE ParentId = ".$p_topicId
-				." ORDER BY Id ASC, LanguageId ASC, Name ASC ";
+				." ORDER BY TopicOrder ASC, LanguageId ASC";
 		$rows = $g_ado_db->GetAll($sql);
 		if ($rows) {
 			$previousTopic = new Topic();
@@ -510,6 +545,114 @@ class Topic extends DatabaseObject {
 
 		}
 	} // fn __TraverseTree
+
+
+	/**
+	 * Change the topic's position in the order sequence
+	 * relative to its current position.
+	 *
+	 * @param string $p_direction -
+	 * 		Can be "up" or "down".  "Up" means towards the beginning of the list,
+	 * 		and "down" means towards the end of the list.
+	 *
+	 * @param int $p_spacesToMove -
+	 *		The number of spaces to move the article.
+	 *
+	 * @return boolean
+	 */
+	public function positionRelative($p_direction, $p_spacesToMove = 1)
+	{
+		global $g_ado_db;
+
+		CampCache::singleton()->clear('user');
+		$this->fetch();
+		// Get the article that is in the final position where this
+		// article will be moved to.
+		$compareOperator = ($p_direction == 'up') ? '<' : '>';
+		$order = ($p_direction == 'up') ? 'desc' : 'asc';
+		$queryStr = 'SELECT DISTINCT(Id), TopicOrder FROM Topics '
+					.' WHERE TopicOrder '.$compareOperator.' '.$this->m_data['TopicOrder']
+					.' AND ParentId='.$this->m_data['ParentId']
+					.' ORDER BY TopicOrder ' . $order
+		     		.' LIMIT '.($p_spacesToMove - 1).', 1';
+		$destRow = $g_ado_db->GetRow($queryStr);
+		if (!$destRow) {
+			return false;
+		}
+		// Change position of the destination.
+		if ($p_direction == 'up') {
+		    $operator = '+';
+		    $compareOperator = '>=';
+		    $compareOperator2 = '<';
+		} else {
+		    $operator = '-';
+		    $compareOperator = '<=';
+		    $compareOperator2 = '>';
+		}
+		$queryStr2 = 'UPDATE Topics SET TopicOrder = TopicOrder '.$operator.' 1 '
+					.' WHERE TopicOrder '.$compareOperator.' '.$destRow['TopicOrder']
+					.' AND TopicOrder '.$compareOperator2.' '.$this->m_data['TopicOrder'];
+		$g_ado_db->Execute($queryStr2);
+
+		// Change position of this topic to the destination position.
+		$queryStr3 = 'UPDATE Topics SET TopicOrder = ' . $destRow['TopicOrder']
+					.' WHERE Id = ' . $this->m_data['Id'];
+		$g_ado_db->Execute($queryStr3);
+		CampCache::singleton()->clear('user');
+
+		// Re-fetch this article to get the updated article order.
+		$this->fetch();
+		return true;
+	} // fn positionRelative
+
+
+	/**
+	 * Move the topic to the given position (i.e. reorder the topic).
+	 * @param int $p_moveToPosition
+	 * @return boolean
+	 */
+	public function positionAbsolute($p_moveToPosition = 1)
+	{
+		global $g_ado_db;
+		
+		CampCache::singleton()->clear('user');
+		$this->fetch();
+		// Get the topic that is in the location we are moving
+		// this one to.
+		$queryStr = 'SELECT Id, LanguageId, TopicOrder FROM Topics '
+					.' WHERE ParentId='.$this->m_data['ParentId']
+					.' AND TopicOrder='.$p_moveToPosition
+					.' ORDER BY TopicOrder ASC LIMIT 1';
+		$destRow = $g_ado_db->GetRow($queryStr);
+		if (!$destRow) {
+			return false;
+		}
+		
+		// Reposition destination topic.
+		$operator = $destRow['TopicOrder'] < $this->m_data['TopicOrder'] ? '+' : '-';
+		if ($destRow['TopicOrder'] > $this->m_data['TopicOrder']) {
+		    $compareOperator =  '>';
+		    $compareOperator2 =  '<=';
+		} else {
+		    $compareOperator =  '<';
+		    $compareOperator2 =  '>=';
+		}
+		$queryStr = 'UPDATE Topics '
+					.' SET TopicOrder = TopicOrder '.$operator.' 1 '
+					.' WHERE TopicOrder '.$compareOperator.' '.$this->m_data['TopicOrder']
+					.' AND TopicOrder '.$compareOperator2.' '.$destRow['TopicOrder'];
+		$g_ado_db->Execute($queryStr);
+
+		// Reposition this topic.
+		$queryStr = 'UPDATE Topics '
+					.' SET TopicOrder='.$destRow['TopicOrder']
+					.' WHERE Id='.$this->m_data['Id'];
+		$g_ado_db->Execute($queryStr);
+		CampCache::singleton()->clear('user');
+
+		$this->fetch();
+		return true;
+	} // fn positionAbsolute
 
 
 	/**

@@ -25,6 +25,7 @@ if ($numArticles > 0) {
 if ($doDelete) {
 	$deleted = $deleteTopic->delete($f_topic_language_id);
 	if ($deleted) {
+	    camp_html_add_msg(getGS("Topic was deleted."), "ok");
 		camp_html_goto_page("/$ADMIN/topics/index.php");
 	}
 	else {
