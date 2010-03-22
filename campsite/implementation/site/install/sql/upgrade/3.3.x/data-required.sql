@@ -4,6 +4,16 @@ INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageResizeH
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageZoom', 'N');
 
 
+-- Initialize the topics order field
+SET @i:=0;
+CREATE TEMPORARY TABLE `TopicsTmp` SELECT DISTINCT `Id`, `LanguageId`, `Name`, `TopicOrder` FROM `Topics`;
+DELETE FROM `TopicsTmp` WHERE 
+    Id IN (SELECT Id FROM `Topics` GROUP BY Id HAVING COUNT(LanguageId) > 1) 
+    AND LanguageId NOT IN (SELECT LanguageId FROM `Topics` GROUP BY Id HAVING COUNT(LanguageId) > 1);
+UPDATE `TopicsTmp` SET `TopicOrder`= @i:=@i+1 ORDER BY Id ASC, LanguageId ASC, Name ASC;
+UPDATE `Topics` SET `TopicOrder`= (SELECT `TopicsTmp`.`TopicOrder` FROM `TopicsTmp` WHERE `TopicsTmp`.Id = `Topics`.Id);
+
+
 INSERT INTO ls_perms VALUES (1, 1, '_all', 1, 'A');
 INSERT INTO ls_perms VALUES (2, 2, 'read', 1, 'A');
 INSERT INTO ls_perms VALUES (3, 4, '_all', 3, 'A');

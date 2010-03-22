@@ -22,6 +22,9 @@ ALTER TABLE `ArticleTopics`
   ADD INDEX `article_topics_nrarticle_idx`(`NrArticle`),
   ADD INDEX `article_topics_topicid_idx`(`TopicId`);
 
+-- Position field (Ticket #2667)
+ALTER TABLE `Topics` ADD  `TopicOrder` INT NOT NULL AFTER `Name`;
+
 
 CREATE TABLE `Archive_FileMetadata` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
