@@ -19,10 +19,10 @@ Options -Indexes FollowSymLinks -MultiViews
     RewriteCond %{REQUEST_URI} !^/+admin
     RewriteCond %{REQUEST_URI} !^/+install
     RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+javascript
-    RewriteCond %{REQUEST_URI} !^/sys-templates
     RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+css
     RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+images
-    RewriteCond %{REQUEST_URI} !^/+templates/+
+    RewriteCond %{REQUEST_URI} !^/+templates/+site
+    RewriteCond %{REQUEST_URI} !^/+templates/+sys
     RewriteRule . /index.php [L]
     
     RewriteCond %{REQUEST_URI} .tpl$

@@ -33,13 +33,13 @@ if ($newExtension != $origExtension) {
 	$f_new_name .= $origExtension;
 }
 
-$newTemplName = $Campsite['HTML_DIR']."/templates/".urldecode($f_path)."/$f_new_name";
+$newTemplName = $Campsite['HTML_DIR']."/templates/site/".urldecode($f_path)."/$f_new_name";
 $exists = file_exists($newTemplName);
 if (!$exists) {
 	$tpl1_name = urldecode($f_path)."/$f_orig_name";
-	$tpl1 = $Campsite['HTML_DIR']."/templates/".$tpl1_name;
+	$tpl1 = $Campsite['HTML_DIR']."/templates/site/".$tpl1_name;
 	$tpl2_name = urldecode($f_path)."/$f_new_name";
-	$tpl2 = $Campsite['HTML_DIR']."/templates/".$tpl2_name;
+	$tpl2 = $Campsite['HTML_DIR']."/templates/site/".$tpl2_name;
 	if (rename($tpl1, $tpl2)) {
 	        $relativeOldFilePath = ltrim($tpl1_name, '/');
 		$relativeNewFilePath = ltrim($tpl2_name, '/');

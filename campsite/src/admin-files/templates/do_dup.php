@@ -34,18 +34,18 @@ if ($newExtension != $origExtension) {
 	$f_new_name .= $origExtension;
 }
 
-$newTempl = $Campsite['HTML_DIR']."/templates/".urldecode($f_path)."/$f_new_name";
+$newTempl = $Campsite['HTML_DIR']."/templates/site/".urldecode($f_path)."/$f_new_name";
 $exists = file_exists($newTempl);
 if (!$exists) {
 	$tpl1_name = urldecode($f_path)."/$f_orig_name";
-	$tpl1 = $Campsite['HTML_DIR']."/templates/".urldecode($f_path)."/$f_orig_name";
+	$tpl1 = $Campsite['HTML_DIR']."/templates/site/".urldecode($f_path)."/$f_orig_name";
 	$fd = fopen($tpl1, "r");
 	$fileSize = filesize($tpl1);
 	$contents = $fileSize > 0 ? fread($fd, $fileSize) : '';
 	fclose($fd);
 
 	$tpl2_name = urldecode($f_path)."/$f_new_name";
-	$tpl2FullPath = $Campsite['HTML_DIR']."/templates/".urldecode($f_path)."/$f_new_name";
+	$tpl2FullPath = $Campsite['HTML_DIR']."/templates/site/".urldecode($f_path)."/$f_new_name";
 	$fd = fopen($tpl2FullPath, "w");
 	$bytes_written = fwrite($fd, $contents);
 	fclose($fd);

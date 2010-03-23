@@ -82,8 +82,8 @@ class TemplateConverter
         $this->m_templatePathDirectory = dirname($p_filePath);
         $this->m_templateFileName = basename($p_filePath);
         // sets the relative template directory, if any
-        $tplDirPos = strpos($this->m_templatePathDirectory, 'templates/');
-        $tplDirLength = strlen('templates/');
+        $tplDirPos = strpos($this->m_templatePathDirectory, 'templates/site/');
+        $tplDirLength = strlen('templates/site/');
         if ($tplDirPos && $tplDir = substr($this->m_templatePathDirectory, $tplDirPos + $tplDirLength)) {
             $this->m_templateDirectory = $tplDir;
         } else {
@@ -161,7 +161,7 @@ class TemplateConverter
                 if (is_array($m) && !empty($m[0])) {
                     $replacement = '/tpl/';
                 } else {
-                    $replacement = '/templates/';
+                    $replacement = '/templates/site/';
                 }
                 $pattern = '/\/look\//';
                 $this->m_templateContent = @preg_replace($pattern,

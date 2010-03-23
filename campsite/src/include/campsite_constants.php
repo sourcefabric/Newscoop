@@ -24,8 +24,8 @@ define('CS_PATH_CLASSES', CS_PATH_SITE.DIR_SEP.'classes');
 define('CS_PATH_INCLUDES', CS_PATH_SITE.DIR_SEP.'include');
 define('CS_PATH_PEAR_LOCAL', CS_PATH_INCLUDES.DIR_SEP.'pear');
 define('CS_PATH_SMARTY', CS_PATH_INCLUDES.DIR_SEP.'smarty');
-define('CS_PATH_SMARTY_TEMPLATES', 'templates');
-define('CS_PATH_SMARTY_SYS_TEMPLATES', 'sys-templates');
+define('CS_PATH_SMARTY_TEMPLATES', 'templates'.DIR_SEP.'site');
+define('CS_PATH_SMARTY_SYS_TEMPLATES', 'templates'.DIR_SEP.'sys');
 define('CS_PLUGINS_DIR', 'plugins');
 define('CS_PATH_PLUGINS', CS_PATH_SITE.DIR_SEP.CS_PLUGINS_DIR);
 
