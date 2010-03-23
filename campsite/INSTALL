@@ -39,7 +39,7 @@ named 'campsite'.
 
 3. Open the 'campsite' directory.
 
-4. Copy the content of implementation/site directory into the document
+4. Copy the content of src directory into the document
 root directory of the apache virtual host.
 
 5. Start a browser, point it to the http://site_name URL and follow the
