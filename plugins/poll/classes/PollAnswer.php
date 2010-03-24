@@ -110,6 +110,9 @@ class PollAnswer extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
         
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+                
         return true;
     } // fn create
 
@@ -220,6 +223,10 @@ class PollAnswer extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        
         return $deleted;
     } // fn delete
     
@@ -298,7 +305,6 @@ class PollAnswer extends DatabaseObject {
         $this->setProperty('value', $this->getProperty('value') + $p_value);
         $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         $this->getPoll()->increaseUserVoteCount();
-        Poll::triggerStatistics($this->m_data['fk_poll_nr']);   
     }
         
     public function getNumber()
@@ -319,6 +325,21 @@ class PollAnswer extends DatabaseObject {
     public function getLanguageId()
     {
         return $this->getProperty('fk_language_id');   
+    }
+    
+    /**
+     * Method to call parent::setProperty
+     * with clening the cache.
+     *
+     * @param string $p_name
+     * @param sring $p_value
+     */
+    function setProperty($p_name, $p_value)
+    {       
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        return $return;
     }
     
     

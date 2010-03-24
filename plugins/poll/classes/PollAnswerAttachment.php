@@ -86,6 +86,9 @@ class PollAnswerAttachment extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
         
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        
         return true;
     } // fn create
 
@@ -120,6 +123,10 @@ class PollAnswerAttachment extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+        
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        
         return $deleted;
     } // fn delete
 
