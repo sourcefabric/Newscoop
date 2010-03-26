@@ -274,7 +274,7 @@ final class CampHTMLDocument
         $siteinfo['info_message'] = isset($p_params['info_message']) ? $p_params['info_message'] : null;
         $siteinfo['error_message'] = isset($p_params['error_message']) ? $p_params['error_message'] : null;
         $siteinfo['templates_path'] = isset($p_params['templates_dir'])
-                            ? $p_params['templates_dir'] : CS_PATH_SMARTY_TEMPLATES;
+                            ? $p_params['templates_dir'] : CS_TEMPLATES_DIR;
         $siteinfo['title'] = $this->getTitle();
         $siteinfo['content_type'] = $this->getMetaTag('Content-Type', true);
         $siteinfo['generator'] = $this->getGenerator();
@@ -282,14 +282,14 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
 
         if (!file_exists(CS_PATH_SITE.DIR_SEP.$siteinfo['templates_path'].DIR_SEP.$template)
-        || $template === false) {
+                || $template === false) {
             if (empty($template)) {
                 $siteinfo['error_message'] = "No template set for display.";
             } else {
                 $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
             }
             $template = '_campsite_error.tpl';
-            $siteinfo['templates_path'] = CS_PATH_SMARTY_SYS_TEMPLATES;
+            $siteinfo['templates_path'] = CS_SYS_TEMPLATES_DIR;
         }
 
         $tpl = CampTemplate::singleton();

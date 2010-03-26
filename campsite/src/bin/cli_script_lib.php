@@ -133,9 +133,11 @@ function camp_read_files($p_startDir = '.')
  *
  * @param string $p_dirName
  * @param string $p_msg
+ * @param array $p_skip
+ *      Array of files or directories to preserve
  * @return void
  */
-function camp_remove_dir($p_dirName, $p_msg = "")
+function camp_remove_dir($p_dirName, $p_msg = "", $p_skip = array())
 {
 	$p_dirName = str_replace('//', '/', $p_dirName);
 	$dirBaseName = trim($p_dirName, '/');
@@ -160,6 +162,9 @@ function camp_remove_dir($p_dirName, $p_msg = "")
     	camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
     }
     foreach ($dirContent as $file) {
+        if (in_array($file, $p_skip)) {
+                continue;
+        }
     	if ($file == '.' || $file == '..') {
     		continue;
     	}

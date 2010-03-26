@@ -25,7 +25,7 @@ require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
 function display_upgrade_error($p_errorMessage) {
     $template = '_campsite_error.tpl';
-    $templates_dir = CS_PATH_SMARTY_SYS_TEMPLATES;
+    $templates_dir = CS_SYS_TEMPLATES_DIR;
     $params = array('context' => null,
                     'template' => $template,
                     'templates_dir' => $templates_dir,

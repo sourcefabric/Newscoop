@@ -280,12 +280,12 @@ if (sizeof($backup_version_file) != 1) {
     camp_exit_with_error("Archive $archive_file is invalid.");
 }
 $bversion_file_name = basename($backup_version_file[0]);
-$backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
+$backupVersion = substr($bversion_file_name, strlen('BACKUP-VERSION-'));
 
 if ($useExistingConfig) {
     $includeFile = "$ETC_DIR/database_conf.php";
 } else {
-    if ($backupVersion < 3) { 
+    if ($backupVersion < '3.0') { 
         $includeFile = "$tempDirName/$origDbName/database_conf.php";
     } else {
         $includeFile = "$tempDirName/conf/database_conf.php";
@@ -321,7 +321,7 @@ echo " * Destination database name (to be replaced) is '$destDbName'.\n";
 //
 // Restore the backup files
 //
-if ($backupVersion < 3) {
+if ($backupVersion < '3.0') {
     if (!camp_is_empty_dir("$tempDirName/look")) {
         $templatesSrcDir = "$tempDirName/look";
         $packageTemplatesDirName = 'look';
@@ -342,7 +342,7 @@ $filesDestDir = $CAMPSITE_DIR.'/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates';
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
-$compiledTemplatesDir = $CAMPSITE_DIR.'/templates_c';
+$compiledTemplatesDir = $CAMPSITE_DIR.'/templates_cache';
 
 $destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
 
@@ -384,7 +384,11 @@ if ($doPrompt) {
 //
 foreach ($destDirs as $dir) {
     echo " * Removing files in $dir...";
-    camp_remove_dir($dir."/*");
+    if ($dir == $templatesDestDir) {
+        camp_remove_dir($dir."/*", '', array('system_templates'));
+    } else {
+        camp_remove_dir($dir."/*");
+    }
     echo "done.\n";
 }
 
@@ -410,7 +414,7 @@ camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 echo "done.\n";
 
 if (!$useExistingConfig) {
-    if ($backupVersion < 3) {
+    if ($backupVersion < '3.0') {
         echo " * Restoring configuration...";
         $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
         $newConfigFile = camp_migrate_config_file($configFile);
@@ -424,7 +428,7 @@ if (!$useExistingConfig) {
 //
 // Converting template files if necessary
 //
-if ($backupVersion < 3) {
+if ($backupVersion < '3.0') {
     echo " * Converting templates...";
     require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
     $template_files = camp_read_files($CAMPSITE_DIR.'/templates');

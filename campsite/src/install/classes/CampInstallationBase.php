@@ -269,7 +269,7 @@ class CampInstallationBase
 
         $isWritable = true;
         $directories = array();
-        $templatesDir = CS_PATH_SITE.DIR_SEP.CS_PATH_SMARTY_TEMPLATES;
+        $templatesDir = CS_PATH_TEMPLATES;
         $cssDir = $templatesDir.DIR_SEP.'css';
         $imagesDir = $templatesDir.DIR_SEP.'img';
         if (!is_dir($templatesDir) || !is_writable($templatesDir)) {
@@ -298,7 +298,7 @@ class CampInstallationBase
 
         // copies template files to corresponding directory
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'templates';
-        $target = CS_PATH_SITE.DIR_SEP.CS_PATH_SMARTY_TEMPLATES;
+        $target = CS_PATH_TEMPLATES;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';

@@ -44,10 +44,10 @@ final class CampTemplate extends Smarty
 
         $this->cache_dir = CS_PATH_SITE.DIR_SEP.'cache';
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        $this->plugins_dir = array(CS_PATH_SITE.DIR_SEP.'templates'.DIR_SEP.'smarty_camp_plugins',
+        $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'campsite_plugins',
                                    CS_PATH_SMARTY.DIR_SEP.'plugins');
-        $this->template_dir = CS_INSTALL_DIR.DIR_SEP.'templates'.DIR_SEP.'site';
-        $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates'.DIR_SEP.'cache';
+        $this->template_dir = CS_INSTALL_DIR.DIR_SEP.'templates';
+        $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates_cache';
     } // fn __constructor
 
 

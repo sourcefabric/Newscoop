@@ -33,8 +33,8 @@ $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
 unset($scheme);
 
 
-$Campsite['TEMPLATE_DIRECTORY'] = $Campsite['HTML_DIR']."/templates/site";
-$Campsite['TEMPLATE_BASE_URL'] = $Campsite['WEBSITE_URL']."/templates/site";
+$Campsite['TEMPLATE_DIRECTORY'] = $Campsite['HTML_DIR']."/templates";
+$Campsite['TEMPLATE_BASE_URL'] = $Campsite['WEBSITE_URL']."/templates";
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
 $Campsite['ADMIN_IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/css';
