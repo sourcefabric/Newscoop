@@ -82,10 +82,10 @@ class Article extends DatabaseObject {
 
 	var $m_languageName = null;
 
-	private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'asc'),
-                                           array('field'=>'byIssue', 'dir'=>'desc'),
-                                           array('field'=>'bySection', 'dir'=>'asc'),
-                                           array('field'=>'bySectionOrder', 'dir'=>'asc'));
+	private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'ASC'),
+                                           array('field'=>'byIssue', 'dir'=>'DESC'),
+                                           array('field'=>'bySection', 'dir'=>'ASC'),
+                                           array('field'=>'bySectionOrder', 'dir'=>'ASC'));
 
     private static $s_regularParameters = array('idpublication'=>'Articles.IdPublication',
                                                 'nrissue'=>'Articles.NrIssue',
@@ -231,7 +231,7 @@ class Article extends DatabaseObject {
 		}
         $this->fetch();
 		$this->setProperty('UploadDate', 'NOW()', true, true);
-		
+
 		// Insert an entry into the article type table.
 		$articleData = new ArticleData($this->m_data['Type'],
 			$this->m_data['Number'],
@@ -652,7 +652,7 @@ class Article extends DatabaseObject {
 	/**
 	 * Return an array of Language objects, one for each
 	 * language the article is written in.
-	 * 
+	 *
      * @param boolean $p_excludeCurrent
      *      If true, exclude the current language from the list.
      * @param array $p_order
@@ -842,7 +842,7 @@ class Article extends DatabaseObject {
 	public function positionAbsolute($p_moveToPosition = 1)
 	{
 		global $g_ado_db;
-		
+
 		CampCache::singleton()->clear('user');
 		$this->fetch();
 		// Get the article that is in the location we are moving
@@ -2067,8 +2067,8 @@ class Article extends DatabaseObject {
 	    $result = DbObjectArray::Create('Article', $queryStr);
 	    return $result;
 	} // fn GetRecentArticles
-	
-	
+
+
 	/**
 	 * Get the $p_max number of the most recently modified articles.
 	 * @param int $p_max
@@ -2175,20 +2175,14 @@ class Article extends DatabaseObject {
         $hasTopics = array();
         $hasNotTopics = array();
         $selectClauseObj = new SQLSelectClause();
-        $countClauseObj = new SQLSelectClause();
         $otherTables = array();
-
-        // gets the column list to be retrieved for the database table
-        $selectClauseObj->addColumn('Articles.*');
-        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the name of the table for the this database object
         $tmpArticle = new Article();
-        $selectClauseObj->setTable($tmpArticle->getDbTableName());
-        $countClauseObj->setTable($tmpArticle->getDbTableName());
         $articleTable = $tmpArticle->getDbTableName();
+        $selectClauseObj->setTable($articleTable);
         unset($tmpArticle);
-        
+
         $languageId = null;
 
         // parses the given parameters in order to build the WHERE part of
@@ -2210,14 +2204,11 @@ class Article extends DatabaseObject {
                 && strstr($comparisonOperation['symbol'], '=') !== false
                 && $comparisonOperation['right'] == 0) {
                 	$selectClauseObj->addConditionalWhere($whereCondition);
-                	$countClauseObj->addConditionalWhere($whereCondition);
                 	$isNullCond = Article::$s_regularParameters[$leftOperand]
                 	            . ' IS NULL';
                     $selectClauseObj->addConditionalWhere($isNullCond);
-                    $countClauseObj->addConditionalWhere($isNullCond);
                 } else {
                     $selectClauseObj->addWhere($whereCondition);
-                    $countClauseObj->addWhere($whereCondition);
                 }
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
@@ -2240,21 +2231,23 @@ class Article extends DatabaseObject {
             	$author = Author::ReadName($comparisonOperation['right']);
             	$symbol = $comparisonOperation['symbol'];
             	$valModifier = strtolower($symbol) == 'like' ? '%' : '';
-            	
+
             	$firstName = $author['first_name'];
             	$lastName = $author['last_name'];
             	$whereCondition = "CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol "
             	                . "'$valModifier$firstName $lastName$valModifier'";
                 $selectClauseObj->addWhere($whereCondition);
-                $countClauseObj->addWhere($whereCondition);
+            } elseif ($leftOperand == 'search_phrase') {
+                $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right']);
+                $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
+                $selectClauseObj->addWhere($mainClauseConstraint);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
                 $sqlQuery = self::ProcessCustomField($comparisonOperation, $languageId);
                 if (!is_null($sqlQuery)) {
-                    $whereCondition = "Articles.Number in (\n$sqlQuery        )";
+                    $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                     $selectClauseObj->addWhere($whereCondition);
-                    $countClauseObj->addWhere($whereCondition);
                 }
             }
         }
@@ -2269,25 +2262,22 @@ class Article extends DatabaseObject {
                     $sqlQuery = Article::BuildTopicSelectClause($topicId, $typeAttributes);
                     $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                     $selectClauseObj->addWhere($whereCondition);
-                    $countClauseObj->addWhere($whereCondition);
                 }
             } else {
                 $sqlQuery = Article::BuildTopicSelectClause($hasTopics, $typeAttributes);
                 $whereCondition = "Articles.Number IN (\n$sqlQuery        )";
                 $selectClauseObj->addWhere($whereCondition);
-                $countClauseObj->addWhere($whereCondition);
             }
         }
         if (count($hasNotTopics) > 0) {
             $sqlQuery = Article::BuildTopicSelectClause($hasNotTopics, $typeAttributes);
             $whereCondition = "Articles.Number NOT IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
-            $countClauseObj->addWhere($whereCondition);
         }
-        
-        $selectClauseObj->addGroupField('Articles.Number');
-        $selectClauseObj->addGroupField('Articles.IdLanguage');
-        
+
+        // create the count clause object
+        $countClauseObj = clone $selectClauseObj;
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
@@ -2342,6 +2332,11 @@ class Article extends DatabaseObject {
         	$selectClauseObj->addWhere($whereCondition);
         	$countClauseObj->addWhere($whereCondition);
         }
+
+        // gets the column list to be retrieved for the database table
+        $selectClauseObj->addColumn('Articles.Number');
+        $selectClauseObj->addColumn('Articles.IdLanguage');
+        $countClauseObj->addColumn('COUNT(*)');
 
         // sets the LIMIT start and offset values
         $selectClauseObj->setLimit($p_start, $p_limit);
@@ -2452,7 +2447,7 @@ class Article extends DatabaseObject {
             }
             break;
         case 'issue_published':
-        	$p_otherTables['Issues'] = array('IdPublication'=>'IdPublication', 
+        	$p_otherTables['Issues'] = array('IdPublication'=>'IdPublication',
         	'NrIssue'=>'Number', 'IdLanguage'=>'IdLanguage');
         	$conditionOperation['symbol'] = '=';
         	$conditionOperation['right'] = 'Y';
@@ -2518,7 +2513,7 @@ class Article extends DatabaseObject {
      * Performs a search against the article content using the given
      * keywords. Returns the list of articles matching the given criteria.
      *
-     * @param array $p_keywords
+     * @param string $p_searchPhrase
      * @param string $p_fieldName - may be 'title' or 'author'
      * @param bool $p_matchAll - true if all keyword have to match
      * @param array $p_constraints
@@ -2529,7 +2524,7 @@ class Article extends DatabaseObject {
      * @param bool $p_countOnly - if true returns only the total number of rows
      * @return array
      */
-    public static function SearchByKeyword(array $p_keywords,
+    public static function SearchByKeyword($p_searchPhrase,
                                            $p_matchAll = false,
                                            array $p_constraints = array(),
                                            array $p_order = array(),
@@ -2545,38 +2540,12 @@ class Article extends DatabaseObject {
         // set tables and joins between tables
         $selectClauseObj->setTable('Articles');
 
-        // set search keywords
-        if ($p_matchAll && count($p_keywords) > 1) {
-            foreach ($p_keywords as $keyword) {
-                $selectKeywordClauseObj = new SQLSelectClause();
-                $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
-                $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
-                $selectKeywordClauseObj->addColumn('AI2.NrArticle');
-                $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
-
-                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
-                $selectKeywordClauseObj->addWhere($keywordConstraint);
-
-                $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
-                . $selectKeywordClauseObj->buildQuery() . ")";
-                $selectClauseObj->addWhere($mainClauseConstraint);
-            }
-        } else {
-            $selectKeywordClauseObj = new SQLSelectClause();
-            $selectKeywordClauseObj->setTable('KeywordIndex AS KI');
-            $selectKeywordClauseObj->addJoin('LEFT JOIN ArticleIndex AS AI2 ON KI.Id = AI2.IdKeyword');
-            $selectKeywordClauseObj->addColumn('DISTINCT AI2.NrArticle');
-            $selectKeywordClauseObj->addColumn('AI2.IdLanguage');
-
-            foreach ($p_keywords as $keyword) {
-                $keywordConstraint = "KI.Keyword = '" . $g_ado_db->escape($keyword) . "'";
-                $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
-            }
-
-            $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
-            . $selectKeywordClauseObj->buildQuery() . ")";
-            $selectClauseObj->addWhere($mainClauseConstraint);
+        if ($p_matchAll) {
+            $p_searchPhrase = '__match_all ' . $p_searchPhrase;
         }
+        $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
+        . ArticleIndex::SearchQuery($p_searchPhrase) . ")";
+        $selectClauseObj->addWhere($mainClauseConstraint);
 
         $joinTables = array();
         // set other constraints

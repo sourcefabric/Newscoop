@@ -32,16 +32,15 @@ class SearchResultsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
-
 	    if ($p_parameters['scope'] == 'index') {
-	    	$articlesList = Article::SearchByKeyword($keywords,
+	    	$articlesList = Article::SearchByKeyword($p_parameters['search_phrase'],
 	    	                $p_parameters['match_all'],
 	    	                $this->m_constraints,
 	    	                $this->m_order,
 	    	                $p_start, $p_limit, $p_count);
 	    } else {
-            $articlesList = Article::SearchByField($keywords,
+	        $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
+	        $articlesList = Article::SearchByField($keywords,
                             $p_parameters['scope'],
                             $p_parameters['match_all'],
                             $this->m_constraints,
