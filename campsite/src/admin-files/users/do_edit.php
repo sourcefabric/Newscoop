@@ -66,7 +66,7 @@ $userData = array(
 
 // save user data
 foreach ($userData as $value) {
-    $liveUserValues[$value] = Input::Get($value, 'string', '');
+    $liveUserValues[$value] = Input::Get($value, 'string', null);
     $editUser->setProperty($value, $liveUserValues[$value], false);
 }
 

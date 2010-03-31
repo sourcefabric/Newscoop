@@ -22,7 +22,7 @@ $errorField = "";
 $typeParam = 'uType=' . urlencode($uType);
 $backLink = "/$ADMIN/users/edit.php?$typeParam";
 foreach ($fields as $index=>$field) {
-	$fieldValues[$field] = Input::Get($field, 'string', '');
+	$fieldValues[$field] = Input::Get($field, 'string', null);
 	if ($fieldValues[$field] != '')
 		$backLink .= "&" . urlencode($field) . "=" . urlencode($fieldValues[$field]);
 	elseif (array_key_exists($field, $notNullFields) && $errorField == "")
