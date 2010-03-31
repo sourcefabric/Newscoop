@@ -122,16 +122,21 @@ class ArticleIndex extends DatabaseObject {
 
 	    $startTime = microtime(true);
 
-	    $sql = "CREATE TABLE IF NOT EXISTS `__index_lock` (\n"
-	    . "  `id` INT  NOT NULL AUTO_INCREMENT,\n"
-	    . "  PRIMARY KEY (`id`)\n"
-	    . ") ENGINE = MyISAM;";
-	    if (!$g_ado_db->Execute($sql)) {
-	        return new PEAR_Error('Error creating lock table: ' . $g_ado_db->ErrorMsg());
+	    $rowsLimit = 0;
+	    if (!is_null($p_timeLimit)) {
+	        $rowsLimit = (int)$p_timeLimit * 5;
 	    }
-//	    if (!$g_ado_db->Execute('LOCK TABLE __index_lock WRITE')) {
-//	        return new PEAR_Error('Error locking index table: ' . $g_ado_db->ErrorMsg());
-//	    }
+	    if (!is_null($p_articlesLimit)) {
+	        $rowsLimit = $rowsLimit > 0 ? min($rowsLimit, $p_articlesLimit) : $p_articlesLimit;
+	    }
+
+	    $lockFile = fopen($GLOBALS['g_campsiteDir'].'/campsite-indexer.lock', "w+");
+	    if ($lockFile === false) {
+	        return new PEAR_Error("Unable to create single process lock control!");
+	    }
+	    if (!flock($lockFile, LOCK_EX | LOCK_NB)) { // do an exclusive lock
+            return new PEAR_Error("Another indexer process is already running!");
+	    }
 
 	    try {
 	        if ($p_lastModifiedFirst) {
@@ -139,22 +144,28 @@ class ArticleIndex extends DatabaseObject {
 	        } else {
 	            $order = 'Number ASC';
 	        }
+	        $limit = $rowsLimit > 0 ? "LIMIT 0, $rowsLimit" : null;
 	        // selects articles not yet indexed
 	        $sql_query = 'SELECT IdPublication, NrIssue, NrSection, Number, '
 	        . 'IdLanguage, Type, Keywords, Name, '
 	        . "TRIM(CONCAT(first_name, ' ', last_name)) AS AuthorName \n"
 	        . "FROM Articles as a LEFT JOIN Authors as auth \n"
 	        . "  ON a.fk_default_author_id = auth.Id \n"
-	        . "WHERE IsIndexed = 'N' ORDER BY $order";
+	        . "WHERE IsIndexed = 'N' ORDER BY $order $limit";
 	        $sql_result = $g_ado_db->GetAll($sql_query);
 	        if ($sql_result === false) {
 	            throw new Exception('Error selecting articles not yet indexed');
 	        }
 
-	        $total_art = count($sql_result);
+	        $sql = "SELECT COUNT(*) FROM Articles WHERE IsIndexed = 'N'";
+	        $total_art = $g_ado_db->GetOne($sql);
+
 	        $nr_art = 0;
 	        $nr_new = 0;
 	        $nr_word = 0;
+	        $word_cache_hits = 0;
+	        $articleWordsBatch = array();
+	        $wordInsertQueries = 0;
 
 	        $existing_words = array();
 	        foreach ($sql_result as $row) {
@@ -193,10 +204,12 @@ class ArticleIndex extends DatabaseObject {
 
 	                if (isset($existing_words[$keyword])) {
 	                    $kwd_id = $existing_words[$keyword];
+	                    $word_cache_hits++;
 	                } else {
 	                    $sql_query = 'SELECT Id FROM KeywordIndex '
 	                    . "WHERE Keyword = '" . $g_ado_db->escape($keyword) ."'";
 	                    $kwd_id = 0 + $g_ado_db->GetOne($sql_query);
+	                    $existing_words[$keyword] = $kwd_id;
 	                }
 	                if ($kwd_id == 0) {
 	                    $sql_query = 'SELECT MAX(Id) AS Id FROM KeywordIndex';
@@ -210,23 +223,17 @@ class ArticleIndex extends DatabaseObject {
 	                    if (!$g_ado_db->Execute($sql_query)) {
 	                        throw new Exception('Error adding keyword');
 	                    }
+	                    $existing_words[$keyword] = $kwd_id;
 
 	                    $nr_new++;
 	                }
-	                $existing_words[$keyword] = $kwd_id;
 
-	                // inserts in article index
-	                $sql_query = 'INSERT IGNORE INTO ArticleIndex '
-	                . 'SET IdPublication = ' . $article['IdPublication']
-	                . ', IdLanguage = ' . $article['IdLanguage']
-	                . ', IdKeyword = ' . $kwd_id
-	                . ', NrIssue = ' . $article['NrIssue']
-	                . ', NrSection = ' . $article['NrSection']
-	                . ', NrArticle = ' . $article['Number'];
-	                if (!$g_ado_db->Execute($sql_query)) {
-	                    throw new Exception('Error adding article to index');
+	                if (!self::BatchAddArticleWord($articleWordsBatch, $article,
+	                $kwd_id, $wordInsertQueries)) {
+                        throw new Exception('Error adding article to index');
 	                }
 	            }
+	            self::RunArticleWordBatch($articleWordsBatch, $wordInsertQueries);
 
 	            unset($article['Name']);
 	            unset($article['Keywords']);
@@ -253,21 +260,57 @@ class ArticleIndex extends DatabaseObject {
 	            }
 	        }
 	    } catch (Exception $ex) {
-//	        $g_ado_db->Execute('UNLOCK TABLES');
-            return new PEAR_Error($ex->getMessage() . ': ' . $g_ado_db->ErrorMsg());
+	        flock($lockFile, LOCK_UN); // release the lock
+	        return new PEAR_Error($ex->getMessage() . ': ' . $g_ado_db->ErrorMsg());
 	    }
 
-//	    if (!$g_ado_db->Execute('UNLOCK TABLES')) {
-//	        return new PEAR_Error('Error unlocking the index table: ' . $g_ado_db->ErrorMsg());
-//	    }
-        $totalTime = microtime(true) - $startTime;
+	    flock($lockFile, LOCK_UN); // release the lock
+
+	    $totalTime = microtime(true) - $startTime;
         $articleTime = $nr_art > 0 ? $totalTime / $nr_art : 0;
 	    return array('articles'=>$nr_art, 'words'=>$nr_word, 'new words'=>$nr_new,
-	    'total_articles'=>$total_art, 'total_time'=>$totalTime, 'article_time'=>$articleTime);
+	    'total articles'=>$total_art, 'total time'=>$totalTime, 'article time'=>$articleTime,
+	    'word cache hits'=>$word_cache_hits, 'word insert queries'=>$wordInsertQueries);
 	} // fn RunIndexer
 
 
-	public static function BuildKeywordsList($p_article, array &$p_keywordsHash)
+	private static function BatchAddArticleWord(array &$p_batch, array $p_article,
+	$p_keywordId, &$p_queries, $p_force = false)
+	{
+	    $articleWordSQL = '(' . (int)$p_article['IdPublication']
+	    . ', ' . (int)$p_article['IdLanguage']
+        . ', ' . (int)$p_keywordId
+        . ', ' . (int)$p_article['NrIssue']
+        . ', ' . (int)$p_article['NrSection']
+        . ', ' . (int)$p_article['Number'] . ')';
+
+	    $p_batch[] = $articleWordSQL;
+
+	    if (count($p_batch) > 200 || $p_force) {
+	        return self::RunArticleWordBatch($p_batch, $p_queries);
+	    }
+	    return true;
+	}
+
+
+	private static function RunArticleWordBatch(array &$p_batch, &$p_queries)
+	{
+        global $g_ado_db;
+
+        if (count($p_batch) == 0) {
+            return true;
+        }
+
+        $p_queries++;
+	    $values = implode(', ', $p_batch);
+	    $p_batch = array();
+	    $sql = 'INSERT IGNORE INTO ArticleIndex (IdPublication, IdLanguage, '
+	    . "IdKeyword, NrIssue, NrSection, NrArticle) VALUES $values";
+	    return $g_ado_db->Execute($sql);
+	}
+
+
+	private static function BuildKeywordsList($p_article, array &$p_keywordsHash)
 	{
 	    global $g_ado_db;
 
