@@ -71,7 +71,7 @@ class DatabaseObject {
 	 * @var bool
 	 */
 	private static $m_useCache = null;
-	
+
 	/**
 	 * The default engine to use
 	 * @var string
@@ -629,7 +629,7 @@ class DatabaseObject {
 		}
 
         // Write the object to cache
-        if ($success !== false) {
+        if ($success !== false && !$p_commit) {
             $this->writeCache();
         }
 
@@ -1032,7 +1032,7 @@ class DatabaseObject {
     protected function lockTables(array $p_tables = array(), $p_write = true)
     {
     	global $g_ado_db;
-    	
+
     	if (count($p_tables) == 0) {
     		return;
     	}
@@ -1040,8 +1040,8 @@ class DatabaseObject {
     	$lockQuery = 'LOCK TABLES ' . implode(', ', $p_tables) . " $mode";
     	return $g_ado_db->Execute($lockQuery);
     }
-    
-    
+
+
     protected function unlockTables()
     {
     	global $g_ado_db;
