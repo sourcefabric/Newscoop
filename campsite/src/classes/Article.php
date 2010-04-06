@@ -205,7 +205,7 @@ class Article extends DatabaseObject {
 		$values['Type'] = $p_articleType;
 		$values['Public'] = 'Y';
 
-		if (!is_null($p_publicationId) && $p_publicationId > 0) {
+        if (!is_null($p_publicationId) && $p_publicationId > 0) {
 			$where = " WHERE IdPublication = $p_publicationId AND NrIssue = $p_issueNumber"
 		    		. " and NrSection = $p_sectionNumber";
 		} else {
@@ -214,13 +214,13 @@ class Article extends DatabaseObject {
 
 		// compute article order number
 		$queryStr = "SELECT MIN(ArticleOrder) AS min FROM Articles$where";
-		$articleOrder = $g_ado_db->GetOne($queryStr) - 1;
-		if ($articleOrder < 0) {
-			$articleOrder = $this->m_data['Number'];
-		}
-		if ($articleOrder == 0) {
-			$queryStr = "UPDATE Articles SET ArticleOrder = ArticleOrder + 1$where";
-			$g_ado_db->Execute($queryStr);
+        $articleOrder = $g_ado_db->GetOne($queryStr);
+        if (is_null($articleOrder) || !isset($values['NrSection'])) {
+            $articleOrder = $this->m_data['Number'];
+        } else {
+            $increment = $articleOrder > 0 ? 1 : 2;
+            $queryStr = "UPDATE Articles SET ArticleOrder = ArticleOrder + $increment $where";
+            $g_ado_db->Execute($queryStr);
 			$articleOrder = 1;
 		}
 		$values['ArticleOrder'] = $articleOrder;
@@ -289,7 +289,9 @@ class Article extends DatabaseObject {
 	                     $p_destSectionNumber = 0, $p_userId = null,
 	                     $p_copyTranslations = false)
 	{
-		// It is an optimization to put these here because in most cases
+        global $g_ado_db;
+
+        // It is an optimization to put these here because in most cases
 		// you dont need these files.
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
@@ -320,6 +322,7 @@ class Article extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
+        $articleOrder = null;
 		$logtext = '';
 		$newArticles = array();
 		foreach ($copyArticles as $copyMe) {
@@ -337,7 +340,7 @@ class Article extends DatabaseObject {
     		$values['OnFrontPage'] = $copyMe->m_data['OnFrontPage'];
     		$values['OnSection'] = $copyMe->m_data['OnSection'];
     		$values['Public'] = $copyMe->m_data['Public'];
-    		$values['ArticleOrder'] = $copyMe->m_data['ArticleOrder'];
+    		$values['ArticleOrder'] = $articleOrder;
     		$values['Keywords'] = $copyMe->m_data['Keywords'];
     		// Change some attributes
     		$values['Published'] = 'N';
@@ -354,6 +357,12 @@ class Article extends DatabaseObject {
 
     		$articleCopy->__create($values);
     		$articleCopy->setProperty('UploadDate', 'NOW()', true, true);
+    		if (is_null($articleOrder)) {
+    		    $g_ado_db->Execute('LOCK TABLES Articles WRITE');
+    		    $articleOrder = $g_ado_db->GetOne('SELECT MAX(ArticleOrder) + 1 FROM Articles');
+    		    $articleCopy->setProperty('ArticleOrder', $articleOrder);
+    		    $g_ado_db->Execute('UNLOCK TABLES');
+    		}
 
     		// Insert an entry into the article type table.
     		$newArticleData = new ArticleData($articleCopy->m_data['Type'],
@@ -409,7 +418,9 @@ class Article extends DatabaseObject {
 	public function move($p_destPublicationId = 0, $p_destIssueNumber = 0,
 	                     $p_destSectionNumber = 0)
 	{
-		$columns = array();
+	    global $g_ado_db;
+
+	    $columns = array();
 		if ($this->m_data["IdPublication"] != $p_destPublicationId) {
 			$columns["IdPublication"] = (int)$p_destPublicationId;
 		}
@@ -423,7 +434,11 @@ class Article extends DatabaseObject {
 		if (count($columns) > 0) {
 			$success = $this->update($columns);
 			if ($success) {
-				$this->positionAbsolute(1);
+			    $g_ado_db->Execute('LOCK TABLES Articles WRITE');
+			    $articleOrder = $g_ado_db->GetOne('SELECT MAX(ArticleOrder) + 1 FROM Articles');
+			    $this->setProperty('ArticleOrder', $articleOrder);
+			    $g_ado_db->Execute('UNLOCK TABLES');
+			    $this->positionAbsolute(1);
 			}
 		}
 		return $success;
@@ -775,6 +790,9 @@ class Article extends DatabaseObject {
 
 		CampCache::singleton()->clear('user');
 		$this->fetch();
+
+		$g_ado_db->Execute('LOCK TABLES Articles WRITE');
+
 		// Get the article that is in the final position where this
 		// article will be moved to.
 		$compareOperator = ($p_direction == 'up') ? '<' : '>';
@@ -804,7 +822,8 @@ class Article extends DatabaseObject {
 			     		.' LIMIT '.($p_spacesToMove-1).', 1';
 			$destRow = $g_ado_db->GetRow($queryStr);
 			if (!$destRow) {
-				return false;
+			    $g_ado_db->Execute('UNLOCK TABLES');
+			    return false;
 			}
 		}
 		// Shift all articles one space between the source and destination article.
@@ -826,6 +845,9 @@ class Article extends DatabaseObject {
 					.' AND NrSection = ' . $this->m_data['NrSection']
 		     		.' AND Number = ' . $this->m_data['Number'];
 		$g_ado_db->Execute($queryStr3);
+
+		$g_ado_db->Execute('UNLOCK TABLES');
+
 		CampCache::singleton()->clear('user');
 
 		// Re-fetch this article to get the updated article order.
@@ -845,6 +867,9 @@ class Article extends DatabaseObject {
 
 		CampCache::singleton()->clear('user');
 		$this->fetch();
+
+		$g_ado_db->Execute('LOCK TABLES Articles WRITE');
+
 		// Get the article that is in the location we are moving
 		// this one to.
 		$queryStr = 'SELECT Number, IdLanguage, ArticleOrder FROM Articles '
@@ -854,11 +879,14 @@ class Article extends DatabaseObject {
 		     		.' ORDER BY ArticleOrder ASC LIMIT '.($p_moveToPosition - 1).', 1';
 		$destRow = $g_ado_db->GetRow($queryStr);
 		if (!$destRow) {
-			return false;
+		    $g_ado_db->Execute('UNLOCK TABLES');
+		    return false;
 		}
 		if ($destRow['ArticleOrder'] == $this->m_data['ArticleOrder']) {
-			// Move the destination down one.
-			$destArticle = new Article($destRow['IdLanguage'], $destRow['Number']);
+		    $g_ado_db->Execute('UNLOCK TABLES');
+
+		    // Move the destination down one.
+		    $destArticle = new Article($destRow['IdLanguage'], $destRow['Number']);
 			$destArticle->positionRelative("down", 1);
 			return true;
 		}
@@ -887,9 +915,12 @@ class Article extends DatabaseObject {
 					.' AND NrSection='.$this->m_data['NrSection']
 		     		.' AND Number='.$this->m_data['Number'];
 		$g_ado_db->Execute($queryStr);
-		CampCache::singleton()->clear('user');
 
+		$g_ado_db->Execute('UNLOCK TABLES');
+
+		CampCache::singleton()->clear('user');
 		$this->fetch();
+
 		return true;
 	} // fn positionAbsolute
 
