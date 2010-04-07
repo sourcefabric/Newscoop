@@ -33,7 +33,7 @@ function camp_html_select_option($p_value, $p_selectedValue, $p_printValue, $p_a
 		}
 	}
 	foreach ($p_attributes as $k => $v) {
-	   $str .= " $k=\"$v\"";   
+	   $str .= " $k=\"$v\"";
 	}
 	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
 	echo $str;
@@ -358,10 +358,12 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
  * @param string $p_link
  * @return void
  */
-function camp_html_goto_page($p_link)
+function camp_html_goto_page($p_link, $p_exit = true)
 {
 	header("Location: $p_link");
-	exit;
+	if ($p_exit) {
+	    exit;
+	}
 } // fn camp_html_goto_page
 
 // This is a simple global to tell us whether messages have been added

@@ -63,21 +63,24 @@ switch ($f_action) {
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code=".$f_article_number."_".$f_language_selected;
-		camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr);
+		camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr, false);
+		ArticleIndex::RunIndexer(3, 10, true);
 		exit;
 	case "copy":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=duplicate";
-		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
+		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr, false);
+		ArticleIndex::RunIndexer(3, 10, true);
 		exit;
 	case "move":
 		$args = $_REQUEST;
 		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=move";
-		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
+		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr, false);
+		ArticleIndex::RunIndexer(3, 10, true);
 		exit;
 }
 

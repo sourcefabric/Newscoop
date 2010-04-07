@@ -260,9 +260,11 @@ class ArticleIndex extends DatabaseObject {
 	            }
 	        }
 	    } catch (Exception $ex) {
+	        CampCache::singleton()->clear('user');
 	        flock($lockFile, LOCK_UN); // release the lock
 	        return new PEAR_Error($ex->getMessage() . ': ' . $g_ado_db->ErrorMsg());
 	    }
+	    CampCache::singleton()->clear('user');
 
 	    flock($lockFile, LOCK_UN); // release the lock
 

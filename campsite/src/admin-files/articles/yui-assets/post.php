@@ -185,4 +185,6 @@ Log::Message($logtext, $g_user->getUserId(), 37);
 
 echo($json->encode($data));
 
+ArticleIndex::RunIndexer(3, 10, true);
+
 ?>

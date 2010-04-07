@@ -146,12 +146,15 @@ $logtext = getGS('Content edited for article #$1: "$2" (Publication: $3, Issue: 
 Log::Message($logtext, $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
+	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'), false);
 } elseif ($f_save_button == "save_and_close") {
 	if ($f_publication_id > 0) {
-		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'));
+		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'index.php'), false);
 	} else {
-		camp_html_goto_page("/$ADMIN/");
+		camp_html_goto_page("/$ADMIN/", false);
 	}
 }
+
+ArticleIndex::RunIndexer(3, 10, true);
+
 ?>
