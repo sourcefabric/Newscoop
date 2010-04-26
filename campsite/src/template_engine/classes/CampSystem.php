@@ -177,6 +177,11 @@ abstract class CampSystem
     } // fn GetTemplateIdByName
 
 
+    public static function GetInvalidURLTemplate()
+    {
+    } // fn GetInvalidURLTemplate
+
+
     /**
      *
      */
@@ -187,17 +192,17 @@ abstract class CampSystem
 
         if ($p_lngId <= 0) {
             $publication = new Publication($p_pubId);
-            if (!is_object($publication) || !$publication->exists()) {
-                CampTemplate::singleton()->trigger_error('...');
+            if (!$publication->exists()) {
+                return null;
             }
             $p_lngId = $publication->getLanguageId();
         }
         if ($p_artNr > 0) {
             if ($p_issNr <= 0 || $p_sctNr <= 0) {
                 $article = new Article($p_lngId, $p_artNr);
-                if (!is_object($article) || !$article->exists()
-                        || ($p_isPublished && !$article->isPublished())) {
-                    CampTemplate::singleton()->trigger_error('...');
+                if (!$article->exists()
+                || ($p_isPublished && !$article->isPublished())) {
+                    return self::GetInvalidURLTemplate();
                 }
                 $p_issNr = $article->getIssueNumber();
                 $p_sctNr = $article->getSectionNumber();
@@ -217,7 +222,7 @@ abstract class CampSystem
                 }
                 $data = $g_ado_db->GetOne($sql);
                 if (empty($data)) {
-                    CampTemplate::singleton()->trigger_error('...');
+                    return null;
                 }
                 $p_issNr = $data;
             }
@@ -232,7 +237,7 @@ abstract class CampSystem
             }
             $data = $g_ado_db->GetOne($sql);
             if (empty($data)) {
-                CampTemplate::singleton()->trigger_error('...');
+                return null;
             }
             $p_issNr = $data;
         }
@@ -244,14 +249,14 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
-	    $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
-	    $issueTemplate = CampCache::singleton()->fetch($cacheKey);
-	    if ($issueTemplate !== false && !empty($issueTemplate)) {
-	        return $issueTemplate;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
+            $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
+            $issueTemplate = CampCache::singleton()->fetch($cacheKey);
+            if ($issueTemplate !== false && !empty($issueTemplate)) {
+                return $issueTemplate;
+            }
+        }
 
         $sql = 'SELECT t.Name FROM Issues as i, Templates as t '
             . 'WHERE i.IssueTplId = t.Id'
@@ -260,11 +265,11 @@ abstract class CampSystem
             . ' AND i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            CampTemplate::singleton()->trigger_error('...');
+            $data = self::GetInvalidURLTemplate();
         }
-	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $data);
-	}
+        if (CampCache::IsEnabled()) {
+            CampCache::singleton()->store($cacheKey, $data);
+        }
 
         return $data;
     } // fn GetIssueTemplate
@@ -274,14 +279,14 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
-	    $cacheKey = __CLASS__ . '_SectionTemplate_' . $paramString;
-	    $sectionTemplate = CampCache::singleton()->fetch($cacheKey);
-	    if ($sectionTemplate !== false && !empty($sectionTemplate)) {
-	        return $sectionTemplate;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
+            $cacheKey = __CLASS__ . '_SectionTemplate_' . $paramString;
+            $sectionTemplate = CampCache::singleton()->fetch($cacheKey);
+            if ($sectionTemplate !== false && !empty($sectionTemplate)) {
+                return $sectionTemplate;
+            }
+        }
 
         if ($p_sctNr > 0) {
             $sql = 'SELECT t.Name FROM Sections as s, Templates as t '
@@ -303,11 +308,11 @@ abstract class CampSystem
             . ' AND i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            CampTemplate::singleton()->trigger_error('...');
+            $data = self::GetInvalidURLTemplate();
         }
-	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $data);
-	}
+        if (CampCache::IsEnabled()) {
+            CampCache::singleton()->store($cacheKey, $data);
+        }
 
         return $data;
     } // fn GetSectionTemplate
@@ -317,14 +322,14 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
-	if (CampCache::IsEnabled()) {
-	    $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
-	    $cacheKey = __CLASS__ . '_ArticleTemplate_' . $paramString;
-	    $articleTemplate = CampCache::singleton()->fetch($cacheKey);
-	    if ($articleTemplate !== false && !empty($articleTemplate)) {
-	        return $articleTemplate;
-	    }
-	}
+        if (CampCache::IsEnabled()) {
+            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
+            $cacheKey = __CLASS__ . '_ArticleTemplate_' . $paramString;
+            $articleTemplate = CampCache::singleton()->fetch($cacheKey);
+            if ($articleTemplate !== false && !empty($articleTemplate)) {
+                return $articleTemplate;
+            }
+        }
 
         if ($p_sctNr > 0) {
             $sql = 'SELECT t.Name FROM Sections as s, Templates as t '
@@ -346,11 +351,11 @@ abstract class CampSystem
             . ' and i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            CampTemplate::singleton()->trigger_error('...');
+            $data = self::GetInvalidURLTemplate();
         }
-	if (CampCache::IsEnabled()) {
-	    CampCache::singleton()->store($cacheKey, $data);
-	}
+        if (CampCache::IsEnabled()) {
+            CampCache::singleton()->store($cacheKey, $data);
+        }
 
         return $data;
     } // fn GetArticleTemplate

@@ -40,19 +40,19 @@ class CampURITemplatePath extends CampURI
     CampRequest::SECTION_NR,
     CampRequest::ARTICLE_NR
     );
-    
+
     /**
      * Parameters used for the language definition
-     * 
+     *
      * @var array
      */
     static private $m_languageParameters = array(
     CampRequest::LANGUAGE_ID
     );
-    
+
     /**
      * Parameters used for the issue definition
-     * 
+     *
      * @var array
      */
     static private $m_issueParameters = array(
@@ -62,7 +62,7 @@ class CampURITemplatePath extends CampURI
 
     /**
      * Parameters used for the section definition
-     * 
+     *
      * @var array
      */
     static private $m_sectionParameters = array(
@@ -70,10 +70,10 @@ class CampURITemplatePath extends CampURI
     CampRequest::ISSUE_NR,
     CampRequest::SECTION_NR
     );
-    
+
     /**
      * Parameters used for the article definition
-     * 
+     *
      * @var array
      */
     static private $m_articleParameters = array(
@@ -82,7 +82,7 @@ class CampURITemplatePath extends CampURI
     CampRequest::SECTION_NR,
     CampRequest::ARTICLE_NR
     );
-    
+
     /**
      * Templates directory
      *
@@ -102,11 +102,17 @@ class CampURITemplatePath extends CampURI
 
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
         $this->m_templatesPrefix = 'tpl';
-        $this->setURL();
-        $this->parse();
-        foreach (CampURITemplatePath::$m_restrictedParameters as $parameter) {
-            $this->setQueryVar($parameter);
+        $res = $this->setURL();
+        if (PEAR::isError($res)) {
+            $this->m_validURI = false;
+            CampTemplate::singleton()->trigger_error($res->getMessage());
+        } else {
+            foreach (CampURITemplatePath::$m_restrictedParameters as $parameter) {
+                $this->setQueryVar($parameter);
+            }
+            $this->m_validURI = true;
         }
+        $this->validateCache(false);
     } // fn __construct
 
 
@@ -138,30 +144,6 @@ class CampURITemplatePath extends CampURI
         return $queryArray;
     }
 
-
-
-    /**
-     * Gets the current template name.
-     *
-     * @return string
-     *      The name of the template
-     */
-    public function getTemplate()
-    {
-        if (!is_null($this->m_template)) {
-            return $this->m_template->name;
-        }
-
-        $template = $this->readTemplate();
-        if (is_null($template)) {
-            $template = CampSystem::GetTemplate($this->language->number,
-            $this->publication->identifier, $this->issue->number,
-            $this->section->number, $this->article->number);
-        }
-        $this->setTemplate($template);
-
-        return $template;
-    } // fn getTemplate
 
 
     /**
@@ -302,19 +284,6 @@ class CampURITemplatePath extends CampURI
 
 
     /**
-     * Parses the URI.
-     * As URI was already parsed by CampURI, this function only takes care of
-     * read and set the template name.
-     *
-     * @return void
-     */
-    private function parse()
-    {
-        $this->getTemplate();
-    } // fn parse
-
-
-    /**
      * Sets the URL values.
      *
      * @return void
@@ -324,33 +293,30 @@ class CampURITemplatePath extends CampURI
         $this->setQueryVar('tpl', null);
         $this->setQueryVar('acid', null);
 
-        $this->m_publication = new MetaPublication();
-        $this->m_language = new MetaLanguage();
-        $this->m_issue = new MetaIssue();
-        $this->m_section = new MetaSection();
-        $this->m_article = new MetaArticle();
+        $this->m_publication = null;
+        $this->m_language = null;
+        $this->m_issue = null;
+        $this->m_section = null;
+        $this->m_article = null;
 
         // gets the publication object based on site name (URI host)
-        $alias = ltrim($this->getBase(), $this->getScheme().'://');
-        $aliasArray = Alias::GetAliases(null, null, $alias);
-        if (is_array($aliasArray) && sizeof($aliasArray) == 1) {
-            $this->m_publication = new MetaPublication($aliasArray[0]->getPublicationId());
+        $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
+        $aliasObj = new Alias($alias);
+        if ($aliasObj->exists()) {
+            $this->m_publication = new MetaPublication($aliasObj->getPublicationId());
         }
-        if (!$this->m_publication->defined()) {
-            CampTemplate::singleton()->trigger_error('Invalid site alias in URL.');
-            return;
+        if (is_null($this->m_publication) || !$this->m_publication->defined()) {
+            return new PEAR_Error("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
         }
 
         // sets the language identifier
         if (CampRequest::GetVar(CampRequest::LANGUAGE_ID) > 0) {
             $this->m_language = new MetaLanguage(CampRequest::GetVar(CampRequest::LANGUAGE_ID));
-        }
-        if (!$this->m_language->defined()) {
+        } else {
             $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
         }
         if (!$this->m_language->defined()) {
-            CampTemplate::singleton()->trigger_error('Invalid language number in URL.');
-            return;
+            return new PEAR_Error("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
         }
 
         // sets the issue number
@@ -364,8 +330,7 @@ class CampURITemplatePath extends CampURI
             $this->m_language->number, $issueObj->getIssueNumber());
         }
         if (!$this->m_issue->defined()) {
-            CampTemplate::singleton()->trigger_error('Invalid issue number in URL.');
-            return;
+            return new PEAR_Error("Invalid issue identifier in URL.", self::INVALID_ISSUE);
         }
 
         // sets the section if any
@@ -374,8 +339,7 @@ class CampURITemplatePath extends CampURI
             $this->m_issue->number, $this->m_language->number,
             CampRequest::GetVar(CampRequest::SECTION_NR));
             if (!$this->m_section->defined()) {
-                CampTemplate::singleton()->trigger_error('Invalid section number in URL.');
-                return;
+                return new PEAR_Error("Invalid section identifier in URL.", self::INVALID_SECTION);
             }
         }
 
@@ -384,30 +348,19 @@ class CampURITemplatePath extends CampURI
             $this->m_article = new MetaArticle($this->m_language->number,
             CampRequest::GetVar(CampRequest::ARTICLE_NR));
             if (!$this->m_article->defined()) {
-                CampTemplate::singleton()->trigger_error('Invalid article number in URL.');
-                return;
+                return new PEAR_Error("Invalid article identifier in URL.", self::INVALID_ARTICLE);
             }
+        }
+
+        $this->m_template = new MetaTemplate($this->getTemplate($this->readTemplate()));
+        if (!$this->m_template->defined()) {
+            return new PEAR_Error("Invalid template in URL or no default template specified.",
+            self::INVALID_TEMPLATE);
         }
 
         $this->m_validURI = true;
         $this->validateCache(false);
     } // fn setURL
-
-
-    /**
-     * Sets the template name.
-     *
-     * @param string $p_value
-     *      The template name
-     *
-     * @return void
-     */
-    private function setTemplate($p_value)
-    {
-        if ($this->isValidTemplate($p_value)) {
-            $this->m_template = new MetaTemplate($p_value);
-        }
-    } // fn setTemplateName
 
 
     /**
@@ -437,26 +390,6 @@ class CampURITemplatePath extends CampURI
 
         return $template;
     } // fn readTemplate
-
-
-    /**
-     * Returns whether the template name given is a valid template resource.
-     *
-     * @param string $p_templateName
-     *      The name of the template from the URI path
-     *
-     * @return boolean
-     *      true on success, false on failure
-     */
-    private function isValidTemplate($p_templateName)
-    {
-        $tplObj = new Template($p_templateName);
-        if (is_object($tplObj) && $tplObj->exists() && $tplObj->fileExists()) {
-            return true;
-        }
-
-        return false;
-    } // fn isValidTemplate
 
 
     /**

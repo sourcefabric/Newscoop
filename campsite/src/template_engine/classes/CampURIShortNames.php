@@ -47,34 +47,15 @@ class CampURIShortNames extends CampURI
         parent::__construct($p_uri);
 
         $this->setURLType(URLTYPE_SHORT_NAMES);
-        $this->setURL();
-    } // fn __construct
-
-
-    /**
-     *
-     */
-    public function getTemplate()
-    {
-        if (!is_null($this->m_template)) {
-            return $this->m_template->name;
-        }
-
-        $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-        if (!empty($templateId)) {
-            $tplObj = new Template($templateId);
-            if (!$tplObj->exists()) {
-                return null;
-            }
-            $template = $tplObj->getName();
+        $res = $this->setURL();
+        if (PEAR::isError($res)) {
+            $this->m_validURI = false;
+            CampTemplate::singleton()->trigger_error($res->getMessage());
         } else {
-            $template = CampSystem::GetTemplate($this->language->number,
-            $this->publication->identifier, $this->issue->number,
-            $this->section->number, $this->article->number);
+            $this->m_validURI = true;
         }
-
-        return $template;
-    } // fn getTemplate
+        $this->validateCache(false);
+    } // fn __construct
 
 
     /**
@@ -222,8 +203,7 @@ class CampURIShortNames extends CampURI
             $this->m_publication = new MetaPublication($aliasObj->getPublicationId());
         }
         if (is_null($this->m_publication) || !$this->m_publication->defined()) {
-            CampTemplate::singleton()->trigger_error("Invalid site alias '$alias' in URL.");
-            return;
+            return new PEAR_Error("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
         }
 
         // reads parameters values if any
@@ -252,8 +232,7 @@ class CampURIShortNames extends CampURI
             $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
         }
         if (is_null($this->m_language) || !$this->m_language->defined()) {
-            CampTemplate::singleton()->trigger_error("Invalid language code '$cLangCode' in URL.");
-            return;
+            return new PEAR_Error("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
         }
 
         // gets the issue number and sets the issue short name
@@ -265,8 +244,7 @@ class CampURIShortNames extends CampURI
                 $this->m_language->number,
                 $issueArray[0]->getIssueNumber());
             } else {
-	            CampTemplate::singleton()->trigger_error("Invalid issue name '$cIssueSName' in URL.");
-	            return;
+                return new PEAR_Error("Invalid issue identifier in URL.", self::INVALID_ISSUE);
 	        }
         } else {
             $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
@@ -274,8 +252,7 @@ class CampURIShortNames extends CampURI
             $this->m_issue = new MetaIssue($this->m_publication->identifier,
             $this->m_language->number, $issueObj->getIssueNumber());
             if (!$this->m_issue->defined()) {
-                CampTemplate::singleton()->trigger_error("Did not find any published issue.");
-                return;
+                return new PEAR_Error("No published issue was found.", self::INVALID_ISSUE);
             }
         }
 
@@ -291,8 +268,7 @@ class CampURIShortNames extends CampURI
                 $this->m_language->number,
                 $sectionArray[0]->getSectionNumber());
             } else {
-                CampTemplate::singleton()->trigger_error("Invalid section name '$cSectionSName' in URL.");
-                return;
+                return new PEAR_Error("Invalid section identifier in URL.", self::INVALID_SECTION);
             }
         }
 
@@ -302,14 +278,19 @@ class CampURIShortNames extends CampURI
             // the same for Campsite, we will have to change this in the future
             $articleObj = new Article($this->m_language->number, $cArticleSName);
             if (!$articleObj->exists()) {
-                CampTemplate::singleton()->trigger_error("Invalid article name '$cArticleSName' in URL.");
-                return;
+                return new PEAR_Error("Invalid article identifier in URL.", self::INVALID_ARTICLE);
             }
             $this->m_article = new MetaArticle($this->m_language->number,
             $articleObj->getArticleNumber());
         }
 
-        $this->m_template = new MetaTemplate($this->getTemplate());
+        $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+        $this->m_template = new MetaTemplate($this->getTemplate($templateId));
+        if (!$this->m_template->defined()) {
+            return new PEAR_Error("Invalid template in URL or no default template specified.",
+            self::INVALID_TEMPLATE);
+        }
+
         $this->m_validURI = true;
         $this->validateCache(false);
     } // fn setURL
@@ -373,9 +354,8 @@ class CampURIShortNames extends CampURI
                 break;
             case 'template':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
-                $template = new MetaTemplate($option);
-                if ($template->defined) {
-                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $template->identifier;
+                if (!is_null($option) && $this->isValidTemplate($option)) {
+                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $option;
                 }
                 break;
             default:

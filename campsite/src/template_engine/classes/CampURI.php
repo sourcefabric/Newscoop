@@ -16,7 +16,15 @@ define('URLTYPE_SHORT_NAMES', 2);
 /**
  * Class CampURI
  */
-abstract class CampURI {
+abstract class CampURI
+{
+    const INVALID_SITE_NAME = 1;
+    const INVALID_LANGUAGE = 2;
+    const INVALID_ISSUE = 3;
+    const INVALID_SECTION = 4;
+    const INVALID_ARTICLE = 5;
+    const INVALID_TEMPLATE = 6;
+
     /**
      * The URI type
      * It can be either:
@@ -40,7 +48,7 @@ abstract class CampURI {
      * @var array
      */
     protected $m_parts = array('scheme', 'user', 'password', 'host', 'port', 'path', 'query', 'fragment');
-    
+
     static protected $m_objects = array('publication'=>'Publication', 'issue'=>'Issue',
     'section'=>'Section', 'article'=>'Article', 'language'=>'Language');
 
@@ -158,7 +166,7 @@ abstract class CampURI {
      * @var boolean
      */
     protected $m_validURI = false;
-    
+
     /**
      * The list of parameters used in preview mode
      * @var array
@@ -591,6 +599,51 @@ abstract class CampURI {
         $this->buildURI($params, $p_preview);
         return $this->m_buildQuery;
     } // fn getURLParameters
+
+
+    /**
+     *
+     */
+    public function getTemplate($p_templateIdOrName = null)
+    {
+        if (!is_null($this->m_template)) {
+            return $this->m_template->name;
+        }
+
+        if (!empty($p_templateIdOrName)) {
+            $tplObj = new Template($p_templateIdOrName);
+            if (!$tplObj->exists()) {
+                return null;
+            }
+            $template = $tplObj->getName();
+        } else {
+            $template = CampSystem::GetTemplate($this->language->number,
+            $this->publication->identifier, $this->issue->number,
+            $this->section->number, $this->article->number);
+        }
+
+        return $template;
+    } // fn getTemplate
+
+
+    /**
+     * Returns whether the template name given is a valid template resource.
+     *
+     * @param string $p_templateName
+     *      The name of the template from the URI path
+     *
+     * @return boolean
+     *      true on success, false on failure
+     */
+    protected function isValidTemplate($p_templateName)
+    {
+        $tplObj = new Template($p_templateName);
+        if (is_object($tplObj) && $tplObj->exists() && $tplObj->fileExists()) {
+            return true;
+        }
+
+        return false;
+    } // fn isValidTemplate
 
 
     /**

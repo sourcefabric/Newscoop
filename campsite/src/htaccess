@@ -2,7 +2,7 @@
 DirectoryIndex index.php index.html
 Options -Indexes FollowSymLinks -MultiViews
 
-# Options might not aloowed here, use Rewrite rules instead
+# Options might not allowed here, use Rewrite rules instead
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
