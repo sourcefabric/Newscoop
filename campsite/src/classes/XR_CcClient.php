@@ -90,29 +90,6 @@ $GLOBALS['mdefs'] = array(
             '805'=>'message from lower later'
         )
     ),
-    "xr_storeMediaFileOpen" => array(
-        'm'=>'locstor.storeMediaFileOpen',
-        'p'=>array('sessid'/*string*/, 'gunid'/*string*/, 'metadata'/*string*/,
-        'fname'/*string*/, 'chsum'/*string*/, 'type'/*string*/),
-        't'=>array('string', 'string', 'string', 'string', 'string', 'string'),
-        'r'=>array('url'/*string*/, 'token'/*string*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '801'=>'bad params',
-            '805'=>'message from lower later'
-        )
-    ),
-    "xr_storeMediaFileClose" => array(
-        'm'=>'locstor.storeMediaFileClose',
-        'p'=>array('sessid'/*string*/, 'token'/*string*/),
-        't'=>array('string', 'string'),
-        'r'=>array('gunid'/*string*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '801'=>'bad params',
-            '805'=>'message from lower later'
-        )
-    ),
     "xr_storeWebstream" => array(
         'm'=>'locstor.storeWebstream',
         'p'=>array('sessid'/*string*/, 'gunid'/*string*/, 'metadata'/*string*/, 'fname'/*string*/, 'url'/*string*/),

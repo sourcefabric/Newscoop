@@ -423,11 +423,12 @@ final class MetaArticle extends MetaDbObject {
         if (!$image->defined) {
             return null;
         }
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), $image->number);
+        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+        $image->number);
         if (!$articleImage->exists()) {
             return null;
         }
-        return $articleImage->getFileIndex();
+        return $articleImage->getImageArticleIndex();
     }
 
 

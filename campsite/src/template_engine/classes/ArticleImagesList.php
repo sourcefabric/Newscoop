@@ -91,7 +91,7 @@ class ArticleImagesList extends ListObject
         	CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_images");
         	return false;
         }
-        $this->m_constraints[] = new ComparisonOperation('article_number', $operator,
+        $this->m_constraints[] = new ComparisonOperation('nrarticle', $operator,
                                                          $context->article->number);
 
         return $parameters;

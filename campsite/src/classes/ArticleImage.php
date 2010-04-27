@@ -16,10 +16,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 /**
  * @package Campsite
  */
-class ArticleImage extends ArticleAttachment {
+class ArticleImage extends DatabaseObject {
+	var $m_keyColumnNames = array('NrArticle','IdImage');
+	var $m_dbTableName = 'ArticleImages';
+	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
-
-    private static $s_defaultOrder = array(array('field'=>'byIndex', 'dir'=>'asc'));
 
 	/**
 	 * The ArticleImage table links together Articles with Images.
@@ -33,15 +34,15 @@ class ArticleImage extends ArticleAttachment {
 	                             $p_templateId = null)
 	{
 		if (!is_null($p_articleNumber) && !is_null($p_imageId)) {
-			$this->m_data['fk_article_number'] = $p_articleNumber;
-			$this->m_data['fk_file_gunid'] = $p_imageId;
+			$this->m_data['NrArticle'] = $p_articleNumber;
+			$this->m_data['IdImage'] = $p_imageId;
 			$this->fetch();
 		} elseif (!is_null($p_articleNumber) && !is_null($p_templateId)) {
-			$this->m_data['fk_article_number'] = $p_articleNumber;
-			$this->m_data['file_index'] = $p_templateId;
-			$this->m_keyColumnNames = array('fk_article_number', 'file_index');
+			$this->m_data['NrArticle'] = $p_articleNumber;
+			$this->m_data['Number'] = $p_templateId;
+			$this->m_keyColumnNames = array('NrArticle', 'Number');
 			$this->fetch();
-			$this->m_keyColumnNames = array('fk_article_number', 'fk_file_gunid');
+			$this->m_keyColumnNames = array('NrArticle', 'IdImage');
 		}
 	} // constructor
 
@@ -51,8 +52,26 @@ class ArticleImage extends ArticleAttachment {
 	 */
 	public function getImageId()
 	{
-		return $this->m_data['fk_file_gunid'];
+		return $this->m_data['IdImage'];
 	} // fn getImageId
+	
+	
+	/**
+	 * @return int
+	 */
+	public function getImageArticleIndex()
+	{
+	    return $this->m_data['Number'];
+	}
+
+
+	/**
+	 * @return int
+	 */
+	public function getArticleNumber()
+	{
+		return $this->m_data['NrArticle'];
+	} // fn getArticleNumber
 
 
 	/**
@@ -60,7 +79,7 @@ class ArticleImage extends ArticleAttachment {
 	 */
 	public function getTemplateId()
 	{
-		return $this->m_data['file_index'];
+		return $this->m_data['Number'];
 	} // fn getTemplateId
 
 
@@ -72,7 +91,7 @@ class ArticleImage extends ArticleAttachment {
 		if (is_object($this->m_image)) {
 			return $this->m_image;
 		} else {
-			return new Archive_ImageFile($this->m_data['fk_file_gunid']);
+			return new Image($this->m_data['IdImage']);
 		}
 	} // fn getImage
 
@@ -86,7 +105,7 @@ class ArticleImage extends ArticleAttachment {
      */
     public function setTemplateId($p_templateId)
     {
-        return $this->setProperty('file_index', $p_templateId);
+        return $this->setProperty('Number', $p_templateId);
     } // fn setTemplateId
 
 
@@ -104,14 +123,14 @@ class ArticleImage extends ArticleAttachment {
         ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
         $result = parent::delete();
         if ($result) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logtext = getGS('Image $1 unlinked from article $2', $this->getFileIndex(), $p_articleNumber);
-            Log::Message($logtext, null, 42);
+        	if (function_exists("camp_load_translation_strings")) {
+        		camp_load_translation_strings("api");
+        	}
+        	$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
+        	Log::Message($logtext, null, 42);
         }
         return $result;
-    } // fn delete
+    }
 
 
 	/**
@@ -121,10 +140,8 @@ class ArticleImage extends ArticleAttachment {
 	public static function GetUnusedTemplateId($p_articleNumber)
 	{
 		global $g_ado_db;
-
-		settype($p_articleNumber, 'integer');
 		// Get the highest template ID and add one.
-		$queryStr = "SELECT MAX(file_index)+1 FROM ArticleAttachments WHERE fk_article_number = $p_articleNumber";
+		$queryStr = "SELECT MAX(Number)+1 FROM ArticleImages WHERE NrArticle=$p_articleNumber";
 		$templateId = $g_ado_db->GetOne($queryStr);
 		if (!$templateId) {
 			$templateId = 1;
@@ -144,11 +161,8 @@ class ArticleImage extends ArticleAttachment {
 	public static function TemplateIdInUse($p_articleNumber, $p_templateId)
 	{
 		global $g_ado_db;
-
-		settype($p_articleNumber, 'integer');
-        settype($p_templateId, 'integer');
-		$queryStr = "SELECT fk_file_gunid FROM ArticleAttachments "
-				  . "WHERE fk_article_number = $p_articleNumber AND file_index = $p_templateId";
+		$queryStr = "SELECT Number FROM ArticleImages"
+					." WHERE NrArticle=$p_articleNumber AND Number=$p_templateId";
 		$value = $g_ado_db->GetOne($queryStr);
 		if ($value !== false) {
 			return true;
@@ -172,15 +186,18 @@ class ArticleImage extends ArticleAttachment {
 	{
 		global $g_ado_db;
 
-		settype($p_articleNumber, 'integer');
 		if ($p_countOnly) {
 			$selectStr = "COUNT(*)";
 		} else {
-			$selectStr = "*";
+			$tmpImage = new Image();
+			$selectStr = implode(',', $tmpImage->getColumnNames());
+			$selectStr .= ', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage';
 		}
-		$queryStr = "SELECT $selectStr FROM ArticleAttachments "
-				  . "WHERE fk_article_number = $p_articleNumber AND type = 'image' "
-				  . 'ORDER BY file_index';
+		$queryStr = 'SELECT '.$selectStr
+					.' FROM Images, ArticleImages'
+					.' WHERE ArticleImages.NrArticle='.$p_articleNumber
+					.' AND ArticleImages.IdImage=Images.Id'
+					.' ORDER BY ArticleImages.Number';
 		if ($p_countOnly) {
 			return $g_ado_db->GetOne($queryStr);
 		} else {
@@ -190,6 +207,8 @@ class ArticleImage extends ArticleAttachment {
 				foreach ($rows as $row) {
 					$tmpArticleImage = new ArticleImage();
 					$tmpArticleImage->fetch($row);
+					$tmpArticleImage->m_image = new Image();
+					$tmpArticleImage->m_image->fetch($row);
 					$returnArray[] = $tmpArticleImage;
 				}
 			}
@@ -210,22 +229,20 @@ class ArticleImage extends ArticleAttachment {
 	 *
 	 * @return void
 	 */
-	public static function AddImageToArticle($p_gunId, $p_articleNumber, $p_templateId = null)
+	public static function AddImageToArticle($p_imageId, $p_articleNumber,
+	                                         $p_templateId = null)
 	{
 		global $g_ado_db;
-
-		settype($p_articleNumber, 'integer');
 		if (is_null($p_templateId)) {
 			$p_templateId = ArticleImage::GetUnusedTemplateId($p_articleNumber);
-		} else {
-			settype($p_templateId, 'integer');
 		}
-		self::AddFileToArticle($p_gunId, $p_articleNumber, null, true, null, $p_templateId);
-
+		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
+					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
+		$g_ado_db->Execute($queryStr);
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Image $1 linked to article $2', $p_templateId, $p_articleNumber);
+		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
 		Log::Message($logtext, null, 41);
 	} // fn AddImageToArticle
 
@@ -272,20 +289,53 @@ class ArticleImage extends ArticleAttachment {
 	 * @param int $p_imageId
 	 * @return void
 	 */
-	public static function OnImageDelete($p_gunId)
+	public static function OnImageDelete($p_imageId)
 	{
 		global $g_ado_db;
-
 		// Get the articles that use this image.
-		$queryStr = "SELECT * FROM ArticleAttachments WHERE fk_file_gunid = '" . $g_ado_db->escape($p_gunId) . "'";
+		$queryStr = "SELECT * FROM ArticleImages WHERE IdImage=$p_imageId";
 		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
-				ArticleImage::RemoveImageTagsFromArticleText($row['fk_article_number'], $row['file_index']);
+				ArticleImage::RemoveImageTagsFromArticleText($row['NrArticle'], $row['Number']);
 			}
+			$queryStr = "DELETE FROM ArticleImages WHERE IdImage=$p_imageId";
+			$g_ado_db->Execute($queryStr);
 		}
-		self::OnAttachmentDelete($p_gunId);
 	} // fn OnImageDelete
+
+
+	/**
+	 * Remove image pointers for the given article.
+	 * @param int $p_articleNumber
+	 * @return void
+	 */
+	public static function OnArticleDelete($p_articleNumber)
+	{
+		global $g_ado_db;
+		$queryStr = 'DELETE FROM ArticleImages'
+					." WHERE NrArticle='".$p_articleNumber."'";
+		$g_ado_db->Execute($queryStr);
+	} // fn OnArticleDelete
+
+
+	/**
+	 * Copy all the pointers for the given article.
+	 * @param int $p_srcArticleNumber
+	 * @param int $p_destArticleNumber
+	 * @return void
+	 */
+	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+	{
+		global $g_ado_db;
+		$queryStr = 'SELECT * FROM ArticleImages WHERE NrArticle='.$p_srcArticleNumber;
+		$rows = $g_ado_db->GetAll($queryStr);
+		foreach ($rows as $row) {
+			$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
+						." VALUES($p_destArticleNumber, ".$row['IdImage'].",".$row['Number'].")";
+			$g_ado_db->Execute($queryStr);
+		}
+	} // fn OnArticleCopy
 
 
 	/**
@@ -294,29 +344,21 @@ class ArticleImage extends ArticleAttachment {
 	 *
 	 * @return array
 	 */
-	public static function GetArticlesThatUseImage($p_gunId, $p_count = false)
+	public static function GetArticlesThatUseImage($p_imageId)
 	{
 		global $g_ado_db;
-
-		if ($p_count) {
-			$columnQuery = 'COUNT(*)';
-		} else {
-			$article = new Article();
-			$columnNames = $article->getColumnNames();
-			$columnQuery = array();
-			foreach ($columnNames as $columnName) {
-				$columnQuery[] = 'Articles.'.$columnName;
-			}
-			$columnQuery = implode(',', $columnQuery);
+		$article = new Article();
+		$columnNames = $article->getColumnNames();
+		$columnQuery = array();
+		foreach ($columnNames as $columnName) {
+			$columnQuery[] = 'Articles.'.$columnName;
 		}
-		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleAttachments '
-					." WHERE ArticleAttachments.fk_file_gunid='" . $g_ado_db->escape($p_gunId) . "'"
-					.' AND ArticleAttachments.fk_article_number=Articles.Number'
-					.' ORDER BY Articles.Number desc, Articles.IdLanguage';
+		$columnQuery = implode(',', $columnQuery);
+		$queryStr = 'SELECT '.$columnQuery.' FROM Articles, ArticleImages '
+					.' WHERE ArticleImages.IdImage='.$p_imageId
+					.' AND ArticleImages.NrArticle=Articles.Number'
+					.' ORDER BY Articles.Number, Articles.IdLanguage';
 		$rows = $g_ado_db->GetAll($queryStr);
-		if ($p_count) {
-			return $g_ado_db->GetOne();
-		}
 		$articles = array();
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
@@ -375,7 +417,7 @@ class ArticleImage extends ArticleAttachment {
                 break;
             }
 
-            if (strpos($comparisonOperation['left'], 'fk_article_number')) {
+            if (strpos($comparisonOperation['left'], 'NrArticle')) {
                 $hasArticleNr = true;
             }
             $whereCondition = $comparisonOperation['left'] . ' '
@@ -393,7 +435,7 @@ class ArticleImage extends ArticleAttachment {
         }
 
         // sets the columns to be fetched
-        $tmpImage = new Attachment();
+        $tmpImage = new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $selectClauseObj->addColumn($columnName);
@@ -406,18 +448,18 @@ class ArticleImage extends ArticleAttachment {
         unset($tmpImage);
 
         // adds the ArticleImages join and condition to the query
-        $selectClauseObj->addTableFrom('ArticleAttachments');
-        $selectClauseObj->addWhere('ArticleAttachments.fk_file_gunid = Attachments.gunid');
-        $countClauseObj->addTableFrom('ArticleAttachments');
-        $countClauseObj->addWhere('ArticleAttachments.fk_file_gunid = Attachments.gunid');
-        $selectClauseObj->addWhere("Attachments.type = 'image'");
-        $countClauseObj->addWhere("Attachments.type = 'image'");
+        $selectClauseObj->addTableFrom('ArticleImages');
+        $selectClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+        $countClauseObj->addTableFrom('ArticleImages');
+        $countClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
+
+        if (!is_array($p_order)) {
+            $p_order = array();
+        }
 
         // sets the order condition if any
-        $p_order = array_merge($p_order, self::$s_defaultOrder);
-        $order = self::ProcessListOrder($p_order);
-        foreach ($order as $orderDesc) {
-            $selectClauseObj->addOrderBy($orderDesc['field'] . ' ' . $orderDesc['dir']);
+        foreach ($p_order as $orderColumn => $orderDirection) {
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
         // sets the limit
@@ -433,7 +475,7 @@ class ArticleImage extends ArticleAttachment {
         	// builds the array of image objects
         	$articleImagesList = array();
         	foreach ($images as $image) {
-        		$imgObj = new Archive_ImageFile($image['gunid']);
+        		$imgObj = new Image($image['Id']);
         		if ($imgObj->exists()) {
         			$articleImagesList[] = $imgObj;
         		}
@@ -464,8 +506,8 @@ class ArticleImage extends ArticleAttachment {
         $comparisonOperation = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_number':
-            $comparisonOperation['left'] = 'ArticleAttachments.fk_article_number';
+        case 'nrarticle':
+            $comparisonOperation['left'] = 'ArticleImages.NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
         }
@@ -477,27 +519,6 @@ class ArticleImage extends ArticleAttachment {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-
-
-    private static function ProcessListOrder($p_order)
-    {
-        $order = array();
-        foreach ($p_order as $orderDesc) {
-            $field = $orderDesc['field'];
-            $direction = $orderDesc['dir'];
-            $dbField = null;
-            switch (strtolower($field)) {
-                case 'byindex':
-                    $dbField = 'file_index';
-                    break;
-            }
-            if (!is_null($dbField)) {
-                $direction = !empty($direction) ? $direction : 'asc';
-                $order[] = array('field'=>$dbField, 'dir'=>$direction);
-            }
-        }
-        return $order;
-    } // fn ProcessListOrder
 
 } // class ArticleImages
 
