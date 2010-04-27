@@ -16,9 +16,9 @@ final class MetaImage extends MetaDbObject {
 
     public function __construct($p_imageId = null)
     {
-        $this->m_dbObject = new Archive_ImageFile($p_imageId);
+        $this->m_dbObject = new Image($p_imageId);
         if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new Archive_ImageFile();
+            $this->m_dbObject = new Image();
         }
 
         $this->m_properties['number'] = 'Id';
@@ -110,15 +110,15 @@ final class MetaImage extends MetaDbObject {
 
     public function getImageUrl()
     {
-        $url = $this->m_dbObject->getImageUrl();
-        return $url;
+        $url = $this->m_dbObject->getImageUrl(); 
+        return $url;   
     }
 
 
     public function getThumbnailUrl()
     {
-        $url = $this->m_dbObject->getThumbnailUrl();
-        return $url;
+        $url = $this->m_dbObject->getThumbnailUrl(); 
+        return $url;   
     }
 
 

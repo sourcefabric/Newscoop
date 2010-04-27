@@ -12,46 +12,35 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php
 class CampGetImage
 {
     /**
-     * @var string $m_imageSource
+     * @param string $m_imageSource
      *      Path to a local file.
      */
     private $m_imageSource = '';
 
     /**
-     * @var string $m_imageTarget
+     * @param string $m_imageTarget
      *      Path to a local derivate file.
      */
     private $m_imageTarget = '';
 
     /**
-     * @var string $m_isLocal
+     * @param string $m_isLocal
      *      Flag if image is local ore remote.
      */
     private $m_isLocal = TRUE;
 
     /**
-     * @var Image $m_image
+     * @param Image $m_image
      *      Consists name, type and url of the image
      */
     private $m_image = null;
 
+
     /**
-     * @var integer $m_ratio
+     * @param integer $m_ratio
      *      resize ratio in percent
      */
     private $m_ratio = 100;
-
-    /**
-     * @var integer $m_resizeWidth
-     *      resize width in pixels
-     */
-    private $m_resizeWidth = 0;
-
-    /**
-     * @var integer $m_resizeHeight
-     *      resize height in pixels
-     */
-    private $m_resizeHeight = 0;
 
     /**
      * @param integer $m_ttl
@@ -60,11 +49,11 @@ class CampGetImage
     private $m_ttl = 0;
 
     private $m_basePath;
-
+    
     private $m_cache_dir = '/image_cache/';
-
+    
     private $m_derivates_dir = '/derivates/';
-
+    
     private $m_fetch_dir = '/fetched/';
 
 
@@ -78,7 +67,7 @@ class CampGetImage
      * @param integer $p_imageRatio
      *      The ratio for image resize
      */
-    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0)
+    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100)
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
         $this->m_ttl = SystemPref::Get('ImagecacheLifetime');
@@ -87,14 +76,8 @@ class CampGetImage
         || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
             $this->ExitError('Invalid parameters');
         }
-        if($p_imageRatio > 0 && $p_imageRatio < 100) {
+        if($p_imageRatio>0 && $p_imageRatio<100){
             $this->m_ratio = $p_imageRatio;
-        }
-        if($p_imageWidth > 0) {
-            $this->m_resizeWidth = $p_imageWidth;
-        }
-        if($p_imageHeight > 0) {
-            $this->m_resizeHeight = $p_imageHeight;
         }
         $this->GetImage($p_imageNr, $p_articleNr);
     }   // fn __construct
@@ -107,17 +90,17 @@ class CampGetImage
      */
     public function setSourcePath()
     {
-        $fetched = !$this->m_isLocal ? $this->m_cache_dir.$this->m_fetch_dir : null;
+    	$fetched = !$this->m_isLocal ? $this->m_cache_dir.$this->m_fetch_dir : null;
         if ($this->CheckLocalFile($this->m_basePath.$fetched.$this->getLocalFileName())) {
             $this->m_isLocal = true;
             $this->m_imageSource = $this->m_basePath.$fetched.$this->getLocalFileName();
-
+            
         } elseif ($this->CheckRemoteFile($this->m_image->getUrl())) {
             $this->m_isLocal = false;
             $this->m_imageSource = $this->m_image->getUrl();
-
+            
         } else {
-            return false;
+            return false;   
         }
         return true;
     }   // fn setSourcePath
@@ -138,12 +121,12 @@ class CampGetImage
      */
     public function getTargetPath()
     {
-        $fetched = !$this->m_isLocal ? $this->m_fetch_dir : null;
-        $derivates = null;
+    	$fetched = !$this->m_isLocal ? $this->m_fetch_dir : null;
+    	$derivates = null;
         if ($this->m_ratio < 100) {
-            $derivates = $this->m_derivates_dir.$this->m_ratio.'/';
+            $derivates = $this->m_derivates_dir.$this->m_ratio.'/';    
         }
-
+        
         $path = $this->m_basePath.$this->m_cache_dir.$fetched.$derivates.$this->getLocalFileName();
         return $path;
     }   // fn getTargetPath
@@ -196,8 +179,8 @@ class CampGetImage
         $func = 'imagecreatefrom'.$p_ending;;
         return $func($this->getSourcePath());
     }  // fn ReadImage
-
-
+    
+    
     /**
      * Create an proper file ending for given ContenType
      *
@@ -228,11 +211,10 @@ class CampGetImage
         //        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_image->getContentType());
 
-        if ($this->m_isLocal && $this->m_ratio == 100
-	        && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0) {
+        if ($this->m_isLocal && $this->m_ratio == 100) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
-
+            
         } else {
             $this->imageCacheHandler();
         }
@@ -248,42 +230,17 @@ class CampGetImage
     {
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
-	if ($this->m_ratio > 0 && $this->m_ratio < 100) {
-	    $ratio = $this->m_ratio / 100;
-	    $w_dest = @round($w_src * $ratio);
-	    $h_dest = @round($h_src * $ratio);
-	} else {
-	    // if both width and height are set, get the smaller resulting
-	    // image dimension
-	    if ($this->m_resizeWidth > 0 && $this->m_resizeHeight > 0) {
-	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
-		$h_dest = @round($h_src * $h_dest);
-		if ($h_dest < $this->m_resizeHeight) {
-		    $w_dest = $this->m_resizeWidth;
-		} else {
-		    $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
-		    $w_dest = @round($w_src * $w_dest);
-		    $h_dest = $this->m_resizeHeight;
-		}
-	    } elseif ($this->m_resizeWidth > 0 && $this->m_resizeHeight == 0) {
-	        // autocompute height
-	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
-		$h_dest = @round($h_src * $h_dest);
-		$w_dest = $this->m_resizeWidth;
-	    } elseif ($this->m_resizeHeight > 0 && $this->m_resizeWidth == 0) {
-	        // autocompute width
-	        $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
-		$w_dest = @round($w_src * $w_dest);
-		$h_dest = $this->m_resizeHeight;
-	    }
-	}
+
+        $ratio = $this->m_ratio / 100;
+        $w_dest = round($w_src * $ratio);
+        $h_dest = round($h_src * $ratio);
 
         $dest = @imagecreatetruecolor($w_dest, $h_dest);
         @imagecopyresampled($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
     }  // fn ResizeImage
-
-
+    
+    
     /**
      * Return an local filename.
      * For the url's, use md5 hash for it.
@@ -312,8 +269,8 @@ class CampGetImage
         if (!$articleImage->exists()) {
         	$this->ExitError('Image not found');
         }
-        $this->m_image = new Archive_ImageFile($articleImage->getImageId());
-
+        $this->m_image = new Image($articleImage->getImageId());
+        
         if (!$this->m_image->exists()) {
             $this->ExitError('Image not found');
         }
@@ -332,16 +289,16 @@ class CampGetImage
      * @return unknown
      */
     private function imageCacheHandler()
-    {
+    {       
         if ($this->m_ttl == 0) {
             // cache disabled
-            return $this->createImage();
+            return $this->createImage();      
         }
 
         if (is_readable($this->getTargetPath())) {
             if ($this->cacheHasExpired()) {
                 // remove cached version
-                $this->removeCachedImage();
+                $this->removeCachedImage();   
             } else {
                 // use the cached image
                 return $this->sendCachedImage();
@@ -358,53 +315,53 @@ class CampGetImage
                 return $this->createImage();
             }
         }
-
+        
         if (!$this->createImage($this->getTargetPath())) {
             // fallback without caching
             return $this->createImage();
         }
     }
-
+    
     private function sendCachedImage()
     {
         header('Campsite-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
         readfile($this->getTargetPath());
     }
-
+    
     private function createImage($p_target=null)
     {
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
         $t = $this->ResizeImage($t);
         $function = 'image'.$func_ending;
-
+        
         if (!$p_target) {
             header('Campsite-Image-Cache: disabled');
             return $function($t);
         } else {
             $function($t, $p_target);
-            return $this->sendCachedImage();
+            return $this->sendCachedImage();  
         }
     }
-
+    
     private function cacheHasExpired()
     {
         if ($this->m_ttl == -1) {
             // infinite cache
-            return false;
+            return false;    
         }
-
+        
         $mtime = filemtime($this->getTargetPath());
-
+        
         if (time() > $mtime + $this->m_ttl) {
-            return true;
+            return true;   
         }
         return false;
     }
-
+    
     private function removeCachedImage()
     {
-        unlink($this->getTargetPath());
+        unlink($this->getTargetPath());    
     }
 
 

@@ -51,10 +51,12 @@ $articleData = $articleObj->getArticleData();
 $dbColumns = $articleData->getUserDefinedColumns(false, true);
 $articleType = new ArticleType($articleObj->getType());
 
+$articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj = new User($articleObj->getLockedByUser());
 $articleCreator = new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
+$articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleAudioclips = ArticleAudioclip::GetAudioclipsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 
@@ -178,9 +180,9 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 }
 
 if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
-    $spellcheck = 'spellcheck="true"';
+    $spellcheck = 'spellcheck="true"';   
 } else {
-    $spellcheck = 'spellcheck="false"';
+    $spellcheck = 'spellcheck="false"';   
 }
 ?>
 <!-- YUI dependencies -->
@@ -775,7 +777,7 @@ if ($f_edit_mode == "edit") { ?>
 					   class="input_text"
 					   size="50"
 					   maxlength="255"
-			           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"
+			           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" 
 			           <?php print $spellcheck ?> />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
@@ -872,7 +874,7 @@ if ($f_edit_mode == "edit") { ?>
 							$formattingErrors = true;
 							continue;
 						}
-						$image = new Archive_ImageFile($articleImage->getImageId());
+						$image = new Image($articleImage->getImageId());
 						$imageUrl = $image->getImageUrl();
 						unset($fakeTemplateId);
 						if (isset($ratios) && sizeof($ratios) > 0) {
@@ -922,7 +924,7 @@ window.location.reload();
 				        ?>
 					<td><textarea name="<?php print($textAreaId); ?>"
 								  id="<?php print($textAreaId); ?>"
-								  rows="20" cols="60" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
+								  rows="20" cols="70" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
 					</td>
 					<?php } else { ?>
 					<td align="left" style="padding: 5px; <?php if (!empty($text)) {?>border: 1px solid #888; margin-right: 5px;<?php } ?>" <?php if (!empty($text)) {?>bgcolor="#EEEEEE"<?php } ?>><?php p($text); ?></td>
@@ -1034,7 +1036,7 @@ window.location.reload();
                    name="<?php echo $dbColumn->getName(); ?>"
                    value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
                    id="<?php echo $dbColumn->getName(); ?>"
-                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>
+                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> 
                    onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
             </td>
             </tr>
@@ -1089,6 +1091,13 @@ window.location.reload();
 
 
 		<tr><td>
+			<!-- BEGIN Images table -->
+            <?php require('edit_images_box.php'); ?>
+			<!-- END Images table -->
+		</td></tr>
+
+
+		<tr><td>
 			<!-- BEGIN Files table -->
 			<?php require('edit_files_box.php'); ?>
 			<!-- END Files table -->
@@ -1109,9 +1118,9 @@ window.location.reload();
             <!-- END Audioclips table -->
         </td></tr>
         <?php } ?>
-
+        
         <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
-
+        
 		</table>
 	</td>
 </tr>
@@ -1212,7 +1221,7 @@ var handleSuccess = function(o){
 	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
 	emsg.style.display = 'none' ;
 	YAHOO.example.container.wait.hide();
-
+	
     }
 };
 
@@ -1238,7 +1247,7 @@ var sUrl = "/admin/articles/yui-assets/post.php";
 function makeRequest(a){
     // Initialize the temporary Panel to display while waiting
     // for article saving
-    YAHOO.example.container.wait =
+    YAHOO.example.container.wait = 
         new YAHOO.widget.Panel("wait",
                                         { width:"240px",
 					  fixedcenter:true,
@@ -1383,7 +1392,7 @@ createAuthorAutocomplete = function() {
     var oAC = new YAHOO.widget.AutoComplete("f_article_author", "authorContainer", oDS);
     oAC.prehighlightClassName = "yui-ac-prehighlight";
     oAC.useShadow = true;
-
+    
     return {
         oDS: oDS,
         oAC: oAC
