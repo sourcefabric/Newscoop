@@ -149,14 +149,14 @@ function camp_remove_dir($p_dirName, $p_msg = "", $p_skip = array())
     if (empty($p_msg)) {
         $p_msg = "Unable to remove directory '$p_dirName'";
     }
-    
+
     $removeDir = true;
     if (strrpos($p_dirName, '*') == (strlen($p_dirName) - 1)) {
     	$p_dirName = substr($p_dirName, 0, strlen($p_dirName) - 1);
     	$removeDir = false;
     }
     $p_dirName = rtrim($p_dirName, '/');
-    
+
     $dirContent = scandir($p_dirName);
     if ($dirContent === false) {
     	camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
@@ -461,7 +461,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     if (!$p_silent) {
         echo "done.\n";
     }
-    
+
     if (count($skipped) > 0 && !$p_silent) {
     	echo "
 Encountered non-critical errors while converting data to UTF-8 encoding!
@@ -620,7 +620,7 @@ function camp_detect_database_version($p_dbName, &$version)
         if (mysql_num_rows($res2) > 0) {
         	$version = "3.3.x";
         }
-        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ls_files'")) {
+        if (!$res2 = mysql_query("SHOW COLUMNS FROM Languages LIKE 'ShortMonth1'")) {
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
@@ -874,7 +874,7 @@ function camp_get_all_charsets()
 function camp_restore_database($p_sqlFile, $p_silent = false)
 {
 	global $Campsite;
-	
+
 	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
 	. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
 	. $Campsite['DATABASE_SERVER_PORT'];
