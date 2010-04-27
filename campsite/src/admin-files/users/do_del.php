@@ -19,8 +19,6 @@ if (!$editUser->exists()) {
 }
 $uName = $editUser->getUserName();
 $editUser->delete();
-$archiveUser = new MMAUser_ALib($uName);
-$archiveUser->delete();
 if ($phorumUser = Phorum_user::GetByUserName($uName)) {
 	$phorumUser->delete();
 }

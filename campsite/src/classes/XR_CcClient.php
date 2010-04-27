@@ -600,63 +600,6 @@ $GLOBALS['mdefs'] = array(
             '805'=>'message from lower level'
         )
     ),
-    "xr_createUser" => array(
-        'm'=>'locstor.createUser',
-        'p'=>array('sessid'/*string*/, 'login'/*string*/, 'passwd'/*string*/,
-            'name'/*string*/, 'group'/*string*/),
-        't'=>array('string', 'string', 'string', 'string', 'string'),
-        'r'=>array('uid'/*integer*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '805'=>'message from lower level',
-            '806'=>'login name already exists',
-            '848'=>'invalid session id'
-        )
-    ),
-    "xr_deleteUser" => array(
-        'm'=>'locstor.deleteUser',
-        'p'=>array('sessid'/*string*/, 'login'/*string*/),
-        't'=>array('string', 'string'),
-        'r'=>array('delete'/*boolean*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '805'=>'message from lower level',
-            '848'=>'invalid session id'
-        )
-    ),
-    "xr_changePassword" => array(
-        'm'=>'locstor.changePassword',
-        'p'=>array('sessid'/*string*/, 'login'/*string*/, 'old_passwd'/*string*/, 'passwd'/*string*/),
-        't'=>array('string', 'string', 'string', 'string'),
-        'r'=>array('change_password'/*boolean*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '805'=>'message from lower level',
-            '848'=>'invalid session id'
-        )
-    ),
-    "xr_addToGroup" => array(
-        'm'=>'locstor.addToGroup',
-        'p'=>array('sessid'/*string*/, 'login'/*string*/, 'group'/*string*/),
-        't'=>array('string', 'string', 'string'),
-        'r'=>array('add_to_group'/*boolean*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '805'=>'message from lower later',
-            '848'=>'invalid session id'
-        )
-    ),
-    "xr_removeFromGroup" => array(
-        'm'=>'locstor.removeFromGroup',
-        'p'=>array('sessid'/*string*/, 'login'/*string*/, 'group'/*string*/),
-        't'=>array('string', 'string', 'string'),
-        'r'=>array('remove_from_group'/*boolean*/),
-        'e'=>array(
-            '3'=>'incorrect parameters',
-            '805'=>'message from lower level',
-            '848'=>'invalid session id'
-        )
-    ),
     "xr_loadPref" => array(
         'm'=>'locstor.loadPref',
         'p'=>array('sessid'/*string*/, 'key'/*string*/),

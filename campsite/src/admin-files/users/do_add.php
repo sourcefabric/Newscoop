@@ -78,11 +78,6 @@ if (!$phorumUser->UserNameExists($fieldValues['UName']) &&
     if ($uType == 'Staff') {
         $editUser->setUserType($Type);
     }
-    $archiveUser = new MMAUser_ALib();
-    $res = $archiveUser->create($fieldValues['UName'], $password, $editUser->getRealName(), true);
-    if (PEAR::isError($res)) {
-        camp_html_add_msg(getGS('File archive account for the user account $1 could not be created.', $editUser->getUserName()));
-    }
     $phorumUser->create($fieldValues['UName'], $password, $fieldValues['EMail'], $editUser->getUserId());
     camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
     camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
