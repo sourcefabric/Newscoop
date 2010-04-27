@@ -3,16 +3,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/XR_CcClient.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 
 $sessid = null;
-$sessid = camp_session_get(CS_FILEARCHIVE_SESSION_VAR_NAME, '');
-if (!empty($sessid)) {
-    $xrc =& XR_CcClient::Factory($mdefs, true);
-    if (!PEAR::isError($xrc) && !PEAR::isError($xrc->ping($sessid))) {
-        $xrc->xr_logout($sessid);
-    }
-}
-
-$sessid = null;
-$sessid = camp_session_get(CS_CAMPCASTER_SESSION_VAR_NAME, '');
+$sessid = camp_session_get('cc_sessid', '');
 if (!empty($sessid)) {
     $xrc =& XR_CcClient::Factory($mdefs);
     if (!PEAR::isError($xrc) && !PEAR::isError($xrc->ping($sessid))) {

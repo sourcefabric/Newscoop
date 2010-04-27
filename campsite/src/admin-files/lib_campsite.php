@@ -392,18 +392,17 @@ function camp_session_unset($p_name)
  *
  * @param string $f_cc_username
  * @param string $f_cc_password
- * @param boolean $f_local
  * @return boolean true or PEAR_Error
  */
-function camp_campcaster_login($f_username, $f_password, $f_local = false, $f_session_var = CS_CAMPCASTER_SESSION_VAR_NAME)
+function camp_campcaster_login($f_cc_username, $f_cc_password)
 {
     global $mdefs;
 
-    $xrc =& XR_CcClient::Factory($mdefs, $f_local);
+    $xrc =& XR_CcClient::Factory($mdefs);
     if (PEAR::isError($xrc)) {
     	return $xrc;
     }
-    $r = $xrc->xr_login($f_username, $f_password);
+    $r = $xrc->xr_login($f_cc_username, $f_cc_password);
     if (is_string($r) && $r == 'Connection refused') {
         $r = new PEAR_Error(getGS("Connection refused"));
     }
@@ -413,23 +412,9 @@ function camp_campcaster_login($f_username, $f_password, $f_local = false, $f_se
     if (!is_array($r) && !isset($r['sessid'])) {
         return new PEAR_Error(getGS('Unable to connect to the Campcaster server, please verify the Campcaster server settings.'));
     }
-    camp_session_set($f_session_var, $r['sessid']);
+    camp_session_set('cc_sessid', $r['sessid']);
     return true;
 } // fn camp_campcaster_login
-
-
-/**
- * Performs authentication for the local file archive storage server.
- *
- * @param string $f_cc_username
- * @param string $f_cc_password
- * @param boolean $f_local
- * @return boolean true or PEAR_Error
- */
-function camp_filearchive_login($f_username, $f_password)
-{
-    return camp_campcaster_login($f_username, $f_password, true, CS_FILEARCHIVE_SESSION_VAR_NAME);
-} // fn camp_filearchive_login
 
 
 /**
@@ -498,28 +483,6 @@ function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 	}
 	return "";
 } // fn camp_get_error_message
-
-
-function camp_get_file_upload_error($p_errorCode)
-{
-    switch ($error_code) {
-    case UPLOAD_ERR_INI_SIZE:
-    case UPLOAD_ERR_FORM_SIZE:
-        return getGS('The uploaded file exceeds the allowed max file size.');
-    case UPLOAD_ERR_PARTIAL:
-        return getGS('The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in \'php.ini\'.');
-    case UPLOAD_ERR_NO_FILE:
-        return getGS('No file was uploaded.');
-    case UPLOAD_ERR_NO_TMP_DIR:
-        return getGS('There was a problem uploading the file. Missing a temporary folder.');
-    case UPLOAD_ERR_CANT_WRITE:
-        return getGS('There was a problem uploading the file. Failed to write file to disk.');
-    case UPLOAD_ERR_EXTENSION:
-        return getGS('File upload stopped by extension.');
-    default:
-        return getGS('Unknown upload error.');
-    } 
-} // fn camp_get_file_upload_error
 
 
 function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
