@@ -61,6 +61,10 @@ final class CampHTMLDocument
      */
     private static $m_instance = null;
 
+    /** 
+     * @var object 
+     */ 
+    private $m_config = null; 
 
     /**
      * Class constructor
@@ -69,6 +73,8 @@ final class CampHTMLDocument
      */
     private function __construct($p_attributes = array())
     {
+        $this->m_config = CampConfig::singleton();
+
         if (isset($p_attributes['type'])) {
             $this->m_type = $p_attributes['type'];
         } else {
@@ -294,6 +300,10 @@ final class CampHTMLDocument
 
         $tpl = CampTemplate::singleton();
         $tpl->template_dir = $siteinfo['templates_path'];
+        $subdir = $this->m_config->getSetting('SUBDIR'); 
+        if (!empty($subdir)) { 
+            $siteinfo['templates_path'] = substr($subdir, 1) . '/' . $siteinfo['templates_path'];
+        } 
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
 

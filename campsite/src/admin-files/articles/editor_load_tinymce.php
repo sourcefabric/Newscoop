@@ -11,7 +11,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 {
 	global $Campsite;
 
-	$stylesheetFile = '/admin/articles/article_stylesheet.css';
+	$stylesheetFile = $Campsite['WEBSITE_URL'] + '/admin/articles/article_stylesheet.css';
 
 	/** STEP 1 ********************************************************
 	 * What are the names of the textareas you will be turning
@@ -221,7 +221,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
 ?>
 <!-- TinyMCE -->
-<script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js"></script>
 <script type="text/javascript">
 function CampsiteSubhead(ed) {
     element = ed.dom.getParent(ed.selection.getNode(), 'span');
@@ -287,7 +287,7 @@ tinyMCE.init({
     <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
         ed.addButton('campsite-subhead', {
         title : 'campsitesubhead.campsitesubhead_desc',
-        image : '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
+        image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
         onclick : function() {
                       CampsiteSubhead(ed);
                   }
@@ -303,7 +303,7 @@ function campsitemedia(field_name, url, type, win)
     langId = topDoc.getElementById('f_language_selected').value;
 
     tinyMCE.activeEditor.windowManager.open({
-	    url: "/javascript/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
+	    url: website_url + "/javascript/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
 	    width: 580,
 	    height: 320,
 	    inline : "yes",

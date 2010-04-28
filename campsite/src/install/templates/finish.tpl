@@ -28,7 +28,7 @@
           </td>
           <td width="60%" align="center">
             <div class="icon">
-              <a href="/admin/index.php">
+              <a href="../admin/index.php">
               <img src="img/admin.png" /><br />
               <span>Administrator</span>
               </a>

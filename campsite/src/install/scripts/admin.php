@@ -10,7 +10,8 @@ $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 // goes to install process if configuration files does not exist yet
 if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
         || !file_exists($GLOBALS['g_campsiteDir'].'/conf/database_conf.php')) {
-    header('Location: /install/index.php');
+    header('Location: install/index.php');
+    exit(0);
 }
 
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');

@@ -9,15 +9,16 @@
  * @link http://www.campware.org
  */
 
+$g_documentRoot = dirname(__FILE__); 
+
 // goes to install process if configuration files does not exist yet
-if (!file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/configuration.php')
-        || !file_exists($_SERVER['DOCUMENT_ROOT'].'/conf/database_conf.php')) {
-    header('Location: /install/index.php');
+if (!file_exists($g_documentRoot.'/conf/configuration.php')
+        || !file_exists($g_documentRoot.'/conf/database_conf.php')) {
+    header('Location: install/index.php');
+    exit(0);
 }
 
-define('CS_INSTALL_DIR', dirname(__FILE__) . '/install');
-
-$g_documentRoot = $_SERVER['DOCUMENT_ROOT'];
+define('CS_INSTALL_DIR', $g_documentRoot . '/install');
 
 require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
@@ -49,4 +50,4 @@ $document = CampSite::GetHTMLDocumentInstance();
 $document->render($params);
 
 ?>
-<META HTTP-EQUIV="Refresh" content="1;url=/upgrade.php">
+<META HTTP-EQUIV="Refresh" content="1;url=upgrade.php">

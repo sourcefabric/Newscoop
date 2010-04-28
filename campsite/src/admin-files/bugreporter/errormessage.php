@@ -11,7 +11,7 @@ global $ADMIN;
 <table border="0">
 <tr>
     <td rowspan="2" valign="top">
-        <script type="text/javascript" src="/javascript/campsite.js"></script>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
         <form name="dialog" method="POST" action="<?php echo "/$ADMIN/bugreporter/"; ?>senderrorform.php" />
 

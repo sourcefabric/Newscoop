@@ -117,10 +117,10 @@ camp_html_content_top(getGS('Article List'), $topArray);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
-<link type="text/css" rel="stylesheet" href="/javascript/yui/build/container/assets/skins/sam/container.css">
+<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/skins/sam/container.css">
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="/javascript/yui/build/container/container-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/container-min.js"></script>
 <style type="text/css">
 .yui-skin-sam .yui-tt .bd{position:relative;top:0;left:0;z-index:1;color:#000;padding:2px 5px;border-color:#A35ACF #A35ACF #A35ACF #A35ACF;border-width:1px;border-style:solid;background-color:#D5C3DF;}
 </style>

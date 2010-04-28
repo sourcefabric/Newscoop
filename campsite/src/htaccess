@@ -6,27 +6,27 @@ Options -Indexes FollowSymLinks -MultiViews
 <IfModule mod_rewrite.c>
     RewriteEngine On
     
-    RewriteCond %{REQUEST_URI} ^/+get_img$
-    RewriteRule . /get_img.php [L]
+    RewriteCond %{REQUEST_URI} /+get_img$
+    RewriteRule . get_img.php [L]
     
-    RewriteCond %{REQUEST_URI} ^/+attachment/+
-    RewriteRule . /attachment.php [L]
+    RewriteCond %{REQUEST_URI} /+attachment/+
+    RewriteRule . attachment.php [L]
     
     RewriteCond %{REQUEST_URI} !\.php$
     RewriteCond %{REQUEST_URI} !\.html$
     RewriteCond %{REQUEST_URI} !\.css$
     RewriteCond %{REQUEST_URI} !\.js$ 
-    RewriteCond %{REQUEST_URI} !^/+admin
-    RewriteCond %{REQUEST_URI} !^/+install
-    RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+javascript
-    RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+css
-    RewriteCond %{REQUEST_URI} !^(/+plugins/[^/]*)?/+images
-    RewriteCond %{REQUEST_URI} !^/+templates
-    RewriteRule . /index.php [L]
+    RewriteCond %{REQUEST_URI} !/+admin
+    RewriteCond %{REQUEST_URI} !/+install
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+javascript
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+css
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+images
+    RewriteCond %{REQUEST_URI} !/+templates
+    RewriteRule . index.php [L]
     
     RewriteCond %{REQUEST_URI} .tpl$
-    RewriteRule . /index.php [L]
+    RewriteRule . index.php [L]
     
-    RewriteCond %{REQUEST_URI} ^/+admin$|^/+admin/+.*|^/+admin-files
-    RewriteRule . /admin.php [L]
+    RewriteCond %{REQUEST_URI} /+admin$|/+admin/+.*|/+admin-files
+    RewriteRule . admin.php [L]
 </IfModule>

@@ -186,30 +186,30 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 }
 ?>
 <!-- YUI dependencies -->
-<script src="/javascript/yui/build/yahoo/yahoo-min.js"></script>
-<script src="/javascript/yui/build/event/event-min.js"></script>
-<script src="/javascript/yui/build/dom/dom-min.js"></script>
-<script src="/javascript/yui/build/connection/connection-min.js"></script>
-<script src="/javascript/yui/build/animation/animation-min.js"></script>
-<script src="/javascript/yui/build/container/container.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo/yahoo-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/event/event-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/dom/dom-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/connection/connection-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/animation/animation-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/container.js"></script>
 
 <!-- Autocomplete dependencies -->
-<script src="/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="/javascript/yui/build/datasource/datasource-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/datasource/datasource-min.js"></script>
 
 <!-- Button dependencies -->
-<script src="/javascript/yui/build/element/element-beta-min.js"></script>
-<script src="/javascript/yui/build/button/button-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/element/element-beta-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/button/button-min.js"></script>
 
 <!-- Autocomplete Source file -->
-<script src="/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
 
 <!-- CSS file (default YUI Sam Skin) -->
-<link type="text/css" rel="stylesheet" href="/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
+<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
 
-<link rel="stylesheet" type="text/css" href="/javascript/yui/build/button/assets/skins/sam/button.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/button/assets/skins/sam/button.css" />
 
-<link type="text/css" rel="stylesheet" href="/javascript/yui/build/container/assets/container.css">
+<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/container.css">
 
 <link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
 
@@ -1241,7 +1241,7 @@ var callback =
 };
 
 
-var sUrl = "/admin/articles/yui-assets/post.php";
+var sUrl = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/post.php";
 
 
 function makeRequest(a){

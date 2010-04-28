@@ -69,7 +69,6 @@ $Campsite['smtp']['default_port'] = 25;
 
 /** Backward compatibility **/
 $ADMIN_DIR = "admin-files";
-$ADMIN = "admin";
 
 require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');

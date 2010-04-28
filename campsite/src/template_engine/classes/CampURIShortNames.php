@@ -68,7 +68,7 @@ class CampURIShortNames extends CampURI
     {
         $uriString = null;
         if (!is_null($this->m_language) && $this->m_language->defined()) {
-            $uriString = '/' . $this->m_language->code . '/';
+            $uriString = $this->m_config->getSetting('SUBDIR') . '/' . $this->m_language->code . '/';
         }
 
         return $uriString;
@@ -207,7 +207,8 @@ class CampURIShortNames extends CampURI
         }
 
         // reads parameters values if any
-        $cParams = explode('/', trim($this->getPath(), '/'));
+        $params = str_replace($this->m_config->getSetting('SUBDIR'), '', $this->getPath());
+        $cParams = explode('/', trim($params, '/'));
         $cParamsSize = sizeof($cParams);
         if ($cParamsSize >= 1) {
             $cLangCode = $cParams[0];
@@ -374,7 +375,7 @@ class CampURIShortNames extends CampURI
         }
 
         if (!is_null($this->m_language) && $this->m_language->defined() && is_null($this->m_buildPath)) {
-            $this->m_buildPath = '/' . $this->m_language->code . '/';
+            $this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/' . $this->m_language->code . '/';
             if (!is_null($this->m_issue) && $this->m_issue->defined()) {
                 $this->m_buildPath .= $this->m_issue->url_name . '/';
                 if (!is_null($this->m_section) && $this->m_section->defined()) {

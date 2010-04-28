@@ -101,7 +101,8 @@ class CampURITemplatePath extends CampURI
         parent::__construct($p_uri);
 
         $this->setURLType(URLTYPE_TEMPLATE_PATH);
-        $this->m_templatesPrefix = 'tpl';
+        $subdir = $this->m_config->getSetting('SUBDIR');
+        $this->m_templatesPrefix = empty($subdir) ? 'tpl' : substr($subdir, 1) . '/tpl';
         $res = $this->setURL();
         if (PEAR::isError($res)) {
             $this->m_validURI = false;
@@ -375,14 +376,7 @@ class CampURITemplatePath extends CampURI
             return null;
         }
 
-        $trimmedPath = trim($this->getPath(), '/');
-        $pathParts = explode('/', $trimmedPath);
-        $tplDir = array_shift($pathParts);
-        $template = implode('/', $pathParts);
-        if ($tplDir != $this->m_templatesPrefix) {
-            return null;
-        }
-
+        $template = str_replace($this->m_templatesPrefix . '/', '', trim($this->getPath(), '/'));
         $validName = strpos($template, '.tpl');
         if (!$validName) {
             return null;

@@ -227,7 +227,7 @@ hr {
 .breadcrumb_separator {
 	padding-left: 8px;
 	padding-right: 8px;
-	background-image: url(/css/breadcrumb_separator2.png);
+	background-image: url(breadcrumb_separator2.png);
 	background-repeat: no-repeat;
 	background-position: 50% 60%;
 }

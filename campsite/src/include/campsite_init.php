@@ -16,7 +16,7 @@ if (!isset($GLOBALS['g_campsiteDir'])) {
 // redirects to the installation process if necessary
 if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
         || !file_exists($GLOBALS['g_campsiteDir'].'/conf/database_conf.php')) {
-    header('Location: /install/index.php');
+    header('Location: install/index.php');
     exit;
 }
 

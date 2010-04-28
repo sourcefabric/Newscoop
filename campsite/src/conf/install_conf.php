@@ -29,7 +29,9 @@ $Campsite['HOSTNAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME']
 if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
     $Campsite['HOSTNAME'] .= ':'.$_SERVER['SERVER_PORT'];
 }
-$Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'];
+$Campsite['SUBDIR'] = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+$ADMIN = empty($Campsite['SUBDIR']) ? 'admin' : substr($Campsite['SUBDIR'], 1) . '/admin';
+$Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'].$Campsite['SUBDIR'];
 unset($scheme);
 
 

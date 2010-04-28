@@ -38,7 +38,7 @@ if (!isset($_SERVER['SERVER_PORT']))
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
-$websiteURL = $scheme.$siteAlias->getName();
+$websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";

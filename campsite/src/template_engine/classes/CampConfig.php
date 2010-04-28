@@ -43,7 +43,8 @@ final class CampConfig
             $p_configFile = $GLOBALS['g_campsiteDir'].'/conf/configuration.php';
         }
         if (!file_exists($p_configFile)) {
-            header('Location: /install/index.php');
+            header('Location: install/index.php');
+            exit(0);
         }
 
         require_once($p_configFile);
@@ -100,7 +101,7 @@ final class CampConfig
 
         $settingVar = CampConfig::TranslateSettingName($p_varName);
         if (!$settingVar) {
-            return null;
+            return array_key_exists($p_varName, $this->m_config) ? $this->m_config[$p_varName] : null;
         }
 
         $varname = $settingVar['varname'];

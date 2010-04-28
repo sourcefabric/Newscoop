@@ -174,6 +174,10 @@ abstract class CampURI
     static protected $m_previewParameters = array('LoginUserId',
     'LoginUserKey', 'AdminAccess', 'previewLang', 'preview');
 
+    /** 
+     * @var object 
+     */ 
+    protected $m_config = null; 
 
     /**
      * Class constructor
@@ -183,6 +187,8 @@ abstract class CampURI
      */
     public function __construct($p_uri = 'SELF')
     {
+        $this->m_config = CampConfig::singleton();
+
         if (isset($p_uri) && $p_uri != 'SELF') {
             $uriString = $p_uri;
         } else {
@@ -917,7 +923,7 @@ abstract class CampURI
 
         switch ($parameter) {
             case 'root_level':
-                $this->m_buildPath = '/';
+                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/';
                 if ($p_preview) {
                     $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
                 } else {
@@ -928,13 +934,13 @@ abstract class CampURI
             case 'articleattachment':
                 $context = CampTemplate::singleton()->context();
                 $attachment = new Attachment($context->attachment->identifier);
-                $this->m_buildPath = '/attachment/'.basename($attachment->getStorageLocation());
+                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/attachment/'.basename($attachment->getStorageLocation());
                 $this->m_buildQueryArray = array();
                 $p_params = array();
                 break;
             case 'audioattachment':
                 $context = CampTemplate::singleton()->context();
-                $this->m_buildPath = '/audioclip/';
+                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/audioclip/';
                 $this->m_buildQueryArray = array();
                 $p_params = array();
                 break;
@@ -953,7 +959,7 @@ abstract class CampURI
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
                 if ($context->image->article_index !== null) {
-                    $this->m_buildPath = '/get_img';
+                    $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/get_img';
                     $this->m_buildQueryArray = array();
                     $this->m_buildQueryArray['NrImage'] = $context->image->article_index;
                     $this->m_buildQueryArray['NrArticle'] = $context->article->number;

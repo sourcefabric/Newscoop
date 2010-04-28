@@ -1,6 +1,6 @@
 
 // directory of where all the images are
-var cmThemeOfficeBase = '/javascript/JSCookMenu/ThemeOffice/';
+var cmThemeOfficeBase = website_url + '/javascript/JSCookMenu/ThemeOffice/';
 
 var cmThemeOffice =
 {
