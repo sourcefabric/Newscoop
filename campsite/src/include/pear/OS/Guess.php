@@ -74,7 +74,7 @@
 // Darwin home-eden.local 7.5.0 Darwin Kernel Version 7.5.0: Thu Aug  5 19:26:16 PDT 2004; root:xnu/xnu-517.7.21.obj~3/RELEASE_PPC  Power Macintosh
 //
 // Mac OS X early versions
-// 
+//
 
 // }}}
 
@@ -158,7 +158,7 @@ class OS_Guess
             case 'Linux' :
                 $extra = $this->_detectGlibcVersion();
                 // use only the first two digits from the kernel version
-                $release = ereg_replace('^([[:digit:]]+\.[[:digit:]]+).*', '\1', $parts[2]);
+                $release = preg_replace('/^([[:digit:]]+\.[[:digit:]]+).*/', '\1', $parts[2]);
                 break;
             case 'Mac' :
                 $sysname = 'darwin';
@@ -176,10 +176,10 @@ class OS_Guess
                         $cpu = 'powerpc';
                     }
                 }
-                $release = ereg_replace('^([[:digit:]]+\.[[:digit:]]+).*', '\1', $parts[2]);
+                $release = preg_replace('/^([[:digit:]]+\.[[:digit:]]+).*/', '\1', $parts[2]);
                 break;
             default:
-                $release = ereg_replace('-.*', '', $parts[2]);
+                $release = preg_replace('/-.*/', '', $parts[2]);
                 break;
         }
 
