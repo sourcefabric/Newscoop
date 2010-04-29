@@ -156,9 +156,9 @@ class getid3_write_metaflac
 		// 0x7A inclusive (a-z).
 
 		// replace invalid chars with a space, return uppercase text
-		// Thanks Chris Bolt <chris-getid3Øbolt*cx> for improving this function
-		// note: ereg_replace() replaces nulls with empty string (not space)
-		return strtoupper(ereg_replace('[^ -<>-}]', ' ', str_replace("\x00", ' ', $originalcommentname)));
+		// Thanks Chris Bolt <chris-getid3ï¿½bolt*cx> for improving this function
+		// note: preg_replace() replaces nulls with empty string (not space)
+		return strtoupper(preg_replace('/[^ -<>-}]/', ' ', str_replace("\x00", ' ', $originalcommentname)));
 
 	}
 

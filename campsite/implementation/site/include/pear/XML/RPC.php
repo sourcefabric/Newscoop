@@ -497,7 +497,7 @@ function XML_RPC_ee($parser_resource, $name)
 
     case 'METHODNAME':
     case 'RPCMETHODNAME':
-        $XML_RPC_xh[$parser]['method'] = ereg_replace("^[\n\r\t ]+", '',
+        $XML_RPC_xh[$parser]['method'] = preg_replace("/^[\n\r\t ]+/", '',
                                                       $XML_RPC_xh[$parser]['ac']);
         break;
     }
@@ -1228,9 +1228,9 @@ class XML_RPC_Message extends XML_RPC_Base
         $this->payload .= "</params>\n";
         $this->payload .= $this->xml_footer();
         if ($this->remove_extra_lines) {
-            $this->payload = ereg_replace("[\r\n]+", "\r\n", $this->payload);
+            $this->payload = preg_replace("/[\r\n]+/", "\r\n", $this->payload);
         } else {
-            $this->payload = ereg_replace("\r\n|\n|\r|\n\r", "\r\n", $this->payload);
+            $this->payload = preg_replace("/\r\n|\n|\r|\n\r/", "\r\n", $this->payload);
         }
     }
 
