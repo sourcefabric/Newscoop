@@ -88,11 +88,11 @@ class ArticleAttachment extends DatabaseObject {
 		if (is_null($p_languageId)) {
 			$langConstraint = "FALSE";
 		} else {
-			$langConstraint = "Attachments.fk_language_id=$p_languageId";
+			$langConstraint = "Attachments.fk_language_id = " . $g_ado_db->Escape($p_languageId);
 		}
 		$queryStr = 'SELECT '.$columnNames
 					.' FROM Attachments, ArticleAttachments'
-					.' WHERE ArticleAttachments.fk_article_number='.$p_articleNumber
+					.' WHERE ArticleAttachments.fk_article_number = ' . $g_ado_db->Escape($p_articleNumber)
 					.' AND ArticleAttachments.fk_attachment_id=Attachments.id'
 					." AND (Attachments.fk_language_id IS NULL OR $langConstraint)"
 					.' ORDER BY Attachments.time_created asc, Attachments.file_name asc';
