@@ -15,9 +15,9 @@
  * @category   Database
  * @package    DB
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    $Id: include.inc,v 1.5 2005/02/03 05:49:44 danielc Exp $
+ * @version    $Id: include.inc,v 1.6 2007/07/06 05:19:21 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 

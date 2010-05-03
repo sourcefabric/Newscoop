@@ -16,9 +16,9 @@
  * @category   Database
  * @package    DB
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    $Id: limit.inc,v 1.13 2007/01/11 09:03:58 aharvey Exp $
+ * @version    $Id: limit.inc,v 1.14 2007/07/06 05:19:21 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 

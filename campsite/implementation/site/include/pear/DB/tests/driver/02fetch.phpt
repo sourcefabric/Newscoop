@@ -38,3 +38,5 @@ testing fetchmodes: fetchinto ordered default with assoc specified
 a b cc d
 testing fetchmodes: fetchinto assoc default with ordered specified
 0 1 2 3
+testing fetchmodes: fetchrow assoc quoted identifiers
+a b cc d

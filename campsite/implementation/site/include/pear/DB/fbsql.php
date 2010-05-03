@@ -18,9 +18,9 @@
  * @package    DB
  * @author     Frank M. Kromann <frank@frontbase.com>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: fbsql.php,v 1.87 2007/03/28 08:02:35 aharvey Exp $
+ * @version    CVS: $Id: fbsql.php,v 1.88 2007/07/06 05:19:21 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -39,9 +39,9 @@ require_once 'DB/common.php';
  * @package    DB
  * @author     Frank M. Kromann <frank@frontbase.com>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.12
+ * @version    Release: 1.7.14RC1
  * @link       http://pear.php.net/package/DB
  * @since      Class functional since Release 1.7.0
  */
