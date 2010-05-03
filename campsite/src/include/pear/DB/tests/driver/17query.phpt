@@ -11,7 +11,7 @@ error_reporting = 2047
  * @see      DB_common::query()
  * 
  * @package  DB
- * @version  $Id: 17query.phpt,v 1.16 2007/01/12 02:41:07 aharvey Exp $
+ * @version  $Id: 17query.phpt,v 1.19 2007/09/21 15:14:26 aharvey Exp $
  * @category Database
  * @author   Daniel Convissor <danielc@analysisandsolutions.com>
  * @internal
@@ -24,7 +24,7 @@ require_once './skipif.inc';
 --FILE--
 <?php
 
-// $Id: 17query.phpt,v 1.16 2007/01/12 02:41:07 aharvey Exp $
+// $Id: 17query.phpt,v 1.19 2007/09/21 15:14:26 aharvey Exp $
 
 /**
  * Connect to the database and make the phptest table.
@@ -130,6 +130,25 @@ $dbh->nextQueryIsManip(false);
 $res =& $dbh->query('SELECT * FROM phptest');
 print '12) query is manip (without override): ' . ($dbh->_last_query_manip ? 'true' : 'false') . "\n";
 
+// This one's here for bug #11716.
+if ($dbh->phptype == 'msql' || $dbh->phptype == 'ibase' || $dbh->phptype == 'oci8') {
+    // Some databases don't support quoted identifiers. They are full of lose.
+    $res =& $dbh->query('SELECT a FROM phptest');
+} else {
+    $res =& $dbh->query('SELECT '.$dbh->quoteIdentifier('a').' FROM phptest');
+}
+
+print '13) select with quoteIdentifier: ';
+$row = $res->fetchRow(DB_FETCHMODE_ASSOC);
+if (isset($row['a'])) {
+    if ($row['a'] == 42) {
+        print "okay\n";
+    } else {
+        print "field value incorrect\n";
+    }
+} else {
+    print "expected field not in row\n";
+}
 
 $dbh->setErrorHandling(PEAR_ERROR_RETURN);
 drop_table($dbh, 'phptest');
@@ -148,3 +167,4 @@ drop_table($dbh, 'phptest');
 10) delete with 0 as param: okay
 11) query is manip (with override): true
 12) query is manip (without override): false
+13) select with quoteIdentifier: okay

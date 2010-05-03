@@ -19,9 +19,9 @@
  * @author     Rui Hirokawa <hirokawa@php.net>
  * @author     Stig Bakken <ssb@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: pgsql.php,v 1.136 2007/06/29 13:10:40 aharvey Exp $
+ * @version    CVS: $Id: pgsql.php,v 1.139 2007/11/28 02:19:44 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -41,9 +41,9 @@ require_once 'DB/common.php';
  * @author     Rui Hirokawa <hirokawa@php.net>
  * @author     Stig Bakken <ssb@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.12
+ * @version    Release: 1.7.14RC1
  * @link       http://pear.php.net/package/DB
  */
 class DB_pgsql extends DB_common
@@ -193,7 +193,7 @@ class DB_pgsql extends DB_common
      *     'portability' => DB_PORTABILITY_ALL,
      * );
      * 
-     * $db =& DB::connect($dsn, $options);
+     * $db = DB::connect($dsn, $options);
      * if (PEAR::isError($db)) {
      *     die($db->getMessage());
      * }
@@ -676,7 +676,7 @@ class DB_pgsql extends DB_common
         $repeat = false;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
-            $result =& $this->query("SELECT NEXTVAL('${seqname}')");
+            $result = $this->query("SELECT NEXTVAL('${seqname}')");
             $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
                 $result->getCode() == DB_ERROR_NOSUCHTABLE) {
@@ -1103,6 +1103,25 @@ class DB_pgsql extends DB_common
     }
 
     // }}}
+    // {{{ _checkManip()
+
+    /**
+     * Checks if the given query is a manipulation query. This also takes into
+     * account the _next_query_manip flag and sets the _last_query_manip flag
+     * (and resets _next_query_manip) according to the result.
+     *
+     * @param string The query to check.
+     *
+     * @return boolean true if the query is a manipulation query, false
+     * otherwise
+     *
+     * @access protected
+     */
+    function _checkManip($query)
+    {
+        return (preg_match('/^\s*(SAVEPOINT|RELEASE)\s+/i', $query)
+                || parent::_checkManip($query));
+    }
 
 }
 

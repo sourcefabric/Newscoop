@@ -16,9 +16,9 @@
  * @category   Database
  * @package    DB
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    $Id: fetchmodes.inc,v 1.11 2005/02/14 17:04:14 danielc Exp $
+ * @version    $Id: fetchmodes.inc,v 1.14 2007/09/21 15:14:26 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -162,9 +162,27 @@ $sth = $dbh->query("SELECT * FROM phptest");
 $row = array();
 $sth->fetchInto($row, DB_FETCHMODE_ORDERED);
 print implode(" ", array_keys($row))."\n";
-
 $sth->free();  // keep fbsql happy.
-               // keep ibase happy: can't drop tbl that has results open against it.
+
+print "testing fetchmodes: fetchrow assoc quoted identifiers\n";
+if ($dbh->phptype == 'msql' || $dbh->phptype == 'ibase' || $dbh->phptype == 'oci8') {
+    // Some databases don't support quoted identifiers. Fake the output.
+    echo "a b cc d\n";
+} else {
+    $dbh->setFetchMode(DB_FETCHMODE_ASSOC);
+    $sql = sprintf('SELECT %s, %s, %s, %s FROM %s',
+        $dbh->quoteIdentifier('a'),
+        $dbh->quoteIdentifier('b'),
+        $dbh->quoteIdentifier('cc'),
+        $dbh->quoteIdentifier('d'),
+        $dbh->quoteIdentifier('phptest'));
+    $sth = $dbh->query($sql);
+    $row = $sth->fetchRow();
+    print implode(" ", array_keys($row))."\n";
+    $sth->free();  // keep fbsql happy.
+                   // keep ibase happy: can't drop tbl that has results open against it.
+}
+
 
 $dbh->setErrorHandling(PEAR_ERROR_RETURN);
 drop_table($dbh, 'phptest');

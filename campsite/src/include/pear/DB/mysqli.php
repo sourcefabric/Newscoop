@@ -17,9 +17,9 @@
  * @category   Database
  * @package    DB
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: mysqli.php,v 1.79 2007/03/20 10:22:04 aharvey Exp $
+ * @version    CVS: $Id: mysqli.php,v 1.82 2007/09/21 13:40:41 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -41,9 +41,9 @@ require_once 'DB/common.php';
  * @category   Database
  * @package    DB
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.12
+ * @version    Release: 1.7.14RC1
  * @link       http://pear.php.net/package/DB
  * @since      Class functional since Release 1.6.3
  */
@@ -271,7 +271,7 @@ class DB_mysqli extends DB_common
      *     'ssl' => true,
      * );
      * 
-     * $db =& DB::connect($dsn, $options);
+     * $db = DB::connect($dsn, $options);
      * if (PEAR::isError($db)) {
      *     die($db->getMessage());
      * }
@@ -962,6 +962,13 @@ class DB_mysqli extends DB_common
     function tableInfo($result, $mode = null)
     {
         if (is_string($result)) {
+            // Fix for bug #11580.
+            if ($this->_db) {
+                if (!@mysqli_select_db($this->connection, $this->_db)) {
+                    return $this->mysqliRaiseError(DB_ERROR_NODBSELECTED);
+                }
+            }
+
             /*
              * Probably received a table name.
              * Create a result resource identifier.
