@@ -1,7 +1,7 @@
 <?php
 
 /*
-V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -30,6 +30,23 @@ class ADODB_mysqlt extends ADODB_mysql {
 	global $ADODB_EXTENSION; if ($ADODB_EXTENSION) $this->rsPrefix .= 'ext_';
 	}
 	
+	/* set transaction mode
+	
+	SET [GLOBAL | SESSION] TRANSACTION ISOLATION LEVEL
+{ READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE }
+
+	*/
+	function SetTransactionMode( $transaction_mode ) 
+	{
+		$this->_transmode  = $transaction_mode;
+		if (empty($transaction_mode)) {
+			$this->Execute('SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ');
+			return;
+		}
+		if (!stristr($transaction_mode,'isolation')) $transaction_mode = 'ISOLATION LEVEL '.$transaction_mode;
+		$this->Execute("SET SESSION TRANSACTION ".$transaction_mode);
+	}
+	
 	function BeginTrans()
 	{	  
 		if ($this->transOff) return true;
@@ -45,25 +62,25 @@ class ADODB_mysqlt extends ADODB_mysql {
 		if (!$ok) return $this->RollbackTrans();
 		
 		if ($this->transCnt) $this->transCnt -= 1;
-		$this->Execute('COMMIT');
+		$ok = $this->Execute('COMMIT');
 		$this->Execute('SET AUTOCOMMIT=1');
-		return true;
+		return $ok ? true : false;
 	}
 	
 	function RollbackTrans()
 	{
 		if ($this->transOff) return true;
 		if ($this->transCnt) $this->transCnt -= 1;
-		$this->Execute('ROLLBACK');
+		$ok = $this->Execute('ROLLBACK');
 		$this->Execute('SET AUTOCOMMIT=1');
-		return true;
+		return $ok ? true : false;
 	}
 	
-	function RowLock($tables,$where='',$flds='1 as adodb_ignore') 
+	function RowLock($tables,$where='',$col='1 as adodb_ignore') 
 	{
 		if ($this->transCnt==0) $this->BeginTrans();
 		if ($where) $where = ' where '.$where;
-		$rs =& $this->Execute("select $flds from $tables $where for update");
+		$rs = $this->Execute("select $col from $tables $where for update");
 		return !empty($rs); 
 	}
 	

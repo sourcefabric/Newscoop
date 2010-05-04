@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -11,8 +11,8 @@ Set tabs to 4 for best viewing.
   Microsoft SQL Server ADO data driver. Requires ADO and MSSQL client. 
   Works only on MS Windows.
   
-  It is normally better to use the mssql driver directly because it is much faster. 
-  This file is only a technology demonstration and for test purposes.
+  Warning: Some versions of PHP (esp PHP4) leak memory when ADO/COM is used. 
+  Please check http://bugs.php.net/ for more info.
 */
 
 // security - hide paths
@@ -35,6 +35,7 @@ class  ADODB_ado_mssql extends ADODB_ado {
 	var $ansiOuter = true; // for mssql7 or later
 	var $substr = "substring";
 	var $length = 'len';
+	var $_dropSeqSQL = "drop table %s";
 	
 	//var $_inTransaction = 1; // always open recordsets, so no transaction problems.
 	
@@ -45,7 +46,7 @@ class  ADODB_ado_mssql extends ADODB_ado {
 	
 	function _insertid()
 	{
-	        return $this->GetOne('select @@identity');
+	        return $this->GetOne('select SCOPE_IDENTITY()');
 	}
 	
 	function _affectedrows()
@@ -53,7 +54,24 @@ class  ADODB_ado_mssql extends ADODB_ado {
 	        return $this->GetOne('select @@rowcount');
 	}
 	
-	function MetaColumns($table)
+	function SetTransactionMode( $transaction_mode ) 
+	{
+		$this->_transmode  = $transaction_mode;
+		if (empty($transaction_mode)) {
+			$this->Execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+			return;
+		}
+		if (!stristr($transaction_mode,'isolation')) $transaction_mode = 'ISOLATION LEVEL '.$transaction_mode;
+		$this->Execute("SET TRANSACTION ".$transaction_mode);
+	}
+	
+	function qstr($s,$magic_quotes=false)
+	{
+		$s = ADOConnection::qstr($s, $magic_quotes);
+		return str_replace("\0", "\\\\000", $s);
+	}
+	
+	function MetaColumns($table, $normalize=true)
 	{
         $table = strtoupper($table);
         $arr= array();
@@ -82,6 +100,44 @@ class  ADODB_ado_mssql extends ADODB_ado {
         }
         $false = false;
 		return empty($arr) ? $false : $arr;
+	}
+	
+	function CreateSequence($seq='adodbseq',$start=1)
+	{
+		
+		$this->Execute('BEGIN TRANSACTION adodbseq');
+		$start -= 1;
+		$this->Execute("create table $seq (id float(53))");
+		$ok = $this->Execute("insert into $seq with (tablock,holdlock) values($start)");
+		if (!$ok) {
+				$this->Execute('ROLLBACK TRANSACTION adodbseq');
+				return false;
+		}
+		$this->Execute('COMMIT TRANSACTION adodbseq'); 
+		return true;
+	}
+
+	function GenID($seq='adodbseq',$start=1)
+	{
+		//$this->debug=1;
+		$this->Execute('BEGIN TRANSACTION adodbseq');
+		$ok = $this->Execute("update $seq with (tablock,holdlock) set id = id + 1");
+		if (!$ok) {
+			$this->Execute("create table $seq (id float(53))");
+			$ok = $this->Execute("insert into $seq with (tablock,holdlock) values($start)");
+			if (!$ok) {
+				$this->Execute('ROLLBACK TRANSACTION adodbseq');
+				return false;
+			}
+			$this->Execute('COMMIT TRANSACTION adodbseq'); 
+			return $start;
+		}
+		$num = $this->GetOne("select id from $seq");
+		$this->Execute('COMMIT TRANSACTION adodbseq'); 
+		return $num;
+		
+		// in old implementation, pre 1.90, we returned GUID...
+		//return $this->GetOne("SELECT CONVERT(varchar(255), NEWID()) AS 'Char'");
 	}
 	
 	} // end class 

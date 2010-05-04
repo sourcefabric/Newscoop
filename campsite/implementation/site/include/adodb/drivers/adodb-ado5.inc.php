@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -58,8 +58,23 @@ class ADODB_ado extends ADOConnection {
 	// you can also pass a connection string like this:
 	//
 	// $DB->Connect('USER ID=sa;PASSWORD=pwd;SERVER=mangrove;DATABASE=ai',false,false,'SQLOLEDB');
-	function _connect($argHostname, $argUsername, $argPassword, $argProvider= 'MSDASQL')
+	function _connect($argHostname, $argUsername, $argPassword,$argDBorProvider, $argProvider= '')
 	{
+	// two modes
+	//	-	if $argProvider is empty, we assume that $argDBorProvider holds provider -- this is for backward compat
+	//	- 	if $argProvider is not empty, then $argDBorProvider holds db
+	
+		
+		 if ($argProvider) {
+		 	$argDatabasename = $argDBorProvider;
+		 } else {
+		 	$argDatabasename = '';
+		 	if ($argDBorProvider) $argProvider = $argDBorProvider;
+			else if (stripos($argHostname,'PROVIDER') === false) /* full conn string is not in $argHostname */ 
+				$argProvider = 'MSDASQL';
+		}
+		
+		
 		try {
 		$u = 'UID';
 		$p = 'PWD';
@@ -86,7 +101,11 @@ class ADODB_ado extends ADOConnection {
 			$argProvider = "Microsoft.Jet.OLEDB.4.0"; // Microsoft Jet Provider
 		
 		if ($argProvider) $dbc->Provider = $argProvider;	
+
+		if ($argProvider) $argHostname = "PROVIDER=$argProvider;DRIVER={SQL Server};SERVER=$argHostname";	
 		
+
+		if ($argDatabasename) $argHostname .= ";DATABASE=$argDatabasename";		
 		if ($argUsername) $argHostname .= ";$u=$argUsername";
 		if ($argPassword)$argHostname .= ";$p=$argPassword";
 		
@@ -99,6 +118,7 @@ class ADODB_ado extends ADOConnection {
 		$dbc->CursorLocation = $this->_cursor_location;
 		return  $dbc->State > 0;
 		} catch (exception $e) {
+			if ($this->debug);echo "<pre>",$argHostname,"\n",$e,"</pre>\n";
 		}
 		
 		return false;
@@ -152,7 +172,7 @@ class ADODB_ado extends ADOConnection {
 
 */
 	
-	function &MetaTables()
+	function MetaTables()
 	{
 		$arr= array();
 		$dbc = $this->_connectionID;
@@ -174,7 +194,7 @@ class ADODB_ado extends ADOConnection {
 		return $arr;
 	}
 	
-	function &MetaColumns($table)
+	function MetaColumns($table, $normalize=true)
 	{
 		$table = strtoupper($table);
 		$arr= array();
@@ -205,11 +225,8 @@ class ADODB_ado extends ADOConnection {
 		return $arr;
 	}
 	
-
-
-	
 	/* returns queryID or false */
-	function &_query($sql,$inputarr=false) 
+	function _query($sql,$inputarr=false) 
 	{
 		try { // In PHP5, all COM errors are exceptions, so to maintain old behaviour...
 		
@@ -229,13 +246,28 @@ class ADODB_ado extends ADOConnection {
 			$oCmd->CommandText = $sql;
 			$oCmd->CommandType = 1;
 
-			foreach($inputarr as $val) {
+			while(list(, $val) = each($inputarr)) {
+				$type = gettype($val);
+				$len=strlen($val);
+				if ($type == 'boolean')
+					$this->adoParameterType = 11;
+				else if ($type == 'integer')
+					$this->adoParameterType = 3;
+				else if ($type == 'double')
+					$this->adoParameterType = 5;
+				elseif ($type == 'string')
+					$this->adoParameterType = 202;
+				else if (($val === null) || (!defined($val)))
+					$len=1;
+				else
+					$this->adoParameterType = 130;
+				
 				// name, type, direction 1 = input, len,
-				$this->adoParameterType = 130;
-				$p = $oCmd->CreateParameter('name',$this->adoParameterType,1,strlen($val),$val);
-				//print $p->Type.' '.$p->value;
+        		$p = $oCmd->CreateParameter('name',$this->adoParameterType,1,$len,$val);
+
 				$oCmd->Parameters->Append($p);
 			}
+			
 			$p = false;
 			$rs = $oCmd->Execute();
 			$e = $dbc->Errors;
@@ -251,7 +283,8 @@ class ADODB_ado extends ADOConnection {
 		if ($rs->State == 0) {
 			$true = true;
 			return $true; // 0 = adStateClosed means no records returned
-		} return $rs;
+		}
+		return $rs;
 		
 		} catch (exception $e) {
 			
@@ -296,11 +329,17 @@ class ADODB_ado extends ADOConnection {
 	function ErrorMsg() 
 	{
 		if (!$this->_connectionID) return "No connection established";
-		$errc = $this->_connectionID->Errors;
-		if (!$errc) return "No Errors object found";
-		if ($errc->Count == 0) return '';
-		$err = $errc->Item($errc->Count-1);
-		return $err->Description;
+		$errmsg = '';
+		
+		try {
+			$errc = $this->_connectionID->Errors;
+			if (!$errc) return "No Errors object found";
+			if ($errc->Count == 0) return '';
+			$err = $errc->Item($errc->Count-1);
+			$errmsg = $err->Description;
+		}catch(exception $e) {
+		}
+		return $errmsg;
 	}
 	
 	function ErrorNo() 
@@ -348,11 +387,13 @@ class ADORecordSet_ado extends ADORecordSet {
 
 
 	// returns the field object
-	function &FetchField($fieldOffset = -1) {
+	function FetchField($fieldOffset = -1) {
 		$off=$fieldOffset+1; // offsets begin at 1
 		
 		$o= new ADOFieldObject();
 		$rs = $this->_queryID;
+		if (!$rs) return false;
+		
 		$f = $rs->Fields($fieldOffset);
 		$o->name = $f->Name;
 		$t = $f->Type;
@@ -384,8 +425,12 @@ class ADORecordSet_ado extends ADORecordSet {
 	function _initrs()
 	{
 		$rs = $this->_queryID;
-		$this->_numOfRows = $rs->RecordCount;
 		
+		try {
+			$this->_numOfRows = $rs->RecordCount;
+		} catch (Exception $e) {
+			$this->_numOfRows = -1;
+		}
 		$f = $rs->Fields;
 		$this->_numOfFields = $f->Count;
 	}
@@ -595,9 +640,23 @@ class ADORecordSet_ado extends ADORecordSet {
 			case 1: // null
 				$this->fields[] = false;
 				break;
+			case 20:
+			case 21: // bigint (64 bit)
+    			$this->fields[] = (float) $f->value; // if 64 bit PHP, could use (int)
+    			break;
 			case 6: // currency is not supported properly;
 				ADOConnection::outp( '<b>'.$f->Name.': currency type not supported by PHP</b>');
 				$this->fields[] = (float) $f->value;
+				break;
+			case 11: //BIT;
+				$val = "";
+				if(is_bool($f->value))	{
+					if($f->value==true) $val = 1;
+					else $val = 0;
+				}
+				if(is_null($f->value)) $val = null;
+				
+				$this->fields[] = $val;
 				break;
 			default:
 				$this->fields[] = $f->value; 
@@ -611,7 +670,7 @@ class ADORecordSet_ado extends ADORecordSet {
 		@$rs->MoveNext(); // @ needed for some versions of PHP!
 		
 		if ($this->fetchMode & ADODB_FETCH_ASSOC) {
-			$this->fields = &$this->GetRowAssoc(ADODB_ASSOC_CASE);
+			$this->fields = $this->GetRowAssoc(ADODB_ASSOC_CASE);
 		}
 		return true;
 	}
@@ -637,7 +696,10 @@ class ADORecordSet_ado extends ADORecordSet {
 
 	function _close() {
 		$this->_flds = false;
+		try {
 		@$this->_queryID->Close();// by Pete Dishman (peterd@telephonetics.co.uk)
+		} catch (Exception $e) {
+		}
 		$this->_queryID = false;	
 	}
 

@@ -1,6 +1,6 @@
 <?php
 /*
- V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+ V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -104,7 +104,8 @@ WHERE relkind in ('r','v') AND (c.relname='%s' or c.relname = lower('%s'))
 	var $random = 'random()';		/// random function
 	var $autoRollback = true; // apparently pgsql does not autorollback properly before php 4.3.4
 							// http://bugs.php.net/bug.php?id=25404
-							
+	
+	var $uniqueIisR = true;
 	var $_bindInputArray = false; // requires postgresql 7.3+ and ability to modify database
 	var $disableBlobs = false; // set to true to disable blob checking, resulting in 2-5% improvement in performance.
 	
@@ -174,13 +175,13 @@ a different OID if a database must be reloaded. */
 	{
 		if ($this->transOff) return true;
 		$this->transCnt += 1;
-		return @pg_Exec($this->_connectionID, "begin");
+		return @pg_Exec($this->_connectionID, "begin ".$this->_transmode);
 	}
 	
-	function RowLock($tables,$where,$flds='1 as ignore') 
+	function RowLock($tables,$where,$col='1 as ignore') 
 	{
 		if (!$this->transCnt) $this->BeginTrans();
-		return $this->GetOne("select $flds from $tables where $where for update");
+		return $this->GetOne("select $col from $tables where $where for update");
 	}
 
 	// returns true/false. 
@@ -201,7 +202,7 @@ a different OID if a database must be reloaded. */
 		return @pg_Exec($this->_connectionID, "rollback");
 	}
 	
-	function &MetaTables($ttype=false,$showSchema=false,$mask=false) 
+	function MetaTables($ttype=false,$showSchema=false,$mask=false) 
 	{
 		$info = $this->ServerInfo();
 		if ($info['version'] >= 7.3) {
@@ -224,7 +225,7 @@ select tablename,'T' from pg_tables where tablename like $mask
  union 
 select viewname,'V' from pg_views where viewname like $mask";
 		}
-		$ret =& ADOConnection::MetaTables($ttype,$showSchema);
+		$ret = ADOConnection::MetaTables($ttype,$showSchema);
 		
 		if ($mask) {
 			$this->metaTablesSQL = $save;
@@ -236,7 +237,12 @@ select viewname,'V' from pg_views where viewname like $mask";
 	// if magic quotes disabled, use pg_escape_string()
 	function qstr($s,$magic_quotes=false)
 	{
+		if (is_bool($s)) return $s ? 'true' : 'false';
+		 
 		if (!$magic_quotes) {
+			if (ADODB_PHPVER >= 0x5200) {
+				return  "'".pg_escape_string($this->_connectionID,$s)."'";
+			} 
 			if (ADODB_PHPVER >= 0x4200) {
 				return  "'".pg_escape_string($s)."'";
 			}
@@ -424,6 +430,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 	*/
 	function BlobEncode($blob)
 	{
+		if (ADODB_PHPVER >= 0x5200) return pg_escape_bytea($this->_connectionID, $blob);
 		if (ADODB_PHPVER >= 0x4200) return pg_escape_bytea($blob);
 		
 		/*92=backslash, 0=null, 39=single-quote*/
@@ -453,14 +460,17 @@ select viewname,'V' from pg_views where viewname like $mask";
 			if (10 <= $len && $len <= 12) $date = 'date '.$date;
 			else $date = 'timestamp '.$date;
 		}
-		return "($date+interval'$dayFraction days')";
+		
+		
+		return "($date+interval'".($dayFraction * 1440)." minutes')";
+		#return "($date+interval'$dayFraction days')";
 	}
 	
 
 	// for schema support, pass in the $table param "$schema.$tabname".
 	// converts field names to lowercase, $upper is ignored
 	// see http://phplens.com/lens/lensforum/msgs.php?id=14018 for more info
-	function &MetaColumns($table,$normalize=true) 
+	function MetaColumns($table,$normalize=true) 
 	{
 	global $ADODB_FETCH_MODE;
 	
@@ -474,8 +484,8 @@ select viewname,'V' from pg_views where viewname like $mask";
 		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
 		if ($this->fetchMode !== false) $savem = $this->SetFetchMode(false);
 		
-		if ($schema) $rs =& $this->Execute(sprintf($this->metaColumnsSQL1,$table,$table,$schema));
-		else $rs =& $this->Execute(sprintf($this->metaColumnsSQL,$table,$table));
+		if ($schema) $rs = $this->Execute(sprintf($this->metaColumnsSQL1,$table,$table,$schema));
+		else $rs = $this->Execute(sprintf($this->metaColumnsSQL,$table,$table));
 		if (isset($savem)) $this->SetFetchMode($savem);
 		$ADODB_FETCH_MODE = $save;
 		
@@ -492,7 +502,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 			
 			$rskey = $this->Execute(sprintf($this->metaKeySQL,($table)));
 			// fetch all result in once for performance.
-			$keys =& $rskey->GetArray();
+			$keys = $rskey->GetArray();
 			if (isset($savem)) $this->SetFetchMode($savem);
 			$ADODB_FETCH_MODE = $save;
 			
@@ -532,6 +542,8 @@ select viewname,'V' from pg_views where viewname like $mask";
 			$fld->name = $rs->fields[0];
 			$fld->type = $rs->fields[1];
 			$fld->max_length = $rs->fields[2];
+			$fld->attnum = $rs->fields[6];
+			
 			if ($fld->max_length <= 0) $fld->max_length = $rs->fields[3]-4;
 			if ($fld->max_length <= 0) $fld->max_length = -1;
 			if ($fld->type == 'numeric') {
@@ -572,7 +584,7 @@ select viewname,'V' from pg_views where viewname like $mask";
 		
 	}
 
-	  function &MetaIndexes ($table, $primary = FALSE)
+	  function MetaIndexes ($table, $primary = FALSE)
       {
          global $ADODB_FETCH_MODE;
                 
@@ -617,12 +629,14 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 					return $false;
                 }
 				
-                $col_names = $this->MetaColumnNames($table,true);
+                $col_names = $this->MetaColumnNames($table,true,true); 
+				//3rd param is use attnum, 
+				// see http://sourceforge.net/tracker/index.php?func=detail&aid=1451245&group_id=42718&atid=433976
                 $indexes = array();
                 while ($row = $rs->FetchRow()) {
                         $columns = array();
                         foreach (explode(' ', $row[2]) as $col) {
-                                $columns[] = $col_names[$col - 1];
+                                $columns[] = $col_names[$col];
                         }
                         
                         $indexes[$row[0]] = array(
@@ -651,9 +665,9 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 			if (strlen($db) == 0) $db = 'template1';
 			$db = adodb_addslashes($db);
 		   	if ($str)  {
-			 	$host = explode(':', $str);
+			 	$host = explode(":", $str);
 				if ($host[0]) $str = "host=".adodb_addslashes($host[0]);
-				else $str = 'host=localhost';
+				else $str = '';
 				if (isset($host[1])) $str .= " port=$host[1]";
 				else if (!empty($this->port)) $str .= " port=".$this->port;
 			}
@@ -679,6 +693,12 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 		}
 		if ($this->_connectionID === false) return false;
 		$this->Execute("set datestyle='ISO'");
+		
+		$info = $this->ServerInfo();
+		$this->pgVersion = (float) substr($info['version'],0,3);
+		if ($this->pgVersion >= 7.1) { // good till version 999
+			$this->_nestedSQL = true;
+		}
 		return true;
 	}
 	
@@ -699,9 +719,9 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 	
 
 	// returns queryID or false
-	function _query($sql,$inputarr)
+	function _query($sql,$inputarr=false)
 	{
-		
+		$this->_errorMsg = false;
 		if ($inputarr) {
 		/*
 			It appears that PREPARE/EXECUTE is slower for many queries.
@@ -731,6 +751,7 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 			if ($execp) $exsql = "EXECUTE $plan ($execp)";
 			else $exsql = "EXECUTE $plan";
 			
+			
 			$rez = @pg_exec($this->_connectionID,$exsql);
 			if (!$rez) {
 			# Perhaps plan does not exist? Prepare/compile plan.
@@ -755,13 +776,12 @@ WHERE (c2.relname=\'%s\' or c2.relname=lower(\'%s\'))';
 				}
 				$s = "PREPARE $plan ($params) AS ".substr($sql,0,strlen($sql)-2);		
 				//adodb_pr($s);
-				pg_exec($this->_connectionID,$s);
-				echo $this->ErrorMsg();
+				$rez = pg_exec($this->_connectionID,$s);
+				//echo $this->ErrorMsg();
 			}
-			
-			$rez = pg_exec($this->_connectionID,$exsql);
+			if ($rez)
+				$rez = pg_exec($this->_connectionID,$exsql);
 		} else {
-			$this->_errorMsg = false;
 			//adodb_backtrace();
 			$rez = pg_exec($this->_connectionID,$sql);
 		}
@@ -872,10 +892,10 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 		$this->ADORecordSet($queryID);
 	}
 	
-	function &GetRowAssoc($upper=true)
+	function GetRowAssoc($upper=true)
 	{
 		if ($this->fetchMode == PGSQL_ASSOC && !$upper) return $this->fields;
-		$row =& ADORecordSet::GetRowAssoc($upper);
+		$row = ADORecordSet::GetRowAssoc($upper);
 		return $row;
 	}
 
@@ -911,7 +931,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 		 return $this->fields[$this->bind[strtoupper($colname)]];
 	}
 
-	function &FetchField($off = 0) 
+	function FetchField($off = 0) 
 	{
 		// offsets begin at 0
 		
@@ -929,6 +949,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 	
 	function _decode($blob)
 	{
+		if ($blob === NULL) return NULL;
 		eval('$realblob="'.adodb_str_replace(array('"','$'),array('\"','\$'),$blob).'";');
 		return $realblob;	
 	}
@@ -1000,6 +1021,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 		   		case 'BPCHAR':
 				case '_VARCHAR':
 				case 'INET':
+				case 'MACADDR':
 					if ($len <= $this->blobSize) return 'C';
 				
 				case 'TEXT':
@@ -1019,6 +1041,8 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 				case 'DATE':
 					return 'D';
 				
+				
+				case 'TIMESTAMP WITHOUT TIME ZONE':
 				case 'TIME':
 				case 'DATETIME':
 				case 'TIMESTAMP':
@@ -1032,7 +1056,7 @@ class ADORecordSet_postgres64 extends ADORecordSet{
 				case 'INT4':
 				case 'INT2':
 					if (isset($fieldobj) &&
-				empty($fieldobj->primary_key) && empty($fieldobj->unique)) return 'I';
+				empty($fieldobj->primary_key) && (!$this->connection->uniqueIisR || empty($fieldobj->unique))) return 'I';
 				
 				case 'OID':
 				case 'SERIAL':

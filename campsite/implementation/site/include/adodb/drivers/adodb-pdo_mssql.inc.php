@@ -2,7 +2,7 @@
 
 
 /*
-V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -36,12 +36,23 @@ class ADODB_pdo_mssql extends ADODB_pdo {
 		return $ret;
 	}
 	
-	function MetaTables()
+	function SetTransactionMode( $transaction_mode ) 
+	{
+		$this->_transmode  = $transaction_mode;
+		if (empty($transaction_mode)) {
+			$this->Execute('SET TRANSACTION ISOLATION LEVEL READ COMMITTED');
+			return;
+		}
+		if (!stristr($transaction_mode,'isolation')) $transaction_mode = 'ISOLATION LEVEL '.$transaction_mode;
+		$this->Execute("SET TRANSACTION ".$transaction_mode);
+	}
+	
+	function MetaTables($ttype=false,$showSchema=false,$mask=false) 
 	{
 		return false;
 	}
 	
-	function MetaColumns()
+	function MetaColumns($table,$normalize=true)
 	{
 		return false;
 	}
