@@ -556,7 +556,7 @@
 
     <field>
      <name>has_implied</name>
-     <value>N</value>
+     <value>0</value>
    </field>
 
    </insert>
@@ -580,7 +580,7 @@
 
     <field>
      <name>has_implied</name>
-     <value>N</value>
+     <value>0</value>
    </field>
 
    </insert>
@@ -853,7 +853,7 @@
 
     <field>
      <name>is_active</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
    </insert>
@@ -892,7 +892,7 @@
 
     <field>
      <name>is_active</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
    </insert>

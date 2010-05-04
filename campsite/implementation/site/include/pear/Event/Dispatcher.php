@@ -33,7 +33,7 @@
 // |         Stephan Schmidt <schst@php.net>                               |
 // +-----------------------------------------------------------------------+
 //
-// $Id: Dispatcher.php,v 1.4 2005/09/22 15:37:10 schst Exp $
+// $Id: Dispatcher.php 284686 2009-07-24 05:22:17Z clockwerx $
 
 require_once 'Event/Notification.php';
 

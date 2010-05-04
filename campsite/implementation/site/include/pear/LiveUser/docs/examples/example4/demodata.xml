@@ -385,7 +385,7 @@
 
     <field>
      <name>is_active</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
     <field>
@@ -419,7 +419,7 @@
 
     <field>
      <name>is_active</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
     <field>
@@ -453,7 +453,7 @@
 
     <field>
      <name>is_active</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
     <field>
@@ -1534,7 +1534,7 @@
 
     <field>
      <name>isactive</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
    </insert>
@@ -1573,7 +1573,7 @@
 
     <field>
      <name>isactive</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
    </insert>
@@ -1612,7 +1612,7 @@
 
     <field>
      <name>isactive</name>
-     <value>Y</value>
+     <value>1</value>
    </field>
 
    </insert>

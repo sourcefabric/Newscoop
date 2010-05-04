@@ -17,9 +17,9 @@
  * @author      Adam Daniel <adaniel1@eesus.jnj.com>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2007 The PHP Group
+ * @copyright   2001-2009 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: QuickForm.php,v 1.164 2007/10/05 19:57:32 avb Exp $
+ * @version     CVS: $Id: QuickForm.php,v 1.166 2009/04/04 21:34:02 avb Exp $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -119,7 +119,7 @@ define('QUICKFORM_INVALID_DATASOURCE',     -9);
  * @author      Adam Daniel <adaniel1@eesus.jnj.com>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.10
+ * @version     Release: 3.2.11
  */
 class HTML_QuickForm extends HTML_Common
 {
@@ -983,7 +983,7 @@ class HTML_QuickForm extends HTML_Common
     function updateElementAttr($elements, $attrs)
     {
         if (is_string($elements)) {
-            $elements = preg_split('[ ]?,[ ]?', $elements);
+            $elements = split('[ ]?,[ ]?', $elements);
         }
         foreach (array_keys($elements) as $key) {
             if (is_object($elements[$key]) && is_a($elements[$key], 'HTML_QuickForm_element')) {
@@ -1030,7 +1030,13 @@ class HTML_QuickForm extends HTML_Common
             $this->_elementIndex[$elementName] = array_shift($this->_duplicateIndex[$elementName]);
         }
         if ($removeRules) {
+            $this->_required = array_diff($this->_required, array($elementName));
             unset($this->_rules[$elementName], $this->_errors[$elementName]);
+            if ('group' == $el->getType()) {
+                foreach (array_keys($el->getElements()) as $key) {
+                    unset($this->_rules[$el->getElementName($key)]);
+                }
+            }
         }
         return $el;
     } // end func removeElement
@@ -2021,7 +2027,7 @@ class HTML_QuickForm extends HTML_Common
  * @package     HTML_QuickForm
  * @author      Adam Daniel <adaniel1@eesus.jnj.com>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
- * @version     Release: 3.2.10
+ * @version     Release: 3.2.11
  */
 class HTML_QuickForm_Error extends PEAR_Error {
 

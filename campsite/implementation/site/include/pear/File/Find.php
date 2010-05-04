@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Find.php,v 1.26 2006/02/11 16:28:40 techtonik Exp $
+// $Id: Find.php,v 1.27 2006/06/30 14:06:16 techtonik Exp $
 //
 
 require_once 'PEAR.php';
@@ -30,7 +30,7 @@ define('FILE_FIND_VERSION', '@package_version@');
 *  Commonly needed functions searching directory trees
 *
 * @access public
-* @version $Id: Find.php,v 1.26 2006/02/11 16:28:40 techtonik Exp $
+* @version $Id: Find.php,v 1.27 2006/06/30 14:06:16 techtonik Exp $
 * @package File
 * @author Sterling Hughes <sterling@php.net>
 */
@@ -41,6 +41,12 @@ class File_Find
      * @var array
      */
     var $_dirs = array();
+
+    /**
+     * directory separator
+     * @var string
+     */
+    var $dirsep = "/";
 
     /**
      * found files
@@ -55,8 +61,7 @@ class File_Find
     var $directories = array();
 
     /**
-     * Search the current directory to find matches for the
-     * the specified pattern.
+     * Search specified directory to find matches for specified pattern
      *
      * @param string $pattern a string containing the pattern to search
      * the directory for.
@@ -80,7 +85,7 @@ class File_Find
         $dh = @opendir($dirpath);
 
         if (!$dh) {
-            $pe = PEAR::raiseError("Cannot open directory");
+            $pe = PEAR::raiseError("Cannot open directory $dirpath");
             return $pe;
         }
 
@@ -124,24 +129,22 @@ class File_Find
 
         /* if called statically */
         if (!isset($this)  || !is_a($this, "File_Find")) {
-            $obj = new File_Find();
+            $obj = &new File_Find();
             return $obj->maptree($directory);
         }
-
+      
         /* clear the results just in case */
         $this->files       = array();
         $this->directories = array();
 
-        /* consistency rules - strip out trailing slashes */
+        /* strip out trailing slashes */
         $directory = preg_replace('![\\\\/]+$!', '', $directory);
-        /* use only native system directory delimiters */
-        $directory = preg_replace("![\\\\/]+!", DIRECTORY_SEPARATOR, $directory);
 
         $this->_dirs = array($directory);
 
         while (count($this->_dirs)) {
             $dir = array_pop($this->_dirs);
-            File_Find::_build($dir);
+            File_Find::_build($dir, $this->dirsep);
             array_push($this->directories, $dir);
         }
 
@@ -155,7 +158,7 @@ class File_Find
      *
      * @param string $directory contains the directory path that you
      * want to map.
-     * @param integer $maxrecursion maximun number of folders to recursive
+     * @param integer $maxrecursion maximun number of folders to recursive 
      * map
      *
      * @return array a multidimensional array containing all subdirectories
@@ -176,13 +179,14 @@ class File_Find
      * @static
      */
     function &mapTreeMultiple($directory, $maxrecursion = 0, $count = 0)
-    {
+    {   
         $retval = array();
 
         $count++;
 
-        $directory .= DIRECTORY_SEPARATOR;
-
+        /* strip trailing slashes */
+        $directory = preg_replace('![\\\\/]+$!', '', $directory);
+        
         if (is_readable($directory)) {
             $dh = opendir($directory);
             while (false !== ($entry = @readdir($dh))) {
@@ -192,16 +196,14 @@ class File_Find
             }
             closedir($dh);
         }
-
+     
         while (list($key, $val) = each($retval)) {
-            $path = $directory . $val;
-            $path = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR,
-                                DIRECTORY_SEPARATOR, $path);
-
+            $path = $directory . "/" . $val;
+      
             if (!is_array($val) && is_dir($path)) {
                 unset($retval[$key]);
                 if ($maxrecursion == 0 || $count < $maxrecursion) {
-                    $retval[$val] = &File_Find::mapTreeMultiple($path,
+                    $retval[$val] = &File_Find::mapTreeMultiple($path, 
                                     $maxrecursion, $count);
                 }
             }
@@ -240,11 +242,11 @@ class File_Find
         $matches = array();
         list ($directories,$files)  = File_Find::maptree($directory);
         switch($match) {
-            case 'directories':
-                $data = $directories;
+            case 'directories': 
+                $data = $directories; 
                 break;
-            case 'both':
-                $data = array_merge($directories, $files);
+            case 'both': 
+                $data = array_merge($directories, $files); 
                 break;
             case 'files':
             default:
@@ -258,10 +260,10 @@ class File_Find
         // check if empty string given (ok for 'shell' method, but bad for others)
         if ($pattern || ($type != 'php' && $type != 'perl')) {
             while (list(,$entry) = each($data)) {
-                if ($match_function($pattern,
+                if ($match_function($pattern, 
                                     $fullpath ? $entry : basename($entry))) {
                     $matches[] = $entry;
-                }
+                } 
             }
         }
 
@@ -287,9 +289,10 @@ class File_Find
      * File_Find::maptree()
      *
      * @param string $directory name of the directory to read
+     * @param string $separator directory separator
      * @return void
      */
-    function _build($directory)
+    function _build($directory, $separator = "/")
     {
 
         $dh = @opendir($directory);
@@ -302,9 +305,7 @@ class File_Find
         while (false !== ($entry = @readdir($dh))) {
             if ($entry != '.' && $entry != '..') {
 
-                $entry = $directory.DIRECTORY_SEPARATOR.$entry;
-                $entry = str_replace(DIRECTORY_SEPARATOR.DIRECTORY_SEPARATOR,
-                                     DIRECTORY_SEPARATOR, $entry);
+                $entry = $directory.$separator.$entry;
 
                 if (is_dir($entry)) {
                     array_push($this->_dirs, $entry);
@@ -343,12 +344,12 @@ class File_Find
 
 /**
 * Package method to match via 'shell' pattern. Provided in global
-* scope, because they should be called like 'preg_match' and 'eregi'
+* scope, because it should be called like 'preg_match' and 'eregi'
 * and can be easily copied into other packages
 *
 * @author techtonik <techtonik@php.net>
 * @return mixed bool on success and PEAR_Error on failure
-*/
+*/ 
 function File_Find_match_shell($pattern, $filename)
 {
     // {{{ convert pattern to positive and negative regexps
@@ -370,7 +371,7 @@ function File_Find_match_shell($pattern, $filename)
        if ($negation) {
            $negative = _File_Find_match_shell_get_pattern($negative);
        }
-    // }}} convert end
+    // }}} convert end 
 
 
     if (defined("FILE_FIND_DEBUG")) {
@@ -382,7 +383,7 @@ function File_Find_match_shell($pattern, $filename)
     if (!preg_match($positive, $filename)) {
         return FALSE;
     } else {
-        if (isset($negative)
+        if (isset($negative) 
               && preg_match($negative, $filename)) {
             return FALSE;
         } else {
@@ -393,8 +394,8 @@ function File_Find_match_shell($pattern, $filename)
 
 /**
 * function used by File_Find_match_shell to convert 'shell' mask
-* into pcre regexp. Some of the rules (see testcases for more):
-*  escaping all special chars and replacing
+* into pcre regexp. Some of the rules (see testcases for more): 
+*  escaping all special chars and replacing 
 *    . with \.
 *    * with .*
 *    ? with .{1}
@@ -402,7 +403,7 @@ function File_Find_match_shell($pattern, $filename)
 *
 * @author techtonik <techtonik@php.net>
 * @return string pcre regexp for preg_match
-*/
+*/ 
 function _File_Find_match_shell_get_pattern($mask) {
     // get array of several masks (if any) delimited by comma
     // do not touch commas in char class

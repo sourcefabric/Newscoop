@@ -15,9 +15,9 @@
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2007 The PHP Group
+ * @copyright   2001-2009 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: html.php,v 1.2 2007/05/29 18:34:36 avb Exp $
+ * @version     CVS: $Id: html.php,v 1.3 2009/04/04 21:34:03 avb Exp $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -35,7 +35,7 @@ require_once 'HTML/QuickForm/static.php';
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.10
+ * @version     Release: 3.2.11
  * @since       3.0
  * @deprecated  Please use the templates rather than add raw HTML via this element
  */

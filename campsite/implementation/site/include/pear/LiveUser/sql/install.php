@@ -56,7 +56,7 @@ PEAR_ErrorStack::setDefaultCallback('handleError');
 echo '<pre>';
 
 // customize DSN as needed
-$dsn = 'mysql://root:thewinner@localhost/liveuser_test_installer';
+$dsn = 'mysql://root:@localhost/liveuser_test_installer';
 
 // customize config array as needed
 $conf = array(
