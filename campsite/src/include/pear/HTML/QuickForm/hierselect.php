@@ -17,9 +17,9 @@
  * @author      Herim Vasquez <vasquezh@iro.umontreal.ca>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2007 The PHP Group
+ * @copyright   2001-2009 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: hierselect.php,v 1.19 2007/05/29 18:34:36 avb Exp $
+ * @version     CVS: $Id: hierselect.php,v 1.20 2009/04/04 21:34:03 avb Exp $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -45,7 +45,7 @@ require_once 'HTML/QuickForm/select.php';
  * @author      Herim Vasquez <vasquezh@iro.umontreal.ca>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.10
+ * @version     Release: 3.2.11
  * @since       3.1
  */
 class HTML_QuickForm_hierselect extends HTML_QuickForm_group
@@ -313,6 +313,9 @@ class HTML_QuickForm_hierselect extends HTML_QuickForm_group
                 $this->_js .= <<<JAVASCRIPT
 function _hs_findOptions(ary, keys)
 {
+    if (ary == undefined) {
+        return {};
+    }
     var key = keys.shift();
     if (!key in ary) {
         return {};

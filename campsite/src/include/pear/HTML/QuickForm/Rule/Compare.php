@@ -15,9 +15,9 @@
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2007 The PHP Group
+ * @copyright   2001-2009 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: Compare.php,v 1.6 2007/06/05 18:35:49 avb Exp $
+ * @version     CVS: $Id: Compare.php,v 1.7 2009/04/04 21:34:04 avb Exp $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -35,7 +35,7 @@ require_once 'HTML/QuickForm/Rule.php';
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.10
+ * @version     Release: 3.2.11
  * @since       3.2
  */
 class HTML_QuickForm_Rule_Compare extends HTML_QuickForm_Rule
