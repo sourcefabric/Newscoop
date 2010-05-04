@@ -2,7 +2,7 @@
 
 
 /*
-V4.81 3 May 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V5.10 10 Nov 2009   (c) 2000-2009 John Lim (jlim#natsoft.com). All rights reserved.
          Contributed by Ross Smith (adodb@netebb.com). 
   Released under both BSD license and Lesser GPL library license.
   Whenever there is any discrepancy between the two licenses,
@@ -16,8 +16,9 @@ This file is provided for backwards compatibility purposes
 
 */
 
-require_once dirname(__FILE__) . '/adodb-session.php';
-
+if (!defined('ADODB_SESSION')) {
+	require_once dirname(__FILE__) . '/adodb-session.php';
+}
 ADODB_Session::clob('CLOB');
 
 ?>
