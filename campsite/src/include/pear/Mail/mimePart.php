@@ -285,7 +285,7 @@ class Mail_mimePart
      */
     function encode($boundary=null)
     {
-        $encoded =& $this->_encoded;
+        $encoded = $this->_encoded;
 
         if (count($this->_subparts)) {
             $boundary = $boundary ? $boundary : '=_' . md5(rand() . microtime());
@@ -330,7 +330,7 @@ class Mail_mimePart
         }
 
         // Add headers to $encoded
-        $encoded['headers'] =& $this->_headers;
+        $encoded['headers'] = $this->_headers;
 
         return $encoded;
     }

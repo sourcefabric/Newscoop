@@ -179,7 +179,7 @@ class getid3_writetags
 		foreach ($WritingFilesToInclude as $tagformat) {
 			switch ($tagformat) {
 				case 'ape':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY = $this->errors;
 					if (!getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'write.apetag.php', __FILE__, false)) {
 						return false;
 					}
@@ -190,7 +190,7 @@ class getid3_writetags
 				case 'vorbiscomment':
 				case 'metaflac':
 				case 'real':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY = $this->errors;
 					if (!getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'write.'.$tagformat.'.php', __FILE__, false)) {
 						return false;
 					}
@@ -200,7 +200,7 @@ class getid3_writetags
 				case 'id3v2.3':
 				case 'id3v2.4':
 				case 'id3v2':
-					$GETID3_ERRORARRAY = &$this->errors;
+					$GETID3_ERRORARRAY = $this->errors;
 					if (!getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'write.id3v2.php', __FILE__, false)) {
 						return false;
 					}

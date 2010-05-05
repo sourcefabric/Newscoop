@@ -117,7 +117,7 @@ require_once 'LiveUser.php';
 
 function forceLogin(&$notification)
 {
-    $liveUserObj =& $notification->getNotificationObject();
+    $liveUserObj = $notification->getNotificationObject();
 
     $username = (array_key_exists('username', $_REQUEST)) ? $_REQUEST['username'] : null;
     if($username) {

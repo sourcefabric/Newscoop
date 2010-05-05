@@ -88,7 +88,7 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
     function doDownloadAll($command, $options, $params)
     {
         $savechannel = $this->config->get('default_channel');
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         $channel = isset($options['channel']) ? $options['channel'] :
             $this->config->get('default_channel');
         if (!$reg->channelExists($channel)) {
@@ -105,7 +105,7 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
 
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
-            $rest = &$this->config->getREST('1.0', array());
+            $rest = $this->config->getREST('1.0', array());
             $remoteInfo = array_flip($rest->listPackages($base, $channel));
         }
 
@@ -113,7 +113,7 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
             return $remoteInfo;
         }
 
-        $cmd = &$this->factory("download");
+        $cmd = $this->factory("download");
         if (PEAR::isError($cmd)) {
             return $cmd;
         }

@@ -266,7 +266,7 @@ class AMFStream {
 	var $pos;
 
 	function AMFStream(&$bytes) {
-		$this->bytes =& $bytes;
+		$this->bytes = $bytes;
 		$this->pos = 0;
 	}
 
@@ -349,7 +349,7 @@ class AMFReader {
 	var $stream;
 
 	function AMFReader(&$stream) {
-		$this->stream =& $stream;
+		$this->stream = $stream;
 	}
 
 	function readData() {

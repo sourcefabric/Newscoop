@@ -115,7 +115,7 @@ class HTML_QuickForm_Renderer_ITStatic extends HTML_QuickForm_Renderer
     function HTML_QuickForm_Renderer_ITStatic(&$tpl)
     {
         $this->HTML_QuickForm_Renderer();
-        $this->_tpl =& $tpl;
+        $this->_tpl = $tpl;
     } // end constructor
 
    /**

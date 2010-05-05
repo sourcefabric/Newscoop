@@ -118,7 +118,7 @@ class LiveUser_Auth_PEARAuth extends LiveUser_Auth_Common
                     'debug' => $pearAuth->getUserInfo()));
                 return false;
             }
-            $this->pearAuth =& $pearAuth;
+            $this->pearAuth = $pearAuth;
         }
 
         if (!is_a($this->pearAuth, 'auth')) {

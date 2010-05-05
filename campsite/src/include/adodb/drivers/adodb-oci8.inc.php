@@ -30,8 +30,8 @@ For Oracle the default is dd-mon-yy or dd-mon-yyyy, and for SQL-92 the default i
 yy-mm-dd or yyyy-mm-dd.
 
 Using 'RR' in the format forces two-digit years less than or equal to 49 to be
-interpreted as years in the 21st century (2000–2049), and years over 50 as years in
-the 20th century (1950–1999). Setting the RR format as the default for all two-digit
+interpreted as years in the 21st century (2000ï¿½2049), and years over 50 as years in
+the 20th century (1950ï¿½1999). Setting the RR format as the default for all two-digit
 year entries allows you to become year-2000 compliant. For example:
 NLS_DATE_FORMAT='RR-MM-DD'
 
@@ -967,7 +967,7 @@ NATSOFT.DOMAIN =
 			if ($isOutput == false) {
 				$var = $this->BlobEncode($var);
 				$tmp->WriteTemporary($var);
-				$this->_refLOBs[$numlob]['VAR'] = &$var;
+				$this->_refLOBs[$numlob]['VAR'] = $var;
 				if ($this->debug) {
 					ADOConnection::outp("<b>Bind</b>: LOB has been written to temp");
 				}

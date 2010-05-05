@@ -101,7 +101,7 @@ class HTTP_Client_CookieManager
     function passCookies(&$request)
     {
         if (!empty($this->_cookies)) {
-            $url =& $request->_url;
+            $url = $request->_url;
             // We do not check cookie's "expires" field, as we do not store deleted
             // cookies in the array and our client does not work long enough for other
             // cookies to expire.
@@ -147,7 +147,7 @@ class HTTP_Client_CookieManager
     function updateCookies(&$request)
     {
         if (false !== ($cookies = $request->getResponseCookies())) {
-            $url =& $request->_url;
+            $url = $request->_url;
             foreach ($cookies as $cookie) {
                 // use the current domain by default
                 if (!isset($cookie['domain'])) {

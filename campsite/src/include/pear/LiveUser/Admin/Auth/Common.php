@@ -172,13 +172,13 @@ class LiveUser_Admin_Auth_Common
             $keys = array_keys($conf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key =& $conf[$key];
+                    $this->$key = $conf[$key];
                 }
             }
         }
 
         $storageConf = array();
-        $storageConf[$conf['type']] =& $conf['storage'];
+        $storageConf[$conf['type']] = $conf['storage'];
         $this->_storage = LiveUser::storageFactory($storageConf, 'LiveUser_Admin_Auth_');
         if ($this->_storage === false) {
             $this->stack->push(LIVEUSER_ADMIN_ERROR, 'exception',

@@ -158,9 +158,9 @@ class getid3_mp3
 	function GuessEncoderOptions(&$ThisFileInfo) {
 		// shortcuts
 		if (!empty($ThisFileInfo['mpeg']['audio'])) {
-			$thisfile_mpeg_audio = &$ThisFileInfo['mpeg']['audio'];
+			$thisfile_mpeg_audio = $ThisFileInfo['mpeg']['audio'];
 			if (!empty($thisfile_mpeg_audio['LAME'])) {
-				$thisfile_mpeg_audio_lame = &$thisfile_mpeg_audio['LAME'];
+				$thisfile_mpeg_audio_lame = $thisfile_mpeg_audio['LAME'];
 			}
 		}
 
@@ -453,7 +453,7 @@ class getid3_mp3
 		if (!isset($ThisFileInfo['mpeg']['audio'])) {
 			$ThisFileInfo['mpeg']['audio'] = array();
 		}
-		$thisfile_mpeg_audio = &$ThisFileInfo['mpeg']['audio'];
+		$thisfile_mpeg_audio = $ThisFileInfo['mpeg']['audio'];
 
 
 		if ($MPEGaudioHeaderValidCache[$head4]) {
@@ -679,7 +679,7 @@ class getid3_mp3
 
 					// shortcut
 					$thisfile_mpeg_audio['LAME'] = array();
-					$thisfile_mpeg_audio_lame    = &$thisfile_mpeg_audio['LAME'];
+					$thisfile_mpeg_audio_lame    = $thisfile_mpeg_audio['LAME'];
 
 
 					$thisfile_mpeg_audio_lame['long_version']  = substr($headerstring, $VBRidOffset + 120, 20);
@@ -700,11 +700,11 @@ class getid3_mp3
 
 						// shortcuts
 						$thisfile_mpeg_audio_lame['RGAD']    = array('track'=>array(), 'album'=>array());
-						$thisfile_mpeg_audio_lame_RGAD       = &$thisfile_mpeg_audio_lame['RGAD'];
-						$thisfile_mpeg_audio_lame_RGAD_track = &$thisfile_mpeg_audio_lame_RGAD['track'];
-						$thisfile_mpeg_audio_lame_RGAD_album = &$thisfile_mpeg_audio_lame_RGAD['album'];
+						$thisfile_mpeg_audio_lame_RGAD       = $thisfile_mpeg_audio_lame['RGAD'];
+						$thisfile_mpeg_audio_lame_RGAD_track = $thisfile_mpeg_audio_lame_RGAD['track'];
+						$thisfile_mpeg_audio_lame_RGAD_album = $thisfile_mpeg_audio_lame_RGAD['album'];
 						$thisfile_mpeg_audio_lame['raw'] = array();
-						$thisfile_mpeg_audio_lame_raw    = &$thisfile_mpeg_audio_lame['raw'];
+						$thisfile_mpeg_audio_lame_raw    = $thisfile_mpeg_audio_lame['raw'];
 
 						// byte $9B  VBR Quality
 						// This field is there to indicate a quality level, although the scale was not precised in the original Xing specifications.
@@ -1519,7 +1519,7 @@ class getid3_mp3
 								if (empty($dummy['mpeg']['audio']['framelength'])) {
 									$SynchErrorsFound++;
 									$synchstartoffset++;
-//echo ' [Ø] ';
+//echo ' [ï¿½] ';
 								} else {
 //echo ' . ';
 									@$ThisFileInfo['mpeg']['audio']['bitrate_distribution'][$thisframebitrate]++;

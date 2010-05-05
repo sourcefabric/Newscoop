@@ -632,7 +632,7 @@ class Localizer {
 		        $languages = $object->getLanguages();
 		    }
 		}
-        //$this->m_languageDefs =& $languages;
+        //$this->m_languageDefs = $languages;
     	return $languages;
     } // fn GetAllLanguages
 

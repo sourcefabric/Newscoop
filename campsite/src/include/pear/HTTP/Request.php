@@ -729,7 +729,7 @@ class HTTP_Request
         if ($keepAlive && !empty($sockets[$sockKey]) &&
             !empty($sockets[$sockKey]->fp))
         {
-            $this->_sock =& $sockets[$sockKey];
+            $this->_sock = $sockets[$sockKey];
             $err = null;
         } else {
             $this->_notify('connect');
@@ -776,7 +776,7 @@ class HTTP_Request
             $this->disconnect();
         // Store the connected socket in "static" property
         } elseif (empty($sockets[$sockKey]) || empty($sockets[$sockKey]->fp)) {
-            $sockets[$sockKey] =& $this->_sock;
+            $sockets[$sockKey] = $this->_sock;
         }
 
         // Check for redirection
@@ -1078,7 +1078,7 @@ class HTTP_Request
         if (!is_a($listener, 'HTTP_Request_Listener')) {
             return false;
         }
-        $this->_listeners[$listener->getId()] =& $listener;
+        $this->_listeners[$listener->getId()] = $listener;
         return true;
     }
 
@@ -1197,8 +1197,8 @@ class HTTP_Response
     */
     function HTTP_Response(&$sock, &$listeners)
     {
-        $this->_sock      =& $sock;
-        $this->_listeners =& $listeners;
+        $this->_sock      = $sock;
+        $this->_listeners = $listeners;
     }
 
 

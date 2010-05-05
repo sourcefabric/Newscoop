@@ -38,13 +38,13 @@ class PEAR_ChannelFile_Parser extends PEAR_XMLParser
 
     function setConfig(&$c)
     {
-        $this->_config = &$c;
-        $this->_registry = &$c->getRegistry();
+        $this->_config = $c;
+        $this->_registry = $c->getRegistry();
     }
 
     function setLogger(&$l)
     {
-        $this->_logger = &$l;
+        $this->_logger = $l;
     }
 
     function parse($data, $file)

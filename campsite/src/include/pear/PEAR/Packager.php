@@ -51,8 +51,8 @@ class PEAR_Packager extends PEAR_Common
 
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $pkg  = new PEAR_PackageFile($this->config, $this->debug);
-        $pf   = &$pkg->fromPackageFile($pkgfile, PEAR_VALIDATE_NORMAL);
-        $main = &$pf;
+        $pf   = $pkg->fromPackageFile($pkgfile, PEAR_VALIDATE_NORMAL);
+        $main = $pf;
         PEAR::staticPopErrorHandling();
         if (PEAR::isError($pf)) {
             if (is_array($pf->getUserInfo())) {
@@ -73,7 +73,7 @@ class PEAR_Packager extends PEAR_Common
         if ($pkg2) {
             $this->log(0, 'Attempting to process the second package file');
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-            $pf2 = &$pkg->fromPackageFile($pkg2, PEAR_VALIDATE_NORMAL);
+            $pf2 = $pkg->fromPackageFile($pkg2, PEAR_VALIDATE_NORMAL);
             PEAR::staticPopErrorHandling();
             if (PEAR::isError($pf2)) {
                 if (is_array($pf2->getUserInfo())) {
@@ -92,11 +92,11 @@ class PEAR_Packager extends PEAR_Common
             if ($pf2->getPackagexmlVersion() == '2.0' ||
                   $pf2->getPackagexmlVersion() == '2.1'
             ) {
-                $main  = &$pf2;
-                $other = &$pf;
+                $main  = $pf2;
+                $other = $pf;
             } else {
-                $main  = &$pf;
-                $other = &$pf2;
+                $main  = $pf;
+                $other = $pf2;
             }
 
             if ($main->getPackagexmlVersion() != '2.0' &&
@@ -146,7 +146,7 @@ class PEAR_Packager extends PEAR_Common
                 $this->log(1, 'Warning: ' . $warning['message']);
             }
 
-            $gen = &$main->getDefaultGenerator();
+            $gen = $main->getDefaultGenerator();
             $tgzfile = $gen->toTgz2($this, $other, $compress);
             if (PEAR::isError($tgzfile)) {
                 return $tgzfile;
@@ -171,7 +171,7 @@ class PEAR_Packager extends PEAR_Common
                 $this->log(1, "(or set the SVN tag $svntag by hand)");
             }
         } else { // this branch is executed for single packagefile packaging
-            $gen = &$pf->getDefaultGenerator();
+            $gen = $pf->getDefaultGenerator();
             $tgzfile = $gen->toTgz($this, $compress);
             if (PEAR::isError($tgzfile)) {
                 $this->log(0, $tgzfile->getMessage());

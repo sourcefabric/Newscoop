@@ -29,7 +29,7 @@ class getid3_au
 
 		// shortcut
 		$ThisFileInfo['au'] = array();
-		$thisfile_au        = &$ThisFileInfo['au'];
+		$thisfile_au        = $ThisFileInfo['au'];
 
 		$ThisFileInfo['fileformat']            = 'au';
 		$ThisFileInfo['audio']['dataformat']   = 'au';

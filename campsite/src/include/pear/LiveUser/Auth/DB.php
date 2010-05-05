@@ -129,7 +129,7 @@ class LiveUser_Auth_DB extends LiveUser_Auth_Common
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc =& $dbc;
+            $this->dbc = $dbc;
         }
 
         if (!is_a($this->dbc, 'db_common')) {

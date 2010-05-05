@@ -19,7 +19,7 @@ class getid3_mpc
 
 	function getid3_mpc(&$fd, &$ThisFileInfo) {
 		$ThisFileInfo['mpc']['header'] = array();
-		$thisfile_mpc_header           = &$ThisFileInfo['mpc']['header'];
+		$thisfile_mpc_header           = $ThisFileInfo['mpc']['header'];
 
 		$ThisFileInfo['fileformat']               = 'mpc';
 		$ThisFileInfo['audio']['dataformat']      = 'mpc';
@@ -61,7 +61,7 @@ class getid3_mpc
 		// this is SV8
 		// http://trac.musepack.net/trac/wiki/SV8Specification
 
-		$thisfile_mpc_header = &$ThisFileInfo['mpc']['header'];
+		$thisfile_mpc_header = $ThisFileInfo['mpc']['header'];
 
 		$keyNameSize            = 2;
 		$maxHandledPacketLength = 9; // specs say: "n*8; 0 < n < 10"
@@ -207,7 +207,7 @@ class getid3_mpc
 	function ParseMPCsv7(&$fd, &$ThisFileInfo) {
 		// this is SV7
 		// http://www.uni-jena.de/~pfk/mpp/sv8/header.html
-		$thisfile_mpc_header = &$ThisFileInfo['mpc']['header'];
+		$thisfile_mpc_header = $ThisFileInfo['mpc']['header'];
 		$offset = 0;
 
 		$thisfile_mpc_header['size'] = 28;
@@ -318,7 +318,7 @@ class getid3_mpc
 
 	function ParseMPCsv6(&$fd, &$ThisFileInfo) {
 		// this is SV4 - SV6
-		$thisfile_mpc_header = &$ThisFileInfo['mpc']['header'];
+		$thisfile_mpc_header = $ThisFileInfo['mpc']['header'];
 		$offset = 0;
 
         $thisfile_mpc_header['size'] = 8;

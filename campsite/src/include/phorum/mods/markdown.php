@@ -567,7 +567,7 @@ function _DoAnchors_inline_callback($matches) {
 	$whole_match	= $matches[1];
 	$link_text		= $matches[2];
 	$url			= $matches[3];
-	$title			=& $matches[6];
+	$title			= $matches[6];
 
 	# We've got to encode these to avoid conflicting with italics/bold.
 	$url = str_replace(array('*', '_'),
@@ -890,8 +890,8 @@ function _ProcessListItems($list_str, $marker_any) {
 }
 function _ProcessListItems_callback($matches) {
 	$item = $matches[4];
-	$leading_line =& $matches[1];
-	$leading_space =& $matches[2];
+	$leading_line = $matches[1];
+	$leading_space = $matches[2];
 
 	if ($leading_line || preg_match('/\n{2,}/', $item)) {
 		$item = _RunBlockGamut(_Outdent($item));

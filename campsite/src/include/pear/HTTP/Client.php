@@ -254,7 +254,7 @@ class HTTP_Client
     */
     function head($url, $headers = array())
     {
-        $request =& $this->_createRequest($url, HTTP_REQUEST_METHOD_HEAD, $headers);
+        $request = $this->_createRequest($url, HTTP_REQUEST_METHOD_HEAD, $headers);
         return $this->_performRequest($request);
     }
    
@@ -272,7 +272,7 @@ class HTTP_Client
     */
     function get($url, $data = null, $preEncoded = false, $headers = array())
     {
-        $request =& $this->_createRequest($url, HTTP_REQUEST_METHOD_GET, $headers);
+        $request = $this->_createRequest($url, HTTP_REQUEST_METHOD_GET, $headers);
         if (is_array($data)) {
             foreach ($data as $name => $value) {
                 $request->addQueryString($name, $value, $preEncoded);
@@ -299,7 +299,7 @@ class HTTP_Client
     */
     function post($url, $data, $preEncoded = false, $files = array(), $headers = array())
     {
-        $request =& $this->_createRequest($url, HTTP_REQUEST_METHOD_POST, $headers);
+        $request = $this->_createRequest($url, HTTP_REQUEST_METHOD_POST, $headers);
         if (is_array($data)) {
             foreach ($data as $name => $value) {
                 $request->addPostData($name, $value, $preEncoded);
@@ -329,7 +329,7 @@ class HTTP_Client
     */
     function put($url, $body = '', $headers = array())
     {
-        $request =& $this->_createRequest($url, HTTP_REQUEST_METHOD_PUT, $headers);
+        $request = $this->_createRequest($url, HTTP_REQUEST_METHOD_PUT, $headers);
         $request->setBody($body);
         return $this->_performRequest($request);
     }
@@ -346,7 +346,7 @@ class HTTP_Client
     */
     function delete($url, $headers = array())
     {
-        $request =& $this->_createRequest($url, HTTP_REQUEST_METHOD_DELETE, $headers);
+        $request = $this->_createRequest($url, HTTP_REQUEST_METHOD_DELETE, $headers);
         return $this->_performRequest($request);
     } 
 
@@ -535,7 +535,7 @@ class HTTP_Client
         if (!is_a($listener, 'HTTP_Request_Listener')) {
             return false;
         }
-        $this->_listeners[$listener->getId()] =& $listener;
+        $this->_listeners[$listener->getId()] = $listener;
         $this->_propagate[$listener->getId()] =  $propagate;
         return true;
     }

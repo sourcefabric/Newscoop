@@ -221,7 +221,7 @@ class LiveUser_Auth_Common
             $keys = array_keys($conf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key =& $conf[$key];
+                    $this->$key = $conf[$key];
                 }
             }
         }
@@ -230,7 +230,7 @@ class LiveUser_Auth_Common
             $keys = array_keys($conf['storage']);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key =& $conf['storage'][$key];
+                    $this->$key = $conf['storage'][$key];
                 }
             }
         }

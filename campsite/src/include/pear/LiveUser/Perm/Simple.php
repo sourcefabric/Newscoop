@@ -147,7 +147,7 @@ class LiveUser_Perm_Simple
             $keys = array_keys($conf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key =& $conf[$key];
+                    $this->$key = $conf[$key];
                 }
             }
         }

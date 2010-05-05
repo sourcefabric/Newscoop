@@ -53,7 +53,7 @@ class getid3_flac
 			}
 
 			$ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'] = array();
-			$ThisFileInfo_flac_METAdataBlockTypeText_raw = &$ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'];
+			$ThisFileInfo_flac_METAdataBlockTypeText_raw = $ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'];
 
 			$ThisFileInfo_flac_METAdataBlockTypeText_raw['offset']          = $METAdataBlockOffset;
 			$ThisFileInfo_flac_METAdataBlockTypeText_raw['last_meta_block'] = $METAdataLastBlockFlag;
@@ -351,7 +351,7 @@ class getid3_flac
 
 
     function FLACparsePICTURE($meta_data_block_data, &$ThisFileInfo) {
-        $picture = &$ThisFileInfo['flac']['PICTURE'][sizeof($ThisFileInfo['flac']['PICTURE']) - 1];
+        $picture = $ThisFileInfo['flac']['PICTURE'][sizeof($ThisFileInfo['flac']['PICTURE']) - 1];
 
         $offset = 0;
 

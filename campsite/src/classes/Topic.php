@@ -522,7 +522,7 @@ class Topic extends DatabaseObject {
 
 					// Remember this topic so we know if the next topic
 					// is a translation of this one.
-					$previousTopic =& $currentTopics[$row['Id']];
+					$previousTopic = $currentTopics[$row['Id']];
 
 					// Create the entry in the tree for the current topic.
 
@@ -532,7 +532,7 @@ class Topic extends DatabaseObject {
 					$newPath = $p_path;
 
 					// Add the current topic to the path.
-					$newPath[$row['Id']] =& $currentTopics[$row['Id']];
+					$newPath[$row['Id']] = $currentTopics[$row['Id']];
 
 					// Add the path to the tree.
 					$p_tree[] = $newPath;

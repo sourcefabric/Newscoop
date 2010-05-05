@@ -116,7 +116,7 @@ class Event_Notification
      */
     function Event_Notification(&$object, $name, $info = array())
     {
-        $this->_notificationObject =& $object;
+        $this->_notificationObject = $object;
         $this->_notificationName   = $name;
         $this->_notificationInfo   = $info;
     }

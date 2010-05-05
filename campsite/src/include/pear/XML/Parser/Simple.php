@@ -159,7 +159,7 @@ class XML_Parser_Simple extends XML_Parser
     function _initHandlers()
     {
         if (!is_object($this->_handlerObj)) {
-            $this->_handlerObj = &$this;
+            $this->_handlerObj = $this;
         }
 
         if ($this->mode != 'func' && $this->mode != 'event') {
