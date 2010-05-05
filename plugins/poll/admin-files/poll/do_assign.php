@@ -23,7 +23,7 @@ $p_u = 0;
 switch ($f_target) {
     case 'publication':
         foreach ($f_poll_exists as $poll_nr => $lost) {
-            $PollPublication =& new PollPublication($poll_nr, $f_publication_id);
+            $PollPublication = new PollPublication($poll_nr, $f_publication_id);
             
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollPublication->exists()) {
                 $PollPublication->create();
@@ -44,7 +44,7 @@ switch ($f_target) {
     
     case 'issue':
         foreach ($f_poll_exists as $poll_nr => $lost) {
-            $PollIssue =& new PollIssue($poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
+            $PollIssue = new PollIssue($poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
             $x = $PollIssue->exists();
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollIssue->exists()) {
                 $PollIssue->create();
@@ -65,7 +65,7 @@ switch ($f_target) {
     
     case 'section':
         foreach ($f_poll_exists as $poll_nr => $val) {
-            $PollSection =& new PollSection($poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
+            $PollSection = new PollSection($poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
             
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollSection->exists()) {
                 $PollSection->create();
@@ -86,7 +86,7 @@ switch ($f_target) {
     
     case 'article':
         foreach ($f_poll_exists as $poll_nr => $val) {
-            $PollArticle =& new PollArticle($poll_nr, $f_language_id, $f_article_nr);
+            $PollArticle = new PollArticle($poll_nr, $f_language_id, $f_article_nr);
             
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollArticle->exists()) {
                 $PollArticle->create();

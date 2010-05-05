@@ -254,7 +254,7 @@ class Interview extends DatabaseObject {
         }
         if ($destRow['position'] == $this->m_data['position']) {
             // Move the destination down one.
-            $destItem =& new Interview($destRow['interview_id']);
+            $destItem = new Interview($destRow['interview_id']);
             $destItem->positionRelative("down", 1);
             return true;
         }
@@ -505,7 +505,7 @@ class Interview extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('interview', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -513,7 +513,7 @@ class Interview extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
             
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
             
             return $renderer->toArray();
@@ -956,7 +956,7 @@ class Interview extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('invitation', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -964,7 +964,7 @@ class Interview extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
             
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
             
             return $renderer->toArray();

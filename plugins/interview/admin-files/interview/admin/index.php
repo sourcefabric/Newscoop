@@ -88,7 +88,7 @@ define('PLUGIN_INTERVIEW_ADMIN_MODE', true);
 $InterviewsList = new InterviewsList($f_start, $parameters);
 $total = $InterviewsList->getTotalCount();
 $count = $InterviewsList->getLength();
-$pager =& new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+$pager = new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
 
 $TotalList = new InterviewsList();
 $total = $TotalList->count;

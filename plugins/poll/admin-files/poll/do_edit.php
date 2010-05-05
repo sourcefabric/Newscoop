@@ -36,7 +36,7 @@ if ($poll->exists()) {
 
     foreach ($f_answers as $nr_answer => $text) {
         if ($text !== '__undefined__') {
-            $answer =& new PollAnswer($f_fk_language_id, $f_poll_nr, $nr_answer);
+            $answer = new PollAnswer($f_fk_language_id, $f_poll_nr, $nr_answer);
             if ($answer->exists()) {
                 $answer->setProperty('answer', $text);   
             } else {
@@ -49,7 +49,7 @@ if ($poll->exists()) {
 
 } else {
     // create new poll
-    $poll =& new Poll($f_fk_language_id);   
+    $poll = new Poll($f_fk_language_id);   
     $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_votes_per_user);
     
     if ($success) {
@@ -57,7 +57,7 @@ if ($poll->exists()) {
         
         foreach ($f_answers as $nr_answer => $text) {
             if ($text !== '__undefined__') {
-                $answer =& new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);
+                $answer = new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);
                 $success = $answer->create($text);
             }
         }            

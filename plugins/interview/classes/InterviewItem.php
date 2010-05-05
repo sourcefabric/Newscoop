@@ -204,7 +204,7 @@ class InterviewItem extends DatabaseObject {
         }
         if ($destRow['position'] == $this->m_data['position']) {
             // Move the destination down one.
-            $destItem =& new InterviewItem(null, $destRow['item_id']);
+            $destItem = new InterviewItem(null, $destRow['item_id']);
             $destItem->positionRelative("down", 1);
             return true;
         }
@@ -434,7 +434,7 @@ class InterviewItem extends DatabaseObject {
             } 
         }
         
-        $form =& new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
+        $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form(&$form, &$mask); 
         
         if ($p_html) {
@@ -442,7 +442,7 @@ class InterviewItem extends DatabaseObject {
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
             
-            $renderer =& new HTML_QuickForm_Renderer_Array(true, true);
+            $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
             
             return $renderer->toArray();

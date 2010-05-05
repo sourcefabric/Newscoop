@@ -11,7 +11,7 @@ $f_poll_code = Input::Get('f_poll_code', 'array');
 
 foreach ($f_poll_code as $code) {
     list($poll_nr, $fk_language_id) = explode('_', $code);
-    $poll =& new Poll($fk_language_id, $poll_nr);
+    $poll = new Poll($fk_language_id, $poll_nr);
     
     switch (Input::Get('f_poll_list_action', 'string')) {
         case 'delete':

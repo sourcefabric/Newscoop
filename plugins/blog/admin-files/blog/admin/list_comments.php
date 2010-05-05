@@ -75,7 +75,7 @@ if ($f_start)    $self_params .= "f_start=$f_start&amp;";
 $BlogCommentsList = new BlogCommentsList($f_start, $parameters);
 $total = $BlogCommentsList->getTotalCount();
 $count = $BlogCommentsList->getLength();
-$pager =& new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
+$pager = new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_order&amp;", false);
 
 $TotalList = new BlogCommentsList();
 $total = $TotalList->count;

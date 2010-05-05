@@ -26,7 +26,7 @@ final class MetaInterviewItem extends MetaDbObject {
 
     public function __construct($p_item_id = null)
     {
-		$this->m_dbObject =& new InterviewItem(null, $p_item_id);
+		$this->m_dbObject = new InterviewItem(null, $p_item_id);
 
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';

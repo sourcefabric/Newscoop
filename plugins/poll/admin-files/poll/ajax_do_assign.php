@@ -24,7 +24,7 @@ if ($f_action == 'assign') {
 
 switch ($f_poll_item) {
     case 'publication':
-            $PollPublication =& new PollPublication($f_poll_nr, $f_publication_id);
+            $PollPublication = new PollPublication($f_poll_nr, $f_publication_id);
             if ($PollPublication->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
             } else {
@@ -33,7 +33,7 @@ switch ($f_poll_item) {
     break;
     
     case 'issue':
-            $PollIssue =& new PollIssue($f_poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
+            $PollIssue = new PollIssue($f_poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
             if ($PollIssue->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
             } else {
@@ -42,7 +42,7 @@ switch ($f_poll_item) {
     break;
     
     case 'section':
-            $PollSection =& new PollSection($f_poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
+            $PollSection = new PollSection($f_poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
             if ($PollSection->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
             } else {
@@ -51,7 +51,7 @@ switch ($f_poll_item) {
     break;
     
     case 'article':
-            $PollArticle =& new PollArticle($f_poll_nr, $f_language_id, $f_article_nr);
+            $PollArticle = new PollArticle($f_poll_nr, $f_language_id, $f_article_nr);
             if ($PollArticle->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";    
             } else {
