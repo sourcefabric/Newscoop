@@ -348,7 +348,7 @@ class LiveUser_Misc_Schema_Install
     function writeSchema($definition, $file)
     {
         require_once 'MDB2/Schema/Writer.php';
-        $writer =& new MDB2_Schema_Writer();
+        $writer = new MDB2_Schema_Writer();
         $arguments = array(
             'output_mode' => 'file',
             'output' => $file,

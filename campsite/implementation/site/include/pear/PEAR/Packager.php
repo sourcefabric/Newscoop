@@ -50,7 +50,7 @@ class PEAR_Packager extends PEAR_Common
         }
 
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-        $pkg  = &new PEAR_PackageFile($this->config, $this->debug);
+        $pkg  = new PEAR_PackageFile($this->config, $this->debug);
         $pf   = &$pkg->fromPackageFile($pkgfile, PEAR_VALIDATE_NORMAL);
         $main = &$pf;
         PEAR::staticPopErrorHandling();

@@ -489,7 +489,7 @@ class PEAR_Common extends PEAR
      */
     function infoFromTgzFile($file)
     {
-        $packagefile = &new PEAR_PackageFile($this->config);
+        $packagefile = new PEAR_PackageFile($this->config);
         $pf = &$packagefile->fromTgzFile($file, PEAR_VALIDATE_NORMAL);
         return $this->_postProcessChecks($pf);
     }
@@ -508,7 +508,7 @@ class PEAR_Common extends PEAR
      */
     function infoFromDescriptionFile($descfile)
     {
-        $packagefile = &new PEAR_PackageFile($this->config);
+        $packagefile = new PEAR_PackageFile($this->config);
         $pf = &$packagefile->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
         return $this->_postProcessChecks($pf);
     }
@@ -527,7 +527,7 @@ class PEAR_Common extends PEAR
      */
     function infoFromString($data)
     {
-        $packagefile = &new PEAR_PackageFile($this->config);
+        $packagefile = new PEAR_PackageFile($this->config);
         $pf = &$packagefile->fromXmlString($data, PEAR_VALIDATE_NORMAL, false);
         return $this->_postProcessChecks($pf);
     }
@@ -571,7 +571,7 @@ class PEAR_Common extends PEAR
     function infoFromAny($info)
     {
         if (is_string($info) && file_exists($info)) {
-            $packagefile = &new PEAR_PackageFile($this->config);
+            $packagefile = new PEAR_PackageFile($this->config);
             $pf = &$packagefile->fromAnyFile($info, PEAR_VALIDATE_NORMAL);
             if (PEAR::isError($pf)) {
                 $errs = $pf->getUserinfo();
@@ -604,7 +604,7 @@ class PEAR_Common extends PEAR
     function xmlFromInfo($pkginfo)
     {
         $config      = &PEAR_Config::singleton();
-        $packagefile = &new PEAR_PackageFile($config);
+        $packagefile = new PEAR_PackageFile($config);
         $pf = &$packagefile->fromArray($pkginfo);
         $gen = &$pf->getDefaultGenerator();
         return $gen->toXml(PEAR_VALIDATE_PACKAGING);
@@ -626,7 +626,7 @@ class PEAR_Common extends PEAR
     function validatePackageInfo($info, &$errors, &$warnings, $dir_prefix = '')
     {
         $config      = &PEAR_Config::singleton();
-        $packagefile = &new PEAR_PackageFile($config);
+        $packagefile = new PEAR_PackageFile($config);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         if (strpos($info, '<?xml') !== false) {
             $pf = &$packagefile->fromXmlString($info, PEAR_VALIDATE_NORMAL, '');

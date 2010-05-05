@@ -129,7 +129,7 @@ class File_Find
 
         /* if called statically */
         if (!isset($this)  || !is_a($this, "File_Find")) {
-            $obj = &new File_Find();
+            $obj = new File_Find();
             return $obj->maptree($directory);
         }
       

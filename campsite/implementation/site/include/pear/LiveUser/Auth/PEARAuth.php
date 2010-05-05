@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -111,7 +111,7 @@ class LiveUser_Auth_PEARAuth extends LiveUser_Auth_Common
         parent::init($conf, $containerName);
 
         if (!is_a($this->pearAuth, 'auth') && $this->container) {
-            $pearAuth = &new Auth($this->container, $this->options, '', false);
+            $pearAuth = new Auth($this->container, $this->options, '', false);
             if (PEAR::isError($pearAuth)) {
                 $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
                     array('container' => 'could not connect: '.$pearAuth->getMessage(),

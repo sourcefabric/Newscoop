@@ -95,7 +95,7 @@
 
         case 0:
 
-            $frm =& new PhorumInputForm ("", "post", "Continue ->");
+            $frm = new PhorumInputForm ("", "post", "Continue ->");
             $frm->addbreak("Welcome to Phorum");
             $frm->addmessage("This wizard will setup Phorum on your server.  The first step is to prepare the database.  Phorum has already confirmed that it can connect to your database.  Press continue when you are ready.");
             $frm->hidden("module", "install");
@@ -274,7 +274,7 @@
 
             }
 
-            $frm =& new PhorumInputForm ("", "post", "Continue ->");
+            $frm = new PhorumInputForm ("", "post", "Continue ->");
             $frm->addbreak("Creating tables....");
             $frm->addmessage($message);
             $frm->hidden("step", "6");
@@ -285,7 +285,7 @@
 
         case 4:
 
-            $frm =& new PhorumInputForm ("", "post");
+            $frm = new PhorumInputForm ("", "post");
             $frm->hidden("step", "5");
             $frm->hidden("module", "install");
             $frm->addbreak("Creating An Administrator");
@@ -340,7 +340,7 @@
                 }
             }
 
-            $frm =& new PhorumInputForm ("", "post", "Continue ->");
+            $frm = new PhorumInputForm ("", "post", "Continue ->");
             $frm->hidden("module", "install");
             $frm->addbreak("Checking cache....");
             $frm->addmessage($message);

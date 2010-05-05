@@ -143,7 +143,7 @@ for( $x = -23;$x <= 23;$x++ ) {
 
 include_once "./include/admin/PhorumInputForm.php";
 
-$frm = &new PhorumInputForm ( "", "post" );
+$frm = new PhorumInputForm ( "", "post" );
 
 $frm->addbreak( "Phorum General Settings" );
 

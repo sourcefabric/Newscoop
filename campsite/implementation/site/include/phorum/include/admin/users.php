@@ -146,7 +146,7 @@
 
         if(empty($_REQUEST["user_id"])){
 
-            $frm =& new PhorumInputForm ("", "get", "Search");
+            $frm = new PhorumInputForm ("", "get", "Search");
 
             $frm->addbreak("Phorum User Admin");
 
@@ -319,7 +319,7 @@ EOT;
 
         if(count($user)){
 
-            $frm =& new PhorumInputForm ("", "post", "Update");
+            $frm = new PhorumInputForm ("", "post", "Update");
 
             $frm->hidden("module", "users");
 
@@ -355,7 +355,7 @@ EOT;
 
             echo "<br /><hr class=\"PhorumAdminHR\" /><br /><a name=\"forums\"></a>";
 
-            $frm =& new PhorumInputForm ("", "post", "Update");
+            $frm = new PhorumInputForm ("", "post", "Update");
 
             $frm->hidden("user_id", $_REQUEST["user_id"]);
 
@@ -408,7 +408,7 @@ EOT;
 
             echo "<br /><hr class=\"PhorumAdminHR\" /><br /><a name=\"groups\"></a>";
 
-            $frm =& new PhorumInputForm ("", "post", "Update");
+            $frm = new PhorumInputForm ("", "post", "Update");
 
             $frm->hidden("user_id", $_REQUEST["user_id"]);
 

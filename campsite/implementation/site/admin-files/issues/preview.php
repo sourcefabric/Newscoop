@@ -8,17 +8,17 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 
 $errorStr = "";
-$languageObj = & new Language($Language);
+$languageObj = new Language($Language);
 if (!$languageObj->exists()) {
 	$errorStr = getGS('There was an error reading the language parameter.');
 }
 if ($errorStr == "") {
-	$publicationObj = & new Publication($Pub);
+	$publicationObj = new Publication($Pub);
 	if (!$publicationObj->exists())
 		$errorStr = getGS('There was an error reading the publication parameter.');
 }
 if ($errorStr == "") {
-	$issueObj = & new Issue($Pub, $Language, $Issue);
+	$issueObj = new Issue($Pub, $Language, $Issue);
 	if (!$issueObj->exists())
 		$errorStr = getGS('There was an error reading the issue parameter.');
 }
@@ -41,7 +41,7 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 				. "&AdminAccess=all";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
-	$templateObj = & new Template($templateId);
+	$templateObj = new Template($templateId);
 	$url = "$websiteURL/tpl/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {

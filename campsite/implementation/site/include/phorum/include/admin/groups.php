@@ -140,7 +140,7 @@
 
         $group=$groups[$_GET["group_id"]];
 
-        $frm =& new PhorumInputForm ("", "post");
+        $frm = new PhorumInputForm ("", "post");
     
         $frm->addbreak("Edit Group");
     
@@ -160,7 +160,7 @@
         echo "<br /><hr class=\"PhorumAdminHR\" /><br />";
 
 
-        $frm =& new PhorumInputForm ("", "post", "Update");
+        $frm = new PhorumInputForm ("", "post", "Update");
 
         $frm->hidden("module", "groups");
     
@@ -217,7 +217,7 @@
 
     if(empty($_REQUEST["edit"])){
 
-        $frm =& new PhorumInputForm ("", "post");
+        $frm = new PhorumInputForm ("", "post");
     
         $frm->addbreak("Phorum Group Admin");
     

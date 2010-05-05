@@ -40,7 +40,7 @@ abstract class CampURI {
      * @var array
      */
     protected $m_parts = array('scheme', 'user', 'password', 'host', 'port', 'path', 'query', 'fragment');
-    
+
     static protected $m_objects = array('publication'=>'Publication', 'issue'=>'Issue',
     'section'=>'Section', 'article'=>'Article', 'language'=>'Language');
 
@@ -158,7 +158,7 @@ abstract class CampURI {
      * @var boolean
      */
     protected $m_validURI = false;
-    
+
     /**
      * The list of parameters used in preview mode
      * @var array
@@ -241,7 +241,7 @@ abstract class CampURI {
         $this->m_uri = $p_uri;
         $p_uri = urldecode($p_uri);
 
-        if ($parts = parse_url($p_uri)) {
+        if ($parts = @parse_url($p_uri)) {
             $success = true;
         }
 

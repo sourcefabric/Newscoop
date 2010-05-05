@@ -239,7 +239,7 @@ class PEAR_Downloader extends PEAR_Common
         if (!class_exists('PEAR_Downloader_Package')) {
             require_once 'PEAR/Downloader/Package.php';
         }
-        $a = &new PEAR_Downloader_Package($t);
+        $a = new PEAR_Downloader_Package($t);
         return $a;
     }
 
@@ -255,7 +255,7 @@ class PEAR_Downloader extends PEAR_Common
         if (!class_exists('PEAR_Dependency2')) {
             require_once 'PEAR/Dependency2.php';
         }
-        $z = &new PEAR_Dependency2($c, $i, $p, $s);
+        $z = new PEAR_Dependency2($c, $i, $p, $s);
         return $z;
     }
 
@@ -789,7 +789,7 @@ class PEAR_Downloader extends PEAR_Common
         if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $a = &new PEAR_PackageFile($c, $d, $t);
+        $a = new PEAR_PackageFile($c, $d, $t);
         return $a;
     }
 
