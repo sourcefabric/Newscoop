@@ -84,7 +84,7 @@ if ($f_start)   $self_params .= "f_start=$f_start&amp;";
 $BlogsList = new BlogsList($f_start, $parameters);
 $total = $BlogsList->getTotalCount();
 $count = $BlogsList->getLength();
-$pager =& new SimplePager($total, $f_length, "f_start", "$self?f_order=$f_order&amp;", false);
+$pager = new SimplePager($total, $f_length, "f_start", "$self?f_order=$f_order&amp;", false);
 
 $TotalList = new BlogsList();
 $total = $TotalList->count;

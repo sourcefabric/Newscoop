@@ -78,7 +78,7 @@ $count = $InterviewItemsList->count;
 $TotalItems = new InterviewItemsList();
 $total = $TotalItems->count;
 
-$pager =& new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;f_interview_id=$f_interview_id&amp;", false);
+$pager = new SimplePager($count, $f_length, "f_start", "index.php?f_order=$f_order&amp;f_interview_id=$f_interview_id&amp;", false);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>

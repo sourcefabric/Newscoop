@@ -24,7 +24,7 @@ foreach ($parents as $poll) {
 }
 
 
-$pager =& new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_order=$f_poll_order&amp;", false);
+$pager = new SimplePager(Poll::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_order=$f_poll_order&amp;", false);
 $allLanguages = Language::GetLanguages();
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
