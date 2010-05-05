@@ -135,7 +135,7 @@ class Date_TimeZone
      */
     function Date_TimeZone($id)
     {
-        $_DATE_TIMEZONE_DATA =& $GLOBALS['_DATE_TIMEZONE_DATA'];
+        $_DATE_TIMEZONE_DATA = $GLOBALS['_DATE_TIMEZONE_DATA'];
         if(Date_TimeZone::isValidID($id)) {
             $this->id = $id;
             $this->longname = $_DATE_TIMEZONE_DATA[$id]['longname'];

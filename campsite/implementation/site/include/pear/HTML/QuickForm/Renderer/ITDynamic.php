@@ -100,7 +100,7 @@ class HTML_QuickForm_Renderer_ITDynamic extends HTML_QuickForm_Renderer
     function HTML_QuickForm_Renderer_ITDynamic(&$tpl)
     {
         $this->HTML_QuickForm_Renderer();
-        $this->_tpl =& $tpl;
+        $this->_tpl = $tpl;
         $this->_tpl->setCurrentBlock('qf_main_loop');
     }
 

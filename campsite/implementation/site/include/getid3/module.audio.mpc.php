@@ -21,7 +21,7 @@ class getid3_mpc
 		// http://www.uni-jena.de/~pfk/mpp/sv8/header.html
 
 		$ThisFileInfo['mpc']['header'] = array();
-		$thisfile_mpc_header           = &$ThisFileInfo['mpc']['header'];
+		$thisfile_mpc_header           = $ThisFileInfo['mpc']['header'];
 
 		$ThisFileInfo['fileformat']               = 'mpc';
 		$ThisFileInfo['audio']['dataformat']      = 'mpc';

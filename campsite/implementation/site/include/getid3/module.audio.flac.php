@@ -53,7 +53,7 @@ class getid3_flac
 			}
 
 			$ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'] = array();
-			$ThisFileInfo_flac_METAdataBlockTypeText_raw = &$ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'];
+			$ThisFileInfo_flac_METAdataBlockTypeText_raw = $ThisFileInfo['flac'][$METAdataBlockTypeText]['raw'];
 
 			$ThisFileInfo_flac_METAdataBlockTypeText_raw['offset']          = $METAdataBlockOffset;
 			$ThisFileInfo_flac_METAdataBlockTypeText_raw['last_meta_block'] = $METAdataLastBlockFlag;

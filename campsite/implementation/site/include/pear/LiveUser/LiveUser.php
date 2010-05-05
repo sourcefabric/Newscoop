@@ -347,7 +347,7 @@ class LiveUser
         if ($debug) {
             $log = LiveUser::PEARLogFactory($debug);
             if ($log) {
-                $this->log =& $log;
+                $this->log = $log;
                 $this->stack->setLogger($this->log);
             }
         }
@@ -464,7 +464,7 @@ class LiveUser
     {
         $debug = false;
         if (array_key_exists('debug', $conf)) {
-            $debug =& $conf['debug'];
+            $debug = $conf['debug'];
         }
 
         $obj = new LiveUser($debug);
@@ -633,17 +633,17 @@ class LiveUser
                 array_pop($keys);
                 $newConfArray = array();
                 foreach ($keys as $key) {
-                    $newConfArray[$key] =& $confArray[$key];
+                    $newConfArray[$key] = $confArray[$key];
                 }
                 $storage = LiveUser::storageFactory($newConfArray, $classprefix);
                 return $storage;
             }
         }
-        $storageConf =& $confArray[$key];
+        $storageConf = $confArray[$key];
         $newConfArray = array();
         foreach ($confArray as $keyNew => $foo) {
             if ($key !== $keyNew) {
-                $newConfArray[$keyNew] =& $confArray[$keyNew];
+                $newConfArray[$keyNew] = $confArray[$keyNew];
             }
         }
         $storage = new $storageName();
@@ -738,10 +738,10 @@ class LiveUser
     function readConfig($conf)
     {
         if (array_key_exists('authContainers', $conf)) {
-            $this->_authContainers =& $conf['authContainers'];
+            $this->_authContainers = $conf['authContainers'];
         }
         if (array_key_exists('permContainer', $conf)) {
-            $this->_permContainer =& $conf['permContainer'];
+            $this->_permContainer = $conf['permContainer'];
         }
 
         $this->_options = LiveUser::arrayMergeClobber($this->_options, $conf);
@@ -1154,7 +1154,7 @@ class LiveUser
                 return false;
             }
             if ($auth->loggedIn) {
-                $this->_auth =& $auth;
+                $this->_auth = $auth;
                 if ($remember) {
                     $this->setRememberCookie($handle, $passwd);
                 }
@@ -1171,7 +1171,7 @@ class LiveUser
                     if (!$perm->mapUser($auth->getProperty('auth_user_id'), $containerName)) {
                         $this->dispatcher->post($this, 'onFailedMapping');
                     } else {
-                        $this->_perm =& $perm;
+                        $this->_perm = $perm;
                     }
                 }
                 $this->_freeze();
@@ -1231,7 +1231,7 @@ class LiveUser
             }
             if ($auth->unfreeze($_SESSION[$this->_options['session']['varname']]['auth'])) {
                 $auth->containerName = $_SESSION[$this->_options['session']['varname']]['auth_name'];
-                $this->_auth = &$auth;
+                $this->_auth = $auth;
                 if (array_key_exists('perm', $_SESSION[$this->_options['session']['varname']])
                     && $_SESSION[$this->_options['session']['varname']]['perm']
                 ) {
@@ -1247,7 +1247,7 @@ class LiveUser
                         $result = $perm->mapUser($auth->getProperty('auth_user_id'), $auth->containerName);
                     }
                     if ($result) {
-                        $this->_perm = &$perm;
+                        $this->_perm = $perm;
                     }
                 }
                 $this->_status = LIVEUSER_STATUS_UNFROZEN;

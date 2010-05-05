@@ -650,7 +650,7 @@ class PEAR_Config extends PEAR
         $this->_registry['default'] = new PEAR_Registry($this->configuration['default']['php_dir']);
         $this->_registry['default']->setConfig($this, false);
         $this->_regInitialized['default'] = false;
-        //$GLOBALS['_PEAR_Config_instance'] = &$this;
+        //$GLOBALS['_PEAR_Config_instance'] = $this;
     }
 
     /**
@@ -699,7 +699,7 @@ class PEAR_Config extends PEAR
              return $t_conf->lastError;
         }
 
-        $GLOBALS['_PEAR_Config_instance'] = &$t_conf;
+        $GLOBALS['_PEAR_Config_instance'] = $t_conf;
         return $GLOBALS['_PEAR_Config_instance'];
     }
 
@@ -1355,9 +1355,9 @@ class PEAR_Config extends PEAR
                     }
 
                     if ($key == 'preferred_mirror') {
-                        $reg = &$this->getRegistry();
+                        $reg = $this->getRegistry();
                         if (is_object($reg)) {
-                            $chan = &$reg->getChannel($channel);
+                            $chan = $reg->getChannel($channel);
                             if (PEAR::isError($chan)) {
                                 return $channel;
                             }
@@ -1381,9 +1381,9 @@ class PEAR_Config extends PEAR
             }
 
             if ($key == 'preferred_mirror') {
-                $reg = &$this->getRegistry();
+                $reg = $this->getRegistry();
                 if (is_object($reg)) {
-                    $chan = &$reg->getChannel($channel);
+                    $chan = $reg->getChannel($channel);
                     if (PEAR::isError($chan)) {
                         return $channel;
                     }
@@ -1432,9 +1432,9 @@ class PEAR_Config extends PEAR
 
 
         if ($ret !== null) {
-            $reg = &$this->getRegistry($layer);
+            $reg = $this->getRegistry($layer);
             if (is_object($reg)) {
-                $chan = &$reg->getChannel($channel);
+                $chan = $reg->getChannel($channel);
                 if (PEAR::isError($chan)) {
                     return $channel;
                 }
@@ -1490,9 +1490,9 @@ class PEAR_Config extends PEAR
                 return false; // can't set the __uri pseudo-channel's mirror
             }
 
-            $reg = &$this->getRegistry($layer);
+            $reg = $this->getRegistry($layer);
             if (is_object($reg)) {
-                $chan = &$reg->getChannel($channel ? $channel : 'pear.php.net');
+                $chan = $reg->getChannel($channel ? $channel : 'pear.php.net');
                 if (PEAR::isError($chan)) {
                     return false;
                 }
@@ -1534,7 +1534,7 @@ class PEAR_Config extends PEAR
 
         if (!in_array($channel, $this->_channels)) {
             $this->_lazyChannelSetup($layer);
-            $reg = &$this->getRegistry($layer);
+            $reg = $this->getRegistry($layer);
             if ($reg) {
                 $channel = $reg->channelName($channel);
             }
@@ -1555,9 +1555,9 @@ class PEAR_Config extends PEAR
 
         if ($key == 'default_channel') {
             if (!isset($reg)) {
-                $reg = &$this->getRegistry($layer);
+                $reg = $this->getRegistry($layer);
                 if (!$reg) {
-                    $reg = &$this->getRegistry();
+                    $reg = $this->getRegistry();
                 }
             }
 
@@ -2012,7 +2012,7 @@ class PEAR_Config extends PEAR
             return false;
         }
 
-        $this->_registry[$layer] = &$reg;
+        $this->_registry[$layer] = $reg;
         if (is_object($reg)) {
             $this->_registry[$layer]->setConfig($this, false);
         }

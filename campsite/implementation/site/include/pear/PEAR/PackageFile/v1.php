@@ -365,8 +365,8 @@ class PEAR_PackageFile_v1
 
     function setConfig(&$config)
     {
-        $this->_config = &$config;
-        $this->_registry = &$config->getRegistry();
+        $this->_config = $config;
+        $this->_registry = $config->getRegistry();
     }
 
     function setRequestedGroup()
@@ -416,7 +416,7 @@ class PEAR_PackageFile_v1
         if ($logger && (!is_object($logger) || !method_exists($logger, 'log'))) {
             return PEAR::raiseError('Logger must be compatible with PEAR_Common::log');
         }
-        $this->_logger = &$logger;
+        $this->_logger = $logger;
     }
 
     function setPackagefile($file, $archive = false)

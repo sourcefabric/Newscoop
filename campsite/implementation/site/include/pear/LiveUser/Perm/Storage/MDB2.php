@@ -117,7 +117,7 @@ class LiveUser_Perm_Storage_MDB2 extends LiveUser_Perm_Storage_SQL
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc =& $dbc;
+            $this->dbc = $dbc;
         }
 
         if (!MDB2::isConnection($this->dbc)) {

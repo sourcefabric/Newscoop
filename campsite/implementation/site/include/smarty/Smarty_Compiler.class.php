@@ -1281,7 +1281,7 @@ class Smarty_Compiler extends Smarty {
 
         for ($i = 0; $i < count($tokens); $i++) {
 
-            $token = &$tokens[$i];
+            $token = $tokens[$i];
 
             switch (strtolower($token)) {
                 case '!':

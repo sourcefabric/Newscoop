@@ -560,7 +560,7 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
     {
         $highest = 1;
         for ($i = 0; $i < count($columns); $i++) {
-            $col = &$columns[$i];
+            $col = $columns[$i];
             if (isset($colparams[$i]) && !empty($colparams[$i]['wrap'])) {
                 $col = wordwrap($col, $colparams[$i]['wrap']);
             }

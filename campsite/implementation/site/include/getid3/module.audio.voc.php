@@ -29,9 +29,9 @@ class getid3_voc
 		}
 
 		// shortcuts
-		$thisfile_audio = &$ThisFileInfo['audio'];
+		$thisfile_audio = $ThisFileInfo['audio'];
 		$ThisFileInfo['voc'] = array();
-		$thisfile_voc        = &$ThisFileInfo['voc'];
+		$thisfile_voc        = $ThisFileInfo['voc'];
 
 		$ThisFileInfo['fileformat']               = 'voc';
 		$thisfile_audio['dataformat']      = 'voc';

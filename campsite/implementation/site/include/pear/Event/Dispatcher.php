@@ -207,7 +207,7 @@ class Event_Dispatcher
         // Post eventual pending notifications for this observer
         if (isset($this->_pending[$nName])) {
             foreach (array_keys($this->_pending[$nName]) as $k) {
-                $notification =& $this->_pending[$nName][$k];
+                $notification = $this->_pending[$nName][$k];
                 if (!$notification->isNotificationCancelled()) {
                     $objClass = get_class($notification->getNotificationObject());
                     if (empty($class) || strcasecmp($class, $objClass) == 0) {
@@ -264,14 +264,14 @@ class Event_Dispatcher
     {
         $nName = $notification->getNotificationName();
         if ($pending === true) {
-            $this->_pending[$nName][] =& $notification;
+            $this->_pending[$nName][] = $notification;
         }
         $objClass = get_class($notification->getNotificationObject());
 
         // Find the registered observers
         if (isset($this->_ro[$nName])) {
             foreach (array_keys($this->_ro[$nName]) as $k) {
-                $rObserver =& $this->_ro[$nName][$k];
+                $rObserver = $this->_ro[$nName][$k];
                 if ($notification->isNotificationCancelled()) {
                     return $notification;
                 }
@@ -286,7 +286,7 @@ class Event_Dispatcher
         // Notify globally registered observers
         if (isset($this->_ro[EVENT_DISPATCHER_GLOBAL])) {
             foreach (array_keys($this->_ro[EVENT_DISPATCHER_GLOBAL]) as $k) {
-                $rObserver =& $this->_ro[EVENT_DISPATCHER_GLOBAL][$k];
+                $rObserver = $this->_ro[EVENT_DISPATCHER_GLOBAL][$k];
                 if ($notification->isNotificationCancelled()) {
                     return $notification;
                 }
@@ -304,7 +304,7 @@ class Event_Dispatcher
         
         // Notify in nested dispatchers
         foreach (array_keys($this->_nestedDispatchers) as $nested) {
-            $notification =& $this->_nestedDispatchers[$nested]->postNotification($notification, $pending);
+            $notification = $this->_nestedDispatchers[$nested]->postNotification($notification, $pending);
         }
 
         return $notification;
@@ -431,7 +431,7 @@ class Event_Dispatcher
     function addNestedDispatcher(&$dispatcher)
     {
         $name = $dispatcher->getName();
-        $this->_nestedDispatchers[$name] =& $dispatcher;
+        $this->_nestedDispatchers[$name] = $dispatcher;
     }
 
    /**

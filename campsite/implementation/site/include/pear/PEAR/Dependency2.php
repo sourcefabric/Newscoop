@@ -85,7 +85,7 @@ class PEAR_Dependency2
     function PEAR_Dependency2(&$config, $installoptions, $package,
                               $state = PEAR_VALIDATE_INSTALLING)
     {
-        $this->_config = &$config;
+        $this->_config = $config;
         if (!class_exists('PEAR_DependencyDB')) {
             require_once 'PEAR/DependencyDB.php';
         }
@@ -95,7 +95,7 @@ class PEAR_Dependency2
             $config->setInstallRoot($installoptions['packagingroot']);
         }
 
-        $this->_registry = &$config->getRegistry();
+        $this->_registry = $config->getRegistry();
         $this->_dependencydb = PEAR_DependencyDB::singleton($config);
         if (isset($installoptions['packagingroot'])) {
             $config->setInstallRoot(false);
@@ -889,14 +889,14 @@ class PEAR_Dependency2
         $params = array();
         // construct an array of "downloaded" packages to fool the package dependency checker
         // into using these to validate uninstalls of circular dependencies
-        $downloaded = &$dl->getUninstallPackages();
+        $downloaded = $dl->getUninstallPackages();
         foreach ($downloaded as $i => $pf) {
             if (!class_exists('PEAR_Downloader_Package')) {
                 require_once 'PEAR/Downloader/Package.php';
             }
             $dp = new PEAR_Downloader_Package($dl);
             $dp->setPackageFile($downloaded[$i]);
-            $params[$i] = &$dp;
+            $params[$i] = $dp;
         }
 
         // check cache

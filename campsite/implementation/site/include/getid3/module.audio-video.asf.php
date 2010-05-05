@@ -29,14 +29,14 @@ class getid3_asf
 	function getid3_asf(&$fd, &$ThisFileInfo) {
 
 		// Shortcuts
-		$thisfile_audio = &$ThisFileInfo['audio'];
-		$thisfile_video = &$ThisFileInfo['video'];
+		$thisfile_audio = $ThisFileInfo['audio'];
+		$thisfile_video = $ThisFileInfo['video'];
 		$ThisFileInfo['asf'] = array();
-		$thisfile_asf        = &$ThisFileInfo['asf'];
+		$thisfile_asf        = $ThisFileInfo['asf'];
 		$thisfile_asf['comments'] = array();
-		$thisfile_asf_comments    = &$thisfile_asf['comments'];
+		$thisfile_asf_comments    = $thisfile_asf['comments'];
 		$thisfile_asf['header_object'] = array();
-		$thisfile_asf_headerobject     = &$thisfile_asf['header_object'];
+		$thisfile_asf_headerobject     = $thisfile_asf['header_object'];
 
 
 		// ASF structure:
@@ -113,7 +113,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['file_properties_object'] = array();
-					$thisfile_asf_filepropertiesobject      = &$thisfile_asf['file_properties_object'];
+					$thisfile_asf_filepropertiesobject      = $thisfile_asf['file_properties_object'];
 
 					$thisfile_asf_filepropertiesobject['objectid']           = $NextObjectGUID;
 					$thisfile_asf_filepropertiesobject['objectid_guid']      = $NextObjectGUIDtext;
@@ -237,7 +237,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['header_extension_object'] = array();
-					$thisfile_asf_headerextensionobject      = &$thisfile_asf['header_extension_object'];
+					$thisfile_asf_headerextensionobject      = $thisfile_asf['header_extension_object'];
 
 					$thisfile_asf_headerextensionobject['objectid']            = $NextObjectGUID;
 					$thisfile_asf_headerextensionobject['objectid_guid']       = $NextObjectGUIDtext;
@@ -281,7 +281,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['codec_list_object'] = array();
-					$thisfile_asf_codeclistobject      = &$thisfile_asf['codec_list_object'];
+					$thisfile_asf_codeclistobject      = $thisfile_asf['codec_list_object'];
 
 					$thisfile_asf_codeclistobject['objectid']                  = $NextObjectGUID;
 					$thisfile_asf_codeclistobject['objectid_guid']             = $NextObjectGUIDtext;
@@ -299,7 +299,7 @@ class getid3_asf
 					for ($CodecEntryCounter = 0; $CodecEntryCounter < $thisfile_asf_codeclistobject['codec_entries_count']; $CodecEntryCounter++) {
 						// shortcut
 						$thisfile_asf_codeclistobject['codec_entries'][$CodecEntryCounter] = array();
-						$thisfile_asf_codeclistobject_codecentries_current = &$thisfile_asf_codeclistobject['codec_entries'][$CodecEntryCounter];
+						$thisfile_asf_codeclistobject_codecentries_current = $thisfile_asf_codeclistobject['codec_entries'][$CodecEntryCounter];
 
 						$thisfile_asf_codeclistobject_codecentries_current['type_raw'] = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
 						$offset += 2;
@@ -421,7 +421,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['script_command_object'] = array();
-					$thisfile_asf_scriptcommandobject      = &$thisfile_asf['script_command_object'];
+					$thisfile_asf_scriptcommandobject      = $thisfile_asf['script_command_object'];
 
 					$thisfile_asf_scriptcommandobject['objectid']             = $NextObjectGUID;
 					$thisfile_asf_scriptcommandobject['objectid_guid']        = $NextObjectGUIDtext;
@@ -479,7 +479,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['marker_object'] = array();
-					$thisfile_asf_markerobject     = &$thisfile_asf['marker_object'];
+					$thisfile_asf_markerobject     = $thisfile_asf['marker_object'];
 
 					$thisfile_asf_markerobject['objectid']             = $NextObjectGUID;
 					$thisfile_asf_markerobject['objectid_guid']        = $NextObjectGUIDtext;
@@ -537,7 +537,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['bitrate_mutual_exclusion_object'] = array();
-					$thisfile_asf_bitratemutualexclusionobject       = &$thisfile_asf['bitrate_mutual_exclusion_object'];
+					$thisfile_asf_bitratemutualexclusionobject       = $thisfile_asf['bitrate_mutual_exclusion_object'];
 
 					$thisfile_asf_bitratemutualexclusionobject['objectid']             = $NextObjectGUID;
 					$thisfile_asf_bitratemutualexclusionobject['objectid_guid']        = $NextObjectGUIDtext;
@@ -569,7 +569,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['error_correction_object'] = array();
-					$thisfile_asf_errorcorrectionobject      = &$thisfile_asf['error_correction_object'];
+					$thisfile_asf_errorcorrectionobject      = $thisfile_asf['error_correction_object'];
 
 					$thisfile_asf_errorcorrectionobject['objectid']              = $NextObjectGUID;
 					$thisfile_asf_errorcorrectionobject['objectid_guid']         = $NextObjectGUIDtext;
@@ -631,7 +631,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['content_description_object'] = array();
-					$thisfile_asf_contentdescriptionobject      = &$thisfile_asf['content_description_object'];
+					$thisfile_asf_contentdescriptionobject      = $thisfile_asf['content_description_object'];
 
 					$thisfile_asf_contentdescriptionobject['objectid']              = $NextObjectGUID;
 					$thisfile_asf_contentdescriptionobject['objectid_guid']         = $NextObjectGUIDtext;
@@ -686,7 +686,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['extended_content_description_object'] = array();
-					$thisfile_asf_extendedcontentdescriptionobject       = &$thisfile_asf['extended_content_description_object'];
+					$thisfile_asf_extendedcontentdescriptionobject       = $thisfile_asf['extended_content_description_object'];
 
 					$thisfile_asf_extendedcontentdescriptionobject['objectid']                  = $NextObjectGUID;
 					$thisfile_asf_extendedcontentdescriptionobject['objectid_guid']             = $NextObjectGUIDtext;
@@ -696,7 +696,7 @@ class getid3_asf
 					for ($ExtendedContentDescriptorsCounter = 0; $ExtendedContentDescriptorsCounter < $thisfile_asf_extendedcontentdescriptionobject['content_descriptors_count']; $ExtendedContentDescriptorsCounter++) {
 						// shortcut
 						$thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter] = array();
-						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current                                  = &$thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter];
+						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current                                  = $thisfile_asf_extendedcontentdescriptionobject['content_descriptors'][$ExtendedContentDescriptorsCounter];
 
 						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['base_offset']  = $offset + 30;
 						$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['name_length']  = getid3_lib::LittleEndian2Int(substr($ASFHeaderData, $offset, 2));
@@ -868,7 +868,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['stream_bitrate_properties_object'] = array();
-					$thisfile_asf_streambitratepropertiesobject       = &$thisfile_asf['stream_bitrate_properties_object'];
+					$thisfile_asf_streambitratepropertiesobject       = $thisfile_asf['stream_bitrate_properties_object'];
 
 					$thisfile_asf_streambitratepropertiesobject['objectid']                  = $NextObjectGUID;
 					$thisfile_asf_streambitratepropertiesobject['objectid_guid']             = $NextObjectGUIDtext;
@@ -893,7 +893,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['padding_object'] = array();
-					$thisfile_asf_paddingobject     = &$thisfile_asf['padding_object'];
+					$thisfile_asf_paddingobject     = $thisfile_asf['padding_object'];
 
 					$thisfile_asf_paddingobject['objectid']                  = $NextObjectGUID;
 					$thisfile_asf_paddingobject['objectid_guid']             = $NextObjectGUIDtext;
@@ -967,7 +967,7 @@ class getid3_asf
 
 						// shortcut
 						$thisfile_asf['audio_media'][$streamnumber] = array();
-						$thisfile_asf_audiomedia_currentstream      = &$thisfile_asf['audio_media'][$streamnumber];
+						$thisfile_asf_audiomedia_currentstream      = $thisfile_asf['audio_media'][$streamnumber];
 
 						$audiomediaoffset = 0;
 
@@ -1032,7 +1032,7 @@ class getid3_asf
 
 						// shortcut
 						$thisfile_asf['video_media'][$streamnumber] = array();
-						$thisfile_asf_videomedia_currentstream      = &$thisfile_asf['video_media'][$streamnumber];
+						$thisfile_asf_videomedia_currentstream      = $thisfile_asf['video_media'][$streamnumber];
 
 						$videomediaoffset = 0;
 						$thisfile_asf_videomedia_currentstream['image_width']                     = getid3_lib::LittleEndian2Int(substr($streamdata['type_specific_data'], $videomediaoffset, 4));
@@ -1114,7 +1114,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['data_object'] = array();
-					$thisfile_asf_dataobject     = &$thisfile_asf['data_object'];
+					$thisfile_asf_dataobject     = $thisfile_asf['data_object'];
 
 					$DataObjectData = $NextObjectDataHeader.fread($fd, 50 - 24);
 					$offset = 24;
@@ -1164,7 +1164,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['simple_index_object'] = array();
-					$thisfile_asf_simpleindexobject      = &$thisfile_asf['simple_index_object'];
+					$thisfile_asf_simpleindexobject      = $thisfile_asf['simple_index_object'];
 
 					$SimpleIndexObjectData = $NextObjectDataHeader.fread($fd, 56 - 24);
 					$offset = 24;
@@ -1218,7 +1218,7 @@ class getid3_asf
 
 					// shortcut
 					$thisfile_asf['asf_index_object'] = array();
-					$thisfile_asf_asfindexobject      = &$thisfile_asf['asf_index_object'];
+					$thisfile_asf_asfindexobject      = $thisfile_asf['asf_index_object'];
 
 					$ASFIndexObjectData = $NextObjectDataHeader.fread($fd, 34 - 24);
 					$offset = 24;

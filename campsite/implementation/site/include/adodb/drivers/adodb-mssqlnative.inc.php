@@ -550,7 +550,7 @@ class ADODB_mssqlnative extends ADOConnection {
             where upper(object_name(fkeyid)) = $table
             order by constraint_name, referenced_table_name, keyno";
 		
-		$constraints =& $this->GetArray($sql);
+		$constraints = $this->GetArray($sql);
 		
 		$ADODB_FETCH_MODE = $save;
 		
@@ -576,7 +576,7 @@ class ADODB_mssqlnative extends ADOConnection {
 	function MetaDatabases() 
 	{ 
 	    $this->SelectDB("master");
-        $rs =& $this->Execute($this->metaDatabasesSQL);
+        $rs = $this->Execute($this->metaDatabasesSQL);
         $rows = $rs->GetRows();
         $ret = array();
         for($i=0;$i<count($rows);$i++) {

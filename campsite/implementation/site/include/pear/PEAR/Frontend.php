@@ -92,7 +92,7 @@ class PEAR_Frontend extends PEAR
             // quick test to see if this class implements a few of the most
             // important frontend methods
             if (is_a($obj, 'PEAR_Frontend')) {
-                $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = &$obj;
+                $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = $obj;
                 $GLOBALS['_PEAR_FRONTEND_CLASS'] = $uiclass;
                 return $obj;
             }
@@ -126,7 +126,7 @@ class PEAR_Frontend extends PEAR
             return $err;
         }
 
-        $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = &$uiobject;
+        $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = $uiobject;
         $GLOBALS['_PEAR_FRONTEND_CLASS'] = get_class($uiobject);
         return $uiobject;
     }

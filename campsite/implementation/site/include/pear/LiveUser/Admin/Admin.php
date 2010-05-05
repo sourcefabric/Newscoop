@@ -187,7 +187,7 @@ class LiveUser_Admin
         if ($debug) {
             $log = LiveUser::PEARLogFactory($debug);
             if ($log) {
-                $this->log =& $log;
+                $this->log = $log;
                 $this->stack->setLogger($this->log);
             }
         }
@@ -207,13 +207,13 @@ class LiveUser_Admin
     {
         $debug = false;
         if (array_key_exists('debug', $conf)) {
-            $debug =& $conf['debug'];
+            $debug = $conf['debug'];
         }
 
         $obj = new LiveUser_Admin($debug);
 
         if (is_array($conf)) {
-            $obj->_conf =& $conf;
+            $obj->_conf = $conf;
         }
 
         return $obj;
@@ -236,7 +236,7 @@ class LiveUser_Admin
                 return false;
             }
             $obj = LiveUser_Admin::factory($conf);
-            $instance =& $obj;
+            $instance = $obj;
         }
 
         return $instance;
@@ -277,10 +277,10 @@ class LiveUser_Admin
                     array('msg' => 'Could not instanciate auth container: '.$authName));
                 return $auth;
             }
-            $this->_authContainers[$authName] = &$auth;
+            $this->_authContainers[$authName] = $auth;
         }
         $this->authContainerName = $authName;
-        $this->auth = &$this->_authContainers[$authName];
+        $this->auth = $this->_authContainers[$authName];
         return $this->auth;
     }
 
@@ -312,7 +312,7 @@ class LiveUser_Admin
                 array('msg' => 'Could not instanciate perm container of type: '.$this->_conf['permContainer']['type']));
             return $perm;
         }
-        $this->perm = &$perm;
+        $this->perm = $perm;
 
         return $this->perm;
     }
@@ -355,7 +355,7 @@ class LiveUser_Admin
                                 array('msg' => 'Could not instanciate auth container: '.$key));
                             return $auth;
                         }
-                        $this->_authContainers[$key] =& $auth;
+                        $this->_authContainers[$key] = $auth;
                     }
 
                     if (!is_null($authUserId)) {

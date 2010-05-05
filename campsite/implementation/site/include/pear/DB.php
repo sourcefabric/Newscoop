@@ -1097,7 +1097,7 @@ class DB_result
     function DB_result(&$dbh, $result, $options = array())
     {
         $this->autofree    = $dbh->options['autofree'];
-        $this->dbh         = &$dbh;
+        $this->dbh         = $dbh;
         $this->fetchmode   = $dbh->fetchmode;
         $this->fetchmode_object_class = $dbh->fetchmode_object_class;
         $this->parameters  = $dbh->last_parameters;
@@ -1470,7 +1470,7 @@ class DB_row
     function DB_row(&$arr)
     {
         foreach ($arr as $key => $value) {
-            $this->$key = &$arr[$key];
+            $this->$key = $arr[$key];
         }
     }
 

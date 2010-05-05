@@ -181,7 +181,7 @@ class PEAR_Common extends PEAR
     {
         // doesn't work due to bug #14744
         //$tempfiles = $this->_tempfiles;
-        $tempfiles =& $GLOBALS['_PEAR_Common_tempfiles'];
+        $tempfiles = $GLOBALS['_PEAR_Common_tempfiles'];
         while ($file = array_shift($tempfiles)) {
             if (@is_dir($file)) {
                 if (!class_exists('System')) {
@@ -297,7 +297,7 @@ class PEAR_Common extends PEAR
      */
     function setFrontendObject(&$ui)
     {
-        $this->ui = &$ui;
+        $this->ui = $ui;
     }
 
     /**
@@ -490,7 +490,7 @@ class PEAR_Common extends PEAR
     function infoFromTgzFile($file)
     {
         $packagefile = new PEAR_PackageFile($this->config);
-        $pf = &$packagefile->fromTgzFile($file, PEAR_VALIDATE_NORMAL);
+        $pf = $packagefile->fromTgzFile($file, PEAR_VALIDATE_NORMAL);
         return $this->_postProcessChecks($pf);
     }
 
@@ -509,7 +509,7 @@ class PEAR_Common extends PEAR
     function infoFromDescriptionFile($descfile)
     {
         $packagefile = new PEAR_PackageFile($this->config);
-        $pf = &$packagefile->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
+        $pf = $packagefile->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
         return $this->_postProcessChecks($pf);
     }
 
@@ -528,7 +528,7 @@ class PEAR_Common extends PEAR
     function infoFromString($data)
     {
         $packagefile = new PEAR_PackageFile($this->config);
-        $pf = &$packagefile->fromXmlString($data, PEAR_VALIDATE_NORMAL, false);
+        $pf = $packagefile->fromXmlString($data, PEAR_VALIDATE_NORMAL, false);
         return $this->_postProcessChecks($pf);
     }
 
@@ -572,7 +572,7 @@ class PEAR_Common extends PEAR
     {
         if (is_string($info) && file_exists($info)) {
             $packagefile = new PEAR_PackageFile($this->config);
-            $pf = &$packagefile->fromAnyFile($info, PEAR_VALIDATE_NORMAL);
+            $pf = $packagefile->fromAnyFile($info, PEAR_VALIDATE_NORMAL);
             if (PEAR::isError($pf)) {
                 $errs = $pf->getUserinfo();
                 if (is_array($errs)) {
@@ -605,8 +605,8 @@ class PEAR_Common extends PEAR
     {
         $config      = PEAR_Config::singleton();
         $packagefile = new PEAR_PackageFile($config);
-        $pf = &$packagefile->fromArray($pkginfo);
-        $gen = &$pf->getDefaultGenerator();
+        $pf = $packagefile->fromArray($pkginfo);
+        $gen = $pf->getDefaultGenerator();
         return $gen->toXml(PEAR_VALIDATE_PACKAGING);
     }
 
@@ -629,9 +629,9 @@ class PEAR_Common extends PEAR
         $packagefile = new PEAR_PackageFile($config);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         if (strpos($info, '<?xml') !== false) {
-            $pf = &$packagefile->fromXmlString($info, PEAR_VALIDATE_NORMAL, '');
+            $pf = $packagefile->fromXmlString($info, PEAR_VALIDATE_NORMAL, '');
         } else {
-            $pf = &$packagefile->fromAnyFile($info, PEAR_VALIDATE_NORMAL);
+            $pf = $packagefile->fromAnyFile($info, PEAR_VALIDATE_NORMAL);
         }
 
         PEAR::staticPopErrorHandling();

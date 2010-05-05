@@ -142,7 +142,7 @@ class DynMenuItem {
      */
     public function addItem(&$p_item)
     {
-        $p_item->m_parent =& $this;
+        $p_item->m_parent = $this;
         if (isset($p_item->m_attrs['id'])) {
             $this->m_subItems[$p_item->m_attrs['id']] = $p_item;
         } else {
@@ -205,7 +205,7 @@ class DynMenuItem {
                 $newSubItems[$p_item->m_attrs['id']] = $p_item;
             }
         }
-        $this->m_subItems =& $newSubItems;
+        $this->m_subItems = $newSubItems;
     } // fn addItemAfter
 
 
@@ -261,7 +261,7 @@ class DynMenuItem_JsCook extends DynMenuItem {
     {
         $str = '';
         foreach ($this->m_subItems as $subItem) {
-            $attrs =& $subItem->m_attrs;
+            $attrs = $subItem->m_attrs;
             if (!isset($attrs['target'])) {
                 $attrs['target'] = '';
             }

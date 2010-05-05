@@ -189,7 +189,7 @@ parameter.
             return $this->raiseError("$command expects one param: the remote package name");
         }
         $savechannel = $channel = $this->config->get('default_channel');
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         $package = $params[0];
         $parsed = $reg->parsePackageName($package, $channel);
         if (PEAR::isError($parsed)) {
@@ -205,7 +205,7 @@ parameter.
 
         $mirror = $this->config->get('preferred_mirror');
         if ($chan->supportsREST($mirror) && $base = $chan->getBaseURL('REST1.0', $mirror)) {
-            $rest = &$this->config->getREST('1.0', array());
+            $rest = $this->config->getREST('1.0', array());
             $info = $rest->packageInfo($base, $parsed['package'], $channel);
         }
 
@@ -237,7 +237,7 @@ parameter.
     function doRemoteList($command, $options, $params)
     {
         $savechannel = $channel = $this->config->get('default_channel');
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         if (isset($options['channel'])) {
             $channel = $options['channel'];
             if (!$reg->channelExists($channel)) {
@@ -262,11 +262,11 @@ parameter.
               $base = $chan->getBaseURL('REST1.1', $this->config->get('preferred_mirror'))
         ) {
             // use faster list-all if available
-            $rest = &$this->config->getREST('1.1', array());
+            $rest = $this->config->getREST('1.1', array());
             $available = $rest->listAll($base, $list_options, true, false, false, $chan->getName());
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
-            $rest = &$this->config->getREST('1.0', array());
+            $rest = $this->config->getREST('1.0', array());
             $available = $rest->listAll($base, $list_options, true, false, false, $chan->getName());
         }
 
@@ -299,7 +299,7 @@ parameter.
     function doListAll($command, $options, $params)
     {
         $savechannel = $channel = $this->config->get('default_channel');
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         if (isset($options['channel'])) {
             $channel = $options['channel'];
             if (!$reg->channelExists($channel)) {
@@ -322,11 +322,11 @@ parameter.
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.1', $this->config->get('preferred_mirror'))) {
             // use faster list-all if available
-            $rest = &$this->config->getREST('1.1', array());
+            $rest = $this->config->getREST('1.1', array());
             $available = $rest->listAll($base, $list_options, false, false, false, $chan->getName());
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
-            $rest = &$this->config->getREST('1.0', array());
+            $rest = $this->config->getREST('1.0', array());
             $available = $rest->listAll($base, $list_options, false, false, false, $chan->getName());
         }
 
@@ -423,7 +423,7 @@ parameter.
         }
 
         foreach ($local_pkgs as $name) {
-            $info = &$reg->getPackage($name, $channel);
+            $info = $reg->getPackage($name, $channel);
             $data['data']['Local'][] = array(
                 $reg->channelAlias($channel) . '/' . $info->getPackage(),
                 '',
@@ -447,7 +447,7 @@ parameter.
         }
 
         $channelinfo = isset($options['channelinfo']);
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         if (isset($options['allchannels'])) {
             // search all channels
             unset($options['allchannels']);
@@ -477,7 +477,7 @@ parameter.
         $package = strtolower($params[0]);
         $summary = isset($params[1]) ? $params[1] : false;
         if (isset($options['channel'])) {
-            $reg = &$this->config->getRegistry();
+            $reg = $this->config->getRegistry();
             $channel = $options['channel'];
             if (!$reg->channelExists($channel)) {
                 return $this->raiseError('Channel "' . $channel . '" does not exist');
@@ -493,7 +493,7 @@ parameter.
 
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
-            $rest = &$this->config->getREST('1.0', array());
+            $rest = $this->config->getREST('1.0', array());
             $available = $rest->listAll($base, false, false, $package, $summary, $chan->getName());
         }
 
@@ -594,7 +594,7 @@ parameter.
         /* $options['ignorepreferred_state'] = 1; */
         // eliminate error messages for preferred_state-related errors
 
-        $downloader = &$this->getDownloader($options);
+        $downloader = $this->getDownloader($options);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $e = $downloader->setDownloadDir(getcwd());
         PEAR::staticPopErrorHandling();
@@ -643,7 +643,7 @@ parameter.
         }
 
         $savechannel = $channel = $this->config->get('default_channel');
-        $reg = &$this->config->getRegistry();
+        $reg = $this->config->getRegistry();
         foreach ($reg->listChannels() as $channel) {
             $inst = array_flip($reg->listPackages($channel));
             if (!count($inst)) {
@@ -674,10 +674,10 @@ parameter.
 
             ) {
                 if ($base2) {
-                    $rest = &$this->config->getREST('1.4', array());
+                    $rest = $this->config->getREST('1.4', array());
                     $base = $base2;
                 } else {
-                    $rest = &$this->config->getREST('1.0', array());
+                    $rest = $this->config->getREST('1.0', array());
                 }
 
                 if (empty($state) || $state == 'any') {

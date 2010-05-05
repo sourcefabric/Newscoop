@@ -109,9 +109,9 @@ function get_user_urlparams($userId = 0, $print_back_link = false, $strip_search
 		'subscription_status');
 	$params_nosearch = array('uType', 'userOffs');
 	if ($strip_search)
-		$params = & $params_nosearch;
+		$params = $params_nosearch;
 	else
-		$params = & $params_search;
+		$params = $params_search;
 
 	$url = '';
 	if ($userId > 0)

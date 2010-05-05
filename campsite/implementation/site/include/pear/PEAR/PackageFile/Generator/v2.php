@@ -102,7 +102,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
      */
     function PEAR_PackageFile_Generator_v2(&$packagefile)
     {
-        $this->_packagefile = &$packagefile;
+        $this->_packagefile = $packagefile;
         if (isset($this->_packagefile->encoding)) {
             $this->_defaultOptions['encoding'] = $this->_packagefile->encoding;
         }
@@ -288,7 +288,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
 
             // add the package.xml version 1.0
             if ($pf1 !== null) {
-                $pfgen = &$pf1->getDefaultGenerator();
+                $pfgen = $pf1->getDefaultGenerator();
                 $packagexml1 = $pfgen->toPackageFile($where, PEAR_VALIDATE_PACKAGING, 'package.xml', true);
                 if (!$tar->addModify(array($packagexml1), '', $where)) {
                     return $packager->raiseError(
@@ -378,7 +378,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
             }
 
             foreach (array_keys($arr['changelog']['release']) as $key) {
-                $c =& $arr['changelog']['release'][$key];
+                $c = $arr['changelog']['release'][$key];
                 if (isset($c['notes'])) {
                     // This trims out the indenting, needs fixing
                     $c['notes'] = "\n" . trim($c['notes']) . "\n";

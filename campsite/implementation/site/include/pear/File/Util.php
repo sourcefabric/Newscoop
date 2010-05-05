@@ -406,11 +406,11 @@ class File_Util
         $dates = array();
 
         if ($sort & FILE_SORT_NAME) {
-            $r = &$names;
+            $r = $names;
         } elseif ($sort & FILE_SORT_DATE) {
-            $r = &$dates;
+            $r = $dates;
         } elseif ($sort & FILE_SORT_SIZE) {
-            $r = &$sizes;
+            $r = $sizes;
         } else {
             asort($files, SORT_REGULAR);
             return $files;

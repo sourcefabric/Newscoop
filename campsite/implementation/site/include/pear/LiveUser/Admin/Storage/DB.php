@@ -114,7 +114,7 @@ class LiveUser_Admin_Storage_DB extends LiveUser_Admin_Storage_SQL
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc =& $dbc;
+            $this->dbc = $dbc;
         }
 
         if (!is_a($this->dbc, 'db_common')) {

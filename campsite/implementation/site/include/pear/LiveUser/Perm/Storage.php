@@ -108,7 +108,7 @@ class LiveUser_Perm_Storage
             $keys = array_keys($storageConf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key =& $storageConf[$key];
+                    $this->$key = $storageConf[$key];
                 }
             }
         }

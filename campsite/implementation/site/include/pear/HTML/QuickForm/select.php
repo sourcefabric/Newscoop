@@ -408,7 +408,7 @@ class HTML_QuickForm_select extends HTML_QuickForm_element {
                 return $dbConn;
             }
         } elseif (is_subclass_of($conn, "db_common")) {
-            $dbConn = &$conn;
+            $dbConn = $conn;
         } else {
             return PEAR::raiseError('Argument 1 of HTML_Select::loadQuery is not a valid type');
         }

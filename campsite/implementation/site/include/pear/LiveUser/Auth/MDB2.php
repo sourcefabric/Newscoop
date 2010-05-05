@@ -150,7 +150,7 @@ class LiveUser_Auth_MDB2 extends LiveUser_Auth_Common
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc =& $dbc;
+            $this->dbc = $dbc;
         }
 
         if (!MDB2::isConnection($this->dbc)) {

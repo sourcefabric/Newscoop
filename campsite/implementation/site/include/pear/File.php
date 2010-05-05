@@ -163,7 +163,7 @@ class File extends PEAR
             $lock = $mode == FILE_MODE_READ ? FILE_LOCK_SHARED : FILE_LOCK_EXCLUSIVE;
             $locks = PEAR::getStaticProperty('File', 'locks');
             if (@flock($filePointers[$filename][$mode], $lock)) {
-                $locks[] = &$filePointers[$filename][$mode];
+                $locks[] = $filePointers[$filename][$mode];
             } elseif (FILE_LOCKS_BLOCK) {
                 return PEAR::raiseError("File already locked: $filename");
             } else {

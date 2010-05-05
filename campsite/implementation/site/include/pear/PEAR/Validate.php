@@ -133,7 +133,7 @@ class PEAR_Validate
      */
     function setPackageFile(&$pf)
     {
-        $this->_packagexml = &$pf;
+        $this->_packagexml = $pf;
     }
 
     /**

@@ -126,7 +126,7 @@ class LiveUser_Admin_Storage_MDB extends LiveUser_Admin_Storage_SQL
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc =& $dbc;
+            $this->dbc = $dbc;
         }
 
         if (!MDB::isConnection($this->dbc)) {

@@ -125,7 +125,7 @@ generate both package.xml.
     {
         $this->output = '';
         $pkginfofile = isset($params[0]) ? $params[0] : 'package2.xml';
-        $packager = &$this->getPackager();
+        $packager = $this->getPackager();
         if (PEAR::isError($err = $this->_convertPackage($pkginfofile))) {
             return $err;
         }
@@ -146,8 +146,8 @@ generate both package.xml.
 
     function _convertPackage($packagexml)
     {
-        $pkg = &$this->getPackageFile($this->config);
-        $pf2 = &$pkg->fromPackageFile($packagexml, PEAR_VALIDATE_NORMAL);
+        $pkg = $this->getPackageFile($this->config);
+        $pf2 = $pkg->fromPackageFile($packagexml, PEAR_VALIDATE_NORMAL);
         if (!is_a($pf2, 'PEAR_PackageFile_v2')) {
             return $this->raiseError('Cannot process "' .
                 $packagexml . '", is not a package.xml 2.0');
@@ -415,7 +415,7 @@ generate both package.xml.
                 'translation for package.xml 1.0');
         }
 
-        $gen = &$pf->getDefaultGenerator();
+        $gen = $pf->getDefaultGenerator();
         $gen->toPackageFile('.');
     }
 }

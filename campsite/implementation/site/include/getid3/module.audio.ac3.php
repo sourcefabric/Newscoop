@@ -21,9 +21,9 @@ class getid3_ac3
 
 		///AH
 		$ThisFileInfo['ac3']['raw']['bsi'] = array();
-		$thisfile_ac3                      = &$ThisFileInfo['ac3'];
-		$thisfile_ac3_raw                  = &$thisfile_ac3['raw'];
-		$thisfile_ac3_raw_bsi              = &$thisfile_ac3_raw['bsi'];
+		$thisfile_ac3                      = $ThisFileInfo['ac3'];
+		$thisfile_ac3_raw                  = $thisfile_ac3['raw'];
+		$thisfile_ac3_raw_bsi              = $thisfile_ac3_raw['bsi'];
 
 
 		// http://www.atsc.org/standards/a_52a.pdf
@@ -147,7 +147,7 @@ class getid3_ac3
 
 			$thisfile_ac3['channels_enabled'] = $this->AC3channelsEnabledLookup($thisfile_ac3_raw_bsi['acmod'], $thisfile_ac3_raw_bsi['lfeon']);
 
-			// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1–31.
+			// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1ï¿½31.
 			// The value of 0 is reserved. The values of 1 to 31 are interpreted as -1 dB to -31 dB with respect to digital 100 percent.
 			$thisfile_ac3_raw_bsi['dialnorm'] = bindec(substr($AC3header['bsi'], $ac3_bsi_offset, 5));
 			$ac3_bsi_offset += 5;
@@ -186,7 +186,7 @@ class getid3_ac3
 				// a number of additional items are present in BSI or audblk to fully describe Ch2.
 
 
-				// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1–31.
+				// This indicates how far the average dialogue level is below digital 100 percent. Valid values are 1ï¿½31.
 				// The value of 0 is reserved. The values of 1 to 31 are interpreted as -1 dB to -31 dB with respect to digital 100 percent.
 				$thisfile_ac3_raw_bsi['dialnorm2'] = bindec(substr($AC3header['bsi'], $ac3_bsi_offset, 5));
 				$ac3_bsi_offset += 5;
@@ -312,9 +312,9 @@ class getid3_ac3
 		static $AC3centerMixLevelLookup;
 		if (empty($AC3centerMixLevelLookup)) {
 			$AC3centerMixLevelLookup = array(
-				0 => pow(2, -3.0 / 6), // 0.707 (–3.0 dB)
-				1 => pow(2, -4.5 / 6), // 0.595 (–4.5 dB)
-				2 => pow(2, -6.0 / 6), // 0.500 (–6.0 dB)
+				0 => pow(2, -3.0 / 6), // 0.707 (ï¿½3.0 dB)
+				1 => pow(2, -4.5 / 6), // 0.595 (ï¿½4.5 dB)
+				2 => pow(2, -6.0 / 6), // 0.500 (ï¿½6.0 dB)
 				3 => 'reserved'
 			);
 		}
@@ -376,7 +376,7 @@ class getid3_ac3
 		// We will represent the two 4-bit fields of compr as follows:
 		//   X0 X1 X2 X3 . Y4 Y5 Y6 Y7
 		// The meaning of the X values is most simply described by considering X to represent a 4-bit
-		// signed integer with values from –8 to +7. The gain indicated by X is then (X + 1) * 6.02 dB. The
+		// signed integer with values from ï¿½8 to +7. The gain indicated by X is then (X + 1) * 6.02 dB. The
 		// following table shows this in detail.
 
 		// Meaning of 4 msb of compr
@@ -389,13 +389,13 @@ class getid3_ac3
 		//  1    +12.04 dB
 		//  0     +6.02 dB
 		// -1         0 dB
-		// -2     –6.02 dB
-		// -3    –12.04 dB
-		// -4    –18.06 dB
-		// -5    –24.08 dB
-		// -6    –30.10 dB
-		// -7    –36.12 dB
-		// -8    –42.14 dB
+		// -2     ï¿½6.02 dB
+		// -3    ï¿½12.04 dB
+		// -4    ï¿½18.06 dB
+		// -5    ï¿½24.08 dB
+		// -6    ï¿½30.10 dB
+		// -7    ï¿½36.12 dB
+		// -8    ï¿½42.14 dB
 
 		$fourbit = str_pad(decbin(($compre & 0xF0) >> 4), 4, '0', STR_PAD_LEFT);
 		if ($fourbit{0} == '1') {
@@ -405,16 +405,16 @@ class getid3_ac3
 		}
 		$log_gain = ($log_gain + 1) * getid3_lib::RGADamplitude2dB(2);
 
-		// The value of Y is a linear representation of a gain change of up to –6 dB. Y is considered to
+		// The value of Y is a linear representation of a gain change of up to ï¿½6 dB. Y is considered to
 		// be an unsigned fractional integer, with a leading value of 1, or: 0.1 Y4 Y5 Y6 Y7 (base 2). Y can
 		// represent values between 0.111112 (or 31/32) and 0.100002 (or 1/2). Thus, Y can represent gain
-		// changes from –0.28 dB to –6.02 dB.
+		// changes from ï¿½0.28 dB to ï¿½6.02 dB.
 
 		$lin_gain = (16 + ($compre & 0x0F)) / 32;
 
 		// The combination of X and Y values allows compr to indicate gain changes from
-		//  48.16 – 0.28 = +47.89 dB, to
-		// –42.14 – 6.02 = –48.16 dB.
+		//  48.16 ï¿½ 0.28 = +47.89 dB, to
+		// ï¿½42.14 ï¿½ 6.02 = ï¿½48.16 dB.
 
 		return $log_gain - $lin_gain;
 	}

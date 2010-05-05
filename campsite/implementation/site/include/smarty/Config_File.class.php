@@ -152,7 +152,7 @@ class Config_File {
     function &get_key($config_key)
     {
         list($file_name, $section_name, $var_name) = explode('/', $config_key, 3);
-        $result = &$this->get($file_name, $section_name, $var_name);
+        $result = $this->get($file_name, $section_name, $var_name);
         return $result;
     }
 
@@ -280,7 +280,7 @@ class Config_File {
         $config_data['vars'] = array();
 
         /* reference to fill with data */
-        $vars =& $config_data['vars'];
+        $vars = $config_data['vars'];
 
         /* parse file line by line */
         preg_match_all('!^.*\r?\n?!m', $contents, $match);
@@ -306,7 +306,7 @@ class Config_File {
                 }
                 if (!isset($config_data['sections'][$section_name]))
                     $config_data['sections'][$section_name] = array('vars' => array());
-                $vars =& $config_data['sections'][$section_name]['vars'];
+                $vars = $config_data['sections'][$section_name]['vars'];
                 continue;
             }
 

@@ -93,7 +93,7 @@ class getid3_lyrics3
 			$this->getLyrics3Data($ThisFileInfo, $fd, $lyrics3offset, $lyrics3version, $lyrics3size);
 
 			if (!isset($ThisFileInfo['ape'])) {
-				$GETID3_ERRORARRAY = &$ThisFileInfo['warning'];
+				$GETID3_ERRORARRAY = $ThisFileInfo['warning'];
 				if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.apetag.php', __FILE__, false)) {
 					$tag = new getid3_apetag($fd, $ThisFileInfo, $ThisFileInfo['lyrics3']['tag_offset_start']);
 				}

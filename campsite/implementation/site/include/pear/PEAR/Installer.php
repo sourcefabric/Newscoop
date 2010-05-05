@@ -130,8 +130,8 @@ class PEAR_Installer extends PEAR_Downloader
 
     function setConfig(&$config)
     {
-        $this->config    = &$config;
-        $this->_registry = &$config->getRegistry();
+        $this->config    = $config;
+        $this->_registry = $config->getRegistry();
     }
 
     // }}}
@@ -218,7 +218,7 @@ class PEAR_Installer extends PEAR_Downloader
         // {{{ return if this file is meant for another platform
         static $os;
         if (!isset($this->_registry)) {
-            $this->_registry = &$this->config->getRegistry();
+            $this->_registry = $this->config->getRegistry();
         }
 
         if (isset($atts['platform'])) {
@@ -501,7 +501,7 @@ class PEAR_Installer extends PEAR_Downloader
     {
         $atts = $real_atts;
         if (!isset($this->_registry)) {
-            $this->_registry = &$this->config->getRegistry();
+            $this->_registry = $this->config->getRegistry();
         }
 
         $channel = $pkg->getChannel();
@@ -1056,7 +1056,7 @@ class PEAR_Installer extends PEAR_Downloader
         // Parse xml file -----------------------------------------------
         $pkg = new PEAR_PackageFile($this->config, $this->debug, $tmpdir);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-        $p = &$pkg->fromAnyFile($descfile, PEAR_VALIDATE_INSTALLING);
+        $p = $pkg->fromAnyFile($descfile, PEAR_VALIDATE_INSTALLING);
         PEAR::staticPopErrorHandling();
         if (PEAR::isError($p)) {
             if (is_array($p->getUserInfo())) {
@@ -1088,7 +1088,7 @@ class PEAR_Installer extends PEAR_Downloader
         if (PEAR::isError($err)) {
             return $err;
         }
-        $this->_downloadedPackages = &$pkgs;
+        $this->_downloadedPackages = $pkgs;
     }
 
     /**
@@ -1098,7 +1098,7 @@ class PEAR_Installer extends PEAR_Downloader
      */
     function setUninstallPackages(&$pkgs)
     {
-        $this->_downloadedPackages = &$pkgs;
+        $this->_downloadedPackages = $pkgs;
     }
 
     function getInstallPackages()
@@ -1129,9 +1129,9 @@ class PEAR_Installer extends PEAR_Downloader
     function install($pkgfile, $options = array())
     {
         $this->_options = $options;
-        $this->_registry = &$this->config->getRegistry();
+        $this->_registry = $this->config->getRegistry();
         if (is_object($pkgfile)) {
-            $dlpkg    = &$pkgfile;
+            $dlpkg    = $pkgfile;
             $pkg      = $pkgfile->getPackageFile();
             $pkgfile  = $pkg->getArchiveFile();
             $descfile = $pkg->getPackageFile();
@@ -1166,13 +1166,13 @@ class PEAR_Installer extends PEAR_Downloader
 
         if (isset($options['installroot'])) {
             $this->config->setInstallRoot($options['installroot']);
-            $this->_registry = &$this->config->getRegistry();
-            $installregistry = &$this->_registry;
+            $this->_registry = $this->config->getRegistry();
+            $installregistry = $this->_registry;
             $this->installroot = ''; // all done automagically now
             $php_dir = $this->config->get('php_dir', null, $channel);
         } else {
             $this->config->setInstallRoot(false);
-            $this->_registry = &$this->config->getRegistry();
+            $this->_registry = $this->config->getRegistry();
             if (isset($this->_options['packagingroot'])) {
                 $installregistry = new PEAR_Registry($regdir);
                 if (!$installregistry->channelExists($channel, true)) {
@@ -1182,7 +1182,7 @@ class PEAR_Installer extends PEAR_Downloader
                 }
                 $php_dir = $packrootphp_dir;
             } else {
-                $installregistry = &$this->_registry;
+                $installregistry = $this->_registry;
                 $php_dir = $this->config->get('php_dir', null, $channel);
             }
             $this->installroot = '';
@@ -1264,7 +1264,7 @@ class PEAR_Installer extends PEAR_Downloader
                     }
 
                     $pfk = new PEAR_PackageFile($this->config);
-                    $parentpkg = &$pfk->fromArray($parentreg);
+                    $parentpkg = $pfk->fromArray($parentreg);
                     $installregistry->updatePackage2($parentpkg);
                 }
 
@@ -1362,7 +1362,7 @@ class PEAR_Installer extends PEAR_Downloader
         // {{{ Copy files to dest dir ---------------------------------------
 
         // info from the package it self we want to access from _installFile
-        $this->pkginfo = &$pkg;
+        $this->pkginfo = $pkg;
         // used to determine whether we should build any C code
         $this->source_files = 0;
 
@@ -1392,7 +1392,7 @@ class PEAR_Installer extends PEAR_Downloader
             return $filelist;
         }
 
-        $p = &$installregistry->getPackage($pkgname, $channel);
+        $p = $installregistry->getPackage($pkgname, $channel);
         $dirtree = (empty($options['register-only']) && $p) ? $p->getDirTree() : false;
 
         $pkg->resetFilelist();
@@ -1640,7 +1640,7 @@ class PEAR_Installer extends PEAR_Downloader
         $this->config->setInstallRoot($installRoot);
 
         $this->installroot = '';
-        $this->_registry = &$this->config->getRegistry();
+        $this->_registry = $this->config->getRegistry();
         if (is_object($package)) {
             $channel = $package->getChannel();
             $pkg     = $package;
@@ -1698,7 +1698,7 @@ class PEAR_Installer extends PEAR_Downloader
             }
         }
 
-        $this->pkginfo = &$pkg;
+        $this->pkginfo = $pkg;
         // pretty much nothing happens if we are only registering the uninstall
         if (empty($options['register-only'])) {
             // {{{ Delete the files

@@ -118,13 +118,13 @@ class LiveUser_Perm_Storage_XML extends LiveUser_Perm_Storage
         }
 
         $tree = new XML_Tree($this->file);
-        $err =& $tree->getTreeFromFile();
+        $err = $tree->getTreeFromFile();
         if (PEAR::isError($err)) {
             $this->stack->push(LIVEUSER_ERROR, 'exception', array(),
                 "Perm initialisation failed. Can't get tree from file");
             return false;
         }
-        $this->tree =& $tree;
+        $this->tree = $tree;
 
         if (!is_a($this->tree, 'xml_tree')) {
             $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
@@ -159,7 +159,7 @@ class LiveUser_Perm_Storage_XML extends LiveUser_Perm_Storage
                         ) {
                             $result['perm_user_id'] = $user->attributes['userId'];
                             $result['perm_type'] = $user->attributes['type'];
-                            $this->userObj =& $this->tree->root->getElement(array($nodeIndex, $userIndex));
+                            $this->userObj = $this->tree->root->getElement(array($nodeIndex, $userIndex));
                             return $result;
                         }
                         $userIndex++;
