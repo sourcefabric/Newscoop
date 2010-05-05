@@ -87,8 +87,8 @@ if (PEAR::isError($resp)) {
 
 $search_conditions = array();
 for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
-	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
-	$f_curr_category_name =& ${'f_category_'.$varIndex.'_name'};
+	$f_curr_category_value = ${'f_category_'.$varIndex.'_value'};
+	$f_curr_category_name = ${'f_category_'.$varIndex.'_name'};
 	$category_conditions[$varIndex] = array();
 	foreach ($f_curr_category_value as $categoryValue) {
 		if ($categoryValue == '-1') {
