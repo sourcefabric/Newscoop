@@ -115,7 +115,7 @@ class PEAR_DependencyDB
     function setConfig(&$config, $depdb = false)
     {
         if (!$config) {
-            $this->_config = &PEAR_Config::singleton();
+            $this->_config = PEAR_Config::singleton();
         } else {
             $this->_config = &$config;
         }

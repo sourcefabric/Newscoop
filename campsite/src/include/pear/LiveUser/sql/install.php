@@ -136,7 +136,7 @@ $lengths = array('description' => 255);
 $defaults = array('right_level' => LIVEUSER_MAX_LEVEL);
 
 // create instance of the auth container
-$auth =& LiveUser::authFactory($conf['authContainers'][0], 'foo');
+$auth = LiveUser::authFactory($conf['authContainers'][0], 'foo');
 // generate xml schema file for auth container
 $result = LiveUser_Misc_Schema_Install::generateSchema(
     $auth,
@@ -161,7 +161,7 @@ $result = LiveUser_Misc_Schema_Install::installSchema(
 var_dump($result);
 
 // create instance of the perm container
-$perm =& LiveUser::storageFactory($conf['permContainer']['storage']);
+$perm = LiveUser::storageFactory($conf['permContainer']['storage']);
 // generate xml schema file for perm container
 $result = LiveUser_Misc_Schema_Install::generateSchema(
     $perm,
@@ -395,7 +395,7 @@ class LiveUser_Misc_Schema_Install
         $variables['database'] = $dsn['database'];
         unset($dsn['database']);
 
-        $manager =& MDB2_Schema::factory($dsn, $options);
+        $manager = MDB2_Schema::factory($dsn, $options);
         if (PEAR::isError($manager)) {
         return $manager;
         }

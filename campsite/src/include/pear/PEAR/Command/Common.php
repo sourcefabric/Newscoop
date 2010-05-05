@@ -176,7 +176,7 @@ class PEAR_Command_Common extends PEAR
     */
     function getHelp($command)
     {
-        $config = &PEAR_Config::singleton();
+        $config = PEAR_Config::singleton();
         if (!isset($this->commands[$command])) {
             return "No such command \"$command\"";
         }

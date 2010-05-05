@@ -637,7 +637,7 @@ class PEAR_PackageFile_v2
     function runPostinstallScripts()
     {
         if ($this->initPostinstallScripts()) {
-            $ui = &PEAR_Frontend::singleton();
+            $ui = PEAR_Frontend::singleton();
             if ($ui) {
                 $ui->runPostinstallScripts($this->_scripts, $this);
             }

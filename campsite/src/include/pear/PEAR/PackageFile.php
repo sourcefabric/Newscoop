@@ -376,7 +376,7 @@ class PEAR_PackageFile
         }
 
         PEAR::staticPopErrorHandling();
-        $ret = &PEAR_PackageFile::fromPackageFile("$tmpdir/$xml", $state, $origfile);
+        $ret = PEAR_PackageFile::fromPackageFile("$tmpdir/$xml", $state, $origfile);
         return $ret;
     }
 
@@ -434,7 +434,7 @@ class PEAR_PackageFile
         // for each block of cdata
         fclose($fp);
         $data = file_get_contents($descfile);
-        $ret = &PEAR_PackageFile::fromXmlString($data, $state, $descfile, $archive);
+        $ret = PEAR_PackageFile::fromXmlString($data, $state, $descfile, $archive);
         return $ret;
     }
 
@@ -478,17 +478,17 @@ class PEAR_PackageFile
 
             $tmp = substr($info, -4);
             if ($tmp == '.xml') {
-                $info = &PEAR_PackageFile::fromPackageFile($info, $state);
+                $info = PEAR_PackageFile::fromPackageFile($info, $state);
             } elseif ($tmp == '.tar' || $tmp == '.tgz') {
-                $info = &PEAR_PackageFile::fromTgzFile($info, $state);
+                $info = PEAR_PackageFile::fromTgzFile($info, $state);
             } else {
                 $fp   = fopen($info, 'r');
                 $test = fread($fp, 5);
                 fclose($fp);
                 if ($test == '<?xml') {
-                    $info = &PEAR_PackageFile::fromPackageFile($info, $state);
+                    $info = PEAR_PackageFile::fromPackageFile($info, $state);
                 } else {
-                    $info = &PEAR_PackageFile::fromTgzFile($info, $state);
+                    $info = PEAR_PackageFile::fromTgzFile($info, $state);
                 }
             }
 

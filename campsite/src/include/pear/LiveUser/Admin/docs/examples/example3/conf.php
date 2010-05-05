@@ -120,7 +120,7 @@ function eHandler($errObj)
 }
 
 // Create new LiveUser object
-$LU =& LiveUser::factory($liveuserConfig);
+$LU = LiveUser::factory($liveuserConfig);
 
 if (!$LU->init()) {
     var_dump($LU->getErrors());
@@ -143,7 +143,7 @@ if ($logout) {
 
 require_once 'LiveUser/Admin.php';
 
-$luadmin =& LiveUser_Admin::factory($liveuserConfig);
+$luadmin = LiveUser_Admin::factory($liveuserConfig);
 $luadmin->init();
 
 $language_selected = array_key_exists('language', $_GET) ? $_GET['language'] : 'de';

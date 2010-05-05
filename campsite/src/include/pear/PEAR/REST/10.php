@@ -483,7 +483,7 @@ class PEAR_REST_10
             return $packagelist;
         }
         if ($this->_rest->config->get('verbose') > 0) {
-            $ui = &PEAR_Frontend::singleton();
+            $ui = PEAR_Frontend::singleton();
             $ui->log('Retrieving data...0%', true);
         }
         $ret = array();

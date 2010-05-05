@@ -325,7 +325,7 @@ class PEAR_Registry extends PEAR
                     $this->_config->set('php_dir', $this->install_dir);
                 }
 
-                $this->_dependencyDB = &PEAR_DependencyDB::singleton($this->_config);
+                $this->_dependencyDB = PEAR_DependencyDB::singleton($this->_config);
                 if (PEAR::isError($this->_dependencyDB)) {
                     // attempt to recover by removing the dep db
                     if (file_exists($this->_config->get('php_dir', null, 'pear.php.net') .
@@ -334,7 +334,7 @@ class PEAR_Registry extends PEAR
                             DIRECTORY_SEPARATOR . '.depdb');
                     }
 
-                    $this->_dependencyDB = &PEAR_DependencyDB::singleton($this->_config);
+                    $this->_dependencyDB = PEAR_DependencyDB::singleton($this->_config);
                     if (PEAR::isError($this->_dependencyDB)) {
                         echo $this->_dependencyDB->getMessage();
                         echo 'Unrecoverable error';
@@ -1476,7 +1476,7 @@ class PEAR_Registry extends PEAR
                     require_once 'PEAR/ChannelFile.php';
                 }
 
-                $ch = &PEAR_ChannelFile::fromArrayWithErrors($chinfo);
+                $ch = PEAR_ChannelFile::fromArrayWithErrors($chinfo);
             }
         }
 

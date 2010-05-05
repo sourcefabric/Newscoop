@@ -371,7 +371,7 @@ class Mail_mimeDecode extends PEAR
                     $_mime_number = ($mime_number == '' ? $i + 1 : sprintf('%s.%s', $mime_number, $i + 1));
                 }
 
-                $arr = &Mail_mimeDecode::getMimeNumbers($structure->parts[$i], $no_refs, $_mime_number, $prepend);
+                $arr = Mail_mimeDecode::getMimeNumbers($structure->parts[$i], $no_refs, $_mime_number, $prepend);
                 foreach ($arr as $key => $val) {
                     $no_refs ? $return[$key] = '' : $return[$key] = &$arr[$key];
                 }
@@ -614,7 +614,7 @@ class Mail_mimeDecode extends PEAR
      * Checks the input for uuencoded files and returns
      * an array of them. Can be called statically, eg:
      *
-     * $files =& Mail_mimeDecode::uudecode($some_text);
+     * $files = Mail_mimeDecode::uudecode($some_text);
      *
      * It will check for the begin 666 ... end syntax
      * however and won't just blindly decode whatever you

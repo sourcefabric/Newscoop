@@ -168,7 +168,7 @@ class PEAR_Common extends PEAR
     function PEAR_Common()
     {
         parent::PEAR();
-        $this->config = &PEAR_Config::singleton();
+        $this->config = PEAR_Config::singleton();
         $this->debug = $this->config->get('verbose');
     }
 
@@ -252,7 +252,7 @@ class PEAR_Common extends PEAR
                 require_once 'PEAR/Frontend.php';
             }
 
-            $ui = &PEAR_Frontend::singleton();
+            $ui = PEAR_Frontend::singleton();
             if (is_a($ui, 'PEAR_Frontend')) {
                 $ui->log($msg, $append_crlf);
             } else {
@@ -603,7 +603,7 @@ class PEAR_Common extends PEAR
      */
     function xmlFromInfo($pkginfo)
     {
-        $config      = &PEAR_Config::singleton();
+        $config      = PEAR_Config::singleton();
         $packagefile = new PEAR_PackageFile($config);
         $pf = &$packagefile->fromArray($pkginfo);
         $gen = &$pf->getDefaultGenerator();
@@ -625,7 +625,7 @@ class PEAR_Common extends PEAR
      */
     function validatePackageInfo($info, &$errors, &$warnings, $dir_prefix = '')
     {
-        $config      = &PEAR_Config::singleton();
+        $config      = PEAR_Config::singleton();
         $packagefile = new PEAR_PackageFile($config);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         if (strpos($info, '<?xml') !== false) {

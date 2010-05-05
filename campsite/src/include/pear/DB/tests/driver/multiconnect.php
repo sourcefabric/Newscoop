@@ -29,7 +29,7 @@ require_once './setup.inc';
 foreach ($dsns as $dbms => $dsn) {
     echo "======== $dbms ========\n";
     $options['persistent'] = false;
-    $dbh =& DB::connect($dsn, $options);
+    $dbh = DB::connect($dsn, $options);
     if (DB::isError($dbh)) {
         echo 'PROBLEM: ' . $dbh->getUserInfo() . "\n";
         continue;
@@ -41,7 +41,7 @@ foreach ($dsns as $dbms => $dsn) {
         $probs = false;
         $dsn = DB::parseDSN($dsn);
         $dsn['new_link'] = true;
-        $dbh =& DB::connect($dsn, $options);
+        $dbh = DB::connect($dsn, $options);
         if (DB::isError($dbh)) {
             echo 'NEW LINK PROBLEM: ' . $dbh->getUserInfo() . "\n";
             $probs = true;
@@ -50,7 +50,7 @@ foreach ($dsns as $dbms => $dsn) {
         if ($dbh->provides('pconnect')) {
             $options['persistent'] = true;
             $dbh->disconnect();
-            $dbh =& DB::connect($dsn, $options);
+            $dbh = DB::connect($dsn, $options);
             if (DB::isError($dbh)) {
                 echo 'PERSIST NEWCON PROBLEM: ' . $dbh->getUserInfo() . "\n";
                 $probs = true;
@@ -58,7 +58,7 @@ foreach ($dsns as $dbms => $dsn) {
 
             unset($dsn['new_link']);
             $dbh->disconnect();
-            $dbh =& DB::connect($dsn, $options);
+            $dbh = DB::connect($dsn, $options);
             if (DB::isError($dbh)) {
                 echo 'PERSIST OLDCON PROBLEM: ' . $dbh->getUserInfo() . "\n";
                 $probs = true;
@@ -72,7 +72,7 @@ foreach ($dsns as $dbms => $dsn) {
     } elseif ($dbh->provides('pconnect')) {
         $options['persistent'] = true;
         $dbh->disconnect();
-        $dbh =& DB::connect($dsn, $options);
+        $dbh = DB::connect($dsn, $options);
         if (DB::isError($dbh)) {
             echo 'PERSIST PROBLEM: ' . $dbh->getUserInfo() . "\n";
             continue;

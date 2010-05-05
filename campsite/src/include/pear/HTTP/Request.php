@@ -721,7 +721,7 @@ class HTTP_Request
 
         $keepAlive = (HTTP_REQUEST_HTTP_VER_1_1 == $this->_http && empty($this->_requestHeaders['connection'])) ||
                      (!empty($this->_requestHeaders['connection']) && 'Keep-Alive' == $this->_requestHeaders['connection']);
-        $sockets   = &PEAR::getStaticProperty('HTTP_Request', 'sockets');
+        $sockets   = PEAR::getStaticProperty('HTTP_Request', 'sockets');
         $sockKey   = $host . ':' . $port;
         unset($this->_sock);
 

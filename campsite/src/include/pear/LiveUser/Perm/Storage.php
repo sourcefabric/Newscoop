@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -91,7 +91,7 @@ class LiveUser_Perm_Storage
      */
     function LiveUser_Perm_Storage()
     {
-        $this->stack = &PEAR_ErrorStack::singleton('LiveUser');
+        $this->stack = PEAR_ErrorStack::singleton('LiveUser');
     }
 
     /**

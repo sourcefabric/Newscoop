@@ -70,7 +70,7 @@ packages within preferred_state ({config preferred_state}) will be downloaded'
      */
     function &factory($a)
     {
-        $a = &PEAR_Command::factory($a, $this->config);
+        $a = PEAR_Command::factory($a, $this->config);
         return $a;
     }
 

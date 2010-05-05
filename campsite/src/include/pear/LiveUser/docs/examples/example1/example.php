@@ -11,7 +11,7 @@
  * This example is intended to be used with the auth XML driver.
  * No permission management is supported.
  *
- * @author Björn Kraus <krausbn@php.net>
+ * @author Bjï¿½rn Kraus <krausbn@php.net>
  * @version $Id: example.php,v 1.12 2005/12/18 12:41:10 lsmith Exp $
  **/
 error_reporting(E_ALL);
@@ -58,8 +58,8 @@ class LU_Default_observer
 }
 
 // Create new LiveUser (LiveUser) object.
-// We´ll only use the auth container, permissions are not used.
-$LU =& LiveUser::factory($liveuserConfig);
+// Weï¿½ll only use the auth container, permissions are not used.
+$LU = LiveUser::factory($liveuserConfig);
 
 $obs = new LU_Default_observer();
 
