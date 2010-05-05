@@ -623,7 +623,7 @@ class ADODB_mssqlnative extends ADOConnection {
 			$mask = $this->qstr(($mask));
 			$this->metaTablesSQL .= " AND name like $mask";
 		}
-		$ret =& ADOConnection::MetaTables($ttype,$showSchema);
+		$ret = ADOConnection::MetaTables($ttype,$showSchema);
 
 		if ($mask) {
 			$this->metaTablesSQL = $save;

@@ -127,7 +127,7 @@ define('PEAR_ERRORSTACK_ERR_OBJTOSTRING', 2);
  * Usage:
  * <code>
  * // global error stack
- * $global_stack = &PEAR_ErrorStack::singleton('MyPackage');
+ * $global_stack = PEAR_ErrorStack::singleton('MyPackage');
  * // local error stack
  * $local_stack = new PEAR_ErrorStack('MyPackage');
  * </code>
@@ -609,7 +609,7 @@ class PEAR_ErrorStack {
     function staticPush($package, $code, $level = 'error', $params = array(),
                         $msg = false, $repackage = false, $backtrace = false)
     {
-        $s = &PEAR_ErrorStack::singleton($package);
+        $s = PEAR_ErrorStack::singleton($package);
         if ($s->_contextCallback) {
             if (!$backtrace) {
                 if (function_exists('debug_backtrace')) {
@@ -980,6 +980,6 @@ class PEAR_ErrorStack {
         return call_user_func_array(array('PEAR', 'raiseError'), $args);
     }
 }
-$stack = &PEAR_ErrorStack::singleton('PEAR_ErrorStack');
+$stack = PEAR_ErrorStack::singleton('PEAR_ErrorStack');
 $stack->pushCallback(array('PEAR_ErrorStack', '_handleError'));
 ?>

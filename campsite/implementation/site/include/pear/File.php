@@ -115,7 +115,7 @@ class File extends PEAR
      */
     function _getFilePointer($filename, $mode, $lock = false)
     {
-        $filePointers = &PEAR::getStaticProperty('File', 'filePointers');
+        $filePointers = PEAR::getStaticProperty('File', 'filePointers');
 
         // Win32 is case-insensitive
         if (OS_WINDOWS) {
@@ -161,7 +161,7 @@ class File extends PEAR
         // lock file
         if ($lock) {
             $lock = $mode == FILE_MODE_READ ? FILE_LOCK_SHARED : FILE_LOCK_EXCLUSIVE;
-            $locks = &PEAR::getStaticProperty('File', 'locks');
+            $locks = PEAR::getStaticProperty('File', 'locks');
             if (@flock($filePointers[$filename][$mode], $lock)) {
                 $locks[] = &$filePointers[$filename][$mode];
             } elseif (FILE_LOCKS_BLOCK) {
@@ -374,8 +374,8 @@ class File extends PEAR
      */
     function closeAll()
     {
-        $locks = &PEAR::getStaticProperty('File', 'locks');
-        $filePointers = &PEAR::getStaticProperty('File', 'filePointers');
+        $locks = PEAR::getStaticProperty('File', 'locks');
+        $filePointers = PEAR::getStaticProperty('File', 'filePointers');
 
         // unlock files
         for ($i = 0, $c = count($locks); $i < $c; $i++) {
@@ -405,7 +405,7 @@ class File extends PEAR
      */
     function close($filename, $mode)
     {
-        $filePointers = &PEAR::getStaticProperty('File', 'filePointers');
+        $filePointers = PEAR::getStaticProperty('File', 'filePointers');
 
         if (OS_WINDOWS) {
             $filename = strToLower($filename);

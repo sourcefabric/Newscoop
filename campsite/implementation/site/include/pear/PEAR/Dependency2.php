@@ -96,7 +96,7 @@ class PEAR_Dependency2
         }
 
         $this->_registry = &$config->getRegistry();
-        $this->_dependencydb = &PEAR_DependencyDB::singleton($config);
+        $this->_dependencydb = PEAR_DependencyDB::singleton($config);
         if (isset($installoptions['packagingroot'])) {
             $config->setInstallRoot(false);
         }

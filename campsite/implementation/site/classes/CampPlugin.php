@@ -343,12 +343,12 @@ class CampPlugin extends DatabaseObject
         }     
                     
         $p_menu_root->addSplit();
-        $menu_modules =& DynMenuItem::Create(getGS("Plugins"), "",
+        $menu_modules = DynMenuItem::Create(getGS("Plugins"), "",
         array("icon" => sprintf($p_iconTemplateStr, "plugin.png"), "id" => "plugins"));
         $p_menu_root->addItem($menu_modules);
 
         if ($g_user->hasPermission("plugin_manager")) {
-            $menu_item =& DynMenuItem::Create(getGS('Manage Plugins'),
+            $menu_item = DynMenuItem::Create(getGS('Manage Plugins'),
             "/$ADMIN/plugins/manage.php",
             array("icon" => sprintf($p_iconTemplateStr, "configure.png")));
             $menu_modules->addItem($menu_item);
@@ -373,7 +373,7 @@ class CampPlugin extends DatabaseObject
                 }
 
                 if ($parent_menu && isset($info['menu'])) {
-                    $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
+                    $menu_plugin = DynMenuItem::Create(getGS($info['menu']['label']),
                     isset($info['menu']['path']) ? "/$ADMIN/".$info['menu']['path'] : null,
                     array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$info['menu']['icon'])));
                 }
@@ -381,7 +381,7 @@ class CampPlugin extends DatabaseObject
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
                     foreach ($info['menu']['sub'] as $menu_info) {
                         if ($g_user->hasPermission($menu_info['permission'])) {
-                            $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
+                            $menu_item = DynMenuItem::Create(getGS($menu_info['label']),
                             is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
                             array("icon" => sprintf($p_iconTemplateStr, '..'.DIR_SEP.$Plugin->getBasePath().DIR_SEP.$menu_info['icon'])));
                             $menu_plugin->addItem($menu_item);

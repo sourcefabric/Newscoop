@@ -441,7 +441,7 @@ class Mail_mimePart
      *
      * @return Mail_mimePart A reference to the part you just added. It is
      *                       crucial if using multipart/* in your subparts that
-     *                       you use =& in your script when calling this function,
+     *                       you use = in your script when calling this function,
      *                       otherwise you will not be able to add further subparts.
      * @access public
      */

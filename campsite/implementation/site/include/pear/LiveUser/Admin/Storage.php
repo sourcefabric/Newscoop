@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -108,7 +108,7 @@ class LiveUser_Admin_Storage
      */
     function LiveUser_Admin_Storage()
     {
-        $this->stack = &PEAR_ErrorStack::singleton('LiveUser_Admin');
+        $this->stack = PEAR_ErrorStack::singleton('LiveUser_Admin');
     }
 
     /**

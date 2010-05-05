@@ -136,7 +136,7 @@ $options = array(
 $dsn = MDB2::parseDSN($dsn);
 $database = $dsn['database'];
 unset($dsn['database']);
-$manager =& MDB2_Schema::factory($dsn, $options);
+$manager = MDB2_Schema::factory($dsn, $options);
 
 if (PEAR::isError($manager)) {
    print "I could not connect to the database\n";

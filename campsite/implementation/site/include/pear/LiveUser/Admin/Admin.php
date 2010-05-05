@@ -182,10 +182,10 @@ class LiveUser_Admin
      */
     function LiveUser_Admin(&$debug)
     {
-        $this->stack = &PEAR_ErrorStack::singleton('LiveUser_Admin');
+        $this->stack = PEAR_ErrorStack::singleton('LiveUser_Admin');
 
         if ($debug) {
-            $log =& LiveUser::PEARLogFactory($debug);
+            $log = LiveUser::PEARLogFactory($debug);
             if ($log) {
                 $this->log =& $log;
                 $this->stack->setLogger($this->log);
@@ -235,7 +235,7 @@ class LiveUser_Admin
             if (!$conf) {
                 return false;
             }
-            $obj = &LiveUser_Admin::factory($conf);
+            $obj = LiveUser_Admin::factory($conf);
             $instance =& $obj;
         }
 
@@ -267,7 +267,7 @@ class LiveUser_Admin
                 $result = false;
                 return $result;
             }
-            $auth = &LiveUser::authFactory(
+            $auth = LiveUser::authFactory(
                 $this->_conf['authContainers'][$authName],
                 $authName,
                 'LiveUser_Admin_'
@@ -306,7 +306,7 @@ class LiveUser_Admin
             return $result;
         }
 
-        $perm = &LiveUser::permFactory($this->_conf['permContainer'], 'LiveUser_Admin_');
+        $perm = LiveUser::permFactory($this->_conf['permContainer'], 'LiveUser_Admin_');
         if ($perm === false) {
             $this->stack->push(LIVEUSER_ADMIN_ERROR, 'exception',
                 array('msg' => 'Could not instanciate perm container of type: '.$this->_conf['permContainer']['type']));
@@ -349,7 +349,7 @@ class LiveUser_Admin
                     if (!isset($this->_authContainers[$key])
                         || !is_object($this->_authContainers[$key])
                     ) {
-                        $auth = &LiveUser::authFactory($value, $key, 'LiveUser_Admin_');
+                        $auth = LiveUser::authFactory($value, $key, 'LiveUser_Admin_');
                         if ($auth === false) {
                             $this->stack->push(LIVEUSER_ADMIN_ERROR, 'exception',
                                 array('msg' => 'Could not instanciate auth container: '.$key));

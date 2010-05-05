@@ -349,7 +349,7 @@ installed package.'
             foreach ($list['dir']['file'] as $att) {
                 $att = $att['attribs'];
                 $file = $att['name'];
-                $role = &PEAR_Installer_Role::factory($info, $att['role'], $this->config);
+                $role = PEAR_Installer_Role::factory($info, $att['role'], $this->config);
                 $role->setup($this, $info, $att, $file);
                 if (!$role->isInstallable()) {
                     $dest = '(not installable)';

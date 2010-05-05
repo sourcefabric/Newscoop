@@ -100,7 +100,7 @@ class PEAR_RunTest
         $this->_logger  = $logger;
         $this->_options = $options;
 
-        $conf = &PEAR_Config::singleton();
+        $conf = PEAR_Config::singleton();
         $this->_php = $conf->get('php_bin');
     }
 

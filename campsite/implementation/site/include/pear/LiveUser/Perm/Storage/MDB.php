@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -99,9 +99,9 @@ class LiveUser_Perm_Storage_MDB extends LiveUser_Perm_Storage_SQL
         if (!MDB::isConnection($this->dbc) && !is_null($this->dsn)) {
             $this->options['optimize'] = 'portability';
             if ($this->function == 'singleton') {
-                $dbc =& MDB::singleton($this->dsn, $this->options);
+                $dbc = MDB::singleton($this->dsn, $this->options);
             } else {
-                $dbc =& MDB::connect($this->dsn, $this->options);
+                $dbc = MDB::connect($this->dsn, $this->options);
             }
             if (PEAR::isError($dbc)) {
                 $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
