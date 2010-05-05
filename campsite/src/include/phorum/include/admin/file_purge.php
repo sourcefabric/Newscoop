@@ -39,7 +39,7 @@
     $purge_files = phorum_db_file_purge_stale_files();
 
     include_once "./include/admin/PhorumInputForm.php";
-    $frm =& new PhorumInputForm ("", "post", count($purge_files) ? "Purge stale files now" : "Refresh screen");
+    $frm = new PhorumInputForm ("", "post", count($purge_files) ? "Purge stale files now" : "Refresh screen");
 
     $frm->hidden("module", "file_purge");
 

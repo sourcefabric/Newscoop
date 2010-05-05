@@ -102,7 +102,7 @@
 
     include_once "./include/admin/PhorumInputForm.php";
 
-    $frm =& new PhorumInputForm ("", "post");
+    $frm = new PhorumInputForm ("", "post");
 
     $frm->addbreak("Phorum Module Settings");
 

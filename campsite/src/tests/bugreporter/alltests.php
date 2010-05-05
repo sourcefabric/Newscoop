@@ -18,7 +18,7 @@ if (! defined('CAMP_CLASSES')) {
 require_once (SIMPLE_TEST . 'unit_tester.php');
 require_once (SIMPLE_TEST . 'reporter.php');
 
-$test = &new GroupTest('All Tests');
+$test = new GroupTest('All Tests');
 $test->addTestFile (CAMP_TESTS . 'bugreporter_test.php');
 $test->addTestFile (CAMP_TESTS . 'autotrac_test.php');
 $test->run(new HtmlReporter());

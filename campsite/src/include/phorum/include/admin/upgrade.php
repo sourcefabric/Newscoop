@@ -40,7 +40,7 @@
 
         case 0:
 
-            $frm =& new PhorumInputForm ("", "post", "Continue ->");
+            $frm = new PhorumInputForm ("", "post", "Continue ->");
             $frm->addbreak("Phorum Upgrade");
             $frm->addmessage("This wizard will upgrade Phorum on your server.  Phorum has already confirmed that it can connect to your database.  Press continue when you are ready.");
             $frm->hidden("module", "upgrade");
@@ -58,7 +58,7 @@
             // ok upgrading tables
             $message = phorum_upgrade_tables($PHORUM['internal_version'],PHORUMINTERNAL);
 
-            $frm =& new PhorumInputForm ("", "post", "Continue ->");
+            $frm = new PhorumInputForm ("", "post", "Continue ->");
 
             // done or not done? ;)
             $stepsleft = PHORUMINTERNAL - $PHORUM['internal_version'];

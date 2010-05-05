@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -100,7 +100,7 @@ define('LIVEUSER_ADMIN_ERROR_NOT_SUPPORTED',    -6);
  * @package LiveUser_Admin
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@
@@ -210,7 +210,7 @@ class LiveUser_Admin
             $debug =& $conf['debug'];
         }
 
-        $obj = &new LiveUser_Admin($debug);
+        $obj = new LiveUser_Admin($debug);
 
         if (is_array($conf)) {
             $obj->_conf =& $conf;

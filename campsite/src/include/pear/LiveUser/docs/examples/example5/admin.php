@@ -44,7 +44,7 @@ if (array_key_exists('mode', $_GET) && $_GET['mode'] == 'edit') {
     $news = getNewsList($db, $category);
 }
 
-$tpl =& new HTML_Template_IT('./');
+$tpl = new HTML_Template_IT('./');
 $tpl->loadTemplatefile('admin.tpl');
 
 // assign the content to the vars
@@ -78,7 +78,7 @@ function getNewsList(&$db, $category)
     if (PEAR::isError($news)) {
         die($news->getMessage() . ' ' . $news->getUserinfo());
     } else {
-        $tpl =& new HTML_Template_IT('./');
+        $tpl = new HTML_Template_IT('./');
 
         $tpl->loadTemplatefile('news_list.tpl', false, false);
 
@@ -130,7 +130,7 @@ function getNewsContent(&$db, $news = null)
     if  (PEAR::isError($news)) {
         die($news->getMessage() . ' ' . $news->getUserinfo());
     } else {
-        $tpl =& new HTML_Template_IT('./');
+        $tpl = new HTML_Template_IT('./');
 
         $tpl->loadTemplatefile('news_edit.tpl', false, false);
 

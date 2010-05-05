@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -57,7 +57,7 @@ require_once 'XML/Tree.php';
  *
  * @category authentication
  * @package LiveUser
- * @author  Björn Kraus <krausbn@php.net>
+ * @author  Bjï¿½rn Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@
@@ -112,7 +112,7 @@ class LiveUser_Auth_XML extends LiveUser_Auth_Common
             $this->file = getenv('DOCUMENT_ROOT') . $this->file;
         }
 
-        $tree =& new XML_Tree($this->file);
+        $tree = new XML_Tree($this->file);
         $err =& $tree->getTreeFromFile();
         if (PEAR::isError($err)) {
             $this->stack->push(LIVEUSER_ERROR, 'exception', array(),

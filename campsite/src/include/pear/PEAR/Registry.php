@@ -319,7 +319,7 @@ class PEAR_Registry extends PEAR
                 $initializing = true;
                 if (!$this->_config) { // never used?
                     $file = OS_WINDOWS ? 'pear.ini' : '.pearrc';
-                    $this->_config = &new PEAR_Config($this->statedir . DIRECTORY_SEPARATOR .
+                    $this->_config = new PEAR_Config($this->statedir . DIRECTORY_SEPARATOR .
                         $file);
                     $this->_config->setRegistry($this);
                     $this->_config->set('php_dir', $this->install_dir);
@@ -1447,7 +1447,7 @@ class PEAR_Registry extends PEAR
 
         $a = $this->_config;
         if (!$a) {
-            $this->_config = &new PEAR_Config;
+            $this->_config = new PEAR_Config;
             $this->_config->set('php_dir', $this->statedir);
         }
 
@@ -1455,7 +1455,7 @@ class PEAR_Registry extends PEAR
             require_once 'PEAR/PackageFile.php';
         }
 
-        $pkg = &new PEAR_PackageFile($this->_config);
+        $pkg = new PEAR_PackageFile($this->_config);
         $pf = &$pkg->fromArray($info);
         return $pf;
     }

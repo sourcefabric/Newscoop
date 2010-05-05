@@ -176,7 +176,7 @@ class HTTP_Client
         if (!empty($cookieManager) && is_a($cookieManager, 'HTTP_Client_CookieManager')) {
             $this->_cookieManager = $cookieManager;
         } else {
-            $this->_cookieManager =& new HTTP_Client_CookieManager();
+            $this->_cookieManager = new HTTP_Client_CookieManager();
         }
         if (isset($defaultHeaders)) {
             $this->setDefaultHeader($defaultHeaders);
@@ -225,7 +225,7 @@ class HTTP_Client
     */
     function &_createRequest($url, $method = HTTP_REQUEST_METHOD_GET, $headers = array())
     {
-        $req =& new HTTP_Request($url, $this->_defaultRequestParams);
+        $req = new HTTP_Request($url, $this->_defaultRequestParams);
         $req->setMethod($method);
         foreach ($this->_defaultHeaders as $name => $value) {
             $req->addHeader($name, $value);

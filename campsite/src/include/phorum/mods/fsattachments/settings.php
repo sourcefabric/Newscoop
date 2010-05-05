@@ -16,7 +16,7 @@ if(count($_POST)){
 
 include_once "./include/admin/PhorumInputForm.php";
 
-$frm =& new PhorumInputForm ("", "post", "Save");
+$frm = new PhorumInputForm ("", "post", "Save");
 
 $frm->hidden("module", "modsettings");
 $frm->hidden("mod", "fsattachments"); // this is the directory name that the Settings file lives in

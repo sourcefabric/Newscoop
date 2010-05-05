@@ -10,8 +10,8 @@ $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
-$languageObj = & new Language($f_language_selected);
-$publicationObj = & new Publication($f_publication_id);
+$languageObj = new Language($f_language_selected);
+$publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 $articleObj = new Article($f_language_selected, $f_article_number);
@@ -43,7 +43,7 @@ $websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
-	$templateObj = & new Template($templateId);
+	$templateObj = new Template($templateId);
 	$url = "$websiteURL/tpl/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";

@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
+ * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -117,7 +117,7 @@ class LiveUser_Perm_Storage_XML extends LiveUser_Perm_Storage
             $this->file = getenv('DOCUMENT_ROOT') . $this->file;
         }
 
-        $tree =& new XML_Tree($this->file);
+        $tree = new XML_Tree($this->file);
         $err =& $tree->getTreeFromFile();
         if (PEAR::isError($err)) {
             $this->stack->push(LIVEUSER_ERROR, 'exception', array(),

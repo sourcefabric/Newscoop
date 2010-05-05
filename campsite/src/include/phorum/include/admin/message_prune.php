@@ -60,7 +60,7 @@
     include_once "./include/admin/PhorumInputForm.php";
         
 
-    $frm =& new PhorumInputForm ("", "post", "Delete messages");
+    $frm = new PhorumInputForm ("", "post", "Delete messages");
 
     $frm->hidden("module", "message_prune");
 

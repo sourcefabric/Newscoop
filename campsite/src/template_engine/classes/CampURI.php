@@ -174,10 +174,10 @@ abstract class CampURI
     static protected $m_previewParameters = array('LoginUserId',
     'LoginUserKey', 'AdminAccess', 'previewLang', 'preview');
 
-    /** 
-     * @var object 
-     */ 
-    protected $m_config = null; 
+    /**
+     * @var object
+     */
+    protected $m_config = null;
 
     /**
      * Class constructor
@@ -255,7 +255,7 @@ abstract class CampURI
         $this->m_uri = $p_uri;
         $p_uri = urldecode($p_uri);
 
-        if ($parts = parse_url($p_uri)) {
+        if ($parts = @parse_url($p_uri)) {
             $success = true;
         }
 
