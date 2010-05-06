@@ -179,7 +179,7 @@ configuration.',
 
     function doList($command, $options, $params)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $registered = $reg->getChannels();
         usort($registered, array(&$this, '_sortchannels'));
         $i = $j = 0;
@@ -203,7 +203,7 @@ configuration.',
 
     function doUpdateAll($command, $options, $params)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $channels = $reg->getChannels();
 
         $success = true;
@@ -230,7 +230,7 @@ configuration.',
             return $this->raiseError("No channel specified");
         }
 
-        $reg     = $this->config->getRegistry();
+        $reg     = &$this->config->getRegistry();
         $channel = strtolower($params[0]);
         if ($reg->channelExists($channel)) {
             $chan = $reg->getChannel($channel);
@@ -239,7 +239,7 @@ configuration.',
             }
         } else {
             if (strpos($channel, '://')) {
-                $downloader = $this->getDownloader();
+                $downloader = &$this->getDownloader();
                 $tmpdir = $this->config->get('temp_dir');
                 PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
                 $loc = $downloader->downloadHttp($channel, $this->ui, $tmpdir);
@@ -367,7 +367,7 @@ configuration.',
             return $this->raiseError('channel-delete: no channel specified');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if (!$reg->channelExists($params[0])) {
             return $this->raiseError('channel-delete: channel "' . $params[0] . '" does not exist');
         }
@@ -413,7 +413,7 @@ configuration.',
         }
 
         if (strpos($params[0], '://')) {
-            $downloader = $this->getDownloader();
+            $downloader = &$this->getDownloader();
             $tmpdir = $this->config->get('temp_dir');
             if (!file_exists($tmpdir)) {
                 require_once 'System.php';
@@ -483,7 +483,7 @@ configuration.',
             }
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if ($reg->channelExists($channel->getName())) {
             return $this->raiseError('channel-add: Channel "' . $channel->getName() .
                 '" exists, use channel-update to update entry', PEAR_COMMAND_CHANNELS_CHANNEL_EXISTS);
@@ -529,7 +529,7 @@ configuration.',
                 '" - You can change this location with "pear config-set temp_dir"');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $lastmodified = false;
         if ((!file_exists($params[0]) || is_dir($params[0]))
               && $reg->channelExists(strtolower($params[0]))) {
@@ -539,7 +539,7 @@ configuration.',
             }
 
             $this->ui->outputData("Updating channel \"$params[0]\"", $command);
-            $dl = $this->getDownloader(array());
+            $dl = &$this->getDownloader(array());
             // if force is specified, use a timestamp of "1" to force retrieval
             $lastmodified = isset($options['force']) ? false : $c->lastModified();
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
@@ -589,7 +589,7 @@ configuration.',
             }
         } else {
             if (strpos($params[0], '://')) {
-                $dl = $this->getDownloader();
+                $dl = &$this->getDownloader();
                 PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
                 $loc = $dl->downloadHttp($params[0],
                     $this->ui, $tmpdir, null, $lastmodified);
@@ -679,7 +679,7 @@ configuration.',
                 'Invalid format, correct is: channel-alias channel alias');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if (!$reg->channelExists($params[0], true)) {
             $extra = '';
             if ($reg->isAlias($params[0])) {
@@ -695,7 +695,7 @@ configuration.',
                 'already aliased to "' . strtolower($params[1]) . '", cannot re-alias');
         }
 
-        $chan = $reg->getChannel($params[0]);
+        $chan = &$reg->getChannel($params[0]);
         if (PEAR::isError($chan)) {
             return $this->raiseError('Corrupt registry?  Error retrieving channel "' . $params[0] .
                 '" information (' . $chan->getMessage() . ')');
@@ -738,7 +738,7 @@ configuration.',
             $channel = $params[0];
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if ($reg->channelExists($channel)) {
             if (!$reg->isAlias($channel)) {
                 return $this->raiseError("Channel \"$channel\" is already initialized", PEAR_COMMAND_CHANNELS_CHANNEL_EXISTS);
@@ -797,7 +797,7 @@ configuration.',
      */
     function doLogin($command, $options, $params)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
 
         // If a parameter is supplied, use that as the channel to log in to
         $channel = isset($params[0]) ? $params[0] : $this->config->get('default_channel');
@@ -863,7 +863,7 @@ configuration.',
      */
     function doLogout($command, $options, $params)
     {
-        $reg     = $this->config->getRegistry();
+        $reg     = &$this->config->getRegistry();
 
         // If a parameter is supplied, use that as the channel to log in to
         $channel = isset($params[0]) ? $params[0] : $this->config->get('default_channel');

@@ -62,8 +62,8 @@ class getid3_iso
 
 		// shortcuts
 		$ThisFileInfo['iso']['primary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_primaryVD     = $ThisFileInfo['iso']['primary_volume_descriptor'];
-		$thisfile_iso_primaryVD_raw = $thisfile_iso_primaryVD['raw'];
+		$thisfile_iso_primaryVD     = &$ThisFileInfo['iso']['primary_volume_descriptor'];
+		$thisfile_iso_primaryVD_raw = &$thisfile_iso_primaryVD['raw'];
 
 		$thisfile_iso_primaryVD_raw['volume_descriptor_type']         = getid3_lib::LittleEndian2Int(substr($ISOheader,    0, 1));
 		$thisfile_iso_primaryVD_raw['standard_identifier']            =                  substr($ISOheader,    1, 5);
@@ -135,8 +135,8 @@ class getid3_iso
 
 		// shortcuts
 		$ThisFileInfo['iso']['supplementary_volume_descriptor']['raw'] = array();
-		$thisfile_iso_supplementaryVD     = $ThisFileInfo['iso']['supplementary_volume_descriptor'];
-		$thisfile_iso_supplementaryVD_raw = $thisfile_iso_supplementaryVD['raw'];
+		$thisfile_iso_supplementaryVD     = &$ThisFileInfo['iso']['supplementary_volume_descriptor'];
+		$thisfile_iso_supplementaryVD_raw = &$thisfile_iso_supplementaryVD['raw'];
 
 		$thisfile_iso_supplementaryVD_raw['volume_descriptor_type'] = getid3_lib::LittleEndian2Int(substr($ISOheader,    0, 1));
 		$thisfile_iso_supplementaryVD_raw['standard_identifier']    =                  substr($ISOheader,    1, 5);
@@ -235,7 +235,7 @@ class getid3_iso
 		while ($offset < $PathTableSize) {
 			// shortcut
 			$ThisFileInfo['iso']['path_table']['directories'][$pathcounter] = array();
-			$thisfile_iso_pathtable_directories_current = $ThisFileInfo['iso']['path_table']['directories'][$pathcounter];
+			$thisfile_iso_pathtable_directories_current = &$ThisFileInfo['iso']['path_table']['directories'][$pathcounter];
 
 			$thisfile_iso_pathtable_directories_current['length']           = getid3_lib::LittleEndian2Int(substr($ThisFileInfo['iso']['path_table']['raw'], $offset, 1));
 			$offset += 1;

@@ -114,7 +114,7 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         require_once 'PEAR/Common.php';
         require_once 'System.php';
         $log = new PEAR_Common;
-        $log->ui = $this->ui; // slightly hacky, but it will work
+        $log->ui = &$this->ui; // slightly hacky, but it will work
         $tests = array();
         $depth = isset($options['recur']) ? 14 : 1;
 
@@ -125,14 +125,14 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         if (isset($options['package'])) {
             $oldparams = $params;
             $params = array();
-            $reg = $this->config->getRegistry();
+            $reg = &$this->config->getRegistry();
             foreach ($oldparams as $param) {
                 $pname = $reg->parsePackageName($param, $this->config->get('default_channel'));
                 if (PEAR::isError($pname)) {
                     return $this->raiseError($pname);
                 }
 
-                $package = $reg->getPackage($pname['package'], $pname['channel']);
+                $package = &$reg->getPackage($pname['package'], $pname['channel']);
                 if (!$package) {
                     return PEAR::raiseError('Unknown package "' .
                         $reg->parsedPackageNameToString($pname) . '"');

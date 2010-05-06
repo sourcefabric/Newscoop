@@ -212,7 +212,7 @@ class PEAR_PackageFile_v2
                             'package' => $param, 'version' => $this->getVersion());
                     }
                 }
-                $dl = $this->getPEARDownloader($installer->ui, $installer->getOptions(),
+                $dl = &$this->getPEARDownloader($installer->ui, $installer->getOptions(),
                     $installer->config);
                 $verbose = $dl->config->get('verbose');
                 $dl->config->set('verbose', -1);
@@ -624,8 +624,8 @@ class PEAR_PackageFile_v2
                 if (PEAR::isError($res)) {
                     return $res;
                 }
-                $assign = $task;
-                $this->_scripts[] = $assign;
+                $assign = &$task;
+                $this->_scripts[] = &$assign;
             }
         }
         if (count($this->_scripts)) {
@@ -637,7 +637,7 @@ class PEAR_PackageFile_v2
     function runPostinstallScripts()
     {
         if ($this->initPostinstallScripts()) {
-            $ui = PEAR_Frontend::singleton();
+            $ui = &PEAR_Frontend::singleton();
             if ($ui) {
                 $ui->runPostinstallScripts($this->_scripts, $this);
             }
@@ -733,8 +733,8 @@ class PEAR_PackageFile_v2
 
     function setConfig(&$config)
     {
-        $this->_config = $config;
-        $this->_registry = $config->getRegistry();
+        $this->_config = &$config;
+        $this->_registry = &$config->getRegistry();
     }
 
     function setLogger(&$logger)
@@ -742,7 +742,7 @@ class PEAR_PackageFile_v2
         if (!is_object($logger) || !method_exists($logger, 'log')) {
             return PEAR::raiseError('Logger must be compatible with PEAR_Common::log');
         }
-        $this->_logger = $logger;
+        $this->_logger = &$logger;
     }
 
     /**
@@ -1252,7 +1252,7 @@ class PEAR_PackageFile_v2
                 }
                 $release = array($release);
             }
-            $depchecker = $this->getPEARDependency2($this->_config, array(),
+            $depchecker = &$this->getPEARDependency2($this->_config, array(),
                 array('channel' => $this->getChannel(), 'package' => $this->getPackage()),
                 PEAR_VALIDATE_INSTALLING);
             foreach ($release as $instance) {
@@ -1876,7 +1876,7 @@ class PEAR_PackageFile_v2
             }
             if ($name == '_config' || $name == '_logger'|| $name == '_registry' ||
                   $name == '_stack') {
-                $a->$name = $this->$name;
+                $a->$name = &$this->$name;
             } else {
                 $a->$name = $this->$name;
             }

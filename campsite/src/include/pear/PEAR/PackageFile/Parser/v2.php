@@ -37,13 +37,13 @@ class PEAR_PackageFile_Parser_v2 extends PEAR_XMLParser
 
     function setConfig(&$c)
     {
-        $this->_config = $c;
-        $this->_registry = $c->getRegistry();
+        $this->_config = &$c;
+        $this->_registry = &$c->getRegistry();
     }
 
     function setLogger(&$l)
     {
-        $this->_logger = $l;
+        $this->_logger = &$l;
     }
     /**
      * Unindent given string

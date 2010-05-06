@@ -1296,7 +1296,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      */
     function addInstallAs($path, $as)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }
@@ -1315,7 +1315,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      */
     function addIgnore($path)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }
@@ -1338,7 +1338,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         if ($this->getPackageType() != 'extsrc' && $this->getPackageType() != 'zendextsrc') {
             return false;
         }
-        $r = $this->_getCurrentRelease(false);
+        $r = &$this->_getCurrentRelease(false);
         if ($r === null) {
             return false;
         }
@@ -1361,7 +1361,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
             return false;
         }
 
-        $r = $this->_getCurrentRelease(false);
+        $r = &$this->_getCurrentRelease(false);
         if ($r === null) {
             return false;
         }
@@ -1386,7 +1386,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      */
     function setPhpInstallCondition($min, $max, $exclude = false)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }
@@ -1428,7 +1428,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
     function addExtensionInstallCondition($name, $min = false, $max = false, $recommended = false,
                                           $exclude = false)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }
@@ -1457,7 +1457,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      */
     function setOsInstallCondition($name, $conflicts = false)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }
@@ -1492,7 +1492,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
      */
     function setArchInstallCondition($pattern, $conflicts = false)
     {
-        $r = $this->_getCurrentRelease();
+        $r = &$this->_getCurrentRelease();
         if ($r === null) {
             return false;
         }

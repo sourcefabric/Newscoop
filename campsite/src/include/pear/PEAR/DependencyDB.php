@@ -96,7 +96,7 @@ class PEAR_DependencyDB
         $phpdir = $config->get('php_dir', null, 'pear.php.net');
         if (!isset($GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'][$phpdir])) {
             $a = new PEAR_DependencyDB;
-            $GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'][$phpdir] = $a;
+            $GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'][$phpdir] = &$a;
             $a->setConfig($config, $depdb);
             $e = $a->assertDepsDB();
             if (PEAR::isError($e)) {
@@ -115,12 +115,12 @@ class PEAR_DependencyDB
     function setConfig(&$config, $depdb = false)
     {
         if (!$config) {
-            $this->_config = PEAR_Config::singleton();
+            $this->_config = &PEAR_Config::singleton();
         } else {
-            $this->_config = $config;
+            $this->_config = &$config;
         }
 
-        $this->_registry = $this->_config->getRegistry();
+        $this->_registry = &$this->_config->getRegistry();
         if (!$depdb) {
             $this->_depdb = $this->_config->get('php_dir', null, 'pear.php.net') .
                 DIRECTORY_SEPARATOR . '.depdb';
@@ -598,7 +598,7 @@ class PEAR_DependencyDB
     {
         $pkg->setConfig($this->_config);
         if ($pkg->getPackagexmlVersion() == '1.0') {
-            $gen = $pkg->getDefaultGenerator();
+            $gen = &$pkg->getDefaultGenerator();
             $deps = $gen->dependenciesToV2();
         } else {
             $deps = $pkg->getDeps(true);

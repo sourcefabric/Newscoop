@@ -58,7 +58,7 @@ class getid3_real
 
 			// shortcut
 			$ThisFileInfo['real']['chunks'][$ChunkCounter] = array();
-			$thisfile_real_chunks_currentchunk = $ThisFileInfo['real']['chunks'][$ChunkCounter];
+			$thisfile_real_chunks_currentchunk = &$ThisFileInfo['real']['chunks'][$ChunkCounter];
 
 			$thisfile_real_chunks_currentchunk['name']   = $ChunkName;
 			$thisfile_real_chunks_currentchunk['offset'] = ftell($fd) - 8;
@@ -172,7 +172,7 @@ class getid3_real
 						$offset += $thisfile_real_chunks_currentchunk['type_specific_len'];
 
 						// shortcut
-						$thisfile_real_chunks_currentchunk_typespecificdata = $thisfile_real_chunks_currentchunk['type_specific_data'];
+						$thisfile_real_chunks_currentchunk_typespecificdata = &$thisfile_real_chunks_currentchunk['type_specific_data'];
 
 						switch ($thisfile_real_chunks_currentchunk['mime_type']) {
 							case 'video/x-pn-realvideo':
@@ -181,7 +181,7 @@ class getid3_real
 
 								// shortcut
 								$thisfile_real_chunks_currentchunk['video_info'] = array();
-								$thisfile_real_chunks_currentchunk_videoinfo     = $thisfile_real_chunks_currentchunk['video_info'];
+								$thisfile_real_chunks_currentchunk_videoinfo     = &$thisfile_real_chunks_currentchunk['video_info'];
 
 								$thisfile_real_chunks_currentchunk_videoinfo['dwSize']            = getid3_lib::BigEndian2Int(substr($thisfile_real_chunks_currentchunk_typespecificdata,  0, 4));
 								$thisfile_real_chunks_currentchunk_videoinfo['fourcc1']           =                           substr($thisfile_real_chunks_currentchunk_typespecificdata,  4, 4);
@@ -228,7 +228,7 @@ class getid3_real
 							case 'logical-fileinfo':
 								// shortcut
 								$thisfile_real_chunks_currentchunk['logical_fileinfo'] = array();
-								$thisfile_real_chunks_currentchunk_logicalfileinfo     = $thisfile_real_chunks_currentchunk['logical_fileinfo'];
+								$thisfile_real_chunks_currentchunk_logicalfileinfo     = &$thisfile_real_chunks_currentchunk['logical_fileinfo'];
 
 								$thisfile_real_chunks_currentchunk_logicalfileinfo_offset = 0;
 								$thisfile_real_chunks_currentchunk_logicalfileinfo['logical_fileinfo_length'] = getid3_lib::BigEndian2Int(substr($thisfile_real_chunks_currentchunk_typespecificdata, $thisfile_real_chunks_currentchunk_logicalfileinfo_offset, 4));

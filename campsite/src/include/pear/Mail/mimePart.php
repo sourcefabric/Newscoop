@@ -285,7 +285,7 @@ class Mail_mimePart
      */
     function encode($boundary=null)
     {
-        $encoded = $this->_encoded;
+        $encoded =& $this->_encoded;
 
         if (count($this->_subparts)) {
             $boundary = $boundary ? $boundary : '=_' . md5(rand() . microtime());
@@ -330,7 +330,7 @@ class Mail_mimePart
         }
 
         // Add headers to $encoded
-        $encoded['headers'] = $this->_headers;
+        $encoded['headers'] =& $this->_headers;
 
         return $encoded;
     }
@@ -441,7 +441,7 @@ class Mail_mimePart
      *
      * @return Mail_mimePart A reference to the part you just added. It is
      *                       crucial if using multipart/* in your subparts that
-     *                       you use = in your script when calling this function,
+     *                       you use =& in your script when calling this function,
      *                       otherwise you will not be able to add further subparts.
      * @access public
      */

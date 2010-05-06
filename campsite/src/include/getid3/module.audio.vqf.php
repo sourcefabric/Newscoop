@@ -17,7 +17,7 @@
 class getid3_vqf
 {
 	function getid3_vqf(&$fd, &$ThisFileInfo) {
-		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulï¿½gmx*de>
+		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulØgmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
 
 		$ThisFileInfo['fileformat']            = 'vqf';
@@ -27,8 +27,8 @@ class getid3_vqf
 
 		// shortcut
 		$ThisFileInfo['vqf']['raw'] = array();
-		$thisfile_vqf               = $ThisFileInfo['vqf'];
-		$thisfile_vqf_raw           = $thisfile_vqf['raw'];
+		$thisfile_vqf               = &$ThisFileInfo['vqf'];
+		$thisfile_vqf_raw           = &$thisfile_vqf['raw'];
 
 		fseek($fd, $ThisFileInfo['avdataoffset'], SEEK_SET);
 		$VQFheaderData = fread($fd, 16);
@@ -72,7 +72,7 @@ class getid3_vqf
 				case 'COMM':
 					// shortcut
 					$thisfile_vqf['COMM'] = array();
-					$thisfile_vqf_COMM    = $thisfile_vqf['COMM'];
+					$thisfile_vqf_COMM    = &$thisfile_vqf['COMM'];
 
 					$thisfile_vqf_COMM['channel_mode']   = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 					$chunkoffset += 4;

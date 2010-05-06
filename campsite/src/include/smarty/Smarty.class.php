@@ -601,7 +601,7 @@ class Smarty
     function assign_by_ref($tpl_var, &$value)
     {
         if ($tpl_var != '')
-            $this->_tpl_vars[$tpl_var] = $value;
+            $this->_tpl_vars[$tpl_var] = &$value;
     }
 
     /**
@@ -658,10 +658,10 @@ class Smarty
             }
             if ($merge && is_array($value)) {
                 foreach($value as $_key => $_val) {
-                    $this->_tpl_vars[$tpl_var][$_key] = $value[$_key];
+                    $this->_tpl_vars[$tpl_var][$_key] = &$value[$_key];
                 }
             } else {
-                $this->_tpl_vars[$tpl_var][] = $value;
+                $this->_tpl_vars[$tpl_var][] = &$value;
             }
         }
     }
@@ -1472,9 +1472,9 @@ class Smarty
         $smarty_compiler->security_settings = $this->security_settings;
         $smarty_compiler->trusted_dir       = $this->trusted_dir;
         $smarty_compiler->use_sub_dirs      = $this->use_sub_dirs;
-        $smarty_compiler->_reg_objects      = $this->_reg_objects;
-        $smarty_compiler->_plugins          = $this->_plugins;
-        $smarty_compiler->_tpl_vars         = $this->_tpl_vars;
+        $smarty_compiler->_reg_objects      = &$this->_reg_objects;
+        $smarty_compiler->_plugins          = &$this->_plugins;
+        $smarty_compiler->_tpl_vars         = &$this->_tpl_vars;
         $smarty_compiler->default_modifiers = $this->default_modifiers;
         $smarty_compiler->compile_id        = $this->_compile_id;
         $smarty_compiler->_config            = $this->_config;
@@ -1893,7 +1893,7 @@ class Smarty
      * @return array
      */
     function &_smarty_cache_attrs($cache_serial, $count) {
-        $_cache_attrs = $this->_cache_info['cache_attrs'][$cache_serial][$count];
+        $_cache_attrs =& $this->_cache_info['cache_attrs'][$cache_serial][$count];
 
         if ($this->_cache_including) {
             /* return next set of cache_attrs */

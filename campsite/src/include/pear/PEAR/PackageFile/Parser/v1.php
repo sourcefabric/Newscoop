@@ -47,13 +47,13 @@ class PEAR_PackageFile_Parser_v1
 
     function setConfig(&$c)
     {
-        $this->_config = $c;
-        $this->_registry = $c->getRegistry();
+        $this->_config = &$c;
+        $this->_registry = &$c->getRegistry();
     }
 
     function setLogger(&$l)
     {
-        $this->_logger = $l;
+        $this->_logger = &$l;
     }
 
     /**
@@ -67,7 +67,7 @@ class PEAR_PackageFile_Parser_v1
         }
         $xp = xml_parser_create();
         if (!$xp) {
-            $a = PEAR::raiseError('Cannot create xml parser for parsing package.xml');
+            $a = &PEAR::raiseError('Cannot create xml parser for parsing package.xml');
             return $a;
         }
         xml_set_object($xp, $this);
@@ -80,7 +80,7 @@ class PEAR_PackageFile_Parser_v1
         $this->current_element = false;
         unset($this->dir_install);
         $this->_packageInfo['filelist'] = array();
-        $this->filelist = $this->_packageInfo['filelist'];
+        $this->filelist =& $this->_packageInfo['filelist'];
         $this->dir_names = array();
         $this->in_changelog = false;
         $this->d_i = 0;
@@ -91,7 +91,7 @@ class PEAR_PackageFile_Parser_v1
             $code = xml_get_error_code($xp);
             $line = xml_get_current_line_number($xp);
             xml_parser_free($xp);
-            $a = PEAR::raiseError(sprintf("XML error: %s at line %d",
+            $a = &PEAR::raiseError(sprintf("XML error: %s at line %d",
                            $str = xml_error_string($code), $line), 2);
             return $a;
         }
@@ -225,7 +225,7 @@ class PEAR_PackageFile_Parser_v1
                     $this->m_i = 0;
                 }
                 $this->_packageInfo['maintainers'][$this->m_i] = array();
-                $this->current_maintainer = $this->_packageInfo['maintainers'][$this->m_i];
+                $this->current_maintainer =& $this->_packageInfo['maintainers'][$this->m_i];
                 break;
             case 'changelog':
                 $this->_packageInfo['changelog'] = array();
@@ -235,9 +235,9 @@ class PEAR_PackageFile_Parser_v1
             case 'release':
                 if ($this->in_changelog) {
                     $this->_packageInfo['changelog'][$this->c_i] = array();
-                    $this->current_release = $this->_packageInfo['changelog'][$this->c_i];
+                    $this->current_release = &$this->_packageInfo['changelog'][$this->c_i];
                 } else {
-                    $this->current_release = $this->_packageInfo;
+                    $this->current_release = &$this->_packageInfo;
                 }
                 break;
             case 'deps':

@@ -219,7 +219,7 @@ final class CampContext
         foreach (MetaAction::ReadAvailableActions() as $actionName=>$actionAttributes) {
             $propertyName = $actionName . '_action';
             if ($requestActionName == $actionName) {
-                $this->m_readonlyProperties[$propertyName] = $this->m_readonlyProperties['request_action'];
+                $this->m_readonlyProperties[$propertyName] =& $this->m_readonlyProperties['request_action'];
             } else {
                 $this->m_readonlyProperties[$propertyName] = MetaAction::DefaultAction();
             }
@@ -547,10 +547,10 @@ final class CampContext
    	    $this->SaveProperties($p_savePropertiesList);
 
    	    $listName = $this->m_listObjects[$objectName]['list'];
-   	    $this->m_readonlyProperties['lists'][] = $p_list;
-   	    $this->m_readonlyProperties['current_list'] = $p_list;
-   	    $this->m_readonlyProperties[$listName.'_lists'][] = $p_list;
-   	    $this->m_readonlyProperties['current_'.$listName.'_list'] = $p_list;
+   	    $this->m_readonlyProperties['lists'][] =& $p_list;
+   	    $this->m_readonlyProperties['current_list'] =& $p_list;
+   	    $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
+   	    $this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
     } // fn setCurrentList
 
 

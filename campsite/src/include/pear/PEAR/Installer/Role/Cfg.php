@@ -47,8 +47,8 @@ class PEAR_Installer_Role_Cfg extends PEAR_Installer_Role_Common
      */
     function setup(&$installer, $pkg, $atts, $file)
     {
-        $this->installer = $installer;
-        $reg = $this->installer->config->getRegistry();
+        $this->installer = &$installer;
+        $reg = &$this->installer->config->getRegistry();
         $package = $reg->getPackage($pkg->getPackage(), $pkg->getChannel());
         if ($package) {
             $filelist = $package->getFilelist();

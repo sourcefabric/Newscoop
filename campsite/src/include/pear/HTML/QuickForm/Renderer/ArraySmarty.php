@@ -139,7 +139,7 @@ class HTML_QuickForm_Renderer_ArraySmarty extends HTML_QuickForm_Renderer_Array
     function HTML_QuickForm_Renderer_ArraySmarty(&$tpl, $staticLabels = false, $collectHidden = true)
     {
         $this->HTML_QuickForm_Renderer_Array($collectHidden, $staticLabels);
-        $this->_tpl = $tpl;
+        $this->_tpl =& $tpl;
     } // end constructor
 
    /**

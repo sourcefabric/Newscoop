@@ -31,7 +31,7 @@ class getid3_dss
 
 		// shortcut
 		$ThisFileInfo['dss'] = array();
-		$thisfile_dss        = $ThisFileInfo['dss'];
+		$thisfile_dss        = &$ThisFileInfo['dss'];
 
 		$ThisFileInfo['fileformat']            = 'dss';
 		$ThisFileInfo['audio']['dataformat']   = 'dss';

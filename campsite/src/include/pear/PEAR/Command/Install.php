@@ -531,14 +531,14 @@ Run post-installation scripts in package <package>, if any exist.
             return $this->raiseError('ERROR: cannot use both --installroot and --packagingroot');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $channel = isset($options['channel']) ? $options['channel'] : $this->config->get('default_channel');
         if (!$reg->channelExists($channel)) {
             return $this->raiseError('Channel "' . $channel . '" does not exist');
         }
 
         if (empty($this->installer)) {
-            $this->installer = $this->getInstaller($this->ui);
+            $this->installer = &$this->getInstaller($this->ui);
         }
 
         if ($command == 'upgrade' || $command == 'upgrade-all') {
@@ -551,7 +551,7 @@ Run post-installation scripts in package <package>, if any exist.
             $packages = $params;
         }
 
-        $instreg = $reg; // instreg used to check if package is installed
+        $instreg = &$reg; // instreg used to check if package is installed
         if (isset($options['packagingroot']) && !isset($options['upgrade'])) {
             $packrootphp_dir = $this->installer->_prependPath(
                 $this->config->get('php_dir', null, 'pear.php.net'),
@@ -656,9 +656,9 @@ Run post-installation scripts in package <package>, if any exist.
             return true;
         }
 
-        $this->downloader = $this->getDownloader($this->ui, $options, $this->config);
+        $this->downloader = &$this->getDownloader($this->ui, $options, $this->config);
         $errors = $downloaded = $binaries = array();
-        $downloaded = $this->downloader->download($packages);
+        $downloaded = &$this->downloader->download($packages);
         if (PEAR::isError($downloaded)) {
             return $this->raiseError($downloaded);
         }
@@ -709,7 +709,7 @@ Run post-installation scripts in package <package>, if any exist.
             PEAR::staticPopErrorHandling();
             if (PEAR::isError($info)) {
                 $oldinfo = $info;
-                $pkg = $param->getPackageFile();
+                $pkg = &$param->getPackageFile();
                 if ($info->getCode() != PEAR_INSTALLER_NOBINARY) {
                     if (!($info = $pkg->installBinary($this->installer))) {
                         $this->ui->outputData('ERROR: ' .$oldinfo->getMessage());
@@ -731,11 +731,11 @@ Run post-installation scripts in package <package>, if any exist.
                   $param->getPackageType() == 'extbin' ||
                   $param->getPackageType() == 'zendextsrc' ||
                   $param->getPackageType() == 'zendextbin') {
-                $pkg = $param->getPackageFile();
+                $pkg = &$param->getPackageFile();
                 if ($instbin = $pkg->getInstalledBinary()) {
-                    $instpkg = $instreg->getPackage($instbin, $pkg->getChannel());
+                    $instpkg = &$instreg->getPackage($instbin, $pkg->getChannel());
                 } else {
-                    $instpkg = $instreg->getPackage($pkg->getPackage(), $pkg->getChannel());
+                    $instpkg = &$instreg->getPackage($pkg->getPackage(), $pkg->getChannel());
                 }
 
                 foreach ($instpkg->getFilelist() as $name => $atts) {
@@ -842,7 +842,7 @@ Run post-installation scripts in package <package>, if any exist.
                 }
             }
 
-            $pkg = $instreg->getPackage($param->getPackage(), $param->getChannel());
+            $pkg = &$instreg->getPackage($param->getPackage(), $param->getChannel());
             // $pkg may be NULL if install is a 'fake' install via --packagingroot
             if (is_object($pkg)) {
                 $pkg->setConfig($this->config);
@@ -874,7 +874,7 @@ Run post-installation scripts in package <package>, if any exist.
 
     function doUpgradeAll($command, $options, $params)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $upgrade = array();
 
         if (isset($options['channel'])) {
@@ -913,7 +913,7 @@ Run post-installation scripts in package <package>, if any exist.
         }
 
         if (empty($this->installer)) {
-            $this->installer = $this->getInstaller($this->ui);
+            $this->installer = &$this->getInstaller($this->ui);
         }
 
         if (isset($options['remoteconfig'])) {
@@ -923,7 +923,7 @@ Run post-installation scripts in package <package>, if any exist.
             }
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $newparams = array();
         $binaries = array();
         $badparams = array();
@@ -938,13 +938,13 @@ Run post-installation scripts in package <package>, if any exist.
             }
             $package = $parsed['package'];
             $channel = $parsed['channel'];
-            $info = $reg->getPackage($package, $channel);
+            $info = &$reg->getPackage($package, $channel);
             if ($info === null &&
                  ($channel == 'pear.php.net' || $channel == 'pecl.php.net')) {
                 // make sure this isn't a package that has flipped from pear to pecl but
                 // used a package.xml 1.0
                 $testc = ($channel == 'pear.php.net') ? 'pecl.php.net' : 'pear.php.net';
-                $info = $reg->getPackage($package, $testc);
+                $info = &$reg->getPackage($package, $testc);
                 if ($info !== null) {
                     $channel = $testc;
                 }
@@ -952,13 +952,13 @@ Run post-installation scripts in package <package>, if any exist.
             if ($info === null) {
                 $badparams[] = $pkg;
             } else {
-                $newparams[] = $info;
+                $newparams[] = &$info;
                 // check for binary packages (this is an alias for those packages if so)
                 if ($installedbinary = $info->getInstalledBinary()) {
                     $this->ui->log('adding binary package ' .
                         $reg->parsedPackageNameToString(array('channel' => $channel,
                             'package' => $installedbinary), true));
-                    $newparams[] = $reg->getPackage($installedbinary, $channel);
+                    $newparams[] = &$reg->getPackage($installedbinary, $channel);
                 }
                 // add the contents of a dependency group to the list of installed packages
                 if (isset($parsed['group'])) {
@@ -967,7 +967,7 @@ Run post-installation scripts in package <package>, if any exist.
                         $installed = $reg->getInstalledGroup($group);
                         if ($installed) {
                             foreach ($installed as $i => $p) {
-                                $newparams[] = $installed[$i];
+                                $newparams[] = &$installed[$i];
                             }
                         }
                     }
@@ -1096,8 +1096,8 @@ Run post-installation scripts in package <package>, if any exist.
             'soft'         => true,
             'downloadonly' => true
         );
-        $downloader = $this->getDownloader($this->ui, $opts, $this->config);
-        $reg = $this->config->getRegistry();
+        $downloader = &$this->getDownloader($this->ui, $opts, $this->config);
+        $reg = &$this->config->getRegistry();
         if (count($params) < 1) {
             return $this->raiseError("Please supply the package you want to bundle");
         }
@@ -1119,14 +1119,14 @@ Run post-installation scripts in package <package>, if any exist.
             return PEAR::raiseError('download directory "' . $dest .
                 '" is not writeable.');
         }
-        $result = $downloader->download(array($params[0]));
+        $result = &$downloader->download(array($params[0]));
         if (PEAR::isError($result)) {
             return $result;
         }
         if (!isset($result[0])) {
             return $this->raiseError('unable to unpack ' . $params[0]);
         }
-        $pkgfile = $result[0]->getPackageFile();
+        $pkgfile = &$result[0]->getPackageFile();
         $pkgname = $pkgfile->getName();
         $pkgversion = $pkgfile->getVersion();
 
@@ -1150,7 +1150,7 @@ Run post-installation scripts in package <package>, if any exist.
             return $this->raiseError('run-scripts expects 1 parameter: a package name');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $parsed = $reg->parsePackageName($params[0], $this->config->get('default_channel'));
         PEAR::staticPopErrorHandling();
@@ -1158,7 +1158,7 @@ Run post-installation scripts in package <package>, if any exist.
             return $this->raiseError($parsed);
         }
 
-        $package = $reg->getPackage($parsed['package'], $parsed['channel']);
+        $package = &$reg->getPackage($parsed['package'], $parsed['channel']);
         if (!is_object($package)) {
             return $this->raiseError('Could not retrieve package "' . $params[0] . '" from registry');
         }
@@ -1177,7 +1177,7 @@ Run post-installation scripts in package <package>, if any exist.
      */
     function _filterUptodatePackages($packages, $command)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $latestReleases = array();
 
         $ret = array();
@@ -1196,7 +1196,7 @@ Run post-installation scripts in package <package>, if any exist.
 
             if (!isset($latestReleases[$channel])) {
                 // fill in cache for this channel
-                $chan = $reg->getChannel($channel);
+                $chan = &$reg->getChannel($channel);
                 if (PEAR::isError($chan)) {
                     return $this->raiseError($chan);
                 }
@@ -1221,10 +1221,10 @@ Run post-installation scripts in package <package>, if any exist.
 
                 if ($dorest) {
                     if ($base2) {
-                        $rest = $this->config->getREST('1.4', array());
+                        $rest = &$this->config->getREST('1.4', array());
                         $base = $base2;
                     } else {
-                        $rest = $this->config->getREST('1.0', array());
+                        $rest = &$this->config->getREST('1.0', array());
                     }
 
                     $installed = array_flip($reg->listPackages($channel));

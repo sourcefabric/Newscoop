@@ -37,7 +37,7 @@ PEAR::setErrorHandling(PEAR_ERROR_CALLBACK, 'pear_error_handler');
 //$dsn = '{dbtype}://{user}:{passwd}@{dbhost}/{dbname}';
 $dsn = 'mysql://root:@localhost/liveuser_test_example4';
 
-$db = MDB2::connect($dsn, true);
+$db =& MDB2::connect($dsn, true);
 $db->setFetchMode(MDB2_FETCHMODE_ASSOC);
 
 
@@ -117,7 +117,7 @@ require_once 'LiveUser.php';
 
 function forceLogin(&$notification)
 {
-    $liveUserObj = $notification->getNotificationObject();
+    $liveUserObj =& $notification->getNotificationObject();
 
     $username = (array_key_exists('username', $_REQUEST)) ? $_REQUEST['username'] : null;
     if($username) {
@@ -160,8 +160,8 @@ function showLoginForm(&$liveUserObj)
 }
 
 // Create new LiveUser (LiveUser) object.
-// Weï¿½ll only use the auth container, permissions are not used.
-$LU = LiveUser::factory($LUOptions);
+// We´ll only use the auth container, permissions are not used.
+$LU =& LiveUser::factory($LUOptions);
 $LU->dispatcher->addObserver('forceLogin', 'forceLogin');
 
 if (!$LU->init()) {

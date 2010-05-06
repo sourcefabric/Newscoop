@@ -83,7 +83,7 @@ class PEAR_PackageFile
 
     function setLogger(&$l)
     {
-        $this->_logger = $l;
+        $this->_logger = &$l;
     }
 
     /**
@@ -145,7 +145,7 @@ class PEAR_PackageFile
     function &fromArray($arr)
     {
         if (isset($arr['xsdversion'])) {
-            $obj = $this->factory($arr['xsdversion']);
+            $obj = &$this->factory($arr['xsdversion']);
             if ($this->_logger) {
                 $obj->setLogger($this->_logger);
             }
@@ -156,9 +156,9 @@ class PEAR_PackageFile
         }
 
         if (isset($arr['package']['attribs']['version'])) {
-            $obj = $this->factory($arr['package']['attribs']['version']);
+            $obj = &$this->factory($arr['package']['attribs']['version']);
         } else {
-            $obj = $this->factory('1.0');
+            $obj = &$this->factory('1.0');
         }
 
         if ($this->_logger) {
@@ -190,7 +190,7 @@ class PEAR_PackageFile
                     '" is not supported, only 1.0, 2.0, and 2.1 are supported.');
             }
 
-            $object = $this->parserFactory($packageversion[1]);
+            $object = &$this->parserFactory($packageversion[1]);
             if ($this->_logger) {
                 $object->setLogger($this->_logger);
             }
@@ -243,7 +243,7 @@ class PEAR_PackageFile
                 PEAR_PACKAGEFILE_ERROR_NO_PACKAGEVERSION,
                 'warning', array('xml' => $data), 'package.xml "' . $file .
                     '" has no package.xml <package> version');
-            $object = $this->parserFactory('1.0');
+            $object = &$this->parserFactory('1.0');
             $object->setConfig($this->_config);
             $pf = $object->parse($data, $file, $archive);
             if (PEAR::isError($pf)) {
@@ -376,7 +376,7 @@ class PEAR_PackageFile
         }
 
         PEAR::staticPopErrorHandling();
-        $ret = PEAR_PackageFile::fromPackageFile("$tmpdir/$xml", $state, $origfile);
+        $ret = &PEAR_PackageFile::fromPackageFile("$tmpdir/$xml", $state, $origfile);
         return $ret;
     }
 
@@ -434,7 +434,7 @@ class PEAR_PackageFile
         // for each block of cdata
         fclose($fp);
         $data = file_get_contents($descfile);
-        $ret = PEAR_PackageFile::fromXmlString($data, $state, $descfile, $archive);
+        $ret = &PEAR_PackageFile::fromXmlString($data, $state, $descfile, $archive);
         return $ret;
     }
 
@@ -478,17 +478,17 @@ class PEAR_PackageFile
 
             $tmp = substr($info, -4);
             if ($tmp == '.xml') {
-                $info = PEAR_PackageFile::fromPackageFile($info, $state);
+                $info = &PEAR_PackageFile::fromPackageFile($info, $state);
             } elseif ($tmp == '.tar' || $tmp == '.tgz') {
-                $info = PEAR_PackageFile::fromTgzFile($info, $state);
+                $info = &PEAR_PackageFile::fromTgzFile($info, $state);
             } else {
                 $fp   = fopen($info, 'r');
                 $test = fread($fp, 5);
                 fclose($fp);
                 if ($test == '<?xml') {
-                    $info = PEAR_PackageFile::fromPackageFile($info, $state);
+                    $info = &PEAR_PackageFile::fromPackageFile($info, $state);
                 } else {
-                    $info = PEAR_PackageFile::fromTgzFile($info, $state);
+                    $info = &PEAR_PackageFile::fromTgzFile($info, $state);
                 }
             }
 

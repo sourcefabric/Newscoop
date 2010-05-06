@@ -18,7 +18,7 @@ require_once 'LiveUser.php';
 require_once 'Log.php';
 
 if (is_readable('Auth_XML.xml') && is_writable('Auth_XML.xml')) {
-    $logger = Log::factory('win', 'liveuserlog');
+    $logger =& Log::factory('win', 'liveuserlog');
 
     $liveuserConfig = array(
         'debug' => &$logger,

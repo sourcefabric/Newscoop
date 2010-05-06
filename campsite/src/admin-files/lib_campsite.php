@@ -398,7 +398,7 @@ function camp_campcaster_login($f_cc_username, $f_cc_password)
 {
     global $mdefs;
 
-    $xrc = XR_CcClient::Factory($mdefs);
+    $xrc =& XR_CcClient::Factory($mdefs);
     if (PEAR::isError($xrc)) {
     	return $xrc;
     }

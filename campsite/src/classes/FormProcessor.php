@@ -45,16 +45,16 @@ class FormProcessor
             ## add elements ########################
             if ($v['type']=='radio') {
                 foreach($v['options'] as $rk=>$rv) {
-                    $radio[] = $form->createElement($v['type'], NULL, NULL, $rv, $rk, $v['attributes']);
+                    $radio[] =& $form->createElement($v['type'], NULL, NULL, $rv, $rk, $v['attributes']);
                 }
                 $form->addGroup($radio, $v['element'], $v['label']);
                 unset($radio);
     
             } elseif ($v['type']=='checkbox_multi') {
-                $checkbox[] = $form->createElement('hidden', '', '');
+                $checkbox[] =& $form->createElement('hidden', '', '');
                 
                 foreach($v['options'] as $rk=>$rv) {
-                    $checkbox[$rk] = $form->createElement('checkbox', is_string($rk) ? $rk : $rv, NULL, $rv, $v['attributes']);
+                    $checkbox[$rk] =& $form->createElement('checkbox', is_string($rk) ? $rk : $rv, NULL, $rv, $v['attributes']);
     
                     if (array_key_exists($rk, array_flip($v['default'])) !== false) { 
                         $checkbox[$rk]->setChecked(true);
@@ -64,25 +64,25 @@ class FormProcessor
                 unset($checkbox);
     
             } elseif ($v['type']=='select') {
-                $elem[$v['element']] = $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
                 $elem[$v['element']]->setMultiple($v['multiple']);
                 if (isset($v['selected'])) $elem[$v['element']]->setSelected($v['selected']);
                 if (!$v['groupit'])        $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='date') {
-                $elem[$v['element']] = $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['options'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='checkbox' || $v['type']=='static') {
-                $elem[$v['element']] = $form->createElement($v['type'], $v['element'], $v['label'], $v['text'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'], $v['text'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
     
             } elseif ($v['type']=='image') {
-                $elem[$v['element']] = $form->createElement($v['type'], $v['element'], $v['src'], $v['attributes']);
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['src'], $v['attributes']);
                 if (!$v['groupit'])     $form->addElement($elem[$v['element']]);
                 
             } elseif (isset($v['type'])) {                
-                $elem[$v['element']] = $form->createElement($v['type'], $v['element'], $v['label'],
+                $elem[$v['element']] =& $form->createElement($v['type'], $v['element'], $v['label'],
                                             ($v['type']=='text' || $v['type']=='file' || $v['type']=='password') ? array_merge(array('size'=>CAMP_FORM_INPUT_TEXT_STANDARD_SIZE, 'maxlength'=>CAMP_FORM_INPUT_TEXT_STANDARD_MAXLENGTH), $v['attributes']) :
                                             ($v['type']=='textarea' ? array_merge(array('rows'=>CAMP_FORM_TEXTAREA_STANDARD_ROWS, 'cols'=>CAMP_FORM_TEXTAREA_STANDARD_COLS), $v['attributes']) :
                                             ($v['type']=='button' || $v['type']=='submit' || $v['type']=='reset' ? array_merge(array('class'=>CAMP_FORM_STANDARD_ELEMENTS_CLASS), $v['attributes']) : $v['attributes']))
@@ -108,7 +108,7 @@ class FormProcessor
             ## add group ###########################
             if (is_array($v['group'])) {
                 foreach($v['group'] as $val) {
-                    $groupthose[] = $elem[$val];
+                    $groupthose[] =& $elem[$val];
                 }
                 $form->addGroup($groupthose, $v['name'], $v['label'], $v['seperator'], $v['appendName']);
                 if ($v['rule']) {

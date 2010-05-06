@@ -539,7 +539,7 @@ class CampInstallationBase
             mkdir($p_directoryPath);
         }
     }
-    
+
     private static function InstallPlugins()
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
@@ -554,7 +554,7 @@ class CampInstallationBase
             } else {
             	$CampPlugin->disable();
             }
-            
+
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
                 call_user_func("plugin_{$info['name']}_addPermissions");
             }
@@ -609,12 +609,7 @@ class CampInstallationBaseHelper
             ."password = SHA1('".$g_db->Escape($p_password)."'), "
             ."email = '".$g_db->Escape($p_email)."' "
             .'WHERE user_id = 1';
-        $sqlQuery3 = 'UPDATE ls_subjs SET '
-            . "pass = MD5('" . $g_db->Escape($p_password) . "'), "
-            . "realname = '" . $g_db->Escape($p_email) . "' "
-            . 'WHERE id = 4';
-        if (!$g_db->Execute($sqlQuery1) || !$g_db->Execute($sqlQuery2)
-                || !$g_db->Execute($sqlQuery3)) {
+        if (!$g_db->Execute($sqlQuery1) || !$g_db->Execute($sqlQuery2)) {
             return false;
         }
 
@@ -752,7 +747,7 @@ class CampInstallationBaseHelper
 
         return true;
     } // fn CopyFiles
-    
+
 } // class CampInstallationBaseHelper
 
 ?>

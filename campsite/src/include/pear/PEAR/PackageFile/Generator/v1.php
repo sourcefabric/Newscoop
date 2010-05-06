@@ -41,7 +41,7 @@ class PEAR_PackageFile_Generator_v1
     var $_packagefile;
     function PEAR_PackageFile_Generator_v1(&$packagefile)
     {
-        $this->_packagefile = $packagefile;
+        $this->_packagefile = &$packagefile;
     }
 
     function getPackagerVersion()

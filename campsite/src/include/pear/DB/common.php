@@ -823,7 +823,7 @@ class DB_common extends PEAR
             }
         }
 
-        $this->prepare_tokens[] = $newtokens;
+        $this->prepare_tokens[] = &$newtokens;
         end($this->prepare_tokens);
 
         $k = key($this->prepare_tokens);

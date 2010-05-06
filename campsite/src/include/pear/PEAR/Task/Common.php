@@ -91,12 +91,12 @@ class PEAR_Task_Common
      */
     function PEAR_Task_Common(&$config, &$logger, $phase)
     {
-        $this->config = $config;
-        $this->registry = $config->getRegistry();
-        $this->logger = $logger;
+        $this->config = &$config;
+        $this->registry = &$config->getRegistry();
+        $this->logger = &$logger;
         $this->installphase = $phase;
         if ($this->type == 'multiple') {
-            $GLOBALS['_PEAR_TASK_POSTINSTANCES'][get_class($this)][] = $this;
+            $GLOBALS['_PEAR_TASK_POSTINSTANCES'][get_class($this)][] = &$this;
         }
     }
 

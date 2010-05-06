@@ -174,19 +174,19 @@ final class CampRequest
         if (!isset(CampRequest::$m_input[$p_reqMethod])) {
         	switch($p_reqMethod) {
         		case 'GET':
-        			$input = $_GET;
+        			$input = &$_GET;
         			break;
         		case 'POST':
-        			$input = $_POST;
+        			$input = &$_POST;
         			break;
         		case 'COOKIE':
-        			$input = $_COOKIE;
+        			$input = &$_COOKIE;
         			break;
         		case 'FILES':
-        			$input = $_FILES;
+        			$input = &$_FILES;
         			break;
         		case 'DEFAULT':
-        			$input = $_REQUEST;
+        			$input = &$_REQUEST;
         			break;
         		default:
         			return;

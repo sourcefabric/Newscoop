@@ -154,7 +154,7 @@ and uninstall).
         sort($keys);
         $channel = isset($options['channel']) ? $options['channel'] :
             $this->config->get('default_channel');
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if (!$reg->channelExists($channel)) {
             return $this->raiseError('Channel "' . $channel . '" does not exist');
         }
@@ -206,7 +206,7 @@ and uninstall).
         }
 
         $channel = isset($options['channel']) ? $options['channel'] : $this->config->get('default_channel');
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if (!$reg->channelExists($channel)) {
             return $this->raiseError('Channel "' . $channel . '" does not exist');
         }
@@ -232,7 +232,7 @@ and uninstall).
         }
 
         $channel = isset($options['channel']) ? $options['channel'] : $this->config->get('default_channel');
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if (!$reg->channelExists($channel)) {
             return $this->raiseError('Channel "' . $channel . '" does not exist');
         }

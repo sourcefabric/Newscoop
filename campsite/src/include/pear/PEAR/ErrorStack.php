@@ -127,7 +127,7 @@ define('PEAR_ERRORSTACK_ERR_OBJTOSTRING', 2);
  * Usage:
  * <code>
  * // global error stack
- * $global_stack = PEAR_ErrorStack::singleton('MyPackage');
+ * $global_stack = &PEAR_ErrorStack::singleton('MyPackage');
  * // local error stack
  * $local_stack = new PEAR_ErrorStack('MyPackage');
  * </code>
@@ -302,9 +302,9 @@ class PEAR_ErrorStack {
     function setDefaultLogger(&$log)
     {
         if (is_object($log) && method_exists($log, 'log') ) {
-            $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'] = $log;
+            $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'] = &$log;
         } elseif (is_callable($log)) {
-            $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'] = $log;
+            $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'] = &$log;
 	}
     }
     
@@ -315,9 +315,9 @@ class PEAR_ErrorStack {
     function setLogger(&$log)
     {
         if (is_object($log) && method_exists($log, 'log') ) {
-            $this->_logger = $log;
+            $this->_logger = &$log;
         } elseif (is_callable($log)) {
-            $this->_logger = $log;
+            $this->_logger = &$log;
         }
     }
     
@@ -571,7 +571,7 @@ class PEAR_ErrorStack {
             if (!isset($this->_errorsByLevel[$err['level']])) {
                 $this->_errorsByLevel[$err['level']] = array();
             }
-            $this->_errorsByLevel[$err['level']][] = $this->_errors[0];
+            $this->_errorsByLevel[$err['level']][] = &$this->_errors[0];
         }
         if ($log) {
             if ($this->_logger || $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER']) {
@@ -609,7 +609,7 @@ class PEAR_ErrorStack {
     function staticPush($package, $code, $level = 'error', $params = array(),
                         $msg = false, $repackage = false, $backtrace = false)
     {
-        $s = PEAR_ErrorStack::singleton($package);
+        $s = &PEAR_ErrorStack::singleton($package);
         if ($s->_contextCallback) {
             if (!$backtrace) {
                 if (function_exists('debug_backtrace')) {
@@ -629,9 +629,9 @@ class PEAR_ErrorStack {
     function _log($err)
     {
         if ($this->_logger) {
-            $logger = $this->_logger;
+            $logger = &$this->_logger;
         } else {
-            $logger = $GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'];
+            $logger = &$GLOBALS['_PEAR_ERRORSTACK_DEFAULT_LOGGER'];
         }
         if (is_a($logger, 'Log')) {
             $levels = array(
@@ -980,6 +980,6 @@ class PEAR_ErrorStack {
         return call_user_func_array(array('PEAR', 'raiseError'), $args);
     }
 }
-$stack = PEAR_ErrorStack::singleton('PEAR_ErrorStack');
+$stack = &PEAR_ErrorStack::singleton('PEAR_ErrorStack');
 $stack->pushCallback(array('PEAR_ErrorStack', '_handleError'));
 ?>

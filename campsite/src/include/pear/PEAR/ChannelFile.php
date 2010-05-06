@@ -1343,13 +1343,13 @@ class PEAR_ChannelFile
         if (isset($this->_channelInfo['servers']['mirror'][0])) {
             foreach ($this->_channelInfo['servers']['mirror'] as $i => $mir) {
                 if ($mirror == $mir['attribs']['host']) {
-                    $setmirror = $this->_channelInfo['servers']['mirror'][$i];
+                    $setmirror = &$this->_channelInfo['servers']['mirror'][$i];
                     break;
                 }
             }
         } else {
             if ($this->_channelInfo['servers']['mirror']['attribs']['host'] == $mirror) {
-                $setmirror = $this->_channelInfo['servers']['mirror'];
+                $setmirror = &$this->_channelInfo['servers']['mirror'];
             }
         }
 
@@ -1391,17 +1391,17 @@ class PEAR_ChannelFile
             if (isset($this->_channelInfo['servers']['mirror'][0])) {
                 foreach ($this->_channelInfo['servers']['mirror'] as $i => $mir) {
                     if ($mirror == $mir['attribs']['host']) {
-                        $setmirror = $this->_channelInfo['servers']['mirror'][$i];
+                        $setmirror = &$this->_channelInfo['servers']['mirror'][$i];
                         break;
                     }
                 }
             } else {
                 if ($this->_channelInfo['servers']['mirror']['attribs']['host'] == $mirror) {
-                    $setmirror = $this->_channelInfo['servers']['mirror'];
+                    $setmirror = &$this->_channelInfo['servers']['mirror'];
                 }
             }
         } else {
-            $setmirror = $this->_channelInfo['servers']['primary'];
+            $setmirror = &$this->_channelInfo['servers']['primary'];
         }
 
         $set = array('attribs' => array('type' => $resourceType), '_content' => $url);

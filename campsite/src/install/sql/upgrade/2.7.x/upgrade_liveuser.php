@@ -201,12 +201,12 @@ $localPearPath = $Campsite['CAMPSITE_DIR'].'/include/pear';
 set_include_path(get_include_path() . PATH_SEPARATOR . $localPearPath);
 require_once('LiveUser/Admin.php');
 
-$LiveUser = LiveUser::factory($liveuserConfig);
+$LiveUser =& LiveUser::factory($liveuserConfig);
 if (!$LiveUser->init()) {
     echo "Error when initializing the authentication system.";
     exit(1);
 }
-$LiveUserAdmin = LiveUser_Admin::factory($liveuserConfig);
+$LiveUserAdmin =& LiveUser_Admin::factory($liveuserConfig);
 $LiveUserAdmin->init();
 $permissions = $LiveUserAdmin->perm->outputRightsConstants('array');
 

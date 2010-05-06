@@ -63,7 +63,7 @@ class getid3_apetag
 		}
 
 		// shortcut
-		$thisfile_ape = $ThisFileInfo['ape'];
+		$thisfile_ape = &$ThisFileInfo['ape'];
 
 		fseek($fd, $thisfile_ape['tag_offset_end'] - $apetagheadersize, SEEK_SET);
 		$APEfooterData = fread($fd, 32);
@@ -107,7 +107,7 @@ class getid3_apetag
 
 		// shortcut
 		$ThisFileInfo['replay_gain'] = array();
-		$thisfile_replaygain = $ThisFileInfo['replay_gain'];
+		$thisfile_replaygain = &$ThisFileInfo['replay_gain'];
 
 		for ($i = 0; $i < $thisfile_ape['footer']['raw']['tag_items']; $i++) {
 			$value_size = getid3_lib::LittleEndian2Int(substr($APEtagData, $offset, 4));
@@ -123,7 +123,7 @@ class getid3_apetag
 
 			// shortcut
 			$thisfile_ape['items'][$item_key] = array();
-			$thisfile_ape_items_current = $thisfile_ape['items'][$item_key];
+			$thisfile_ape_items_current = &$thisfile_ape['items'][$item_key];
 
 			$offset += ($ItemKeyLength + 1); // skip 0x00 terminator
 			$thisfile_ape_items_current['data'] = substr($APEtagData, $offset, $value_size);
@@ -212,7 +212,7 @@ class getid3_apetag
 
 		// shortcut
 		$headerfooterinfo['raw'] = array();
-		$headerfooterinfo_raw = $headerfooterinfo['raw'];
+		$headerfooterinfo_raw = &$headerfooterinfo['raw'];
 
 		$headerfooterinfo_raw['footer_tag']   =                  substr($APEheaderFooterData,  0, 8);
 		if ($headerfooterinfo_raw['footer_tag'] != 'APETAGEX') {

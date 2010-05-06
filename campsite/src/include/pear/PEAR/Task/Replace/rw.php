@@ -34,7 +34,7 @@ class PEAR_Task_Replace_rw extends PEAR_Task_Replace
     {
         parent::PEAR_Task_Common($config, $logger, PEAR_TASK_PACKAGE);
         $this->_contents = $fileXml;
-        $this->_pkg = $pkg;
+        $this->_pkg = &$pkg;
         $this->_params = array();
     }
 

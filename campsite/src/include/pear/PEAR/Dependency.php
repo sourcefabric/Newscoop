@@ -54,7 +54,7 @@ class PEAR_Dependency
      */
     function PEAR_Dependency(&$registry)
     {
-        $this->registry = $registry;
+        $this->registry = &$registry;
     }
 
     // }}}

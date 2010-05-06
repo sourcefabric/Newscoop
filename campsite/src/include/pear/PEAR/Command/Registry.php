@@ -112,7 +112,7 @@ installed package.'
 
     function doList($command, $options, $params)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $channelinfo = isset($options['channelinfo']);
         if (isset($options['allchannels']) && !$channelinfo) {
             return $this->doListAll($command, array(), $params);
@@ -210,7 +210,7 @@ installed package.'
         // This duplicate code is deprecated over
         // list --channelinfo, which gives identical
         // output for list and list --allchannels.
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $installed = $reg->packageInfo(null, null, null);
         foreach ($installed as $channel => $packages) {
             usort($packages, array($this, '_sortinfo'));
@@ -250,7 +250,7 @@ installed package.'
             return $this->raiseError('list-files expects 1 parameter');
         }
 
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $fp = false;
         if (!is_dir($params[0]) && (file_exists($params[0]) || $fp = @fopen($params[0], 'r'))) {
             if ($fp) {
@@ -263,7 +263,7 @@ installed package.'
 
             $pkg = new PEAR_PackageFile($this->config, $this->_debug);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-            $info = $pkg->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
+            $info = &$pkg->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
             PEAR::staticPopErrorHandling();
             $headings = array('Package File', 'Install Path');
             $installed = false;
@@ -275,7 +275,7 @@ installed package.'
                 return $this->raiseError($parsed);
             }
 
-            $info = $reg->getPackage($parsed['package'], $parsed['channel']);
+            $info = &$reg->getPackage($parsed['package'], $parsed['channel']);
             $headings = array('Type', 'Install Path');
             $installed = true;
         }
@@ -349,7 +349,7 @@ installed package.'
             foreach ($list['dir']['file'] as $att) {
                 $att = $att['attribs'];
                 $file = $att['name'];
-                $role = PEAR_Installer_Role::factory($info, $att['role'], $this->config);
+                $role = &PEAR_Installer_Role::factory($info, $att['role'], $this->config);
                 $role->setup($this, $info, $att, $file);
                 if (!$role->isInstallable()) {
                     $dest = '(not installable)';
@@ -376,7 +376,7 @@ installed package.'
         }
 
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $info = $reg->parsePackageName($params[0], $this->config->get('default_channel'));
         if (PEAR::isError($info)) {
             exit(1); // invalid package name
@@ -423,7 +423,7 @@ installed package.'
         }
 
         $info = $fp = false;
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         if ((file_exists($params[0]) && is_file($params[0]) && !is_dir($params[0])) || $fp = @fopen($params[0], 'r')) {
             if ($fp) {
                 fclose($fp);
@@ -435,7 +435,7 @@ installed package.'
 
             $pkg = new PEAR_PackageFile($this->config, $this->_debug);
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-            $obj = $pkg->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
+            $obj = &$pkg->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
             PEAR::staticPopErrorHandling();
             if (PEAR::isError($obj)) {
                 $uinfo = $obj->getUserInfo();
@@ -631,7 +631,7 @@ installed package.'
      */
     function _doInfo2($command, $options, $params, &$obj, $installed)
     {
-        $reg = $this->config->getRegistry();
+        $reg = &$this->config->getRegistry();
         $caption = 'About ' . $obj->getChannel() . '/' .$obj->getPackage() . '-' .
             $obj->getVersion();
         $data = array(

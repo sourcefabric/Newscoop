@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -107,14 +107,14 @@ class LiveUser_Admin_Storage_DB extends LiveUser_Admin_Storage_SQL
 
         if (!is_a($this->dbc, 'db_common') && !is_null($this->dsn)) {
             $this->options['portability'] = DB_PORTABILITY_ALL;
-            $dbc = DB::connect($this->dsn, $this->options);
+            $dbc =& DB::connect($this->dsn, $this->options);
             if (PEAR::isError($dbc)) {
                 $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
                     array('container' => 'could not connect: '.$dbc->getMessage(),
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc = $dbc;
+            $this->dbc =& $dbc;
         }
 
         if (!is_a($this->dbc, 'db_common')) {

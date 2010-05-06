@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -124,9 +124,9 @@ class LiveUser_Admin_Storage_MDB2 extends LiveUser_Admin_Storage_SQL
         if (!MDB2::isConnection($this->dbc) && !is_null($this->dsn)) {
             $this->options['portability'] = MDB2_PORTABILITY_ALL;
             if ($this->function == 'singleton') {
-                $dbc = MDB2::singleton($storageConf['dsn'], $this->options);
+                $dbc =& MDB2::singleton($storageConf['dsn'], $this->options);
             } else {
-                $dbc = MDB2::connect($storageConf['dsn'], $this->options);
+                $dbc =& MDB2::connect($storageConf['dsn'], $this->options);
             }
             if (PEAR::isError($dbc)) {
                 $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
@@ -134,7 +134,7 @@ class LiveUser_Admin_Storage_MDB2 extends LiveUser_Admin_Storage_SQL
                     'debug' => $dbc->getUserInfo()));
                 return false;
             }
-            $this->dbc = $dbc;
+            $this->dbc =& $dbc;
         }
 
         if (!MDB2::isConnection($this->dbc)) {

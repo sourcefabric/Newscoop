@@ -203,7 +203,7 @@ class File_Find
             if (!is_array($val) && is_dir($path)) {
                 unset($retval[$key]);
                 if ($maxrecursion == 0 || $count < $maxrecursion) {
-                    $retval[$val] = File_Find::mapTreeMultiple($path, 
+                    $retval[$val] = &File_Find::mapTreeMultiple($path, 
                                     $maxrecursion, $count);
                 }
             }

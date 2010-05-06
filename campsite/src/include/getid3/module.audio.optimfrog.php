@@ -97,7 +97,7 @@ class getid3_optimfrog
 			if (!isset($ThisFileInfo['ofr'][$BlockName])) {
 				$ThisFileInfo['ofr'][$BlockName] = array();
 			}
-			$thisfile_ofr_thisblock = $ThisFileInfo['ofr'][$BlockName];
+			$thisfile_ofr_thisblock = &$ThisFileInfo['ofr'][$BlockName];
 
 			switch ($BlockName) {
 				case 'OFR ':

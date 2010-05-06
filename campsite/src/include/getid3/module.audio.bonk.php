@@ -20,7 +20,7 @@ class getid3_bonk
 
 		// shortcut
 		$ThisFileInfo['bonk'] = array();
-		$thisfile_bonk        = $ThisFileInfo['bonk'];
+		$thisfile_bonk        = &$ThisFileInfo['bonk'];
 
 		$thisfile_bonk['dataoffset']      = $ThisFileInfo['avdataoffset'];
 		$thisfile_bonk['dataend']         = $ThisFileInfo['avdataend'];
@@ -40,7 +40,7 @@ class getid3_bonk
 				$BonkTagOffset = ftell($fd);
 				$TagHeaderTest = fread($fd, 5);
 				if (($TagHeaderTest{0} != "\x00") || (substr($PossibleBonkTag, 4, 4) != strtolower(substr($PossibleBonkTag, 4, 4)))) {
-					$ThisFileInfo['error'][] = 'Expecting "ï¿½'.strtoupper(substr($PossibleBonkTag, 4, 4)).'" at offset '.$BonkTagOffset.', found "'.$TagHeaderTest.'"';
+					$ThisFileInfo['error'][] = 'Expecting "Ø'.strtoupper(substr($PossibleBonkTag, 4, 4)).'" at offset '.$BonkTagOffset.', found "'.$TagHeaderTest.'"';
 					return false;
 				}
 				$BonkTagName = substr($TagHeaderTest, 1, 4);
@@ -117,7 +117,7 @@ class getid3_bonk
 		switch ($BonkTagName) {
 			case 'BONK':
 				// shortcut
-				$thisfile_bonk_BONK = $ThisFileInfo['bonk']['BONK'];
+				$thisfile_bonk_BONK = &$ThisFileInfo['bonk']['BONK'];
 
 				$BonkData = "\x00".'BONK'.fread($fd, 17);
 				$thisfile_bonk_BONK['version']            =        getid3_lib::LittleEndian2Int(substr($BonkData,  5, 1));
@@ -151,7 +151,7 @@ class getid3_bonk
 
 			case 'INFO':
 				// shortcut
-				$thisfile_bonk_INFO = $ThisFileInfo['bonk']['INFO'];
+				$thisfile_bonk_INFO = &$ThisFileInfo['bonk']['INFO'];
 
 				$thisfile_bonk_INFO['version'] = getid3_lib::LittleEndian2Int(fread($fd, 1));
 				$thisfile_bonk_INFO['entries_count'] = 0;
@@ -176,7 +176,7 @@ class getid3_bonk
 				$BonkData = "\x00".'META'.fread($fd, $ThisFileInfo['bonk']['META']['size'] - 5);
 				$ThisFileInfo['bonk']['META']['version'] = getid3_lib::LittleEndian2Int(substr($BonkData,  5, 1));
 
-				$MetaTagEntries = floor(((strlen($BonkData) - 8) - 6) / 8); // BonkData - xxxxmeta - ï¿½META
+				$MetaTagEntries = floor(((strlen($BonkData) - 8) - 6) / 8); // BonkData - xxxxmeta - ØMETA
 				$offset = 6;
 				for ($i = 0; $i < $MetaTagEntries; $i++) {
 					$MetaEntryTagName   =                  substr($BonkData, $offset, 4);
