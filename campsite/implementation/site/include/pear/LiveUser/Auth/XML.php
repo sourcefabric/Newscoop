@@ -113,13 +113,13 @@ class LiveUser_Auth_XML extends LiveUser_Auth_Common
         }
 
         $tree = new XML_Tree($this->file);
-        $err = $tree->getTreeFromFile();
+        $err =& $tree->getTreeFromFile();
         if (PEAR::isError($err)) {
             $this->stack->push(LIVEUSER_ERROR, 'exception', array(),
                 "Perm initialisation failed. Can't get tree from file");
             return false;
         }
-        $this->tree = $tree;
+        $this->tree =& $tree;
 
         if (!is_a($this->tree, 'xml_tree')) {
             $this->stack->push(LIVEUSER_ERROR_INIT_ERROR, 'error',
@@ -146,7 +146,7 @@ class LiveUser_Auth_XML extends LiveUser_Auth_Common
         $index = 0;
         foreach ($this->userObj->children as $value) {
             if ($value->name == $this->alias['lastlogin']) {
-                $el = $this->userObj->getElement(array($index));
+                $el =& $this->userObj->getElement(array($index));
                 $el->setContent($this->currentLogin);
             }
             $index++;
@@ -253,7 +253,7 @@ class LiveUser_Auth_XML extends LiveUser_Auth_Common
 
         $this->propertyValues = $result;
 
-        $this->userObj      = $this->tree->root->getElement(array($index));
+        $this->userObj      =& $this->tree->root->getElement(array($index));
 
         return true;
     }

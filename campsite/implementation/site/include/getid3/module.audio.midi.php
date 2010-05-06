@@ -21,8 +21,8 @@ class getid3_midi
 
 		// shortcut
 		$ThisFileInfo['midi']['raw'] = array();
-		$thisfile_midi               = $ThisFileInfo['midi'];
-		$thisfile_midi_raw           = $thisfile_midi['raw'];
+		$thisfile_midi               = &$ThisFileInfo['midi'];
+		$thisfile_midi_raw           = &$thisfile_midi['raw'];
 
 		$ThisFileInfo['fileformat']          = 'midi';
 		$ThisFileInfo['audio']['dataformat'] = 'midi';

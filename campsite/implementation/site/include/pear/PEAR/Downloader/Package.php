@@ -132,16 +132,16 @@ class PEAR_Downloader_Package
      */
     function PEAR_Downloader_Package(&$downloader)
     {
-        $this->_downloader = $downloader;
-        $this->_config = $this->_downloader->config;
-        $this->_registry = $this->_config->getRegistry();
+        $this->_downloader = &$downloader;
+        $this->_config = &$this->_downloader->config;
+        $this->_registry = &$this->_config->getRegistry();
         $options = $downloader->getOptions();
         if (isset($options['packagingroot'])) {
             $this->_config->setInstallRoot($options['packagingroot']);
-            $this->_installRegistry = $this->_config->getRegistry();
+            $this->_installRegistry = &$this->_config->getRegistry();
             $this->_config->setInstallRoot(false);
         } else {
-            $this->_installRegistry = $this->_registry;
+            $this->_installRegistry = &$this->_registry;
         }
         $this->_valid = $this->_analyzed = false;
     }
@@ -743,7 +743,7 @@ class PEAR_Downloader_Package
                     $newdep['channel'] = 'pecl.php.net';
                     $chan = 'pecl.php.net';
                     $url = $this->_downloader->_getDepPackageDownloadUrl($newdep, $pname);
-                    $obj = $this->_installRegistry->getPackage($dep['name']);
+                    $obj = &$this->_installRegistry->getPackage($dep['name']);
                     if (PEAR::isError($url)) {
                         PEAR::popErrorHandling();
                         if ($obj !== null && $this->isInstalled($obj, $dep['rel'])) {
@@ -895,7 +895,7 @@ class PEAR_Downloader_Package
      */
     function setPackageFile(&$pkg)
     {
-        $this->_packagefile = $pkg;
+        $this->_packagefile = &$pkg;
     }
 
     function getShortName()
@@ -1325,12 +1325,12 @@ class PEAR_Downloader_Package
 
         $ret = array();
         foreach ($params as $i => $param) {
-            $ret[] = $params[$i];
+            $ret[] = &$params[$i];
         }
 
         $params = array();
         foreach ($ret as $i => $param) {
-            $params[] = $ret[$i];
+            $params[] = &$ret[$i];
         }
     }
 
@@ -1356,7 +1356,7 @@ class PEAR_Downloader_Package
             }
 
             $bundles[] = $i;
-            $pf = $param->getPackageFile();
+            $pf = &$param->getPackageFile();
             $newdeps = array();
             $contents = $pf->getBundledPackages();
             if (!is_array($contents)) {
@@ -1365,7 +1365,7 @@ class PEAR_Downloader_Package
 
             foreach ($contents as $file) {
                 $filecontents = $pf->getFileContents($file);
-                $dl = $param->getDownloader();
+                $dl = &$param->getDownloader();
                 $options = $dl->getOptions();
                 if (PEAR::isError($dir = $dl->getDownloadDir())) {
                     return $dir;
@@ -1398,10 +1398,10 @@ class PEAR_Downloader_Package
                     continue;
                 }
 
-                $j = $obj;
+                $j = &$obj;
                 if (!PEAR_Downloader_Package::willDownload($j,
                       array_merge($params, $newparams)) && !$param->isInstalled($j)) {
-                    $newparams[] = $j;
+                    $newparams[] = &$j;
                 }
             }
         }
@@ -1413,7 +1413,7 @@ class PEAR_Downloader_Package
         PEAR_Downloader_Package::removeDuplicates($params); // strip any unset indices
         if (count($newparams)) { // add in bundled packages for install
             foreach ($newparams as $i => $unused) {
-                $params[] = $newparams[$i];
+                $params[] = &$newparams[$i];
             }
             $newparams = array();
         }
@@ -1457,14 +1457,14 @@ class PEAR_Downloader_Package
                     }
                 }
 
-                $j = $obj;
-                $newparams[] = $j;
+                $j = &$obj;
+                $newparams[] = &$j;
             }
         }
 
         if (count($newparams)) {
             foreach ($newparams as $i => $unused) {
-                $params[] = $newparams[$i];
+                $params[] = &$newparams[$i];
             }
             return true;
         }
@@ -1528,24 +1528,24 @@ class PEAR_Downloader_Package
                 $this->_type = 'local';
                 $options = $this->_downloader->getOptions();
                 if (isset($options['downloadonly'])) {
-                    $pkg = $this->getPackagefileObject($this->_config,
+                    $pkg = &$this->getPackagefileObject($this->_config,
                         $this->_downloader->_debug);
                 } else {
                     if (PEAR::isError($dir = $this->_downloader->getDownloadDir())) {
                         return $dir;
                     }
-                    $pkg = $this->getPackagefileObject($this->_config,
+                    $pkg = &$this->getPackagefileObject($this->_config,
                         $this->_downloader->_debug, $dir);
                 }
                 PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
-                $pf = $pkg->fromAnyFile($param, PEAR_VALIDATE_INSTALLING);
+                $pf = &$pkg->fromAnyFile($param, PEAR_VALIDATE_INSTALLING);
                 PEAR::popErrorHandling();
                 if (PEAR::isError($pf)) {
                     $this->_valid = false;
                     $param = $saveparam;
                     return $pf;
                 }
-                $this->_packagefile = $pf;
+                $this->_packagefile = &$pf;
                 if (!$this->getGroup()) {
                     $this->setGroup('default'); // install the default dependency group
                 }
@@ -1609,17 +1609,17 @@ class PEAR_Downloader_Package
 
             // whew, download worked!
             if (isset($options['downloadonly'])) {
-                $pkg = $this->getPackagefileObject($this->_config, $this->_downloader->debug);
+                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug);
             } else {
                 $dir = $this->_downloader->getDownloadDir();
                 if (PEAR::isError($dir)) {
                     return $dir;
                 }
-                $pkg = $this->getPackagefileObject($this->_config, $this->_downloader->debug, $dir);
+                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug, $dir);
             }
 
             PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
-            $pf = $pkg->fromAnyFile($file, PEAR_VALIDATE_INSTALLING);
+            $pf = &$pkg->fromAnyFile($file, PEAR_VALIDATE_INSTALLING);
             PEAR::popErrorHandling();
             if (PEAR::isError($pf)) {
                 if (is_array($pf->getUserInfo())) {
@@ -1646,7 +1646,7 @@ class PEAR_Downloader_Package
                 return $err;
             }
 
-            $this->_packagefile = $pf;
+            $this->_packagefile = &$pf;
             $this->setGroup('default'); // install the default dependency group
             return $this->_valid = true;
         }

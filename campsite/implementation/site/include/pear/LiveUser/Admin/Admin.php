@@ -182,12 +182,12 @@ class LiveUser_Admin
      */
     function LiveUser_Admin(&$debug)
     {
-        $this->stack = PEAR_ErrorStack::singleton('LiveUser_Admin');
+        $this->stack = &PEAR_ErrorStack::singleton('LiveUser_Admin');
 
         if ($debug) {
-            $log = LiveUser::PEARLogFactory($debug);
+            $log =& LiveUser::PEARLogFactory($debug);
             if ($log) {
-                $this->log = $log;
+                $this->log =& $log;
                 $this->stack->setLogger($this->log);
             }
         }
@@ -207,13 +207,13 @@ class LiveUser_Admin
     {
         $debug = false;
         if (array_key_exists('debug', $conf)) {
-            $debug = $conf['debug'];
+            $debug =& $conf['debug'];
         }
 
         $obj = new LiveUser_Admin($debug);
 
         if (is_array($conf)) {
-            $obj->_conf = $conf;
+            $obj->_conf =& $conf;
         }
 
         return $obj;
@@ -235,8 +235,8 @@ class LiveUser_Admin
             if (!$conf) {
                 return false;
             }
-            $obj = LiveUser_Admin::factory($conf);
-            $instance = $obj;
+            $obj = &LiveUser_Admin::factory($conf);
+            $instance =& $obj;
         }
 
         return $instance;
@@ -267,7 +267,7 @@ class LiveUser_Admin
                 $result = false;
                 return $result;
             }
-            $auth = LiveUser::authFactory(
+            $auth = &LiveUser::authFactory(
                 $this->_conf['authContainers'][$authName],
                 $authName,
                 'LiveUser_Admin_'
@@ -277,10 +277,10 @@ class LiveUser_Admin
                     array('msg' => 'Could not instanciate auth container: '.$authName));
                 return $auth;
             }
-            $this->_authContainers[$authName] = $auth;
+            $this->_authContainers[$authName] = &$auth;
         }
         $this->authContainerName = $authName;
-        $this->auth = $this->_authContainers[$authName];
+        $this->auth = &$this->_authContainers[$authName];
         return $this->auth;
     }
 
@@ -306,13 +306,13 @@ class LiveUser_Admin
             return $result;
         }
 
-        $perm = LiveUser::permFactory($this->_conf['permContainer'], 'LiveUser_Admin_');
+        $perm = &LiveUser::permFactory($this->_conf['permContainer'], 'LiveUser_Admin_');
         if ($perm === false) {
             $this->stack->push(LIVEUSER_ADMIN_ERROR, 'exception',
                 array('msg' => 'Could not instanciate perm container of type: '.$this->_conf['permContainer']['type']));
             return $perm;
         }
-        $this->perm = $perm;
+        $this->perm = &$perm;
 
         return $this->perm;
     }
@@ -349,13 +349,13 @@ class LiveUser_Admin
                     if (!isset($this->_authContainers[$key])
                         || !is_object($this->_authContainers[$key])
                     ) {
-                        $auth = LiveUser::authFactory($value, $key, 'LiveUser_Admin_');
+                        $auth = &LiveUser::authFactory($value, $key, 'LiveUser_Admin_');
                         if ($auth === false) {
                             $this->stack->push(LIVEUSER_ADMIN_ERROR, 'exception',
                                 array('msg' => 'Could not instanciate auth container: '.$key));
                             return $auth;
                         }
-                        $this->_authContainers[$key] = $auth;
+                        $this->_authContainers[$key] =& $auth;
                     }
 
                     if (!is_null($authUserId)) {

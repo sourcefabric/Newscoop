@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 $sessid = null;
 $sessid = camp_session_get('cc_sessid', '');
 if (!empty($sessid)) {
-    $xrc = XR_CcClient::Factory($mdefs);
+    $xrc =& XR_CcClient::Factory($mdefs);
     if (!PEAR::isError($xrc) && !PEAR::isError($xrc->ping($sessid))) {
         $xrc->xr_logout($sessid);
     }

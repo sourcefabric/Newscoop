@@ -36,7 +36,7 @@ if (empty($sessid)) {
 
 // ... is something wrong with either the sessid
 // or the communication to Campcaster
-$xrc = XR_CcClient::Factory($mdefs);
+$xrc =& XR_CcClient::Factory($mdefs);
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
     switch ($resp->getCode()) {

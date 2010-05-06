@@ -881,18 +881,18 @@ class Mail_mime
 
         switch (true) {
         case $text && !$attachments:
-            $message = $this->_addTextPart($null, $this->_txtbody);
+            $message =& $this->_addTextPart($null, $this->_txtbody);
             break;
 
         case !$text && !$html && $attachments:
-            $message = $this->_addMixedPart();
+            $message =& $this->_addMixedPart();
             for ($i = 0; $i < count($this->_parts); $i++) {
                 $this->_addAttachmentPart($message, $this->_parts[$i]);
             }
             break;
 
         case $text && $attachments:
-            $message = $this->_addMixedPart();
+            $message =& $this->_addMixedPart();
             $this->_addTextPart($message, $this->_txtbody);
             for ($i = 0; $i < count($this->_parts); $i++) {
                 $this->_addAttachmentPart($message, $this->_parts[$i]);
@@ -901,11 +901,11 @@ class Mail_mime
 
         case $html && !$attachments && !$html_images:
             if (isset($this->_txtbody)) {
-                $message = $this->_addAlternativePart($null);
+                $message =& $this->_addAlternativePart($null);
                 $this->_addTextPart($message, $this->_txtbody);
                 $this->_addHtmlPart($message);
             } else {
-                $message = $this->_addHtmlPart($null);
+                $message =& $this->_addHtmlPart($null);
             }
             break;
 
@@ -916,10 +916,10 @@ class Mail_mime
             //       * html
             //       * image...
             if (isset($this->_txtbody)) {
-                $message = $this->_addAlternativePart($null);
+                $message =& $this->_addAlternativePart($null);
                 $this->_addTextPart($message, $this->_txtbody);
 
-                $ht = $this->_addRelatedPart($message);
+                $ht =& $this->_addRelatedPart($message);
                 $this->_addHtmlPart($ht);
                 for ($i = 0; $i < count($this->_html_images); $i++) {
                     $this->_addHtmlImagePart($ht, $this->_html_images[$i]);
@@ -928,7 +928,7 @@ class Mail_mime
                 // * Content-Type: multipart/related;
                 //    * html
                 //    * image...
-                $message = $this->_addRelatedPart($null);
+                $message =& $this->_addRelatedPart($null);
                 $this->_addHtmlPart($message);
                 for ($i = 0; $i < count($this->_html_images); $i++) {
                     $this->_addHtmlImagePart($message, $this->_html_images[$i]);
@@ -941,9 +941,9 @@ class Mail_mime
             //        * text
             //        * html
             //    * image...
-            $message = $this->_addRelatedPart($null);
+            $message =& $this->_addRelatedPart($null);
             if (isset($this->_txtbody)) {
-                $alt = $this->_addAlternativePart($message);
+                $alt =& $this->_addAlternativePart($message);
                 $this->_addTextPart($alt, $this->_txtbody);
                 $this->_addHtmlPart($alt);
             } else {
@@ -956,9 +956,9 @@ class Mail_mime
             break;
 
         case $html && $attachments && !$html_images:
-            $message = $this->_addMixedPart();
+            $message =& $this->_addMixedPart();
             if (isset($this->_txtbody)) {
-                $alt = $this->_addAlternativePart($message);
+                $alt =& $this->_addAlternativePart($message);
                 $this->_addTextPart($alt, $this->_txtbody);
                 $this->_addHtmlPart($alt);
             } else {
@@ -970,13 +970,13 @@ class Mail_mime
             break;
 
         case $html && $attachments && $html_images:
-            $message = $this->_addMixedPart();
+            $message =& $this->_addMixedPart();
             if (isset($this->_txtbody)) {
-                $alt = $this->_addAlternativePart($message);
+                $alt =& $this->_addAlternativePart($message);
                 $this->_addTextPart($alt, $this->_txtbody);
-                $rel = $this->_addRelatedPart($alt);
+                $rel =& $this->_addRelatedPart($alt);
             } else {
-                $rel = $this->_addRelatedPart($message);
+                $rel =& $this->_addRelatedPart($message);
             }
             $this->_addHtmlPart($rel);
             for ($i = 0; $i < count($this->_html_images); $i++) {

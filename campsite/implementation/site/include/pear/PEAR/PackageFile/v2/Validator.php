@@ -58,12 +58,12 @@ class PEAR_PackageFile_v2_Validator
      */
     function validate(&$pf, $state = PEAR_VALIDATE_NORMAL)
     {
-        $this->_pf = $pf;
+        $this->_pf = &$pf;
         $this->_curState = $state;
         $this->_packageInfo = $this->_pf->getArray();
         $this->_isValid = $this->_pf->_isValid;
         $this->_filesValid = $this->_pf->_filesValid;
-        $this->_stack = $pf->_stack;
+        $this->_stack = &$pf->_stack;
         $this->_stack->getErrors(true);
         if (($this->_isValid & $state) == $state) {
             return true;

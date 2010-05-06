@@ -21,9 +21,9 @@ class getid3_bmp
 
 	    // shortcuts
 	    $ThisFileInfo['bmp']['header']['raw'] = array();
-	    $thisfile_bmp                         = $ThisFileInfo['bmp'];
-	    $thisfile_bmp_header                  = $thisfile_bmp['header'];
-	    $thisfile_bmp_header_raw              = $thisfile_bmp_header['raw'];
+	    $thisfile_bmp                         = &$ThisFileInfo['bmp'];
+	    $thisfile_bmp_header                  = &$thisfile_bmp['header'];
+	    $thisfile_bmp_header_raw              = &$thisfile_bmp_header['raw'];
 
 		// BITMAPFILEHEADER [14 bytes] - http://msdn.microsoft.com/library/en-us/gdi/bitmaps_62uq.asp
 		// all versions

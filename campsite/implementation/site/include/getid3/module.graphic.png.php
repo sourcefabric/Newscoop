@@ -21,7 +21,7 @@ class getid3_png
 
 	    // shortcut
 	    $ThisFileInfo['png'] = array();
-	    $thisfile_png = $ThisFileInfo['png'];
+	    $thisfile_png = &$ThisFileInfo['png'];
 
 		$ThisFileInfo['fileformat']          = 'png';
 		$ThisFileInfo['video']['dataformat'] = 'png';
@@ -61,7 +61,7 @@ class getid3_png
 
 			// shortcut
 			$thisfile_png[$chunk['type_text']] = array();
-			$thisfile_png_chunk_type_text = $thisfile_png[$chunk['type_text']];
+			$thisfile_png_chunk_type_text = &$thisfile_png[$chunk['type_text']];
 
 			switch ($chunk['type_text']) {
 

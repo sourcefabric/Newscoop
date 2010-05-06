@@ -338,7 +338,7 @@ used for automated conversion or learning the format.
             $pkg2 = 'package2.xml';
         }
 
-        $packager = $this->getPackager();
+        $packager = &$this->getPackager();
         $compress = empty($options['nocompress']) ? true : false;
         $result   = $packager->package($pkginfofile, $compress, $pkg2);
         if (PEAR::isError($result)) {
@@ -364,7 +364,7 @@ used for automated conversion or learning the format.
             $params[0] = 'package.xml';
         }
 
-        $obj = $this->getPackageFile($this->config, $this->_debug);
+        $obj = &$this->getPackageFile($this->config, $this->_debug);
         $obj->rawReturn();
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $info = $obj->fromTgzFile($params[0], PEAR_VALIDATE_NORMAL);
@@ -422,7 +422,7 @@ used for automated conversion or learning the format.
         $packageFile = realpath($params[0]);
         $dir = dirname($packageFile);
         $dir = substr($dir, strrpos($dir, '/') + 1);
-        $obj  = $this->getPackageFile($this->config, $this->_debug);
+        $obj  = &$this->getPackageFile($this->config, $this->_debug);
         $info = $obj->fromAnyFile($packageFile, PEAR_VALIDATE_NORMAL);
         if (PEAR::isError($info)) {
             return $this->raiseError($info);
@@ -621,7 +621,7 @@ used for automated conversion or learning the format.
         }
 
         $packageFile = realpath($params[0]);
-        $obj  = $this->getPackageFile($this->config, $this->_debug);
+        $obj  = &$this->getPackageFile($this->config, $this->_debug);
         $info = $obj->fromAnyFile($packageFile, PEAR_VALIDATE_NORMAL);
         if (PEAR::isError($info)) {
             return $this->raiseError($info);
@@ -707,7 +707,7 @@ used for automated conversion or learning the format.
         }
 
         $file = realpath($params[0]);
-        $obj  = $this->getPackageFile($this->config, $this->_debug);
+        $obj  = &$this->getPackageFile($this->config, $this->_debug);
         $info = $obj->fromAnyFile($file, PEAR_VALIDATE_NORMAL);
         if (PEAR::isError($info)) {
             return $this->raiseError($info);
@@ -796,7 +796,7 @@ used for automated conversion or learning the format.
             return $this->raiseError("bad parameter(s), try \"help $command\"");
         }
 
-        $obj = $this->getPackageFile($this->config, $this->_debug);
+        $obj = &$this->getPackageFile($this->config, $this->_debug);
         if (is_file($params[0]) || strpos($params[0], '.xml') > 0) {
            $info = $obj->fromAnyFile($params[0], PEAR_VALIDATE_NORMAL);
         } else {
@@ -857,7 +857,7 @@ used for automated conversion or learning the format.
             } else { // package.xml 2.0 dependencies display
                 require_once 'PEAR/Dependency2.php';
                 $deps = $info->getDependencies();
-                $reg = $this->config->getRegistry();
+                $reg = &$this->config->getRegistry();
                 if (is_array($deps)) {
                     $d = new PEAR_Dependency2($this->config, array(), '');
                     $data = array(
@@ -1065,7 +1065,7 @@ used for automated conversion or learning the format.
         $packagexml    = isset($params[0]) ? $params[0] : 'package.xml';
         $newpackagexml = isset($params[1]) ? $params[1] : dirname($packagexml) .
             DIRECTORY_SEPARATOR . 'package2.xml';
-        $pkg = $this->getPackageFile($this->config, $this->_debug);
+        $pkg = &$this->getPackageFile($this->config, $this->_debug);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $pf = $pkg->fromPackageFile($packagexml, PEAR_VALIDATE_NORMAL);
         PEAR::staticPopErrorHandling();
@@ -1083,10 +1083,10 @@ used for automated conversion or learning the format.
             return true;
         }
 
-        $gen   = $pf->getDefaultGenerator();
-        $newpf = $gen->toV2();
+        $gen   = &$pf->getDefaultGenerator();
+        $newpf = &$gen->toV2();
         $newpf->setPackagefile($newpackagexml);
-        $gen = $newpf->getDefaultGenerator();
+        $gen = &$newpf->getDefaultGenerator();
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $state = (isset($options['flat']) ? PEAR_VALIDATE_PACKAGING : PEAR_VALIDATE_NORMAL);
         $saved = $gen->toPackageFile(dirname($newpackagexml), $state, basename($newpackagexml));

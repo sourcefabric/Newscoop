@@ -43,9 +43,9 @@ class getid3_id3v2
 
 		// shortcuts
 		$ThisFileInfo['id3v2']['header'] = true;
-		$thisfile_id3v2                  = $ThisFileInfo['id3v2'];
+		$thisfile_id3v2                  = &$ThisFileInfo['id3v2'];
 		$thisfile_id3v2['flags']         =  array();
-		$thisfile_id3v2_flags            = $thisfile_id3v2['flags'];
+		$thisfile_id3v2_flags            = &$thisfile_id3v2['flags'];
 
 
 		fseek($fd, $StartingOffset, SEEK_SET);
@@ -56,7 +56,7 @@ class getid3_id3v2
 			$thisfile_id3v2['minorversion'] = ord($header{4});
 
 			// shortcut
-			$id3v2_majorversion = $thisfile_id3v2['majorversion'];
+			$id3v2_majorversion = &$thisfile_id3v2['majorversion'];
 
 		} else {
 
@@ -1164,7 +1164,7 @@ class getid3_id3v2
 				$frame_imagetype = substr($parsedFrame['data'], $frame_offset, 3);
 				if (strtolower($frame_imagetype) == 'ima') {
 					// complete hack for mp3Rage (www.chaoticsoftware.com) that puts ID3v2.3-formatted
-					// MIME type instead of 3-char ID3v2.2-format image type  (thanks xbhoffï¿½pacbell*net)
+					// MIME type instead of 3-char ID3v2.2-format image type  (thanks xbhoffØpacbell*net)
 					$frame_terminatorpos = strpos($parsedFrame['data'], "\x00", $frame_offset);
 					$frame_mimetype = substr($parsedFrame['data'], $frame_offset, $frame_terminatorpos - $frame_offset);
 					if (ord($frame_mimetype) === 0) {
@@ -2078,7 +2078,7 @@ class getid3_id3v2
 			SOS	Somalia
 			SPL	Seborga
 			SRG	Suriname
-			STD	Sï¿½o Tome and Principe
+			STD	São Tome and Principe
 			SVC	El Salvador
 			SYP	Syria
 			SZL	Swaziland
@@ -2102,13 +2102,13 @@ class getid3_id3v2
 			VND	Viet Nam
 			VUV	Vanuatu
 			WST	Samoa
-			XAF	Communautï¿½ Financiï¿½re Africaine
+			XAF	Communauté Financière Africaine
 			XAG	Silver
 			XAU	Gold
 			XCD	East Caribbean
 			XDR	International Monetary Fund
 			XPD	Palladium
-			XPF	Comptoirs Franï¿½ais du Pacifique
+			XPF	Comptoirs Français du Pacifique
 			XPT	Platinum
 			YER	Yemen
 			YUM	Yugoslavia
@@ -2552,7 +2552,7 @@ class getid3_id3v2
 			vai	Vai
 			ven	Venda
 			vie	Vietnamese
-			vol	Volapï¿½k
+			vol	Volapük
 			vot	Votic
 			wak	Wakashan Languages
 			wal	Walamo

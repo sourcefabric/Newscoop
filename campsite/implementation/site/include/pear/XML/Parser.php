@@ -281,7 +281,7 @@ class XML_Parser extends PEAR
      */
     function setHandlerObj(&$obj)
     {
-        $this->_handlerObj = $obj;
+        $this->_handlerObj = &$obj;
         return true;
     }
 
@@ -298,7 +298,7 @@ class XML_Parser extends PEAR
         }
 
         if (!is_object($this->_handlerObj)) {
-            $this->_handlerObj = $this;
+            $this->_handlerObj = &$this;
         }
         switch ($this->mode) {
 
@@ -513,7 +513,7 @@ class XML_Parser extends PEAR
 
             while ($data = fread($this->fp, 4096)) {
                 if (!$this->_parseString($data, feof($this->fp))) {
-                    $error = $this->raiseError();
+                    $error = &$this->raiseError();
                     $this->free();
                     return $error;
                 }
@@ -521,7 +521,7 @@ class XML_Parser extends PEAR
         } else {
             // otherwise, $this->fp must be a string
             if (!$this->_parseString($this->fp, true)) {
-                $error = $this->raiseError();
+                $error = &$this->raiseError();
                 $this->free();
                 return $error;
             }
@@ -569,7 +569,7 @@ class XML_Parser extends PEAR
         }
 
         if (!$this->_parseString($data, $eof)) {
-            $error = $this->raiseError();
+            $error = &$this->raiseError();
             $this->free();
             return $error;
         }

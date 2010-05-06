@@ -296,7 +296,7 @@ class DB_storage extends PEAR
         $obj = new $classname($table);
         foreach ($data as $name => $value) {
             $obj->_properties[$name] = true;
-            $obj->$name = $value;
+            $obj->$name = &$value;
         }
         return $obj;
     }
@@ -341,7 +341,7 @@ class DB_storage extends PEAR
                 $found_keycolumn = true;
             }
             $this->_properties[$key] = true;
-            $this->$key = $value;
+            $this->$key = &$value;
             unset($value); // have to unset, or all properties will
                            // refer to the same value
         }
@@ -448,7 +448,7 @@ class DB_storage extends PEAR
         $params = array();
         $vars = array();
         foreach ($this->_changes as $name => $foo) {
-            $params[] = $this->$name;
+            $params[] = &$this->$name;
             $vars[] = $name . ' = ?';
         }
         if ($vars) {

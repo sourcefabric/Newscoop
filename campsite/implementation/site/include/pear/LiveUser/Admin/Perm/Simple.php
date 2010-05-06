@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -80,7 +80,7 @@ require_once 'LiveUser/Perm/Simple.php';
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
  * @author  Bjoern Kraus <krausbn@php.net>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@
@@ -142,7 +142,7 @@ class LiveUser_Admin_Perm_Simple
     function LiveUser_Admin_Perm_Simple()
     {
         // Create the error stack, retrieve the errors using LiveUser_Admin->getErrors().
-        $this->stack = PEAR_ErrorStack::singleton('LiveUser_Admin');
+        $this->stack = &PEAR_ErrorStack::singleton('LiveUser_Admin');
     }
 
     /**
@@ -167,13 +167,13 @@ class LiveUser_Admin_Perm_Simple
             $keys = array_keys($conf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key = $conf[$key];
+                    $this->$key =& $conf[$key];
                 }
             }
         }
 
         // Create the storage class, if and error occures, add it to the stack and return false.
-        $this->_storage = LiveUser::storageFactory($conf['storage'], 'LiveUser_Admin_Perm_');
+        $this->_storage =& LiveUser::storageFactory($conf['storage'], 'LiveUser_Admin_Perm_');
         if ($this->_storage === false) {
             end($conf['storage']);
             $key = key($conf['storage']);

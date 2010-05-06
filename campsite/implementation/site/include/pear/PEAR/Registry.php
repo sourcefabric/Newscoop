@@ -179,7 +179,7 @@ class PEAR_Registry extends PEAR
 
     function setConfig(&$config, $resetInstallDir = true)
     {
-        $this->_config = $config;
+        $this->_config = &$config;
         if ($resetInstallDir) {
             $this->setInstallDir($config->get('php_dir'));
         }
@@ -325,7 +325,7 @@ class PEAR_Registry extends PEAR
                     $this->_config->set('php_dir', $this->install_dir);
                 }
 
-                $this->_dependencyDB = PEAR_DependencyDB::singleton($this->_config);
+                $this->_dependencyDB = &PEAR_DependencyDB::singleton($this->_config);
                 if (PEAR::isError($this->_dependencyDB)) {
                     // attempt to recover by removing the dep db
                     if (file_exists($this->_config->get('php_dir', null, 'pear.php.net') .
@@ -334,7 +334,7 @@ class PEAR_Registry extends PEAR
                             DIRECTORY_SEPARATOR . '.depdb');
                     }
 
-                    $this->_dependencyDB = PEAR_DependencyDB::singleton($this->_config);
+                    $this->_dependencyDB = &PEAR_DependencyDB::singleton($this->_config);
                     if (PEAR::isError($this->_dependencyDB)) {
                         echo $this->_dependencyDB->getMessage();
                         echo 'Unrecoverable error';
@@ -1456,7 +1456,7 @@ class PEAR_Registry extends PEAR
         }
 
         $pkg = new PEAR_PackageFile($this->_config);
-        $pf = $pkg->fromArray($info);
+        $pf = &$pkg->fromArray($info);
         return $pf;
     }
 
@@ -1476,7 +1476,7 @@ class PEAR_Registry extends PEAR
                     require_once 'PEAR/ChannelFile.php';
                 }
 
-                $ch = PEAR_ChannelFile::fromArrayWithErrors($chinfo);
+                $ch = &PEAR_ChannelFile::fromArrayWithErrors($chinfo);
             }
         }
 
@@ -1939,7 +1939,7 @@ class PEAR_Registry extends PEAR
         if (PEAR::isError($e = $this->_lock(LOCK_SH))) {
             return $e;
         }
-        $ret = $this->_getChannel($channel, $noaliases);
+        $ret = &$this->_getChannel($channel, $noaliases);
         $this->_unlock();
         if (!$ret) {
             return PEAR::raiseError('Unknown channel: ' . $channel);
@@ -1959,7 +1959,7 @@ class PEAR_Registry extends PEAR
         if (PEAR::isError($e = $this->_lock(LOCK_SH))) {
             return $e;
         }
-        $pf = $this->_getPackage($package, $channel);
+        $pf = &$this->_getPackage($package, $channel);
         $this->_unlock();
         return $pf;
     }
@@ -1983,10 +1983,10 @@ class PEAR_Registry extends PEAR
             }
             foreach ($group['package'] as $package) {
                 $depchannel = isset($package['channel']) ? $package['channel'] : '__uri';
-                $p = $this->getPackage($package['name'], $depchannel);
+                $p = &$this->getPackage($package['name'], $depchannel);
                 if ($p) {
-                    $save = $p;
-                    $ret[] = $save;
+                    $save = &$p;
+                    $ret[] = &$save;
                 }
             }
         }
@@ -1996,10 +1996,10 @@ class PEAR_Registry extends PEAR
             }
             foreach ($group['subpackage'] as $package) {
                 $depchannel = isset($package['channel']) ? $package['channel'] : '__uri';
-                $p = $this->getPackage($package['name'], $depchannel);
+                $p = &$this->getPackage($package['name'], $depchannel);
                 if ($p) {
-                    $save = $p;
-                    $ret[] = $save;
+                    $save = &$p;
+                    $ret[] = &$save;
                 }
             }
         }
@@ -2036,7 +2036,7 @@ class PEAR_Registry extends PEAR
             return $e;
         }
         foreach ($this->_listChannels() as $channel) {
-            $e = $this->_getChannel($channel);
+            $e = &$this->_getChannel($channel);
             if (!$e || PEAR::isError($e)) {
                 continue;
             }

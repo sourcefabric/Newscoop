@@ -28,15 +28,15 @@ class getid3_riff
 		$ThisFileInfo['riff'] = array('raw'=>array());
 
 		// Shortcuts
-		$thisfile_riff             = $ThisFileInfo['riff'];
-		$thisfile_riff_raw         = $thisfile_riff['raw'];
-		$thisfile_audio            = $ThisFileInfo['audio'];
-		$thisfile_video            = $ThisFileInfo['video'];
-		$thisfile_avdataoffset     = $ThisFileInfo['avdataoffset'];
-		$thisfile_avdataend        = $ThisFileInfo['avdataend'];
-		$thisfile_audio_dataformat = $thisfile_audio['dataformat'];
-		$thisfile_riff_audio       = $thisfile_riff['audio'];
-		$thisfile_riff_video       = $thisfile_riff['video'];
+		$thisfile_riff             = &$ThisFileInfo['riff'];
+		$thisfile_riff_raw         = &$thisfile_riff['raw'];
+		$thisfile_audio            = &$ThisFileInfo['audio'];
+		$thisfile_video            = &$ThisFileInfo['video'];
+		$thisfile_avdataoffset     = &$ThisFileInfo['avdataoffset'];
+		$thisfile_avdataend        = &$ThisFileInfo['avdataend'];
+		$thisfile_audio_dataformat = &$thisfile_audio['dataformat'];
+		$thisfile_riff_audio       = &$thisfile_riff['audio'];
+		$thisfile_riff_video       = &$thisfile_riff['video'];
 
 
 		$Original['avdataoffset'] = $thisfile_avdataoffset;
@@ -66,7 +66,7 @@ class getid3_riff
 				$thisfile_riff[$RIFFsubtype]  = getid3_riff::ParseRIFF($fd, $thisfile_avdataoffset + 12, $thisfile_avdataoffset + $RIFFheaderSize, $ThisFileInfo);
 				$thisfile_riff['header_size'] = $RIFFheaderSize;
 				if ($RIFFsubtype == 'WAVE') {
-					$thisfile_riff_WAVE = $thisfile_riff['WAVE'];
+					$thisfile_riff_WAVE = &$thisfile_riff['WAVE'];
 				}
 				break;
 
@@ -138,11 +138,11 @@ class getid3_riff
 				if (isset($thisfile_riff_WAVE['rgad'][0]['data'])) {
 
 					// shortcuts
-					$rgadData = $thisfile_riff_WAVE['rgad'][0]['data'];
+					$rgadData = &$thisfile_riff_WAVE['rgad'][0]['data'];
 					$thisfile_riff_raw['rgad']    = array('track'=>array(), 'album'=>array());
-					$thisfile_riff_raw_rgad       = $thisfile_riff_raw['rgad'];
-					$thisfile_riff_raw_rgad_track = $thisfile_riff_raw_rgad['track'];
-					$thisfile_riff_raw_rgad_album = $thisfile_riff_raw_rgad['album'];
+					$thisfile_riff_raw_rgad       = &$thisfile_riff_raw['rgad'];
+					$thisfile_riff_raw_rgad_track = &$thisfile_riff_raw_rgad['track'];
+					$thisfile_riff_raw_rgad_album = &$thisfile_riff_raw_rgad['album'];
 
 					$thisfile_riff_raw_rgad['fPeakAmplitude']      =               getid3_lib::LittleEndian2Float(substr($rgadData, 0, 4));
 					$thisfile_riff_raw_rgad['nRadioRgAdjust']      = getid3_riff::EitherEndian2Int($ThisFileInfo, substr($rgadData, 4, 2));
@@ -189,7 +189,7 @@ class getid3_riff
 
 				if (isset($thisfile_riff_WAVE['bext'][0]['data'])) {
 					// shortcut
-					$thisfile_riff_WAVE_bext_0 = $thisfile_riff_WAVE['bext'][0];
+					$thisfile_riff_WAVE_bext_0 = &$thisfile_riff_WAVE['bext'][0];
 
 					$thisfile_riff_WAVE_bext_0['title']          =                         trim(substr($thisfile_riff_WAVE_bext_0['data'],   0, 256));
 					$thisfile_riff_WAVE_bext_0['author']         =                         trim(substr($thisfile_riff_WAVE_bext_0['data'], 256,  32));
@@ -215,7 +215,7 @@ class getid3_riff
 
 				if (isset($thisfile_riff_WAVE['MEXT'][0]['data'])) {
 					// shortcut
-					$thisfile_riff_WAVE_MEXT_0 = $thisfile_riff_WAVE['MEXT'][0];
+					$thisfile_riff_WAVE_MEXT_0 = &$thisfile_riff_WAVE['MEXT'][0];
 
 					$thisfile_riff_WAVE_MEXT_0['raw']['sound_information']      = getid3_lib::LittleEndian2Int(substr($thisfile_riff_WAVE_MEXT_0['data'], 0, 2));
 					$thisfile_riff_WAVE_MEXT_0['flags']['homogenous']           = (bool) ($thisfile_riff_WAVE_MEXT_0['raw']['sound_information'] & 0x0001);
@@ -235,7 +235,7 @@ class getid3_riff
 
 				if (isset($thisfile_riff_WAVE['cart'][0]['data'])) {
 					// shortcut
-					$thisfile_riff_WAVE_cart_0 = $thisfile_riff_WAVE['cart'][0];
+					$thisfile_riff_WAVE_cart_0 = &$thisfile_riff_WAVE['cart'][0];
 
 					$thisfile_riff_WAVE_cart_0['version']              =                  substr($thisfile_riff_WAVE_cart_0['data'],    0,    4);
 					$thisfile_riff_WAVE_cart_0['title']                =             trim(substr($thisfile_riff_WAVE_cart_0['data'],    4,   64));
@@ -320,8 +320,8 @@ class getid3_riff
 
 							// shortcut
 							$thisfile_riff['litewave']['raw'] = array();
-							$thisfile_riff_litewave     = $thisfile_riff['litewave'];
-							$thisfile_riff_litewave_raw = $thisfile_riff_litewave['raw'];
+							$thisfile_riff_litewave     = &$thisfile_riff['litewave'];
+							$thisfile_riff_litewave_raw = &$thisfile_riff_litewave['raw'];
 
 							$thisfile_riff_litewave_raw['compression_method'] = getid3_lib::LittleEndian2Int(substr($thisfile_riff_WAVE['fmt '][0]['data'], 18, 1));
 							$thisfile_riff_litewave_raw['compression_flags']  = getid3_lib::LittleEndian2Int(substr($thisfile_riff_WAVE['fmt '][0]['data'], 19, 1));
@@ -417,7 +417,7 @@ class getid3_riff
 
 					// shortcut
 					$thisfile_riff_raw['avih'] = array();
-					$thisfile_riff_raw_avih = $thisfile_riff_raw['avih'];
+					$thisfile_riff_raw_avih = &$thisfile_riff_raw['avih'];
 
 					$thisfile_riff_raw_avih['dwMicroSecPerFrame']    = getid3_riff::EitherEndian2Int($ThisFileInfo, substr($avihData,  0, 4)); // frame display rate (or 0L)
 					if ($thisfile_riff_raw_avih['dwMicroSecPerFrame'] == 0) {
@@ -447,7 +447,7 @@ class getid3_riff
 
 					// shortcut
 					$thisfile_riff_video[$streamindex] = array();
-					$thisfile_riff_video_current = $thisfile_riff_video[$streamindex];
+					$thisfile_riff_video_current = &$thisfile_riff_video[$streamindex];
 
 					if ($thisfile_riff_raw_avih['dwWidth'] > 0) {
 						$thisfile_riff_video_current['frame_width'] = $thisfile_riff_raw_avih['dwWidth'];
@@ -476,7 +476,7 @@ class getid3_riff
 									$strfData = $thisfile_riff['AVI ']['hdrl']['strl']['strf'][$i]['data'];
 
 									// shortcut
-									$thisfile_riff_raw_strf_strhfccType_streamindex = $thisfile_riff_raw['strf'][$strhfccType][$streamindex];
+									$thisfile_riff_raw_strf_strhfccType_streamindex = &$thisfile_riff_raw['strf'][$strhfccType][$streamindex];
 
 									switch ($strhfccType) {
 										case 'auds':
@@ -491,7 +491,7 @@ class getid3_riff
 
 											// shortcut
 											$thisfile_audio['streams'][$streamindex] = $thisfile_riff_audio[$streamindex];
-											$thisfile_audio_streams_currentstream = $thisfile_audio['streams'][$streamindex];
+											$thisfile_audio_streams_currentstream = &$thisfile_audio['streams'][$streamindex];
 
 											if ($thisfile_audio_streams_currentstream['bits_per_sample'] == 0) {
 												unset($thisfile_audio_streams_currentstream['bits_per_sample']);
@@ -552,7 +552,7 @@ class getid3_riff
 										case 'vids':
 											// shortcut
 											$thisfile_riff_raw['strh'][$i]                  = array();
-											$thisfile_riff_raw_strh_current                 = $thisfile_riff_raw['strh'][$i];
+											$thisfile_riff_raw_strh_current                 = &$thisfile_riff_raw['strh'][$i];
 
 											$thisfile_riff_raw_strh_current['fccType']               =                  substr($strhData,  0, 4);  // same as $strhfccType;
 											$thisfile_riff_raw_strh_current['fccHandler']            =                  substr($strhData,  4, 4);
@@ -660,7 +660,7 @@ class getid3_riff
 
 				if (isset($thisfile_riff['CDDA']['fmt '][0]['data'])) {
 					// shortcut
-					$thisfile_riff_CDDA_fmt_0 = $thisfile_riff['CDDA']['fmt '][0];
+					$thisfile_riff_CDDA_fmt_0 = &$thisfile_riff['CDDA']['fmt '][0];
 
 					$thisfile_riff_CDDA_fmt_0['unknown1']           = getid3_riff::EitherEndian2Int($ThisFileInfo, substr($thisfile_riff_CDDA_fmt_0['data'],  0, 2));
 					$thisfile_riff_CDDA_fmt_0['track_num']          = getid3_riff::EitherEndian2Int($ThisFileInfo, substr($thisfile_riff_CDDA_fmt_0['data'],  2, 2));
@@ -709,7 +709,7 @@ class getid3_riff
 				if (isset($thisfile_riff[$RIFFsubtype]['COMM'][0]['data'])) {
 
 					// shortcut
-					$thisfile_riff_RIFFsubtype_COMM_0_data = $thisfile_riff[$RIFFsubtype]['COMM'][0]['data'];
+					$thisfile_riff_RIFFsubtype_COMM_0_data = &$thisfile_riff[$RIFFsubtype]['COMM'][0]['data'];
 
 					$thisfile_riff_audio['channels']         =         getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_COMM_0_data,  0,  2), true);
 					$thisfile_riff_audio['total_samples']    =         getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_COMM_0_data,  2,  4), false);
@@ -807,7 +807,7 @@ class getid3_riff
 
 				if (isset($thisfile_riff[$RIFFsubtype]['VHDR'][0]['offset'])) {
 					// shortcut
-					$thisfile_riff_RIFFsubtype_VHDR_0 = $thisfile_riff[$RIFFsubtype]['VHDR'][0];
+					$thisfile_riff_RIFFsubtype_VHDR_0 = &$thisfile_riff[$RIFFsubtype]['VHDR'][0];
 
 					$thisfile_riff_RIFFsubtype_VHDR_0['oneShotHiSamples']  =   getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_VHDR_0['data'],  0, 4));
 					$thisfile_riff_RIFFsubtype_VHDR_0['repeatHiSamples']   =   getid3_lib::BigEndian2Int(substr($thisfile_riff_RIFFsubtype_VHDR_0['data'],  4, 4));
@@ -874,7 +874,7 @@ class getid3_riff
 			case 'CDXA':
 				$ThisFileInfo['mime_type']      = 'video/mpeg';
 				if (!empty($thisfile_riff['CDXA']['data'][0]['size'])) {
-					$GETID3_ERRORARRAY = $ThisFileInfo['warning'];
+					$GETID3_ERRORARRAY = &$ThisFileInfo['warning'];
 					if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio-video.mpeg.php', __FILE__, false)) {
 						$dummy = $ThisFileInfo;
 						$dummy['error'] = array();
@@ -1130,7 +1130,7 @@ class getid3_riff
 									} elseif (preg_match('/^\x0B\x77/s', $FirstFourBytes)) {
 
 										// AC3
-										$GETID3_ERRORARRAY = $ThisFileInfo['warning'];
+										$GETID3_ERRORARRAY = &$ThisFileInfo['warning'];
 										if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.ac3.php', __FILE__, false)) {
 
 											$dummy = $ThisFileInfo;
@@ -1194,7 +1194,7 @@ class getid3_riff
 							} elseif ((strlen($RIFFdataChunkContentsTest) > 0) && (substr($RIFFdataChunkContentsTest, 0, 2) == "\x0B\x77")) {
 
 								// This is probably AC-3 data
-								$GETID3_ERRORARRAY = $ThisFileInfo['warning'];
+								$GETID3_ERRORARRAY = &$ThisFileInfo['warning'];
 								if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.ac3.php', __FILE__, false)) {
 
 									$dummy = $ThisFileInfo;
@@ -1217,7 +1217,7 @@ class getid3_riff
 								// AC-3 content, but not encoded in same format as normal AC-3 file
 								// For one thing, byte order is swapped
 
-								$GETID3_ERRORARRAY = $ThisFileInfo['warning'];
+								$GETID3_ERRORARRAY = &$ThisFileInfo['warning'];
 								if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.ac3.php', __FILE__, false)) {
 
 									// ok to use tmpfile here - only 56 bytes
@@ -1339,7 +1339,7 @@ class getid3_riff
 	function RIFFparseWAVEFORMATex($WaveFormatExData) {
 		// shortcut
 		$WaveFormatEx['raw'] = array();
-		$WaveFormatEx_raw    = $WaveFormatEx['raw'];
+		$WaveFormatEx_raw    = &$WaveFormatEx['raw'];
 
 		$WaveFormatEx_raw['wFormatTag']      = getid3_lib::LittleEndian2Int(substr($WaveFormatExData,  0, 2));
 		$WaveFormatEx_raw['nChannels']       = getid3_lib::LittleEndian2Int(substr($WaveFormatExData,  2, 2));
@@ -1374,7 +1374,7 @@ class getid3_riff
 
 		// shortcut
 		$ThisFileInfo['wavpack'] = array();
-		$thisfile_wavpack        = $ThisFileInfo['wavpack'];
+		$thisfile_wavpack        = &$ThisFileInfo['wavpack'];
 
 		$thisfile_wavpack['version']           = getid3_lib::LittleEndian2Int(substr($WavPackChunkData,  0, 2));
 		if ($thisfile_wavpack['version'] >= 2) {
@@ -1394,7 +1394,7 @@ class getid3_riff
 
 			// shortcut
 			$thisfile_wavpack['flags'] = array();
-			$thisfile_wavpack_flags = $thisfile_wavpack['flags'];
+			$thisfile_wavpack_flags = &$thisfile_wavpack['flags'];
 
 			$thisfile_wavpack_flags['mono']                 = (bool) ($thisfile_wavpack['flags_raw'] & 0x000001);
 			$thisfile_wavpack_flags['fast_mode']            = (bool) ($thisfile_wavpack['flags_raw'] & 0x000002);
@@ -1724,7 +1724,7 @@ class getid3_riff
 			IY41	Interlaced version of Y41P (www.leadtools.com)
 			IYU1	12 bit format used in mode 2 of the IEEE 1394 Digital Camera 1.04 spec    IEEE standard
 			IYU2	24 bit format used in mode 2 of the IEEE 1394 Digital Camera 1.04 spec    IEEE standard
-			IYUV	Planar YUV format (8-bpp Y plane, followed by 8-bpp 2ï¿½2 U and V planes)
+			IYUV	Planar YUV format (8-bpp Y plane, followed by 8-bpp 2×2 U and V planes)
 			i263	Intel ITU H.263 Videoconferencing (i263)
 			I420	Intel Indeo 4
 			IAN 	Intel Indeo 4 (RDX)

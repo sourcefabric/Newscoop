@@ -865,8 +865,8 @@ class XML_Unserializer extends PEAR
         }
         $parent = array_pop($this->_valStack);
         if ($parent === null) {
-            $this->_unserializedData = $value['value'];
-            $this->_root             = $value['name'];
+            $this->_unserializedData = &$value['value'];
+            $this->_root             = &$value['name'];
             return true;
         } else {
             // parent has to be an array
@@ -906,7 +906,7 @@ class XML_Unserializer extends PEAR
                     }
                     array_push($parent['children'][$value['name']], $value['value']);
                 } else {
-                    $parent['children'][$value['name']] = $value['value'];
+                    $parent['children'][$value['name']] = &$value['value'];
                     array_push($parent['childrenKeys'], $value['name']);
                 }
             } else {

@@ -88,8 +88,8 @@ if ($xml_is_readable != false && $xml_is_writable != false) {
     define('CONNECTINGTHEINTERNET', 6);
 
     // Create new LiveUser (LiveUser) object.
-    // Weï¿½ll only use the auth container, permissions are not used.
-    $LU = LiveUser::factory($liveuserConfig);
+    // We´ll only use the auth container, permissions are not used.
+    $LU =& LiveUser::factory($liveuserConfig);
 
     if (!$LU->init()) {
         var_dump($LU->getErrors());

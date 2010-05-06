@@ -69,7 +69,7 @@ if (empty($sessid)) {
 
 // ... is something wrong with either the sessid
 // or the communication to Campcaster
-$xrc = XR_CcClient::Factory($mdefs);
+$xrc =& XR_CcClient::Factory($mdefs);
 $resp = $xrc->ping($sessid);
 if (PEAR::isError($resp)) {
     switch ($resp->getCode()) {
@@ -87,8 +87,8 @@ if (PEAR::isError($resp)) {
 
 $search_conditions = array();
 for ($varIndex = 1; $varIndex <= 3; $varIndex++) {
-	$f_curr_category_value = ${'f_category_'.$varIndex.'_value'};
-	$f_curr_category_name = ${'f_category_'.$varIndex.'_name'};
+	$f_curr_category_value =& ${'f_category_'.$varIndex.'_value'};
+	$f_curr_category_name =& ${'f_category_'.$varIndex.'_name'};
 	$category_conditions[$varIndex] = array();
 	foreach ($f_curr_category_value as $categoryValue) {
 		if ($categoryValue == '-1') {

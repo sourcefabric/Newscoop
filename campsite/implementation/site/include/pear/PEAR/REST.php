@@ -39,7 +39,7 @@ class PEAR_REST
 
     function PEAR_REST(&$config, $options = array())
     {
-        $this->config   = $config;
+        $this->config   = &$config;
         $this->_options = $options;
     }
 

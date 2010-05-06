@@ -63,8 +63,8 @@ class PEAR_Remote extends PEAR
     function PEAR_Remote(&$config)
     {
         $this->PEAR();
-        $this->config = $config;
-        $this->_registry = $this->config->getRegistry();
+        $this->config = &$config;
+        $this->_registry = &$this->config->getRegistry();
     }
 
     // }}}
@@ -72,7 +72,7 @@ class PEAR_Remote extends PEAR
     
     function setRegistry(&$reg)
     {
-        $this->_registry = $reg;
+        $this->_registry = &$reg;
     }
     // }}}
     // {{{ getCache()

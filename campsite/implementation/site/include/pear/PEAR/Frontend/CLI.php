@@ -81,7 +81,7 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
     {
         $this->displayError($eobj);
         if (class_exists('PEAR_Config')) {
-            $config = PEAR_Config::singleton();
+            $config = &PEAR_Config::singleton();
             if ($config->get('verbose') > 5) {
                 if (function_exists('debug_print_backtrace')) {
                     debug_print_backtrace();
@@ -485,7 +485,7 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
                 );
 
                 if (isset($d['deprecated']) && $d['deprecated']) {
-                    $conf = PEAR_Config::singleton();
+                    $conf = &PEAR_Config::singleton();
                     $reg = $conf->getRegistry();
                     $name = $reg->parsedPackageNameToString($d['deprecated'], true);
                     $data['data'][] = array('Deprecated! use', $name);
@@ -560,7 +560,7 @@ class PEAR_Frontend_CLI extends PEAR_Frontend
     {
         $highest = 1;
         for ($i = 0; $i < count($columns); $i++) {
-            $col = $columns[$i];
+            $col = &$columns[$i];
             if (isset($colparams[$i]) && !empty($colparams[$i]['wrap'])) {
                 $col = wordwrap($col, $colparams[$i]['wrap']);
             }

@@ -39,7 +39,7 @@ require_once 'HTML/QuickForm/text.php';
  * 
  * Example:
  * <code>
- * $autocomplete = $form->addElement('autocomplete', 'fruit', 'Favourite fruit:');
+ * $autocomplete =& $form->addElement('autocomplete', 'fruit', 'Favourite fruit:');
  * $options = array("Apple", "Orange", "Pear", "Strawberry");
  * $autocomplete->setOptions($options);
  * </code>

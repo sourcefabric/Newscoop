@@ -33,7 +33,7 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
@@ -202,7 +202,7 @@ class LiveUser_Auth_Common
      */
     function LiveUser_Auth_Common()
     {
-        $this->stack = PEAR_ErrorStack::singleton('LiveUser');
+        $this->stack = &PEAR_ErrorStack::singleton('LiveUser');
     }
 
     /**
@@ -221,7 +221,7 @@ class LiveUser_Auth_Common
             $keys = array_keys($conf);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key = $conf[$key];
+                    $this->$key =& $conf[$key];
                 }
             }
         }
@@ -230,7 +230,7 @@ class LiveUser_Auth_Common
             $keys = array_keys($conf['storage']);
             foreach ($keys as $key) {
                 if (isset($this->$key)) {
-                    $this->$key = $conf['storage'][$key];
+                    $this->$key =& $conf['storage'][$key];
                 }
             }
         }

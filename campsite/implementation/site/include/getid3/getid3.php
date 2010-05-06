@@ -248,7 +248,7 @@ class getID3
 		// ID3v2 detection (even if not parsing) is always done otherwise fileformat is much harder to detect
 		if ($this->option_tag_id3v2) {
 
-			$GETID3_ERRORARRAY = $this->info['warning'];
+			$GETID3_ERRORARRAY = &$this->info['warning'];
 			if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE__, false)) {
 				$tag = new getid3_id3v2($fp, $this->info);
 			}
