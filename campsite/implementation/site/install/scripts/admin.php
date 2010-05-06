@@ -76,6 +76,9 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 
 if (($extension == '.php') || ($extension == '')) {
 	header("Content-type: text/html; charset=UTF-8");
+	header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+	header("Cache-Control: no-store, no-cache, must-revalidate");
 
 	// If they arent trying to login in...
 	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
