@@ -629,7 +629,7 @@ class DatabaseObject {
 		}
 
         // Write the object to cache
-        if ($success !== false && !$p_commit) {
+        if ($success !== false && $p_commit) {
             $this->writeCache();
         }
 
