@@ -8,7 +8,7 @@ class InterviewItem extends DatabaseObject {
      * @var array
      */
     var $m_keyColumnNames = array('item_id');
-    
+
     var $m_keyIsAutoIncrement = true;
 
     var $m_dbTableName = 'plugin_interview_items';
@@ -16,35 +16,35 @@ class InterviewItem extends DatabaseObject {
     var $m_columnNames = array(
         // int - interview id
         'item_id',
-    
+
         // int - interview id
         'fk_interview_id',
 
         // int - questioneer user id
         'fk_questioneer_user_id',
-        
+
         // string - question text
         'question',
-        
+
         // datetime - question date
-        'question_date',        
-             
+        'question_date',
+
         // string - status
         'status',
-        
+
         // string - answer
         'answer',
-        
+
         // datetime - answer date
         'answer_date',
-        
+
         // int - custom list position
         'position',
-        
+
         // timestamp - last_modified
         'last_modified'
         );
-        
+
 
     /**
      * Construct by passing in the primary key to access the interview in
@@ -56,10 +56,10 @@ class InterviewItem extends DatabaseObject {
     public function __construct($p_fk_interview_id = null, $p_item_id = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        
+
         $this->m_data['fk_interview_id'] = $p_fk_interview_id;
         $this->m_data['item_id'] = $p_item_id;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -71,8 +71,8 @@ class InterviewItem extends DatabaseObject {
      * @param array $p_values
      */
     private function __create($p_values = null) { return parent::create($p_values); }
-    
-    
+
+
     /**
      * Create an interview in the database. Use the SET functions to
      * change individual values.
@@ -86,13 +86,13 @@ class InterviewItem extends DatabaseObject {
     public function create($p_fk_questioneer_user_id = null, $p_question = null, $p_status = 'draft')
     {
         global $g_ado_db;
-       
-        /* 
+
+        /*
         if (!strlen($p_title) || !strlen($p_question) || !$p_date_begin || !$p_date_end || !$p_nr_of_answers) {
-            return false;   
+            return false;
         }
         */
-        
+
         // Create the record
         $values = array(
             'fk_questioneer_user_id' => $p_fk_questioneer_user_id,
@@ -105,17 +105,17 @@ class InterviewItem extends DatabaseObject {
         if (!$success) {
             return false;
         }
-        
+
         $query = "  SELECT  MAX(position) + 1 AS next
                     FROM    {$this->m_dbTableName}
                     WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}";
         $max = $g_ado_db->getRow($query);
-        
+
         // Set position
         $query = "  UPDATE  {$this->m_dbTableName}
                     SET     position = {$max['next']}
                     WHERE   item_id = {$this->m_data['item_id']}";
-        $res = $g_ado_db->execute($query); 
+        $res = $g_ado_db->execute($query);
 
         /*
         if (function_exists("camp_load_translation_strings")) {
@@ -124,12 +124,12 @@ class InterviewItem extends DatabaseObject {
         $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
         Log::Message($logtext, null, 31);
         */
-        
-        $CampCache = CampCache::singleton(); 
+
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return true;
     } // fn create
-    
+
     /**
      * Change the items position in the order sequence
      * relative to its current position.
@@ -158,12 +158,12 @@ class InterviewItem extends DatabaseObject {
                         ORDER BY position $order
                         LIMIT ".($p_spacesToMove-1).", 1";
         $destRow = $g_ado_db->GetRow($queryStr);
-        
+
         // Shift all items one space between the source and destination item.
         $operator = ($p_direction == 'up') ? '+' : '-';
         $minItemOrder = min($destRow['position'], $this->m_data['position']);
         $maxItemOrder = max($destRow['position'], $this->m_data['position']);
-        $queryStr2 = "  UPDATE  {$this->m_dbTableName} 
+        $queryStr2 = "  UPDATE  {$this->m_dbTableName}
                         SET     position = position $operator 1
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
                                 AND position >= $minItemOrder
@@ -176,7 +176,7 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr3);
 
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         $this->fetch();
         return true;
@@ -196,7 +196,7 @@ class InterviewItem extends DatabaseObject {
         $queryStr = "   SELECT  position, item_id
                         FROM    {$this->m_dbTableName}
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
-                        ORDER BY position ASC 
+                        ORDER BY position ASC
                         LIMIT   ".($p_moveToPosition - 1).', 1';
         $destRow = $g_ado_db->GetRow($queryStr);
         if (!$destRow) {
@@ -229,7 +229,7 @@ class InterviewItem extends DatabaseObject {
                         WHERE   item_id = {$this->m_data['item_id']}";
         $g_ado_db->Execute($queryStr);
 
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         $this->fetch();
         return true;
@@ -243,9 +243,9 @@ class InterviewItem extends DatabaseObject {
      * @return boolean
      */
     public function delete()
-    {   
+    {
         global $g_ado_db;
-        
+
         // reduce order of all following items minus 1
         $currItemOrder = $this->getProperty('position');
         $queryStr = "   UPDATE  {$this->m_dbTableName}
@@ -253,7 +253,7 @@ class InterviewItem extends DatabaseObject {
                         WHERE   fk_interview_id = {$this->m_data['fk_interview_id']}
                                 AND position > $currItemOrder";
         $g_ado_db->Execute($queryStr);
-        
+
         // finally delete from main table
         $deleted = parent::delete();
 
@@ -270,8 +270,8 @@ class InterviewItem extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
-        
-        $CampCache = CampCache::singleton(); 
+
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $deleted;
     } // fn delete
@@ -284,29 +284,29 @@ class InterviewItem extends DatabaseObject {
      * @return string
      */
     static private function GetQuery($p_fk_interview_id, array $p_order_by = null)
-    {   
+    {
         $InterviewItem = new InterviewItem();
-        
-        $query = "SELECT    item_id, fk_interview_id 
+
+        $query = "SELECT    item_id, fk_interview_id
                   FROM      {$InterviewItem->m_dbTableName} ";
-        
+
         if (!count($p_order_by)) {
-            $p_order_by = array('position' => 'ASC');   
+            $p_order_by = array('position' => 'ASC');
         }
-        
+
         foreach ($p_order_by as $col => $dir) {
             if (in_array($col, $InterviewItem->m_columnNames)) {
-                $order .= "$col $dir , ";   
+                $order .= "$col $dir , ";
             }
         }
-        
-        $query .= "ORDER BY ".substr($order, 0, -2);   
-        
+
+        $query .= "ORDER BY ".substr($order, 0, -2);
+
         return $query;
     }
-    
+
     /**
-     * Get an array of interview objects 
+     * Get an array of interview objects
      * You may specify the language
      *
      * @param unknown_type $p_fk_language_id
@@ -317,29 +317,29 @@ class InterviewItem extends DatabaseObject {
     static public function GetInterviewItems($p_fk_interview_id, $p_offset = null, $p_limit = null, array $p_order_by = null)
     {
         global $g_ado_db;
-        
+
         if (empty($p_offset)) {
-            $p_offset = 0;   
+            $p_offset = 0;
         }
-        
+
         if (empty($p_limit)) {
-            $p_limit = 20;   
+            $p_limit = 20;
         }
-        
+
         $query = InterviewItem::GetQuery($p_fk_interview_id, $p_order_by);
-        
-        $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);        
+
+        $res = $g_ado_db->SelectLimit($query, $p_limit, $p_offset);
         $interviewItems = array();
-        
-        while ($row = $res->FetchRow()) { 
+
+        while ($row = $res->FetchRow()) {
             $tmp_interviewItem = new InterviewItem($row['fk_interview_id'], $row['item_id']);
-            $interviewItems[] = $tmp_interviewItem;  
+            $interviewItems[] = $tmp_interviewItem;
         }
-        
+
         return $interviewItems;
     }
 
-    
+
     /**
      * Get the count for available interviews
      *
@@ -348,13 +348,13 @@ class InterviewItem extends DatabaseObject {
     public static function countInterviewItems()
     {
         global $g_ado_db;;
-        
-        $query   = InterviewItem::getQuery(); 
+
+        $query   = InterviewItem::getQuery();
         $res     = $g_ado_db->Execute($query);
-        
-        return $res->RecordCount();  
+
+        return $res->RecordCount();
     }
-    
+
     /**
      * Get the item id
      *
@@ -362,9 +362,9 @@ class InterviewItem extends DatabaseObject {
      */
     public function getId()
     {
-        return $this->getProperty('item_id');   
+        return $this->getProperty('item_id');
     }
-         
+
     /**
      * Get the interview id
      *
@@ -372,9 +372,9 @@ class InterviewItem extends DatabaseObject {
      */
     public function getInterviewId()
     {
-        return $this->getProperty('interview_id');   
+        return $this->getProperty('interview_id');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -382,9 +382,9 @@ class InterviewItem extends DatabaseObject {
      */
     public function getQuestion()
     {
-        return $this->getProperty('question');   
+        return $this->getProperty('question');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -392,9 +392,9 @@ class InterviewItem extends DatabaseObject {
      */
     public function getAnswer()
     {
-        return $this->getProperty('answer');   
+        return $this->getProperty('answer');
     }
-    
+
     /**
      * Get the language id
      *
@@ -402,9 +402,9 @@ class InterviewItem extends DatabaseObject {
      */
     public function getLanguageId()
     {
-        return $this->getProperty('fk_language_id');   
+        return $this->getProperty('fk_language_id');
     }
-    
+
     /**
      * Get the english language name
      *
@@ -413,46 +413,46 @@ class InterviewItem extends DatabaseObject {
     public function getLanguageName()
     {
         $language = new Language($this->m_data['fk_language_id']);
-        
-        return $language->getName(); 
+
+        return $language->getName();
     }
-    
-    
+
+
     public function getForm($p_role, $p_target='index.php', $p_add_hidden_vars=array(), $p_html=false)
     {
         require_once 'HTML/QuickForm.php';
-              
+
         $mask = InterviewItem::getFormMask($p_role);
 
         if (is_array($p_add_hidden_vars)) {
-            foreach ($p_add_hidden_vars as $k => $v) {       
+            foreach ($p_add_hidden_vars as $k => $v) {
                 $mask[] = array(
                     'element'   => $k,
                     'type'      => 'hidden',
                     'constant'  => $v
-                );   
-            } 
+                );
+            }
         }
-        
+
         $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask); 
-        
+        FormProcessor::parseArr2Form($form, $mask);
+
         if ($p_html) {
-            return $form->toHTML();    
+            return $form->toHTML();
         } else {
             require_once 'HTML/QuickForm/Renderer/Array.php';
-            
+
             $renderer = new HTML_QuickForm_Renderer_Array(true, true);
             $form->accept($renderer);
-            
+
             return $renderer->toArray();
-        } 
+        }
     }
-    
+
     private function getFormMask($p_role)
     {
         $data = $this->m_data;
-                
+
         $mask = array(
             array(
                 'element'   => 'action',
@@ -476,7 +476,7 @@ class InterviewItem extends DatabaseObject {
                 'default'   => $data['question'],
                 'required'  => $p_role == 'admin' || $p_role == 'moderator' ? true : false,
                 'attributes'=> $p_role == 'admin' || $p_role == 'moderator' ? false : array('readonly', 'disabled')
-            ), 
+            ),
             array(
                 'element'   => 'f_answer',
                 'type'      => 'textarea',
@@ -484,16 +484,16 @@ class InterviewItem extends DatabaseObject {
                 'default'   => $data['answer'],
                 'required'  => $p_role == 'guest' ? true : false,
                 'attributes'=> $p_role == 'admin' || $p_role == 'guest' ? false : array('readonly', 'disabled')
-            ), 
-            $p_role == 'admin' || $p_role == 'moderator' ? 
+            ),
+            $p_role == 'admin' || $p_role == 'moderator' ?
                 array(
                     'element'   => 'f_status',
                     'type'      => 'select',
                     'label'     => getGS('Status'),
                     'default'   => $data['status'],
                     'options'=> array(
-                        'draft'     => getGS('draft'), 
-                        'pending'   => getGS('pending'), 
+                        'draft'     => getGS('draft'),
+                        'pending'   => getGS('pending'),
                         'published' => getGS('published'),
                         'rejected'   => getGS('rejected')
                     )
@@ -526,26 +526,26 @@ class InterviewItem extends DatabaseObject {
                 'label'     => getGS('Cancel'),
                 'attributes' => array('onClick' => 'window.close()'),
                 'groupit'   => true
-            ), 
+            ),
             array(
                 'group'     => array('f_reset', 'f_cancel', 'f_submit')
-            )       
+            )
         );
-        
-        return $mask;   
+
+        return $mask;
     }
-    
+
     public function store($p_type='item')
     {
         require_once 'HTML/QuickForm.php';
-              
-        $mask = InterviewItem::getFormMask($p_type, $p_owner, $p_admin);        
+
+        $mask = InterviewItem::getFormMask($p_type, $p_owner, $p_admin);
         $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
-        FormProcessor::parseArr2Form(&$form, &$mask);   
-           
+        FormProcessor::parseArr2Form($form, $mask);
+
         if ($form->validate()) {
             $data = $form->getSubmitValues();
-            
+
             if (strlen($data['f_question'])) {
                 $this->setProperty('question', $data['f_question']);
             }
@@ -559,33 +559,33 @@ class InterviewItem extends DatabaseObject {
         }
         return false;
     }
-    
-    
+
+
     static public function OnInterviewDelete($p_interview_id)
     {
         foreach (InterviewItem::GetInterviewItems($p_interview_id, 0, 65535) as $InterviewItem) {
-            $InterviewItem->delete();   
-        }      
+            $InterviewItem->delete();
+        }
     }
-    
+
     public function setProperty($p_name, $p_value)
     {
         switch ($p_name) {
             case 'question':
             case 'answer':
                 if ($this->getProperty($p_name) == '') {
-                    parent::setProperty($p_name.'_date', date('Y-m-d H:i:s'));   
+                    parent::setProperty($p_name.'_date', date('Y-m-d H:i:s'));
                 }
-            break;  
-        }   
+            break;
+        }
         $return = parent::setProperty($p_name, $p_value);
-        $CampCache = CampCache::singleton(); 
+        $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $return;
     }
 
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an issue list based on the given parameters.
      *
@@ -607,16 +607,16 @@ class InterviewItem extends DatabaseObject {
                                    $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
-        
+
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
@@ -625,7 +625,7 @@ class InterviewItem extends DatabaseObject {
             if (empty($comparisonOperation)) {
                 continue;
             }
-            
+
             if (strpos($comparisonOperation['left'], 'interview_id') !== false) {
                 $interview_id = $comparisonOperation['right'];
             } else {
@@ -635,7 +635,7 @@ class InterviewItem extends DatabaseObject {
                 $selectClauseObj->addWhere($whereCondition);
             }
         }
-        
+
         // sets the columns to be fetched
         $tmpInterviewItem = new InterviewItem();
 		$columnNames = $tmpInterviewItem->getColumnNames(true);
@@ -647,12 +647,12 @@ class InterviewItem extends DatabaseObject {
         $mainTblName = $tmpInterviewItem->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpInterviewItem);
-        
+
         // set constraints which ever have to care of
         $selectClauseObj->addWhere("$mainTblName.fk_interview_id = $interview_id");
         #$selectClauseObj->addWhere("$mainTblName.is_online = 1");
 
-       
+
         if (is_array($p_order)) {
             $order = InterviewItem::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -660,16 +660,16 @@ class InterviewItem extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-       
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get tlimited rows
         $interviewItemRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
-        
+
         // builds the array of interview objects
         $interviewItemsList = array();
         while ($interviewItem = $interviewItemRes->FetchRow()) {
@@ -681,7 +681,7 @@ class InterviewItem extends DatabaseObject {
 
         return $interviewItemsList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
