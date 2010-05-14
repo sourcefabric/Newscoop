@@ -158,6 +158,9 @@ class Poll extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
 
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+
         return true;
     } // fn create
 
@@ -303,6 +306,10 @@ class Poll extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
+
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+
         return $deleted;
     } // fn delete
 
@@ -581,6 +588,21 @@ class Poll extends DatabaseObject {
                 $translation->setProperty('percentage_of_votes_overall', $nr_of_votes[$translation->getLanguageId()] / $nr_of_votes_overall * 100);
             }
         }
+    }
+
+    /**
+     * Method to call parent::setProperty
+     * with clening the cache.
+     *
+     * @param string $p_name
+     * @param sring $p_value
+     */
+    function setProperty($p_name, $p_value)
+    {
+        $return = parent::setProperty($p_name, $p_value);
+        $CampCache = CampCache::singleton();
+        $CampCache->clear('user');
+        return $return;
     }
 
 
