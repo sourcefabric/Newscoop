@@ -8,7 +8,7 @@ class Poll extends DatabaseObject {
      * @var array
      */
     var $m_keyColumnNames = array('poll_nr', 'fk_language_id');
-    
+
     var $m_keyIsAutoIncrement = false;
 
     var $m_dbTableName = 'plugin_poll';
@@ -16,16 +16,16 @@ class Poll extends DatabaseObject {
     var $m_columnNames = array(
         // int - poll poll_nr
         'poll_nr',
-    
+
         // int - default language id
         'fk_language_id',
-        
+
         // int - parent poll number (0 on master)
         'parent_poll_nr',
-        
+
         // boolean - is extended poll type
         'is_extended',
-                
+
         // string - title in given language
         'title',
 
@@ -43,20 +43,20 @@ class Poll extends DatabaseObject {
 
         // int - how many votes can single user make,
         'votes_per_user',
-        
+
         // int - number of votes in this language
         'nr_of_votes',
-        
+
         // int - number of votes overall languages
         'nr_of_votes_overall',
-        
+
         // float - percentage of votes in this language of overall languages
         'percentage_of_votes_overall',
-        
+
         // timestamp - last_modified
         'last_modified'
         );
-        
+
     /**
      * This indicates each poll can just voted once by a user, identicated by cookie + session var
      *
@@ -76,10 +76,10 @@ class Poll extends DatabaseObject {
     public function Poll($p_language_id = null, $p_poll_nr = null)
     {
         parent::DatabaseObject($this->m_columnNames);
-        
+
         $this->m_data['fk_language_id'] = $p_language_id;
         $this->m_data['poll_nr'] = $p_poll_nr;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -101,19 +101,19 @@ class Poll extends DatabaseObject {
     protected function generatePollNumber()
     {
         global $g_ado_db;
-        
+
         $query = "SELECT    MAX(poll_nr) + 1 AS number
                   FROM      plugin_poll";
         $result = $g_ado_db->execute($query);
         $row = $result->fetchRow();
-        
+
         if (is_null($row['number'])) {
             return 1;
         }
-        return $row['number'];  
+        return $row['number'];
     }
-    
-    
+
+
     /**
      * Create an poll in the database.  Use the SET functions to
      * change individual values.
@@ -127,11 +127,11 @@ class Poll extends DatabaseObject {
     public function create($p_title, $p_question, $p_date_begin, $p_date_end, $p_nr_of_answers, $p_votes_per_user)
     {
         global $g_ado_db;
-        
+
         if (!strlen($p_title) || !strlen($p_question) || !$p_date_begin || !$p_date_end || !$p_nr_of_answers) {
-            return false;   
+            return false;
         }
-        
+
         $this->m_data['poll_nr'] = $this->generatePollNumber();
 
         // Create the record
@@ -141,7 +141,7 @@ class Poll extends DatabaseObject {
             'nr_of_answers' => $p_nr_of_answers,
             'title' => $p_title,
             'question' => $p_question,
-            'votes_per_user' => $p_votes_per_user        
+            'votes_per_user' => $p_votes_per_user
         );
 
 
@@ -157,10 +157,10 @@ class Poll extends DatabaseObject {
         $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
         Log::Message($logtext, null, 31);
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        
+
         return true;
     } // fn create
 
@@ -173,9 +173,9 @@ class Poll extends DatabaseObject {
      * @return Poll
      */
     public function createTranslation($p_language_id, $p_title, $p_question)
-    {        
-        // Construct the duplicate poll object.  
-        $poll_copy = new Poll();      
+    {
+        // Construct the duplicate poll object.
+        $poll_copy = new Poll();
         $poll_copy->m_data['poll_nr'] = $this->m_data['poll_nr'];
         $poll_copy->m_data['fk_language_id'] = $p_language_id;
 
@@ -187,15 +187,15 @@ class Poll extends DatabaseObject {
             'date_end' => $this->m_data['date_end'],
             'nr_of_answers' => $this->m_data['nr_of_answers'],
             'votes_per_user' => $this->m_data['votes_per_user'],
-            'is_extended' => $this->m_data['is_extended'] ? 'true' : 'false',    
+            'is_extended' => $this->m_data['is_extended'] ? 'true' : 'false',
         );
 
         $success = $poll_copy->__create($values);
-        
+
         if (!$success) {
             return false;
         }
-               
+
         // create an set of answers
         PollAnswer::CreateTranslationSet($this->m_data['poll_nr'], $this->m_data['fk_language_id'], $p_language_id);
 
@@ -208,11 +208,11 @@ class Poll extends DatabaseObject {
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
         Log::Message($logtext, null, 31);
         */
-        
+
         return $poll_copy;
     } // fn createTranslation
 
-    
+
     /**
      * Create a copy of an poll.
      *
@@ -222,10 +222,10 @@ class Poll extends DatabaseObject {
      * @return Poll
      */
     public function createCopy($p_data, $p_answers)
-    {        
-        // Construct the duplicate poll object.  
-        $poll_copy = new Poll();  
-        $poll_copy->m_data['poll_nr'] = Poll::generatePollNumber();    
+    {
+        // Construct the duplicate poll object.
+        $poll_copy = new Poll();
+        $poll_copy->m_data['poll_nr'] = Poll::generatePollNumber();
         $poll_copy->m_data['parent_poll_nr'] = $this->m_data['poll_nr'];
         $poll_copy->m_data['fk_language_id'] = $this->m_data['fk_language_id'];
 
@@ -240,14 +240,14 @@ class Poll extends DatabaseObject {
         );
 
         $success = $poll_copy->__create($values);
-        
+
         if (!$success) {
             return false;
         }
-               
+
         // create an set of answers
         PollAnswer::CreateCopySet($poll_copy->getNumber(), $this->m_data['fk_language_id'], $this->m_data['poll_nr'], $p_answers);
-        
+
         $poll_copy->triggerStatistics();
 
         /*
@@ -259,11 +259,11 @@ class Poll extends DatabaseObject {
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
         Log::Message($logtext, null, 31);
         */
-        
+
         return $poll_copy;
     } // fn createTranslation
-    
-    
+
+
     /**
      * Delete poll from database.  This will
      * only delete one specific translation of the poll.
@@ -271,25 +271,25 @@ class Poll extends DatabaseObject {
      * @return boolean
      */
     public function delete()
-    {       
+    {
         // Delete from plugin_poll_answer table
         PollAnswer::OnPollDelete($this->m_data['poll_nr'], $this->m_data['fk_language_id']);
 
         // Delete from plugin_poll_article table
-        
+
         // Delete from plugin_poll_section table
-        
+
         // Delete from plugin_poll_issue table
-        
+
         // Delete from plugin_poll_publication table
-        
+
         // Delete from plugin_poll_main table
         // note: first set votes to null, to recalculate statistics
 
         $this->setProperty('nr_of_votes', 0);
         $this->setProperty('nr_of_votes_overall', 0);
         $this->triggerStatistics();
-        
+
         // finally delete the poll
         $deleted = parent::delete();
 
@@ -306,10 +306,10 @@ class Poll extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        
+
         return $deleted;
     } // fn delete
 
@@ -326,9 +326,9 @@ class Poll extends DatabaseObject {
     public function getTranslations($p_poll_nr = null)
     {
         global $g_ado_db;
-        
+
         $poll = array();
-        
+
         if (!is_null($p_poll_nr)) {
             $poll_nr = $p_poll_nr;
         } elseif (isset($this)) {
@@ -336,17 +336,17 @@ class Poll extends DatabaseObject {
         } else {
             return array();
         }
-         
-        $query = "SELECT    poll_nr, fk_language_id 
-                  FROM      plugin_poll 
+
+        $query = "SELECT    poll_nr, fk_language_id
+                  FROM      plugin_poll
                   WHERE     poll_nr = $poll_nr
                   ORDER BY  fk_language_id";
         $result = $g_ado_db->execute($query);
-        
-        while ($row = $result->FetchRow()) { 
-            $polls[] = new Poll($row['fk_language_id'], $row['poll_nr']);   
+
+        while ($row = $result->FetchRow()) {
+            $polls[] = new Poll($row['fk_language_id'], $row['poll_nr']);
         }
-        
+
         return $polls;
     } // fn getTranslations
 
@@ -358,41 +358,41 @@ class Poll extends DatabaseObject {
      * @return string
      */
     static private function GetQuery($p_language = null, $p_orderBy = null)
-    {   
+    {
         switch ($p_orderBy) {
             case 'title':
-                $orderBy = 'title ASC, poll_nr DESC, fk_language_id ASC'; 
+                $orderBy = 'title ASC, poll_nr DESC, fk_language_id ASC';
             break;
-            
+
             case 'begin':
                 $orderBy = 'date_begin, poll_nr DESC, fk_language_id ASC';
-            break;   
-            
+            break;
+
             case 'end':
                 $orderBy = 'date_end, poll_nr DESC, fk_language_id ASC';
             break;
-            
+
             default:
                 $orderBy = 'poll_nr DESC, fk_language_id ASC';
-            break;   
+            break;
         }
-        
+
         if (!empty($p_language)) {
-            $query = "SELECT    poll_nr, fk_language_id  
+            $query = "SELECT    poll_nr, fk_language_id
                       FROM      plugin_poll
                       WHERE     fk_language_id = $p_language
-                      ORDER BY  $orderBy";  
+                      ORDER BY  $orderBy";
         } else {
             $query = "SELECT    poll_nr, fk_language_id
                       FROM      plugin_poll
                       ORDER BY  $orderBy";
         }
-        
+
         return $query;
     }
-    
+
     /**
-     * Get an array of poll objects 
+     * Get an array of poll objects
      * You need to specify the language
      *
      * @param unknown_type $p_language_id
@@ -404,7 +404,7 @@ class Poll extends DatabaseObject {
     {
         $constraints = array();
         $operator = new Operator('is');
-        
+
 	    if (array_key_exists('language_id', $p_constraints) && !empty($p_constraints['language_id'])) {
     	    $comparisonOperation = new ComparisonOperation('language_id', $operator, $p_constraints['language_id']);
     	    $constraints[] = $comparisonOperation;
@@ -414,38 +414,38 @@ class Poll extends DatabaseObject {
     	    $comparisonOperation = new ComparisonOperation('_assign_publication_id', $operator, $p_constraints['publication_id']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    
+
 	    if (array_key_exists('issue_nr', $p_constraints) && !empty($p_constraints['issue_nr'])) {
     	    $comparisonOperation = new ComparisonOperation('_assign_issue_nr', $operator, $p_constraints['issue_nr']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    
+
 	    if (array_key_exists('section_nr', $p_constraints) && !empty($p_constraints['section_nr'])) {
     	    $comparisonOperation = new ComparisonOperation('_assign_section_nr', $operator, $p_constraints['section_nr']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    
+
 	    if (array_key_exists('article_nr', $p_constraints) && !empty($p_constraints['article_nr'])) {
     	    $comparisonOperation = new ComparisonOperation('_assign_article_nr', $operator, $p_constraints['article_nr']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    
+
 	    if (array_key_exists('is_extendet', $p_constraints)) {
     	    $comparisonOperation = new ComparisonOperation('is_extended', $operator, $p_constraints['is_extended']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    
+
 	    if (array_key_exists('parent_poll_nr', $p_constraints)) {
     	    $comparisonOperation = new ComparisonOperation('parent_poll_nr', $operator, $p_constraints['parent_poll_nr']);
     	    $constraints[] = $comparisonOperation;
 	    }
-	    	    
-	    $order = array($p_orderBy => 'ASC');    
 
-        return Poll::GetList($constraints, $p_item, $order, $p_offset, $p_limit, &$p_count);
+	    $order = array($p_orderBy => 'ASC');
+
+        return Poll::GetList($constraints, $p_item, $order, $p_offset, $p_limit, $p_count);
     }
 
-    
+
     /**
      * Get the count for available polls
      *
@@ -454,14 +454,14 @@ class Poll extends DatabaseObject {
     public function countPolls($p_language_id = null)
     {
         global $g_ado_db;;
-        
-        $query   = Poll::getQuery($p_language_id); 
+
+        $query   = Poll::getQuery($p_language_id);
         $res     = $g_ado_db->Execute($query);
-        
-        return $res->RecordCount();  
+
+        return $res->RecordCount();
     }
-    
-        
+
+
     /**
      * Get answer object for this poll by given number
      *
@@ -471,9 +471,9 @@ class Poll extends DatabaseObject {
     public function getAnswer($p_nr_answer)
     {
         $answer = new PollAnswer($this->m_data['fk_language_id'], $this->m_data['poll_nr'], $p_nr_answer);
-        return $answer;   
+        return $answer;
     }
-    
+
     /**
      * Get array of answer objects for an poll
      *
@@ -481,9 +481,9 @@ class Poll extends DatabaseObject {
      */
     public function getAnswers()
     {
-        return PollAnswer::getAnswers($this->m_data['poll_nr'], $this->m_data['fk_language_id']);   
+        return PollAnswer::getAnswers($this->m_data['poll_nr'], $this->m_data['fk_language_id']);
     }
-    
+
     /**
      * Get the poll number
      *
@@ -491,9 +491,9 @@ class Poll extends DatabaseObject {
      */
     public function getNumber()
     {
-        return $this->getProperty('poll_nr');   
+        return $this->getProperty('poll_nr');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -501,9 +501,9 @@ class Poll extends DatabaseObject {
      */
     public function getName()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
-    
+
     /**
      * Get the name/title
      *
@@ -511,9 +511,9 @@ class Poll extends DatabaseObject {
      */
     public function getTitle()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
-    
+
     /**
      * Get the language id
      *
@@ -521,9 +521,9 @@ class Poll extends DatabaseObject {
      */
     public function getLanguageId()
     {
-        return $this->getProperty('fk_language_id');   
+        return $this->getProperty('fk_language_id');
     }
-    
+
     /**
      * Get the english language name
      *
@@ -532,20 +532,20 @@ class Poll extends DatabaseObject {
     public function getLanguageName()
     {
         $language = new Language($this->m_data['fk_language_id']);
-        
-        return $language->getName(); 
+
+        return $language->getName();
     }
-    
+
     /**
      * Get the english language name
      *
      * @return string
      */
     public function isExtended()
-    {       
-        return $this->getProperty('is_extended') == 1 ? true : false; 
+    {
+        return $this->getProperty('is_extended') == 1 ? true : false;
     }
-    
+
     /**
      * Update the statistic information in database
      * for all translations and all their answers
@@ -555,23 +555,23 @@ class Poll extends DatabaseObject {
     public function triggerStatistics($p_poll_nr = null)
     {
         if (!is_null($p_poll_nr)) {
-            $poll = new Poll(null, $p_poll_nr);;   
+            $poll = new Poll(null, $p_poll_nr);;
         } elseif (isset($this)) {
-            $poll = $this;   
-        }   
-            
+            $poll = $this;
+        }
+
         $votes = array();
         $nr_of_votes = array();
         $nr_of_votes_overall = 0;
-        
+
         foreach ($poll->getTranslations() as $translation) {
             foreach ($translation->getAnswers() as $answer) {
                 $votes[$translation->getLanguageId()][$answer->getProperty('nr_answer')] = $answer->getProperty('nr_of_votes');
-                $nr_of_votes[$translation->getLanguageId()] += $answer->getProperty('nr_of_votes'); 
-                $nr_of_votes_overall += $answer->getProperty('nr_of_votes'); 
-            } 
+                $nr_of_votes[$translation->getLanguageId()] += $answer->getProperty('nr_of_votes');
+                $nr_of_votes_overall += $answer->getProperty('nr_of_votes');
+            }
         }
-        
+
         if ($nr_of_votes_overall) {
             foreach ($poll->getTranslations() as $translation) {
                 foreach ($translation->getAnswers() as $answer) {
@@ -579,17 +579,17 @@ class Poll extends DatabaseObject {
                         $percentage = $votes[$translation->getLanguageId()][$answer->getProperty('nr_answer')] / $nr_of_votes[$translation->getLanguageId()] * 100;
                         $answer->setProperty('percentage', $percentage);
                     }
-                    
+
                     $percentag_overall = $votes[$translation->getLanguageId()][$answer->getProperty('nr_answer')] / $nr_of_votes_overall * 100;
                     $answer->setProperty('percentage_overall', $percentag_overall);
-                }  
-                $translation->setProperty('nr_of_votes', $nr_of_votes[$translation->getLanguageId()]);  
-                $translation->setProperty('nr_of_votes_overall', $nr_of_votes_overall); 
-                $translation->setProperty('percentage_of_votes_overall', $nr_of_votes[$translation->getLanguageId()] / $nr_of_votes_overall * 100); 
+                }
+                $translation->setProperty('nr_of_votes', $nr_of_votes[$translation->getLanguageId()]);
+                $translation->setProperty('nr_of_votes_overall', $nr_of_votes_overall);
+                $translation->setProperty('percentage_of_votes_overall', $nr_of_votes[$translation->getLanguageId()] / $nr_of_votes_overall * 100);
             }
         }
     }
-    
+
     /**
      * Method to call parent::setProperty
      * with clening the cache.
@@ -598,16 +598,16 @@ class Poll extends DatabaseObject {
      * @param sring $p_value
      */
     function setProperty($p_name, $p_value)
-    {       
+    {
         $return = parent::setProperty($p_name, $p_value);
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $return;
     }
-    
-    
+
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an issue list based on the given parameters.
      *
@@ -628,16 +628,16 @@ class Poll extends DatabaseObject {
     public static function GetList(array $p_parameters, $p_item = null, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
-        
+
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
@@ -646,7 +646,7 @@ class Poll extends DatabaseObject {
             if (empty($comparisonOperation)) {
                 continue;
             }
-            
+
             if (strpos($comparisonOperation['left'], '_assign_publication_id') !== false) {
                 $assign_publication_id = $comparisonOperation['right'];
             } elseif (strpos($comparisonOperation['left'], '_assign_issue_nr') !== false) {
@@ -667,7 +667,7 @@ class Poll extends DatabaseObject {
                     . $comparisonOperation['symbol'] . " '"
                     . $comparisonOperation['right'] . "' ";
                     $selectClauseObj->addWhere($whereCondition);
-          
+
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
@@ -675,7 +675,7 @@ class Poll extends DatabaseObject {
                 $selectClauseObj->addWhere($whereCondition);
             }
         }
-        
+
         // sets the columns to be fetched
         $tmpPoll = new Poll();
 		$columnNames = $tmpPoll->getColumnNames(true);
@@ -687,93 +687,93 @@ class Poll extends DatabaseObject {
         $mainTblName = $tmpPoll->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpPoll);
-        
+
         switch ($p_item) {
             case 'publication':
                 if (empty($assign_publication_id)) {
-                    return;   
+                    return;
                 }
                 $tmpAssignObj = new PollPublication();
                 $assignTblName = $tmpAssignObj->getDbTableName();
-                $join = "LEFT JOIN `$assignTblName` AS j 
-                            ON 
+                $join = "LEFT JOIN `$assignTblName` AS j
+                            ON
                             j.fk_poll_nr = `$mainTblName`.poll_nr
                             AND j.fk_publication_id = '$assign_publication_id'";
                 $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
                 $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
-            
+
             case 'issue':
                 if (empty($assign_publication_id) || empty($assign_issue_nr)) {
-                    return;   
+                    return;
                 }
-                
+
                 $tmpAssignObj = new PollIssue();
                 $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $join = "LEFT JOIN $assignTblName AS j 
-                            ON 
-                            j.fk_poll_nr = `$mainTblName`.poll_nr 
-                            AND j.fk_issue_nr = '$assign_issue_nr' 
+
+                $join = "LEFT JOIN $assignTblName AS j
+                            ON
+                            j.fk_poll_nr = `$mainTblName`.poll_nr
+                            AND j.fk_issue_nr = '$assign_issue_nr'
                             AND j.fk_publication_id = '$assign_publication_id'";
-                
+
                 if (isset($language_id)) {
-                    $join .= " AND j.fk_issue_language_id = '$language_id'";    
+                    $join .= " AND j.fk_issue_language_id = '$language_id'";
                 }
-                
-                $selectClauseObj->addJoin($join);
-                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
-                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
-            break;  
-            
-            case 'section':
-                if (empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
-                    return;   
-                }
-                
-                $tmpAssignObj = new PollSection();
-                $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $join = "LEFT JOIN `$assignTblName` AS j 
-                            ON 
-                            j.fk_poll_nr = `$mainTblName`.poll_nr 
-                            AND j.fk_section_nr = '$assign_section_nr'                     
-                            AND j.fk_issue_nr = '$assign_issue_nr' 
-                            AND j.fk_publication_id = '$assign_publication_id'";
-                                
-                if (isset($language_id)) {
-                    $join .= " AND j.fk_section_language_id = '$language_id'";    
-                }
-                
+
                 $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
                 $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
-            
+
+            case 'section':
+                if (empty($assign_publication_id) || empty($assign_issue_nr) || empty($assign_section_nr)) {
+                    return;
+                }
+
+                $tmpAssignObj = new PollSection();
+                $assignTblName = $tmpAssignObj->getDbTableName();
+
+                $join = "LEFT JOIN `$assignTblName` AS j
+                            ON
+                            j.fk_poll_nr = `$mainTblName`.poll_nr
+                            AND j.fk_section_nr = '$assign_section_nr'
+                            AND j.fk_issue_nr = '$assign_issue_nr'
+                            AND j.fk_publication_id = '$assign_publication_id'";
+
+                if (isset($language_id)) {
+                    $join .= " AND j.fk_section_language_id = '$language_id'";
+                }
+
+                $selectClauseObj->addJoin($join);
+                $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
+                $selectClauseObj->setDistinct('plugin_poll.poll_nr');
+            break;
+
             case 'article':
                 if (empty($assign_article_nr)) {
-                    return;   
+                    return;
                 }
-                
+
                 $tmpAssignObj = new PollArticle();
                 $assignTblName = $tmpAssignObj->getDbTableName();
-                
-                $join = "LEFT JOIN `$assignTblName` AS j 
-                            ON 
-                            j.fk_poll_nr = `$mainTblName`.poll_nr 
+
+                $join = "LEFT JOIN `$assignTblName` AS j
+                            ON
+                            j.fk_poll_nr = `$mainTblName`.poll_nr
                             AND j.fk_article_nr = '$assign_article_nr'";
-                
+
                 if (isset($language_id)) {
-                    $join .= " AND j.fk_article_language_id = '$language_id'";    
+                    $join .= " AND j.fk_article_language_id = '$language_id'";
                 }
-                
+
                 $selectClauseObj->addJoin($join);
                 $selectClauseObj->addWhere('j.fk_poll_nr IS NOT NULL');
                 $selectClauseObj->setDistinct('plugin_poll.poll_nr');
             break;
         }
-        
+
         if (is_array($p_order)) {
             $order = Poll::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -781,16 +781,16 @@ class Poll extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-        
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get the wanted rows
         $pollRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
-        
+
         // builds the array of poll objects
         $pollsList = array();
         while ($poll = $pollRes->FetchRow()) {
@@ -802,7 +802,7 @@ class Poll extends DatabaseObject {
 
         return $pollsList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -875,7 +875,7 @@ class Poll extends DatabaseObject {
                     break;
                 case 'bylastmodified':
                     $dbField = 'last_modified';
-                    break;  
+                    break;
                 default:
                     $dbField = 'poll_nr';
             }
@@ -886,44 +886,44 @@ class Poll extends DatabaseObject {
         }
         return $order;
     }
-       
+
     /**
      * Return if this poll can be voted
-     * (must be within start-end interval, 
+     * (must be within start-end interval,
      * and not been voted before by same client)
      *
      * @return boolean
      */
     public function isVotable()
-    {   	
+    {
         if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
-            return false;   
+            return false;
         }
         if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
-            return false;   
+            return false;
         }
         if ($this->m_data['votes_per_user'] <= $this->getUserVoteCount()) {
-            return false;   
+            return false;
         }
-        
-        return true;   
+
+        return true;
     }
-    
+
     /**
-     * Increate counter poll has been voted by single client 
+     * Increate counter poll has been voted by single client
      *
      */
     public function increaseUserVoteCount()
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
         $value = $this->getUserVoteCount() + 1;
-        
+
         $_SESSION[$key] = $value;
-        
+
         preg_match('/([0-9a-zA-Z]+\.[a-zA-Z]+)$/', $_SERVER['SERVER_NAME'], $hostname);
-        setcookie($key, $value, time()+60*60*24*365, '/', $hostname[0]);       
+        setcookie($key, $value, time()+60*60*24*365, '/', $hostname[0]);
     }
-    
+
     /**
      * Return counter single client has votes this poll
      *
@@ -932,23 +932,23 @@ class Poll extends DatabaseObject {
     public function getUserVoteCount()
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
-        
+
         if (array_key_exists($key, $_COOKIE)) {
-            return $_COOKIE[$key];   
+            return $_COOKIE[$key];
         }
         if (array_key_exists($key, $_SESSION)) {
-            return $_SESSION[$key];   
+            return $_SESSION[$key];
         }
 
         return 0;
     }
-    
+
     /**
      * Reset all counters
      *
      */
     public function reset()
-    {   
+    {
         foreach ($this->getAnswers() as $PollAnswer) {
             $PollAnswer->setProperty('nr_of_votes', 0);
             $PollAnswer->setProperty('percentage', 0);
