@@ -2,8 +2,14 @@
 /**
  * Show a list of attachments in a long horizontal table.
  * @author $Author: holman $
- * @version $Id: attachments.php 8002 2009-04-07 11:24:23Z holman $
  */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+if (!$LiveUser->isLoggedIn()) {
+    // If not logged in, show the login screen.
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+}
 
 require_once('config.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");

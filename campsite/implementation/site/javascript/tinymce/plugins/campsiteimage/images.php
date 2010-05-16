@@ -2,9 +2,15 @@
 /**
  * Show a list of images in a long horizontal table.
  * @author $Author: holman $
- * @version $Id: images.php 8002 2008-05-12 18:24:23Z holman $
  * @package ImageManager
  */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+if (!$LiveUser->isLoggedIn()) {
+    // If not logged in, show the login screen.
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+}
 
 require_once('config.inc.php');
 require_once('classes/ImageManager.php');
@@ -12,7 +18,6 @@ require_once('classes/ImageManager.php');
 //default path is /
 $relative = '/';
 $manager = new ImageManager($IMConfig);
-
 $refreshDir = false;
 
 // Check for any sub-directory request.
@@ -25,12 +30,17 @@ if (isset($_REQUEST['dir'])) {
 }
 
 $manager = new ImageManager($IMConfig);
+$articleId = (isset($_REQUEST['article_id']) && is_numeric($_REQUEST['article_id']))
+    ? $_REQUEST['article_id'] : null;
 
 // Get the list of files and directories
-$list = $manager->getFiles($relative, $_REQUEST['article_id']);
+$list = array();
+if (!is_null($articleId)) {
+    $list = $manager->getFiles($relative, $articleId);
+}
 
 if (isset($_REQUEST['image_id'])) {
-    $image = $manager->getImageByNumber($_REQUEST['article_id'], $_REQUEST['image_id']);
+    $image = $manager->getImageByNumber($articleId, $_REQUEST['image_id']);
     $imageAltOpt = '';
     $imageTitleOpt = '';
     if (isset($_REQUEST['image_alt'])) {

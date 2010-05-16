@@ -13,10 +13,16 @@ camp_load_translation_strings("tiny_media_plugin");
 
 $manager = new AttachmentManager($AMConfig);
 
-$languageSelected = (isset($_REQUEST['language_selected'])) ? $_REQUEST['language_selected'] : null;
+$languageSelected = (isset($_REQUEST['language_selected']) && is_numeric($_REQUEST['language_selected']))
+    ? $_REQUEST['language_selected'] : null;
+$articleId = (isset($_REQUEST['article_id']) && is_numeric($_REQUEST['article_id']))
+    ? $_REQUEST['article_id'] : null;
 
 // Get the list of files and directories
-$list = $manager->getFiles($_REQUEST['article_id'], $languageSelected);
+$list = array();
+if (!is_null($articleId)) {
+    $list = $manager->getFiles($articleId, $languageSelected);
+}
 
 
 /**
