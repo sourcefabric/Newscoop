@@ -187,6 +187,9 @@ span.error {
 span.other {
     color: orange;
 }
+span.optional {
+    color: grey;
+}
 
 /* Tooltip Overlib Style */
 div.domTTOverlib {

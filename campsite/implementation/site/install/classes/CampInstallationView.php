@@ -60,11 +60,12 @@ final class CampInstallationView
 
     private function preInstallationCheck()
     {
-        $requirementsOk = $this->phpFunctionsCheck() && $this->sysCheck();
+        $phpFunctionsCheck = $this->phpFunctionsCheck();
+        $sysCheck = $this->sysCheck();
+        $requirementsOk = $phpFunctionsCheck && $sysCheck;
         $this->phpRecommendedOptions();
 
         $template = CampTemplate::singleton();
-
         $template->assign('php_req_ok', $requirementsOk);
         $template->assign('php_functions', $this->m_lists['phpFunctions']);
         $template->assign('sys_requirements', $this->m_lists['sysRequirements']);
@@ -134,9 +135,16 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
+        $hasCLI = CampInstallationViewHelper::CheckCLI();
+        $success = ($hasCLI == 'Yes') ? $success : false;
+        $phpFunctions[] = array(
+                                'tag' => '<span class="optional">PHP CLI (Command Line)</span>',
+                                'exists' => $hasCLI
+                               );
+
         $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
         $phpFunctions[] = array(
-                                'tag' => 'APC (PHP Cache) Support',
+                                'tag' => '<span class="optional">APC (PHP Cache) Support</span>',
                                 'exists' => $hasAPC
                                 );
 
@@ -162,7 +170,6 @@ final class CampInstallationView
                                 );
 
         $this->m_lists['phpFunctions'] = $phpFunctions;
-
         return $success;
     } // fn phpFunctionsCheck
 
@@ -225,6 +232,11 @@ final class CampInstallationViewHelper
         return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
     }
 
+    public static function CheckCLI()
+    {
+        $response = exec('php -v', $o, $r);
+        return (!empty($o)) ? 'Yes' : 'No';
+    } // fn CheckCLI
 
     public static function CheckPHPAPC()
     {
