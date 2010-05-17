@@ -60,7 +60,9 @@ final class CampInstallationView
 
     private function preInstallationCheck()
     {
-        $requirementsOk = $this->phpFunctionsCheck() && $this->sysCheck();
+        $phpFunctionsCheck = $this->phpFunctionsCheck();
+        $sysCheck = $this->sysCheck();
+        $requirementsOk = $phpFunctionsCheck && $sysCheck;
         $this->phpRecommendedOptions();
 
         $template = CampTemplate::singleton();
@@ -134,9 +136,16 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
+        $hasCLI = CampInstallationViewHelper::CheckCLI();
+        $success = ($hasCLI == 'Yes') ? $success : false;
+        $phpFunctions[] = array(
+                                'tag' => 'PHP CLI (Command Line)',
+                                'exists' => $hasCLI
+                                );
+
         $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
         $phpFunctions[] = array(
-                                'tag' => 'APC (PHP Cache) Support',
+                                'tag' => '<span class="optional">APC (PHP Cache) Support</span>',
                                 'exists' => $hasAPC
                                 );
 
@@ -162,7 +171,6 @@ final class CampInstallationView
                                 );
 
         $this->m_lists['phpFunctions'] = $phpFunctions;
-
         return $success;
     } // fn phpFunctionsCheck
 
@@ -223,6 +231,13 @@ final class CampInstallationViewHelper
             return 'Cannot be checked';   
         }    
         return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
+    }
+
+
+    public static function CheckCLI()
+    {
+        $response = exec('php -v', $o, $r);
+        return (!empty($o)) ? 'Yes' : 'No';
     }
 
 
