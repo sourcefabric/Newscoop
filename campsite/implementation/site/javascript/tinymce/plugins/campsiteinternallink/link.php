@@ -8,6 +8,22 @@
  *
  */
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+
+// Only logged in admin users allowed
+if (!$LiveUser->isLoggedIn()) {
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+} else {
+    $userId = $LiveUser->getProperty('auth_user_id');
+    $userTmp = new User($userId);
+    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+        header("Location: /$ADMIN/login.php");
+        exit(0);
+    }
+    unset($userTmp);
+}
+
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
