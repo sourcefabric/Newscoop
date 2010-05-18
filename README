@@ -1,0 +1,25 @@
+Campsite is a multilingual content management system (CMS) for news websites.
+
+Campsite's user interface was built with the end user (journalist/editor/publisher) in mind and it can be scaled to suit different requirements and complexities. Campsite works best for medium-to-large-size online news publications, but it is capable of handling lighter sites too.  Campsite is developed by sourcefabric (http://www.sourcefabric.org)
+
+Benefits:
+
+    * Professional grade software that is free to download and easy to install.
+    * User-friendly interface to allow journalists and editors to work efficiently.
+    * Possibility for multi-lingual content comes as standard.
+    * Management features designed specifically for newspapers: automation of issue publishing, editor review, multimedia support.
+    * Subscription management with control over what content your subscribers have access to.
+    * Total design freedom - make your site look however you like, utilising the templating engine.
+
+Sourcefabric has a dedicated platform for Developers. Firstly, you'll need to create a Sourcefabric log-in. It's free, quick and safe. Information on how to do that can be found at http://www.sourcefabric.org/en/home/support/26/?tpl=15
+
+Quick links to our resources are:
+
+Manuals for Campsite (http://en.flossmanuals.net/CampSite/Introductio) and Campcaster (http://en.flossmanuals.net/CampCaster/Introduction)
+Forums and mailing lists: http://forum.sourcefabric.org
+Bug Tracking: http://dev.sourcefabric.org
+Code view/review: http://code.sourcefabric.org
+Public source code hosting: http://github.com/sourcefabric
+Download link: http://sourceforge.net/users/campware
+Developer's wiki: http://wiki.sourcefabric.org
+
