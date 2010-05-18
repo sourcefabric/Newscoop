@@ -2,8 +2,23 @@
 /**
  * Show a list of attachments in a long horizontal table.
  * @author $Author: holman $
- * @version $Id: attachments.php 8002 2009-04-07 11:24:23Z holman $
  */
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+
+// Only logged in admin users allowed
+if (!$LiveUser->isLoggedIn()) {
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+} else {
+    $userId = $LiveUser->getProperty('auth_user_id');
+    $userTmp = new User($userId);
+    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+        header("Location: /$ADMIN/login.php");
+        exit(0);
+    }
+    unset($userTmp);
+}
 
 require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');
@@ -13,10 +28,16 @@ camp_load_translation_strings("tiny_media_plugin");
 
 $manager = new AttachmentManager($AMConfig);
 
-$languageSelected = (isset($_REQUEST['language_selected'])) ? $_REQUEST['language_selected'] : null;
+$languageSelected = (isset($_REQUEST['language_selected']) && is_numeric($_REQUEST['language_selected']))
+    ? $_REQUEST['language_selected'] : null;
+$articleId = (isset($_REQUEST['article_id']) && is_numeric($_REQUEST['article_id']))
+    ? $_REQUEST['article_id'] : null;
 
 // Get the list of files and directories
-$list = $manager->getFiles($_REQUEST['article_id'], $languageSelected);
+$list = array();
+if (!is_null($articleId)) {
+    $list = $manager->getFiles($articleId, $languageSelected);
+}
 
 
 /**

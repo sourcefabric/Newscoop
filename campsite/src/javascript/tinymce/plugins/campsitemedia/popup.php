@@ -1,11 +1,26 @@
 <?php
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+
+// Only logged in admin users allowed
+if (!$LiveUser->isLoggedIn()) {
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+} else {
+    $userId = $LiveUser->getProperty('auth_user_id');
+    $userTmp = new User($userId);
+    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+        header("Location: /$ADMIN/login.php");
+        exit(0);
+    }
+    unset($userTmp);
+}
 
 require_once('config.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 camp_load_translation_strings("tiny_media_plugin");
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
