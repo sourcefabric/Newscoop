@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+// fill in HTTP_HOST to avoid notices in campsite_constants.php
+$_SERVER['HTTP_HOST'] = '';
 $www_dir = dirname(dirname(__FILE__));
 $GLOBALS['g_campsiteDir'] = $www_dir;
 require_once($www_dir.'/conf/configuration.php');
