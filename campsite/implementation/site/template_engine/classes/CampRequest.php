@@ -43,9 +43,9 @@ final class CampRequest
      * Template identifier parameter name
      */
     const TEMPLATE_ID = 'tpl';
-    
+
     /**
-     * Stores the input parameters 
+     * Stores the input parameters
      *
      * @var array
      */
@@ -154,7 +154,7 @@ final class CampRequest
         return CampRequest::$m_input[$p_reqMethod];
     } // fn GetInput
 
-    
+
     /**
      * Returns the method used to read the input data: GET, POST etc.
      *
@@ -163,7 +163,7 @@ final class CampRequest
     public static function GetMethod() {
         return $_SERVER['REQUEST_METHOD'];
     }
-    
+
     /**
      * Initializes the input parameters array
      *
@@ -186,7 +186,7 @@ final class CampRequest
         			$input = &$_FILES;
         			break;
         		case 'DEFAULT':
-        			$input = &$_REQUEST;
+        			$input = array_merge($_COOKIE, $_REQUEST);
         			break;
         		default:
         			return;

@@ -43,6 +43,8 @@ class Log extends DatabaseObject {
 			// try to get the user name from the global environment
 			if (isset($_REQUEST['LoginUserId'])) {
 				$p_userId = $_REQUEST['LoginUserId'];
+			} elseif (isset($_COOKIE['LoginUserId'])) {
+			    $p_userId = $_COOKIE['LoginUserId'];
 			}
 		}
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {

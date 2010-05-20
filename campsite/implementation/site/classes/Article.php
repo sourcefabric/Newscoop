@@ -649,7 +649,7 @@ class Article extends DatabaseObject {
             return;
         }
 
-        // Dont change the article timestamp when the
+        // Don't change the article timestamp when the
         // article is locked.
         $lastModified = $this->m_data['time_updated'];
 	    if ($p_lock) {
@@ -1487,25 +1487,6 @@ class Article extends DatabaseObject {
 	{
 		return $this->m_data['LockUser'];
 	} // fn getLockedByUser
-
-
-	/**
-	 * Set the user who currently has a lock on the article.
-	 *
-	 * @param int $p_value
-	 * @return boolean
-	 */
-	public function setLockedByUser($p_value)
-	{
-	    // Dont change the timestamp when an article
-	    // is locked.
-	    $timestamp = $this->m_data['time_updated'];
-		$success = parent::setProperty('LockUser', $p_value);
-		if ($success) {
-		    parent::setProperty('time_updated', $timestamp);
-		}
-		return $success;
-	} // fn setLockedByUser
 
 
 	/**
