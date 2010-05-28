@@ -403,7 +403,17 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         return "Can't upgrade database $p_dbName: it doesn't exist";
     }
 
+    $lockFileName = __FILE__;
+    $lockFile = fopen($lockFileName, "r");
+    if ($lockFile === false) {
+        return "Unable to create single process lock control!";
+    }
+    if (!flock($lockFile, LOCK_EX | LOCK_NB)) { // do an exclusive lock
+        return "The upgrade process is already running.";
+    }
+
     if (!($res = camp_detect_database_version($p_dbName, $old_version)) == 0) {
+        flock($lockFile, LOCK_UN); // release the lock
         return $res;
     }
 
@@ -422,6 +432,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         	}
             $res = camp_utf8_convert(null, $skipped);
             if ($res !== true) {
+                flock($lockFile, LOCK_UN); // release the lock
                 return $res;
             }
             $first = false;
@@ -449,6 +460,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
             $cmd = $cmd_prefix . $script . " 2>&1";
             exec($cmd, $output, $res);
             if ($res != 0 && $script != "data-optional.sql") {
+                flock($lockFile, LOCK_UN); // release the lock
                 return "$script ($db_version): " . implode("\n", $output);
             }
         }
@@ -478,6 +490,7 @@ Please save the following list of skipped queries:\n";
     	echo "-- end of queries list --\n";
     }
 
+    flock($lockFile, LOCK_UN); // release the lock
     return 0;
 } // fn camp_upgrade_database
 

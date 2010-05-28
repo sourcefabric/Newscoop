@@ -86,24 +86,16 @@ function camp_upgrade()
 
     require_once(CS_PATH_SITE.DIR_SEP.'bin'.DIR_SEP.'cli_script_lib.php');
 
-    $lockFileName = $GLOBALS['g_campsiteDir'].DIR_SEP.'upgrade.php';
-    $lockFile = fopen($lockFileName, "r");
-    if ($lockFile === false) {
-        camp_display_message("Unable to create single process lock control!");
-    }
-    if (!flock($lockFile, LOCK_EX | LOCK_NB)) { // do an exclusive lock
-        camp_display_message("The upgrade process is already running.");
-    }
-
     $res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
     if ($res !== 0) {
         $dbVersion = '[unknown]';
     }
 
+    header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+
     camp_display_message("Upgrading the database from version $dbVersion...");
     echo '<META HTTP-EQUIV="Refresh" content="1;url=/upgrade.php">';
-
-    flock($lockFile, LOCK_UN); // release the lock
 }
 
 

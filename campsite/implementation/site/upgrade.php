@@ -9,6 +9,9 @@
  * @link http://www.campware.org
  */
 
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+
 $g_documentRoot = dirname(__FILE__);
 
 // goes to install process if configuration files does not exist yet
