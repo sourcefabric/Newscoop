@@ -374,11 +374,15 @@ class CampInstallationBase
             $this->m_message = 'Error: Could not update the admin user credentials.';
             return false;
         }
-        if (!file_exists(CS_PATH_SITE . '/.htaccess')
-               && !copy(CS_PATH_SITE . '/htaccess', CS_PATH_SITE . '/.htaccess')) {
+        if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
+        && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
             return false;
+        }
+
+        if (file_exists(CS_PATH_SITE . DIR_SEP . 'upgrade.php')) {
+            @unlink(CS_PATH_SITE . DIR_SEP . 'upgrade.php');
         }
 
         return true;
@@ -539,7 +543,7 @@ class CampInstallationBase
             mkdir($p_directoryPath);
         }
     }
-    
+
     private static function InstallPlugins()
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
@@ -554,7 +558,7 @@ class CampInstallationBase
             } else {
             	$CampPlugin->disable();
             }
-            
+
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
                 call_user_func("plugin_{$info['name']}_addPermissions");
             }
@@ -749,7 +753,7 @@ class CampInstallationBaseHelper
 
         return true;
     } // fn CopyFiles
-    
+
 } // class CampInstallationBaseHelper
 
 ?>

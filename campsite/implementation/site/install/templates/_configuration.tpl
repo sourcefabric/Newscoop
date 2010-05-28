@@ -18,6 +18,7 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSession.php');
 
 
 /** System settings **/
