@@ -43,6 +43,21 @@ class Author extends DatabaseObject {
 
 
 	/**
+     * Wrapper around DatabaseObject::setProperty
+     * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     */
+    public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+    {
+        if ($p_dbColumnName == 'first_name' || $p_dbColumnName == 'last_name') {
+            $this->m_keyColumnNames = array('first_name', 'last_name');
+            $this->resetCache();
+            $this->m_keyColumnNames = array('id');
+        }
+        return parent::setProperty($p_dbColumnName, $p_value);
+    }
+
+
+	/**
 	 * @return int
 	 */
 	public function getId()
@@ -80,7 +95,7 @@ class Author extends DatabaseObject {
     	return $this->m_data['last_name'];
     } // fn getLastName
 
-    
+
     public static function ReadName($p_name)
     {
     	$p_name = trim($p_name);
@@ -158,7 +173,7 @@ class Author extends DatabaseObject {
 	public static function GetAllExistingNames()
 	{
 		global $g_ado_db;
-		
+
 		$sql = "SELECT DISTINCT Name FROM (\n"
              . "  SELECT Name FROM liveuser_users\n"
              . "  UNION\n"

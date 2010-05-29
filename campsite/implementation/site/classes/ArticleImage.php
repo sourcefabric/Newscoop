@@ -47,6 +47,22 @@ class ArticleImage extends DatabaseObject {
 	} // constructor
 
 
+    /**
+     * Wrapper around DatabaseObject::setProperty
+     *
+     * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     */
+    public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+    {
+        if ($p_dbColumnName == 'Number') {
+            $this->m_keyColumnNames = array('NrArticle', 'Number');
+            $this->resetCache();
+            $this->m_keyColumnNames = array('NrArticle', 'IdImage');
+        }
+        return parent::setProperty($p_dbColumnName, $p_value);
+    } // fn setProperty
+
+
 	/**
 	 * @return int
 	 */
@@ -54,8 +70,8 @@ class ArticleImage extends DatabaseObject {
 	{
 		return $this->m_data['IdImage'];
 	} // fn getImageId
-	
-	
+
+
 	/**
 	 * @return int
 	 */

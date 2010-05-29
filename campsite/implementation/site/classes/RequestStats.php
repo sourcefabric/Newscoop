@@ -95,9 +95,9 @@ class RequestStats extends DatabaseObject {
         $p_count = 0 + $p_count;
         $sql = 'UPDATE ' . $this->m_dbTableName . ' '
              . "SET request_count = LAST_INSERT_ID(request_count + $p_count) "
-             . "WHERE object_id = '" . $g_ado_db->Escape($this->m_data['object_id']) . "'"
-             . "  AND date = '" . $g_ado_db->Escape($this->m_data['date']) . "'"
-             . "  AND hour = '" . $g_ado_db->Escape($this->m_data['hour']) . "'";
+             . "WHERE object_id = '" . $g_ado_db->escape($this->m_data['object_id']) . "'"
+             . "  AND date = '" . $g_ado_db->escape($this->m_data['date']) . "'"
+             . "  AND hour = '" . $g_ado_db->escape($this->m_data['hour']) . "'";
         $success = $g_ado_db->Execute($sql);
         if ($success === false) {
         	return false;
