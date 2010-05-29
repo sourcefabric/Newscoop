@@ -78,6 +78,8 @@ $forward = $session->getData('forward');
 $session->unsetData('forward');
 header("Location: " . $forward);
 
-unlink('upgrade.php');
+if (file_exists(__FILE__)) {
+    @unlink(__FILE__);
+}
 
 ?>
