@@ -17,7 +17,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_organization = 'Campware - MDLF';
+    private $m_organization = 'Sourcefabric o.p.s';
 
     /**
      * @var string
@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.3.5';
+    private $m_release = '3.3.6';
 
     /**
      * @var string
@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2010-03-08';
+    private $m_releaseDate = '2010-05-31';
 
     /**
      * @var string
@@ -57,7 +57,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_website = 'http://www.campware.org/';
+    private $m_website = 'http://www.sourcefabric.org';
 
 
     /**

@@ -1,4 +1,16 @@
+Copyright (C) 2010 Sourcefabric o.p.s
+
+Copyright (C) 2004-2009 Media Development Loan Fund
+
+
 Campsite Credits (by Version Number)
+
+------------------------------------
+Campsite 3.3.6 Credits
+------------------------------------
+- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Holman Romero (holman.romero@sourcefabric.org)
+- Sebastian Goebel (sebastian.goebel@sourcefabric.org)
 
 ------------------------------------
 Campsite 3.3.5 Credits
@@ -348,13 +360,23 @@ Released November 10, 2002
 
 
 -------------------------------------------------------------------------
-The original Campsite concept was developed by Micz Flor and Sava Tatić
-for Center for Advanced Media-Prague (CAMP) in collaboration with
-Aleksandar Brajanoski from Transitions Online, the first site to go live
-on Campsite in late 2000. Developer teams at DNT-Cluj
-(http://www.dntcj.ro) and Recognos (http://www.recognos.com), software
-companies based in Cluj, Romania, wrote the original code and contributed
-to the development of the concept.
+
+The original Campsite concept was developed by developed by Micz Flor
+and Sava Tatić for Center for Advanced Media--Prague (CAMP).
+
+It was developed in collaboration with Aleksandar Brajanoski from
+Transitions Online, the first site to go live on Campsite in late 2000.
+MDLF originally founded CAMP (Center for Advanced Media–Prague) in 1998
+as its new-media arm. Campcaster is now being developed by an
+international community of developers and designers led by Sourcefabric
+(formerly Campware).
+
+The original funding was provided by Open Society Institute's Internet
+Program. Initial coding was done by DNT Cluj and then by Recognos.
+Campsite code was brought to its first public release by a team of
+CAMP New Media Fellows. Developer teams at DNT-Cluj and Recognos,
+software companies based in Cluj, Romania, provided the initial coding.
+
 
 Former contributors
 - Lucian Muresan: database, admin interface, localization, documentation
@@ -371,4 +393,10 @@ Thanks to
 - All contributors who helped with bug reports and suggestions
 - Third-party open source software we use:
   * TinyMCE - Javascript WYSIWYG Editor: http://tinymce.moxiecode.com/
-  * EditArea - the code editor in a textarea: http://www.cdolivet.com/index.php?page=editArea
+  * EditArea - the code editor in a textarea:
+    http://www.cdolivet.com/index.php?page=editArea
+
+
+Copyright (C) 2010 Sourcefabric o.p.s
+
+Copyright (C) 2004-2009 Media Development Loan Fund
