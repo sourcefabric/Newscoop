@@ -920,8 +920,8 @@ class Poll extends DatabaseObject {
 
         $_SESSION[$key] = $value;
 
-        preg_match('/([0-9a-zA-Z]+\.[a-zA-Z]+)$/', $_SERVER['SERVER_NAME'], $hostname);
-        setcookie($key, $value, time()+60*60*24*365, '/', $hostname[0]);
+        preg_match('/(https?:\/\/)?([-_.\w]+)(:\d+)?$/', $_SERVER['SERVER_NAME'], $hostname);
+        setcookie($key, $value, time()+60*60*24*365, '/', $hostname[2]);
     }
 
     /**
