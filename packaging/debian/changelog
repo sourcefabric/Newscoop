@@ -1,6 +1,42 @@
-campsite (3.1-0ubuntu1) hardy; urgency=low
+campsite (3.3.6-1) unstable; urgency=low
 
-  * Ubuntu linux package for Hardy Heron 
+  Improvements
+  ------------
+  - CS-2126: Make the upgrade process safer by not allowing multiple upgrade
+             processes in parallel
 
- -- The Campsite Team <campsite-support@campware.org>  Thu, 03 Jul 2008 16:58:50 -0500
+  Bugs Fixed
+  ----------
+  - CS-747: Article list -> add article -> article added at bottom of list
+  - CS-2095: Comment "Moderator Address", "From Address" saved but not
+             displayed
+  - CS-2096: The character set not initialized by the front end script
+  - CS-2097: Assigning a phorum to a publication does not work
+  - CS-2099: Poll plugin: clear cache after changes
+  - CS-2102: The article must be unlocked on "Save and Close"
+  - CS-2103: On user data save empty values are not initialized properly
+  - CS-2107: On first entry to the login page the language in control box is
+             English instead of default language in browser
+  - CS-2108: The article order is broken on article create/copy/move
+  - CS-2109: Log shows the same event when cache enabled
+  - CS-2111: Template file cannot be removed if empty
+  - CS-2113: HTTP_HOST is undefined in CLI environment
+  - CS-2115: Fix SQL injection vulnerability
+  - CS-2116: Add no-cache instruction in admin.php file to avoid caching
+             admin interface
+  - CS-2118: Remove warnings and notices
+  - CS-2119: PHP CLI must be checked at installation time
+  - CS-2120: Unsecure PHP scripts in the javascript directory
+  - CS-2125: The upgrade/restore scripts crash when upgrading from 2.6 version
+  - CS-2127: Objects are not updated in cache in certain circumstances
+  - CS-2129: In the demo templates the logout link is truncated
 
+  Compatibility updates
+  ---------------------
+  - CS-2114: Replace deprecated ereg functions
+  - CS-2117: Update the Campsite dependencies to the latest versions
+  - CS-2122: Resolve PHP 5.3 incompatibilities
+  - CS-2128: The restore script does not read options
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Sourcefabric <campsite-support@lists.sourcefabric.org>  Mon, 31 May 2010 16:55:14 +0300
