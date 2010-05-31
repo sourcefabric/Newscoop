@@ -26,6 +26,7 @@
     {{ unset_section }}
     <div id="user"><a href="{{ uri options="template classic/register.tpl" }}">{{ $campsite->user->name }}</a></div>
     {{ set_default_section }}
+    {{ set_default_article }}
 
     {{ $campsite->url->set_parameter('f_blog_id', $campsite->blog->identifier) }}
     {{ $campsite->url->set_parameter('f_blogentry_id', $campsite->blogentry->identifier) }}
