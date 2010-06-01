@@ -1,5 +1,107 @@
+3.3.6 (May 31, 2010)
+  Improvements
+  ------------
+  - CS-2126: Make the upgrade process safer by not allowing multiple upgrade
+             processes in parallel
+
+  Bugs Fixed
+  ----------
+  - CS-747: Article list -> add article -> article added at bottom of list
+  - CS-2095: Comment "Moderator Address", "From Address" saved but not
+             displayed
+  - CS-2096: The character set not initialized by the front end script
+  - CS-2097: Assigning a phorum to a publication does not work
+  - CS-2099: Poll plugin: clear cache after changes
+  - CS-2102: The article must be unlocked on "Save and Close"
+  - CS-2103: On user data save empty values are not initialized properly
+  - CS-2107: On first entry to the login page the language in control box is
+             English instead of default language in browser
+  - CS-2108: The article order is broken on article create/copy/move
+  - CS-2109: Log shows the same event when cache enabled
+  - CS-2111: Template file cannot be removed if empty
+  - CS-2113: HTTP_HOST is undefined in CLI environment
+  - CS-2115: Fix SQL injection vulnerability
+  - CS-2116: Add no-cache instruction in admin.php file to avoid caching
+             admin interface
+  - CS-2118: Remove warnings and notices
+  - CS-2119: PHP CLI must be checked at installation time
+  - CS-2120: Unsecure PHP scripts in the javascript directory
+  - CS-2125: The upgrade/restore scripts crash when upgrading from 2.6 version
+  - CS-2127: Objects are not updated in cache in certain circumstances
+  - CS-2129: In the demo templates the logout link is truncated
+
+  Compatibility updates
+  ---------------------
+  - CS-2114: Replace deprecated ereg functions
+  - CS-2117: Update the Campsite dependencies to the latest versions
+  - CS-2122: Resolve PHP 5.3 incompatibilities
+  - CS-2128: The restore script does not read options
+
+
+3.3.5 (Mar 8, 2010)
+  Improvements
+  ------------
+  - #3040 - Added support for the <iframe> tag and iframe plugin to TinyMCE
+  - #3066 - Implemented language based ordering in the article search
+            results list
+  - #3069 - Improved IP logging for comments when cache is used
+  - #3072 - Elements automatically created by camp_edit, camp_select etc.
+            validate in XHTML
+  - #3082 - Classic templates default in Campsite installation
+  - #3085 - Only files with the .tpl extension are displayed in template
+            selection dropdowns
+
+  Bugs Fixed
+  ----------
+  - #3046 - URI options "next_items" and "previous_items" not working in
+            plugins lists
+  - #3062 - The articles list is empty when issue or section not defined
+  - #3063 - Cache keys for database objects do not match when using different
+            character cases
+  - #3065 - Preview does not work when switching the user in the same browser
+  - #3067 - Topics list does not work properly when multiple languages were
+            used and cache was on
+  - #3068 - Replace obsolete function split() for future PHP compatibility
+  - #3070 - Wrong PHP version is checked during installation process
+  - #3071 - "Published" articles from "Not published" issue are listed in
+            "list_articles" when ignore_issue or issue constraints used
+  - #3075 - The list of issues does not accept the publish_date parameter
+  - #3077 - Cannot select attachment file when description has quotes
+  - #3083 - Email notifiers set invalid content type for email
+  - #3084 - Bad pagination in poll plugin
+
+3.3.4 (Dec 24, 2009)
+  Improvements
+  ------------
+  - #3044 - Issue and section constraints to List of Articles now available
+  - #3054 - Firefox spell checkers to check article fields is enabled by
+            default
+
+  Bugs Fixed
+  ----------
+  - #3037 - Changes to plugin objects not reflected in MetaClass objects
+  - #3038 - Blog plugin's administration Screen does not update correctly
+            when APC cache is on
+  - #3041 - Comment-related elements of the Article Edit screen work
+            incorrectly with APC caching on
+  - #3046 - URI options "next_items" and "previous_items" not working in
+            plugins lists
+  - #3047 - IMG inserted via TinyMCE editor wrapped in <table> on site
+  - #3051 - Conflicting sections can be created in different issue
+            translations
+  - #3052 - Cyrillic characters are not displayed properly in Tiny Campsite
+            image plugin popup
+  - #3053 - Special chars do not work properly in image caption and
+            alternative texts
+  - #3056 - Article reordering does not work when cache was enabled
+  - #3057 - A recently published article does not show up on the frontend
+            immediately
+  - #3058 - Notice message breaks image display
+  - #3059 - Slash character can not be used in the image description fields
+  - #3060 - IP address authentication does not work
+
 3.3.3 (Oct 16, 2009)
-  Improvementes
+  Improvements
   -------------
   - #2877 - Add "anchor" button to make html anchors to rich text editor
   - #3014 - Add Campsite template highlighting to Editarea template editor
@@ -450,7 +552,7 @@
 3.0.0 (April 23, 2008)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=3.0.0
-  
+
   Major Improvements
   ------------------
   - The template engine was rewritten in PHP for better performance,
@@ -461,7 +563,7 @@
   - A caching mechanism for database objects was implemented. This
   will result in fewer database queries and greater speed and
   scalability.
-  
+
   Small Improvements
   ------------------
   - Variables for storing temporary data can be used in the template
@@ -472,18 +574,18 @@
   easier learning of the template language.
   - Removed the constraint of having at most one limitted list of a
   certain type in a template.
-  
+
 2.7.0 "Tomas" (March 12, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.7.0
-  
+
   Major Improvements (4 total)
   ----------------------------
   01) #2326 - Attach Campcaster audio files to Campsite articles
   02) #2327 - Upload audio files to the LS database from within Campsite
   03) #2328 - Single sing-on
   04) #2330 - Offline editing/Synchronizing Articles with Another Server
-  
+
   Small Improvements (6 total)
   ----------------------------
   01) #2199 - Login screen should display the instance name
@@ -493,11 +595,11 @@
   05) #2281 - Show max upload file size in file attachment window
   06) #2283 - Show additional info in the ATTACHMENT EDIT screen
   07) #2436 - Mailout for article comments
-  
+
   Bugs Fixed (14 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
-  
+
   01) #2282 - Image attachments do not show in the browser
   02) #2299 - Non-template files are not displayed properly
   03) #2300 - "Move template" screen should not refresh when you
@@ -525,11 +627,11 @@
   ----------------------------
   01) #2421 - Improve the comments management UI
   02) #2422 - Base files for the .deb package
-  
+
   Bugs Fixed (13 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
-  
+
   01) #2407 - Error in localizer when the source language was not defined
   02) #2412 - Error when an image was deleted from the article but the
               link to it from the article content was not
@@ -554,11 +656,11 @@
   Small Improvements (1 total)
   ----------------------------
   01) #2409 - Update Serbian and Serbo-Croatian localizations
-  
+
   Bugs Fixed (2 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
-  
+
   01) #2408 - The template engine skips empty parameters
   02) #2410 - Fix phorum configuration issue
 
@@ -569,7 +671,7 @@
   Bugs Fixed (7 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
-  
+
   01) #2391 - Error when duplicating an empty template
   02) #2396 - campsite-upgrade-instances fails when run from bin folder
   03) #2397 - The image link is not processed when saving the article
@@ -582,17 +684,17 @@
 2.6.4 (January 11, 2007)
   For full details about these changes, see:
   http://code.campware.org/projects/campsite/query?milestone=2.6.4
-  
+
   Small Improvements (3 total)
   ----------------------------
   01) #2359 - Hack for integration with Cream on subscription management
   02) #2382 - Improve selection by topic in articles list
   03) #2383 - Replace ImageMagic with PHP GD
-  
+
   Bugs Fixed (5 total)
   ---------------------
   Bugs are listed in order of oldest to newest.
-  
+
   01) #2375 - Translated topics are shown twice in article edit screen
   02) #2376 - Error when executing user subscription page
   03) #2377 - Error: Undefined variable 'key' in Localizer.php:78
