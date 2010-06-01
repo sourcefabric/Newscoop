@@ -1,0 +1,75 @@
+#!/bin/bash
+
+BASE_URL="."
+
+exit_usage()
+{
+	if [ "$1" = "ERROR" ]; then
+		echo "ERROR: Received invalid arguments!"
+	fi
+	echo "Arguments for creating the:"
+	echo -e "- package from a branch/tag/commit:"
+	echo -e "\t--what <branch_tag_comming_name> [<package_version>]"
+	exit 1
+}
+
+revision=
+what=$1
+shift 1
+case $what in
+--what)
+	branch=$1
+	if [ "$branch" = "" ] || [ "$branch" = "-r" ]; then
+		exit_usage
+	fi
+	url="$BASE_URL/campsite"
+    plugins_url="$BASE_URL/plugins"
+	shift 1
+	;;
+--help)
+	exit_usage
+	;;
+-h)
+	exit_usage
+	;;
+*)
+	exit_usage ERROR
+	;;
+esac
+
+version=$1
+if [ "$version" = "" ]; then
+    version=`date +%Y.%m.%d`
+fi
+
+base_cmd="git checkout"
+cmd="$base_cmd $branch"
+
+$cmd || exit 1
+
+rm -fr ./campsite/implementation/site/plugins
+mv ./plugins ./campsite/implementation/site
+
+rm -f ./campsite/documentation/CampsiteTestChecklist*
+rm -fr ./campsite/documentation/specifications
+rm -fr ./campsite/implementation/templates
+rm -fr ./campsite/implementation/trac
+rm -fr ./campsite/implementation/site/plugins/pear_quickform
+rm -fr ./campsite/implementation/site/export*log
+rm -fr ./campsite/implementation/site/tests
+
+package_name="campsite-$version.tar.gz"
+
+tar czf $package_name ./campsite
+res=$?
+
+mv ./campsite/implementation/site/plugins .
+
+if [ $res -eq 0 ]; then
+    echo "package $package_name prepared successfully"
+else
+    echo "error creating package $package_name"
+    exit 1
+fi
+
+$base_cmd -- .

@@ -1,9 +1,14 @@
-This package was debianized by The Campsite Team <campsite-support@campware.org> on
-Thu, 03 Jul 2008 15:58:50 -0500.
+This work was packaged for Debian by:
 
-It was downloaded from <http://sourceforge.net/projects/campsite/>
+    Sourcefabric <campsite-support@lists.sourcefabric.org> on Mon, 31 May 2010 16:55:14 +0300
 
-Copyright Holder: Campware Initiative <campsite-support@campware.org>
+It was downloaded from:
+
+    <http://sourceforge.net/projects/campsite/>
+
+Copyright:
+
+    <Copyright (C) Sourcefabric>
 
 License:
 
@@ -25,3 +30,6 @@ License:
 On Debian systems, the complete text of the GNU General
 Public License can be found in `/usr/share/common-licenses/GPL'.
 
+The Debian packaging is:
+
+    Copyright (C) 2010 Sourcefabric <campsite-support@lists.sourcefabric.org>
