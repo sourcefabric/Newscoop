@@ -613,12 +613,17 @@ function camp_detect_database_version($p_dbName, &$version)
         if (mysql_num_rows($res2) > 0) {
             $version = "3.2.x";
         }
-        if (!$res2 = mysql_query("SELECT * FROM SystemPreferences "
-        . "WHERE varname = 'CacheEngine'")) {
-        	return "Unable to query the database $p_dbName";
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'SystemPreferences'")) {
+            return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
-        	$version = "3.3.x";
+            if (!$res2 = mysql_query("SELECT * FROM SystemPreferences "
+            . "WHERE varname = 'CacheEngine'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "3.3.x";
+            }
         }
         if (!$res2 = mysql_query("SHOW COLUMNS FROM Languages LIKE 'ShortMonth1'")) {
             return "Unable to query the database $p_dbName";
