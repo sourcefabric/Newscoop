@@ -9,6 +9,9 @@
  * @link http://www.campware.org
  */
 
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+
 $g_documentRoot = dirname(__FILE__);
 
 // goes to install process if configuration files does not exist yet
@@ -24,6 +27,7 @@ require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
+
 function display_upgrade_error($p_errorMessage) {
     $template = '_campsite_error.tpl';
     $templates_dir = CS_SYS_TEMPLATES_DIR;
@@ -36,6 +40,7 @@ function display_upgrade_error($p_errorMessage) {
     $document->render($params);
     exit(0);
 }
+
 
 // initiates the campsite site
 $campsite = new CampSite();
@@ -59,6 +64,7 @@ $res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
 if ($res !== 0) {
     display_upgrade_error("While upgrading the database: $res");
 }
+CampCache::singleton()->clear('user');
 
 CampRequest::SetVar('step', 'finish');
 
@@ -68,18 +74,12 @@ $install->initSession();
 
 $step = $install->execute();
 
-@unlink('admin.php');
-@unlink('index.php');
-$copyAdmin = copy('install/scripts/admin.php', 'admin.php');
-$copyIndex = copy('install/scripts/index.php', 'index.php');
-if (!$copyAdmin || !$copyIndex) {
-    display_upgrade_error("while upgrading the database: Can't create the index.php file.");
-}
-
 $forward = $session->getData('forward');
 $session->unsetData('forward');
 header("Location: " . $forward);
 
-unlink('upgrade.php');
+if (file_exists(__FILE__)) {
+    @unlink(__FILE__);
+}
 
 ?>

@@ -15,11 +15,21 @@ header("Content-type: text/html; charset=UTF-8");
 
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
-require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
+require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
+.DIRECTORY_SEPARATOR.'campsite_constants.php');
 
-if (file_exists($GLOBALS['g_campsiteDir'] . '/reset_cache')) {
+// goes to install process if configuration files does not exist yet
+if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
+|| !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+    header('Location: /install/');
+    exit(0);
+}
+
+require_once(CS_PATH_INCLUDES.DIR_SEP.'campsite_init.php');
+
+if (file_exists(CS_PATH_SITE . DIR_SEP . 'reset_cache')) {
     CampCache::singleton()->clear('user');
-    unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
+    @unlink(CS_PATH_SITE . DIR_SEP . 'reset_cache');
 }
 
 $start1 = microtime(true);
@@ -33,6 +43,11 @@ $campsite->loadConfiguration(CS_PATH_CONFIG.DIR_SEP.'configuration.php');
 $start3 = microtime(true);
 // starts the session
 $campsite->initSession();
+
+if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
+    camp_upgrade();
+    exit(0);
+}
 
 $start4 = microtime(true);
 // initiates the context
@@ -61,7 +76,43 @@ $campsite->render();
 $end1 = microtime(true);
 // triggers an event after displaying
 $campsite->event('afterRender');
+
 $end2 = microtime(true);
+
+
+function camp_upgrade()
+{
+    global $Campsite;
+
+    require_once(CS_PATH_SITE.DIR_SEP.'bin'.DIR_SEP.'cli_script_lib.php');
+
+    $res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
+    if ($res !== 0) {
+        $dbVersion = '[unknown]';
+    }
+
+    header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+
+    camp_display_message("Upgrading the database from version $dbVersion...");
+    echo '<META HTTP-EQUIV="Refresh" content="1;url=/upgrade.php">';
+}
+
+
+function camp_display_message($p_message)
+{
+    $session = CampSite::GetSessionInstance();
+    $forward = $session->setData('forward', $_SERVER['REQUEST_URI']);
+
+    $params = array('context' => null,
+                'template' => '_campsite_message.tpl',
+                'templates_dir' => CS_PATH_SMARTY_SYS_TEMPLATES,
+                'info_message' => $p_message
+    );
+    $document = CampSite::GetHTMLDocumentInstance();
+    $document->render($params);
+}
+
 
 $initPaths = sprintf("%.3f", ($start1 - $start0)*1000);
 $initCampsite = sprintf("%.3f", ($start2 - $start1)*1000);

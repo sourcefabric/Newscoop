@@ -25,15 +25,6 @@ $install = new CampInstallation();
 $install->initSession();
 
 $step = $install->execute();
-if ($step == 'finish') {
-    $copyAdmin = @copy($GLOBALS['g_campsiteDir'].'/install/scripts/admin.php',
-    $GLOBALS['g_campsiteDir'].'/admin.php');
-    $copyIndex = @copy($GLOBALS['g_campsiteDir'].'/install/scripts/index.php',
-    $GLOBALS['g_campsiteDir'].'/index.php');
-    if ($copyAdmin && $copyIndex && file_exists($GLOBALS['g_campsiteDir'].'/upgrade.php')) {
-        @unlink($GLOBALS['g_campsiteDir'].'/upgrade.php');
-    }
-}
 
 $install->dispatch($step);
 
