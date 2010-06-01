@@ -12,15 +12,13 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 // fill in HTTP_HOST to avoid notices in campsite_constants.php
 $_SERVER['HTTP_HOST'] = '';
 
-$archive_file = isset($GLOBALS['argv'][1]) ? trim($GLOBALS['argv'][1]) : '';
-$options = getopt("t:efc:slh");
-
+$options = getopt("b:t:efc:slh");
 
 // define the cleanup function
 function __exit_cleanup()
 {
     global $tempDirName;
-    
+
     if (!empty($tempDirName)) {
         camp_remove_dir($tempDirName);
     }
@@ -32,8 +30,8 @@ echo "------------------------\n";
 
 $usage =
 "  Usage:
-  campsite-restore <backup_file> [-t <destination_database_name>] [-e] [-f] \
-                   [-c <charset>]|[-s]
+  campsite-restore -b <backup_file> [-t <destination_database_name>] \
+                   [-e] [-f] [-c <charset>]|[-s]
   campsite-restore -l
   campsite-restore -h
 
@@ -83,7 +81,7 @@ $usage =
 
     [-f]
         Dont prompt, assume 'yes' to questions.
-    
+
     [-h]
         Show this help and exit.
 
@@ -99,11 +97,19 @@ if (isset($options['h'])) {
 }
 
 // initialize options variables from command line parameters
+$archive_file = isset($options['b']) ? $options['b'] : null;
 $useExistingConfig = isset($options['e']);
 $doPrompt = !isset($options['f']);
 $destDbSpecified = isset($options['t']);
 $destDbName = isset($options['t']) ? $options['t'] : "";
 $convertToUTF = isset($options['c']) || isset($options['s']);
+
+// verify if the command line parameters were valid
+if (empty($archive_file) || ($destDbSpecified && empty($destDbName))
+|| (isset($options['c']) && empty($options['c']))) {
+    echo $usage;
+    camp_exit_with_error("Invalid parameters; please read the usage description above.");
+}
 
 
 // include the utils library
@@ -140,13 +146,6 @@ if (isset($options['l'])) {
     exit(0);
 }
 
-
-// verify if the command line parameters were valid
-if (empty($archive_file) || ($destDbSpecified && $destDbName == "")
-|| (array_search('-c', $GLOBALS['argv']) !== false && empty($options['c']))) {
-    echo $usage;
-    camp_exit_with_error("Invalid parameters; please read the usage description above.");
-}
 
 if (!file_exists($archive_file)) {
     camp_exit_with_error("The backup file you specified does not exist.");
@@ -253,10 +252,6 @@ if (sizeof($database_dump_file) != 1) {
 $db_file_name = basename($database_dump_file[0]);
 $origDbName = substr($db_file_name, 0, strrpos($db_file_name, '-'));
 
-if (!$destDbSpecified) {
-    // Use the config parameters specified in the backup file.
-    $destDbName = $origDbName;
-}
 
 // If old backup format, extract the tar files inside the tar file.
 if (!$isNewBackupFormat) {
@@ -282,12 +277,12 @@ if (sizeof($backup_version_file) != 1) {
     camp_exit_with_error("Archive $archive_file is invalid.");
 }
 $bversion_file_name = basename($backup_version_file[0]);
-$backupVersion = substr($bversion_file_name, strlen('BACKUP-VERSION-'));
+$backupVersion = (int)substr($bversion_file_name, strlen('BACKUP-VERSION-'), 1);
 
 if ($useExistingConfig) {
     $includeFile = "$ETC_DIR/database_conf.php";
 } else {
-    if ($backupVersion < '3.0') { 
+    if ($backupVersion < 3) {
         $includeFile = "$tempDirName/$origDbName/database_conf.php";
     } else {
         $includeFile = "$tempDirName/conf/database_conf.php";
@@ -305,6 +300,7 @@ if (!file_exists($includeFile)) {
     exit(1);
 }
 
+
 // Check if configuration file is readable.
 if (!camp_is_readable($includeFile)) {
     echo " * Cleaning up...";
@@ -313,7 +309,14 @@ if (!camp_is_readable($includeFile)) {
     exit(1);
 }
 require($includeFile);
-$destDbName = $Campsite['DATABASE_NAME'];
+
+if ($destDbSpecified) {
+    $Campsite['DATABASE_NAME'] = $destDbName;
+} elseif ($useExistingConfig) {
+    $destDbName = $Campsite['DATABASE_NAME'];
+} else {
+    $destDbName = $origDbName;
+}
 camp_connect_to_database();
 
 echo " * Backup database name is '$origDbName'.\n";
@@ -323,7 +326,7 @@ echo " * Destination database name (to be replaced) is '$destDbName'.\n";
 //
 // Restore the backup files
 //
-if ($backupVersion < '3.0') {
+if ($backupVersion < 3) {
     if (!camp_is_empty_dir("$tempDirName/look")) {
         $templatesSrcDir = "$tempDirName/look";
         $packageTemplatesDirName = 'look';
@@ -416,7 +419,7 @@ camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 echo "done.\n";
 
 if (!$useExistingConfig) {
-    if ($backupVersion < '3.0') {
+    if ($backupVersion < 3) {
         echo " * Restoring configuration...";
         $configFile = @file_get_contents("$ETC_DIR/database_conf.php");
         $newConfigFile = camp_migrate_config_file($configFile);
@@ -430,7 +433,7 @@ if (!$useExistingConfig) {
 //
 // Converting template files if necessary
 //
-if ($backupVersion < '3.0') {
+if ($backupVersion < 3) {
     echo " * Converting templates...";
     require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
     $template_files = camp_read_files($CAMPSITE_DIR.'/templates');
@@ -446,7 +449,7 @@ if ($backupVersion < '3.0') {
 //
 // Restore the database...
 //
-echo " * Restoring the database...";
+echo " * Restoring the database $destDbName...";
 if (camp_database_exists($destDbName)) {
     camp_clean_database($destDbName);
 } else {
