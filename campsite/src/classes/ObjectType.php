@@ -33,6 +33,21 @@ class ObjectType extends DatabaseObject {
 	} // constructor
 
 
+    /**
+     * Wrapper around DatabaseObject::setProperty
+     * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     */
+    public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+    {
+        if ($p_dbColumnName == 'name') {
+            $this->m_keyColumnNames = array('name');
+            $this->resetCache();
+            $this->m_keyColumnNames = array('id');
+        }
+        return parent::setProperty($p_dbColumnName, $p_value);
+    }
+
+
 	public function delete()
 	{
 		if (!$this->exists()) {

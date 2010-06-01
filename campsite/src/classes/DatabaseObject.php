@@ -309,8 +309,10 @@ class DatabaseObject {
 		// Reset old key values - we are now synced with the database.
 		$this->m_oldKeyValues = array();
 
-		// Write the object to cache
-        $this->writeCache();
+		if ($this->m_exists) {
+		    // Write the object to cache
+		    $this->writeCache();
+		}
 
 		return $this->m_exists;
 	} // fn fetch
@@ -353,11 +355,12 @@ class DatabaseObject {
 	 *
 	 * @return boolean
 	 */
-	public function keyValuesExist()
+	public function keyValuesExist($p_recordSet = null)
 	{
-		foreach ($this->m_keyColumnNames as $columnName) {
-			if (!isset($this->m_data[$columnName])
-			|| is_null($this->m_data[$columnName])) {
+        $recordSet = is_null($p_recordSet) ? $this->m_data : $p_recordSet;
+	    foreach ($this->m_keyColumnNames as $columnName) {
+			if (!isset($recordSet[$columnName])
+			|| is_null($recordSet[$columnName])) {
 				return false;
 			}
 		}
@@ -572,7 +575,7 @@ class DatabaseObject {
 		if ($p_value == $this->m_data[$p_dbColumnName] && !$p_isSql) {
 			return true;
 		}
-		// If we dont have the key to this row, we cant update it.
+		// If we don't have the key to this row, we can't update it.
 		if ($p_commit && !$this->keyValuesExist()) {
 			return false;
 		}
@@ -734,7 +737,7 @@ class DatabaseObject {
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
+        		$setColumns[] = "`".$columnName . "`='". $g_ado_db->escape($columnValue) ."'";
         	}
         }
 		$queryStr = 'UPDATE ' . $this->m_dbTableName
@@ -897,17 +900,9 @@ class DatabaseObject {
 		}
 
         $cacheKey = '';
-		if (is_array($p_recordSet) && sizeof($p_recordSet) > 0) {
-			foreach ($this->m_keyColumnNames as $columnName) {
-				if (!isset($p_recordSet[$columnName])) {
-					return false;
-				}
-			}
-		} else {
-			if (!$this->keyValuesExist()) {
-				return false;
-			}
-		}
+        if (!$this->keyValuesExist($p_recordSet)) {
+            return false;
+        }
 
         $cacheKey = $this->getCacheKey($p_recordSet);
         $cacheObj = CampCache::singleton();
@@ -965,11 +960,7 @@ class DatabaseObject {
 
 	public function resetCache()
 	{
-        if (!DatabaseObject::GetUseCache()) {
-            return false;
-        }
-
-        if (!$this->exists()) {
+        if (!DatabaseObject::GetUseCache() || !$this->m_exists) {
             return false;
         }
 
@@ -988,7 +979,7 @@ class DatabaseObject {
 	 */
 	public function writeCache()
 	{
-		if (!DatabaseObject::GetUseCache()) {
+		if (!DatabaseObject::GetUseCache() || !$this->m_exists) {
 			return false;
 		}
 
@@ -1018,7 +1009,7 @@ class DatabaseObject {
 
 		$cacheKey = '';
 		foreach ($this->m_keyColumnNames as $key) {
-			if (!isset($recordSet[$key])) {
+			if (!isset($recordSet[$key]) || is_null($recordSet[$key])) {
 				return false;
 			}
 			$cacheKey .= (strlen($cacheKey) < 1) ? '' : '_';

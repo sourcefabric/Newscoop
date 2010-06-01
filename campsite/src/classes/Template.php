@@ -41,6 +41,21 @@ class Template extends DatabaseObject {
 
 
 	/**
+	 * Wrapper around DatabaseObject::setProperty
+	 * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+	 */
+    public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+    {
+        if ($p_dbColumnName == 'Name') {
+            $this->m_keyColumnNames = array('Name');
+            $this->resetCache();
+            $this->m_keyColumnNames = array('Id');
+        }
+        return parent::setProperty($p_dbColumnName, $p_value);
+    }
+
+
+	/**
 	 * Return TRUE if the file exists.
 	 *
 	 * @return boolean
@@ -137,7 +152,7 @@ class Template extends DatabaseObject {
 			}
 		}
 
-		if ($p_checkIfExists && 
+		if ($p_checkIfExists &&
 		      !is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
 		      !is_file($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
 		      !is_link($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
@@ -452,9 +467,10 @@ class Template extends DatabaseObject {
      * @param array $p_sqlOptions
      * @param boolean $p_update
      * @param boolean $p_useFilter
-     *      filter templates matching setting in SystemPrefs
+     *		filter templates matching setting in SystemPrefs
      * @param boolean $p_strict
      *      if true, retrieves only template (tpl) files
+     *
      * @return array
      */
     public static function GetAllTemplates($p_sqlOptions = null, $p_update = true, $p_useFilter = false,
@@ -469,7 +485,7 @@ class Template extends DatabaseObject {
             $queryStr .= ' WHERE Type < 5';
         }
         if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
-            $queryStr .= ($p_strict == false) ? ' WHERE ' : ' ';
+            $queryStr .= ($p_strict == false) ? ' WHERE ' : ' AND ';
             $queryStr .= 'Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';
         }
 
@@ -586,7 +602,7 @@ class Template extends DatabaseObject {
 		}
 		return false;
 	} // fn move
-	
+
 	/**
 	 * Return an regular expression to filter template lists
 	 *
@@ -595,18 +611,18 @@ class Template extends DatabaseObject {
 	 */
 	static public function GetTemplateFilterRegex($p_sql = false) {
 	 	$filters = array();
-	 	
+
 		if ($filterStr = SystemPref::Get('TemplateFilter')) {
 		  foreach (explode(',', $filterStr) as $filter) {
-		      
-		       
 
-    		      
+
+
+
     		   if ($p_sql) {
     		      $filter = preg_quote(trim($filter), '/');       // quote the filter
     		      $filter = str_replace('\\', '\\\\', $filter);
     		      $filter = str_replace('\\*', '.*', $filter);    // * becomes .*
-    		      $filter = str_replace('\\?', '.', $filter);     //  becomes . 
+    		      $filter = str_replace('\\?', '.', $filter);     //  becomes .
     		      $filter1 = "(^$filter$)";
     		      $filters[] = $filter1;
     		      $filter2 = "(/$filter$)";
@@ -618,11 +634,11 @@ class Template extends DatabaseObject {
 		      } else {
 		          $filter = preg_quote(trim($filter), '/');   // quote the filter
 		          $filter = str_replace('\\*', '.*', $filter); // * becomes .*
-		          $filter = str_replace('\\?', '.', $filter);     //  becomes . 
+		          $filter = str_replace('\\?', '.', $filter);     //  becomes .
     		      $filter = "(^$filter$)";
     		      $filters[] = $filter;
 		      }
-		  }   
+		  }
 		}
 		$filterRegex = implode('|', $filters);
 

@@ -57,11 +57,27 @@ class Alias extends DatabaseObject {
 
 
 	/**
+	 * Wrapper around DatabaseObject::setProperty
+	 *
+	 * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+	 */
+    public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+    {
+        if ($p_dbColumnName == 'Name') {
+            $this->m_keyColumnNames = array('Name');
+            $this->resetCache();
+            $this->m_keyColumnNames = array('Id');
+        }
+        return parent::setProperty($p_dbColumnName, $p_value);
+    } // fn setProperty
+
+
+	/**
 	 *
 	 */
 	public function setName($p_name)
 	{
-		return $this->setProperty('Name', $p_name);
+	    return $this->setProperty('Name', $p_name);
 	} // fn setName
 
 

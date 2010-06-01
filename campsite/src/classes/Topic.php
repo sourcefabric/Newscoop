@@ -87,8 +87,10 @@ class Topic extends DatabaseObject {
 			}
 		}
 
-		// Write the object to cache
-		$this->writeCache();
+		if ($this->m_exists) {
+		    // Write the object to cache
+		    $this->writeCache();
+		}
 
         return $this->m_exists;
 	} // fn fetch
@@ -475,8 +477,8 @@ class Topic extends DatabaseObject {
 
         return $topics;
 	} // fn GetTopics
-	
-	
+
+
 	public function getSubtopics($p_returnIds = false)
 	{
         global $g_ado_db;
