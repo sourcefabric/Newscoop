@@ -232,7 +232,8 @@ final class CampContext
         // initialize plugins
         foreach (CampPlugin::GetPluginsInfo(true) as $info) {
             if (function_exists($info['template_engine']['init'])) {
-                call_user_func($info['template_engine']['init'], $this);
+                $plugin_init = $info['template_engine']['init'];
+                $plugin_init($this);
             }
         }
     } // fn __construct
@@ -309,16 +310,16 @@ final class CampContext
                         $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath()
                         .'/template_engine/metaclasses/'.CampContext::ObjectType($p_element).'.php';
                         if (file_exists($pluginClassFullPath)) {
-                            $pluginImplementsClassFullPath = $pluginClassFullPath;   
+                            $pluginImplementsClassFullPath = $pluginClassFullPath;
                         }
                     }
                     if ($pluginImplementsClassFullPath) {
                         require_once(($pluginImplementsClassFullPath));
-                    } else {  
+                    } else {
                         throw new InvalidObjectException($p_element);
                     }
                 }
-                
+
 
                 $metaclass = CampContext::ObjectType($p_element);
                 if (!is_a($p_value, $metaclass)) {
@@ -578,7 +579,7 @@ final class CampContext
             $this->m_readonlyProperties['current_'.$listName.'_list'] =
                 end($this->m_readonlyProperties[$listName.'_lists']);
         }
-        
+
         array_pop($this->m_readonlyProperties['lists']);
    	    $this->m_readonlyProperties['current_list'] = end($this->m_readonlyProperties['lists']);
     } // fn resetCurrentList
@@ -664,12 +665,12 @@ final class CampContext
                 $pluginClassFullPath = $GLOBALS['g_campsiteDir'].'/'.$CampPlugin->getBasePath()
                 .'/template_engine/metaclasses/'.CampContext::ObjectType($p_objectType).'.php';
                 if (file_exists($pluginClassFullPath)) {
-                    $pluginImplementsClassFullPath = $pluginClassFullPath;   
+                    $pluginImplementsClassFullPath = $pluginClassFullPath;
                 }
             }
             if ($pluginImplementsClassFullPath) {
                 require_once(($pluginImplementsClassFullPath));
-            } else { 
+            } else {
                 throw new InvalidObjectException($p_objectType);
             }
         }
@@ -716,31 +717,31 @@ final class CampContext
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     } // fn trigger_invalid_property_error
 
-    
+
     /**
      * Register an new object type (for plugin)
      *
      * @param array $p_objectType
-     * structure: array(object name => object class name) 
+     * structure: array(object name => object class name)
      */
     final private function registerObjectType(array $p_objectType)
-    {        
+    {
         try {
             // check the structure
             $keys = array_keys($p_objectType);
             $values = array_values($p_objectType);
-            
+
             if (count($keys) !== 1 || count($values) !== 1) {
                 throw new Exception('CampContext::registerObjectType called with malformed parameter: '.print_r($p_objectType));
             }
         } catch (Exception $e) {
             $this->trigger_invalid_register_error($e->getMessage());
         }
-    
-        CampContext::$m_objectTypes += $p_objectType;   
+
+        CampContext::$m_objectTypes += $p_objectType;
     }
-    
-    
+
+
     /**
      * Register an list object (for plugins)
      *
@@ -748,28 +749,28 @@ final class CampContext
      * structure: array(list object name => array('class' => class name, 'list' => list class name))
      */
     final private function registerListObject(array $p_listObject)
-    {       
+    {
         try {
             // check the structure
             $keys = array_keys($p_listObject);
             $values = array_values($p_listObject);
-            
+
             if (count($keys) !== 1 || count($values) !== 1) {
                 throw new Exception('CampContext::registerListObject called with malformed parameter: '.print_r($p_listObject));
             }
         } catch (Exception $e) {
-            $this->trigger_invalid_register_error($e->getMessage());   
+            $this->trigger_invalid_register_error($e->getMessage());
         }
-        
-        $this->m_listObjects += $p_listObject;    
+
+        $this->m_listObjects += $p_listObject;
     }
-    
-    
+
+
     final protected function trigger_invalid_register_error($p_message)
     {
-        CampTemplate::singleton()->trigger_error($p_message);   
+        CampTemplate::singleton()->trigger_error($p_message);
     }
-    
+
 
     /**
      * Returns the language defined in the current context; if it
@@ -867,7 +868,7 @@ final class CampContext
 
         $this->m_readonlyProperties['url']->language = $p_newLanguage;
         $this->m_objects['language'] = $p_newLanguage;
-        
+
         if ($this->article->defined()) {
         	$oldArticle = $this->m_objects['article'];
         	$newArticle = new MetaArticle($p_newLanguage->number,
@@ -934,7 +935,7 @@ final class CampContext
         && !$p_newIssue->is_published && $p_newIssue->defined()) {
             return;
         }
-        
+
         if ($issueHandlerRunning || $p_newIssue->same_as($p_oldIssue)) {
             return;
         }

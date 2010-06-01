@@ -41,6 +41,7 @@ class CacheEngine_APC extends CacheEngine
      */
     public function storeValue($p_key, $p_value, $p_ttl = 0)
     {
+        apc_delete($p_key);
     	return apc_store($p_key, $p_value, $p_ttl);
     }
 
