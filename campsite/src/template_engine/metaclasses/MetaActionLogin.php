@@ -39,9 +39,9 @@ class MetaActionLogin extends MetaAction
             ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
         }
-        if (isset($p_input['f_login_rememberuser']) && !empty($p_input['f_login_rememberuser'])) {
-            $this->m_properties['remember_user'] = true;
-        }
+        $this->m_properties['remember_user'] = isset($p_input['f_login_rememberuser'])
+        && !empty($p_input['f_login_rememberuser']);
+
         $this->m_error = ACTION_OK;
         $this->m_user = $user;
         $this->m_user->initLoginKey();
