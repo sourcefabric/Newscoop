@@ -73,6 +73,22 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
 </tr>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Time Zone:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_time_zone" class="input_select">
+        <?php
+        $timeZone = SystemPref::Get('TimeZone');
+        camp_html_select_option('', $timeZone, getGS('disabled'));
+        for ($k = -12; $k < 13; $k++) {
+            $v = $k < 0 ? $k : '+' . $k;
+            camp_html_select_option($v, $timeZone, "GMT $v:00");
+        }
+        ?>
+        </select>
+    </td>
+</tr><tr>
+    <td align="left" width="400px">
         <?php putGS("Cache Enabled:") ?>
     </td>
     <td align="left" valign="top">

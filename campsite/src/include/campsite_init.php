@@ -25,4 +25,13 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSite.php');
 require_once($GLOBALS['g_campsiteDir'].'/admin-files/lib_campsite.php');
 
+// set timezone
+$timeZone = SystemPref::Get('TimeZone');
+if (!empty($timeZone)) {
+    $g_ado_db->Execute("SET SESSION time_zone = '" . $timeZone . ":00'");
+    $timeZone[0] = $timeZone[0] == '-' ? '+' : '-';
+    date_default_timezone_set('Etc/GMT' . $timeZone);
+}
+unset($timeZone);
+
 ?>

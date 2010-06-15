@@ -3,6 +3,8 @@ INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageResizeW
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageResizeHeight', '');
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageZoom', 'N');
 
+-- add disabled time zone by default
+INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('TimeZone', NULL);
 
 -- Initialize the topics order field
 SET @i:=0;

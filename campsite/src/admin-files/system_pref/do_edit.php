@@ -14,6 +14,7 @@ $f_campsite_online = Input::Get('f_campsite_online');
 $f_site_title = Input::Get('f_site_title');
 $f_site_metakeywords = Input::Get('f_site_metakeywords');
 $f_site_metadescription = Input::Get('f_site_metadescription');
+$f_time_zone = Input::Get('f_time_zone');
 $f_cache_enabled = Input::Get('f_cache_enabled');
 $f_cache_engine = Input::Get('f_cache_engine');
 $f_secret_key = Input::Get('f_secret_key');
@@ -62,6 +63,9 @@ SystemPref::Set('SiteMetaKeywords', $f_site_metakeywords);
 
 // Site Meta Description
 SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
+
+// Site Time Zone
+SystemPref::Set('TimeZone', $f_time_zone);
 
 // Caching
 SystemPref::Set('CacheEngine', $f_cache_engine);
