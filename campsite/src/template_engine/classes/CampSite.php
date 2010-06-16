@@ -64,11 +64,6 @@ final class CampSite extends CampSystem
         if (empty($p_configFile)) {
             $p_configFile = $GLOBALS['g_campsiteDir'].'/conf/configuration.php';
         }
-        if (!file_exists($p_configFile)) {
-            header('Location: install/index.php');
-            exit(0);
-        }
-
         CampConfig::singleton($p_configFile);
     } // fn loadConfiguration
 

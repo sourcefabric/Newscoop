@@ -42,10 +42,10 @@ $accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_us
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = new Template($templateId);
-	$url = "$websiteURL/tpl/" . $templateObj->getName()
+	$url = "$websiteURL"  . $Campsite['SUBDIR'] . "/tpl/" . $templateObj->getName()
 		. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
-	$url = "$websiteURL/" . $languageObj->getCode()
+	$url = "$websiteURL" . $Campsite['SUBDIR'] . '/' . $languageObj->getCode()
 		. "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 
