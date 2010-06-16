@@ -519,7 +519,10 @@ class PollAnswer extends DatabaseObject {
                     break;
                 case 'bylastmodified':
                     $dbField = 'last_modified';
-                    break;                    
+                    break;
+                default:
+                    $dbField = 'nr_answer';
+                    break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
