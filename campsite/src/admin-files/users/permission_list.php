@@ -35,7 +35,8 @@ function camp_get_permission_list()
 
     $administrative_group = array(
 	'ChangeSystemPreferences'=>getGS('User may change system preferences'),
-	'ClearCache'=>getGS('User may clear up the system cache'));
+	'ClearCache'=>getGS('User may clear up the system cache'),
+    'ManageBackup'=>getGS('User may backup and restore the site data'));
 
     $users_group = array(
 	'ManageUsers'=>getGS('User may add/change staff accounts and passwords'),

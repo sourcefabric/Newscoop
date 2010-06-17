@@ -1,4 +1,4 @@
-<?php 
+<?php
 regGS("User account information changed for \"$1\"", "User account information changed for \"$1\"");
 regGS("Permissions changed for user \"$1\"", "Permissions changed for user \"$1\"");
 regGS("Password Generator", "Password Generator");
@@ -150,6 +150,7 @@ regGS("User may insert horizontal rules", "User may insert horizontal rules");
 regGS("User may change the font color", "User may change the font color");
 regGS("User may use superscripts", "User may use superscripts");
 regGS("User may use subscripts", "User may use subscripts");
+regGS("User may backup and restore the site data", "User may backup and restore the site data");
 regGS("Miscellaneous", "Miscellaneous");
 regGS("Staff/Subscribers Management", "Staff/Subscribers Management");
 regGS("Editor Basic Settings", "Editor Basic Settings");

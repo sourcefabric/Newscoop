@@ -6,6 +6,8 @@ if (!is_array($GLOBALS['argv'])) {
     exit(1);
 }
 
+require_once("cli_script_lib.php");
+
 $CAMPSITE_DIR = dirname(dirname(__FILE__));
 $GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
 $ETC_DIR = $CAMPSITE_DIR . '/conf';

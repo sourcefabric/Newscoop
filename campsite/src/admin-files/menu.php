@@ -190,6 +190,13 @@ if ($showAdminActions) {
 					  array("icon" => sprintf($iconTemplateStr, "actions.png")));
 	$menu_actions->addItem($menu_item);
     }
+
+	if ($g_user->hasPermission("ManageBackup")) {
+        $menu_item =& DynMenuItem::Create(getGS("Backup/Restore"),
+                      "/$ADMIN/backup.php",
+                      array("icon" => sprintf($iconTemplateStr, "actions.png")));
+    $menu_actions->addItem($menu_item);
+    }
 }
 
 if ($showConfigureMenu) {
@@ -304,7 +311,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script> 
+	<script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
 	<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
 	<LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">

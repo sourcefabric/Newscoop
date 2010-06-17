@@ -91,8 +91,9 @@ final class CampInstallationView
             CS_PATH_TEMPLATES => 'Templates Folder Writable',
             CS_PATH_SITE.DIR_SEP.'templates_cache' => 'Templates Cache Writable',
             CS_PATH_SITE.DIR_SEP.'plugins' => 'Plugins Folder Writable',
-        );
-        
+            CS_PATH_SITE.DIR_SEP.'backup' => 'Backup Folder Writable',
+            );
+
         foreach ($to_check as $path => $tag) {
             $isWritable = CampInstallationViewHelper::CheckDirWritable($path);
             $success = ($isWritable == 'Yes') ? $success : false;
@@ -100,7 +101,7 @@ final class CampInstallationView
                                    'tag' => $tag,
                                    'exists' => $isWritable,
                                    'path' => $path
-                                   );   
+                                   );
         }
 
         if (CampInstallation::GetHostOS() == 'windows') {
@@ -228,8 +229,8 @@ final class CampInstallationViewHelper
     public static function CheckRewriteModule()
     {
         if (!function_exists('apache_get_modules')) {
-            return 'Cannot be checked';   
-        }    
+            return 'Cannot be checked';
+        }
         return array_search('mod_rewrite', apache_get_modules()) !== FALSE ? 'Yes' : 'No';
     }
 

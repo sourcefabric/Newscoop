@@ -1,4 +1,4 @@
-<?php 
+<?php
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.");
 regGS("Import XML", "Import XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "You must have the permissions to add/change issues and articles in order to set the author for all articles.");
@@ -64,4 +64,5 @@ regGS("You do not have the right to access this page.", "You do not have the rig
 regGS("Login failed", "Login failed");
 regGS("Please make sure that you typed the correct user name and password.", "Please make sure that you typed the correct user name and password.");
 regGS("If your problem persists please contact the site administrator $1", "If your problem persists please contact the site administrator $1");
+regGS("Backup/Restore", "Backup/Restore");
 ?>
