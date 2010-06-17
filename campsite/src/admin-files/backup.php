@@ -24,9 +24,10 @@ switch ($action) {
         set_time_limit(0);
         ob_end_flush();
         flush();
-        $cmd = CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-backup --default-dir';
+        echo str_repeat(' ', 2048);
         echo '<pre>';
-        system($cmd);
+        $options = array('--default-dir');
+        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-backup';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);
@@ -51,9 +52,14 @@ switch ($action) {
         set_time_limit(0);
         ob_end_flush();
         flush();
-        $cmd = CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-restore -b "' . $file . '" -e -f';
+        echo str_repeat(' ', 2048);
         echo '<pre>';
-        system($cmd);
+        $options = array(
+            'f' => true,
+            'e' => true,
+            'b' => $file,
+        );
+        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-restore';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);

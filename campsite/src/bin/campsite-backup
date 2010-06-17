@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-if (!is_array($GLOBALS['argv'])) {
+if (!is_array($GLOBALS['argv']) && empty($options)) {
 	echo "\n";
 	echo "Can't read command line arguments\n";
 	echo "\n";
@@ -21,7 +21,12 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 // include install_conf.php file
 require_once("$ETC_DIR/install_conf.php");
 
-
+if (empty($options)) {
+    $flush = false;
+} else {
+    $GLOBALS['argv'] = $options;
+    $flush = true;
+}
 $help = false;
 $silent = false;
 $default_dir = false;
@@ -39,6 +44,7 @@ if (!$silent) {
 	echo "\n";
 	echo "Campsite Backup Utility\n";
 	echo "-----------------------\n";
+	flush_output($flush);
 }
 
 $usage =
@@ -104,6 +110,7 @@ if ($default_dir) {
 if (!$silent) {
 	echo "Backup script version: ".$Campsite["VERSION"]."\n";
 	echo "Backing up campsite\n";
+	flush_output($flush);
 }
 
 if (!file_exists($backupDirFullPath)) {
@@ -118,6 +125,7 @@ camp_exec_command($cmd, "Couldn't write VERSION file.");
 // backup the database
 if (!$silent) {
 	echo " * Backing up the database...";
+	flush_output($flush);
 }
 $db_file_name = "$backupDirFullPath/".$Campsite['DATABASE_NAME'].'-database.sql';
 
@@ -133,6 +141,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Backing up the templates...";
+	flush_output($flush);
 }
 camp_copy_files("$html_dir/templates", $backupDirFullPath);
 if (!$silent) {
@@ -141,6 +150,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Backing up images...";
+	flush_output($flush);
 }
 camp_copy_files("$html_dir/images", $backupDirFullPath);
 if (!$silent) {
@@ -149,6 +159,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Backing up file attachments...";
+	flush_output($flush);
 }
 camp_copy_files("$html_dir/files", $backupDirFullPath);
 if (!$silent) {
@@ -157,6 +168,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Backing up configuration files...";
+	flush_output($flush);
 }
 camp_copy_files("$ETC_DIR", $backupDirFullPath);
 if (!$silent) {
@@ -165,6 +177,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Creating tarball...";
+	flush_output($flush);
 }
 if (camp_archive_file($backupDirFullPath, dirname($backupDirFullPath), $backupDirName, $output) != 0) {
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
@@ -181,6 +194,7 @@ if (!$silent) {
 
 if (!$silent) {
 	echo " * Cleaning up...";
+	flush_output($flush);
 }
 camp_remove_dir($backupDirFullPath, "Unable to remove temporary directory $backupDirFullPath");
 if (!$silent) {
@@ -190,6 +204,5 @@ if (!$silent) {
 if (!$silent) {
 	echo "\nBackup saved to file:\n  $backupDirFullPath.tar.gz\n\n";
 }
-exit(0);
 
 ?>

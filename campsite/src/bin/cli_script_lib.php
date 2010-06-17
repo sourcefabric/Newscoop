@@ -905,4 +905,16 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
 	return true;
 }
 
+/**
+ * Flushes output buffer.
+ * @param $flush - boolean
+ * @return void
+ */
+function flush_output($flush)
+{
+    if ($flush) {
+        echo '<span></span>';
+        flush();
+    }
+}
 ?>

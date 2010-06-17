@@ -1,7 +1,7 @@
 #!/usr/bin/php
 <?php
 
-if (!is_array($GLOBALS['argv'])) {
+if (!is_array($GLOBALS['argv']) && empty($options)) {
     echo "Can't read command line arguments\n";
     exit(1);
 }
@@ -14,7 +14,12 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 // fill in HTTP_HOST to avoid notices in campsite_constants.php
 $_SERVER['HTTP_HOST'] = '';
 
-$options = getopt("b:t:efc:slh");
+if (empty($options)) {
+    $options = getopt("b:t:efc:slh");
+    $flush = false;
+} else {
+    $flush = true;
+}
 
 // define the cleanup function
 function __exit_cleanup()
@@ -29,7 +34,7 @@ function __exit_cleanup()
 
 echo "\nCampsite Restore Utility\n";
 echo "------------------------\n";
-
+flush_output($flush);
 $usage =
 "  Usage:
   campsite-restore -b <backup_file> [-t <destination_database_name>] \
@@ -189,6 +194,7 @@ $adviceOnError = "Please run this script as '" . $Campsite['APACHE_USER'] . "' o
 // Get the name of the directory that will be untarred.
 //
 echo " * Initializing...\n";
+flush_output($flush);
 $archiveExtension = pathinfo($archive_file, PATHINFO_EXTENSION);
 if ($archiveExtension == "gz") {
     $tarGzOption = "z";
@@ -216,7 +222,7 @@ if ($isNewBackupFormat) {
 }
 echo "   * Temp directory: $tempDirName\n";
 echo "   * Initialization done.\n";
-
+flush_output($flush);
 if (file_exists($tempDirName)) {
     echo "\nThis script needs to create a temporary directory named '$tempDirName',\n";
     echo "but the directory already exists.  Please delete the existing directory or move it out of the way.\n\n";
@@ -227,6 +233,7 @@ if (file_exists($tempDirName)) {
 // Untar the backup
 //
 echo " * Extracting files into temp directory...";
+flush_output($flush);
 if ($isNewBackupFormat) {
     $cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file);
     camp_exec_command($cmd, $adviceOnError);
@@ -270,6 +277,7 @@ if (!$isNewBackupFormat) {
     }
 }
 echo "done.\n";
+flush_output($flush);
 
 //
 // Get the version from the backup archive.
@@ -323,7 +331,7 @@ camp_connect_to_database();
 
 echo " * Backup database name is '$origDbName'.\n";
 echo " * Destination database name (to be replaced) is '$destDbName'.\n";
-
+flush_output($flush);
 
 //
 // Restore the backup files
@@ -380,6 +388,7 @@ if ($doPrompt) {
     if ($answer == 'n' || $answer == '') {
         echo "\n Restore cancelled.\n";
         echo " * Cleaning up...";
+        flush_output($flush);
         camp_remove_dir($tempDirName);
         echo "done.\n\n";
         exit(0);
@@ -391,6 +400,7 @@ if ($doPrompt) {
 //
 foreach ($destDirs as $dir) {
     echo " * Removing files in $dir...";
+    flush_output($flush);
     if ($dir == $templatesDestDir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
     } else {
@@ -403,6 +413,7 @@ foreach ($destDirs as $dir) {
 // Restore files from backup...
 //
 echo " * Restoring templates...";
+flush_output($flush);
 if (!is_null($templatesSrcDir)) {
     camp_copy_files($templatesSrcDir, $CAMPSITE_DIR);
     if ($packageTemplatesDirName != $templatesDirName) {
@@ -413,12 +424,15 @@ if (!is_null($templatesSrcDir)) {
 echo "done.\n";
 
 echo " * Restoring images...";
+flush_output($flush);
 camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
 echo "done.\n";
 
 echo " * Restoring file attachments...";
+flush_output($flush);
 camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 echo "done.\n";
+flush_output($flush);
 
 if (!$useExistingConfig) {
     if ($backupVersion < 3) {
@@ -437,6 +451,7 @@ if (!$useExistingConfig) {
 //
 if ($backupVersion < 3) {
     echo " * Converting templates...";
+    flush_output($flush);
     require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
     $template_files = camp_read_files($CAMPSITE_DIR.'/templates');
     $converter = new TemplateConverter();
@@ -452,6 +467,7 @@ if ($backupVersion < 3) {
 // Restore the database...
 //
 echo " * Restoring the database $destDbName...";
+flush_output($flush);
 if (camp_database_exists($destDbName)) {
     camp_clean_database($destDbName);
 } else {
@@ -466,6 +482,7 @@ $cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
     . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
     . $Campsite['DATABASE_SERVER_PORT'];
 echo "done.\n";
+flush_output($flush);
 
 // If database version is minor than 2.6.0 we do nothing but exit the
 // script as we only care about upgrading newer Campsites.
@@ -483,11 +500,11 @@ if ($dbVersion < '2.6.0') {
 
 // Upgrade the database
 echo " * Upgrading (if necessary)...";
+flush_output($flush);
 $res = camp_upgrade_database($destDbName);
 if ($res !== 0) {
     camp_exit_with_error($res);
 }
-echo "   done.\n";
 
 if ($convertToUTF) {
     echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
@@ -511,6 +528,7 @@ if ($convertToUTF) {
 // Remove the temp dir.
 //
 echo " * Cleaning up...";
+flush_output($flush);
 camp_remove_dir($tempDirName);
 echo "done.\n\n";
 
@@ -521,9 +539,7 @@ aliases in your publications before the frontend will work.  An alias
 is the base URL for your publication. To change an alias, login to the
 administration interface and go to the publication configure screen.\n\n";
 }
-
 echo "IMPORTANT!\n";
 echo "You must restart the apache server for the changes to take effect!\n";
-exit;
 
 ?>
