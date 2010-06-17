@@ -19,6 +19,7 @@ if (!empty($files[$fileIndex]['name'])) {
 // main controller
 $action = Input::Get('action', 'string', null);
 switch ($action) {
+
     case 'backup':
         set_time_limit(0);
         ob_end_flush();
@@ -26,9 +27,10 @@ switch ($action) {
         $cmd = CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-backup --default-dir';
         echo '<pre>';
         system($cmd);
-        echo '</pre>';
+        echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);
+
     case 'delete':
         if (!is_readable($file)) {
             camp_html_goto_page("/$ADMIN/backup.php");
@@ -41,6 +43,7 @@ switch ($action) {
         }
         camp_html_goto_page("/$ADMIN/backup.php");
         break;
+
     case 'restore':
         if (!is_readable($file)) {
             camp_html_goto_page("/$ADMIN/backup.php");
@@ -51,15 +54,16 @@ switch ($action) {
         $cmd = CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-restore -b "' . $file . '" -e -f';
         echo '<pre>';
         system($cmd);
-        echo '</pre>';
+        echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);
+
     case 'download':
         if (!is_readable($file)) {
             camp_html_goto_page("/$ADMIN/backup.php");
         }
         header('Content-Disposition: attachment; filename=' . basename($file));
-        header('Content-Length:' . getRealSize($file));
+        header('Content-Length: ' . getRealSize($file));
         header('Content-Type: application/x-gzip');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Transfer-Encoding: binary');
@@ -85,26 +89,17 @@ echo $breadcrumbs;
 // view template
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<script type="text/javascript">
-
-</script>
 <p />
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
     <tr>
-    <td valign="bottom" style="padding-left: 10px;">
-        <a href="backup.php">
-        <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/actions.png" border="0">
-        <b><?php putGS("Refresh list")?></b>
-        </a>
-    </td>
+    <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
+        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('Mb');?></b></td>
     <td valign="bottom" style="padding-left: 10px;">
         <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make new backup?')?>')) window.open('backup.php?action=backup', '', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
         <b><?php putGS("Make new backup")?></b>
         </a>
     </td>
-    <td valign="bottom" style="padding-left: 10px;"><b><?php echo getGS("Free disk space") . ': '
-        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('Mb');?></b></td>
     </tr>
 </table>
 <p />
@@ -132,8 +127,7 @@ if ($files) {
             $tr_class = "class=\"list_row_odd\"";
         }
         print "<tr $tr_class><td>{$file['name']}</td><td align=\"center\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
-        print '<td align="center"><a href="backup.php?action=download&index='.$key.'" onclick="return confirm(\''
-            .getGS('Are you sure you want to download the file $1?',htmlspecialchars($file['name'])).'\');"><img src="'
+        print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
         print '<td align="center"><a href="#" onclick="if (confirm(\''.getGS('Are you sure you want to restore the file $1?',
             htmlspecialchars($file['name'])).'\')) window.open(\'backup.php?action=restore&index='.$key.'\', \'\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100\');"><img src="'
@@ -165,8 +159,6 @@ function getRealSize($file) {
 }
 
 function getBackupList() {
-    global $Campsite;
-
     $files = array();
     $backupDir = CS_PATH_SITE . DIR_SEP . 'backup';
     $handle = opendir($backupDir);
