@@ -215,7 +215,7 @@ if (count($output) == 0) {
 }
 $output = array_pop($output);
 if ($isNewBackupFormat) {
-    $parts = split("/", $output);
+    $parts = preg_split('/\//', $output);
     $tempDirName = array_shift($parts);
 } else {
     $tempDirName = "backup-temp-".date("Y-m-d-H-i-s");
