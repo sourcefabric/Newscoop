@@ -95,11 +95,6 @@ if ($default_dir) {
 	$backupDirFullPath = $CAMPSITE_DIR . "/backup/$backupDirName";
 	camp_exec_command("mkdir -p " . escapeshellarg($backupDirFullPath),
 				 "Unable to create the default backup directory.\n$adviceOnError", !$silent);
-	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
-			. escapeshellarg($Campsite['APACHE_GROUP']) . " " . escapeshellarg($backupDirFullPath);
-	camp_exec_command($cmd,
-				 "Unable to set the ownership of the default backup directory.\n$adviceOnError",
-				 !$silent);
 } else {
 	$adviceOnError = "You may not have the right to write to the current directory.\n"
 					. "Please set the current directory to a location where you have\n"
@@ -179,15 +174,11 @@ if (!$silent) {
 	echo " * Creating tarball...";
 	flush_output($flush);
 }
+
 if (camp_archive_file($backupDirFullPath, dirname($backupDirFullPath), $backupDirName, $output) != 0) {
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
-if ($default_dir) {
-	$cmd = "chown " . escapeshellarg($Campsite['APACHE_USER']) . ":"
-			. escapeshellarg($Campsite['APACHE_GROUP']) . " "
-			. escapeshellarg("$backupDirFullPath.tar.gz");
-	camp_exec_command($cmd, $adviceOnError, !$silent);
-}
+
 if (!$silent) {
 	echo "done.\n";
 }
