@@ -2,11 +2,13 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Template.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
 camp_load_translation_strings("api");
 
 // Check permissions
@@ -18,6 +20,7 @@ if (!$g_user->hasPermission('ManagePub')) {
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $defaultLanguage = array_pop(Language::GetLanguages(null, camp_session_get('TOL_Language', 'en'), null, array(), array(), true));
 $urlTypes = UrlType::GetUrlTypes();
+$allTemplates = Template::GetAllTemplates(null, true, true, true);
 $timeUnits = TimeUnit::GetTimeUnits(camp_session_get('TOL_Language', 'en'));
 $shortNameUrlType = UrlType::GetByName('short names');
 $aliases = array();

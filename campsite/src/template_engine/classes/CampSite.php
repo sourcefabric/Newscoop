@@ -120,9 +120,12 @@ final class CampSite extends CampSystem
             if (empty($template)) {
                 $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
                 if (is_null($tplId)) {
-                    $error_message = 'Unable to select a template! '
-                    .'Please make sure there is at least one issue published and it had '
-                    .'assigned valid templates for the front, section and article pages.';
+                    $error_message = "Unable to select a template! "
+                    ."Please make sure the following conditions are met:\n"
+                    ."<li>there is at least one issue published and it had assigned "
+                    ."valid templates for the front, section and article pages;</li>\n"
+                    ."<li>a template was assigned for the URL error handling in "
+                    ."the publication configuration screen.";
                 } else {
                     $error_message = 'The template identified by the number ' . $tplId
                     .' does not exist.';

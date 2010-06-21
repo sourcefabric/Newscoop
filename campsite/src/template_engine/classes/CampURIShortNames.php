@@ -50,6 +50,14 @@ class CampURIShortNames extends CampURI
         $res = $this->setURL();
         if (PEAR::isError($res)) {
             $this->m_validURI = false;
+            $this->m_errorCode = $res->getCode();
+            if (!is_null($this->m_publication)) {
+            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+            	$template = new MetaTemplate($tplId);
+            	if ($template->defined()) {
+            		$this->m_template = $template;
+            	}
+            }
             CampTemplate::singleton()->trigger_error($res->getMessage());
         } else {
             $this->m_validURI = true;
@@ -182,9 +190,22 @@ class CampURIShortNames extends CampURI
     /**
      * Sets the URL values.
      *
-     * @return void
+     * Algorithm:
+	 * - identify object (e.g.: publication, language, issue, section, article)
+	 *     - object defined
+	 *         - valid object?
+	 *             - yes: set
+	 *             - no: return error
+	 *     - object undefined
+	 *         - has default value?
+	 *             - yes: set
+	 *             - no:
+	 *                 - object mandatory?
+	 *                     - yes: return error
+	 *                     - no: continue
      *
-     * TODO: Error handling
+     * @return PEAR_Error
+     *
      */
     private function setURL()
     {
