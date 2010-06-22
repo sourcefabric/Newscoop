@@ -44,6 +44,14 @@ if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
 	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
 $f_template_filter = Input::Get('f_template_filter', '', 'string', true);
+$f_external_cron_management = Input::Get('f_external_cron_management');
+if ($f_external_cron_management != 'Y' && $f_external_cron_management != 'N') {
+    $f_external_cron_management = SystemPref::Get('ExternalCronManagement');
+}
+if ($f_external_cron_management == 'N'
+    && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
+    $f_external_cron_management = 'Y';
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -164,6 +172,9 @@ if ($f_use_campcaster == 'Y') {
 
 // template filter
 SystemPref::Set("TemplateFilter", $f_template_filter);
+
+// External cron management
+SystemPref::Set('ExternalCronManagement', $f_external_cron_management);
 
 $logtext = getGS('System preferences updated');
 Log::Message($logtext, $g_user->getUserId(), 171);

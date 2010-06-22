@@ -70,6 +70,11 @@ $campsite->render();
 // triggers an event after displaying
 $campsite->event('afterRender');
 
+// run internal cron scheduler
+if (SystemPref::Get('ExternalCronManagement') == 'N') {
+    flush();
+    camp_cron();
+}
 
 function camp_upgrade()
 {

@@ -100,9 +100,6 @@ class CampInstallationBase
             }
             break;
         case 'cronjobs':
-            if ($this->m_os != 'linux') {
-                break;
-            }
             if (isset($input['install_demo']) && $input['install_demo'] == 1) {
                 $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
                 if (!$this->loadDemoSite()) {
@@ -111,9 +108,7 @@ class CampInstallationBase
             }
             break;
         case 'finish':
-            if ($this->m_os == 'linux' && !$this->saveCronJobsScripts()) {
-                break;
-            }
+            $this->saveCronJobsScripts();
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
@@ -394,6 +389,8 @@ class CampInstallationBase
      */
     private function saveCronJobsScripts()
     {
+        global $g_db;
+
         $cronJobs = array('campsite_autopublish',
                           'campsite_indexer',
                           'campsite_notifyendsubs',
@@ -405,15 +402,16 @@ class CampInstallationBase
         $template->assign('CAMPSITE_BIN_DIR', CS_PATH_SITE.DIR_SEP.'bin');
 
         $cmd = 'crontab -l';
+        $external = true;
         exec($cmd, $output, $result);
         if ($result != 0) {
         	$cmd = 'crontab -';
             exec($cmd, $output, $result);
             if ($result != 0) {
-                $this->m_step = 'cronjobs';
-                $this->m_message = 'Error: Could not save cron job files. '
-                    .'Could not run the crontab executable.';
-                return false;
+                $external = false;
+                $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
+                    ."WHERE varname = 'ExternalCronManagement'";
+                $g_db->Execute($sqlQuery);
             }
         }
 
@@ -470,7 +468,7 @@ class CampInstallationBase
             return false;
         }
 
-        if (file_exists($allAtOnceFile)) {
+        if ($external && file_exists($allAtOnceFile)) {
             $cmd = 'crontab '.escapeshellarg($allAtOnceFile);
             system($cmd);
         }

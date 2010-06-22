@@ -170,12 +170,13 @@ if (($extension == '.php') || ($extension == '')) {
 		$_top_menu = ob_get_clean();
 	}
 
-	echo "<html>\n" . $_top_menu . $content;
+	$content =  "<html>\n" . $_top_menu . $content;
 
 	if ($needs_menu) {
-		echo "</td></tr>\n</table>\n";
+		$content .= "</td></tr>\n</table>\n";
 	}
-	echo "</html>\n";
+	$content .= "</html>\n";
+    echo $content;
 
 	camp_html_clear_msgs(true);
 } elseif (file_exists($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script")) {
@@ -185,6 +186,11 @@ if (($extension == '.php') || ($extension == '')) {
 	exit;
 }
 
+// run internal cron scheduler
+if (SystemPref::Get('ExternalCronManagement') == 'N') {
+    flush();
+    camp_cron();
+}
 
 /**
  * Sets a user-defined error function.
@@ -222,4 +228,5 @@ function camp_report_bug($p_number, $p_string, $p_file, $p_line)
     require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php");
     camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
 } // fn camp_report_bug
+
 ?>

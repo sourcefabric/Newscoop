@@ -10,6 +10,9 @@ INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('TimeZone', NULL);
 INSERT INTO `liveuser_rights` VALUES ('74', '0', 'ManageBackup', '1');
 INSERT INTO `liveuser_grouprights` VALUES (1,74,3);
 
+-- add external cron handler
+INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('ExternalCronManagement', 'Y');
+
 -- Initialize the topics order field
 SET @i:=0;
 CREATE TEMPORARY TABLE `TopicsTmp` SELECT DISTINCT `Id`, `LanguageId`, `Name`, `TopicOrder` FROM `Topics`;

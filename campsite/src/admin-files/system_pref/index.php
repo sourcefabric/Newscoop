@@ -123,10 +123,10 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
                        60   => '1 Minute',
                        300  => '5 Minutes',
                        900  => '15 Minutes',
-                       1800 => '30 Minutes', 
-                       3600 => '1 Hour', 
-                       3600*24 => '1 Day', 
-                       3600*24*2 => '2 Days', 
+                       1800 => '30 Minutes',
+                       3600 => '1 Hour',
+                       3600*24 => '1 Day',
+                       3600*24*2 => '2 Days',
                        3600*24*3 => '3 Days',
                        3600*24*4 => '4 Days',
                        3600*24*5 => '5 Days',
@@ -140,7 +140,7 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
                        3600*24*183 => '6 Months',
                        3600*24*365 => '1 Year',
                        -1          => 'Infinite') as $k => $v) {
-        	camp_html_select_option($k, $ttl, $v); 
+        	camp_html_select_option($k, $ttl, $v);
         }
         ?>
         </select>
@@ -370,7 +370,20 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
         <input type="text" name="f_template_filter" value="<?php p(SystemPref::Get("TemplateFilter")) ?>" maxlenght="50" size="30" class="input_text"/>
     </td>
 </tr>
-<?php CampPlugin::PluginAdminHooks(__FILE__); ?> 
+<tr>
+    <td colspan="2"><hr></td>
+</tr>
+<tr>
+    <td colspan="2" align="left">
+        <?php putGS("Run cron tasks externaly?"); ?>
+        <input type="radio" name="f_external_cron_management" value="Y" <?php if (SystemPref::Get("ExternalCronManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_external_cron_management" value="N" <?php if (SystemPref::Get("ExternalCronManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr></td>
+</tr>
+<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <tr>
 	<td colspan="2" align="center" style="padding-top: 10px;">
 		<input type="submit" name="save" value="<?php putGS("Save"); ?>" class="button">

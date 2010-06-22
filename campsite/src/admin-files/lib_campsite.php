@@ -490,21 +490,21 @@ function camp_get_plugin_path($p_plugin_name, $p_source_fullpath)
     global $ADMIN_DIR;
 
     $PLUGIN_PATH = dirname(__FILE__).'/../plugins';
-    
+
     $target_subpath = str_replace(dirname(__FILE__), '', $p_source_fullpath);
     $target_fullpath = realpath("$PLUGIN_PATH/$p_plugin_name/$ADMIN_DIR/include/$target_subpath");
-    
+
     if (file_exists($target_fullpath)) {
         return $target_fullpath;
-    }  
-    
-    else return false; 
+    }
+
+    else return false;
 }
 
 
 function get($p_input)
 {
-    return $p_input;   
+    return $p_input;
 }
 
 
@@ -517,18 +517,18 @@ function get($p_input)
 function camp_html_entity_decode_array($p_input, $p_decode_keys=false)
 {
     if ($p_decode_keys) {
-        $function = 'html_entity_decode';    
+        $function = 'html_entity_decode';
     } else {
-        $function = 'get';   
+        $function = 'get';
     }
-    
+
     if (is_array($p_input)) {
-        foreach ($p_input as $key=>$val) { 
+        foreach ($p_input as $key=>$val) {
             if (is_array($val)) {
                 $arr[$function($key)] = html_entity_decode_array($val, $p_decode_keys);
             } else {
                 $arr[$function($key)] = $function($val);
-            }            
+            }
         }
         return $arr;
     } else {
@@ -540,18 +540,18 @@ function camp_html_entity_decode_array($p_input, $p_decode_keys=false)
 function htmlspecialchars_array($p_input, $p_decode_keys=false)
 {
     if ($p_decode_keys) {
-        $function = 'html_specialchars';    
+        $function = 'html_specialchars';
     } else {
-        $function = 'get'; 
+        $function = 'get';
     }
-    
+
     if (is_array($p_input)) {
-        foreach ($p_input as $key=>$val) { 
+        foreach ($p_input as $key=>$val) {
             if (is_array($val)) {
                 $arr[$function($key)] = html_entity_decode_array($val, $p_decode_keys);
             } else {
                 $arr[$function($key)] = $function($val);
-            }            
+            }
         }
         return $arr;
     } else {
@@ -572,7 +572,7 @@ function htmlspecialchars_array($p_input, $p_decode_keys=false)
 function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowClass, &$p_color) {
     global $g_user;
     $p_lockInfo = '';
-    
+
     $timeDiff = camp_time_diff_str($p_articleObj->getLockTime());
     if ($p_articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
         $lockUserObj = new User($p_articleObj->getLockedByUser());
@@ -588,7 +588,7 @@ function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowCl
             $timeDiff['minutes']);
         }
     }
-        
+
     if ($p_articleObj->isLocked() && ($timeDiff['days'] <= 0) && $p_articleObj->getLockedByUser() != $g_user->getUserId()) {
         $p_rowClass = "article_locked";
     } else {
@@ -620,7 +620,7 @@ function camp_get_calendar_include($p_languageCode = null)
             $calendarLocalization = "lang/calendar-$p_languageCode.js";
         }
     }
-	
+
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
 	$calendarURL = "$websiteURL/javascript/jscalendar";
 	ob_start();
@@ -700,6 +700,40 @@ function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
 		}
 	}
 	return count($p_errors);
+}
+
+/**
+ * Internal cron task scheduler.
+ */
+function camp_cron() {
+    require_once(CS_PATH_SITE.DIR_SEP.'classes'.DIR_SEP.'Cron.php');
+
+    $fileName = CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once';
+    $cronTasks = null;
+    if (is_readable($fileName)) {
+        $cronTasks = @file_get_contents($fileName);
+    }
+    if (preg_match_all('/^(.+)([^*]+)$/mU', $cronTasks, $aMatches)) {
+        foreach ($aMatches[1] as $key => $schedule) {
+            $task = trim($aMatches[2][$key]);
+            $taskName = basename($task);
+            $fileName = CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'lastrun-'.$taskName;
+            $taskLastRun = null;
+            if (is_readable($fileName)) {
+                $taskLastRun = @file_get_contents($fileName);
+            }
+            $currentTime = time();
+            if (!$taskLastRun || Cron::due((int)$taskLastRun, (int)$currentTime, $schedule)) {
+                if ($fp = fopen($fileName, 'w')) {
+                    if (flock($fp, LOCK_EX)) {
+                        fwrite($fp, (string)$currentTime);
+                        exec($task . ' > /dev/null &');
+                    }
+                    fclose($fp);
+                }
+            }
+        }
+    }
 }
 
 ?>

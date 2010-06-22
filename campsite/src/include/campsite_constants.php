@@ -30,6 +30,7 @@ define('CS_SYS_TEMPLATES_DIR', 'system_templates');
 define('CS_PATH_SYS_TEMPLATES', CS_PATH_TEMPLATES.DIR_SEP.CS_SYS_TEMPLATES_DIR);
 define('CS_PLUGINS_DIR', 'plugins');
 define('CS_PATH_PLUGINS', CS_PATH_SITE.DIR_SEP.CS_PLUGINS_DIR);
+define('CS_INSTALL_DIR', CS_PATH_SITE.DIR_SEP.'install');
 
 // Campsite session var names for campcaster and file archive storages
 define('CS_CAMPCASTER_SESSION_VAR_NAME', 'cc_sessid');
