@@ -17,10 +17,6 @@ INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageZoom', 
 -- add disabled time zone by default
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('TimeZone', NULL);
 
--- add ManageBackup right
-INSERT INTO `liveuser_rights` VALUES ('74', '0', 'ManageBackup', '1');
-INSERT INTO `liveuser_grouprights` VALUES (1,74,3);
-
 -- add external cron handler
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('ExternalCronManagement', 'Y');
 
@@ -71,3 +67,6 @@ WHERE Articles.Number = DupOrderArticles.Number
 
 DROP TEMPORARY TABLE ArticleOrderDup;
 DROP TEMPORARY TABLE DupOrderArticles;
+
+-- add additional group rights
+system php ./update_rights.php
