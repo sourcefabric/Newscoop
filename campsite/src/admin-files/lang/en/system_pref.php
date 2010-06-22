@@ -1,4 +1,4 @@
-<?php 
+<?php
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Please enter a valid value (1 - 100) for the '$1' field.");
 regGS("Imagecache Lifetime:", "Imagecache Lifetime:");
 regGS("Templates filter mask (separated by comma)", "Templates filter mask (separated by comma)");
@@ -53,4 +53,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Number of fai
 regGS("Keyword separator:", "Keyword separator:");
 regGS("Time Zone:", "Time Zone:");
 regGS("disabled", "disabled");
+regGS("Run cron tasks externaly?", "Run cron tasks externaly?");
 ?>
