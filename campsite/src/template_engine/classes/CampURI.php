@@ -168,6 +168,13 @@ abstract class CampURI
     protected $m_validURI = false;
 
     /**
+     * Holds the URL process error code; null if no error
+     *
+     * @var int
+     */
+    protected $m_errorCode = null;
+
+    /**
      * The list of parameters used in preview mode
      * @var array
      */
@@ -622,14 +629,27 @@ abstract class CampURI
                 return null;
             }
             $template = $tplObj->getName();
-        } else {
+        } elseif (is_null($this->m_errorCode)) {
             $template = CampSystem::GetTemplate($this->language->number,
             $this->publication->identifier, $this->issue->number,
             $this->section->number, $this->article->number);
+        } else {
+        	return null;
         }
 
         return $template;
     } // fn getTemplate
+
+
+    /**
+     * Returns the URL processing error code
+     *
+     * @return int
+     */
+    public function getErrorCode()
+    {
+    	return $this->m_errorCode;
+    } // fn getErrorCode
 
 
     /**
@@ -823,6 +843,14 @@ abstract class CampURI
     public function __get($p_property)
     {
         $p_property = strtolower($p_property);
+        switch ($p_property) {
+        	case 'error_code':
+        		$p_property = 'errorCode';
+        		break;
+        	case 'is_valid':
+        		$p_property = 'validURI';
+        		break;
+        }
         if (!property_exists($this, "m_$p_property")) {
             return null;
         }

@@ -1,3 +1,14 @@
+-- initialize the "URL not-found" handling template
+CREATE TEMPORARY TABLE `InvalidURLTemplates`
+    SELECT IdPublication, IssueTplId
+    FROM Issues AS I1 WHERE Number = (
+        SELECT MAX(Number) FROM Issues AS I2
+        WHERE I1.IdPublication = I2.IdPublication AND IssueTplId > 0)
+    GROUP BY IdPublication;
+UPDATE Publications, InvalidURLTemplates SET url_error_tpl_id = IssueTplId
+WHERE Publications.Id = InvalidURLTemplates.IdPublication;
+
+
 -- add new system preferences for tinymce editor image resizing and zooming
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageResizeWidth', '');
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('EditorImageResizeHeight', '');

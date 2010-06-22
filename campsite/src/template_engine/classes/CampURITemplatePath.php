@@ -106,6 +106,15 @@ class CampURITemplatePath extends CampURI
         $res = $this->setURL();
         if (PEAR::isError($res)) {
             $this->m_validURI = false;
+            $this->m_errorCode = $res->getCode();
+            if ($this->m_errorCode == self::INVALID_TEMPLATE
+            && !is_null($this->m_publication)) {
+            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+            	$template = new MetaTemplate($tplId);
+            	if ($template->defined()) {
+            		$this->m_template = $template;
+            	}
+            }
             CampTemplate::singleton()->trigger_error($res->getMessage());
         } else {
             foreach (CampURITemplatePath::$m_restrictedParameters as $parameter) {

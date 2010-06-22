@@ -177,8 +177,10 @@ abstract class CampSystem
     } // fn GetTemplateIdByName
 
 
-    public static function GetInvalidURLTemplate()
+    public static function GetInvalidURLTemplate($p_publicationId)
     {
+    	$pub = new Publication($p_publicationId);
+    	return $pub->getProperty('url_error_tpl_id');
     } // fn GetInvalidURLTemplate
 
 

@@ -35,7 +35,8 @@ class Publication extends DatabaseObject {
 	                           'comments_subscribers_moderated',
 	                           'comments_public_moderated',
 	                           'comments_captcha_enabled',
-	                           'comments_spam_blocking_enabled');
+	                           'comments_spam_blocking_enabled',
+							   'url_error_tpl_id');
 
 	/**
 	 * A publication represents a magazine or newspaper.
@@ -170,8 +171,8 @@ class Publication extends DatabaseObject {
 	{
 		return $this->m_data['TimeUnit'];
 	} // fn getTimeUnit
-	
-	
+
+
 	/**
 	 * Returns the publication subscription time unit name.
 	 *
@@ -187,8 +188,8 @@ class Publication extends DatabaseObject {
 	    }
 	    return $timeUnit->getName();
 	}
-	
-	
+
+
 
 
 	/**
@@ -485,9 +486,9 @@ class Publication extends DatabaseObject {
 	/**
 	 * Return all languages used in the publication as an array of
 	 * Language objects.
-	 * 
+	 *
      * @param integer $p_excludeLanguageId
-     *      If greater than 0, exclude the language with the given 
+     *      If greater than 0, exclude the language with the given
      *      identifier from the list.
      * @param array $p_order
      *      The array of order directives in the format:
@@ -618,6 +619,6 @@ class Publication extends DatabaseObject {
         }
         return $order;
     }
-	
+
 } // class Publication
 ?>

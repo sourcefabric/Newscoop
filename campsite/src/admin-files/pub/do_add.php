@@ -15,6 +15,7 @@ $f_name = trim(Input::Get('f_name'));
 $f_default_alias = trim(Input::Get('f_default_alias'));
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int', 0);
+$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
 $f_time_unit = Input::Get('f_time_unit', 'string', null, true);
 $f_unit_cost = Input::Get('f_unit_cost', 'string', null, true);
 $f_unit_cost_all_lang = Input::Get('f_unit_cost_all_lang', 'string', null, true);
@@ -63,6 +64,7 @@ $columns = array('Name' => $f_name,
 				 'IdDefaultAlias'=> $alias->getId(),
 				 'IdDefaultLanguage' => $f_language,
 				 'IdURLType' => $f_url_type,
+				 'url_error_tpl_id' => $f_url_error_tpl_id,
 				 'TimeUnit' => $f_time_unit,
 				 'PaidTime' => $f_paid,
 				 'TrialTime' => $f_trial,
