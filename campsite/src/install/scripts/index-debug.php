@@ -106,7 +106,7 @@ function camp_display_message($p_message)
 
     $params = array('context' => null,
                 'template' => '_campsite_message.tpl',
-                'templates_dir' => CS_PATH_SMARTY_SYS_TEMPLATES,
+                'templates_dir' => CS_SYS_TEMPLATES_DIR,
                 'info_message' => $p_message
     );
     $document = CampSite::GetHTMLDocumentInstance();

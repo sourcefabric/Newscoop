@@ -61,7 +61,7 @@ final class CampInstallation extends CampInstallationBase
      * @var string
      */
     private $m_title = null;
-    
+
     private $m_version = null;
 
 
@@ -128,7 +128,7 @@ final class CampInstallation extends CampInstallationBase
         $tpl->assign('copyright', $this->m_version->getCopyright());
 
         $tpl->assign('host_os', $this->m_os);
-        
+
         $tpl->assign('current_step', $this->m_step);
         $tpl->assign('current_step_title', $this->m_steps[$this->m_step]['title']);
         $tpl->assign('step_titles', $this->m_steps);
@@ -136,7 +136,7 @@ final class CampInstallation extends CampInstallationBase
         $session = CampSession::singleton();
         $config_db = $session->getData('config.db', 'installation');
 
-	$tpl->assign('overwrite_db', $this->m_overwriteDb);
+        $tpl->assign('overwrite_db', $this->m_overwriteDb);
 
         if (!empty($config_db)) {
             $tpl->assign('db', $config_db);
