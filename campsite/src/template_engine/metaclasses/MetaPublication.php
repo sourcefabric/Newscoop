@@ -21,7 +21,7 @@ final class MetaPublication extends MetaDbObject {
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Publication();
         }
-        
+
         $this->m_properties['name'] = 'Name';
         $this->m_properties['identifier'] = 'Id';
         $this->m_properties['subscription_currency'] = 'Currency';
@@ -44,7 +44,7 @@ final class MetaPublication extends MetaDbObject {
     /**
      * Returns a list of MetaLanguage objects - list of languages in which
      * the issue was translated.
-     * 
+     *
      * @param boolean $p_excludeCurrent
      * @param array $p_order
      * @param boolean $p_allIssues
@@ -74,7 +74,8 @@ final class MetaPublication extends MetaDbObject {
         if (!$defaultAlias->exists()) {
             return null;
         }
-        return $defaultAlias->getName();
+        $subdir = CampConfig::singleton()->getSetting('SUBDIR');
+        return $defaultAlias->getName() . $subdir;
     }
 
 
