@@ -103,10 +103,10 @@ function onCommentsActivated(p_checkbox)
         	</SELECT>
         	</TD>
         </TR>
-        <TR id="seo" <?php if($publicationObj->getUrlTypeId() != '2') echo 'style="display:none;"'?>>
+        <TR id="seo" <?php if(isset($publicationObj) && $publicationObj->getUrlTypeId() != '2') echo 'style="display:none;"'?>>
             <TD ALIGN="RIGHT"><?php  putGS("Search engine optimization"); ?>:</TD>
             <TD>
-                <?php $seo = $publicationObj->getSeo(); ?>
+                <?php $seo = isset($publicationObj) ? $publicationObj->getSeo() : array(); ?>
                 <input type="checkbox" NAME="f_seo[name]" class="input_checkbox" <?php if (!empty($seo['name'])) { ?>checked<?php } ?>>
                 <?php  putGS("Article title"); ?><br>
                 <input type="checkbox" NAME="f_seo[keywords]" class="input_checkbox" <?php if (!empty($seo['keywords'])) { ?>checked<?php } ?>>
