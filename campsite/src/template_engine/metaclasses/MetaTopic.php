@@ -22,7 +22,7 @@ final class MetaTopic extends MetaDbObject {
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Topic();
         }
-        
+
         $this->m_properties['identifier'] = 'Id';
 
         $this->m_customProperties['name'] = 'getName';
@@ -33,7 +33,7 @@ final class MetaTopic extends MetaDbObject {
     } // fn __construct
 
 
-    protected function getName($p_languageId = null)
+    public function getName($p_languageId = null)
     {
     	if (is_null($p_languageId)) {
     		$p_languageId = CampTemplate::singleton()->context()->language->number;

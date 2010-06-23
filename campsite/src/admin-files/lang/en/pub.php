@@ -1,4 +1,4 @@
-<?php 
+<?php
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "The site alias for publication \"$1\" has been modified to \"$2\".");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "The site alias \"$1\" has been added to publication \"$2\".");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "The alias \"$1\" has been deleted from publication \"$2\".");
@@ -76,4 +76,9 @@ regGS("There are $1 issue(s) left.", "There are $1 issue(s) left.");
 regGS("Time Unit", "Time Unit");
 regGS("Currency", "Currency");
 regGS("Edit languages", "Edit languages");
+regGS("Search engine optimization", "Search engine optimization");
+regGS("Article title", "Article title");
+regGS("Article keywords", "Article keywords");
+regGS("Article topics", "Article topics");
+regGS("Invalid URL Template", "Invalid URL Template");
 ?>

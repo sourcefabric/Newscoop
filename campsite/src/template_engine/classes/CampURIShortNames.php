@@ -140,10 +140,28 @@ class CampURIShortNames extends CampURI
      */
     private function getURIArticle()
     {
-        $uriString = $this->getURISection();
-
         if (!is_null($this->m_article) && $this->m_article->defined()) {
+            $uriString = $this->getURISection();
             $uriString .= $this->m_article->url_name . '/';
+            if ($seo = $this->m_publication->seo) {
+                $article = null;
+                foreach ($seo as $field => $value) {
+                    switch ($field) {
+                        case 'name':
+                            $article .= trim($this->m_article->name) . ' ';
+                            break;
+                        case 'keywords':
+                            $article .= trim($this->m_article->keywords) . ' ';
+                            break;
+                        case 'topics':
+                            $article .= implode('-', $this->m_article->topics) . ' ';
+                            break;
+                    }
+                }
+                $article = preg_replace('/[,\/\.\?"\+&]/', '', trim($article));
+                $article = str_replace(' ', '-', $article) . '.htm';
+                $uriString .= $article;
+            }
         } else {
             $uriString = null;
         }
@@ -240,7 +258,7 @@ class CampURIShortNames extends CampURI
         if ($cParamsSize >= 3) {
             $cSectionSName = $cParams[2];
         }
-        if ($cParamsSize == 4) {
+        if ($cParamsSize >= 4) {
             $cArticleSName = $cParams[3];
         }
 
@@ -402,7 +420,7 @@ class CampURIShortNames extends CampURI
                 if (!is_null($this->m_section) && $this->m_section->defined()) {
                     $this->m_buildPath .= $this->m_section->url_name . '/';
                     if (!is_null($this->m_article) && $this->m_article->defined()) {
-                        $this->m_buildPath .= $this->m_article->url_name . '/';
+                        $this->m_buildPath = $this->getURIArticle();
                     }
                 }
             }

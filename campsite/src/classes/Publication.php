@@ -36,7 +36,8 @@ class Publication extends DatabaseObject {
 	                           'comments_public_moderated',
 	                           'comments_captcha_enabled',
 	                           'comments_spam_blocking_enabled',
-							   'url_error_tpl_id');
+							   'url_error_tpl_id',
+                               'seo');
 
 	/**
 	 * A publication represents a magazine or newspaper.
@@ -280,6 +281,16 @@ class Publication extends DatabaseObject {
 	{
 	    return $this->m_data['fk_forum_id'];
 	} // fn getForumId
+
+	/**
+     * Return the SEO params.
+     *
+     * @return int
+     */
+    public function getSeo()
+    {
+        return @unserialize($this->m_data['seo']);
+    } // fn getSeo
 
 
 	public function setForumId($p_value)

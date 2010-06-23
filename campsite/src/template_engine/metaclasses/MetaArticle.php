@@ -22,7 +22,7 @@ final class MetaArticle extends MetaDbObject {
     private $m_state = null;
 
     private $m_contentCache = null;
-    
+
     private static $m_baseProperties = array(
     'name'=>'Name',
     'number'=>'Number',
@@ -68,7 +68,8 @@ final class MetaArticle extends MetaDbObject {
     'image'=>'getImage',
     'reads'=>'getReads',
     'topics_count'=>'topicsCount',
-    'has_topics'=>'hasTopics'
+    'has_topics'=>'hasTopics',
+    'topics'=>'getTopics',
     );
 
 
@@ -478,12 +479,25 @@ final class MetaArticle extends MetaDbObject {
         }
         return count($articleTopics);
     }
-    
-    
+
+
     protected function hasTopics() {
         return (int)($this->topicsCount() > 0);
     }
 
+
+    protected function getTopics() {
+        $articleTopics = $this->getContentCache('article_topics');
+        if (is_null($articleTopics)) {
+            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
+            $this->setContentCache('article_topics', $articleTopics);
+        }
+        $topics = array();
+        foreach ($articleTopics as $topic) {
+            $topics[] = $topic->getName($this->getLanguage()->number);
+        }
+        return $topics;
+    }
 
     public function has_topic($p_topicName) {
         $topic = new Topic($p_topicName);
@@ -503,7 +517,6 @@ final class MetaArticle extends MetaDbObject {
         }
         return (int)false;
     }
-
 
     /**
      * Returns true if the article was translated in to the language
@@ -532,7 +545,7 @@ final class MetaArticle extends MetaDbObject {
     /**
      * Returns a list of MetaLanguage objects - list of languages in which
      * the article was translated.
-     * 
+     *
      * @param boolean $p_excludeCurrent
      * @param array $p_order
      * @return array of MetaLanguage
@@ -547,8 +560,8 @@ final class MetaArticle extends MetaDbObject {
     	}
     	return $metaLanguagesList;
     }
-    
-    
+
+
     /**
      * Returns true if the article keywords field had the given keyword.
      *

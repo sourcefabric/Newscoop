@@ -1,6 +1,8 @@
 -- Add field for URL error template definition
 ALTER TABLE `Publications` ADD COLUMN `url_error_tpl_id` INT UNSIGNED DEFAULT NULL AFTER `comments_spam_blocking_enabled`;
 
+-- Add field for SEO
+ALTER TABLE `Publications` ADD COLUMN `seo` varchar(128) DEFAULT NULL;
 
 -- Set default NULL for more strict MySQL versions
 ALTER TABLE `Authors` CHANGE `first_name` `first_name` varchar(100) NOT NULL DEFAULT '';

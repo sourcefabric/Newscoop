@@ -84,7 +84,13 @@ function onCommentsActivated(p_checkbox)
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("URL Type"); ?>:</TD>
         	<TD>
-        	<SELECT NAME="f_url_type" class="input_select">
+        	<SELECT NAME="f_url_type" class="input_select"
+        	onchange="
+        	   if (this.value == '2') {
+        	       document.getElementById('seo').setAttribute('style', '');
+        	   } else {
+        	       document.getElementById('seo').setAttribute('style', 'display:none;');
+        	   }">
         	<?php
         	   $selectedUrlType = '2';
         	   if (isset($publicationObj)) {
@@ -96,6 +102,18 @@ function onCommentsActivated(p_checkbox)
         	?>
         	</SELECT>
         	</TD>
+        </TR>
+        <TR id="seo" <?php if($publicationObj->getUrlTypeId() != '2') echo 'style="display:none;"'?>>
+            <TD ALIGN="RIGHT"><?php  putGS("Search engine optimization"); ?>:</TD>
+            <TD>
+                <?php $seo = $publicationObj->getSeo(); ?>
+                <input type="checkbox" NAME="f_seo[name]" class="input_checkbox" <?php if (!empty($seo['name'])) { ?>checked<?php } ?>>
+                <?php  putGS("Article title"); ?><br>
+                <input type="checkbox" NAME="f_seo[keywords]" class="input_checkbox" <?php if (!empty($seo['keywords'])) { ?>checked<?php } ?>>
+                <?php  putGS("Article keywords"); ?><br>
+                <input type="checkbox" NAME="f_seo[topics]" class="input_checkbox" <?php if (!empty($seo['topics'])) { ?>checked<?php } ?>>
+                <?php  putGS("Article topics"); ?>
+            </TD>
         </TR>
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Invalid URL Template"); ?>:</TD>

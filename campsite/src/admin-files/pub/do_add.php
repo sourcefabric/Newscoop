@@ -31,6 +31,7 @@ $f_comments_captcha_enabled = Input::Get('f_comments_captcha_enabled', 'checkbox
 $f_comments_spam_blocking_enabled = Input::Get('f_comments_spam_blocking_enabled', 'checkbox', 'numeric');
 $f_comments_moderator_to = Input::Get('f_comments_moderator_to', 'text', 'string');
 $f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'string');
+$f_seo = Input::Get('f_seo', 'array', array());
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -76,7 +77,9 @@ $columns = array('Name' => $f_name,
 			     'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
 			     'comments_public_moderated' => $f_comments_public_moderated,
 			     'comments_captcha_enabled' => $f_comments_captcha_enabled,
-				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled);
+				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled,
+                 'seo' => serialize($f_seo));
+
 $created = $publicationObj->create($columns);
 if ($created) {
 	$alias->setPublicationId($publicationObj->getPublicationId());

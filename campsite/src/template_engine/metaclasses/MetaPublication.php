@@ -38,6 +38,7 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['captcha_enabled'] = 'getCAPTCHAEnabled';
         $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
         $this->m_customProperties['subscription_time'] = 'getSubscriptionTime';
+        $this->m_customProperties['seo'] = 'getSeo';
     } // fn __construct
 
 
@@ -116,6 +117,11 @@ final class MetaPublication extends MetaDbObject {
             return $this->subscription_paid_time;
         }
         return null;
+    }
+
+
+    protected function getSeo() {
+        return $this->m_dbObject->getSeo();
     }
 } // class MetaPublication
 
