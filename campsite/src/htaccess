@@ -31,4 +31,4 @@ Options -Indexes FollowSymLinks -MultiViews
     RewriteRule . admin.php [L]
 </IfModule>
 
-php value output_buffering Off
+php_value output_buffering Off
