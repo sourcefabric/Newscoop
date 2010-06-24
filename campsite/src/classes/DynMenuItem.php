@@ -1,7 +1,7 @@
 <?PHP
 /**
  * PHP class to dynamically create a javascript menu.
- * Funded by MDLF/Campware (http://www.campware.org)
+ * Funded by MDLF/Campware (http://www.sourcefabric.org)
  *
  * Copyright (C) 2005  Paul Baranowski (paul@paulbaranowski.org)
  *

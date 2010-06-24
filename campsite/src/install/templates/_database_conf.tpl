@@ -6,7 +6,7 @@
  * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 global $Campsite;

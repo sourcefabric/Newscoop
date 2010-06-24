@@ -6,7 +6,7 @@
  * @copyright 2007 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 define('CAMP_FORM_INPUT_TEXT_STANDARD_SIZE', 50);

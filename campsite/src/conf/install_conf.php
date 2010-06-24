@@ -7,7 +7,7 @@
  * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 $Campsite['APACHE_USER'] = 'www-data';
@@ -53,9 +53,9 @@ $Campsite['FILE_DIRECTORY'] = $Campsite['HTML_DIR'].'/files';
 $Campsite['FILE_NUM_DIRS_LEVEL_1'] = "1000";
 $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
-$Campsite['HELP_URL'] = 'http://code.campware.org/manuals/campsite/3.3/';
-$Campsite['ABOUT_URL'] = 'http://www.campware.org/en/camp/campsite_news/';
-$Campsite['SUPPORT_EMAIL'] = 'campsite-support@campware.org';
+$Campsite['HELP_URL'] = 'http://en.flossmanuals.net/Campsite/Introduction';
+$Campsite['ABOUT_URL'] = 'http://www.sourcefabric.org/en/home/web/6/campsite.htm?tpl=18';
+$Campsite['SUPPORT_EMAIL'] = 'campsite-support@lists.sourcefabric.org';
 $Campsite['DEBUG'] = true;
 
 require_once($Campsite['CAMPSITE_DIR'].'/template_engine/classes/CampVersion.php');

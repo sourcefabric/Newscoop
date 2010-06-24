@@ -6,7 +6,7 @@
  * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 global $Campsite;
@@ -32,11 +32,11 @@ $Campsite['site']['title'] = SystemPref::Get('SiteTitle');
 $Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
 $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
-$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/3.3/';
-$Campsite['site']['about_url'] = 'http://www.campware.org/en/camp/campsite_news/';
-$Campsite['site']['email'] = 'campsite-support@lists.campware.org';
+$Campsite['site']['help_url'] = 'http://en.flossmanuals.net/Campsite/Introduction';
+$Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/home/web/6/campsite.htm?tpl=18';
+$Campsite['site']['email'] = 'campsite-support@lists.sourcefabric.org';
 
-$Campsite['campware']['url'] = 'http://www.campware.org/';
+$Campsite['campware']['url'] = 'http://www.sourcefabric.org';
 
 /** Locale settings **/
 $Campsite['locale']['lang_id'] = 1;

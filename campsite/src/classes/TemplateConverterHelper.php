@@ -6,7 +6,7 @@
  * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 $_docRoot = dirname(dirname(__FILE__));

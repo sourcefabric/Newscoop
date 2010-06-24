@@ -7,7 +7,7 @@
  * @copyright 2008 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 define ('SQL', "SELECT %s\nFROM %s");

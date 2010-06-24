@@ -67,7 +67,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
             ?><br/>
             Maintained and distributed under
             <?php echo $campVersion->getLicense(); ?> by
-            <a style="font-size:8pt; color: black;" href="http://www.campware.org" target="campware">
+            <a style="font-size:8pt; color: black;" href="http://www.sourcefabric.org">
             <?php echo $campVersion->getOrganization(); ?>
             </a>
 		</td>

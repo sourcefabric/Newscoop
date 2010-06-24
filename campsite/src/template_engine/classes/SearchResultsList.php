@@ -64,7 +64,8 @@ class SearchResultsList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-		return array();
+		$constraints[] = new ComparisonOperation('Published', new Operator('is', 'integer'), 'Y');
+		return $constraints;
 	}
 
 	/**
