@@ -26,6 +26,10 @@ if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
 require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 
+// define authentication specific prefix
+$authType = $liveuserConfig['authContainers']['DB']['type'];
+$prefix = $authType == 'DB' ? '/' : '/' . strtolower($authType) . '_';
+
 global $ADMIN_DIR;
 global $ADMIN;
 global $g_user;
@@ -39,12 +43,13 @@ camp_set_error_handler("camp_report_bug");
 camp_load_translation_strings("api");
 $plugins = CampPlugin::GetEnabled(true);
 foreach ($plugins as $plugin) {
-	camp_load_translation_strings("plugin_".$plugin->getName());
+    camp_load_translation_strings("plugin_".$plugin->getName());
 }
 
 $no_menu_scripts = array(
-    '/login.php',
-    '/do_login.php',
+    $prefix . 'login.php',
+    $prefix . 'do_login.php',
+    $prefix . 'logout.php',
     '/issues/preview.php',
     '/issues/empty.php',
     '/ad_popup.php',
@@ -60,9 +65,9 @@ $no_menu_scripts = array(
     '/articles/audioclips/edit.php',
     '/articles/empty.php',
     '/comments/ban.php',
-	'/comments/do_ban.php',
-	'/imagearchive/do_add.php'
-	);
+    '/comments/do_ban.php',
+    '/imagearchive/do_add.php'
+    );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
 
@@ -71,119 +76,120 @@ $call_script = substr($request_uri, strlen("/$ADMIN"));
 
 // Remove any GET parameters
 if (($question_mark = strpos($call_script, '?')) !== false) {
-	$call_script = substr($call_script, 0, $question_mark);
+    $call_script = substr($call_script, 0, $question_mark);
 }
 
 // Remove all attempts to get at other parts of the file system
 $call_script = str_replace('/../', '/', $call_script);
+if ($call_script == '/logout.php') $call_script = $prefix . 'logout.php';
 
 $extension = '';
 if (($extension_start = strrpos($call_script, '.')) !== false) {
-	$extension = strtolower(substr($call_script, $extension_start));
+    $extension = strtolower(substr($call_script, $extension_start));
 }
 
 if (($extension == '.php') || ($extension == '')) {
-	header("Content-type: text/html; charset=UTF-8");
-	header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
-	header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-	header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Content-type: text/html; charset=UTF-8");
+    header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    header("Cache-Control: no-store, no-cache, must-revalidate");
 
-	// If they arent trying to login in...
-	if (($call_script != '/login.php') && ($call_script != '/do_login.php')) {
-		// Check if the user is logged in already
-		list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
-		if (!$access) {
+    // If they arent trying to login in...
+    if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php')) {
+        // Check if the user is logged in already
+        list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
+        if (!$access) {
             if ($call_script == '/articles/audioclips/popup.php') {
                 print("<script>\n");
                 print("window.opener.document.forms.article_edit.submit();");
                 print("window.close();");
                 print("</script>");
             }
-			// If not logged in, show the login screen.
-			header("Location: /$ADMIN/login.php");
-			exit(0);
-		}
-	}
+            // If not logged in, show the login screen.
+            header('Location: /' . $ADMIN . $prefix . 'login.php');
+            exit(0);
+        }
+    }
 
-	// Load common translation strings
-	camp_load_translation_strings('globals');
+    // Load common translation strings
+    camp_load_translation_strings('globals');
 
-	// If its not a PHP file, assume its a directory.
-   	if ($extension != '.php') {
-		// If its a directory
-		if (($call_script != '') && ($call_script[strlen($call_script)-1] != '/') ) {
-			$call_script .= '/';
-		}
-		$call_script .= 'index.php';
-	}
-	$needs_menu = ! (in_array($call_script, $no_menu_scripts) || Input::Get('p_no_menu', 'boolean', false, true));
+    // If its not a PHP file, assume its a directory.
+    if ($extension != '.php') {
+        // If its a directory
+        if (($call_script != '') && ($call_script[strlen($call_script)-1] != '/') ) {
+            $call_script .= '/';
+        }
+        $call_script .= 'index.php';
+    }
+    $needs_menu = ! (in_array($call_script, $no_menu_scripts) || Input::Get('p_no_menu', 'boolean', false, true));
 
-	// Verify the file exists
-	$path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
+    // Verify the file exists
+    $path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
 
-	if (!file_exists($path_name)) {
+    if (!file_exists($path_name)) {
 
-	    foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-	       $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
-	       if (file_exists($plugin_path_name)) {
-	           $path_name = $plugin_path_name;
-	           break;
-	       }
-	    }
-	    if (!file_exists($path_name)) {
-    		header("HTTP/1.1 404 Not found");
-    		exit;
-	    }
-	}
+        foreach (CampPlugin::GetEnabled() as $CampPlugin) {
+           $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
+           if (file_exists($plugin_path_name)) {
+               $path_name = $plugin_path_name;
+               break;
+           }
+        }
+        if (!file_exists($path_name)) {
+            header("HTTP/1.1 404 Not found");
+            exit;
+        }
+    }
 
-	// Clean up the global namespace before we call the script
-	unset($access);
-	unset($extension);
-	unset($extension_start);
-	unset($question_mark);
-	unset($no_menu_scripts);
-	unset($request_uri);
+    // Clean up the global namespace before we call the script
+    unset($access);
+    unset($extension);
+    unset($extension_start);
+    unset($question_mark);
+    unset($no_menu_scripts);
+    unset($request_uri);
 
     if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
         CampCache::singleton()->clear('user');
         unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
     }
-	require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
+    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
 
-	// Get the main content
-	ob_start();
-	require_once($path_name);
-	$content = ob_get_clean();
+    // Get the main content
+    ob_start();
+    require_once($path_name);
+    $content = ob_get_clean();
 
-	// We create the top menu AFTER the main content because
-	// of the localizer screen.  It will update the strings, which
-	// need to be reflected immediately in the menu.
-	$_top_menu = '';
-	if ($needs_menu) {
-		ob_start();
+    // We create the top menu AFTER the main content because
+    // of the localizer screen.  It will update the strings, which
+    // need to be reflected immediately in the menu.
+    $_top_menu = '';
+    if ($needs_menu) {
+        ob_start();
         echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 //        echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"rtl\" lang=\"ar\" xml:lang=\"ar\">\n";
         echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en\" xml:lang=\"en\">\n";
-		echo "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
-		require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
-		echo "</td></tr>\n<tr><td>\n";
-		$_top_menu = ob_get_clean();
-	}
+        echo "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
+        require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
+        echo "</td></tr>\n<tr><td>\n";
+        $_top_menu = ob_get_clean();
+    }
 
-	$content =  "<html>\n" . $_top_menu . $content;
+    $content =  "<html>\n" . $_top_menu . $content;
 
-	if ($needs_menu) {
-		$content .= "</td></tr>\n</table>\n";
-	}
-	$content .= "</html>\n";
+    if ($needs_menu) {
+        $content .= "</td></tr>\n</table>\n";
+    }
+    $content .= "</html>\n";
     echo $content;
 
-	camp_html_clear_msgs(true);
+    camp_html_clear_msgs(true);
 } elseif (file_exists($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script")) {
     readfile($Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script");
 } else {
-	header("HTTP/1.1 404 Not found");
-	exit;
+    header("HTTP/1.1 404 Not found");
+    exit;
 }
 
 // run internal cron scheduler
