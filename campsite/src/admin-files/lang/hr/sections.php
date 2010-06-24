@@ -1,4 +1,5 @@
 <?php 
+regGS("The section number $1 was already in use.", "");
 regGS("Delete all articles written in $1 language from this section", "");
 regGS("Delete all articles and all of their translations", "");
 regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");

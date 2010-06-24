@@ -1,4 +1,5 @@
 <?php 
+regGS("Enable Firefox spell checking by default", "");
 regGS("User account information changed for \"$1\"", "La información de la cuenta de usuario se cambió por \"$1\"");
 regGS("Permissions changed for user \"$1\"", "Se cambiaron los permisas para el usuario \"$1\".");
 regGS("Password Generator", "Generador de contraseñas");

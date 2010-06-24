@@ -1,4 +1,24 @@
-<?php
+<?php 
+regGS("We", "We");
+regGS("Tu", "Tu");
+regGS("Th", "Th");
+regGS("Su", "Su");
+regGS("Sep", "Sep");
+regGS("Sa", "Sa");
+regGS("Please enter the translation for week day short names.", "Please enter the translation for week day short names.");
+regGS("Please enter the translation for month short names.", "Please enter the translation for month short names.");
+regGS("Oct", "Oct");
+regGS("Nov", "Nov");
+regGS("Mo", "Mo");
+regGS("Mar", "Mar");
+regGS("Jun", "Jun");
+regGS("Jul", "Jul");
+regGS("Jan", "Jan");
+regGS("Fr", "Fr");
+regGS("Feb", "Feb");
+regGS("Dec", "Dec");
+regGS("Aug", "Aug");
+regGS("Apr", "Apr");
 regGS("No language.", "No language.");
 regGS("Delete language $1", "Delete language $1");
 regGS("You do not have the right to add languages.", "You do not have the right to add languages.");

@@ -1,4 +1,20 @@
 <?php 
+regGS("You do not have the right to manage backup.", "");
+regGS("There was an error trying to delete the file $1.", "");
+regGS("The file $1 was deleted successfully.", "");
+regGS("Size", "");
+regGS("Restore file", "");
+regGS("Restore", "");
+regGS("Mb", "");
+regGS("Make new backup", "");
+regGS("Free disk space", "");
+regGS("Download file", "");
+regGS("Download", "");
+regGS("Delete file", "");
+regGS("Backup list is empty.", "");
+regGS("Are you sure you want to restore the file $1?", "");
+regGS("Are you sure you want to make new backup?", "");
+regGS("Are you sure you want to delete the file $1?", "");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "");
 regGS("Import XML", "هاورد ه ی ئیکس ئێم ئێڵ");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "تۆ ئه بێ مافی زیاد کرد ن / گۆڕانکاری بابه ت و بابه تی بڵاو کراوه ت هه بێ به مه به ستی د ه سنیشا نکرد نی نوسه ر بۆ هه مو بابه ته کان");

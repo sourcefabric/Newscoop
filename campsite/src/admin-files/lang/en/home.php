@@ -1,4 +1,20 @@
-<?php
+<?php 
+regGS("You do not have the right to manage backup.", "You do not have the right to manage backup.");
+regGS("There was an error trying to delete the file $1.", "There was an error trying to delete the file $1.");
+regGS("The file $1 was deleted successfully.", "The file $1 was deleted successfully.");
+regGS("Size", "Size");
+regGS("Restore file", "Restore file");
+regGS("Restore", "Restore");
+regGS("Mb", "Mb");
+regGS("Make new backup", "Make new backup");
+regGS("Free disk space", "Free disk space");
+regGS("Download file", "Download file");
+regGS("Download", "Download");
+regGS("Delete file", "Delete file");
+regGS("Backup list is empty.", "Backup list is empty.");
+regGS("Are you sure you want to restore the file $1?", "Are you sure you want to restore the file $1?");
+regGS("Are you sure you want to make new backup?", "Are you sure you want to make new backup?");
+regGS("Are you sure you want to delete the file $1?", "Are you sure you want to delete the file $1?");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.");
 regGS("Import XML", "Import XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "You must have the permissions to add/change issues and articles in order to set the author for all articles.");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Topics order changed.", "");
+regGS("Topic was deleted.", "");
+regGS("Topic does not exist.", "");
 regGS("The topic name is already in use by another topic.", "Назва гэтай тэмы ўжо выкарыстоўваецца ў iншай тэме.");
 regGS("You must enter a name for the topic.", "Вы павiнны ўвесьцi назву тэмы.");
 regGS("You must choose a language for the topic.", "Вы павiнны выбраць мову для тэмы.");

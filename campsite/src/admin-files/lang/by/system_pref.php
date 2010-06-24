@@ -1,4 +1,9 @@
 <?php 
+regGS("Zoom enabled for images in article content?", "");
+regGS("Image Resizing Width:", "");
+regGS("Image Resizing Width", "");
+regGS("Image Resizing Height:", "");
+regGS("Image Resizing Height", "");
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Увядзіце патрэбнае значэнне (ад 1 да 100) для поля '$1'");
 regGS("Imagecache Lifetime:", "Час жыцця кеш-выявы:");
 regGS("Templates filter mask (separated by comma)", "Час жыцця маскі фільтра (раздзелены коскамі)");

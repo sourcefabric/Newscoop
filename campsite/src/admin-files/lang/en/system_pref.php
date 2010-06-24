@@ -1,4 +1,9 @@
-<?php
+<?php 
+regGS("Zoom enabled for images in article content?", "Zoom enabled for images in article content?");
+regGS("Image Resizing Width:", "Image Resizing Width:");
+regGS("Image Resizing Width", "Image Resizing Width");
+regGS("Image Resizing Height:", "Image Resizing Height:");
+regGS("Image Resizing Height", "Image Resizing Height");
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Please enter a valid value (1 - 100) for the '$1' field.");
 regGS("Imagecache Lifetime:", "Imagecache Lifetime:");
 regGS("Templates filter mask (separated by comma)", "Templates filter mask (separated by comma)");

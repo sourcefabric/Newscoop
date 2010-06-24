@@ -1,4 +1,7 @@
 <?php 
+regGS("Topics order changed.", "");
+regGS("Topic was deleted.", "");
+regGS("Topic does not exist.", "");
 regGS("The topic name is already in use by another topic.", "نا وی ئه و ته وه ر پێشتر به کا ر ها توه");
 regGS("You must enter a name for the topic.", "تۆ ئه بێ نا وی بۆ ئه و ته وه ره د ا بنێیت");
 regGS("You must choose a language for the topic.", "تۆ ئه بێ زما نێ بۆ ئه و ته وه ره هه ڵبژێ ریت");
