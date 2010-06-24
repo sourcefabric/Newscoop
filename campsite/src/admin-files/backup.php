@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("backup");
+camp_load_translation_strings("home");
 
 // check permission
 if (!$g_user->hasPermission('ManageBackup')) {
