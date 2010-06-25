@@ -1,7 +1,7 @@
 <?php 
-regGS("Topics order changed.", "");
-regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
+regGS("Topics order changed.", "Сортировка тем изменена.");
+regGS("Topic was deleted.", "Тема удалена.");
+regGS("Topic does not exist.", "Тема не существует.");
 regGS("The topic name is already in use by another topic.", "Название этой темы уже используется в другой теме.");
 regGS("You must enter a name for the topic.", "Вы должны ввести название темы.");
 regGS("You must choose a language for the topic.", "Вы должны выбрать язык для темы.");

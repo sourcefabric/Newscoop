@@ -76,4 +76,9 @@ regGS("There are $1 issue(s) left.", "Отсалось выпусков: $1");
 regGS("Time Unit", "Единица времени");
 regGS("Currency", "Валюта");
 regGS("Edit languages", "Редактировать языки");
+regGS("Search engine optimization", "Оптимизация для поисковых систем");
+regGS("Article title", "Название статьи");
+regGS("Article keywords", "Ключевые слова статьи");
+regGS("Article topics", "Темы статьи");
+regGS("Invalid URL Template", "Шаблон для показа ошибки 404 (неверная ссылка)");
 ?>
