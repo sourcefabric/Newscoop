@@ -243,16 +243,20 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 				<OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
 				<OPTION value="">-----------------------</OPTION>
 
-				<?php if ($g_user->hasPermission('Publish')) { ?>
-				<OPTION value="workflow_publish"><?php putGS("Status: Publish"); ?></OPTION>
+				<?php if ($g_user->hasPermission('Publish') && $issueObj->isPublished()) { ?>
+				<OPTION value="workflow_publish"><?php echo getGS("Status") . ': ' . getGS("Publish"); ?></OPTION>
+				<?php } ?>
+
+				<?php if ($g_user->hasPermission('Publish') && !$issueObj->isPublished()) { ?>
+				<OPTION value="workflow_publish"><?php echo getGS("Status") . ': ' . getGS("Publish with issue"); ?></OPTION>
 				<?php } ?>
 
 				<?php if ($g_user->hasPermission('ChangeArticle')) { ?>
-				<OPTION value="workflow_submit"><?php putGS("Status: Submit"); ?></OPTION>
+				<OPTION value="workflow_submit"><?php echo getGS("Status") . ': ' . getGS("Submit"); ?></OPTION>
 				<?php } ?>
 
 				<?php if ($g_user->hasPermission('Publish')) { ?>
-				<OPTION value="workflow_new"><?php putGS("Status: Set New"); ?></OPTION>
+				<OPTION value="workflow_new"><?php echo getGS("Status") . ': ' . getGS("New"); ?></OPTION>
 				<?php } ?>
 
 				<?php if ($g_user->hasPermission('ChangeArticle')) { ?>

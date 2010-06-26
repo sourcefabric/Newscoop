@@ -64,8 +64,7 @@ class SearchResultsList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-		$constraints[] = new ComparisonOperation('Published', new Operator('is', 'integer'), 'Y');
-		return $constraints;
+		return array();
 	}
 
 	/**
@@ -188,6 +187,9 @@ class SearchResultsList extends ListObject
         if (!empty($p_parameters['topic_id'])) {
             $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
                                                              $p_parameters['topic_id']);
+        }
+        if (!$context->preview) {
+        	$this->m_constraints[] = new ComparisonOperation('Published', $operator, 'Y');
         }
 
     	return $parameters;

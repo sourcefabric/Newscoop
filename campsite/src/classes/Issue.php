@@ -428,6 +428,8 @@ class Issue extends DatabaseObject {
 			}
 		}
 		if (!is_null($doPublish)) {
+			Article::OnIssuePublish($this->getPublicationId(), $this->getLanguageId(),
+			$this->getIssueNumber(), $doPublish);
 			if ($doPublish) {
 				$this->setProperty('Published', 'Y', true);
 				$this->setProperty('PublicationDate', 'NOW()', true, true);

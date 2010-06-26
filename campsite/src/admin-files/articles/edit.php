@@ -180,9 +180,9 @@ if (($f_edit_mode == "edit") && $hasArticleBodyField) {
 }
 
 if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
-    $spellcheck = 'spellcheck="true"';   
+    $spellcheck = 'spellcheck="true"';
 } else {
-    $spellcheck = 'spellcheck="false"';   
+    $spellcheck = 'spellcheck="false"';
 }
 ?>
 <!-- YUI dependencies -->
@@ -363,23 +363,30 @@ if ($f_edit_mode == "edit") { ?>
           // Show a different menu depending on the rights of the user.
           if ($g_user->hasPermission("Publish")) { ?>
             <select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
-              <?php
-                  camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status: Published"));
-                  camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
-                  camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
-              ?>
+			<?php
+			if (isset($issueObj) && $issueObj->isPublished()) {
+				camp_html_select_option("Y", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("Published"));
+			} else {
+				camp_html_select_option("M", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("Publish with issue"));
+			}
+			camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("Submitted"));
+			camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("New"));
+			?>
             </select>
           <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
             <select name="f_action_workflow" class="input_select" onchange="this.form.submit();">
               <?php
-                  camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status: Submitted"));
-                  camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status: New"));
+                  camp_html_select_option("S", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("Submitted"));
+                  camp_html_select_option("N", $articleObj->getWorkflowStatus(), getGS("Status") . ': ' . getGS("New"));
               ?>
             </select>
           <?php } else {
               switch ($articleObj->getWorkflowStatus()) {
               case 'Y':
                   putGS("Status: Published");
+                  break;
+              case 'M':
+                  putGS("Status: Publish with issue");
                   break;
               case 'S':
                   putGS("Status: Submitted");
@@ -777,7 +784,7 @@ if ($f_edit_mode == "edit") { ?>
 					   class="input_text"
 					   size="50"
 					   maxlength="255"
-			           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" 
+			           onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"
 			           <?php print $spellcheck ?> />
 		        <?php } else {
 		        	print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
@@ -1036,7 +1043,7 @@ window.location.reload();
                    name="<?php echo $dbColumn->getName(); ?>"
                    value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
                    id="<?php echo $dbColumn->getName(); ?>"
-                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> 
+                   <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>
                    onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
             </td>
             </tr>
@@ -1118,9 +1125,9 @@ window.location.reload();
             <!-- END Audioclips table -->
         </td></tr>
         <?php } ?>
-        
+
         <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
-        
+
 		</table>
 	</td>
 </tr>
@@ -1221,7 +1228,7 @@ var handleSuccess = function(o){
 	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
 	emsg.style.display = 'none' ;
 	YAHOO.example.container.wait.hide();
-	
+
     }
 };
 
@@ -1247,7 +1254,7 @@ var sUrl = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/po
 function makeRequest(a){
     // Initialize the temporary Panel to display while waiting
     // for article saving
-    YAHOO.example.container.wait = 
+    YAHOO.example.container.wait =
         new YAHOO.widget.Panel("wait",
                                         { width:"240px",
 					  fixedcenter:true,
@@ -1392,7 +1399,7 @@ createAuthorAutocomplete = function() {
     var oAC = new YAHOO.widget.AutoComplete("f_article_author", "authorContainer", oDS);
     oAC.prehighlightClassName = "yui-ac-prehighlight";
     oAC.useShadow = true;
-    
+
     return {
         oDS: oDS,
         oAC: oAC
