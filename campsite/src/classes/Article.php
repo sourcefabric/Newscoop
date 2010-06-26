@@ -388,9 +388,11 @@ class Article extends DatabaseObject {
     		$articleCopy->positionAbsolute(1);
 
     		$newArticles[] = $articleCopy;
-			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$3. ',
-				$copyMe->getArticleNumber(), $copyMe->getName(),
-				$copyMe->getLanguageId(), $articleCopy->getArticleNumber());
+    		$languageObj = new Language($copyMe->getLanguageId());
+			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$4 (publication $5, issue $6, section $7).',
+				$copyMe->getArticleNumber(), $copyMe->getName(), $languageObj->getCode(),
+				$articleCopy->getArticleNumber(), $articleCopy->getPublicationId(),
+				$articleCopy->getIssueNumber(), $articleCopy->getSectionNumber());
 		}
 
 		Log::Message($logtext, null, 155);
@@ -1309,6 +1311,8 @@ class Article extends DatabaseObject {
 			$p_value = $issueObj->isPublished() ? 'Y' : 'M';
 		}
 
+		$oldStatus = $this->getWorkflowStatus();
+
 		if (!parent::setProperty('Published', $p_value)) {
 			return false;
 		}
@@ -1320,7 +1324,7 @@ class Article extends DatabaseObject {
 		}
 		$logtext = getGS('Article #$1 "$2" status changed from $3 to $4.',
 			$this->m_data['Number'], $this->m_data['Name'],
-			$this->getWorkflowDisplayString(), $this->getWorkflowDisplayString($p_value))
+			$this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value))
 			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
 			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
 			." ".getGS("Section")." ".$this->m_data['NrSection'].")";

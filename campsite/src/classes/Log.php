@@ -13,7 +13,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
  * @package Campsite
  */
 class Log extends DatabaseObject {
-	var $m_keyColumnNames = array('time_created', 'fk_event_id');
+	var $m_keyColumnNames = array('time_created', 'fk_event_id', 'text');
 	var $m_keyIsAutoIncrement = false;
 	var $m_dbTableName = 'Log';
 	var $m_columnNames = array(
