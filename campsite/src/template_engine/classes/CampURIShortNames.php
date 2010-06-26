@@ -277,8 +277,9 @@ class CampURIShortNames extends CampURI
 
         // gets the issue number and sets the issue short name
         if (!empty($cIssueSName)) {
+        	$publishedOnly = !$this->m_preview;
             $issueArray = Issue::GetIssues($this->m_publication->identifier,
-            $this->m_language->number, null, $cIssueSName);
+            $this->m_language->number, null, $cIssueSName, null, $publishedOnly);
             if (is_array($issueArray) && sizeof($issueArray) == 1) {
                 $this->m_issue = new MetaIssue($this->m_publication->identifier,
                 $this->m_language->number,
@@ -317,7 +318,7 @@ class CampURIShortNames extends CampURI
             // we pass article short name as article identifier as they are
             // the same for Campsite, we will have to change this in the future
             $articleObj = new Article($this->m_language->number, $cArticleSName);
-            if (!$articleObj->exists()) {
+            if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
                 return new PEAR_Error("Invalid article identifier in URL.", self::INVALID_ARTICLE);
             }
             $this->m_article = new MetaArticle($this->m_language->number,

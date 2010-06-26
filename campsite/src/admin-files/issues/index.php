@@ -16,7 +16,7 @@ if (!Input::IsValid()) {
 	exit;
 }
 $publicationObj = new Publication($Pub);
-$allIssues = Issue::GetIssues($Pub, null, null, null, $publicationObj->getLanguageId(), array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)), true);
+$allIssues = Issue::GetIssues($Pub, null, null, null, $publicationObj->getLanguageId(), false, array('LIMIT' => array('START' => $IssOffs, 'MAX_ROWS'=> $ItemsPerPage)), true);
 $totalIssues = Issue::GetNumIssues($Pub);
 
 $pager = new SimplePager($totalIssues, $ItemsPerPage, "IssOffs_$Pub", "index.php?Pub=$Pub&");

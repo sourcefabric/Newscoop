@@ -151,27 +151,11 @@ final class CampContext
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
 
-        $this->m_readonlyProperties['preview'] = false;
-        $userId = CampRequest::GetVar('LoginUserId');
-        if (!is_null($userId)) {
-            $user = new User($userId);
-            if ($user->exists()
-            && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
-                $this->m_objects['user'] = new MetaUser($userId);
-                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
-                && $this->m_objects['user']->is_admin;
-            }
-        } else {
-        	$ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
-        	if (count($ipUsers) > 0) {
-        		$this->m_objects['user'] = new MetaUser($ipUsers[0]->getUserId());
-                $this->m_readonlyProperties['preview'] = CampRequest::GetVar('preview') == 'on'
-                && $this->m_objects['user']->is_admin;
-        	}
-        }
-
         $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
+
+        $this->m_objects['user'] = $this->m_readonlyProperties['url']->user;
+        $this->m_readonlyProperties['preview'] = $this->m_readonlyProperties['url']->preview;
 
         if (!$this->m_readonlyProperties['preview']) {
         	if (!$this->m_readonlyProperties['url']->article->is_published) {
