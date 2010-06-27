@@ -1,9 +1,9 @@
 <?php 
-regGS("Zoom enabled for images in article content?", "");
-regGS("Image Resizing Width:", "");
-regGS("Image Resizing Width", "");
-regGS("Image Resizing Height:", "");
-regGS("Image Resizing Height", "");
+regGS("Zoom enabled for images in article content?", "¿Desea activar el acercamiento (zoom) para las imágenes en el contenido del artículo?");
+regGS("Image Resizing Width:", "Ancho para reajustar el tamaño de la imagen:");
+regGS("Image Resizing Width", "Ancho para reajustar el tamaño de la imagen");
+regGS("Image Resizing Height:", "Alto para reajustar el tamaño de la imagen:");
+regGS("Image Resizing Height", "Alto para reajustar el tamaño de la imagen");
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Por favor ingrese un valor válido (1 - 100) para el campo '$1'.");
 regGS("Imagecache Lifetime:", "Tiempo de vida del caché de la imagen");
 regGS("Templates filter mask (separated by comma)", "Filtro de las plantillas (saparados por una coma)");
@@ -56,4 +56,7 @@ regGS("Keyword separator must be at least one character.", "El separador de clav
 regGS("You do not have the right to change system preferences.", "No tiene privilegios para modificar las preferencias del sistema.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Número de intentos de ingreso fallidos antes de mostrar el CAPTCHA:");
 regGS("Keyword separator:", "Separador de palabra clave:");
+regGS("Time Zone:", "Huso horario:");
+regGS("disabled", "desactivar");
+regGS("Run cron tasks externaly?", "¿Desea correr las tareas cron externamente?");
 ?>

@@ -1,20 +1,20 @@
 <?php 
-regGS("You do not have the right to manage backup.", "");
-regGS("There was an error trying to delete the file $1.", "");
-regGS("The file $1 was deleted successfully.", "");
-regGS("Size", "");
-regGS("Restore file", "");
-regGS("Restore", "");
-regGS("Mb", "");
-regGS("Make new backup", "");
-regGS("Free disk space", "");
-regGS("Download file", "");
-regGS("Download", "");
-regGS("Delete file", "");
-regGS("Backup list is empty.", "");
-regGS("Are you sure you want to restore the file $1?", "");
-regGS("Are you sure you want to make new backup?", "");
-regGS("Are you sure you want to delete the file $1?", "");
+regGS("You do not have the right to manage backup.", "No está autorizado para administrar archivos de respaldo.");
+regGS("There was an error trying to delete the file $1.", "Se registró un error al tratar de eliminar el archivo $1.");
+regGS("The file $1 was deleted successfully.", "El archivo $1 se eliminó con éxito.");
+regGS("Size", "Tamaño");
+regGS("Restore file", "Restablecer archivo");
+regGS("Restore", "Restablecer");
+regGS("Mb", "Mb");
+regGS("Make new backup", "Realice un nuevo respaldo");
+regGS("Free disk space", "Espacio libre en el disco");
+regGS("Download file", "Descargue archivo");
+regGS("Download", "Descargar");
+regGS("Delete file", "Eliminar archivo");
+regGS("Backup list is empty.", "La lista de respaldo está vacía");
+regGS("Are you sure you want to restore the file $1?", "¿realmente desea recuperar el archivo $1?");
+regGS("Are you sure you want to make new backup?", "¿realmente desea crear un nuevo respaldo?");
+regGS("Are you sure you want to delete the file $1?", "¿realmente desea eliminar el archivo $1?");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Su servidor no apoya Javascript o (es más probable) no está utilizando Javascript. Por favor arregle eso para poder usar Campsite.");
 regGS("Import XML", "Importar XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Debe tener los permisos para añadir/cambiar notas y artículos para poder poner el autor de todos los artículos.");
@@ -80,4 +80,5 @@ regGS("You do not have the right to access this page.", "No tiene derecho para a
 regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegurese de que escribio correctamente su nombre de usuario y clave.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
+regGS("Backup/Restore", "Respaldar/Restablecer");
 ?>

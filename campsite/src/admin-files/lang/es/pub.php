@@ -76,5 +76,10 @@ regGS("There are $1 issue(s) left.", "Faltan $1 ediciones");
 regGS("Time Unit", "Unidad de tiempo");
 regGS("Currency", "Moneda");
 regGS("Edit languages", "Editar idiomas");
+regGS("Search engine optimization", "Optimización del motor de búsqueda");
+regGS("Article title", "Título del artículo");
+regGS("Article keywords", "Palabras clave del artículo");
+regGS("Article topics", "Tópicos del artículo");
+regGS("Invalid URL Template", "El URL de esta plantilla es inválido");
 regGS("Change publication information", "Cambiar información de publicación");
 ?>

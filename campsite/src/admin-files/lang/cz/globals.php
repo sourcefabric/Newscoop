@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "");
+regGS("Manage Plugins", "");
 regGS("Account", "Účet");
 regGS("Items per page", "Položek na stránku");
 regGS("Add new", "Přidat nový");
@@ -239,7 +241,7 @@ regGS("Show article", "");
 regGS("Article Type Fields", "");
 regGS("Article Images", "");
 regGS("Log Messages", "");
-regGS("Article Files", "Soubory Článku");
+regGS("Article Files", "Soubory článku");
 regGS("Article Comments", "");
 regGS("Are you sure you want to deactivate the subscription?", "Doopravdy chcete deaktivovat předplatné?");
 regGS("Are you sure you want to activate the subscription?", "Doopravdy chcete aktivovat předplatné?");
@@ -256,7 +258,6 @@ regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
 regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
-regGS("Plugins", "");
 regGS("Readers", "");
 regGS("User name", "Uživatelské jméno");
 regGS("Schedule a new publish action", "");
@@ -265,4 +266,5 @@ regGS("User may add/change user accounts and passwords", "Uživatel může přid
 regGS("User may delete user accounts", "Uživatel může mazat uživatelské účty");
 regGS("Add new user account", "Přidat uživatelský účet");
 regGS("Subscription Default Time", "Předplatné období");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Doopravdy chcete odstranit obrázek \\'$1\\'?");
 ?>

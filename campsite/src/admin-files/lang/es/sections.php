@@ -1,5 +1,5 @@
 <?php 
-regGS("The section number $1 was already in use.", "");
+regGS("The section number $1 was already in use.", "El número de sección $1 ya está en uso.");
 regGS("Delete all articles written in $1 language from this section", "Borrar todos los artículos estritos en  lenguaje $1 de esta sección. ");
 regGS("Delete all articles and all of their translations", "Borrar todos los artículos y todas sus traducciones");
 regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Sección \"$1\" ha sido duplicada a $2. \"$3\" de \"4$\"");
