@@ -86,7 +86,7 @@ switch ($f_action) {
 
 if (!is_null($f_action_workflow)) {
 	$f_action_workflow = strtoupper($f_action_workflow);
-	if (in_array($f_action_workflow, array('Y', 'S', 'N'))) {
+	if (in_array($f_action_workflow, array('Y', 'M', 'S', 'N'))) {
 		$access = false;
 		// A publisher can change the status in any way he sees fit.
 		// Someone who can change an article can submit/unsubmit articles.

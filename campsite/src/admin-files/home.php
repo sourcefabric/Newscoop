@@ -141,7 +141,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		<tr><td nowrap><a href="javascript: void(0);" id="link_recently_published_articles" onclick="HideAll(home_page_elements); ShowElement('recently_published_articles'); on_link_click('link_recently_published_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "recently_published_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Recently Published Articles"); ?></a></td></tr>
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_recently_modified_articles" onclick="HideAll(home_page_elements); ShowElement('recently_modified_articles'); on_link_click('link_recently_modified_articles', home_page_links);"  style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "recently_modified_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Recently Modified Articles"); ?></a></td></tr>
-		
+
 		<tr><td nowrap><a href="javascript: void(0);" id="link_scheduled_actions" onclick="HideAll(home_page_elements); ShowElement('scheduled_actions'); on_link_click('link_scheduled_actions', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "scheduled_actions") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Scheduled Publishing"); ?></a></td></tr>
 
 		<tr><td nowrap><a href="javascript: void(0);" id="link_unplaced_articles" onclick="HideAll(home_page_elements); ShowElement('unplaced_articles'); on_link_click('link_unplaced_articles', home_page_links);" style="font-weight: bold; color: #333; padding: 5px; <?php if ($f_screen == "unplaced_articles") { echo 'background-color:#CCC;'; } ?>"><?php putGS("Pending Articles"); ?></a></td></tr>
@@ -174,13 +174,13 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 	        </tr>
 		    <?php
 		}
-		
+
 		foreach ($pendingArticles as $pendingArticle) {
 		  if ($pendingArticle['publish_action'] && $pendingArticle['IdUser'] == $g_user->getUserId()) {
 		      $yourPendingArticles[$pendingArticle['IdLanguage']][$pendingArticle['Number']] = $pendingArticle;
-		  }   
+		  }
 		}
-		
+
 		$color = 0;
 		foreach ($YourArticles as $tmpArticle) {
 			$section = $tmpArticle->getSection();
@@ -211,17 +211,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 				?>
 			</TD>
 
-			<TD align="center" nowrap valign="top">
+			<TD align="center" valign="top">
 				<?php
-				if ($tmpArticle->getWorkflowStatus() == "Y") {
-					putGS('Published');
-				}
-				elseif ($tmpArticle->getWorkflowStatus() == 'S') {
-					putGS('Submitted');
-				}
-				elseif ($tmpArticle->getWorkflowStatus() == "N") {
-					putGS('New');
-				}
+				echo $tmpArticle->getWorkflowDisplayString();
 				?>
 			</TD>
 
@@ -244,7 +236,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			<td align="center" valign="top">
 				<?php p(htmlspecialchars($tmpArticle->getCreationDate())); ?>
 			</td>
-			
+
 			<td align="center" valign="top">
 				<?php
 				if ($pendingArticle = $yourPendingArticles[$tmpArticle->getLanguageId()][$tmpArticle->getArticleNumber()]) {
@@ -254,7 +246,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 						}
 						if ($publishAction == "U") {
 							putGS("Unpublish");
-						}  
+						}
 				}
 				?>
 			</td>
@@ -390,7 +382,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
-									$tmpArticle->getSectionNumber());				
+									$tmpArticle->getSectionNumber());
 			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
 		    ?>
 		<TR class="<?php echo $rowClass ?>">
@@ -434,8 +426,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		} // for
     	?>
         </table>
-        
-        
+
+
 		<!-- Recently Modified -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="recently_modified_articles" <?php if ($f_screen != "recently_modified_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
@@ -465,7 +457,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 			$section = new Section($tmpArticle->getPublicationId(),
 									$tmpArticle->getIssueNumber(),
 									$tmpArticle->getLanguageId(),
-									$tmpArticle->getSectionNumber());				
+									$tmpArticle->getSectionNumber());
 			camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
 		    ?>
 		<TR class="<?php echo $rowClass ?>">
@@ -509,7 +501,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		} // for
     	?>
         </table>
-                
+
 
         <!-- Scheduled Publishing -->
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
@@ -532,7 +524,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		// Warning: the next section is a big hack!
 		// Hopefully will be fixed in 2.4
 		$color = 0;
-		foreach ($pendingActions as $action) {	 
+		foreach ($pendingActions as $action) {
 		if ($action["ObjectType"] == "article") {
 			$language = new Language($action["IdLanguage"]);
 			$pub = new Publication($action["IdPublication"]);

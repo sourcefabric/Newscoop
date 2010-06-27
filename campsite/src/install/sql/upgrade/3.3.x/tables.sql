@@ -1,6 +1,9 @@
 -- Add field for URL error template definition
 ALTER TABLE `Publications` ADD COLUMN `url_error_tpl_id` INT UNSIGNED DEFAULT NULL AFTER `comments_spam_blocking_enabled`;
 
+-- Add intermediary stage in the article workflow for improved articles list performance
+ALTER TABLE `Articles` MODIFY COLUMN `Published` ENUM('N','S', 'M','Y') NOT NULL DEFAULT 'N';
+
 -- Add field for SEO
 ALTER TABLE `Publications` ADD COLUMN `seo` varchar(128) DEFAULT NULL;
 

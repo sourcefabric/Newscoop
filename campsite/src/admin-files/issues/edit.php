@@ -33,7 +33,7 @@ if (!$issueObj->exists()) {
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 // Get translations of this issue
-$issueTranslations = Issue::GetIssues($Pub, null, $Issue, null, null, null, true);
+$issueTranslations = Issue::GetIssues($Pub, null, $Issue, null, null, false, null, true);
 $excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage');
 
 $allTemplates = Template::GetAllTemplates(null, true, true, true);

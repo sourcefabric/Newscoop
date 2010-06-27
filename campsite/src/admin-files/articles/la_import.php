@@ -208,7 +208,7 @@ if ($isValidXMLFile) {
 // Gets all issues
 $allIssues = array();
 if ($f_publication_id > 0) {
-    $allIssues = Issue::GetIssues($f_publication_id, $f_article_language_id, null, null, null, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")), true);
+    $allIssues = Issue::GetIssues($f_publication_id, $f_article_language_id, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")), true);
     // Automatically selects the issue if there is only one
     if (count($allIssues) == 1) {
         $tmpIssue = camp_array_peek($allIssues);

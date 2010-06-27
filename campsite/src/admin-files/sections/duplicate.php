@@ -51,7 +51,7 @@ $allIssues = array();
 if ($f_dest_publication_id > 0) {
     // Get the most recent 50 Issues...if they want something farther back, we are in trouble.
     $sqlOptions = array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC"));
-	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, null, $sqlOptions, true);
+	$allIssues = Issue::GetIssues($f_dest_publication_id, $f_language_id, null, null, null, false, $sqlOptions, true);
 	if (count($allIssues) == 1) {
 		$f_dest_issue_number = $f_src_issue_number;
 	}

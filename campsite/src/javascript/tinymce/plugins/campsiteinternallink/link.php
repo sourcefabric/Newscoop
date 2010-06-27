@@ -44,7 +44,7 @@ $target = Input::get('targetlist', 'string', '', true);
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
-        $issues = Issue::GetIssues($publicationId, $languageId, null, null, null, null, true);
+        $issues = Issue::GetIssues($publicationId, $languageId, null, null, null, false, null, true);
 }
 if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
         $sections = Section::GetSections($publicationId, $issueId, $languageId, null, null, null, true);

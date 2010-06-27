@@ -55,22 +55,22 @@ class ArticlesList extends ListObject
 
 
     private static $s_articleTypes = null;
-    
-    
+
+
     private static $s_dynamicFields = null;
-    
-    
+
+
     const CONSTRAINT_ATTRIBUTE_NAME = 1;
     const CONSTRAINT_DYNAMIC_FIELD = 4;
     const CONSTRAINT_OPERATOR = 2;
     const CONSTRAINT_VALUE = 3;
-    
-    
+
+
     private $m_ignoreIssue = false;
 
     private $m_ignoreSection = false;
 
-    
+
     /**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
 	 * true if this list is limited and elements still exist in the original
@@ -123,7 +123,7 @@ class ArticlesList extends ListObject
 	                		$state = self::CONSTRAINT_DYNAMIC_FIELD;
 	                		break;
 	                	}
-	                	
+
 	                	// not an article type name; is it a dynamic field name?
 	                	$dynamicFields = self::GetDynamicFields($articleTypeName, $attribute);
 	                	if (count($dynamicFields) > 0) {
@@ -135,7 +135,7 @@ class ArticlesList extends ListObject
 	                		$state = self::CONSTRAINT_OPERATOR;
 	                		break;
 	                	}
-	                	
+
 	                	// unknown attribute
 	                	CampTemplate::singleton()->trigger_error("invalid attribute $word in statement list_articles, constraints parameter");
 	                	return false;
@@ -157,7 +157,7 @@ class ArticlesList extends ListObject
 	                }
 	                $this->m_ignoreIssue = $this->m_ignoreIssue || $attribute == 'issue';
 	                $this->m_ignoreSection = $this->m_ignoreSection || $attribute == 'section';
-	                
+
 	                if ($attribute == 'onfrontpage' || $attribute == 'onsection') {
 	                    if (($index + 1) < count($p_constraints)) {
 	                        try {
@@ -249,7 +249,7 @@ class ArticlesList extends ListObject
             CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_articles");
             return false;
 	    }
-	    
+
 	    if (!$this->m_ignoreIssue && $context->issue->defined) {
             $this->m_constraints[] = new ComparisonOperation('NrIssue', new Operator('is', 'integer'),
                                                              $context->issue->number);
@@ -258,7 +258,7 @@ class ArticlesList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('NrSection', new Operator('is', 'integer'),
                                                              $context->section->number);
         }
-        
+
 	    return $parameters;
 	}
 
@@ -364,7 +364,6 @@ class ArticlesList extends ListObject
         }
         if (!$context->preview) {
             $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
-            $this->m_constraints[] = new ComparisonOperation('issue_published', $operator, 'true');
         }
 
     	return $parameters;
@@ -391,8 +390,8 @@ class ArticlesList extends ListObject
 			self::$s_dynamicFields = ArticleTypeField::FetchFields();
 		}
 	}
-	
-	
+
+
 	private static function GetDynamicFields($p_articleTypeName = null, $p_fieldName)
 	{
 		$result = array();

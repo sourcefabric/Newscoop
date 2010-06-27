@@ -62,7 +62,7 @@ if ($changed) {
 }
 
 // The tricky part - language ID and URL name must be unique.
-$conflictingIssues = Issue::GetIssues($f_publication_id, $f_new_language_id, null, $f_url_name, null, null, true);
+$conflictingIssues = Issue::GetIssues($f_publication_id, $f_new_language_id, null, $f_url_name, null, false, null, true);
 $conflictingIssue = array_pop($conflictingIssues);
 // If it conflicts with another issue
 if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f_new_language_id, $f_url_name, true)) {

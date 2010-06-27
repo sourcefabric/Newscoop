@@ -68,7 +68,7 @@ abstract class CampURI
     protected $m_port = null;
 
     /**
-     * @var string
+     * @var MetaUser
      */
     protected $m_user = null;
 
@@ -111,6 +111,13 @@ abstract class CampURI
      * @var array
      */
     protected $m_buildQueryArray = array();
+
+    /**
+     * True if in preview mode
+     *
+     * @var boolean
+     */
+    protected $m_preview = false;
 
     /**
      * Language object
@@ -230,6 +237,8 @@ abstract class CampURI
 
         $this->parse($uriString);
         $this->m_queryArray = array_merge($this->m_queryArray, CampRequest::GetInput('POST'));
+
+        $this->readUser();
     } // fn __construct
 
 
@@ -1076,6 +1085,28 @@ abstract class CampURI
         foreach ($parameters as $parameter) {
             $this->setQueryVar($parameter);
             unset($this->m_buildQueryArray[$parameter]);
+        }
+    }
+
+
+    private function readUser()
+    {
+        $userId = CampRequest::GetVar('LoginUserId');
+        if (!is_null($userId)) {
+            $user = new User($userId);
+            if ($user->exists()
+            && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
+                $this->m_user = new MetaUser($userId);
+                $this->m_preview = CampRequest::GetVar('preview') == 'on'
+                && $this->m_user->is_admin;
+            }
+        } else {
+        	$ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
+        	if (count($ipUsers) > 0) {
+        		$this->m_user = new MetaUser($ipUsers[0]->getUserId());
+                $this->m_preview = CampRequest::GetVar('preview') == 'on'
+                && $this->m_user->is_admin;
+        	}
         }
     }
 

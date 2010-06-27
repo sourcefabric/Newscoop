@@ -388,9 +388,11 @@ class Article extends DatabaseObject {
     		$articleCopy->positionAbsolute(1);
 
     		$newArticles[] = $articleCopy;
-			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$3. ',
-				$copyMe->getArticleNumber(), $copyMe->getName(),
-				$copyMe->getLanguageId(), $articleCopy->getArticleNumber());
+    		$languageObj = new Language($copyMe->getLanguageId());
+			$logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$4 (publication $5, issue $6, section $7).',
+				$copyMe->getArticleNumber(), $copyMe->getName(), $languageObj->getCode(),
+				$articleCopy->getArticleNumber(), $articleCopy->getPublicationId(),
+				$articleCopy->getIssueNumber(), $articleCopy->getSectionNumber());
 		}
 
 		Log::Message($logtext, null, 155);
@@ -1257,12 +1259,14 @@ class Article extends DatabaseObject {
 		if (is_null($p_value)) {
 			$p_value = $this->m_data['Published'];
 		}
-		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
+		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N') && $p_value != 'M') {
 			return '';
 		}
 		switch ($p_value) {
 		case 'Y':
 			return getGS("Published");
+		case 'M':
+			return getGS('Publish with issue');
 		case 'S':
 			return getGS("Submitted");
 		case 'N':
@@ -1285,35 +1289,42 @@ class Article extends DatabaseObject {
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
 		$p_value = strtoupper($p_value);
-		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N')) {
+		if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N') && ($p_value != 'M')) {
 			return false;
 		}
 
-		// If the article is being unpublished
-		if ( ($this->getWorkflowStatus() == 'Y') && ($p_value != 'Y') ) {
-			// Delete indexes
-			ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
-				$this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
-		}
 		// If the article is being published
 		if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
-    		$this->setIsIndexed(false);
 		    $this->setProperty('PublishDate', 'NOW()', true, true);
 		}
 		// Unlock the article if it changes status.
 		if ( $this->getWorkflowStatus() != $p_value ) {
 			$this->setIsLocked(false);
 		}
+
+		if ($p_value == 'Y' || $p_value == 'M') {
+			$issueObj = new Issue($this->getPublicationId(), $this->getLanguageId(),
+			$this->getIssueNumber());
+			if (!$issueObj->exists()) {
+				return false;
+			}
+			$p_value = $issueObj->isPublished() ? 'Y' : 'M';
+		}
+
+		$oldStatus = $this->getWorkflowStatus();
+
 		if (!parent::setProperty('Published', $p_value)) {
 			return false;
 		}
+
 		CampCache::singleton()->clear('user');
+
 		if (function_exists("camp_load_translation_strings")) {
 		    camp_load_translation_strings("api");
 		}
 		$logtext = getGS('Article #$1 "$2" status changed from $3 to $4.',
 			$this->m_data['Number'], $this->m_data['Name'],
-			$this->getWorkflowDisplayString(), $this->getWorkflowDisplayString($p_value))
+			$this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value))
 			." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
 			." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
 			." ".getGS("Section")." ".$this->m_data['NrSection'].")";
@@ -1576,6 +1587,51 @@ class Article extends DatabaseObject {
 	/*****************************************************************/
     /** Static Functions                                             */
     /*****************************************************************/
+
+
+	/**
+	 * Set the article workflow on issue status change. Articles to be
+	 * published with the issue will be published on article publish.
+	 * Published articles are set to "publish with issue" on issue
+	 * unpublish.
+	 *
+	 * @param int $p_publicationId
+	 * @param int $p_languageId
+	 * @param int $p_issueNo
+	 * @param int $p_publish
+	 */
+	public static function OnIssuePublish($p_publicationId, $p_languageId,
+	$p_issueNo, $p_publish = true)
+	{
+		global $g_ado_db;
+
+		settype($p_publicationId, 'integer');
+		settype($p_languageId, 'integer');
+		settype($p_issueNo, 'integer');
+
+		$issueObj = new Issue($p_publicationId, $p_languageId, $p_issueNo);
+		if (!$issueObj->exists()) {
+			return false;
+		}
+
+		if (($issueObj->isPublished() && $p_publish)
+		|| (!$issueObj->isPublished() && !$p_publish)) {
+			return false;
+		}
+
+		$fromState = $p_publish ? 'M' : 'Y';
+		$toState = $p_publish ? 'Y' : 'M';
+
+		$sql = "UPDATE Articles SET Published = '$toState' WHERE "
+		. "IdPublication = $p_publicationId AND IdLanguage = $p_languageId"
+		. " AND NrIssue = $p_issueNo AND Published = '$fromState'";
+		$res = $g_ado_db->Execute($sql);
+
+		CampCache::singleton()->clear('user');
+
+		return $res;
+	}
+
 
     /**
      * Return an Article object having the given number

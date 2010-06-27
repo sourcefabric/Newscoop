@@ -428,6 +428,8 @@ class Issue extends DatabaseObject {
 			}
 		}
 		if (!is_null($doPublish)) {
+			Article::OnIssuePublish($this->getPublicationId(), $this->getLanguageId(),
+			$this->getIssueNumber(), $doPublish);
 			if ($doPublish) {
 				$this->setProperty('Published', 'Y', true);
 				$this->setProperty('PublicationDate', 'NOW()', true, true);
@@ -574,14 +576,18 @@ class Issue extends DatabaseObject {
 	                                 $p_issueNumber = null,
 	                                 $p_urlName = null,
 	                                 $p_preferredLanguage = null,
+	                                 $p_publishedOnly = false,
 	                                 $p_sqlOptions = null, $p_skipCache = false)
 	{
+	    global $g_ado_db;
+
 	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	    	$paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
 	    	$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
 	    	$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
 	    	$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
 	    	$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
+	    	$paramsArray['published_only'] = $p_publishedOnly ? 'true' : 'false';
 	    	$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
 	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
 	    	$issuesList = $cacheListObj->fetchFromCache();
@@ -613,13 +619,16 @@ class Issue extends DatabaseObject {
 	        $whereClause[] = "Issues.Number=$p_issueNumber";
 	    }
 	    if (!is_null($p_urlName)) {
-	        $whereClause[] = "Issues.ShortName='".mysql_real_escape_string($p_urlName)."'";
+	        $whereClause[] = "Issues.ShortName='".$g_ado_db->escape($p_urlName)."'";
+	    }
+	    if ($p_publishedOnly) {
+	    	$whereClause[] = "Issues.Published = 'Y'";
 	    }
 	    if (count($whereClause) > 0) {
 	        $queryStr .= ' WHERE '.implode(' AND ', $whereClause);
 	    }
+
 	    $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-	    global $g_ado_db;
 	    $issues = array();
 	    $rows = $g_ado_db->GetAll($queryStr);
 	    if (is_array($rows)) {
@@ -1054,7 +1063,7 @@ class Issue extends DatabaseObject {
         }
         return $order;
     }
-    
+
 } // class Issue
 
 ?>
