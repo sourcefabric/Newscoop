@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "Ediţia $1 şi-a schimbat statutul la $2
 regGS("Last", "Ultimul");
 regGS("First", "Primul");
 regGS("Article #$1 \"$2\" ($3) created.", "Articolul #$1 \"#$2\" ($3) a fost creat.");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Articolul #$1 \"#$2\" ($3) a fost copiat ca articol #$3.");
 regGS("Single-line Text", "Text");
 regGS("Multi-line Text with WYSIWYG", "Corpul articolului");
 regGS("Image $1 linked to article $2", "Imaginea $1 a fost asociată cu articolul $2");

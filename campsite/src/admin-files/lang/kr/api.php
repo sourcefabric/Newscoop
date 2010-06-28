@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "이슈 $1 이 $2 로 상태가 변경됨
 regGS("Last", "마지막");
 regGS("First", "처음");
 regGS("Article #$1 \"$2\" ($3) created.", "기사 #$1 :$2\" ($3) 새로 작성됨 ");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "기사 #$1 \"$2\" ($3) 가 기사 #$3 로 복사됨");
 regGS("Single-line Text", "텍스트");
 regGS("Multi-line Text with WYSIWYG", "기사 본문");
 regGS("Image $1 linked to article $2", "이미지 $1 가 기사 $2 로 링크됨");

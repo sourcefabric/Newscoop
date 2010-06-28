@@ -273,4 +273,5 @@ regGS("There are $1 issue(s) left.", "დარჩა $1 ნომერი/ჟ�
 regGS("There are $1 keyword(s) left.", "დარჩა $1 საკვანძო სიტყვები: ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "");
 regGS("New field", "ახალი ველი");
+regGS("Publish with issue", "");
 ?>

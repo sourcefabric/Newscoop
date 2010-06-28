@@ -271,4 +271,5 @@ regGS("There are $1 issue(s) left.", "还有$1个问题");
 regGS("There are $1 keyword(s) left.", "还有$1个关键字");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "名称（点击编辑）");
 regGS("New field", "新字段");
+regGS("Publish with issue", "");
 ?>

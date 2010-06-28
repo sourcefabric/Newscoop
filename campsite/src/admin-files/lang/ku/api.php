@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "نه زانراوه");
 regGS("User type \"$1\" deleted", "به کارهێنه ری جۆری  \"$1\" سڕایه وه");
 regGS("User type \"$1\" added", "به کارهێنه ری جۆری  \"$1\" زیاد بوو");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "چا پی $1 گۆڕ د را بۆ  $2");
 regGS("Last", "دواترین");
 regGS("First", "یه که م");
 regGS("Article #$1 \"$2\" ($3) created.", "با به تی #$1 \"$2\" ($3) خوڵقێند را");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "با به تی #$1 \"$2\" ($3) کۆ پی کرا بۆ با به تی  #$3");
 regGS("Single-line Text", "تێکستی یه ك د ێڕی");
 regGS("Multi-line Text with WYSIWYG", "تێکستی چه ند د ێڕی   WYSIWYGله گه ڵ   ");
 regGS("Image $1 linked to article $2", "وێنه ی $1 لینک د را به با به تی $2");

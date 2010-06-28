@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "تم تغير حالة العدد $1 إ�
 regGS("Last", "الأخير");
 regGS("First", "الأول");
 regGS("Article #$1 \"$2\" ($3) created.", "تم إنشاء المقالة رقم $1 \"$2\" ($3)");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "تم نسخ المقالة رقم $1 \"$2\" إلى المقالة رقم $3.");
 regGS("Single-line Text", "نص");
 regGS("Multi-line Text with WYSIWYG", "نص متقدم");
 regGS("Image $1 linked to article $2", "تم ربط الصورة 1$ بالمقال 2$");

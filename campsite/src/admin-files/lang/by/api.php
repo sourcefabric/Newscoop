@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "невядома");
 regGS("User type \"$1\" deleted", "Тып карыстальніка \"$1 выдалены");
 regGS("User type \"$1\" added", "Тып карыстальніка \"$1 дададзены");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "Выпуск $1 зьмянiў свой �
 regGS("Last", "Апошнi");
 regGS("First", "Першы");
 regGS("Article #$1 \"$2\" ($3) created.", "Артыкул #$1 \"$2\" ($3) створаны.");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Артыкул #$1 \"$2\" ($3) скапiяваны ў артыкул #$3.");
 regGS("Single-line Text", "Тэкст");
 regGS("Multi-line Text with WYSIWYG", "Цела артыкула");
 regGS("Image $1 linked to article $2", "Графiчны файл $1 дададзены да артыкула $2");

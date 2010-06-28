@@ -272,4 +272,5 @@ regGS("There are $1 issue(s) left.", "Es sind noch $1 Ausgaben vorhanden");
 regGS("There are $1 keyword(s) left.", "Es sind noch $1 Stichworte vorhanden");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Name (bearbeiten, bitte anklicken)");
 regGS("New field", "Neues Feld");
+regGS("Publish with issue", "");
 ?>

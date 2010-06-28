@@ -400,4 +400,5 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("New Field", "Nieuw Veld");
 regGS("Add New Field", "Voeg nieuw veld toe");
 regGS("No such section.", "Sectie bestaat niet.");
+regGS("Publish with issue", "");
 ?>

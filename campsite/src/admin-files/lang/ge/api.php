@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "უცნობი");
 regGS("User type \"$1\" deleted", "მომხმარებლის ტიპი $1 წაშლილია");
 regGS("User type \"$1\" added", "მომხმარებლის ტიპი $1 დამატებულია");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "");
 regGS("Last", "");
 regGS("First", "");
 regGS("Article #$1 \"$2\" ($3) created.", "");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "");
 regGS("Single-line Text", "");
 regGS("Multi-line Text with WYSIWYG", "");
 regGS("Image $1 linked to article $2", "");

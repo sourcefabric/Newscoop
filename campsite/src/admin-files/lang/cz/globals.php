@@ -266,5 +266,5 @@ regGS("User may add/change user accounts and passwords", "Uživatel může přid
 regGS("User may delete user accounts", "Uživatel může mazat uživatelské účty");
 regGS("Add new user account", "Přidat uživatelský účet");
 regGS("Subscription Default Time", "Předplatné období");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Doopravdy chcete odstranit obrázek \\'$1\\'?");
+regGS("Publish with issue", "");
 ?>

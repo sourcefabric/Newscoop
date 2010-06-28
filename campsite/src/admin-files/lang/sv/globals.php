@@ -257,4 +257,5 @@ regGS("The URL you entered is invalid: '$1'", "Den URL du skrev in är ogiltig: 
 regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
+regGS("Publish with issue", "");
 ?>

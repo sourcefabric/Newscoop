@@ -1,4 +1,6 @@
 <?php 
+regGS("Publish with issue", "");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
@@ -75,7 +77,6 @@ regGS("Issue $1 changed status to $2", "Издању $1 промењен ста�
 regGS("Last", "Последњи");
 regGS("First", "Први");
 regGS("Article #$1 \"$2\" ($3) created.", "Чланак #$1 \"$2\" ($3) је креиран.");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$3. ", "Чланак #$1 \"$2\" ($3) је прекопиран у #$3");
 regGS("Single-line Text", "текст");
 regGS("Multi-line Text with WYSIWYG", "Сложен текст");
 regGS("Image $1 linked to article $2", "Слика $1 јењ повезана са чланком $2.");

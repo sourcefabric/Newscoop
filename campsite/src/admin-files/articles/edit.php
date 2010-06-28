@@ -383,16 +383,16 @@ if ($f_edit_mode == "edit") { ?>
           <?php } else {
               switch ($articleObj->getWorkflowStatus()) {
               case 'Y':
-                  putGS("Status: Published");
+                  echo getGS("Status") . ': ' . getGS("Published");
                   break;
               case 'M':
-                  putGS("Status: Publish with issue");
+                  echo getGS("Status") . ': ' . getGS("Publish with issue");
                   break;
               case 'S':
-                  putGS("Status: Submitted");
+                  echo getGS("Status") . ': ' . getGS("Submitted");
                   break;
               case 'N':
-                  putGS("Status: New");
+                  echo getGS("Status") . ': ' . getGS("New");
                   break;
               }
           }
