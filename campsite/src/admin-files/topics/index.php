@@ -161,7 +161,7 @@ foreach ($topics as $topicPath) {
 	        .' ORDER BY TopicOrder ASC, LanguageId ASC';
 	    $aTopicOrder[$parentId] = $g_ado_db->GetCol($sql);
     }
-	
+
     $topicTranslations = $currentTopic->getTranslations();
 	$isFirstTranslation = true;
 	foreach ($topicTranslations as $topicLanguageId => $topicName) {
@@ -181,7 +181,7 @@ foreach ($topics as $topicPath) {
 		}
 		?>
 		</td>
-		
+
 		<?php if ($isFirstTranslation && count($aTopicOrder[$parentId]) > 1) { ?>
 		<TD ALIGN="right" valign="middle" NOWRAP <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
 		<?php
@@ -231,7 +231,7 @@ foreach ($topics as $topicPath) {
 		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
 			<?php
 			// Append decoration of tree
-			//			
+			//
 			// It's hasn't got sense to describe relations between root topics
 		    if ($parentId != 0) {
 		        // Drawing parent parts
@@ -240,17 +240,17 @@ foreach ($topics as $topicPath) {
 			        if ($topic->getParentId() == 0 || $topicId == $currentTopic->getTopicId()) {
 			            continue;
 			        }
-			        
+
 			        // Is last?
 			        $parentTopicPosition = array_search($topic->getProperty('TopicOrder'), $aTopicOrder[$topic->getParentId()]);
 			        $lastTopicOrder = camp_array_peek($aTopicOrder[$topic->getParentId()], false, -1);
 			        $isLast = $aTopicOrder[$topic->getParentId()][$parentTopicPosition] == $lastTopicOrder;
-			        
+
 		            if (!$isLast && count($aTopicOrder[$topic->getParentId()]) > 1) {
 		                // If previous topic wasn't last...
-		                echo '<img alt="" src="/css/tree-I.png">';
+		                echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-I.png">';
 			        } else {
-			            echo '<img alt="" src="/css/tree-blank.png">';
+			            echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-blank.png">';
 			        }
 			    }
 
@@ -260,10 +260,10 @@ foreach ($topics as $topicPath) {
 			    if ($isFirstTranslation) {
     			    if ($isLast || count($aTopicOrder[$parentId]) == 1) {
     			        // If last or only
-    			        echo '<img alt="" src="/css/tree-L.png">';
+    			        echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-L.png">';
     			    } else {
     			        // If non-last and non-only
-    			        echo '<img alt="" src="/css/tree-T.png">';
+    			        echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-T.png">';
     			    }
 			    } else {
 			        if (!$isLast) {
