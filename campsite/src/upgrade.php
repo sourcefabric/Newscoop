@@ -59,27 +59,28 @@ $configDb = array('hostname'=>$Campsite['db']['host'],
                   'database'=>$Campsite['db']['name']);
 $session->setData('config.db', $configDb, 'installation');
 
+$forward = $session->getData('forward');
+$session->unsetData('forward');
+
 // upgrading the database
 $res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
 if ($res !== 0) {
     display_upgrade_error("While upgrading the database: $res");
 }
 CampCache::singleton()->clear('user');
+CampCache::singleton()->clear();
 
 CampRequest::SetVar('step', 'finish');
-
 $install = new CampInstallation();
-
 $install->initSession();
-
 $step = $install->execute();
 
-$forward = $session->getData('forward');
-$session->unsetData('forward');
-header("Location: " . $forward);
+CampTemplate::singleton()->clearCache();
 
 if (file_exists(__FILE__)) {
     @unlink(__FILE__);
 }
+
+header("Location: " . $forward);
 
 ?>

@@ -73,6 +73,12 @@ final class CampTemplate extends Smarty
     } // fn setTemplateDir
 
 
+    public function clearCache()
+    {
+    	$this->clear_compiled_tpl();
+    }
+
+
     /**
      * Inserts an error message into the errors list.
      *

@@ -57,7 +57,7 @@ final class CampTemplate extends Smarty
 
         $this->cache_dir = CS_PATH_SITE.DIR_SEP.'cache';
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        
+
         $plugin_smarty_camp_plugin_paths = array();
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $plugin_smarty_camp_plugin_paths[] = CS_PATH_SITE.DIR_SEP.$CampPlugin->getBasePath().DIR_SEP.'smarty_camp_plugins';
@@ -111,6 +111,12 @@ final class CampTemplate extends Smarty
     {
         $this->template_dir = $p_dir;
     } // fn setTemplateDir
+
+
+    public function clearCache()
+    {
+    	$this->clear_compiled_tpl();
+    }
 
 
     /**
