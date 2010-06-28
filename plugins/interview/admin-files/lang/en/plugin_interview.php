@@ -1,4 +1,6 @@
 <?php 
+regGS("Please select:", "Please select:");
+regGS("Create new one...", "Create new one...");
 regGS("Title", "Title");
 regGS("Sender", "Sender");
 regGS("Reset", "Reset");
