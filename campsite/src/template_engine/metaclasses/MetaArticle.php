@@ -70,6 +70,7 @@ final class MetaArticle extends MetaDbObject {
     'topics_count'=>'topicsCount',
     'has_topics'=>'hasTopics',
     'topics'=>'getTopics',
+    'type_translation'=>'getTypeTranslated'
     );
 
 
@@ -499,6 +500,12 @@ final class MetaArticle extends MetaDbObject {
         return $topics;
     }
 
+
+    protected function getTypeTranslated() {
+    	return $this->m_dbObject->getTranslateType($this->m_dbObject->getLanguageId());
+    }
+
+
     public function has_topic($p_topicName) {
         $topic = new Topic($p_topicName);
         if (!$topic->exists()) {
@@ -517,6 +524,7 @@ final class MetaArticle extends MetaDbObject {
         }
         return (int)false;
     }
+
 
     /**
      * Returns true if the article was translated in to the language

@@ -1121,11 +1121,11 @@ class Article extends DatabaseObject {
 	 * Get the logged in language's translation of the article type.
 	 * @return string
 	 */
-	public function getTranslateType()
+	public function getTranslateType($p_languageId = null)
 	{
 		$type = $this->getType();
 		$typeObj = new ArticleType($type);
-		return $typeObj->getDisplayName();
+		return $typeObj->getDisplayName($p_languageId);
 	}
 
 
