@@ -81,4 +81,4 @@ ALTER TABLE `ArticleTopics`
   ADD INDEX `article_topics_topicid_idx`(`TopicId`);
 
 -- Position field (Ticket #2667)
-ALTER TABLE `Topics` ADD  `TopicOrder` INT NOT NULL AFTER `Name`;
+ALTER TABLE `Topics` ADD  `TopicOrder` INT NOT NULL DEFAULT 0 AFTER `Name`;

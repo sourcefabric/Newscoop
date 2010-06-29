@@ -58,7 +58,7 @@ $usage =
   and NOT /var/www/cs2/bin/campsite-restore.
 
   Parameters:
-    <backup_file>
+    -b <backup_file>
         The tarball created by the 'campsite-backup' script.
         Give the full or relative path to the file.
 
