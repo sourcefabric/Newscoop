@@ -76,4 +76,9 @@ regGS("There are $1 issue(s) left.", "Засталося выпускаў: $1");
 regGS("Time Unit", "Адзiнка часу");
 regGS("Currency", "Валюта");
 regGS("Edit languages", "Рэдагаваць мовы");
+regGS("Search engine optimization", "Аптымізацыя для пошукавых сістэм");
+regGS("Article title", "Назва артыкула");
+regGS("Article keywords", "Ключавыя словы артыкула");
+regGS("Article topics", "Тэма артыкула");
+regGS("Invalid URL Template", "Шаблён для памылкі 404 (няправільная спасылка)");
 ?>

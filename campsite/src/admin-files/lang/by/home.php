@@ -1,20 +1,20 @@
 <?php 
-regGS("You do not have the right to manage backup.", "");
-regGS("There was an error trying to delete the file $1.", "");
-regGS("The file $1 was deleted successfully.", "");
-regGS("Size", "");
-regGS("Restore file", "");
-regGS("Restore", "");
-regGS("Mb", "");
-regGS("Make new backup", "");
-regGS("Free disk space", "");
-regGS("Download file", "");
-regGS("Download", "");
-regGS("Delete file", "");
-regGS("Backup list is empty.", "");
-regGS("Are you sure you want to restore the file $1?", "");
-regGS("Are you sure you want to make new backup?", "");
-regGS("Are you sure you want to delete the file $1?", "");
+regGS("You do not have the right to manage backup.", "Вы ня маеце права доступу для кіравання рэзервным капіраваннем.");
+regGS("There was an error trying to delete the file $1.", "Памылка пры выдаленні файла $1.");
+regGS("The file $1 was deleted successfully.", "Файл $1 ");
+regGS("Size", "Памер");
+regGS("Restore file", "Аднавіць файл");
+regGS("Restore", "Аднавіць");
+regGS("Mb", "Мб");
+regGS("Make new backup", "Стварыць новую рэзервную копію");
+regGS("Free disk space", "Даступнае прастору на дыску");
+regGS("Download file", "Загрузіць файл");
+regGS("Download", "Загрузіць");
+regGS("Delete file", "Выдаліць файл");
+regGS("Backup list is empty.", "Спіс пусты.");
+regGS("Are you sure you want to restore the file $1?", "Цi Вы ўпэўнены, што жадаеце аднавіць $1?");
+regGS("Are you sure you want to make new backup?", "Цi Вы ўпэўнены, што жадаеце стварыць рэзервную копію?");
+regGS("Are you sure you want to delete the file $1?", "Цi Вы ўпэўнены, што жадаеце выдалiць файл $1?");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Ваш браузэр не падтрымлівае Javascript ці мае спеціфічныя налады. Калі ласка, смяніце налады браузэра каб выкарыстовываць сервісы сістэмы Campsite.");
 regGS("Import XML", "Імпарт XML ");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "У вас павінны быць правы карыстальніка для дадавання/змянення выпускаў і артыкулаў для таго, каб вызначыць аўтара для артыкулаў.");
@@ -80,5 +80,6 @@ regGS("You do not have the right to access this page.", "Вы ня маеце п
 regGS("Login failed", "Памылка ўваходу");
 regGS("Please make sure that you typed the correct user name and password.", "Калi ласка, праверце, цi правiльна Вы ўвялі лагiн і пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Калi праблема iснуе, зьвярнецеся да адмiнiстратара сайта $1");
+regGS("Backup/Restore", "Рэзервнае капіраванне");
 regGS("Instance", "Прыклад ");
 ?>

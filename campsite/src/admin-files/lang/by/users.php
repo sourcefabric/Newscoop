@@ -1,5 +1,5 @@
 <?php 
-regGS("Enable Firefox spell checking by default", "");
+regGS("Enable Firefox spell checking by default", "Уключыць праверку правапісу ў Firefox па-змоўчванні");
 regGS("User account information changed for \"$1\"", "Інфармацыя пра акаунт карыстальніка зменена  для \"$1\" ");
 regGS("Permissions changed for user \"$1\"", "Зменены правы доступу для карыстальніка  \"$1\" ");
 regGS("Password Generator", "Генератар пароляў");
@@ -151,6 +151,7 @@ regGS("User may insert horizontal rules", "Карыстальнiк можа ўс
 regGS("User may change the font color", "Карыстальнiк можа зьмяняць колер шрыфту");
 regGS("User may use superscripts", "Карыстальнiк можа выкарыстоўваць верхнi шрыфт");
 regGS("User may use subscripts", "Карыстальнiк можа выкарыстовываць ніжні шрыфт");
+regGS("User may backup and restore the site data", "Карыстальнік можа кіраваць рэзервным капіраваннем");
 regGS("Miscellaneous", "Рознае");
 regGS("Staff/Subscribers Management", "Кiраваньне пэрсаналам/падпiсчыкамі");
 regGS("Editor Basic Settings", "Асноўныя наладкі рэдактара");

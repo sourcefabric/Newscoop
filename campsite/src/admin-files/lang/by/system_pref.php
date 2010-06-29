@@ -1,9 +1,9 @@
 <?php 
-regGS("Zoom enabled for images in article content?", "");
-regGS("Image Resizing Width:", "");
-regGS("Image Resizing Width", "");
-regGS("Image Resizing Height:", "");
-regGS("Image Resizing Height", "");
+regGS("Zoom enabled for images in article content?", "Ўключыць маштабаванне малюнкаў у артыкулах?");
+regGS("Image Resizing Width:", "Шырыня выявы для маштабавання:");
+regGS("Image Resizing Width", "Шырыня выявы для маштабавання");
+regGS("Image Resizing Height:", "Вышыня выявы для маштабавання:");
+regGS("Image Resizing Height", "Вышыня выявы для маштабавання");
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Увядзіце патрэбнае значэнне (ад 1 да 100) для поля '$1'");
 regGS("Imagecache Lifetime:", "Час жыцця кеш-выявы:");
 regGS("Templates filter mask (separated by comma)", "Час жыцця маскі фільтра (раздзелены коскамі)");
@@ -56,4 +56,7 @@ regGS("Keyword separator must be at least one character.", "Разьдзялял
 regGS("You do not have the right to change system preferences.", "Вы ня маеце права зьмяняць сыстэмныя наладкі. ");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Колькасьць няўдалых спробаў уваходк да тэста  чалавек-машына:");
 regGS("Keyword separator:", "Разьдзяляльнiк ключавых слоў:");
+regGS("Time Zone:", "Часовая зона");
+regGS("disabled", "адключана");
+regGS("Run cron tasks externaly?", "Выконваць службовыя задачы знешніх сэрвісам?");
 ?>
