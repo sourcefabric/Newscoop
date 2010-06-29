@@ -134,11 +134,12 @@ class SyntaxError {
 }
 
 
+$GLOBALS['g_errorList'] = array();
+
+
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
                               $p_errorLine = null, $p_errorContext = null)
 {
-    global $g_errorList;
-
     if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) == 0) {
         $errorString = substr($p_errorString, strlen("Campsite error:"));
     } elseif(strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) == 0) {
@@ -194,7 +195,7 @@ function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
 
     $error = new SyntaxError(SyntaxError::ConstructParameters($errorCode, $errorFile,
                              $errorLine, $what));
-    $g_errorList[] = $error;
+    $GLOBALS['g_errorList'][] = $error;
 }
 
 ?>

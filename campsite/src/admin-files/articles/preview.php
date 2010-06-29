@@ -55,9 +55,8 @@ if ($publicationObj->getUrlTypeId() == 1) {
 	$url .= '?' . $accessParams;
 }
 
-if (isset($_REQUEST['TOL_Language'])) {
-    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
-}
+$selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
+$url .= "&previewLang=$selectedLanguage";
 
 if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);

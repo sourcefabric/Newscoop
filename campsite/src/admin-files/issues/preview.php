@@ -49,9 +49,8 @@ if ($urlType == 1) {
 		. "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 
-if (isset($_REQUEST['TOL_Language'])) {
-    $url .= '&previewLang='.$_REQUEST['TOL_Language'];
-}
+$selectedLanguage = (int)CampRequest::GetVar('Language');
+$url .= "&previewLang=$selectedLanguage";
 
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges

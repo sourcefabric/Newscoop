@@ -17,11 +17,12 @@ $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 .DIRECTORY_SEPARATOR.'campsite_constants.php');
+require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
 // goes to install process if configuration files does not exist yet
 if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
 || !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
-    header('Location: /install/');
+    header('Location: '.$Campsite['SUBDIR'].'/install/');
     exit(0);
 }
 
@@ -67,6 +68,8 @@ if (!is_null($previewLang)) {
 
     // loads translations strings in the proper language for the error messages display
     camp_load_translation_strings('preview', $previewLang);
+} else {
+	set_error_handler(create_function('', 'return true;'));
 }
 
 $start7 = microtime(true);
@@ -79,6 +82,11 @@ $campsite->event('afterRender');
 
 $end2 = microtime(true);
 
+// run internal cron scheduler
+if (SystemPref::Get('ExternalCronManagement') == 'N') {
+    flush();
+    camp_cron();
+}
 
 function camp_upgrade()
 {
@@ -95,7 +103,7 @@ function camp_upgrade()
     header("Cache-Control: no-store, no-cache, must-revalidate");
 
     camp_display_message("Upgrading the database from version $dbVersion...");
-    echo '<META HTTP-EQUIV="Refresh" content="1;url=/upgrade.php">';
+    echo '<META HTTP-EQUIV="Refresh" content="1;url='.$Campsite['SUBDIR'].'/upgrade.php">';
 }
 
 

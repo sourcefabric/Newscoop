@@ -307,7 +307,12 @@ final class CampHTMLDocument
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
 
-        $tpl->display($template);
+        try {
+        	$tpl->display($template);
+        }
+        catch (Exception $ex) {
+        	CampTemplate::trigger_error($ex->getMessage(), $tpl);
+        }
     } // fn render
 
 } // class CampHTMLDocument

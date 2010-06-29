@@ -150,8 +150,6 @@ final class CampSite extends CampSystem
      */
     public function event($p_eventName)
     {
-        global $g_errorList;
-
         $preview = CampTemplate::singleton()->context()->preview;
         switch ($p_eventName) {
         case 'beforeRender':
@@ -163,7 +161,7 @@ final class CampSite extends CampSystem
                     ."</head><body bgcolor=white text=black>\\\n<pre>\\\n"
                     ."\\\n<b>Parse errors:</b>\\\n");
 
-                foreach ($g_errorList as $error) {
+                foreach ($GLOBALS['g_errorList'] as $error) {
                     print("<p>".addslashes($error->getMessage())."</p>\\\n");
                 }
 

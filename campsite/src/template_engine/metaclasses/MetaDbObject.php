@@ -49,6 +49,17 @@ class MetaDbObject {
     	return get_class($this) == get_class($p_otherObject)
     	&& (is_null($this->m_dbObject) && is_null($p_otherObject->m_dbObject)
     	|| $this->m_dbObject->sameAs($p_otherObject->m_dbObject));
+    } // fn same_as
+
+
+    public function __toString()
+    {
+    	$className = get_class($this);
+    	if (strncasecmp($className, 'Meta', 4) == 0) {
+    		$className = strtolower(substr($className, 4));
+    	}
+    	CampTemplate::trigger_error("Invalid use of object of type '$className'. Use \$campsite->${className}->[property_name] to display a property of this object.");
+    	return null;
     }
 
 
@@ -105,7 +116,7 @@ class MetaDbObject {
 
     /**
      * Returns true if the current object was initialized
-     * 
+     *
      * @return boolean
      */
     final public function defined()
