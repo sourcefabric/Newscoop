@@ -2,7 +2,7 @@
 
 DATABASE_USER=root
 DATABASE_PASSWORD=
-DATABASE_NAME=campsite
+DATABASE_NAME=campsite34
 
 if [ "$1" != "" ]; then
     DATABASE_NAME=$1
@@ -29,9 +29,7 @@ TABLES_TO_FILL="
  Templates\
  Topics\
  Translations\
- XArticle\
- XLink\
- XService\
+ Xnews_article\
  liveuser_groupusers\
  liveuser_perm_users\
  liveuser_perm_users_perm_user_id_seq\
@@ -43,7 +41,7 @@ TABLES_TO_FILL="
  phorum_forums\
  phorum_users"
 
-CUSTOM_TABLES="XArticle XLink XService"
+CUSTOM_TABLES="Xnews_article"
 
 mysqldump -u $DATABASE_USER $password_string -t --insert-ignore \
   $DATABASE_NAME $TABLES_TO_FILL > campsite_demo_data.sql

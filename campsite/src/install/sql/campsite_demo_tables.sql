@@ -1,8 +1,8 @@
--- MySQL dump 10.11
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
 --
--- Host: localhost    Database: campsite33
+-- Host: localhost    Database: campsite34
 -- ------------------------------------------------------
--- Server version	5.0.75-0ubuntu10.2
+-- Server version	5.1.41-3ubuntu12.3
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,54 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `XArticle`
+-- Table structure for table `Xnews_article`
 --
 
-DROP TABLE IF EXISTS `XArticle`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `XArticle` (
-  `NrArticle` int(10) unsigned NOT NULL default '0',
-  `IdLanguage` int(10) unsigned NOT NULL default '0',
-  `FDeck` varchar(255) NOT NULL default '',
-  `FByline` varchar(255) NOT NULL default '',
-  `FTeaser_a` varchar(255) NOT NULL default '',
-  `FTeaser_b` varchar(255) NOT NULL default '',
-  `FIntro` mediumblob NOT NULL,
-  `FFull_text` mediumblob NOT NULL,
-  PRIMARY KEY  (`NrArticle`,`IdLanguage`)
+DROP TABLE IF EXISTS `Xnews_article`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xnews_article` (
+  `NrArticle` int(10) unsigned NOT NULL,
+  `IdLanguage` int(10) unsigned NOT NULL,
+  `FDeck` varchar(255) NOT NULL,
+  `FLead_and_SMS` mediumblob,
+  `Fbody` mediumblob NOT NULL,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `XLink`
---
-
-DROP TABLE IF EXISTS `XLink`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `XLink` (
-  `NrArticle` int(10) unsigned NOT NULL default '0',
-  `IdLanguage` int(10) unsigned NOT NULL default '0',
-  `Furl` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `XService`
---
-
-DROP TABLE IF EXISTS `XService`;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-CREATE TABLE `XService` (
-  `NrArticle` int(10) unsigned NOT NULL default '0',
-  `IdLanguage` int(10) unsigned NOT NULL default '0',
-  `FFull_text` mediumblob NOT NULL,
-  PRIMARY KEY  (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -74,4 +41,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2009-06-15 17:57:36
+-- Dump completed on 2010-07-02 15:33:02
