@@ -45,7 +45,7 @@ class CampInstallationBase
     /**
      * @var string
      */
-    protected $m_sampleSiteName = 'campsite_3.0-sample-template-01-v1';
+    protected $m_sampleSiteName = 'classic';
 
     /**
      * @var string

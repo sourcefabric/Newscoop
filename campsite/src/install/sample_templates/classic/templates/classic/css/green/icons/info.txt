@@ -1,0 +1,41 @@
+NDD Icon Set 1.0
+
+Dies ist das erste Icon Set das ich erstellt habe.
+Alle Icons liegen vollständig im PNG Format inklusive Alpha-Kanal vor und sind in den Größen 16x16, 32x32, 64x64 und 128x128 Pixeln vorhanden.
+
+Das Icon Set ist freie Software und steht unter der LGPL-Lizenz 3.0. Das erlaubt die freie Verwendung in privaten und kommerziellen Projekten. Änderungen des Icon Sets müssen jedoch wieder unter der LGPL oder GPL veröffentlicht werden.
+
+Weitere Informationen über die genauen Bestimmungen der Lizenz finden Sie unter:
+http://www.gnu.org/licenses/lgpl-3.0.html
+
+Eine inoffizielle deutsche Übersetzung dazu gibt es unter folgender Adresse:
+http://www.gnu.de/documents/lgpl-3.0.de.html
+
+Eine Kopie der Lizenz ist ebenfalls im Paket enthalten, siehe Datei lgpl-3.0.txt.
+
+Dieses Programm wird in die Hoffnung, daß es nützlich ist, aber OHNE IRGENDEINE GARANTIE verteilt!
+
+Wenn Sie dieses Icon Set oder Teile daraus verwenden, informieren Sie bitte den Autor per E-Mail in welchem Projekt es Verwendung findet.
+Senden Sie eine E-Mail an: info@nddesign.de
+
+Copyright (c) 2007 Fabian Volmer - Next Dimension Desgin - www.nddesign.de
+
+
+-------------------------------------------------------------------------------------------
+NDD Icon Set 1.0
+
+This is the first Icon Set I created. I decided to distribute it as free software under the LGPL 3.0 license so you can use it in your own private and commercial projects.
+
+For more details about the license visit:
+http://www.gnu.org/licenses/lgpl-3.0.html
+
+A copy of the GNU Lesser General Public License is also included in the package, see the file lgpl-3.0.txt.
+
+This Icon Set is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation; either version 3.0 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+
+If you use this Icon Set or parts of it please let the author know in which projects.
+Send an e-mail to: info@nddesign.de
+
+Copyright (c) 2007 Fabian Volmer - Next Dimension Desgin - www.nddesign.de

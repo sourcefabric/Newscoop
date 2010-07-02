@@ -1,0 +1,36 @@
+body {
+  background:#BEC3C6 url(bg.jpg) repeat-x;
+  margin: 0px;
+}
+#wrapbg {
+  display: block;
+  height: 600px;
+  background: url(light.jpg) center top no-repeat;
+}
+#wrapper {
+  margin-top: 20px;
+}
+div#header {
+  padding-top:5px;
+  height: 180px;
+  background: url(header.jpg) center top no-repeat;
+}
+/* sectionheader with section name */
+div.sectionheader {
+  padding-left: 10px;
+  width: 956px;
+}
+/* white backgrounds */
+#wrapper,
+#header,
+div.colmask,
+#footer {
+  background: white;
+}
+/* get rid off lines */
+div#navmain ul {
+  border-top: 0px solid #ddd;
+}
+.colmask {
+  border-right: 0px solid #ddd;
+}
