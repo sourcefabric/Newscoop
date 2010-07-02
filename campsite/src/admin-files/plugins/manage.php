@@ -12,20 +12,20 @@ if (!$g_user->hasPermission('plugin_manager')) {
 if (Input::Get('save')) {
     $p_plugins = Input::Get('p_plugins', 'array');
     $p_enabled = Input::Get('p_enabled', 'array');
-    
-    
+
+
     // delete from DB those which were uninstalled
     foreach (CampPlugin::getAll() as $CampPlugin) {
         if (!$p_plugins[$CampPlugin->getName()]) {
-            $CampPlugin->delete();   
-        }   
+            $CampPlugin->delete();
+        }
     }
-    
+
 
     foreach ($p_plugins as $plugin => $oldversion) {
         $CampPlugin = new CampPlugin($plugin);   // installed version, if exists
         $currentVersion = $CampPlugin->getFsVersion();
-        
+
         if ($p_enabled[$plugin]) {
             if ($CampPlugin->exists()) {
                 if ($CampPlugin->getDbVersion() != $currentVersion) {
@@ -34,10 +34,10 @@ if (Input::Get('save')) {
                     $CampPlugin->create($plugin, $currentVersion);
                     $CampPlugin->update();
                     $CampPlugin->enable();
-                          
+
                 } else {
                     // just enable plugin
-                    $CampPlugin->enable();   
+                    $CampPlugin->enable();
                 }
             } else {
                 // install + enable not previously installed plugin
@@ -46,30 +46,30 @@ if (Input::Get('save')) {
                 $CampPlugin->enable();
             }
         } else {
-            $CampPlugin->disable();   
+            $CampPlugin->disable();
         }
     }
 }
 
 if (Input::Get('upload_package')) {
     $file = $_FILES['package'];
-    if ($Plugin = CampPlugin::extractPackage($file['tmp_name'], &$log)) {
+    if ($Plugin = CampPlugin::extractPackage($file['tmp_name'], $log)) {
         $success = getGS('The plugin $1 was sucessfully installed.', $Plugin->getName());
     } else {
-        $error = $log;   
+        $error = $log;
     }
-    //$Plugin->enable();    
+    //$Plugin->enable();
 }
 
 if (Input::Get('p_uninstall')) {
     $Plugin = new CampPlugin(Input::Get('p_plugin', 'string'));
-    $Plugin->uninstall();    
+    $Plugin->uninstall();
 }
 
 // check if update was needed
 CampPlugin::GetPluginsInfo(false, true);
 if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
-    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));  
+    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));
 }
 
 $crumbs = array();
@@ -109,7 +109,7 @@ if ($success) {
         <td class="error_message" ><?php echo $error ?></td>
       </tr>
    </table>
-   <?php  
+   <?php
 }
 ?>
 
@@ -136,21 +136,21 @@ if ($success) {
             <TD width="100px">
                 <?php  p($info['label']); ?>
             </TD>
-            
+
             <td width="100px">
                 <?php p($info['version']) ?>
             </td>
-    
+
             <TD width="*">
                 <?php  p($info['description']); ?>&nbsp;
             </TD>
-    
+
             <TD  width="80px" align="center">
                 <input type="hidden" name="p_plugins[<?php p(htmlspecialchars($info['name']))?>]" value="<?php p(htmlspecialchars($info['version'])) ?>">
-                
+
                 <input type="checkbox" name="p_enabled[<?php p(htmlspecialchars($info['name']))?>]" <?php p($checked) ?>>
             </TD>
-            
+
             <TD  width="80px" align="center">
                <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall? All plugin data will be deleted!', $info['name']) ?>')">
                  <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
