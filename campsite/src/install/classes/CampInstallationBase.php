@@ -112,6 +112,12 @@ class CampInstallationBase
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
+
+                // clear all cache
+                require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
+                CampCache::singleton()->clear('user');
+                CampCache::singleton()->clear();
+                CampTemplate::singleton()->clearCache();
             }
             break;
         }
@@ -363,6 +369,13 @@ class CampInstallationBase
         $dbData = $session->getData('config.db', 'installation');
         $mcData = $session->getData('config.site', 'installation');
 
+        CampInstallationBaseHelper::SetCacheStatus();
+        if (is_array($mcData) && isset($mcData['sitetitle'])
+        && !CampInstallationBaseHelper::SetSiteTitle($mcData['sitetitle'])) {
+            $this->m_step = 'mainconfig';
+            $this->m_message = 'Error: Could not update the site title.';
+            return false;
+        }
         if (is_array($mcData) && isset($mcData['adminemail'])
         && !CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'], $mcData['adminpsswd'])) {
             $this->m_step = 'mainconfig';
@@ -540,7 +553,8 @@ class CampInstallationBase
         if (!is_dir($p_directoryPath)) {
             mkdir($p_directoryPath);
         }
-    }
+    } // fn CreateDirectory
+
 
     private static function InstallPlugins()
     {
@@ -577,6 +591,10 @@ class CampInstallationBaseHelper
     public static function ConnectDB()
     {
         global $g_db;
+
+        if (is_a($g_db, 'ADONewConnection')) {
+        	return true;
+        }
 
         $session = CampSession::singleton();
         $dbData = $session->getData('config.db', 'installation');
@@ -655,6 +673,10 @@ class CampInstallationBaseHelper
     {
         global $g_db;
 
+        if (self::ConnectDB() == false) {
+            return false;
+        }
+
         if (!ini_get('apc.enabled') || !function_exists('apc_store')) {
             $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
                 ."WHERE varname = 'SiteCacheEnabled'";
@@ -668,6 +690,21 @@ class CampInstallationBaseHelper
 
         return true;
     } // fn SetCacheStatus
+
+
+    public static function SetSiteTitle($p_title)
+    {
+        global $g_db;
+
+        if (self::ConnectDB() == false) {
+            return false;
+        }
+
+        $p_title = $g_db->escape($p_title);
+        $sqlQuery = "UPDATE SystemPreferences SET value = '$p_title' "
+        ."WHERE varname = 'SiteTitle'";
+        return $g_db->Execute($sqlQuery);
+    }
 
 
     /**
