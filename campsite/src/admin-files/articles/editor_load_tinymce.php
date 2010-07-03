@@ -11,7 +11,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 {
 	global $Campsite;
 
-	$stylesheetFile = $Campsite['WEBSITE_URL'] + '/admin/articles/article_stylesheet.css';
+	$stylesheetFile = $Campsite['WEBSITE_URL'] . '/admin/articles/article_stylesheet.css';
 
 	/** STEP 1 ********************************************************
 	 * What are the names of the textareas you will be turning
@@ -272,7 +272,7 @@ tinyMCE.init({
     paste_convert_headers_to_strong: true,
     paste_remove_spans: true,
     paste_remove_styles: true,
-    
+
     <?php if ($p_user->hasPermission('EditorSpellcheckerEnabled')): ?>
         gecko_spellcheck : true,
     <?php endif; ?>
