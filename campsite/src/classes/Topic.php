@@ -116,7 +116,7 @@ class Topic extends DatabaseObject {
 		if (isset($p_values['Name'])) {
 			$this->m_names[$this->m_data['LanguageId']] = $p_values['Name'];
 		}
-		
+
 		// compute topic order number
 		$queryStr = "SELECT MIN(TopicOrder) AS min FROM Topics";
 		$topicOrder = $g_ado_db->GetOne($queryStr) - 1;
@@ -129,7 +129,7 @@ class Topic extends DatabaseObject {
 			$topicOrder = 1;
 		}
 		$p_values['TopicOrder'] = $topicOrder;
-		
+
 		$success = parent::create($p_values);
 		if ($success) {
 			$this->m_exists = true;
@@ -162,7 +162,7 @@ class Topic extends DatabaseObject {
 			$deleted = $g_ado_db->Execute($sql);
 		}
 
-		// Change TopicOrder of another topics 
+		// Change TopicOrder of another topics
 		// if all translations of this topic removed
 		if ($deleted) {
 		    $sql = "SELECT COUNT(*) FROM Topics WHERE Id=".$this->m_data['Id'];
@@ -442,6 +442,9 @@ class Topic extends DatabaseObject {
 			$order = array();
 			foreach ($p_order as $orderCond) {
 				switch (strtolower($orderCond['field'])) {
+					case 'default':
+						$order['TopicOrder'] = $orderCond['dir'];
+						break;
                 	case 'byname':
                 		$order['Name'] = $orderCond['dir'];
                 		break;
@@ -616,7 +619,7 @@ class Topic extends DatabaseObject {
 	public function positionAbsolute($p_moveToPosition = 1)
 	{
 		global $g_ado_db;
-		
+
 		CampCache::singleton()->clear('user');
 		$this->fetch();
 		// Get the topic that is in the location we are moving
@@ -629,7 +632,7 @@ class Topic extends DatabaseObject {
 		if (!$destRow) {
 			return false;
 		}
-		
+
 		// Reposition destination topic.
 		$operator = $destRow['TopicOrder'] < $this->m_data['TopicOrder'] ? '+' : '-';
 		if ($destRow['TopicOrder'] > $this->m_data['TopicOrder']) {

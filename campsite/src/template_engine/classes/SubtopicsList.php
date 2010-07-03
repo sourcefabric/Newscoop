@@ -9,7 +9,7 @@ require_once('ListObject.php');
  */
 class SubtopicsList extends ListObject
 {
-    private static $s_orderFields = array(
+    private static $s_orderFields = array('default',
                                           'bynumber',
                                           'byname'
                                     );
@@ -39,9 +39,13 @@ class SubtopicsList extends ListObject
 	        $sqlOptions = null;
 	    }
 
-	    $topicsList = Topic::GetTopics(null, $p_parameters['language_id'], null, 
+	    if (count($this->m_order) == 0) {
+	    	$this->m_order[] = array('field'=>'default', 'dir'=>'asc');
+	    }
+
+	    $topicsList = Topic::GetTopics(null, $p_parameters['language_id'], null,
 	                                   $rootTopicId, $sqlOptions, $this->m_order);
-	    $p_count = Topic::GetTopics(null, $p_parameters['language_id'], null, 
+	    $p_count = Topic::GetTopics(null, $p_parameters['language_id'], null,
 	                                $rootTopicId, null, null, true);
 	    $metaTopicsList = array();
 	    $index = 0;
@@ -137,6 +141,9 @@ class SubtopicsList extends ListObject
     	// 'topic_identifier' and 'language_id' parameters are needed for the cache key
     	$context = CampTemplate::singleton()->context();
     	$parameters['topic_identifier'] = $context->topic->identifier;
+    	if (is_null($parameters['topic_identifier'])) {
+    		$parameters['topic_identifier'] = 0;
+    	}
         $parameters['language_id'] = $context->language->number;
     	return $parameters;
 	}
