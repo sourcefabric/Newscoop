@@ -14,6 +14,10 @@
         <div class="col1wrap">
             <div class="col1">
 
+{{ if !$campsite->url->is_valid }}
+	<h3>The requested page was not found.</h3>
+{{ else }}
+
 <!-- Column 1 start -->
 <!-- section 10 -->
 {{ local }}
@@ -42,6 +46,8 @@
 {{ /local }}
 
 <!-- Column 1 end -->
+
+{{ /if }}
 
             </div>
         </div>
