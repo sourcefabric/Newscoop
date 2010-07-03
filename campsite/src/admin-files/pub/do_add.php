@@ -31,7 +31,7 @@ $f_comments_captcha_enabled = Input::Get('f_comments_captcha_enabled', 'checkbox
 $f_comments_spam_blocking_enabled = Input::Get('f_comments_spam_blocking_enabled', 'checkbox', 'numeric');
 $f_comments_moderator_to = Input::Get('f_comments_moderator_to', 'text', 'string');
 $f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'string');
-$f_seo = Input::Get('f_seo', 'array', array());
+$f_seo = Input::Get('f_seo', 'array', array(), true);
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
