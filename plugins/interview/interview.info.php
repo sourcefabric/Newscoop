@@ -1,9 +1,9 @@
 <?php
-$info = array( 
+$info = array(
     'name' => 'interview',
-    'version' => '3.3.x-0.3',
+    'version' => '3.4.x-0.3',
     'label' => 'Interview',
-    'description' => 'This plugin provides functionality to perform online interviews.',  
+    'description' => 'This plugin provides functionality to perform online interviews.',
     'menu' => array(
         'name' => 'interview',
         'label' => 'Interviews',
@@ -77,28 +77,28 @@ $info = array(
 
 if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
     define('PLUGIN_INTERVIEW_FUNCTIONS', true);
-     
+
     function plugin_interview_install()
     {
         global $LiveUserAdmin;
-        
+
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_notify', 'has_implied' => 1));
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_guest', 'has_implied' => 1));
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_moderator', 'has_implied' => 1));
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_interview_admin', 'has_implied' => 1));
-        
+
         require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
-        
+
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview/install/sql/plugin_interview.sql', $error_queries);
-        
-        unset($GLOBALS['g_db']);       
+
+        unset($GLOBALS['g_db']);
     }
-    
+
     function plugin_interview_uninstall()
     {
         global $LiveUserAdmin, $g_ado_db;
-        
+
         foreach (array('plugin_interview_notify', 'plugin_interview_guest', 'plugin_interview_moderator', 'plugin_interview_admin') as $right_def_name) {
             $filter = array(
                 "fields" => array("right_id"),
@@ -109,25 +109,25 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
                 $LiveUserAdmin->removeRight(array('right_id' => $rights[0]['right_id']));
             }
         }
-        
+
         $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
         $g_ado_db->execute('DROP TABLE plugin_interview_items');
-        
+
         system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
-    
+
     function plugin_interview_update()
     {
         require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
-        
+
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'interview'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
-        
-        unset($GLOBALS['g_db']);       
+
+        unset($GLOBALS['g_db']);
     }
-    
+
     function plugin_interview_init(&$p_context)
-    {      
+    {
         $interview_id = Input::Get("f_interview_id", "int");
         $interviewitem_id = Input::Get("f_interviewitem_id", "int");
 
@@ -138,8 +138,8 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
         } else {
             $p_context->interview = new MetaInterview($interview_id);
         }
-        
-        foreach (array('f_interview_id', 
+
+        foreach (array('f_interview_id',
                        'f_interview_action',
                        'f_interviewnotify',
                        'f_interviewitem',
@@ -147,21 +147,21 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
                        'f_interviewitem_question',
                        'f_interviewitem_action'
                    ) as $v) {
-                       
+
             $p_context->url->reset_parameter($v);
-            $p_context->default_url->reset_parameter($v);   
+            $p_context->default_url->reset_parameter($v);
         }
     }
-    
+
     function plugin_interview_addPermissions()
     {
         $Admin = new UserType(1);
         $ChiefEditor = new UserType(2);
         $Editor = new UserType(3);
-        
+
         $Admin->setPermission('plugin_interview_admin', true);
         $Admin->setPermission('plugin_interview_moderator', true);
-        
+
         $ChiefEditor->setPermission('plugin_interview_moderator', true);
     }
 }
