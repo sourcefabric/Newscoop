@@ -17,7 +17,7 @@ var CampsiteMediaDialog = {
 	if (elm != null && elm.nodeName == "A")
 	    action = "update";
 
-	formObj.insert.value = tinyMCEPopup.getLang(action, 'Insert', true); 
+	formObj.insert.value = tinyMCEPopup.getLang(action, 'Insert', true);
 
 	if (action == "update")
 	    var href = inst.dom.getAttrib(elm, 'href');

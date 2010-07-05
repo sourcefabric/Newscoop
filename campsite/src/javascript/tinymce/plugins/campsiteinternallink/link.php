@@ -24,6 +24,8 @@ if (!$LiveUser->isLoggedIn()) {
     unset($userTmp);
 }
 
+header('Content-Type: text/html; charset=UTF-8');
+
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");

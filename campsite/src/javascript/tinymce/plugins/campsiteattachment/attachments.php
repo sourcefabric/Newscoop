@@ -24,6 +24,8 @@ require_once('config.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once('classes/AttachmentManager.php');
 
+$Campsite['SUBDIR'] = str_replace('/javascript/tinymce/plugins/campsiteattachment', '', $Campsite['SUBDIR']);
+
 $manager = new AttachmentManager($AMConfig);
 
 $languageSelected = (isset($_REQUEST['language_selected']) && is_numeric($_REQUEST['language_selected']))
@@ -43,14 +45,14 @@ if (!is_null($articleId)) {
  */
 function drawFiles($list, &$manager)
 {
-    global $languageSelected;
+    global $languageSelected, $Campsite;
 
     $counter = 0;
     foreach($list as $entry => $file)
     {
         $counter++;
         $languageId = ($file['attachment']->getLanguageId()) ? $file['attachment']->getLanguageId() : $languageSelected;
-	$downloadURL = '/attachment/' . basename($file['attachment']->getStorageLocation()) . '?g_download=1';
+        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($file['attachment']->getStorageLocation()) . '?g_download=1';
 ?>
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
@@ -146,7 +148,7 @@ function drawErrorBase(&$manager)
 <?php
     $firstAttachment = array_shift($list);
     if (!empty($firstAttachment)) {
-        $downloadURL = '/attachment/' . basename($firstAttachment['attachment']->getStorageLocation()) . '?g_download=1';
+        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($firstAttachment['attachment']->getStorageLocation()) . '?g_download=1';
 ?>
   <!-- automatically select the first attachment -->
   <script>

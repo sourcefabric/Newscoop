@@ -79,7 +79,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT"><?php putGS('File Name'); ?>:</TD>
 	<TD><?php echo htmlspecialchars($attachmentObj->getFileName()); ?> &nbsp; <A
-		HREF="/attachment/<?php p(basename($attachmentObj->getStorageLocation())); ?>"><IMG
+		HREF="<?php p($Campsite['SUBDIR'])?>/attachment/<?php p(basename($attachmentObj->getStorageLocation())); ?>"><IMG
 		TITLE="<?php putGS('Download'); ?>" BORDER="0" ALIGN="absmiddle" SRC="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" /></A></TD>
 </TR>
 <TR>
