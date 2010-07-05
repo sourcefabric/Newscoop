@@ -988,11 +988,11 @@ abstract class CampURI
                 }
                 break;
             case 'image':
-                $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                $imageNo = isset($p_params[0]) ? array_shift($p_params) : null;
                 $context = CampTemplate::singleton()->context();
-                if (!is_null($option)) {
+                if (!is_null($imageNo)) {
                     $oldImage = $context->image;
-                    $articleImage = new ArticleImage($context->article->number, null, $option);
+                    $articleImage = new ArticleImage($context->article->number, null, $imageNo);
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
                 if ($context->image->article_index !== null) {
@@ -1000,11 +1000,27 @@ abstract class CampURI
                     $this->m_buildQueryArray = array();
                     $this->m_buildQueryArray['NrImage'] = $context->image->article_index;
                     $this->m_buildQueryArray['NrArticle'] = $context->article->number;
-                    if(isset($p_params[0]))
+                    if(isset($p_params[0]) && is_numeric($p_params[0])) {
                         $this->m_buildQueryArray['ImageRatio'] = $p_params[0];
-
+                    } else {
+                    	while (isset($p_params[0])) {
+                    		$option = strtolower(array_shift($p_params));
+                    		if ($option != 'width' && $option != 'height') {
+                    			CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
+                    			break;
+                    		}
+                    		if (isset($p_params[0]) && is_numeric($p_params[0])) {
+                    			$option_value = array_shift($p_params);
+                    		} else {
+                    			CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
+                    			break;
+                    		}
+                    		$param = 'Image' . ucfirst($option);
+                    		$this->m_buildQueryArray[$param] = $option_value;
+                    	}
+                    }
                 }
-                if (!is_null($option)) {
+                if (!is_null($imageNo)) {
                     $context->image = $oldImage;
                 }
                 $p_params = array();
