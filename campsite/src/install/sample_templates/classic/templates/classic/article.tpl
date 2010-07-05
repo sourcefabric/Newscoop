@@ -14,7 +14,7 @@
         <!-- Column 1 start -->
           <div class="articlecontent">
             <div class="date">
-              {{ $campsite->article->Date }} {{ $campsite->article->Time }}
+              {{ $campsite->article->publish_date }}
               {{ include file="classic/tpl/topic-list.tpl" }}
             </div><!-- .date -->
             <h3 class="deck deck_med">{{ $campsite->article->Deck }}</h3>
