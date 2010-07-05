@@ -294,8 +294,8 @@ final class CampHTMLDocument
             } else {
                 $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
             }
-            $template = '_campsite_error.tpl';
-            $siteinfo['templates_path'] = CS_SYS_TEMPLATES_DIR;
+            $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
+            $siteinfo['templates_path'] = CS_TEMPLATES_DIR;
         }
 
         $tpl = CampTemplate::singleton();

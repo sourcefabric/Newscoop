@@ -101,8 +101,8 @@ function camp_display_message($p_message)
     $forward = $session->setData('forward', $_SERVER['REQUEST_URI']);
 
     $params = array('context' => null,
-                'template' => '_campsite_message.tpl',
-                'templates_dir' => CS_SYS_TEMPLATES_DIR,
+                'template' => CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_message.tpl',
+                'templates_dir' => CS_TEMPLATES_DIR,
                 'info_message' => $p_message
     );
     $document = CampSite::GetHTMLDocumentInstance();

@@ -9,11 +9,11 @@
   <meta name="description" content="{{ $siteinfo.description }}" />
   <meta name="keywords" content="{{ $siteinfo.keywords }}" />
 
-  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/_style_offline.css" />
+  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/system_templates/css/_style_offline.css" />
 </head>
 <body>
 <div id="offline">
-  <div><img src="/{{ $siteinfo.templates_path }}/img/campsite_logo_gn.jpg" />
+  <div><img src="/{{ $siteinfo.templates_path }}/system_templates/img/campsite_logo_gn.jpg" />
   <div>Error: {{ $siteinfo.error_message }}</div>
 </div>
 </body>

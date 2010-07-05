@@ -102,17 +102,17 @@ final class CampSite extends CampSystem
         $context = CampTemplate::singleton()->context();
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
-            $templates_dir = CS_SYS_TEMPLATES_DIR;
-            $template = '_campsite_offline.tpl';
+            $templates_dir = CS_TEMPLATES_DIR;
+            $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_offline.tpl';
         } elseif (!$uri->publication->defined) {
-            $templates_dir = CS_SYS_TEMPLATES_DIR;
-            $template = '_campsite_error.tpl';
+            $templates_dir = CS_TEMPLATES_DIR;
+            $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
             $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
             . '\' was not assigned to a publication. Please create a publication and '
             . ' assign it the current site alias.';
         } elseif (is_array($g_errorList) && !empty($g_errorList)) {
-            $templates_dir = CS_SYS_TEMPLATES_DIR;
-            $template = '_campsite_error.tpl';
+            $templates_dir = CS_TEMPLATES_DIR;
+            $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
             $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
         } else {
             $templates_dir = CS_TEMPLATES_DIR;
@@ -130,8 +130,8 @@ final class CampSite extends CampSystem
                     $error_message = 'The template identified by the number ' . $tplId
                     .' does not exist.';
                 }
-                $template = '_campsite_error.tpl';
-                $templates_dir = CS_SYS_TEMPLATES_DIR;
+                $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
+                $templates_dir = CS_TEMPLATES_DIR;
             }
         }
 
