@@ -845,10 +845,10 @@ if ($f_edit_mode == "edit") { ?>
 				$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
 
 				// Internal Links with targets
-                $text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*target[\s\"]*([\w_]*)[\s\"]*>/i", '<a href="/campsite/campsite_internal_link?$1" target="$2">', $text);
+                $text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*target[\s\"]*([\w_]*)[\s\"]*>/i", '<a href="campsite_internal_link?$1" target="$2">', $text);
 
 				// Internal Links without targets
-				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="/campsite/campsite_internal_link?$1">', $text);
+				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="campsite_internal_link?$1">', $text);
 
                 // External Links (old style 2.1) with targets
                 $text = preg_replace("/<!\*\*\s*Link\s*External[\s\"]*([^\s\"]*)[\s\"]*target[\s\"]*([\w_]*)[\s\"]*>/i", '<a href="$1" target="$2">', $text);

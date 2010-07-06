@@ -895,8 +895,7 @@ abstract class CampURI
         $memberName = "m_$p_property";
         $this->$memberName = $p_value;
         if ($p_property == 'publication') {
-           $subdir = $this->m_config->getSetting('SUBDIR');
-        	$this->m_host = str_replace($subdir, '', $this->m_publication->site);
+        	$this->m_host = $this->m_publication->site;
         }
         $this->validateCache(false);
         return true;
