@@ -205,13 +205,13 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
 
 <!-- CSS file (default YUI Sam Skin) -->
-<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css" />
 
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/button/assets/skins/sam/button.css" />
 
-<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/container.css">
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/container.css" />
 
-<link rel="stylesheet" type="text/css" href="yui-assets/styles.css">
+<link rel="stylesheet" type="text/css" href="/admin/articles/yui-assets/styles.css" />
 
 
 <?php
@@ -1215,20 +1215,19 @@ function buttonDisable(buttonId) {
 
 var handleSuccess = function(o){
     if(o.responseText !== undefined){
-        resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
-	resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
-	resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
-	resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
-	resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
+        //resp.innerHTML = "<li>Transaction id: " + o.tId + "</li>";
+        //resp.innerHTML += "<li>HTTP status: " + o.status + "</li>";
+        //resp.innerHTML += "<li>Status code message: " + o.statusText + "</li>";
+        //resp.innerHTML += "<li>HTTP headers received: <ul>" + o.getAllResponseHeaders + "</ul></li>";
+        //resp.innerHTML += "<li>PHP response: " + o.responseText + "</li>";
 
-	mesg.style.display = 'inline';
-	document.getElementById('yui-saved').style.display = 'none';
-	var savedTime = makeSavedTime();
-	saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
-	mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
-	emsg.style.display = 'none' ;
-	YAHOO.example.container.wait.hide();
-
+        mesg.style.display = 'inline';
+        document.getElementById('yui-saved').style.display = 'none';
+        var savedTime = makeSavedTime();
+        saved.innerHTML = '<?php putGS("Saved:"); ?> ' + savedTime;
+        mesg.innerHTML = '<?php putGS("Article Saved"); ?>';
+        emsg.style.display = 'none' ;
+        YAHOO.example.container.wait.hide();
     }
 };
 

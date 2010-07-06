@@ -60,7 +60,7 @@
 
 .ThemeOfficeMainItemHover,.ThemeOfficeMainItemActive
 {
-	background-color:	#C6D3EF;
+	background-color:	#eef7fd;
 }
 
 .ThemeOfficeMenuItem
@@ -84,7 +84,7 @@
 td.ThemeOfficeMainItemHover,td.ThemeOfficeMainItemActive
 {
 	/*padding:	0px;*/
-	border:		1px solid #3169C6;
+	border:		1px solid #5a7490;
 }
 
 .ThemeOfficeMainFolderLeft,.ThemeOfficeMainItemLeft,
@@ -109,7 +109,11 @@ td.ThemeOfficeMainFolderLeft,td.ThemeOfficeMainItemLeft
 
 	background-color:	inherit;
 }
-
+.ThemeOfficeMainFolderLeft, .ThemeOfficeMainItemLeft
+{
+	padding: 0 10px 0 4px;
+	float:left;
+}
 td.ThemeOfficeMainFolderText,td.ThemeOfficeMainItemText
 {
 	padding-top:	2px;
@@ -137,6 +141,10 @@ td.ThemeOfficeMainFolderRight,td.ThemeOfficeMainItemRight
 
 	background-color:	inherit;
 }
+.ThemeOfficeMainFolderRight, .ThemeOfficeMainItemRight {
+	padding: 0 5px 0 5px;
+	
+}
 
 tr.ThemeOfficeMainItem td.ThemeOfficeMainFolderLeft,
 tr.ThemeOfficeMainItem td.ThemeOfficeMainItemLeft
@@ -153,15 +161,24 @@ tr.ThemeOfficeMainItem td.ThemeOfficeMainItemLeft
 }
 
 tr.ThemeOfficeMainItem td.ThemeOfficeMainFolderText,
-tr.ThemeOfficeMainItem td.ThemeOfficeMainItemText
+tr.ThemeOfficeMainItem td.ThemeOfficeMainItemText,
 {
-	padding-top:	3px;
+	padding-top:	8px;
 	padding-bottom:	3px;
 	padding-left:	5px;
 	padding-right:	5px;
 
 	border:		0;
 	background-color:	inherit;
+}
+
+.ThemeOfficeMainFolderText, .ThemeOfficeMainItemText {
+	font-size: 11px;
+	text-transform:uppercase;
+	font-weight:bold;
+	color:#374461;
+	padding-top: 5px;
+	float:left;
 }
 
 tr.ThemeOfficeMainItem td.ThemeOfficeMainItemRight,

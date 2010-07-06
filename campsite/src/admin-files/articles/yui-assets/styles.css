@@ -9,19 +9,20 @@ div#yui-connection-message, div#yui-connection-error {
 div#yui-connection-message { color: green; }
 div#yui-connection-error { color: red; }
 div#yui-saved-box{
-    background-color: #00CB38;
+    background-color: #9cd465;
     color: #FFF;
     font-weight: bold;
     border: 1px solid white;
-    padding-left: 5px;
-    padding-right: 10px;
-    margin-bottom: 2px;
+    padding: 3px 8px 3px 8px;
+	float:right;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
 }
 div#authorAutoComplete {
-    width:25em; /* set width here or else widget will expand to fit its container */
+    width:352px; /* set width here or else widget will expand to fit its container */
     padding-bottom:2em;
+	float:left;
 }
-fieldset#pushbuttonsfrommarkup,
-fieldset#pushbuttonsfrommarkup div {
+fieldset#pushbuttonsfrommarkup {
     border: 0;
 }

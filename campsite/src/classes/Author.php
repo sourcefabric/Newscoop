@@ -185,7 +185,17 @@ class Author extends DatabaseObject {
                                         '$value = $value["Name"];');
         array_walk($authors, $convertArray);
         return $authors;
-	}
+	} // fn GetAllExistingNames
+
+
+    public static function GetAuthors()
+    {
+        $tmpAuthor = new Author();
+        $columns = implode(',', $tmpAuthor->getColumnNames(true));
+        $queryStr = "SELECT $columns FROM Authors ORDER BY first_name";
+        $authors = DbObjectArray::Create('Author', $queryStr);
+        return $authors;
+    } // fn GetAuthors
 
 } // class Author
 

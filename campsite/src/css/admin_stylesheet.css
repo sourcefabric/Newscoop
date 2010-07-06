@@ -17,7 +17,6 @@ BODY {
 
 TH, TD, FORM, BLOCKQUOTE, UL, LI {
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
 	color: black;
 }
 
@@ -26,47 +25,71 @@ SMALL, ADDRESS {
 	font-size: 8pt;
 }
 
-A {
+a {
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: black;
+	color: #00415b;
 }
 
-A:active {
+a:active {
 	color: red;
 }
 
-A:visited {
-	color: black;
+a:visited {
+	color: #00415b;
+}
+
+a:hover {
+	color: #1a8cbb;
 }
 
 hr {
 	color: black;
 }
 
-.button {
+.button, .button_disabled, .buttonStrong {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 9pt;
-	border: 1px solid #777;
-	background-color: #EEEEEE;
-	color: #333333;
+	font-size: 11px;
+	border: 1px solid #015476;
+	background: #bbd4e0 url(button_bg.png) repeat-x 0 0;
+	color: #2e4a58;
 	font-weight: bold;
+	text-transform:uppercase;
+	text-shadow:0 1px 0 #e7f6fe;
+	padding:3px 9px 3px 9px;
+	line-height:15px;
+	margin:0;
+	margin-right:10px;
+}
+.buttonStrong {
+	border-color: #3a7304;
+	background: #73ca1d url(button_bg.png) repeat-x 0 -75px;
+	color: #2c5703;	
+	text-shadow:0 1px 0 #d4eeb9;
+}
+.buttonStrong:hover {
+	background: #41a908 url(button_bg.png) repeat-x 0 -100px;
+	text-shadow:0 1px 0 #d4eeb9;
+}
+.button:hover {
+	background: #bbd4e0 url(button_bg.png) repeat-x 0 -25px;
 }
 
 .button_disabled {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 8pt;
-	border: 1px dashed white;
-	background-color: #EEEEEE;
-	color: grey;
-	font-weight: bold;
+	border: 1px solid #b5d5e2;
+	background: #bbd4e0 url(button_bg.png) repeat-x 0 0;
+	color: #a1bdc9;
+	text-shadow:0 1px 0 #e2ecf6;
 }
 
 .input_text {
-	border: 1px solid #777;
-	background-color: #f0f0ff;
+	border: 1px solid #015476;
+	background:#fff url(input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
-	font-size: 9pt;
+	font-size: 12px;
+	margin:0;
+	height:21px;
+	padding: 0;
+	line-height:20px;
 }
 
 .input_text_disabled {
@@ -77,16 +100,19 @@ hr {
 }
 
 .input_checkbox {
-    background-color: #f0f0ff;
-    border: 1px solid grey;
+    height:13px;
+	width:13px;
+	margin:0;
+	padding:0;
 }
 
 .input_radio { }
 
 .input_select {
-	background-color: #f0f0ff;
-	border: 1px solid grey;
-	font-size: 9pt;
+	background-color: #fff;
+	border: 1px solid #777;
+	font-size: 12px;
+	height:20px;
 }
 
 .input_file {
@@ -183,11 +209,10 @@ hr {
 }
 
 .table_input {
-	background-color: #d5e2ee;
-	border: 1px solid #8baed1;
-	margin-left: 15px;
-	margin-right: 15px;
-	padding-right: 5px;
+	background-color: #ebf1f7;
+	border: 1px solid #5a7490;
+	width:900px;
+	margin: 5px 5px 0 15px;
 }
 
 .message_box {
@@ -202,34 +227,46 @@ hr {
 }
 
 .breadcrumb {
-    color: #2F667F;
-    font-weight: bold;
+    color: #00415b;
+    font-weight: normal;
+	float:left;
+	padding-top:4px;
+}
+a.breadcrumb  {
+    color: #00415b;
+}
+a.breadcrumb:hover {
+    color: #1a8cbb;
 }
 
 .breadcrumb:visited {
-    color: #2F667F;
-    font-weight: bold;
+    color: #00415b;
 }
 
 .breadcrumb_active {
-    /*color: #d95022;*/
-    color: #2F2F2F;
-	font-weight: bold;
-	font-size: larger;
+    color: #015476;
+	font-weight: normal;
+	font-size: 22px;
 }
 
 .breadcrumb_active:visited {
-    color: #d95022;
+    color: #015476;
+}
+.breadcrumb_intra_separator {
+	padding-right:5px;
+	float:left;
+}
+.breadcrumb_intra_separator .breadcrumb {
 	font-weight: bold;
-	font-size: larger;
 }
 
 .breadcrumb_separator {
 	padding-left: 8px;
 	padding-right: 8px;
-	background-image: url(breadcrumb_separator2.png);
-	background-repeat: no-repeat;
-	background-position: 50% 60%;
+	background: url(breadcrumb_separator2.png) no-repeat center 0;
+	height:23px;
+	width:15px;
+	float:left;
 }
 
 .info_message {
@@ -402,3 +439,321 @@ div.domTTOverlib .contents {
 div#fileindex, div#datatable_paginator {
     margin-left: 20px;
 }
+
+/*
+New Styles - 06.2010
+---------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+/*
+clearfix
+---------------------------------------------
+*/
+.clearfix:after, ul li:after, .editBox:after, .formBlock:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+.clearfix, ul li, .editBox, .formBlock {
+    display: inline-block;
+}
+
+html[xmlns] .clearfix, html[xmlns] ul li, html[xmlns] .editBox, html[xmlns] .formBlock {
+    display: block;
+}
+
+* html .clearfix, * html ul li, * html  .editBox, * html .formBlock {
+    height: 1%;
+}
+/*
+END clearfix
+---------------------------------------------
+*/
+.logoTable {
+	background-color:#1a8cbb;
+	border-bottom:1px solid #015476;
+	height:39px;
+	width:100%;
+}
+.naviHolder {
+	background: url(main_navi_bg.png) repeat-x 0 0;
+	border-bottom:1px solid #5a7490;
+}
+
+.breadcrumbHolder .breadcrumbTD {
+	background:#ecf6fc url(breadcrumb_bg.png) repeat-x 0 0;
+	border-bottom:1px solid #5d99b1;
+	padding:0px 0 0px 13px;
+	font-size:11px;
+	font-family:Arial, Helvetica, sans-serif;
+	height:23px;
+}
+.breadcrumbHolder .activeSection{
+	background:#edf7fc url(breadcrumb_bg.png) repeat-x 0 -30px;
+	border-bottom:1px solid #b5d5e2;
+	padding:7px 0 7px 14px;
+}
+.breadcrumbHolder .activeSection .limiter {
+	width:966px;
+}
+.breadcrumbHolder .activeSection .limiter .buttonBox {
+	float:right;
+	text-align:right;
+}
+
+.personal td {
+	font-size: 11px;
+	color:#000;
+	padding: 0 4px 2px 4px;
+}
+.personal td a {
+	font-size: 11px;
+	font-weight:bold;
+	color:#000;
+}
+fieldset {
+	padding:0;
+	margin:0;
+}
+.table_input td {
+	padding:1px 0 1px 0;
+}
+.editBox {
+	width: 963px;
+	background:#edf7fc;
+	border:1px solid #5d99b1;
+	margin:20px 0 0 15px;
+	position:relative;
+}
+.editBox .topBox {
+	padding: 8px 10px 8px 10px; 
+	border-bottom:1px solid #5d99b1;
+}
+.topBox .language {
+	
+}
+.topBox .input_select {
+	margin-right:10px;
+}
+
+.topBox .button,.topBox .button_disabled {
+	float:right;
+	background:url(button_bg.png) repeat-x 0 0;
+	border:1px solid #015476;
+	margin:0;
+}
+.topBox .button:hover {
+	background:url(button_bg.png) repeat-x 0 -25px;
+}
+.topBox .button_disabled {
+	float:right;
+	background:url(button_bg.png) repeat-x 0 -50px;
+	border:1px solid #015476;
+	color:#5d8091;
+	text-shadow:0 1px 0 #ccdfe8;
+}
+.topBox .left {
+	border-right:none;
+}
+.editBox .main {
+	float:left;
+	border-right:1px solid #5d99b1;
+	width:791px;
+	padding:4px
+}
+.editBox .sideBar {
+	float:right;
+	width:155px;
+	padding:4px 4px 4px 0;
+}
+
+.formBorder {
+	border:1px solid #b5d5e2;
+}
+.formBlock {
+	padding:7px 8px 7px 0;
+	border-top:1px solid #fff;
+	border-bottom:1px solid #b5d5e2;
+	clear:both;
+}
+.formBlock label {
+	display:inline-block;
+	width:115px;
+	margin-right:12px;
+	text-align:right;
+	float:left;
+}
+.formBlock label.strong {
+	font-weight:bold;
+}
+.lastBlock {
+	border-bottom:none;
+}
+.formBlock ul {
+	padding:3px 0 0 0;
+	margin:0;
+	list-style-type:0;
+}
+.formBlock ul.floatingList {
+	width:320px;
+	float:left;
+}
+.formBlock ul li {
+	padding:0 0 10px 0;
+	margin:0;
+}
+.formBlock ul li.last {
+	padding:0;
+}
+.formBlock .input_text {
+	width:350px;
+	float:left;
+}
+.scrollHolder {
+	float:left;
+	width:240px;
+	height:155px;
+	overflow:auto;
+}
+.scrollHolder label {
+	float:left;
+	width:auto;
+	text-align:left;
+}
+.scrollHolder .input_checkbox {
+	float:left;
+	margin-right:7px;
+}
+.tinyMCEHolder {
+	float:left;
+	width:505px;
+}
+.dateSpan {
+	float:left;
+}
+a.calendarButton {
+	width: 21px;
+	height:16px;
+	background:url(calendar.png) no-repeat 0 0;
+	margin:0 0 0 6px;
+	float:left;
+	outline:none;
+}
+.calendarButton:hover {
+	background-position:0 -16px;
+}
+.sideBox {
+	border:1px solid #89b7c9;
+	margin-bottom:12px;
+	background:#f4fafd;
+}
+.sideBox h3 {
+	background:url(sidebar-heading_bg.png) repeat-x 0 0;
+	font-size:13px;
+	margin:0;
+	padding:5px 0 5px 7px;
+	border-bottom:1px solid #b5d5e2;
+}
+.addSmall {
+	display:block;
+	background:url(add-small_bg.png) no-repeat 0 0;
+	padding:4px 0 4px 24px;
+	font-size:12px;
+	border-bottom:1px solid #aec6df;
+	color:#3a7304;
+	text-decoration:none;
+}
+.addSmall:hover {
+	background:url(add-small_bg.png) no-repeat 0 -25px;
+	color:#3a7304;
+	text-decoration:none;
+}
+.sideBox .schedule {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+.sideBox .schedule li {
+	position:relative;
+	border-bottom:1px solid #cae1ea;
+	font-size:12px;
+	padding:5px 22px 4px 7px;
+}
+.sideBox .schedule li.last {
+	border-bottom:none;
+}
+.sideBox .schedule li img {
+	position:absolute;
+	right:3px;
+	top:4px;
+}
+.sideBox .schedule li ul {
+	margin:8px 0 0 0;
+	padding:0;
+	list-style-type:none;
+}
+.sideBox .schedule li ul li {
+	margin:0 0 5px 0;
+	padding:0 0 0 10px;
+	list-style-type:none;
+	background:url(bullet_smal.png) no-repeat 0 4px;
+	border-bottom:none;
+	font-size:11px;
+	color:#537989;
+}
+.sideBox p {
+	font-size:12px;
+	margin:0;
+	padding:5px 7px 8px 7px;
+	line-height:160%;
+}
+.sideBox p a {
+	color:#1a8cbb;
+}
+.sideBox p a:hover {
+	color:#015476;
+}
+.breadcrumbHolder .activeSection .limiter .buttonBox {
+	float:right;
+	text-align:right;
+}
+.addArticle {
+	border:1px solid #5bac0b;
+	padding:6px 12px 7px 32px;
+	background:#deecd0 url(add-big_bg.png) no-repeat 0 0;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:12px;
+	line-height:1;
+	font-weight:bold;
+	color:#3a7304;
+	float:right;
+	margin-left:10px;
+}
+.addArticle:hover {
+	border-color:#3a7304;
+	background-position: 0 -30px;
+	color:#3a7304;
+}
+.goBack {
+	padding:6px 12px 7px 33px;
+	border:1px solid #b5d5e2;
+	background:#f4fafd url(arrow_left.png) no-repeat 5px center;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:12px;
+	line-height:1;
+	font-weight:bold;
+	color:#015476;
+	float:right;
+}
+.goBack:hover {
+	border-color:#5c99b1;
+	background-color:#daedf5;
+	color:#015476;
+}
+	

@@ -42,7 +42,7 @@ $menu_content =& DynMenuItem::Create(getGS('Content'), '',
                 array('icon' => sprintf($iconTemplateStr, 'content.png'), 'id' => 'content'));
 $menu_root->addItem($menu_content);
 $menu_item =& DynMenuItem::Create(getGS('Publications'), "/$ADMIN/pub/index.php",
-                array('icon' => sprintf($iconTemplateStr, 'publication.png'), 'id' => 'publication'));
+                array('icon' => sprintf($iconTemplateStr, 'publications.png'), 'id' => 'publication'));
 $menu_content->addItem($menu_item);
 
 if ($g_user->hasPermission('CommentModerate')) {
@@ -308,53 +308,62 @@ $menu_help->addItem($menu_item);
 
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 ?>
-<HEAD>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
-	<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
-	<LINK REL="stylesheet" HREF="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-<script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
-    <?php echo $menu_root->createMenu("myMenu"); ?>
-	<TITLE><?php p($siteTitle); ?></TITLE>
-</HEAD>
-<BODY class="yui-skin-sam" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-<table cellpadding="0" cellspacing="0" bgcolor="#8BAED1" width="100%">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
+  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
+  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
+  <?php echo $menu_root->createMenu("myMenu"); ?>
+  <title><?php p($siteTitle); ?></title>
+</head>
+<body class="yui-skin-sam" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table cellpadding="0" cellspacing="0" class="logoTable">
+<tbody>
 <tr>
-    <td style="padding-left: 13px; padding-top: 1px; padding-bottom: 2px;">
-        <a href="/<?php p($ADMIN) ?>/home.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big3.gif" BORDER="0" align="middle"></a>
-    </td>
+  <td>
+    <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" BORDER="0" /></a>
+  </td>
 </tr>
+</tbody>
 </table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-bottom: 2px solid #D5E2EE; padding-top: 4px;" bgcolor="#d5e2ee">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" class="naviHolder">
+<tbody>
 <tr>
-	<td valign="top" align="left" width="70%">
-	   <table border="0" cellpadding="0" cellspacing="0">
-		<tr>
-			<td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
-			<DIV ID="myMenuID"></DIV>
-			<SCRIPT LANGUAGE="JavaScript"><!--
-				cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
-			--></SCRIPT>
-			</td>
-		</tr>
-		</table>
-	</td>
-	<td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
-        <table cellpadding="0" cellspacing="0" width="100%" border="0">
-		<tr>
-			<td align="right" style="padding-top: 0px;">
-                <table cellpadding="0" cellspacing="0">
-				<TR>
-            		<td align="right" style="font-size: 8pt; padding-right: 5px; padding-top: 0px;" colspan="4"><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
-					<td style="padding-left: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>"></a></td>
-					<td style="font-weight: bold; padding-left: 2px; padding-right: 10px;"><A HREF="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
-				</tr>
-				</table>
-			</td>
-		</tr>
-		</table>
-	</td>
+  <td valign="top" align="left" width="70%">
+    <table border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
+        <div id="myMenuID"></div>
+        <script language="JavaScript"><!--
+          cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
+        --></script>
+      </td>
+    </tr>
+    </tbody>
+    </table>
+  </td>
+  <td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
+    <table cellpadding="0" cellspacing="0" width="100%" border="0">
+    <tbody>
+    <tr>
+      <td align="right">
+        <table cellpadding="0" cellspacing="0" border="0" class="personal">
+        <tbody>
+        <tr>
+          <td><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
+          <td><a href="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>" /></a></td>
+          <td><a href="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
+        </tr>
+        </tbody>
+        </table>
+      </td>
+    </tr>
+    </tbody>
+    </table>
+  </td>
 </tr>
+</tbody>
 </table>

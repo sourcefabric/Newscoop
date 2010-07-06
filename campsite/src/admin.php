@@ -64,9 +64,13 @@ $no_menu_scripts = array(
     '/articles/audioclips/popup.php',
     '/articles/audioclips/edit.php',
     '/articles/empty.php',
+    '/articles/yui-assets/post.php',
     '/comments/ban.php',
     '/comments/do_ban.php',
-    '/imagearchive/do_add.php'
+    '/imagearchive/do_add.php',
+    '/smartlist/assets/php/dynamicfilter/data.php',
+    '/smartlist/assets/load_filterby_menu.php',
+    '/smartlist/assets/dt_actions.php'
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
@@ -89,7 +93,6 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 }
 
 if (($extension == '.php') || ($extension == '')) {
-    header("Content-type: text/html; charset=UTF-8");
     header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
     header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
     header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -170,18 +173,16 @@ if (($extension == '.php') || ($extension == '')) {
         echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
 //        echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"rtl\" lang=\"ar\" xml:lang=\"ar\">\n";
         echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en\" xml:lang=\"en\">\n";
-        echo "<table width=\"100%\" cellpadding=\"0\" cellspacing=\"0\">\n<tr><td>\n";
         require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
-        echo "</td></tr>\n<tr><td>\n";
         $_top_menu = ob_get_clean();
     }
 
-    $content =  "<html>\n" . $_top_menu . $content;
+    $content =  $_top_menu . $content;
 
-    if ($needs_menu) {
-        $content .= "</td></tr>\n</table>\n";
-    }
-    $content .= "</html>\n";
+    //if ($needs_menu) {
+        //$content .= "</td></tr>\n</table>\n";
+    //}
+    //$content .= "</html>\n";
     echo $content;
 
     camp_html_clear_msgs(true);
