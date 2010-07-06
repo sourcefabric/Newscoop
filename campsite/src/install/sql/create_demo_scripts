@@ -24,6 +24,7 @@ TABLES_TO_FILL="
  Images\
  Issues\
  KeywordIndex\
+ Plugins\
  Publications\
  Sections\
  Templates\
@@ -39,7 +40,13 @@ TABLES_TO_FILL="
  liveuser_rights_right_id_seq\
  liveuser_grouprights\
  phorum_forums\
- phorum_users"
+ phorum_users\
+ plugin_blog_blog\
+ plugin_blog_comment\
+ plugin_blog_entry\
+ plugin_blog_topic\
+ plugin_poll\
+ plugin_poll_answer"
 
 CUSTOM_TABLES="Xnews_article"
 
