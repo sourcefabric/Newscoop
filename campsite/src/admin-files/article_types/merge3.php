@@ -350,9 +350,9 @@ if ($ok) {
         				$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
 
         				// Internal Links with targets
-        				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*target\s*([\w_]*)\s*>/i", '<a href="campsite_internal_link?$1" target="$2">', $text);
+        				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*target\s*([\w_]*)\s*>/i", '<a href="/campsite/campsite1_internal_link?$1" target="$2">', $text);
         				// Internal Links without targets
-        				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="campsite_internal_link?$1">', $text);
+        				$text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="/campsite/campsite1_internal_link?$1">', $text);
         				// End link
         				$text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
         				// Images

@@ -34,7 +34,7 @@ function init() {
     if (elm != null && elm.nodeName == "A")
 	action = "update";
 
-    formObj.insert.value = tinyMCEPopup.getLang(action, 'Insert', true); 
+    formObj.insert.value = tinyMCEPopup.getLang(action, 'Insert', true);
 
     if (action == "update") {
 	var href = inst.dom.getAttrib(elm, 'href');
@@ -155,7 +155,7 @@ function getURLVar(urlVarName, href) {
 	    }
 	}
     }
-    return urlVarValue;   
+    return urlVarValue;
 }
 
 
@@ -360,7 +360,7 @@ function insertAction() {
 
     // Pass data back to the calling window.
     var param = new Object();
-    param["f_href"] = "campsite_internal_link?IdPublication="+publicationId
+    param["f_href"] = "/campsite/campsite_internal_link?IdPublication="+publicationId
 	+"&IdLanguage="+languageId;
     if (issueId > 0) {
 	param["f_href"] += "&NrIssue=" + issueId;
