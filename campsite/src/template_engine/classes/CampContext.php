@@ -153,6 +153,9 @@ final class CampContext
 
         $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
+        if (!$this->m_readonlyProperties['default_url']->is_valid) {
+        	header('HTTP/1.0 404 Not Found');
+        }
 
         $this->m_objects['user'] = $this->m_readonlyProperties['url']->user;
         $this->m_readonlyProperties['preview'] = $this->m_readonlyProperties['url']->preview;
