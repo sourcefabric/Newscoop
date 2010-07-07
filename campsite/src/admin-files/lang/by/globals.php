@@ -258,6 +258,7 @@ regGS("(optional)", "(дадаткова)");
 regGS("The URL you entered is invalid: '$1'", "Уведзены URL няправільны: '$1' ");
 regGS("There was an error logging in to the Campcaster server", "Адбылася памылка ўваходу ў адміністрацыйны інтэрфэйс Campsite");
 regGS("Reads", "Колькасьць праглядаў");
+regGS("Publish with issue", "Апублiкаваць выпуск");
 regGS("User name", "Карыстальнiк");
 regGS("User Types", "Тыпы карыстальнiкаў ");
 regGS("Add new user account", "Дадаць новы ўлiковы запiс карыстальнiка");
@@ -273,6 +274,6 @@ regGS("There are $1 issue(s) left.", "Засталося $1 выпуск(аў):b
 regGS("There are $1 keyword(s) left.", "Засталося $1 ключавога(-ых) слоў(ва):by");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Назва<BR><SMALL>(нацiснуць для праўкi)</SMALL>:by");
 regGS("New field", "Новае поле");
-regGS("Author:", "");
-regGS("Publish with issue", "");
+regGS("Author:", "Аўтар");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Цi Вы ўпэўнены, што жадаеце выдалiць графiчны файл \\'$1\\'? ");
 ?>

@@ -56,7 +56,7 @@ regGS("Keyword separator must be at least one character.", "Разделител
 regGS("You do not have the right to change system preferences.", "Вы не имеете прав доступа к изменению системных настроек.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Число неудачных попыток входа до теста человек-машина:");
 regGS("Keyword separator:", "Разделитель ключевых слов:");
-regGS("Time Zone:", "Временная зона");
+regGS("Time Zone:", "Часовой пояс:");
 regGS("disabled", "отключено");
 regGS("Run cron tasks externaly?", "Выполнять служебные задачи внешним сервисом?");
 ?>

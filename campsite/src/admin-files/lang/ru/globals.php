@@ -258,6 +258,7 @@ regGS("(optional)", "(дополнительно)");
 regGS("The URL you entered is invalid: '$1'", "Введенный URL неверен: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Произошла ошибка входа в административный интерфейс Campsite");
 regGS("Reads", "Количество просмотров");
+regGS("Publish with issue", "Опубликовать выпуск");
 regGS("Author:", "Автор:");
 regGS("User name", "Пользователь");
 regGS("User Types", "Типы пользователей");
@@ -274,5 +275,4 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
-regGS("Publish with issue", "");
 ?>
