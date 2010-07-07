@@ -23,28 +23,28 @@ class PollAnswer extends DatabaseObject {
 
         // string - the literal answer
         'answer',
-        
+
         // int - number of votes for this answer
         'nr_of_votes',
-        
+
         // float - score of this answers in this language
         'percentage',
-        
+
         // float - score of this answers overall languages
         'percentage_overall',
-        
+
         // int - the commulative value of all votes
         'value',
-        
+
         // float - value / number of votes
-        'average_value', 
-        
+        'average_value',
+
         // timestamp - last_modified
         'last_modified'
         );
 
     private static $s_defaultOrder = array('bynumber'=>'asc');
-                                       
+
     /**
      * Construct by passing in the primary key to access the poll answer in
      * the database.
@@ -86,14 +86,14 @@ class PollAnswer extends DatabaseObject {
     function create($p_answer)
     {
         global $g_ado_db;
-        
+
         if (!strlen($p_answer)) {
-            return false;   
+            return false;
         }
 
         // Create the record
         $values = array(
-            'answer' => $p_answer      
+            'answer' => $p_answer
         );
 
 
@@ -109,10 +109,10 @@ class PollAnswer extends DatabaseObject {
         $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
         Log::Message($logtext, null, 31);
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-                
+
         return true;
     } // fn create
 
@@ -140,7 +140,7 @@ class PollAnswer extends DatabaseObject {
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
         Log::Message($logtext, null, 31);
         */
-        
+
         return $pollAnswerCopy;
     } // fn createTranslation
 
@@ -160,21 +160,21 @@ class PollAnswer extends DatabaseObject {
             if (isset($answer['number']) && !empty($answer['number']) && strlen($answer['text'])) {
                 $answer_copy = new PollAnswer($p_fk_language_id, $p_fk_poll_nr, $answer['number']);
                 $answer_copy->create($answer['text']);
-                
+
                 if (isset($answer['nr_of_votes']) && !empty($answer['nr_of_votes'])) {
-                    $answer_copy->setProperty('nr_of_votes', $answer['nr_of_votes']);    
+                    $answer_copy->setProperty('nr_of_votes', $answer['nr_of_votes']);
                 }
-                
+
                 if (isset($answer['value']) && !empty($answer['nr_of_votes'])) {
                     $answer_copy->setProperty('value', $answer['value']);
                     $answer_copy->setProperty('average_value', $answer_copy->getProperty('value') / $answer_copy->getProperty('nr_of_votes'));
-                }   
+                }
             }
         }
-        
+
         // Copy PollAnswerAttachments
         PollAnswerAttachment::CreateCopySet($p_fk_poll_nr, $p_fk_language_id, $p_parent_nr);
-        
+
         /*
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
@@ -184,18 +184,18 @@ class PollAnswer extends DatabaseObject {
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
         Log::Message($logtext, null, 31);
         */
-        
+
         return $pollAnswerCopy;
     } // fn createTranslation
-    
+
     function getPollAnswerAttachments()
     {
         $PollAnswerAttachments = PollAnswerAttachment::getPollAnswerAttachments($this->getPollNumber(), $this->getNumber());
-           
+
         return $PollAnswerAttachments;
-    }    
-    
-    
+    }
+
+
     /**
      * Delete poll from database.  This will
      * only delete one specific translation of the poll question.
@@ -203,10 +203,10 @@ class PollAnswer extends DatabaseObject {
      * @return boolean
      */
     function delete()
-    {      
+    {
         // Delte PollAnswerAttachments
-        PollAnswerAttachment::OnPollAnswerDelete($this->getPollNumber(), $this->getNumber()); 
-          
+        PollAnswerAttachment::OnPollAnswerDelete($this->getPollNumber(), $this->getNumber());
+
         // Delete from plugin_poll_answer table
         $deleted = parent::delete();
 
@@ -223,110 +223,111 @@ class PollAnswer extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        
+
         return $deleted;
     } // fn delete
-    
+
     public function OnPollDelete($p_fk_poll_nr, $p_fk_language_id)
     {
         foreach (PollAnswer::getAnswers($p_fk_poll_nr, $p_fk_language_id) as $answer) {
-            $answer->delete();   
-        }   
+            $answer->delete();
+        }
     }
-    
+
     public function getAnswers($p_fk_poll_nr = null, $p_fk_language_id = null)
     {
         global $g_ado_db;
         $answers = array();
-               
+
         if (!is_null($p_fk_poll_nr) && !is_null($p_fk_language_id)) {
             $fk_poll_nr = $p_fk_poll_nr;
-            $fk_language_id = $p_fk_language_id;   
+            $fk_language_id = $p_fk_language_id;
         } elseif (isset($this)) {
-            $fk_poll_nr = $this->m_data['fk_poll_nr']; 
-            $fk_language_id = $this->m_data['fk_language_id'];      
+            $fk_poll_nr = $this->m_data['fk_poll_nr'];
+            $fk_language_id = $this->m_data['fk_language_id'];
         }
-        
+
         if (!$fk_poll_nr || !$fk_language_id) {
-            return array();   
+            return array();
         }
-        
+
         $query = "SELECT    nr_answer
                   FROM      plugin_poll_answer
                   WHERE     fk_poll_nr = $fk_poll_nr
                         AND fk_language_id = $fk_language_id
                   ORDER BY  nr_answer";
-        
+
         $res = $g_ado_db->Execute($query);
-        
+
         while ($row = $res->fetchRow()) {
-            $answers[] = new PollAnswer($fk_language_id, $fk_poll_nr, $row['nr_answer']);      
-        } 
-        
-        return $answers;    
+            $answers[] = new PollAnswer($fk_language_id, $fk_poll_nr, $row['nr_answer']);
+        }
+
+        return $answers;
     }
-    
+
     public static function SyncNrOfAnswers($p_fk_language_id, $p_fk_poll_nr)
     {
         global $g_ado_db;
-        
+
         $poll = new Poll($p_fk_language_id, $p_fk_poll_nr);
-        
+
         if (count($poll->getTranslations()) > 1) {
             $nr_of_answers = $poll->getProperty('nr_of_answers');
-            
+
             $query = "DELETE FROM   plugin_poll_answer
                       WHERE         fk_poll_nr = $p_fk_poll_nr
                                 AND fk_language_id = $p_fk_language_id
                                 AND nr_answer > $nr_of_answers";
-            $g_ado_db->execute($query);  
-            
+            $g_ado_db->execute($query);
+
             Poll::triggerStatistics($p_fk_poll_nr);
         }
     }
-       
+
     public function getPoll()
     {
-        $poll = new Poll($this->m_data['fk_language_id'], $this->m_data['fk_poll_nr']); 
-        
-        return $poll;  
+        $poll = new Poll($this->m_data['fk_language_id'], $this->m_data['fk_poll_nr']);
+
+        return $poll;
     }
-    
+
     public function vote($p_value = 1)
     {
         if (!settype($p_value, 'float')) {
-            return false;   
+            return false;
         }
-        
+
         $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
         $this->setProperty('value', $this->getProperty('value') + $p_value);
         $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         $this->getPoll()->increaseUserVoteCount();
+        Poll::triggerStatistics($this->m_data['fk_poll_nr']);
     }
-        
+
     public function getNumber()
     {
-        return $this->m_data['nr_answer'];   
+        return $this->m_data['nr_answer'];
     }
-    
+
     public function getPollNumber()
     {
-        return $this->m_data['fk_poll_nr'];   
+        return $this->m_data['fk_poll_nr'];
     }
-    
+
     public function getAnswer()
     {
-        return $this->getProperty('answer');   
+        return $this->getProperty('answer');
     }
-    
+
     public function getLanguageId()
     {
-        return $this->getProperty('fk_language_id');   
+        return $this->getProperty('fk_language_id');
     }
-    
+
     /**
      * Method to call parent::setProperty
      * with clening the cache.
@@ -335,16 +336,16 @@ class PollAnswer extends DatabaseObject {
      * @param sring $p_value
      */
     function setProperty($p_name, $p_value)
-    {       
+    {
         $return = parent::setProperty($p_name, $p_value);
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $return;
     }
-    
-    
+
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an issue list based on the given parameters.
      *
@@ -364,14 +365,14 @@ class PollAnswer extends DatabaseObject {
         $hasPollNr = false;
         $hasLanguageId = fase;
         $selectClauseObj = new SQLSelectClause();
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
 
         // sets the where conditions
@@ -391,7 +392,7 @@ class PollAnswer extends DatabaseObject {
                 . $comparisonOperation['right'] . "' ";
             $selectClauseObj->addWhere($whereCondition);
         }
-        
+
         // validates whether publication identifier was given
         if ($hasPollNr == false) {
             CampTemplate::singleton()->trigger_error('missed parameter Poll Number in statement list_pollanswers');
@@ -402,7 +403,7 @@ class PollAnswer extends DatabaseObject {
             CampTemplate::singleton()->trigger_error('missed parameter Language Identifier in statement list_pollanswers');
             return;
         }
-        
+
         // sets the columns to be fetched
         $tmpPollAnswer = new PollAnswer();
 		$columnNames = $tmpPollAnswer->getColumnNames(true);
@@ -414,7 +415,7 @@ class PollAnswer extends DatabaseObject {
         $mainTblName = $tmpPollAnswer->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpPollAnswer);
-        
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
@@ -425,16 +426,16 @@ class PollAnswer extends DatabaseObject {
         foreach ($order as $orderColumn => $orderDirection) {
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
-        
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get the wanted rows
         $pollAnswerRes = $g_ado_db->Execute($sqlQuery);
-        
+
         // builds the array of poll objects
         $pollAnswersList = array();
         while ($pollAnswer = $pollAnswerRes->FetchRow()) {
@@ -446,7 +447,7 @@ class PollAnswer extends DatabaseObject {
 
         return $pollAnswersList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -480,7 +481,7 @@ class PollAnswer extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-    
+
    /**
      * Processes an order directive coming from template tags.
      *
