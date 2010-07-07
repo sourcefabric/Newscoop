@@ -297,6 +297,9 @@ class CampInstallationBase
             return false;
         }
 
+        require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+        camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates'));
+
         // copies template files to corresponding directory
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'templates';
         $target = CS_PATH_TEMPLATES;
