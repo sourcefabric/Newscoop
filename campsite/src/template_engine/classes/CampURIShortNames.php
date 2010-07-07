@@ -395,8 +395,9 @@ class CampURIShortNames extends CampURI
                 break;
             case 'template':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
-                if (!is_null($option) && $this->isValidTemplate($option)) {
-                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $option;
+                $template = new Template($option);
+                if (!is_null($option) && $template->exists()) {
+                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $template->getTemplateId();
                 }
                 break;
             default:
