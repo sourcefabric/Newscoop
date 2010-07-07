@@ -48,7 +48,21 @@ TABLES_TO_FILL="
  plugin_poll\
  plugin_poll_answer"
 
-CUSTOM_TABLES="Xnews_article"
+CUSTOM_TABLES="Xnews_article\
+ plugin_blog_blog\
+ plugin_blog_comment\
+ plugin_blog_entry\
+ plugin_blog_entry_topic\
+ plugin_blog_topic\
+ plugin_interview_interviews\
+ plugin_interview_items\
+ plugin_poll\
+ plugin_poll_answer\
+ plugin_poll_article\
+ plugin_poll_issue\
+ plugin_poll_publication\
+ plugin_poll_section\
+ plugin_pollanswer_attachment"
 
 mysqldump -u $DATABASE_USER $password_string -t --insert-ignore \
   $DATABASE_NAME $TABLES_TO_FILL > campsite_demo_data.sql
