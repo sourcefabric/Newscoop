@@ -284,9 +284,9 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 function camp_html_breadcrumbs($p_crumbs)
 {
     $lastCrumb = array_pop($p_crumbs);
-    $str = '<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0" bgcolor="#D5E2EE" width="100%">';
+    $str = '<table border="0" cellspacing="0" cellpadding="0" width="100%" class="breadcrumbHolder">';
     if (count($p_crumbs) > 0) {
-	   	$str .= '<TR><TD align="left" style="border-top: 1px solid #8BAED1; padding-left: 1.25em; padding-top: 3px;">';
+	   	$str .= '<tr><td class="breadcrumbTD">';
 	    $tmpCrumbs = array();
 		foreach ($p_crumbs as $crumb) {
 		    if (count($crumb) == 2) {
@@ -296,17 +296,17 @@ function camp_html_breadcrumbs($p_crumbs)
 	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
 		    }
 		}
-	    $str .= '</TD></TR>';
+	    $str .= '</td></tr>';
     }
-    $str .= '<TR>';
-    $str .= '<TD align="left" style="padding-left: 1.4em; padding-bottom: 2px; border-bottom: 1px solid black; padding-top: 3px;';
+    $str .= '<tr>';
+    $str .= '<td class="activeSection" ';
     if (count($p_crumbs) <= 0) {
-    	$str .= "border-top: 1px solid #8BAED1;";
+    	$str .= "style=\"border-top: 1px solid #8BAED1;\"";
     }
     $str .= '">';
     $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
-    $str .= '</TD></TR>';
-    $str .= '</TABLE>';
+    $str .= '</td></tr>';
+    $str .= '</table>';
     return $str;
 } // fn camp_html_breadcrumbs
 

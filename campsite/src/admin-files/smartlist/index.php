@@ -33,8 +33,10 @@ echo camp_html_breadcrumbs($crumbs);
 
 <style type="text/css">
 #doc {
-	width: 98%;
-	margin: 0 auto;
+    margin-left: 15px;
+    width: 963px;
+	//width: 98%;
+	//margin: 0 auto;
 }
 #hd {
 	width: 700px;
@@ -330,8 +332,8 @@ loader.insert({
     		submenuButton: [],
 
     		/**
-    		 * Filter settings (gender/states) are stored here. These
-    		 * settings are then used to create the query string.
+    		 * Filter settings are stored here. These settings are then
+    		 * used to create the query string.
     		 */
     		settings: {
     			publication: '',
@@ -513,6 +515,20 @@ loader.insert({
                     var request = Connect.asyncRequest('POST', sUrl, saveEditorHandler, postData);
                 };
 
+                // Set up editing flow
+                var setActionMenuStatus = function(oArgs) {
+                    if (myDataTable.getSelectedRows().length > 0) {
+                        if (CF.menuButtons[3].get("disabled") == true) {
+                            CF.menuButtons[3].getMenu().render();
+                            CF.menuButtons[3].set('disabled', false);
+                        }
+                    } else {
+                        CF.menuButtons[3].getMenu().render();
+                        CF.menuButtons[3].set('disabled', true);
+                    }
+                };
+
+
                 //
                 myDataTable.subscribe("cellMouseoverEvent", highlightEditableCell);
                 myDataTable.subscribe("cellMouseoutEvent", myDataTable.onEventUnhighlightCell);
@@ -544,6 +560,7 @@ loader.insert({
                         else {
                             myDataTable.selectRow(target);
                         }
+                        setActionMenuStatus();
                         myDataTable.checkboxClickEvent.fire;
                     }
                 );
@@ -772,7 +789,7 @@ loader.insert({
     		 */
     		createMenuButton: function (el, context) {
     			var buttonKey = CF.menuButtons.length;
-                if (context == "content_ias_menu") {
+                if (context == "content_ias_menu" || context == "action_menu") {
                     CF.menuButtons[buttonKey] = new Button(el, {
     				    type: 'menu',
     				    menu: Dom.getNextSibling(el),
@@ -895,6 +912,11 @@ loader.insert({
     			this.set("label", ("<em class=\"yui-button-label\">" +
     				oMenuItem.cfg.getProperty("text") + "<\/em>"));
     			CF.settings[this.get('id')] = oMenuItem.value;
+    			//
+    			var selRows = CF.myDataTable.getSelectedRows();
+    			if (selRows == null || selRows.length == 0) {
+    			    return false;
+    			}
 
                 var deleteHandler = {
                     success: function(o) {
@@ -1061,6 +1083,10 @@ loader.insert({
                 switch(actionName) {
                 case 'delete':                    
                     handler = deleteHandler;
+                    var r = confirm("<?php echo getGS("Are you sure you want to delete the selected articles?"); ?>");
+                    if (!r) {
+                        return;
+                    }
                     break;
                 case 'workflow_publish':
                 case 'workflow_submit':
@@ -1089,7 +1115,6 @@ loader.insert({
                     break;
                 }
 
-                var selRows = CF.myDataTable.getSelectedRows();
                 for (x in selRows) {
                     postData += '&row' + x + '='
                         + encodeURIComponent(CF.myDataTable.getRecord(selRows[x]).getData("art_id"))
