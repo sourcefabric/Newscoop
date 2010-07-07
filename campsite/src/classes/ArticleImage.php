@@ -277,10 +277,10 @@ class ArticleImage extends DatabaseObject {
 		$articles = Article::getTranslations($p_articleNumber);
 
 		// The REGEX
-		$altAttr = "(alt\s*=\s*[\"][^\"]*[\"])";
-		$alignAttr = "(align\s*=\s*\w*)";
-		$subAttr = "(sub\s*=\s*[\"][^\"]*[\"])";
-		$otherAttr = "(\w+\s*=\s*\"[^\"]*\")*";
+		$altAttr = '(alt\s*=\s*("[^"]*"|[^\s]*))';
+		$alignAttr = '(align\s*=\s*("[^"]*"|[^\s]*))';
+		$subAttr = '(sub\s*=\s*("[^"]*"|[^\s]*))';
+		$otherAttr = '(\w+\s*=\s*("[^"]*"|[^\s]*))*';
 		$matchString = "/<!\*\*\s*Image\s*$p_templateId\s*(($altAttr|$alignAttr|$subAttr|$otherAttr)\s*)*>/i";
 
 		// Replace the article tag in each one with the empty string

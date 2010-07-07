@@ -208,7 +208,7 @@ final class MetaSubtitle {
         $content = preg_replace("|$endLinkPattern|i", '</a>', $content);
 
         // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
-        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)="?[^"]+"?)*)[\s]*>';
+        $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)\s*=\s*("[^"]*"|[^\s]*))*)[\s]*>';
         return preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
