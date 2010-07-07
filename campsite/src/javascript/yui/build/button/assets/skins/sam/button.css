@@ -31,7 +31,7 @@ version: 2.8.0r4
 	border:1px solid #3a7304;
 	background:url(../../../../assets/skins/sam/sprite.png) repeat-x 0 0;
 	/*background:url(sprite.png) repeat-x 0 0;*/
-	margin:auto 10px;
+	margin:auto 4px;
 	float:left;
 }
 .yui-skin-sam .yui-button .first-child {

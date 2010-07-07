@@ -303,7 +303,7 @@ function camp_html_breadcrumbs($p_crumbs)
     if (count($p_crumbs) <= 0) {
     	$str .= "style=\"border-top: 1px solid #8BAED1;\"";
     }
-    $str .= '">';
+    $str .= '>';
     $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
     $str .= '</td></tr>';
     $str .= '</table>';

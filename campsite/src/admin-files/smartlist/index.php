@@ -33,82 +33,84 @@ echo camp_html_breadcrumbs($crumbs);
 
 <style type="text/css">
 #doc {
-    margin-left: 15px;
-    width: 963px;
-	//width: 98%;
-	//margin: 0 auto;
+        width: 963px;
+        margin-left: 15px;
 }
-#hd {
-	width: 700px;
-	margin: 0 auto;
+#hd, #bd {
+        width: 963px;
 }
 .yui-skin-sam .yui-dt table {
-	width: 100%;
+        width: 100%;
 }
 .yui-skin-sam .yui-dt th.yui-dt-col-name {
-	width: 301px;
+        width: 301px;
 }
 .yui-skin-sam .yui-dt .yui-dt-col-state1,
 .yui-skin-sam .yui-dt .yui-dt-col-state2,
 .yui-skin-sam .yui-dt .yui-dt-col-state3 {
-	width: 133px;
-	text-align: right;
+        width: 133px;
+        text-align: right;
 }
 #breadcrumbContainer {
-    width: 750px;
-	height: 28px;
-	padding: 8px 0;
-	text-align: center;
+    width: 100%;
+        height: 28px;
+        padding: 8px 0;
 }
 #searchContainer {
-    float: left;
+    float: right;
     width: 350px;
-    font-size: 85%;
+        text-align:right;
+
 }
 #dt_input {
     position: static;
     width: 200px;
 }
 #contentSelectContainer {
-	float: left;
-	width: 399px;
+        float: left;
+        width: 500px;
+        text-align:left;
 }
 #contentSelectContainer .yui-button button {
-	width: 123px;
-	*width: 121px;
-	_width: 118px;
-	font-size: 70%;
-	line-height: 1.5;
+        /*width: 123px;
+        *width: 121px;
+        _width: 118px;
+        font-size: 85%;;*/
+        line-height: 1.5
 }
-
 #controlsContainer {
     width: 100%;
     height: 28px;
     padding: 8px 0;
-	text-align: center;
+        text-align: center;
+        position:relative;
 }
 #filterSelectContainer {
-    float: left;
-    width: 33%;
+    position:absolute;
+        left:0;
+        top:8px;
+    width: 35%;
     text-align: left;
 }
 #dataPaginator {
-    float: left;
-	font-size: 85%;
-	width: 34%;
+        font-size: 12px;
+        width: 40%;
+        margin: 0 auto;
+        text-align:center;
+}
+#dataPaginator a {
+        font-size: 12px;
 }
 #actionSelectContainer {
-	float: left;
-	width: 33%;
-	text-align: right;
+        position:absolute;
+        right:0;
+        top:8px;
+        width: 33%;
+        text-align: right;
 }
 li.yui-button-selectedmenuitem {
     background: url(./assets/images/checkbox.png) left center no-repeat;
 }
-
-
-
-
 #dt-dlg {visibility:hidden;border:1px solid #808080;background-color:#E3E3E3;}
 #dt-dlg .hd {text-align:left;font-weight:bold;padding:1em;background:none;background-color:#E3E3E3;border-bottom:0;}
 #dt-dlg .ft {text-align:right;padding:.5em;background-color:#E3E3E3;}
@@ -122,7 +124,6 @@ li.yui-button-selectedmenuitem {
     filter: alpha(opacity=60);
     background-color:#272727;
 }
-
 /* Container workarounds for Mac Gecko scrollbar issues */
 .yui-panel-container.hide-scrollbars #dt-dlg .bd {
     /* Hide scrollbars by default for Gecko on OS X */
@@ -134,7 +135,7 @@ li.yui-button-selectedmenuitem {
 }
 #dt-dlg_c .underlay {overflow:hidden;}
 .inprogress {position:absolute;} /* transitional progressive enhancement state */
-.yui-dt-liner {white-space:nowrap;}
+.yui-dt-liner {/*white-space:nowrap;*/}
 
 /* Class for marked rows */
 .yui-skin-sam .yui-dt tr.mark,
@@ -147,15 +148,14 @@ li.yui-button-selectedmenuitem {
 
 /* custom styles for this example */
 .dnd-class {
-	opacity: 0.6;
-	filter:alpha(opacity=60);
-	color:blue;
-	border: 2px solid gray;
+        opacity: 0.6;
+        filter:alpha(opacity=60);
+        color:blue;
+        border: 2px solid gray;
 }
 #articlesTable tr {
- 	cursor: pointer;
+        cursor: pointer;
 }
-
 /* calendar */
 #cal1Container {
     display:none;
@@ -186,10 +186,19 @@ input.publish-date-single, input.publish-date-range {
     visibility:hidden;
 }
 div.message {
-    padding-top: 10px;
+    padding: 10px 0 0 15px;
+        width:948px;
     color: red;
+        height:20px;
     text-align: center;
     font-weight: bold;
+}
+#contentSelectContainer .yui-button, #filterSelectContainer .yui-button {
+        margin: auto 6px auto 0;
+}
+#actionSelectContainer .yui-button {
+        margin: auto 0 auto 6px;
+        float:right;
 }
 </style>
 
@@ -272,7 +281,7 @@ div.message {
                 </div>
                 <input type="button" class="menuButton" id="action" value="<?php putGS('Actions...'); ?>">
                 <select id="actionSelect">
-                    <option value=""><?php putGS('Actions...'); ?></option>
+                    <option value="none"><?php putGS('Actions...'); ?></option>
                     <option value="workflow_publish"><?php putGS('Status: Publish'); ?></option>
                     <option value="workflow_submit"><?php putGS('Status: Submit'); ?></option>
                     <option value="workflow_new"><?php putGS('Status: Set New'); ?></option>
@@ -311,6 +320,7 @@ loader.insert({
     		Connect = YAHOO.util.Connect,
     		XHRDataSource = YAHOO.util.XHRDataSource,
     		DDM = YAHOO.util.DragDropMgr,
+            Animation = YAHOO.util.Anim,
     		Button = YAHOO.widget.Button,
     		ButtonGroup = YAHOO.widget.ButtonGroup,
     		DataTable = YAHOO.widget.DataTable,
@@ -319,6 +329,44 @@ loader.insert({
     		CF, // CustomFilter
             RangeDateCalendar,
             SingleDateCalendar;
+
+
+      // Extend YUI DataTable which is missing a selectAllRows method
+      YAHOO.lang.augmentObject(
+        YAHOO.widget.DataTable.prototype, {
+
+          _selectAllTrEls : function() {
+            var selectedRowsEven = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_EVEN, "tr",this._elTbody);
+            YAHOO.util.Dom.addClass( selectedRowsEven , YAHOO.widget.DataTable.CLASS_SELECTED);
+
+            var selectedRowsOdd = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_ODD, "tr",this._elTbody);
+            YAHOO.util.Dom.addClass( selectedRowsOdd, YAHOO.widget.DataTable.CLASS_SELECTED);
+          },
+
+        /* Selects all rows. * * @method selectAllRows */
+        selectAllRows : function() {
+          // Remove all rows from tracker
+          var tracker = this._aSelections || [];
+          for(var j=tracker.length- 1; j>-1; j--) {
+            if(YAHOO.lang.isString( tracker[j] )){
+              tracker.splice( j,1);
+            }
+          }
+          // Update tracker
+          this._aSelections = tracker;
+          // Update UI
+          this._selectAllTrEls();
+          // Get all highlighted rows and make yahoo aware they are selected
+          var selectedRowsEven = YAHOO.util.Dom.getElementsByClassName(YAHOO.widget.DataTable.CLASS_SELECTED, "tr",this._elTbody);
+          for (i=0;i<selectedRowsEven.length; i++){
+            this.selectRow(i);
+          }
+        }
+      });
+      // End YUI Datatable extension
+
+
+
 
     	/**
     	 * CF creates a paginated DataTable of Articles data
@@ -341,6 +389,7 @@ loader.insert({
     			section: '',
     			filter_type: '',
     			filter_input: '',
+    			action: '',
     		},
 
     		/**
@@ -471,6 +520,10 @@ loader.insert({
     					totalRecords: myDataSource.length,
     					containers: 'dataPaginator',
     					template: "{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}",
+    					firstPageLinkLabel : "&lt;&lt;",
+    					lastPageLinkLabel : "&gt;&gt;",
+    					previousPageLinkLabel : "&lt;",
+    					nextPageLinkLabel : "&gt;",
     					pageReportTemplate: "<strong>{startRecord}</strong> - <strong>{endRecord}</strong> of <strong>{totalRecords}</strong>",
     					rowsPerPageOptions: [10,25,50],
     					pageLinks: 5
@@ -503,7 +556,22 @@ loader.insert({
                 //
                 var triggerSaveEvent = function(oArgs) {
                     var saveEditorHandler = {
-                        success: function(o) {},
+                        success: function(o) {
+                            var json = o.responseText.substring(o.responseText.indexOf('{'), o.responseText.lastIndexOf('}') + 1);
+                            var data = eval('(' + json + ')');
+                            if (data.success == false) {
+                                if (data.error != undefined) {
+                                    message.innerHTML = '<?php putGS("Error"); ?>' + ': '
+                                        + data.error;
+                                    CF.displayMessage();
+                                }
+                                return false;
+                            }
+
+                            message.style.color = 'green';
+                            message.innerHTML = data.message;
+                            CF.displayMessage();
+                        },
                         failure: function(o) {}
                     };
 
@@ -511,7 +579,6 @@ loader.insert({
                     var postData = "&articleid=" + oArgs.editor.getRecord().getData('art_id')
                         + "&target=" + oArgs.editor.getColumn().getKey()
                         + "&value=" + oArgs.newData;
-                        //alert(postData);
                     var request = Connect.asyncRequest('POST', sUrl, saveEditorHandler, postData);
                 };
 
@@ -907,13 +974,33 @@ loader.insert({
     			CF.fireDT(false);
     		},
 
+            displayMessage: function(e) {
+                ani = new Animation(
+                    'message', // container id
+                    {opacity: {from: 1, to: 0 }},
+                    3, // duration in secs
+                    YAHOO.util.Easing.easeIn // effect
+                );
+                ani.animate();
+            },
+
+            resetActionMenu: function (o) {
+                o.set("label", ("<?php putGS("Actions..."); ?>"));
+                //alert('ogetid: ' + o.get('id'));
+                CF.settings[o.get('id')] = 0;
+                //alert(CF.settings.action);
+            },
+
     		onActionMenuItemChange: function (e) {
                 var oMenuItem = e.newValue;
-    			this.set("label", ("<em class=\"yui-button-label\">" +
-    				oMenuItem.cfg.getProperty("text") + "<\/em>"));
-    			CF.settings[this.get('id')] = oMenuItem.value;
+    			//this.set("label", ("<em class=\"yui-button-label\">" +
+    				//oMenuItem.cfg.getProperty("text") + "<\/em>"));
+    			//CF.settings[this.get('id')] = oMenuItem.value;
+    			//alert('thisgetid: ' + this.get('id') + ' oMIvalue: ' + oMenuItem.value);
     			//
+
     			var selRows = CF.myDataTable.getSelectedRows();
+    			//alert(selRows);
     			if (selRows == null || selRows.length == 0) {
     			    return false;
     			}
@@ -926,6 +1013,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -934,6 +1022,7 @@ loader.insert({
                         }
                         message.style.color = 'green';
                         message.innerHTML = data.message;
+                        CF.displayMessage();
                     },
                     failure: function(o) {
                         alert('failure');
@@ -948,6 +1037,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -963,7 +1053,8 @@ loader.insert({
                             CF.myDataTable.updateCell(recordData, 'art_status', newStatus);
                         }
                         message.style.color = 'green';
-                        message.innerHTML = data.message;                        
+                        message.innerHTML = data.message;
+                        CF.displayMessage();                        
                     },
                     failure: function(o) {
                         alert('failure');
@@ -978,6 +1069,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -997,7 +1089,8 @@ loader.insert({
                             CF.myDataTable.updateCell(oRecord, oColumn, oNewValue);
                         }
                         message.style.color = 'green';
-                        message.innerHTML = data.message;                        
+                        message.innerHTML = data.message;
+                        CF.displayMessage();                        
                     },
                     failure: function(o) {
                         alert('failure');
@@ -1012,6 +1105,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -1021,6 +1115,7 @@ loader.insert({
                         //}
                         message.style.color = 'green';
                         message.innerHTML = data.message;
+                        CF.displayMessage();
                     },
                     failure: function(o) {
                         alert('failure');
@@ -1035,6 +1130,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -1044,6 +1140,7 @@ loader.insert({
                         //}
                         message.style.color = 'green';
                         message.innerHTML = data.message;
+                        CF.displayMessage();
                     },
                     failure: function(o) {
                         alert('failure');
@@ -1058,6 +1155,7 @@ loader.insert({
                             if (data.error != undefined) {
                                 message.innerHTML = '<?php putGS("Error"); ?>' + ': '
                                     + data.error;
+                                CF.displayMessage();
                             }
                             return false;
                         }
@@ -1079,13 +1177,14 @@ loader.insert({
                 var sUrl = '/admin/smartlist/assets/dt_actions.php';
                 var actionName = oMenuItem.value;
                 var postData = '&action=' + actionName;
+                var skipRequest = false;
 
                 switch(actionName) {
                 case 'delete':                    
                     handler = deleteHandler;
-                    var r = confirm("<?php echo getGS("Are you sure you want to delete the selected articles?"); ?>");
+                    var r = confirm("<?php putGS("Are you sure you want to delete the selected articles?"); ?>");
                     if (!r) {
-                        return;
+                        skipRequest = true;
                     }
                     break;
                 case 'workflow_publish':
@@ -1121,8 +1220,11 @@ loader.insert({
                         + '_' + encodeURIComponent(CF.myDataTable.getRecord(selRows[x]).getData("art_languageid"));
                 }
                 //alert('pD: ' + postData);
-                var request = Connect.asyncRequest('POST', sUrl, handler, postData);
-
+                if (!skipRequest) {
+                    var request = Connect.asyncRequest('POST', sUrl, handler, postData);
+                }
+                CF.resetActionMenu(this);
+                //alert('CFrAm: ' + CF.settings.action);
     			CF.fireDT(false);
     		},
 
@@ -1348,16 +1450,17 @@ loader.insert({
     			It is beyond the scope of this example, but the DataTable::sortColumn() method
     			has code that can be used with some modification. */
 
-    			/*
-    			This example uses onDataReturnSetRows because that method
-    			will clear out the old data in the DataTable, making way for
-    			the new data.*/
+    			/* This uses onDataReturnSetRows because that method will clear out
+    			the old data in the DataTable, making way for the new data.*/
     			oCallback = {
     			    success : CF.myDataTable.onDataReturnSetRows,
     			    failure : CF.myDataTable.onDataReturnSetRows,
                     argument : oState,
     			    scope : CF.myDataTable
     			};
+
+                // Unselect all records before requesting for new data
+                CF.myDataTable.unselectAllRows();
 
     			// Generate a query string
                 request = CF.myDataTable.get("generateRequest")(oState, CF.myDataTable);
