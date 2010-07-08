@@ -198,7 +198,7 @@ regGS("Article automatic publishing schedule", "Automatické publikování rozvr
 regGS("Are you sure you want to delete this scheduled action?", "Doopravdy chcete odstranit naplánovanou činnost?");
 regGS("Unlink", "Rozpojit");
 regGS("Are you sure you want to delete the image \'$1\'?", "Doopravdy chcete odstranit obrázek \'$1\'?");
-regGS("No such issue.", "");
+regGS("No such issue.", "Žádný takový problém.");
 regGS("Are you sure you want to delete the subscription to the publication $1?", "Doopravdy chcete odstranit předplatné k publikaci $1?");
 regGS("Could not save the changes to the issue $1. Please make sure the issue URL name '$2' was not used before in the publication $3.", "Není možné uložit změny vydání $1. Prosím ujistěte se, že URL jméno vydání '$2' nebylo použito dříve v publikaci $3.");
 regGS("GB", "GM");
@@ -257,7 +257,7 @@ regGS("Please take a minute to send us an email.", "Prosíme, najděte si chvíl
 regGS("(optional)", "(volitelný)");
 regGS("The URL you entered is invalid: '$1'", "URL, kterou jste zadali je neplatná: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Stala se chyba v přilhašování na server Campcaster");
-regGS("Reads", "");
+regGS("Reads", "Přečteno");
 regGS("Publish with issue", "");
 regGS("Readers", "");
 regGS("User name", "Uživatelské jméno");

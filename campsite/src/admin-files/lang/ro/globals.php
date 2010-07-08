@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "");
+regGS("Manage Plugins", "");
 regGS("Account", "Cont");
 regGS("Items per page", "Elemente pe pagină");
 regGS("Add new", "Adaugă element nou");
@@ -256,7 +258,7 @@ regGS("(optional)", "(opţional)");
 regGS("The URL you entered is invalid: '$1'", "Adresa de Internet introdusă nu este validă: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Eroare la autentificarea cu server-ul aplicaţiei Campcaster");
 regGS("Reads", "");
-regGS("Plugins", "");
+regGS("Publish with issue", "");
 regGS("Article Audioclips", "");
 regGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.", "");
 regGS("Unable to add new image.", "");
@@ -274,5 +276,4 @@ regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii");
 regGS("There are $1 keyword(s) left.", "Mai sunt $1 cuvinte cheie");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nume");
 regGS("New field", "Câmp nou");
-regGS("Publish with issue", "");
 ?>

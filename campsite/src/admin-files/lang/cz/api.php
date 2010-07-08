@@ -1,9 +1,9 @@
 <?php 
 regGS("Publish with issue", "");
 regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
-regGS("unknown", "");
-regGS("User type \"$1\" deleted", "");
-regGS("User type \"$1\" added", "");
+regGS("unknown", "neznámý");
+regGS("User type \"$1\" deleted", "Vymazán uživatel typu '$1'");
+regGS("User type \"$1\" added", "Přidán uživatel typu '$1'");
 regGS("User permissions for \"$1\" ($2) changed", "");
 regGS("User account \"$1\" ($2) created", "");
 regGS("Topic $1: (\"$2\" -> \"$3\") updated", "");
