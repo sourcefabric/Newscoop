@@ -4,6 +4,12 @@ require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 
 camp_load_translation_strings("articles");
 
+
+//$articlesParams = array();
+//$articles = Article::GetList($articlesParams, array(array('field'=>'byname', 'dir'=>'desc')), 0, 100, $articlesCount, true);
+//var_dump($articles);
+//exit;
+
 //
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
@@ -259,6 +265,11 @@ div.message {
                     <option value="type"><?php putGS('Type'); ?></option>
                 </select>
                 <label id="filtermenubutton-container"></label>
+                <div id="myAutoComplete">
+                  <input id="myInput" type="text">
+                  <div id="myContainer"></div>
+                  <input id="myHidden" type="hidden">
+                </div>
                 <!--<label id="publish-date-single"></label>//-->
                 <input type="button" id="publish-date-single" class="publish-date-single" name="publish-date-single" value="" />
                 <input type="button" id="publish-date-range" class="publish-date-range" name="publish-date-range" value="" />
@@ -268,11 +279,6 @@ div.message {
                   <input type="hidden" name="dateTxt" id="dateTxt">
                   <input type="hidden" name="in" id="in">
                   <input type="hidden" name="out" id="out">
-                </div>
-                <div id="myAutoComplete">
-                  <input id="myInput" type="text">
-                  <div id="myContainer"></div>
-                  <input id="myHidden" type="hidden">
                 </div>
             </div>
             <div id="dataPaginator"><!-- The Paginator widget is rendered here --></div>
@@ -466,8 +472,8 @@ loader.insert({
     				{key: "art_osp", label: "<?php putGS('On Section Page'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true})},
     				{key: "art_images", label: "<?php putGS('Images'); ?>", formatter:"number", hidden:true},
     				{key: "art_topics", label: "<?php putGS('Topics'); ?>", formatter:"number"},
-    				//{key: "art_comments", label: "<?php putGS('Comments'); ?>", formatter:"number", sortable:true, hidden:true},
-    				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true}), sortable:true, hidden:true},
+    				//{key: "art_comments", label: "<?php putGS('Comments'); ?>", formatter:"number", hidden:true},
+    				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true}), hidden:true},
     				{key: "art_reads", label: "<?php putGS('Reads'); ?>", formatter:"number", sortable:true},
     				{key: "art_lastmodifieddate", label: "<?php putGS('Last Modified'); ?>", formatter:"date"},
     				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", formatter:"date", hidden:true},
@@ -488,18 +494,18 @@ loader.insert({
     			myDataSource.responseSchema = {
     				resultsList: "records",
     				fields: [
-    					{key: "art_id"},
-    					{key: "art_name"},
-    					{key: "art_type"},
+    					{key: "art_id", parser: "number"},
+    					{key: "art_name", parser: "string"},
+    					{key: "art_type", parser: "string"},
     					{key: "art_createdby"},
-    					{key: "art_author"},
-    					{key: "art_status"},
-    					{key: "art_ofp"},
+    					{key: "art_author", parser: "string"},
+    					{key: "art_status", parser: "string"},
+    					{key: "art_ofp", parser: "string"},
     					{key: "art_osp"},
     					{key: "art_images"},
     					{key: "art_topics"},
     					{key: "art_comments"},
-    					{key: "art_reads"},
+    					{key: "art_reads", parser: "number"},
     					{key: "art_lastmodifieddate"},
     					{key: "art_publishdate"},
     					{key: "art_creationdate"},
@@ -532,7 +538,7 @@ loader.insert({
     					pageLinks: 5
     				}),
     				sortedBy:{
-                        key: 'art_creationdate',
+                        key: 'art_id',
                         dir: DataTable.CLASS_ASC
                     },
                     formatRow: rowCustomHighlighter,
@@ -639,109 +645,12 @@ loader.insert({
                             myDataTable.selectRow(target);
                         }
                         setActionMenuStatus();
-                        //alert(target);
-                        //myDataTable.checkboxClickEvent.fire;
+                        myDataTable.checkboxClickEvent.fire;
                     }
                 );
 
-                // Custom drag and drop class
-                YAHOO.campsite.DDRows = function (id, sGroup, config) {
-                    YAHOO.campsite.DDRows.superclass.constructor.call(this, id, sGroup, config);
-                    Dom.addClass(this.getDragEl(), 'dnd-class');
-                    //this.goingUp = false;
-                    //this.lastY = 0;
-                };
-
-                // DDRows extends DDProxy
-                YAHOO.extend(YAHOO.campsite.DDRows, YAHOO.util.DDProxy, {
-                    proxyEl: null,
-                    srcEl:null,
-                    srcData:null,
-                    srcIndex: null,
-                    tmpIndex:null,
-
-                    startDrag: function(x, y) {
-                        var proxyEl = this.proxyEl = this.getDragEl(),
-                            srcEl = this.srcEl = this.getEl();
-
-                        //this.srcData = myDataTable.getRecord(this.srcEl).getData();
-                        //this.srcIndex = srcEl.sectionRowIndex;
-                        // Make the proxy look like the source element
-                        //Dom.setStyle(srcEl, "visibility", "hidden");
-                        proxyEl.innerHTML = "<table><tbody>"+srcEl.innerHTML+"</tbody></table>";
-                    },
-
-                    endDrag: function(x,y) {
-                        //var position,
-                            //srcEl = this.srcEl;
-
-                        Dom.setStyle(this.proxyEl, "visibility", "hidden");
-                        //Dom.setStyle(srcEl, "visibility", "");
-                    },
-
-                    //onDrag: function(e) {
-                    //    // Keep track of the direction of the drag for use during onDragOver
-                    //    var y = Event.getPageY(e);
-
-                    //    if (y < this.lastY) {
-                    //        this.goingUp = true;
-                    //    } else if (y > this.lastY) {
-                    //        this.goingUp = false;
-                    //    }
-
-                    //    this.lastY = y;
-                    //},
-
-                    //onDragOver: function(e, id) {
-                        // Reorder rows as user drags
-                    //    var srcIndex = this.srcIndex,
-                    //        destEl = Dom.get(id),
-                    //        destIndex = destEl.sectionRowIndex,
-                    //        tmpIndex = this.tmpIndex;
-
-                    //    if (destEl.nodeName.toLowerCase() === "tr") {
-                    //        if(tmpIndex !== null) {
-                    //            myDataTable.deleteRow(tmpIndex);
-                    //        } else {
-                    //            myDataTable.deleteRow(this.srcIndex);
-                    //        }
-
-                    //        myDataTable.addRow(this.srcData, destIndex);
-                    //        this.tmpIndex = destIndex;
-
-                    //        DDM.refreshCache();
-                    //    }
-                    //}
-                    
-                    onDragDrop: function(e, id) {
-                        var destDD = DDM.getDDById(id);
-                        // Only if dropping on a valid target
-                        if(destDD && destDD.isTarget && this.srcEl) {
-                            var	srcEl = this.srcEl,
-                            srcIndex = srcEl.sectionRowIndex,
-                            destEl = Dom.get(id),
-                            destIndex = destEl.sectionRowIndex,
-                            srcData = myDataTable.getRecord(srcEl).getData();
-
-                            this.srcEl = null;
-
-                            // Cleanup existing Drag instance
-                            myDTDrags[srcEl.id].unreg();
-                            delete myDTDrags[srcEl.id];
-
-                            // Move the row to its new position
-                            myDataTable.deleteRow(srcIndex);
-                            myDataTable.addRow(srcData, destIndex);
-                            DDM.refreshCache();
-                        }
-                    }
-                });
-
-                // Create DDRows instances when DataTable is initialized
                 myDataTable.subscribe("initEvent", function() {
-                    var i, id,
-                        allRows = this.getTbodyEl().rows,
-                        chkall = Dom.get('chkall');
+                    var chkall = Dom.get('chkall');
 
                     if (chkall) {
                         Event.on(chkall, 'click', function (e) {
@@ -758,27 +667,7 @@ loader.insert({
                             setActionMenuStatus();
                         });
                     }
-
-
-                    for(i = 0; i < allRows.length; i++) {
-                        id = allRows[i].id;
-                        // Clean up any existing Drag instances
-                        if (myDTDrags[id]) {
-                            myDTDrags[id].unreg();
-                            delete myDTDrags[id];
-                        }
-                        // Create a Drag instance for each row
-                        myDTDrags[id] = new YAHOO.campsite.DDRows(id);
-                    }
                 });
-
-                // Create DDRows instances when new row is added
-                myDataTable.subscribe("rowAddEvent",function(e) {
-                    var id = e.record.getId();
-                    myDTDrags[id] = new YAHOO.campsite.DDRows(id);
-                });
-
-
 
                 // Shows dialog, creating one when necessary
                 var newCols = true;
@@ -1312,6 +1201,7 @@ loader.insert({
                         if (CF.submenuButton.length == 1) {
                             CF.submenuButton[buttonKey].destroy();
                         }
+                        Dom.get("myInput").style.visibility = "hidden";
                         CF.submenuButton[buttonKey] = new YAHOO.widget.Button({
                                 id: "filter_input",
                                 name: "filter_input",

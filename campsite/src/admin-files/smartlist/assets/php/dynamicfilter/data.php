@@ -17,7 +17,6 @@ if (!isset($_REQUEST['results']) or intval($_REQUEST['results']) < 10) {
 
 
 $articlesParams = array();
-//$articlesParams = array(new ComparisonOperation('published', new Operator('is'), 'true'));
 if (isset($_REQUEST['publication']) && $_REQUEST['publication'] > 0) {
     $publication_id = (int) $_REQUEST['publication'];
     $articlesParams[] = new ComparisonOperation('idpublication', new Operator('is', 'integer'), $publication_id);
@@ -57,7 +56,7 @@ if (isset($_REQUEST['filter_type']) && strlen($_REQUEST['filter_type']) > 0
     }
 }
 
-$articles = Article::GetList($articlesParams, array(array('field'=>'bydate', 'dir'=>'desc')), 0, 100, $articlesCount, true);
+$articles = Article::GetList($articlesParams, array(array('field'=>'bynumber', 'dir'=>'asc')), 0, 100, $articlesCount, true);
 
 $return = array();
 foreach($articles as $article) {
@@ -99,7 +98,7 @@ foreach($articles as $article) {
     //
     $onSectionPage = $article->onSectionPage() ? 'Yes' : 'No';
     //
-    $imagesNo = 0; //ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
+    $imagesNo = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
     //
     $topicsNo = ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
     //
