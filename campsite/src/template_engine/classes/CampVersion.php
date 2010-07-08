@@ -3,7 +3,7 @@
  * @package Campsite
  *
  * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2010 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
  * @link http://www.sourcefabric.org
@@ -27,12 +27,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.4';
+    private $m_release = '3.4.0';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'dev';
+    private $m_devStatus = '';
 
     /**
      * @var string
@@ -42,12 +42,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2010-06-01';
+    private $m_releaseDate = '2010-07-08';
 
     /**
      * @var string
      */
-    private $m_copyrightYear = 2009;
+    private $m_copyrightYear = 2010;
 
     /**
      * @var string

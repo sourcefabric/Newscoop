@@ -1,3 +1,51 @@
+3.4.0 (July 8, 2010)
+  Improvements
+  ------------
+  - CS-2048: Supernavigation and backend search: Implement a new navigation
+             sytem on backend home page, including full text search.
+  - CS-2028: Search engine optimization in URL: It allows to add in URL the
+             combination of texts from article title, keywords, topics.
+  - CS-1669: Order of topics: Ability to re-order the subtopics; the topics
+             order is preserved on the frontend.
+  - CS-1329: Time zone handling: It allows to set custom timezone instead of
+             server's.
+  - CS-1301: Backup/restore admin GUI: It allows to manage backup and restore
+             process via administration interface.
+  - CS-2087: Installation supports subfolder: It allows to install campsite
+             not only in the root forlder but any subfolder.
+  - CS-2085: Internal cron scheduler: It allows to manage cron tasks when the
+             hosting has no cron daemon support.
+  - CS-2130: New iconography for the admin interface, part of the UI
+             re-design. Art work by Vladimir Stefanovic.
+  - CS-1784: Customizable error page for not-found URLs
+  - CS-1667: Incorporate Embed Media TinyMCE plugin
+  - CS-1897: Advanced archive calendar as a standard: calendar widget that
+             allows only the selection of dates of published issues/articles.
+  - CS-1964: Thumbnail generation for article images by specifying fix
+             width/height values
+  - CS-2105: Make Campsite compatible with the newer, stricter MySQL version
+  - CS-2101: Make the article indexer runnable in the UI with user specified
+             parameters
+  - CS-2070: Add possibility to show translation of
+             {{$campsite->article->type_name}} filed in local language.
+
+  Bugs Fixed
+  ----------
+  - CS-841: Campsite log should log Pending articles correctly
+  - CS-1615: deb install package does not install with install/index.php
+  - CS-1940: Campsite logs article duplication incorrectly
+  - CS-2104: Poll plugin - Fatal error
+  - CS-2121: undefined constant CS_PATH_SMARTY_SYS_TEMPLATES
+  - CS-2136: getimagesize stucks when URL given is SSL
+  - CS-2141: campsite_3.3.6-1_i386.deb install does not work properly
+  - CS-2152: Tinymce editor stylesheet wrong path
+  - CS-2153: The site title and cache status are not set on Campsite install
+  - CS-2162: Some admin screens are shift
+  - CS-2164: Error importing demo data
+  - CS-2165: Campsite template engine crashes when the article embedded images
+             description not wrapped in double quotes
+
+
 3.3.6 (May 31, 2010)
   Improvements
   ------------
