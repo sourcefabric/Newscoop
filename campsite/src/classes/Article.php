@@ -103,6 +103,7 @@ class Article extends DatabaseObject {
                                                 'onsection'=>'Articles.OnSection',
                                                 'public'=>'Articles.Public',
                                                 'published'=>'Articles.Published',
+                                                'workflow_status'=>'Articles.Published',
                                                 'issue_published'=>'Issues.Published',
                                                 'reads'=>'RequestObjects.request_count');
 
@@ -2512,6 +2513,20 @@ class Article extends DatabaseObject {
             if (strtolower($p_param->getRightOperand()) == 'true') {
                 $conditionOperation['symbol'] = '=';
                 $conditionOperation['right'] =  'Y';
+            }
+            break;
+        case 'workflow_status':
+            $conditionOperation['symbol'] = '=';
+            switch(strtolower($p_param->getRightOperand())) {
+            case 'new':
+                $conditionOperation['right'] = 'N';
+                break;
+            case 'published':
+                $conditionOperation['right'] = 'Y';
+                break;
+            case 'submitted':
+                $conditionOperation['right'] = 'S';
+                break;
             }
             break;
         case 'issue_published':

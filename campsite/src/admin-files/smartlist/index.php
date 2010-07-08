@@ -33,83 +33,85 @@ echo camp_html_breadcrumbs($crumbs);
 
 <style type="text/css">
 #doc {
-        width: 963px;
-        margin-left: 15px;
+  width: 963px;
+  margin-left: 15px;
 }
 #hd, #bd {
-        width: 963px;
+  width: 963px;
 }
 .yui-skin-sam .yui-dt table {
-        width: 100%;
+  width: 100%;
 }
 .yui-skin-sam .yui-dt th.yui-dt-col-name {
-        width: 301px;
+  width: 301px;
 }
 .yui-skin-sam .yui-dt .yui-dt-col-state1,
 .yui-skin-sam .yui-dt .yui-dt-col-state2,
 .yui-skin-sam .yui-dt .yui-dt-col-state3 {
-        width: 133px;
-        text-align: right;
+  width: 133px;
+  text-align: right;
 }
 #breadcrumbContainer {
-    width: 100%;
-        height: 28px;
-        padding: 8px 0;
+  width: 100%;
+  height: 28px;
+  padding: 8px 0;
 }
 #searchContainer {
-    float: right;
-    width: 350px;
-        text-align:right;
-
+  float: right;
+  width: 350px;
+  text-align:right;
+  font-size: 85%;
 }
 #dt_input {
-    position: static;
-    width: 200px;
+  position: static;
+  width: 200px;
 }
 #contentSelectContainer {
-        float: left;
-        width: 500px;
-        text-align:left;
+  float: left;
+  width: 500px;
+  text-align:left;
 }
 #contentSelectContainer .yui-button button {
-        /*width: 123px;
-        *width: 121px;
-        _width: 118px;
-        font-size: 85%;;*/
-        line-height: 1.5
+  /*width: 123px;
+  *width: 121px;
+  _width: 118px;
+  font-size: 85%;;*/
+  line-height: 1.5
 }
 #controlsContainer {
-    width: 100%;
-    height: 28px;
-    padding: 8px 0;
-        text-align: center;
-        position:relative;
+  width: 100%;
+  height: 28px;
+  padding: 8px 0;
+  text-align: center;
+  position:relative;
 }
 #filterSelectContainer {
-    position:absolute;
-        left:0;
-        top:8px;
-    width: 35%;
-    text-align: left;
+  position:absolute;
+  left:0;
+  top:8px;
+  width: 35%;
+  text-align: left;
 }
 #dataPaginator {
-        font-size: 12px;
-        width: 40%;
-        margin: 0 auto;
-        text-align:center;
+  font-size: 12px;
+  width: 40%;
+  margin: 0 0 0 290px;
+  text-align:left;
+  float:left;
+  padding-top:3px;
 }
 #dataPaginator a {
-        font-size: 12px;
+  font-size: 12px;
 }
 #actionSelectContainer {
-        position:absolute;
-        right:0;
-        top:8px;
-        width: 33%;
-        text-align: right;
+  position:absolute;
+  right:0;
+  top:8px;
+  width: 40%;
+  text-align: right;
 }
 li.yui-button-selectedmenuitem {
-    background: url(./assets/images/checkbox.png) left center no-repeat;
+  background: url(./assets/images/checkbox.png) left center no-repeat;
 }
 #dt-dlg {visibility:hidden;border:1px solid #808080;background-color:#E3E3E3;}
 #dt-dlg .hd {text-align:left;font-weight:bold;padding:1em;background:none;background-color:#E3E3E3;border-bottom:0;}
@@ -119,19 +121,19 @@ li.yui-button-selectedmenuitem {
 #dt-dlg .dt-dlg-pickerkey {float:left;padding-top:.3em;}
 #dt-dlg .dt-dlg-pickerbtns {float:right;}
 .yui-skin-sam .mask {
-    -moz-opacity: 0.6;
-    opacity:.60;
-    filter: alpha(opacity=60);
-    background-color:#272727;
+  -moz-opacity: 0.6;
+  opacity:.60;
+  filter: alpha(opacity=60);
+  background-color:#272727;
 }
 /* Container workarounds for Mac Gecko scrollbar issues */
 .yui-panel-container.hide-scrollbars #dt-dlg .bd {
-    /* Hide scrollbars by default for Gecko on OS X */
-    overflow: hidden;
+  /* Hide scrollbars by default for Gecko on OS X */
+  overflow: hidden;
 }
 .yui-panel-container.show-scrollbars #dt-dlg .bd {
-    /* Show scrollbars for Gecko on OS X when the Panel is visible  */
-    overflow: auto;
+  /* Show scrollbars for Gecko on OS X when the Panel is visible  */
+  overflow: auto;
 }
 #dt-dlg_c .underlay {overflow:hidden;}
 .inprogress {position:absolute;} /* transitional progressive enhancement state */
@@ -143,62 +145,63 @@ li.yui-button-selectedmenuitem {
 .yui-skin-sam .yui-dt tr.mark td.yui-dt-desc,
 .yui-skin-sam .yui-dt tr.mark td.yui-dt-asc,
 .yui-skin-sam .yui-dt tr.mark td.yui-dt-desc {
-    background-color: #ffdfdf;
+  background-color: #ffdfdf;
 }
 
 /* custom styles for this example */
 .dnd-class {
-        opacity: 0.6;
-        filter:alpha(opacity=60);
-        color:blue;
-        border: 2px solid gray;
+  opacity: 0.6;
+  filter:alpha(opacity=60);
+  color:blue;
+  border: 2px solid gray;
 }
 #articlesTable tr {
-        cursor: pointer;
+  cursor: pointer;
 }
+
 /* calendar */
 #cal1Container {
-    display:none;
-    position:absolute;
-    z-index:1;
+  display:none;
+  position:absolute;
+  z-index:1;
 }
 #cal2Container {
-    display:none;
-    position:absolute;
-    z-index:1;
+  display:none;
+  position:absolute;
+  z-index:1;
 }
 #dates {
-    display:none;
+  display:none;
 }
 // Topic filtering
 #myAutoComplete {
-    display:none;
-    width:15em; /* set width here or else widget will expand to fit its container */
-    padding-bottom:2em;
+  display:none;
+  width:15em; /* set width here or else widget will expand to fit its container */
+  padding-bottom:2em;
 }
 #myInput {
-    visibility:hidden;
+  visibility:hidden;
 }
 .match {
-    font-weight:bold;
+  font-weight:bold;
 }
 input.publish-date-single, input.publish-date-range {
-    visibility:hidden;
+  visibility:hidden;
 }
 div.message {
-    padding: 10px 0 0 15px;
-        width:948px;
-    color: red;
-        height:20px;
-    text-align: center;
-    font-weight: bold;
+  padding: 10px 0 0 15px;
+  width:948px;
+  color: red;
+  height:20px;
+  text-align: center;
+  font-weight: bold;
 }
 #contentSelectContainer .yui-button, #filterSelectContainer .yui-button {
-        margin: auto 6px auto 0;
+  margin: auto 6px auto 0;
 }
 #actionSelectContainer .yui-button {
-        margin: auto 0 auto 6px;
-        float:right;
+  margin: auto 0 auto 6px;
+  float:right;
 }
 </style>
 
@@ -251,7 +254,7 @@ div.message {
                     <option value="publish_range"><?php putGS('Date Range'); ?></option>
                     <option value="iduser"><?php putGS('Creator'); ?></option>
                     <option value="language"><?php putGS('Language'); ?></option>
-                    <option value="status"><?php putGS('Status'); ?></option>
+                    <option value="workflow_status"><?php putGS('Status'); ?></option>
                     <option value="topic"><?php putGS('Topic'); ?></option>
                     <option value="type"><?php putGS('Type'); ?></option>
                 </select>
@@ -615,6 +618,14 @@ loader.insert({
                 myDataTable.subscribe("rowMouseoverEvent", myDataTable.onEventHighlightRow);
                 myDataTable.subscribe("rowMouseoutEvent", myDataTable.onEventUnhighlightRow);
 
+                myDataTable.subscribe("checkboxClickEvent", function(e) {
+                    var id = parseInt(e.target.value, 10);
+                    checked[id] = e.target.checked;
+                    if (!e.target.checked) {
+                        Dom.get('chkall').checked = false;
+                    }
+                });
+
                 // Enable row selection
                 myDataTable.subscribe("rowClickEvent",
                     function(ev) {
@@ -728,7 +739,24 @@ loader.insert({
                 // Create DDRows instances when DataTable is initialized
                 myDataTable.subscribe("initEvent", function() {
                     var i, id,
-                    allRows = this.getTbodyEl().rows;
+                        allRows = this.getTbodyEl().rows,
+                        chkall = Dom.get('chkall');
+
+                    if (chkall) {
+                        Event.on(chkall,'click',function (e) {
+                            var checks = document.getElementsByName('filerow');
+                            var i = 0, l = checks.length;
+                            for (; i < l; ++i) {
+                                checked[i] = checks[i].checked = this.checked;
+                            }
+                            if (this.checked) {
+                                myDataTable.selectAllRows();
+                            } else {
+                                myDataTable.unselectAllRows();
+                            }
+                        });
+                    }
+
 
                     for(i = 0; i < allRows.length; i++) {
                         id = allRows[i].id;

@@ -91,19 +91,12 @@ hr {
 	background:#fff url(input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
 	font-size: 12px;
-	margin:0;
-	height:21px;
-	padding: 0;
-	line-height:20px;
 }
 .input_text_area {
 	border: 1px solid #015476;
 	background:#fff url(input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
 	font-size: 12px;
-	margin:0;
-	padding: 0;
-	line-height:20px;
 }
 .input_text_disabled {
 	border: 1px solid grey;
@@ -585,9 +578,20 @@ fieldset {
 .formBlock .input_text {
 	width:350px;
 	float:left;
+	border: 1px solid #015476;
+	background:#fff url(input_bg.png) repeat-x 0 0;
+	text-indent: 3px;
+	font-size: 12px;
+	margin:0;
+	height:21px;
+	padding: 0;
+	line-height:20px;
 }
 .formBlock .input_text_area {
 	float:left;
+	margin:0;
+	padding: 0;
+	line-height:20px;
 }
 .scrollHolder {
 	float:left;

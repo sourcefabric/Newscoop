@@ -51,7 +51,7 @@ switch($action) {
                     $list[$tmpArticleType->getTypeName()] = $tmpArticleType->getDisplayName();
                 }
                 break;
-            case 'status':
+            case 'workflow_status':
                 $list = array('published' => 'Published', 'new' => 'New', 'submitted' => 'Submitted');
                 break;
         }
