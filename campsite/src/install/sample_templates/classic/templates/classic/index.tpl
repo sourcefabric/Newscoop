@@ -16,6 +16,8 @@
 
 {{ if !$campsite->url->is_valid }}
 	<h3>The requested page was not found.</h3>
+	{{ set_language name=`$campsite->publication->default_language->english_name` }}
+	{{ set_current_issue }}
 {{ else }}
 
 <!-- Column 1 start -->
