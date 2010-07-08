@@ -274,4 +274,5 @@ regGS("There are $1 keyword(s) left.", "დარჩა $1 საკვანძ
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "");
 regGS("New field", "ახალი ველი");
 regGS("Publish with issue", "");
+regGS("Universal List", "");
 ?>

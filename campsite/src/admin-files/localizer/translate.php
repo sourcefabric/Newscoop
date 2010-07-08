@@ -99,6 +99,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay[] = "";
     $mapPrefixToDisplay["globals"] = getGS("Globals");
     $mapPrefixToDisplay["home"] = getGS("Home");
+    $mapPrefixToDisplay["universal_list"] = getGS("Universal List");
     $mapPrefixToDisplay["api"] = getGS("API");
     $mapPrefixToDisplay["pub"] = getGS("Publications");
     $mapPrefixToDisplay["issues"] = getGS("Issues");
@@ -207,7 +208,7 @@ function translationForm($p_request)
 				</tr>
 				</table>
 			</td>
-			
+
 			<td>
 				<table>
 				<tr>
@@ -220,20 +221,20 @@ function translationForm($p_request)
 				        <?php
 				        if ($screenDropDownSelection) {
 				            $all = $transl_status[$screenDropDownSelection]['all'];
-				            $transl = $transl_status[$screenDropDownSelection]['translated']; 
-				            $untransl = $transl_status[$screenDropDownSelection]['untranslated'];   
+				            $transl = $transl_status[$screenDropDownSelection]['translated'];
+				            $untransl = $transl_status[$screenDropDownSelection]['untranslated'];
 				        } else {
     				        foreach ($transl_status as $screen) {
     				            $all += $screen['all'];
     				            $transl += $screen['translated'];
-    				            $untransl += $screen['untranslated']; 
+    				            $untransl += $screen['untranslated'];
     				        }
 				        }
 				        if ($all) {
 				            putGS("$1 of $2 strings translated", $transl, $all);
 				            echo '<br>'.round(100 - 100 / $all * $untransl, 2) . ' %';
 				        } else {
-				            echo 'N/A';   
+				            echo 'N/A';
 				        }
 				        ?>
 					</td>

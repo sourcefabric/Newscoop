@@ -261,4 +261,5 @@ regGS("Add new umember", "Dodaj novog suradnika");
 regGS("Your articles", "Vaši članci");
 regGS("Submitted articles", "Predani članci");
 regGS("Publish with issue", "");
+regGS("Universal List", "");
 ?>

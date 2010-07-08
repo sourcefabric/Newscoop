@@ -259,4 +259,5 @@ regGS("The URL you entered is invalid: '$1'", "The URL you entered is invalid: '
 regGS("There was an error logging in to the Campcaster server", "There was an error logging in to the Campcaster server");
 regGS("Reads", "Reads");
 regGS("Publish with issue", "Publish with issue");
+regGS("Universal List", "Universal List");
 ?>

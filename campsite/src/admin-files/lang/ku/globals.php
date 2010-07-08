@@ -259,4 +259,5 @@ regGS("There was an error logging in to the Campcaster server", "هه ڵه یه 
 regGS("Reads", "بینراوه");
 regGS("Plugins", "چه سپێنه ره کا ن");
 regGS("Publish with issue", "");
+regGS("Universal List", "");
 ?>

@@ -258,4 +258,5 @@ regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Publish with issue", "");
+regGS("Universal List", "");
 ?>

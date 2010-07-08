@@ -3,6 +3,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 
 camp_load_translation_strings("articles");
+camp_load_translation_strings("universal_list");
 
 //
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -288,9 +289,9 @@ div.message {
                     <option value="workflow_publish"><?php putGS('Status: Publish'); ?></option>
                     <option value="workflow_submit"><?php putGS('Status: Submit'); ?></option>
                     <option value="workflow_new"><?php putGS('Status: Set New'); ?></option>
-                    <option value="switch_onfrontpage"><?php putGS('Toggle: \'On Front Page\''); ?></option>
-                    <option value="switch_onsectionpage"><?php putGS('Toggle: \'On Section Page\''); ?></option>
-                    <option value="switch_comments"><?php putGS('Toggle: \'Comments\''); ?></option>
+                    <option value="switch_onfrontpage"><?php putGS("Toggle: 'On Front Page'"); ?></option>
+                    <option value="switch_onsectionpage"><?php putGS("Toggle: 'On Section Page'"); ?></option>
+                    <option value="switch_comments"><?php putGS("Toggle: 'Comments'"); ?></option>
                     <!--<option value="schedule_publish"><?php putGS('Publish Schedule'); ?></option>//-->
                     <option value="unlock"><?php putGS('Unlock'); ?></option>
                     <option value="delete"><?php putGS('Delete'); ?></option>
@@ -948,7 +949,7 @@ loader.insert({
                         }
                         message.style.color = 'green';
                         message.innerHTML = data.message;
-                        CF.displayMessage();                        
+                        CF.displayMessage();
                     },
                     failure: function(o) {
                         alert('failure');
@@ -983,7 +984,7 @@ loader.insert({
                         }
                         message.style.color = 'green';
                         message.innerHTML = data.message;
-                        CF.displayMessage();                        
+                        CF.displayMessage();
                     },
                     failure: function(o) {
                         alert('failure');
@@ -1060,7 +1061,7 @@ loader.insert({
                 var skipRequest = false;
 
                 switch(actionName) {
-                case 'delete':                    
+                case 'delete':
                     handler = deleteHandler;
                     var r = confirm("<?php putGS("Are you sure you want to delete the selected articles?"); ?>");
                     if (!r) {
@@ -1148,7 +1149,7 @@ loader.insert({
                 this.set("label", ("<em class=\"yui-button-label\">" +
                     oMenuItem.cfg.getProperty("text") + "<\/em>"));
                 CF.settings[this.get('id')] = oMenuItem.value;
-                
+
                 var loadSubmenuHandler = {
                     success: function(o) {
                         var buttonKey = 0;
@@ -1194,7 +1195,7 @@ loader.insert({
                         }
                         selDate = selDate.getFullYear() + "-" + (selDate.getMonth() + 1) + "-" + selDate.getDate();
                         //
-                        //Dom.get("publish-date-single").innerHTML = "<a href=\"#\" id=\"cal2Button\" class=\"filterdate\">" + selDate + "</a>"; 
+                        //Dom.get("publish-date-single").innerHTML = "<a href=\"#\" id=\"cal2Button\" class=\"filterdate\">" + selDate + "</a>";
                         Dom.get("publish-date-single").value = selDate;
                         Dom.get("publish-date-single").style.visibility = "visible";
                         //
@@ -1227,7 +1228,7 @@ loader.insert({
                         Dom.get("publish-date-range").value = "From "
                             + intervalDates[0] + " to "
                             + intervalDates[1];
-                        Dom.get("publish-date-range").style.visibility = "visible"; 
+                        Dom.get("publish-date-range").style.visibility = "visible";
                         //
 		                CF.settings['filter_type'] = oMenuItem.value;
 		                CF.settings['filter_input'] = intervalDates;
@@ -1489,7 +1490,7 @@ loader.insert({
                 var displaytname = '';
                 <?php print($oDataTNameBuilder); ?>
                 myAC.getInputEl().value = decodeURI(displaytname);
-                
+
                 CF.settings['filter_input'] = oData.id;
                 CF.fireDT(false);
             };
@@ -1513,7 +1514,7 @@ loader.insert({
         /**
         * The interval state, which counts the number of interval endpoints that have
         * been selected (0 to 2).
-        * 
+        *
         * @private
         * @type Number
         */
@@ -1535,7 +1536,7 @@ loader.insert({
 
     /**
     * Default configuration parameters.
-    * 
+    *
     * @property IntervalCalendar._DEFAULT_CONFIG
     * @final
     * @static
@@ -1550,7 +1551,7 @@ loader.insert({
         * Returns a string representation of a date which takes into account
         * relevant localization settings and is suitable for use with
         * YAHOO.widget.CalendarGroup and YAHOO.widget.Calendar methods.
-        * 
+        *
         * @method _dateString
         * @private
         * @param {Date} d The JavaScript Date object of which to obtain a string representation.
@@ -1574,7 +1575,7 @@ loader.insert({
         * <b>Note:</b> No internal checking is done to ensure that the lower date
         * is in fact less than or equal to the upper date.
         * </p>
-        * 
+        *
         * @method _dateIntervalString
         * @private
         * @param {Date} l The lower date of the interval, as a JavaScript Date object.
@@ -1591,7 +1592,7 @@ loader.insert({
         /**
         * Returns the lower and upper dates of the currently selected interval, if an
         * interval is selected.
-        * 
+        *
         * @method getInterval
         * @return {Array} An empty array if no interval is selected; otherwise an array
         *                 consisting of two JavaScript Date objects, the first being the
@@ -1619,7 +1620,7 @@ loader.insert({
         * <b>Note:</b> The render method must be called after setting the interval
         * for any changes to be seen.
         * </p>
-        * 
+        *
         * @method setInterval
         * @param {Date} d1 A JavaScript Date object.
         * @param {Date} d2 A JavaScript Date object.
@@ -1640,7 +1641,7 @@ loader.insert({
         * <b>Note:</b> The render method must be called after resetting the interval
         * for any changes to be seen.
         * </p>
-        * 
+        *
         * @method resetInterval
         */
         resetInterval : function() {
@@ -1651,7 +1652,7 @@ loader.insert({
 
         /**
         * Handles beforeSelect event.
-        * 
+        *
         * @method _intervalOnBeforeSelect
         * @private
         */
@@ -1667,7 +1668,7 @@ loader.insert({
 
         /**
         * Handles selectEvent event.
-        * 
+        *
         * @method _intervalOnSelect
         * @private
         */
@@ -1687,7 +1688,7 @@ loader.insert({
 
         /**
         * Handles beforeDeselect event.
-        * 
+        *
         * @method _intervalOnBeforeDeselect
         * @private
         */
@@ -1769,7 +1770,7 @@ YAHOO.util.Event.onDOMReady(function() {
             }
         }
     }, RangeDateCalendar, true);
-    
+
     RangeDateCalendar.render();
     Event.addListener("publish-date-range", "click", RangeDateCalendar.show, RangeDateCalendar, true);
 

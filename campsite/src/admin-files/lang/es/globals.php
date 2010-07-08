@@ -286,4 +286,5 @@ regGS("There are $1 keyword(s) left.", "Hay $1 palabras clave(s) pendiente(s)");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nombre");
 regGS("New field", "Nuevo Campo");
 regGS("Publish with issue", "");
+regGS("Universal List", "");
 ?>
