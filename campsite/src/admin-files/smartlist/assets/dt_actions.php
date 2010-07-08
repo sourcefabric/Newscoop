@@ -203,10 +203,12 @@ case 'move':
 if ($f_target == 'art_ofp') {
     $value = ($f_value == 'Yes') ? true : false;
     $success = $articleObj->setOnFrontPage($value);
+    $message = getGS("$1 toggled.", "&quot;".getGS("On Front Page")."&quot;");
 }
 if ($f_target == 'art_osp') {
     $value = ($f_value == 'Yes') ? true : false;
     $success = $articleObj->setOnSectionPage($value);
+    $message = getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;");
 }
 if ($f_target == 'art_status') {
     if (in_array($f_value, array('Published', 'Submitted', 'New'))) {
@@ -237,6 +239,8 @@ if ($f_target == 'art_status') {
         }
 
         $success = $articleObj->setWorkflowStatus($f_value);
+        
+        $message = getGS("Article status set to '$1'", $articleObj->getWorkflowDisplayString($f_value));
     }
 }
 

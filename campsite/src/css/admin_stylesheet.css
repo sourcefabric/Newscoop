@@ -29,6 +29,9 @@ a {
 	font-family: Tahoma, Arial, Helvetica, sans-serif;
 	color: #00415b;
 }
+form {
+	display:inline;
+}
 
 a:active {
 	color: red;
@@ -80,18 +83,21 @@ hr {
 	color: #a1bdc9;
 	text-shadow:0 1px 0 #e2ecf6;
 }
-
+.formBlock .button, .formBlock .button_disabled, .formBlock .buttonStrong {
+	float:left;
+}
 .input_text {
 	border: 1px solid #015476;
 	background:#fff url(input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
 	font-size: 12px;
-	margin:0;
-	height:21px;
-	padding: 0;
-	line-height:20px;
 }
-
+.input_text_area {
+	border: 1px solid #015476;
+	background:#fff url(input_bg.png) repeat-x 0 0;
+	text-indent: 3px;
+	font-size: 12px;
+}
 .input_text_disabled {
 	border: 1px solid grey;
 	background-color: #f0f0ff;
@@ -105,8 +111,6 @@ hr {
 	margin:0;
 	padding:0;
 }
-
-.input_radio { }
 
 .input_select {
 	background-color: #fff;
@@ -211,7 +215,6 @@ hr {
 .table_input {
 	background-color: #ebf1f7;
 	border: 1px solid #5a7490;
-	width:900px;
 	margin: 5px 5px 0 15px;
 }
 
@@ -225,7 +228,10 @@ hr {
 	background-color: #d5e2ee;
 	border: 1px solid #8baed1;
 }
-
+.breadcrumbTD span, .breadcrumbTD a {
+	float:left;
+	display:inline-block;
+}
 .breadcrumb {
     color: #00415b;
     font-weight: normal;
@@ -247,6 +253,7 @@ a.breadcrumb:hover {
     color: #015476;
 	font-weight: normal;
 	font-size: 22px;
+	float:left;
 }
 
 .breadcrumb_active:visited {
@@ -319,57 +326,6 @@ a.breadcrumb:hover {
 
 .translation_indent {
     padding-left: 20px;
-}
-
-.comment_approved {
-    background-color: #D7E3EF;
-}
-.comment_pending_approved {
-    background-color: #D7E3EF;
-}
-.comment_pending_approved td a {
-    /* border: 1px dashed #666; */
-}
-
-.comment_hidden {
-    background-color: #B5C2CF;
-}
-.comment_hidden td a {
-    color: #666;
-}
-.comment_hidden table tr td {
-    color: #666;
-}
-.comment_pending_hidden {
-    background-color: #B5C2CF;
-}
-.comment_pending_hidden td a {
-    /*border: 1px dashed #666;*/
-    color: #666;
-}
-
-.comment_inbox {
-    background-color: #FEFFAF;
-}
-.comment_pending_inbox {
-    background-color: #FEFFAF;
-}
-.comment_pending_inbox td {
-    /* border: 1px dashed #666; */
-}
-
-.comment_delete {
-    background-color: #FFCFCF;
-}
-.comment_delete table tr td {
-    color: #666;
-}
-.comment_pending_delete {
-    background-color: #FFCFCF;
-}
-.comment_pending_delete td a {
-    /* border: 1px dashed #666; */
-    color: #666;
 }
 
 .tab_active {
@@ -499,10 +455,12 @@ END clearfix
 }
 .breadcrumbHolder .activeSection .limiter {
 	width:966px;
+	float:left;
 }
 .breadcrumbHolder .activeSection .limiter .buttonBox {
 	float:right;
 	text-align:right;
+	width:400px;
 }
 
 .personal td {
@@ -529,15 +487,20 @@ fieldset {
 	margin:20px 0 0 15px;
 	position:relative;
 }
+.small {
+	width: 799px;
+}
 .editBox .topBox {
-	padding: 8px 10px 8px 10px; 
+	padding: 8px 10px 0 10px; 
 	border-bottom:1px solid #5d99b1;
+	height:30px;
 }
 .topBox .language {
-	
+	float:left;
 }
 .topBox .input_select {
 	margin-right:10px;
+	float:left;
 }
 
 .topBox .button,.topBox .button_disabled {
@@ -609,9 +572,26 @@ fieldset {
 .formBlock ul li.last {
 	padding:0;
 }
+.formBlock ul li.buttonBlock {
+	padding:4px 0 6px 0;
+}
 .formBlock .input_text {
 	width:350px;
 	float:left;
+	border: 1px solid #015476;
+	background:#fff url(input_bg.png) repeat-x 0 0;
+	text-indent: 3px;
+	font-size: 12px;
+	margin:0;
+	height:21px;
+	padding: 0;
+	line-height:20px;
+}
+.formBlock .input_text_area {
+	float:left;
+	margin:0;
+	padding: 0;
+	line-height:20px;
 }
 .scrollHolder {
 	float:left;
@@ -717,10 +697,7 @@ a.calendarButton {
 .sideBox p a:hover {
 	color:#015476;
 }
-.breadcrumbHolder .activeSection .limiter .buttonBox {
-	float:right;
-	text-align:right;
-}
+
 .addArticle {
 	border:1px solid #5bac0b;
 	padding:6px 12px 7px 32px;
@@ -756,4 +733,97 @@ a.calendarButton {
 	background-color:#daedf5;
 	color:#015476;
 }
+.buttonLink {
+	background:url("button_bg.png") repeat-x scroll 0 0 #BBD4E0;
+	border:1px solid #015476;
+	color:#2E4A58;
+	font-family:Verdana,Arial,Helvetica,sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	line-height:14px;
+	margin:0 10px 0 0;
+	padding:3px 9px;
+	text-shadow:0 1px 0 #E7F6FE;
+	text-decoration:none;
+	display:block;
+	float:left;
+}
+.buttonLink:hover {
+	background: #bbd4e0 url(button_bg.png) repeat-x 0 -25px;
+	color:#2E4A58;
+}
+.editBox h2{
+	font-size:14px;
+	font-weight:bold;
+	color:#015476;
+	margin:0;
+	padding:8px 0 8px 7px;
+	border-bottom:1px solid #b5d5e2;
+}
+.formBlock ul li p {
+	display:block;
+	float:left;
+	padding: 0;
+	margin:0;
+	width:650px;
 	
+}
+.actionList {
+	margin: 0;
+	padding:0;
+	list-style-type:0;
+	border-bottom:1px solid #b5d5e2;
+	background:#d3e4eb url(sidebar-heading_bg.png) repeat-x 0 0;
+	height: 32px
+}
+.actionList li {
+	margin: 0;
+	padding:7px 5px 3px 7px;
+	float:left;
+}
+.actionList li .input_radio {
+	float: left;
+	margin-right:3px;
+}
+.actionList li label {
+	float: left;
+	margin-right:3px;
+}
+.actionList li.first {
+	margin: 0;
+	padding-left:127px;
+}
+
+.comment_approved {
+    background: transparent;
+}
+.comment_pending_approved {
+    background-color: #transparent;
+}
+.comment_hidden {
+    background-color: #d0d0d0;
+}
+.comment_hidden li {
+	color:#727272;
+}
+
+.comment_pending_hidden {
+    background-color: #d0d0d0;
+	color:#8a8a8a;
+}
+
+.comment_inbox {
+    background: #cbf3a1;
+}
+
+.comment_pending_inbox {
+    background: #cbf3a1;
+}
+
+.comment_delete {
+    background-color: #ffc6c6;
+}
+
+.comment_pending_delete {
+    background-color: #ffc6c6;
+}
