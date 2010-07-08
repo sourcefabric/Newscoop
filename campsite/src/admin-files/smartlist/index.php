@@ -4,17 +4,11 @@ require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 
 camp_load_translation_strings("articles");
 
-
-//$articlesParams = array();
-//$articles = Article::GetList($articlesParams, array(array('field'=>'byname', 'dir'=>'desc')), 0, 100, $articlesCount, true);
-//var_dump($articles);
-//exit;
-
 //
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_language_id = 1; //Input::Get('f_language_id', 'int', 0);
+$f_language_id = Input::Get('f_language_id', 'int', 1);
 if (isset($_SESSION['f_language_selected'])) {
     $f_old_language_selected = (int)$_SESSION['f_language_selected'];
 } else {
@@ -297,7 +291,7 @@ div.message {
                     <option value="switch_onfrontpage"><?php putGS('Toggle: \'On Front Page\''); ?></option>
                     <option value="switch_onsectionpage"><?php putGS('Toggle: \'On Section Page\''); ?></option>
                     <option value="switch_comments"><?php putGS('Toggle: \'Comments\''); ?></option>
-                    <option value="schedule_publish"><?php putGS('Publish Schedule'); ?></option>
+                    <!--<option value="schedule_publish"><?php putGS('Publish Schedule'); ?></option>//-->
                     <option value="unlock"><?php putGS('Unlock'); ?></option>
                     <option value="delete"><?php putGS('Delete'); ?></option>
                     <option value="duplicate"><?php putGS('Duplicate'); ?></option>
@@ -383,7 +377,7 @@ loader.insert({
     	 */
     	CF = {
     		/**
-    		 * The Menu Buttons are stored in these arrays.
+    		 * Menu Buttons are stored in these arrays.
     		 */
     		menuButtons: [],
     		submenuButton: [],
@@ -422,7 +416,7 @@ loader.insert({
                 var oACDS = new YAHOO.util.FunctionDataSource(this.fireDT);
                 oACDS.queryMatchContains = true;
                 var oAutoComp = new AutoComplete("dt_input","dt_ac_container", oACDS);
-                // Do not query until we have at least 3 chars
+                // Do not query until we have at least X chars
                 oAutoComp.minQueryLength = 0;
 
     			// Create the select menus
@@ -433,7 +427,7 @@ loader.insert({
                 //
     			var oConfColsPushButton = new Button("confColsPushButton");
 
-                // Define a custom row formatter function
+                // Define a custom row formatter function for locked articles
                 var rowCustomHighlighter = function(elTr, oRecord) {
                     if (oRecord.getData('art_lockhighlight')) {
                         Dom.addClass(elTr, 'mark');
@@ -463,18 +457,18 @@ loader.insert({
     			// Define the DataTable's columns
     			myColumnDefs = [
     				{key: "art_id", label: "<input id=\"chkall\" name=\"chkall\" value=\"\" type=\"checkbox\">",formatter:"check"},
-    				{key: "art_name", label: "<?php putGS('Name'); ?>", formatter:articleTitleFormat, width:300, resizeable:true, sortable:true},
-    				{key: "art_type", label: "<?php putGS('Type'); ?>", width:"auto", sortable:true},
+    				{key: "art_name", label: "<?php putGS('Name'); ?>", formatter:articleTitleFormat, width:300, resizeable:true},
+    				{key: "art_type", label: "<?php putGS('Type'); ?>", width:"auto"},
     				{key: "art_createdby", label: "<?php putGS('Created by'); ?>", width:"auto", hidden:true},
-    				{key: "art_author", label: "<?php putGS('Author'); ?>", width:"auto", sortable:true},
-    				{key: "art_status", label: "<?php putGS('Status'); ?>", width:"auto", sortable:true, editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Published","Submitted","New"],disableBtns:true})},
-    				{key: "art_ofp", label: "<?php putGS('On Front Page'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true})},
-    				{key: "art_osp", label: "<?php putGS('On Section Page'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true})},
+    				{key: "art_author", label: "<?php putGS('Author'); ?>", width:"auto"},
+    				{key: "art_status", label: "<?php putGS('Status'); ?>", width:"auto", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Published"); ?>","<?php putGS("Submitted"); ?>","<?php putGS("New"); ?>"],disableBtns:true})},
+    				{key: "art_ofp", label: "<?php putGS('On Front Page'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Yes"); ?>","<?php putGS("No"); ?>"],disableBtns:true})},
+    				{key: "art_osp", label: "<?php putGS('On Section Page'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Yes"); ?>","<?php putGS("No"); ?>"],disableBtns:true})},
     				{key: "art_images", label: "<?php putGS('Images'); ?>", formatter:"number", hidden:true},
     				{key: "art_topics", label: "<?php putGS('Topics'); ?>", formatter:"number"},
     				//{key: "art_comments", label: "<?php putGS('Comments'); ?>", formatter:"number", hidden:true},
-    				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["Yes","No"],disableBtns:true}), hidden:true},
-    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", formatter:"number", sortable:true},
+    				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Yes"); ?>","<?php putGS("No"); ?>"],disableBtns:true}), hidden:true},
+    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", formatter:"number"},
     				{key: "art_lastmodifieddate", label: "<?php putGS('Last Modified'); ?>", formatter:"date"},
     				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", formatter:"date", hidden:true},
     				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", formatter:"date", hidden:true},
@@ -538,8 +532,8 @@ loader.insert({
     					pageLinks: 5
     				}),
     				sortedBy:{
-                        key: 'art_id',
-                        dir: DataTable.CLASS_ASC
+                        key: 'art_creationdate',
+                        dir: 'asc'
                     },
                     formatRow: rowCustomHighlighter,
 
@@ -550,9 +544,6 @@ loader.insert({
 
     			// Create the DataTable.
     			myDataTable = new DataTable("articlesTable", myColumnDefs, myDataSource, myConfigs);
-
-    			//
-    			myDTDrags = {};
 
                 // Set up editing flow
                 var highlightEditableCell = function(oArgs) {
@@ -796,16 +787,6 @@ loader.insert({
                 }
     		},
 
-    		/**
-    		 * Handler for the selectedMenuItemChange event for the Menu Buttons.
-    		 * This changes the label on the Menu buttons. Then, stores the value
-    		 * of the new selected Menu Item in the CF.settings object. Each of the
-    		 * Menu Buttons has an id that corresponds to one of the three United States
-    		 * columns in the DataTable. This id is used as the key for the CF.settings.[STATE]
-    		 * object. Lastly, fire a request for new data for the DataTable. Pass in a boolean
-    		 * false so that the pagination settings are retained.
-    		 * @param {Object} e
-    		 */
     		onContentMenuItemChange: function (e) {
     			var oMenuItem = e.newValue;
     			this.set("label", ("<em class=\"yui-button-label\">" +
@@ -912,14 +893,8 @@ loader.insert({
 
     		onActionMenuItemChange: function (e) {
                 var oMenuItem = e.newValue;
-    			//this.set("label", ("<em class=\"yui-button-label\">" +
-    				//oMenuItem.cfg.getProperty("text") + "<\/em>"));
-    			//CF.settings[this.get('id')] = oMenuItem.value;
-    			//alert('thisgetid: ' + this.get('id') + ' oMIvalue: ' + oMenuItem.value);
-    			//
 
     			var selRows = CF.myDataTable.getSelectedRows();
-    			//alert(selRows);
     			if (selRows == null || selRows.length == 0) {
     			    return false;
     			}
@@ -1000,7 +975,6 @@ loader.insert({
                         case 'switch_onsectionpage': oColumn = 'art_onsectionpage'; break;
                         case 'switch_comments': oColumn = 'art_comments'; break;
                         }
-                        // TODO: keep it to set some highligthing?
                         for (x in selRows) {
                             var oRecord = CF.myDataTable.getRecord(selRows[x]);
                             var oldValue = oRecord.getData(oColumn);
@@ -1028,10 +1002,6 @@ loader.insert({
                             }
                             return false;
                         }
-                        // TODO: Keep this to remove lock styling
-                        //for (x in selRows) {
-                            //CF.myDataTable.deleteRow(selRows[x]);
-                        //}
                         message.style.color = 'green';
                         message.innerHTML = data.message;
                         CF.displayMessage();
@@ -1053,10 +1023,6 @@ loader.insert({
                             }
                             return false;
                         }
-                        // TODO: Keep this?
-                        //for (x in selRows) {
-                            //CF.myDataTable.deleteRow(selRows[x]);
-                        //}
                         message.style.color = 'green';
                         message.innerHTML = data.message;
                         CF.displayMessage();
@@ -1087,11 +1053,6 @@ loader.insert({
                         alert('failure');
                     }
                 };
-
-
-                // } else if (actionName.indexOf('switch') == 0) {
-                // var oColumn = 'art_' + actionName.substring(7);
-
 
                 var sUrl = '/admin/smartlist/assets/dt_actions.php';
                 var actionName = oMenuItem.value;
@@ -1547,36 +1508,6 @@ loader.insert({
     /**
     * IntervalCalendar is an extension of the CalendarGroup designed specifically
     * for the selection of an interval of dates.
-    *
-    * @namespace YAHOO.example.calendar
-    * @module calendar
-    * @since 2.5.2
-    * @requires yahoo, dom, event, calendar
-    */
-
-    /**
-    * IntervalCalendar is an extension of the CalendarGroup designed specifically
-    * for the selection of an interval of dates, as opposed to a single date or
-    * an arbitrary collection of dates.
-    * <p>
-    * <b>Note:</b> When using IntervalCalendar, dates should not be selected or
-    * deselected using the 'selected' configuration property or any of the
-    * CalendarGroup select/deselect methods. Doing so will corrupt the internal
-    * state of the control. Instead, use the provided methods setInterval and
-    * resetInterval.
-    * </p>
-    * <p>
-    * Similarly, when handling select/deselect/etc. events, do not use the
-    * dates passed in the arguments to attempt to keep track of the currently
-    * selected interval. Instead, use getInterval.
-    * </p>
-    *
-    * @namespace YAHOO.example.calendar
-    * @class IntervalCalendar
-    * @extends YAHOO.widget.CalendarGroup
-    * @constructor
-    * @param {String | HTMLElement} container The id of, or reference to, an HTML DIV element which will contain the control.
-    * @param {Object} cfg optional The initial configuration options for the control.
     */
     function IntervalCalendar(container, cfg) {
         /**

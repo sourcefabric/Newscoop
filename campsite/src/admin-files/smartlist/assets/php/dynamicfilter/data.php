@@ -56,7 +56,7 @@ if (isset($_REQUEST['filter_type']) && strlen($_REQUEST['filter_type']) > 0
     }
 }
 
-$articles = Article::GetList($articlesParams, array(array('field'=>'bynumber', 'dir'=>'asc')), 0, 100, $articlesCount, true);
+$articles = Article::GetList($articlesParams, array(array('field'=>'bycreationdate', 'dir'=>'asc')), 0, 100, $articlesCount, true);
 
 $return = array();
 foreach($articles as $article) {
@@ -94,9 +94,9 @@ foreach($articles as $article) {
     //
     $tmpArticleType = new ArticleType($article->getType());
     //
-    $onFrontPage = $article->onFrontPage() ? 'Yes' : 'No';
+    $onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
     //
-    $onSectionPage = $article->onSectionPage() ? 'Yes' : 'No';
+    $onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
     //
     $imagesNo = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
     //

@@ -54,6 +54,11 @@ if ($g_user->hasPermission('CommentModerate')) {
 $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
+
+$menu_item =& DynMenuItem::Create(getGS('Universal List'), "/$ADMIN/smartlist/index.php",
+                array('icon' => sprintf($iconTemplateStr, 'logs.png'), 'id' => 'universal_list'));
+$menu_content->addItem($menu_item);
+
 $menu_content->addSplit();
 
 $icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
