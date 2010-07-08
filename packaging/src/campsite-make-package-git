@@ -45,25 +45,24 @@ fi
 base_cmd="git checkout"
 cmd="$base_cmd $branch"
 
+pushd ../..
+
 $cmd || exit 1
 
-rm -fr ./campsite/implementation/site/plugins
-mv ./plugins ./campsite/implementation/site
+mv ./plugins/* ./campsite/src/plugins
 
 rm -f ./campsite/documentation/CampsiteTestChecklist*
 rm -fr ./campsite/documentation/specifications
-rm -fr ./campsite/implementation/templates
-rm -fr ./campsite/implementation/trac
-rm -fr ./campsite/implementation/site/plugins/pear_quickform
-rm -fr ./campsite/implementation/site/export*log
-rm -fr ./campsite/implementation/site/tests
+rm -fr ./campsite/templates
+rm -fr ./campsite/src/tests
+find ./campsite/src -name placeholder -exec rm -f {} \;
 
 package_name="campsite-$version.tar.gz"
 
 tar czf $package_name ./campsite
 res=$?
 
-mv ./campsite/implementation/site/plugins .
+mv ./campsite/src/plugins .
 
 if [ $res -eq 0 ]; then
     echo "package $package_name prepared successfully"
@@ -73,3 +72,5 @@ else
 fi
 
 $base_cmd -- .
+
+popd
