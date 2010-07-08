@@ -532,7 +532,7 @@ loader.insert({
     					pageLinks: 5
     				}),
     				sortedBy:{
-                        key: 'art_name',
+                        key: 'art_creationdate',
                         dir: DataTable.CLASS_ASC
                     },
                     formatRow: rowCustomHighlighter,
@@ -639,7 +639,8 @@ loader.insert({
                             myDataTable.selectRow(target);
                         }
                         setActionMenuStatus();
-                        myDataTable.checkboxClickEvent.fire;
+                        //alert(target);
+                        //myDataTable.checkboxClickEvent.fire;
                     }
                 );
 
@@ -743,7 +744,7 @@ loader.insert({
                         chkall = Dom.get('chkall');
 
                     if (chkall) {
-                        Event.on(chkall,'click',function (e) {
+                        Event.on(chkall, 'click', function (e) {
                             var checks = document.getElementsByName('filerow');
                             var i = 0, l = checks.length;
                             for (; i < l; ++i) {
@@ -754,6 +755,7 @@ loader.insert({
                             } else {
                                 myDataTable.unselectAllRows();
                             }
+                            setActionMenuStatus();
                         });
                     }
 

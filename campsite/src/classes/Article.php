@@ -2527,6 +2527,9 @@ class Article extends DatabaseObject {
             case 'submitted':
                 $conditionOperation['right'] = 'S';
                 break;
+            case 'withissue':
+                $conditionOperation['right'] = 'M';
+                break;
             }
             break;
         case 'issue_published':

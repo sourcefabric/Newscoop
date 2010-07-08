@@ -52,7 +52,8 @@ switch($action) {
                 }
                 break;
             case 'workflow_status':
-                $list = array('published' => 'Published', 'new' => 'New', 'submitted' => 'Submitted');
+                $list = array('published' => 'Published', 'new' => 'New',
+                              'submitted' => 'Submitted', 'withissue' => 'Published with Issue');
                 break;
         }
         break;
