@@ -158,7 +158,7 @@ class ImageManager
 		$articleImages = ArticleImage::GetImagesByArticleNumber($articleId);
 		foreach ($articleImages as $articleImage) {
 			$image = $articleImage->getImage();
-			$img = $this->getImageInfo($image->getImageUrl());
+			$img = $this->getImageInfo($image->getImageStorageLocation());
 			if (is_array($img) || !$this->config['validate_images']) {
 				$file['template_id'] = $articleImage->getTemplateId();
 				$file['url'] = $image->getImageUrl();
