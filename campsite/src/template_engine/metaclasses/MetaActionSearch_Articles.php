@@ -7,15 +7,15 @@ define('ACTION_SEARCH_ARTICLES_ERR_INVALID_SCOPE', 'action_search_articles_err_i
 class MetaActionSearch_Articles extends MetaAction
 {
     const SEARCH_LEVEL_MULTIPLE_PUBLICATION = 0;
-    
+
     const SEARCH_LEVEL_PUBLICATION = 1;
-    
+
     const SEARCH_LEVEL_ISSUE = 2;
-    
+
     const SEARCH_LEVEL_SECTION = 3;
-    
+
     const DEFAULT_SEARCH_LEVEL = MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION;
-    
+
     /**
      * Stores the total number of articles that matched the search criteria.
      *
@@ -43,7 +43,7 @@ class MetaActionSearch_Articles extends MetaAction
         $this->m_properties['search_results'] = 'getSearchResults';
 
         $this->m_properties['match_all'] = isset($p_input['f_match_all'])
-        && strtolower($p_input['f_match_all']) == 'on';
+        && strtolower($p_input['f_match_all']) == 'on' ? true : null;
 
         if (isset($p_input['f_search_level'])) {
             if ($p_input['f_search_level'] < MetaActionSearch_Articles::SEARCH_LEVEL_MULTIPLE_PUBLICATION
@@ -55,32 +55,31 @@ class MetaActionSearch_Articles extends MetaAction
             $this->m_properties['search_level'] = MetaActionSearch_Articles::DEFAULT_SEARCH_LEVEL;
         }
 
-        if (isset($p_input['f_search_issue'])) {
+        if (isset($p_input['f_search_issue']) && $p_input['f_search_issue'] > 0) {
         	$this->m_properties['search_issue'] = (int)$p_input['f_search_issue'];
         } else {
-        	$this->m_properties['search_issue'] = 0;
+        	$this->m_properties['search_issue'] = null;
         }
 
-        if (isset($p_input['f_search_section'])) {
+        if (isset($p_input['f_search_section']) && $p_input['f_search_section'] > 0) {
             $this->m_properties['search_section'] = (int)$p_input['f_search_section'];
         } else {
-            $this->m_properties['search_section'] = 0;
+            $this->m_properties['search_section'] = null;
         }
 
-        if (isset($p_input['f_search_start_date'])) {
+        if (isset($p_input['f_search_start_date']) && !empty($p_input['f_search_start_date'])) {
         	$this->m_properties['start_date'] = $p_input['f_search_start_date'];
         } else {
         	$this->m_properties['start_date'] = null;
         }
 
-        if (isset($p_input['f_search_end_date'])) {
+        if (isset($p_input['f_search_end_date']) && !empty($p_input['f_search_end_date'])) {
             $this->m_properties['end_date'] = $p_input['f_search_end_date'];
         } else {
             $this->m_properties['end_date'] = null;
         }
 
-        if (isset($p_input['f_search_topic'])
-        && $p_input['f_search_topic'] > 0) {
+        if (isset($p_input['f_search_topic']) && $p_input['f_search_topic'] > 0) {
             $this->m_properties['topic_id'] = $p_input['f_search_topic'];
         } else {
             $this->m_properties['topic_id'] = null;
@@ -130,7 +129,7 @@ class MetaActionSearch_Articles extends MetaAction
         } else {
             $this->m_properties['template'] = $p_context->template;
         }
-        
+
         $fields = array('f_search_articles', 'f_match_all', 'f_search_level',
                         'f_search_keywords', 'f_search_issue', 'f_search_section',
                         'f_search_start_date', 'f_search_end_date', 'f_search_topic_id',
@@ -157,11 +156,11 @@ class MetaActionSearch_Articles extends MetaAction
 	        $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
 	                                                         $p_context->section->number);
 	    }
-	    if ($this->m_properties['search_issue'] != 0) {
+	    if ($this->m_properties['search_issue'] > 0) {
 	    	$this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrIssue', $operator,
                                                              $this->m_properties['search_issue']);
 	    }
-        if ($this->m_properties['search_section'] != 0) {
+        if ($this->m_properties['search_section'] > 0) {
             $this->m_properties['constraints'][] = new ComparisonOperation('Articles.NrSection', $operator,
                                                              $this->m_properties['search_section']);
         }

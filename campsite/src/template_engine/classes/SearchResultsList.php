@@ -182,7 +182,7 @@ class SearchResultsList extends ListObject
         if (!empty($p_parameters['end_date'])) {
             $endDateOperator = new Operator('smaller_equal', 'date');
             $this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
-                                                             $p_parameters['end_date']);
+                                                             $p_parameters['end_date'] . ' 23:59:59');
         }
         if (!empty($p_parameters['topic_id'])) {
             $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,

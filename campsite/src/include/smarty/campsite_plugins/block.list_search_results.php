@@ -47,7 +47,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $p_params['search_section'] = $campContext->search_articles_action->search_section;
         $p_params['start_date'] = $campContext->search_articles_action->start_date;
         $p_params['end_date'] = $campContext->search_articles_action->end_date;
-        $p_params['topic_id'] = (int)$campContext->search_articles_action->topic_id;
+        $p_params['topic_id'] = $campContext->search_articles_action->topic_id;
         $p_params['scope'] = $campContext->search_articles_action->scope;
 
         $searchResultsList = new SearchResultsList($start, $p_params);
