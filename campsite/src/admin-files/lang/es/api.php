@@ -1,6 +1,6 @@
 <?php 
-regGS("Publish with issue", "");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Publish with issue", "Publicar con edición");
+regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "El artículo #$1 \"$2\" ($3) se copió al artículo #$4 (publicación $5, edición $6, sección $7). 	");
 regGS("unknown", "desconocido");
 regGS("User type \"$1\" deleted", "Usuario tipo \"$1\" borrado");
 regGS("User type \"$1\" added", "Usuario tipo \"$1\" añadido.");

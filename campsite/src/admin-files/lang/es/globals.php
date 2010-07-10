@@ -258,6 +258,8 @@ regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "El URL que ingresó es inválido: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Hubo un errror al ingresar al servidro de Campcaster");
 regGS("Reads", "Impresiones");
+regGS("Publish with issue", "Publicar con edición");
+regGS("Universal List", "Lista universal");
 regGS("Blogs", "Blogs");
 regGS("Administer Blogs", "Administrar blogs");
 regGS("Moderate Blogs", "Moderar blogs");
@@ -285,6 +287,5 @@ regGS("There are $1 issue(s) left.", "Hay $1 edicion(es) pendiente(s)");
 regGS("There are $1 keyword(s) left.", "Hay $1 palabras clave(s) pendiente(s)");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nombre");
 regGS("New field", "Nuevo Campo");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "¿Está seguro de querer eliminar la imagen \\'$1\\'?");
 ?>
