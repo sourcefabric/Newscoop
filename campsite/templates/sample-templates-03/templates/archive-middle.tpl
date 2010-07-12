@@ -8,7 +8,7 @@
   {{ else }} 
   <tr>
     <td valign="top">
-      <p class="tekst-front"><b></b><a class="dalje" href="{{ uripath options="issue" }}">{{ $campsite->issue->name }}, dated {{ $campsite->issue->date->%w, %m %y }}</a></b></p>
+      <p class="tekst-front"><b></b><a class="dalje" href="{{ uripath options="issue" }}">{{ $campsite->issue->name }}, dated {{ $campsite->issue->date }}</a></b></p>
       {{ local }}
       {{ unset_section }}
       {{ list_articles constraints="type is Article" }}

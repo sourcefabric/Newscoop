@@ -15,7 +15,7 @@
 <p class="blok-podnaslov"><i>{{ $campsite->article->byline }}</i></p>
 {{ if $campsite->article->has_image(1) }}
             <div align="center"><img src="/get_img.php?{{ urlparameters options="image 1" }}" align="center">
-            <span class="caption">{{ $campsite->image1->description }}</span></div>
+            <span class="caption">{{ $campsite->article->image1->description }}</span></div>
 {{ /if }}							
 
 							<p class="tekst" style="padding-left:5px;">{{ $campsite->article->intro }}</a></p>

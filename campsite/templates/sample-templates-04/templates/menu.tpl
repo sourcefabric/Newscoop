@@ -34,7 +34,7 @@
 			    <td height="1" bgcolor="#ffffff"></td>
 			  </tr>
               <tr>
-                <td valign="middle" bgcolor="#006B24" height="16" style="padding-left: 3px"><p class="index-naslovi"><img src="/templates/img/indexleft2.gif"> Linkovi</p></td>
+                <td valign="middle" bgcolor="#006B24" height="16" style="padding-left: 3px"><p class="index-naslovi"><img src="/templates/img/indexleft2.gif"> Links</p></td>
               </tr>
 
               <tr> 
@@ -62,14 +62,4 @@
                 <td height="18" bgcolor="#ffffff"></td>
               </tr>
 			  
-			  <!-- banner -->
-			  
-              <tr>
-                <td align="center"><a href="http://www.campware.org/en/camp/campsite_news/" target="_blank"><img src="/templates/img/camplogo.gif" border="0"></a>
-<br><br>
-<a href="http://www.campware.org/en/camp/livesupport_news/" target="_blank"><img src="/templates/img/lslogo.gif" border="0"></a>
-</td>
-              </tr>
-
-			  		
             </table>

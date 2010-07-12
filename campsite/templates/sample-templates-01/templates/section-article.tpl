@@ -17,7 +17,7 @@
         <td align="center" valign="top">
          {{ if $campsite->article->has_image(2) }}
          <img src="/get_img.php?{{ urlparameters options="image 2" }}" align="center"><br>
-         <span class="caption">{{ $campsite->image2->description }}</span></div>
+         <span class="caption">{{ $campsite->article->image2->description }}</span></div>
         </td>
      </tr>
      </table>

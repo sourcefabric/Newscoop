@@ -6,7 +6,7 @@
  * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 global $Campsite;
@@ -18,6 +18,7 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 set_include_path(CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSession.php');
 
 
 /** System settings **/
@@ -31,11 +32,11 @@ $Campsite['site']['title'] = SystemPref::Get('SiteTitle');
 $Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
 $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
-$Campsite['site']['help_url'] = 'http://code.campware.org/manuals/campsite/3.3/';
-$Campsite['site']['about_url'] = 'http://www.campware.org/en/camp/campsite_news/';
-$Campsite['site']['email'] = 'campsite-support@lists.campware.org';
+$Campsite['site']['help_url'] = 'http://en.flossmanuals.net/Campsite/Introduction';
+$Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/home/web/6/campsite.htm?tpl=18';
+$Campsite['site']['email'] = 'campsite-support@lists.sourcefabric.org';
 
-$Campsite['campware']['url'] = 'http://www.campware.org/';
+$Campsite['campware']['url'] = 'http://www.sourcefabric.org';
 
 /** Locale settings **/
 $Campsite['locale']['lang_id'] = 1;
@@ -57,6 +58,10 @@ $Campsite['smarty']['use_subdirs'] = false;
 $Campsite['smarty']['left_delimeter'] = '{{';
 $Campsite['smarty']['right_delimeter'] = '}}';
 
+/** File Archive Storage Server settings **/
+$Campsite['xmlrpc_storage']['path'] = '/mma/xmlrpc/';
+$Campsite['xmlrpc_storage']['file'] = 'xrLocStor.php';
+
 /** Mailer settings **/
 $Campsite['smtp']['host'] = SystemPref::Get('SMTPHost');
 $Campsite['smtp']['port'] = SystemPref::Get('SMTPPort');
@@ -65,7 +70,6 @@ $Campsite['smtp']['default_port'] = 25;
 
 /** Backward compatibility **/
 $ADMIN_DIR = "admin-files";
-$ADMIN = "admin";
 
 require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
