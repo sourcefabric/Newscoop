@@ -12,13 +12,13 @@
 {{ if $campsite->article->has_image(200) }}
 <!-- Big banner image -->
   <div class="teaserimg_big">
-  <a href="{{ uri options="template article.tpl" }}"><img src="/get_img.php?{{ urlparameters options="image 200" }}"/></a>
+  <a href="{{ uri options="template article.tpl" }}"><img src="http://{{ $campsite->publication->site }}/get_img.php?{{ urlparameters options="image 200" }}"/></a>
   </div><!-- .teaserimg_big -->
 {{ /if }}
 {{ if $campsite->article->has_image(201) }}
 <!-- Big square image -->
   <div class="teaserimg_med">
-  <a href="{{ uri options="template article.tpl" }}"><img src="/get_img.php?{{ urlparameters options="image 201" }}"/></a>
+  <a href="{{ uri options="template article.tpl" }}"><img src="http://{{ $campsite->publication->site }}/get_img.php?{{ urlparameters options="image 201" }}"/></a>
   </div><!-- .teaserimg_med -->
 {{ /if }}
   <div class="teasercontent content">
