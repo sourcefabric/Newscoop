@@ -6,7 +6,7 @@
  * @copyright 2009 MDLF, Inc.
  * @license http://www.gnu.org/licenses/gpl.txt
  * @version $Revision$
- * @link http://www.campware.org
+ * @link http://www.sourcefabric.org
  */
 
 global $Campsite;
@@ -16,7 +16,7 @@ global $Campsite;
  * further we will implement the use of CampConfig class
  * in the administrator.
  */
-$Campsite['DATABASE_NAME'] = 'campsite';
+$Campsite['DATABASE_NAME'] = 'campsite34';
 $Campsite['DATABASE_SERVER_ADDRESS'] = 'localhost';
 $Campsite['DATABASE_SERVER_PORT'] = '3306';
 $Campsite['DATABASE_USER'] = 'root';

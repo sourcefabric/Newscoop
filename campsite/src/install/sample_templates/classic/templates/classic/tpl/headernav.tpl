@@ -4,7 +4,7 @@
   <div id="headernav">
 {{ include file="classic/tpl/login-top.tpl" }}
     <div id="logospace">
-       <a href="/" style="border: none; dispaly: block; float: left; margin: 25px 0 0 10px;"><img alt="logo" style="border: none" src="/templates/classic/css/cleanblue/logo-blue.png" /></a>
+       <a href="http://{{ $campsite->publication->site }}" style="border: none; dispaly: block; float: left; margin: 25px 0 0 10px;"><img alt="logo" style="border: none" src="http://{{ $campsite->publication->site }}/templates/classic/css/cleanblue/logo-blue.png" /></a>
        {{ include file="classic/tpl/banner/bannerlogo.tpl" }}
       </div>
       

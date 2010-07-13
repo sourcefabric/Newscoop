@@ -727,7 +727,10 @@ function camp_cron() {
                 if ($fp = fopen($fileName, 'w')) {
                     if (flock($fp, LOCK_EX)) {
                         fwrite($fp, (string)$currentTime);
-                        exec($task . ' > /dev/null &');
+                        flock($fp, LOCK_UN);
+                        if (substr(strtolower(PHP_OS), 0, 3) != 'win') {
+                            exec($task . ' > /dev/null &');
+                        }
                     }
                     fclose($fp);
                 }

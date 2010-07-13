@@ -33,8 +33,10 @@ if (PEAR::isError($db)) {
 $liveuserConfig = array (
     'session' => array(
         'name' => 'PHPSESSID',
-        'varname' => 'loginInfo'
+        'varname' => 'loginInfo',
+        'force_start' => true
         ),
+    'login' => array('regenid' => true),
     'logout' => array ('destroy' => true),
     'cookie' => array(
         'name' => 'loginInfo',

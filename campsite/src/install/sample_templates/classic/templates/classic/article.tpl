@@ -29,7 +29,7 @@
           {{ if $campsite->current_list->at_beginning }}
           <h4>Downloads:</h4>
           {{ /if }}
-            <a href="/attachment/{{ $campsite->attachment->identifier }}">{{ $campsite->attachment->file_name }}</a>
+            <a href="http://{{ $campsite->publication->site }}/attachment/{{ $campsite->attachment->identifier }}">{{ $campsite->attachment->file_name }}</a>
             ({{ $campsite->attachment->size_kb }}kb)
             <br>
           {{ /list_article_attachments }}

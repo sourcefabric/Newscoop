@@ -108,7 +108,13 @@ class CampInstallationBase
             }
             break;
         case 'finish':
-            $this->saveCronJobsScripts();
+            if (isset($input['install_demo']) && $input['install_demo'] == 1) {
+                $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
+                if (!$this->loadDemoSite()) {
+                    break;
+                }
+            }
+        	$this->saveCronJobsScripts();
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
@@ -424,7 +430,13 @@ class CampInstallationBase
         	$cmd = 'crontab -';
             exec($cmd, $output, $result);
             if ($result != 0) {
-                $external = false;
+            	$external = false;
+            	if (CampInstallationBaseHelper::ConnectDB() == false) {
+            		$this->m_step = 'cronjobs';
+            		$this->m_message = 'Error: Database parameters invalid. Could not '
+            		. 'connect to database server.';
+            		return false;
+            	}
                 $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
                     ."WHERE varname = 'ExternalCronManagement'";
                 $g_db->Execute($sqlQuery);

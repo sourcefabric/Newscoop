@@ -28,7 +28,7 @@
                       <td valign="top">
 {{ if $campsite->article->has_image(2) }}
 <div class="front-slika1"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"> 
-                          <p class="text">{{ $campsite->image2->description }}</p> 
+                          <p class="text">{{ $campsite->article->image2->description }}</p> 
                         </div> 
 {{ /if }}
                         <p class="nadnaslov">{{ $campsite->article->deck }}</p> 
