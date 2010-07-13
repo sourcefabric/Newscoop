@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>create issue</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">create issue</td></tr>
+</thead><tbody>
+<tr>
+	<td>allowNativeXpath</td>
+	<td>/admin/issues/?Pub=16</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//td[4]/a/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>f_issue_name</td>
+	<td>Today's News</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>f_issue_number</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>f_url_name</td>
+	<td>1</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>f_issue_template_id</td>
+	<td>label=classic/section.tpl</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>f_section_template_id</td>
+	<td>label=classic/section.tpl</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>f_article_template_id</td>
+	<td>label=classic/archive.tpl</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Issue updated</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>action</td>
+	<td>label=Publish</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>document.forms[1].elements[8]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Today's News</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
