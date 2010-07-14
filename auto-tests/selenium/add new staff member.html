@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>create new staff member</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">create new staff member</td></tr>
+</thead><tbody>
+<tr>
+	<td>allowNativeXpath</td>
+	<td>/admin/index.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>_self</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>waitForPopUp</td>
+	<td>_self</td>
+	<td>30000</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//a/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>UName</td>
+	<td>michaelb</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='Generate']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Name</td>
+	<td>Michael Ben</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>EMail</td>
+	<td>mick.ben@something.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>Phone</td>
+	<td>none</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>Type</td>
+	<td>label=Journalist</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>Save</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>User account michaelb was created successfully. </td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
