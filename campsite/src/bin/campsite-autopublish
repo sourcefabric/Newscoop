@@ -5,9 +5,7 @@
 $_SERVER['HTTP_HOST'] = '';
 $www_dir = dirname(dirname(__FILE__));
 $GLOBALS['g_campsiteDir'] = $www_dir;
-require_once($www_dir.'/conf/configuration.php');
-require_once($www_dir.'/db_connect.php');
-require_once($www_dir.'/'.$ADMIN_DIR.'/lib_campsite.php');
+require_once($www_dir.'/include/campsite_init.php');
 require_once($www_dir.'/classes/ArticlePublish.php');
 require_once($www_dir.'/classes/IssuePublish.php');
 $issueActions = IssuePublish::DoPendingActions();
