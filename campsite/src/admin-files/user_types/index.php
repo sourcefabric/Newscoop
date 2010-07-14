@@ -59,7 +59,7 @@ foreach ($userTypes as $userType) { ?>
 	</td>
 
 	<td align="center">
-		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getId())); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
+		<a href="/<?php echo $ADMIN; ?>/user_types/do_del.php?UType=<?php p(urlencode($userType->getId()) . '&' . SecurityToken::URLParameter()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user type $1?', $userType->getName()); ?>');">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" alt="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>" title="Delete user type <?php p(htmlspecialchars($userType->getName())); ?>"></a>
 	</td>
 <?php  } ?>

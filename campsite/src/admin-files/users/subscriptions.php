@@ -65,13 +65,13 @@ if (count($subscriptions) > 0) {
 		</TD>
 		<TD ALIGN="CENTER">
 		<?php if ($subscription->isActive()) { ?>
-			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to deactivate the subscription?'); ?>');"><?php putGS('Yes'); ?></a>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId() . '&' . SecurityToken::URLParameter()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to deactivate the subscription?'); ?>');"><?php putGS('Yes'); ?></a>
 		<?php } else { ?>
-			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to activate the subscription?'); ?>');"><?php putGS('No');?></a>
+			<a href="/<?php echo $ADMIN; ?>/users/subscriptions/do_status.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId() . '&' . SecurityToken::URLParameter()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to activate the subscription?'); ?>');"><?php putGS('No');?></a>
 		<?php } ?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');">
+			<A HREF="/<?php echo $ADMIN; ?>/users/subscriptions/do_del.php?f_user_id=<?php echo $editUser->getUserId(); ?>&f_subscription_id=<?php p($subscription->getSubscriptionId() . '&' . SecurityToken::URLParameter()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription to the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');">
 			<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>" TITLE="<?php  putGS('Delete subscriptions to $1', htmlspecialchars($publicationObj->getName()) ); ?>"></A>
 		</TD>
 	</TR>

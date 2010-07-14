@@ -30,6 +30,7 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_topay.php"  >
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<?php echo SecurityToken::FormParameter(); ?>
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Update payment"); ?></B>

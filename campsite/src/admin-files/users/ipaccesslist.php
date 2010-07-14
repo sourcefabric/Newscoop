@@ -43,7 +43,7 @@ if (sizeof($ipAccessList) > 0) {
 		<td style="padding-left: 3px; padding-top: 3px; padding-bottom: 3px; "><?php echo $startIP; ?></td>
 		<td style="padding-left: 3px;"><?php p(htmlspecialchars($addresses)); ?></td>
 		<td align="center" style="padding-left: 3px;">
-			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getUserId(); ?>&StartIP=<?php  p($startIP); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1:$2?', $startIP, htmlspecialchars($addresses)); ?>');">
+			<a href="/<?php echo $ADMIN; ?>/users/do_ipdel.php?User=<?php echo $editUser->getUserId() . '&' . SecurityToken::URLParameter(); ?>&StartIP=<?php  p($startIP); ?>"  onclick="return confirm('<?php putGS('Are you sure you want to delete the IP Group $1:$2?', $startIP, htmlspecialchars($addresses)); ?>');">
 			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete'); ?>" title="<?php putGS('Delete'); ?>"></a>
 		</td>
 	</tr>
@@ -55,6 +55,7 @@ if (sizeof($ipAccessList) > 0) {
 <tr id="add_ip_row_id" style="display: none;">
 	<td colspan="3" align="center" style="padding-top: 3px;">
 		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+		<?php echo SecurityToken::FormParameter(); ?>
 		<input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
 		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
 			<tr>

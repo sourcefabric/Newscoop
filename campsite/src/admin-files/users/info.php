@@ -45,6 +45,7 @@ $my_user_type = $editUser->getUserType();
 
 
 <form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="uType" value="<?php echo $uType; ?>">
 <?php
 if (!$isNewUser) {
