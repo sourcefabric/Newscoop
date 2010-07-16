@@ -59,6 +59,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php"  onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("Languages"); ?>:</TD>

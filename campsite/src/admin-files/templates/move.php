@@ -15,7 +15,7 @@ if (!Template::IsValidPath($f_current_folder) || !Template::IsValidPath($f_desti
 foreach ($f_template_code as $name) {
      if (!Template::IsValidPath($name, false)) {
     	camp_html_goto_page("/$ADMIN/templates/");
-    }   
+    }
 }
 
 //
@@ -61,6 +61,11 @@ if ($f_current_folder != '/') {
 // This section is executed when the user finally hits the action button.
 //
 if (isset($_REQUEST["action_button"])) {
+	if (!SecurityToken::isValid()) {
+		camp_html_display_error(getGS('Invalid security token!'));
+		exit;
+	}
+
 	if (empty($f_destination_folder)) {
 		$errorMsg = getGS("You must select a destination folder");
 		camp_html_add_msg($errorMsg);
@@ -123,6 +128,7 @@ camp_html_display_msgs();
 </DIV>
 
 <FORM NAME="move" METHOD="POST" ONSUBMIT="return validateForm(this, 0, 1, 0, 1, 8);">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_action" value="<?php p($f_action); ?>">
 <?php
 if (!empty($f_current_folder)) {

@@ -1,6 +1,11 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/user_types/utypes_common.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $canManage = $g_user->hasPermission('ManageUserTypes');
 if (!$canManage) {
 	$error = getGS("You do not have the right to change user type permissions.");

@@ -59,6 +59,7 @@ foreach ($rights as $group_name => $group) {
 $jsRightsArray = implode(',', $rightsList);
 ?>
 <form name="dialog" method="post" action="do_access.php" >
+<?php echo SecurityToken::FormParameter(); ?>
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="table_input">
 <tr>

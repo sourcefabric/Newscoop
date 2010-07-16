@@ -22,6 +22,7 @@ camp_html_display_msgs("0.25em", "0.25em");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 <form name="user_type_add" method="post" action="do_add.php">
+<?php echo SecurityToken::FormParameter(); ?>
 <p>
 <?php
 $checkboxPrefix = 'checkbox_';

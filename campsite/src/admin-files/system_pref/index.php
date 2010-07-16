@@ -32,6 +32,7 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
 <?php camp_html_display_msgs(); ?>
 
 <form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="6" align="left" class="table_input" width="500px">
 <tr>
 	<td colspan="2" align="left">

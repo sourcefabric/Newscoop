@@ -101,7 +101,7 @@ echo $breadcrumbs;
     <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
         . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('Mb');?></b></td>
     <td valign="bottom" style="padding-left: 10px;">
-        <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make new backup?')?>')) window.open('backup.php?action=backup', '', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
+        <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make new backup?')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
         <b><?php putGS("Make new backup")?></b>
         </a>
@@ -136,7 +136,7 @@ if ($files) {
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
         print '<td align="center"><a href="#" onclick="if (confirm(\''.getGS('Are you sure you want to restore the file $1?',
-            htmlspecialchars($file['name'])).'\')) window.open(\'backup.php?action=restore&index='.$key.'\', \'\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100\');"><img src="'
+            htmlspecialchars($file['name'])).'\')) window.open(\'backup.php?action=restore&index='.$key.'\', \'Backup\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100\');"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/help.png" border="0" alt="'.getGS('Restore file').'" title="'.getGS('Restore file').'"></a>';
         print '<td align="center"><a href="backup.php?action=delete&index='.$key.'" onclick="return confirm(\''
             .getGS('Are you sure you want to delete the file $1?',htmlspecialchars($file['name'])).'\');"><img src="'

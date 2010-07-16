@@ -33,6 +33,7 @@ camp_html_display_msgs();
 ?>
 <P>
 <FORM METHOD="POST" ACTION="do_upload_templ.php" ENCTYPE="multipart/form-data" >
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="600px">
 <TR>
 	<TD ALIGN="RIGHT"><?php  putGS("File"); ?>:</TD>

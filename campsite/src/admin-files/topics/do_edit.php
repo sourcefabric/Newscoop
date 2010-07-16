@@ -1,6 +1,11 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (!$g_user->hasPermission('ManageTopics')) {
 	camp_html_display_error(getGS("You do not have the right to change topic name."));
 	exit;
