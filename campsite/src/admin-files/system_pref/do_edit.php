@@ -16,34 +16,34 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 }
 
 $f_campsite_online = Input::Get('f_campsite_online');
-$f_site_title = Input::Get('f_site_title');
-$f_site_metakeywords = Input::Get('f_site_metakeywords');
-$f_site_metadescription = Input::Get('f_site_metadescription');
+$f_site_title = strip_tags(Input::Get('f_site_title'));
+$f_site_metakeywords = strip_tags(Input::Get('f_site_metakeywords'));
+$f_site_metadescription = strip_tags(Input::Get('f_site_metadescription'));
 $f_time_zone = Input::Get('f_time_zone');
 $f_cache_enabled = Input::Get('f_cache_enabled');
 $f_cache_engine = Input::Get('f_cache_engine');
-$f_secret_key = Input::Get('f_secret_key');
-$f_session_lifetime = intval(Input::Get('f_session_lifetime'));
-$f_imagecache_lifetime = intval(Input::Get('f_imagecache_lifetime'));
-$f_keyword_separator = Input::Get('f_keyword_separator');
+$f_secret_key = strip_tags(Input::Get('f_secret_key'));
+$f_session_lifetime = Input::Get('f_session_lifetime', 'int');
+$f_imagecache_lifetime = Input::Get('f_imagecache_lifetime', 'int');
+$f_keyword_separator = strip_tags(Input::Get('f_keyword_separator'));
 $f_login_num = Input::Get('f_login_num', 'int');
-$f_max_upload_filesize = Input::Get('f_max_upload_filesize');
-$f_smtp_host = Input::Get('f_smtp_host');
-$f_smtp_port = intval(Input::Get('f_smtp_port'));
-$f_editor_image_ratio = intval(Input::Get('f_editor_image_ratio'));
-$f_editor_image_width = intval(Input::Get('f_editor_image_width'));
-$f_editor_image_height = intval(Input::Get('f_editor_image_height'));
+$f_max_upload_filesize = strip_tags(Input::Get('f_max_upload_filesize'));
+$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
+$f_smtp_port = Input::Get('f_smtp_port', 'int');
+$f_editor_image_ratio = Input::Get('f_editor_image_ratio', 'int');
+$f_editor_image_width = Input::Get('f_editor_image_width', 'int');
+$f_editor_image_height = Input::Get('f_editor_image_height', 'int');
 $f_editor_image_zoom = Input::Get('f_editor_image_zoom');
 $f_use_replication = Input::Get('f_use_replication');
-$f_db_repl_host = Input::Get('f_db_repl_host');
-$f_db_repl_user = Input::Get('f_db_repl_user');
-$f_db_repl_pass = Input::Get('f_db_repl_pass');
-$f_db_repl_port = intval(Input::Get('f_db_repl_port'));
+$f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
+$f_db_repl_user = strip_tags(Input::Get('f_db_repl_user'));
+$f_db_repl_pass = strip_tags(Input::Get('f_db_repl_pass'));
+$f_db_repl_port = Input::Get('f_db_repl_port', 'int');
 $f_use_campcaster = Input::Get('f_use_campcaster');
-$f_cc_hostname = Input::Get('f_cc_hostname');
-$f_cc_hostport = intval(Input::Get('f_cc_hostport'));
-$f_cc_xrpcpath = Input::Get('f_cc_xrpcpath');
-$f_cc_xrpcfile = Input::Get('f_cc_xrpcfile');
+$f_cc_hostname = strip_tags(Input::Get('f_cc_hostname'));
+$f_cc_hostport = Input::Get('f_cc_hostport', 'int');
+$f_cc_xrpcpath = strip_tags(Input::Get('f_cc_xrpcpath'));
+$f_cc_xrpcfile = strip_tags(Input::Get('f_cc_xrpcfile'));
 $f_external_subs_management = Input::Get('f_external_subs_management');
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
 	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
@@ -54,7 +54,7 @@ if ($f_external_cron_management != 'Y' && $f_external_cron_management != 'N') {
     $f_external_cron_management = SystemPref::Get('ExternalCronManagement');
 }
 if ($f_external_cron_management == 'N'
-    && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
+        && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
     $f_external_cron_management = 'Y';
 }
 
