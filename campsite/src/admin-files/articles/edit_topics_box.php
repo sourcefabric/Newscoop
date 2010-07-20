@@ -18,7 +18,7 @@
 			</TR>
 			<?PHP
 			foreach ($articleTopics as $tmpArticleTopic) {
-				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id";
+				$detachUrl = "/$ADMIN/articles/topics/do_del.php?f_article_number=$f_article_number&f_topic_id=".$tmpArticleTopic->getTopicId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
 			?>
 			<TR>
 				<TD align="center" width="100%" style="border-top: 1px solid #EEEEEE;">

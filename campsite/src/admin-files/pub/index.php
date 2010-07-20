@@ -98,7 +98,7 @@ foreach ($publications as $pub) { ?>
         <?php  }
         if ($g_user->hasPermission("DeletePub")) { ?>
         <TD ALIGN="CENTER">
-        <A HREF="/<?php p($ADMIN); ?>/pub/do_del.php?Pub=<?php p($pub->getPublicationId()); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($pub->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" TITLE="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" ></A>
+        <A HREF="/<?php p($ADMIN); ?>/pub/do_del.php?Pub=<?php p($pub->getPublicationId()); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($pub->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" TITLE="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" ></A>
         </TD>
         <?php  } ?>
 </TR>

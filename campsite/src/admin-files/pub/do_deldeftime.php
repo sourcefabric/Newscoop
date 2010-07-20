@@ -4,6 +4,11 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to manage publications."));

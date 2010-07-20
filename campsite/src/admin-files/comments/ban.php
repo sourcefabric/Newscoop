@@ -69,6 +69,7 @@ if (isset($connectedToOnlineServer)
 ?>
 <center>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
 <TR>

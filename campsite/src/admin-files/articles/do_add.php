@@ -2,6 +2,11 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('AddArticle')) {
 	camp_html_display_error(getGS("You do not have the right to add articles."));

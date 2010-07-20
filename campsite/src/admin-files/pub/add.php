@@ -42,6 +42,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <?php camp_html_display_msgs(); ?>
 <p>
 <FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php include("pub_form.php"); ?>
 </FORM>
 <P>

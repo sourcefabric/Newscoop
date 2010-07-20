@@ -580,6 +580,9 @@ loader.insert({
                     var postData = "&articleid=" + oArgs.editor.getRecord().getData('art_id')
                         + "&target=" + oArgs.editor.getColumn().getKey()
                         + "&value=" + oArgs.newData;
+                    // add security token
+                    postData += '&<?php echo SecurityToken::URLParameter(); ?>';
+
                     var request = Connect.asyncRequest('POST', sUrl, saveEditorHandler, postData);
                 };
 
@@ -836,6 +839,7 @@ loader.insert({
                         } else if (this.get('id') == 'issue') {
                             var postData = "&action=content&publication=" + CF.settings['publication'] + "&issue=" + oMenuItem.value;
                         }
+
                         var request = Connect.asyncRequest('POST', sUrl, loadIssueMenuHandler, postData);
                     } else {
                         var aItems = CF.menuButtons[buttonKey].getMenu().getItems();
@@ -1100,12 +1104,14 @@ loader.insert({
                         + encodeURIComponent(CF.myDataTable.getRecord(selRows[x]).getData("art_id"))
                         + '_' + encodeURIComponent(CF.myDataTable.getRecord(selRows[x]).getData("art_languageid"));
                 }
-                //alert('pD: ' + postData);
+
+                // add security token
+                postData += '&<?php echo SecurityToken::URLParameter(); ?>';
+
                 if (!skipRequest) {
                     var request = Connect.asyncRequest('POST', sUrl, handler, postData);
                 }
                 CF.resetActionMenu(this);
-                //alert('CFrAm: ' + CF.settings.action);
     			CF.fireDT(false);
     		},
 
@@ -1242,6 +1248,7 @@ loader.insert({
                     CF.cleanUpRangeDateSelection();
                     var sUrl = '/admin/smartlist/assets/load_filterby_menu.php';
                     var postData = "&action=filterby&filterby=" + oMenuItem.value;
+
                     var request = Connect.asyncRequest('POST', sUrl, loadSubmenuHandler, postData);
                 }
             },

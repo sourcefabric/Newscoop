@@ -6,6 +6,17 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_add_msg(getGS('Invalid security token!'));
+?>
+<script type="text/javascript">
+window.close();
+window.opener.location.reload();
+</script>
+<?php
+	exit;
+}
+
 if (!$g_user->hasPermission('AddFile')) {
 	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);
 	exit;

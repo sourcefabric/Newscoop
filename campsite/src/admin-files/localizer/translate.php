@@ -147,6 +147,7 @@ function translationForm($p_request)
 		<td valign="top"> <!-- Begin top control panel -->
 
         <form action="index.php" method="post">
+		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
         <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
 		<table border="0" style="background-color: #d5e2ee; border: 1px solid #8baed1; margin-left: 10px; margin-top: 5px;" width="700px;">
@@ -301,6 +302,7 @@ function translationForm($p_request)
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != 'globals')) {
 		?>
         <form action="do_add_missing_strings.php" method="post">
+		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
@@ -333,6 +335,7 @@ function translationForm($p_request)
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != 'globals')) {
 		?>
         <form action="do_delete_unused_strings.php" method="post">
+		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
@@ -364,6 +367,7 @@ function translationForm($p_request)
 	?>
 	<!-- Begin translated strings box -->
     <form action="do_save.php" method="post">
+	<?php echo SecurityToken::FormParameter(); ?>
     <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
@@ -459,9 +463,9 @@ function translationForm($p_request)
             	            }
 
             	            $removeLink    = "do_delete_string.php?pos=$count&$fileparms"
-            	            	."&string=".urlencode($sourceKey);
-            	            $moveUpLink    = "do_reorder_string.php?pos1=$count&pos2=$prev&$fileparms";
-            	            $moveDownLink  = "do_reorder_string.php?pos1=$count&pos2=$next&$fileparms";
+            	            	."&string=".urlencode($sourceKey).'&'.SecurityToken::URLParameter();
+            	            $moveUpLink    = "do_reorder_string.php?pos1=$count&pos2=$prev&$fileparms&".SecurityToken::URLParameter();
+            	            $moveDownLink  = "do_reorder_string.php?pos1=$count&pos2=$next&$fileparms&".SecurityToken::URLParameter();
                 			if (empty($searchString)) {
             				?>
             				<td style="padding-left: 3px;">
@@ -487,7 +491,7 @@ function translationForm($p_request)
 								}
 								?>
 								</SELECT>
-								<input type="button" name="" value="Move" onclick="location.href='do_string_switch_file.php?string=<?php echo urlencode($sourceKey); ?>&new_prefix='+this.form.change_prefix_<?php echo $count; ?>.options[this.form.change_prefix_<?php echo $count; ?>.selectedIndex].value+'&<?php echo $fileparms; ?>';" class="button">
+								<input type="button" name="" value="Move" onclick="location.href='do_string_switch_file.php?string=<?php echo urlencode($sourceKey); ?>&new_prefix='+this.form.change_prefix_<?php echo $count; ?>.options[this.form.change_prefix_<?php echo $count; ?>.selectedIndex].value+'&<?php echo $fileparms; ?>&<?php echo SecurityToken::URLParameter(); ?>';" class="button">
             	            </td>
                             <?php
                 	        }

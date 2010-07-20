@@ -9,6 +9,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (!$g_user->hasPermission('ChangeFile')) {
 	camp_html_display_error(getGS('You do not have the right to change files.' ), null, true);
 	exit;

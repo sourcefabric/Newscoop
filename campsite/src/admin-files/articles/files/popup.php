@@ -42,6 +42,7 @@ camp_html_display_msgs();
 
 <br>
 <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">

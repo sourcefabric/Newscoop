@@ -38,6 +38,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 
 <P>
 <FORM NAME="issue_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

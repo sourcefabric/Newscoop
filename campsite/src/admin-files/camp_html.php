@@ -116,7 +116,8 @@ function camp_html_article_link($p_articleObj, $p_interfaceLanguageId, $p_target
  *
  * @param string $p_extraParams
  */
-function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null)
+function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "",
+$p_backLink = "", $p_extraParams = null, $p_securityParameter = false)
 {
 	global $ADMIN;
 	$str = "/$ADMIN/articles/".$p_targetFileName
@@ -126,6 +127,9 @@ function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFil
 		."&f_article_number=".$p_articleObj->getArticleNumber()
 		."&f_language_id=".$p_sectionLanguageId
 		."&f_language_selected=".$p_articleObj->getLanguageId();
+	if ($p_securityParameter) {
+		$str .= '&'.SecurityToken::URLParameter();
+	}
 	if ($p_backLink != "") {
 		$str .="&Back=".urlencode($p_backLink);
 	}

@@ -8,6 +8,11 @@ require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
 	camp_html_display_error(getGS("You do not have the right to change publication information."));

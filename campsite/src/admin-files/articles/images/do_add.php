@@ -9,6 +9,17 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_add_msg(getGS('Invalid security token!'));
+?>
+<script type="text/javascript">
+window.close();
+window.opener.location.reload();
+</script>
+<?php
+	exit;
+}
+
 if (!$g_user->hasPermission('AddImage')) {
 	camp_html_display_error(getGS('You do not have the right to add images.' ), null, true);
 	exit;

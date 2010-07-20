@@ -3,6 +3,11 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (!$g_user->hasPermission("ManageSection")) {
 	camp_html_display_error(getGS("You do not have the right to add sections."));
 	exit;

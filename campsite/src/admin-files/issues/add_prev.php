@@ -33,6 +33,7 @@ if (is_null($lastCreatedIssue)) { ?>
 
 <P>
 <FORM name="issue_add" METHOD="POST" ACTION="do_add_prev.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

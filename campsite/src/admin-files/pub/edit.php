@@ -72,6 +72,7 @@ if ($g_user->hasPermission("DeletePub")) {
 <?php camp_html_display_msgs(0); ?>
 
 <FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php include("pub_form.php"); ?>
 </FORM>
 <P>

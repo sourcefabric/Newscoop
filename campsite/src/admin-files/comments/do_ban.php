@@ -6,8 +6,25 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_ban_item.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_add_msg(getGS('Invalid security token!'));
+?>
+<script type="text/javascript">
+window.close();
+window.opener.location.reload();
+</script>
+<?php
+    exit;
+}
+
 if (!$g_user->hasPermission('CommentModerate')) {
-	camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+	camp_html_add_msg(getGS("You do not have the right to moderate comments." ));
+?>
+<script type="text/javascript">
+window.close();
+window.opener.location.reload();
+</script>
+<?php
 	exit;
 }
 
@@ -16,6 +33,13 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
     $connectedToOnlineServer = $dbReplicationObj->connect();
     if ($connectedToOnlineServer == false) {
         camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
+?>
+<script type="text/javascript">
+window.close();
+window.opener.location.reload();
+</script>
+<?php
+		exit;
     }
 }
 
@@ -87,6 +111,9 @@ if (isset($connectedToOnlineServer)
 <?php
 }
 ?>
+<script type="text/javascript">
+window.opener.location.reload();
+</script>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 20px;">
 <TR>
 	<TD align="center">
