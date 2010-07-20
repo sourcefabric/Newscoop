@@ -273,4 +273,5 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nome <br> (Carregue para Altera
 regGS("New field", "Novo Campo");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>
