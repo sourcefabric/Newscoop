@@ -6,11 +6,13 @@ chmod 770 /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
 chmod 770 /var/www/campsite/templates >/dev/null 2>&1 || true
 chmod 770 /var/www/campsite/templates_cache >/dev/null 2>&1 || true
 chmod 770 /var/www/campsite/plugins >/dev/null 2>&1 || true
+chmod 770 /var/www/campsite/backup >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite/conf >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite/templates >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite/templates_cache >/dev/null 2>&1 || true
 chown www-data.www-data /var/www/campsite/plugins >/dev/null 2>&1 || true
+chown www-data.www-data /var/www/campsite/backup >/dev/null 2>&1 || true
 
 exit 0

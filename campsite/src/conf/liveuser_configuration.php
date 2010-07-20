@@ -36,6 +36,13 @@ $liveuserConfig = array (
         'varname' => 'loginInfo',
         'force_start' => true
         ),
+    'session_cookie_params' => array(
+        'lifetime' => ($Campsite['campsite']['session_lifetime'] / 86400),
+        'path' => null,
+        'domain' => null,
+        'secure' => false,
+        'httponly' => true
+        ),
     'login' => array('regenid' => true),
     'logout' => array ('destroy' => true),
     'cookie' => array(
@@ -43,10 +50,11 @@ $liveuserConfig = array (
         'path' => null,
         'domain' => null,
         'secure' => false,
-        'lifetime' => 30,
-        'secret' => 'asecretkey',
-        'savedir' => '.'
-        ),
+        'lifetime' => ($Campsite['campsite']['session_lifetime'] / 86400),
+        'secret' => $Campsite['campsite']['secret_key'],
+        'savedir' => '.',
+        'httponly' => true
+    ),
     'authContainers' => array (
         'DB' => array (
             'type' => 'DB',

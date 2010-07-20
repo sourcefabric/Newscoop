@@ -33,6 +33,7 @@ camp_html_display_msgs();
 
 <P>
 <FORM NAME="template_add" METHOD="POST" ACTION="do_new_templ.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

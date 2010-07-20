@@ -6,6 +6,11 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/SubscriptionSection.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
 
+if (!SecurityToken::isValid()) {
+	camp_html_display_error(getGS('Invalid security token!'));
+	exit;
+}
+
 if (!$g_user->hasPermission('ManageSubscriptions')) {
 	camp_html_display_error(getGS("You do not have the right to add subscriptions."));
 	exit;
