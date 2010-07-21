@@ -8,32 +8,32 @@ camp_load_translation_strings("plugin_blog");
 function ajax_action(action)
 {
     $('f_action').value = action;
-  
+
     var myAjax = new Ajax.Request(
             "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
-            { 
+            {
                 method: 'get',
                 parameters: Form.serialize($('entries_list')),
                 onComplete: do_reload
             }
-        );      
-   
-    
+        );
+
+
 }
 
 function do_reload(response)
 {
     if (response.responseText) {
-        alert(response.responseText);   
+        alert(response.responseText);
     }
-    document.location.reload();   
+    document.location.reload();
 }
 </script>
 <?php
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
-    $is_admin = true;   
+    $is_admin = true;
 }
 if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
     $is_moderator = true;
@@ -50,15 +50,15 @@ $f_start = Input::Get('f_start', 'int', 0);
 $f_order = Input::Get('f_order', 'string', 'byidentifier');
 
 if ($f_language_id = Input::Get('f_language_id', 'int')) {
-    $constraints .= "language_id is $f_language_id ";   
+    $constraints .= "language_id is $f_language_id ";
 }
 
 if ($f_blog_id = Input::Get('f_blog_id', 'int')) {
-    $constraints .= "blog_id is $f_blog_id ";   
+    $constraints .= "blog_id is $f_blog_id ";
 }
 
 if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
-    $constraints .= "status is $f_status ";   
+    $constraints .= "status is $f_status ";
 }
 
 $parameters = array(
@@ -89,20 +89,20 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
   <TR>
     <TD><A HREF="list_blogs.php" ><B><?php  putGS("Blogs"); ?></B></A></TD>
 
-    
-    <?php if ($f_blog_id) { 
+
+    <?php if ($f_blog_id) {
         $Blog = new Blog($f_blog_id);
         ?>
        <TD> >> <B><?php p($Blog->getSubject()) ?></B></TD>
-    <?php } else { ?> 
+    <?php } else { ?>
         <TD> >> <B><?php putGS("All posts"); ?></B></TD>
-    <?php } ?> 
-    
+    <?php } ?>
+
     <?php if ($f_blog_id && $is_admin) { ?>
         <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
         <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new post"); ?></B></A></TD>
-    <?php } ?>  
-    
+    <?php } ?>
+
   </tr>
 </TABLE>
 
@@ -125,7 +125,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                         <option value="0"><?php putGS("All"); ?></option>
                         <?php
                         foreach (Language::GetLanguages() as $Language) {
-                            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+                            $languageList[$Language->getLanguageId()] = $Language->getNativeName();
                         }
                         asort($languageList);
 
@@ -181,7 +181,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                 </TR>
                 </TABLE>
             </TD>
-            
+
             <?php if ($is_admin) { ?>
               <TD style="padding-left: 20px;">
                 <script>
@@ -242,16 +242,16 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                     }
                 }
                 </script>
-                
+
                 <SELECT name="f_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="entries_delete"><?php putGS("Delete"); ?></OPTION>
                     <OPTION value="entries_set_online"><?php putGS("Admin Status: Online"); ?></OPTION>
                     <OPTION value="entries_set_offline"><?php putGS("Admin Status: Offline"); ?></OPTION>
-                    <OPTION value="entries_set_pending"><?php putGS("Admin Status: Pending"); ?></OPTION>                   
+                    <OPTION value="entries_set_pending"><?php putGS("Admin Status: Pending"); ?></OPTION>
                 </SELECT>
               </TD>
-        
+
               <TD style="padding-left: 5px; font-weight: bold;">
                 <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($count); ?>);">
                 <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($count); ?>);">
@@ -272,20 +272,21 @@ $color= 0;
 if ($BlogEntriesList->getLength()) {
     ?>
     <FORM name="entries_list" id="entries_list" action="action.php" method="POST">
+	<?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_action" id="f_action" />
     <input type="hidden" name="f_new_pos" id="f_new_pos" />
-    
+
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
-        
+
             <?php if($is_admin) { ?>
                 <TD width="10">&nbsp;</TD>
             <?php } ?>
-            
+
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
                 <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Title"); ?></a>
                 &nbsp;<SMALL><?php if ($is_admin) putGS('Click to edit'); ?></SMALL>
-            </TD>           
+            </TD>
             <TD align="center" valign="top" width="60">
                 <A href="<?php p($self_params) ?>f_order=byuser_id"><?php  putGS("User"); ?></a>
             </TD>
@@ -312,16 +313,16 @@ if ($BlogEntriesList->getLength()) {
             <TD ALIGN="center" VALIGN="TOP" width="60" colspan="2">
                 <?php  putGS("Comments"); ?>
             </TD>
-            
+
             <?php if($is_admin) { ?>
                 <TD width="10">&nbsp;</TD>
             <?php } ?>
         </TR>
         <?php
-     
+
         while ($MetaBlogEntry = $BlogEntriesList->current) {
             $BlogEntriesList->defaultIterator()->next();
-            
+
             if ($color) {
                 $rowClass = "list_row_even";
             } else {
@@ -331,17 +332,17 @@ if ($BlogEntriesList->getLength()) {
             ?>
             <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
             <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
-                
+
                 <?php if($is_admin) { ?>
                     <TD>
                         <input type="checkbox" value="<?php p((int)$MetaBlogEntry->identifier); ?>" name="f_entries[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                     </TD>
                 <?php } ?>
-                
+
                 <td>
-                    <?php 
-                    p($MetaBlogEntry->identifier.'.'); 
-                    
+                    <?php
+                    p($MetaBlogEntry->identifier.'.');
+
                     if ($is_admin) {
                         ?><a href="javascript: void(0);" onclick="window.open('entry_form.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');"><?php p($MetaBlogEntry->title); ?></a><?php
                     } else {
@@ -350,33 +351,33 @@ if ($BlogEntriesList->getLength()) {
                     ?>
                     (<?php p($MetaBlogEntry->language->name); ?>)
                 </td>
-                              
+
                 <td align="center"><?php p($MetaBlogEntry->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlogEntry->status); ?></td>
                 <td align="center"><?php putGS($MetaBlogEntry->admin_status); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->date); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->comments_online); ?> / <?php p($MetaBlogEntry->comments_offline); ?></td>
                 <td align="center"><?php p($MetaBlogEntry->feature); ?></td>
-                
+
                 <td align='center'>
                     <?php
                     // get the topics used
                     $topics = array();
                     $BlogEntry = new BlogEntry($MetaBlogEntry->identifier);
-                    foreach ($BlogEntry->getTopics() as $Topic) {            
+                    foreach ($BlogEntry->getTopics() as $Topic) {
                         $topics[] = "{$Topic->getName($BlogEntry->getLanguageId())}";
                     }
-                    $topics_list = implode(' | ', $topics); 
-                    
+                    $topics_list = implode(' | ', $topics);
+
 				    ?>
 				    <A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=entry_topic&amp;f_blogentry_id=<?php echo $MetaBlogEntry->identifier ?>', 'blogentry_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/<?php p($is_admin ? 'add.png' : 'preview.png') ?>" border="0"></A>
 
                 </td>
-                
+
                 <td align='center'>
                     <A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $MetaBlogEntry->identifier ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
                 </td>
-                          
+
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href='list_comments.php?f_entry_id=<?php p($MetaBlogEntry->identifier); ?>'>
@@ -384,18 +385,18 @@ if ($BlogEntriesList->getLength()) {
                         </a>
                     </td>
                 <?php } ?>
-                
+
                 <?php if($is_admin) { ?>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
                             uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
-                            ajax_action('entries_delete') 
+                            ajax_action('entries_delete')
                             }">
                             <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                         </a>
                     </td>
-                 <?php } ?>   
+                 <?php } ?>
             </tr>
             <?php
             $counter++;
@@ -403,11 +404,11 @@ if ($BlogEntriesList->getLength()) {
       ?>
     </table>
 </FORM>
-<?php 
+<?php
 } else {?>
     <BLOCKQUOTE>
     <LI><?php  putGS('No posts.'); ?></LI>
-    </BLOCKQUOTE>  
-    <?php 
+    </BLOCKQUOTE>
+    <?php
 }
 ?>

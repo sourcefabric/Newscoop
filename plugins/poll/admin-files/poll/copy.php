@@ -15,7 +15,7 @@ $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 $poll = new Poll($f_fk_language_id, $f_poll_nr);
 
 if (!$poll->exists()) {
-    camp_html_display_error(getGS('Poll does not exists.'));         
+    camp_html_display_error(getGS('Poll does not exists.'));
     exit;
 }
 
@@ -49,6 +49,7 @@ camp_html_display_msgs();
 <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
 <P>
 <FORM NAME="duplicate_poll" METHOD="POST" ACTION="do_copy.php" onsubmit="return (<?php camp_html_fvalidate(); ?> && checkForm());">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php  p($poll->getNumber()); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($poll->getLanguageId()); ?>">
 
@@ -179,15 +180,15 @@ camp_html_display_msgs();
 <script language="javascript">
 function checkForm() {
     var checked = false;
-    
+
     for (var i = 0; i < document.forms['duplicate_poll'].length; i++) {
         if (document.forms['duplicate_poll'].elements[i].name.indexOf('[number]') != -1 &&
             document.forms['duplicate_poll'].elements[i].checked) {
-            
+
             checked = true;
-        }  
+        }
     }
-    
+
     if (!checked) {
         alert("<?php putGS('You need to activate at least 1 answer.') ?>");
         return false;

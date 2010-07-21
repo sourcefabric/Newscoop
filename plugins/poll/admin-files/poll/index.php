@@ -43,6 +43,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <p>
 
 <FORM name="poll_list" action="action.php" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -106,7 +107,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                     // Get the index of the "delete" and "reset" option.
                     deleteOptionIndex = -1;
                     translateOptionIndex = -1;
-                    
+
                     for (var index = 0; index < dropdownElement.options.length; index++) {
                         if (dropdownElement.options[index].value == "delete") {
                             deleteOptionIndex = index;
@@ -124,7 +125,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                             return;
                         }
                     }
-                    
+
                     // if the user has selected the "reset" option
                     if (dropdownElement.selectedIndex == resetOptionIndex) {
                         ok = confirm("<?php putGS("Are you sure you want to reset counters on the selected polls?"); ?>");
@@ -133,7 +134,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                             return;
                         }
                     }
-                    
+
                     // do the action if it isnt the first or second option
                     if ( (dropdownElement.selectedIndex != 0)) {
                         dropdownElement.form.submit();
@@ -192,9 +193,9 @@ if (count($polls)) {
             <TD align="center" valign="top" width="20">&nbsp;</TD>
         </TR>
         <?php
-    
+
         $used = array();
-        
+
         foreach ($polls as $poll) {
             if ($color) {
                 $rowClass = "list_row_even";
@@ -208,16 +209,16 @@ if (count($polls)) {
                 <TD>
                     <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_poll_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                 </TD>
-              
+
                 <td>
                     <?php
                     if (!array_key_exists($poll->getNumber(), $used) && $poll->getProperty('parent_poll_nr') == 0) {
                         p($poll->getNumber().'.');
-                        $used[$poll->getNumber()] = true;   
+                        $used[$poll->getNumber()] = true;
                     } elseif ($poll->getProperty('parent_poll_nr')) {
-                        p('\'-> '.$poll->getNumber().'.'); 
+                        p('\'-> '.$poll->getNumber().'.');
                     } else {
-                        p('&nbsp;&nbsp;');   
+                        p('&nbsp;&nbsp;');
                     }
                     ?>
                     <a href="edit.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>">
@@ -225,10 +226,10 @@ if (count($polls)) {
                     </a>
                     &nbsp; (<?php p($poll->getLanguageName()); ?>)
                 </td>
-              
+
                 <td align="center"><?php p($poll->getProperty('date_begin')); ?></td>
                 <td align="center"><?php p($poll->getProperty('date_end')); ?></td>
-              
+
                 <td align='center'>
                 <?php if (!$poll->getProperty('parent_poll_nr')) { ?>
                     <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Translate') ?>">
@@ -236,7 +237,7 @@ if (count($polls)) {
                     </a>
                 <?php } ?>
                 </td>
-              
+
                 <td align='center'>
                 <?php if ($poll->isExtended()) { ?>
                     <a href="copy.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Copy') ?>">
@@ -244,19 +245,19 @@ if (count($polls)) {
                     </a>
                 <?php } ?>
                 </td>
-                
+
                 <td align='center'>
                     <a href="result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()); ?>" title="<?php putGS('Result') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
-              
+
                 <td align='center'>
-                    <a href="javascript: if (confirm('Are you sure to delete poll &quot;<? echo htmlspecialchars($poll->getProperty('title')); ?>&quot;')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>'">
+                    <a href="javascript: if (confirm('Are you sure to delete poll &quot;<? echo htmlspecialchars($poll->getProperty('title')); ?>&quot;')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                     </a>
                 </td>
-                
+
             </tr>
             <?php
             $counter++;
@@ -264,11 +265,11 @@ if (count($polls)) {
       ?>
     </table>
 </FORM>
-<?php 
+<?php
 } else {?>
     <BLOCKQUOTE>
     <LI><?php  putGS('No polls.'); ?></LI>
-    </BLOCKQUOTE>  
-    <?php 
+    </BLOCKQUOTE>
+    <?php
 }
 ?>

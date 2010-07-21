@@ -459,6 +459,11 @@ class InterviewItem extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => $this->exists() ? 'interviewitem_edit' : 'interviewitem_create'
             ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
+            ),
             array(
                 'element'   => 'f_interview_id',
                 'type'      => 'hidden',
@@ -543,7 +548,7 @@ class InterviewItem extends DatabaseObject {
         $form = new html_QuickForm('interviewitem', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()) {
+        if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
 
             if (strlen($data['f_question'])) {

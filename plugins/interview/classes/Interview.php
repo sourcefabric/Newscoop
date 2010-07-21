@@ -538,6 +538,11 @@ class Interview extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => 'interview_edit'
             ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
+            ),
             $exists ? array(
                     'element'   => 'f_interview_id',
                     'type'      => 'hidden',
@@ -828,7 +833,7 @@ class Interview extends DatabaseObject {
         $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()) {
+        if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
 
             $image_id = $this->getProperty('fk_image_id');
@@ -1054,6 +1059,11 @@ class Interview extends DatabaseObject {
                     'type'      => 'hidden',
                     'constant'  => $data['interview_id']
             ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
+            ),
             isset($p_preview) ?
                 array(
                     'element'   => 'f_sender',
@@ -1205,7 +1215,7 @@ class Interview extends DatabaseObject {
         $form = new html_QuickForm('invitation', 'post', $p_target, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()) {
+        if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
 
             $data['f_invitation_template_guest'] = preg_replace_callback('/(%7B%7B.*%7D%7D)/u', create_function('$input', 'return urldecode($input[0]);'), $data['f_invitation_template_guest']);

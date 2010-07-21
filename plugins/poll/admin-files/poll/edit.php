@@ -18,7 +18,7 @@ $poll = new Poll($f_fk_language_id, $f_poll_nr);
 if ($poll->exists()) {
     // edit existing poll
     $parent_poll_nr = $poll->getProperty('parent_poll_nr');
-    $is_extended = $poll->isExtended();        
+    $is_extended = $poll->isExtended();
     $title = $poll->getProperty('title');
     $question = $poll->getProperty('question');
     $date_begin = $poll->getProperty('date_begin');
@@ -26,11 +26,11 @@ if ($poll->exists()) {
     $nr_of_answers = $poll->getProperty('nr_of_answers');
     $fk_language_id = $poll->getProperty('fk_language_id');
     $votes_per_user = $poll->getProperty('votes_per_user');
-    
+
     $poll_answers = $poll->getAnswers();
-    
+
     foreach ($poll_answers as $poll_answer) {
-        $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');  
+        $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');
     }
 
 } else {
@@ -45,7 +45,7 @@ if (!$f_include) { ?>
             <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
         </TR>
     </TABLE>
-<?php 
+<?php
 } else {
 ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
@@ -68,6 +68,7 @@ camp_html_display_msgs();
 
 <P>
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php if ($poll->exists()) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php p($poll->getNumber()); ?>">
 <?php } ?>
@@ -203,7 +204,7 @@ camp_html_display_msgs();
                 </SELECT>
             </TD>
         </TR>
-        
+
         <?php if (!$poll->getProperty('parent_poll_nr')) { ?>
             <TR>
                 <TD ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</TD>
@@ -220,8 +221,8 @@ camp_html_display_msgs();
                     </SELECT>
                 </TD>
             </TR>
-        <?php } ?> 
-        
+        <?php } ?>
+
         <?php
         for ($n=1; $n<=255; $n++) {
             ?>
@@ -230,19 +231,19 @@ camp_html_display_msgs();
                 <TD>
                     <INPUT TYPE="TEXT" NAME="f_answer[<?php p($n); ?>]" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" id="poll_answer_input_<?php p($n); ?>" emsg="<?php putGS('You must fill in the $1 field.', getGS('Answer $1', $n)); ?>" value="<?php isset($answers[$n]) ? p(htmlspecialchars($answers[$n])) : p('__undefined__'); ?>">
                 </TD>
-                
+
                 <?php if ($poll->exists()) { ?>
                     <td align='center'>
                         <a href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
                             <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" BORDER="0">
                         </a>
-                    </td>  
-                <?php } ?>              
+                    </td>
+                <?php } ?>
             </TR>
             <?php
         }
         ?>
-        
+
         </table>
     </td>
 </tr>
@@ -268,29 +269,29 @@ function poll_set_nr_of_answers()
 
     for (n = 1; n <= nr_of_answers; n++) {
         document.getElementById('poll_answer_tr_' + n).style.display = '';
-        
-        if (poll_values[n] && poll_values[n] != '__undefined__') { 
-            document.getElementById('poll_answer_input_' + n).value = poll_values[n];    
+
+        if (poll_values[n] && poll_values[n] != '__undefined__') {
+            document.getElementById('poll_answer_input_' + n).value = poll_values[n];
         } else {
             if (document.getElementById('poll_answer_input_' + n).value == '__undefined__') {
-                document.getElementById('poll_answer_input_' + n).value = ''; 
+                document.getElementById('poll_answer_input_' + n).value = '';
             }
         }
     }
-    
-    for (m = n; m <= 200; m++) { 
+
+    for (m = n; m <= 200; m++) {
         document.getElementById('poll_answer_tr_' + m).style.display = 'none';
-        
+
         value = document.getElementById('poll_answer_input_' + m).value;
-        if (value.length) { 
-            poll_values[m] = value;     
+        if (value.length) {
+            poll_values[m] = value;
         }
-        document.getElementById('poll_answer_input_' + m).value = '__undefined__';   
+        document.getElementById('poll_answer_input_' + m).value = '__undefined__';
     }
 }
 </script>
 <?php
 if (!$f_include) {
-    camp_html_copyright_notice(); 
-}    
+    camp_html_copyright_notice();
+}
 ?>
