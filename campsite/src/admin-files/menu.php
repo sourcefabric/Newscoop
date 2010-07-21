@@ -307,7 +307,7 @@ $menu_help->addItem($menu_item);
 $menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
     array("icon" => sprintf($iconTemplateStr, "about.png"), "target" => "_blank"));
 $menu_help->addItem($menu_item);
-$menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
+$menu_item =& DynMenuItem::Create(getGS("Feedback"), 'mailto:campsite-support@lists.sourcefabric.org',
     array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
 $menu_help->addItem($menu_item);
 
