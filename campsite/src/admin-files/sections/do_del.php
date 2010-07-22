@@ -3,6 +3,11 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/Subscription.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (!$g_user->hasPermission('DeleteSection')) {
 	camp_html_display_error(getGS('You do not have the right to delete sections.'));
 	exit;

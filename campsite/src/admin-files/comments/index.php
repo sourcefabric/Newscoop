@@ -83,6 +83,9 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+
+<?php camp_html_display_msgs("0.25em", "0.25em"); ?>
+
 <table cellpadding="6" cellspacing="0" style="padding-top: 5px;" border="0" width="100%">
 <tr>
     <td style="border-bottom: 1px solid #777;">&nbsp;</td>
@@ -247,6 +250,7 @@ function onSummaryClick(p_messageId)
     <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
         <form action="do_edit.php" method="POST">
+		<?php echo SecurityToken::FormParameter(); ?>
         <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
         <?php
         $count = 1;

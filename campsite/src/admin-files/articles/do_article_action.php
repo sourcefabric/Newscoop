@@ -1,6 +1,11 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
@@ -61,14 +66,16 @@ switch ($f_action) {
 		exit;
 	case "translate":
 		$args = $_REQUEST;
-		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+		unset($args[SecurityToken::SECURITY_TOKEN]);
+		$argsStr = camp_implode_keys_and_values($args, "=", "&");
 		$argsStr .= "&f_article_code=".$f_article_number."_".$f_language_selected;
 		camp_html_goto_page("/$ADMIN/articles/translate.php?".$argsStr, false);
 		ArticleIndex::RunIndexer(3, 10, true);
 		exit;
 	case "copy":
 		$args = $_REQUEST;
-		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+		unset($args[SecurityToken::SECURITY_TOKEN]);
+		$argsStr = camp_implode_keys_and_values($args, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=duplicate";
 		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr, false);
@@ -76,7 +83,8 @@ switch ($f_action) {
 		exit;
 	case "move":
 		$args = $_REQUEST;
-		$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+		unset($args[SecurityToken::SECURITY_TOKEN]);
+		$argsStr = camp_implode_keys_and_values($args, "=", "&");
 		$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
 		$argsStr .= "&f_mode=single&f_action=move";
 		camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr, false);

@@ -9,6 +9,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (SystemPref::Get("UseCampcasterAudioclips") != 'Y') {
     camp_html_display_error(getGS("Campcaster integration is disabled"), null, true);
     exit;

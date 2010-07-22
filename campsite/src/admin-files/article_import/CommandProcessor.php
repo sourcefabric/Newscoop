@@ -5,6 +5,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 // Command processor
 if ($_REQUEST["form_name"] == "upload_article_form") {
+	if (!SecurityToken::isValid()) {
+		camp_html_display_error(getGS('Invalid security token!'));
+		exit;
+	}
+
 	upload_article_handler($_REQUEST, $_SESSION, $_FILES);
 }
 

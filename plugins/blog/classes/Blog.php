@@ -94,7 +94,7 @@ class Blog extends DatabaseObject {
     function delete()
     {
         $blog_id =  $this->getProperty('blog_id');
-        
+
         foreach (BlogEntry::getEntries(array('fk_blog_id' => $blog_id)) as $Entry) {
             $Entry->delete();
         }
@@ -110,11 +110,11 @@ class Blog extends DatabaseObject {
     {
         return $this->m_data;
     }
-    
-        
+
+
     function getSubject()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
 
     private static function BuildQueryStr($p_cond)
@@ -173,47 +173,47 @@ class Blog extends DatabaseObject {
     static function TriggerCounters($p_blog_id)
     {
         global $g_ado_db;
-        
+
         $blogs_tbl = self::$s_dbTableName;
         $entries_tbl = BlogEntry::$s_dbTableName;
 
         $queryStr = "UPDATE $blogs_tbl
-                     SET    entries_online = 
-                        (SELECT COUNT(entry_id) 
+                     SET    entries_online =
+                        (SELECT COUNT(entry_id)
                          FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id AND (status = 'online' AND admin_status = 'online')),
-                            entries_offline = 
-                        (SELECT COUNT(entry_id) 
+                            entries_offline =
+                        (SELECT COUNT(entry_id)
                          FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id AND (status != 'online' OR admin_status != 'online')),
                             comments_online =
-                        (SELECT SUM(comments_online) 
+                        (SELECT SUM(comments_online)
                          FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id),
-                            comments_offline = 
-                        (SELECT SUM(comments_offline) 
+                            comments_offline =
+                        (SELECT SUM(comments_offline)
                          FROM   $entries_tbl
                          WHERE  fk_blog_id = $p_blog_id)
-                     WHERE  blog_id = $p_blog_id";  
+                     WHERE  blog_id = $p_blog_id";
         $g_ado_db->Execute($queryStr);
     }
 
     private function getFormMask($p_owner=false, $p_admin=false)
     {
         global $g_user;
-        
+
         $data = $this->getData();
-        
+
         foreach (User::GetUsers() as $User) {
             if (1 || $User->hasPermission('PLUGIN_BLOG_USER')) {
                 $ownerList[$User->getUserId()] = "{$User->getRealName()} ({$User->getUserName()})";
             }
         }
         asort($ownerList);
-        
+
         $languageList = array('' => getGS("---Select language---"));
         foreach (Language::GetLanguages() as $Language) {
-            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+            $languageList[$Language->getLanguageId()] = $Language->getNativeName();
         }
         asort($languageList);
 
@@ -223,14 +223,14 @@ class Blog extends DatabaseObject {
                 $data[$k] = camp_html_entity_decode_array($v);
             }
         }
-        
+
         // load possible topic list
         foreach ($this->GetTopicTreeFlat() as $topicId => $topicName) {
-            $topics[$topicId]  = $topicName;   
+            $topics[$topicId]  = $topicName;
         }
-        
+
         // get the topics used
-        foreach ($this->getTopics() as $Topic) {            
+        foreach ($this->getTopics() as $Topic) {
             $active_topics[$Topic->getTopicId()] = $Topic->getName($this->getLanguageId());
         }
 
@@ -240,6 +240,11 @@ class Blog extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => $data['blog_id']
             ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
+            ),
             'language' => array(
                     'element'   => 'Blog[fk_language_id]',
                     'type'      => 'select',
@@ -247,7 +252,7 @@ class Blog extends DatabaseObject {
                     'default'   => $data['fk_language_id'],
                     'options'   => $languageList,
                     'required'  => true
-            ),   
+            ),
             'title'     => array(
                 'element'   => 'Blog[title]',
                 'type'      => 'text',
@@ -286,7 +291,7 @@ class Blog extends DatabaseObject {
                     'moderated'     => getGS('moderated'),
                     'readonly'      => getGS('read only'),
                 ),
-                
+
             ),
             'admin_status' => array(
                 'element'   => 'Blog[admin_status]',
@@ -334,8 +339,8 @@ class Blog extends DatabaseObject {
             ),
             'image_group' =>  isset($data['images']['100x100']) ? array(
                 'group'     => array('image_display', 'Blog_Image_remove', 'image_label'),
-            
-            ) : null,      
+
+            ) : null,
             'admin_remark'      => array(
                 'element'   => 'Blog[admin_remark]',
                 'type'      => 'textarea',
@@ -399,7 +404,7 @@ class Blog extends DatabaseObject {
         $form = new html_QuickForm('blog', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()){
+        if ($form->validate() && SecurityToken::isValid()){
             $data = $form->getSubmitValues(true);
 
             foreach ($data['Blog'] as $k => $v) {
@@ -413,24 +418,24 @@ class Blog extends DatabaseObject {
                 foreach ($data['Blog'] as $k => $v) {
                     $this->setProperty($k, $v);
                 }
-                
+
                 if ($data['Blog_Image_remove']) {
                     BlogImageHelper::RemoveImageDerivates('blog', $data['f_blog_id']);
                 }
                 if ($data['Blog_Image']) {
                     BlogImageHelper::StoreImageDerivates('blog', $data['f_blog_id'], $data['Blog_Image']);
                 }
-                
+
                 return true;
-                
+
             } elseif ($this->create(
-                            isset($p_user_id) ? $p_user_id : $data['Blog']['fk_user_id'], 
+                            isset($p_user_id) ? $p_user_id : $data['Blog']['fk_user_id'],
                             $data['Blog']['fk_language_id'],
-                            $data['Blog']['title'], 
-                            $data['Blog']['info'], 
+                            $data['Blog']['title'],
+                            $data['Blog']['info'],
                             $data['Blog']['request_text'],
                             $data['Blog']['feature'])) {
-                                
+
                 if ($data['Blog']['status']) {
                     $this->setProperty('status', $data['Blog']['status']);
                 }
@@ -443,14 +448,14 @@ class Blog extends DatabaseObject {
                 if ($data['Blog_Image']) {
                     BlogImageHelper::StoreImageDerivates('blog', $this->getProperty('blog_id'), $data['BlogEntry_Image']);
                 }
-                
+
                 return true;
             }
         }
         return false;
 
     }
-    
+
     /**
      * Get the blog identifier
      *
@@ -458,9 +463,9 @@ class Blog extends DatabaseObject {
      */
     public function getId()
     {
-        return $this->getProperty('blog_id');   
+        return $this->getProperty('blog_id');
     }
-    
+
     /**
      * get the blog language id
      *
@@ -470,37 +475,37 @@ class Blog extends DatabaseObject {
     {
         return $this->getProperty('fk_language_id');
     }
-      
+
     public static function GetBlogLanguageId($p_blog_id)
     {
         $tmpBlog= new Blog($p_blog_id);
         return $tmpBlog->getProperty('fk_language_id');
     }
-    
+
     static public function GetTopicTree($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
     {
         $root_id = SystemPref::Get($p_key);
-        $tree = Topic::GetTree((int)$root_id);  
-        
+        $tree = Topic::GetTree((int)$root_id);
+
         return (array) $tree;
     }
-    
+
     static public function GetTopicTreeFlat($p_key = 'PLUGIN_BLOG_ROOT_TOPIC_ID')
-    {       
+    {
         foreach (self::GetTopicTree($p_key) as $branch) {
              $flat[] = end($branch)->getTopicId();
         }
-        
+
         return (array) $flat;
     }
-    
-    public function setTopics(array $p_topics=array()) 
+
+    public function setTopics(array $p_topics=array())
     {
         // store the topics
         $allowed_topics = self::GetTopicTreeFlat();
-        
+
         BlogTopic::DeleteBlogTopics($this->getId());
-        
+
         foreach ($p_topics as $topic_id) {
             if (in_array($topic_id, $allowed_topics, true)) {
                 $BlogTopic = new BlogTopic($this->m_data['blog_id'], $topic_id);
@@ -508,21 +513,21 @@ class Blog extends DatabaseObject {
             }
         }
     }
-    
-    public function getTopics() 
-    {   
+
+    public function getTopics()
+    {
         foreach (BlogTopic::getAssignments($this->m_data['blog_id']) as $BlogTopic) {
-            $topics[] = $BlogTopic->getTopic();      
+            $topics[] = $BlogTopic->getTopic();
         }
         return (array) $topics;
     }
-    
+
     public static function GetMoodList($p_language_id)
     {
         foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
             $currentTopic = camp_array_peek($path, false, -1);
             $name = $currentTopic->getName($p_language_id);
-            
+
             if (empty($name)) {
                 // Backwards compatibility
                 $name = $currentTopic->getName(1);
@@ -543,12 +548,12 @@ class Blog extends DatabaseObject {
             $selected = $currentTopic->getTopicId() == SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID') ? 'selected' : '';
             $options[$currentTopic->getTopicId()] = $value;
         }
-        
+
         return (array)$options;
     }
-    
+
     /**
-     * If we modify the admin status, 
+     * If we modify the admin status,
      * the publish date is modified too.
      *
      * @param string $p_name
@@ -564,53 +569,53 @@ class Blog extends DatabaseObject {
                 case 'readonly':
                     parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
-                  
+
                 case 'offline':
                 case 'pending':
                     parent::setProperty('date', null);
                 break;
-            }          
+            }
         }
         */
-        
+
         if ($p_name == 'topics') {
             $return = $this->setTopics($p_value);
             $CampCache = CampCache::singleton();
             $CampCache->clear('user');
-            return $return; 
+            return $return;
         }
-        
+
         if ($p_name == 'fk_language_id') {
             $this->onSetLanguage($p_value);
         }
-        
+
         $return = parent::setProperty($p_name, $p_value);
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $return;
     }
-    
+
     private function onSetLanguage($p_language_id)
     {
         if ($p_language_id == $this->getLanguageId()) {
-            return;   
+            return;
         }
-        
+
         global $g_ado_db;
-        
+
         $entryTbl   = BlogEntry::$s_dbTableName;
         $commentTbl = BlogComment::$s_dbTableName;
-        
+
         $queryStr1 = "UPDATE $entryTbl
                       SET fk_language_id = $p_language_id
                       WHERE fk_blog_id = {$this->getId()}";
         $g_ado_db->Execute($queryStr1);
-        
+
         $queryStr1 = "UPDATE $commentTbl
                       SET fk_language_id = $p_language_id
                       WHERE fk_blog_id = {$this->getId()}";
         $g_ado_db->Execute($queryStr1);
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
     }
@@ -625,9 +630,9 @@ class Blog extends DatabaseObject {
     public static function GetEditor($p_box_id, $p_user, $p_editorLanguage)
     {
     	global $Campsite;
-    
+
     	$stylesheetFile = '/admin/articles/article_stylesheet.css';
-    
+
     	/** STEP 2 ********************************************************
     	 * Now, what are the plugins you will be using in the editors
     	 * on this page.  List all the plugins you will need, even if not
@@ -651,12 +656,12 @@ class Blog extends DatabaseObject {
     	}
         $plugins[] = 'drupalbreak';
     	$plugins_list = implode(",", $plugins);
-    
+
     	$statusbar_location = "none";
     	if ($p_user->hasPermission('EditorStatusBar')) {
     	    $statusbar_location = "bottom";
     	}
-    
+
     	/** STEP 3 ********************************************************
     	 * We create a default configuration to be used by all the editors.
     	 * If you wish to configure some of the editors differently this
@@ -744,13 +749,13 @@ class Blog extends DatabaseObject {
     	    $toolbar1[] = "search";
     	    $toolbar1[] = "replace";
     	}
-    
+
     	$toolbar2 = array();
     	// Slice up the first toolbar if it is too long.
     	if (count($toolbar1) > 31) {
     		$toolbar2 = array_splice($toolbar1, 31);
     	}
-    
+
     	// This is to put the bulleted and numbered list controls
     	// on the most appropriate line of the toolbar.
     	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 19) {
@@ -777,7 +782,7 @@ class Blog extends DatabaseObject {
     	        $toolbar2[] = "numlist";
     	    }
     	}
-    
+
     	if ($p_user->hasPermission('EditorFontFace')) {
     	    $toolbar2[] = "|";
     	    $toolbar2[] = "styleselect";
@@ -787,18 +792,18 @@ class Blog extends DatabaseObject {
     	if ($p_user->hasPermission('EditorFontSize')) {
     	    $toolbar2[] = "fontsizeselect";
     	}
-    
+
     	if ($p_user->hasPermission('EditorTable')) {
     	    $toolbar3[] = "tablecontrols";
     	}
-    
+
     	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
     	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
     	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
-    	
+
     	ob_start();
     ?>
-                    
+
     <!-- TinyMCE -->
     <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
     <script type="text/javascript">
@@ -811,7 +816,7 @@ class Blog extends DatabaseObject {
     	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
         }
     } // fn CampsiteSubhead
-    
+
     // Default skin
     tinyMCE.init({
         // General options
@@ -822,41 +827,41 @@ class Blog extends DatabaseObject {
         plugins : "<?php p($plugins_list); ?>",
         forced_root_block : "",
         relative_urls : false,
-    
+
         // Theme options
         theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
         theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
         theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
-    
+
         theme_advanced_toolbar_location : "top",
         theme_advanced_toolbar_align : "left",
         theme_advanced_resizing : false,
         theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
-    
+
         // Example content CSS (should be your site CSS)
         content_css : "<?php echo $stylesheetFile; ?>",
-    
+
         // Drop lists for link/image/media/template dialogs
         template_external_list_url : "lists/template_list.js",
         external_link_list_url : "lists/link_list.js",
         external_image_list_url : "lists/image_list.js",
         media_external_list_url : "lists/media_list.js",
-    
+
         // paste options
         paste_use_dialog: false,
         paste_auto_cleanup_on_paste: true,
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
         paste_remove_styles: true,
-    
+
         setup : function(ed) {
             ed.onKeyUp.add(function(ed, l) {
     	    var idx = ed.id.lastIndexOf('_');
     	    var buttonId = ed.id.substr(0, idx);
     	    buttonEnable('save_' + buttonId);
     	});
-    
-    
+
+
         }
     });
     </script>
@@ -865,10 +870,10 @@ class Blog extends DatabaseObject {
         $output = ob_get_clean();
         return $output;
     } // fn editor_load_tinymce
-        
-    
+
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an blog list based on the given parameters.
      *
@@ -887,27 +892,27 @@ class Blog extends DatabaseObject {
     public static function GetList($p_parameters, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
-        
+
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
             $leftOperand = strtolower($comparisonOperation['left']);
-            
+
             if ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
-                
+
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
@@ -921,14 +926,14 @@ class Blog extends DatabaseObject {
                 if (empty($comparisonOperation)) {
                     continue;
                 }
-                
+
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-                $selectClauseObj->addWhere($whereCondition);   
+                $selectClauseObj->addWhere($whereCondition);
             }
         }
-        
+
         if (count($hasTopics) > 0) {
             if ($matchAllTopics) {
                 foreach ($hasTopics as $topicId) {
@@ -947,8 +952,8 @@ class Blog extends DatabaseObject {
             $whereCondition = "plugin_blog_blog.blog_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
-        
-        
+
+
         // sets the columns to be fetched
         $tmpBlog = new Blog();
 		$columnNames = $tmpBlog->getColumnNames(true);
@@ -960,7 +965,7 @@ class Blog extends DatabaseObject {
         $mainTblName = $tmpBlog->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpBlog);
-                
+
         if (is_array($p_order)) {
             $order = self::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -968,16 +973,16 @@ class Blog extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-       
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get tlimited rows
         $blogRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
-        
+
         // builds the array of blog objects
         $blogsList = array();
         while ($blog = $blogRes->FetchRow()) {
@@ -989,7 +994,7 @@ class Blog extends DatabaseObject {
 
         return $blogsList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -1005,7 +1010,7 @@ class Blog extends DatabaseObject {
 
         $leftOperand = strtolower($p_param->getLeftOperand());
         $conditionOperation['left'] = BlogsList::$s_parameters[$leftOperand]['field'];
-        
+
         switch ($leftOperand) {
 
         case 'feature':
@@ -1043,7 +1048,7 @@ class Blog extends DatabaseObject {
      *      The array containing processed values of the condition
      */
     private static function ProcessListOrder(array $p_order)
-    {                                      
+    {
         $order = array();
         foreach ($p_order as $field=>$direction) {
             $dbField = BlogsList::$s_parameters[substr($field, 2)]['field'];
@@ -1058,7 +1063,7 @@ class Blog extends DatabaseObject {
         }
         return $order;
     } // fn ProcessListOrder
-    
+
     /**
      * Returns a select query for obtaining the blogs that have the given topics
      *
@@ -1072,7 +1077,7 @@ class Blog extends DatabaseObject {
         $notCondition = $p_negate ? ' NOT' : '';
         $selectClause = '        SELECT fk_blog_id FROM '.BlogTopic::$$s_dbTableName.' WHERE fk_topic_id'
                       . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
-        
+
         return $selectClause;
     }
 }

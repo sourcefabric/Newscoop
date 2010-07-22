@@ -12,6 +12,12 @@ class SecurityToken
 	const SECURITY_TOKEN = 'security_token';
 
 
+	public static function GetToken()
+	{
+		return CampSession::singleton()->getToken();
+	}
+
+
 	public static function URLParameter()
 	{
 		return urlencode(self::SECURITY_TOKEN) . '=' . urlencode(CampSession::singleton()->getToken());

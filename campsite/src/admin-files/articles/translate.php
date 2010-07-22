@@ -102,6 +102,7 @@ if ($f_publication_id > 0) {
 <?php camp_html_display_msgs(); ?>
 <P>
 <FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">

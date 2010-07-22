@@ -262,4 +262,5 @@ regGS("Your articles", "Vaši članci");
 regGS("Submitted articles", "Predani članci");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

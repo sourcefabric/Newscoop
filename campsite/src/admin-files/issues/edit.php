@@ -93,6 +93,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <tr>
 	<td valign="top">
 		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+		<?php echo SecurityToken::FormParameter(); ?>
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_current_language_id" VALUE="<?php p($Language); ?>">
@@ -158,7 +159,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				<?php if ($issueObj->getWorkflowStatus() == 'Y') { ?>
 				<INPUT TYPE="TEXT" class="input_text" NAME="f_publication_date" SIZE="20" MAXLENGTH="19" value="<?php  p(htmlspecialchars($issueObj->getPublicationDate())); ?>">
 				<?php } ?>
-				<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&f_target=edit.php" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issueObj->getIssueNumber().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
+				<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>&f_target=edit.php&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issueObj->getIssueNumber().'. '.htmlspecialchars($issueObj->getName()).' ('.htmlspecialchars($issueObj->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
 		');">
 				<?php if ($issueObj->getWorkflowStatus() == 'Y') {
 						print putGS("Unpublish");
@@ -281,7 +282,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				</TD>
 
 				<TD ALIGN="CENTER">
-					<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
+					<A HREF="/<?php echo $ADMIN; ?>/issues/autopublish_del.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&event_id=<?php echo $event->getEventId(); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete this scheduled action?"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete entry'); ?>"></A>
 				</TD>
 
 			<?php } // foreach ?>
@@ -292,6 +293,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</table>
 
 		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+		<?php echo SecurityToken::FormParameter(); ?>
         <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
         <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
         <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">

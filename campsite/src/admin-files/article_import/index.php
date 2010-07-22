@@ -92,6 +92,7 @@ $issueLanguage = new Language($sLanguage);
 </table>
 
 <form method="POST" action="CommandProcessor.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" enctype="multipart/form-data">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">
 <input type="hidden" name="Pub" value="<?php echo $Pub ?>">

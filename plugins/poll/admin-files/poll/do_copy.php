@@ -1,6 +1,11 @@
 <?php
 camp_load_translation_strings("plugin_poll");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -24,12 +29,12 @@ foreach ($f_answers as $answer) {
     if (isset($answer['number']) && !empty($answer['number']) && strlen($answer['text'])) {
         $PollAnswer = new PollAnswer($f_fk_language_id, $f_poll_nr, $answer['number']);
         $answers[] = array(
-            'number' => $answer['number'], 
+            'number' => $answer['number'],
             'text' => $answer['text'],
             'nr_of_votes' => $f_copy_statistics ? $PollAnswer->getProperty('nr_of_votes') : 0,
             'value' => $f_copy_statistics ? $PollAnswer->getProperty('value') : 0,
-        );   
-    }  
+        );
+    }
 }
 
 $source = new Poll($f_fk_language_id, $f_poll_nr);
@@ -37,7 +42,7 @@ $copy = $source->createCopy($data, $answers);
 
 /*
 foreach($translation->getAnswers() as $answer) {
-    $answer->setProperty('answer', $f_answers[$answer->getNumber()]);   
+    $answer->setProperty('answer', $f_answers[$answer->getNumber()]);
 }
 */
 

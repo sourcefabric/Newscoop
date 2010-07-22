@@ -265,4 +265,5 @@ regGS("User may add/change user accounts and passwords", "Корисник мо�
 regGS("User may delete user accounts", "Корисник може да брише корисничке налоге");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

@@ -259,4 +259,5 @@ regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

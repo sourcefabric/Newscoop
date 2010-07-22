@@ -17,32 +17,32 @@ camp_load_translation_strings("plugin_blog");
 function ajax_action(action)
 {
     $('f_action').value = action;
-  
+
     var myAjax = new Ajax.Request(
             "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
-            { 
+            {
                 method: 'get',
                 parameters: Form.serialize($('blogs_list')),
                 onComplete: do_reload
             }
-        );      
-   
-    
+        );
+
+
 }
 
 function do_reload(response)
 {
     if (response.responseText) {
-        alert(response.responseText);   
+        alert(response.responseText);
     }
-    document.location.reload();   
+    document.location.reload();
 }
 </script>
 <?php
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
-    $is_admin = true;   
+    $is_admin = true;
 }
 if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
     $is_moderator = true;
@@ -59,11 +59,11 @@ $f_start = Input::Get('f_start', 'int', 0);
 $f_order = Input::Get('f_order', 'string', 'byidentifier');
 
 if ($f_language_id = Input::Get('f_language_id', 'int')) {
-    $constraints .= "language_id is $f_language_id ";   
+    $constraints .= "language_id is $f_language_id ";
 }
 
 if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
-    $constraints .= "status is $f_status ";   
+    $constraints .= "status is $f_status ";
 }
 
 if ($f_admin_status = mysql_escape_string(Input::Get('f_admin_status', 'string'))) {
@@ -96,7 +96,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="list_entries.php" ><B><?php  putGS("List all posts"); ?></B></A></TD>
-    
+
     <?php if ($is_admin) { ?>
             <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
             <TD><A HREF="javascript: void(0);" onclick="window.open('blog_form.php', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');" ><B><?php  putGS("Add new blog"); ?></B></A></TD>
@@ -123,7 +123,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                         <option value="0"><?php putGS("All"); ?></option>
                         <?php
                         foreach (Language::GetLanguages() as $Language) {
-                            $languageList[$Language->getLanguageId()] = $Language->getNativeName();   
+                            $languageList[$Language->getLanguageId()] = $Language->getNativeName();
                         }
                         asort($languageList);
 
@@ -179,7 +179,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                 </TR>
                 </TABLE>
             </TD>
-            
+
             <?php if ($is_admin) { ?>
               <TD style="padding-left: 20px;">
                 <script>
@@ -240,7 +240,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                     }
                 }
                 </script>
-                
+
                 <SELECT name="f_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="blogs_delete"><?php putGS("Delete"); ?></OPTION>
@@ -251,7 +251,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                     <OPTION value="blogs_set_readonly"><?php putGS("Admin Status: Readonly"); ?></OPTION>
                 </SELECT>
               </TD>
-        
+
               <TD style="padding-left: 5px; font-weight: bold;">
                 <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($count); ?>);">
                 <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($count); ?>);">
@@ -272,16 +272,17 @@ $color= 0;
 if ($BlogsList->getLength()) {
     ?>
     <FORM name="blogs_list" id="blogs_list" action="action.php" method="POST">
+	<?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_action" id="f_action" />
     <input type="hidden" name="f_new_pos" id="f_new_pos" />
-    
+
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
-        
+
             <?php if($is_admin) { ?>
                 <TD width="10">&nbsp;</TD>
             <?php } ?>
-            
+
             <TD ALIGN="LEFT" VALIGN="TOP" width="500">
                 <A href="<?php p($self_params) ?>f_order=byname"><?php  putGS("Name"); ?></a>
                 &nbsp;<SMALL>
@@ -314,16 +315,16 @@ if ($BlogsList->getLength()) {
             <TD ALIGN="center" VALIGN="TOP" width="60" <?php p($is_admin ? 'colspan="2"' : '') ?>>
                 <?php  putGS("Posts"); ?>
             </TD>
-            
+
             <?php if($is_admin) { ?>
                 <TD width="10">&nbsp;</TD>
             <?php } ?>
         </TR>
         <?php
-     
+
         while ($MetaBlog = $BlogsList->current) {
             $BlogsList->defaultIterator()->next();
-            
+
             if ($color) {
                 $rowClass = "list_row_even";
             } else {
@@ -333,17 +334,17 @@ if ($BlogsList->getLength()) {
             ?>
             <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
             <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
-                
+
                 <?php if($is_admin) { ?>
                     <TD>
                         <input type="checkbox" value="<?php p((int)$MetaBlog->identifier); ?>" name="f_blogs[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                     </TD>
                 <?php } ?>
-                
+
                 <td>
-                    <?php 
-                    p($MetaBlog->identifier.'.'); 
-                    
+                    <?php
+                    p($MetaBlog->identifier.'.');
+
                     if ($is_admin) {
                         ?><a href="javascript: void(0);" onclick="window.open('blog_form.php?f_blog_id=<?php p($MetaBlog->identifier); ?>', 'edit_blog', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=770, top=100, left=100');"><?php p($MetaBlog->title); ?></a><?php
                     } else {
@@ -352,33 +353,33 @@ if ($BlogsList->getLength()) {
                     ?>
                     (<?php p($MetaBlog->language->name); ?>)
                 </td>
-                
+
                 <td align="center"><?php p($MetaBlog->user->name); ?></td>
                 <td align="center"><?php putGS($MetaBlog->status); ?></td>
                 <td align="center"><?php putGS($MetaBlog->admin_status); ?></td>
                 <td align="center"><?php p($MetaBlog->date); ?></td>
                 <td align="center"><?php p($MetaBlog->entries_online); ?> / <?php p($MetaBlog->entries_offline); ?></td>
                 <td align="center"><?php p($MetaBlog->feature); ?></td>
-                
+
                 <td align='center'>
                     <?php
                     // get the topics used
                     $topics = array();
                     $Blog = new Blog($MetaBlog->identifier);
-                    foreach ($Blog->getTopics() as $Topic) {            
+                    foreach ($Blog->getTopics() as $Topic) {
                         $topics[] = "{$Topic->getName($Blog->getLanguageId())}";
                     }
                     $topics_list = implode(' | ', $topics);
                     ?>
 					<A title="<?php putGS('Topics'); p(strlen($topics_list) ? ": $topics_list" : ': -') ?>" href="javascript: void(0);" onclick="window.open('topics/popup.php?f_mode=blog_topic&amp;f_blog_id=<?php echo $MetaBlog->identifier ?>', 'blog_attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=300, height=400, top=200, left=200');"><IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/<?php p($is_admin ? 'add.png' : 'preview.png') ?>" border="0"></A>
                 </td>
-                
-                <?php if ($is_admin) { ?>   
+
+                <?php if ($is_admin) { ?>
                     <td align='center' width="20">
                         <A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $MetaBlog->identifier ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
                     </td>
-                <?php } ?> 
-                
+                <?php } ?>
+
                 <td align='center' width="20">
                     <a href='list_entries.php?f_blog_id=<?php p($MetaBlog->identifier); ?>'>
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
@@ -390,12 +391,12 @@ if ($BlogsList->getLength()) {
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
                             uncheckAll(<?php p($count); ?>);
                             document.getElementById('checkbox_<?php p($counter); ?>').checked = true;
-                            ajax_action('blogs_delete') 
+                            ajax_action('blogs_delete')
                             }">
                             <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                         </a>
                     </td>
-                 <?php } ?>   
+                 <?php } ?>
             </tr>
             <?php
             $counter++;
@@ -403,11 +404,11 @@ if ($BlogsList->getLength()) {
       ?>
     </table>
 </FORM>
-<?php 
+<?php
 } else {?>
     <BLOCKQUOTE>
     <LI><?php  putGS('No blogs.'); ?></LI>
-    </BLOCKQUOTE>  
-    <?php 
+    </BLOCKQUOTE>
+    <?php
 }
 ?>

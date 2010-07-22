@@ -6,6 +6,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);

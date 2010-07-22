@@ -1,6 +1,11 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $Pub = Input::Get('Pub', 'int');
 $Issue = Input::Get('Issue', 'int');
 $Language = Input::Get('Language', 'int');

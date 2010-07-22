@@ -6,6 +6,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid() || ($f_image_id <= 0)) {

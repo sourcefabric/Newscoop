@@ -3,6 +3,17 @@ header('Content-type: application/json');
 
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
+if (!SecurityToken::isValid()) {
+    require_once('php/JSON.php');
+    $json = new Services_JSON();
+    echo($json->encode(array(
+        "success" => false,
+        "error" => getGS('Invalid security token!'),
+        "goto" => '',
+    )));
+    exit;
+}
+
 $f_article_id = Input::Get('articleid', 'int', 0);
 $f_language_selected = 1;
 $f_action = Input::Get('action', 'string', null, true);
@@ -86,7 +97,7 @@ case 'workflow_submit':
     }
     if ($success) {
         $message = getGS("Article status set to '$1'", getGS("Submitted"));
-    }    
+    }
     break;
 case 'workflow_new':
     foreach ($articleCodes as $articleCode) {
@@ -101,7 +112,7 @@ case 'workflow_new':
     }
     if ($success) {
         $message = getGS("Article status set to '$1'", getGS("New"));
-    }    
+    }
     break;
 case 'switch_onfrontpage':
     foreach ($articleCodes as $articleCode) {
@@ -116,7 +127,7 @@ case 'switch_onfrontpage':
     }
     if ($success) {
         $message = getGS("$1 toggled.", "&quot;".getGS("On Front Page")."&quot;");
-    }    
+    }
     break;
 case 'switch_onsectionpage':
     foreach ($articleCodes as $articleCode) {
@@ -130,7 +141,7 @@ case 'switch_onsectionpage':
     }
     if ($success) {
         $message = getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;");
-    }    
+    }
     break;
 case 'switch_comments':
     foreach ($articleCodes as $articleCode) {
@@ -144,7 +155,7 @@ case 'switch_comments':
     }
     if ($success) {
         $message = getGS("$1 toggled.", "&quot;".getGS("Comments")."&quot;");
-    }    
+    }
     break;
 case 'unlock':
     foreach ($articleCodes as $articleCode) {
@@ -239,12 +250,12 @@ if ($f_target == 'art_status') {
         }
 
         $success = $articleObj->setWorkflowStatus($f_value);
-        
+
         $message = getGS("Article status set to '$1'", $articleObj->getWorkflowDisplayString($f_value));
     }
 }
 
-require_once('php/JSON.php');    
+require_once('php/JSON.php');
 $json = new Services_JSON();
 echo($json->encode(array(
 	"success" => $success,

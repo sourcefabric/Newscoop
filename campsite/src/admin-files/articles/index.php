@@ -138,6 +138,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <p>
 
 <FORM name="article_list" action="do_article_list_action.php" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($f_issue_number); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php p($f_section_number); ?>">
@@ -423,17 +424,17 @@ foreach ($allArticles as $articleObj) {
 					<tr>
 						<td width="18px">
 							<?php if (($f_article_offset > 0) || ($uniqueArticleCounter != 1)) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=up_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
 							<?php } ?>
 						</td>
 						<td width="20px">
 							<?php if (($uniqueArticleCounter + $f_article_offset) < $numUniqueArticles) { ?>
-								<A HREF="/<?php echo $ADMIN; ?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+								<A HREF="/<?php echo $ADMIN; ?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($articleObj->getArticleNumber()); ?>&f_article_language=<?php p($articleObj->getLanguageId());?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_move=down_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 							<?php } ?>
 						</td>
 
 						<td>
-							<select name="f_position_<?php p($counter);?>" onChange="positionValue = document.forms.article_list.f_position_<?php p($counter); ?>.options[document.forms.article_list.f_position_<?php p($counter); ?>.selectedIndex].value; url = '/<?php p($ADMIN);?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected);?>&f_article_language=<?php p($articleObj->getLanguageId()); ?>&f_article_number=<?php p($articleObj->getArticleNumber());?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
+							<select name="f_position_<?php p($counter);?>" onChange="positionValue = document.forms.article_list.f_position_<?php p($counter); ?>.options[document.forms.article_list.f_position_<?php p($counter); ?>.selectedIndex].value; url = '/<?php p($ADMIN);?>/articles/do_position.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected);?>&f_article_language=<?php p($articleObj->getLanguageId()); ?>&f_article_number=<?php p($articleObj->getArticleNumber());?>&f_move=abs&<?php echo SecurityToken::URLParameter(); ?>&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
 							<?php
 							for ($j = 1; $j <= $numUniqueArticles; $j++) {
 								if (($f_article_offset + $uniqueArticleCounter) == $j) {

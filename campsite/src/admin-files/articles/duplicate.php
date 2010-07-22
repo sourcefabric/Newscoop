@@ -207,6 +207,11 @@ if (isset($_REQUEST["action_button"])) {
 		camp_html_goto_page($srcArticleIndexUrl);
 	}
 
+	if (!empty($f_action) && !SecurityToken::isValid()) {
+		camp_html_display_error(getGS('Invalid security token!'));
+		exit;
+	}
+
 	if ($f_action == "duplicate") {
 		foreach ($doAction as $articleNumber => $languageArray) {
 			$languageArray = array_keys($languageArray);
@@ -384,6 +389,7 @@ if ($f_publication_id > 0) {
 </div>
 
 <FORM NAME="move_duplicate" METHOD="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php if ($f_publication_id > 0) { ?>
 <input type="hidden" name="f_publication_id" value="<?php p($f_publication_id); ?>">
 <input type="hidden" name="f_issue_number" value="<?php p($f_issue_number); ?>">

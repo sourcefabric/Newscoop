@@ -1,6 +1,11 @@
 <?php
 camp_load_translation_strings("plugin_poll");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -19,18 +24,18 @@ $f_poll_checked = Input::Get('f_poll_checked', 'array', array());
 
 $p_a = 0;
 $p_u = 0;
- 
+
 switch ($f_target) {
     case 'publication':
         foreach ($f_poll_exists as $poll_nr => $lost) {
             $PollPublication = new PollPublication($poll_nr, $f_publication_id);
-            
+
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollPublication->exists()) {
                 $PollPublication->create();
                 $p_a++;
             } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollPublication->exists()) {
                 $PollPublication->delete();
-                $p_u++;  
+                $p_u++;
             }
         }
         ?>
@@ -41,7 +46,7 @@ switch ($f_target) {
         </script>
         <?php
     break;
-    
+
     case 'issue':
         foreach ($f_poll_exists as $poll_nr => $lost) {
             $PollIssue = new PollIssue($poll_nr, $f_language_id, $f_issue_nr, $f_publication_id);
@@ -50,8 +55,8 @@ switch ($f_target) {
                 $PollIssue->create();
                 $p_a++;
             } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollIssue->exists()) {
-                $PollIssue->delete(); 
-                $p_u++;   
+                $PollIssue->delete();
+                $p_u++;
             }
         }
         ?>
@@ -62,17 +67,17 @@ switch ($f_target) {
         </script>
         <?php
     break;
-    
+
     case 'section':
         foreach ($f_poll_exists as $poll_nr => $val) {
             $PollSection = new PollSection($poll_nr, $f_language_id, $f_section_nr, $f_issue_nr, $f_publication_id);
-            
+
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollSection->exists()) {
                 $PollSection->create();
                 $a++;
             } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollSection->exists()) {
                 $PollSection->delete();
-                $u++;    
+                $u++;
             }
         }
         ?>
@@ -83,17 +88,17 @@ switch ($f_target) {
         </script>
         <?php
     break;
-    
+
     case 'article':
         foreach ($f_poll_exists as $poll_nr => $val) {
             $PollArticle = new PollArticle($poll_nr, $f_language_id, $f_article_nr);
-            
+
             if (array_key_exists($poll_nr, $f_poll_checked) && !$PollArticle->exists()) {
                 $PollArticle->create();
                 $p_a++;
             } elseif (!array_key_exists($poll_nr, $f_poll_checked) && $PollArticle->exists()) {
                 $PollArticle->delete();
-                $p_u++;   
+                $p_u++;
             }
         }
         ?>
@@ -105,10 +110,10 @@ switch ($f_target) {
         </script>
         <?php
     break;
-    
+
     default:
 	   camp_html_display_error(getGS('Invalid input'), 'javascript: window.close()');
 	   exit;
-    break; 
+    break;
 }
 ?>

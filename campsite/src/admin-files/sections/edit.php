@@ -61,6 +61,7 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
 
 <P>
 <FORM NAME="section_edit" METHOD="POST" ACTION="do_edit.php" >
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">

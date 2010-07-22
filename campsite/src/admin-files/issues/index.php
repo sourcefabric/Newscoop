@@ -126,7 +126,7 @@ foreach ($allIssues as $issue) {
 				$t3 = getGS('Published');
 			}
 			?>
-			<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>&f_target=index.php" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issue->getIssueNumber().'. '.htmlspecialchars($issue->getName()).' ('.htmlspecialchars($issue->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
+			<A HREF="/<?php echo $ADMIN; ?>/issues/do_status.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>&f_target=index.php&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php  putGS('Are you sure you want to change the issue $1 status from $2 to $3?',$issue->getIssueNumber().'. '.htmlspecialchars($issue->getName()).' ('.htmlspecialchars($issue->getLanguageName()).')',"\'$t2\'","\'$t3\'"); ?>
 	');"><?php ($issue->getWorkflowStatus() == 'Y') ? putGS("Unpublish") : putGS("Publish"); ?></A>
 			- <A HREF="/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php  p($issue->getIssueNumber()); ?>&Language=<?php p($issue->getLanguageId()); ?>"><?php  putGS("Schedule"); ?></A>
 			<?php

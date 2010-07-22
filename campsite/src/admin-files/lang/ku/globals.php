@@ -260,4 +260,5 @@ regGS("Reads", "بینراوه");
 regGS("Plugins", "چه سپێنه ره کا ن");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

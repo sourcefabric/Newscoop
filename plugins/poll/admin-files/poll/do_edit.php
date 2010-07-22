@@ -1,6 +1,11 @@
 <?php
 camp_load_translation_strings("plugin_poll");
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
@@ -24,7 +29,7 @@ $f_onhitlist = Input::Get('f_onhitlist', 'array');
 $poll = new Poll($f_fk_language_id, $f_poll_nr);
 
 if ($poll->exists()) {
-    // update existing poll   
+    // update existing poll
     $poll = new Poll($f_fk_language_id, $f_poll_nr);
     $poll->setProperty('title', $f_title);
     $poll->setProperty('question', $f_question);
@@ -38,29 +43,29 @@ if ($poll->exists()) {
         if ($text !== '__undefined__') {
             $answer = new PollAnswer($f_fk_language_id, $f_poll_nr, $nr_answer);
             if ($answer->exists()) {
-                $answer->setProperty('answer', $text);   
+                $answer->setProperty('answer', $text);
             } else {
                 $answer->create($text);
-            }   
+            }
         }
     }
-    
-    PollAnswer::SyncNrOfAnswers($f_fk_language_id, $f_poll_nr);   
+
+    PollAnswer::SyncNrOfAnswers($f_fk_language_id, $f_poll_nr);
 
 } else {
     // create new poll
-    $poll = new Poll($f_fk_language_id);   
+    $poll = new Poll($f_fk_language_id);
     $success = $poll->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_votes_per_user);
-    
+
     if ($success) {
         $poll->setProperty('is_extended', $f_is_extended);
-        
+
         foreach ($f_answers as $nr_answer => $text) {
             if ($text !== '__undefined__') {
                 $answer = new PollAnswer($f_fk_language_id, $poll->getNumber(), $nr_answer);
                 $success = $answer->create($text);
             }
-        }            
+        }
     }
 }
 $f_from = Input::Get('f_from', 'string', 'index.php');

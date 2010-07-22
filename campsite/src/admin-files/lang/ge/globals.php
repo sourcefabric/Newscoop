@@ -275,4 +275,5 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "");
 regGS("New field", "ახალი ველი");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

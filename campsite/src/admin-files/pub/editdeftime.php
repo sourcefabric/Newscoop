@@ -36,6 +36,7 @@ camp_html_content_top(getGS("Change country subscription settings"), array("Pub"
 ?>
 <P>
 <FORM NAME="subscription_settings" METHOD="POST" ACTION="do_editdeftime.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php p($Pub); ?>">
 <INPUT TYPE="HIDDEN" NAME="CountryCode" VALUE="<?php p($CountryCode); ?>">
