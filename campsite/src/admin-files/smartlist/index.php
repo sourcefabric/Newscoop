@@ -566,6 +566,12 @@ loader.insert({
                                         + data.error;
                                     CF.displayMessage();
                                 }
+
+                                // restore cell value in case of failure
+                                var oRecord = oArgs.editor.getRecord();
+                                var cKey = oArgs.editor.getColumn().getKey();
+                                myDataTable.updateCell(oRecord, cKey, oArgs.oldData);
+
                                 return false;
                             }
 
