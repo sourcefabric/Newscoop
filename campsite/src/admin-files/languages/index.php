@@ -63,6 +63,9 @@ if (count($languages) > 0) {
 	</TR>
     <?php
     } // foreach
+    ?>
+    </TABLE>
+    <?php
 } else { ?>
     <BLOCKQUOTE>
 	<LI><?php  putGS('No language.'); ?></LI>

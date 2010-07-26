@@ -61,7 +61,7 @@ $menu_content->addItem($menu_item);
 
 $menu_content->addSplit();
 
-$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
+$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" style="padding:3px;" width="8" height="8" border="0" />';
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create($publication->getName(),

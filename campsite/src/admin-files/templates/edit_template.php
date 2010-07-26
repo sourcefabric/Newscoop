@@ -106,7 +106,7 @@ if (in_array($extension, $imageExtensions)) {
     	   document.forms['template_load'].submit();
     	}
     	</script>
-    	<table class="table_input">
+    	<table class="box_table">
         <tr>
     		<td align="left" colspan="2">
     			<form name="template_load" method="post" action="edit_template.php">
@@ -141,7 +141,7 @@ if (in_array($extension, $imageExtensions)) {
      	if ($g_user->hasPermission("DeleteTempl")
      			&& is_writable($Campsite['TEMPLATE_DIRECTORY'].$f_path)) {
      	?>
-    	<table class="table_input">
+    	<table class="box_table">
         <tr>
     		<td align="left" colspan="2">
     			<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
@@ -173,7 +173,7 @@ if (in_array($extension, $imageExtensions)) {
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
 	<INPUT TYPE="HIDDEN" NAME="oldValue" VALUE="<?php p(htmlspecialchars($contents)); ?>">
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+	<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table" width="1014">
 
 	<TR>
 		<TD colspan="2">

@@ -34,7 +34,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_dup.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table" width="380">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Duplicate template"); ?></B>
