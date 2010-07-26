@@ -87,7 +87,7 @@ function uncheckAllLang()
 <form method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_topic_parent_id" value="0">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD ALIGN="LEFT">
 		<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="1">

@@ -22,7 +22,7 @@ global $ADMIN;
         <input type="hidden" name="f_file" value="<?php echo htmlspecialchars($reporter->getFile()); ?>">
         <input type="hidden" name="f_line" value="<?php echo htmlspecialchars($reporter->getLine()); ?>">
         <input type="hidden" name="f_backtrace" value="<?php echo htmlspecialchars($reporter->getBacktraceString()); ?>">
-        <table border="0" cellspacing="0" align="left" class="table_input"  width="600px">
+        <table border="0" cellpadding="0" cellspacing="0" class="box_table">
         <tr>
             <td align="left">
                 <table border="0" cellspacing="0" cellpadding="3" align="left">

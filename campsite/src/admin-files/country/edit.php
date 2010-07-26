@@ -25,7 +25,7 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php"  >
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Edit country name"); ?></B>

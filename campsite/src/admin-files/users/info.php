@@ -54,7 +54,7 @@ if (!$isNewUser) {
 <?php
 }
 ?>
-<table border="0" cellspacing="0" align="left" class="table_input" width="600px">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td align="left">
 		<table border="0" cellspacing="0" cellpadding="3" align="left">

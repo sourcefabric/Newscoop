@@ -251,7 +251,7 @@ function onSummaryClick(p_messageId)
         <!-- The column where you can edit the comments -->
         <form action="do_edit.php" method="POST">
 		<?php echo SecurityToken::FormParameter(); ?>
-        <table class="table_input" style="margin-top: 5px; margin-left: 5px;">
+        <table border="0" cellpadding="0" cellspacing="0" class="box_table">
         <?php
         $count = 1;
         foreach ($comments as $commentPack) {

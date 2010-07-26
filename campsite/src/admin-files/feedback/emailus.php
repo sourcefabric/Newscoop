@@ -6,7 +6,7 @@ global $Campsite;
 
 ?>
 <br />
-<table class="table_input" align="left" valign="top" width="650px" style="padding: 5px;">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
     <td colspan="2">
 		<?php

@@ -34,7 +34,7 @@ camp_html_display_msgs();
 <P>
 <FORM NAME="template_add" METHOD="POST" ACTION="do_new_templ.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table" width="380">
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Create new template"); ?></B>

@@ -79,7 +79,7 @@ if ($canManage) {
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php p($uType); ?>">
 <input type="hidden" name="userOffs" value="0">
-<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 17px;">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
 	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($userSearchParameters['full_name'])); ?>" class="input_text" style="width: 150px;"></td>

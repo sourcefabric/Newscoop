@@ -61,7 +61,7 @@ $jsRightsArray = implode(',', $rightsList);
 <form name="dialog" method="post" action="do_access.php" >
 <?php echo SecurityToken::FormParameter(); ?>
 <p>
-<table border="0" cellspacing="0" cellpadding="1" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
 		<b><?php  putGS("Change user type permissions"); ?></b>

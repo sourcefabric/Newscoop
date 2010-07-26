@@ -57,7 +57,7 @@ if (sizeof($ipAccessList) > 0) {
 		<form name="dialog" method="POST" action="do_ipadd.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<?php echo SecurityToken::FormParameter(); ?>
 		<input type="hidden" name="User" value="<?php echo $editUser->getUserId(); ?>">
-		<table border="0" cellspacing="0" cellpadding="3" class="table_input" align="center" width="100%">
+		<table cellspacing="0" cellpadding="0" class="box_table">
 			<tr>
 				<td align="right" width="1%" nowrap><?php  putGS("Start IP"); ?>:</td>
 				<td nowrap>

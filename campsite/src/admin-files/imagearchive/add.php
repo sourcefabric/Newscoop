@@ -41,7 +41,7 @@ function checkAddForm(form) {
 <P>
 <FORM NAME="image_add" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php putGS('Add new image'); ?></B>

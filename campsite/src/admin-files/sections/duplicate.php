@@ -212,7 +212,6 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 </tr>
 <?php } ?>
 <FORM METHOD="GET" action="do_duplicate.php" onsubmit="return CustomValidator_DuplicateSection(this);">
-<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_src_publication_id" value="<?php p($f_src_publication_id); ?>">
 <input type="hidden" name="f_src_issue_number" value="<?php p($f_src_issue_number); ?>">
 <input type="hidden" name="f_src_section_number" value="<?php p($f_src_section_number); ?>">

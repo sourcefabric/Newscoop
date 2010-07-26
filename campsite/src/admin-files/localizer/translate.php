@@ -372,7 +372,7 @@ function translationForm($p_request)
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
     <INPUT TYPE="hidden" name="search_string" value="<?php echo $searchString; ?>">
-	<table border="0" class="table_input" style="padding-left: 10px; padding-bottom: 10px; margin-left: 10px;" width="700px">
+	<table border="0" cellpadding="0" cellspacing="0" class="box_table">
 	<?PHP
 	$foundUntranslatedString = false;
 	$count = 0;

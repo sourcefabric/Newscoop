@@ -91,7 +91,7 @@ if (isset($connectedToOnlineServer)
         && $connectedToOnlineServer == false) {
 ?>
 <center>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
         <TD >
 <?php
@@ -114,7 +114,7 @@ if (isset($connectedToOnlineServer)
 <script type="text/javascript">
 window.opener.location.reload();
 </script>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 20px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD align="center">
 		<b>

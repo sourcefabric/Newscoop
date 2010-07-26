@@ -20,7 +20,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php putGS("Add new article type"); ?></B>

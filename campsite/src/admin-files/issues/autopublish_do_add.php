@@ -66,7 +66,7 @@ $crumbs = array("Pub" => $publicationObj, "Issue" => $issueObj);
 camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" ALIGN="CENTER" class="table_input">
+<TABLE CELLSPACING="0" CELLPADDING="0" class="box_table">
 	<TR>
 		<TD COLSPAN="2">
 			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>

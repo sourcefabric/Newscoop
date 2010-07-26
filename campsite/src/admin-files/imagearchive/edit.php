@@ -59,7 +59,7 @@ echo $breadcrumbs;
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
 <FORM NAME="image_edit" METHOD="POST" ACTION="do_edit.php" ENCTYPE="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Change image information"); ?></B>
@@ -129,7 +129,7 @@ document.forms.image_edit.f_image_description.focus();
 if (count($articles) > 0) {
 	// image is in use //////////////////////////////////////////////////////////////////
 	?>
-	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list" style="margin-left: 4px;">
+	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list">
 	<tr class="table_list_header">
 		<td><?php putGS('Used in articles'); ?>:</td>
 		<td><?php putGS('Language'); ?></td>

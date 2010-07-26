@@ -103,7 +103,7 @@ $issueLanguage = new Language($sLanguage);
 <!-- BEGIN: The following fields are needed for edit.php -->
 <input type="hidden" name="sLanguage" value="<?php echo $sLanguage ?>">
 <!-- END -->
-<table border="0" align="center" cellspacing="0" class="table_input">
+<table border="0" cellpadding="0" cellspacing="0" class="box_table">
 <tr>
 	<td align="left" colspan="2" style="padding: 6px">
 		<B>Article Import</B>

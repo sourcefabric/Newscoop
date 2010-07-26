@@ -31,7 +31,7 @@ foreach ($rights as $group_name => $group) {
     $no_rights += sizeof($group);
 }
 ?>
-<table border="0" cellspacing="0" cellpadding="1" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
 		<b><?php  putGS("Add new user type"); ?></b>
