@@ -18,7 +18,7 @@ function onCommentsActivated(p_checkbox)
     }
 }
 </script>
-<TABLE CLASS="box_table" cellpadding="0" cellspacing="0">
+<TABLE BORDER="0" CLASS="box_table" cellpadding="0" cellspacing="0">
 <tr>
     <td>
         <!-- Begin left column -->

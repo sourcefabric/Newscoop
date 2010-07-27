@@ -81,7 +81,7 @@ echo camp_html_breadcrumbs($crumbs);
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
 
-<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="3">
 		<b><?php putGS("Merge Article Types: Step $1 of $2", "2", "3"); ?></b>

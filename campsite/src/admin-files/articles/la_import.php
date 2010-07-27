@@ -239,7 +239,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 <p>
 <form name="import_archive" enctype="multipart/form-data" method="POST" action="la_import.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<table cellspacing="0" cellpadding="0" class="box_table">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2">
     <b><?php putGS("Import XML"); ?></b>
@@ -356,7 +356,7 @@ echo camp_html_breadcrumbs($crumbs);
 </table><br />
 
 <?php if (sizeof($errorMessages) > 0) { ?>
-<table cellspacing="0" cellpadding="0" class="box_table">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td>
     <b><?php putGS("Error List"); ?></b>

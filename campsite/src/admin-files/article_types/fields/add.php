@@ -67,7 +67,7 @@ function UpdateArticleFieldContext() {
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <input type="hidden" name="show_precision" id="show_precision" value="false">
-<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 	<TD>

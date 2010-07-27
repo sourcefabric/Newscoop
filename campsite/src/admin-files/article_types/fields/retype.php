@@ -61,7 +61,7 @@ You cannot reassign this type.
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <input type="hidden" name="f_field_name" value="<?php print $articleTypeFieldName; ?>">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
-<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TABLE BORDER="" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
 	<TD>

@@ -22,7 +22,7 @@ echo camp_html_breadcrumbs($crumbs);
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="merge2.php">
-<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<b><?php putGS("Merge Article Types: Step $1 of $2", "1", "3"); ?></b>

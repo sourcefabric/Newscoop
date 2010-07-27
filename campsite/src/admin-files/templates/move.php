@@ -165,7 +165,7 @@ foreach ($templates as $template) {
 <?php putGS("to folder"); ?>:
 </DIV>
 <P>
-<TABLE CELLSPACING="0" CELLPADDING="0" class="box_table">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD align="left">
 		<TABLE align="left" border="0" width="100%">

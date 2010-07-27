@@ -173,7 +173,7 @@ if (in_array($extension, $imageExtensions)) {
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
 	<INPUT TYPE="HIDDEN" NAME="oldValue" VALUE="<?php p(htmlspecialchars($contents)); ?>">
-	<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 
 	<TR>
 		<TD colspan="2">

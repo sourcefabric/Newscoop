@@ -154,7 +154,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 	<td valign="top" align="left" style="border-left: 1px solid black; padding-left: 10px;">
 
 		<!-- Your articles -->
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="your_articles" <?php if ($f_screen != "your_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="your_articles" <?php if ($f_screen != "your_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Your Articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
@@ -266,7 +266,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 		<!-- Submitted articles -->
 		<?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_input" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Submitted Articles"); ?></TD>
 			<td align="center" valign="top"><?php putGS("Publication"); ?></td>
@@ -354,7 +354,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 		?>
 
 		<!-- Recently Published -->
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="recently_published_articles" <?php if ($f_screen != "recently_published_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="recently_published_articles" <?php if ($f_screen != "recently_published_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP" ><?php  putGS("Recently Published Articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Publish Date"); ?></TD>
@@ -429,7 +429,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 
 		<!-- Recently Modified -->
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="recently_modified_articles" <?php if ($f_screen != "recently_modified_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="recently_modified_articles" <?php if ($f_screen != "recently_modified_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP" ><?php  putGS("Recently Modified Articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP" nowrap><?php  putGS("Modification Date"); ?></TD>
@@ -504,7 +504,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 
         <!-- Scheduled Publishing -->
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP" ><?php putGS("Scheduled Publishing"); ?></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP" nowrap><?php putGS("Event(s)"); ?></TD>
@@ -657,7 +657,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     	</table>
 
 		<!-- Unplaced articles -->
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="unplaced_articles" <?php if ($f_screen != "unplaced_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="unplaced_articles" <?php if ($f_screen != "unplaced_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Pending Articles"); ?></TD>
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Status"); ?></TD>
@@ -738,7 +738,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
         <!-- Most popular articles -->
         <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
-        <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" id="popular_articles" <?php if ($f_screen != "popular_articles") { echo 'style="display:none;"'; } ?>>
+        <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="popular_articles" <?php if ($f_screen != "popular_articles") { echo 'style="display:none;"'; } ?>>
         <TR class="table_list_header">
             <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Most Popular Articles"); ?></TD>
             <td align="center" valign="top"><?php putGS("Publication"); ?></td>
@@ -834,4 +834,4 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 </table>
 
 
-<?php camp_html_copyright_notice(false); ?>
+<?php camp_html_copyright_notice(); ?>
