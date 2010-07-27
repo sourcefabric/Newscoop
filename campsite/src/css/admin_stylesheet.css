@@ -926,11 +926,45 @@ a.calendarButton {
 	color:#1a8cbb;
 	text-decoration:underline;
 }
+.login_box {
+	border:1px solid #015476;
+	background:#f5fbfd url(login_bg.png) repeat-x 0 bottom;
+	margin:40px auto 0 auto;
+	text-align:center;
+	width:420px;
+}
+.login_box h2 {
+	background:#d3e6eb url(login_header_bg.png) repeat-x 0 0;
+	border-bottom:1px solid #b5d9e2;
+	margin:0;
+	padding:3px 0 4px 8px;
+	font-size:18px;
+	font-weight:normal;
+	color:#015476;
+	text-align:left;
+
+}
+.logobox {
+	background:url(logobar_bg.png) repeat-x 0 0;
+	height:102px;
+	text-align:center;
+}
 .login {
-	margin:20px auto 0 auto;
+	margin:2px 0 0 0;
+	border:none;
+	background-color:transparent;
+	text-align:left;
+}
+.login td {
+	border:none;
+	background-color:transparent;
+	
 }
 .login h2 {
 	padding:7px 0 10px 0;
+}
+.light {
+	color:#1683b0;
 }
 .box_table td.error {
 	padding:0

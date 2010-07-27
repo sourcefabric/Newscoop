@@ -81,13 +81,6 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
   <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 </head>
 <body>
-<table border="0" cellspacing="0" cellpadding="0" width="100%" >
-<tr>
-  <td align="center" style="padding-top:50px;">
-    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" />
-  </td>
-</tr>
-</table>
 
 <?php
 if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
@@ -100,13 +93,9 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <?php } else { ?>
 <input type="hidden" name="f_is_encrypted" value="1" />
 <?php } ?>
-<table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="400">
-<colgroup>
-  <col width="180" />
-  <col width="220" />
-</colgroup>
-<tr>
-  <td colspan="2" align="center" class="error">
+<div class="login_box">
+<div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
+<h2><?php putGS("Login"); ?></h2>
     <noscript>
     <?php
     putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
@@ -134,21 +123,18 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     <?php
     }
     ?>
-  </td>
+
+<table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="390">
+<tr>
+  <td colspan="2"><span class="light"><?php putGS('Please enter your user name and password'); ?></span></td>
 </tr>
 <tr>
-  <td colspan="2">
-    <h2><?php putGS("Login"); ?></h2>
-  </td>
-</tr>
-<tr>
-  <td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
-</tr>
-<tr>
-  <td align="right" ><?php putGS("Account name"); ?>:</td>
+  <td align="right" ><strong>
+    <?php putGS("Account name"); ?>
+    :</strong></td>
   <td>
     <?php if ($error_code != "upgrade") { ?>
-    <input type="text" name="f_user_name" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your user name."); ?>" />
+    <input type="text" name="f_user_name" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your user name."); ?>" />
     <?php } else { ?>
     <input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>" />
     <?php echo p(htmlspecialchars($f_user_name)); ?>
@@ -156,15 +142,19 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Password"); ?>:</td>
+  <td align="right"><strong>
+    <?php putGS("Password"); ?>
+    :</strong></td>
   <td>
-    <input type="password" name="f_password" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your password."); ?>" />
+    <input type="password" name="f_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your password."); ?>" />
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Language"); ?>:</td>
+  <td align="right"><strong>
+    <?php putGS("Language"); ?>
+    :</strong></td>
   <td>
-    <select name="f_login_language" class="input_select" style="width:217px;">
+    <select name="f_login_language" class="input_select" style="width:253px;">
     <?php
         foreach ($languages as $languageCode => $languageAttrs) {
             $languageName = isset($languageAttrs['orig_name']) ?
@@ -210,6 +200,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
   </td>
 </tr>
 </table>
+</div>
 <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
 </form>
 <script type="text/javascript">
