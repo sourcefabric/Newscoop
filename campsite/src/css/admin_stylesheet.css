@@ -818,7 +818,7 @@ a.calendarButton {
 	background-color:transparent;
 }
 .table_list td img {
-	float:left;
+	/*float:left;*/
 }
 .table_list td.last {
 	text-align: right;
