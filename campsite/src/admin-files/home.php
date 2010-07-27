@@ -266,7 +266,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 		<!-- Submitted articles -->
 		<?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
-		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_input" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input" id="submitted_articles" <?php if ($f_screen != "submitted_articles") { echo 'style="display:none;"'; } ?>>
 		<TR class="table_list_header">
 			<TD ALIGN="center" VALIGN="TOP"><?php  putGS("Submitted Articles"); ?></TD>
 			<td align="center" valign="top"><?php putGS("Publication"); ?></td>

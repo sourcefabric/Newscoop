@@ -138,7 +138,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 </tr>
 <tr>
   <td colspan="2">
-    <b><?php putGS("Login"); ?></b>
+    <h2><?php putGS("Login"); ?></h2>
   </td>
 </tr>
 <tr>
@@ -164,7 +164,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <tr>
   <td align="right"><?php putGS("Language"); ?>:</td>
   <td>
-    <select name="f_login_language" class="input_select" style="width:253px;">
+    <select name="f_login_language" class="input_select" style="width:217px;">
     <?php
         foreach ($languages as $languageCode => $languageAttrs) {
             $languageName = isset($languageAttrs['orig_name']) ?
