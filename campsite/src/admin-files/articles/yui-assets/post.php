@@ -8,6 +8,14 @@ require_once('JSON.php');
 
 $json = new Services_JSON();
 
+if (!SecurityToken::isValid()) {
+	$data = new stdclass();
+	$data->Results = new stdclass();
+	$data->Results->f_message = getGS('Invalid security token!');
+	echo($json->encode($data));
+	exit;
+}
+
 $f_save = Input::Get('f_save', 'string', '', true);
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);

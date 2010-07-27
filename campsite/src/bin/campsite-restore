@@ -425,12 +425,16 @@ echo "done.\n";
 
 echo " * Restoring images...";
 flush_output($flush);
-camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
+if (is_dir($imagesSrcDir)) {
+	camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
+}
 echo "done.\n";
 
 echo " * Restoring file attachments...";
 flush_output($flush);
-camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
+if (is_dir($fileSrcDir)) {
+	camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
+}
 echo "done.\n";
 flush_output($flush);
 

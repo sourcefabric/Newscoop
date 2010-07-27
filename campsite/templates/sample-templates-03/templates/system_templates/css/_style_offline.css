@@ -1,0 +1,17 @@
+/*** Core html setup stuff ***/
+
+body {
+    font-family: sans-serif, arial, verdana;
+    background: #ffffff;
+    margin: 30px;
+    padding: 30px;
+}
+
+div#offline {
+    margin: 0;
+    padding: 20px;
+    font-size: 120%;
+    color: #cc0000;
+    text-align: center;
+    border: 1px solid #afafaf;
+}

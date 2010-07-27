@@ -21,7 +21,7 @@
         | {{ $campsite->article->name }}
     {{ /if }}
 </title>
-<LINK href="/templates/classic/css/cleanblue/style.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="/templates/classic/js/javascript.js"></script>
+<LINK href="http://{{ $campsite->publication->site }}/templates/classic/css/cleanblue/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://{{ $campsite->publication->site }}/templates/classic/js/javascript.js"></script>
 <link rel="alternate" type="application/rss+xml" title="RSS" href="{{ url options="template classic/tpl/rss.tpl" }}" />
 </head>

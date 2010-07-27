@@ -92,6 +92,7 @@ $issueLanguage = new Language($sLanguage);
 </table>
 
 <form method="POST" action="CommandProcessor.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" enctype="multipart/form-data">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">
 <input type="hidden" name="Pub" value="<?php echo $Pub ?>">
@@ -102,7 +103,7 @@ $issueLanguage = new Language($sLanguage);
 <!-- BEGIN: The following fields are needed for edit.php -->
 <input type="hidden" name="sLanguage" value="<?php echo $sLanguage ?>">
 <!-- END -->
-<table border="0" align="center" cellspacing="0" class="table_input">
+<table border="0" cellpadding="0" cellspacing="0" class="box_table">
 <tr>
 	<td align="left" colspan="2" style="padding: 6px">
 		<B>Article Import</B>

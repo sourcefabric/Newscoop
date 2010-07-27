@@ -21,8 +21,8 @@ if (!is_file("$ETC_DIR/database_conf.php")) {
 	exit;
 }
 
-// includes database configuration file
-require_once("$ETC_DIR/database_conf.php");
+// includes campsite initialisation
+require_once("$CAMPSITE_DIR/include/campsite_init.php");
 
 // defines the notifier template file name
 define('NOTIFIER_TEMPLATE', '_events_notifier.tpl');

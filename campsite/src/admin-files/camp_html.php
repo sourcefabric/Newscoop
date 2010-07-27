@@ -46,33 +46,28 @@ function camp_html_select_option($p_value, $p_selectedValue, $p_printValue, $p_a
  */
 function camp_html_copyright_notice($p_displayBorder = true)
 {
-	global $Campsite;
+    global $Campsite;
     $campVersion = new CampVersion();
-	if ($p_displayBorder) {
-	?>
-	<table width="100%" align="center" style="border-top: 1px solid black; margin-top: 15px;">
-	<?php
-	} else {
-	?>
-	<table width="100%" align="center" style="margin-top: 5px;">
-	<?php
-	}
-	?>
-	<tr>
-		<td style="padding-left: 5px; padding-top: 10px;" align="center">
-            <?php
-                echo $campVersion->getPackage() . '&nbsp;';
-                echo $campVersion->getVersion() . '&nbsp;';
-                echo $campVersion->getCopyright();
-            ?><br/>
-            Maintained and distributed under
-            <?php echo $campVersion->getLicense(); ?> by
-            <a style="font-size:8pt; color: black;" href="http://www.sourcefabric.org">
-            <?php echo $campVersion->getOrganization(); ?>
-            </a>
-		</td>
-	</tr>
-	</table>
+    if ($p_displayBorder) {
+?>
+    <div class="footer">
+    <?php
+    } else {
+    ?>
+    <div class="footer_plain">
+    <?php
+    }
+      echo $campVersion->getPackage() . '&nbsp;';
+      echo $campVersion->getVersion() . '&nbsp;';
+      echo $campVersion->getCopyright();
+    ?>
+      <br />
+      Maintained and distributed under
+    <?php echo $campVersion->getLicense(); ?> by
+      <a style="font-size:8pt; color: black;" href="http://www.sourcefabric.org">
+    <?php echo $campVersion->getOrganization(); ?>
+      </a>
+    </div>
 	<?php
 } // fn camp_html_copyright_notice
 
@@ -116,7 +111,8 @@ function camp_html_article_link($p_articleObj, $p_interfaceLanguageId, $p_target
  *
  * @param string $p_extraParams
  */
-function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "", $p_backLink = "", $p_extraParams = null)
+function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFileName = "",
+	$p_backLink = "", $p_extraParams = null, $p_securityParameter = false)
 {
 	global $ADMIN;
 	$str = "/$ADMIN/articles/".$p_targetFileName
@@ -126,6 +122,9 @@ function camp_html_article_url($p_articleObj, $p_sectionLanguageId, $p_targetFil
 		."&f_article_number=".$p_articleObj->getArticleNumber()
 		."&f_language_id=".$p_sectionLanguageId
 		."&f_language_selected=".$p_articleObj->getLanguageId();
+	if ($p_securityParameter) {
+		$str .= '&'.SecurityToken::URLParameter();
+	}
 	if ($p_backLink != "") {
 		$str .="&Back=".urlencode($p_backLink);
 	}

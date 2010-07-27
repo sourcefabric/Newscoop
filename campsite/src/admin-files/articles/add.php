@@ -82,6 +82,7 @@ if (sizeof($allArticleTypes) == 0) {
 ?>
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
 <?php } ?>

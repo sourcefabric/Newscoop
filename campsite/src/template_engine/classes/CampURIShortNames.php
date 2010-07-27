@@ -158,7 +158,7 @@ class CampURIShortNames extends CampURI
                             break;
                     }
                 }
-                $article = preg_replace('/[,\/\.\?"\+&]/', '', trim($article));
+                $article = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($article));
                 $article = str_replace(' ', '-', $article) . '.htm';
                 $uriString .= $article;
             }

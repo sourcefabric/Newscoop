@@ -79,7 +79,7 @@ if ($canManage) {
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php p($uType); ?>">
 <input type="hidden" name="userOffs" value="0">
-<table border="0" cellspacing="0" cellpadding="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px; margin-left: 17px;">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
 	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($userSearchParameters['full_name'])); ?>" class="input_text" style="width: 150px;"></td>
@@ -236,7 +236,7 @@ for($loop = 0; $loop < $last; $loop++) {
 <?php
 	if ($canDelete) { ?>
 		<td align="center">
-			<a href="/<?php echo $ADMIN; ?>/users/do_del.php?<?php echo get_user_urlparams($userId, false, true); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
+			<a href="/<?php echo $ADMIN; ?>/users/do_del.php?<?php echo get_user_urlparams($userId, false, true) . '&' . SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
 				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete user $1', $row['UName']); ?>" title="<?php putGS('Delete user $1', $row['UName']); ?>">
 			</a>
 		</td>

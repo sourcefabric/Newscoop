@@ -1,4 +1,9 @@
 <?PHP
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 camp_load_translation_strings("plugin_blog");
 $f_mode = Input::Get('f_mode', 'string');
 
@@ -14,7 +19,7 @@ switch ($f_mode) {
         $Blog = new Blog($f_blog_id);
         $Blog->setTopics($f_topic_ids);
     break;
-    
+
     case 'entry_topic':
     case 'entry_mood':
         if (!$g_user->hasPermission('plugin_blog_admin') && !$g_user->hasPermission('plugin_blog_moderator')) {
@@ -26,8 +31,8 @@ switch ($f_mode) {
         $topics = Blog::GetTopicTree();
         $BlogEntry = new BlogEntry($f_blogentry_id);
         $BlogEntry->setTopics($f_topic_ids);
-    break;   
-    
+    break;
+
 }
 
 if (!Input::IsValid()) {

@@ -33,7 +33,8 @@ camp_html_display_msgs();
 
 <P>
 <FORM NAME="directory_add" METHOD="POST" ACTION="do_new_dir.php"  >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<?php echo SecurityToken::FormParameter(); ?>
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Create new folder"); ?></B>

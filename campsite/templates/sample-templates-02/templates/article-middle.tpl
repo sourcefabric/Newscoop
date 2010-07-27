@@ -9,7 +9,7 @@
 <p class="nadnaslov">{{ $campsite->article->deck }}</p>
 <p class="naslov">{{ $campsite->article->name }}</p>
 {{ if $campsite->article->has_image(2) }}
-<div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"><br><span class="caption">{{ $campsite->image2->description }}</span></div>
+<div class="front-slika"><img src="/get_img.php?{{ urlparameters options="image 2" }}" border="0"><br><span class="caption">{{ $campsite->article->image2->description }}</span></div>
 {{ /if }}
 <p class="tekst">{{ $campsite->article->intro }}</p>
 <p class="tekst">{{ $campsite->article->full_text }}</p>

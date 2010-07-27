@@ -250,7 +250,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 <tr>
   <td colspan="2">
     <div align="CENTER">
-      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php"); ?>'" />
+      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
       <input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
       <input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
     </div>
@@ -298,6 +298,7 @@ if ($f_edit_mode == "edit") { ?>
       <td width="100%" valign="middle">
         <!-- BEGIN the article control bar -->
         <form name="article_actions" action="do_article_action.php" method="POST">
+		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php  p($f_publication_id); ?>" />
         <input type="hidden" name="f_issue_number" id="f_issue_number" value="<?php  p($f_issue_number); ?>" />
         <input type="hidden" name="f_section_number" id="f_section_number" value="<?php  p($f_section_number); ?>" />
@@ -481,6 +482,7 @@ if ($f_edit_mode == "edit") { ?>
 	<td valign="top">
 	<!-- BEGIN article content -->
 	<form name="article_edit" action="do_edit.php" method="POST">
+	<?php echo SecurityToken::FormParameter(); ?>
 	<fieldset id="pushbuttonsfrommarkup" class=" yui-skin-sam">
 	<input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
 	<input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
@@ -1345,7 +1347,8 @@ function makeRequest(a){
       + "&f_article_number=" + ycaFArticleNumber
       + "&f_message=" + encodeURIComponent(ycaFMessage)
       + postCustomFieldsData + postCustomSwitchesData
-      + postCustomTextareasData + postAction;
+      + postCustomTextareasData + postAction
+      + "&<?php echo SecurityToken::URLParameter(); ?>";
 
     // Show the saving panel
     YAHOO.example.container.wait.show();

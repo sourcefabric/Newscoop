@@ -141,7 +141,7 @@ if ($ok) {
         ?>
         <P>
         <FORM NAME="dialog" METHOD="POST" ACTION="merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
-        <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+        <TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
         <TR>
         	<TD COLSPAN="2">
         		<b><?php putGS("Merge Article Types: Step $1 of $2", "3", "3"); ?></b>

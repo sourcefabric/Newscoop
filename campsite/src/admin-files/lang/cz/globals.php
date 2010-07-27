@@ -268,4 +268,5 @@ regGS("User may delete user accounts", "Uživatel může mazat uživatelské ú�
 regGS("Add new user account", "Přidat uživatelský účet");
 regGS("Subscription Default Time", "Předplatné období");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

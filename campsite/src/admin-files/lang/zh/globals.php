@@ -273,4 +273,5 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "名称（点击编辑）");
 regGS("New field", "新字段");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>

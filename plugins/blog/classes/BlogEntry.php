@@ -68,9 +68,9 @@ class BlogEntry extends DatabaseObject {
             $return = $this->setTopics($p_value);
             $CampCache = CampCache::singleton();
             $CampCache->clear('user');
-            return $return;  
+            return $return;
         }
-        
+
         /*
         if ($p_name == 'admin_status') {
             switch ($p_value) {
@@ -79,15 +79,15 @@ class BlogEntry extends DatabaseObject {
                 case 'readonly':
                     parent::setProperty('date', date('Y-m-d H:i:s'));
                 break;
-                  
+
                 case 'offline':
                 case 'pending':
                     parent::setProperty('date', null);
                 break;
-            }          
+            }
         }
         */
-        
+
         $result = parent::setProperty($p_name, $p_value);
 
         if ($p_name == 'status' || $p_name == 'admin_status') {
@@ -99,7 +99,7 @@ class BlogEntry extends DatabaseObject {
         $CampCache->clear('user');
         return $result;
     }
-    
+
 
 
     /**
@@ -127,14 +127,14 @@ class BlogEntry extends DatabaseObject {
         if (!$success) {
             return false;
         }
-        
+
         // set proper status/adminstatus if blog is not moderated
         // DB default is pending
         if ($this->getBlog()->getProperty('admin_status') == 'online') {
-            $this->setProperty('admin_status', 'online');   
+            $this->setProperty('admin_status', 'online');
         }
         if ($this->getBlog()->getProperty('status') == 'online') {
-            $this->setProperty('status', 'online');   
+            $this->setProperty('status', 'online');
         }
 
         $this->fetch();
@@ -150,7 +150,7 @@ class BlogEntry extends DatabaseObject {
     {
         $entry_id = $this->getProperty('entry_id');
         $blog_id = $this->getProperty('fk_blog_id');
-        
+
         foreach (BlogComment::getComments(array('entry_id' => $this->getProperty('entry_id'))) as $Comment) {
             $Comment->delete();
         }
@@ -167,27 +167,27 @@ class BlogEntry extends DatabaseObject {
     {
         return $this->m_data;
     }
-    
+
     function getSubject()
     {
-        return $this->getProperty('title');   
+        return $this->getProperty('title');
     }
-    
+
     function getBlog()
     {
         static $Blog;
-        
+
         if (!is_object($Bog)) {
             $Blog = new Blog($this->getProperty('fk_blog_id'));
         }
-        return $Blog;   
+        return $Blog;
     }
 
     function _buildQueryStr($p_cond, $p_checkParent)
     {
         $blogs_tbl = Blog::$s_dbTableName;
         $entries_tbl = self::$s_dbTableName;
-        
+
         if (array_key_exists('fk_blog_id', $p_cond)) {
             $cond .= " AND e.fk_blog_id = {$p_cond['fk_blog_id']}";
         }
@@ -215,9 +215,9 @@ class BlogEntry extends DatabaseObject {
         }
 
         $queryStr = "$select
-                     FROM       $entries_tbl AS e, 
+                     FROM       $entries_tbl AS e,
                                 $blogs_tbl  AS b
-                     WHERE      e.fk_blog_id = b.blog_id 
+                     WHERE      e.fk_blog_id = b.blog_id
                                 $cond
                      $groupby
                      ORDER BY   entry_id DESC";
@@ -274,26 +274,26 @@ class BlogEntry extends DatabaseObject {
     static function TriggerCounters($p_entry_id)
     {
         global $g_ado_db;
-        
+
         if (!$p_entry_id) {
-            return false;   
+            return false;
         }
-        
+
         $entryTbl = self::$s_dbTableName;
         $commentTbl  = BlogComment::$s_dbTableName;
-        
+
         $queryStr = "UPDATE $entryTbl
-                     SET    comments_online = 
-                        (SELECT COUNT(comment_id) 
+                     SET    comments_online =
+                        (SELECT COUNT(comment_id)
                          FROM   $commentTbl
                          WHERE  fk_entry_id = $p_entry_id AND (status = 'online' AND admin_status = 'online')),
-                            comments_offline = 
-                        (SELECT COUNT(comment_id) 
+                            comments_offline =
+                        (SELECT COUNT(comment_id)
                          FROM   $commentTbl
                          WHERE  fk_entry_id = $p_entry_id AND (status != 'online' OR admin_status != 'online'))
-                     WHERE  entry_id = $p_entry_id";  
+                     WHERE  entry_id = $p_entry_id";
         $g_ado_db->Execute($queryStr);
-        
+
         Blog::TriggerCounters(self::GetBlogId($p_entry_id));
     }
 
@@ -302,11 +302,11 @@ class BlogEntry extends DatabaseObject {
         $tmpEntry = new BlogEntry($p_entry_id);
         return $tmpEntry->getProperty('fk_blog_id');
     }
-    
+
     function _getFormMask($p_admin)
     {
         global $g_user;
-        
+
         $data = $this->getData();
 
         foreach ($data as $k => $v) {
@@ -321,6 +321,11 @@ class BlogEntry extends DatabaseObject {
                 'element'   => 'f_entry_id',
                 'type'      => 'hidden',
                 'constant'  => $data['entry_id']
+            ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
             ),
             'f_blog_id'    => array(
                 'element'   => 'f_blog_id',
@@ -402,7 +407,7 @@ class BlogEntry extends DatabaseObject {
             ),
             'image_group' =>  isset($data['images']['100x100']) ? array(
                 'group'     => array('image_display', 'BlogEntry_Image_remove', 'image_label'),
-            
+
             ) : null,
             'reset'     => array(
                 'element'   => 'reset',
@@ -459,7 +464,7 @@ class BlogEntry extends DatabaseObject {
         $form = new html_QuickForm('blog_entry', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()){
+        if ($form->validate() && SecurityToken::isValid()){
             $data = $form->getSubmitValues(true);
 
             foreach ($data['BlogEntry'] as $k => $v) {
@@ -490,18 +495,18 @@ class BlogEntry extends DatabaseObject {
                 if ($data['BlogEntry_Image']) {
                     BlogImageHelper::StoreImageDerivates('entry', $data['f_entry_id'], $data['BlogEntry_Image']);
                 }
-                
+
                 Blog::TriggerCounters(self::GetBlogId($data['f_entry_id']));
 
                 return true;
 
             } elseif ($this->create(
-                            $data['f_blog_id'], 
-                            $p_user_id, 
-                            $data['BlogEntry']['title'], 
-                            $data['BlogEntry']['content'], 
+                            $data['f_blog_id'],
+                            $p_user_id,
+                            $data['BlogEntry']['title'],
+                            $data['BlogEntry']['content'],
                             $data['f_mood_id'])) {
-                                
+
                 // admin and owner can override status setting
                 if ($data['BlogEntry']['status']) {
                     $this->setProperty('status', $data['BlogEntry']['status']);
@@ -509,11 +514,11 @@ class BlogEntry extends DatabaseObject {
                 if ($p_admin && $data['BlogEntry']['admin_status']) {
                     $this->setProperty('admin_status', $data['BlogEntry']['admin_status']);
                 }
-                
+
                 if ($data['BlogEntry_Image']) {
                     BlogImageHelper::StoreImageDerivates('entry', $this->getProperty('entry_id'), $data['BlogEntry_Image']);
                 }
-                
+
                 Blog::TriggerCounters($this->getProperty('fk_blog_id'));
                 return true;
             }
@@ -554,8 +559,8 @@ class BlogEntry extends DatabaseObject {
         }
         return false;
     }
-    
-    
+
+
     /**
      * Get the blogentry identifier
      *
@@ -563,9 +568,9 @@ class BlogEntry extends DatabaseObject {
      */
     public function getId()
     {
-        return $this->getProperty('entry_id');   
+        return $this->getProperty('entry_id');
     }
-    
+
     /**
      * get the blogentry language id
      *
@@ -574,21 +579,21 @@ class BlogEntry extends DatabaseObject {
     public function getLanguageId()
     {
         return $this->getProperty('fk_language_id');
-    } 
-    
+    }
+
     public static function GetEntryLanguageId($p_entry_id)
     {
         $tmpEntry = new BlogEntry($p_entry_id);
         return $tmpEntry->getProperty('fk_language_id');
     }
-    
-    public function setTopics(array $p_topics=array()) 
+
+    public function setTopics(array $p_topics=array())
     {
         // store the topics
         $allowed_topics = Blog::GetTopicTreeFlat();
-        
+
         BlogentryTopic::DeleteBlogentryTopics($this->getId());
-        
+
         foreach ($p_topics as $topic_id) {
             if (in_array($topic_id, $allowed_topics, true)) {
                 $BlogentryTopic = new BlogentryTopic($this->m_data['entry_id'], $topic_id);
@@ -596,18 +601,18 @@ class BlogEntry extends DatabaseObject {
             }
         }
     }
-    
-    public function getTopics() 
-    {   
+
+    public function getTopics()
+    {
         foreach (BlogentryTopic::getAssignments($this->m_data['entry_id']) as $BlogentryTopic) {
-            $topics[] = $BlogentryTopic->getTopic();      
+            $topics[] = $BlogentryTopic->getTopic();
         }
         return (array) $topics;
     }
-    
-    
+
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an blog list based on the given parameters.
      *
@@ -626,27 +631,27 @@ class BlogEntry extends DatabaseObject {
     public static function GetList($p_parameters, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
-        
+
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
             $leftOperand = strtolower($comparisonOperation['left']);
-            
+
             if ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
                 $matchAllTopics = true;
-                
+
             } elseif ($leftOperand == 'topic') {
                 // add the topic to the list of match/do not match topics depending
                 // on the operator
@@ -660,14 +665,14 @@ class BlogEntry extends DatabaseObject {
                 if (empty($comparisonOperation)) {
                     continue;
                 }
-                
+
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $comparisonOperation['right'] . "' ";
-                $selectClauseObj->addWhere($whereCondition);   
+                $selectClauseObj->addWhere($whereCondition);
             }
         }
-        
+
         if (count($hasTopics) > 0) {
             if ($matchAllTopics) {
                 foreach ($hasTopics as $topicId) {
@@ -686,7 +691,7 @@ class BlogEntry extends DatabaseObject {
             $whereCondition = "plugin_blog_entry.entry_id IN (\n$sqlQuery        )";
             $selectClauseObj->addWhere($whereCondition);
         }
-        
+
         // sets the columns to be fetched
         $tmpBlogEntry = new BlogEntry();
         $columnNames = $tmpBlogEntry->getColumnNames(true);
@@ -698,7 +703,7 @@ class BlogEntry extends DatabaseObject {
         $mainTblName = $tmpBlogEntry->getDbTableName();
         $selectClauseObj->setTable($mainTblName);
         unset($tmpBlogEntry);
-                
+
         if (is_array($p_order)) {
             $order = self::ProcessListOrder($p_order);
             // sets the order condition if any
@@ -706,16 +711,16 @@ class BlogEntry extends DatabaseObject {
                 $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
             }
         }
-       
+
         $sqlQuery = $selectClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get tlimited rows
         $blogEntryRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);
-        
+
         // builds the array of blog objects
         $blogEntriesList = array();
         while ($blogEntry = $blogEntryRes->FetchRow()) {
@@ -727,7 +732,7 @@ class BlogEntry extends DatabaseObject {
 
         return $blogEntriesList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -742,20 +747,20 @@ class BlogEntry extends DatabaseObject {
         $conditionOperation = array();
 
         $leftOperand = strtolower($p_param->getLeftOperand());
-        
+
         switch ($leftOperand) {
-            
+
         case 'feature':
             $conditionOperation['symbol'] = 'LIKE';
             $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
             break;
-            
+
         case 'matchalltopics':
             $conditionOperation['left'] = $leftOperand;
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'true';
             break;
-            
+
         case 'topic':
             $conditionOperation['left'] = $leftOperand;
             $conditionOperation['right'] = (string)$p_param->getRightOperand();
@@ -776,7 +781,7 @@ class BlogEntry extends DatabaseObject {
     } // fn ProcessListParameters
 
 
-                                      
+
     /**
      * Processes an order directive coming from template tags.
      *
@@ -787,7 +792,7 @@ class BlogEntry extends DatabaseObject {
      *      The array containing processed values of the condition
      */
     private static function ProcessListOrder(array $p_order)
-    {                                      
+    {
         $order = array();
         foreach ($p_order as $field=>$direction) {
             $dbField = BlogEntriesList::$s_parameters[substr($field, 2)]['field'];
@@ -799,11 +804,11 @@ class BlogEntry extends DatabaseObject {
         }
         if (count($order) == 0) {
             $order['fk_blog_id'] = 'asc';
-            $order['entry_id'] = 'asc';  
+            $order['entry_id'] = 'asc';
         }
         return $order;
     }
-    
+
     /**
      * Returns a select query for obtaining the entries that have the given topics
      *
@@ -817,7 +822,7 @@ class BlogEntry extends DatabaseObject {
         $notCondition = $p_negate ? ' NOT' : '';
         $selectClause = '        SELECT fk_entry_id FROM '.BlogentryTopic::$s_dbTableName.' WHERE fk_topic_id'
                       . "$notCondition IN (" . implode(', ', $p_TopicIds) . ")\n";
-                      
+
         return $selectClause;
     }
 }

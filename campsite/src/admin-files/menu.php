@@ -61,7 +61,7 @@ $menu_content->addItem($menu_item);
 
 $menu_content->addSplit();
 
-$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" align="middle" style="padding-bottom: 3px;" width="16" height="16" />';
+$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" style="padding:3px;" width="8" height="8" border="0" />';
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create($publication->getName(),
@@ -307,7 +307,7 @@ $menu_help->addItem($menu_item);
 $menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
     array("icon" => sprintf($iconTemplateStr, "about.png"), "target" => "_blank"));
 $menu_help->addItem($menu_item);
-$menu_item =& DynMenuItem::Create(getGS("Feedback"), '/'. $ADMIN .'/feedback',
+$menu_item =& DynMenuItem::Create(getGS("Feedback"), 'mailto:campsite-support@lists.sourcefabric.org',
     array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
 $menu_help->addItem($menu_item);
 

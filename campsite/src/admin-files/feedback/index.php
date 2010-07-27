@@ -12,7 +12,7 @@ global $ADMIN;
 <form name="dialog" method="POST" action="<?php echo "/$ADMIN/feedback/do_feedback.php"; ?>">
 <input type="hidden" value="1" NAME="f_isFromInterface">
 
-<table border="0" cellspacing="0" cellpadding="6" align="left" class="table_input"  width="500px">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
     <td align="left">
         <table border="0" cellspacing="0" cellpadding="3" align="left">

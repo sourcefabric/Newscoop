@@ -37,6 +37,7 @@ $topics = Topic::GetTree();
 
 <?php if (count($topics) > 0) { ?>
 <FORM action="<?php p("/$ADMIN/articles/topics/do_add.php"); ?>" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <table class="table_list">

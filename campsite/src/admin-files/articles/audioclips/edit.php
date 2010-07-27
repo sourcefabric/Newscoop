@@ -36,7 +36,12 @@ if (!Input::IsValid()) {
 
 switch($f_action) {
     case 'add':
-        if (empty($_FILES['f_media_file']) || !isset($_FILES['f_media_file']['name'])
+    	if (!SecurityToken::isValid()) {
+    		camp_html_display_error(getGS('Invalid security token!'));
+    		exit;
+    	}
+
+    	if (empty($_FILES['f_media_file']) || !isset($_FILES['f_media_file']['name'])
         		|| !isset($_FILES['f_media_file']['tmp_name'])
         		|| $_FILES['f_media_file']['name'] == ''
         		|| $_FILES['f_media_file']['tmp_name'] == '') {
@@ -94,6 +99,7 @@ switch($f_action) {
 <?php camp_html_display_msgs(); ?>
 
 <form name="audioclip_metadata" id="audioclip_metadata" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/do_<?php echo $f_action; ?>.php" enctype="multipart/form-data" onsubmit="return validateForm(this, 0, 1, 0, 0, 8);">
+<?php echo SecurityToken::FormParameter(); ?>
 <p>
 <table style="margin-top: 10px; margin-left: 5px; margin-right: 5px;" cellpadding="0" cellspacing="0">
 <tr>

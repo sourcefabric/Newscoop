@@ -44,10 +44,11 @@ camp_html_display_msgs();
 ?>
 <P>
 <FORM NAME="language_form" METHOD="POST" ACTION="do_add_modify.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php if ($editMode) { ?>
 <input type="hidden" name="f_language_id" value="<?php p($languageObj->getLanguageId()); ?>">
 <?php } ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 	   <?php if ($editMode) { ?>

@@ -22,6 +22,7 @@ camp_html_display_msgs("0.25em", "0.25em");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 <form name="user_type_add" method="post" action="do_add.php">
+<?php echo SecurityToken::FormParameter(); ?>
 <p>
 <?php
 $checkboxPrefix = 'checkbox_';
@@ -30,7 +31,7 @@ foreach ($rights as $group_name => $group) {
     $no_rights += sizeof($group);
 }
 ?>
-<table border="0" cellspacing="0" cellpadding="1" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
 		<b><?php  putGS("Add new user type"); ?></b>

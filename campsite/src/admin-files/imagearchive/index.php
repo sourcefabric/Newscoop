@@ -69,7 +69,7 @@ if ($g_user->hasPermission('AddImage')) { ?>
 <form method="POST" action="index.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <tr>
 	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
 	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>
@@ -168,7 +168,7 @@ foreach ($imageData as $image) {
         if ($g_user->hasPermission('DeleteImage')) {
         	if (!$image['in_use']) { ?>
             	<TD ALIGN="CENTER">
-                <A HREF="do_del.php?f_image_id=<?php echo $image['id']; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image['description'])); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
+                <A HREF="do_del.php?f_image_id=<?php echo $image['id']; ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($image['description'])); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($image['description'])); ?>"></A>
               	</TD>
             	<?php
          	}

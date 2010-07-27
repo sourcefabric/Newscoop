@@ -13,6 +13,6 @@
           <tr>
             <td height="190" align="center">
 <p class="tekst">Powered by</p>
-            <a href="http://www.campware.org/" target="_blank"><img border="0" src="/templates/img/desno1.gif" border="0"></a></td>
+            <a href="http://www.sourcefabric.org/en/home/web/6/campsite.htm?tpl=18" target="_blank"><img border="0" src="/templates/img/desno1.gif" border="0"></a></td>
           </tr>
 </table>

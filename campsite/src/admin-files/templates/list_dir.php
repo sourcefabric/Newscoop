@@ -43,6 +43,7 @@ if(isset($files) && is_array($files)) {
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 
 <FORM name="template_list" action="/<?php echo $ADMIN; ?>/templates/do_template_list_action.php" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
         <TD>
@@ -156,18 +157,18 @@ if(isset($files) && is_array($files)) {
 		if (empty($currentFolder)) {
 			$currentFolder = "/";
 		}
-		
+
 		$filterRegex = Template::GetTemplateFilterRegex();
-		
+
 		if (isset($dirs)) {
 			sort($dirs);
 			$color = 0;
 			foreach ($dirs as $dirname) {
-			    // filter folders			    
+			    // filter folders
 			    if (strlen($filterRegex) && preg_match("/$filterRegex/", $dirname)) {
-			         continue;   
+			         continue;
 			    }
-			    
+
 				$tr_class = "";
 				if ($color) {
 					$color = 0;
@@ -179,7 +180,7 @@ if(isset($files) && is_array($files)) {
 				print "<TR $tr_class><TD valign=\"center\"><IMG SRC='".$Campsite["ADMIN_IMAGE_BASE_URL"]."/folder.png' BORDER='0'>&nbsp;<A HREF='?Path=".urlencode("$listbasedir/$dirname")."'>$dirname</A></TD>";
 
 				if ($g_user->hasPermission("DeleteTempl")) {
-					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/do_del.php?What=0&Path='.urlencode($listbasedir).'&Name='.urlencode($dirname).'" onclick="return confirm(\''.getGS('Are you sure you want to delete the folder $1 from $2?',htmlspecialchars($dirname),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
+					print '<TD ALIGN="CENTER"><A HREF="/'.$ADMIN.'/templates/do_del.php?What=0&Path='.urlencode($listbasedir).'&Name='.urlencode($dirname).'&'.SecurityToken::URLParameter().'" onclick="return confirm(\''.getGS('Are you sure you want to delete the folder $1 from $2?',htmlspecialchars($dirname),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete folder').'" TITLE="'.getGS('Delete folder').'"></A></TD></TR>';
 				} else {
 					echo '</TR>';
 				}
@@ -218,9 +219,9 @@ if(isset($files) && is_array($files)) {
 
 				// filter hidden files
 				if (SystemPref::Get('TemplateFilterHidden') == 'Y' && preg_match('/(^\.)|(\/\.)/', $templateName)) {
-			         continue;   
-			    }   
-			        
+			         continue;
+			    }
+
 				$templateObj = new Template($templateName);
 				if ($color) {
 					$tr_class = "list_row_even";
@@ -264,7 +265,7 @@ if(isset($files) && is_array($files)) {
 					print "\n\t\t\t<TD ALIGN=\"CENTER\"><A HREF=\"/".$ADMIN.'/templates/rename.php?Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/rename.png" BORDER="0" ALT="'.getGS('Rename file').'" TITLE="'.getGS('Rename file').'"></A?</TD>';
 				}
 				if ($g_user->hasPermission("DeleteTempl")) {
-					print "\n\t\t\t<TD ALIGN=\"CENTER\"><A HREF=\"/".$ADMIN.'/templates/do_del.php?What=1&Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'" onclick="return confirm(\''.getGS('Are you sure you want to delete the template object $1 from folder $2?', htmlspecialchars($filename),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD>';
+					print "\n\t\t\t<TD ALIGN=\"CENTER\"><A HREF=\"/".$ADMIN.'/templates/do_del.php?What=1&Path='.urlencode($listbasedir).'&Name='.urlencode($filename).'&'.SecurityToken::URLParameter().'" onclick="return confirm(\''.getGS('Are you sure you want to delete the template object $1 from folder $2?', htmlspecialchars($filename),htmlspecialchars($currentFolder)).'\');"><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" BORDER="0" ALT="'.getGS('Delete file').'" TITLE="'.getGS('Delete file').'"></A></TD>';
 				}
 				print "</TR>\n";
 				$counter++;

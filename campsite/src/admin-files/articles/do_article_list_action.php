@@ -1,9 +1,10 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
-//echo "<pre>";
-//print_r($_REQUEST);
-//echo "</pre>";
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
 
 // Get input
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -151,6 +152,7 @@ case "copy":
 	break;
 case "copy_interactive":
 	$args = $_REQUEST;
+	unset($args[SecurityToken::SECURITY_TOKEN]);
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
 	$argsStr .= "&f_mode=multi&f_action=duplicate";
@@ -161,6 +163,7 @@ case "copy_interactive":
 	camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 case "move":
 	$args = $_REQUEST;
+	unset($args[SecurityToken::SECURITY_TOKEN]);
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
 	$argsStr .= "&f_mode=multi&f_action=move";
@@ -180,6 +183,7 @@ case "unlock":
 	break;
 case "schedule_publish":
 	$args = $_REQUEST;
+	unset($args[SecurityToken::SECURITY_TOKEN]);
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
 	foreach ($_REQUEST["f_article_code"] as $code) {
@@ -188,6 +192,7 @@ case "schedule_publish":
 	camp_html_goto_page("/$ADMIN/articles/multi_autopublish.php?".$argsStr);
 case "translate":
 	$args = $_REQUEST;
+	unset($args[SecurityToken::SECURITY_TOKEN]);
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
 	foreach ($_REQUEST["f_article_code"] as $code) {

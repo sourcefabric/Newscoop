@@ -85,8 +85,9 @@ function uncheckAllLang()
 <p>
 <?php  if ($g_user->hasPermission("ManageTopics")) { ?>
 <form method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_topic_parent_id" value="0">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD ALIGN="LEFT">
 		<TABLE BORDER="0" CELLSPACING="2" CELLPADDING="1">
@@ -192,17 +193,17 @@ foreach ($topics as $topicPath) {
 			<tr>
 				<td width="18px">
 					<?php if ($topicPosition > 0) { ?>
-						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=up_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
+						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=up_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
 					<?php } ?>
 				</td>
 				<td width="20px">
 					<?php if ($topicOrder < camp_array_peek($aTopicOrder[$parentId], false, -1)) { ?>
-						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=down_rel&f_position=1"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
+						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=down_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
 					<?php } ?>
 				</td>
 
 				<td>
-					<select name="f_position_<?php p($counter);?>" onChange="positionValue = this.options[this.selectedIndex].value; url = '/<?php p($ADMIN);?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId());?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
+					<select name="f_position_<?php p($counter);?>" onChange="positionValue = this.options[this.selectedIndex].value; url = '/<?php p($ADMIN);?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId());?>&<?php echo SecurityToken::URLParameter(); ?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
 					<?php
 					for ($j = 0; $j < count($aTopicOrder[$parentId]); $j++) {
 						if ($topicPosition == $j) {
@@ -284,7 +285,7 @@ foreach ($topics as $topicPath) {
 			?>
 		</TD>
 		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> align="center">
-			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
+			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
 		</td>
 		</tr>
 
@@ -292,6 +293,7 @@ foreach ($topics as $topicPath) {
 	    	<td colspan="2"></td>
 	    	<td colspan="4">
 	    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+				<?php echo SecurityToken::FormParameter(); ?>
 	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
 	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
 	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #8FBF8F; border-bottom: 1px solid #8FBF8F; background-color: #EFFFEF; padding-left: 5px; padding-right: 5px;" width="100%">
@@ -323,6 +325,7 @@ foreach ($topics as $topicPath) {
     	<td colspan="2"></td>
     	<td colspan="4">
     		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+			<?php echo SecurityToken::FormParameter(); ?>
     		<input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>

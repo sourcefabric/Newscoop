@@ -248,6 +248,11 @@ class BlogComment extends DatabaseObject {
                 'type'      => 'hidden',
                 'constant'  => $this->getProperty('fk_entry_id'),
             ),
+            SecurityToken::SECURITY_TOKEN => array(
+            	'element'   => SecurityToken::SECURITY_TOKEN,
+            	'type'      => 'hidden',
+            	'constant'  => SecurityToken::GetToken()
+            ),
             /*
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
@@ -382,7 +387,7 @@ class BlogComment extends DatabaseObject {
         $form = new html_QuickForm('blog_comment', 'post', '', null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
-        if ($form->validate()) {
+        if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
 
             foreach ($data['BlogComment'] as $k => $v) {

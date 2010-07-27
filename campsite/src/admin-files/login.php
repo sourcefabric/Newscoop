@@ -72,139 +72,147 @@ camp_load_translation_strings("home");
 
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
-	<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-        <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+  <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 </head>
-<body >
-
-<table border="0" cellspacing="0" cellpadding="1" width="100%" >
+<body>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" >
 <tr>
-	<td align="center" style="padding-top: 50px;">
-		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0">
-	</td>
+  <td align="center" style="padding-top:50px;">
+    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" />
+  </td>
 </tr>
 </table>
 
 <?php
 if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
-	require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
+    require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
 <form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
-<input type="hidden" name="f_is_encrypted" value="0">
+<input type="hidden" name="f_is_encrypted" value="0" />
 <?php } else { ?>
-<input type="hidden" name="f_is_encrypted" value="1">
+<input type="hidden" name="f_is_encrypted" value="1" />
 <?php } ?>
-<table width="400px" border="0" cellspacing="0" cellpadding="6" align="center" style="margin-top: 20px; background-color: #d5e2ee;  border: 1px solid #8baed1;">
-
-	<tr>
-		<td colspan="2" align="center">
-			<span style="color:#FF0000;">
-                        <noscript>
-                        <?php
-                            putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
-                        ?>
-                        </noscript>
-				<?php
-				if ($error_code == "userpass") {
-					putGS("Login failed");
-					echo "<br><br>";
-					putGS('Please make sure that you typed the correct user name and password.');
-					//putGS('If your problem persists please contact the site administrator $1','');
-				} elseif ($error_code == "captcha") {
-					 putGS('CAPTCHA code is not valid.  Please try again.');
-				} elseif ($error_code == "upgrade") {
-					putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
-				} elseif ($error_code == 'xorkey') {
-					putGS("An error occured in session management. Please reload the login page.");
-				}
-				?>
-			</span>
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<b><?php  putGS("Login"); ?></b>
-			<hr noshade size="1"  color="black" />
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
-	</tr>
-	<tr>
-		<td align="right" ><?php putGS("Account name"); ?>:</td>
-		<td>
-		<?php if ($error_code != "upgrade") { ?>
-		<input type="text" name="f_user_name" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your user name."); ?>">
-		<?php } else { ?>
-		<input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>">
-		<?php echo p(htmlspecialchars($f_user_name)); ?>
-		<?php } ?>
-		</td>
-	</tr>
-	<tr>
-		<td align="right" ><?php putGS("Password"); ?>:</td>
-		<td>
-		<input type="password" name="f_password" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your password."); ?>">
-		</td>
-	</tr>
-	<tr>
-		<td align="right" ><?php putGS("Language"); ?>:</td>
-		<td>
-		<select name="f_login_language" class="input_select">
-		    <?php
-			foreach ($languages as $languageCode => $languageAttrs) {
-			    $languageName = isset($languageAttrs['orig_name'])?
-			    	$languageAttrs['orig_name']:$languageAttrs['name'];
-			    $languageName = htmlspecialchars($languageName);
-			    print "<option value=\"$languageCode\"";
-			    if ($languageCode == $defaultLanguage) {
-			    	print " selected ";
-			    }
-			    print ">$languageName</option>";
-			}
-			unset($languageCode);
-			unset($languageAttrs);
-			unset($languageName);
-		    ?>
-		</select>
-		</td>
-	</tr>
-
-	<!-- CAPTCHA-->
-	<?php if (LoginAttempts::MaxLoginAttemptsExceeded()) { ?>
-	<tr>
-		<td colspan="2" align="center">
-			<img src="<?php echo $Campsite['WEBSITE_URL']; ?>/include/captcha/image.php">
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center">
-			<?php  putGS('Type the code shown above:'); ?>
-			<input name="f_captcha_code" size="5" class="input_text" alt="blank" emsg="<?php putGS("Please enter the code shown in the image."); ?>">
-		</td>
-	</tr>
-	<?php } ?>
-	<!-- CAPTCHA-->
-
-	<tr>
-		<td colspan="2" align="center">
-                <noscript>
-                          <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" disabled />
-                </noscript>
-                <script type="text/javascript" language="JavaScript"><!--
-			  document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?>/>');
-                //--></script>
-		</td>
-	</tr>
+<table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="400">
+<colgroup>
+  <col width="180" />
+  <col width="220" />
+</colgroup>
+<tr>
+  <td colspan="2" align="center" class="error">
+    <noscript>
+    <?php
+    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+    ?>
+    </noscript>
+    <?php
+    if (strlen($error_code) > 0) {
+    ?>
+    <div class="login_error">
+    <?php
+        if ($error_code == "userpass") {
+            putGS("Login failed");
+            echo "<br><br>";
+            putGS('Please make sure that you typed the correct user name and password.');
+            //putGS('If your problem persists please contact the site administrator $1','');
+        } elseif ($error_code == "captcha") {
+            putGS('CAPTCHA code is not valid.  Please try again.');
+        } elseif ($error_code == "upgrade") {
+            putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
+        } elseif ($error_code == 'xorkey') {
+            putGS("An error occured in session management. Please reload the login page.");
+        }
+    ?>
+    </div>
+    <?php
+    }
+    ?>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <b><?php putGS("Login"); ?></b>
+  </td>
+</tr>
+<tr>
+  <td colspan="2"><?php putGS('Please enter your user name and password'); ?></td>
+</tr>
+<tr>
+  <td align="right" ><?php putGS("Account name"); ?>:</td>
+  <td>
+    <?php if ($error_code != "upgrade") { ?>
+    <input type="text" name="f_user_name" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your user name."); ?>" />
+    <?php } else { ?>
+    <input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>" />
+    <?php echo p(htmlspecialchars($f_user_name)); ?>
+    <?php } ?>
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Password"); ?>:</td>
+  <td>
+    <input type="password" name="f_password" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter your password."); ?>" />
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Language"); ?>:</td>
+  <td>
+    <select name="f_login_language" class="input_select" style="width:253px;">
+    <?php
+        foreach ($languages as $languageCode => $languageAttrs) {
+            $languageName = isset($languageAttrs['orig_name']) ?
+                $languageAttrs['orig_name'] : $languageAttrs['name'];
+            $languageName = htmlspecialchars($languageName);
+            print "<option value=\"$languageCode\"";
+            if ($languageCode == $defaultLanguage) {
+                print " selected ";
+            }
+            print ">$languageName</option>";
+        }
+        unset($languageCode);
+        unset($languageAttrs);
+        unset($languageName);
+    ?>
+    </select>
+  </td>
+</tr>
+<!-- CAPTCHA-->
+<?php if (LoginAttempts::MaxLoginAttemptsExceeded()) { ?>
+<tr>
+  <td colspan="2" align="center">
+    <img src="<?php echo $Campsite['WEBSITE_URL']; ?>/include/captcha/image.php" />
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="center">
+    <?php  putGS('Type the code shown above:'); ?>
+    <input name="f_captcha_code" size="5" class="input_text" alt="blank" emsg="<?php putGS("Please enter the code shown in the image."); ?>" />
+  </td>
+</tr>
+<?php } ?>
+<!-- CAPTCHA-->
+<tr class="buttonBlock2">
+  <td>&nbsp;</td>
+  <td>
+    <noscript>
+      <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" disabled />
+    </noscript>
+    <script type="text/javascript" language="JavaScript">
+        document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?>/>');
+    </script>
+  </td>
+</tr>
 </table>
 <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
 </form>
-<script>
+<script type="text/javascript">
 <?php if ($error_code != "upgrade") { ?>
 document.forms.login_form.f_user_name.focus();
 <?php } else { ?>

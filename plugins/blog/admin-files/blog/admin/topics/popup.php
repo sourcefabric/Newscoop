@@ -5,7 +5,7 @@ $f_mode = Input::Get('f_mode', 'string');
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
-    $is_admin = true;   
+    $is_admin = true;
 }
 if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
     $is_moderator = true;
@@ -26,7 +26,7 @@ switch ($f_mode) {
         $object = 'BlogTopic';
         $object_id = $f_blog_id;
     break;
-    
+
     case 'entry_topic':
         $f_blogentry_id = Input::Get('f_blogentry_id', 'int');
         $topics = Blog::GetTopicTree();
@@ -34,8 +34,8 @@ switch ($f_mode) {
         $language_id = $BlogEntry->getLanguageId();
         $object = 'BlogentryTopic';
         $object_id = $f_blogentry_id;
-    break;   
-    
+    break;
+
 }
 
 if (!Input::IsValid()) {
@@ -60,6 +60,7 @@ if (!Input::IsValid()) {
 <?php if (count($topics) > 0) { ?>
 
 <FORM action="do_edit.php" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_mode" value="<?php p($f_mode); ?>">
 <INPUT type="hidden" name="f_blog_id" value="<?php p($f_blog_id); ?>">
 <INPUT type="hidden" name="f_blogentry_id" value="<?php p($f_blogentry_id); ?>">
@@ -77,9 +78,9 @@ foreach ($topics as $path) {
 			continue;
 		}
 	}
-	
+
 	$$object = new $object($object_id, $currentTopic->getTopicId());
-	$checked = $$object->exists() ? 'checked="checked"' : '';	
+	$checked = $$object->exists() ? 'checked="checked"' : '';
 	?>
 	<tr <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 		<td><input type="checkbox" name="f_topic_ids[]" value="<?php p($currentTopic->getTopicId()); ?>" <?php p($checked); p($is_admin ? '' : ' disabled'); ?>></td>

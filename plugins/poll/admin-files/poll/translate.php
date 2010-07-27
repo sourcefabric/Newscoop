@@ -14,9 +14,9 @@ $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
 $poll = new Poll($f_fk_language_id, $f_poll_nr);
 
-if ($poll->exists()) {  
+if ($poll->exists()) {
     foreach ($poll->getTranslations() as $translation) {
-        $existing[$translation->getLanguageId()] = true;   
+        $existing[$translation->getLanguageId()] = true;
     }
     $title = $poll->getProperty('title');
     $question = $poll->getProperty('question');
@@ -43,6 +43,7 @@ camp_html_display_msgs();
 
 <P>
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <?php if ($poll) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php  p($poll->getNumber()); ?>">
 <INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($poll->getLanguageId()); ?>">

@@ -17,7 +17,7 @@ if ($f_path_name = Input::Get('f_path_name', 'string', '')) {
 $f_path = preg_replace('#//+#', '/', $f_path);
 
 if ($f_path == '/') {
-    $f_path = '';   
+    $f_path = '';
 }
 
 $f_content = Input::Get('f_content', 'string', '', true);
@@ -95,21 +95,22 @@ if (in_array($extension, $imageExtensions)) {
     	function openFile()
     	{
     	   if (document.forms['template_load'].elements['f_path_name'].value == "") {
-    	       return false;    
+    	       return false;
     	   }
-    	   
+
     	   if (editAreaLoader.getValue('cField') !== document.forms['template_edit'].elements['oldValue'].value) {
     	       if (!confirm('<?php putGS('Changes have not been saved. Load new template without saving the current one?') ?>')) {
-    	           return false;;      
-    	       } 
+    	           return false;;
+    	       }
     	   }
     	   document.forms['template_load'].submit();
     	}
     	</script>
-    	<table class="table_input">
+    	<table class="box_table">
         <tr>
     		<td align="left" colspan="2">
     			<form name="template_load" method="post" action="edit_template.php">
+				<?php echo SecurityToken::FormParameter(); ?>
                 <table >
     			<tr>
     				<td>
@@ -121,7 +122,7 @@ if (in_array($extension, $imageExtensions)) {
                         	    if (1 || camp_is_text_file($template->getName())) {
                                     camp_html_select_option('/'.$template->getName(), $f_path.'/'.$f_name, $template->getName());
                         	    }
-                        		  
+
                         	}
                         	?>
                         </SELECT>
@@ -132,18 +133,19 @@ if (in_array($extension, $imageExtensions)) {
     		</td>
     	</TR>
     	</TABLE>
-	
+
 	   </td>
 	   <td>
-	
+
      	<?php
      	if ($g_user->hasPermission("DeleteTempl")
      			&& is_writable($Campsite['TEMPLATE_DIRECTORY'].$f_path)) {
      	?>
-    	<table class="table_input">
+    	<table class="box_table">
         <tr>
     		<td align="left" colspan="2">
     			<form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
+				<?php echo SecurityToken::FormParameter(); ?>
     			<input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
     			<input type="hidden" name="f_old_name" value="<?php p(htmlspecialchars($f_name)); ?>">
                 <table >
@@ -164,13 +166,14 @@ if (in_array($extension, $imageExtensions)) {
     	</td>
       </tr>
     </table>
-    
+
 	<P>
 	<FORM NAME="template_edit" METHOD="POST" ACTION="do_edit.php"  >
+	<?php echo SecurityToken::FormParameter(); ?>
 	<INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
 	<INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
 	<INPUT TYPE="HIDDEN" NAME="oldValue" VALUE="<?php p(htmlspecialchars($contents)); ?>">
-	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+	<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 
 	<TR>
 		<TD colspan="2">
@@ -199,7 +202,7 @@ if (in_array($extension, $imageExtensions)) {
 	</TR>
 	</table>
     </FORM>
-    
+
 <?php } ?>
 <p>
 <P>

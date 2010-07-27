@@ -25,7 +25,8 @@ camp_html_display_msgs();
 
 <P>
 <FORM name="issue_add" METHOD="POST" ACTION="do_add_new.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<?php echo SecurityToken::FormParameter(); ?>
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new issue"); ?></B>

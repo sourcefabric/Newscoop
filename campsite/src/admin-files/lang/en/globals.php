@@ -260,4 +260,5 @@ regGS("There was an error logging in to the Campcaster server", "There was an er
 regGS("Reads", "Reads");
 regGS("Publish with issue", "Publish with issue");
 regGS("Universal List", "Universal List");
+regGS("Invalid security token!", "Invalid security token!");
 ?>

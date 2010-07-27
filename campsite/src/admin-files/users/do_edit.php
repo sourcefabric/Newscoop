@@ -4,6 +4,11 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/Log.php");
 require_once($GLOBALS['g_campsiteDir']. '/classes/UserType.php');
 
+if (!SecurityToken::isValid()) {
+	camp_html_display_error(getGS('Invalid security token!'));
+	exit;
+}
+
 read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search parameters
 verify_user_type();
 compute_user_rights($g_user, $canManage, $canDelete);

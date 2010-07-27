@@ -20,7 +20,7 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 
 ?>
 <P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="2" ALIGN="CENTER" class="table_input">
+<TABLE CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD VALIGN="TOP"><A HREF="add_prev.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></A></TD>
 	<TD><B><A HREF="add_prev.php?Pub=<?php p($Pub); ?>"><?php  putGS('Use the structure of the previous issue'); ?></A></B></TD>

@@ -133,6 +133,9 @@ class SearchResultsList extends ListObject
                 case 'end_date':
                 case 'topic_id':
                 case 'scope':
+                	if (is_null($value)) {
+                		break;
+                	}
     				if ($parameter == 'length' || $parameter == 'columns'
     				|| $parameter == 'search_level' || $parameter == 'search_section') {
     					$intValue = (int)$value;

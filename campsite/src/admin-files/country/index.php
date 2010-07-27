@@ -122,7 +122,7 @@ foreach ($countries as $country) { ?>
 	<?php  }
 	if ($g_user->hasPermission("DeleteCountries")) { ?>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN); ?>/country/do_del.php?f_country_code=<?php p(urlencode($country->getCode())); ?>&f_country_language=<?php p($country->getLanguageId()); ?>" onclick="return confirm('<?php  putGS('Are you sure you want to delete the country $1?' ,htmlspecialchars($country->getName()).' ('.htmlspecialchars($language->getNativeName()).')'); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="Delete country <?php p(htmlspecialchars($country->getName())); ?>" TITLE="Delete country <?php  p(htmlspecialchars($country->getName())); ?>" ></A>
+			<A HREF="/<?php p($ADMIN); ?>/country/do_del.php?f_country_code=<?php p(urlencode($country->getCode())); ?>&f_country_language=<?php p($country->getLanguageId()); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php  putGS('Are you sure you want to delete the country $1?' ,htmlspecialchars($country->getName()).' ('.htmlspecialchars($language->getNativeName()).')'); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="Delete country <?php p(htmlspecialchars($country->getName())); ?>" TITLE="Delete country <?php  p(htmlspecialchars($country->getName())); ?>" ></A>
 		</TD>
 	<?php  } ?>
 	</TR>

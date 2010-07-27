@@ -33,7 +33,8 @@ camp_html_content_top(getGS("Set subscription settings for a country"), array("P
 
 <P>
 <FORM METHOD="POST" ACTION="do_countryadd.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
+<?php echo SecurityToken::FormParameter(); ?>
+<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <INPUT TYPE="HIDDEN" NAME="cPub" VALUE="<?php p($Pub); ?>">
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Country"); ?>:</TD>

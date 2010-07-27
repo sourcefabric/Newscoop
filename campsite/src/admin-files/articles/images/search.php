@@ -119,6 +119,7 @@ foreach ($imageData as $image) {
         if ($articleObj->userCanModify($g_user)) { ?>
             <TD ALIGN="CENTER">
     		<form method="POST" action="do_link.php">
+			<?php echo SecurityToken::FormParameter(); ?>
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 			<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">

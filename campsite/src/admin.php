@@ -33,8 +33,8 @@ $prefix = $authType == 'DB' ? '/' : '/' . strtolower($authType) . '_';
 global $ADMIN_DIR;
 global $ADMIN;
 global $g_user;
-require_once(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR.DIR_SEP.'lib_campsite.php');
 require_once(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR.DIR_SEP.'camp_html.php');
+require_once(CS_PATH_CLASSES.DIR_SEP.'SecurityToken.php');
 
 set_include_path(get_include_path() . PATH_SEPARATOR . CS_PATH_PEAR_LOCAL);
 

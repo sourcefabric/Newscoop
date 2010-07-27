@@ -48,7 +48,7 @@ if (isset($connectedToOnlineServer)
     && $connectedToOnlineServer == false) {
 ?>
 <center>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
         <TD >
 <?php
@@ -69,8 +69,9 @@ if (isset($connectedToOnlineServer)
 ?>
 <center>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" align="center" style="margin-top: 15px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD >
 		<table cellpadding="0" cellspacing="0" width="100%">

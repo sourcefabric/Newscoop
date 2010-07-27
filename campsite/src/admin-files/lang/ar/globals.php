@@ -268,4 +268,5 @@ regGS("User may delete user accounts", "يحق للمستخدم إلغاء حس�
 regGS("Add new user account", "أضف حساب مستخدم جديد");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
+regGS("Invalid security token!", "");
 ?>
