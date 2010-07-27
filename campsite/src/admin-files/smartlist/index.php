@@ -1374,7 +1374,7 @@ loader.insert({
                 $x = 1;
                 $topicAutocompleteName = '';
                 foreach ($topicBranch as $topicId => $topicName) {
-                    $topicAutocompleteName .= ', tname'.$x++.':"'.trim($topicName->getName($f_language_id)).'"';
+                    $topicAutocompleteName .= ', tname'.$x++.':"'.camp_javascriptspecialchars(trim($topicName->getName($f_language_id))).'"';
                 }
                 $x = $x - 1;
                 if ($x > $maxBranchLength) {
