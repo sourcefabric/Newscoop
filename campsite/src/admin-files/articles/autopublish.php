@@ -90,7 +90,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
 <INPUT type="hidden" name="f_backlink" value="<?php echo $BackLink; ?>">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" style="margin-top: 10px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php putGS("Schedule a new action"); ?></B>

@@ -114,7 +114,7 @@ switch($f_action) {
 <tr>
     <td colspan="3" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
         <br />
-        <table cellpadding="5" cellspacing="0" class="table_input">
+        <table border="0" cellpadding="0" cellspacing="0" class="box_table">
         <tr id="tab1">
             <td>
                 <?php include('main_metadata.php'); ?>

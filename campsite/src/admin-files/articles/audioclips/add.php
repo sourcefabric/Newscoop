@@ -72,7 +72,7 @@ function checkAddForm(form) {
 <p>
 <form name="audioclip_add" method="POST" action="/<?php echo $ADMIN; ?>/articles/audioclips/edit.php" enctype="multipart/form-data" onsubmit="return checkAddForm(this);">
 <?php echo SecurityToken::FormParameter(); ?>
-<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td colspan="2">
 		<B><?php  putGS("Add New Audioclip"); ?></B>

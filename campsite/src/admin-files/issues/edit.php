@@ -97,7 +97,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_current_language_id" VALUE="<?php p($Language); ?>">
-		<TABLE CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 		<TR>
 			<TD COLSPAN="2">
 				<B><?php  putGS("Change issue details"); ?></B>
@@ -298,7 +298,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
         <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
         <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
         <p>
-		<TABLE CELLSPACING="0" CELLPADDING="0" class="box_table">
+		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 		<TR>
 			<TD COLSPAN="2">
 				<B><?php  putGS("Schedule a new action"); ?></B>

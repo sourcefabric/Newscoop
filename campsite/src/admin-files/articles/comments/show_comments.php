@@ -14,7 +14,7 @@ function onCommentAction(p_type, p_commentId)
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <a name="comments"></a>
-<table class="table_input" width="900px" style="padding-left: 5px;">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
     <td style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #8EAED7;"">
         &nbsp;<b><?php putGS("Comments"); ?></b>
@@ -162,7 +162,7 @@ if (!$articleObj->commentsLocked() && ($f_edit_mode == "edit") ) {
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<table class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
     <td colspan="2" style="padding-left: 5px;">
         <b><?php putGS("Post a comment"); ?></b>

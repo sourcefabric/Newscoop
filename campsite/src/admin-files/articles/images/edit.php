@@ -64,7 +64,7 @@ if ($f_publication_id > 0) {
 <p>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" ALIGN="CENTER" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  p($title); ?></B>

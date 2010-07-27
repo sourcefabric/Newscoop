@@ -45,7 +45,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_input" style="margin-bottom: 10px; margin-top: 5px;" align="center">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <tr>
 	<td><input type="submit" name="submit_button" value="Search" class="button"></td>
 	<td><input type="text" name="f_search_string" value="<?php echo $f_search_string; ?>" class="input_text" style="width: 150px;"></td>

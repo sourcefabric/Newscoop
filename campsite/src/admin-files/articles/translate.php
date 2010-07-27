@@ -111,7 +111,7 @@ if ($f_publication_id > 0) {
 <input type='hidden' name='f_section_number' value="<?php p($f_section_number); ?>">
 <?php } ?>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="600px">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Translate article"); ?></B>

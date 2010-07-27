@@ -69,7 +69,7 @@ if ($f_publication_id > 0) {
 <P>
 <?php } ?>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  p($title); ?></B>

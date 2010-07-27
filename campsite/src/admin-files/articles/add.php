@@ -67,7 +67,7 @@ camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(ge
 if (sizeof($allArticleTypes) == 0) {
 ?>
 <p>
-<table border="0" cellspacing="0" cellpadding="6" align="center" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td align="center" class="error_message">
 	<?php putGS("No article types were defined. You must create an article type first."); ?>
@@ -95,7 +95,7 @@ if (sizeof($allArticleTypes) == 0) {
 <?php if ($f_language_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
 <?php } ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new article"); ?></B>

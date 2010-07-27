@@ -100,7 +100,7 @@ if (count($articles) > 0) {
 <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php echo $f_language_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php echo $f_language_selected; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_mode" VALUE="multi">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Schedule a new action"); ?></B>

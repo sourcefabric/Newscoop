@@ -488,7 +488,7 @@ foreach ($articles as $languageArray) {
 <?php putGS("to section"); ?>:
 </div>
 <p>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input" width="400px" style="margin-left: 18px;">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD align="left">
 		<TABLE align="left" border="0" width="100%">

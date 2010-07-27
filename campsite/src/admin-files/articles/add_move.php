@@ -72,7 +72,7 @@ echo camp_html_breadcrumbs($crumbs);
 if (sizeof($allArticleTypes) == 0) {
 ?>
 <p>
-<table border="0" cellspacing="0" cellpadding="6" align="center" class="table_input">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td align="center">
 	<font color="red">
@@ -89,7 +89,7 @@ if (sizeof($allArticleTypes) == 0) {
 ?>
 <P>
 <FORM NAME="add_article" METHOD="GET" ACTION="add_move.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
+<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
 		<B><?php  putGS("Add new article"); ?></B>

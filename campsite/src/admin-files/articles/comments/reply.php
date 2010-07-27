@@ -55,7 +55,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 </tr>
 </table>
 <p>
-<table cellspacing="0" cellpadding="3" border="0" class="table_input" width="600px" style="padding-left: 5px;">
+<table cellspacing="0" cellpadding="0" border="0" class="box_table">
 <tr>
     <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
         &nbsp;<b><?php putGS("Comment"); ?></b>
@@ -101,7 +101,7 @@ if (isset($connectedToOnlineServer)
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 <input type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
-<table class="table_input" width="600px">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
     <td colspan="2" style="padding-left: 5px;">
         <b><?php putGS("Reply to comment"); ?></b>
