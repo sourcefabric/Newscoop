@@ -1242,7 +1242,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','N','2009-01-16 20:40:12'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'CacheEngine','APC','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'CacheEngine','APC','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1613,7 +1613,7 @@ CREATE TABLE `liveuser_grouprights` (
 
 LOCK TABLES `liveuser_grouprights` WRITE;
 /*!40000 ALTER TABLE `liveuser_grouprights` DISABLE KEYS */;
-INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,2,3),(1,3,3),(1,4,3),(1,5,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,52,3),(1,53,3),(1,55,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,71,3),(1,73,3),(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,52,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,2,3),(4,3,3),(4,4,3),(4,5,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,25,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3);
+INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,2,3),(1,3,3),(1,4,3),(1,5,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,52,3),(1,53,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,71,3),(1,73,3),(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,52,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,2,3),(4,3,3),(4,4,3),(4,5,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,25,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3),(1,54,3),(1,74,3),(1,72,3);
 /*!40000 ALTER TABLE `liveuser_grouprights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1844,7 +1844,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1853,7 +1853,7 @@ CREATE TABLE `liveuser_rights_right_id_seq` (
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (74);
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (88);
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2015,7 +2015,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2009-01-16 20:40:33','0000-00-00 00:00:00','1970-01-01 00:00:00',1);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2010-07-28 16:18:16','0000-00-00 00:00:00','2010-07-28 19:17:07',1);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2616,4 +2616,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-06-29 23:31:54
+-- Dump completed on 2010-07-28 19:18:39
