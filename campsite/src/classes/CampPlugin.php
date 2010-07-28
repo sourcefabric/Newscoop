@@ -46,7 +46,7 @@ class CampPlugin extends DatabaseObject
     {
         // Create the record
         $this->m_data['Name'] = $p_name;
-        
+
         $values = array(
             'Version' => $p_version,
             'Enabled' => $p_enabled ? 1 : 0
@@ -66,7 +66,7 @@ class CampPlugin extends DatabaseObject
         if (!$p_reload && is_array(self::$m_allPlugins)) {
         	return self::$m_allPlugins;
         }
-        
+
         if (!$p_reload && CampCache::IsEnabled()) {
             $cacheListObj = new CampCacheList(array(), __METHOD__);
             self::$m_allPlugins = $cacheListObj->fetchFromCache();
@@ -120,8 +120,8 @@ class CampPlugin extends DatabaseObject
     {
         return $this->getProperty('Version');
     }
-    
-    
+
+
     public function getFsVersion()
     {
         $info = self::GetPluginsInfo();
@@ -180,14 +180,14 @@ class CampPlugin extends DatabaseObject
         if (function_exists($info['uninstall'])) {
             call_user_func($info['uninstall']);
         }
-        
-        self::ClearPluginsInfo();        
 
-        $this->delete();   
+        self::ClearPluginsInfo();
+
+        $this->delete();
         MetaAction::DeleteActionsFromCache();
         self::ClearPluginsInfo();
     }
-    
+
     public function update()
     {
         $info = $this->getPluginInfo();
@@ -195,7 +195,7 @@ class CampPlugin extends DatabaseObject
             call_user_func($info['update']);
         }
     }
-    
+
     static public function GetPluginsInfo($p_selectEnabled = false, $p_reload = false)
     {
     	if (!is_array(self::$m_pluginsInfo)) {
@@ -208,7 +208,7 @@ class CampPlugin extends DatabaseObject
             && isset(self::$m_pluginsInfo[$p_selectEnabled])) {
                 foreach (self::$m_pluginsInfo[1] as $entry => $info) {
                     if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
-                        include_once (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');  
+                        include_once (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
                     }
                 }
                 return self::$m_pluginsInfo[$p_selectEnabled];
@@ -217,9 +217,9 @@ class CampPlugin extends DatabaseObject
             if (!is_dir(CS_PATH_PLUGINS)) {
                 continue;
             }
-            
+
             self::$m_pluginsInfo[$p_selectEnabled] = array();
-            
+
             $enabledPluginsNames = array();
             if ($p_selectEnabled) {
             	$enabledPlugins = self::GetEnabled();
@@ -262,7 +262,7 @@ class CampPlugin extends DatabaseObject
     	return false;
     }
 
-    
+
     private static function StoreCachePluginsInfo()
     {
     	if (CampCache::IsEnabled()) {
@@ -317,15 +317,15 @@ class CampPlugin extends DatabaseObject
     {
         global $ADMIN;
         global $g_user;
-        
+
         $root_menu = false;
         $plugin_infos = self::GetPluginsInfo(true);
-        
+
         if ($g_user->hasPermission('plugin_manager')) {
-            $root_menu = true;   
+            $root_menu = true;
         }
 
-        
+
         foreach ($plugin_infos as $info) {
         	if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
         		$root_menu = true;
@@ -337,11 +337,11 @@ class CampPlugin extends DatabaseObject
         		}
         	}
         }
-        
+
         if (empty($root_menu)) {
-            return;   
-        }     
-                    
+            return;
+        }
+
         $p_menu_root->addSplit();
         $menu_modules =& DynMenuItem::Create(getGS("Plugins"), "",
         array("icon" => sprintf($p_iconTemplateStr, "plugin.png"), "id" => "plugins"));
@@ -359,7 +359,7 @@ class CampPlugin extends DatabaseObject
             if (CampPlugin::IsPluginEnabled($info['name'])) {
                 $menu_plugin = null;
                 $parent_menu = false;
-                
+
                 $Plugin = new CampPlugin($info['name']);
 
                 if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
@@ -402,63 +402,64 @@ class CampPlugin extends DatabaseObject
 
         require_once('Archive/Tar.php');
         $tar = new Archive_Tar($p_uploaded_package);
-        
-        
+
+
         if (($file_list = $tar->ListContent()) == 0) {
             $p_log = getGS('The uploaded file format is unsupported.');
             return false;
         } else {
             foreach ($file_list as $v) {
-                
+
                 if (preg_match('/[^\/]+\/([^.]+)\.info\.php/', $v['filename'], $matches)) {
-                    $plugin_name = $matches[1];    
+                    $plugin_name = $matches[1];
                 }
-                
+
                 #$p_log .= sprintf("Name: %s  Size: %d   modtime: %s mode: %s<br>", $v['filename'], $v['size'], $v['mtime'], $v['mode']);
             }
         }
-        
+
         if ($plugin_name === false) {
             $p_log = getGS('The uploaded archive does not contain an valid campsite plugin.');
-            return false;    
+            return false;
         }
-        
+
         $tar->extract(CS_PATH_PLUGINS);
-        
+
+        self::ClearPluginsInfo();
         CampPlugin::GetPluginsInfo(false, true);
     }
-    
+
     public static function PluginAdminHooks($p_filename, $p_area=null)
     {
         global $ADMIN, $ADMIN_DIR, $Campsite, $g_user;
-        
+
         $paths = array();
-        
+
         $filename = realpath($p_filename);
         $admin_path = realpath(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR);
         $script = str_replace($admin_path, '', $filename);
-        
+
         foreach (self::GetEnabled() as $plugin) {
             $filepath = $plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
             if (file_exists($filepath))  {
-                include $filepath;   
-            }  
-        }  
+                include $filepath;
+            }
+        }
     }
-    
+
     public static function GetNeedsUpdate()
     {
         $upgradable = false;
-        
+
         foreach (self::GetEnabled(true) as $CampPlugin) {
             if ($CampPlugin->getFsVersion() != $CampPlugin->getDbVersion()) {
                 $upgradable[$CampPlugin->getName()]  = array(
                                                             'db' => $CampPlugin->getDbVersion(),
                                                             'current' => $CampPlugin->getFsVersion()
-                                                        ); 
+                                                        );
             }
         }
-        return $upgradable;  
+        return $upgradable;
     }
 }
 
