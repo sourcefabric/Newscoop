@@ -9,9 +9,11 @@
       </div>
       
     <div id="navmain">
+    {{ if $campsite->section->defined }}
       {{ assign var='curr_section' value=$campsite->section->number }}
       {{ set_current_issue }}
       {{ set_section number=$curr_section }}
+    {{ /if }}
        
       <ul>
       <li id="navlinksection-home">
