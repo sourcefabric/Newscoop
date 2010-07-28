@@ -244,14 +244,14 @@ function send_email($p_message)
     $to = implode(', ', $p_message['recipients']);
     $subject = $p_message['subject'];
     $message = $p_message['text'];
-    $headers = "From: ".$p_message['reply']."\r\n" .
-        'X-Mailer: PHP/' . phpversion() . "\r\n" .
-        "MIME-Version: 1.0\r\n" .
-        "Content-Type: text/plain; charset=utf-8\r\n" .
-        "Content-Transfer-Encoding: 8bit\r\n\r\n";
+    $headers = "From: ".$p_message['reply']."\n" .
+        'X-Mailer: PHP/' . phpversion() . "\n" .
+        "MIME-Version: 1.0\n" .
+        "Content-Type: text/plain; charset=utf-8\n" .
+        "Content-Transfer-Encoding: 8bit\n\n";
 
     // sends the email message
-    return mail($to, $subject, $message, $headers);
+    return mail($to, '=?UTF-8?B?'.base64_encode($subject).'?=', $message, $headers);
 } // fn send_email
 
 
