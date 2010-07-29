@@ -1,10 +1,31 @@
-3.4.1 ()
+3.4.1 (July 30, 2010)
   Improvements
   ------------
-  
-  
+  - CS-2197: Implement CSRF (Cross-site request forgery) protection
+  - CS-2214: General UI changes and fixes
+  - CS-2179: Reduce the number of parameters in the articles search list
+  - CS-2206: Improving session handling to avoid logged user session grabbing
+             via CSRF atack
+
   Bugs Fixed
   ----------
+  - CS-2171: On backup data restore the file system_preferences.php should be
+             deleted
+  - CS-2176: The restore script crashes if the files/images directory didn't
+             exist in the package
+  - CS-2177: Layout errors in the universal list
+  - CS-2180: Campsite installer crashes on Windows
+  - CS-2183: Missing default admin permission
+  - CS-2184: Feedback not working
+  - CS-2186: Universal List not working if topic has " in title.
+  - CS-2201: Can't install a plugin
+  - CS-2203: UTF strings not showing up properly in emails notifications
+  - CS-2205: User input is not being filter out
+  - CS-2208: Field values change in the universal list on failure
+  - CS-2209: Pagination and sorting not working properly in staff-user-admin
+             of campsite
+  - CS-2219: Localizer doesn't support languages with different country code
+             (e.g. zh_CN - simplified , zh_TW - traditional)
 
 
 3.4.0 (July 8, 2010)
