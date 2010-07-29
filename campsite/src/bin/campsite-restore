@@ -534,6 +534,12 @@ if ($convertToUTF) {
 echo " * Cleaning up...";
 flush_output($flush);
 camp_remove_dir($tempDirName);
+
+$file = $CAMPSITE_DIR . '/system_preferences.php';
+if (file_exists($file)) {
+    unlink($file);
+}
+
 echo "done.\n\n";
 
 if ($useExistingConfig || $destDbSpecified) {
