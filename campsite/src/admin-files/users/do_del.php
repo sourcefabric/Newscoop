@@ -27,6 +27,7 @@ $editUser->delete();
 if ($phorumUser = Phorum_user::GetByUserName($uName)) {
 	$phorumUser->delete();
 }
+reset_user_search_parameters();
 
 $typeParam = 'uType=' . urlencode($uType);
 camp_html_add_msg(getGS('User account $1 was deleted successfully.', $uName), "ok");

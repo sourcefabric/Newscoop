@@ -270,14 +270,14 @@ if ($showUserMenu) {
     $menu_root->addItem($menu_users);
 	if ($g_user->hasPermission("ManageUsers") || $g_user->hasPermission("DeleteUsers")) {
         $menu_item =& DynMenuItem::Create(getGS("Staff"),
-            "/$ADMIN/users/?uType=Staff",
+            "/$ADMIN/users/?uType=Staff&reset_search=true",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
 	}
 	if (($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions"))
 			&& SystemPref::Get("ExternalSubscriptionManagement") != 'Y') {
         $menu_item =& DynMenuItem::Create(getGS("Subscribers"),
-            "/$ADMIN/users/?uType=Subscribers",
+            "/$ADMIN/users/?uType=Subscribers&reset_search=true",
             array("icon" => sprintf($iconTemplateStr, "users.png")));
         $menu_users->addItem($menu_item);
 	}

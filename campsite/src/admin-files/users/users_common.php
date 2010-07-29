@@ -38,7 +38,7 @@ function read_user_common_parameters()
 	if ($userOffs < 0) {
 		$userOffs = 0;
 	}
-	$ItemsPerPage = Input::Get('ItemsPerPage', 'int', 10);
+	$ItemsPerPage = Input::Get('ItemsPerPage', 'int', 20);
 	foreach ($userSearchParameters as $parameter=>$defaultValue) {
 		$userSearchParameters[$parameter] =
 			camp_session_get($parameter, $defaultUserSearchParameters[$parameter]);
@@ -61,7 +61,10 @@ function reset_user_search_parameters()
 {
 	global $userSearchParameters, $_REQUEST, $_GET, $_POST, $_SESSION;
 
-	foreach ($userSearchParameters as $parameter=>$defaultValue) {
+	$params = $userSearchParameters;
+	$params['userOffs'] = null;
+
+	foreach ($params as $parameter=>$defaultValue) {
 		if (isset($_REQUEST[$parameter])) {
 			unset($_REQUEST[$parameter]);
 		}
@@ -99,30 +102,38 @@ function compute_user_rights($User, &$canManage, &$canDelete)
 	}
 }
 
-function get_user_urlparams($userId = 0, $print_back_link = false, $strip_search = false)
+function get_user_urlparams($userId = 0, $print_back_link = false,
+$strip_search = false, $strip_offset = false)
 {
-	global $uType, $userOffs, $full_name, $user_name, $email, $subscription_how;
-	global $subscription_when, $subscription_date, $subscription_status;
+	global $uType, $userOffs, $userSearchParameters;
 
-	$params_search = array('uType', 'userOffs', 'full_name', 'user_name', 'email',
+	$params_search = array('full_name', 'user_name', 'email',
 		'subscription_how', 'subscription_when', 'subscription_date',
 		'subscription_status');
-	$params_nosearch = array('uType', 'userOffs');
-	if ($strip_search)
-		$params = & $params_nosearch;
-	else
-		$params = & $params_search;
+	$params = array('uType');
+	if (!$strip_offset) {
+		$params[] = 'userOffs';
+	}
 
 	$url = '';
 	if ($userId > 0)
 		$url = 'User=' . $userId;
 	foreach ($params as $index=>$param) {
-		if ($$param != '' && $$param != '0')
+		if ($$param != '' && $$param != '0') {
 			$url .= '&' . urlencode($param) . '=' . urlencode($$param);
+		}
 	}
 
 	if ($print_back_link) {
 		$url .= '&backLink=' . urlencode($_SERVER['REQUEST_URI']);
+	}
+
+	if (!$strip_search) {
+		foreach ($params_search as $param) {
+			if (!empty($userSearchParameters[$param])) {
+				$url .= '&' . urlencode($param) . '=' . urlencode($userSearchParameters[$param]);
+			}
+		}
 	}
 
 	if ($url != '' && $url[0] == '&')

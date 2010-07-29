@@ -49,7 +49,7 @@ echo $breadcrumbs;
 <tr>
 <?php
 if ($canManage) {
-	$addLink = "edit.php?" . get_user_urlparams(0, true, true);
+	$addLink = "edit.php?" . get_user_urlparams(0, true, true, true);
 ?>
 	<td valign="bottom">
 		<a href="<?php echo $addLink; ?>">
@@ -66,7 +66,7 @@ if ($canManage) {
 	</td>
 <?php if (user_search_is_set()) { ?>
 	<td style="padding-left: 20px;" valign="bottom">
-		<a href="?reset_search=true&<?php echo get_user_urlparams(0, false, true); ?>">
+		<a href="?reset_search=true&<?php echo get_user_urlparams(0, false, true, true); ?>">
 		<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/clear.png" border="0">
 		<b><?php putGS("Reset search form"); ?></b>
 		</a>
@@ -137,7 +137,7 @@ camp_html_display_msgs();
 
 $usersSearchResult = get_users_from_search($isReader, $orderFields, $orderField, $orderDir, $totalUsers);
 
-$pager = new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0)."&", false);
+$pager = new SimplePager($totalUsers, $ItemsPerPage, "userOffs", "index.php?".get_user_urlparams(0, false, false, true)."&", false);
 
 if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
 	$nr = sizeof($usersSearchResult);
@@ -154,13 +154,13 @@ if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
 	<tr class="table_list_header">
 		<td align="left" valign="middle">
 			<table><tr>
-			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['fname']; ?>"><?php putGS("Full Name"); ?></a></b></td>
+			<td><b><a href="?<?php echo $orderURLs['fname'] . '&' . get_user_urlparams(0); ?>"><?php putGS("Full Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'fname') echo $orderSigns['fname']; ?></td>
 			</tr></table>
 		</td>
 		<td align="left" valign="middle">
 			<table><tr>
-			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['uname']; ?>"><?php putGS("Account Name"); ?></a></b></td>
+			<td><b><a href="?<?php echo $orderURLs['uname'] . '&' . get_user_urlparams(0); ?>"><?php putGS("Account Name"); ?></a></b></td>
 			<td><?php if ($orderField == 'uname') echo $orderSigns['uname']; ?></td>
 			</tr></table>
 		</td>
@@ -178,7 +178,7 @@ if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
 
 		<td align="left" valign="middle">
 			<table><tr>
-			<td><b><a href="?<?php echo "$typeParam&" . $orderURLs['cdate']; ?>"><?php putGS("Creation Date"); ?></a></b></td>
+			<td><b><a href="?<?php echo $orderURLs['cdate'] . '&' . get_user_urlparams(0); ?>"><?php putGS("Creation Date"); ?></a></b></td>
 			<td><?php if ($orderField == 'cdate') echo $orderSigns['cdate']; ?></td>
 			</tr></table>
 		</td>
@@ -197,7 +197,7 @@ for($loop = 0; $loop < $last; $loop++) {
 		<td>
 		<?php
 			if ($canManage) {
-				echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true) . "\">";
+				echo "<a href=\"edit.php?" . get_user_urlparams($userId, false, true, true) . "\">";
 			}
 			echo htmlspecialchars($row['Name']);
 			if ($canManage) {
@@ -236,7 +236,7 @@ for($loop = 0; $loop < $last; $loop++) {
 <?php
 	if ($canDelete) { ?>
 		<td align="center">
-			<a href="/<?php echo $ADMIN; ?>/users/do_del.php?<?php echo get_user_urlparams($userId, false, true) . '&' . SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
+			<a href="/<?php echo $ADMIN; ?>/users/do_del.php?<?php echo get_user_urlparams($userId, false, true, true) . '&' . SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the user account $1 ?', $row['UName']); ?>');">
 				<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" ALT="<?php putGS('Delete user $1', $row['UName']); ?>" title="<?php putGS('Delete user $1', $row['UName']); ?>">
 			</a>
 		</td>
