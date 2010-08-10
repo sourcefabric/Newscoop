@@ -68,6 +68,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    }
 	}
 	$plugins[] = 'iframe';
+	$plugins[] = 'codehighlighting';
 	$plugins_list = implode(",", $plugins);
 
 	$statusbar_location = "none";
@@ -168,6 +169,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "replace";
 	}
 
+	$toolbar1[] = 'codehighlighting';
 	$toolbar2 = array();
 	// Slice up the first toolbar if it is too long.
 	if (count($toolbar1) > 34) {
