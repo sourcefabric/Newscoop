@@ -150,7 +150,7 @@ function translationForm($p_request)
 		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
         <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
-		<table border="0" style="background-color: #d5e2ee; border: 1px solid #8baed1; margin-left: 10px; margin-top: 5px;" width="700px;">
+		<table border="0" cellpadding="0" cellspacing="0" class="box_table">
 		<tr>
 			<td>
 				<table>
@@ -275,7 +275,7 @@ function translationForm($p_request)
             <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
             <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
             <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
-			<table border="0" style="background-color: #FAEFFF; border: 1px solid black; margin-left: 10px;" width="700px;" align="center">
+			<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 			<tr>
 				<td width="1%" style="padding-left: 5px;">
 					<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/preview.png">
@@ -306,7 +306,7 @@ function translationForm($p_request)
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
-        <table align="center" style="background-color: #EDFFDF; border: 1px solid #357654; margin-left: 10px; margin-bottom: 5px;" width="700px">
+        <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 		<tr>
 			<td>
 				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/add.png">
@@ -339,7 +339,7 @@ function translationForm($p_request)
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
         <input type="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">
-        <table style="background-color: #FFE0DF; border: 1px solid #C51325; margin-top: 3px; margin-left: 10px; margin-bottom: 5px;" width="700px">
+        <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 		<tr>
 			<td>
 				<img src="<?php echo $g_localizerConfig['ICONS_DIR']; ?>/delete.png">
@@ -532,7 +532,7 @@ function translationForm($p_request)
 	?>
 	</table>
 
-	<table style="margin-left: 8px; margin-top: 5px;">
+	<table style="margin-left: 12px; margin-top: 5px;">
 	<tr>
 		<td>
 			<input type="submit" name="save_button" value="<?php putGS('Save'); ?>" class="button">
