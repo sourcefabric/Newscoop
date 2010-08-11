@@ -768,7 +768,7 @@ class LiveUser
             );
             if (is_array($this->_options['session_cookie_params'])) {
                 $this->_options['session_cookie_params'] =
-                    LiveUser::arrayMergeClobber($session_cookie_params_default, $this->_options['cookie']);
+                    LiveUser::arrayMergeClobber($session_cookie_params_default, $this->_options['session_cookie_params']);
             } else {
                 $this->_options['session_cookie_params'] = $session_cookie_params_default;
             }

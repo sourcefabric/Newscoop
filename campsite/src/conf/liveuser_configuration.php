@@ -33,28 +33,28 @@ if (PEAR::isError($db)) {
 $liveuserConfig = array (
     'session' => array(
         'name' => 'PHPSESSID',
-        'varname' => 'loginInfo',
-        'force_start' => true
+        'varname' => 'loginInfo'
         ),
     'session_cookie_params' => array(
-        'lifetime' => ($Campsite['campsite']['session_lifetime'] / 86400),
-        'path' => null,
+        'lifetime' => $Campsite['campsite']['session_lifetime'] / 86400,
+        'path' => '/',
         'domain' => null,
         'secure' => false,
         'httponly' => true
         ),
     'login' => array('regenid' => true),
     'logout' => array ('destroy' => true),
-    'cookie' => array(
-        'name' => 'loginInfo',
-        'path' => null,
-        'domain' => null,
-        'secure' => false,
-        'lifetime' => ($Campsite['campsite']['session_lifetime'] / 86400),
-        'secret' => $Campsite['campsite']['secret_key'],
-        'savedir' => '.',
-        'httponly' => true
-    ),
+//    'cookie' => array(
+//        'name' => 'csRmeInfo',
+//        'path' => '/',
+//        'domain' => null,
+//        'secure' => false,
+//        'lifetime' => 30,
+//        'secret' => $Campsite['campsite']['secret_key'],
+//        'savedir' => '.',
+//        'secure' => false,
+//        'httponly' => true
+//        ),
     'authContainers' => array (
         'DB' => array (
             'type' => 'DB',
