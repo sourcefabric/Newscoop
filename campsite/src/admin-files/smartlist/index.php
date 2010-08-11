@@ -93,7 +93,7 @@ echo camp_html_breadcrumbs($crumbs);
   width: 35%;
   text-align: left;
 }
-#dataPaginator {
+#dataPaginator1, #dataPaginator2 {
   font-size: 12px;
   width: 40%;
   margin: 0 0 0 290px;
@@ -101,7 +101,11 @@ echo camp_html_breadcrumbs($crumbs);
   float:left;
   padding-top:3px;
 }
-#dataPaginator a {
+#dataPaginator2 {
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+#dataPaginator1 a, #dataPaginator2 a {
   font-size: 12px;
 }
 #actionSelectContainer {
@@ -276,7 +280,7 @@ div.message {
                   <input type="hidden" name="out" id="out">
                 </div>
             </div>
-            <div id="dataPaginator"><!-- The Paginator widget is rendered here --></div>
+            <div id="dataPaginator1"><!-- The Paginator widget is rendered here --></div>
             <div id="actionSelectContainer">
                 <input type="button" id="confColsPushButton" name="colsPushButton" value="<?php putGS('Show/Hide Columns'); ?>" />
                 <div id="dt-dlg" class="inprogress">
@@ -303,6 +307,7 @@ div.message {
 		</div>
 
 		<div id="articlesTable"><!-- The DataTable widget is rendered here --></div>
+		<div id="dataPaginator2"><!-- The Paginator widget is rendered here --></div>
 	</div>
 </div>
 
@@ -522,7 +527,7 @@ loader.insert({
     				paginator: new Paginator({
     					rowsPerPage: 25,
     					totalRecords: myDataSource.length,
-    					containers: 'dataPaginator',
+    					containers: ['dataPaginator1','dataPaginator2'],
     					template: "{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}",
     					firstPageLinkLabel : "&lt;&lt;",
     					lastPageLinkLabel : "&gt;&gt;",
