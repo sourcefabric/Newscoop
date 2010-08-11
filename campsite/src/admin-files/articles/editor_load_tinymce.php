@@ -169,7 +169,6 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "replace";
 	}
 
-	$toolbar1[] = 'codehighlighting';
 	$toolbar2 = array();
 	// Slice up the first toolbar if it is too long.
 	if (count($toolbar1) > 34) {
@@ -217,6 +216,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar3[] = "tablecontrols";
 	}
 	$toolbar3[] = 'iframe';
+	$toolbar3[] = 'codehighlighting';
 
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
