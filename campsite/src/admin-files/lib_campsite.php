@@ -271,7 +271,9 @@ function camp_load_translation_strings($p_prefix, $p_langCode = null)
     if (!is_null($p_langCode)) {
         $langCode = $p_langCode;
     } elseif (isset($_REQUEST['TOL_Language'])) {
-         $langCode = $_REQUEST['TOL_Language'];
+        $langCode = $_REQUEST['TOL_Language'];
+    } elseif (isset($_COOKIE['TOL_Language'])) {
+        $langCode = $_COOKIE['TOL_Language'];
     }
     Localizer::LoadLanguageFiles($p_prefix, $langCode);
 } // fn camp_load_translation_strings

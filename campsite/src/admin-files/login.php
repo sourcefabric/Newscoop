@@ -25,7 +25,11 @@ LoginAttempts::DeleteOldLoginAttempts();
 // language as set by the browser.  If the user has logged in before,
 // use the language that they previously used.
 $defaultLanguage = null;
-if (!isset($_REQUEST['TOL_Language'])) {
+if (isset($_REQUEST['TOL_Language'])) {
+    $defaultLanguage = $_REQUEST['TOL_Language'];
+} elseif (isset($_COOKIE['TOL_Language'])) {
+    $defaultLanguage = $_COOKIE['TOL_Language'];
+} else {
 	// Get the browser languages
 	$browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
 	$browserLanguageArray = preg_split("/[,;]/", $browserLanguageStr);
@@ -60,10 +64,8 @@ if (!isset($_REQUEST['TOL_Language'])) {
 	// english language strings, but only if it knows that
 	// the language being displayed is english...and it knows
 	// via the cookie.
+	$_COOKIE['TOL_Language'] = $defaultLanguage;
 	$_REQUEST['TOL_Language'] = $defaultLanguage;
-}
-else {
-	$defaultLanguage = $_REQUEST['TOL_Language'];
 }
 
 // Load the language files.
