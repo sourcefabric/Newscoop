@@ -5,6 +5,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 $articleTypeName = Input::Get('f_article_type');
 $articleTypeFieldName = Input::Get('f_field_name');
 $isContent = Input::Get('f_is_content');

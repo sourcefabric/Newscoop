@@ -26,6 +26,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <P>
 <FORM NAME="dialog" METHOD="POST" ACTION="do_rename.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="hidden" VALUE="<?php p($f_name); ?>" NAME="f_oldName">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR><TD COLSPAN="2">You may only use letters or the underscore (_) for a name.</TD></TR>

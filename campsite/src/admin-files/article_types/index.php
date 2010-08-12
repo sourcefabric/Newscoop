@@ -135,16 +135,16 @@ foreach ($articleTypes as $articleType) {
 	</td>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?f_article_type=<?php  print urlencode($articleType); ?>&f_status=<?php print $hideShowStatus; ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?f_article_type=<?php  print urlencode($articleType); ?>&f_status=<?php print $hideShowStatus; ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_comment_activation.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 comments for article type $2?', $commentChangeText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $commentImage; ?>" BORDER="0" ALT="<?php  putGS('$1 comments for article type $1', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 comments for article type $2', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_comment_activation.php?f_article_type=<?php  print urlencode($articleType); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 comments for article type $2?', $commentChangeText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $commentImage; ?>" BORDER="0" ALT="<?php  putGS('$1 comments for article type $1', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 comments for article type $2', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 
 	<?php  if ($g_user->hasPermission("DeleteArticleTypes")) { ?>
 	<TD ALIGN="CENTER">
-		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?f_article_type=<?php  print urlencode($articleType); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1.', htmlspecialchars($articleType)); ?>" ></A>
+		<A HREF="/<?php p($ADMIN); ?>/article_types/do_del.php?f_article_type=<?php  print urlencode($articleType); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.', htmlspecialchars($articleType)); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete article type $1', htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('Delete article type $1.', htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
 	<?php  } ?>
 
@@ -180,6 +180,7 @@ foreach ($articleTypes as $articleType) {
     	<tr>
     	<td colspan="2">
     		<FORM method="POST" action="do_translate.php">
+			<?php echo SecurityToken::FormParameter(); ?>
     		<input type="hidden" name="f_type_id" value="<?php p($articleType); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
     		<tr>

@@ -21,7 +21,7 @@ class ArticleTypeField extends DatabaseObject {
     const TYPE_TOPIC = 'topic';
     const TYPE_SWITCH = 'switch';
     const TYPE_NUMERIC = 'numeric';
-    
+
     const NUMERIC_DEFAULT_DIGITS = 65;
     const NUMERIC_DEFAULT_PRECISION = 2;
 
@@ -82,8 +82,15 @@ class ArticleTypeField extends DatabaseObject {
 		$success = $g_ado_db->Execute($queryStr);
 
 		if ($success) {
+			if ($this->getType() == self::TYPE_TOPIC) {
+				$query = "UPDATE TopicFields SET FieldName = '" . $g_ado_db->escape($p_newName)
+				. "' WHERE RootTopicId = " . $this->getTopicTypeRootElement();
+				$g_ado_db->Execute($query);
+			}
+
 			$fieldName = $this->m_data['field_name'];
 			$this->setProperty('field_name', $p_newName);
+
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -306,7 +313,7 @@ class ArticleTypeField extends DatabaseObject {
 	public function delete()
 	{
 		global $g_ado_db;
-		
+
 		if (!$this->exists()) {
 			return false;
 		}
@@ -382,8 +389,8 @@ class ArticleTypeField extends DatabaseObject {
 	{
 		return $this->m_data['field_type'];
 	} // fn getType
-	
-	
+
+
 	public function getGenericType()
 	{
 		switch ($this->getType()) {
@@ -598,7 +605,7 @@ class ArticleTypeField extends DatabaseObject {
 	public function isContent() {
 	    return $this->m_data['is_content_field'];
 	}
-	
+
 
 
 	/**

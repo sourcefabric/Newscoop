@@ -59,6 +59,7 @@ You cannot reassign this type.
 
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_retype.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_field_name" value="<?php print $articleTypeFieldName; ?>">
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">

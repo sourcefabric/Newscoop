@@ -64,6 +64,7 @@ function UpdateArticleFieldContext() {
 
 <P>
 <FORM NAME="add_field_form" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <input type="hidden" name="show_precision" id="show_precision" value="false">

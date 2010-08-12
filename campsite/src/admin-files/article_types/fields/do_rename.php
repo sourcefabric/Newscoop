@@ -6,6 +6,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+if (!SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
 	camp_html_display_error(getGS("You do not have the right to rename article type fields."));
@@ -48,7 +53,7 @@ if (empty($f_name)) {
 			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
 		}
 	}
-	
+
 	if ($correct) {
 		$article = new MetaArticle();
 		if ($article->has_property($f_name) || method_exists($article, $f_name)) {

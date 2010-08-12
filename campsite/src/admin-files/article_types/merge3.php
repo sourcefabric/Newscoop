@@ -63,6 +63,11 @@ foreach ($f_src_c as $destColumn => $srcColumn) {
 // if f_action is Merge, do the merge and return them to article_types/ screen (or an error)
 //
 if ($ok && $f_action == 'Merge') {
+	if (!SecurityToken::isValid()) {
+		camp_html_display_error(getGS('Invalid security token!'));
+		exit;
+	}
+
 	$res = ArticleType::merge($f_src, $f_dest, $f_src_c);
     if (!$res) {
         $errMsgs[] = getGS("Merge failed.");
@@ -141,6 +146,7 @@ if ($ok) {
         ?>
         <P>
         <FORM NAME="dialog" METHOD="POST" ACTION="merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
+		<?php echo SecurityToken::FormParameter(); ?>
         <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
         <TR>
         	<TD COLSPAN="2">
