@@ -5,6 +5,11 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticleType.php");
 
 global $Campsite;
 
+if ($_POST['f_save'] && !SecurityToken::isValid()) {
+    camp_html_display_error(getGS('Invalid security token!'));
+    exit;
+}
+
 if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticle')) {
     camp_html_display_error(getGS("You do not have the right to import XML archives."));
     exit;
@@ -239,6 +244,8 @@ echo camp_html_breadcrumbs($crumbs);
 
 <p>
 <form name="import_archive" enctype="multipart/form-data" method="POST" action="la_import.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php echo SecurityToken::FormParameter(); ?>
+
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2">
