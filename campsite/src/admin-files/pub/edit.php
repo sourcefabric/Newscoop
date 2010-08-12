@@ -64,7 +64,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 if ($g_user->hasPermission("DeletePub")) {
 ?>
 	<TD style="padding-left: 10px;"><A HREF="do_del.php?Pub=<?php p($f_publication_id); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="do_del.php?Pub=<?php p($f_publication_id); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+	<TD><A HREF="do_del.php?Pub=<?php p($f_publication_id); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 <?php } ?>
 </TR>
 </TABLE>
