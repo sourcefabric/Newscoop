@@ -25,9 +25,9 @@
       </li>
       {{ list_sections name="sections" }}
         {{ if $campsite->section->number == $campsite->default_section->number }}
-          <li class="active" id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uripath }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
+          <li class="active" id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
         {{ else }}
-          <li id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uri }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
+          <li id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
         {{ /if }}
       {{ /list_sections }}
       

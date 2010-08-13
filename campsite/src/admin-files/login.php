@@ -134,7 +134,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     }
     ?>
 
-<table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="390">
+<table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
 <tr>
   <td colspan="2"><span class="light"><?php putGS('Please enter your user name and password'); ?></span></td>
 </tr>
