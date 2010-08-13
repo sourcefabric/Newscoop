@@ -452,6 +452,13 @@ loader.insert({
                     }
                 };
 
+                var articlePreviewFormat = function(elLiner, oRecord, oColumn, oData) {
+                    elLiner.innerHTML = '<a href="" onclick="window.open(\'' + oRecord.getData('art_previewlink') +
+                        '\', \'fpreview\', \'resizable=yes, menubar=no, toolbar=yes, width=800, height=600\'); return false">' +
+                        '<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview-16x16.png" ' +
+                        'alt="<?php putGS("Preview"); ?>" title="<?php putGS('Preview'); ?>" border="0" width="16" height="16"></a>';
+                }
+
                 // Keep record of the checkbox states to handle column sorting
                 var checked = [];
 
@@ -478,6 +485,7 @@ loader.insert({
     				{key: "art_lastmodifieddate", label: "<?php putGS('Last Modified'); ?>", formatter:"date"},
     				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", formatter:"date", hidden:true},
     				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", formatter:"date", hidden:true},
+    				{key: "art_preview", label: "", formatter:articlePreviewFormat}
     			];
 
     			// Create a new DataSource
@@ -513,7 +521,8 @@ loader.insert({
     					{key: "art_lockinfo"},
     					{key: "art_lockhighlight"},
     					{key: "art_link"},
-    					{key: "art_languageid"},
+    					{key: "art_previewlink"},
+    					{key: "art_languageid"}
     				],
     				metaFields: {
     					totalRecords: "totalRecords"
