@@ -61,10 +61,14 @@ $articles = Article::GetList($articlesParams, array(array('field'=>'bycreationda
 $return = array();
 foreach($articles as $article) {
     //
-    $articleLink = '/admin/articles/edit.php?f_publication_id=' . $article->getPublicationId()
+    $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
         . '&f_issue_number=' . $article->getIssueNumber() . '&f_section_number=' . $article->getSectionNumber()
         . '&f_article_number=' . $article->getArticleNumber() . '&f_language_id=' . $article->getLanguageId()
         . '&f_language_selected=' . $article->getLanguageId();
+    //
+    $articleLink = '/admin/articles/edit.php' . $articleLinkParams;
+    //
+    $previewLink = '/admin/articles/preview.php' . $articleLinkParams;
     //
     $lockInfo = '';
     $lockHighlight = false;
@@ -128,6 +132,7 @@ foreach($articles as $article) {
         'art_lockinfo' => $lockInfo,
         'art_lockhighlight' => $lockHighlight,
         'art_link' => $articleLink,
+        'art_previewlink' => $previewLink,
         'art_languageid' => $article->getLanguageId(),
     );
 }
