@@ -15,6 +15,9 @@ function camp_check_admin_access($p_request)
 	$XPerm = array();
 	$user = array();
 
+    // records current page as last visited page
+    camp_session_set('lastVisitPage', $_SERVER['REQUEST_URI']);
+
     if (!$LiveUser->isLoggedIn()) {
         return array($access, $user, $XPerm);
     }

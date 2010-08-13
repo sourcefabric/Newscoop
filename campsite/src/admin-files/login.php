@@ -1,5 +1,4 @@
 <?php
-
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/languages.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
@@ -12,6 +11,12 @@ camp_session_set('xorkey', $key);
 // Delete any cookies they currently have.
 setcookie("LoginUserId", "", time() - 86400);
 setcookie("LoginUserKey", "", time() - 86400);
+
+// Get last visited page if any
+$lastVisitPage = '';
+if (camp_session_get('lastVisitPage', '')) {
+    $lastVisitPage = camp_session_get('lastVisitPage', '');
+}
 
 // This can be "userpass", "captcha", "upgrade"
 $error_code = isset($_REQUEST['error_code']) ? $_REQUEST['error_code'] : '';
@@ -90,6 +95,9 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 }
 ?>
 <form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<?php if ($lastVisitPage) { ?>
+<input type="hidden" name="f_redirect" value="<?php p(urlencode($lastVisitPage)); ?>" />
+<?php } ?>
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0" />
 <?php } else { ?>
