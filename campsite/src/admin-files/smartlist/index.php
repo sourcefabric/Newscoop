@@ -82,7 +82,6 @@ echo camp_html_breadcrumbs($crumbs);
                     <option value="publish_date"><?php putGS('Date'); ?></option>
                     <option value="publish_range"><?php putGS('Date Range'); ?></option>
                     <option value="iduser"><?php putGS('Creator'); ?></option>
-                    <option value="language"><?php putGS('Language'); ?></option>
                     <option value="workflow_status"><?php putGS('Status'); ?></option>
                     <option value="topic"><?php putGS('Topic'); ?></option>
                     <option value="type"><?php putGS('Type'); ?></option>
@@ -295,7 +294,7 @@ loader.insert({
     			// Define the DataTable's columns
     			myColumnDefs = [
     				{key: "art_id", label: "<input id=\"chkall\" name=\"chkall\" value=\"\" type=\"checkbox\">",formatter:"check"},
-    				{key: "art_name", label: "<?php putGS('Name'); ?>", formatter:articleTitleFormat, width:300, resizeable:true},
+    				{key: "art_name", label: "<?php putGS('Name'); ?>", sortable:true, formatter:articleTitleFormat, width:300, resizeable:true},
     				{key: "art_type", label: "<?php putGS('Type'); ?>", width:"auto"},
     				{key: "art_createdby", label: "<?php putGS('Created by'); ?>", width:"auto", hidden:true},
     				{key: "art_author", label: "<?php putGS('Author'); ?>", width:"auto"},
@@ -306,10 +305,10 @@ loader.insert({
     				{key: "art_topics", label: "<?php putGS('Topics'); ?>", formatter:"number"},
     				//{key: "art_comments", label: "<?php putGS('Comments'); ?>", formatter:"number", hidden:true},
     				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Yes"); ?>","<?php putGS("No"); ?>"],disableBtns:true}), hidden:true},
-    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", formatter:"number"},
+    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", sortable:true, formatter:"number"},
     				{key: "art_lastmodifieddate", label: "<?php putGS('Last Modified'); ?>", formatter:"date"},
-    				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", formatter:"date", hidden:true},
-    				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", formatter:"date", hidden:true},
+    				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", sortable:true, formatter:"date", hidden:true},
+    				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", sortable:true, formatter:"date", hidden:true},
     				{key: "art_preview", label: "", formatter:articlePreviewFormat}
     			];
 
@@ -1124,26 +1123,21 @@ loader.insert({
     		 * the column sorting state as well.
     		 */
     		requestBuilder: function (oState, oSelf) {
-    			/* We aren't initializing sort and dir variables. If you are
-    			using column sorting built into the DataTable, use this
-    			set of variable initializers.
-    			var sort, dir, startIndex, results; */
-    			var startIndex, results;
+    			var sort, dir, startIndex, results;
 
     			oState = oState || {pagination: null, sortedBy: null};
 
-    			/* If using column sorting built into DataTable, these next two lines
-    			will properly set the current _sortedBy_ column and the _sortDirection_
     			sort = (oState.sortedBy) ? oState.sortedBy.key : oSelf.getColumnSet().keys[0].getKey();
-    			dir = (oState.sortedBy && oState.sortedBy.dir === DataTable.CLASS_DESC) ? "desc" : "asc"; */
+    			dir = (oState.sortedBy && oState.sortedBy.dir === DataTable.CLASS_DESC) ? "desc" : "asc";
     			startIndex = (oState.pagination) ? oState.pagination.recordOffset : 0;
     			results = (oState.pagination) ? oState.pagination.rowsPerPage : null;
 
                 params = "&results=" + results +
-    					"&startIndex=" + startIndex +
-    				    "&query=" + Dom.get('dt_input').value +
-    				    "&publication=" + CF.settings.publication +
-                        "&filter_type=" + CF.settings.filter_type;
+                    "&startIndex=" + startIndex +
+                    "&sort=" + sort + "&dir=" + dir +
+                    "&query=" + Dom.get('dt_input').value +
+                    "&publication=" + CF.settings.publication +
+                    "&filter_type=" + CF.settings.filter_type;
                 if (Dom.inDocument('filter_input') || CF.settings.filter_input) {
                     params += "&filter_input=" + CF.settings.filter_input;
                 }

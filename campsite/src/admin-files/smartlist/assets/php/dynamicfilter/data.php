@@ -56,7 +56,28 @@ if (isset($_REQUEST['filter_type']) && strlen($_REQUEST['filter_type']) > 0
     }
 }
 
-$articles = Article::GetList($articlesParams, array(array('field'=>'bycreationdate', 'dir'=>'asc')), 0, 100, $articlesCount, true);
+$sort = '';
+// Sorted?
+if(strlen($_GET['sort']) > 0) {
+    $sort = $_GET['sort'];
+}
+
+// Sort dir?
+if((strlen($_GET['dir']) > 0) && ($_GET['dir'] == 'desc')) {
+    $sortDir = 'desc';
+} else {
+    $sortDir = 'asc';
+}
+
+switch($sort) {
+case 'art_reads': $sortBy = 'bypopularity'; break;
+case 'art_publishdate': $sortBy = 'bypublishdate'; break;
+case 'art_name': $sortBy = 'byname'; break;
+case 'art_creationdate':
+default:
+    $sortBy = 'bycreationdate'; break;
+}
+$articles = Article::GetList($articlesParams, array(array('field'=>$sortBy, 'dir'=>$sortDir)), 0, 100, $articlesCount, true);
 
 $return = array();
 foreach($articles as $article) {
@@ -142,9 +163,11 @@ $return = array_slice($return, $startIndex, $results);
 require_once('JSON.php');    
 $json = new Services_JSON();
 echo($json->encode(array(
-	"recordsReturned" => count($return),
+    "recordsReturned" => count($return),
     "totalRecords" => $articlesCount,
     "startIndex" => $startIndex,
+    "sort" => $sort,
+    "dir" => $dir,
     "records" => $return,
 )));
 ?>
