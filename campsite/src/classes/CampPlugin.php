@@ -196,65 +196,98 @@ class CampPlugin extends DatabaseObject
         }
     }
 
+    /**
+     * Return a list or available or activated plugins.
+     * The method have to return an (empty) array.
+     *
+     * @param boolean $p_selectEnabled
+     * @param boolean $p_reload
+     * @return array
+     */
     static public function GetPluginsInfo($p_selectEnabled = false, $p_reload = false)
     {
-    	if (!is_array(self::$m_pluginsInfo)) {
-    		self::$m_pluginsInfo = array(0=>null, 1=>null);
-    	}
-    	$p_selectEnabled = $p_selectEnabled ? 1 : 0;
-        if (!is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
-
-            if (!$p_reload && self::FetchCachePluginsInfo()
-            && isset(self::$m_pluginsInfo[$p_selectEnabled])) {
-                foreach (self::$m_pluginsInfo[1] as $entry => $info) {
-                    if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
-                        include_once (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
-                    }
-                }
-                return self::$m_pluginsInfo[$p_selectEnabled];
-            }
-
-            if (!is_dir(CS_PATH_PLUGINS)) {
-                continue;
-            }
-
-            self::$m_pluginsInfo[$p_selectEnabled] = array();
-
-            $enabledPluginsNames = array();
-            if ($p_selectEnabled) {
-            	$enabledPlugins = self::GetEnabled();
-                if (count($enabledPlugins) == 0) {
-                	self::StoreCachePluginsInfo();
-                	return self::$m_pluginsInfo[$p_selectEnabled];
-                }
-            	foreach ($enabledPlugins as $plugin) {
-            		$enabledPluginsNames[] = $plugin->getName();
-            	}
-            }
-
-            $handle=opendir(CS_PATH_PLUGINS);
-            while ($entry = readdir($handle)) {
-                if ($entry != "." && $entry != ".." && $entry != '.svn'
-                && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)
-                && (!$p_selectEnabled || array_search($entry, $enabledPluginsNames) !== false)) {
-                    if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
-                        include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
-                        self::$m_pluginsInfo[$p_selectEnabled][$entry] = $info;
-                    }
-                }
-            }
-            closedir($handle);
-            self::StoreCachePluginsInfo();
+        $p_selectEnabled = $p_selectEnabled ? 'enabled' : 'available';
+        
+        if ($p_reload) {
+            self::FetchFilePluginsInfo();
         }
 
-        return self::$m_pluginsInfo[$p_selectEnabled];
+        if (is_array(self::$m_pluginsInfo) && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
+            $ret = self::$m_pluginsInfo[$p_selectEnabled];
+            return $ret;
+        } else {
+            if (self::FetchCachePluginsInfo() && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
+                $ret = self::$m_pluginsInfo[$p_selectEnabled];
+                return $ret;
+            }
+            if (self::FetchFilePluginsInfo() && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
+                $ret = self::$m_pluginsInfo[$p_selectEnabled];
+                return $ret;
+            }
+        }
+        self::$m_pluginsInfo = array('available' => array(), 'enabled' => array());
+        return array();
+    }
+    
+    /**
+     * Fetch plugin infos from the %plugin.info files.
+     *
+     * @return boolen plugins were found
+     */
+    private static function FetchFilePluginsInfo()
+    {
+        if (!is_dir(CS_PATH_PLUGINS)) {
+            return false;
+        }
+        
+        $pluginsInfo = array('available' => null, 'enabled' => array());
+        
+        $enabledPluginsNames = array();
+        $enabledPlugins = self::GetEnabled();
+        foreach ($enabledPlugins as $plugin) {
+            $enabledPluginsNames[] = $plugin->getName();
+        }
+        
+        $handle=opendir(CS_PATH_PLUGINS);
+        while ($entry = readdir($handle)) {
+            if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)) {
+                if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
+                    include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
+                    $pluginsInfo['available'][$entry] = $info;
+                    if (array_search($entry, $enabledPluginsNames) !== false) {
+                        $pluginsInfo['enabled'][$entry] = $info;   
+                    }
+                }
+            }
+        }
+        closedir($handle);
+        
+	    self::$m_pluginsInfo = $pluginsInfo;
+        self::StoreCachePluginsInfo();   
+			    
+        if (is_array($pluginsInfo['available'])) {
+			return true;
+        };
+        return false;
     }
 
+    /**
+     * Fetch plugin infos from cache.
+     * The method have to validate if plugins still exists in filesystem.
+     *
+     * @return boolean plugins were found in cache
+     */
     private static function FetchCachePluginsInfo()
     {
     	if (CampCache::IsEnabled()) {
     		$pluginsInfo = CampCache::singleton()->fetch(self::CACHE_KEY_PLUGINS_LIST);
-    		if ($pluginsInfo !== false && is_array($pluginsInfo)) {
+    		if ($pluginsInfo !== false && is_array($pluginsInfo['available'])) {
+    		    foreach ($pluginsInfo['available'] as $entry => $info) {
+    		        if (!file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
+    		            unset($pluginsInfo['available'][$entry]);
+    		            unset($pluginsInfo['enabled'][$entry]);
+    		        }
+    		    }
     			self::$m_pluginsInfo = $pluginsInfo;
     			return true;
     		}
