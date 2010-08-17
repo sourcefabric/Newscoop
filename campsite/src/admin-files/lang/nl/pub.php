@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "Tijd eenheid kosten per een sectie");
 regGS("Paid subscriptions", "Betaalde abonnementen");
 regGS("Default time period", "Standaard tijd periode");
 regGS("Go To Issues", "Ga na Uitgaven");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Naam<BR><SMALL>(klik om uitgaven te zien)</SMALL>");
 regGS("Delete publication $1", "Verwijder publicatie $1");
 regGS("No publications.", "Geen publicaties.");
 regGS("Default Site Alias", "Standaard Site Alias");

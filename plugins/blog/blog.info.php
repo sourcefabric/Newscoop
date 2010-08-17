@@ -33,7 +33,12 @@ $info = array(
         'plugin_blog' => 'N',
     ),
     'permissions' => array(
-        'plugin_blog_admin' => 'User may manage Blogs',
+    /**
+     * Do not remove this comment: it is needed for the localizer
+     * getGS('User may manage Blogs');
+     * getGS('User may moderate Blogs');
+     */
+    	'plugin_blog_admin' => 'User may manage Blogs',
         'plugin_blog_moderator' => 'User may moderate Blogs',
     ),
     'template_engine' => array(

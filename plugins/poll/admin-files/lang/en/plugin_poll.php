@@ -1,4 +1,6 @@
 <?php 
+regGS("Are you sure you want to delete the poll \"$1\"?", "Are you sure you want to delete the poll \"$1\"?");
+regGS("click to edit", "click to edit");
 regGS("Polls", "Polls");
 regGS("You must select a file to upload.", "You must select a file to upload.");
 regGS("You do not have the right to delete files.", "You do not have the right to delete files.");

@@ -37,6 +37,13 @@ $info = array(
         'plugin_interview_guest'=>'N',
     ),
     'permissions' => array(
+    /**
+     * Do not remove this comment: it is needed for the localizer
+     * getGS('User recives notification about new interviews');
+     * getGS('User is interview admin');
+     * getGS('User is interview moderator');
+     * getGS('User is interview guest');
+     */
         'plugin_interview_notify' => 'User recives notification about new interviews',
         'plugin_interview_admin' => 'User is interview admin',
         'plugin_interview_moderator' => 'User is interview moderator',

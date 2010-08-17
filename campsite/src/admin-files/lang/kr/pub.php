@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "한 섹션당 시간 단가");
 regGS("Paid subscriptions", "정기 구독");
 regGS("Default time period", "기본 시간 기간");
 regGS("Go To Issues", "이슈로 가기 ");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "이름<BR><SMALL>(이슈 보려면 클릭)</SMALL>");
 regGS("Delete publication $1", "출판 $1 삭제");
 regGS("No publications.", "출판안됨");
 regGS("Default Site Alias", "기본사이트아리아스");

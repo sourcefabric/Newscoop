@@ -179,7 +179,7 @@ if (count($polls)) {
             <TD width="10">&nbsp;</TD>
             <TD ALIGN="LEFT" VALIGN="TOP" width="800">
                 <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_order=byname"><?php  putGS("Name"); ?></a>
-                &nbsp;<SMALL>(click to edit)</SMALL>
+                &nbsp;<SMALL>(<?php putGS('click to edit'); ?></SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="30">
                 <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_order=bybegin"><?php  putGS("Begin"); ?></a>
@@ -253,7 +253,7 @@ if (count($polls)) {
                 </td>
 
                 <td align='center'>
-                    <a href="javascript: if (confirm('Are you sure to delete poll &quot;<? echo htmlspecialchars($poll->getProperty('title')); ?>&quot;')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
+                    <a href="javascript: if (confirm('<?php echo camp_javascriptspecialchars(getGS('Are you sure you want to delete the poll "$1"?', $poll->getProperty('title'))); ?>')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                     </a>
                 </td>

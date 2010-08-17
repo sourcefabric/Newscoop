@@ -15,7 +15,12 @@ $info = array(
         'plugin_poll' => 'N',
     ),
     'permissions' => array(
-        'plugin_poll' => 'User may manage Polls',
+    /**
+     * Do not remove this comment: it is needed for the localizer
+     * getGS('User may manage Polls');
+     *
+     */
+    	'plugin_poll' => 'User may manage Polls'
     ),
     'no_menu_scripts' => array(
         '/poll/assign_popup.php',
