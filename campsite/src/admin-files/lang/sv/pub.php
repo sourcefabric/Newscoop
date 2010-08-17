@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "Tidsenhetskostnad per sektion");
 regGS("Paid subscriptions", "Betalda prenumerationer");
 regGS("Default time period", "Grundtidsperiod");
 regGS("Go To Issues", "Gå till utgåvor");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Namn<BR><SMALL>(klicka för att se utgåvor)</SMALL>");
 regGS("Delete publication $1", "Radera publikation $1");
 regGS("No publications.", "Inga publikationer.");
 regGS("Default Site Alias", "Förvalt sajtalias");

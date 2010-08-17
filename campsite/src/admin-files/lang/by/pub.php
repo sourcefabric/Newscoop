@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Аліяс сайта для выдання \"$1\" быў зменены на \"$2\".");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "Аліяс сайта \"$1\" быў дададзены да выдання \"$2\".");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Аліяс сайта \"$1\" быў выдалены з выдання \"$2\".");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "Кошт адзінкi часу за а
 regGS("Paid subscriptions", "Платныя падпiскі");
 regGS("Default time period", "Пэрыяд  часу па змаўчаньні");
 regGS("Go To Issues", "Перайсьцi да выпускаў");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Назва<BR><SMALL>(нацiсьнiце для прагляду выпуску)</SMALL> ");
 regGS("Delete publication $1", "Выдалiць выданьне $1");
 regGS("No publications.", "Няма выданьняў.");
 regGS("Default Site Alias", "Сынонім сайту па змаўчаньні");

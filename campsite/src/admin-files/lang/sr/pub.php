@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "Цена по временској је
 regGS("Paid subscriptions", "Плаћене претплате");
 regGS("Default time period", "Подразумевани временски период");
 regGS("Go To Issues", "Иди на издања");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Име<br><small>(кликните за преглед издања)</small>");
 regGS("Delete publication $1", "Обриши публикацију $1");
 regGS("No publications.", "Нема публикација");
 regGS("Default Site Alias", "Основни сајт алиас");

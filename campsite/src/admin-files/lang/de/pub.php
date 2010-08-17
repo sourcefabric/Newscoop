@@ -1,4 +1,5 @@
 <?php 
+regGS("click to see issues", "");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
@@ -37,7 +38,6 @@ regGS("Time unit cost per one section", "Kosten der Zeiteinheit für eine Rubrik
 regGS("Paid subscriptions", "Bezahlte Abonnements");
 regGS("Default time period", "Voreinstellung der Zeiteinheit");
 regGS("Go To Issues", "Gehe zu Ausgabe");
-regGS("Name<BR><SMALL>(click to see issues)</SMALL>", "Name");
 regGS("Delete publication $1", "Publikation $1 löschen");
 regGS("No publications.", "Keine Publikationen");
 regGS("Default Site Alias", "Alias der voreingestellten Seite");

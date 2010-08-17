@@ -1,4 +1,6 @@
 <?php 
+regGS("User may moderate Blogs", "");
+regGS("User may manage Blogs", "");
 regGS("read only", "solo lectura");
 regGS("You are not allowed to edit this blog.", "No está autorizado para editar este blog.");
 regGS("Titel", "Título");
