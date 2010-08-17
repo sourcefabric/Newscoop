@@ -300,7 +300,7 @@ class BlogComment extends DatabaseObject {
             ),
             'mood'      => array(
                 'element'   => 'BlogComment[fk_mood_id]',
-                'type'      => 'radio',
+                'type'      => 'select',
                 'label'     => getGS('Mood'),
                 'default'   => $this->getProperty('fk_mood_id'),
                 'options'   => Blog::GetMoodList($this->getProperty('fk_language_id') ?

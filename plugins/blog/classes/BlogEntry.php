@@ -377,7 +377,7 @@ class BlogEntry extends DatabaseObject {
             ),
             'mood'      => array(
                 'element'   => 'BlogEntry[fk_mood_id]',
-                'type'      => 'radio',
+                'type'      => 'select',
                 'label'     => getGS('Mood'),
                 'default'   => $data['fk_mood_id'],
                 'options'   => Blog::GetMoodList(!empty($data['fk_laguage_id']) ? $data['fk_laguage_id'] : Blog::GetBlogLanguageId($data['fk_blog_id']))

@@ -524,6 +524,8 @@ class Blog extends DatabaseObject {
 
     public static function GetMoodList($p_language_id)
     {
+        $options = array(0 => '------');
+      
         foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
             $currentTopic = camp_array_peek($path, false, -1);
             $name = $currentTopic->getName($p_language_id);
