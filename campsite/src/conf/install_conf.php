@@ -13,18 +13,24 @@
 $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
 $Campsite['CAMPSITE_DIR'] = (strlen($GLOBALS['g_campsiteDir']) > 0)
-     ? $GLOBALS['g_campsiteDir'] : dirname(dirname(__FILE__));
+    ? $GLOBALS['g_campsiteDir'] : dirname(dirname(__FILE__));
 $Campsite['ETC_DIR'] = $Campsite['CAMPSITE_DIR'].'/conf';
 $Campsite['BIN_DIR'] = $Campsite['CAMPSITE_DIR'].'/bin';
 $Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];
 
 $Campsite['HTML_DIR'] = $Campsite['CAMPSITE_DIR'];
 
-if (!isset($_SERVER['SERVER_PORT']))
-{
-        $_SERVER['SERVER_PORT'] = 80;
+if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1)) {
+    $scheme = 'https://';
+} elseif (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) {
+    $scheme = 'https://';
+} else {
+    $scheme = 'http://';
 }
-$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+
+if (!isset($_SERVER['SERVER_PORT'])) {
+    $_SERVER['SERVER_PORT'] = 80;
+}
 $Campsite['HOSTNAME'] = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : "";
 if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
     $Campsite['HOSTNAME'] .= ':'.$_SERVER['SERVER_PORT'];
@@ -44,7 +50,7 @@ $Campsite['IMAGE_PREFIX'] = 'cms-image-';
 $Campsite['IMAGEMAGICK_INSTALLED'] = true;
 $Campsite['THUMBNAIL_MAX_SIZE'] = 64;
 $Campsite['THUMBNAIL_COMMAND'] = 'convert -sample '
-                .$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
+    .$Campsite['THUMBNAIL_MAX_SIZE'].'x'.$Campsite['THUMBNAIL_MAX_SIZE'];
 $Campsite['THUMBNAIL_DIRECTORY'] = $Campsite['IMAGE_DIRECTORY'].'/thumbnails/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/thumbnails/';
 $Campsite['THUMBNAIL_PREFIX'] = 'cms-thumb-';
