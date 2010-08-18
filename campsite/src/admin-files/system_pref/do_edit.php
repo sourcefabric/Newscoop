@@ -84,6 +84,11 @@ SystemPref::Set('TimeZone', $f_time_zone);
 SystemPref::Set('CacheEngine', $f_cache_engine);
 if ($f_cache_enabled == 'Y') {
     if (CampCache::IsSupported($f_cache_engine)) {
+        if (SystemPref::Get("SiteCacheEnabled") == 'N') {
+            // clear the cache before enable, it could contain old settings
+            CampCache::singleton()->Clear();
+            CampCache::singleton()->Clear(true);
+        }
         SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
     } else {
         $msg_ok = 0;
