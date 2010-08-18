@@ -275,7 +275,7 @@ class BlogComment extends DatabaseObject {
             'title'     => array(
                 'element'   => 'BlogComment[title]',
                 'type'      => 'text',
-                'label'     => getGS('Titel'),
+                'label'     => getGS('Title'),
                 'default'   => html_entity_decode($this->getProperty('title'))
             ),
             'user_name'     => array(

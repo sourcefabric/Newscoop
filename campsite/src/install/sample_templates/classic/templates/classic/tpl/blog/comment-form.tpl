@@ -12,7 +12,8 @@
                 <tr><td>Your Name</td><td>{{ blogcomment_edit attribute=user_name }}</td></tr>
                 <tr><td>Your EMail</td><td> {{ blogcomment_edit attribute=user_email }}</td></tr>
             {{ /if }}
-            
+           
+            <tr><td>Title</td><td> {{ blogcomment_edit attribute=title }}</td></tr>
             <tr><td>Comment</td><td> {{ blogcomment_edit attribute=content  wysiwyg=1 html_code="rows=6 cols=30" }}</td></tr>
             <tr><td>Mood</td><td> {{ blogcomment_edit attribute=mood  html_code="size=39" }}</td></tr>
             
