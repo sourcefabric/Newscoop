@@ -61,6 +61,10 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
     $constraints .= "status is $f_status ";
 }
 
+if ($f_admin_status = mysql_escape_string(Input::Get('f_admin_status', 'string'))) {
+    $constraints .= "admin_status is $f_admin_status ";
+}
+
 $parameters = array(
     'constraints' => $constraints,
     'length' => $f_length,
