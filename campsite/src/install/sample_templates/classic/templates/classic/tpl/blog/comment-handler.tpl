@@ -7,7 +7,7 @@
         Your EMail: {{ $campsite->preview_blogcomment_action->user_email }}<br>
         Title: {{ $campsite->preview_blogcomment_action->title }}<br>
         Comment: {{ $campsite->preview_blogcomment_action->content }}<br>
-        Mood: {{ $campsite->preview_blogcomment_action->mood }}
+        Mood: {{ $campsite->preview_blogcomment_action->mood->name }}
     {{ else }}
         <b><i>{{ $campsite->preview_blogcomment_action->error_message }}</i></b> 
     {{ /if }}
