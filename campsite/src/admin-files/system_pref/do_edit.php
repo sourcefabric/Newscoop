@@ -84,18 +84,20 @@ SystemPref::Set('TimeZone', $f_time_zone);
 SystemPref::Set('CacheEngine', $f_cache_engine);
 if ($f_cache_enabled == 'Y') {
     if (CampCache::IsSupported($f_cache_engine)) {
-        if (SystemPref::Get("SiteCacheEnabled") == 'N') {
-            // clear the cache before enable, it could contain old settings
-            CampCache::singleton()->Clear();
-            CampCache::singleton()->Clear(true);
-        }
+    	$wasDisabled = SystemPref::Get("SiteCacheEnabled") == 'N';
         SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+        if ($wasDisabled) {
+        	CampCache::singleton()->clear('user');
+        	CampCache::singleton()->clear();
+        }
     } else {
         $msg_ok = 0;
         camp_html_add_msg(getGS('Invalid: You need PHP $1 enabled in order to use the caching system.', $f_cache_engine));
     }
 } else {
-    SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+	CampCache::singleton()->clear('user');
+	CampCache::singleton()->clear();
+	SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
 }
 
 // Image cache lifetime
