@@ -1,3 +1,34 @@
+3.4.2 (August 23, 2010)
+  Improvements
+  ------------
+  - CS-2166: Integrate Syntax Highlighter into Article Editor
+  - CS-2232: Implement CSRF protection for article type operations
+  - CS-2210: "Preview article" anywhere in lists and edit article screen
+  - CS-2131: Write a text truncate modifier that works for UTF-8 text
+  - CS-2187: Implement custom ordering in the article universal list
+  - CS-2190: Use dropdown list for blog plugin mood selector
+  - CS-2227: Add pagination below the Universal List as well
+  - CS-2217: Return to last used page on session timeout
+
+  Bugs Fixed
+  ----------
+  - CS-2229: TinyMCE camp plugins don't work
+  - CS-2237: New/deleted plugins in filesystem are not correctly reflected
+             in cache
+  - CS-2230: Multi-linguality is not working for the admin interface
+  - CS-2233: The delete operation from the publication edit screen fails
+  - CS-2228: Add Article action fails
+  - CS-2185: Universal List CSS issues (part 2)
+  - CS-2215: Language codes need more letters
+  - CS-2182: Traslation missing for some UI text
+  - CS-2195: Blog plugin: Top bar, no filter the state of admin status
+  - CS-2194: When adding a new blog post comment in the frontend the field
+             "Title" does not exist in the form
+  - CS-2239: Blog plugin: preview does not show the mood
+  - CS-2238: Cache may return outdated settings
+  - CS-2240: The plugins menu is not updated on plugin enable
+
+
 3.4.1 (July 30, 2010)
   Improvements
   ------------
