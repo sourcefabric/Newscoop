@@ -26,9 +26,8 @@ if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
 require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 
-// define authentication specific prefix
-$authType = $liveuserConfig['authContainers']['DB']['type'];
-$prefix = $authType == 'DB' ? '/' : '/' . strtolower($authType) . '_';
+// detect extended login/logout files
+$prefix = file_exists(CS_PATH_SITE.DIR_SEP.'admin-files'.DIR_SEP.'ext_login.php') ? '/ext_' : '/';
 
 global $ADMIN_DIR;
 global $ADMIN;

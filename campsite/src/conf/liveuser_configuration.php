@@ -217,6 +217,11 @@ $liveuserConfig = array (
         )
     );
 
+// load custom liveuser configuration
+$filename = CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration_ext.php';
+if (file_exists($filename)) {
+    include($filename);
+}
 
 require_once(CS_PATH_PEAR_LOCAL.DIR_SEP.'LiveUser'.DIR_SEP.'Admin.php');
 

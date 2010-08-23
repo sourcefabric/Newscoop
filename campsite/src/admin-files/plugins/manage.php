@@ -71,6 +71,11 @@ if (Input::Get('p_uninstall')) {
     $Plugin->uninstall();
 }
 
+$plugins = CampPlugin::GetEnabled(true);
+foreach ($plugins as $plugin) {
+    camp_load_translation_strings("plugin_".$plugin->getName());
+}
+
 // check if update was needed
 CampPlugin::GetPluginsInfo(false, true);
 if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {

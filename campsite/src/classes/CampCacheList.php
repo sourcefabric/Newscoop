@@ -92,6 +92,14 @@ class CampCacheList
     }
 
 
+    public function deleteFromCache()
+    {
+    	if (CampCache::IsEnabled()) {
+    		CampCache::singleton()->delete($this->getCacheKey());
+    	}
+    }
+
+
     /**
      * Generate the cache key for the list based on parameters.
      *

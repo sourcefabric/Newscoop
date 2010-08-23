@@ -3,7 +3,7 @@ regGS("User may moderate Blogs", "User may moderate Blogs");
 regGS("User may manage Blogs", "User may manage Blogs");
 regGS("read only", "read only");
 regGS("You are not allowed to edit this blog.", "You are not allowed to edit this blog.");
-regGS("Titel", "Titel");
+regGS("Title", "Title");
 regGS("Reset", "Reset");
 regGS("Remove this image", "Remove this image");
 regGS("Remove this Image", "Remove this Image");

@@ -60,6 +60,10 @@ if ($f_status = mysql_escape_string(Input::Get('f_status', 'string'))) {
     $constraints .= "status is $f_status ";
 }
 
+if ($f_admin_status = mysql_escape_string(Input::Get('f_admin_status', 'string'))) {
+    $constraints .= "admin_status is $f_admin_status ";
+}
+
 $parameters = array(
     'constraints' => $constraints,
     'length' => $f_length,
@@ -111,7 +115,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <p>
 
 <FORM name="selector" method="get">
-<input type="hidden" name="f_blogentry_id" value="<?php p($f_entry_id) ?>">
+<input type="hidden" name="f_entry_id" value="<?php p($f_entry_id) ?>">
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -145,7 +149,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
             <TD ALIGN="left">
                 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
                 <TR>
-                    <TD><?php  putGS('Admin Status'); ?>:</TD>
+                    <TD><?php  putGS('Status'); ?>:</TD>
                     <TD valign="middle">
                         <SELECT NAME="f_status" class="input_select" onchange="this.form.submit()">
                         <option value="0"><?php putGS("All"); ?></option>
@@ -153,6 +157,26 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
                         foreach (array('pending', 'online', 'offline') as $item) {
                             echo '<OPTION value="'.$item.'"' ;
                             if ($item == $f_status) {
+                                echo " selected";
+                            }
+                            echo '>'.getGS($item).'</option>';
+                        } ?>
+                        </SELECT>
+                    </TD>
+                </TR>
+                </TABLE>
+            </TD>
+            <TD ALIGN="left">
+                <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" >
+                <TR>
+                    <TD><?php  putGS('Admin Status'); ?>:</TD>
+                    <TD valign="middle">
+                        <SELECT NAME="f_admin_status" class="input_select" onchange="this.form.submit()">
+                        <option value="0"><?php putGS("All"); ?></option>
+                        <?php
+                        foreach (array('pending', 'online', 'offline') as $item) {
+                            echo '<OPTION value="'.$item.'"' ;
+                            if ($item == $f_admin_status) {
                                 echo " selected";
                             }
                             echo '>'.getGS($item).'</option>';
