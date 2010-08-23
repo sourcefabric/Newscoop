@@ -27,6 +27,7 @@
   - CS-2239: Blog plugin: preview does not show the mood
   - CS-2238: Cache may return outdated settings
   - CS-2240: The plugins menu is not updated on plugin enable
+  - CS-2242: Invalid security token when editing the article attachment description
 
 
 3.4.1 (July 30, 2010)
