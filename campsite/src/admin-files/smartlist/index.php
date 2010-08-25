@@ -305,10 +305,10 @@ loader.insert({
     				{key: "art_topics", label: "<?php putGS('Topics'); ?>", formatter:"number"},
     				//{key: "art_comments", label: "<?php putGS('Comments'); ?>", formatter:"number", hidden:true},
     				{key: "art_comments", label: "<?php putGS('Comments'); ?>", editor: new YAHOO.widget.RadioCellEditor({radioOptions:["<?php putGS("Yes"); ?>","<?php putGS("No"); ?>"],disableBtns:true}), hidden:true},
-    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", sortable:true, formatter:"number"},
+    				{key: "art_reads", label: "<?php putGS('Reads'); ?>", sortable:true, sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC}, formatter:"number"},
     				{key: "art_lastmodifieddate", label: "<?php putGS('Last Modified'); ?>", formatter:"date"},
-    				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", sortable:true, formatter:"date", hidden:true},
-    				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", sortable:true, formatter:"date", hidden:true},
+    				{key: "art_publishdate", label: "<?php putGS('Publish Date'); ?>", sortable:true, sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC}, formatter:"date", hidden:true},
+    				{key: "art_creationdate", label: "<?php putGS('Creation Date'); ?>", sortable:true, sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC}, formatter:"date", hidden:true},
     				{key: "art_preview", label: "", formatter:articlePreviewFormat}
     			];
 
