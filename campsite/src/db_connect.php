@@ -8,7 +8,7 @@ global $g_ado_db;
 global $Campsite;
 
 if (!isset($g_ado_db)) {
-	$g_ado_db = ADONewConnection('mysql'); # eg 'mysql' or 'postgres'
+	$g_ado_db = ADONewConnection($Campsite['db']['type']); # eg 'mysql' or 'postgres'
 	//$g_ado_db->debug = true;
 	// Set fetch mode to return associative arrays
 	$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);

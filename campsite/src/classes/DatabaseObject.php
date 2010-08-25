@@ -336,13 +336,18 @@ class DatabaseObject {
 	 */
 	public function getKeyWhereClause()
 	{
+	    global $g_ado_db;
+
 		$whereParts = array();
 		foreach ($this->m_keyColumnNames as $columnName) {
-			if (isset($this->m_oldKeyValues[$columnName])) {
-				$whereParts[] = '`' . $columnName . "`='".mysql_real_escape_string($this->m_oldKeyValues[$columnName]) ."'";
+            $value = isset($this->m_oldKeyValues[$columnName]) ? $this->m_oldKeyValues[$columnName]
+                : $this->m_data[$columnName];
+			if ($g_ado_db->databaseType == 'mysql') {
+			    $whereParts[] = '`' . $columnName . "`='"
+                    .mysql_real_escape_string($value) ."'";
 			} else {
-				$whereParts[] = '`' . $columnName . "`='"
-					.mysql_real_escape_string($this->m_data[$columnName]) ."'";
+			    $whereParts[] = '`' . $columnName . "`='"
+                    .mysqli_real_escape_string($g_ado_db->_connectionID, $value) ."'";
 			}
 		}
 		return implode(' AND ', $whereParts);
