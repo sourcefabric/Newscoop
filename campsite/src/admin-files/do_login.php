@@ -44,7 +44,7 @@ function camp_successful_login($user, $f_login_language)
         setcookie("LoginUserKey", $user->getKeyId());
         setcookie("TOL_Language", $f_login_language);
         Article::UnlockByUser($user->getUserId());
-        if (isset($_POST['f_redirect']) && $_POST['f_redirect'] !='/admin') {
+        if (isset($_POST['f_redirect']) && substr($_POST['f_redirect'], -8, 8) != '%2Fadmin') {
             camp_html_goto_page(urldecode($_POST['f_redirect']));
         } else {
             camp_html_goto_page("/$ADMIN/index.php");
