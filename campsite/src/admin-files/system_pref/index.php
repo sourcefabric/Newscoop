@@ -19,10 +19,10 @@ echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-$htmlFormData['SiteTitle'] = htmlentities(SystemPref::Get("SiteTitle"));
-$htmlFormData['SiteMetaKeywords'] = htmlentities(SystemPref::Get("SiteMetaKeywords"));
-$htmlFormData['SiteMetaDescription'] = htmlentities(SystemPref::Get("SiteMetaDescription"));
-$htmlFormData['SiteSecretKey'] = htmlentities(SystemPref::Get("SiteSecretKey"));
+$htmlFormData['SiteTitle'] = htmlspecialchars(SystemPref::Get("SiteTitle"));
+$htmlFormData['SiteMetaKeywords'] = htmlspecialchars(SystemPref::Get("SiteMetaKeywords"));
+$htmlFormData['SiteMetaDescription'] = htmlspecialchars(SystemPref::Get("SiteMetaDescription"));
+$htmlFormData['SiteSecretKey'] = htmlspecialchars(SystemPref::Get("SiteSecretKey"));
 
 $max_upload_filesize = SystemPref::Get("MaxUploadFileSize");
 if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
