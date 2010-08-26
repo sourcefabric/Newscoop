@@ -67,6 +67,7 @@ if ($res !== 0) {
 }
 CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
+SystemPref::DeleteSystemPrefsFromCache();
 
 CampRequest::SetVar('step', 'finish');
 $install = new CampInstallation();
