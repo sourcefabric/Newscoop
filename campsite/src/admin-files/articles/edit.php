@@ -211,7 +211,7 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/container.css" />
 
-<link rel="stylesheet" type="text/css" href="/admin/articles/yui-assets/styles.css" />
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/styles.css" />
 
 
 <?php
