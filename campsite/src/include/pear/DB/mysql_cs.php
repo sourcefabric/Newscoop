@@ -17,4 +17,10 @@ class DB_mysql_cs extends DB_mysql
 
         return;
     }
+
+    function disconnect()
+    {
+        $this->connection = null;
+        return true;
+    }
 }
