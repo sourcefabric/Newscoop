@@ -25,4 +25,7 @@
 </center>
 </div><!-- id="footerlinksinner" -->
 </div><!-- id="footerlinksinner" -->
+<div style="text-align: center; margin-bottom: 10px">
+      <A HREF="http://campsite.sourcefabric.org"><IMG SRC="http://www.sourcefabric.org/fs/poweredby/CS_88x31_Dark_BG_Oversized_Blue.png" height="31" width="88" align="Center" border="0"></a>
+</div>
 </div>

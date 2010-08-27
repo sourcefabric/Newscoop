@@ -1,6 +1,4 @@
 <!-- bannerleaderboard.tpl -->
-<div id="bannerleaderboard">
-<center>
-  <a href="#"><img src="http://{{ $campsite->publication->site }}/templates/classic/img/banner/728x90.png" border="0" alt=""></a>
-</center>
+<div id="bannerleaderboard" style="text-align: center">
+<A HREF="http://www.sourcefabric.org"><IMG SRC="http://www.sourcefabric.org/fs/big/SF_big_more_find_a_way.png" height="60" width="468" align="Center" border="0"></a>
 </div>
