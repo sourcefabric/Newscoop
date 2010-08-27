@@ -12,8 +12,7 @@ global $LiveUserAdmin;
 
 
 // Data Source Name (DSN)
-$dsn = $Campsite['db']['type']
-            .'://'.$Campsite['db']['user']
+$dsn = 'mysql_cs://'.$Campsite['db']['user']
             .':'.$Campsite['db']['pass']
             .'@'.$Campsite['db']['host']
             .'/'.$Campsite['db']['name'];
