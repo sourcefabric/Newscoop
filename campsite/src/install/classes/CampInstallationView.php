@@ -137,6 +137,20 @@ final class CampInstallationView
                                 'exists' => $hasMySQL
                                 );
 
+        $execEnabled = CampInstallationViewHelper::CheckExec();
+        $success = ($execEnabled == 'Yes') ? $success : false;
+        $phpFunctions[] = array(
+                                'tag' => 'Exec() function enabled',
+                                'exists' => $execEnabled
+                                );
+
+        $systemEnabled = CampInstallationViewHelper::CheckSystem();
+        $success = ($systemEnabled == 'Yes') ? $success : false;
+        $phpFunctions[] = array(
+                                'tag' => 'System() function enabled',
+                                'exists' => $systemEnabled
+                                );
+
         $hasCLI = CampInstallationViewHelper::CheckCLI();
         $success = ($hasCLI == 'Yes') ? $success : false;
         $phpFunctions[] = array(
@@ -187,8 +201,8 @@ final class CampInstallationView
                               'rec_state' => 'Off',
                               'cur_state' => $safeModeState
                               );
-	$regGlobalsState = (ini_get('register_globals') == '1') ? 'On' : 'Off';
-	$phpOptions[] = array(
+		$regGlobalsState = (ini_get('register_globals') == '1') ? 'On' : 'Off';
+		$phpOptions[] = array(
 			      'tag' => 'Register Globals',
 			      'rec_state' => 'Off',
 			      'cur_state' => $regGlobalsState
@@ -235,9 +249,25 @@ final class CampInstallationViewHelper
     }
 
 
+    public static function CheckExec()
+    {
+    	$disabledFunctions = explode(', ', ini_get('disable_functions'));
+    	$execEnabled = !in_array('exec', $disabledFunctions);
+		return $execEnabled ? 'Yes' : 'No';
+    }
+
+
+    public static function CheckSystem()
+    {
+    	$disabledFunctions = explode(', ', ini_get('disable_functions'));
+    	$systemEnabled = !in_array('system', $disabledFunctions);
+		return $systemEnabled ? 'Yes' : 'No';
+    }
+
+
     public static function CheckCLI()
     {
-        $response = exec('php -v', $o, $r);
+    	$response = exec('php -v', $o, $r);
         return (!empty($o)) ? 'Yes' : 'No';
     }
 
