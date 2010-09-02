@@ -109,8 +109,9 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
     <td align="left" valign="top">
         <select name="f_cache_engine" class="input_select">
         <?php
+        $cacheEngine = SystemPref::Get('CacheEngine');
         foreach ($availableCacheEngines as $cacheEngineName=>$engineData) {
-        	echo "<option value=\"$cacheEngineName\">$cacheEngineName</option>\n";
+            camp_html_select_option($cacheEngineName, $cacheEngine, $cacheEngineName);
         }
         ?>
         </select>
