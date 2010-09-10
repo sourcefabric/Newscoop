@@ -64,7 +64,7 @@ class Template extends DatabaseObject {
 	{
 		global $Campsite;
 
-		if (!Template::IsValidPath(dirname($this->m_data['Name']))) {
+		if (!self::IsValidPath(dirname($this->m_data['Name']))) {
 			return false;
 		}
 		if (!is_file($Campsite['TEMPLATE_DIRECTORY']."/".$this->m_data['Name'])) {
@@ -323,7 +323,7 @@ class Template extends DatabaseObject {
 		global $g_ado_db;
 
 		// check if each template record in the database has the corresponding file
-		$templates = Template::GetAllTemplates(null, false);
+		$templates = self::GetAllTemplates(null, false);
 		foreach ($templates as $index=>$template) {
 			if (!$template->fileExists()) {
 				$g_ado_db->Execute("DELETE FROM Templates WHERE Id = "
@@ -335,8 +335,8 @@ class Template extends DatabaseObject {
 		$rootDir = $Campsite['TEMPLATE_DIRECTORY'];
 		$dirs[] = $rootDir;
 		while (($currDir = array_pop($dirs)) != "") {
-		        if (!is_readable($currDir)) {
-			        continue;
+            if (!is_readable($currDir)) {
+                continue;
 			}
 			if (!$dirHandle = opendir($currDir)) {
 				continue;
@@ -386,6 +386,111 @@ class Template extends DatabaseObject {
 	} // fn UpdateStatus
 
 
+    /**
+     * @return void
+     */
+    public static function OnMultiFileUpload()
+    {
+        // HTTP headers for no cache etc
+        header('Content-type: text/plain; charset=UTF-8');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        // Settings
+        $targetDir = CS_TMP_TPL_DIR;
+        $cleanupTargetDir = false;
+        $maxFileAge = 60 * 60;
+
+        // 5 minutes execution time
+        @set_time_limit(5 * 60);
+
+        // Get parameters
+        $chunk = isset($_REQUEST["chunk"]) ? $_REQUEST["chunk"] : 0;
+        $chunks = isset($_REQUEST["chunks"]) ? $_REQUEST["chunks"] : 0;
+        $fileName = isset($_REQUEST["name"]) ? $_REQUEST["name"] : '';
+
+        // Clean the fileName for security reasons
+        $fileName = preg_replace('/[^\w\._]+/', '', $fileName);
+
+        // Create target dir
+        if (!file_exists($targetDir)) {
+            @mkdir($targetDir);
+        }
+
+        // Remove old temp files
+        if (is_dir($targetDir) && ($dir = opendir($targetDir))) {
+            while (($file = readdir($dir)) !== false) {
+                $filePath = $targetDir . DIR_SEP . $file;
+
+                // Remove temp files if they are older than the max age
+                if (preg_match('/\\.tmp$/', $file) && (filemtime($filePath) < time() - $maxFileAge)) {
+                    @unlink($filePath);
+                }
+            }
+            closedir($dir);
+        } else {
+            die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
+        }
+
+        // Look for the content type header
+        if (isset($_SERVER["HTTP_CONTENT_TYPE"])) {
+            $contentType = $_SERVER["HTTP_CONTENT_TYPE"];
+        }
+
+        if (isset($_SERVER["CONTENT_TYPE"])) {
+            $contentType = $_SERVER["CONTENT_TYPE"];
+        }
+
+        if (strpos($contentType, "multipart") !== false) {
+            if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
+                // Open temp file
+                $out = fopen($targetDir . DIR_SEP . $fileName, $chunk == 0 ? "wb" : "ab");
+                if ($out) {
+                    // Read binary input stream and append it to temp file
+                    $in = fopen($_FILES['file']['tmp_name'], "rb");
+                    if ($in) {
+                        while ($buff = fread($in, 4096)) {
+                            fwrite($out, $buff);
+                        }
+                    } else {
+                        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+                    }
+                    fclose($out);
+                    unlink($_FILES['file']['tmp_name']);
+                } else {
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+                }
+            } else {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
+            }
+        } else {
+            // Open temp file
+            $out = fopen($targetDir . DIR_SEP . $fileName, $chunk == 0 ? "wb" : "ab");
+            if ($out) {
+                // Read binary input stream and append it to temp file
+                $in = fopen("php://input", "rb");
+                if ($in) {
+                    while ($buff = fread($in, 4096)) {
+                        fwrite($out, $buff);
+                    }
+                } else {
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+                }
+
+                fclose($out);
+            } else {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+            }
+        }
+
+        // Return JSON-RPC response
+        die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+    } // fn OnMultiFileUpload
+
+
 	/**
 	 * Call this to upload a template file.  Note: Template::UpdateStatus()
 	 * will be called automatically for you if this is successful.
@@ -419,7 +524,7 @@ class Template extends DatabaseObject {
 		}
 
 		// remove existing file if one exists
-		$newname = "$p_baseUpload/$fileName";
+		$newname = $p_baseUpload . DIR_SEP . $fileName;
 		if (file_exists($newname) && !is_dir($newname)) {
 			if (!unlink($newname)) {
 				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $newname), CAMP_ERROR_DELETE_FILE);
@@ -427,23 +532,9 @@ class Template extends DatabaseObject {
 		}
 
 		$fType = $_FILES[$f_fileVarName]['type'];
-		if (!is_null($p_charset) && (strncmp($fType, 'text', 4) == 0)) {
-			$origFile = "$newname.orig";
-			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $origFile);
-			if ($success) {
-				$command = 'iconv -f ' . escapeshellarg($p_charset) . ' -t UTF-8 '
-				. escapeshellarg($origFile) . ' > ' . escapeshellarg($newname);
-				system($command, $status);
-				if ($status == 0) {
-					$success = unlink($origFile);
-				} else {
-					$success = false;
-					unlink($newname);
-					return new PEAR_Error("Unable to convert the character set of the file.");
-				}
-			} else {
-				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $origFile), CAMP_ERROR_CREATE_FILE);
-			}
+		if (!is_null($p_charset)) {
+		    // original file, destination file, file type, file charset
+            $success = self::ChangeCharset($_FILES[$f_fileVarName]['tmp_name'], $newname, $fType, $p_charset);
 		} else {
 			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $newname);
 			if (!$success) {
@@ -452,7 +543,7 @@ class Template extends DatabaseObject {
 		}
 
 		if ($success) {
-			Template::UpdateStatus();
+			self::UpdateStatus();
 			if (function_exists('camp_load_translation_strings')) {
 				camp_load_translation_strings('api');
 			}
@@ -461,6 +552,84 @@ class Template extends DatabaseObject {
 		}
 		return $success;
 	} // fn OnUpload
+
+
+    /**
+     * @param p_tmpFile
+     * @param p_newFile
+     * @param p_charset
+     *
+     * @return
+     */
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_charset = null)
+    {
+        // remove existing file if one exists
+        if (file_exists($p_newFile) && !is_dir($p_newFile)) {
+            if (!unlink($p_newFile)) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $p_newFile), CAMP_ERROR_DELETE_FILE);
+            }
+        }
+
+        $fileName = basename($p_newFile);
+        $fileType = @mime_content_type($p_tmpFile);
+        if (!empty($p_charset)) {
+            if (strncmp($fileType, 'text', 4) == 0) {
+                $success = self::ChangeCharset($p_tmpFile, $p_newFile, $fileType, $p_charset);
+            } else {
+                $success = rename($p_tmpFile, $p_newFile);
+            }
+            if (PEAR::isError($success) || !$success) {
+                return $success;
+            }
+        } else {
+            $success = rename($p_tmpFile, $p_newFile);
+            if (!$success) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $fileName), CAMP_ERROR_CREATE_FILE);
+            }
+        }
+
+        self::UpdateStatus();
+        if (function_exists('camp_load_translation_strings')) {
+            camp_load_translation_strings('api');
+        }
+        $logtext = getGS('Template $1 uploaded', $fileName);
+        Log::Message($logtext, null, 111);
+
+        return true;
+    } // fn ProcessFile
+
+
+    /**
+     * @param p_oFile
+     * @param p_dFile
+     * @param p_type
+     * @param p_charset
+     *
+     * @return
+     */
+    public static function ChangeCharset($p_oFile, $p_dFile, $p_type, $p_charset)
+    {
+        if (strncmp($p_type, 'text', 4) == 0) {
+            $origFile = $p_dFile . '.orig';
+            $success = rename($p_oFile, $origFile);
+            if ($success) {
+                $command = 'iconv -f ' . escapeshellarg($p_charset) . ' -t UTF-8 '
+                    . escapeshellarg($origFile) . ' > ' . escapeshellarg($p_dFile);
+                system($command, $status);
+                if ($status == 0) {
+                    $success = unlink($origFile);
+                } else {
+                    $success = false;
+                    unlink($p_dFile);
+                    return new PEAR_Error("Unable to convert the character set of the file.");
+                }
+            } else {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $origFile), CAMP_ERROR_CREATE_FILE);
+            }
+        }
+
+        return $success;
+    } // fn ChangeCharset
 
 
     /**
@@ -477,16 +646,16 @@ class Template extends DatabaseObject {
                                            $p_strict = false)
     {
         if ($p_update) {
-            Template::UpdateStatus();
+            self::UpdateStatus();
         }
         $queryStr = 'SELECT * FROM Templates';
 
         if ($p_strict) {
             $queryStr .= ' WHERE Type < 5';
         }
-        if ($p_useFilter && $rexeg = Template::GetTemplateFilterRegex(true)) {
+        if ($p_useFilter && $rexeg = self::GetTemplateFilterRegex(true)) {
             $queryStr .= ($p_strict == false) ? ' WHERE ' : ' AND ';
-            $queryStr .= 'Name NOT REGEXP "'.Template::GetTemplateFilterRegex(true).'"';
+            $queryStr .= 'Name NOT REGEXP "'.self::GetTemplateFilterRegex(true).'"';
         }
 
         if (!is_null($p_sqlOptions)) {
@@ -531,7 +700,7 @@ class Template extends DatabaseObject {
 							!in_array($pathTo, $p_folders)) {
 						$i++;
 						$p_folders[$i] = $pathTo;
-						$p_folders = Template::GetAllFolders($p_folders);
+						$p_folders = self::GetAllFolders($p_folders);
 					}
 				}
 			}
@@ -557,7 +726,7 @@ class Template extends DatabaseObject {
 			$Path = dirname($rootDir . $this->getName());
 			$Name = basename($this->getName());
 			$fileFullPath = $this->getFullPath($Path, $Name);
-			if (!Template::InUse($this->getName())) {
+			if (!self::InUse($this->getName())) {
 				if (unlink($fileFullPath)) {
 					$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
 					Log::Message($logtext, $g_user->getUserId(), 112);
@@ -582,8 +751,8 @@ class Template extends DatabaseObject {
 		global $Campsite;
 		global $g_user;
 
-		if (Template::IsValidPath($p_current_folder) &&
-			Template::IsValidPath($p_destination_folder)) {
+		if (self::IsValidPath($p_current_folder) &&
+			self::IsValidPath($p_destination_folder)) {
 			$currentFolder = ($p_current_folder == '/') ? '' : $p_current_folder;
 			$destinationFolder = ($p_destination_folder == '/') ? '' : $p_destination_folder;
 			$currentFullPath = $Campsite['TEMPLATE_DIRECTORY']
@@ -602,6 +771,7 @@ class Template extends DatabaseObject {
 		}
 		return false;
 	} // fn move
+
 
 	/**
 	 * Return an regular expression to filter template lists

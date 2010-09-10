@@ -1012,3 +1012,7 @@ a.calendarButton {
 	float:left;
 	margin-right:5px;
 }
+
+#uploader {
+    width:700px;
+}

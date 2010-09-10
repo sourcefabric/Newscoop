@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Plupload">
+</Property><Property Name="Solution File" Value="D:\Projects\plupload\src\csharp\Plupload\Plupload.sln">
+</Property><Property Name="User Options File" Value="D:\Projects\plupload\src\csharp\Plupload\Plupload.suo">
+</Property><Property Name="Date" Value="Thursday, May 27, 2010">
+</Property><Property Name="Time" Value="14:42">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="Plupload.sln" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Plupload.sln">
+</Event><Event ErrorLevel="0" Project="" Source="Plupload.suo" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Plupload.suo">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Plupload.csproj" Description="Project file successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Plupload.csproj">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="App.xaml.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\App.xaml.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\DCT.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\DCT.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\DecodedJpeg.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\DecodedJpeg.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Decoder\HuffmanTable.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Decoder\HuffmanTable.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Decoder\JpegHuffmanTable.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Decoder\JpegHuffmanTable.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Decoder\JpegQuantizationTable.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Decoder\JpegQuantizationTable.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Encoder\JpegEncoder.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Encoder\JpegEncoder.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\FDCT.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\FDCT.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Filter\Convolution.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Filter\Convolution.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Filter\FilterBase.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Filter\FilterBase.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Filter\FilterLowpassResize.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Filter\FilterLowpassResize.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Filter\FilterNNResize.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Filter\FilterNNResize.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Filter\GrayImage.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Filter\GrayImage.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Image.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Image.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\IO\BinaryWriter.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\IO\BinaryWriter.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\JpegMarker.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\JpegMarker.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\Resize\ImageResizer.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\Resize\ImageResizer.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\YCbCr.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\YCbCr.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\ZigZag.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\ZigZag.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Page.xaml.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Page.xaml.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\Adler32.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\Adler32.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\CRC32.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\CRC32.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\Deflater.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\Deflater.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\DeflaterConstants.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\DeflaterConstants.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\DeflaterEngine.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\DeflaterEngine.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\DeflaterHuffman.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\DeflaterHuffman.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\DeflaterOutputStream.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\DeflaterOutputStream.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\DeflaterPending.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\DeflaterPending.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\IChecksum.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\IChecksum.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\PngEncoder.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\PngEncoder.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="PngEncoder\PendingBuffer.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\PngEncoder\PendingBuffer.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Properties\AssemblyInfo.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FileReference.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FileReference.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Utils\JsonReader.cs" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Utils\JsonReader.cs">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Properties\AppManifest.xml" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Properties\AppManifest.xml">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\IJG.txt" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\IJG.txt">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\JAI.txt" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\JAI.txt">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\License.txt" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\License.txt">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="FJCore\README.txt" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\FJCore\README.txt">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="App.xaml" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\App.xaml">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Page.xaml" Description="File successfully backed up as D:\Projects\plupload\src\csharp\Plupload\Backup\Page.xaml">
+</Event><Event ErrorLevel="0" Project="Plupload" Source="Plupload.csproj" Description="The project file does not require conversion.">
+</Event><Event ErrorLevel="3" Project="Plupload" Source="Plupload.csproj" Description="No Conversion Required">
+</Event><Event ErrorLevel="0" Project="" Source="Plupload.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Plupload.sln" Description="Converted">
+</Event></UpgradeLog>
