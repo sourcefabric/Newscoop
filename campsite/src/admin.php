@@ -18,14 +18,14 @@ if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
     exit(0);
 }
 
+require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
+require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
+
 if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
     camp_display_message("Site is down for upgrade. Please initiate upgrade process.");
     echo '<META HTTP-EQUIV="Refresh" content="10">';
     exit(0);
 }
-
-require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
-require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 
 // detect extended login/logout files
 $prefix = file_exists(CS_PATH_SITE.DIR_SEP.'admin-files'.DIR_SEP.'ext_login.php') ? '/ext_' : '/';
