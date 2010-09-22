@@ -19,7 +19,8 @@ if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
 }
 
 if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
-    require_once(CS_PATH_SITE.DIR_SEP.'index.php');
+    camp_display_message("Site is down for upgrade. Please initiate upgrade process.");
+    echo '<META HTTP-EQUIV="Refresh" content="10">';
     exit(0);
 }
 

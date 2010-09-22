@@ -25,20 +25,11 @@ require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 
-
-function display_upgrade_error($p_errorMessage) {
-    $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
-    $templates_dir = CS_TEMPLATES_DIR;
-    $params = array('context' => null,
-                    'template' => $template,
-                    'templates_dir' => $templates_dir,
-                    'error_message' => $p_errorMessage
-    );
-    $document = CampSite::GetHTMLDocumentInstance();
-    $document->render($params);
-    exit(0);
+$res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
+if ($res !== 0) {
+    $dbVersion = '[unknown]';
 }
-
+echo "Upgrading the database from version $dbVersion...";
 
 // initiates the campsite site
 $campsite = new CampSite();
@@ -56,9 +47,6 @@ $configDb = array('hostname'=>$Campsite['db']['host'],
                   'userpass'=>$Campsite['db']['pass'],
                   'database'=>$Campsite['db']['name']);
 $session->setData('config.db', $configDb, 'installation');
-
-$forward = $session->getData('forward');
-$session->unsetData('forward');
 
 // upgrading the database
 $res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
@@ -80,6 +68,18 @@ if (file_exists(__FILE__)) {
     @unlink(__FILE__);
 }
 
-header("Location: " . $forward);
+function display_upgrade_error($p_errorMessage) {
+    $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
+    $templates_dir = CS_TEMPLATES_DIR;
+    $params = array('context' => null,
+                    'template' => $template,
+                    'templates_dir' => $templates_dir,
+                    'error_message' => $p_errorMessage
+    );
+    $document = CampSite::GetHTMLDocumentInstance();
+    $document->render($params);
+    exit(0);
+}
 
 ?>
+finished<p><a href="<?php echo "/$ADMIN";?>">Administration</a></p>
