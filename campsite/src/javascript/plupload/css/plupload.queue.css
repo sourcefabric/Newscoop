@@ -1,28 +1,30 @@
 /* 
    Plupload
 ------------------------------------------------------------------- */
-
+.plupload {
+	border:1px solid #5d99b1;
+}
 .plupload_button {
 	display: -moz-inline-box; /* FF < 3*/
 	display: inline-block;
 	font: normal 12px sans-serif;
 	text-decoration: none;
-    color: #42454a;
-    border: 1px solid #bababa;
+    color: #00415b;
+    border: 1px solid #95c26a;
     padding: 2px 8px 3px 20px;
 	margin-right: 4px;
     background: #f3f3f3 url('../img/buttons.png') no-repeat 0 center;
 	outline: 0;
 
-    /* Optional rounded corners for browsers that support it */
+    /* Optional rounded corners for browsers that support it 
     -moz-border-radius: 3px;
     -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
-    border-radius: 3px;
+    border-radius: 3px;*/
 }
 
 .plupload_button:hover {
-	color: #000;
+	color: #3a7304;
 	text-decoration: none;
 }
 
@@ -77,24 +79,25 @@
 
 .plupload_scroll .plupload_filelist {
 	height: 185px;
-	background: #F5F5F5;
+	background: #f8fcfe;
 	overflow-y: scroll;
+	border-bottom:1px solid #d2e4eb;
 }
 
 .plupload_filelist li {
 	padding: 10px 8px;
-	background: #F5F5F5 url('../img/backgrounds.gif') repeat-x 0 -156px;
-	border-bottom: 1px solid #DDD;
+	background: #e4f1f9 url('../img/backgrounds.gif') repeat-x 0 -156px;
+	border-bottom: 1px solid #d2e4eb;
 }
 
 .plupload_filelist_header, .plupload_filelist_footer {
-	background: #DFDFDF;
+	background: #edf7fc;
 	padding: 8px 8px;
 	color: #42454A;
 }
 .plupload_filelist_header {	
-	border-top: 1px solid #EEE;
-	border-bottom: 1px solid #CDCDCD;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #b5d5e2;
 }
 
 .plupload_filelist_footer {border-top: 1px solid #FFF; height: 22px; line-height: 20px; vertical-align: middle;}
@@ -122,7 +125,7 @@
 	height: 16px;
 }
 
-li.plupload_uploading {background: #ECF3DC url('../img/backgrounds.gif') repeat-x 0 -238px;}
+li.plupload_uploading {background: #e1f4d1 url('../img/backgrounds.gif') repeat-x 0 -237px}
 li.plupload_done {color:#AAA}
 
 li.plupload_delete a {
