@@ -90,37 +90,13 @@ if (SystemPref::Get('ExternalCronManagement') == 'N') {
 
 function camp_upgrade()
 {
-    global $Campsite;
-
-    require_once(CS_PATH_SITE.DIR_SEP.'bin'.DIR_SEP.'cli_script_lib.php');
-
-    $res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
-    if ($res !== 0) {
-        $dbVersion = '[unknown]';
-    }
-
     header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
     header("Cache-Control: no-store, no-cache, must-revalidate");
 
-    camp_display_message("Upgrading the database from version $dbVersion...");
-    echo '<META HTTP-EQUIV="Refresh" content="1;url='.$Campsite['SUBDIR'].'/upgrade.php">';
+    camp_display_message("The website you are trying to view is currently down for maintenance.
+        <br>Normal service will resume shortly.");
+    echo '<META HTTP-EQUIV="Refresh" content="10">';
 }
-
-
-function camp_display_message($p_message)
-{
-    $session = CampSite::GetSessionInstance();
-    $forward = $session->setData('forward', $_SERVER['REQUEST_URI']);
-
-    $params = array('context' => null,
-                'template' => CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_message.tpl',
-                'templates_dir' => CS_TEMPLATES_DIR,
-                'info_message' => $p_message
-    );
-    $document = CampSite::GetHTMLDocumentInstance();
-    $document->render($params);
-}
-
 
 $initPaths = sprintf("%.3f", ($start1 - $start0)*1000);
 $initCampsite = sprintf("%.3f", ($start2 - $start1)*1000);
