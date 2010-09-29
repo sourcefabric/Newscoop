@@ -376,7 +376,6 @@ class CampInstallationBase
         $dbData = $session->getData('config.db', 'installation');
         $mcData = $session->getData('config.site', 'installation');
 
-        CampInstallationBaseHelper::SetCacheStatus();
         if (is_array($mcData) && isset($mcData['sitetitle'])
         && !CampInstallationBaseHelper::SetSiteTitle($mcData['sitetitle'])) {
             $this->m_step = 'mainconfig';
