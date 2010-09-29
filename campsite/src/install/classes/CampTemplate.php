@@ -38,6 +38,7 @@ final class CampTemplate extends Smarty
         $this->force_compile = true;
         $this->compile_check = false;
         $this->use_sub_dirs = false;
+        //$this->cache_handler_func = 'yy';
 
         $this->left_delimiter = '{{';
         $this->right_delimiter = '}}';

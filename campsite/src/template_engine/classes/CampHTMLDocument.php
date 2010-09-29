@@ -306,7 +306,6 @@ final class CampHTMLDocument
         }
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
-
         try {
         	$tpl->display($template);
         }

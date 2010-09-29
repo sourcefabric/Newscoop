@@ -20,15 +20,15 @@ abstract class CacheEngine
 
     abstract public function getName();
 
-	/**
-	 * Inserts the value identified by the given key in the cache.
-	 * Returns false if the key already existed and does not
-	 * overwrite the existing key.
-	 * @param $p_key
-	 * @param $p_value
-	 * @return boolean
-	 */
-	abstract public function addValue($p_key, $p_value, $p_ttl = 0);
+    /**
+     * Inserts the value identified by the given key in the cache.
+     * Returns false if the key already existed and does not
+     * overwrite the existing key.
+     * @param $p_key
+     * @param $p_value
+     * @return boolean
+     */
+    abstract public function addValue($p_key, $p_value, $p_ttl = 0);
 
     /**
      * Stores the value identified by the given key in the cache.
@@ -62,10 +62,10 @@ abstract class CacheEngine
     abstract public function deleteValue($p_key);
 
     /**
-	 * Deletes the values stored in the cache.
-	 * @return void
-	 */
-	abstract public function clearValues();
+     * Deletes the values stored in the cache.
+     * @return void
+     */
+    abstract public function clearValues();
 
     /**
      * Stores the current page under the given key (identifier).
@@ -101,95 +101,95 @@ abstract class CacheEngine
      */
     abstract public function pageCachingSupported();
 
-	/**
-	 * Returns true if the engine was supported in PHP, false otherwise.
-	 * @return boolean
-	 */
-	abstract public function isSupported();
+    /**
+     * Returns true if the engine was supported in PHP, false otherwise.
+     * @return boolean
+     */
+    abstract public function isSupported();
 
-	/**
-	 * Returns a short description of the cache engine.
-	 * @return string
-	 */
-	abstract public function description();
+    /**
+     * Returns a short description of the cache engine.
+     * @return string
+     */
+    abstract public function description();
 
     /**
      * Returns an array of cached data; false if invalid type.
      * @param $p_type
      * @return array
      */
-	abstract public function getInfo($p_type = self::CACHE_VALUES_INFO);
+    abstract public function getInfo($p_type = self::CACHE_VALUES_INFO);
 
     /**
      * Returns an array of shared memory data
      * @return array
      */
-	abstract public function getMemInfo();
+    abstract public function getMemInfo();
 
-	/**
-	 * Loads the engine specified by the given name.
-	 * @param $p_engineName
-	 * @return boolean
-	 */
-	public static function Factory($p_engineName, $p_path = null)
-	{
-		if (is_null($p_path)) {
-			$path = dirname(__FILE__);
-		} else {
-			$path = $p_path;
-		}
-		$filePath = "$path/CacheEngine_$p_engineName.php";
-		if (!file_exists($filePath)) {
-			throw new InvalidCacheEngine($p_engineName);
-		}
-		require_once($filePath);
-		$className = "CacheEngine_$p_engineName";
-		if (!class_exists($className)) {
-			throw new InvalidCacheEngine($p_engineName);
-		}
-		$cacheObj = new $className;
-		if ($cacheObj->isSupported()) {
-			return $cacheObj;
-		}
-		return null;
-	}
-
-	/**
-	 * Returns an array of available engines containing
-	 * engine name -> info pairs.
-	 * @param $p_path
-	 * @return array
-	 */
-	public static function AvailableEngines($p_path = null)
-	{
+    /**
+     * Loads the engine specified by the given name.
+     * @param $p_engineName
+     * @return boolean
+     */
+    public static function Factory($p_engineName, $p_path = null)
+    {
         if (is_null($p_path)) {
             $path = dirname(__FILE__);
         } else {
             $path = $p_path;
         }
-        
+        $filePath = "$path/CacheEngine_$p_engineName.php";
+        if (!file_exists($filePath)) {
+            throw new InvalidCacheEngine($p_engineName);
+        }
+        require_once($filePath);
+        $className = "CacheEngine_$p_engineName";
+        if (!class_exists($className)) {
+            throw new InvalidCacheEngine($p_engineName);
+        }
+        $cacheObj = new $className;
+        if ($cacheObj->isSupported()) {
+            return $cacheObj;
+        }
+        return null;
+    }
+
+    /**
+     * Returns an array of available engines containing
+     * engine name -> info pairs.
+     * @param $p_path
+     * @return array
+     */
+    public static function AvailableEngines($p_path = null)
+    {
+        if (is_null($p_path)) {
+            $path = dirname(__FILE__);
+        } else {
+            $path = $p_path;
+        }
+
         require_once(dirname(dirname(dirname(__FILE__))).'/include/pear/File/Find.php');
         $includeFiles = File_Find::search('/^CacheEngine_[^.]*\.php$/', $path, 'perl', false);
         $engines = array();
         foreach ($includeFiles as $includeFile) {
-        	if (preg_match('/CacheEngine_([^.]+)\.php/', $includeFile, $matches) == 0) {
-        		continue;
-        	}
+            if (preg_match('/CacheEngine_([^.]+)\.php/', $includeFile, $matches) == 0) {
+                continue;
+            }
 
-        	require_once($includeFile);
-        	$engineName = $matches[1];
-        	$className = "CacheEngine_$engineName";
-        	if (class_exists($className)) {
-        		$cacheEngine = new $className;
-        		$engines[$engineName] = array(
+            require_once($includeFile);
+            $engineName = $matches[1];
+            $className = "CacheEngine_$engineName";
+            if (class_exists($className)) {
+                $cacheEngine = new $className;
+                $engines[$engineName] = array(
                     'is_supported'=>$cacheEngine->isSupported(),
                     'page_caching_supported'=>$cacheEngine->pageCachingSupported(),
                     'file'=>"$path/CacheEngine_$engineName.php",
                     'description'=>$cacheEngine->description());
-        	}
+            }
         }
         return $engines;
-	}
+    }
 } // class CacheEngine
 
 ?>

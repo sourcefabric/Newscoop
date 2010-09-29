@@ -50,7 +50,6 @@ $Campsite['cache']['expiration_time'] = 900;
 $Campsite['cache']['path'] = null;
 
 /** Smarty settings **/
-$Campsite['smarty']['caching'] = false;
 $Campsite['smarty']['debugging'] = false;
 $Campsite['smarty']['force_compile'] = false;
 $Campsite['smarty']['compile_check'] = true;
@@ -89,7 +88,7 @@ function __autoload($p_className)
     static $classDirectories = array('classes',
                               'template_engine/classes',
                               'template_engine/metaclasses');
-                      
+
     if (!is_string($p_className)) {
         return;
     }
@@ -101,12 +100,12 @@ function __autoload($p_className)
             return;
         }
     }
-    
+
     $basePaths = array();
     foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-        $basePaths[] = $CampPlugin->getBasePath();  
+        $basePaths[] = $CampPlugin->getBasePath();
     }
-    foreach ($basePaths as $basePath) {                       
+    foreach ($basePaths as $basePath) {
         foreach ($classDirectories as $dirName) {
             $fileName = $GLOBALS['g_campsiteDir']."/$basePath/$dirName/$p_className.php";
             if (file_exists($fileName)) {

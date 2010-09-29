@@ -30,6 +30,7 @@ if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
 }
 
 $availableCacheEngines = CacheEngine::AvailableEngines();
+$availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 ?>
 <p></p>
 
@@ -95,23 +96,31 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
 </tr>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Cache Enabled:") ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="radio" name="f_cache_enabled" value="Y" <?php if (SystemPref::Get("SiteCacheEnabled") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_cache_enabled" value="N" <?php if (SystemPref::Get("SiteCacheEnabled") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
-    </td>
-</tr>
-<tr>
-    <td align="left" width="400px">
-        <?php putGS("Cache Engine:") ?>
+        <?php putGS("Database Cache Engine:") ?>
     </td>
     <td align="left" valign="top">
         <select name="f_cache_engine" class="input_select">
         <?php
-        $cacheEngine = SystemPref::Get('CacheEngine');
+        $DBcacheEngine = SystemPref::Get('DBCacheEngine');
+        camp_html_select_option('', $DBcacheEngine, getGS('disabled'));
         foreach ($availableCacheEngines as $cacheEngineName=>$engineData) {
-            camp_html_select_option($cacheEngineName, $cacheEngine, $cacheEngineName);
+            camp_html_select_option($cacheEngineName, $DBcacheEngine, $cacheEngineName);
+        }
+        ?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Template Cache Handler:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_template_cache_handler" class="input_select">
+        <?php
+        $templateCacheHandler = SystemPref::Get('TemplateCacheHandler');
+        camp_html_select_option('', $TemplateCacheHandler, getGS('disabled'));
+        foreach ($availableTemplateCacheHandlers as $handler => $value) {
+            camp_html_select_option($handler, $templateCacheHandler, $handler);
         }
         ?>
         </select>
@@ -147,7 +156,7 @@ $availableCacheEngines = CacheEngine::AvailableEngines();
                        3600*24*183 => '6 Months',
                        3600*24*365 => '1 Year',
                        -1          => 'Infinite') as $k => $v) {
-        	camp_html_select_option($k, $ttl, $v);
+            camp_html_select_option($k, $ttl, $v);
         }
         ?>
         </select>

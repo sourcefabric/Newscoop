@@ -11,8 +11,8 @@ if (!SecurityToken::isValid()) {
 
 // Check permissions
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
-	camp_html_display_error(getGS("You do not have the right to change system preferences."));
-	exit;
+    camp_html_display_error(getGS("You do not have the right to change system preferences."));
+    exit;
 }
 
 $f_campsite_online = Input::Get('f_campsite_online');
@@ -20,8 +20,8 @@ $f_site_title = strip_tags(Input::Get('f_site_title'));
 $f_site_metakeywords = strip_tags(Input::Get('f_site_metakeywords'));
 $f_site_metadescription = strip_tags(Input::Get('f_site_metadescription'));
 $f_time_zone = Input::Get('f_time_zone');
-$f_cache_enabled = Input::Get('f_cache_enabled');
 $f_cache_engine = Input::Get('f_cache_engine');
+$f_template_cache_handler = Input::Get('f_template_cache_handler');
 $f_secret_key = strip_tags(Input::Get('f_secret_key'));
 $f_session_lifetime = Input::Get('f_session_lifetime', 'int');
 $f_imagecache_lifetime = Input::Get('f_imagecache_lifetime', 'int');
@@ -46,7 +46,7 @@ $f_cc_xrpcpath = strip_tags(Input::Get('f_cc_xrpcpath'));
 $f_cc_xrpcfile = strip_tags(Input::Get('f_cc_xrpcfile'));
 $f_external_subs_management = Input::Get('f_external_subs_management');
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
-	$f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
+    $f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
 $f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 $f_external_cron_management = Input::Get('f_external_cron_management');
@@ -59,8 +59,8 @@ if ($f_external_cron_management == 'N'
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 
 $msg_ok = 1;
@@ -80,24 +80,31 @@ SystemPref::Set('SiteMetaDescription', $f_site_metadescription);
 // Site Time Zone
 SystemPref::Set('TimeZone', $f_time_zone);
 
-// Caching
-SystemPref::Set('CacheEngine', $f_cache_engine);
-if ($f_cache_enabled == 'Y') {
-    if (CampCache::IsSupported($f_cache_engine)) {
-    	$wasDisabled = SystemPref::Get("SiteCacheEnabled") == 'N';
-        SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
-        if ($wasDisabled) {
-        	CampCache::singleton()->clear('user');
-        	CampCache::singleton()->clear();
-        }
+// DB Caching
+if (SystemPref::Get('DBCacheEngine') != $f_cache_engine) {
+    if (!$f_cache_engine || CampCache::IsSupported($f_cache_engine)) {
+        SystemPref::Set('DBCacheEngine', $f_cache_engine);
+        CampCache::singleton()->clear('user');
+        CampCache::singleton()->clear();
     } else {
         $msg_ok = 0;
         camp_html_add_msg(getGS('Invalid: You need PHP $1 enabled in order to use the caching system.', $f_cache_engine));
     }
+}
+
+// Template Caching
+if (SystemPref::Get('TemplateCacheHandler') != $f_template_cache_handler && $f_template_cache_handler) {
+    $handler = CampTemplateCache::factory($f_template_cache_handler);
+    if ($handler && CampTemplateCache::factory($f_template_cache_handler)->isSupported()) {
+        SystemPref::Set('TemplateCacheHandler', $f_template_cache_handler);
+        CampTemplateCache::factory($f_template_cache_handler)->clean();
+    } else {
+        $msg_ok = 0;
+        camp_html_add_msg(getGS('Invalid: You need PHP $1 enabled in order to use the template caching system.'
+            , $f_template_cache_handler));
+    }
 } else {
-	CampCache::singleton()->clear('user');
-	CampCache::singleton()->clear();
-	SystemPref::Set('SiteCacheEnabled', $f_cache_enabled);
+    SystemPref::Set('TemplateCacheHandler', $f_template_cache_handler);
 }
 
 // Image cache lifetime
@@ -114,17 +121,17 @@ SystemPref::Set("KeywordSeparator", $f_keyword_separator);
 
 // Number of failed login attempts
 if ($f_login_num >= 0) {
-	SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
+    SystemPref::Set("LoginFailedAttemptsNum", $f_login_num);
 }
 
 // Max Upload File Size
 $max_upload_filesize_bytes = camp_convert_bytes($f_max_upload_filesize);
 if ($max_upload_filesize_bytes > 0 &&
-		$max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
-	SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
+        $max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
+    SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
 } else {
-	$msg_ok = 0;
-	camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
+    $msg_ok = 0;
+    camp_html_add_msg(getGS('Invalid Max Upload File Size value submitted'));
 }
 
 // SMTP Host/Port
@@ -193,7 +200,7 @@ Log::Message($logtext, $g_user->getUserId(), 171);
 
 // Success message if everything was ok
 if ($msg_ok == 1) {
-	camp_html_add_msg(getGS("System preferences updated."), "ok");
+    camp_html_add_msg(getGS("System preferences updated."), "ok");
 }
 
 CampPlugin::PluginAdminHooks(__FILE__);

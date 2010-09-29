@@ -15,7 +15,6 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/include/smarty/Smarty.class.php');
 
-
 /**
  * Class CampTemplate
  */
@@ -26,18 +25,18 @@ final class CampTemplate extends Smarty
      *
      * @var object
      */
-	private static $m_instance = null;
+    private static $m_instance = null;
 
 
-	/**
-	 * Holds the context object;
-	 *
-	 * @var object
-	 */
-	private $m_context = null;
+    /**
+     * Holds the context object;
+     *
+     * @var object
+     */
+    private $m_context = null;
 
 
-	private $m_preview = false;
+    private $m_preview = false;
 
 
     private function __construct()
@@ -46,11 +45,25 @@ final class CampTemplate extends Smarty
 
         $config = CampSite::GetConfigInstance();
 
-        $this->caching = $config->getSetting('smarty.caching');
         $this->debugging = $config->getSetting('smarty.debugging');
         $this->force_compile = $config->getSetting('smarty.force_compile');
         $this->compile_check = $config->getSetting('smarty.compile_check');
         $this->use_sub_dirs = $config->getSetting('smarty.use_subdirs');
+
+        // cache settings
+        $cacheHandler = SystemPref::Get('TemplateCacheHandler');
+        if ($cacheHandler) {
+            $this->caching = 1;
+            $this->cache_lifetime = 25920000; // 300 days
+            $this->cache_handler_func = 'TemplateCacheHandler_'. $cacheHandler . '::handler';
+            require_once CS_PATH_SITE.DIR_SEP.'classes'.DIR_SEP.'cache'.DIR_SEP."TemplateCacheHandler_$cacheHandler.php";
+        } else {
+            $this->caching = 0;
+        }
+
+        // define dynamic uncached block
+        require_once CS_PATH_SMARTY.DIR_SEP.'campsite_plugins/block.dynamic.php';
+        $this->register_block('dynamic', 'smarty_block_dynamic', false);
 
         $this->left_delimiter = $config->getSetting('smarty.left_delimeter');
         $this->right_delimiter = $config->getSetting('smarty.right_delimeter');
@@ -88,7 +101,7 @@ final class CampTemplate extends Smarty
 
     public function contextInitialized()
     {
-    	return !is_null($this->m_context);
+        return !is_null($this->m_context);
     }
 
 
@@ -99,11 +112,11 @@ final class CampTemplate extends Smarty
      */
     public function &context()
     {
-    	if (!isset($this->m_context)) {
-    		$this->m_context = new CampContext();
-    		$this->m_preview = $this->m_context->preview;
-    	}
-    	return $this->m_context;
+        if (!isset($this->m_context)) {
+            $this->m_context = new CampContext();
+            $this->m_preview = $this->m_context->preview;
+        }
+        return $this->m_context;
     } // fn context
 
 
@@ -115,7 +128,8 @@ final class CampTemplate extends Smarty
 
     public function clearCache()
     {
-    	$this->clear_compiled_tpl();
+        $this->clear_compiled_tpl();
+        $this->clear_all_cache();
     }
 
 
@@ -129,14 +143,14 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-    	if (!self::singleton()->m_preview) {
-    		return;
-    	}
-    	if (is_object($p_smarty)) {
-    		$p_smarty->trigger_error($p_message);
-    	} else {
-    		trigger_error("Campsite error: $p_message");
-    	}
+        if (!self::singleton()->m_preview) {
+            return;
+        }
+        if (is_object($p_smarty)) {
+            $p_smarty->trigger_error($p_message);
+        } else {
+            trigger_error("Campsite error: $p_message");
+        }
     } // fn trigger_error
 
 } // class CampTemplate

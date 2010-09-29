@@ -16,11 +16,11 @@ define('CACHE_SERIAL_FOOTER', "*/\n?".">");
  */
 final class CampCache
 {
-	/**
-	 * Stores the cache engine wrapper object.
-	 * @var CacheEngine
-	 */
-	private $m_cacheEngine = null;
+    /**
+     * Stores the cache engine wrapper object.
+     * @var CacheEngine
+     */
+    private $m_cacheEngine = null;
 
     /**
      * The cache key for the current cache object.
@@ -61,22 +61,25 @@ final class CampCache
     private function __construct($p_cacheEngine)
     {
         global $Campsite;
-        
+
         if (empty($p_cacheEngine)) {
-        	return;
+            return;
         }
 
         $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
-        if (is_null($this->m_cacheEngine)) {
+        if (is_null($this->m_cacheEngine) || !$this->m_cacheEngine->isSupported()) {
             self::$m_enabled = false;
-        	SystemPref::Set('SiteCacheEnabled', 'N');
-        	return;
+            SystemPref::Set('DBCacheEngine', '');
+            CampSession::singleton()->setData('system_preferences', null, 'default', true);
+            return;
+        } else {
+            self::$m_enabled = true;
         }
 
         if (isset($Campsite['CAMP_SECRET'])) {
-			$this->m_secret = $Campsite['CAMP_SECRET'];
+            $this->m_secret = $Campsite['CAMP_SECRET'];
         } else {
-			$this->m_secret = $Campsite['DATABASE_USER']
+            $this->m_secret = $Campsite['DATABASE_USER']
                 .$Campsite['DATABASE_NAME']
                 .$Campsite['DATABASE_SERVER_ADDRESS']
                 .$Campsite['WWW_DIR'];
@@ -86,7 +89,7 @@ final class CampCache
 
     public static function initialized()
     {
-    	return !is_null(self::$m_instance);
+        return !is_null(self::$m_instance);
     }
 
 
@@ -97,17 +100,9 @@ final class CampCache
      */
     public static function singleton()
     {
-    	if (!is_null(self::$m_instance)) {
-    		return self::$m_instance;
-    	}
-        self::$m_instance = new CampCache(SystemPref::Get('CacheEngine'));
-        self::$m_enabled = !is_null(self::$m_instance->m_cacheEngine)
-        && SystemPref::Get('SiteCacheEnabled') == 'Y'
-        && self::$m_instance->m_cacheEngine->isSupported();
-        if (!self::$m_enabled) {
-        	CampSession::singleton()->setData('system_preferences', null, 'default', true);
+        if (is_null(self::$m_instance)) {
+            self::$m_instance = new CampCache(SystemPref::Get('DBCacheEngine'));
         }
-
         return self::$m_instance;
     } // fn singleton
 
@@ -146,20 +141,20 @@ final class CampCache
      */
     public function fetch($p_key)
     {
-    	if (!self::$m_enabled) {
-    		return false;
-    	}
-    	self::$m_fetchRequests ++;
+        if (!self::$m_enabled) {
+            return false;
+        }
+        self::$m_fetchRequests ++;
         $serial = $this->m_cacheEngine->fetchValue($this->genKey($p_key));
         if ($serial !== false) {
-        	self::$m_hits ++;
+            self::$m_hits ++;
         } else {
             if (!isset(self::$m_missKeys[$p_key])) {
                 self::$m_missKeys[$p_key] = 1;
             } else {
                 self::$m_missKeys[$p_key]++;
             }
-        	return false;
+            return false;
         }
 
         return $this->unserialize($serial);
@@ -181,10 +176,10 @@ final class CampCache
      */
     public function store($p_key, $p_data, $p_ttl = 0)
     {
-    	if (!self::$m_enabled) {
-    		return false;
-    	}
-    	self::$m_storeRequests ++;
+        if (!self::$m_enabled) {
+            return false;
+        }
+        self::$m_storeRequests ++;
         $p_data = $this->serialize($p_data);
 
         return $this->m_cacheEngine->storeValue($this->genKey($p_key), $p_data, $p_ttl);
@@ -206,9 +201,9 @@ final class CampCache
             return false;
         }
         if ($p_key == SystemPref::CACHE_KEY_SYSTEM_PREF) {
-	    CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
+        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
         }
-    	return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
+        return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
 
 
@@ -228,11 +223,11 @@ final class CampCache
             return false;
         }
         CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
-    	if ($p_type == 'user') {
+        if ($p_type == 'user') {
             return $this->m_cacheEngine->clearValues();
-    	} else {
+        } else {
             return $this->m_cacheEngine->clearPages();
-    	}
+        }
     } // fn clear
 
 
@@ -252,8 +247,8 @@ final class CampCache
         if (!self::$m_enabled) {
             return false;
         }
-    	$type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
-    	return $this->m_cacheEngine->getInfo($type);
+        $type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
+        return $this->m_cacheEngine->getInfo($type);
     } // fn info
 
 
@@ -269,7 +264,7 @@ final class CampCache
         if (!self::$m_enabled) {
             return false;
         }
-    	return $this->m_cacheEngine->getMemInfo();
+        return $this->m_cacheEngine->getMemInfo();
     } // fn meminfo
 
 
@@ -326,25 +321,25 @@ final class CampCache
 
     public static function GetStoreRequests()
     {
-    	return self::$m_storeRequests;
+        return self::$m_storeRequests;
     }
 
 
     public static function GetFetchRequests()
     {
-    	return self::$m_fetchRequests;
+        return self::$m_fetchRequests;
     }
 
 
     public static function GetHits()
     {
-    	return self::$m_hits;
+        return self::$m_hits;
     }
 
 
     public static function GetMissKeys()
     {
-    	return self::$m_missKeys;
+        return self::$m_missKeys;
     }
 
 
@@ -357,15 +352,18 @@ final class CampCache
      */
     public static function IsSupported($p_cacheEngine = null)
     {
-    	if (empty($p_cacheEngine)) {
-    		return false;
-    	}
-    	try {
-    		$cacheEngine = CacheEngine::Factory($p_cacheEngine);
-    		return true;
-    	} catch (InvalidCacheEngine $ex) {
-    		return false;
-    	}
+        if (empty($p_cacheEngine)) {
+            return false;
+        }
+        try {
+            if ($cacheEngine = CacheEngine::Factory($p_cacheEngine)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (InvalidCacheEngine $ex) {
+            return false;
+        }
     }
 
 
@@ -379,10 +377,10 @@ final class CampCache
      */
     public static function IsEnabled($p_cacheEngine = null)
     {
-    	if (is_null(self::$m_enabled)) {
-    		self::singleton();
-    	}
-    	return self::$m_enabled;
+        if (is_null(self::$m_enabled)) {
+            self::singleton();
+        }
+        return self::$m_enabled;
     } // fn IsEnabled
 
 } // class CampCache

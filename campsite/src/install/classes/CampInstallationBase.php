@@ -114,7 +114,7 @@ class CampInstallationBase
                     break;
                 }
             }
-        	$this->saveCronJobsScripts();
+            $this->saveCronJobsScripts();
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
@@ -143,14 +143,14 @@ class CampInstallationBase
     {
         global $g_db;
 
-    	$session = CampSession::singleton();
+        $session = CampSession::singleton();
 
         $db_hostname = Input::Get('db_hostname', 'text');
         $db_hostport = Input::Get('db_hostport', 'int');
         $db_username = Input::Get('db_username', 'text');
         $db_userpass = Input::Get('db_userpass', 'text');
         $db_database = Input::Get('db_database', 'text');
-    	$db_overwrite = Input::Get('db_overwrite', 'int', 0);
+        $db_overwrite = Input::Get('db_overwrite', 'int', 0);
 
         if (empty($db_hostport)) {
             $db_hostport = 3306;
@@ -172,19 +172,19 @@ class CampInstallationBase
         } else {
             $selectDb = $g_db->SelectDB($db_database);
             if ($selectDb && !$db_overwrite) {
-            	$this->m_step = 'database';
-            	$this->m_overwriteDb = true;
-            	$this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
-            	$this->m_config['database'] = array(
+                $this->m_step = 'database';
+                $this->m_overwriteDb = true;
+                $this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
+                $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
                                             'hostport' => $db_hostport,
                                             'username' => $db_username,
                                             'userpass' => $db_userpass,
                                             'database' => $db_database
-            	);
-            	$session->unsetData('config.db', 'installation');
-            	$session->setData('config.db', $this->m_config['database'], 'installation', true);
-            	return false;
+                );
+                $session->unsetData('config.db', 'installation');
+                $session->setData('config.db', $this->m_config['database'], 'installation', true);
+                return false;
             }
         }
 
@@ -218,8 +218,6 @@ class CampInstallationBase
             }
             return false;
         }
-
-        CampInstallationBaseHelper::SetCacheStatus();
 
         $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
@@ -427,16 +425,16 @@ class CampInstallationBase
         $external = true;
         exec($cmd, $output, $result);
         if ($result != 0) {
-        	$cmd = 'crontab -';
+            $cmd = 'crontab -';
             exec($cmd, $output, $result);
             if ($result != 0) {
-            	$external = false;
-            	if (CampInstallationBaseHelper::ConnectDB() == false) {
-            		$this->m_step = 'cronjobs';
-            		$this->m_message = 'Error: Database parameters invalid. Could not '
-            		. 'connect to database server.';
-            		return false;
-            	}
+                $external = false;
+                if (CampInstallationBaseHelper::ConnectDB() == false) {
+                    $this->m_step = 'cronjobs';
+                    $this->m_message = 'Error: Database parameters invalid. Could not '
+                    . 'connect to database server.';
+                    return false;
+                }
                 $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
                     ."WHERE varname = 'ExternalCronManagement'";
                 $g_db->Execute($sqlQuery);
@@ -581,9 +579,9 @@ class CampInstallationBase
             $CampPlugin->create($info['name'], $info['version']);
             $CampPlugin->install();
             if ($CampPlugin->isEnabled()) {
-            	$CampPlugin->enable();
+                $CampPlugin->enable();
             } else {
-            	$CampPlugin->disable();
+                $CampPlugin->disable();
             }
 
             if (function_exists("plugin_{$info['name']}_addPermissions")) {
@@ -608,7 +606,7 @@ class CampInstallationBaseHelper
         global $g_db;
 
         if (is_a($g_db, 'ADONewConnection')) {
-        	return true;
+            return true;
         }
 
         $session = CampSession::singleton();
@@ -679,32 +677,6 @@ class CampInstallationBaseHelper
 
         return $errors;
     } // fn ImportDB
-
-
-    /**
-     *
-     */
-    public static function SetCacheStatus()
-    {
-        global $g_db;
-
-        if (self::ConnectDB() == false) {
-            return false;
-        }
-
-        if (!ini_get('apc.enabled') || !function_exists('apc_store')) {
-            $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
-                ."WHERE varname = 'SiteCacheEnabled'";
-        } else {
-            $sqlQuery = "UPDATE SystemPreferences SET value = 'Y' "
-                ."WHERE varname = 'SiteCacheEnabled'";
-        }
-        if (!$g_db->Execute($sqlQuery)) {
-            return false;
-        }
-
-        return true;
-    } // fn SetCacheStatus
 
 
     public static function SetSiteTitle($p_title)

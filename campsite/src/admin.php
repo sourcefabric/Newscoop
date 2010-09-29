@@ -20,6 +20,7 @@ if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
 
 require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
+require_once(CS_PATH_SITE.DIR_SEP.'classes'.DIR_SEP.'CampTemplateCache.php');
 
 if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
     camp_display_message("Site is down for upgrade. Please initiate upgrade process.");

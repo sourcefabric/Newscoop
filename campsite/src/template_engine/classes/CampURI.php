@@ -624,6 +624,19 @@ abstract class CampURI
 
 
     /**
+     * Returns campsite params: language, publication, issue, section, article.
+     *
+     * @return array
+     */
+    public function getCampsiteVector()
+    {
+        return array ('language' => $this->language->number,
+            'publication' => $this->publication->identifier, 'issue' => $this->issue->number,
+            'section' => $this->section->number, 'article' => $this->article->number);
+    }
+
+
+    /**
      *
      */
     public function getTemplate($p_templateIdOrName = null)
