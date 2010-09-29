@@ -31,4 +31,6 @@ Options -Indexes FollowSymLinks -MultiViews
     RewriteRule . admin.php [L]
 </IfModule>
 
-php_value output_buffering Off
+# Uncomment it for gui backup/restore process
+# NOTE: It can be incompatible on some shared hosting
+#php_value output_buffering Off
