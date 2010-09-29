@@ -1,3 +1,43 @@
+3.4.3 (October 04, 2010)
+  New Feature
+  -----------
+  * [CS-38]   - Multiple template upload
+
+  Improvement
+  -----------
+  * [CS-2188] - Multilingual site template set
+  * [CS-2189] - Comments in classic template
+  * [CS-2248] - Redesign upgrade process to disallow automatic start upgrade script after files copy
+  * [CS-2263] - Update demo data (on campsite-design site)
+
+  Bugs Fixed
+  ----------
+  * [CS-2018] - Inconsistent treatment of logo images in the Classic template set
+  * [CS-2022] - Article types in the sample package should have proper display name
+  * [CS-2038] - Localizer: global strings not detected
+  * [CS-2181] - Campsite 3.4. updates for the manual
+  * [CS-2192] - Blog post comments don't clear the cache
+  * [CS-2241] - Small fixes to custom sorting in Universal list
+  * [CS-2243] - On upgrade error the displayed message is wrong
+  * [CS-2244] - Opera & IE browsers doesn't support the login into admin interface
+  * [CS-2245] - Site title, Meta keywords and Meta description doesn't support UTF-8 chars
+  * [CS-2246] - On upgrade the system_preferences.php should be deleted
+  * [CS-2250] - Very slow article edit page openning for non english version
+  * [CS-2251] - Periodically PEAR::DB reports "Mysql connection error" on any hosting
+  * [CS-2253] - Fixed administration session timelife
+  * [CS-2254] - The installer should check if exec was enabled
+
+  Task
+  ----
+  * [CS-1995] - Write howto for "news player" functionality
+  * [CS-2014] - Add promotion elements to templates
+  * [CS-2051] - Make use of automatically generated header metatags in sample templates
+  * [CS-2056] - Use content from article fields to add metainfo automatically to page source
+  * [CS-2178] - Create HOWTO for installing Campsite on 1&1
+  * [CS-2247] - Sortable columns in the Universal List should have proper styling
+  * [CS-2249] - Replace sample template package with the package from campsite-design.sourcefabric.org
+  * [CS-2257] - Last tagged version in repository was 3.3.6. There are missed tags for 3.4.0, 3.4.1, 3.4.2
+
 3.4.2 (August 23, 2010)
   Improvements
   ------------
