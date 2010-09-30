@@ -28,30 +28,30 @@
         
         <div class="teaserframe teaserframebig teaserframe-{{ $campsite->section->number }} teaserframebig-{{ $campsite->section->number }}">
         <div class="teaserframebiginner">
-        	<div class="teaserhead">
-        	<div class="teaserheadinner">
-        		{{ $campsite->blogentry->published|camp_date_format:'%M %D, %Y %h:%i:%s' }}
-        	</div><!-- .teaserheadinner -->
-        	</div><!-- .teaserhead -->
-        	
+          <div class="teaserhead">
+          <div class="teaserheadinner">
+            {{ $campsite->blogentry->published|camp_date_format:'%M %D, %Y %h:%i:%s' }}
+          </div><!-- .teaserheadinner -->
+          </div><!-- .teaserhead -->
+          
             {{ if $campsite->blogentry->images.100x100 }}
             <!-- blogentry image -->
-            	<div class="blogentry_img">
-            	<a href="{{ url }}"><img src="{{ $campsite->blogentry->images.100x100 }}" border="0" /></a>
-            	</div>
+              <div class="blogentry_img">
+              <a href="{{ url }}"><img src="{{ $campsite->blogentry->images.100x100 }}" border="0" /></a>
+              </div>
             <!-- /blogentry image -->
             {{ /if }}
         
-        	<div class="teasercontent content">
-            	<h2 class="title title_med"><a href="{{ uri }}">{{ $campsite->blogentry->title }}</a></h2>
+          <div class="teasercontent content">
+              <h2 class="title title_med"><a href="{{ uri }}">{{ $campsite->blogentry->title }}</a></h2>
                 <p class="text">{{ $campsite->blogentry->content }}</p>
                 {{ if strlen($campsite->blogentry->mood->name ) }}
-                    <p class="text">Mood: {{ $campsite->blogentry->mood->name }}</p>
+                    <p class="text">{{ if $campsite->language->name == "English" }}Mood:{{ else }}Estado de ánimo:{{ /if }} {{ $campsite->blogentry->mood->name }}</p>
                 {{ /if }}
                 <ul class="links">
-                	<li><a href="{{ uri }}">comments: {{ $campsite->blogentry->comments_online }}</a>
+                  <li><a href="{{ uri }}">{{ if $campsite->language->name == "English" }}comments:{{ else }}comentarios:{{ /if }} {{ $campsite->blogentry->comments_online }}</a>
                 </ul>
-        	</div><!-- .teasercontent content -->
+          </div><!-- .teasercontent content -->
         </div><!-- .teaserframebiginner -->
         </div><!-- .teaserframebig -->  
         
@@ -64,7 +64,7 @@
       {{ list_articles ignore_issue="true" ignore_section="true"  }}
         {{ if $campsite->current_list->at_beginning }}
               <div class="topicblocktitle" id="topicid">{{ $campsite->topic->name }}
-                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">show/hide</a>
+                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">{{ if $campsite->language->name == "English" }}show/hide{{ else }}mostrar / ocultar{{ /if }}</a>
               </div>
             <div class="topicblockitems" id="topicitemsid{{ $campsite->topic->identifier }}" style="display:none">
             <div class="topicblockitem">
@@ -87,7 +87,7 @@
             {{ $campsite->url->set_parameter('f_blogentry_id', $campsite->blogentry->identifier) }}
 
             <div>
-              <b>Blogentry:</b>
+              <b>{{ if $campsite->language->name == "English" }}Blogentry:{{ else }}Entrada de blog:{{ /if }}</b>
               <a href="{{ uri options="article" }}" class="article">{{ $campsite->blogentry->name }}</a>
               |
               {{ $campsite->blogentry->published|camp_date_format:'%M %D, %Y %h:%i:%s' }}
@@ -99,16 +99,16 @@
         {{ list_articles ignore_issue="true" ignore_section="true"  }}
         {{ if $campsite->current_list->at_beginning }}
               <div class="topicblocktitle" id="topicid">{{ $campsite->topic->name }}
-                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">show/hide</a>
+                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">>{{ if $campsite->language->name == "English" }}show/hide{{ else }}mostrar / ocultar{{ /if }}</a>
               </div>
             <div class="topicblockitems" id="topicitemsid{{ $campsite->topic->identifier }}" style="display:none">
             <div class="topicblockitem">
-              See all: <a href="{{ uri options="template classic/topic.tpl" }}" class="topicname">{{ $campsite->topic->name }}</a>
+              >{{ if $campsite->language->name == "English" }}See all:{{ else }}Ver todos:{{ /if }} <a href="{{ uri options="template classic/topic.tpl" }}" class="topicname">{{ $campsite->topic->name }}</a>
             </div><!--  class="topicblockitem" -->
         {{ /if }}
             <div class="topicblockitem">
               <a href="{{ uri options="article" }}" class="article">{{ $campsite->article->name }}</a>
-              | (published {{ $campsite->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
+              | ({{ $campsite->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
             </div><!--  class="topicblockitem" -->
         {{ if $campsite->current_list->at_end }}
             </div><!--  class="topicblockitems" -->
@@ -123,7 +123,7 @@
 
 
               <div>
-                <b>Blogentry:</b>
+                <b>{{ if $campsite->language->name == "English" }}Blog entry{{ else }}Entrada de blog{{ /if }}:</b>
                 <a href="{{ uri options="article" }}" class="article">{{ $campsite->blogentry->name }}</a>
                 |
                 {{ $campsite->blogentry->published|camp_date_format:'%M %D, %Y %h:%i:%s' }}
@@ -167,16 +167,16 @@
             {{ list_articles ignore_issue="true" ignore_section="true"  }}
         {{ if $campsite->current_list->at_beginning }}
               <div class="topicblocktitle" id="topicid">{{ $campsite->topic->name }}
-                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">show/hide</a>
+                <a  href="javascript:toggleLayer('topicitemsid{{ $campsite->topic->identifier }}');" class="toggleshowhide">>{{ if $campsite->language->name == "English" }}show/hide{{ else }}mostrar / ocultar{{ /if }}</a>
               </div>
             <div class="topicblockitems" id="topicitemsid{{ $campsite->topic->identifier }}" style="display:none">
             <div class="topicblockitem">
-              See all: <a href="{{ uri options="template classic/topic.tpl" }}" class="topicname">{{ $campsite->topic->name }}</a>
+              {{ if $campsite->language->name == "English" }}See all{{ else }}Ver todos{{ /if }}: <a href="{{ uri options="template classic/topic.tpl" }}" class="topicname">{{ $campsite->topic->name }}</a>
             </div><!--  class="topicblockitem" -->
         {{ /if }}
             <div class="topicblockitem">
               <a href="{{ uri options="article" }}" class="article">{{ $campsite->article->name }}</a>
-              | (published {{ $campsite->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
+              | ({{ $campsite->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
             </div><!--  class="topicblockitem" -->
         {{ if $campsite->current_list->at_end }}
             </div><!--  class="topicblockitems" -->
@@ -189,7 +189,7 @@
                   {{ $campsite->url->set_parameter('f_blogentry_id', $campsite->blogentry->identifier) }}
 
                   <div>
-                    <b>Blogentry:</b>
+                    <b>{{ if $campsite->language->name == "English" }}Blogentry:{{ else }}Entrada de blog{{ /if }}</b>
                     <a href="{{ uri options="article" }}" class="article">{{ $campsite->blogentry->name }}</a>
                     |
                     {{ $campsite->blogentry->published|camp_date_format:'%M %D, %Y %h:%i:%s' }}
@@ -204,7 +204,7 @@
   
 {{ /if }}
 
-				<!-- Column 1 end -->
+        <!-- Column 1 end -->
             </div>
         </div>
         <div class="col2">
@@ -212,7 +212,7 @@
 
 {{ include file="classic/tpl/search-box.tpl" }}
 
-			<!-- Column 2 end -->
+      <!-- Column 2 end -->
 
         </div>
     </div>

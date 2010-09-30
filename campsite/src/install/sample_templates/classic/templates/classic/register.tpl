@@ -20,14 +20,14 @@
 
 {{ if $campsite->edit_user_action->defined && $campsite->edit_user_action->is_error }}
 <div class="error"><div class="errorinner">
-There was an error submitting the account creation form:
+{{ if $campsite->language->name == "English" }}There was an error submitting the account creation form:{{ else }}Hubo un error al enviar el formulario de creación de la cuenta:{{ /if }}
   {{ $campsite->edit_user_action->error_message }}
 </div></div>
   {{ include file="classic/tpl/user-form.tpl" }}
 {{ /if }}
 
 {{ if $campsite->edit_user_action->defined && $campsite->edit_user_action->ok }}
-  Your profile updated sucessfully.
+  {{ if $campsite->language->name == "English" }}Your profile updated sucessfully.{{ else }}Su perfil actualizado correctamente.{{ /if }}
 {{ /if }}
 
 

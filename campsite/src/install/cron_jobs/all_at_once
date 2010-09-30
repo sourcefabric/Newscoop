@@ -1,0 +1,18 @@
+
+
+*/2 * * * * /opt/campcaster/var/Campcaster/storageServer/var/cron/transportCron.php
+* * * * * /var/www/campsite-demo/bin/campsite-autopublish
+0 */4 * * * /var/www/campsite-demo/bin/campsite-indexer > /dev/null
+0 */8 * * * /var/www/campsite-demo/bin/subscription-notifier
+#*/2 * * * * /var/www/campsite-demo/bin/events-notifier
+0 */4 * * * /var/www/campsite-demo/bin/campsite-statistics
+* * * * * /var/www/campsite-design.git/campsite/src/bin/campsite-autopublish
+0 */4 * * * /var/www/campsite-design.git/campsite/src/bin/campsite-indexer > /dev/null
+0 */8 * * * /var/www/campsite-design.git/campsite/src/bin/subscription-notifier
+#*/2 * * * * /var/www/campsite-design.git/campsite/src/bin/events-notifier
+0 */4 * * * /var/www/campsite-design.git/campsite/src/bin/campsite-statistics
+* * * * * /var/www/campsite.git/campsite/src/bin/campsite-autopublish
+0 */4 * * * /var/www/campsite.git/campsite/src/bin/campsite-indexer
+0 */8 * * * /var/www/campsite.git/campsite/src/bin/subscription-notifier
+*/2 * * * * /var/www/campsite.git/campsite/src/bin/events-notifier
+0 */4 * * * /var/www/campsite.git/campsite/src/bin/campsite-statistics

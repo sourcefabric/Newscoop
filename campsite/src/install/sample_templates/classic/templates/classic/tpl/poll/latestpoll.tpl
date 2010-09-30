@@ -2,7 +2,7 @@
 <div class="teaserframebiginner">
   <div class="teaserhead">
   <div class="teaserheadinner">
-<a href="{{ uri options="template classic/tpl/poll/poll-list.tpl" }}">Latest Poll</a>
+<a href="{{ uri options="template classic/tpl/poll/poll-list.tpl" }}">{{ if $campsite->language->name == "English" }}Latest Poll{{ else }}Última encuesta{{ /if }}</a>
 </div><!-- .teaserheadinner -->
   </div><!-- .teaserhead -->
 
@@ -17,13 +17,13 @@ document.myform.submit();
 //-->
 </script>
 
-{{ list_polls name="last" length="1" order='bynumber desc' }}
+{{ list_polls name="last" length="1" order="bynumber desc" }}
     <p class="question">{{ $campsite->poll->question }}</p> 
 
     <form id="poll-form" action="" name="myform" target="NewWindow">
     <input type="hidden" name="f_poll" value="1" />
     <input type="hidden" name="f_poll_nr" value="{{ $campsite->poll->number }}" />
-    <input type="hidden" name="f_poll_language_id" value="{{ $campsite->poll->language_id }}" />
+    <input type="hidden" name="f_poll_language_id" value="{{ $campsite->language->number }}" />
     <input type="hidden" name="f_poll_mode" value="standard" />
     <input type="hidden" name="tpl" value="886" /><!-- template ID -->
 
@@ -33,7 +33,7 @@ document.myform.submit();
 
 <input class="button" type="submit" onClick="javascript:submitForm();return false;" value="Vote" />
 
-<a href="{{ uri options="template classic/tpl/poll/poll-results.tpl" }}" onClick="javascript:submitForm();return false;">Results</a>
+<a href="{{ uri options="template classic/tpl/poll/poll-results.tpl" }}" onClick="javascript:submitForm();return false;">{{ if $campsite->language->name == "English" }}Results{{ else }}Resultados{{ /if }}</a>
         </form>
 {{ /list_polls }}   
 

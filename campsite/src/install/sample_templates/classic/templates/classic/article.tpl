@@ -17,24 +17,25 @@
               {{ $campsite->article->publish_date }}
               {{ include file="classic/tpl/topic-list.tpl" }}
             </div><!-- .date -->
-            <h3 class="deck deck_med">{{ $campsite->article->Deck }}</h3>
+            <h3 class="deck deck_med">{{ $campsite->article->Deck }}</h3>            
+            
             <h1>{{ $campsite->article->name }}</h1>
             <div class="byline">{{ $campsite->article->author->name }}</div>
+
+            {{ include file="classic/tpl/if-video.tpl" }}
+            {{ include file="classic/tpl/if-audio.tpl" }}
+            
             <p class="text">
               {{ $campsite->article->Body }}
             </p>
           </div><!-- .articlecontent -->
           
-          {{ list_article_attachments }}
-          {{ if $campsite->current_list->at_beginning }}
-          <h4>Downloads:</h4>
-          {{ /if }}
-            <a href="http://{{ $campsite->publication->site }}/attachment/{{ $campsite->attachment->identifier }}">{{ $campsite->attachment->file_name }}</a>
-            ({{ $campsite->attachment->size_kb }}kb)
-            <br>
-          {{ /list_article_attachments }}
+{{ include file="classic/tpl/article-gallery.tpl" }}          
+          
+{{ include file="classic/tpl/article-attachments.tpl" }}
         
-          {{ include file="classic/tpl/comments.tpl" }}
+{{ include file="classic/tpl/comments.tpl" }}
+
         <!-- Column 1 end -->
         </div>
       </div>
