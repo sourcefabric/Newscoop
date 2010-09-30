@@ -260,6 +260,7 @@ regGS("There was an error logging in to the Campcaster server", "Произош�
 regGS("Reads", "Количество просмотров");
 regGS("Publish with issue", "Опубликовать выпуск");
 regGS("Universal List", "Универсальный список");
+regGS("Invalid security token!", "Неверный маркер безопасности!");
 regGS("Author:", "Автор:");
 regGS("User name", "Пользователь");
 regGS("User Types", "Типы пользователей");
@@ -276,5 +277,5 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
-regGS("Invalid security token!", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Вы уверены, что хотите удалить картинку \\'$1\\'?");
 ?>

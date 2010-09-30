@@ -1,5 +1,5 @@
 <?php 
-regGS("click to see issues", "");
+regGS("click to see issues", "кликните для просмотра выпуска");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Алиас сайта для издания \"$1\" был изменен на \"$2\".");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "Алиас сайта \"$1\" был добавлен к изданию \"$2\".");
 regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Алиас сайта \"$1\" был удален из издания \"$2\".");
