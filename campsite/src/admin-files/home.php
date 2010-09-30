@@ -94,11 +94,13 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
     CampCache::singleton()->clear('user');
     CampCache::singleton()->clear();
     SystemPref::DeleteSystemPrefsFromCache();
-    CampTemplateCache::factory()->clean();
 
     // Clear compiled templates
     require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampTemplate.php");
     CampTemplate::singleton()->clear_compiled_tpl();
+
+    // Clear template cache storage
+    if (CampTemplateCache::factory()) CampTemplateCache::factory()->clean();
 
     $actionMsg = getGS('Campsite cache was cleaned up');
     $res = 'OK';
