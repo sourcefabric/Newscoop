@@ -1,14 +1,14 @@
 <div class="breadcrumbs"><div class="breadcrumbsinner">
-<a href="{{ uri options="publication" }}">Home</a>
+<a href="{{ uri options="publication" }}">{{ if $campsite->language->name == "English" }}Home{{ else }}Portada{{ /if }}</a>
 &gt;
 {{ if $campsite->template->name == "classic/topic.tpl" }}
     {{ if $campsite->topic->defined }}
-        Topic: {{ $campsite->topic->name }}
+        {{ if $campsite->language->name == "English" }}Topic{{ else }}Tema{{ /if }}: {{ $campsite->topic->name }}
     {{ else }}
-        Topics
+        {{ if $campsite->language->name == "English" }}Topics{{ else }}Temas{{ /if }}
     {{ /if }}
 {{ elseif $campsite->template->name == "classic/archive.tpl" }}
-    Archive
+    {{ if $campsite->language->name == "English" }}Archive{{ else }}Archivo{{ /if }}
 {{ elseif $campsite->section->defined }}
     <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>
 {{ /if }}

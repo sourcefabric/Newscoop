@@ -23,27 +23,27 @@
 
         {{ list_search_results name="results" length=9 }}
         {{ if $campsite->current_list->at_beginning }}
-            <p>Found {{ $campsite->current_list->count }} articles matching the condition.</p>
+            <p>{{ if $campsite->language->name == "English" }}Found {{ $campsite->current_list->count }} articles matching the condition.{{ else }}Se han encontrado {{ $campsite->current_list->count }} artículos que coinciden con la condición.{{ /if }}</p>
         {{ /if }}
 <div class="teaserframe teaserframebig teaserframe-{{ $campsite->section->number }} teaserframebig-{{ $campsite->section->number }}">
 <div class="teaserframebiginner">
-	<div class="teaserhead">
-	<div class="teaserheadinner">
-	</div><!-- .teaserheadinner -->
-	</div><!-- .teaserhead -->
-        	<div class="teasercontent content">
-        	<h2 class="title title_big"><a href="{{ uri options="article template article.tpl" }}">{{ $campsite->article->name }}</a></h2>
-        	<p class="text">(Section <a href="{{ uri options="section template section.tpl" }}">{{ $campsite->section->name }}</a>, {{ $campsite->article->Date }} {{ $campsite->article->Time }}) {{ $campsite->article->Deck }}</p>
-        	</div><!-- .teasercontent content -->
+  <div class="teaserhead">
+  <div class="teaserheadinner">
+  </div><!-- .teaserheadinner -->
+  </div><!-- .teaserhead -->
+          <div class="teasercontent content">
+          <h2 class="title title_big"><a href="{{ uri options="article" }}">{{ $campsite->article->name }}</a></h2>
+          <p class="text">{{ if $campsite->language->name == "English" }}Section{{ else }}Sección{{ /if }} <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>, {{ $campsite->article->Date }} {{ $campsite->article->Time }}) {{ $campsite->article->Deck }}</p>
+          </div><!-- .teasercontent content -->
         </div><!-- .teaserframebiginner -->
         </div><!-- .teaserframebig -->
-        	{{ unset_section }}
+          {{ unset_section }}
             {{ include file="classic/tpl/pagination.tpl" }}
         {{ /list_search_results }}
 
         {{ if $campsite->prev_list_empty }}
           <div class="error"><div class="errorinner">
-          There were no articles found.
+          {{ if $campsite->language->name == "English" }}There were no articles found.{{ else }}No se encontraron artículos encontrados.{{ /if }}
           </div></div>
         {{ /if }}
     {{ /if }}

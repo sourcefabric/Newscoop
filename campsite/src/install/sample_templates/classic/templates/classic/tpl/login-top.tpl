@@ -15,7 +15,7 @@
     {{ local }}
         {{ unset_section }}
         <div id="register">
-        <a href="{{ uri options="template classic/register.tpl" }}">Register</a> |
+        <a href="{{ uri options="template classic/register.tpl" }}">{{ if $campsite->language->name == "English" }}Register{{ else }}Registrarse{{ /if }}</a> |
         </div>
     {{ /local }}
 {{ /if }}
@@ -34,7 +34,7 @@
     {{ $campsite->url->set_parameter('tpid', $campsite->default_topic->identifier) }}
     {{ $campsite->url->set_parameter('logout', 1) }}
     
-    <div id="logout"><a href="{{ uri }}">Logout</a></div>
+    <div id="logout"><a href="{{ uri }}">{{ if $campsite->language->name == "English" }}Logout{{ else }}Desconectarse{{ /if }}</a></div>
     
     {{ $campsite->url->reset_parameter('f_blog_id') }}
     {{ $campsite->url->reset_parameter('f_blogentry_id') }}
@@ -49,7 +49,7 @@
     {{ $campsite->url->set_parameter('tpl', $campsite->default_template->identifier) }}
     {{ $campsite->url->set_parameter('tpid', $campsite->default_topic->identifier) }}
     
-    <div id="singin"> Sign in: </div>
+    <div id="singin"> {{ if $campsite->language->name == "English" }}Sign in{{ else }}Entra{{ /if }}: </div>
     {{ login_form submit_button="Send" }}
           {{ camp_edit object="login" attribute="uname" }}
           {{ camp_edit object="login" attribute="password" }}

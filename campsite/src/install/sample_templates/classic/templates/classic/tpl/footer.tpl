@@ -18,7 +18,7 @@
 <div id="footerlinks">
 <div id="footerlinksinner">
 <center>
-          <a href="{{ uri options="issue" }}">Home<!-- home --></a>
+          <a href="{{ uri options="issue" }}">{{ if $campsite->language->name == "English" }}Home{{ else }}Portada{{ /if }}</a>
       {{ list_sections name="sections" constraints="number greater_equal 10 number smaller_equal 120" }}
           <a href="{{ uri }}">{{ $campsite->section->name }}</a>
       {{ /list_sections }}

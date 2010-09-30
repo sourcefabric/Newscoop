@@ -21,9 +21,9 @@
 {{ /list_articles }}
 
 <!-- Banner -->
-{{ include file="classic/tpl/banner/bannerleftcol.tpl" }}
+{{ include file="classic/tpl/banner/banner-leftcol-section.tpl" }}
 
-				<!-- Column 1 end -->
+        <!-- Column 1 end -->
             </div>
         </div>
         <div class="col2">
@@ -45,7 +45,7 @@
 {{ /list_articles }}
 
 
-			<!-- Column 2 end -->
+      <!-- Column 2 end -->
 
         </div>
     </div>

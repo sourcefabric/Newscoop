@@ -1,21 +1,21 @@
 {{ if $campsite->blog->comment_mode == 'registered' && !$campsite->user->defined }}  
 
-    <p><i><b>You need to register/login to post blog comments.</b></i></p> 
+    <p><i><b>{{ if $campsite->language->name == "English" }}You need to register/login to post blog comments{{ else }}Es necesario registrarse / iniciar sesión para enviar comentarios del blog{{ /if }}.</b></i></p> 
      
 {{ else }}
 
     {{ blogcomment_form submit_button="Submit" preview_button="Preview" template="classic/tpl/blog/section-blog.tpl" }}
         <table>
-            <tr><th colspan="2" align="left">Add Comment:</th></tr>
+            <tr><th colspan="2" align="left">{{ if $campsite->language->name == "English" }}Add Comment{{ else }}Añadir comentario{{ /if }}:</th></tr>
             
             {{ if !$campsite->user->defined }}
-                <tr><td>Your Name</td><td>{{ blogcomment_edit attribute=user_name }}</td></tr>
-                <tr><td>Your EMail</td><td> {{ blogcomment_edit attribute=user_email }}</td></tr>
+                <tr><td>{{ if $campsite->language->name == "English" }}Your Name{{ else }}Su nombre{{ /if }}</td><td>{{ blogcomment_edit attribute=user_name }}</td></tr>
+                <tr><td>{ if $campsite->language->name == "English" }}Your Email{{ else }}Su email{{ /if }}</td><td> {{ blogcomment_edit attribute=user_email }}</td></tr>
             {{ /if }}
            
-            <tr><td>Title</td><td> {{ blogcomment_edit attribute=title }}</td></tr>
-            <tr><td>Comment</td><td> {{ blogcomment_edit attribute=content  wysiwyg=1 html_code="rows=6 cols=30" }}</td></tr>
-            <tr><td>Mood</td><td> {{ blogcomment_edit attribute=mood  html_code="size=39" }}</td></tr>
+            <tr><td>{{ if $campsite->language->name == "English" }}Title{{ else }}Título{{ /if }}</td><td> {{ blogcomment_edit attribute=title }}</td></tr>
+            <tr><td>{{ if $campsite->language->name == "English" }}Comment{{ else }}Comentar{{ /if }}</td><td> {{ blogcomment_edit attribute=content  wysiwyg=1 html_code="rows=6 cols=30" }}</td></tr>
+            <tr><td>{{ if $campsite->language->name == "English" }}Mood{{ else }}Estado de ánimo{{ /if }}</td><td> {{ blogcomment_edit attribute=mood  html_code="size=39" }}</td></tr>
             
             {{ if $campsite->blog->captcha_enabled }}
                 <tr><td><img src="{{ captcha_image_link }}"></td><td>{{ camp_edit object="captcha" attribute="code" }}</td></tr>

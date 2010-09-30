@@ -2,7 +2,7 @@
 
 DATABASE_USER=root
 DATABASE_PASSWORD=
-DATABASE_NAME=campsite34
+DATABASE_NAME=campsite
 
 if [ "$1" != "" ]; then
     DATABASE_NAME=$1
@@ -13,42 +13,71 @@ fi
 
 TABLES_TO_FILL="
  Aliases\
+ ArticleAttachments\
+ ArticleAudioclips\
  ArticleAuthors\
+ ArticleComments\
  ArticleImages\
  ArticleIndex\
+ ArticlePublish\
  ArticleTopics\
  ArticleTypeMetadata\
  Articles\
+ Attachments\
+ AudioclipMetadata\
  Authors\
  AutoId\
+ Classes\
+ Countries\
+ Dictionary\
+ EnumerationElements\
+ Enumerations\
+ Errors\
+ Events\
  Images\
+ IssuePublish\
  Issues\
+ KeywordClasses\
  KeywordIndex\
+ Languages\
+ ObjectTypes\
  Plugins\
  Publications\
  Sections\
+ SubsDefTime\
+ SubsSections\
+ Subscriptions\
+ TemplateTypes\
  Templates\
+ TimeUnits\
+ TopicFields\
  Topics\
  Translations\
+ URLTypes\
+ XArticle\
+ XInterview\
+ XService\
+ XSpecial\
+ Xlink\
  Xnews_article\
- liveuser_groupusers\
- liveuser_perm_users\
- liveuser_perm_users_perm_user_id_seq\
- liveuser_users\
- liveuser_users_auth_user_id_seq\
- liveuser_rights\
- liveuser_rights_right_id_seq\
- liveuser_grouprights\
+ Xsava\
+ phorum_banlists\
+ phorum_files\
+ phorum_forum_group_xref\
  phorum_forums\
- phorum_users\
- plugin_blog_blog\
- plugin_blog_comment\
- plugin_blog_entry\
- plugin_blog_topic\
- plugin_poll\
- plugin_poll_answer"
-
-CUSTOM_TABLES="Xnews_article\
+ phorum_groups\
+ phorum_messages\
+ phorum_pm_buddies\
+ phorum_pm_folders\
+ phorum_pm_messages\
+ phorum_pm_xref\
+ phorum_search\
+ phorum_settings\
+ phorum_subscribers\
+ phorum_user_custom_fields\
+ phorum_user_group_xref\
+ phorum_user_newflags\
+ phorum_user_permissions\
  plugin_blog_blog\
  plugin_blog_comment\
  plugin_blog_entry\
@@ -65,6 +94,6 @@ CUSTOM_TABLES="Xnews_article\
  plugin_pollanswer_attachment"
 
 mysqldump -u $DATABASE_USER $password_string -t --insert-ignore \
-  $DATABASE_NAME $TABLES_TO_FILL > campsite_demo_data.sql
+  $DATABASE_NAME $TABLES > campsite_demo_data.sql
 mysqldump -u $DATABASE_USER $password_string -d --insert-ignore \
-  "$DATABASE_NAME" $CUSTOM_TABLES > campsite_demo_tables.sql
+  $DATABASE_NAME $TABLES > campsite_demo_tables.sql

@@ -1,65 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-{{ set_default_publication }}
-{{ unset_issue }}
-{{ php }}
-setlocale(LC_TIME, 'en_GB');
-{{ /php }}
-  
-<rss version="2.0"
-  xmlns:content="http://purl.org/rss/1.0/modules/content/"
-  xmlns:wfw="http://wellformedweb.org/CommentAPI/"
-  xmlns:dc="http://purl.org/dc/elements/1.1/"
-  xmlns:atom="http://www.w3.org/2005/Atom"
-  xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
-  xmlns:media="http://search.yahoo.com/mrss/"
-  >
-
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
 <channel>
-  <title>{{ $campsite->publication->name }}</title>
-  <atom:link href="{{ url }}" rel="self" type="application/rss+xml" />
-  <link>{{ url }}</link>
-  <description>The latest news on {{ $campsite->publication->name }}.</description>
-  <pubDate>{{ $smarty.now|date_format:"%a, %d %b %Y %T +0000" }}</pubDate>
-  <generator>http://code.campware.org/projects/campsite</generator>
-  <language>{{ $campsite->publication->default_language->code }}</language>
-  <sy:updatePeriod>hourly</sy:updatePeriod>
-  <sy:updateFrequency>1</sy:updateFrequency>
-  <image>
-    <url>{{ url options="root_level"}}/templates/classic/img/logo.png</url>
-    <title>{{ $campsite->publication->name }} News</title>
-    <link>{{ url options="publication" }}</link>
-  </image>
-  
-{{ list_articles length="20" order="bypublish_date desc" }}
-  <item>
-    <title>{{ $campsite->article->name }}</title>
-    <link>{{ url }}</link>
-    <comments>{{ url }}#comments]</comments>
-    
-    <pubDate>{{ $campsite->article->publish_date|date_format:"%a, %d %b %Y %T +0000" }}</pubDate>
-    <dc:creator>{{ $campsite->article->owner->name }}</dc:creator>
-    
-    {{ list_subtopics }}
-      <category><![CDATA[{{ $campsite->topic->name }}]]></category>
-    {{ /list_subtopics }}
-    
-    <guid isPermaLink="false">{{ url }}</guid>
-    
-    <description><![CDATA[{{ $campsite->article->Lead_and_SMS }}]]></description>
+<title>{{$campsite->publication->name}}</title>
+<link>http://{{$campsite->publication->site}}</link>
+<description>{{$siteinfo.description}}</description>
+<language>{{ $campsite->language->code }}</language>
+<copyright>Copyright {{$smarty.now|date_format:"%Y"}}, {{$campsite->publication->name}}</copyright>
+<lastBuildDate>{{$smarty.now|date_format:"%a, %d %b %Y %H:%M:%S"}} +0100</lastBuildDate>
+<ttl>60</ttl>
+<generator>Campsite</generator>
+<image>
+<url>http://{{$campsite->publication->site}}/templates/classic/img/logo-rss.jpg</url>
+<title>{{$campsite->publication->name}}</title>
+<link>http://{{$campsite->publication->site}}</link>
+<width>144</width>
+<height>19</height>
+</image>
+<atom:link href="http://{{$campsite->publication->site}}/templates/feed/index-en.rss" rel="self" type="application/rss+xml" />
+{{list_articles length="20" order="bypublishdate desc"}}
+<item>
+<title>{{$campsite->article->name|html_entity_decode|regex_replace:'/&(.*?)quo;/':'&quot;'}}</title>
+<link>http://{{$campsite->publication->site}}/ru/{{ $campsite->issue->number }}/{{$campsite->section->url_name}}/{{$campsite->article->number}}</link>
+<description>
+{{if $campsite->article->has_image(1)}}
+&lt;img src="{{$campsite->article->image1->thumbnailurl}}" border="0" align="left" hspace="5" /&gt;
+{{/if}}
+{{$campsite->article->intro|strip_tags:false|strip|escape:'html':'utf-8'}}
+&lt;br clear="all"&gt;
+</description>
+<category domain="http://{{$campsite->publication->site}}/{{ $campsite->language->code }}/{{ $campsite->issue->number }}/{{$campsite->section->url_name}}">{{$campsite->section->name}}</category>
 
-    <content:encoded><![CDATA[{{ $campsite->article->body }}]]></content:encoded>
-  
-    {{ list_article_images length="10" }}
-        {{if $campsite->image->article_index < 99 }}
-            <media:content url="{{ url options="root_level }}get_img.php?{{ urlparameters options="image" }}" medium="image">
-              <media:title type="html">{{ $campsite->image->description }}</media:title>
-            </media:content>
-        {{ /if }}
-    {{ /list_article_images }}
-
-  </item>
-{{ /list_articles }}
- 
+{{if $campsite->article->author->name}}
+<atom:author><atom:name>{{$campsite->article->author->name}}</atom:name></atom:author>
+{{/if}}
+<pubDate>{{$campsite->article->publish_date|date_format:"%a, %d %b %Y %H:%M:%S"}} +0100</pubDate>
+<guid isPermaLink="true">http://{{$campsite->publication->site}}/{{ $campsite->language->code }}/{{ $campsite->issue->number }}/{{$campsite->section->url_name}}/{{$campsite->article->number}}</guid>
+</item>
+{{/list_articles}}
 </channel>
-
 </rss>
