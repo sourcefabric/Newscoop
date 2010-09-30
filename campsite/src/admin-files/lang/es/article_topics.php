@@ -6,7 +6,7 @@ regGS("You do not have the right to detach topics from articles.", "No puede des
 regGS("You do not have the right to attach topics to articles.", "No puede vincular tópicos a los artículos");
 regGS("Attach Topics", "Adjuntar tópicos");
 regGS("Attach Topic To Article", "Adjuntar tópico al artículo");
-regGS("No topics.", "Sin temas");
+regGS("No topics.", "No existen tópicos");
 regGS("Delete topic $1 from article", "Borrar tema $1 de artículo");
 regGS("Add topic $1 to article", "Agregar tema $1 a artículo");
 ?>
