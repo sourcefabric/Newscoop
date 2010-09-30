@@ -293,6 +293,13 @@ if ($showUserMenu) {
         array("icon" => sprintf($iconTemplateStr, "sync_users.png")));
         $menu_users->addItem($menu_item);
     }
+
+    if ($g_user->hasPermission("ManageUsers")) {
+        $menu_item =& DynMenuItem::Create("Manage Authors",
+        "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+        array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
+        $menu_users->addItem($menu_item);
+    }
 } // if ($showUserMenu)
 
 // plugins: extend menu
@@ -319,6 +326,9 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
   <meta http-equiv="Expires" content="now" />
   <script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
   <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
+  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.js" type="text/javascript"></script>
+  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.tools.min.js" type="text/javascript"></script>
+  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
   <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>

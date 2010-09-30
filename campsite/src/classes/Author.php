@@ -17,7 +17,8 @@ class Author extends DatabaseObject {
 	var $m_dbTableName = 'Authors';
 	var $m_keyColumnNames = array('id');
 	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('id', 'first_name', 'last_name', 'email');
+	var $m_columnNames = array('id', 'first_name', 'last_name', 'email','type','skype','jabber','aim','biography','image');
+    var $m_aliases = null;
 
 	/**
 	 * Constructor.
@@ -39,6 +40,10 @@ class Author extends DatabaseObject {
             $this->fetch();
             $this->m_keyColumnNames = array('id');
 		}
+        if ($this->getId()>0)
+        {
+            $this->loadAliases();
+        }
 	} // constructor
 
 
@@ -95,6 +100,30 @@ class Author extends DatabaseObject {
     	return $this->m_data['last_name'];
     } // fn getLastName
 
+    public function getType()
+    {
+        return $this->m_data['type'];
+    }
+    
+    public function getSkype()
+    {
+        return $this->m_data['skype'];
+    }
+    
+    public function getJabber()
+    {
+        return $this->m_data['jabber'];
+    }
+    public function getAim()
+    {
+        return $this->m_data['aim'];
+    }
+    
+    
+    public function getImage()
+    {
+        return $this->m_data['image'];
+    }
 
     public static function ReadName($p_name)
     {
@@ -169,7 +198,93 @@ class Author extends DatabaseObject {
 		return $this->setProperty('email', $p_value);
 	} // fn setEmail
 
+    public function setType($p_value)
+    {
+        return $this->setProperty('type', $p_value);
+    }
+    
+    public function setSkype($p_value)
+    {
+        return $this->setProperty('skype', $p_value);
+    }
+    
+    public function setJabber($p_value)
+    {
+        return $this->setProperty('jabber', $p_value);
+    }
+    public function setAim($p_value)
+    {
+        return $this->setProperty('aim', $p_value);
+    }
+    
+    public function setImage($p_value)
+    {
+        return $this->setProperty('image',$p_value);
+    }
+    
+    protected function loadAliases()
+    {
+        global $g_ado_db;
+        $sql = "SELECT alias FROM authorsaliases WHERE IdAuthor=" . $this->getId() . " order by id  ";
+        $this->m_aliases = $g_ado_db->GetAll($sql); 
+    }
+    
+    public function getAliases()
+    {
+        $this->loadAliases();
+        return $this->m_aliases;
+    }
+    
+    public function setBiography($p_value, $IdLanguage=1, $first_name="", $last_name="")
+    {
+        global $g_ado_db;
+        $bio = $this->getBiography($IdLanguage);
+        if (empty($bio))
+        {
+            $sql = "INSERT INTO authorbiography (IdAuthor,IdLanguage,biography,first_name,last_name) VALUES('%d','%d','%s','%s','%s')";
+            $sql = sprintf($sql, $this->getId(), $IdLanguage, $p_value,$first_name,$last_name);
+            $g_ado_db->Execute($sql);
+        }
+        else 
+        {
+            $sql = "UPDATE authorbiography SET biography='%s', first_name='%s', last_name='%s' WHERE IdAuthor='%d' AND IdLanguage='%d'";
+            $sql = sprintf($sql, $p_value, $first_name, $last_name, $this->getId(), $IdLanguage);
+            $g_ado_db->Execute($sql);
+        }
+        
+    }
+    public function getBiography($IdLanguage=1)
+    {
+        global $g_ado_db;
+        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM authorbiography WHERE IdAuthor=%d AND IdLanguage=%d";
+        $sql = sprintf($sql, $this->getId(), $IdLanguage);
+        return $g_ado_db->GetAll($sql);
+    }
+    
+    public function getBiographies()
+    {
+        global $g_ado_db;
+        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM authorbiography WHERE IdAuthor=%d";
+        $sql = sprintf($sql, $this->getId());
+        return $g_ado_db->GetAll($sql);
+    }
 
+    public function setAliases($aliases)
+    {
+        global $g_ado_db;
+        $sql = "DELETE FROM authorsaliases WHERE IdAuthor=" . $this->getId();
+        $g_ado_db->Execute($sql);
+        foreach ($aliases as $alias)
+        {
+            if (strlen($alias)>0)
+            {
+                $sql = "INSERT INTO authorsaliases(IdAuthor,alias) VALUES('%s','%s')";
+                $sql = sprintf($sql, $this->getId(), $alias);
+                $g_ado_db->Execute($sql);
+            }
+        }
+    }
+    
 	public static function GetAllExistingNames()
 	{
 		global $g_ado_db;

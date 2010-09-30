@@ -71,7 +71,9 @@ $no_menu_scripts = array(
     '/imagearchive/do_add.php',
     '/smartlist/assets/php/dynamicfilter/data.php',
     '/smartlist/assets/load_filterby_menu.php',
-    '/smartlist/assets/dt_actions.php'
+    '/smartlist/assets/dt_actions.php',
+    '/users/authors_ajax/detail.php',
+    '/users/authors_ajax/grid.php'
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);

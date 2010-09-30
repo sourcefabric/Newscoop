@@ -1016,3 +1016,187 @@ a.calendarButton {
 #uploader {
     width:700px;
 }
+
+
+
+.tabs {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	width:100%;
+	border-bottom:1px solid #5d99b1;
+	height:25px;
+	overflow:visible;
+}
+.tabs li {
+	float:left;
+}
+.tabs li a {
+	float:left;
+	margin:0 4px 0 0;
+	height:19px;
+	padding:5px 12px 0 12px;
+	border:1px solid #b5d5e2;
+	border-bottom:none;
+	text-decoration:none;
+	font-size:12px;
+	font-weight:bold;
+	color:#537989;
+	background:#f4fafd;
+	outline:none;
+}
+.tabs li a.current {
+	height:20px;
+	background:#edf7fc;
+	border:1px solid #5d99b1;
+	border-bottom:none;
+	color:#015476;
+	position:relative;
+	z-index:10;
+}
+.pane {
+	background:#edf7fc;
+	border:1px solid #5d99b1;
+	border-top:none;
+	padding:10px 0 0px 0;
+}
+.floatBox {
+	float:left;
+	margin:20px 0 20px 15px;
+	width: 416px;
+}
+.bigBox {
+	width: 550px;
+}
+.floatBox .editBox {
+	margin:0;
+	width:100%;
+}
+.firstBlock {
+	border-top:none;
+}
+.authorThumb {
+	padding:1px;
+	background:#fff;
+	border:1px solid #5d99b1;
+	width:100px;
+	height:120px;
+	float:left;
+}
+.pane .formBlock {
+	padding:7px 8px 7px 12px;
+}
+.formBlock ul.nameList {
+	width:400px;
+	float:left;
+	margin-left:15px;
+}
+.formBlock ul.nameList label {
+	width:70px;
+	text-align:left;
+}
+.formBlock label.smaller {
+	margin-right:14px;
+	text-align:right;
+	width:105px;
+}
+.textHolder {
+	float:left;
+	margin: 0 20px 10px 0;
+	width: 253px;
+	padding:7px 0 0 0;
+}
+.textHolder textarea {
+	width:246px;
+	font-size:12px;
+}
+.omega {
+	margin-right:0;
+}
+
+.addButton, .arrowButton {
+	display:block;
+	background:url(add-button_bg.png) no-repeat 0 0;
+	width:22px;
+	height:21px;
+	padding:0;
+	margin:0 0 0 4px;
+	border:1px solid #95c26a;
+	float:left;
+}
+.arrowButton {
+	background:url(arrow-button_bg.png) no-repeat 0 0;
+	width:24px;
+	margin:0;
+	border:1px solid #015476;
+	border-left:none;
+}
+.addButton:hover {
+	background-position: 0 -25px;
+	border:1px solid #3a7304;
+}
+.arrowButton:hover {
+	background-position: 0 -25px;
+	border-colo:1px solid #015476;
+}
+
+.input_select2 {
+	background-color: #fff;
+	border: 1px solid #777;
+	font-size: 13px;
+	height:23px;
+	float:left;
+}
+.pane h2 {
+	border-bottom:1px solid #B5D5E2;
+	border-top:1px solid #fff;
+	color:#015476;
+	font-size:14px;
+	font-weight:bold;
+	margin:0;
+	padding:8px 0 8px 7px;
+	position:relative;
+}
+.pane h2.top {
+	border-top:none;
+}
+.pane ul{
+	list-style-type:none;
+}
+.pane h2 a.addButton {
+	position:absolute;
+	top:5px;
+	left:135px;
+}
+.formBlockSolo {
+	padding:7px 8px 7px 8px;
+}
+.addButtonText{
+	border:1px solid #95c26a;
+	padding:5px 12px 0 23px;
+	background:url(add-button_bg.png) no-repeat 0 0;
+	text-decoration:none;
+	text-transform:uppercase;
+	font-size:11px;
+	line-height:1;
+	font-weight:bold;
+	color:#44506b;
+	float:right;
+	margin-left:10px;
+	height:16px;
+
+}
+.marginBttmSmall {
+	margin-bottom:10px;
+}
+.addButtonText:hover {
+	border-color:#3a7304;
+	background-position: 0 -25px;
+	color:#3a7304;
+}
+#paginatorContainer {
+	font-size:12px;
+	margin:7px 0 5px 0;
+	padding-top:3px;
+	text-align:left;
+}

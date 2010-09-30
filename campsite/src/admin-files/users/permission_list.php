@@ -44,7 +44,9 @@ function camp_get_permission_list()
 	'ManageReaders'=>getGS('User may add/change subscribers accounts and passwords'),
 	'ManageSubscriptions'=>getGS('User may manage user subscriptions'),
 	'ManageUserTypes'=>getGS('User may manage account types'),
-        'SyncPhorumUsers'=>getGS('User may synchronize Campsite and Phorum users'));
+        'SyncPhorumUsers'=>getGS('User may synchronize Campsite and Phorum users'),
+         'EditAuthors'=>getGS('User may change authors')
+        );
 
     $article_types_group = array(
 	'ManageArticleTypes'=>getGS('User may add/change article types'),
