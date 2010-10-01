@@ -15,36 +15,28 @@
             <div class="col1">
 
 {{ if !$campsite->url->is_valid }}
-	<h3>The requested page was not found.</h3>
-	{{ set_language name=`$campsite->publication->default_language->english_name` }}
-	{{ set_current_issue }}
+  <h3>{{ if $campsite->language->name == "English" }}The requested page was not found.{{ else }}La página solicitada no fue encontrada.{{ /if }}</h3>
+  {{ set_language name=`$campsite->publication->default_language->english_name` }}
+  {{ set_current_issue }}
 {{ else }}
 
 <!-- Column 1 start -->
 <!-- section 10 -->
 {{ local }}
-{{ set_section number=10 }}
-{{ list_articles name="articles" constraints="OnFrontPage is on" ignore_issue=true }}
+
+{{ list_sections constraints="number smaller_equal 30" }}
+
+{{ list_articles constraints="OnFrontPage is on" ignore_issue=true }}
 {{ include file="classic/tpl/teaserframe_articlelistleft.tpl" }}
 {{ /list_articles }}
-{{ /local }}
 
+{{ if $campsite->current_sections_list->index == 1 }}
 <!-- Banner -->
 {{ include file="classic/tpl/banner/bannerleftcol.tpl" }}
+{{ /if }}
 
-<!-- section 20 -->
-{{ local }}
-{{ set_section number=20 }}
-{{ list_articles name="articles" constraints="OnFrontPage is on" ignore_issue=true }}
-{{ include file="classic/tpl/teaserframe_articlelistleft.tpl" }}
-{{ /list_articles }}
-{{ /local }}
-<!-- section 30 -->
-{{ local }}
-{{ set_section number=30 }}
-{{ list_articles name="articles" constraints="OnFrontPage is on" ignore_issue=true }}
-{{ include file="classic/tpl/teaserframe_articlelistleft.tpl" }}
-{{ /list_articles }}
+{{ /list_sections }}
+
 {{ /local }}
 
 <!-- Column 1 end -->
@@ -61,10 +53,18 @@
 {{* include file="classic/tpl/blog/entrylistright.tpl" *}}
 {{ include file="classic/tpl/poll/latestpoll.tpl" }}
 
+{{ include file="classic/tpl/news-slider.tpl" }}
+
+<h3>{{ if $campsite->language->name == "English" }}Other articles{{ else }}Otros artículos{{ /if }}</h3>
+
 <!-- section 40 -->
 {{ local }}
+{{ set_issue number="1" }} 
 {{ set_section number="40" }}
-{{ list_articles name="articles" constraints="OnFrontPage is on" ignore_issue=true }}
+
+<!-- lists only articles from issues that are not current, because current issue articles of this section are already shown in the news slider -->
+
+{{ list_articles constraints="OnFrontPage is on" }}
 {{ include file="classic/tpl/teaserframe_articlelistright.tpl" }}
 {{ /list_articles }}
 {{ /local }}

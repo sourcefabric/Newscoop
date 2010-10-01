@@ -35,8 +35,8 @@
 <ul class="links">
   {{ $campsite->url->reset_parameter('f_blog_id') }}
   {{ $campsite->url->set_parameter('f_blogentry_id', $campsite->blogentry->identifier) }}
-  <li><a href="{{ uri options="template classic/tpl/blog/section-blog.tpl" }}">Read the story<!--Read the story--></a></li>
-  <li>Comments: {{ $campsite->blogentry->comments_online }}</li>
+  <li><a href="{{ uri options="template classic/tpl/blog/section-blog.tpl" }}">{{ if $campsite->language->name == "English" }}Read the story{{ else }}Leer la historia{{ /if }}</a></li>
+  <li>{{ if $campsite->language->name == "English" }}Comments{{ else }}Comentarios{{ /if }}: {{ $campsite->blogentry->comments_online }}</li>
 </ul>
 </div><!-- .teasercontent content -->
 

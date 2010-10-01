@@ -151,7 +151,6 @@ class CacheEngine_APC extends CacheEngine
      */
     public function isSupported()
     {
-        print_r(ini_get('apc.enabled') && function_exists('apc_store'));
         return ini_get('apc.enabled') && function_exists('apc_store');
     }
 

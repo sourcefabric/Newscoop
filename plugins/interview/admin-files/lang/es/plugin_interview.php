@@ -1,8 +1,8 @@
 <?php 
-regGS("User recives notification about new interviews", "");
-regGS("User is interview moderator", "");
-regGS("User is interview guest", "");
-regGS("User is interview admin", "");
+regGS("User recives notification about new interviews", "El usuario recibe notificación de entrevistas nuevas");
+regGS("User is interview moderator", "El usuario es un moderador de entrevistas");
+regGS("User is interview guest", "El usuario es un invitado a la entrevista");
+regGS("User is interview admin", "El usuario es un administrador de entrevsitas");
 regGS("Please select:", "Seleccione:");
 regGS("Create new one...", "Crear una nueva...");
 regGS("Title", "Título");

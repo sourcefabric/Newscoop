@@ -1,86 +1,85 @@
 {{ if $campsite->article->comments_enabled }}
-<div class="comments comments-{{ $campsite->section->number }}">
-<div class="commentsinner">
-  <h3><a name="comments">Comments</a></h3>
-  {{ list_article_comments order="bydate desc" }}
-  <div class="comment">
-  <div class="commentinner">
-	<div class ="field-label" id="subject-label">Subject:</div>
-	<div class ="field-value" id="subject-value">
-{{ if $campsite->comment == $campsite->default_comment }}<b>{{ /if }}
-    <!--a href="{{ uri }}#comments"-->{{ $campsite->comment->subject }}<!--/a-->
-{{ if $campsite->comment == $campsite->default_comment }}</b>{{ /if }}</div>
-	<div class ="field-label" id="sender-label">From:</div>
-	<div class ="field-value" id="sender-value">{{ $campsite->comment->reader_email }}</div>
-	<div class ="field-label" id="content-label">Content:</div>
-	<div class ="field-value" id="content-value">{{ $campsite->comment->content }}</div>
-    </div><!-- .commentinner -->
-    </div><!-- .comment -->
-  {{ /list_article_comments }}
+
+<div id="comments">
+<a name="comments">
+  <h3>{{ if $campsite->language->name == "English" }}Comments{{ else }}Comentarios{{ /if }}</h3>
+</a>
+{{ list_article_comments }}
+{{ if $campsite->current_list->at_beginning }}
+<a name="commentlist">
+  <h4>{{ if $campsite->language->name == "English" }}Previous comments{{ else }}Los comentarios anteriores{{ /if }}</h4>
+</a>
+{{ /if }}
+  <div class="comment" {{ if $campsite->current_list->at_end }}id="everlast"{{ /if }}>
+    <p><strong>{{ $campsite->comment->nickname }}</strong><br>
+    {{ $campsite->comment->content }}</p>
+    <p><em>{{ $campsite->comment->subject }} | <span>{{ $campsite->comment->submit_date|camp_date_format:"%M %e, %Y" }}</span></em></p>
+  </div><!-- /.comment -->
+{{ /list_article_comments }}
+
+<a name="commentform">
+    <h4>{{ if $campsite->language->name == "English" }}Your comment{{ else }}Su comentario{{ /if }}</h4>
+</a>
+{{ if $campsite->submit_comment_action->rejected }}
+    <div class="posterror">{{ if $campsite->language->name == "English" }}Your comment has not been accepted.{{ else }}Su comentario no ha sido aceptada.{{ /if }}</div>
+{{ /if }}
 
 {{ if $campsite->submit_comment_action->is_error }}
-<div class="error"><div class="errorinner">
-  There was an error submitting the comment: {{ $campsite->submit_comment_action->error_message }}
-</div></div>
+    <div class="posterror">{{ $campsite->submit_comment_action->error_message }}
+        <span class="posterrorcode">{{ $campsite->submit_comment_action->error_code }}</span>
+   </div>
+{{ else }}
+    {{ if $campsite->submit_comment_action->defined }}
+        {{ if $campsite->publication->moderated_comments }}
+            <div class="postinformation">{{ if $campsite->language->name == "English" }}Your comment has been sent for approval.{{ else }}Tu comentario ha sido enviado para su aprobación.{{ /if }}</div>
+        {{ /if }}
+    {{ /if }}   
 {{ /if }}
-{{ if $campsite->submit_comment_action->ok }}
-<div class="notice"><div class="noticeinner">
-  {{ if $campsite->publication->moderated_comments }}
-  Your comment was submitted for approval.
-  {{ else }}
-  Your comment was approved.
-  {{ /if }}
-</div></div>
-{{ /if }}
-{{ if $campsite->preview_comment_action->is_error }}
-<div class="error"><div class="errorinner">
-  There was an error previewing the comment: {{ $campsite->preview_comment_action->error_message }}
-</div></div>
-{{ /if }}
-{{ if $campsite->preview_comment_action->ok }}
-<div class="preview"><div class="previewinner">
-    <h3>Comment preview</h3>
-    Subject: {{ $campsite->preview_comment_action->subject }}, Reader email: {{ $campsite->preview_comment_action->reader_email }}<br/>
-    Content: {{ $campsite->preview_comment_action->content }}
-</div></div>
-{{ /if }}
-{{ if !$campsite->article->comments_locked
-      && ($campsite->user->logged_in || $campsite->publication->public_comments) }}
-  <div id="genericform">
-    {{ comment_form submit_button="Submit" preview_button="Preview" anchor="comments" button_html_code="class=\"submitbutton\"" }}
 
-      <div class="field-label">E-mail:</div>
-      <div class="field-value">
-      {{ if $campsite->user->logged_in }}
-        {{ $campsite->user->email }}
-      {{ else }}
-        {{ camp_edit object="comment" attribute="reader_email" html_code="class=\"input_long\"" }}
-      {{ /if }}
-      </div>
-      <div class="field-label">Subject:</div>
-      <div class="field-value">{{ camp_edit object="comment" attribute="subject" html_code="class=\"input_long\"" }}</div>
-      <div class="field-label">Comment:</div>
-      <div class="field-value">{{ camp_edit object="comment" attribute="content" }}</div>
-    {{ if $campsite->publication->captcha_enabled }}
+{{* if $campsite->comment->defined }}
+    <p><strong>{{ $campsite->comment->subject }}
+        ({{ $campsite->comment->reader_email|obfuscate_email }}) -
+        {{ $campsite->comment->level }}</strong></p>
+    <p>{{ $campsite->comment->content }}</p>
+{{ /if *}}
 
-      <div class="field-label" id="captcha-info">Please fill in the code shown in the image below:</div>
-      <div class="field-value" id="captcha-field">{{ camp_edit object="captcha" attribute="code" }}
-      <div id="captcha-image"><img src="/include/captcha/image.php"></div>
-	</div>
-    {{ /if }}
+{{ if $campsite->user->blocked_from_comments }}
+    <div class="posterror">{{ if $campsite->language->name == "English" }}This user is banned from commenting!{{ else }}Este usuario está prohibido de comentar!{{ /if }}</div>
+{{ else }}
 
-    <div align="center">{{ /comment_form }}</div>
+{{ comment_form submit_button="Send comment" }}
+    <div class="form-element">
+      <label for="CommentSubject">{{ if $campsite->language->name == "English" }}Your name (mandatory):{{ else }}Tu nombre (obligatorio):{{ /if }}</label>{{ camp_edit object="comment" attribute="subject" }}
+    </div>
+   
+    <div class="form-element">
+      <label for="CommentEmail">{{ if $campsite->language->name == "English" }}Your e-mail (mandatory):{{ else }}Tu e-mail (obligatorio):{{ /if }}</label>{{ camp_edit object="comment" attribute="reader_email" }}
     </div>
 
-{{ elseif !$campsite->article->comments_locked }}
-<div class="notice"><div class="noticeinner">
-You must be a registered reader in order to submit comments.
-</div></div>
-{{ else }}
-<!--div class"notice">Comment posting is not allowed.</div -->
-
+    <div class="form-element">
+      <label for="CommentNickname">{{ if $campsite->language->name == "English" }}Comment subject:{{ else }}Comentar tema{{ /if }}</label>{{ camp_edit object="comment" attribute="nickname" }}
+    </div>
+    
+    <div class="form-element">
+      <label for="CommentContent">{{ if $campsite->language->name == "English" }}Comment text{{ else }}Texto del comentario{{ /if }}</label>{{ camp_edit object="comment" attribute="content" }}
+    </div>
+    {{ if $campsite->publication->captcha_enabled }}
+    <div class="form-element clearfix">
+      <img src="{{ captcha_image_link }}"><br />
+      <label for="f_captcha_code">{{ if $campsite->language->name == "English" }}Enter the code:{{ else }}Introduce el código:{{ /if }} </label>{{ camp_edit object="captcha" attribute="code" }}
+    </div>
+    {{ /if }}
+    <div class="form-element">
+      <label for="submitComment"></label>
+    </div>
+{{ /comment_form }}
 {{ /if }}
 
-</div><!-- .commentsinner -->
-</div><!-- .comments comments- -->
+{{ unset_comment }}
+{{ if $campsite->comment->defined }}
+    <div class="posterror">{{ if $campsite->language->name == "English" }}Error: previous comment is still active{{ else }}Error: El comentario anterior es aún activo{{ /if }}</div>
+{{ /if }}
+
+</div><!-- /#comments -->
+
 {{ /if }}

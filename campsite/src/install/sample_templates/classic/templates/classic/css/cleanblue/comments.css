@@ -1,0 +1,49 @@
+div#comments {
+     margin: 10px 0 20px 0;
+}
+
+#comments .comment {
+    margin: 0 0 20px 0;
+    padding-left: 10px;
+    border-left: 3px solid #ccc;
+}
+
+#comments form input[type="text"] {
+    width: 250px;
+}
+
+#comments form textarea {
+    width: 250px;
+    height: 100px;
+}
+
+#comments .form-element {
+    margin: 4px 0;
+}
+
+#comments .form-element img {
+    margin: 5px 0;
+}
+
+#comments label {
+    width: 165px;
+    float: left;
+    display: block;
+}
+
+.posterror, .postinformation {
+  padding: 10px;
+  border: 1px solid #aaa;
+  margin-bottom: 1em;
+}
+.posterror {
+  background: #ffd3d3;
+}
+.postinformation {
+  background: #d3dfff;
+}
+.posterrorcode {
+  font-weight: bold;
+  display: block;
+  font-family: monospace;
+}

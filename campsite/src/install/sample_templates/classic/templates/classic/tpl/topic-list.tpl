@@ -3,7 +3,7 @@
 {{ if $campsite->current_list->at_beginning }}
 <div class="relatedtopics">
 <div class="relatedtopicsinner">
-Related topics 
+{{ if $campsite->language->name == "English" }}Related topics {{ else }}Temas relacionados {{ /if }}
 {{ /if }}
 : <a href="{{ uri options="template classic/topic.tpl" }}" class="topic">{{$campsite->topic->name }}</a>
 {{ if $campsite->current_list->at_end }}
