@@ -56,9 +56,9 @@ if you have or intend to developed this software further.
 DEMO
 You can try Campsite without installing it at our demo site.
 This is the URL for the backend admin:
-  http://campsite-demo.campware.org/admin/
+  http://campsite-demo.sourcefabric.org/admin/
 and you can see the frontend of the site here:
-  http://campsite-demo.campware.org/
+  http://campsite-demo.sourcefabric.org/
 Please note that the frontend can be made to look however
 you wish - you have full control over the look-and-feel.
 
