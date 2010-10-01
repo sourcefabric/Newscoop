@@ -234,25 +234,25 @@ tbody .yui-dt-editable {
 	background-color:#f4fafd;
 }
 .yui-skin-sam th.yui-dt-highlighted, .yui-skin-sam th.yui-dt-highlighted a {
-	background-color:#c4e1ed;
+	background-color:#e2f0f6;
 }
 .yui-skin-sam tr.yui-dt-highlighted, .yui-skin-sam tr.yui-dt-highlighted td.yui-dt-asc, .yui-skin-sam tr.yui-dt-highlighted td.yui-dt-desc, .yui-skin-sam tr.yui-dt-even td.yui-dt-highlighted, .yui-skin-sam tr.yui-dt-odd td.yui-dt-highlighted {
 	cursor:pointer;
-	background-color:#c4e1ed;
+	background-color:#e2f0f6;
 }
 .yui-skin-sam .yui-dt-list th.yui-dt-highlighted, .yui-skin-sam .yui-dt-list th.yui-dt-highlighted a {
-	background-color:#c4e1ed;
+	background-color:#e2f0f6;
 }
 .yui-skin-sam .yui-dt-list tr.yui-dt-highlighted, .yui-skin-sam .yui-dt-list tr.yui-dt-highlighted td.yui-dt-asc, .yui-skin-sam .yui-dt-list tr.yui-dt-highlighted td.yui-dt-desc, .yui-skin-sam .yui-dt-list tr.yui-dt-even td.yui-dt-highlighted, .yui-skin-sam .yui-dt-list tr.yui-dt-odd td.yui-dt-highlighted {
 	cursor:pointer;
-	background-color:#c4e1ed;
+	background-color:#e2f0f6;
 }
 .yui-skin-sam th.yui-dt-selected, .yui-skin-sam th.yui-dt-selected a {
 	background-color:#446CD7;
 }
 .yui-skin-sam tr.yui-dt-selected td, .yui-skin-sam tr.yui-dt-selected td.yui-dt-asc, .yui-skin-sam tr.yui-dt-selected td.yui-dt-desc {
-	background-color:#426FD9;
-	color:#FFF;
+	background-color:#fed677;
+	color:#000;
 }
 .yui-skin-sam tr.yui-dt-even td.yui-dt-selected, .yui-skin-sam tr.yui-dt-odd td.yui-dt-selected {
 	background-color:#446CD7;
@@ -262,8 +262,8 @@ tbody .yui-dt-editable {
 	background-color:#446CD7;
 }
 .yui-skin-sam .yui-dt-list tr.yui-dt-selected td, .yui-skin-sam .yui-dt-list tr.yui-dt-selected td.yui-dt-asc, .yui-skin-sam .yui-dt-list tr.yui-dt-selected td.yui-dt-desc {
-	background-color:#426FD9;
-	color:#FFF;
+	background-color:#fed677;
+	color:#000;
 }
 .yui-skin-sam .yui-dt-list tr.yui-dt-even td.yui-dt-selected, .yui-skin-sam .yui-dt-list tr.yui-dt-odd td.yui-dt-selected {
 	background-color:#446CD7;
@@ -292,4 +292,10 @@ tbody .yui-dt-editable {
 .yui-skin-sam .yui-dt-selected {
 	border:1px solid #fff;
 	background-color:#fff;
+}
+.yui-skin-sam thead th.yui-dt-sortable:hover {
+	background:url("../../../../assets/skins/sam/sortable_hover.png") repeat-x right 0;
+}
+.yui-skin-sam thead th.yui-dt-asc:hover, .yui-skin-sam thead th.yui-dt-desc:hover {
+	background:url("../../../../assets/skins/sam/sprite.png") repeat-x scroll 0 -2250px transparent;
 }
