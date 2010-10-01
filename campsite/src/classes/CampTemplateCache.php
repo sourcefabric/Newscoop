@@ -14,6 +14,9 @@ class CampTemplateCache
         if (!$p_handlerName) {
             $p_handlerName = SystemPref::Get('TemplateCacheHandler');
         }
+        if (!$p_handlerName) {
+            return null;
+        }
         if (!empty($handlers[$p_handlerName])) {
             return $handlers[$p_handlerName];
         }

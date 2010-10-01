@@ -135,7 +135,8 @@ class Article extends DatabaseObject {
      */
     public function __destruct()
     {
-        if ($this->m_cacheUpdate && ($this->isPublished() || $this->m_published)) {
+        if ($this->m_cacheUpdate && ($this->isPublished() || $this->m_published)
+        && CampTemplateCache::factory()) {
             CampTemplateCache::factory()->update(array(
                 'language' => $this->getLanguageId(),
                 'publication' => $this->getPublicationId(),
@@ -1695,8 +1696,15 @@ class Article extends DatabaseObject {
         $res = $g_ado_db->Execute($sql);
 
         CampCache::singleton()->clear('user');
-        $this->m_cacheUpdate = true;
-
+        if (CampTemplateCache::factory()) {
+            CampTemplateCache::factory()->update(array(
+                'language' => $p_languageId,
+                'publication' => $p_publicationId,
+                'issue' => $p_issueNo,
+                'section' => null,
+                'article' => null,
+            ));
+        }
         return $res;
     }
 
