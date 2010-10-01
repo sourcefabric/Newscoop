@@ -235,6 +235,11 @@ function CampsiteSubhead(ed) {
     }
 } // fn CampsiteSubhead
 
+function editorChanged(inst){
+    // gotta remove _35 from name
+    var name = "save_" + inst.id.substring(0, inst.id.length-3);
+    buttonEnable(name);
+}
 
 // Default skin
 tinyMCE.init({
@@ -247,6 +252,7 @@ tinyMCE.init({
     file_browser_callback : "campsitemedia",
     forced_root_block : "",
     relative_urls : false,
+    onchange_callback : "editorChanged",
     extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
     // Theme options

@@ -75,6 +75,16 @@ class ArticleAuthor extends DatabaseObject {
         return $this->m_data['fk_author_id'];
     } // fn getAuthorId
 
+    
+    public function createRow($articleNumber, $languageId, $authorId)
+    {
+        global $g_ado_db;
+        $queryStr = "INSERT IGNORE INTO ArticleAuthors
+                     (fk_article_number, fk_language_id, fk_author_id)
+                     VALUES ('%d','%d','%d')";
+        $queryStr= sprintf($queryStr, $articleNumber, $languageId, $authorId);
+        $g_ado_db->Execute($queryStr);
+    }
 
     /**
      * Get all the authors that wrote this article.
@@ -144,9 +154,33 @@ class ArticleAuthor extends DatabaseObject {
 
         $queryStr = "DELETE FROM ArticleAuthors
                      WHERE fk_article_number = '$p_articleNumber'";
+
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
 
+    public static function getArticleAuthorList($articleNumber, $languageId)
+    {
+        global $g_ado_db;
+        $sql ="SELECT authors.first_name, authors.last_name 
+                FROM authors
+                JOIN articleauthors
+                ON authors.id = fk_author_id
+                WHERE
+                fk_language_id=%d
+                AND fk_article_number=%d";
+        $sql = sprintf($sql,  $languageId,$articleNumber);
+        return $g_ado_db->Execute($sql);
+    }
+    
+    public static function OnArticleLanguageDelete($p_articleNumber, $p_languageId)
+    {
+        global $g_ado_db;
+
+        $queryStr = "DELETE FROM ArticleAuthors
+                     WHERE fk_article_number = '$p_articleNumber' AND fk_language_id='$p_languageId'";
+
+        $g_ado_db->Execute($queryStr);
+    } // fn OnArticleDelete
 
     /**
      * Copy all the pointers for the given article.
