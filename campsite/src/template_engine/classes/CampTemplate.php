@@ -54,8 +54,8 @@ final class CampTemplate extends Smarty
         $cacheHandler = SystemPref::Get('TemplateCacheHandler');
         if ($cacheHandler) {
             $this->caching = 1;
-            $this->cache_lifetime = 25920000; // 300 days
-            $this->cache_handler_func = 'TemplateCacheHandler_'. $cacheHandler . '::handler';
+            $this->cache_lifetime = 2592000; // 30 days
+            $this->cache_handler_func = "TemplateCacheHandler_$cacheHandler::handler";
             require_once CS_PATH_SITE.DIR_SEP.'classes'.DIR_SEP.'cache'.DIR_SEP."TemplateCacheHandler_$cacheHandler.php";
         } else {
             $this->caching = 0;

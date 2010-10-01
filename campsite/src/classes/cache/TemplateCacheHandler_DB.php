@@ -84,7 +84,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         $result = true;
                     } else {
                         // clear expired cache
-                        $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr;
+                        $queryStr = 'DELETE FROM Cache WHERE expired <= '. time();
                         $g_ado_db->Execute($queryStr);
                         $cacheExists = false;
                         $return = false;
@@ -107,7 +107,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                 $queryStr .= '(' . implode(',', array_keys($campsiteVector));
                 $queryStr .=  ',template,expired,content) VALUES (';
                 foreach ($campsiteVector as $key => $value) {
-                    $queryStr .= is_null($value) ? 'NULL,' : $value . ',';
+                    $queryStr .= !isset($value) ? 'NULL,' : $value . ',';
                 }
                 $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
                 $g_ado_db->Execute($queryStr);
@@ -132,7 +132,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     {
         $output = null;
         foreach ((array)$vector as $key => $value) {
-            if ($value) {
+            if (isset($value)) {
                 $output .= $key . ' = ' . $value;
             } else {
                 $output .= $key . ' IS NULL';
