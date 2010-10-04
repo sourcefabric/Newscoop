@@ -2672,7 +2672,7 @@ VALUES (
 
 INSERT INTO `Events` (
 `Id` ,
-`Name` ,
+`Name` , 
 `Notify` ,
 `IdLanguage`
 )
