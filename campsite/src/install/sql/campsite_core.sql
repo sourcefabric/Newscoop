@@ -2633,20 +2633,20 @@ CREATE TABLE `Cache` (
 
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('TemplateCacheHandler', NULL);
 
-ALTER TABLE `authors` ADD `type` INT NULL ,
+ALTER TABLE `Authors` ADD `type` INT NULL ,
 ADD `skype` VARCHAR( 255 ) NULL ,
 ADD `jabber` VARCHAR( 255 ) NULL ,
 ADD `aim` VARCHAR( 255 ) NULL ,
 ADD `biography` TEXT NULL ,
 ADD `image` INT NULL;
-DROP TABLE IF EXISTS `authorsaliases`;
-CREATE TABLE `authorsaliases` (
+DROP TABLE IF EXISTS `Authorsaliases`;
+CREATE TABLE `Authorsaliases` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `IdAuthor` INT NOT NULL ,
 `alias` VARCHAR( 255 ) NOT NULL
 ) ENGINE = MYISAM ;
-DROP TABLE IF EXISTS `authorbiography`;
-CREATE TABLE `authorbiography` (
+DROP TABLE IF EXISTS `Authorbiography`;
+CREATE TABLE `Authorbiography` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `IdAuthor` INT NOT NULL ,
 `IdLanguage` INT NOT NULL ,
@@ -2656,11 +2656,11 @@ CREATE TABLE `authorbiography` (
 ) ENGINE = MYISAM ;
 
 
-ALTER TABLE `articleauthors` CHANGE `fk_article_number` `fk_article_number` INT( 10 ) UNSIGNED NULL ,
+ALTER TABLE `Articleauthors` CHANGE `fk_article_number` `fk_article_number` INT( 10 ) UNSIGNED NULL ,
 CHANGE `fk_language_id` `fk_language_id` INT( 10 ) UNSIGNED NULL ,
 CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL ;
 
-INSERT INTO `events` (
+INSERT INTO `Events` (
 `Id` ,
 `Name` ,
 `Notify` ,
@@ -2670,7 +2670,7 @@ VALUES (
 '174', 'Delete Author', 'N', '01'
 );
 
-INSERT INTO `events` (
+INSERT INTO `Events` (
 `Id` ,
 `Name` ,
 `Notify` ,
