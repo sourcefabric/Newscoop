@@ -1,13 +1,13 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Artículo #$1 \"$2\" no está adjuntada al artículo #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Archivo ");
-regGS("Unable to add attachment.", "Incapaz de añadir archivo adjunto.");
-regGS("There was a problem uploading the file.", "Hubo un problema la subir el archivo.");
-regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo subido fue solo parcialmente subido. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
-regGS("The maximum file upload size was not configured in Campsite.", "El tamño máximo de un archivo para subir no ha sido configurao en Campsite.");
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "El artículo #$1 \"$2\" se desvinculó del artículo #$3 \"$4\"");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "El archivo #$1 \"$2\" se vinculó al artículo #$3 \"$4\" ");
+regGS("Unable to add attachment.", "No es posible agregar un adjunto.");
+regGS("There was a problem uploading the file.", "Hubo un problema al subir el archivo.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo solo subió parcialmente. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "El tamaño máximo de un archivo para subir no ha sido configurado en Campsite.");
 regGS("The file exceeds the allowed max file size.", "El archivo sobrepasa el tamaño máximo permitido para un archivo.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Por favor asegúrese de haber actualizado la base de datos correctamente: ejecute $1 en la línea de comandos.");
-regGS("Maximum Upload Size", "Tamaño máximo para cargar");
+regGS("Maximum Upload Size", "Tamaño máximo para subir");
 regGS("File Size", "Tamaño de archivo");
 regGS("File Name", "Nombre de archivo");
 regGS("Download", "Descargar");
@@ -15,14 +15,14 @@ regGS("File '$1' updated.", "Se actualizó el archivo '$1' ");
 regGS("File '$1' deleted.", "Se eliminó el artículo '$1' ");
 regGS("File '$1' added.", "Se añadió el artículo '$1' ");
 regGS("Edit article", "Editar artículo");
-regGS("You do not have the right to delete file attachments.", "No tiene permiso para eliminar archivos adjuntos");
+regGS("You do not have the right to delete file attachments.", "No tiene privilegios para eliminar archivos adjuntos");
 regGS("You must select a file to upload.", "Debe seleccionar un archivo para cargar.");
 regGS("You do not have the right to delete files.", "No tiene privilegios para eliminar archivos.");
 regGS("You do not have the right to change the article.", "No tiene privilegios para cambiar el artículo.");
 regGS("You do not have the right to change files.", "No tiene privilegios para cambiar archivos.");
 regGS("You do not have the right to add files.", "No tiene privilegios para añadir archivos.");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "¿Desea tener disponible este archivo sólo para esta traducción del artículo o para todas las transacciones?");
-regGS("Please enter a description for the file.", "Por ingrese una descripción para el archivo.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "¿Desea tener disponible este archivo sólo para esta traducción del artículo o para todas las traducciones?");
+regGS("Please enter a description for the file.", "Por favor ingrese una descripción para el archivo.");
 regGS("Open in the browser", "Abrir en el navegador");
 regGS("Only this translation", "Sólo esta traducción");
 regGS("File information", "Información del archivo");
@@ -30,7 +30,7 @@ regGS("Do you want this file to open in the user's browser, or to automatically 
 regGS("Change file information", "Cambiar la información del archivo");
 regGS("Automatically download", "Descargar automáticamente");
 regGS("Attachments", "Adjuntos");
-regGS("Attachment does not exist.", "No existe el adjunto.");
-regGS("Attach File to Article", "Adjuntar archivo al artículo");
+regGS("Attachment does not exist.", "El adjunto no existe.");
+regGS("Attach File to Article", "Adjuntar un archivo al artículo");
 regGS("All translations", "Todas las traducciones");
 ?>
