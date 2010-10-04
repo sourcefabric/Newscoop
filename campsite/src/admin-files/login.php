@@ -4,7 +4,7 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/languages.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
-
+require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
 camp_session_set('xorkey', $key);
@@ -199,7 +199,12 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <?php } ?>
 <!-- CAPTCHA-->
 <tr class="buttonBlock2">
-  <td>&nbsp;</td>
+  <td><?php
+         if (SystemPref::Get("PasswordRecovery")=='Y')
+         {
+            echo '<a href="./password_recovery.php">Forgot your password?</a>';
+         } ?>
+  </td>
   <td>
     <noscript>
       <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" disabled />
@@ -208,6 +213,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
         document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?>/>');
     </script>
   </td>
+
 </tr>
 </table>
 </div>

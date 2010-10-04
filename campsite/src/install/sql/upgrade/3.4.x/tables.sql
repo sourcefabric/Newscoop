@@ -73,3 +73,5 @@ INSERT INTO `liveuser_rights` (
 VALUES (
 '97', '0', 'EditAuthors', '1'
 );
+
+ALTER TABLE `campsite_pavol_i1`.`liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL  AFTER `isActive` ;

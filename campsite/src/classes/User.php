@@ -64,7 +64,8 @@ class User extends DatabaseObject {
         'time_updated',
         'time_created',
         'lastLogin',
-        'isActive');
+        'isActive',
+        'password_reset_token');
 
     private static $m_defaultConfig = array();
 
@@ -255,6 +256,37 @@ class User extends DatabaseObject {
     } // fn FetchUserByName
 
 
+
+        /**
+     * Fetch the user by given email
+     *
+     * @param string
+     *    $p_email The email
+     * @param bool
+     *    $p_adminOnly Whether we want to be sure to get only an admin user
+     *
+     * @return mixed
+     *    null No one user found
+     *    object User object
+     */
+    public static function FetchUserByEamil($p_email, $p_adminOnly = false)
+    {
+        global $g_ado_db;
+
+        $queryStr = "SELECT * FROM liveuser_users WHERE EMail='$p_email'";
+        if ($p_adminOnly) {
+            $queryStr .= " AND Reader='N'";
+        }
+        $row = $g_ado_db->GetRow($queryStr);
+        if ($row) {
+            $user = new User();
+            $user->fetch($row);
+            return $user;
+        }
+        return null;
+    } // fn FetchUserByName
+
+
     /**
      * Return the user type if there is one, or null if not.
      *
@@ -405,6 +437,12 @@ class User extends DatabaseObject {
     {
         return $this->m_data['EMail'];
     } // fn getEmail
+
+
+    public function getPasswordResetToken()
+    {
+        return $this->m_data['password_reset_token'];
+    }
 
 
     /**
@@ -683,7 +721,14 @@ class User extends DatabaseObject {
         }
         $logtext = getGS('Password changed for user "$1" ($2)', $this->m_data['Name'], $this->m_data['UName']);
         Log::Message($logtext, null, 54);
+        $this->setProperty('password_reset_token','');
     }  // fn setPassword
+
+    public function setPasswordResetToken()
+    {
+        $this->setProperty('password_reset_token',md5(rand(0, 9999)));
+    }
+
 
 
     /**

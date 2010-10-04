@@ -73,7 +73,9 @@ $no_menu_scripts = array(
     '/smartlist/assets/load_filterby_menu.php',
     '/smartlist/assets/dt_actions.php',
     '/users/authors_ajax/detail.php',
-    '/users/authors_ajax/grid.php'
+    '/users/authors_ajax/grid.php',
+    $prefix . 'password_recovery.php',
+    $prefix . 'password_check_token.php'
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
@@ -102,7 +104,7 @@ if (($extension == '.php') || ($extension == '')) {
     header("Content-Type: text/html; charset=UTF-8");
 
     // If they arent trying to login in...
-    if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php')) {
+    if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php') && $call_script != $prefix . 'password_recovery.php' && $call_script != $prefix . 'password_check_token.php') {
         // Check if the user is logged in already
         list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
         if (!$access) {
