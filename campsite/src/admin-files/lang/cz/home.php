@@ -34,7 +34,7 @@ regGS("There are currently no articles in statistics.", "Momentálně nejsou ž�
 regGS("Publish date", "Uveřejnit datum");
 regGS("Most Popular Articles", "Nejoblíbenější články");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Je nemožné se spojit s Campcaster serverem, prosím ověřte servrové nastavení Campcaster.");
-regGS("Clear system cache", "");
+regGS("Clear system cache", "Vymazat system cache");
 regGS("Campsite cache was cleaned up", "Campsite cache byl vyčištěn");
 regGS("The system was unable to upload the file '$1'. ", "Systém byl neschopen nahrát soubor '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Prosím, zkontrolujte soubor, který se snažíte nahrát zda není poškozený. ");

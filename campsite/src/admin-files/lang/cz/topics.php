@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "");
-regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
-regGS("The topic name is already in use by another topic.", "");
-regGS("You must enter a name for the topic.", "");
-regGS("You must choose a language for the topic.", "");
-regGS("This topic has subtopics, therefore it cannot be deleted.", "");
-regGS("Show languages:", "");
-regGS("Add translation:", "");
-regGS("Add subtopic:", "");
-regGS("Add subtopic", "");
-regGS("Add root topic:", "");
+regGS("Topics order changed.", "Pořadí témat změněno.");
+regGS("Topic was deleted.", "Téma bylo odstraněno.");
+regGS("Topic does not exist.", "Téma neexistuje.");
+regGS("The topic name is already in use by another topic.", "Název tématu se již používá.");
+regGS("You must enter a name for the topic.", "Zadejte název tématu.");
+regGS("You must choose a language for the topic.", "Zvolte jazyk tématu.");
+regGS("This topic has subtopics, therefore it cannot be deleted.", "Téma obsahuje podtémata, proto nemůže být odstraněno.");
+regGS("Show languages:", "Zobrazit jazyky:");
+regGS("Add translation:", "Přidat překlad:");
+regGS("Add subtopic:", "Přidat témata:");
+regGS("Add subtopic", "Přidat podtéma");
+regGS("Add root topic:", "Přidat zdrojové téma:");
 regGS("Top", "");
 regGS("You do not have the right to add topics.", "Nemáte právo přidat témata");
 regGS("You do not have the right to delete topics.", "Nemáte právo mazat témata");
