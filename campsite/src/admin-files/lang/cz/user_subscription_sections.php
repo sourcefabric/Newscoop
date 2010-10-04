@@ -1,11 +1,10 @@
 <?php 
-regGS("Please select one or more sections.", "");
-regGS("There are no sections in this publication.", "");
-regGS("You must input a number greater or equal to 0 into the $1 field.", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
-regGS("Account", "");
+regGS("Please select one or more sections.", "Prosím zvolte jednu nebo více rubrik.");
+regGS("There are no sections in this publication.", "V této publikaci nejsou žádné rubriky.");
+regGS("You must input a number greater or equal to 0 into the $1 field.", "Do pole $1 vložte číslo větší nebo rovné 0.");
+regGS("Regardless of the language", "Nehledě na jazyk");
+regGS("Individual languages", "Jednotlivé jazyky");
+regGS("All languages", "Všechny jazyky");
 regGS("Subscribed sections", "Předplacené rubriky");
 regGS("Add new section to subscription", "Přidat novou rubriku do předplatného");
 regGS("Start Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Začátek (rrrr-mm-dd)");
@@ -22,4 +21,5 @@ regGS("-- ALL SECTIONS --", "-- VŠECHNY RUBRIKY --");
 regGS("Updating subscription", "Obnovení předplatného");
 regGS("The subscription could not be updated.", "Předplatné nemohlo být obnoveno");
 regGS("Changing subscription", "Změna předplatného");
+regGS("Account", "");
 ?>
