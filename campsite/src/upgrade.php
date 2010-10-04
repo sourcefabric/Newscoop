@@ -24,6 +24,7 @@ if (!file_exists($g_documentRoot.'/conf/configuration.php')
 require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');
+require_once($g_documentRoot.'/classes/User.php');
 
 $res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
 if ($res !== 0) {
@@ -56,6 +57,9 @@ if ($res !== 0) {
 CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
+
+// sync phorum users
+User::SyncPhorumUsers();
 
 CampRequest::SetVar('step', 'finish');
 $install = new CampInstallation();
