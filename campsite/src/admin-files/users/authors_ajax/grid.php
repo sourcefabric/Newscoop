@@ -1,4 +1,6 @@
 <?php
+ini_set("display_errors","2");
+error_reporting(E_ALL);
 function l_getType($type)
 {
     switch ($type)
