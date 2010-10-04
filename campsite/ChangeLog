@@ -1,6 +1,7 @@
-3.4.3 (October 04, 2010)
+3.4.3 (October 05, 2010)
   New Feature
   -----------
+  * Added Polish localization
   * [CS-38]   - Multiple template upload
 
   Improvement
@@ -25,6 +26,7 @@
 
   Task
   ----
+  * Updated Czech localization
   * [CS-1995] - Write howto for "news player" functionality
   * [CS-2014] - Add promotion elements to templates
   * [CS-2051] - Make use of automatically generated header metatags in sample templates
