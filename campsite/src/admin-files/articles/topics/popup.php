@@ -23,10 +23,11 @@ $topics = Topic::GetTree();
 ?>
 <html>
 <head>
+	<title><?php putGS("Attach Topic To Article"); ?></title>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Attach Topic To Article"); ?></title>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
 </head>
 <body>
 <br>
@@ -40,11 +41,24 @@ $topics = Topic::GetTree();
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
 <INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-<table class="table_list">
-<?PHP
-$color = 0;
+
+<?php
+$color = FALSE;
+$level = 0;
 foreach ($topics as $path) {
+    $topic_level = 0;
+    foreach ($path as $topicObj) {
+        $topic_level++;
+    }
+
+    if ($topic_level > $level) {
+        echo empty($level) ? '<ul class="tree">' : '<ul>';
+    } else {
+        echo str_repeat('</li></ul>', $level - $topic_level), '</li>';
+    }
+
 	$currentTopic = camp_array_peek($path, false, -1);
+    $topic_id = $currentTopic->getTopicId();
 	$name = $currentTopic->getName($f_language_selected);
 	if (empty($name)) {
 		// Backwards compatibility
@@ -53,34 +67,55 @@ foreach ($topics as $path) {
 			continue;
 		}
 	}
-	?>
-	<tr <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<td><input type="checkbox" name="f_topic_ids[]" value="<?php p($currentTopic->getTopicId()); ?>"></td>
-		<td style="padding-left: 3px; padding-right: 5px;" width="400px">
-			<?php
-			foreach ($path as $topicObj) {
-				$name = $topicObj->getName($f_language_selected);
-				if (empty($name)) {
-					$name = $topicObj->getName(1);
-					if (empty($name)) {
-						$name = "-----";
-					}
-				}
-				echo " / ".htmlspecialchars($name);
-			}
-			?>
-		</td>
-	</tr>
-	<?PHP
-}
+
+    $color_class = $color && $topic_level == 1 ? ' class="odd"' : '';
+    if ($topic_level == 1) {
+        $color = !$color;
+    }
 ?>
-</table>
+
+    <li<?php echo $color_class; ?>>
+        <input id="f_topic_ids-<?php echo $topic_id; ?>" type="checkbox" name="f_topic_ids[]" value="<?php echo $topic_id; ?>">
+        <label for="f_topic_ids-<?php echo $topic_id; ?>"><?php echo $name; ?></label>
+	<?php
+    $level = $topic_level;
+}
+echo str_repeat('</li></ul>', $level);
+?>
+
 <p></p>
 <DIV class="action_buttons" align="center">
 <INPUT type="submit" value="<?php putGS("Save and Close"); ?>" class="button">
 &nbsp;&nbsp;&nbsp;<INPUT type="submit" value="<?php putGS("Cancel"); ?>" class="button" onclick="window.close();">
 </div>
 </FORM>
+<p></p>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('ul.tree ul').hide();
+    $('ul.tree li').each(function() {
+        if ($(this).children('ul').length > 0) {
+            $(this).prepend('<a>+</a>');
+        } else {
+            $(this).prepend('<span>&nbsp;</span>');
+        }
+
+    });
+    $('ul.tree a').click(function() {
+        if ($(this).nextAll('ul').length == 0) {
+            return;
+        }
+        $(this).nextAll('ul').toggle('medium');
+        if ($(this).text() == '+') {
+            $(this).text('-');
+        } else {
+            $(this).text('+');
+        }
+    });
+});
+</script>
+
 <?php } else { ?>
 	<BLOCKQUOTE>
 	<LI><?php  putGS('No topics.'); ?></LI>

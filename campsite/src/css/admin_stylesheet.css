@@ -1240,3 +1240,32 @@ fieldset dl dd {
     margin-left: 0;
 }
 
+ul.tree {
+    width: 300px;
+}
+
+ul.tree li {
+    width: 100%;
+    padding: 3px;
+    border-top: 1px solid #ccc;
+}
+
+ul.tree li.odd {
+    background-color: #f9f9f9;
+}
+
+ul.tree li li {
+    border-top: none;
+}
+
+ul.tree li span, ul.tree li a {
+    display: block;
+    float: left;
+    width: 10px;
+    text-align: center;
+    cursor: default;
+}
+
+ul.tree li a {
+    cursor: pointer;
+}
