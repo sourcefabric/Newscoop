@@ -75,3 +75,4 @@ VALUES (
 );
 
 ALTER TABLE `liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL  AFTER `isActive` ;
+INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('PasswordRecovery','Y');
