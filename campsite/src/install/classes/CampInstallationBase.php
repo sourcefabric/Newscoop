@@ -100,17 +100,25 @@ class CampInstallationBase
             }
             break;
         case 'cronjobs':
-            if (isset($input['install_demo']) && $input['install_demo'] == 1) {
-                $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
+            if (isset($input['install_demo'])) {
+                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
+            }
+            if ($input['install_demo']!='0'){
+                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
                 if (!$this->loadDemoSite()) {
+                    die();
                     break;
                 }
             }
             break;
         case 'finish':
-            if (isset($input['install_demo']) && $input['install_demo'] == 1) {
-                $session->setData('config.demo', array('loaddemo' => true), 'installation', true);
+            if (isset($input['install_demo'])) {
+                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
+            }
+            if ($input['install_demo']!='0'){
+                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
                 if (!$this->loadDemoSite()) {
+                    die();
                     break;
                 }
             }
@@ -271,7 +279,8 @@ class CampInstallationBase
     private function loadDemoSite()
     {
         global $g_db;
-
+        $session = CampSession::singleton();
+        $template_name = $session->getData('config.demo', 'installation');
         $isWritable = true;
         $directories = array();
         $templatesDir = CS_PATH_TEMPLATES;
@@ -305,7 +314,7 @@ class CampInstallationBase
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates'));
 
         // copies template files to corresponding directory
-        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'templates';
+        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$template_name['loaddemo'].DIR_SEP.'templates';
         $target = CS_PATH_TEMPLATES;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
@@ -315,11 +324,12 @@ class CampInstallationBase
 
         // copies template data files to corresponding directories.
         // data files are article images and article attachments
-        $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$this->m_sampleSiteName.DIR_SEP.'data';
+        $source = CS_INSTALL_DIR.DIR_SEP.'sample_data';
         $target = CS_PATH_SITE;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site data files';
+            die('failed');
             return false;
         }
 

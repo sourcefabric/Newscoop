@@ -59,14 +59,23 @@
           <td width="60%" valign="top">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="install_demo">Install Sample Site?</label> &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="1"
-                {{ if $dm.loaddemo eq true }} checked {{ /if }} /> &nbsp; Yes &nbsp;
+              <label for="install_demo">Please choose a demo template:</label> &nbsp;
               <input
                 type="radio" id="install_demo" name="install_demo" value="0"
-                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No
+                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No, thanks!
             </div>
+
+          {{ foreach from=$sample_templates key="step" item="t" }}
+          <input
+              type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
+          {{ $t }}
+          <div class="demo_img">
+              <img src="sample_templates/{{ $t }}/screenshot.jpg" />
+              <span style="vertical-align:top">
+                  {{include file="./../sample_templates/$t/description.txt"}}
+              </span>
+          </div>
+          {{ /foreach }}
             <div class="demo_img">
               <img src="img/campsite_demo.png" />
             </div>
