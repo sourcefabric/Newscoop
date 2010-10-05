@@ -1200,3 +1200,43 @@ a.calendarButton {
 	padding-top:3px;
 	text-align:left;
 }
+
+ul#edit-images {
+    height: 1%;
+    overflow: hidden;
+}
+
+ul#edit-images li {
+    float: left;
+    width: 300px;
+    margin: 5px 0 0 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+ul#edit-images li > div {
+    height: 50px;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+#edit-images fieldset {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+fieldset.buttons {
+    margin: 10px 40px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+fieldset dl {
+    margin: 0 0 5px;
+}
+
+fieldset dl dd {
+    margin-left: 0;
+}
+

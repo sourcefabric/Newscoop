@@ -495,7 +495,7 @@ class Image extends DatabaseObject {
     	    							CAMP_ERROR_CREATE_FILE);
     	    	}
     	    } else {
-    	        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+    	        if (!rename($p_fileVar['tmp_name'], $target)) {
     	    		throw new Exception(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target),
     	    							CAMP_ERROR_CREATE_FILE);
     	        }
@@ -868,6 +868,44 @@ class Image extends DatabaseObject {
         $sqlClauseObj = new SQLSelectClause();
 
     } // fn GetList
+
+    /**
+     * Process multi-upload file.
+     *
+     * @param string $p_tmpFile
+     * @param string $p_newFile
+     * @param int $p_userId
+     *
+     * @return Image|NULL
+     */
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    {
+        $tmp_name = $GLOBALS['Campsite']['IMAGE_DIRECTORY'] . $p_tmpFile;
+        $image_ary = getimagesize($tmp_name);
+
+        $file = array(
+            'name' => $p_newFile,
+            'tmp_name' => $tmp_name,
+            'type' => $image_ary['mime'],
+            'size' => filesize($tmp_name),
+            'error' => 0,
+        );
+
+        $attributes = array(
+            'Description' => '',
+            'Photographer' => '',
+            'Place' => '',
+            'Date' => '',
+        );
+
+        try {
+            $image = self::OnImageUpload($file, $attributes, $p_userId);
+            return $image;
+        } catch (PEAR_Error $e) {
+            return NULL;
+        }
+            
+    } // fn ProcessImage
 
 } // class Image
 ?>

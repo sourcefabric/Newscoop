@@ -55,6 +55,4 @@ if (PEAR::isError($image)) {
 	camp_html_goto_page("/$ADMIN/imagearchive/add.php");
 }
 
-camp_html_add_msg(getGS("Image added."), "ok");
-camp_html_goto_page("/$ADMIN/imagearchive/edit.php?f_image_id=".$image->getImageId());
 ?>

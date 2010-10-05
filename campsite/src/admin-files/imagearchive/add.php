@@ -26,73 +26,86 @@ echo $breadcrumbs;
 
 camp_html_display_msgs();
 ?>
-<script>
-function checkAddForm(form) {
-	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
-	if (!retval) {
-	    alert('<?php putGS("You must select an image file to upload."); ?>');
-	    return retval;
-	}
-	retval = retval && <?php camp_html_fvalidate(); ?>;
-	return retval;
-} // fn checkAddForm
+
+<!-- Load Queue widget CSS and jQuery -->
+<link rel="stylesheet" type="text/css" href="/javascript/plupload/css/plupload.queue.css" />
+<script type="text/javascript" src="/javascript/jquery-1.4.2.min.js"></script>
+<!-- Load plupload and all it's runtimes and the jQuery queue widget -->
+<script type="text/javascript" src="/javascript/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/javascript/plupload/js/jquery.plupload.queue.min.js"></script>
+
+<br />
+<form method="POST" action="do_upload.php" enctype="multipart/form-data">
+<?php echo SecurityToken::FormParameter(); ?>
+<div id="uploader"></div>
+<div id="uploader_error"></div>
+
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<TR>
+    <TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
+    <TD align="left">
+        <INPUT id="form-url" TYPE="TEXT" NAME="f_image_url" SIZE="32" class="input_text">
+    </TD>
+</TR>
+<tr>
+  <td colspan="2" align="center">
+    <input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />
+  </td>
+</tr>
+</table>
+</form>
+<p>&nbsp;</p>
+
+<script type="text/javascript">
+$(function() {
+    $("#uploader").pluploadQueue({
+        // General settings
+        runtimes : 'html5',
+        url : 'multifile_uploader.php',
+        unique_names : true,
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+        ],
+    });
+
+    // Client side form validation
+    $('form').submit(function(e) {
+        var uploader = $('#uploader').pluploadQueue();
+        var url = $('#form-url').val();
+
+        // Validate number of uploaded files
+        if (uploader.total.uploaded == 0) {
+            // Files in queue upload them first
+            if (uploader.files.length > 0) {
+                // When all files are uploaded submit form
+                uploader.bind('UploadProgress', function() {
+                    if (uploader.total.uploaded == uploader.files.length) {
+                        $('form').submit();
+                    }
+                });
+                uploader.start();
+            } else if (url.length > 0) {
+                return;
+            } else {
+                alert('You must at least upload one file.');
+            }
+            e.preventDefault();
+        }
+    });
+});
+
+plupload.addI18n({
+    'Select files' : '<?php putGS('Select files'); ?>',
+    'Add files to the upload queue and click the start button.' : '<?php putGS('Add files to the upload queue and click the start button.'); ?>',
+    'Filename' : '<?php putGS('Filename'); ?>',
+    'Status' : '<?php putGS('Status'); ?>',
+    'Size' : '<?php putGS('Size'); ?>',
+    'Add files' : '<?php putGS('Add files'); ?>',
+    'Start upload' : '<?php putGS('Start upload'); ?>',
+    'Stop current upload' : '<?php putGS('Stop current upload'); ?>',
+    'Start uploading queue' : '<?php putGS('Start uploading queue'); ?>',
+    'Drag files here.' : '<?php putGS('Drag files here.'); ?>'
+});
 </script>
 
-<P>
-<FORM NAME="image_add" METHOD="POST" ACTION="do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
-<?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php putGS('Add new image'); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php echo Image::GetMaxId(); ?>" SIZE="32" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Photographer'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($g_user->getRealName()); ?>" SIZE="32" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Place'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Date'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php  p($q_now); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php  putGS('YYYY-MM-DD'); ?>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_url" SIZE="32" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS('Image'); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" class="input_file">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	</TD>
-</TR>
-</TABLE>
-</FORM>
-<P>
-<script>
-document.forms.image_add.f_image_description.focus();
-</script>
 <?php camp_html_copyright_notice(); ?>
