@@ -1,4 +1,4 @@
-<?php
+<?php 
 regGS("You do not have the right to add countries.", "Nemáte právo přidat zemi");
 regGS("The country $1 could not be created", "Země $1 nemohla být vytvořena");
 regGS("Delete country", "Smazat zemi");
@@ -12,4 +12,5 @@ regGS("The country name $1 could not be changed", "Název země $1 nemohl být z
 regGS("Translate country name", "Přelož název země");
 regGS("You do not have the right to translate country names.", "Nemáte právo přeložit název země");
 regGS("The country name $1 could not be translated", "Název země $1 nemohl být přeložen");
+regGS("Add New Country", "Přidat Novou Zemi");
 ?>

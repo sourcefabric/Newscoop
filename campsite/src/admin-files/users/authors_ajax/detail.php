@@ -69,7 +69,7 @@ if ($id > 0) {
                     <label>Aliases:</label>
                     <span id="aliases">
 <?php
-if (isset($aliases)) {
+if (isset($aliases) && is_array($aliases)) {
     foreach ($aliases as $alias) {
         $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;" value="%s">';
         echo sprintf($input, $alias['alias']);

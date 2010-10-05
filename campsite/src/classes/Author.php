@@ -17,7 +17,6 @@ class Author extends DatabaseObject {
 	var $m_dbTableName = 'Authors';
 	var $m_keyColumnNames = array('id');
 	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('id', 'first_name', 'last_name', 'email','type','skype','jabber','aim','biography','image');
     var $m_aliases = null;
 
 	/**
@@ -225,7 +224,7 @@ class Author extends DatabaseObject {
     protected function loadAliases()
     {
         global $g_ado_db;
-        $sql = "SELECT alias FROM authorsaliases WHERE IdAuthor=" . $this->getId() . " order by id  ";
+        $sql = "SELECT alias FROM Authorsaliases WHERE IdAuthor=" . $this->getId() . " order by id  ";
         $this->m_aliases = $g_ado_db->GetAll($sql); 
     }
     
@@ -241,13 +240,13 @@ class Author extends DatabaseObject {
         $bio = $this->getBiography($IdLanguage);
         if (empty($bio))
         {
-            $sql = "INSERT INTO authorbiography (IdAuthor,IdLanguage,biography,first_name,last_name) VALUES('%d','%d','%s','%s','%s')";
+            $sql = "INSERT INTO Authorbiography (IdAuthor,IdLanguage,biography,first_name,last_name) VALUES('%d','%d','%s','%s','%s')";
             $sql = sprintf($sql, $this->getId(), $IdLanguage, $p_value,$first_name,$last_name);
             $g_ado_db->Execute($sql);
         }
         else 
         {
-            $sql = "UPDATE authorbiography SET biography='%s', first_name='%s', last_name='%s' WHERE IdAuthor='%d' AND IdLanguage='%d'";
+            $sql = "UPDATE Authorbiography SET biography='%s', first_name='%s', last_name='%s' WHERE IdAuthor='%d' AND IdLanguage='%d'";
             $sql = sprintf($sql, $p_value, $first_name, $last_name, $this->getId(), $IdLanguage);
             $g_ado_db->Execute($sql);
         }
@@ -256,7 +255,7 @@ class Author extends DatabaseObject {
     public function getBiography($IdLanguage=1)
     {
         global $g_ado_db;
-        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM authorbiography WHERE IdAuthor=%d AND IdLanguage=%d";
+        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM Authorbiography WHERE IdAuthor=%d AND IdLanguage=%d";
         $sql = sprintf($sql, $this->getId(), $IdLanguage);
         return $g_ado_db->GetAll($sql);
     }
@@ -264,7 +263,7 @@ class Author extends DatabaseObject {
     public function getBiographies()
     {
         global $g_ado_db;
-        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM authorbiography WHERE IdAuthor=%d";
+        $sql = "SELECT IdLanguage, biography, first_name, last_name FROM Authorbiography WHERE IdAuthor=%d";
         $sql = sprintf($sql, $this->getId());
         return $g_ado_db->GetAll($sql);
     }
@@ -272,13 +271,13 @@ class Author extends DatabaseObject {
     public function setAliases($aliases)
     {
         global $g_ado_db;
-        $sql = "DELETE FROM authorsaliases WHERE IdAuthor=" . $this->getId();
+        $sql = "DELETE FROM Authorsaliases WHERE IdAuthor=" . $this->getId();
         $g_ado_db->Execute($sql);
         foreach ($aliases as $alias)
         {
             if (strlen($alias)>0)
             {
-                $sql = "INSERT INTO authorsaliases(IdAuthor,alias) VALUES('%s','%s')";
+                $sql = "INSERT INTO Authorsaliases(IdAuthor,alias) VALUES('%s','%s')";
                 $sql = sprintf($sql, $this->getId(), $alias);
                 $g_ado_db->Execute($sql);
             }

@@ -11,7 +11,7 @@ if [ "$DATABASE_PASSWORD" != "" ]; then
     password_string="-p$DATABASE_PASSWORD"
 fi
 
-TABLES_TO_FILL="
+TABLES="
  Aliases\
  ArticleAttachments\
  ArticleAudioclips\

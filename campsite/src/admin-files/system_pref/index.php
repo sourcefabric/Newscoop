@@ -164,6 +164,15 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Allow password recovery:") ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_password_recovery" value="Y" <?php if (SystemPref::Get("PasswordRecovery") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_password_recovery" value="N" <?php if (SystemPref::Get("PasswordRecovery") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("Secret Key:"); ?>
     </td>
     <td align="left" valign="top">

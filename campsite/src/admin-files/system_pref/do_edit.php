@@ -45,6 +45,7 @@ $f_cc_hostport = Input::Get('f_cc_hostport', 'int');
 $f_cc_xrpcpath = strip_tags(Input::Get('f_cc_xrpcpath'));
 $f_cc_xrpcfile = strip_tags(Input::Get('f_cc_xrpcfile'));
 $f_external_subs_management = Input::Get('f_external_subs_management');
+$f_password_recovery = Input::Get('f_password_recovery');
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
     $f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
@@ -67,6 +68,9 @@ $msg_ok = 1;
 
 // Site On-line
 SystemPref::Set('SiteOnline', $f_campsite_online);
+
+// Allow Password Recovery
+SystemPref::Set('PasswordRecovery', $f_password_recovery);
 
 // Site title
 SystemPref::Set('SiteTitle', $f_site_title);
