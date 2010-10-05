@@ -5,6 +5,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 
+// Delete any session
+$LiveUser->logout();
+
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
 camp_session_set('xorkey', $key);
