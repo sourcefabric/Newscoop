@@ -19,14 +19,20 @@ if (!Input::IsValid()) {
 }
 
 $topics = Topic::GetTree();
+$articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
+$selectedIds = array();
+foreach ($articleTopics as $topic) {
+    $selectedIds[(int) $topic->getTopicId()] = TRUE;
+}
 
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 	<title><?php putGS("Attach Topic To Article"); ?></title>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Expires" CONTENT="now">
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
 </head>
 <body>
@@ -72,10 +78,15 @@ foreach ($topics as $path) {
     if ($topic_level == 1) {
         $color = !$color;
     }
+
+    $checked_str = '';
+    if (!empty($selectedIds[$currentTopic->getTopicId()])) {
+        $checked_str = ' checked="checked"';
+    }
 ?>
 
     <li<?php echo $color_class; ?>>
-        <input id="f_topic_ids-<?php echo $topic_id; ?>" type="checkbox" name="f_topic_ids[]" value="<?php echo $topic_id; ?>">
+        <input id="f_topic_ids-<?php echo $topic_id; ?>" type="checkbox" name="f_topic_ids[]" value="<?php echo $topic_id; ?>"<?php echo $checked_str; ?> />
         <label for="f_topic_ids-<?php echo $topic_id; ?>"><?php echo $name; ?></label>
 	<?php
     $level = $topic_level;
@@ -93,14 +104,16 @@ echo str_repeat('</li></ul>', $level);
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('ul.tree ul').hide();
+    $('ul.tree ul').hide(); // hide ul's
+    $('input[checked=checked]').each(function() {
+        $(this).parents('ul').show(); // but show witch checked inputs
+    });
     $('ul.tree li').each(function() {
         if ($(this).children('ul').length > 0) {
             $(this).prepend('<a>+</a>');
         } else {
             $(this).prepend('<span>&nbsp;</span>');
         }
-
     });
     $('ul.tree a').click(function() {
         if ($(this).nextAll('ul').length == 0) {
