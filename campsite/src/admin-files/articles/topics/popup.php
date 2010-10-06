@@ -43,10 +43,10 @@ foreach ($articleTopics as $topic) {
 <p></p>
 
 <?php if (count($topics) > 0) { ?>
-<FORM action="<?php p("/$ADMIN/articles/topics/do_add.php"); ?>" method="POST">
+<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
-<INPUT type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<INPUT type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
 
 <?php
 $color = FALSE;

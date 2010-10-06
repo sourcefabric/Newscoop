@@ -9,7 +9,7 @@
 						<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) {  ?>
 						<TD align="right">
 							<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" border="0">
-							<A href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=400, top=200, left=200');"><?php putGS("Attach"); ?></A>
+							<A href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=400, top=200, left=200');"><?php putGS("Edit"); ?></A>
 						</TD>
 						<?php } ?>
 					</TR>
