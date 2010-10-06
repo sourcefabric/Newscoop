@@ -162,8 +162,8 @@ class ArticleAuthor extends DatabaseObject {
     {
         global $g_ado_db;
         $sql ="SELECT authors.first_name, authors.last_name 
-                FROM authors
-                JOIN articleauthors
+                FROM Authors
+                JOIN ArticleAuthors
                 ON authors.id = fk_author_id
                 WHERE
                 fk_language_id=%d
