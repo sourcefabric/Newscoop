@@ -143,7 +143,7 @@ AKAM;
 
         }
         else {
-            $errors[] = getGS("No user is regisered with this email.");
+            $errors[] = getGS("No user is registered with this email.");
         }
     }
 

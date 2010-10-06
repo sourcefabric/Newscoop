@@ -6,8 +6,6 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
-
-
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
 
@@ -68,101 +66,84 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";
-if (SystemPref::Get("PasswordRecovery")=='N')
-{
-    $errors[] = getGS('Password recovery is disabled.<br/> <a href="login.php">login</a>');
-}
-else
-if (!stristr($email, "@") == false && strlen($token)>4)
-{
+if (SystemPref::Get("PasswordRecovery") == 'N') {
+    $errors[] = getGS('Password recovery is disabled.') . '<br/> <a href="login.php">' . getGS('login') . '</a>';
+} elseif (!stristr($email, "@") == false && strlen($token) > 4) {
     $usr = User::FetchUserByEamil($email);
-    if ($usr!=null)
-    {
-        if ("|" . strtoupper($usr->getPasswordResetToken()) == $token)
-        {
+    if ($usr != null) {
+        if ("|" . strtoupper($usr->getPasswordResetToken()) == $token) {
             $newPassword = Input::Get("f_password","string");
-            if (strlen($newPassword)>0)
-            {
+            if (strlen($newPassword) > 0) {
                $usr->setPassword($newPassword);
-               $errors[] = getGS('Your password has been reset <br/> you may now proceed to <a href="login.php">login</a>');
-            }
-            else
-            {
+               $errors[] = getGS('Your password has been reset <br/> you may now proceed to')
+                   . ' <a href="login.php">' . getGS('login') . '</a>';
+            } else {
                 $action = "inputs";
             }
+        } else {
+            $errors[] = getGS('This link is not valid.') . '<br/> <a href="login.php">'
+                . getGS('login') . '</a>';
         }
-        else
-        {
-            $errors[] = getGS('This link is not valid.<br/> <a href="login.php">login</a>');
-        }
+    } else {
+        $errors[] = getGS('Bad input parameters.') . '<br/> <a href="login.php">' . getGS('login') .'</a>';
     }
-    else
-    {
-        $errors[] = getGS('Bad input parameters.<br/> <a href="login.php">login</a>');
-    }
+} else {
+    $errors[] = getGS('Bad input parameters.') . '<br/> <a href="login.php">' . getGS('login') . '</a>';
 }
-else
-{
-    $errors[] = getGS('Bad input parameters.<br/> <a href="login.php">login</a>');
-}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
-    <head>
-        <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-            <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
-    </head>
-    <body>
-        <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-            <input type="hidden" name="email" value="<?php echo $email; ?>"/>
-            <input type="hidden" name="token" value="<?php echo $token; ?>"/>
-            <div class="login_box">
-                <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
-                <h2><?php putGS("Password Recovery"); ?></h2>
-                <noscript>
-<?php
-                    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
-                    ?>
-                </noscript>
-<?php
-                if (isset($errors)) {
-                    ?>
-                <div class="login_error">
+<head>
+  <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
+  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+</head>
+<body>
+  <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+  <input type="hidden" name="email" value="<?php echo $email; ?>" />
+  <input type="hidden" name="token" value="<?php echo $token; ?>" />
+  <div class="login_box">
+    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
+    <h2><?php putGS("Password Recovery"); ?></h2>
+    <noscript>
     <?php
-                        foreach ($errors as $error) {
-                            echo "$error <br/>";
-                        }
-                        ?>
-                </div>
+        putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+    ?>
+    </noscript>
     <?php
-                }
+    if (isset($errors)) {
+    ?>
+    <div class="login_error">
+        <?php
+        foreach ($errors as $error) {
+            echo "$error <br/>";
+        }
+        ?>
+    </div>
+    <?php
+    }
 
-                if ($action=='inputs')
-                {
-                ?>
-
-                <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
-                <tr>
-                    <td align="right">
-                        <strong><?php putGS("Password"); ?> :</strong>
-                    </td>
-                    <td>
-                        <input type="password" name="f_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your password."); ?>" />
-                    </td>
-                    </tr>
-                    <tr class="buttonBlock2">
-                        <td></td>
-                        <td>
-                            <input type="submit" class="button" name="Login" value="<?php  putGS('Recover password'); ?>" />
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
-        
-<?php } ?>
+    if ($action == 'inputs') {
+    ?>
+    <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
+    <tr>
+      <td align="right">
+        <strong><?php putGS("Password"); ?> :</strong>
+      </td>
+      <td>
+        <input type="password" name="f_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your password."); ?>" />
+      </td>
+    </tr>
+    <tr class="buttonBlock2">
+      <td></td>
+      <td>
+        <input type="submit" class="button" name="Login" value="<?php putGS('Recover password'); ?>" />
+      </td>
+    </tr>
+    </table>
+  </div>
+  <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
+  <?php } ?>
 </form>
 <?php camp_html_copyright_notice(false); ?>
