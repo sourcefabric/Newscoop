@@ -105,15 +105,20 @@ echo str_repeat('</li></ul>', $level);
 <script type="text/javascript">
 $(document).ready(function() {
     $('ul.tree ul').hide(); // hide ul's
-    $('input[checked=checked]').each(function() {
-        $(this).parents('ul').show(); // but show witch checked inputs
-    });
     $('ul.tree li').each(function() {
         if ($(this).children('ul').length > 0) {
             $(this).prepend('<a>+</a>');
         } else {
             $(this).prepend('<span>&nbsp;</span>');
         }
+    });
+    $('input[checked=checked]').each(function() {
+        $(this).parents('ul').show();
+        $(this).parents('ul').first().each(function() {
+            $(this).parents('li').each(function() {
+                $(this).children('a').first().text('-');
+            });
+        }); // but show witch checked inputs
     });
     $('ul.tree a').click(function() {
         if ($(this).nextAll('ul').length == 0) {
