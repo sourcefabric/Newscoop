@@ -53,6 +53,11 @@ camp_html_display_msgs();
 
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
+  <td colspan="2" align="center" style="padding-top: 15px;">
+    <?php p(wordwrap(getGS("Specify image url if you want to load it."), 60, "<br />")); ?>
+  </td>
+</td>
+<tr>
     <td align="right" ><?php putGS('URL'); ?>:</td>
     <td align="left">
         <input id="form-url" type="text" name="f_image_url" size="32" class="input_text" />
