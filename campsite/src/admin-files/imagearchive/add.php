@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @copyright 2010 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @link http://www.sourcefabric.org
+ */
+
 camp_load_translation_strings("imagearchive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
@@ -29,7 +38,7 @@ camp_html_display_msgs();
 
 <!-- Load Queue widget CSS and jQuery -->
 <style>
-    @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/plupload/css/plupload.queue.css);
+@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/plupload/css/plupload.queue.css);
 </style>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
 <!-- Load plupload and all it's runtimes and the jQuery queue widget -->
@@ -43,12 +52,12 @@ camp_html_display_msgs();
 <div id="uploader_error"></div>
 
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
-<TR>
-    <TD ALIGN="RIGHT" ><?php putGS('URL'); ?>:</TD>
-    <TD align="left">
-        <INPUT id="form-url" TYPE="TEXT" NAME="f_image_url" SIZE="32" class="input_text">
-    </TD>
-</TR>
+<tr>
+    <td align="right" ><?php putGS('URL'); ?>:</td>
+    <td align="left">
+        <input id="form-url" type="text" name="f_image_url" size="32" class="input_text" />
+    </td>
+</tr>
 <tr>
   <td colspan="2" align="center">
     <input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />

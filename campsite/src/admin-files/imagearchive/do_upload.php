@@ -1,7 +1,14 @@
 <?php
 /**
  * @package Campsite
+ *
+ * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @copyright 2010 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @link http://www.sourcefabric.org
  */
+
+camp_load_translation_strings("imagearchive");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
