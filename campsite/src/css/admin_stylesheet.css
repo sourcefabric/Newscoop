@@ -1662,3 +1662,11 @@ fieldset dt {
     margin: 0;
     padding: 0;
 }
+
+.dataTables_wrapper {
+    margin: 0 10px;
+}
+
+.dataTables_wrapper table {
+    width: 100%;
+}
