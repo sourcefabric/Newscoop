@@ -147,7 +147,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Authors` WRITE;
 /*!40000 ALTER TABLE `Authors` DISABLE KEYS */;
-INSERT  IGNORE INTO `Authors` VALUES (1,'Douglas','Arellanes','doug@campware.org'),(2,'James Q.','Reporter',NULL),(3,'Sarah','Staffwriter',NULL),(4,'','',NULL),(5,'Jeffrey','McManus','jeffreymcmanus@gmail.com'),(6,'Global Wire','Service',NULL),(7,'Jane','Stockwriter',NULL),(8,'Sava','Tatić','sava.tatic@sourcefabric.org'),(9,'Test','Persona',NULL),(10,'Orlando','Persona',NULL),(11,'Amerigo','Vespucci',NULL);
+INSERT  IGNORE INTO `Authors` (id, first_name, last_name) VALUES (1,'Douglas','Arellanes','doug@campware.org'),(2,'James Q.','Reporter',NULL),(3,'Sarah','Staffwriter',NULL),(4,'','',NULL),(5,'Jeffrey','McManus','jeffreymcmanus@gmail.com'),(6,'Global Wire','Service',NULL),(7,'Jane','Stockwriter',NULL),(8,'Sava','Tatić','sava.tatic@sourcefabric.org'),(9,'Test','Persona',NULL),(10,'Orlando','Persona',NULL),(11,'Amerigo','Vespucci',NULL);
 /*!40000 ALTER TABLE `Authors` ENABLE KEYS */;
 UNLOCK TABLES;
 
