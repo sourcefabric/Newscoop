@@ -131,15 +131,13 @@ if (count($topics) == 0) { ?>
 <script>
 var topic_ids = new Array;
 </script>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="3" class="table_list">
-<TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"></TD>
-	<TD ALIGN="center" VALIGN="TOP" style="padding-left: 10px; padding-right: 10px;"><?php  putGS("Order"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP" style="padding-left: 10px; padding-right: 10px;"><?php  putGS("Language"); ?></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Topic"); ?></TD>
-	<TD ALIGN="center" VALIGN="TOP"></TD>
-</TR>
+
+<form method="POST" action="do_order.php" onsubmit="return updateOrder(this);">
+<?php echo SecurityToken::FormParameter(); ?>
+<fieldset class="buttons">
+    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" ?>
+</fieldset>
+</form>
 
 <?php
 
@@ -147,15 +145,26 @@ $counter = 0;
 $color= 0;
 $isFirstTopic = true;
 $aTopicOrder = array();
+$level = 0;
 
-//$t = new Topic(1);
-//$t->fetch();
-//var_dump($topics[0]);
-//die;
 foreach ($topics as $topicPath) {
-	$currentTopic = camp_array_peek($topicPath, false, -1);
+    $topic_level = 0;
+    foreach ($topicPath as $topicObj) {
+        $topic_level++;
+    }
 
+    if ($topic_level > $level) {
+        echo empty($level) ? '<ul class="tree sortable">' : '<ul>';
+    } else {
+        echo str_repeat('</li></ul>', $level - $topic_level), '</li>';
+    }
+
+	$currentTopic = camp_array_peek($topicPath, false, -1);
 	$parentId = $currentTopic->getParentId();
+
+    echo '<li id="topic_', $currentTopic->getTopicId(), '">';
+    echo '<input type="hidden" name="position[', $parentId, '][', $currentTopic->getTopicId(), ']" />';
+
 	if (!isset($aTopicOrder[$parentId])) {
 	    $sql = 'SELECT DISTINCT(TopicOrder) FROM Topics'
 	        .' WHERE ParentId = '.$parentId
@@ -163,206 +172,163 @@ foreach ($topics as $topicPath) {
 	    $aTopicOrder[$parentId] = $g_ado_db->GetCol($sql);
     }
 
-    $topicTranslations = $currentTopic->getTranslations();
 	$isFirstTranslation = true;
+    $topicTranslations = $currentTopic->getTranslations();
 	foreach ($topicTranslations as $topicLanguageId => $topicName) {
 		if (!in_array($topicLanguageId, $f_show_languages)) {
 			continue;
 		}
+
+        $topicLanguage = new Language($topicLanguageId);
+        echo '<div><h3>';
+        echo '<span class="lang">', $topicLanguage->getCode(), '</span>';
+        echo " <a href='/$ADMIN/topics/edit.php
+            ?f_topic_edit_id=".$currentTopic->getTopicId()."
+            &f_topic_language_id=$topicLanguageId'>
+            ".htmlspecialchars($topicName)."</a>";
+        echo '</h3>';
 	?>
-	<TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
-			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>'); return false;"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add_subtopic.png" alt="<?php putGS("Add subtopic"); ?>" title="<?php putGS("Add subtopic"); ?>" border="0"></a>
-		</td>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
-		<?php if ($isFirstTranslation) {
-			?>
-			<a href="javascript: void(0);" onclick="HideAll(topic_ids); ShowElement('translate_topic_<?php p($currentTopic->getTopicId()); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/localizer.png" alt="<?php putGS("Translate"); ?>" title="<?php putGS("Translate"); ?>" border="0"></a>
-			<?php
-		}
-		?>
-		</td>
+	    <div class="subtopic">
+            <form method="POST" action="do_add.php" onsubmit="return validate(this);">
+                <?php echo SecurityToken::FormParameter(); ?>
+                <input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
+                <input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
 
-		<?php if ($isFirstTranslation && count($aTopicOrder[$parentId]) > 1) { ?>
-		<TD ALIGN="right" valign="middle" NOWRAP <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>
-		<?php
-		    $topicOrder = $currentTopic->getProperty('TopicOrder');
-		    $topicPosition =  array_search($topicOrder, $aTopicOrder[$parentId]);
-	    ?>
-			<table cellpadding="0" cellspacing="0">
-			<tr>
-				<td width="18px">
-					<?php if ($topicPosition > 0) { ?>
-						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=up_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/up-16x16.png" width="16" height="16" border="0"></A>
-					<?php } ?>
-				</td>
-				<td width="20px">
-					<?php if ($topicOrder < camp_array_peek($aTopicOrder[$parentId], false, -1)) { ?>
-						<A HREF="/<?php echo $ADMIN; ?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId()); ?>&f_move=down_rel&f_position=1&<?php echo SecurityToken::URLParameter(); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/down-16x16.png" width="16" height="16" border="0" style="padding-left: 3px; padding-right: 3px;"></A>
-					<?php } ?>
-				</td>
+            <fieldset>
+                <legend><?php putGS("Add subtopic:"); ?></legend>
+                <label><?php p($topicLanguage->getNativeName()); ?></label>
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>" />
+                <input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button" />
+            </fieldset>
 
-				<td>
-					<select name="f_position_<?php p($counter);?>" onChange="positionValue = this.options[this.selectedIndex].value; url = '/<?php p($ADMIN);?>/topics/do_position.php?f_topic_number=<?php p($currentTopic->getTopicId());?>&<?php echo SecurityToken::URLParameter(); ?>&f_move=abs&f_position='+positionValue; location.href=url;" class="input_select" style="font-size: smaller;">
-					<?php
-					for ($j = 0; $j < count($aTopicOrder[$parentId]); $j++) {
-						if ($topicPosition == $j) {
-							echo "<option value=\"{$aTopicOrder[$parentId][$j]}\" selected>" . ($j + 1) . "</option>\n";
-						} else {
-							echo "<option value=\"{$aTopicOrder[$parentId][$j]}\">" . ($j + 1) . "</option>\n";
-						}
-					}
-					?>
-					</select>
-				</td>
+            </form>
+        </div>
 
-			</tr>
-			</table>
-		</TD>
-		<?php } else { ?>
-			<TD ALIGN="right" valign="middle" NOWRAP <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?>>&nbsp;</TD>
-		<?php } ?>
-		<TD <?php if (!$isFirstTopic & $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="center">
-			<?php
-			$topicLanguage = new Language($topicLanguageId);
-			p($topicLanguage->getCode());
-			?>
-		</TD>
+        <?php if ($isFirstTranslation) {
+            $isFirstTranslation = false;
+        ?>
+        <div class="translate">
+            <form method="POST" action="do_add.php" onsubmit="return validate(this);">
+                <?php echo SecurityToken::FormParameter(); ?>
+                <input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
 
-		<TD <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> valign="middle" align="left" width="450px">
-			<?php
-			// Append decoration of tree
-			//
-			// It's hasn't got sense to describe relations between root topics
-		    if ($parentId != 0) {
-		        // Drawing parent parts
-			    foreach ($topicPath as $topicId => $topic) {
-			        // Skip root topic and current topic
-			        if ($topic->getParentId() == 0 || $topicId == $currentTopic->getTopicId()) {
-			            continue;
-			        }
+            <fieldset>
+                <legend><?php putGS("Add translation:"); ?></legend>
+                <select name="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
+                    <option value="0"><?php putGS("---Select language---"); ?></option>
+                    <?php foreach ($allLanguages as $tmpLanguage) {
+                    camp_html_select_option($tmpLanguage->getLanguageId(),
+                                            null, $tmpLanguage->getNativeName());
+                    } ?>
+                </select>
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>" />
+                <input type="submit" name="f_submit" value="<?php putGS("Translate"); ?>" class="button" />
+            </fieldset>
+            
+            </form>
+        </div>
+        <?php } ?>
 
-			        // Is last?
-			        $parentTopicPosition = array_search($topic->getProperty('TopicOrder'), $aTopicOrder[$topic->getParentId()]);
-			        $lastTopicOrder = camp_array_peek($aTopicOrder[$topic->getParentId()], false, -1);
-			        $isLast = $aTopicOrder[$topic->getParentId()][$parentTopicPosition] == $lastTopicOrder;
+		<a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>"><?php putGS("Delete"); ?></a>
+        </div>
 
-		            if (!$isLast && count($aTopicOrder[$topic->getParentId()]) > 1) {
-		                // If previous topic wasn't last...
-		                echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-I.png">';
-			        } else {
-			            echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-blank.png">';
-			        }
-			    }
-
-			    // Drawing for current topic
-			    $lastTopicOrder = camp_array_peek($aTopicOrder[$parentId], false, -1);
-			    $isLast = ($aTopicOrder[$parentId][$topicPosition] == $lastTopicOrder);
-			    if ($isFirstTranslation) {
-    			    if ($isLast || count($aTopicOrder[$parentId]) == 1) {
-    			        // If last or only
-    			        echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-L.png">';
-    			    } else {
-    			        // If non-last and non-only
-    			        echo '<img alt="" src="' . $Campsite['SUBDIR'] . '/css/tree-T.png">';
-    			    }
-			    } else {
-			        if (!$isLast) {
-    			        // Non-first translations should be marked with I
-        			    echo '<img alt="" src="/css/tree-I.png">';
-			        } else {
-			            // Non-first translations should be ident
-			            // if topic in branch is last
-			            echo '<img alt="" src="/css/tree-blank.png">';
-			        }
-    			}
-			}
-
-			echo " <a href='/$ADMIN/topics/edit.php"
-				 ."?f_topic_edit_id=".$currentTopic->getTopicId()
-				 ."&f_topic_language_id=$topicLanguageId'>"
-				.htmlspecialchars($topicName)."</a>";
-			?>
-		</TD>
-		<td <?php if (!$isFirstTopic && $isFirstTranslation) { ?>style="border-top: 2px solid #8AACCE;"<?php } ?> align="center">
-			<a href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="<?php putGS("Delete"); ?>" title="<?php putGS("Delete"); ?>" border="0"></a>
-		</td>
-		</tr>
-
-	    <tr id="add_subtopic_<?php p($currentTopic->getTopicId()); ?>_<?php p($topicLanguageId); ?>" style="display: none;">
-	    	<td colspan="2"></td>
-	    	<td colspan="4">
-	    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-				<?php echo SecurityToken::FormParameter(); ?>
-	    		<input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
-	    		<input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
-	    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #8FBF8F; border-bottom: 1px solid #8FBF8F; background-color: #EFFFEF; padding-left: 5px; padding-right: 5px;" width="100%">
-	    		<tr>
-	    			<td align="left">
-	    				<table cellpadding="2" cellspacing="1">
-	    				<tr>
-			    			<td><?php putGS("Add subtopic:"); ?></td>
-			    			<td><?php p($topicLanguage->getNativeName()); ?>
-			    			</td>
-			    			<td><input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>"></td>
-			    			<td><input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button"></td>
-			    		</tr>
-		    			</table>
-	    			</td>
-	    		</tr>
-	    		</table>
-	    		</FORM>
-	    	</td>
-	    </tr>
-		<script>
-		topic_ids.push("add_subtopic_"+<?php p($currentTopic->getTopicId()); ?>+"_<?php p($topicLanguageId); ?>");
-		</script>
-		<?php
-		$isFirstTranslation = false;
-	}
-	?>
-    <tr id="translate_topic_<?php p($currentTopic->getTopicId()); ?>" style="display: none;">
-    	<td colspan="2"></td>
-    	<td colspan="4">
-    		<FORM method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-			<?php echo SecurityToken::FormParameter(); ?>
-    		<input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
-    		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
-    		<tr>
-    			<td align="left">
-    				<table cellpadding="2" cellspacing="1">
-    				<tr>
-		    			<td><?php putGS("Add translation:"); ?></td>
-		    			<td>
-							<SELECT NAME="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
-							<option value="0"><?php putGS("---Select language---"); ?></option>
-							<?php
-						 	foreach ($allLanguages as $tmpLanguage) {
-						 		camp_html_select_option($tmpLanguage->getLanguageId(),
-						 								null,
-						 								$tmpLanguage->getNativeName());
-					        }
-							?>
-							</SELECT>
-		    			</td>
-		    			<td><input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>"></td>
-		    			<td><input type="submit" name="f_submit" value="<?php putGS("Translate"); ?>" class="button"></td>
-		    		</tr>
-		    		</table>
-		    	</td>
-    		</tr>
-    		</table>
-    		</FORM>
-    	</td>
-    </tr>
-		<script>
-		topic_ids.push("translate_topic_"+<?php p($currentTopic->getTopicId()); ?>);
-		</script>
     <?php
     $isFirstTopic = false;
     $counter++;
+    $level = $topic_level;
+    }
 }
+echo str_repeat('</li></ul>', $level);
 ?>
+
+<form method="POST" action="do_order.php" onsubmit="return updateOrder(this);">
+<?php echo SecurityToken::FormParameter(); ?>
+<fieldset class="buttons">
+    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" ?>
+</fieldset>
+</form>
+
+<style>
+@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
+</style>
+
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-ui-1.8.5.custom.min.js"></script>
+<script type="text/javascript">
+$('ul.tree.sortable  fieldset legend').show().click(function() {
+    $(this).nextAll().toggle();
+    $(this).parent().toggleClass('closed');
+}).nextAll().hide().parent().addClass('closed');
+
+$('ul.tree.sortable').sortable();
+$('ul.tree.sortable ul').sortable();
+$('ul.tree.sortable > li').dblclick(function() {
+    $(this).children('ul').toggle('slow');
+}).children('ul').each(function() {
+    var childrens = $(this).children('li').length;
+    $(this).hide();
+    $('div > h3', $(this).parent()).first().append(' <span class="sub">' + childrens + ' <?php echo putGS('Subtopics'); ?></span>');
+});
+
+/**
+ * Update one list order.
+ *
+ * @param object list
+ * @param object form
+ *
+ * @return void
+ */
+function updateListOrder(list, form)
+{
+    var orderAry = list.sortable('toArray');
+    for (var i = 0; i < orderAry.length; i++) {
+        var elem = $('#' + orderAry[i] + ' > input[type=hidden]').first().val(i + 1);
+        elem.appendTo(form);
+    }
+}
+
+/**
+ * Update order info in tree
+ *
+ * @return bool
+ */
+function updateOrder(form)
+{
+    updateListOrder($('ul.tree.sortable'), form);
+    $('ul.tree.sortable ul').each(function() {
+        updateListOrder($(this), form);
+    });
+    return true;
+}
+
+/**
+ * Validate form.
+ *
+ * @param object form
+ *
+ * @return bool
+ */
+function validate(form)
+{
+    var select = $('select', form);
+    var input = $('input[type=text]', form).first();
+    var emsg = [];
+
+    if (select.length && select.first().val() == 0) {
+        emsg.push(select.first().attr('emsg'));
+    }
+
+    if (!input.val()) {
+        emsg.push(input.attr('emsg'));
+    }
+
+    if (emsg.length > 0) {
+        alert(emsg.join("\n"));
+        return false;
+    }
+
+    return true;
+}
+</script>
 <?php } ?>
-</table>
 <?php camp_html_copyright_notice(); ?>
