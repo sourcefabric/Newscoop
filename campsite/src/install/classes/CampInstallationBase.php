@@ -104,7 +104,6 @@ class CampInstallationBase
                 $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
                 if ($input['install_demo'] != '0') {
                     if (!$this->loadDemoSite()) {
-                        die();
                         break;
                     }
                 }
@@ -115,7 +114,6 @@ class CampInstallationBase
                 $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
                 if ($input['install_demo'] != '0') {
                     if (!$this->loadDemoSite()) {
-                        die();
                         break;
                     }
                 }
