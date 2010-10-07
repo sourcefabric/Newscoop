@@ -33,7 +33,7 @@ foreach ($articleTopics as $topic) {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="Expires" CONTENT="now">
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 </head>
 <body>
 <br>
