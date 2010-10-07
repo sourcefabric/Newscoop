@@ -33,8 +33,8 @@ class MetaActionLogin extends MetaAction
             ACTION_LOGIN_ERR_NO_PASSWORD);
             return;
         }
-        $user = User::FetchUserByName($this->m_properties['user_name']);
-        if (is_null($user) || !$user->isValidPassword($p_input['f_login_password'])) {
+        global $LiveUser;
+        if (!$LiveUser->login($p_input['f_login_uname'], $p_input['f_login_password'], false)) {
             $this->m_error = new PEAR_Error('Invalid user credentials',
             ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
@@ -43,7 +43,7 @@ class MetaActionLogin extends MetaAction
         && !empty($p_input['f_login_rememberuser']);
 
         $this->m_error = ACTION_OK;
-        $this->m_user = $user;
+        $this->m_user = User::FetchUserByName($this->m_properties['user_name']);;
         $this->m_user->initLoginKey();
     }
 
@@ -64,7 +64,7 @@ class MetaActionLogin extends MetaAction
         $p_context->default_url->reset_parameter('f_login_password');
         $p_context->url->reset_parameter('f_login_password');
 
-        if ($this->m_error != ACTION_OK) {
+        if (!is_int($this->m_error) || $this->m_error != ACTION_OK) {
             return false;
         }
         $time = $this->m_properties['remember_user'] ? time() + 14 * 24 * 3600 : null;
