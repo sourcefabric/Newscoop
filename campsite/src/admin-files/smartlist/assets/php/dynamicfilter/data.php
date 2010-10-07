@@ -1,16 +1,20 @@
 <?php
-
 header('Content-type: application/json');
 
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 
-// start >= 0
-$startIndex = max(0,
-    empty($_REQUEST['iDisplayStart']) ? 0 : (int) $_REQUEST['iDisplayStart']);
+if (!isset($_REQUEST['startIndex']) or intval($_REQUEST['startIndex']) < 1) {
+    $startIndex = 0;
+} else {
+    $startIndex = intval($_REQUEST['startIndex']);
+}
+if (!isset($_REQUEST['results']) or intval($_REQUEST['results']) < 10) {
+    $results = 10;
+} else {
+    $results = intval($_REQUEST['results']);
+    $results = $results > 35 ? 35 : $results;
+}
 
-// results num >= 10 && <= 35
-$results = min(100, max(10,
-    empty($_REQUEST['iDisplayLength']) ? 0 : (int) $_REQUEST['iDisplayLength']));
 
 $articlesParams = array();
 if (isset($_REQUEST['publication']) && $_REQUEST['publication'] > 0) {
@@ -130,30 +134,40 @@ foreach($articles as $article) {
         $commentsNo = 'No';
     }
     $return[] = array(
-        $article->getTitle(),
-        $tmpArticleType->getDisplayName(),
-        $tmpAuthor->getName(),
-        $topicsNo,
-        $commentsNo,
-        $article->getReads(),
-        $article->getLastModified(),
-        $article->getPublishDate(),
-        $article->getCreationDate(),
-        $article->isLocked(),
-        $lockInfo,
-        $lockHighlight,
-        $articleLink,
-        $previewLink,
-        //$article->getLanguageId(),
+        'art_id' => $article->getArticleNumber(),
+        'art_name' => $article->getTitle(),
+        'art_type' => $tmpArticleType->getDisplayName(),
+        'art_createdby' => $tmpUser->getRealName(),
+        'art_author' => $tmpAuthor->getName(),
+        'art_status' => $article->getWorkflowDisplayString(),
+        'art_ofp' => $onFrontPage,
+        'art_osp' => $onSectionPage,
+        'art_images' => $imagesNo,
+        'art_topics' => $topicsNo,
+        'art_comments' => $commentsNo,
+        'art_reads' => $article->getReads(),
+        'art_lastmodifieddate' => $article->getLastModified(),
+        'art_publishdate' => $article->getPublishDate(),
+        'art_creationdate' => $article->getCreationDate(),
+        'art_islocked' => $article->isLocked(),
+        'art_lockinfo' => $lockInfo,
+        'art_lockhighlight' => $lockHighlight,
+        'art_link' => $articleLink,
+        'art_previewlink' => $previewLink,
+        'art_languageid' => $article->getLanguageId(),
     );
 }
 
 $return = array_slice($return, $startIndex, $results);
 
-echo(json_encode(array(
-    'iTotalRecords' => $articlesCount,
-    'iTotalDisplayRecords' => sizeof($return),
-    'sEcho' => $_GET['sEcho'],
-    'sColumns' => 'name,author,type,date',
-    'aaData' => $return,
+require_once('JSON.php');    
+$json = new Services_JSON();
+echo($json->encode(array(
+    "recordsReturned" => count($return),
+    "totalRecords" => $articlesCount,
+    "startIndex" => $startIndex,
+    "sort" => $sort,
+    "dir" => $dir,
+    "records" => $return,
 )));
+?>
