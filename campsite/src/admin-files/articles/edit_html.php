@@ -1,5 +1,3 @@
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css" />
 <!-- YUI dependencies -->
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo/yahoo-min.js"></script>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/event/event-min.js"></script>
