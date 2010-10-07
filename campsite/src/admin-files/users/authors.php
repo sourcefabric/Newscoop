@@ -165,7 +165,6 @@
 
     function changeBio(id){
         $.getJSON('authors_ajax/detail.php?id=' + id + '&getBio=1&language=' + $("#lang").val(), function(data) {
-            alert(data);
             $("#bioArea").html(data.biography);
             $("#lang_first_name").val(data.first_name);
             $("#lang_last_name").val(data.last_name);
@@ -175,7 +174,7 @@
     function changeTranslation(id){
             $.getJSON('authors_ajax/detail.php?id=' + id + '&getBio=1&language=' + $("#lang_trans").val(), function(data)
             {
-                $("#bioArea").html(data.biography);
+                $("#transArea").html(data.biography);
             }
         )
     }

@@ -1,4 +1,3 @@
-<form method="post" enctype="multipart/form-data">
 <?php
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Image.php');
@@ -47,6 +46,7 @@ if ($id > 0) {
     $aliases = $author->getAliases();
 }
 ?>
+<form method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 <div class="floatBox bigBox">
     <ul class="tabs">
@@ -125,7 +125,7 @@ if (isset($aliases) && is_array($aliases)) {
         <div class="formBlock firstBlock">
             <ul>
                 <li><label class="smaller">Languages:</label>
-                    <select name="lang" id="languages" class="input_select" style="width:120px;"  onchange="changeBio(<?php echo $id ?>)">
+                    <select name="lang"  class="input_select" style="width:120px;"  id="lang" onchange="changeBio(<?php echo $id ?>)">
 <?php
                     $publications = Issue::GetIssues();
                     $languages = array();
@@ -158,7 +158,7 @@ if (isset($aliases) && is_array($aliases)) {
 ?>
                     </select></li>
                 <li><label class="smaller">Translate from:</label>
-                    <select name="translate" id="translate" class="input_select" style="width:120px;" onchange="changeTranslation(<?php echo $id ?>)">
+                    <select name="translate" id="lang_trans" class="input_select" style="width:120px;" onchange="changeTranslation(<?php echo $id ?>)">
 <?php echo $combo ?>
                     </select></li>
             </ul>
@@ -186,9 +186,9 @@ if (isset($aliases) && is_array($aliases)) {
         </div>
         <div class="formBlock">
             <div class="textHolder">
-                <textarea name="langbio" id="bioArea" rows="20" readonly="readonly"></textarea></div>
+                <textarea name="langbio" id="transArea" rows="20" readonly="readonly"></textarea></div>
 
-                <textarea name="biography" rows="20"><?php echo $biography; ?></textarea></div>
+                <textarea name="biography" id="bioArea" rows="20"><?php echo $biography; ?></textarea></div>
             <br style="clear:both;" />
         </div>
         <div class="formBlock lastBlock">
