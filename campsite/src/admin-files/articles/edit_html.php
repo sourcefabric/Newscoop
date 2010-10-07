@@ -1,3 +1,5 @@
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css" />
 <!-- YUI dependencies -->
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo/yahoo-min.js"></script>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/event/event-min.js"></script>
@@ -666,7 +668,7 @@ if ($f_edit_mode == "edit") { ?>
                            id="<?php echo $dbColumn->getName(); ?>"
                        type="TEXT"
                        value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
-                       class="input_text"
+                       class="input_text datepicker"
                        size="11"
                        maxlength="10"
                                            onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');" />
@@ -979,3 +981,12 @@ window.location.reload();
 <span id="dialogBox" style="display:none">
     <img src="http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif" />
 </span>
+<style>
+@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
+</style>
+<script type="text/javascript">
+// datepicker for date
+$('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd'
+});
+</script>
