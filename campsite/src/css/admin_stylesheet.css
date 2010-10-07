@@ -1363,3 +1363,6 @@ ul.tree.sortable a.delete {
 ul.tree.sortable .state-highlight {
     border: 1px solid #ffcc00;
 }
+
+.dataTables_wrapper { margin: 0 10px; }
+.dataTables_wrapper table { width: 100%; }

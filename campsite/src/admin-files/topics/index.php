@@ -252,8 +252,8 @@ echo str_repeat('</li></ul>', $level);
 @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
 </style>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery-ui-1.8.5.custom.min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
 <script type="text/javascript">
 $('ul.tree.sortable  fieldset legend').show().click(function() {
     $(this).nextAll().toggle();
