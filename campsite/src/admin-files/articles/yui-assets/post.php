@@ -140,6 +140,7 @@ if ($f_save == 'f_article_author' || $f_save == 'all') {
             $articleAuthorsObj->createRow($articleObj->getArticleNumber(),$articleObj->getLanguageId(),$authorObj->getId());
         }
     }
+
     
     /*
     $authorObj = new Author($f_article_author[0]);

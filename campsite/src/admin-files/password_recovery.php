@@ -132,8 +132,7 @@ $HTMLMessage
 AKAM;
            
 $Headers     =<<<AKAM
-From: Campsite admin <phusar@gmail.com>
-Reply-To: phusar@gmail.com
+From: Campsite admin 
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
     boundary="$boundary1"

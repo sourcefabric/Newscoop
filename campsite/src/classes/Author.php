@@ -17,7 +17,8 @@ class Author extends DatabaseObject {
 	var $m_dbTableName = 'Authors';
 	var $m_keyColumnNames = array('id');
 	var $m_keyIsAutoIncrement = true;
-    var $m_aliases = null;
+        var $m_aliases = null;
+        var $m_columnNames = array('id', 'first_name', 'last_name', 'email','type','skype','jabber','aim','biography','image');
 
 	/**
 	 * Constructor.
@@ -35,9 +36,9 @@ class Author extends DatabaseObject {
 			$names = Author::ReadName($p_idOrName);
 			$this->m_keyColumnNames = array('first_name', 'last_name');
 			$this->m_data['first_name'] = $names['first_name'];
-            $this->m_data['last_name'] = $names['last_name'];
-            $this->fetch();
-            $this->m_keyColumnNames = array('id');
+                        $this->m_data['last_name'] = $names['last_name'];
+                        $this->fetch();
+                        $this->m_keyColumnNames = array('id');
 		}
         if ($this->getId()>0)
         {

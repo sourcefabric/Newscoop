@@ -360,16 +360,17 @@ if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
                     <?php 
                     $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-                    //print_r($authors); 
+                    //print_r($authors);
                     //exit();
                     if (!empty($authors))
                     {
                         foreach ($authors as $author)
                         {
-                    ?>
-                             <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
-                    <?php 
-                        } 
+                            ?>
+                         <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                   <?php
+                        }
+                            
                     }
                     else 
                     {

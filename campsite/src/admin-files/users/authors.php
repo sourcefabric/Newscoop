@@ -27,26 +27,31 @@
     }
     if ($id>-1)
     {
+
         $author = new Author();
         if ($id>0)
         {
             $author = new  Author($id);
         } else
         {
-            $author->create();
+            $author->create(array('first_name'=>Input::Get("first_name"),'last_name'=>Input::Get("last_name")));
         }
+        
         $uploadFileSpecified = isset($_FILES['file'])
         && isset($_FILES['file']['name'])
         && !empty($_FILES['file']['name']);
+        
 
         $author->setFirstName(Input::Get("first_name"));
         $author->setLastName(Input::Get("last_name"));
-        $author->setBiography(Input::Get("biography"),Input::Get("lang","int",0), Input::Get("lang_first_name"), Input::Get("lang_last_name"));
+        $author->commit();
         $author->setType(Input::Get("type"));
         $author->setSkype(Input::Get("skype"));
         $author->setJabber(Input::Get("jabber"));
         $author->setAim(Input::Get("aim"));
         $author->setEmail(Input::Get("email"));
+        
+        $author->setBiography(Input::Get("biography"),Input::Get("lang","int",0), Input::Get("lang_first_name"), Input::Get("lang_last_name"));
         if ($uploadFileSpecified)
         {
             $attributes = array();
@@ -56,9 +61,13 @@
             }
             $author->setImage($image->getImageId());
         }
+        
         $aliases = Input::Get("alias","array");
-        $author->setAliases($aliases);
-
+        if (!empty($aliases))
+        {
+            $author->setAliases($aliases);
+        }
+        
         $logtext = getGS('Author information has been changed for "$1"', $author->getName());
         Log::Message($logtext, $g_user->getUserId(), 172);
         camp_html_add_msg(getGS("Author saved."));

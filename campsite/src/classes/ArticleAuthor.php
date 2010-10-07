@@ -161,10 +161,10 @@ class ArticleAuthor extends DatabaseObject {
     public static function getArticleAuthorList($articleNumber, $languageId)
     {
         global $g_ado_db;
-        $sql ="SELECT authors.first_name, authors.last_name 
+        $sql ="SELECT Authors.first_name, Authors.last_name
                 FROM Authors
                 JOIN ArticleAuthors
-                ON authors.id = fk_author_id
+                ON Authors.id = fk_author_id
                 WHERE
                 fk_language_id=%d
                 AND fk_article_number=%d";
