@@ -697,6 +697,31 @@ class Topic extends DatabaseObject {
 		return $tree;
 	} // fn GetTree
 
+    /**
+     * Update order for all items in tree.
+     *
+     * @param array $order
+     *      $id => $order mapping
+     *
+     *  @return void
+     */
+    public static function UpdateOrder(array $p_order)
+    {
+		global $g_ado_db;
+
+        if (empty($p_order) || !is_array($p_order)) {
+            return;
+        }
+
+        $g_ado_db->StartTrans();
+        foreach ($p_order as $topicId => $topicOrder) {
+            $queryStr = sprintf('UPDATE Topics SET TopicOrder = %d WHERE Id = %d',
+                                 $topicOrder, $topicId);
+            $g_ado_db->Execute($queryStr);
+        }
+        $g_ado_db->CompleteTrans();
+    } // fn UpdateOrder
+
 } // class Topics
 
 ?>
