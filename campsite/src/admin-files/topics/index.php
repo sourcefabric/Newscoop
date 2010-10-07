@@ -182,12 +182,14 @@ foreach ($topics as $topicPath) {
         $topicLanguage = new Language($topicLanguageId);
         echo '<div><h3>';
         echo '<span class="lang">', $topicLanguage->getCode(), '</span>';
-        echo " <a href='/$ADMIN/topics/edit.php
-            ?f_topic_edit_id=".$currentTopic->getTopicId()."
-            &f_topic_language_id=$topicLanguageId'>
-            ".htmlspecialchars($topicName)."</a>";
-        echo '</h3>';
-	?>
+        echo " <a href='/$ADMIN/topics/edit.php"
+            ."?f_topic_edit_id=".$currentTopic->getTopicId()
+            ."&f_topic_language_id=$topicLanguageId'>"
+            .htmlspecialchars($topicName)."</a>";
+?>
+		<a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>"><?php putGS("Delete"); ?></a>
+        <div class="edit">
+
 	    <div class="subtopic">
             <form method="POST" action="do_add.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
@@ -229,7 +231,9 @@ foreach ($topics as $topicPath) {
         </div>
         <?php } ?>
 
-		<a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>"><?php putGS("Delete"); ?></a>
+        </div><!-- /.edit -->
+        </h3>
+
         </div>
 
     <?php
@@ -255,19 +259,23 @@ echo str_repeat('</li></ul>', $level);
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
 <script type="text/javascript">
-$('ul.tree.sortable  fieldset legend').show().click(function() {
-    $(this).nextAll().toggle();
-    $(this).parent().toggleClass('closed');
-}).nextAll().hide().parent().addClass('closed');
-
 $('ul.tree.sortable').sortable();
 $('ul.tree.sortable ul').sortable();
 $('ul.tree.sortable > li').dblclick(function() {
     $(this).children('ul').toggle('slow');
 }).children('ul').each(function() {
     var childrens = $(this).children('li').length;
-    $(this).hide();
     $('div > h3', $(this).parent()).first().append(' <span class="sub">' + childrens + ' <?php echo putGS('Subtopics'); ?></span>');
+});
+$('ul.tree.sortable h3').click(function() {
+    $('ul.tree.sortable .edit').hide();
+    $(this).children('.edit').show();
+    $('ul.tree.sortable h3').removeClass('active');
+    $(this).addClass('active');
+}).children('.edit').hide();
+$('ul.tree.sortable li').each(function() {
+    $(this).children('div').first().addClass('first');
+    $(this).children('div').last().addClass('last');
 });
 
 /**
