@@ -26,9 +26,9 @@ function camp_exec_command($p_cmd, $p_errMsg = "",
     $p_cmd .= " 2> /dev/null";
     @exec($p_cmd, $output, $result);
     if ($result != 0) {
-    	if ($p_silent) {
-    		exit(1);
-    	}
+        if ($p_silent) {
+            exit(1);
+        }
         if (!$p_printOutput) {
             $output = array();
         }
@@ -139,8 +139,8 @@ function camp_read_files($p_startDir = '.')
  */
 function camp_remove_dir($p_dirName, $p_msg = "", $p_skip = array())
 {
-	$p_dirName = str_replace('//', '/', $p_dirName);
-	$dirBaseName = trim($p_dirName, '/');
+    $p_dirName = str_replace('//', '/', $p_dirName);
+    $dirBaseName = trim($p_dirName, '/');
     if ($p_dirName == "/" || $dirBaseName == ''
     || $dirBaseName == '.' || $dirBaseName == '..'
     || (strpos($dirBaseName, '/') === false && $p_dirName[0] == '/')) {
@@ -152,30 +152,30 @@ function camp_remove_dir($p_dirName, $p_msg = "", $p_skip = array())
 
     $removeDir = true;
     if (strrpos($p_dirName, '*') == (strlen($p_dirName) - 1)) {
-    	$p_dirName = substr($p_dirName, 0, strlen($p_dirName) - 1);
-    	$removeDir = false;
+        $p_dirName = substr($p_dirName, 0, strlen($p_dirName) - 1);
+        $removeDir = false;
     }
     $p_dirName = rtrim($p_dirName, '/');
 
     $dirContent = scandir($p_dirName);
     if ($dirContent === false) {
-    	camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
+        camp_exit_with_error("Unable to read the content of the directory '$p_dirName'.");
     }
     foreach ($dirContent as $file) {
         if (in_array($file, $p_skip)) {
                 continue;
         }
-    	if ($file == '.' || $file == '..') {
-    		continue;
-    	}
-    	$filePath = "$p_dirName/$file";
-    	if (is_dir($filePath)) {
-    		camp_remove_dir($filePath);
-    		continue;
-    	}
-    	if (!unlink($filePath)) {
+        if ($file == '.' || $file == '..') {
+            continue;
+        }
+        $filePath = "$p_dirName/$file";
+        if (is_dir($filePath)) {
+            camp_remove_dir($filePath);
+            continue;
+        }
+        if (!unlink($filePath)) {
             camp_exit_with_error("Unable to delete the file '$filePath'.");
-    	}
+        }
     }
     if ($removeDir) {
         rmdir($p_dirName);
@@ -275,14 +275,14 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 function camp_backup_database($p_dbName, $p_destFile, &$p_output,
                               $p_customParams = array())
 {
-	global $Campsite;
+    global $Campsite;
 
-	$user = $Campsite['DATABASE_USER'];
-	$password = $Campsite['DATABASE_PASSWORD'];
-	$cmd = "mysqldump --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
-		. $Campsite['DATABASE_SERVER_ADDRESS']
-		. " --port=" . $Campsite['DATABASE_SERVER_PORT'];
-	if ($password != "") {
+    $user = $Campsite['DATABASE_USER'];
+    $password = $Campsite['DATABASE_PASSWORD'];
+    $cmd = "mysqldump --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
+        . $Campsite['DATABASE_SERVER_ADDRESS']
+        . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
+    if ($password != "") {
         $cmd .= " --password=$password";
     }
     $cmd .= ' ' . implode(' ', $p_customParams);
@@ -301,9 +301,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
  */
 function camp_exit_with_error($p_errorStr)
 {
-	if (function_exists('__exit_cleanup')) {
-		__exit_cleanup();
-	}
+    if (function_exists('__exit_cleanup')) {
+        __exit_cleanup();
+    }
     if (is_array($p_errorStr)) {
         $p_errorStr = implode("\n", $p_errorStr);
     }
@@ -426,15 +426,16 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     $skipped = array();
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
                       "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
-                      "2.7.x", "3.0.x", "3.1.0", "3.1.x", "3.2.x", "3.3.x");
+                      "2.7.x", "3.0.x", "3.1.0", "3.1.x", "3.2.x", "3.3.x",
+                      "3.4.x");
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
         }
         if ($first) {
-        	if (!$p_silent) {
+            if (!$p_silent) {
                 echo "\n\t* Upgrading the database from version $db_version...";
-        	}
+            }
             $res = camp_utf8_convert(null, $skipped);
             if ($res !== true) {
                 flock($lockFile, LOCK_UN); // release the lock
@@ -475,7 +476,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     }
 
     if (count($skipped) > 0 && !$p_silent) {
-    	echo "
+        echo "
 Encountered non-critical errors while converting data to UTF-8 encoding!
 The following database queries were unsuccessful because after conversion
 text values become case insensitive. Words written in different case were
@@ -489,10 +490,10 @@ later. The table fields that were not converted will not support case
 insensitive searches.
 
 Please save the following list of skipped queries:\n";
-    	foreach ($skipped as $query) {
-    		echo "$query;\n";
-    	}
-    	echo "-- end of queries list --\n";
+        foreach ($skipped as $query) {
+            echo "$query;\n";
+        }
+        echo "-- end of queries list --\n";
     }
 
     flock($lockFile, LOCK_UN); // release the lock
@@ -644,8 +645,13 @@ function camp_detect_database_version($p_dbName, &$version)
         if (mysql_num_rows($res2) > 0) {
             $version = "3.4.x";
         }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'Cache'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.5.x";
+        }
     }
-
     return 0;
 } // fn camp_detect_database_version
 
@@ -750,7 +756,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     $sqlSentences = array();
     $res = mysql_query($sql);
     while ($row = mysql_fetch_row($res)) {
-    	$sqlSentences[] = $row[0];
+        $sqlSentences[] = $row[0];
     }
 
     foreach ($sqlSentences as $sentence) {
@@ -769,19 +775,19 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
          . "  AND data_type LIKE 'varbinary%'";
     $res = mysql_query($sql);
     while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
-    	$table_name = $row['table_name'];
-    	$column_name = $row['column_name'];
-    	$column_type = $row['column_type'];
-    	$is_nullable = strtolower($row['is_nullable']) != 'no';
-    	$nullDefinition = $is_nullable ? '' : 'NOT NULL';
-    	$column_default = is_null($row['column_default']) ? 'NULL' : "'" . $row['column_default'] . "'";
-    	$sql = "ALTER TABLE `$table_name` MODIFY `$column_name` \n"
+        $table_name = $row['table_name'];
+        $column_name = $row['column_name'];
+        $column_type = $row['column_type'];
+        $is_nullable = strtolower($row['is_nullable']) != 'no';
+        $nullDefinition = $is_nullable ? '' : 'NOT NULL';
+        $column_default = is_null($row['column_default']) ? 'NULL' : "'" . $row['column_default'] . "'";
+        $sql = "ALTER TABLE `$table_name` MODIFY `$column_name` \n"
              . "  $column_type $nullDefinition DEFAULT $column_default";
         if (!mysql_query($sql)) {
-        	if ($table_name == 'Articles' && $column_name == 'Name') {
+            if ($table_name == 'Articles' && $column_name == 'Name') {
                 return "Unable to convert data to UTF-8 on query:\n$sql";
-        	}
-        	$p_skipped[] = $sql;
+            }
+            $p_skipped[] = $sql;
         } elseif ($do_log) {
             $log_text .= $sql . "\n";
         }
@@ -809,25 +815,25 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
 function camp_change_dump_encoding($p_inDumpFile, $p_outDumpFile,
                                    $p_fromEncoding)
 {
-	$inFile = fopen($p_inDumpFile, "r");
-	if (!$inFile) {
+    $inFile = fopen($p_inDumpFile, "r");
+    if (!$inFile) {
         camp_exit_with_error("Unable to open the source dump file $p_inDumpFile!");
-	}
-	$outFile = fopen($p_outDumpFile, 'w');
+    }
+    $outFile = fopen($p_outDumpFile, 'w');
     if (!$outFile) {
         camp_exit_with_error("Unable to open the destination dump file $p_outDumpFile!");
     }
     while (!feof($inFile)) {
-    	$line = fgets($inFile);
-    	$pattern = "/SET\s+NAMES\s+[']?${p_fromEncoding}[']?([^_])/i";
-    	$replacement = 'SET NAMES utf8${1}';
-    	$line = preg_replace($pattern, $replacement, $line);
+        $line = fgets($inFile);
+        $pattern = "/SET\s+NAMES\s+[']?${p_fromEncoding}[']?([^_])/i";
+        $replacement = 'SET NAMES utf8${1}';
+        $line = preg_replace($pattern, $replacement, $line);
         $pattern = "/CHARSET\s*=\s*[']?${p_fromEncoding}[']?([^_])/i";
         $replacement = 'CHARSET=utf8${1}';
         $line = preg_replace($pattern, $replacement, $line);
-    	if (fputs($outFile, $line) === false) {
+        if (fputs($outFile, $line) === false) {
             camp_exit_with_error("Unable to write the dump file $p_outDumpFile!");
-    	}
+        }
     }
     fclose($inFile);
     fclose($outFile);
@@ -841,13 +847,13 @@ function camp_change_dump_encoding($p_inDumpFile, $p_outDumpFile,
  */
 function camp_get_server_charset()
 {
-	$sql = "SHOW VARIABLES LIKE 'character_set_server'";
-	$res = mysql_query($sql);
-	$row = mysql_fetch_array($res, MYSQL_ASSOC);
-	if (!$row) {
-		return false;
-	}
-	return $row['Value'];
+    $sql = "SHOW VARIABLES LIKE 'character_set_server'";
+    $res = mysql_query($sql);
+    $row = mysql_fetch_array($res, MYSQL_ASSOC);
+    if (!$row) {
+        return false;
+    }
+    return $row['Value'];
 }
 
 
@@ -874,11 +880,11 @@ function camp_valid_charset($p_charset)
  */
 function camp_get_all_charsets()
 {
-	$charsets = array();
+    $charsets = array();
     $sql = "SHOW CHARACTER SET";
     $res = mysql_query($sql);
     while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
-    	$charsets[$row['Charset']] = $row['Description'];
+        $charsets[$row['Charset']] = $row['Description'];
     }
     return $charsets;
 }
@@ -891,18 +897,18 @@ function camp_get_all_charsets()
  */
 function camp_restore_database($p_sqlFile, $p_silent = false)
 {
-	global $Campsite;
+    global $Campsite;
 
-	$cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
-	. $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
-	. $Campsite['DATABASE_SERVER_PORT'];
-	if ($Campsite['DATABASE_PASSWORD'] != "") {
-		$cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
-	}
-	$cmd .= ' ' . $Campsite['DATABASE_NAME'] . " < $p_sqlFile";
-	camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
-	                  true, $p_silent);
-	return true;
+    $cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+    . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
+    . $Campsite['DATABASE_SERVER_PORT'];
+    if ($Campsite['DATABASE_PASSWORD'] != "") {
+        $cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
+    }
+    $cmd .= ' ' . $Campsite['DATABASE_NAME'] . " < $p_sqlFile";
+    camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
+                      true, $p_silent);
+    return true;
 }
 
 /**

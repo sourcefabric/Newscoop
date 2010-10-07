@@ -41,38 +41,4 @@ ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT(
 CHANGE `fk_language_id` `fk_language_id` INT( 10 ) UNSIGNED NULL ,
 CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL ;
 
-INSERT INTO `Events` (
-`Id` ,
-`Name` ,
-`Notify` ,
-`IdLanguage`
-)
-VALUES (
-'174', 'Delete Author', 'N', '01'
-);
-
-INSERT INTO `Events` (
-`Id` ,
-`Name` , 
-`Notify` ,
-`IdLanguage`
-)
-VALUES (
-'172', 'Add Author', 'N', '1'
-), (
-'173', 'Edit Author', 'N', '1'
-);
-
-
-INSERT INTO `liveuser_rights` (
-`right_id` ,
-`area_id` ,
-`right_define_name` ,
-`has_implied`
-)
-VALUES (
-'97', '0', 'EditAuthors', '1'
-);
-
 ALTER TABLE `liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL  AFTER `isActive` ;
-INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('PasswordRecovery','Y');

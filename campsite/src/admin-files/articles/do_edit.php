@@ -14,7 +14,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_article_author = Input::Get('f_article_author', 'string', '');
+$f_article_author = Input::Get('f_article_author','array',array());
 $f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
 $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
@@ -92,12 +92,26 @@ if ($f_article_title != $articleObj->getTitle()) {
 }
 
 // Update the article author
-$authorObj = new Author($f_article_author);
+    if (!empty($f_article_author))
+    {
+        $articleAuthorsObj = new ArticleAuthor();
+        ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+        foreach ($f_article_author as $author)
+        {
+            $authorObj = new Author($author);
+            if (!$authorObj->exists()) {
+                $authorData = Author::ReadName($author);
+                $authorObj->create($authorData);
+            }
+            $articleAuthorsObj->createRow($articleObj->getArticleNumber(),$articleObj->getLanguageId(),$authorObj->getId());
+        }
+    }
+/*$authorObj = new Author($f_article_author);
 if (!$authorObj->exists()) {
 	$authorData = Author::ReadName($f_article_author);
 	$authorObj->create($authorData);
 }
-$articleObj->setAuthorId($authorObj->getId());
+$articleObj->setAuthorId($authorObj->getId());*/
 
 // Update the article.
 $articleObj->setOnFrontPage(!empty($f_on_front_page));

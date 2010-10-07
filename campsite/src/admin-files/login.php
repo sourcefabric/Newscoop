@@ -206,11 +206,10 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <?php } ?>
 <!-- CAPTCHA-->
 <tr class="buttonBlock2">
-  <td><?php
-         if (SystemPref::Get("PasswordRecovery")=='Y')
-         {
-            echo '<a href="./password_recovery.php">Forgot your password?</a>';
-         } ?>
+  <td>
+  <?php if (SystemPref::Get("PasswordRecovery") == 'Y') { ?>
+    <a href="password_recovery.php"><?php putGS('Forgot your password?'); ?></a>
+  <?php } ?>
   </td>
   <td>
     <noscript>

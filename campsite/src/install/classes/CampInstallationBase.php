@@ -102,24 +102,22 @@ class CampInstallationBase
         case 'cronjobs':
             if (isset($input['install_demo'])) {
                 $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-            }
-            if ($input['install_demo']!='0'){
-                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-                if (!$this->loadDemoSite()) {
-                    die();
-                    break;
+                if ($input['install_demo'] != '0') {
+                    if (!$this->loadDemoSite()) {
+                        die();
+                        break;
+                    }
                 }
             }
             break;
         case 'finish':
             if (isset($input['install_demo'])) {
                 $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-            }
-            if ($input['install_demo']!='0'){
-                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-                if (!$this->loadDemoSite()) {
-                    die();
-                    break;
+                if ($input['install_demo'] != '0') {
+                    if (!$this->loadDemoSite()) {
+                        die();
+                        break;
+                    }
                 }
             }
             $this->saveCronJobsScripts();
