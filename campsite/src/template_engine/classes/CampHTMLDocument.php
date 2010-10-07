@@ -306,11 +306,20 @@ final class CampHTMLDocument
         }
         $tpl->assign('campsite', $context);
         $tpl->assign('siteinfo', $siteinfo);
+
+        // on template caching add additional info
+        if (SystemPref::Get('TemplateCacheHandler')) {
+            $uri = CampSite::GetURIInstance();
+            $tpl->campsiteVector = $uri->getCampsiteVector();
+            $templateObj = new Template($template);
+            $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
+        }
+
         try {
-        	$tpl->display($template);
+            $tpl->display($template);
         }
         catch (Exception $ex) {
-        	CampTemplate::trigger_error($ex->getMessage(), $tpl);
+            CampTemplate::trigger_error($ex->getMessage(), $tpl);
         }
     } // fn render
 

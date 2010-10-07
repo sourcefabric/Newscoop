@@ -38,6 +38,7 @@ final class CampTemplate extends Smarty
 
     private $m_preview = false;
 
+    public $campsiteVector = array();
 
     private function __construct()
     {
@@ -54,7 +55,6 @@ final class CampTemplate extends Smarty
         $cacheHandler = SystemPref::Get('TemplateCacheHandler');
         if ($cacheHandler) {
             $this->caching = 1;
-            $this->cache_lifetime = 2592000; // 30 days
             $this->cache_handler_func = "TemplateCacheHandler_$cacheHandler::handler";
             require_once CS_PATH_SITE.DIR_SEP.'classes'.DIR_SEP.'cache'.DIR_SEP."TemplateCacheHandler_$cacheHandler.php";
         } else {
@@ -64,6 +64,10 @@ final class CampTemplate extends Smarty
         // define dynamic uncached block
         require_once CS_PATH_SMARTY.DIR_SEP.'campsite_plugins/block.dynamic.php';
         $this->register_block('dynamic', 'smarty_block_dynamic', false);
+
+        // define render function
+        require_once CS_PATH_SMARTY.DIR_SEP.'campsite_plugins/function.render.php';
+        $this->register_function('render', 'smarty_function_render', false);
 
         $this->left_delimiter = $config->getSetting('smarty.left_delimeter');
         $this->right_delimiter = $config->getSetting('smarty.right_delimeter');

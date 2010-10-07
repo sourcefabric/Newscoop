@@ -13,37 +13,37 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 class Template extends DatabaseObject {
-	var $m_dbTableName = 'Templates';
-	var $m_keyColumnNames = array('Id');
-	var $m_keyIsAutoIncrement = true;
-	var $m_columnNames = array('Id', 'Name', 'Type', 'Level');
+    var $m_dbTableName = 'Templates';
+    var $m_keyColumnNames = array('Id');
+    var $m_keyIsAutoIncrement = true;
+    var $m_columnNames = array('Id', 'Name', 'Type', 'Level', 'CacheLifetime');
 
-	/**
-	 * A template is an HTML file with Campsite parser tags inside.
-	 *
-	 * @param mixed p_templateIdOrName
-	 * 		Give the template ID or the template name relative
-	 * 		to the template base directory.
-	 */
-	public function Template($p_templateIdOrName = null)
-	{
-		parent::DatabaseObject($this->m_columnNames);
-		if (is_numeric($p_templateIdOrName)) {
-			$this->m_data['Id'] = $p_templateIdOrName;
-		} elseif (is_string($p_templateIdOrName)) {
-			$this->m_data['Name'] = $p_templateIdOrName;
-			$this->m_keyColumnNames = array('Name');
-		}
-		if ($this->keyValuesExist()) {
-			$this->fetch();
-		}
-	} // constructor
+    /**
+     * A template is an HTML file with Campsite parser tags inside.
+     *
+     * @param mixed p_templateIdOrName
+     * 		Give the template ID or the template name relative
+     * 		to the template base directory.
+     */
+    public function Template($p_templateIdOrName = null)
+    {
+        parent::DatabaseObject($this->m_columnNames);
+        if (is_numeric($p_templateIdOrName)) {
+            $this->m_data['Id'] = $p_templateIdOrName;
+        } elseif (is_string($p_templateIdOrName)) {
+            $this->m_data['Name'] = $p_templateIdOrName;
+            $this->m_keyColumnNames = array('Name');
+        }
+        if ($this->keyValuesExist()) {
+            $this->fetch();
+        }
+    } // constructor
 
 
-	/**
-	 * Wrapper around DatabaseObject::setProperty
-	 * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
-	 */
+    /**
+     * Wrapper around DatabaseObject::setProperty
+     * @see classes/DatabaseObject#setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql)
+     */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
         if ($p_dbColumnName == 'Name') {
@@ -55,398 +55,519 @@ class Template extends DatabaseObject {
     }
 
 
-	/**
-	 * Return TRUE if the file exists.
-	 *
-	 * @return boolean
-	 */
-	public function fileExists()
-	{
-		global $Campsite;
+    /**
+     * Return TRUE if the file exists.
+     *
+     * @return boolean
+     */
+    public function fileExists()
+    {
+        global $Campsite;
 
-		if (!self::IsValidPath(dirname($this->m_data['Name']))) {
-			return false;
-		}
-		if (!is_file($Campsite['TEMPLATE_DIRECTORY']."/".$this->m_data['Name'])) {
-			return false;
-		}
-		return true;
-	} // fn fileExists
-
-
-	/**
-	 * @return int
-	 */
-	public function getTemplateId()
-	{
-		return $this->m_data['Id'];
-	} // fn getTemplateId
+        if (!self::IsValidPath(dirname($this->m_data['Name']))) {
+            return false;
+        }
+        if (!is_file($Campsite['TEMPLATE_DIRECTORY']."/".$this->m_data['Name'])) {
+            return false;
+        }
+        return true;
+    } // fn fileExists
 
 
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
-		return $this->m_data['Name'];
-	} // fn getName
+    /**
+     * @return int
+     */
+    public function getTemplateId()
+    {
+        return $this->m_data['Id'];
+    } // fn getTemplateId
 
 
-	/**
-	 * @return int
-	 */
-	public function getType()
-	{
-		return $this->m_data['Type'];
-	} // fn  getType
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->m_data['Name'];
+    } // fn getName
 
 
-	/**
-	 * @return int
-	 */
-	public function getLevel()
-	{
-		return $this->m_data['Level'];
-	} // fn getLevel
+    /**
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->m_data['Type'];
+    } // fn  getType
 
 
-	/**
-	 * @return string
-	 */
-	public function getAbsoluteUrl()
-	{
-		global $Campsite;
-		return $Campsite['TEMPLATE_BASE_URL'].$this->m_data['Name'];
-	} // fn getAbsoluteUrl
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return $this->m_data['Level'];
+    } // fn getLevel
 
 
-	/**
-	 * @param string $p_path
-	 * @return string
-	 */
-	public static function GetContents($p_path)
-	{
-		if (file_exists($p_path)) {
-			$contents = file_get_contents($p_path);
-		} else {
-			$contents = "";
-		}
-		return $contents;
-	} // fn GetContents
+    /**
+     * @return int
+     */
+    public function getCacheLifetime()
+    {
+        return $this->m_data['CacheLifetime'];
+    } // fn getCacheLifetime
+
+    /**
+     * @return boolean
+     */
+    public function setCacheLifetime($p_lifetime = 0)
+    {
+        return $this->setProperty('CacheLifetime', $p_lifetime, true);
+    } // fn setCacheLifetime
+
+    /**
+     * @return string
+     */
+    public function getAbsoluteUrl()
+    {
+        global $Campsite;
+        return $Campsite['TEMPLATE_BASE_URL'].$this->m_data['Name'];
+    } // fn getAbsoluteUrl
 
 
-	/**
-	 * Returns true if the template path is valid.
-	 *
-	 * @param string $p_path
-	 * @param boolenan $p_checkIfExists
-	 * @return bool
-	 */
-	public static function IsValidPath($p_path, $p_checkIfExists=true)
-	{
-		global $Campsite;
-
-		foreach (explode("/", $p_path) as $index=>$dir) {
-			if ($dir == "..") {
-				return false;
-			}
-		}
-
-		if ($p_checkIfExists &&
-		      !is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
-		      !is_file($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
-		      !is_link($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
-			return false;
-		}
-		return true;
-	} // fn IsValidPath
+    /**
+     * @param string $p_path
+     * @return string
+     */
+    public static function GetContents($p_path)
+    {
+        if (file_exists($p_path)) {
+            $contents = file_get_contents($p_path);
+        } else {
+            $contents = "";
+        }
+        return $contents;
+    } // fn GetContents
 
 
-	/**
-	 * Returns TRUE if the template is being used in an Issue or Section.
-	 * @return boolean
-	 */
-	public static function InUse($p_templateName)
-	{
-		global $Campsite;
-		global $g_ado_db;
+    /**
+     * Returns true if the template path is valid.
+     *
+     * @param string $p_path
+     * @param boolenan $p_checkIfExists
+     * @return bool
+     */
+    public static function IsValidPath($p_path, $p_checkIfExists=true)
+    {
+        global $Campsite;
 
-		$p_templateName = ltrim($p_templateName, '/');
+        foreach (explode("/", $p_path) as $index=>$dir) {
+            if ($dir == "..") {
+                return false;
+            }
+        }
 
-		$queryStr = "SELECT * FROM Templates WHERE Name = '$p_templateName'";
-		$row = $g_ado_db->GetRow($queryStr);
-		if (!$row) {
-			return false;
-		}
-		$id = $row['Id'];
-
-		$queryStr = "SELECT COUNT(*) FROM Issues "
-					." WHERE IssueTplId = " . $id
-		     		." OR SectionTplId = " . $id
-		     		." OR ArticleTplId = " . $id;
-		$numMatches = $g_ado_db->GetOne($queryStr);
-		if ($numMatches > 0) {
-			return true;
-		}
-
-		$queryStr = "SELECT COUNT(*) FROM Sections "
-					." WHERE SectionTplId = " . $id
-		     		." OR ArticleTplId = " . $id;
-		$numMatches = $g_ado_db->GetOne($queryStr);
-		if ($numMatches > 0) {
-			return true;
-		}
-
-		$tplFindObj = new FileTextSearch();
-		$tplFindObj->setExtensions(array('tpl','css'));
-		$tplFindObj->setSearchKey($p_templateName);
-		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
-		if (is_array($result) && sizeof($result) > 0) {
-		        return $result[0];
-		}
-
-		if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
-			$p_templateName = ' ' . $p_templateName;
-		}
-		$tplFindObj->setSearchKey($p_templateName);
-		$result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
-		if (is_array($result) && sizeof($result) > 0) {
-		        return $result[0];
-		}
-		if ($tplFindObj->m_totalFound > 0) {
-			return true;
-		}
-
-		return false;
-	} // fn InUse
+        if ($p_checkIfExists &&
+              !is_dir($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+              !is_file($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path") &&
+              !is_link($Campsite['TEMPLATE_DIRECTORY'] ."/$p_path")) {
+            return false;
+        }
+        return true;
+    } // fn IsValidPath
 
 
-	/**
-	 * Get the relative path to the given file in the template directory.
-	 * @return string
-	 */
-	public static function GetPath($p_path, $p_filename)
-	{
-		$lookDir = "/look";
+    /**
+     * Returns TRUE if the template is being used in an Issue or Section.
+     * @return boolean
+     */
+    public static function InUse($p_templateName)
+    {
+        global $Campsite;
+        global $g_ado_db;
 
-		$p_path = str_replace("//", "/", $p_path);
+        $p_templateName = ltrim($p_templateName, '/');
 
-		// Remove any path that occurs before the 'look' dir.
-		$p_path = strstr($p_path, $lookDir);
+        $queryStr = "SELECT * FROM Templates WHERE Name = '$p_templateName'";
+        $row = $g_ado_db->GetRow($queryStr);
+        if (!$row) {
+            return false;
+        }
+        $id = $row['Id'];
 
-		// Remove the 'look' dir if it occurs at the beginning of the string.
-		if (strncmp($p_path, $lookDir, strlen($lookDir)) == 0) {
-			$p_path = substr($p_path, strlen($lookDir));
-		}
+        $queryStr = "SELECT COUNT(*) FROM Issues "
+                    ." WHERE IssueTplId = " . $id
+                     ." OR SectionTplId = " . $id
+                     ." OR ArticleTplId = " . $id;
+        $numMatches = $g_ado_db->GetOne($queryStr);
+        if ($numMatches > 0) {
+            return true;
+        }
 
-		// Remove beginning and trailing slashes
-		if ($p_path[0] == '/') {
-			$p_path = substr($p_path, 1);
-		}
-		if ($p_path[strlen($p_path) - 1] == '/') {
-			$p_path = substr($p_path, 0, strlen($p_path) - 1);
-		}
+        $queryStr = "SELECT COUNT(*) FROM Sections "
+                    ." WHERE SectionTplId = " . $id
+                     ." OR ArticleTplId = " . $id;
+        $numMatches = $g_ado_db->GetOne($queryStr);
+        if ($numMatches > 0) {
+            return true;
+        }
 
-		$p_filename = str_replace("//", "/", $p_filename);
+        $tplFindObj = new FileTextSearch();
+        $tplFindObj->setExtensions(array('tpl','css'));
+        $tplFindObj->setSearchKey($p_templateName);
+        $result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+        if (is_array($result) && sizeof($result) > 0) {
+                return $result[0];
+        }
 
-		// Remove beginning slash
-		if ($p_filename[0] == '/') {
-			$p_filename = substr($p_filename, 1);
-		}
+        if (pathinfo($p_templateName, PATHINFO_EXTENSION) == 'tpl') {
+            $p_templateName = ' ' . $p_templateName;
+        }
+        $tplFindObj->setSearchKey($p_templateName);
+        $result = $tplFindObj->findReplace($Campsite['TEMPLATE_DIRECTORY']);
+        if (is_array($result) && sizeof($result) > 0) {
+                return $result[0];
+        }
+        if ($tplFindObj->m_totalFound > 0) {
+            return true;
+        }
 
-		if (!empty($p_path)) {
-			$templatePath = $p_path . "/" . $p_filename;
-		} else {
-			$templatePath = $p_filename;
-		}
-		return $templatePath;
-	} // fn GetPath
-
-
-	/**
-	 * Return the full path to the file.
-	 *
-	 * @param string $p_path
-	 * 		Path of the file starting from the base template directory.
-	 * @param string $p_filename
-	 * @return string
-	 */
-	public static function GetFullPath($p_path, $p_filename)
-	{
-		global $Campsite;
-		$fileFullPath = $Campsite['TEMPLATE_DIRECTORY'].$p_path."/".$p_filename;
-		return $fileFullPath;
-	} // fn GetFullPath
-
-
-	/**
-	 * Update the Name field for a template on Renaming/Moving.
-	 *
-	 * It is called before any UpdateStatus() when renaming/moving
-	 * a template to avoid a new Id is set for the changed template.
-	 *
-	 * @param string $p_tplOrig
-	 *		The original template Name
-	 * @param string $p_tplNew
-	 *		The new template Name
-	 * @return mixed
-	 */
-	public static function UpdateOnChange($p_tplOrig, $p_tplNew)
-	{
-		global $Campsite;
-		global $g_ado_db;
-
-		// Remove beginning slashes
-		$p_tplOrig = ltrim($p_tplOrig, '/');
-		$p_tplNew = ltrim($p_tplNew, '/');
-
-		if (is_file($Campsite['TEMPLATE_DIRECTORY']."/".$p_tplNew)) {
-			$sql = "SELECT * FROM Templates WHERE Name = '$p_tplOrig'";
-			$row = $g_ado_db->GetRow($sql);
-			if (!$row) {
-				return false;
-			}
-			$id = $row['Id'];
-			$sql = "UPDATE Templates SET Name = '$p_tplNew' WHERE Id = '$id'";
-			$g_ado_db->Execute($sql);
-		}
-	} // fn UpdateOnChange
+        return false;
+    } // fn InUse
 
 
-	/**
-	 * Sync the database with the filesystem.
-	 * @return void
-	 */
-	public static function UpdateStatus()
-	{
-		global $Campsite;
-		global $g_ado_db;
+    /**
+     * Get the relative path to the given file in the template directory.
+     * @return string
+     */
+    public static function GetPath($p_path, $p_filename)
+    {
+        $lookDir = "/look";
 
-		// check if each template record in the database has the corresponding file
-		$templates = self::GetAllTemplates(null, false);
-		foreach ($templates as $index=>$template) {
-			if (!$template->fileExists()) {
-				$g_ado_db->Execute("DELETE FROM Templates WHERE Id = "
-					. $template->m_data['Id']);
-			}
-		}
+        $p_path = str_replace("//", "/", $p_path);
 
-		// insert new templates
-		$rootDir = $Campsite['TEMPLATE_DIRECTORY'];
-		$dirs[] = $rootDir;
-		while (($currDir = array_pop($dirs)) != "") {
+        // Remove any path that occurs before the 'look' dir.
+        $p_path = strstr($p_path, $lookDir);
+
+        // Remove the 'look' dir if it occurs at the beginning of the string.
+        if (strncmp($p_path, $lookDir, strlen($lookDir)) == 0) {
+            $p_path = substr($p_path, strlen($lookDir));
+        }
+
+        // Remove beginning and trailing slashes
+        if ($p_path[0] == '/') {
+            $p_path = substr($p_path, 1);
+        }
+        if ($p_path[strlen($p_path) - 1] == '/') {
+            $p_path = substr($p_path, 0, strlen($p_path) - 1);
+        }
+
+        $p_filename = str_replace("//", "/", $p_filename);
+
+        // Remove beginning slash
+        if ($p_filename[0] == '/') {
+            $p_filename = substr($p_filename, 1);
+        }
+
+        if (!empty($p_path)) {
+            $templatePath = $p_path . "/" . $p_filename;
+        } else {
+            $templatePath = $p_filename;
+        }
+        return $templatePath;
+    } // fn GetPath
+
+
+    /**
+     * Return the full path to the file.
+     *
+     * @param string $p_path
+     * 		Path of the file starting from the base template directory.
+     * @param string $p_filename
+     * @return string
+     */
+    public static function GetFullPath($p_path, $p_filename)
+    {
+        global $Campsite;
+        $fileFullPath = $Campsite['TEMPLATE_DIRECTORY'].$p_path."/".$p_filename;
+        return $fileFullPath;
+    } // fn GetFullPath
+
+
+    /**
+     * Update the Name field for a template on Renaming/Moving.
+     *
+     * It is called before any UpdateStatus() when renaming/moving
+     * a template to avoid a new Id is set for the changed template.
+     *
+     * @param string $p_tplOrig
+     *		The original template Name
+     * @param string $p_tplNew
+     *		The new template Name
+     * @return mixed
+     */
+    public static function UpdateOnChange($p_tplOrig, $p_tplNew)
+    {
+        global $Campsite;
+        global $g_ado_db;
+
+        // Remove beginning slashes
+        $p_tplOrig = ltrim($p_tplOrig, '/');
+        $p_tplNew = ltrim($p_tplNew, '/');
+
+        if (is_file($Campsite['TEMPLATE_DIRECTORY']."/".$p_tplNew)) {
+            $sql = "SELECT * FROM Templates WHERE Name = '$p_tplOrig'";
+            $row = $g_ado_db->GetRow($sql);
+            if (!$row) {
+                return false;
+            }
+            $id = $row['Id'];
+            $sql = "UPDATE Templates SET Name = '$p_tplNew' WHERE Id = '$id'";
+            $g_ado_db->Execute($sql);
+        }
+    } // fn UpdateOnChange
+
+
+    /**
+     * Sync the database with the filesystem.
+     * @return void
+     */
+    public static function UpdateStatus()
+    {
+        global $Campsite;
+        global $g_ado_db;
+
+        // check if each template record in the database has the corresponding file
+        $templates = self::GetAllTemplates(null, false);
+        foreach ($templates as $index=>$template) {
+            if (!$template->fileExists()) {
+                $g_ado_db->Execute("DELETE FROM Templates WHERE Id = "
+                    . $template->m_data['Id']);
+            }
+        }
+
+        // insert new templates
+        $rootDir = $Campsite['TEMPLATE_DIRECTORY'];
+        $dirs[] = $rootDir;
+        while (($currDir = array_pop($dirs)) != "") {
             if (!is_readable($currDir)) {
                 continue;
-			}
-			if (!$dirHandle = opendir($currDir)) {
-				continue;
-			}
+            }
+            if (!$dirHandle = opendir($currDir)) {
+                continue;
+            }
 
-			while ($file = readdir($dirHandle)) {
-				$fullPath = $currDir . '/' . $file;
-			        if (!is_readable($fullPath)) {
-				        continue;
-				}
-				if ($file == "." || $file == "..") {
-					continue;
-				}
+            while ($file = readdir($dirHandle)) {
+                $fullPath = $currDir . '/' . $file;
+                    if (!is_readable($fullPath)) {
+                        continue;
+                }
+                if ($file == "." || $file == "..") {
+                    continue;
+                }
 
-				$fileType = filetype($fullPath);
-				if ($fileType == "dir") {
-					$dirs[] = $fullPath;
-					continue;
-				}
+                $fileType = filetype($fullPath);
+                if ($fileType == "dir") {
+                    $dirs[] = $fullPath;
+                    continue;
+                }
 
-				if ($fileType != "file") { // ignore special files and links
-					continue;
-				}
+                if ($fileType != "file") { // ignore special files and links
+                    continue;
+                }
 
-				$relPath = substr($fullPath, strlen($rootDir) + 1);
-				$level = $relPath == "" ? 0 : substr_count($relPath, "/");
-				$sql = "SELECT count(*) AS nr FROM Templates WHERE Name = '" . $relPath . "'";
-				$existingTemplates = $g_ado_db->GetOne($sql);
-				if ($existingTemplates == 0) {
-					$ending = substr($file, strlen($file) - 4);
-					if ($ending != ".tpl") { // ignore files that are not templates (end in .tpl)
-						$sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
-						$nonTplTypeId = $g_ado_db->GetOne($sql);
-						$sql = "INSERT IGNORE INTO Templates (Name, Type, Level) "
-									. "VALUES('$relPath', "
-										. "$nonTplTypeId, "
-										. "$level)";
-					} else {
-						$sql = "INSERT IGNORE INTO Templates (Name, Level) "
-									. "VALUES('$relPath', "
-										. "$level)";
-					}
-					$g_ado_db->Execute($sql);
-				}
-			}
-		}
-	} // fn UpdateStatus
+                $relPath = substr($fullPath, strlen($rootDir) + 1);
+                $level = $relPath == "" ? 0 : substr_count($relPath, "/");
+                $sql = "SELECT count(*) AS nr FROM Templates WHERE Name = '" . $relPath . "'";
+                $existingTemplates = $g_ado_db->GetOne($sql);
+                if ($existingTemplates == 0) {
+                    $ending = substr($file, strlen($file) - 4);
+                    if ($ending != ".tpl") { // ignore files that are not templates (end in .tpl)
+                        $sql = "SELECT Id FROM TemplateTypes WHERE Name = 'nontpl'";
+                        $nonTplTypeId = $g_ado_db->GetOne($sql);
+                        $sql = "INSERT IGNORE INTO Templates (Name, Type, Level) "
+                                    . "VALUES('$relPath', "
+                                        . "$nonTplTypeId, "
+                                        . "$level)";
+                    } else {
+                        $sql = "INSERT IGNORE INTO Templates (Name, Level) "
+                                    . "VALUES('$relPath', "
+                                        . "$level)";
+                    }
+                    $g_ado_db->Execute($sql);
+                }
+            }
+        }
+    } // fn UpdateStatus
 
 
-	/**
-	 * Call this to upload a template file.  Note: Template::UpdateStatus()
-	 * will be called automatically for you if this is successful.
-	 *
-	 * @param string $p_fileVarName
-	 * 		Name of the variable in the $_FILES global variable.
-	 * @param string $p_charset
-	 * 		Desired character set of the file.
-	 * @param string $p_baseUpload
-	 * 		Directory path to add to the base template directory.
-	 * @param string $p_desiredName
-	 * 		Desired name of the file.
-	 *
-	 * @return mixed
-	 * 		TRUE on success, PEAR_Error on failure.
-	 */
-	public static function OnUpload($f_fileVarName, $p_baseUpload,
-	                                $p_desiredName = null, $p_charset = null)
-	{
-		global $Campsite;
-		$p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
+    /**
+     * @return void
+     */
+    public static function OnMultiFileUpload()
+    {
+        // HTTP headers for no cache etc
+        header('Content-type: text/plain; charset=UTF-8');
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
 
-		if (!isset($_FILES[$f_fileVarName]) || !isset($_FILES[$f_fileVarName]['name'])) {
-			return new PEAR_Error("Invalid parameters given to Template::OnUpload()");
-		}
+        // Settings
+        $targetDir = CS_TMP_TPL_DIR;
+        $cleanupTargetDir = false;
+        $maxFileAge = 60 * 60;
 
-		if (is_null($p_desiredName)) {
-			$fileName = $_FILES[$f_fileVarName]['name'];
-		} else {
-			$fileName = $p_desiredName;
-		}
+        // 5 minutes execution time
+        @set_time_limit(5 * 60);
 
-		// remove existing file if one exists
-		$newname = $p_baseUpload . DIR_SEP . $fileName;
-		if (file_exists($newname) && !is_dir($newname)) {
-			if (!unlink($newname)) {
-				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $newname), CAMP_ERROR_DELETE_FILE);
-			}
-		}
+        // Get parameters
+        $chunk = isset($_REQUEST["chunk"]) ? $_REQUEST["chunk"] : 0;
+        $chunks = isset($_REQUEST["chunks"]) ? $_REQUEST["chunks"] : 0;
+        $fileName = isset($_REQUEST["name"]) ? $_REQUEST["name"] : '';
 
-		$fType = $_FILES[$f_fileVarName]['type'];
-		if (!is_null($p_charset)) {
-		    // original file, destination file, file type, file charset
+        // Clean the fileName for security reasons
+        $fileName = preg_replace('/[^\w\._]+/', '', $fileName);
+
+        // Create target dir
+        if (!file_exists($targetDir)) {
+            @mkdir($targetDir);
+        }
+
+        // Remove old temp files
+        if (is_dir($targetDir) && ($dir = opendir($targetDir))) {
+            while (($file = readdir($dir)) !== false) {
+                $filePath = $targetDir . DIR_SEP . $file;
+
+                // Remove temp files if they are older than the max age
+                if (preg_match('/\\.tmp$/', $file) && (filemtime($filePath) < time() - $maxFileAge)) {
+                    @unlink($filePath);
+                }
+            }
+            closedir($dir);
+        } else {
+            die('{"jsonrpc" : "2.0", "error" : {"code": 100, "message": "Failed to open temp directory."}, "id" : "id"}');
+        }
+
+        // Look for the content type header
+        if (isset($_SERVER["HTTP_CONTENT_TYPE"])) {
+            $contentType = $_SERVER["HTTP_CONTENT_TYPE"];
+        }
+
+        if (isset($_SERVER["CONTENT_TYPE"])) {
+            $contentType = $_SERVER["CONTENT_TYPE"];
+        }
+
+        if (strpos($contentType, "multipart") !== false) {
+            if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name'])) {
+                // Open temp file
+                $out = fopen($targetDir . DIR_SEP . $fileName, $chunk == 0 ? "wb" : "ab");
+                if ($out) {
+                    // Read binary input stream and append it to temp file
+                    $in = fopen($_FILES['file']['tmp_name'], "rb");
+                    if ($in) {
+                        while ($buff = fread($in, 4096)) {
+                            fwrite($out, $buff);
+                        }
+                    } else {
+                        die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+                    }
+                    fclose($out);
+                    unlink($_FILES['file']['tmp_name']);
+                } else {
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+                }
+            } else {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 103, "message": "Failed to move uploaded file."}, "id" : "id"}');
+            }
+        } else {
+            // Open temp file
+            $out = fopen($targetDir . DIR_SEP . $fileName, $chunk == 0 ? "wb" : "ab");
+            if ($out) {
+                // Read binary input stream and append it to temp file
+                $in = fopen("php://input", "rb");
+                if ($in) {
+                    while ($buff = fread($in, 4096)) {
+                        fwrite($out, $buff);
+                    }
+                } else {
+                    die('{"jsonrpc" : "2.0", "error" : {"code": 101, "message": "Failed to open input stream."}, "id" : "id"}');
+                }
+
+                fclose($out);
+            } else {
+                die('{"jsonrpc" : "2.0", "error" : {"code": 102, "message": "Failed to open output stream."}, "id" : "id"}');
+            }
+        }
+
+        // Return JSON-RPC response
+        die('{"jsonrpc" : "2.0", "result" : null, "id" : "id"}');
+    } // fn OnMultiFileUpload
+
+
+    /**
+     * Call this to upload a template file.  Note: Template::UpdateStatus()
+     * will be called automatically for you if this is successful.
+     *
+     * @param string $p_fileVarName
+     * 		Name of the variable in the $_FILES global variable.
+     * @param string $p_charset
+     * 		Desired character set of the file.
+     * @param string $p_baseUpload
+     * 		Directory path to add to the base template directory.
+     * @param string $p_desiredName
+     * 		Desired name of the file.
+     *
+     * @return mixed
+     * 		TRUE on success, PEAR_Error on failure.
+     */
+    public static function OnUpload($f_fileVarName, $p_baseUpload,
+                                    $p_desiredName = null, $p_charset = null)
+    {
+        global $Campsite;
+        $p_baseUpload = $Campsite['TEMPLATE_DIRECTORY'].$p_baseUpload;
+
+        if (!isset($_FILES[$f_fileVarName]) || !isset($_FILES[$f_fileVarName]['name'])) {
+            return new PEAR_Error("Invalid parameters given to Template::OnUpload()");
+        }
+
+        if (is_null($p_desiredName)) {
+            $fileName = $_FILES[$f_fileVarName]['name'];
+        } else {
+            $fileName = $p_desiredName;
+        }
+
+        // remove existing file if one exists
+        $newname = $p_baseUpload . DIR_SEP . $fileName;
+        if (file_exists($newname) && !is_dir($newname)) {
+            if (!unlink($newname)) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $newname), CAMP_ERROR_DELETE_FILE);
+            }
+        }
+
+        $fType = $_FILES[$f_fileVarName]['type'];
+        if (!is_null($p_charset)) {
+            // original file, destination file, file type, file charset
             $success = self::ChangeCharset($_FILES[$f_fileVarName]['tmp_name'], $newname, $fType, $p_charset);
-		} else {
-			$success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $newname);
-			if (!$success) {
-				return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $newname), CAMP_ERROR_CREATE_FILE);
-			}
-		}
+        } else {
+            $success = move_uploaded_file($_FILES[$f_fileVarName]['tmp_name'], $newname);
+            if (!$success) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $newname), CAMP_ERROR_CREATE_FILE);
+            }
+        }
 
-		if ($success) {
-			self::UpdateStatus();
-			if (function_exists('camp_load_translation_strings')) {
-				camp_load_translation_strings('api');
-			}
-			$logtext = getGS('Template $1 uploaded', $fileName);
-			Log::Message($logtext, null, 111);
-		}
-		return $success;
-	} // fn OnUpload
+        if ($success) {
+            self::UpdateStatus();
+            if (function_exists('camp_load_translation_strings')) {
+                camp_load_translation_strings('api');
+            }
+            $logtext = getGS('Template $1 uploaded', $fileName);
+            Log::Message($logtext, null, 111);
+        }
+        return $success;
+    } // fn OnUpload
 
 
     /**
@@ -563,152 +684,152 @@ class Template extends DatabaseObject {
     } // fn GetAllTemplates
 
 
-	/**
-	 * Returns an array containing the directories tree for the given path.
-	 *
-	 * @param array $p_folders
-	 * @return array $p_folders
-	 */
-	public static function GetAllFolders($p_folders)
-	{
-		global $Campsite;
+    /**
+     * Returns an array containing the directories tree for the given path.
+     *
+     * @param array $p_folders
+     * @return array $p_folders
+     */
+    public static function GetAllFolders($p_folders)
+    {
+        global $Campsite;
 
-		$path = $Campsite['TEMPLATE_DIRECTORY'] . '/';
-		if ($dirHandle = opendir($path)) {
-			$i = 0;
-			while (($file = readdir($dirHandle)) !== false) {
-				if ($file != '.' && $file != '..' && is_dir($path . $file)) {
-					$i++;
-					$p_folders[$i] = $path . $file;
-				}
-			}
-		}
-		closedir($dirHandle);
+        $path = $Campsite['TEMPLATE_DIRECTORY'] . '/';
+        if ($dirHandle = opendir($path)) {
+            $i = 0;
+            while (($file = readdir($dirHandle)) !== false) {
+                if ($file != '.' && $file != '..' && is_dir($path . $file)) {
+                    $i++;
+                    $p_folders[$i] = $path . $file;
+                }
+            }
+        }
+        closedir($dirHandle);
 
-		$i = count($p_folders);
-		foreach ($p_folders as $folder) {
-			if ($subDirHandle = opendir($folder)) {
-				while (($file = readdir($subDirHandle)) !== false) {
-					$pathTo = $folder. '/' . $file;
-					if ($file != '.' && $file != '..' &&
-							is_dir($pathTo) &&
-							!in_array($pathTo, $p_folders)) {
-						$i++;
-						$p_folders[$i] = $pathTo;
-						$p_folders = self::GetAllFolders($p_folders);
-					}
-				}
-			}
-			closedir($subDirHandle);
-		}
-		sort($p_folders);
-		return $p_folders;
-	} // fn GetAllFolders
-
-
-	/**
-	 * Deletes a template file.
-	 * It does not take care on database info upgrade because
-	 * it trusts of the cool Template::UpdateStatus() function.
-	 *
-	 * @return mixed
-	 */
-	public function delete() {
-		global $g_user;
-
-		$rootDir = '/';
-		if ($this->exists()) {
-			$Path = dirname($rootDir . $this->getName());
-			$Name = basename($this->getName());
-			$fileFullPath = $this->getFullPath($Path, $Name);
-			if (!self::InUse($this->getName())) {
-				if (unlink($fileFullPath)) {
-					$logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
-					Log::Message($logtext, $g_user->getUserId(), 112);
-					return true;
-				}
-			}
-		}
-		return false;
-	} // fn delete
+        $i = count($p_folders);
+        foreach ($p_folders as $folder) {
+            if ($subDirHandle = opendir($folder)) {
+                while (($file = readdir($subDirHandle)) !== false) {
+                    $pathTo = $folder. '/' . $file;
+                    if ($file != '.' && $file != '..' &&
+                            is_dir($pathTo) &&
+                            !in_array($pathTo, $p_folders)) {
+                        $i++;
+                        $p_folders[$i] = $pathTo;
+                        $p_folders = self::GetAllFolders($p_folders);
+                    }
+                }
+            }
+            closedir($subDirHandle);
+        }
+        sort($p_folders);
+        return $p_folders;
+    } // fn GetAllFolders
 
 
-	/**
-	 * Moves a template from current folder to destination folder.
-	 * It does not take care on database info upgrade because
-	 * it trusts of the cool Template::UpdateStatus() function.
-	 *
-	 * @param string $p_current_folder
-	 * @param string $p_destination_folder
-	 * @return bool true on succes or false on failure
-	 */
-	public function move($p_current_folder, $p_destination_folder) {
-		global $Campsite;
-		global $g_user;
+    /**
+     * Deletes a template file.
+     * It does not take care on database info upgrade because
+     * it trusts of the cool Template::UpdateStatus() function.
+     *
+     * @return mixed
+     */
+    public function delete() {
+        global $g_user;
 
-		if (self::IsValidPath($p_current_folder) &&
-			self::IsValidPath($p_destination_folder)) {
-			$currentFolder = ($p_current_folder == '/') ? '' : $p_current_folder;
-			$destinationFolder = ($p_destination_folder == '/') ? '' : $p_destination_folder;
-			$currentFullPath = $Campsite['TEMPLATE_DIRECTORY']
-						. $currentFolder
-						. '/' . basename($this->getName());
-			$destinationFullPath = $Campsite['TEMPLATE_DIRECTORY']
-						. $destinationFolder
-						. '/' . basename($this->getName());
-			if (rename($currentFullPath, $destinationFullPath)) {
-				$logtext = getGS('Template $1 was moved to $2',
-						 mysql_real_escape_string($currentFolder . '/' . basename($this->getName())),
-						 mysql_real_escape_string($destinationFolder . '/' . basename($this->getName())));
-				Log::Message($logtext, $g_user->getUserId(), 117);
-				return true;
-			}
-		}
-		return false;
-	} // fn move
+        $rootDir = '/';
+        if ($this->exists()) {
+            $Path = dirname($rootDir . $this->getName());
+            $Name = basename($this->getName());
+            $fileFullPath = $this->getFullPath($Path, $Name);
+            if (!self::InUse($this->getName())) {
+                if (unlink($fileFullPath)) {
+                    $logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
+                    Log::Message($logtext, $g_user->getUserId(), 112);
+                    return true;
+                }
+            }
+        }
+        return false;
+    } // fn delete
 
 
-	/**
-	 * Return an regular expression to filter template lists
-	 *
-	 * @param boolean $p_sql indicates usage for sql query
-	 * @return string
-	 */
-	static public function GetTemplateFilterRegex($p_sql = false) {
-	 	$filters = array();
+    /**
+     * Moves a template from current folder to destination folder.
+     * It does not take care on database info upgrade because
+     * it trusts of the cool Template::UpdateStatus() function.
+     *
+     * @param string $p_current_folder
+     * @param string $p_destination_folder
+     * @return bool true on succes or false on failure
+     */
+    public function move($p_current_folder, $p_destination_folder) {
+        global $Campsite;
+        global $g_user;
 
-		if ($filterStr = SystemPref::Get('TemplateFilter')) {
-		  foreach (explode(',', $filterStr) as $filter) {
+        if (self::IsValidPath($p_current_folder) &&
+            self::IsValidPath($p_destination_folder)) {
+            $currentFolder = ($p_current_folder == '/') ? '' : $p_current_folder;
+            $destinationFolder = ($p_destination_folder == '/') ? '' : $p_destination_folder;
+            $currentFullPath = $Campsite['TEMPLATE_DIRECTORY']
+                        . $currentFolder
+                        . '/' . basename($this->getName());
+            $destinationFullPath = $Campsite['TEMPLATE_DIRECTORY']
+                        . $destinationFolder
+                        . '/' . basename($this->getName());
+            if (rename($currentFullPath, $destinationFullPath)) {
+                $logtext = getGS('Template $1 was moved to $2',
+                         mysql_real_escape_string($currentFolder . '/' . basename($this->getName())),
+                         mysql_real_escape_string($destinationFolder . '/' . basename($this->getName())));
+                Log::Message($logtext, $g_user->getUserId(), 117);
+                return true;
+            }
+        }
+        return false;
+    } // fn move
+
+
+    /**
+     * Return an regular expression to filter template lists
+     *
+     * @param boolean $p_sql indicates usage for sql query
+     * @return string
+     */
+    static public function GetTemplateFilterRegex($p_sql = false) {
+         $filters = array();
+
+        if ($filterStr = SystemPref::Get('TemplateFilter')) {
+          foreach (explode(',', $filterStr) as $filter) {
 
 
 
 
-    		   if ($p_sql) {
-    		      $filter = preg_quote(trim($filter), '/');       // quote the filter
-    		      $filter = str_replace('\\', '\\\\', $filter);
-    		      $filter = str_replace('\\*', '.*', $filter);    // * becomes .*
-    		      $filter = str_replace('\\?', '.', $filter);     //  becomes .
-    		      $filter1 = "(^$filter$)";
-    		      $filters[] = $filter1;
-    		      $filter2 = "(/$filter$)";
-    		      $filters[] = $filter2;
-    		      $filter1 = "(^$filter/)";
-    		      $filters[] = $filter1;
-    		      $filter2 = "(/$filter/)";
-    		      $filters[] = $filter2;
-		      } else {
-		          $filter = preg_quote(trim($filter), '/');   // quote the filter
-		          $filter = str_replace('\\*', '.*', $filter); // * becomes .*
-		          $filter = str_replace('\\?', '.', $filter);     //  becomes .
-    		      $filter = "(^$filter$)";
-    		      $filters[] = $filter;
-		      }
-		  }
-		}
-		$filterRegex = implode('|', $filters);
+               if ($p_sql) {
+                  $filter = preg_quote(trim($filter), '/');       // quote the filter
+                  $filter = str_replace('\\', '\\\\', $filter);
+                  $filter = str_replace('\\*', '.*', $filter);    // * becomes .*
+                  $filter = str_replace('\\?', '.', $filter);     //  becomes .
+                  $filter1 = "(^$filter$)";
+                  $filters[] = $filter1;
+                  $filter2 = "(/$filter$)";
+                  $filters[] = $filter2;
+                  $filter1 = "(^$filter/)";
+                  $filters[] = $filter1;
+                  $filter2 = "(/$filter/)";
+                  $filters[] = $filter2;
+              } else {
+                  $filter = preg_quote(trim($filter), '/');   // quote the filter
+                  $filter = str_replace('\\*', '.*', $filter); // * becomes .*
+                  $filter = str_replace('\\?', '.', $filter);     //  becomes .
+                  $filter = "(^$filter$)";
+                  $filters[] = $filter;
+              }
+          }
+        }
+        $filterRegex = implode('|', $filters);
 
-		return $filterRegex;
-	}
+        return $filterRegex;
+    }
 
 } // class Template
 

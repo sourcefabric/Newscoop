@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS `Cache` (
   KEY `expired` (`expired`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- Add CacheLifetime column for template cache handler
+ALTER TABLE `Templates` ADD `CacheLifetime` INT NULL DEFAULT '0';
 
 
 ALTER TABLE `Authors` ADD `type` INT NULL ,

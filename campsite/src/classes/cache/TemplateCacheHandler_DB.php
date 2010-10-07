@@ -66,8 +66,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         static $cacheExists;
 
         $return = false;
-        $uri = CampSite::GetURIInstance();
-        $campsiteVector = $uri->getCampsiteVector();
+        $campsiteVector = $smarty_obj->campsiteVector;
 
             switch ($action) {
             case 'read':
@@ -79,29 +78,25 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                     $result = $g_ado_db->GetRow($queryStr);
                     if ($result) {
                         if ($result['expired'] > time()) {
-                            $cacheExists = true;
+                            $cacheExists[$tpl_file] = true;
                             $cache_content = $result['content'];
                             $result = true;
                         } else {
                             // clear expired cache
                             $queryStr = 'DELETE FROM Cache WHERE expired <= '. time();
                             $g_ado_db->Execute($queryStr);
-                            $cacheExists = false;
                         }
-                    } else {
-                        $cacheExists = false;
                     }
                 }
                 break;
 
             case 'write':
                 // in case template changing should delete old cached templates
-                if ($cacheExists) {
+                if (isset($cacheExists[$tpl_file])) {
                     $queryStr = 'DELETE FROM Cache WHERE template = ' . "'$tpl_file'";
                     $g_ado_db->Execute($queryStr);
                 }
-
-                if ($campsiteVector['language'] && $campsiteVector['publication']) {
+                if ($exp_time > time() && $campsiteVector['language'] && $campsiteVector['publication']) {
 
                     // insert new cached template
                     $queryStr = 'INSERT IGNORE INTO Cache ';

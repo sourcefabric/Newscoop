@@ -2633,6 +2633,7 @@ CREATE TABLE `Cache` (
 
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('TemplateCacheHandler', NULL);
 
+ALTER TABLE `Templates` ADD `CacheLifetime` INT NULL DEFAULT '0';
 
 INSERT INTO `Events` (
 `Id` ,
