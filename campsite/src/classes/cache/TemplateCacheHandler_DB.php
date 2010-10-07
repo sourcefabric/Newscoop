@@ -38,13 +38,24 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             $whereStr .= "publication = {$campsiteVector['publication']} AND ";
             $whereStr .= $campsiteVector['issue'] ? "issue >= {$campsiteVector['issue']} AND "
             :'issue IS NULL AND ';
+
+            // clear language, publication, issue, section, null vector
             if ($campsiteVector['section']) {
                 $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section = {$campsiteVector['section']} AND ";
                 $queryStr .= "article IS NULL";
                 $g_ado_db->Execute($queryStr);
             }
+
+            // clear language, publication, issue, null, null vector
             $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section IS NULL AND article IS NULL";
             $g_ado_db->Execute($queryStr);
+
+            // clear language, publication, null, null, null vector
+            if ($campsiteVector['issue']) {
+                $queryStr = 'DELETE FROM Cache WHERE language = '. "{$campsiteVector['language']} AND "
+                . "publication = {$campsiteVector['publication']} AND issue IS NULL AND section IS NULL AND article IS NULL";
+                $g_ado_db->Execute($queryStr);
+            }
         }
         return;
     }
