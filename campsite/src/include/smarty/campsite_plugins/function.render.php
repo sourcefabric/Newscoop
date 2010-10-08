@@ -36,6 +36,9 @@ function smarty_function_render($p_params, &$p_smarty)
                     $campsiteVector[$key] = $p_params[$key];
                 }
             }
+            if (isset($p_params['params'])) {
+                $campsiteVector['params'] = $p_params['params'];
+            }
         }
         $smarty->campsiteVector = $campsiteVector;
         if (empty($p_params['cache'])) {

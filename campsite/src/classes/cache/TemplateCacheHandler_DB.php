@@ -78,6 +78,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 
         $return = false;
         $campsiteVector = $smarty_obj->campsiteVector;
+        if (!isset($campsiteVector['params'])) {
+            $campsiteVector['params'] = null;
+        }
 
             switch ($action) {
             case 'read':
@@ -141,11 +144,12 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         $output = null;
         foreach ((array)$vector as $key => $value) {
             if (isset($value)) {
-                $output .= $key . ' = ' . $value;
+                $sqlValue = $key == 'params' ? "'" . addslashes($value) . "'" : $value;
+                $output .= $key . ' = ' . $sqlValue;
             } else {
                 $output .= $key . ' IS NULL';
             }
-            if ($key != 'article') {
+            if ($key != 'params') {
                 $output .= ' AND ';
             }
         }

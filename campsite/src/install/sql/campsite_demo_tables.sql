@@ -1615,6 +1615,20 @@ SET character_set_client = @saved_cs_client;
 
 -- Dump completed on 2010-09-30 17:31:02
 
+CREATE TABLE IF NOT EXISTS `Cache` (
+  `language` int(11) default NULL,
+  `publication` int(11) default NULL,
+  `issue` int(11) default NULL,
+  `section` int(11) default NULL,
+  `article` int(11) default NULL,
+  `params` varchar(128) default NULL,
+  `template` varchar(128) NOT NULL,
+  `expired` int(11) NOT NULL,
+  `content` mediumtext,
+  UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
+  KEY `expired` (`expired`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 ALTER TABLE `Authors` ADD `type` INT NULL ,
 ADD `skype` VARCHAR( 255 ) NULL ,
 ADD `jabber` VARCHAR( 255 ) NULL ,
