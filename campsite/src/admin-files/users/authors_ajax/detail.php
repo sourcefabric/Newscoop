@@ -115,7 +115,7 @@ if (isset($aliases) && is_array($aliases)) {
             <ul>
                 <li>
                     <label>&nbsp;</label>
-                    <input type="submit" name="save" id="save" value="Save All" class="buttonStrong"  /><input type="reset" name="reset" id="reset" value="Reset" class="button" onclick="" />
+                    <input type="reset" name="reset" id="reset" value="Reset" class="button" onclick="" />
                 </li>
             </ul>
         </div>
@@ -177,16 +177,16 @@ if (isset($aliases) && is_array($aliases)) {
                 </div>
             <ul class="nameList">
                 <li><label>First name:</label>
-                    <input type="text" name="lang_first_name" id="lang_first_name" maxlength="200" class="input_text" value="<?php echo $lang_first_name; ?>" emsg="Please enter the first name" style="width:170px;" /></li>
+                    <input type="text" name="lang_first_name" id="lang_first_name" maxlength="35" class="input_text" value="<?php echo $lang_first_name; ?>" emsg="Please enter the first name" style="width:170px;" /></li>
                 <li><label>Last name:</label>
-                    <input type="text" name="lang_last_name" id="lang_last_name" maxlength="200" class="input_text" value="<?php echo $lang_last_name; ?>" emsg="Please enter the last name" style="width:170px;" /></li>
+                    <input type="text" name="lang_last_name" id="lang_last_name" maxlength="35" class="input_text" value="<?php echo $lang_last_name; ?>" emsg="Please enter the last name" style="width:170px;" /></li>
                 <li>&nbsp;</li>
                 <li>  <input type="file" name="file" size="32" class="input_file"></li>
             </ul>
         </div>
         <div class="formBlock">
             <div class="textHolder">
-                <textarea name="langbio" id="transArea" rows="20" readonly="readonly"></textarea></div>
+                <textarea name="langbio" id="transArea" rows="20" readonly="readonly"><?php echo $biography; ?></textarea></div>
 
                 <textarea name="biography" id="bioArea" rows="20"><?php echo $biography; ?></textarea></div>
             <br style="clear:both;" />

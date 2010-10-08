@@ -381,7 +381,14 @@ if ($f_edit_mode == "edit") { ?>
                         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()">
                     </div>
                     <?php } else {
-                            print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
+                        $ath='';
+                        $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+                        foreach ($authors as $author)
+                        {
+                            if (strlen($ath)>0) $ath.=", ";
+                            $ath .=$author['first_name'] . ' ' . $author['last_name'];
+                        }
+                            print wordwrap(htmlspecialchars($ath), 60, "<br>");
                           }
                     ?>
                 </td>
