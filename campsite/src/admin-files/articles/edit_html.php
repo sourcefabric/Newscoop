@@ -370,13 +370,11 @@ if ($f_edit_mode == "edit") { ?>
                         }
                             
                     }
-                    else 
-                    {
                     ?>
-                    >
+                 
                            <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
                     <?php
-                    }
+
                     ?>
                         
                         <div id="authorContainer"></div>
