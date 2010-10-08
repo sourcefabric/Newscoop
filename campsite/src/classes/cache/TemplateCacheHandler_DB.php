@@ -77,12 +77,14 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         static $cacheExists;
 
         $return = false;
-        $campsiteVector = $smarty_obj->campsiteVector;
-        if (!isset($campsiteVector['params'])) {
-            $campsiteVector['params'] = null;
+        if ($action != 'clean') {
+            $campsiteVector = $smarty_obj->campsiteVector;
+            if (!isset($campsiteVector['params'])) {
+                $campsiteVector['params'] = null;
+            }
         }
 
-            switch ($action) {
+        switch ($action) {
             case 'read':
                 if ($campsiteVector['language'] && $campsiteVector['publication']) {
                     $whereStr = self::vectorToWhereString($campsiteVector);
