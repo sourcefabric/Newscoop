@@ -14,7 +14,7 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_article_author = Input::Get('f_article_author','array',array());
+$f_article_author = Input::Get('f_article_author','array',array(),true);
 $f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
 $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
