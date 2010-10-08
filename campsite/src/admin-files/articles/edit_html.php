@@ -370,20 +370,25 @@ if ($f_edit_mode == "edit") { ?>
                         }
                             
                     }
-                    else 
-                    {
                     ?>
-                    >
+                 
                            <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
                     <?php
-                    }
+
                     ?>
                         
                         <div id="authorContainer"></div>
                         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()">
                     </div>
                     <?php } else {
-                            print wordwrap(htmlspecialchars($articleAuthorObj->getName()), 60, "<br>");
+                        $ath='';
+                        $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+                        foreach ($authors as $author)
+                        {
+                            if (strlen($ath)>0) $ath.=", ";
+                            $ath .=$author['first_name'] . ' ' . $author['last_name'];
+                        }
+                            print wordwrap(htmlspecialchars($ath), 60, "<br>");
                           }
                     ?>
                 </td>
