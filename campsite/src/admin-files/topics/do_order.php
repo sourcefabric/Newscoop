@@ -21,13 +21,7 @@ if (!Input::IsValid()) {
 }
 
 // set position
-$order_ary = array();
-foreach ($f_position as $subtree) {
-    foreach ($subtree as $topicId => $position) {
-        $order_ary[$topicId] = $position;
-    }
-}
-Topic::UpdateOrder($order_ary);
+Topic::UpdateOrder($f_position);
 
 camp_html_add_msg(getGS("Topics order saved."), "ok");
 camp_html_goto_page("/$ADMIN/topics/");

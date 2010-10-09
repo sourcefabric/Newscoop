@@ -679,10 +679,16 @@ ul#edit-images li > div {
     border: 1px solid #ccc;
 }
 
-fieldset.buttons {
-    margin: 10px 40px;
+fieldset.controls, fieldset.buttons {
+    margin: 13px 21px;
     padding: 10px;
     border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+fieldset.controls div {
+    margin-bottom: 5px;
 }
 
 fieldset dl {
@@ -730,20 +736,21 @@ ul.tree li > a {
 
 /** sortable tree */
 ul.tree.sortable {
-    width: 80%;
+    width: auto;
     height: 1%;
     overflow: hidden;
+    margin: 0 21px 13px;
+    padding: 0;
 }
 
 ul.tree.sortable li {
     float: left;
     clear: left;
     width: auto;
-    margin: 3px 0 0;
-    padding: 5px;
+    margin: 8px 0 0;
+    padding: 0;
     background-color: transparent;
     border: none;
-    position: relative;
 }
 
 ul.tree.sortable a, ul.tree.sortable span {
@@ -758,20 +765,24 @@ ul.tree.sortable a {
 }
 
 ul.tree.sortable h3 {
-    width: 350px;
+    width: 450px;
     height: 1%;
     overflow: hidden;
     margin: 0 15px 0 0;
     padding: 3px;
     font-size: 1em;
-    cursor: move;
     background-color: #fff;
     border: 1px solid #ccc;
     border-width: 0 1px 1px;
+    cursor: pointer;
 }
 
 ul.tree.sortable h3.active {
     background-color: #f9f9f9;
+}
+
+ul.tree.sortable li.move h3 {
+    cursor: move;
 }
 
 ul.tree.sortable .first > h3 {
@@ -790,6 +801,11 @@ ul.tree.sortable .first.last > h3 {
     border-radius: 5px;
 }
 
+ul.tree.sortable h3 strong {
+    color: #00415b;
+    cursor: pointer;
+}
+
 ul.tree.sortable span.sub {
     color: #999;
     font-size: 0.8em;
@@ -800,14 +816,8 @@ ul.tree.sortable span.lang {
     cursor: move;
 }
 
-ul.tree.sortable .edit {
-    float: right;
-    clear: right;
-}
-
 ul.tree.sortable fieldset {
-    width: 300px;
-    margin: 5px;
+    margin: 8px 5px;
     padding: 5px;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -827,8 +837,4 @@ ul.tree.sortable fieldset select {
 ul.tree.sortable a.delete {
     float: right;
     color: #cc0000;
-}
-
-ul.tree.sortable .state-highlight {
-    border: 1px solid #ffcc00;
 }
