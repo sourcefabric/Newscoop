@@ -806,10 +806,12 @@ ul.tree.sortable h3 strong {
     cursor: pointer;
 }
 
-ul.tree.sortable span.sub {
+ul.tree.sortable h3 span.sub {
+    padding-left: 8px;
     color: #999;
     font-size: 0.8em;
     font-weight: normal;
+    cursor: pointer;
 }
 
 ul.tree.sortable span.lang {

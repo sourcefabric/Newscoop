@@ -215,22 +215,35 @@ $(document).ready(function() {
 
 var sorting = false;
 
-// hide item forms
-$('ul.tree.sortable fieldset').hide();
-
 // add classes for styling
 $('ul.tree.sortable li').each(function() {
     $(this).children('div').first().addClass('first');
     $(this).children('div').last().addClass('last');
 });
 
-// show sub-trees on click
+// hide subtopics
+$('ul.tree.sortable > li > ul').hide();
+
+// show subtopics on click
 $('ul.tree.sortable h3').click(function() {
     if (sorting) {
         return; // ignore
     }
     $(this).parent().siblings('ul').toggle();
 });
+
+
+// add subtupics count
+$('ul.tree.sortable > li').each(function() {
+    var count = $('li', $(this)).length;
+    if (count > 0) {
+        $('.first > h3', $(this)).first()
+            .append('<span class="sub">' + count + ' <?php putGS('Subtopics'); ?></span>');
+    }
+});
+
+// hide item forms
+$('ul.tree.sortable fieldset').hide();
 
 // show forms on click
 $('ul.tree.sortable h3 strong').click(function() {
