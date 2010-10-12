@@ -1664,9 +1664,23 @@ fieldset dt {
 }
 
 .dataTables_wrapper {
-    margin: 0 10px;
+    margin: 13px 21px;
+    border: 1px solid #c5dbec;
 }
 
-.dataTables_wrapper table {
+.dataTables_wrapper table.datatable {
     width: 100%;
+}
+
+table.datatable tbody td {
+    border: 1px solid #c5dbec;
+    border-bottom: none;
+}
+
+table.datatable tbody tr:first-child td {
+    border-top: none;
+}
+
+table.datatable tbody tr.even td {
+    background-color: #f5f5f5;
 }
