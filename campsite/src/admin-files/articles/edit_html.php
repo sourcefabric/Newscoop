@@ -351,7 +351,7 @@ if ($f_edit_mode == "edit") { ?>
                     <?php if ($f_edit_mode == "edit") { ?>
                     <script language="Javascript">
                       function  addAuthor(){
-                          $('#authorAutoComplete').append('<input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
+                          $('#authorContainer').append('<input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
                       }
                     </script>
                     
