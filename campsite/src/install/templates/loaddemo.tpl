@@ -3,6 +3,11 @@
 <script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
 <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">
@@ -70,7 +75,7 @@
              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label>{{ $t }}</label></div>
 
           <div class="demo_img">
-              <img src="sample_templates/{{ $t }}/screenshot.jpg" />
+              <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg"  rel="lightbox" title="{{ $t }}" /></a>
               <p>{{include file="./../sample_templates/$t/description.txt"}}</p>
           </div>
 

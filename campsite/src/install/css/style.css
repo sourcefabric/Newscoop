@@ -163,6 +163,7 @@ div.demo_img img {
 	padding:2px;
 	float:left;
 	margin:0 10px 10px 0;
+        width:210px;
 }
 div.demo_img p {
     color:#6a6a6a;
