@@ -45,7 +45,9 @@ if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
 
 // sorting
 $sortOptions = array(
+    0 => 'bynumber',
     2 => 'byname',
+    11 => 'bycomments',
     12 => 'bypopularity',
     14 => 'bypublishdate',
     15 => 'bycreationdate',
@@ -68,16 +70,13 @@ $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'd
 
 $return = array();
 foreach($articles as $article) {
-    //
     $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
         . '&f_issue_number=' . $article->getIssueNumber() . '&f_section_number=' . $article->getSectionNumber()
         . '&f_article_number=' . $article->getArticleNumber() . '&f_language_id=' . $article->getLanguageId()
         . '&f_language_selected=' . $article->getLanguageId();
-    //
-    $articleLink = '/admin/articles/edit.php' . $articleLinkParams;
-    //
-    $previewLink = '/admin/articles/preview.php' . $articleLinkParams;
-    //
+    $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
+    $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
+
     $lockInfo = '';
     $lockHighlight = false;
     $timeDiff = camp_time_diff_str($article->getLockTime());
@@ -99,21 +98,15 @@ foreach($articles as $article) {
         }
     }
 
-    //
     $tmpUser = new User($article->getCreatorId());
-    //
     $tmpAuthor = new Author($article->getAuthorId());
-    //
     $tmpArticleType = new ArticleType($article->getType());
-    //
+
     $onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
-    //
     $onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
-    //
+
     $imagesNo = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
-    //
     $topicsNo = ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
-    //
     $commentsNo = '';
     if ($article->commentsEnabled()) {
         $commentsNo = ArticleComment::GetArticleComments($article->getArticleNumber(), $article->getLanguageId(), null, true);

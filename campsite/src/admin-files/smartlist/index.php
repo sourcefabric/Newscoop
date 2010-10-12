@@ -194,7 +194,7 @@ var table = $('table.datatable').dataTable({
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 6, 7, 8, 9, 10, 11, 15],
+            'aTargets': [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 15],
         },
         { // width for name
             'sWidth': '15em',
