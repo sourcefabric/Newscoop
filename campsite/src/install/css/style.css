@@ -1,36 +1,62 @@
 /*** Core html setup stuff ***/
 
 body {
-    font-family: sans-serif, arial, verdana;
+	font-size: 62.5%;
+	font-family:Arial, Helvetica, sans-serif;
     background: #ffffff;
     margin: 0;
     padding: 0;
 }
 
 table.global {
-    width: 98%;
+    width: 70%;
     padding: 8px;
-    border: 1px solid #dfdfdf;
+    /*border: 1px solid #dfdfdf;*/
 }
-
-table.header, table.inside {
+th {
+    padding: 5px 0 10px 0;
+}
+table.header {
     width: 100%;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #5d99b1;
     margin: 0;
-    padding: 8px;
+}
+table.inside {
+    width: 100%;
+    border: 1px solid #5d99b1;
+    margin: 0;
+    padding: 0px;
 }
 
 table.header, table.right_header {
     background-color: #efefef;
 }
 
+table.header, table.right_header {
+    background:#c4e1ed url(table_head_bg.png) repeat-x 0 0;
+}
+
 table.right_header, table.right {
     width: 200px;
     margin: 0px 0px 0px 8px;
-    padding: 8px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #5d99b1;
 }
-
+table.right {
+    background-color: #edf7fc;
+}
+table.right_header td, table.right td {
+    padding: 8px 16px 8px 16px;
+}
+table.right td {
+    padding: 18px 16px 14px 16px;
+}
+table.header, table.right_header {
+	height: 37px;
+}
+table.header td, table.right_header td {
+    padding: 7px 16px 0 16px;
+	vertical-align:top;
+}
 table.view_list {
     margin-top: 6px;
     padding: 0;
@@ -41,10 +67,15 @@ table.view_list td {
     font-size: 75%;
     border-bottom: 1px dotted #dfdfdf;
 }
+table td.template-container {
+	/*background:#edf7fc;*/
+	text-align:left;
+	padding-bottom:30px;
+}
 
 div.title {
-    color: #e07211;
-    font-size: 120%;
+    color: #015476;
+    font-size: 1.6em;
     font-weight: bold;
 }
 
@@ -53,26 +84,29 @@ div.navigate {
 }
 
 div.subtitle {
-    width: 100%;
-    font-size: 90%;
-    font-weight: bold;
-    border-bottom: 1px solid #dfdfdf;
+	padding:0 0 0 16px;
 }
 
 div.help {
-    font-size: 75%;
-    color: #6a6a6a;
     margin-top: 10px;
 }
-
+p {
+    font-size: 1.2em;
+	line-height:150%;
+}
+div.help p {
+    color: #6a6a6a;
+	line-height:150%;
+	padding:0 0 0 16px;
+}
 div.table_spacer {
-    margin: 5px;
+	height:7px;
 }
 
 div.form_field {
-    margin: 8px;
+    margin: 8px 0 16px 0;
     padding: 0;
-    font-size: 75%;
+    font-size: 1.2em;
 }
 
 div.message {
@@ -116,11 +150,26 @@ div.icon span {
     text-align: center;
 }
 div.demo_img {
-    margin-top: 15px;
-    width: 230px;
+    margin-bottom: 15px;
+    width: 350px;
     height: 135px;
-    border: 1px solid #f0f0f0;
+    border: 1px solid #b7b7b7;
+	padding:6px;
+	background-color:#fafafa;
 }
+
+div.demo_img img {
+    border: 1px solid #5d99b1;
+	padding:2px;
+	float:left;
+	margin:0 10px 10px 0;
+}
+div.demo_img p {
+    color:#6a6a6a;
+	margin:0;
+	padding:0 0 12px 0;
+}
+
 div.nonwritable {
     margin-left: 30px;
     color: #404040;
@@ -134,7 +183,7 @@ input.inputbox {
 }
 
 ul#steps_list {
-    font-size: 75%;
+    font-size: 1.2em;
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -158,24 +207,32 @@ input.control_button {
     border: 1px solid #afafaf;
 }
 input.nav_button {
-    font-size: 70%;
-    border: 1px solid #afafaf;
+    font-size: 10px;
+    border: 1px solid #015476;
+	text-transform:uppercase;
+	font-weight:bold;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#fff;
+	line-height:150%;
+	padding:2px 10px 2px 10px;
+	background-color:#1a8cbb;
 }
+input.nav_button:hover {
+	background-color:#015476;
+}
+
+
 input.nav_button_disabled {
-    font-size: 70%;
-    color: #a6a6a6;
-    border: 1px solid #afafaf;
+    font-size: 10px;
+    color: #66a9c3;
+    border: 1px solid #66a9c3;
+	background-color:#c4e1ed;
 }
 
 iframe.license {
     padding: 0px;
     width: 100%;
     height: 400px;
-}
-
-p.footer_text {
-    font-size: 65%;
-    text-align: center;
 }
 
 span.success {
@@ -207,4 +264,53 @@ div.domTTOverlib .contents {
         font-size: 10px;
         padding: 2px;
         background-color: #d5e2ee;
+}
+th.innerHead {
+	padding: 10px 0 10px 0;
+	font-size:1.3em;
+	color:#5d99b1;
+	border-bottom:1px solid #b7b7b7;
+	background-color:#f4fafd;
+}
+td.space {
+	border-left: 1px solid #cacaca;
+	background:#ffffff url(space_bg.png) repeat-y 0 0;
+	padding:0;
+}
+td.info {
+	padding:0 15px 0 0;
+	background-color:#fafafa;
+}
+div.template-header {
+	height:28px;
+}
+div.template-header input, div.template-header label {
+	float:left;
+}
+div.template-header label {
+	font-size:1.3em;
+	line-height:160%;
+	margin:0 0 0 6px;
+	color:#315476;
+	font-weight:bold;
+}
+.footer {
+	background:url("footer_bg.png") repeat-x scroll 0 0 transparent;
+	border-top:1px solid #B5D5E2;
+	clear:both;
+	color:#666666;
+	display:block;
+	font-size:11px;
+	height:45px;
+	line-height:140%;
+	margin-top:20px;
+	padding:10px 0 0;
+	text-align:center;
+}
+p.footer_text {
+    text-align: center;
+	font-size:11px;
+	padding:0;
+	margin:0;
+	line-height:120%;
 }

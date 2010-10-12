@@ -19,7 +19,7 @@
     <table cellspacing="0" cellpadding="0">
     <tr>
       <td>
-        <img src="img/campsite_logo.jpg" />
+        <img src="img/campsite_logo.gif" />
       </td>
     </tr>
     </table>

@@ -36,9 +36,9 @@ var domTT_styleClass = 'domTTOverlib';
       <td>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="3">
+          <th colspan="3" align="left" class="innerHead">
             <div class="subtitle">System Requirements:</div>
-          </td>
+          </th>
         </tr>
         <tr>
           <td width="35%" valign="top">
