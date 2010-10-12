@@ -129,16 +129,16 @@ class CampURITemplatePath extends CampURI
     public function getQueryArray(array $p_keepParameters = array(),
     array $p_removeParameters = array()) {
         $queryArray = parent::getQueryArray();
-        if ($this->m_language->defined()) {
+        if (!is_null($this->m_language) && $this->m_language->defined()) {
             $queryArray[CampRequest::LANGUAGE_ID] = $this->m_language->number;
         }
-        if ($this->m_issue->defined()) {
+        if (!is_null($this->m_issue) && $this->m_issue->defined()) {
             $queryArray[CampRequest::ISSUE_NR] = $this->m_issue->number;
         }
-        if ($this->m_section->defined()) {
+        if (!is_null($this->m_section) && $this->m_section->defined()) {
             $queryArray[CampRequest::SECTION_NR] = $this->m_section->number;
         }
-        if ($this->m_article->defined()) {
+        if (!is_null($this->m_article) && $this->m_article->defined()) {
             $queryArray[CampRequest::ARTICLE_NR] = $this->m_article->number;
         }
         if (count($p_removeParameters) > 0) {
