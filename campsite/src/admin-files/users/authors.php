@@ -123,7 +123,7 @@
             </div>
         </div>
         <div class="formBlock formBlockSolo lastBlock">
-<a href="#" class="addButtonText marginBttmSmall" onclick="getRow(0)">Add new Author</a>
+
 <div id="gridtable" style="float:left" class="box_table"></div>
 
 

@@ -45,7 +45,7 @@ if ($id > 0) {
     $email = $author->getEmail();
     $aliases = $author->getAliases();
 }
-?>
+?><a href="#" class="addButtonText marginBttmSmall" onclick="getRow(0)">Add new Author</a>
 <form method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 <div class="floatBox bigBox">
