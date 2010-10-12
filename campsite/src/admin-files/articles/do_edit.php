@@ -99,7 +99,7 @@ if ($f_article_title != $articleObj->getTitle()) {
         foreach ($f_article_author as $author)
         {
             $authorObj = new Author($author);
-            if (!$authorObj->exists()) {
+            if (!$authorObj->exists()  && strlen(trim($author))>0) {
                 $authorData = Author::ReadName($author);
                 $authorObj->create($authorData);
             }

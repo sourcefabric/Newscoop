@@ -106,9 +106,11 @@ function makeRequest(a){
     var query_string = ''; 
     $("input[type='text'][name='f_article_author[]']").each( 
         function() 
-        { 
+        {
             query_string += "&f_article_author[]=" + this.value; 
-    }); 
+    });
+    if (query_string.length==0) query_string='f_article_author[]=';
+
     YAHOO.example.container.wait =
         new YAHOO.widget.Panel("wait",
                                         { width:"240px",
@@ -122,7 +124,7 @@ function makeRequest(a){
                    );
 
       
-             
+
   /*  YAHOO.example.container.wait.setHeader("<?php putGS('Saving, please wait...'); ?>");
     YAHOO.example.container.wait.setBody("<img src=\"http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif\"/>");
     YAHOO.example.container.wait.render(document.body);*/
@@ -130,7 +132,7 @@ function makeRequest(a){
     var postAction = '&f_save=' + a;
 
     var ycaFArticleTitle = document.getElementById('f_article_title').value;
-    var ycaFArticleAuthor = document.getElementById('f_article_author').value;
+//    var ycaFArticleAuthor = document.getElementById('f_article_author').value;
     var ycaFOnFrontPage = document.getElementById('f_on_front_page').checked;
     var ycaFOnSectionPage = document.getElementById('f_on_section_page').checked;
     var ycaFCreationDate = document.getElementById('f_creation_date').value;

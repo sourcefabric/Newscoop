@@ -351,8 +351,15 @@ if ($f_edit_mode == "edit") { ?>
                     <?php if ($f_edit_mode == "edit") { ?>
                     <script language="Javascript">
                       function  addAuthor(){
-                          $('#authorAutoComplete').append('<input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
+                          var rnumber=Math.floor(Math.random()*9876)
+                          $('#authorContainer').append('<input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
+                          $('#authorContainer').append('<img border="0" src="./../../css/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
                       }
+                      function deleteAuthor(id, empty){
+                          $('#f_article_author' + id).remove();
+                          $('#removeauthor' + id).remove();
+                          buttonEnable('save_f_article_author');
+                       }
                     </script>
                     
                     <div id="authorAutoComplete">
@@ -362,17 +369,21 @@ if ($f_edit_mode == "edit") { ?>
                     //exit();
                     if (!empty($authors))
                     {
+                        $i=0;
                         foreach ($authors as $author)
                         {
+
                             ?>
-                         <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                         <input type="text" name="f_article_author[]" id="f_article_author<?php echo $i; ?>" size="45" class="input_text"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                         <img border="0" src="./../../css/unlink.png" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i;?>');">
                    <?php
+                   $i++;
                         }
                             
                     }
                     ?>
                  
-                           <input type="text" name="f_article_author[]" id="f_article_author" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                           <input type="text" name="f_article_author[]" id="f_article_author0" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthor0" onclick="deleteAuthor('0');">
                     <?php
 
                     ?>

@@ -46,6 +46,8 @@ if ($id > 0) {
     $aliases = $author->getAliases();
 }
 ?>
+
+<a href="#" class="addButtonText marginBttmSmall" onclick="getRow(0)">Add new Author</a>
 <form method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
 <div class="floatBox bigBox">
@@ -188,7 +190,7 @@ if (isset($aliases) && is_array($aliases)) {
             <div class="textHolder">
                 <textarea name="langbio" id="transArea" rows="20" readonly="readonly"><?php echo $biography; ?></textarea></div>
 
-                <textarea name="biography" id="bioArea" rows="20"><?php echo $biography; ?></textarea></div>
+                <textarea name="biography" id="biography" rows="20"><?php echo $biography; ?></textarea></div>
             <br style="clear:both;" />
         </div>
         <div class="formBlock lastBlock">
@@ -201,7 +203,16 @@ if (isset($aliases) && is_array($aliases)) {
     </div>
     <!--Pane 3-->
 
+<?php
+/*require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+$languageObj = new Language($Language);
+if (!is_object($languageObj)) {
+    $languageObj = new Language(1);
+}
+$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());*/
+//editor_load_tinymce('biography', $g_user, 0, $editorLanguage, 'biography');
 
+?>
 
 
 <?php echo SecurityToken::FormParameter(); ?>
