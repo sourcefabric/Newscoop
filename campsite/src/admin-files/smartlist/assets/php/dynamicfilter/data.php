@@ -5,75 +5,66 @@ header('Content-type: application/json');
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 
 // start >= 0
-$startIndex = max(0,
+$start = max(0,
     empty($_REQUEST['iDisplayStart']) ? 0 : (int) $_REQUEST['iDisplayStart']);
 
-// results num >= 10 && <= 35
-$results = min(100, max(10,
+// results num >= 10 && <= 100
+$limit = min(100, max(10,
     empty($_REQUEST['iDisplayLength']) ? 0 : (int) $_REQUEST['iDisplayLength']));
 
+// filters - common
 $articlesParams = array();
-if (isset($_REQUEST['publication']) && $_REQUEST['publication'] > 0) {
-    $publication_id = (int) $_REQUEST['publication'];
-    $articlesParams[] = new ComparisonOperation('idpublication', new Operator('is', 'integer'), $publication_id);
-}
+$filters = array(
+    'publication' => array('is', 'integer'),
+    'issue' => array('is', 'integer'),
+    'section' => array('is', 'integer'),
+    'publish_date' => array('is', 'date'),
+    'publish_date_from' => array('greater_equal', 'date'),
+    'publish_date_to' => array('smaller_equal', 'date'),
+    'author' => array('is', 'integer'),
+);
 
-if (isset($_REQUEST['issue']) && $_REQUEST['issue'] > 0) {
-    $issue_nr = (int) $_REQUEST['issue'];
-    $articlesParams[] = new ComparisonOperation('nrissue', new Operator('is', 'integer'), $issue_nr);
-}
+// mapping form name => db name
+$fields = array(
+    'publish_date_from' => 'publish_date',
+    'publish_date_to' => 'publish_date',
+);
 
-if (isset($_REQUEST['section']) && $_REQUEST['section'] > 0) {
-    $section_nr = (int) $_REQUEST['section'];
-    $articlesParams[] = new ComparisonOperation('nrsection', new Operator('is', 'integer'), $section_nr);
-}
-
-
-if (isset($_REQUEST['query']) && strlen($_REQUEST['query']) > 0) {
-    $search_phrase = $_REQUEST['query'];
-    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('is', 'integer'), $search_phrase);
-}
-if (isset($_REQUEST['filter_type']) && strlen($_REQUEST['filter_type']) > 0
-        && isset($_REQUEST['filter_input']) && strlen($_REQUEST['filter_input']) > 0) {
-    if ($_REQUEST['filter_input'] == 'iduser') {
-        $articlesParams[] = new ComparisonOperation($_REQUEST['filter_type'], new Operator('is', 'integer'), $_REQUEST['filter_input']);
-    } elseif ($_REQUEST['filter_type'] == 'publish_date') {
-        $selectedDate = $_REQUEST['filter_input'];
-        $articlesParams[] = new ComparisonOperation('publish_date', new Operator('is', 'date'), $selectedDate);
-    } elseif ($_REQUEST['filter_type'] == 'publish_range') {
-        $intervalDates = explode(',', $_REQUEST['filter_input']);
-        $articlesParams[] = new ComparisonOperation('publish_date', new Operator('greater_equal', 'date'), $intervalDates[0]);
-        $articlesParams[] = new ComparisonOperation('publish_date', new Operator('smaller_equal', 'date'), $intervalDates[1]);
-    } elseif ($_REQUEST['filter_type'] == 'topic') {
-        $topic = $_REQUEST['filter_input'];
-        $articlesParams[] = new ComparisonOperation('topic', new Operator('is', 'integer'), $topic);
-    } else {
-        $articlesParams[] = new ComparisonOperation($_REQUEST['filter_type'], new Operator('is', 'string'), $_REQUEST['filter_input']);
+foreach ($filters as $name => $opts) {
+    if (!empty($_REQUEST[$name])) {
+        $field = !empty($fields[$name]) ? $fields[$name] : $name;
+        $articlesParams[] = new ComparisonOperation($field, new Operator($opts[0], $opts[1]), $_REQUEST[$name]);
     }
 }
 
-$sort = '';
-// Sorted?
-if(strlen($_GET['sort']) > 0) {
-    $sort = $_GET['sort'];
+// search
+if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
+    $search_phrase = $_REQUEST['sSearch'];
+    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('is', 'integer'), $search_phrase);
 }
 
-// Sort dir?
-if((strlen($_GET['dir']) > 0) && ($_GET['dir'] == 'desc')) {
-    $sortDir = 'desc';
-} else {
-    $sortDir = 'asc';
+// sorting
+$sortOptions = array(
+    2 => 'byname',
+    12 => 'bypopularity',
+    14 => 'bypublishdate',
+    15 => 'bycreationdate',
+);
+
+$sortBy = 'bypublishdate';
+$sortDir = 'desc';
+$sortingCols = min(1, (int) $_REQUEST['iSortingCols']);
+for ($i = 0; $i < $sortingCols; $i++) {
+    $sortOptionsKey = (int) $_REQUEST['iSortCol_' . $i];
+    if (!empty($sortOptions[$sortOptionsKey])) {
+        $sortBy = $sortOptions[$sortOptionsKey];
+        $sortDir = $_REQUEST['sSortDir_' . $i];
+        break;
+    }
 }
 
-switch($sort) {
-case 'art_reads': $sortBy = 'bypopularity'; break;
-case 'art_publishdate': $sortBy = 'bypublishdate'; break;
-case 'art_name': $sortBy = 'byname'; break;
-case 'art_creationdate':
-default:
-    $sortBy = 'bycreationdate'; break;
-}
-$articles = Article::GetList($articlesParams, array(array('field'=>$sortBy, 'dir'=>$sortDir)), 0, 100, $articlesCount, true);
+// get articles
+$articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
 
 $return = array();
 foreach($articles as $article) {
@@ -129,31 +120,33 @@ foreach($articles as $article) {
     } else {
         $commentsNo = 'No';
     }
+
     $return[] = array(
-        $article->getTitle(),
+        $article->getArticleNumber(),
+        $article->getLanguageId(),
+        sprintf('<a href="%s%s" title="%s %s">%s</a>',
+            $articleLink, $articleLinkParams,
+            getGS('Edit'), $article->getName(),
+            $article->getName()),
         $tmpArticleType->getDisplayName(),
+        $tmpUser->getRealName(),
         $tmpAuthor->getName(),
+        $article->getWorkflowStatus(),
+        $onFrontPage,
+        $onSectionPage,
+        $imagesNo,
         $topicsNo,
         $commentsNo,
         $article->getReads(),
-        $article->getLastModified(),
-        $article->getPublishDate(),
         $article->getCreationDate(),
-        $article->isLocked(),
-        $lockInfo,
-        $lockHighlight,
-        $articleLink,
-        $previewLink,
-        //$article->getLanguageId(),
+        $article->getPublishDate(),
+        $article->getLastModified(),
     );
 }
 
-$return = array_slice($return, $startIndex, $results);
-
 echo(json_encode(array(
-    'iTotalRecords' => $articlesCount,
-    'iTotalDisplayRecords' => sizeof($return),
+    'iTotalRecords' => Article::GetTotalCount(),
+    'iTotalDisplayRecords' => $articlesCount,
     'sEcho' => $_GET['sEcho'],
-    'sColumns' => 'name,author,type,date',
     'aaData' => $return,
 )));

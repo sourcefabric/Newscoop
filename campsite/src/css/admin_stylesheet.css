@@ -1317,7 +1317,7 @@ ul#edit-images li > div {
     border: 1px solid #ccc;
 }
 
-fieldset.controls, fieldset.buttons {
+fieldset.controls, fieldset.buttons, fieldset.filters, fieldset.actions {
     margin: 13px 21px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -1333,6 +1333,10 @@ fieldset.buttons.active {
 
 fieldset.controls div {
     margin-bottom: 5px;
+}
+
+fieldset.filters select {
+    margin-right: 13px;
 }
 
 fieldset dl {
@@ -1523,4 +1527,26 @@ ul.tree.sortable .icon.delete span {
 
 .tabs.authors {
     margin: 5px 21px 21px;
+}
+
+.dataTables_wrapper {
+    margin: 13px 21px;
+    border: 1px solid #c5dbec;
+}
+
+.dataTables_wrapper table.datatable {
+    width: 100%;
+}
+
+table.datatable tbody td {
+    border: 1px solid #c5dbec;
+    border-bottom: none;
+}
+
+table.datatable tbody tr:first-child td {
+    border-top: none;
+}
+
+table.datatable tbody tr.even td {
+    background-color: #f5f5f5;
 }

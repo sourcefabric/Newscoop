@@ -2512,6 +2512,18 @@ class Article extends DatabaseObject {
         return $articlesList;
     } // fn GetList
 
+    /**
+     * Get total articles count in db.
+     *
+     * @return int
+     */
+    public static function GetTotalCount()
+    {
+        global $g_ado_db;
+
+        $sql = 'SELECT COUNT(*) FROM Articles';
+        return $g_ado_db->GetOne($sql);
+    }
 
     private static function ProcessCustomField(array $p_comparisonOperation, $p_languageId = null)
     {

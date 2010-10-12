@@ -1,53 +1,39 @@
 <?php
+
 header('Content-type: application/json');
 
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
 if (!SecurityToken::isValid()) {
-    require_once('php/JSON.php');
-    $json = new Services_JSON();
-    echo($json->encode(array(
-        "success" => false,
-        "error" => getGS('Invalid security token!'),
-        "goto" => '',
-    )));
+    echo json_encode(array(
+        'success' => false,
+        'message' => getGS('Invalid security token!'),
+    ));
     exit;
 }
 
-$f_article_id = Input::Get('articleid', 'int', 0);
-$f_language_selected = 1;
+// get input
 $f_action = Input::Get('action', 'string', null, true);
-$f_target = Input::Get('target', 'string', null, true);
-$f_value = Input::Get('value', 'string', null, true);
+$f_language_selected = (int) camp_session_get('f_language_selected', 0); 
+$f_items = Input::Get('items', 'array', array(), true);
+if (!Input::IsValid()) {
+    echo json_encode(array(
+        'success' => false,
+        'message' => getGS('Invalid input.'),
+    ));
+    exit;
+}
 
 $success = false;
-$message = '';
-$goto = '';
-
-if (!Input::IsValid()) {
-
-}
-
-$articleObj = new Article($f_language_selected, $f_article_id);
-//
-if ($articleObj->userCanModify($g_user)) {
-
-}
-
-$articles = $_POST;
 $articleCodes = array();
 $flatArticleCodes = array();
 $groupedArticleCodes = array();
-foreach ($articles as $var => $articleCode) {
-    if (strpos($var, 'row') === false) {
-        continue;
-    }
-    list($articleId, $languageId) = explode("_", $articleCode);
+foreach ($f_items as $articleCode) {
+    list($articleId, $languageId) = explode('_', $articleCode);
     $articleCodes[] = array("article_id" => $articleId, "language_id" => $languageId);
     $flatArticleCodes[] = $articleId . '_' . $languageId;
     $groupedArticleCodes[$articleId][$languageId] = $languageId;
 }
-
 
 switch($f_action) {
 case 'delete':
@@ -255,11 +241,8 @@ if ($f_target == 'art_status') {
     }
 }
 
-require_once('php/JSON.php');
-$json = new Services_JSON();
-echo($json->encode(array(
-	"success" => $success,
-	"message" => $message,
-	"goto" => $goto,
-)));
-?>
+echo json_encode(array(
+    'success' => $success,
+    'message' => is_array($message) ? implode("\n", $message) : $message,
+));
+exit;
