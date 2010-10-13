@@ -156,7 +156,7 @@
     } );
 
     function addAlias(){
-        $("#aliases").append('<input type="text" class="input_text" name="alias[]">');
+        $("#aliases").append('<input type="text" class="input_text" name="alias[]" size="41" spellcheck="false" style="width:322px;margin-left:127px">');
     }
 
     function getRow(id){
@@ -173,7 +173,7 @@
 
     function changeBio(id){
         $.getJSON('authors_ajax/detail.php?id=' + id + '&getBio=1&language=' + $("#lang").val(), function(data) {
-            $("#bioArea").html(data.biography);
+            $("#biography").html(data.biography);
             $("#lang_first_name").val(data.first_name);
             $("#lang_last_name").val(data.last_name);
           });
