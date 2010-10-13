@@ -1,9 +1,10 @@
 <table border="0" cellspacing="0" cellpadding="0" width="100%" class="breadcrumbHolder"><tr><td class="breadcrumbTD"><span><span class="breadcrumb">Configure</span></span><span class="breadcrumb_separator">&nbsp;</span></td></tr><tr><td class="activeSection" ><span class='breadcrumb_intra_separator'><span class="breadcrumb_active">Manage Author</span></span><span>&nbsp;</span></td></tr></table>
-<script type="text/javascript" src="javascript/campsite.js"></script>
-<script type="text/javascript" src="javascript/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="javascript/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="javascript/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="javascript/fValidate/fValidate.validators.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
+
 <!--Content-->
 <div class="floatBox">
 <?php
