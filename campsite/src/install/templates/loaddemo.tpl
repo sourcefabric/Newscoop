@@ -3,6 +3,11 @@
 <script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
 <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">
@@ -36,9 +41,10 @@
       <td>
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="3">
+          <th colspan="3" align="left" class="innerHead">
+
             <div class="subtitle">Load Sample Data:</div>
-          </td>
+          </th>
         </tr>
         <tr>
           <td width="35%" valign="top">
@@ -56,29 +62,24 @@
             </div>
           </td>
           <td width="5%">&nbsp;</td>
-          <td width="60%" valign="top">
+          <td valign="top" width="60%" class="template-container">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
               <label for="install_demo">Please choose a demo template:</label> &nbsp;
-              <input
-                type="radio" id="install_demo" name="install_demo" value="0"
-                {{ if !$dm.loaddemo }} checked {{ /if }}/> &nbsp; No, thanks!
+              <input id="install_demo_no" name="install_demo" value="0" type="radio" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
             </div>
-
           {{ foreach from=$sample_templates key="step" item="t" }}
-          <input
-              type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
-          {{ $t }}
+
+
+        <div class="template-header">
+             <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label>{{ $t }}</label></div>
+
           <div class="demo_img">
-              <img src="sample_templates/{{ $t }}/screenshot.jpg" />
-              <span style="vertical-align:top">
-                  {{include file="./../sample_templates/$t/description.txt"}}
-              </span>
+              <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg"  rel="lightbox" title="{{ $t }}" /></a>
+              <p>{{include file="./../sample_templates/$t/description.txt"}}</p>
           </div>
+
           {{ /foreach }}
-            <div class="demo_img">
-              <img src="img/campsite_demo.png" />
-            </div>
           </td>
         </tr>
         </table>
