@@ -23,6 +23,7 @@ $filters = array(
     'publish_date_to' => array('smaller_equal', 'date'),
     'author' => array('is', 'integer'),
     'topic' => array('is', 'integer'),
+    'workflow_status' => array('is', 'string'),
 );
 
 // mapping form name => db name
@@ -124,7 +125,7 @@ foreach($articles as $article) {
             $article->getName()),
         $tmpArticleType->getDisplayName(),
         $tmpUser->getRealName(),
-        $tmpAuthor->getName(),
+        $tmpAuthor->getFirstName(),
         $article->getWorkflowStatus(),
         $onFrontPage,
         $onSectionPage,
