@@ -22,6 +22,7 @@ $filters = array(
     'publish_date_from' => array('greater_equal', 'date'),
     'publish_date_to' => array('smaller_equal', 'date'),
     'author' => array('is', 'integer'),
+    'topic' => array('is', 'integer'),
 );
 
 // mapping form name => db name

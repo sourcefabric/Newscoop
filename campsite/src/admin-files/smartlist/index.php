@@ -21,6 +21,7 @@ if (isset($_SESSION['f_language_selected'])) {
     $f_old_language_selected = 0;
 }
 $f_language_selected = (int)camp_session_get('f_language_selected', 0); 
+
 // Get all publications
 $publications = Publication::GetPublications();
 $publicationsNo = is_array($publications) ? sizeof($publications) : 0;
@@ -36,13 +37,6 @@ $sections = Section::GetSections(Null, Null, $f_language_id);
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
 
-// Get the whole topics tree
-$allTopics = Topic::GetTree();
-
-// Get Authors
-$authors = Author::GetAllExistingNames();
-
-//
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), ''); $crumbs[] = array(getGS('Article List'), '');
 echo camp_html_breadcrumbs($crumbs);
@@ -80,7 +74,6 @@ echo camp_html_breadcrumbs($crumbs);
 
 <fieldset class="filters">
     <legend><?php putGS('Filters'); ?></legend>
-
     <dl>
         <dt><label for="filter_date"><?php putGS('Date'); ?></label></dt>
         <dd><input id="filter_date" type="text" name="publish_date" class="date" /></dd>
@@ -97,8 +90,36 @@ echo camp_html_breadcrumbs($crumbs);
         <dt><label for="filter_author"><?php putGS('Author'); ?></label></dt>
         <dd><select name="author">
             <option value=""><?php putGS('All'); ?></option>
-            <?php foreach ($authors as $id => $name) { ?>
+            <?php foreach (Author::GetAllExistingNames() as $id => $name) { ?>
             <option value="<?php echo $name; ?>"><?php echo $name; ?></option>
+            <?php } ?>
+        </select></dd>
+    </dl>
+    <dl>
+        <dt><label for="filter_creator"><?php putGS('Creator'); ?></label></dt>
+        <dd><select name="creator">
+            <option value=""><?php putGS('All'); ?></option>
+            <?php foreach (User::GetUsers() as $creator) { ?>
+            <option value="<?php echo $creator->getUserId(); ?>"><?php echo $creator->getRealName(); ?></option>
+            <?php } ?>
+        </select></dd>
+    </dl>
+    <dl>
+        <dt><label for="filter_status"><?php putGS('Status'); ?></label></dt>
+        <dd><select name="status">
+            <option value=""><?php putGS('All'); ?></option>
+            <option value="Y"><?php putGS('Published'); ?></option>
+            <option value="N"><?php putGS('New'); ?></option>
+            <option value="S"><?php putGS('Submitted'); ?></option>
+            <option value="M"><?php putGS('Publish with issue'); ?></option>
+        </select></dd>
+    </dl>
+    <dl>
+        <dt><label for="filter_topic"><?php putGS('Topic'); ?></label></dt>
+        <dd><select name="topic">
+            <option value=""><?php putGS('All'); ?></option>
+            <?php foreach (Topic::GetTopics($f_language_id) as $topic) { ?>
+            <option value="<?php echo $topic->getTopicId(); ?>"><?php echo $topic->getName($f_language_id); ?></option>
             <?php } ?>
         </select></dd>
     </dl>
@@ -144,9 +165,7 @@ echo camp_html_breadcrumbs($crumbs);
     </tr>
 </thead>
 <tbody>
-    <tr>
-        <td colspan="15"><?php putGS('Loading data'); ?></td>
-    </tr>
+    <tr><td colspan="16"><?php putGS('Loading data'); ?></td></tr>
 </tbody>
 </table>
 
@@ -260,8 +279,8 @@ $('input.date').datepicker({
 });
 
 // check all/none
-$('table.datatable th input[type=checkbox]').change(function() {
-    $('table.datatable td input[type=checkbox]').attr('checked', $(this).attr('checked'));
+$('table.datatable thead input[type=checkbox]').change(function() {
+    $('table.datatable tbody input[type=checkbox]').attr('checked', $(this).attr('checked'));
 });
 
 });
