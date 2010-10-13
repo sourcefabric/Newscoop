@@ -71,12 +71,19 @@ if ($id > 0) {
                     <label>Aliases:</label>
                     <span id="aliases">
 <?php
+$count=0;
 if (isset($aliases) && is_array($aliases)) {
     foreach ($aliases as $alias) {
-        $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;" value="%s">';
+        $count++;
+        $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px" value="%s">';
         echo sprintf($input, $alias['alias']);
     }
-}?>                 <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:322px;">
+}
+if ($count==0){
+?><input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:322px;">
+<?php } else {?>     <input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px" value="">
+
+<?php }?>
                     </span><span onclick="addAlias()"><a href="#" class="addButton"></a></span>
                 </li>
                 <li>

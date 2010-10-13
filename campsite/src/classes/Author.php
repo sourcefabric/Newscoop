@@ -276,7 +276,7 @@ class Author extends DatabaseObject {
         $g_ado_db->Execute($sql);
         foreach ($aliases as $alias)
         {
-            if (strlen($alias)>0)
+            if (strlen(trim($alias))>0)
             {
                 $sql = "INSERT INTO Authorsaliases(IdAuthor,alias) VALUES('%s','%s')";
                 $sql = sprintf($sql, $this->getId(), $alias);
