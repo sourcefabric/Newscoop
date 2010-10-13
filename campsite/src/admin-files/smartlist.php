@@ -280,7 +280,7 @@ $('.actions select').change(function() {
     });
 
     if (items.length == 0) {
-        alert("<?php putGS('Select some articles first.'); ?>");
+        dialog_alert('<?php putGS('Select some article first.'); ?>', true);
         return;
     }
 
@@ -290,13 +290,45 @@ $('.actions select').change(function() {
         '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
     }, function(data, textStatus) {
         if (!data.success) {
-            alert('Error: ' + data.message);
+            dialog_alert('<?php putGS('Error'); ?>: ' + data.message, true);
         } else {
-            // TODO dialog
+            if (items.length > 1) {
+                dialog_alert('<?php putGS('Articles updated.'); ?>');
+            } else {
+                dialog_alert('<?php putGS('Article updated.'); ?>');
+            }
         }
         table.fnDraw(true);
     });
 });
+
+/**
+ * Create alert via JQueryUI
+ *
+ * @param string message
+ * @param bool error
+ *
+ * @return void
+ */
+function dialog_alert(message, error)
+{
+    if (error) {
+        title = '<?php putGS('Error'); ?>';
+    } else {
+        title = '<?php putGS('Info'); ?>';
+    }
+
+    $('<div title="' + title + '"><p>' + message + '</p></div>')
+        .appendTo('body')
+        .dialog({
+            modal: true,
+            buttons: {
+                Ok: function() {
+                    $(this).dialog('close');
+                }
+            }
+        });
+}
 
 // datepicker for dates
 $('input.date').datepicker({
