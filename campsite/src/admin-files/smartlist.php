@@ -10,21 +10,24 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Author.php");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("universal_list");
 
-// Get all publications
+// get publications
 $publications = Publication::GetPublications();
 $publicationsNo = is_array($publications) ? sizeof($publications) : 0;
 $menuPubTitle = $publicationsNo > 0 ? getGS('All Publications') : getGS('No publications found');
 
-// Get all issues
+// get issues
 $issues = Issue::GetIssues(Null, $f_language_id);
 $issuesNo = is_array($issues) ? sizeof($issues) : 0;
 $menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
 
-// Get all sections
+// get sections
 $sections = Section::GetSections(Null, Null, $f_language_id);
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
 ?>
+<div class="smartlist">
+
+<div class="controls">
 
 <fieldset class="filters">
     <legend><?php putGS('Select issue'); ?></legend>
@@ -56,8 +59,8 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
     </select>
 </fieldset>
 
-<fieldset class="filters">
-    <legend><?php putGS('Filters'); ?></legend>
+<fieldset class="filters more">
+    <legend><?php putGS('Filter'); ?></legend>
     <dl>
         <dt><label for="filter_date"><?php putGS('Date'); ?></label></dt>
         <dd><input id="filter_date" type="text" name="publish_date" class="date" /></dd>
@@ -74,13 +77,12 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
         <dt><label for="filter_author"><?php putGS('Author'); ?></label></dt>
         <dd><select name="author">
             <option value=""><?php putGS('All'); ?></option>
-            <?php foreach (Author::GetAllExistingNames() as $id => $name) { ?>
-            <option value="<?php echo $name; ?>"><?php echo $name; ?></option>
+            <?php foreach (Author::GetAuthors() as $author) { ?>
+            <option value="<?php echo $author->getId(); ?>"><?php echo $author->getName(); ?></option>
             <?php } ?>
         </select></dd>
     </dl>
-    <dl>
-        <dt><label for="filter_creator"><?php putGS('Creator'); ?></label></dt>
+    <dl> <dt><label for="filter_creator"><?php putGS('Creator'); ?></label></dt>
         <dd><select name="creator">
             <option value=""><?php putGS('All'); ?></option>
             <?php foreach (User::GetUsers() as $creator) { ?>
@@ -90,12 +92,12 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
     </dl>
     <dl>
         <dt><label for="filter_status"><?php putGS('Status'); ?></label></dt>
-        <dd><select name="status">
+        <dd><select name="workflow_status">
             <option value=""><?php putGS('All'); ?></option>
-            <option value="Y"><?php putGS('Published'); ?></option>
-            <option value="N"><?php putGS('New'); ?></option>
-            <option value="S"><?php putGS('Submitted'); ?></option>
-            <option value="M"><?php putGS('Publish with issue'); ?></option>
+            <option value="published"><?php putGS('Published'); ?></option>
+            <option value="new"><?php putGS('New'); ?></option>
+            <option value="submitted"><?php putGS('Submitted'); ?></option>
+            <option value="withissue"><?php putGS('Publish with issue'); ?></option>
         </select></dd>
     </dl>
     <dl>
@@ -110,9 +112,9 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
 </fieldset>
 
 <fieldset class="actions">
-    <legend><?php putGS('Actions'); ?></legend>
+    <legend><?php putGS('Select action'); ?></legend>
     <select name="action">
-        <option value="0">---</option>
+        <option value="">---</option>
         <option value="workflow_publish"><?php putGS('Status: Publish'); ?></option>
         <option value="workflow_submit"><?php putGS('Status: Submit'); ?></option>
         <option value="workflow_new"><?php putGS('Status: Set New'); ?></option>
@@ -127,10 +129,13 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
     </select>
 </fieldset>
 
+</div><!-- /.controls -->
+<div class="data">
+
 <table cellpadding="0" cellspacing="0" class="datatable">
 <thead>
     <tr>
-        <th><input type="checkbox" name="all" value="1" /></th>
+        <th><input type="checkbox" /></th>
         <th><?php echo putGS('Language'); ?></th>
         <th><?php echo putGS('Name'); ?></th>
         <th><?php echo putGS('Type'); ?></th>
@@ -153,6 +158,8 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
 </tbody>
 </table>
 
+</div><!-- /.data -->
+
 <style>
 @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
 @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/ColVis.css);
@@ -167,11 +174,11 @@ filters = [];
 $(document).ready(function() {
 
 var table = $('table.datatable').dataTable({
-    'bProcessing': true,
+    'bProcessing': false,
     'bServerSide': true,
     'sAjaxSource': '/<?php echo $ADMIN; ?>/smartlist.data.php',
     'bJQueryUI': true,
-    'sDom': '<"H"Cfrlip>t<"F"lip>',
+    'sDom': '<"H"Cfrip>t<"F"ipl>',
     'fnServerData': function (sSource, aoData, fnCallback) {
         for (var i in filters) {
             aoData.push({
@@ -182,7 +189,11 @@ var table = $('table.datatable').dataTable({
         $.getJSON(sSource, aoData, function(json) {
             fnCallback(json);
         });
-    },   
+    }, 
+    'bStateSave': true,
+    'sScrollX': '100%',
+    'sScrollXInner': '110%',
+    'bAutoWidth': false,
     'aoColumnDefs': [
         { // inputs for id
             'fnRender': function(obj) {
@@ -190,6 +201,21 @@ var table = $('table.datatable').dataTable({
                 return '<input type="checkbox" name="' + id + '" />';
             },
             'aTargets': [0]
+        },
+        { // status workflow
+            'fnRender': function(obj) {
+                switch (obj.aData[6]) {
+                    case 'Y':
+                        return '<?php putGS('Published'); ?>';
+                    case 'N':
+                        return '<?php putGS('New'); ?>';
+                    case 'S':
+                        return '<?php putGS('Submitted'); ?>';
+                    case 'M':
+                        return '<?php putGS('Pub. With Issue'); ?>';
+                }
+            },
+            'aTargets': [6]
         },
         { // hide columns
             'bVisible': false,
@@ -199,21 +225,39 @@ var table = $('table.datatable').dataTable({
             'bSortable': false,
             'aTargets': [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 15],
         },
-        { // width for name
-            'sWidth': '15em',
+        {
+            'sClass': 'id',
+            'aTargets': [0],
+        },
+        {
+            'sClass': 'name',
             'aTargets': [2],
         },
-        { // width for flags + numbers
-            'sWidth': '7em',
+        {
+            'sClass': 'short',
             'aTargets': [6, 7, 8, 9, 10, 11, 12]
+        },
+        {
+            'sClass': 'date',
+            'aTargets': [-1, -2, -3]
         },
     ],
     'oColVis': { // disable Show/hide column
         'aiExclude': [0, 1]
     },
-    'bStateSave': true,
-    'sScrollX': '100%',
-    'sScrollXInner': '110%',
+    'fnDrawCallback': function() {
+        $('table.datatable tbody tr').click(function() {
+            $(this).toggleClass('selected');
+            input = $('input[type=checkbox]', $(this)).attr('checked', $(this).hasClass('selected'));
+        });
+        $('table.datatable tbody input[type=checkbox]').change(function() {
+            if ($(this).attr('checked')) {
+                $(this).parents('tr').addClass('selected');
+            } else {
+                $(this).parents('tr').removeClass('selected');
+            }
+        });
+    },
 });
 
 // filters handle
@@ -227,9 +271,8 @@ $('.filters select, .filters input').change(function() {
 
 // actions handle
 $('.actions select').change(function() {
-    var action_ary = $(this).val().split(/[[\]]/);
-    var action = action_ary[0];
-    var param = action_ary[1];
+    var action = $(this).val();
+    $(this).val('');
 
     var items = [];
     $('table.datatable td input:checkbox:checked').each(function() {
@@ -237,7 +280,6 @@ $('.actions select').change(function() {
     });
 
     if (items.length == 0) {
-        $(this).val('0');
         alert("<?php putGS('Select some articles first.'); ?>");
         return;
     }
@@ -250,7 +292,7 @@ $('.actions select').change(function() {
         if (!data.success) {
             alert('Error: ' + data.message);
         } else {
-            alert('Info: ' + data.message);
+            // TODO dialog
         }
         table.fnDraw(true);
     });
@@ -259,13 +301,50 @@ $('.actions select').change(function() {
 // datepicker for dates
 $('input.date').datepicker({
     dateFormat: 'yy-mm-dd',
-    showButtonPanel: true
 });
 
 // check all/none
 $('table.datatable thead input[type=checkbox]').change(function() {
-    $('table.datatable tbody input[type=checkbox]').attr('checked', $(this).attr('checked'));
+    var checked = $(this).attr('checked');
+    $('table.datatable tbody input[type=checkbox]').each(function() {
+        $(this).attr('checked', checked);
+        if (checked) {
+            $(this).parents('tr').addClass('selected');
+        } else {
+            $(this).parents('tr').removeClass('selected');
+        }
+    });
+});
+
+// filters managment
+$('fieldset.filters.more').each(function() {
+    $('dl', $(this)).hide();
+    $('<select class="filters"></select>')
+        .appendTo($(this))
+        .change(function() {
+        var value = $(this).val();
+        $('option', $(this)).detach();
+        $(this).append('<option value=""><?php putGS('Filter by...'); ?></option>');
+        $('dl', $(this).parent()).each(function() {
+            var label = $('label', $(this)).text();
+            if (label == value) {
+                $(this).show();
+                $(this).insertBefore($('select.filters', $(this).parent()));
+                if ($('a', $(this)).length == 0) {
+                    $('<a class="detach">X</a>').appendTo($('dd', $(this)))
+                        .click(function() {
+                            $(this).parents('dl').hide();
+                            $('input, select', $(this).parent()).val('').change();
+                            $('select.filters').change();
+                        });
+                }
+            } else if ($(this).css('display') == 'none') {
+                $(this).siblings('select.filters').append('<option value="'+label+'">'+label+'</option>');
+            }
+        });
+    }).change();
 });
 
 });
 </script>
+</div><!-- /.smartlist -->
