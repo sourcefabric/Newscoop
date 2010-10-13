@@ -69,6 +69,36 @@ function uncheckAllLang(elem)
 }
 </script>
 
+<fieldset class="controls search">
+    <legend><?php putGS('Search'); ?></legend>
+    <input type="text" name="search" /> <input type="submit" name="search_submit" value="<?php putGS('Search'); ?>" />
+</fieldset>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('input[name=search]').change(function() {
+        $('ul.tree.sortable *').removeClass('match');
+        $('ul.tree.sortable > li').show();
+        $('ul.tree.sortable').sortable('option', 'disabled', true);
+        if ($(this).val() == "") {
+            $('ul.tree.sortable').sortable('option', 'disabled', false);
+            return;
+        }
+        var re = new RegExp($(this).val(), "i");
+        $('ul.tree.sortable > li').each(function() {
+            var li = $(this);
+            $('strong', li).each(function() {
+                if (!li.hasClass('match') && $(this).text().search(re) >= 0) {
+                    li.addClass('match');
+                    $(this).parent().addClass('match');
+                }
+            });
+        });
+        $('ul.tree.sortable > li').not('.match').hide();
+        $('ul.tree.sortable > li.match > ul').show();
+    });
+});
+</script>
+
 <?php  if ($g_user->hasPermission('ManageTopics')) { ?>
 <form method="post" action="do_add.php" onsubmit="return validate(this);">
 <?php echo SecurityToken::FormParameter(); ?>
@@ -252,6 +282,7 @@ $('ul.tree.sortable h3 strong').click(function() {
     }
     $('fieldset', $(this).parent()).toggle();
     $(this).parent().toggleClass('active');
+    return false;
 });
 
 // make tree sortable
