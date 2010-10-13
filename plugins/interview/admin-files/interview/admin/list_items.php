@@ -8,7 +8,7 @@ function ajax_action(action)
     $('f_action').value = action;
     
     var myAjax = new Ajax.Request(
-            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
+            "ajax_action.php",
             { 
                 method: 'get',
                 parameters: Form.serialize($('items_list')),
@@ -198,6 +198,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
               <TD style="padding-left: 5px; font-weight: bold;">
                 <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p($count); ?>);">
                 <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p($count); ?>);">
+                <input type="button" class="button" value="Add new" onclick="window.open('edit_item.php?f_item_id=0&f_interview_id=<?php p($f_interview_id) ?>&questioneer=<?php echo $g_user->getUserId(); ?>', 'edit_item', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=450, top=200, left=100');" />
               </TD>
             <?php } ?>
         </TR>

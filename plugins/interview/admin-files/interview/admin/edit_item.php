@@ -44,7 +44,13 @@ if (!Input::IsValid()) {
 }
 
 $InterviewItem = new InterviewItem(null, $f_item_id);
-
+if ($InterviewItem->getId()==0){
+    $InterviewItem->setInterviewId(Input::Get('f_interview_id','int',0));
+    $questioneer = Input::Get('questioneer','int',0);
+    if ($questioneer>0){
+        $InterviewItem->setQuestioneerwId($questioneer);
+    }
+}
 if ($InterviewItem->store()) {
     ?>
     <script language="javascript">

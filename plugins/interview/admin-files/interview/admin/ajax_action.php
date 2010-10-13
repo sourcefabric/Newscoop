@@ -1,10 +1,7 @@
 <?php
 camp_load_translation_strings("plugin_interview");
 
-if (!SecurityToken::isValid()) {
-    echo getGS('Invalid security token!');
-    exit;
-}
+
 
 function camp_interview_permission_check($p_action)
 {

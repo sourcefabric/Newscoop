@@ -372,9 +372,21 @@ class InterviewItem extends DatabaseObject {
      */
     public function getInterviewId()
     {
-        return $this->getProperty('interview_id');
+        return $this->getProperty('fk_interview_id');
     }
 
+    public function setInterviewId($p_value)
+    {
+        return $this->setProperty('fk_interview_id', $p_value);
+    }
+    public function getQuestioneerwId()
+    {
+        return $this->getProperty('fk_questioneer_user_id');
+    }
+    public function setQuestioneerwId($p_value)
+    {
+        return $this->setProperty('fk_questioneer_user_id', $p_value);
+    }
     /**
      * Get the name/title
      *
@@ -475,6 +487,11 @@ class InterviewItem extends DatabaseObject {
                 'constant'  => $data['item_id']
             ),
             array(
+                'element'   => 'fk_questioneer_user_id',
+                'type'      => 'hidden',
+                'constant'  => $data['fk_questioneer_user_id']
+            ),
+            array(
                 'element'   => 'f_question',
                 'type'      => 'textarea',
                 'label'     => getGS('Question'),
@@ -550,7 +567,11 @@ class InterviewItem extends DatabaseObject {
 
         if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
-
+            if ($this->getId()==0) {
+                $this->create();
+                $this->setInterviewId($data['f_interview_id']);
+                $this->setQuestioneerwId($data['fk_questioneer_user_id']);
+            }
             if (strlen($data['f_question'])) {
                 $this->setProperty('question', $data['f_question']);
             }
