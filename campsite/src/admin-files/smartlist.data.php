@@ -144,3 +144,4 @@ echo(json_encode(array(
     'sEcho' => $_GET['sEcho'],
     'aaData' => $return,
 )));
+exit;
