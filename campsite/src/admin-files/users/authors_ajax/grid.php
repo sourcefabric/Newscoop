@@ -20,13 +20,13 @@ function l_getType($type)
     }
 }
 ?>
-
-<table border="0" cellspacing="0" cellpadding="3" class="table_list" id="grid" style="width:100%; margin:0;">
-    <thead class="table_list_header">
+<a href="#" class="addButtonText" onclick="getRow(0)">Add new Author</a>
+<table  id="gridx" style="width:100%; margin:0;">
+    <thead >
         <tr>
             <th valign="top">Author</th>
             <th valign="top">Type</th>
-            <th valign="top" class="last">Delete</th>
+            <th valign="top">Delete</th>
         </tr>
     </thead>
   <tbody>

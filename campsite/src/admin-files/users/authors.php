@@ -6,12 +6,13 @@
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
 
 <!--Content-->
-<div class="floatBox">
+<div class="floatBox" style="margin-top:5px">
 <?php
     require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
     require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
     require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
     require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+
     // TODO: permissions
     if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
         camp_html_add_msg(getGS("Unable to add new image, target directory is not writable."));
@@ -32,7 +33,7 @@
         $author->delete();
         $logtext = getGS('Author id "$1" deleted.', $del_id);
         Log::Message($logtext, $g_user->getUserId(), 173);
-        echo getGS("Author deleted.");
+        camp_html_add_msg(getGS("Author deleted."));
     }
     $first_name =Input::Get("first_name");
     $last_name = Input::Get("last_name");
@@ -83,20 +84,21 @@
         
         $logtext = getGS('Author information has been changed for "$1"', $author->getName());
         Log::Message($logtext, $g_user->getUserId(), 172);
-        echo getGS("Author saved.");
+        camp_html_add_msg(getGS("Author saved."));
     } else if ($id>-1 && !$can_save)
     {
-        echo getGS("Please fill at least first name and last name.");
+        camp_html_add_msg(getGS("Please fill at least first name and last name."));
     }
     $author = new Author(1);
     if ($id==-1) $id=0;
+    camp_html_display_msgs();
 ?>
 
 
     <div class="editBox">
 
 <div class="formBlock formBlockSolo ">
-              <input type="text" id="form_search" onchange="doSearch()" class="input_text" size="41" style="width:370px;"><a href="#" class="arrowButton"></a>
+              <input type="text" id="form_search" onchange="doSearch()" onkeyup="doSearch()" class="input_text" size="41" style="width:370px;"><a href="#" class="arrowButton"></a>
       </div>
         <div class="formBlock formBlockSolo">
 <div class="scrollHolder">
@@ -139,18 +141,17 @@
 
 
 <div id="leftcolumn" class="box_table" style="float:left">
-<div id="detailtable" class="box_table" >Loading Data...</div>
+<div id="detailtable" class="" >Loading Data...</div>
 </div>
 <script type="text/javascript" charset="utf-8">
     var oTable;
     $(document).ready(function() {
         $.get('authors_ajax/grid.php',function (data){
             $("#gridtable").html(data);
-            oTable=$('#grid').dataTable( {
+            oTable=$('#gridx').dataTable( {
                 "bLengthChange": false,
-                "bFilter": true,
-                "sPaginationType": "full_numbers"} );
-            $("#grid_filter").html('');
+                "bFilter": true, 'bJQueryUI':true} );
+            $("#gridx_filter").html('');
         });
         getRow(<?php echo $id; ?>);
     } );
