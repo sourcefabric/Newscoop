@@ -383,7 +383,7 @@ if ($f_edit_mode == "edit") { ?>
                     }
                     ?>
                  
-                           <input type="text" name="f_article_author[]" id="f_article_author0" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthor0" onclick="deleteAuthor('0');">
+                           <input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
                     <?php
 
                     ?>
