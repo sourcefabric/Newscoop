@@ -1,4 +1,5 @@
-tinyMCE.addI18n('fr.advlink_dlg',{
+tinyMCE.addI18n('fr.campsiteimage',{
+campsiteimage_desc:"Ins\u00E9rer/\u00C9diter lien",
 title:"Ins\u00E9rer/\u00C9diter lien",
 url:"URL du lien",
 target:"Cible",

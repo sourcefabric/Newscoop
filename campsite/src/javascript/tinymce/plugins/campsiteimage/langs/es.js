@@ -1,4 +1,5 @@
-tinyMCE.addI18n('es.advlink_dlg',{
+tinyMCE.addI18n('es.campsiteimage',{
+campsiteimage_desc:"Insertar imagen",
 title:"Insertar/editar hiperv\u00EDnculo interno",
 url:"URL del hiperv\u00EDnculo",
 target:"Destino",

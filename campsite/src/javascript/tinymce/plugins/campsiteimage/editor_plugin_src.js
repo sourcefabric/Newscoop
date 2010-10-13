@@ -6,14 +6,16 @@
  */
 
 (function() {
-    tinymce.create('tinymce.plugins.CampsiteImage', {
+    tinymce.PluginManager.requireLangPack('campsiteimage');
+
+    tinymce.create('tinymce.plugins.campsiteimage', {
         init : function(ed, url) {
             this.editor = ed;
             editorId = ed.id;
             articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
 
             // Register commands
-            ed.addCommand('mceCampsiteImage', function() {
+            ed.addCommand('mcecampsiteimage', function() {
                 var se = ed.selection;
                 var url_params = '';
 
@@ -58,11 +60,11 @@
             // Register buttons
             ed.addButton('campsiteimage', {
                 title : 'campsiteimage.campsiteimage_desc',
-                cmd : 'mceCampsiteImage',
+                cmd : 'mcecampsiteimage',
                 image : url + '/img/campsiteimage.gif'
             });
 
-            ed.addShortcut('ctrl+g', 'campsiteimage.campsiteimage_desc', 'mceCampsiteImage');
+            ed.addShortcut('ctrl+g', 'campsiteimage.campsiteimage_desc', 'mcecampsiteimage');
 
             ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');
@@ -72,15 +74,15 @@
 
         getInfo : function() {
             return {
-                longname : 'Campsite Image',
-                author : 'Campware',
-                authorurl : 'http://www.campware.org',
-                infourl : 'http://trac.campware.org/campsite',
+                longname : 'campsiteimage',
+                author : 'Sourcefabric',
+                authorurl : 'http://www.sourcefabric.org',
+                infourl : 'http://dev.sourcefabric.org/browse/CS',
                 version : '3.4'
             };
         }
     });
 
     // Register plugin
-    tinymce.PluginManager.add('campsiteimage', tinymce.plugins.CampsiteImage);
+    tinymce.PluginManager.add('campsiteimage', tinymce.plugins.campsiteimage);
 })();

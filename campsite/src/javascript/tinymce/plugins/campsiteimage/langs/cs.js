@@ -1,4 +1,5 @@
-tinyMCE.addI18n('cs.advlink_dlg',{
+tinyMCE.addI18n('cs.campsiteimage',{
+campsiteimage_desc:"Insert image",
 title:"Vlo\u017Eit/upravit odkaz",
 url:"URL odkazu",
 target:"C\u00EDl",

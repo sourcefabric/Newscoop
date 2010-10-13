@@ -7,70 +7,71 @@
 
 (function() {
     tinymce.PluginManager.requireLangPack('campsiteattachment');
-    tinymce.create('tinymce.plugins.CampsiteAttachment', {
+
+    tinymce.create('tinymce.plugins.campsiteattachment', {
         init : function(ed, url) {
             this.editor = ed;
-	    editorId = ed.id;
-	    articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
-	    topDoc = window.top.document;
-	    langId = topDoc.getElementById('f_language_selected').value;
+            editorId = ed.id;
+            articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
+            topDoc = window.top.document;
+            langId = topDoc.getElementById('f_language_selected').value;
 
-	    // Register commands
-	    ed.addCommand('mceCampsiteAttachment', function() {
-		var se = ed.selection;
+            // Register commands
+            ed.addCommand('mcecampsiteattachment', function() {
+                var se = ed.selection;
 
-		// No selection and not in link
-		if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
-		    alert(ed.getLang('campsiteattachment.select_to_link'));
-		    return;
-		}
+                // No selection and not in link
+                if (se.isCollapsed() && !ed.dom.getParent(se.getNode(), 'A')) {
+                    alert(ed.getLang('campsiteattachment.select_to_link'));
+                    return;
+                }
 
-		var action = '';
-		var elm = se.getNode();
-		elm = ed.dom.getParent(elm, "A");
-		if (elm != null && elm.nodeName == "A")
-		    action = "update";
+                var action = '';
+                var elm = se.getNode();
+                elm = ed.dom.getParent(elm, "A");
+                if (elm != null && elm.nodeName == "A") {
+                    action = "update";
+                }
+                if (action == 'update') {
+                    var href = ed.dom.getAttrib(elm, 'href');
+                }
 
-		if (action == 'update') {
-		    var href = ed.dom.getAttrib(elm, 'href');
-		}
-
-		ed.windowManager.open({
+                ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo + '&language_selected=' + langId,
-		        width : 580 + parseInt(ed.getLang('campsiteattachment.delta_width', 0)),
-			height : 330 + parseInt(ed.getLang('campsiteattachment.delta_height', 0)),
-			inline : 1
-		    }, {
-		    plugin_url : url
-		});
-	    });
+                    width : 580 + parseInt(ed.getLang('campsiteattachment.delta_width', 0)),
+                    height : 330 + parseInt(ed.getLang('campsiteattachment.delta_height', 0)),
+                    inline : 1
+                }, {
+                    plugin_url : url
+                });
+            });
 
-	    // Register buttons
-	    ed.addButton('campsiteattachment', {
-	        title : 'campsiteattachment.campsiteattachment_desc',
-		cmd : 'mceCampsiteAttachment',
-		image : url + '/img/campsiteattachment.gif'
-	    });
+            // Register buttons
+            ed.addButton('campsiteattachment', {
+                title : 'campsiteattachment.campsiteattachment_desc',
+                cmd : 'mcecampsiteattachment',
+                image : url + '/img/campsiteattachment.gif'
+            });
 
-	    ed.addShortcut('ctrl+h', 'campsiteattachment.campsiteattachment_desc', 'mceCampsiteAttachment');
+            ed.addShortcut('ctrl+h', 'campsiteattachment.campsiteattachment_desc', 'mcecampsiteattachment');
 
-	    ed.onNodeChange.add(function(ed, cm, n, co) {
+            ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');
-		cm.setActive('link', n.nodeName == 'A' && !n.name);
-	    });
-	},
+                cm.setActive('link', n.nodeName == 'A' && !n.name);
+            });
+        },
 
-	getInfo : function() {
+        getInfo : function() {
             return {
-		longname : 'Campsite Attachment',
-		author : 'Campware',
-		authorurl : 'http://www.campware.org',
-		infourl : 'http://code.campware.org/projects/campsite',
-		version : '3.2'
-	    };
-	}
+                longname : 'campsiteattachment',
+                author : 'Sourcefabric',
+                authorurl : 'http://www.sourcefabric.org',
+                infourl : 'http://dev.sourcefabric.org/browse/CS',
+                version : '3.2'
+            };
+        }
     });
 
     // Register plugin
-    tinymce.PluginManager.add('campsiteattachment', tinymce.plugins.CampsiteAttachment);
+    tinymce.PluginManager.add('campsiteattachment', tinymce.plugins.campsiteattachment);
 })();

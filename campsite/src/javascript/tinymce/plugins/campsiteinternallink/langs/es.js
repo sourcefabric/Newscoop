@@ -1,4 +1,5 @@
-tinyMCE.addI18n('es.advlink_dlg',{
+tinyMCE.addI18n('es.campsiteinternallink',{
+campsiteinternallink_desc:"Insertar/editar hiperv\u00EDnculo interno",
 title:"Insertar/editar hiperv\u00EDnculo interno",
 url:"URL del hiperv\u00EDnculo",
 target:"Destino",

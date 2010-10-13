@@ -1,4 +1,5 @@
-tinyMCE.addI18n('cs.advlink_dlg',{
+tinyMCE.addI18n('cs.campsiteinternallink',{
+campsiteinternallink_desc:"Insert/edit internal link",
 title:"Vlo\u017Eit/upravit odkaz",
 url:"URL odkazu",
 target:"C\u00EDl",

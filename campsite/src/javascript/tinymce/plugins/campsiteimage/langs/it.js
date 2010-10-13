@@ -1,4 +1,5 @@
-tinyMCE.addI18n('it.advlink_dlg',{
+tinyMCE.addI18n('it.campsiteimage',{
+campsiteimage_desc:"Insert image",
 title:"Inserisci/modifica link",
 url:"URL collegamento",
 target:"Target",

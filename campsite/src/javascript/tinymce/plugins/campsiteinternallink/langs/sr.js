@@ -1,4 +1,5 @@
-tinyMCE.addI18n('sr.advlink_dlg',{
+tinyMCE.addI18n('sr.campsiteinternallink',{
+campsiteinternallink_desc:"Insert/edit internal link",
 title:"Umetni/uredi poveznicu",
 url:"URL poveznice",
 target:"Meta",

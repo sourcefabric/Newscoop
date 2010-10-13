@@ -1,4 +1,5 @@
-tinyMCE.addI18n('it.advlink_dlg',{
+tinyMCE.addI18n('it.campsiteinternallink',{
+campsiteinternallink_desc:"Insert/edit internal link",
 title:"Inserisci/modifica link",
 url:"URL collegamento",
 target:"Target",

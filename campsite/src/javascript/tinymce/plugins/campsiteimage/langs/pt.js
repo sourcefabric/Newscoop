@@ -1,4 +1,5 @@
-tinyMCE.addI18n('pt.advlink_dlg',{
+tinyMCE.addI18n('pt.campsiteimage',{
+campsiteimage_desc:"Insert image",
 title:"Inserir/editar hyperlink",
 url:"URL do hyperlink",
 target:"Alvo",
