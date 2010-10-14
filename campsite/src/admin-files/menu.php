@@ -56,7 +56,7 @@ $menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
 
-$menu_item =& DynMenuItem::Create(getGS('Universal List'), "/$ADMIN/smartlist/index.php",
+$menu_item =& DynMenuItem::Create(getGS('Universal List'), "/$ADMIN/universal-list/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'logs.png'), 'id' => 'universal_list'));
 $menu_content->addItem($menu_item);
 

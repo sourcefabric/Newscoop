@@ -16,9 +16,13 @@ if (isset($_SESSION['f_language_selected'])) {
 $f_language_selected = (int)camp_session_get('f_language_selected', 0); 
 
 $crumbs = array();
-$crumbs[] = array(getGS('Content'), ''); $crumbs[] = array(getGS('Article List'), '');
+$crumbs[] = array(getGS('Content'), '');
+$crumbs[] = array(getGS('Article List'), '');
 echo camp_html_breadcrumbs($crumbs);
 
-require_once(dirname(__FILE__) . '/../smartlist.php');
+require_once(dirname(__FILE__) . '/../smartlist/smartlist.php');
 
 camp_html_copyright_notice();
+?>
+</body>
+</html>

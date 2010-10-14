@@ -160,23 +160,19 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
 
 </div><!-- /.data -->
 
-<style>
-@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
+<style type="text/css">
 @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/ColVis.css);
 </style>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript"><!--
 filters = [];
 $(document).ready(function() {
 
 var table = $('table.datatable').dataTable({
     'bProcessing': false,
     'bServerSide': true,
-    'sAjaxSource': '/<?php echo $ADMIN; ?>/smartlist.data.php',
+    'sAjaxSource': '/<?php echo $ADMIN; ?>/smartlist/smartlist.data.php',
     'bJQueryUI': true,
     'sDom': '<"H"Cfrip>t<"F"ipl>',
     'fnServerData': function (sSource, aoData, fnCallback) {
@@ -284,7 +280,7 @@ $('.actions select').change(function() {
         return;
     }
 
-    $.getJSON('/<?php echo $ADMIN; ?>/smartlist.action.php', {
+    $.getJSON('/<?php echo $ADMIN; ?>/smartlist/smartlist.action.php', {
         'action': action,
         'items': items,
         '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
@@ -378,5 +374,5 @@ $('fieldset.filters.more').each(function() {
 });
 
 });
-</script>
+--></script>
 </div><!-- /.smartlist -->
