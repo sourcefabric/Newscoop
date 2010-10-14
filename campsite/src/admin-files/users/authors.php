@@ -21,7 +21,7 @@
         exit;
     }
     if (!$g_user->hasPermission('EditAuthors')) {
-        camp_html_display_error(getGS("You do not have the right to change authors."));
+        camp_html_display_error(getGS("You do not have the permission to change authors."));
         exit;
     }
 
@@ -33,7 +33,7 @@
         $author->delete();
         $logtext = getGS('Author id "$1" deleted.', $del_id);
         Log::Message($logtext, $g_user->getUserId(), 173);
-        camp_html_add_msg(getGS("Author deleted."));
+        camp_html_add_msg(getGS("Author deleted.","ok"));
     }
     $first_name =Input::Get("first_name");
     $last_name = Input::Get("last_name");
@@ -84,7 +84,7 @@
         
         $logtext = getGS('Author information has been changed for "$1"', $author->getName());
         Log::Message($logtext, $g_user->getUserId(), 172);
-        camp_html_add_msg(getGS("Author saved."));
+        camp_html_add_msg(getGS("Author saved."),"ok");
     } else if ($id>-1 && !$can_save)
     {
         camp_html_add_msg(getGS("Please fill at least first name and last name."));

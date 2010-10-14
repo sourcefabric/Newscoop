@@ -294,7 +294,7 @@ if ($showUserMenu) {
         $menu_users->addItem($menu_item);
     }
 
-    if ($g_user->hasPermission("ManageUsers")) {
+    if ($g_user->hasPermission("EditAuthors")) {
         $menu_item =& DynMenuItem::Create("Manage Authors",
         "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
         array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
