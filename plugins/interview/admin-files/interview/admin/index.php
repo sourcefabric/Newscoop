@@ -25,13 +25,14 @@ function ajax_action(action)
     $('f_action').value = action;
 
     var myAjax = new Ajax.Request(
-            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
+            "ajax_action.php",
             {
                 method: 'get',
                 parameters: Form.serialize($('interviews_list')),
                 onComplete: do_reload
             }
         );
+
 
 
 }
