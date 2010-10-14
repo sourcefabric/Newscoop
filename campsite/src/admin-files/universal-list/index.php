@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+require_once(dirname(__FILE__) . '/../smartlist/Smartlist.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
