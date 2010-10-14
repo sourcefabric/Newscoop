@@ -66,7 +66,7 @@ $('#smartlist-<?php echo $this->id; ?>').dataTable({
     'sAjaxSource': '/<?php echo $this->admin; ?>/smartlist/do_data.php',
     <?php } ?>
     'bJQueryUI': true,
-    'sDom': '<"H"Cfrip>t<"F"ipl>',
+    'sDom': '<?php echo $this->getSDom(); ?>',
     'fnServerData': function (sSource, aoData, fnCallback) {
         for (var i in filters) {
             aoData.push({

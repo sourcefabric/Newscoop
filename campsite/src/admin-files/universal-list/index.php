@@ -28,6 +28,9 @@ $smartlist->setIssue($f_issue_id);
 $smartlist->setSection($f_section_id);
 $smartlist->setLanguage($f_language_id);
 
+$smartlist->setColVis(TRUE);
+$smartlist->setSearch(TRUE);
+
 // render
 $smartlist->renderFilters();
 $smartlist->renderActions();

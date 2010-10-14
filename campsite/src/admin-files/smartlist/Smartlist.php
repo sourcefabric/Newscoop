@@ -43,6 +43,12 @@ class Smartlist
     private $items = NULL;
 
     /** @var bool */
+    private $search = FALSE;
+
+    /** @var bool */
+    private $colVis = FALSE;
+
+    /** @var bool */
     private static $rendered = FALSE;
 
     /**
@@ -154,6 +160,40 @@ class Smartlist
         foreach ((array) $items as $item) {
             $this->items[] = self::ProcessArticle($item);
         }
+        return $this;
+    }
+
+    /**
+     * Get sDom property.
+     * @return string
+     */
+    public function getSDom()
+    {
+        return sprintf('<"H"%s%srip>t<"F"ipl>',
+            $this->colVis ? 'C' : '',
+            $this->search ? 'f' : ''
+        );
+    }
+
+    /**
+     * Set search.
+     * @param bool $search
+     * @return Smartlist
+     */
+    public function setSearch($search = FALSE)
+    {
+        $this->search = (bool) $search;
+        return $this;
+    }
+
+    /**
+     * Set ColVis.
+     * @param bool $colVis
+     * @return Smartlist
+     */
+    public function setColVis($colVis = FALSE)
+    {
+        $this->colVis = (bool) $colVis;
         return $this;
     }
 
