@@ -175,7 +175,8 @@ echo str_repeat('</li></ul>', $level);
 ?>
 
 <form method="post" action="do_order.php" onsubmit="return updateOrder(this);">
-<?php echo SecurityToken::FormParameter(); ?>
+    <?php echo SecurityToken::FormParameter(); ?>
+    <input type="hidden" name="languages" value="<?php echo implode('_', $f_show_languages); ?>" />
 <fieldset class="buttons">
     <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
 </fieldset>
