@@ -228,10 +228,10 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 function CampsiteSubhead(ed) {
     element = ed.dom.getParent(ed.selection.getNode(), 'span');
     if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
-	return false;
+        return false;
     } else {
         html = ed.selection.getContent({format : 'text'});
-	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
+        ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
     }
 } // fn CampsiteSubhead
 
@@ -294,11 +294,11 @@ tinyMCE.init({
 
     <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
         ed.addButton('campsite-subhead', {
-        title : 'campsitesubhead.campsitesubhead_desc',
-        image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
-        onclick : function() {
-                      CampsiteSubhead(ed);
-                  }
+            title : '<?php putGS("Campsite Subhead"); ?>',
+            image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
+            onclick : function() {
+                CampsiteSubhead(ed);
+            }
         });
     <?php } ?>
     }

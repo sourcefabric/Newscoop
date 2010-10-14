@@ -703,13 +703,16 @@ class Topic extends DatabaseObject {
      * @param array $order
      *      $id => $order mapping
      *
+     *  @param array $languages
+     *      affected languages
+     *
      *  @return void
      */
-    public static function UpdateOrder(array $p_order)
+    public static function UpdateOrder(array $p_order, array $p_languages)
     {
 		global $g_ado_db;
 
-        if (empty($p_order) || !is_array($p_order)) {
+        if (empty($p_order) ||  empty($p_languages)) {
             return;
         }
 

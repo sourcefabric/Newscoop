@@ -1367,6 +1367,14 @@ fieldset.controls, fieldset.buttons {
     border-radius: 5px;
 }
 
+fieldset.buttons.active {
+    position: fixed;
+    top: 0;
+    left: -5px;
+    background-color: #fff56e;
+    opacity: 0.9;
+}
+
 fieldset.controls div {
     margin-bottom: 5px;
 }
@@ -1444,7 +1452,7 @@ ul.tree.sortable a {
     cursor: pointer;
 }
 
-ul.tree.sortable h3 {
+ul.tree.sortable div.item {
     width: 450px;
     height: 1%;
     overflow: hidden;
@@ -1457,36 +1465,40 @@ ul.tree.sortable h3 {
     cursor: pointer;
 }
 
-ul.tree.sortable h3.active {
+ul.tree.sortable div.item.active {
     background-color: #f9f9f9;
 }
 
-ul.tree.sortable li.move h3 {
+ul.tree.sortable div.item.match {
+    background-color: #fff56e;
+}
+
+ul.tree.sortable li.move div.item {
     cursor: move;
 }
 
-ul.tree.sortable .first > h3 {
+ul.tree.sortable .first > div.item {
     border-top-width: 1px;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 5px 5px 0 0;
 }
 
-ul.tree.sortable .last > h3 {
+ul.tree.sortable .last > div.item {
     -moz-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px;
 }
 
-ul.tree.sortable .first.last > h3 {
+ul.tree.sortable .first.last > div.item {
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
 
-ul.tree.sortable h3 strong {
+ul.tree.sortable div.item strong {
     color: #00415b;
     cursor: pointer;
 }
 
-ul.tree.sortable h3 span.sub {
+ul.tree.sortable div.item span.sub {
     padding-left: 8px;
     color: #999;
     font-size: 0.8em;

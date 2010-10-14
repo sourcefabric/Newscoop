@@ -14,14 +14,18 @@ if (!$g_user->hasPermission('ManageTopics')) {
 
 // Get input
 $f_position = Input::Get('position', 'array', array());
+$f_languages = Input::Get('languages', 'string', '');
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
 	exit;
 }
 
+// explode languages
+$languages = explode('_', $f_languages);
+
 // set position
-Topic::UpdateOrder($f_position);
+Topic::UpdateOrder($f_position, $languages);
 
 camp_html_add_msg(getGS("Topics order saved."), "ok");
 camp_html_goto_page("/$ADMIN/topics/");

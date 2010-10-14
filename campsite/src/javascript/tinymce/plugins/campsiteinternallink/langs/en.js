@@ -1,5 +1,5 @@
-tinyMCE.addI18n('en.campsiteimage_dlg',{
-title:"Insert image",
+tinyMCE.addI18n('en.campsiteinternallink',{
+campsiteinternallink_desc:"Insert/edit internal link",
 language:"Language",
 section:"Section",
 article:"Article",

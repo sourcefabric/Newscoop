@@ -247,12 +247,12 @@ class DynMenuItem_JsCook extends DynMenuItem {
      */
     public function createMenu($p_name, $p_extraArgs = null)
     {
-    	$str = "<SCRIPT LANGUAGE=\"JavaScript\"><!--\n";
+    	$str = '<script type="text/javascript"><!--' . "\n";
         $str .= "var $p_name =\n";
         $str .= "[\n";
         $str .= $this->__recurseBuild(1);
         $str .= "];\n";
-        $str .= "--></SCRIPT>";
+        $str .= '--></script>';
         return $str;
     } // fn createMenu
 

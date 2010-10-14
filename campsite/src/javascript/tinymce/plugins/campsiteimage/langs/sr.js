@@ -1,4 +1,5 @@
-tinyMCE.addI18n('sr.advlink_dlg',{
+tinyMCE.addI18n('sr.campsiteimage',{
+campsiteimage_desc:"Insert image",
 title:"Umetni/uredi poveznicu",
 url:"URL poveznice",
 target:"Meta",

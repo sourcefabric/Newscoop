@@ -20,22 +20,22 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 function camp_html_select_option($p_value, $p_selectedValue, $p_printValue, $p_attributes=array())
 {
 	$selected = false;
-	$str = '<OPTION VALUE="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
+	$str = '<option value="'.htmlspecialchars($p_value, ENT_QUOTES).'"';
 	if (is_array($p_selectedValue)) {
 		if (in_array($p_value, $p_selectedValue)) {
-			$str .= ' SELECTED';
+			$str .= ' selected="selected"';
 			$selected = true;
 		}
 	} else {
 		if (!strcmp($p_value, $p_selectedValue)) {
-			$str .= ' SELECTED';
+			$str .= ' selected="selected"';
 			$selected = true;
 		}
 	}
 	foreach ($p_attributes as $k => $v) {
 	   $str .= " $k=\"$v\"";
 	}
-	$str .= '>'.htmlspecialchars($p_printValue)."</OPTION>\n";
+	$str .= '>'.htmlspecialchars($p_printValue)."</option>\n";
 	echo $str;
 	return $selected;
 } // fn camp_html_select_option
@@ -331,21 +331,21 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
         $tmpStr .= "<span>";
     }
     else {
-        $tmpStr .= "<span class='breadcrumb_intra_separator'>";
+        $tmpStr .= '<span class="breadcrumb_intra_separator">';
     }
 	if ($p_link != "") {
-        $tmpStr .= "<A HREF='" . htmlspecialchars($p_link) . "' class='$class'>"
-        . htmlspecialchars($p_text) . "</A>";
+        $tmpStr .= '<a href="' . htmlspecialchars($p_link) . "\" class=\"$class\">"
+        . htmlspecialchars($p_text) . "</a>";
 	}
 	else {
-	    $tmpStr .= "<SPAN CLASS='$class'>" . htmlspecialchars($p_text) . "</SPAN>";
+	    $tmpStr .= "<span class=\"$class\">" . htmlspecialchars($p_text) . '</span>';
 	}
 	$tmpStr .="</span>";
 	if ($p_separator) {
-        $tmpStr .= "<span CLASS='breadcrumb_separator'>&nbsp;</span>";
+        $tmpStr .= '<span class="breadcrumb_separator">&nbsp;</span>';
 	}
 	else {
-        $tmpStr .= "<span>&nbsp;</spanTD>";
+        $tmpStr .= '<span>&nbsp;</span>';
 	}
     return $tmpStr;
 } // fn camp_html_breadcrumb

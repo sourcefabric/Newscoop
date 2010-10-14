@@ -1,4 +1,5 @@
-tinyMCE.addI18n('ro.advlink_dlg',{
+tinyMCE.addI18n('ro.campsiteimage',{
+campsiteimage_desc:"Insert image",
 title:"Insereaz\u0103/editeaz\u0103 link",
 url:"URL link",
 target:"\u0162int\u0103",
