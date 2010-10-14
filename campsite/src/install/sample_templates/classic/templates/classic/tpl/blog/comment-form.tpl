@@ -10,7 +10,7 @@
             
             {{ if !$campsite->user->defined }}
                 <tr><td>{{ if $campsite->language->name == "English" }}Your Name{{ else }}Su nombre{{ /if }}</td><td>{{ blogcomment_edit attribute=user_name }}</td></tr>
-                <tr><td>{ if $campsite->language->name == "English" }}Your Email{{ else }}Su email{{ /if }}</td><td> {{ blogcomment_edit attribute=user_email }}</td></tr>
+                <tr><td>{{ if $campsite->language->name == "English" }}Your Email{{ else }}Su email{{ /if }}</td><td> {{ blogcomment_edit attribute=user_email }}</td></tr>
             {{ /if }}
            
             <tr><td>{{ if $campsite->language->name == "English" }}Title{{ else }}Título{{ /if }}</td><td> {{ blogcomment_edit attribute=title }}</td></tr>
