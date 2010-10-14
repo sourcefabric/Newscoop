@@ -1663,6 +1663,7 @@ fieldset dt {
     padding: 0;
 }
 
+/* datatable */
 .dataTables_wrapper {
     margin: 13px 21px;
 }
@@ -1675,19 +1676,15 @@ fieldset dt {
     width: 100%;
 }
 
-table.datatable thead th div {
-    position: relative;
+.smartlist.table * {
+    border-style: solid;
+    border-width: 0;
 }
 
-table.datatable thead th div span {
-    position: absolute;
-    top: 2px;
-}
-
-table.datatable td, table.datatable th {
+.smartlist.table td, .smartlist.table th {
+    padding: 3px;
     border: 1px solid #c5dbec;
-    border-width: 1px 1px 1px 0;
-    border-bottom: none;
+    border-width: 1px 1px 0 0;
 }
 
 table.datatable tbody tr.even td {
@@ -1706,11 +1703,10 @@ table.datatable tbody tr:hover td {
     background-color: #ffcc00 !important;
 }
 
-table.datatable tbody td { width: 5em; padding: 3px; }
-table.datatable tbody td.id { width: 1em; padding: 3px 0; text-align: center; }
-table.datatable tbody td.name { width: 21em; }
-table.datatable tbody td.short { width: 3em; }
-table.datatable tbody td.date { width: 5em; }
+table.datatable tbody td.id {
+    padding: 3px 0;
+    text-align: center;
+}
 
 .smartlist .ui-widget-header {
     padding: 5px;
@@ -1736,8 +1732,12 @@ table.datatable tbody td.date { width: 5em; }
     margin-left: 21px;
 }
 
-.smartlist .data {
+.smartlist.table {
     clear: both;
+}
+
+.smartlist .extra {
+    margin-top: 8px;
 }
 
 .smartlist a.detach {

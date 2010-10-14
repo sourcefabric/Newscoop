@@ -55,8 +55,6 @@ class Smartlist
     private static $renderActions = FALSE;
 
     /**
-     * @param string $web
-     * @param string $admin
      */
     public function __construct()
     {
