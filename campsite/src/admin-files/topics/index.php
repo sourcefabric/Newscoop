@@ -129,12 +129,6 @@ if (count($topics) == 0) { ?>
 <?php
 } else {
 ?>
-<form method="post" action="do_order.php" onsubmit="return updateOrder(this);">
-<?php echo SecurityToken::FormParameter(); ?>
-<fieldset class="buttons">
-    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" ?>
-</fieldset>
-</form>
 
 <?php
 $level = 0;
@@ -262,7 +256,6 @@ $('ul.tree.sortable h3').click(function() {
     $(this).parent().siblings('ul').toggle();
 });
 
-
 // add subtupics count
 $('ul.tree.sortable > li').each(function() {
     var count = $('li', $(this)).length;
@@ -296,6 +289,7 @@ $('ul.tree.sortable, ul.tree.sortable ul').sortable({
     stop: function(event, ui) {
         sorting = false;
         ui.item.removeClass('move');
+        $('fieldset.buttons').addClass('active');
     }
 });
 

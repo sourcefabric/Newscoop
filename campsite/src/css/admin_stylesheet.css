@@ -1367,6 +1367,14 @@ fieldset.controls, fieldset.buttons {
     border-radius: 5px;
 }
 
+fieldset.buttons.active {
+    position: fixed;
+    top: 0;
+    left: -5px;
+    background-color: #fff56e;
+    opacity: 0.9;
+}
+
 fieldset.controls div {
     margin-bottom: 5px;
 }
