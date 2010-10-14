@@ -324,25 +324,25 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
-  <script language="JavaScript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
-  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
-  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
-  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.tools.min.js" type="text/javascript"></script>
-  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
+  <script type="text/javascript">var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";</script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.tools.min.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css" />
-  <link rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" TYPE="text/css" />
+  <link rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
-  <script language="JavaScript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
   <?php echo $menu_root->createMenu("myMenu"); ?>
   <title><?php p($siteTitle); ?></title>
 </head>
-<body class="yui-skin-sam" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<body class="yui-skin-sam">
 <table cellpadding="0" cellspacing="0" class="logoTable">
 <tbody>
 <tr>
   <td>
-    <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" BORDER="0" /></a>
+  <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" alt="<?php putGS('Logo'); ?>" /></a>
   </td>
 </tr>
 </tbody>
@@ -352,10 +352,11 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 <tr>
   <td valign="top" align="left" width="70%">
     <table border="0" cellpadding="0" cellspacing="0">
+    <tbody>
     <tr>
       <td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
         <div id="myMenuID"></div>
-        <script language="JavaScript"><!--
+        <script type="text/javascript"><!--
           cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
         --></script>
       </td>

@@ -25,12 +25,6 @@ echo camp_html_breadcrumbs($crumbs);
 
 camp_html_display_msgs("0.5em", 0);
 ?>
-<style>
-@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
-</style>
-
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
 
 <form action="index.php" method="post">
 <fieldset class="controls">
@@ -49,55 +43,10 @@ camp_html_display_msgs("0.5em", 0);
 </fieldset>
 </form>
 
-<script type="text/javascript">
-/**
- * Check all checkboxes within same fieldset.
- * @param object elem
- */
-function checkAllLang(elem)
-{
-    $('input[type=checkbox]', $(elem).parents('fieldset')).attr('checked', 'checked');
-}
-
-/**
- * Uncheck all checkboxes within same fieldset.
- * @param object elem
- */
-function uncheckAllLang(elem)
-{
-    $('input[type=checkbox]', $(elem).parents('fieldset')).removeAttr('checked');
-}
-</script>
-
 <fieldset class="controls search">
     <legend><?php putGS('Search'); ?></legend>
     <input type="text" name="search" /> <input type="submit" name="search_submit" value="<?php putGS('Search'); ?>" />
 </fieldset>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('input[name=search]').change(function() {
-        $('ul.tree.sortable *').removeClass('match');
-        $('ul.tree.sortable > li').show();
-        $('ul.tree.sortable').sortable('option', 'disabled', true);
-        if ($(this).val() == "") {
-            $('ul.tree.sortable').sortable('option', 'disabled', false);
-            return;
-        }
-        var re = new RegExp($(this).val(), "i");
-        $('ul.tree.sortable > li').each(function() {
-            var li = $(this);
-            $('strong', li).each(function() {
-                if (!li.hasClass('match') && $(this).text().search(re) >= 0) {
-                    li.addClass('match');
-                    $(this).parent().addClass('match');
-                }
-            });
-        });
-        $('ul.tree.sortable > li').not('.match').hide();
-        $('ul.tree.sortable > li.match > ul').show();
-    });
-});
-</script>
 
 <?php  if ($g_user->hasPermission('ManageTopics')) { ?>
 <form method="post" action="do_add.php" onsubmit="return validate(this);">
@@ -105,7 +54,7 @@ $(document).ready(function() {
 <input type="hidden" name="f_topic_parent_id" value="0" />
 <fieldset class="controls">
     <legend><?php  putGS("Add root topic"); ?></legend>
-    <select name="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
+    <select name="f_topic_language_id" class="input_select" title="<?php putGS("You must select a language."); ?>">
         <option value="0"><?php putGS("---Select language---"); ?></option>
         <?php foreach ($allLanguages as $tmpLanguage) {
             camp_html_select_option($tmpLanguage->getLanguageId(),
@@ -114,8 +63,8 @@ $(document).ready(function() {
         } ?>
 	</select>
 
-    <input type="text" name="f_topic_name" value="" class="input_text" size="20" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>">
-    <input type="submit" name="add" value="<?php putGS("Add"); ?>" class="button">
+    <input type="text" name="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" />
+    <input type="submit" name="add" value="<?php putGS("Add"); ?>" class="button" />
 </fieldset>
 </form>
 <?php  } ?>
@@ -126,9 +75,7 @@ if (count($topics) == 0) { ?>
 	<p><?php  putGS('No topics'); ?></p>
 </blockquote>>
 
-<?php
-} else {
-?>
+<?php } else { ?>
 
 <?php
 $level = 0;
@@ -143,6 +90,7 @@ foreach ($topics as $topicPath) {
     } else {
         echo str_repeat('</li></ul>', $level - $topic_level), '</li>';
     }
+    $level = $topic_level;
 
 	$currentTopic = camp_array_peek($topicPath, false, -1);
 	$parentId = $currentTopic->getParentId();
@@ -163,11 +111,11 @@ foreach ($topics as $topicPath) {
         $topicId = $currentTopic->getTopicId();
 ?>
 
-        <div><h3 title="<?php putGS('Click to hide/show sub-tree. Drag to change order.'); ?>">
+        <div><div class="item" title="<?php putGS('Click to hide/show sub-tree. Drag to change order.'); ?>">
             <span class="lang" title="<?php putGS('Drag to change order'); ?>"><?php echo $topicLanguage->getCode(); ?></span>
             <strong title="<?php putGS('Click to edit'); ?>"><?php echo htmlspecialchars($topicName); ?></strong>
 
-            <a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&f_topic_language_id=$topicLanguageId"); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>">
+            <a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&amp;f_topic_language_id=$topicLanguageId"); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>">
                 <?php putGS("Delete"); ?>
             </a>
 
@@ -178,21 +126,21 @@ foreach ($topics as $topicPath) {
 
             <fieldset class="name">
                 <legend><?php  putGS("Change topic name"); ?></legend>
-                <input type="text" class="input_text" name="f_name" value="<?php echo htmlspecialchars($topicName); ?>" size="32" maxlength="255"  emsg="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>" />
+                <input type="text" class="input_text" name="f_name" value="<?php echo htmlspecialchars($topicName); ?>" size="32" maxlength="255"  title="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>" />
 	            <input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>" />
             </fieldset>
             </form>
 
             <form method="post" action="do_add.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
-                <input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>">
-                <input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>">
+                <input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>" />
+                <input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>" />
             
 
             <fieldset class="subtopic">
                 <legend><?php putGS("Add subtopic:"); ?></legend>
                 <label><?php p($topicLanguage->getNativeName()); ?></label>
-                <input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>" />
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php putGS('You must enter a name for the topic.'); ?>" />
                 <input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button" />
             </fieldset>
             </form>
@@ -202,26 +150,25 @@ foreach ($topics as $topicPath) {
             ?>
             <form method="post" action="do_add.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
-                <input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>">
+                <input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>" />
 
             <fieldset class="translate">
                 <legend><?php putGS("Add translation:"); ?></legend>
-                <select name="f_topic_language_id" class="input_select" alt="select" emsg="<?php putGS("You must select a language."); ?>">
+                <select name="f_topic_language_id" class="input_select" title="<?php putGS("You must select a language."); ?>">
                     <option value="0"><?php putGS("---Select language---"); ?></option>
                     <?php foreach ($allLanguages as $tmpLanguage) {
                     camp_html_select_option($tmpLanguage->getLanguageId(),
                                             null, $tmpLanguage->getNativeName());
                     } ?>
                 </select>
-                <input type="text" name="f_topic_name" value="" class="input_text" size="15" alt="blank" emsg="<?php putGS('You must enter a name for the topic.'); ?>" />
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php putGS('You must enter a name for the topic.'); ?>" />
                 <input type="submit" name="f_submit" value="<?php putGS("Translate"); ?>" class="button" />
             </fieldset>
             </form>
             <?php } ?>
-        </h3></div>
+        </div></div>
 
     <?php
-    $level = $topic_level;
     } // foreach
 }
 echo str_repeat('</li></ul>', $level);
@@ -230,11 +177,29 @@ echo str_repeat('</li></ul>', $level);
 <form method="post" action="do_order.php" onsubmit="return updateOrder(this);">
 <?php echo SecurityToken::FormParameter(); ?>
 <fieldset class="buttons">
-    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" ?>
+    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
 </fieldset>
 </form>
 
-<script type="text/javascript">
+<script type="text/javascript"><!--
+/**
+ * Check all checkboxes within same fieldset.
+ * @param object elem
+ */
+function checkAllLang(elem)
+{
+    $('input[type=checkbox]', $(elem).parents('fieldset')).attr('checked', 'checked');
+}
+
+/**
+ * Uncheck all checkboxes within same fieldset.
+ * @param object elem
+ */
+function uncheckAllLang(elem)
+{
+    $('input[type=checkbox]', $(elem).parents('fieldset')).removeAttr('checked');
+}
+
 $(document).ready(function() {
 
 var sorting = false;
@@ -249,7 +214,7 @@ $('ul.tree.sortable li').each(function() {
 $('ul.tree.sortable > li > ul').hide();
 
 // show subtopics on click
-$('ul.tree.sortable h3').click(function() {
+$('ul.tree.sortable div.item').click(function() {
     if (sorting) {
         return; // ignore
     }
@@ -260,7 +225,7 @@ $('ul.tree.sortable h3').click(function() {
 $('ul.tree.sortable > li').each(function() {
     var count = $('li', $(this)).length;
     if (count > 0) {
-        $('.first > h3', $(this)).first()
+        $('.first > div.item', $(this)).first()
             .append('<span class="sub">' + count + ' <?php putGS('Subtopics'); ?></span>');
     }
 });
@@ -269,7 +234,7 @@ $('ul.tree.sortable > li').each(function() {
 $('ul.tree.sortable fieldset').hide();
 
 // show forms on click
-$('ul.tree.sortable h3 strong').click(function() {
+$('ul.tree.sortable div.item strong').click(function() {
     if (sorting) {
         return; // ignore
     }
@@ -340,11 +305,11 @@ function validate(form)
     var emsg = [];
 
     if (select.length && select.first().val() == 0) {
-        emsg.push(select.first().attr('emsg'));
+        emsg.push(select.first().attr('title'));
     }
 
     if (!input.val()) {
-        emsg.push(input.attr('emsg'));
+        emsg.push(input.attr('title'));
     }
 
     if (emsg.length > 0) {
@@ -354,6 +319,31 @@ function validate(form)
 
     return true;
 }
-</script>
+
+// search
+$('input[name=search]').change(function() {
+    $('ul.tree.sortable *').removeClass('match');
+    $('ul.tree.sortable > li').show();
+    $('ul.tree.sortable').sortable('option', 'disabled', true);
+    if ($(this).val() == "") {
+        $('ul.tree.sortable').sortable('option', 'disabled', false);
+        return;
+    }
+    var re = new RegExp($(this).val(), "i");
+    $('ul.tree.sortable > li').each(function() {
+        var li = $(this);
+        $('strong', li).each(function() {
+            if (!li.hasClass('match') && $(this).text().search(re) >= 0) {
+                li.addClass('match');
+                $(this).parent().addClass('match');
+            }
+        });
+    });
+    $('ul.tree.sortable > li').not('.match').hide();
+    $('ul.tree.sortable > li.match > ul').show();
+});
+--></script>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>
+</body>
+</html>
