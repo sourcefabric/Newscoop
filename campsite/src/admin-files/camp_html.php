@@ -334,7 +334,7 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
         $tmpStr .= '<span class="breadcrumb_intra_separator">';
     }
 	if ($p_link != "") {
-        $tmpStr .= '<a href="' . htmlspecialchars($p_link) . " class=\"$class\">"
+        $tmpStr .= '<a href="' . htmlspecialchars($p_link) . "\" class=\"$class\">"
         . htmlspecialchars($p_text) . "</a>";
 	}
 	else {
