@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
+require_once(dirname(__FILE__) . '/../smartlist/Smartlist.php');
 
 camp_load_translation_strings("articles");
 
@@ -20,7 +21,17 @@ $crumbs[] = array(getGS('Content'), '');
 $crumbs[] = array(getGS('Article List'), '');
 echo camp_html_breadcrumbs($crumbs);
 
-require_once(dirname(__FILE__) . '/../smartlist/smartlist.php');
+// set up
+$smartlist = new Smartlist($Campsite['WEBSITE_URL'], $ADMIN);
+$smartlist->setPublication($f_publication_id);
+$smartlist->setIssue($f_issue_id);
+$smartlist->setSection($f_section_id);
+$smartlist->setLanguage($f_language_id);
+
+// render
+$smartlist->renderFilters();
+$smartlist->renderActions();
+$smartlist->renderTable();
 
 camp_html_copyright_notice();
 ?>
