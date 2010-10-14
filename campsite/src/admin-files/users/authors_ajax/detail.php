@@ -211,13 +211,13 @@ if ($count==0){
     <!--Pane 3-->
 
 <?php
-/*require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 $languageObj = new Language($Language);
 if (!is_object($languageObj)) {
     $languageObj = new Language(1);
 }
-$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());*/
-//editor_load_tinymce('biography', $g_user, 0, $editorLanguage, 'biography');
+$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+editor_load_tinymce('biography', $g_user, 0, $editorLanguage, 'authorbiography');
 
 ?>
 

@@ -1,21 +1,3 @@
-<!-- YUI dependencies -->
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo/yahoo-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/event/event-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/dom/dom-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/connection/connection-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/animation/animation-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/container.js"></script>
-
-<!-- Autocomplete dependencies -->
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/datasource/datasource-min.js"></script>
-
-<!-- Button dependencies -->
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/element/element-beta-min.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/button/button-min.js"></script>
-
-<!-- Autocomplete Source file -->
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/autocomplete-min.js"></script>
 
 <!-- CSS file (default YUI Sam Skin) -->
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css" />
@@ -294,7 +276,7 @@ if ($f_edit_mode == "edit") { ?>
 <tr>
     <td valign="top">
     <!-- BEGIN article content -->
-    <form name="article_edit" action="do_edit.php" method="POST">
+    <form name="article_edit" action="do_edit.php" method="POST" id="mainForm">
     <?php echo SecurityToken::FormParameter(); ?>
     <fieldset id="pushbuttonsfrommarkup" class=" yui-skin-sam">
     <input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
@@ -352,7 +334,7 @@ if ($f_edit_mode == "edit") { ?>
                     <script language="Javascript">
                       function  addAuthor(){
                           var rnumber=Math.floor(Math.random()*9876)
-                          $('#authorContainer').append('<input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
+                          $('#authorContainer').append('<input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
                           $('#authorContainer').append('<img border="0" src="./../../css/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
                       }
                       function deleteAuthor(id, empty){
@@ -365,8 +347,7 @@ if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
                     <?php 
                     $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-                    //print_r($authors);
-                    //exit();
+
                     if (!empty($authors))
                     {
                         $i=0;
@@ -374,7 +355,7 @@ if ($f_edit_mode == "edit") { ?>
                         {
 
                             ?>
-                         <input type="text" name="f_article_author[]" id="f_article_author<?php echo $i; ?>" size="45" class="input_text"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                         <input type="text" name="f_article_author[]" id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
                          <img border="0" src="./../../css/unlink.png" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i;?>');">
                    <?php
                    $i++;
@@ -383,7 +364,7 @@ if ($f_edit_mode == "edit") { ?>
                     }
                     ?>
                  
-                           <input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
+                           <input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
                     <?php
 
                     ?>
@@ -621,10 +602,6 @@ if ($f_edit_mode == "edit") { ?>
                 <td align="left" style="padding-right: 5px;">
                     <?php if ($f_edit_mode == "edit") {
                                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                                     ?>
                     <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
                     <?php } ?>
@@ -673,10 +650,6 @@ if ($f_edit_mode == "edit") { ?>
                     if ($f_edit_mode == "edit") {
                         $fCustomFields[] = $dbColumn->getName();
                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                 ?>
                 <input name="<?php echo $dbColumn->getName(); ?>"
                            id="<?php echo $dbColumn->getName(); ?>"
@@ -770,10 +743,6 @@ window.location.reload();
             <td align="right" valign="top" style="padding-top: 8px; padding-right: 5px;">
                 <?php if ($f_edit_mode == "edit") {
                                 $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                                $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                                 ?>
                     <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
                 <?php } ?>
@@ -814,10 +783,6 @@ window.location.reload();
                 <?php if ($f_edit_mode == "edit") {
                     $fCustomFields[] = $dbColumn->getName();
                                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                                 ?>
                 <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
                 <?php } ?>
@@ -864,10 +829,6 @@ window.location.reload();
                 <?php if ($f_edit_mode == "edit") {
                     $fCustomSwitches[] = $dbColumn->getName();
                                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                                 ?>
                 <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
                 <?php } ?>
@@ -887,10 +848,6 @@ window.location.reload();
                 <?php if ($f_edit_mode == "edit") {
                     $fCustomFields[] = $dbColumn->getName();
                                     $saveButtonNames[] = 'save_' . $dbColumn->getName();
-                    $saveButtons[] = 'var oSave' . $dbColumn->getName() .'Button = new YAHOO.widget.Button("save_' . $dbColumn->getName() . '", {
-            onclick: { fn: onButtonClick },
-            disabled: true
-    });';
                                 ?>
                 <input type="button" id="save_<?php p($dbColumn->getName()); ?>" value="<?php putGS('Saved'); ?>">
                 <?php } ?>
