@@ -46,6 +46,7 @@ $('.smartlist thead input:checkbox').change(function() {
     });
 });
 
+
 // actions handle
 $('.smartlist .actions select').change(function() {
     var smartlist = $(this).closest('.smartlist');
