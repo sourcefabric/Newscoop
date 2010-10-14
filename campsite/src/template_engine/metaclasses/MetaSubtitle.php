@@ -251,8 +251,10 @@ final class MetaSubtitle {
         }
 
         $articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
+        $imageObj = $articleImage->getImage();
         $image = new MetaImage($articleImage->getImageId());
-        $imageSize = @getimagesize($image->imageurl);
+        $imageSize = @getimagesize($imageObj->getImageStorageLocation());
+        unset($imageObj);
         $imgParams = '';
         if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
             $imgParams = '&amp;ImageRatio=' . (int)$detailsArray['ratio'];
