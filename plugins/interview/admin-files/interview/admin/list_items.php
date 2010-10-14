@@ -6,16 +6,15 @@ camp_load_translation_strings("plugin_interview");
 function ajax_action(action)
 {
     $('f_action').value = action;
-    
     var myAjax = new Ajax.Request(
+
             "ajax_action.php",
             { 
                 method: 'get',
                 parameters: Form.serialize($('items_list')),
                 onComplete: do_reload
             }
-        );      
-    
+        );    
     
 }
 
@@ -93,7 +92,6 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 <FORM name="selector" method="get">
 <input type="hidden" name="f_interview_id" id="f_interview_id" value="<?php p($f_interview_id) ?>" />
-
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
     <TD>
@@ -219,7 +217,7 @@ if ($InterviewItemsList->getLength()) {
     <input type="hidden" name="f_interview_id" id="f_interview_id" value="<?php p($f_interview_id) ?>" />
     <input type="hidden" name="f_action" id="f_action">
     <input type="hidden" name="f_new_pos" id="f_new_pos" />
-    
+    <?php echo SecurityToken::FormParameter(); ?>
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
         

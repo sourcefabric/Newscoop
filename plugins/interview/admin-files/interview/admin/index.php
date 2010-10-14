@@ -25,13 +25,14 @@ function ajax_action(action)
     $('f_action').value = action;
 
     var myAjax = new Ajax.Request(
-            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
+            "ajax_action.php",
             {
                 method: 'get',
                 parameters: Form.serialize($('interviews_list')),
                 onComplete: do_reload
             }
         );
+
 
 
 }
@@ -392,7 +393,7 @@ if ($InterviewsList->getLength()) {
 
                 <?php if($is_admin) { ?>
                     <td align='center'>
-                        <a href="javascript: void(0);" onclick="window.open('invitation.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=720, height=700, top=200, left=100');"><IMG SRC="<?php echo '/'.CS_PLUGINS_DIR.'/interview/css/', ($MetaInterview->guest_invitation_sent || $MetaInterview->questioneer_invitation_sent) ? 'email_red.png' : 'email_green.png' ?>" BORDER="0"></a>
+                        <a href="javascript: void(0);" onclick="window.open('invitation.php?f_interview_id=<?php p($MetaInterview->identifier); ?>', 'edit_interview', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=720, height=700, top=200, left=100');"><IMG SRC="<?php echo '/'.CS_PLUGINS_DIR.'/interview/css/', ($MetaInterview->guest_invitation_sent || $MetaInterview->questioneer_invitation_sent) ? 'email_red.png' : 'email_green.png' ?>" BORDER="0" alt="Invite"></a>
                     </td>
                     <td align='center'>
                         <a href="javascript: if (confirm('<?php putGS('Are you sure you want to delete the selected item(s)?') ?>')) {
