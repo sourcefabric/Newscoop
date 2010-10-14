@@ -9,7 +9,8 @@
  */
 
 header('Content-type: application/json');
-
+ 
+require_once dirname(__FILE__) . '/Smartlist.php';
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 
 // start >= 0
@@ -80,71 +81,7 @@ $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'd
 
 $return = array();
 foreach($articles as $article) {
-    $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
-        . '&f_issue_number=' . $article->getIssueNumber() . '&f_section_number=' . $article->getSectionNumber()
-        . '&f_article_number=' . $article->getArticleNumber() . '&f_language_id=' . $article->getLanguageId()
-        . '&f_language_selected=' . $article->getLanguageId();
-    $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
-    $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
-
-    $lockInfo = '';
-    $lockHighlight = false;
-    $timeDiff = camp_time_diff_str($article->getLockTime());
-    if ($article->isLocked() && ($timeDiff['days'] <= 0)) {
-        $lockUser = new User($article->getLockedByUser());
-        if ($timeDiff['hours'] > 0) {
-            $lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-                htmlspecialchars($lockUser->getRealName()),
-                htmlspecialchars($lockUser->getUserName()),
-                $timeDiff['hours'], $timeDiff['minutes']);
-        } else {
-            $lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-                htmlspecialchars($lockUser->getRealName()),
-                htmlspecialchars($lockUser->getUserName()),
-                $timeDiff['minutes']);
-        }
-        if ($article->getLockedByUser() != $g_user->getUserId()) {
-            $lockHighlight = true;
-        }
-    }
-
-    $tmpUser = new User($article->getCreatorId());
-    $tmpAuthor = new Author($article->getAuthorId());
-    $tmpArticleType = new ArticleType($article->getType());
-
-    $onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
-    $onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
-
-    $imagesNo = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
-    $topicsNo = ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
-    $commentsNo = '';
-    if ($article->commentsEnabled()) {
-        $commentsNo = ArticleComment::GetArticleComments($article->getArticleNumber(), $article->getLanguageId(), null, true);
-    } else {
-        $commentsNo = 'No';
-    }
-
-    $return[] = array(
-        $article->getArticleNumber(),
-        $article->getLanguageId(),
-        sprintf('<a href="%s%s" title="%s %s">%s</a>',
-            $articleLink, $articleLinkParams,
-            getGS('Edit'), $article->getName(),
-            $article->getName()),
-        $tmpArticleType->getDisplayName(),
-        $tmpUser->getRealName(),
-        $tmpAuthor->getFirstName(),
-        $article->getWorkflowStatus(),
-        $onFrontPage,
-        $onSectionPage,
-        $imagesNo,
-        $topicsNo,
-        $commentsNo,
-        $article->getReads(),
-        $article->getCreationDate(),
-        $article->getPublishDate(),
-        $article->getLastModified(),
-    );
+    $return[] = Smartlist::ProcessArticle($article);
 }
 
 echo(json_encode(array(

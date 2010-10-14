@@ -10,7 +10,7 @@
 ?>
 <div class="smartlist table">
 
-<table cellpadding="0" cellspacing="0" class="datatable">
+<table id="smartlist-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
 <thead>
     <tr>
         <th><input type="checkbox" /></th>
@@ -32,26 +32,39 @@
     </tr>
 </thead>
 <tbody>
+<?php if ($this->items === NULL) { ?>
     <tr><td colspan="16"><?php putGS('Loading data'); ?></td></tr>
+<?php } else if (!empty($this->items)) { ?>
+    <?php foreach ($this->items as $item) { ?>
+    <tr>
+        <?php foreach ($item as $row) { ?>
+        <td><?php echo $row; ?></td>
+        <?php } ?>
+    </tr>
+    <?php } ?>
+<?php } ?>
 </tbody>
 </table>
 
 </div>
 
+<?php if (!self::$rendered) { ?>
 <style type="text/css">
 @import url(<?php echo $this->web ?>/css/adm/ColVis.css);
 </style>
-
 <script type="text/javascript" src="<?php echo $this->web; ?>/javascript/jquery/ColVis.min.js"></script>
+<?php } // render ?>
+
 <script type="text/javascript">
 filters = [];
 
 $(document).ready(function() {
-
-table = $('table.datatable').dataTable({
+$('#smartlist-<?php echo $this->id; ?>').dataTable({
     'bProcessing': false,
+    <?php if ($this->items === NULL) { ?>
     'bServerSide': true,
     'sAjaxSource': '/<?php echo $this->admin; ?>/smartlist/do_data.php',
+    <?php } ?>
     'bJQueryUI': true,
     'sDom': '<"H"Cfrip>t<"F"ipl>',
     'fnServerData': function (sSource, aoData, fnCallback) {
@@ -139,18 +152,5 @@ table = $('table.datatable').dataTable({
     },
 });
 
-// check all/none
-$('table.datatable thead input[type=checkbox]').change(function() {
-    var checked = $(this).attr('checked');
-    $('table.datatable tbody input[type=checkbox]').each(function() {
-        $(this).attr('checked', checked);
-        if (checked) {
-            $(this).parents('tr').addClass('selected');
-        } else {
-            $(this).parents('tr').removeClass('selected');
-        }
-    });
 });
-
-});
-</script>
+--></script>

@@ -30,7 +30,6 @@ $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
 ?>
 <div class="smartlist filters">
-
 <fieldset class="filters">
     <legend><?php putGS('Filter'); ?></legend>
     <select name="publication">
@@ -113,11 +112,10 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
 
     </div>
 </fieldset>
-
 </div><!-- /.smartlist-filters -->
 
+<?php if (!self::$rendered) { ?>
 <script type="text/javascript">
-var filters = [];
 $(document).ready(function() {
 
 // filters handle
@@ -127,6 +125,11 @@ $('.filters select, .filters input').change(function() {
     filters[name] = value;
     table.fnDraw(true);
     return false;
+});
+
+// datepicker for dates
+$('input.date').datepicker({
+    dateFormat: 'yy-mm-dd',
 });
 
 // filters managment
@@ -158,5 +161,6 @@ $('fieldset.filters .extra').each(function() {
     }).change();
 });
 
-}); // document.ready
+});
 </script>
+<?php } ?>

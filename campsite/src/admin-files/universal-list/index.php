@@ -22,7 +22,7 @@ $crumbs[] = array(getGS('Article List'), '');
 echo camp_html_breadcrumbs($crumbs);
 
 // set up
-$smartlist = new Smartlist($Campsite['WEBSITE_URL'], $ADMIN);
+$smartlist = new Smartlist();
 $smartlist->setPublication($f_publication_id);
 $smartlist->setIssue($f_issue_id);
 $smartlist->setSection($f_section_id);
@@ -31,7 +31,7 @@ $smartlist->setLanguage($f_language_id);
 // render
 $smartlist->renderFilters();
 $smartlist->renderActions();
-$smartlist->renderTable();
+$smartlist->render();
 
 camp_html_copyright_notice();
 ?>

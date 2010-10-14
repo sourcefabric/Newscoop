@@ -9,7 +9,6 @@
  */
 ?>
 <div class="smartlist actions">
-
 <fieldset class="actions">
     <legend><?php putGS('Select action'); ?></legend>
     <select name="action">
@@ -27,16 +26,25 @@
         <option value="move"><?php putGS('Move'); ?></option>
     </select>
 </fieldset>
-
 </div><!-- /.smartlist-actions -->
 
+<?php if (!self::$rendered) { ?>
 <script type="text/javascript">
 $(document).ready(function() {
 
-// datepicker for dates
-$('input.date').datepicker({
-    dateFormat: 'yy-mm-dd',
+// check all/none
+$('table.datatable thead input[type=checkbox]').change(function() {
+    var checked = $(this).attr('checked');
+    $('table.datatable tbody input[type=checkbox]').each(function() {
+        $(this).attr('checked', checked);
+        if (checked) {
+            $(this).parents('tr').addClass('selected');
+        } else {
+            $(this).parents('tr').removeClass('selected');
+        }
+    });
 });
+
 
 // actions handle
 $('.actions select').change(function() {
@@ -71,7 +79,7 @@ $('.actions select').change(function() {
     });
 });
 
-}); // document.ready
+});
 
 /**
  * Create alert via JQueryUI
@@ -102,3 +110,4 @@ function dialog_alert(message, error)
 }
 
 </script>
+<?php } ?>
