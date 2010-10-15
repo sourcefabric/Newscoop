@@ -198,9 +198,7 @@
            $(function() {
 		$("ul.tabs").tabs("> .pane");
             });
-        }
-        );
-        
+        });
     }
 
     function changeBio(id){

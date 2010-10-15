@@ -100,6 +100,7 @@ if ($count==0){
                                 }
                       ?>
                         </select>
+                    </span>
                 
                 </li>
             </ul>
