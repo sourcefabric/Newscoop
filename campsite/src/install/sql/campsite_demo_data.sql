@@ -790,21 +790,17 @@ UNLOCK TABLES;
 
 -- Dump completed on 2010-09-30 17:31:02
 ALTER TABLE `Templates` ADD `CacheLifetime` INT NULL DEFAULT '0';
-
 INSERT INTO `campsite`.`AuthorsTypes` (
 `id` ,
 `type`
 )
 VALUES (
+NULL , 'Author'
+),
 NULL , 'Writer'
 ), (
 NULL , 'Photographer'
-);
-INSERT INTO `campsite`.`AuthorsTypes` (
-`id` ,
-`type`
-)
-VALUES (
+),
 NULL , 'Editor'
 ), (
 NULL , 'Columnist'

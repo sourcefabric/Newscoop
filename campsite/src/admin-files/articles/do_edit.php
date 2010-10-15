@@ -106,7 +106,7 @@ if ($f_article_title != $articleObj->getTitle()) {
                 $authorObj->create($authorData);
             }
             $type = $f_article_author_type[$i];
-            $authorObj->addAuthorType($type);
+            $authorObj->setType($type);
             $articleAuthorsObj->createRow($articleObj->getArticleNumber(),$articleObj->getLanguageId(),$authorObj->getId(), $type);
             $i++;
         }
