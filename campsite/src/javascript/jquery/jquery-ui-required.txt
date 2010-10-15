@@ -1,0 +1,12 @@
+# list of required jqueryui components
+# theme: Redmond
+Datepicker
+Tabs
+Dialog
+Autocomplete
+Button
+Sortable
+Draggable
+Droppable
+Selectable
+Resizable
