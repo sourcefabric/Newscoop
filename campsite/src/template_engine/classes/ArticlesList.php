@@ -43,6 +43,7 @@ class ArticlesList extends ListObject
                                           'bydate',
                                           'bycreationdate',
                                           'bypublishdate',
+    									  'bylastupdate',
                                           'bypopularity',
                                           'bypublication',
                                           'byissue',
