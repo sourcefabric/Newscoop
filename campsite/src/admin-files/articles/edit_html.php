@@ -328,48 +328,84 @@ if ($f_edit_mode == "edit") { ?>
                     <input type="button" id="save_f_article_author" name="button5" value="<?php putGS('Saved'); ?>">
                 <?php } ?>
                 </td>
-                <td align="right" valign="top"><b><?php putGS("Author"); ?>:</b></td>
-                <td align="left" valign="top" class="yui-skin-sam">
-                    <?php if ($f_edit_mode == "edit") { ?>
-                    <script language="Javascript">
+                <script language="Javascript">
                       function  addAuthor(){
                           var rnumber=Math.floor(Math.random()*9876)
-                          $('#authorContainer').append('<input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
+                          $('#author_type').append('<select onchange="buttonEnable(\'save_f_article_author\');" name="f_article_author_type[]" id="article_author_type' +rnumber +  '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none"><?php echo drawComboContent(); ?></select>');
+                          $('#authorContainer').append('<input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
                           $('#authorContainer').append('<img border="0" src="./../../css/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
+                          
                       }
                       function deleteAuthor(id, empty){
                           $('#f_article_author' + id).remove();
+                          $('#article_author_type' + id).remove();
                           $('#removeauthor' + id).remove();
                           buttonEnable('save_f_article_author');
                        }
-                    </script>
-                    
-                    <div id="authorAutoComplete">
-                    <?php 
+                </script>
+                <?php
+                function drawCombo($types, $id, $pos){
+                    $combo='<select  onchange="buttonEnable(\'save_f_article_author\');" name="f_article_author_type[]" id="article_author_type' . $pos . '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none">';
+                    $combo .= drawComboContent($id);
+                    $combo .='    </select>    ';
+                    return $combo;
+                }
+
+                function drawComboContent($id=0){
+                    $types =Author::getTypes();
+                    foreach ($types as $xtype){
+                                  $combo .=  '<option value="' . $xtype['id'] . '"';
+                                  if ($id==$xtype['id']) $combo.= ' selected="selected" ';
+                                  $combo.='>' . $xtype['type'] . '</option>';
+                                }
+                                return $combo;
+                }
+
+
+                    $types =Author::getTypes();
                     $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
 
                     if (!empty($authors))
                     {
                         $i=0;
+                        $author_list=  array();
+                        $types_list= array();
                         foreach ($authors as $author)
-                        {
-
-                            ?>
-                         <input type="text" name="f_article_author[]" id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" style="position:relative" />
+                        { ob_start();?><div><?php //echo $combo ?>
+                         <input type="text" name="f_article_author[]" style="width:280px" id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" />
                          <img border="0" src="./../../css/unlink.png" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i;?>');">
-                   <?php
-                   $i++;
+                            </div>
+                          <?php  $author_list[] = ob_get_clean();
+                          $types_list[] = $author['fk_type_id'];
+                          $i++;
                         }
-                            
+                    }
+                ?>
+
+                <td align="right" valign="top" id="author_type">
+                    <?php $i=0;
+                    foreach ($types_list as $type){
+                        echo "<div id=\"author_type$i\" style=\"margin-top:1px\">" . drawCombo($types,$type,$i) . "</div>";
+                        $i++;
                     }
                     ?>
-                 
-                           <input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor"  onkeyup="buttonEnable('save_f_article_author');" style="position:relative" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
+                <select name="article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
+                    <?php echo drawComboContent(); ?></select>
+                </td>
+                <td align="left" valign="top" class="yui-skin-sam">
+                    <?php if ($f_edit_mode == "edit") {  ?>
+                    <div id="authorAutoComplete">
                     <?php
 
-                    ?>
+                    
+                        foreach ($author_list as $author){
+                        echo $author;
+                    }?>
                         
-                        <div id="authorContainer"></div>
+                          
+                        <div id="authorContainer">
+                            <input type="text" style="width:280px" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor"  onkeyup="buttonEnable('save_f_article_author');" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
+                        </div>
                         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()">
                     </div>
                     <?php } else {

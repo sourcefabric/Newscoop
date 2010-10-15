@@ -76,13 +76,14 @@ class ArticleAuthor extends DatabaseObject {
     } // fn getAuthorId
 
     
-    public function createRow($articleNumber, $languageId, $authorId)
+    public function createRow($articleNumber, $languageId, $authorId, $typeId)
     {
         global $g_ado_db;
+        if ($authorId==0) return;
         $queryStr = "INSERT IGNORE INTO ArticleAuthors
-                     (fk_article_number, fk_language_id, fk_author_id)
-                     VALUES ('%d','%d','%d')";
-        $queryStr= sprintf($queryStr, $articleNumber, $languageId, $authorId);
+                     (fk_article_number, fk_language_id, fk_author_id, fk_type_id)
+                     VALUES ('%d','%d','%d','%d')";
+        $queryStr= sprintf($queryStr, $articleNumber, $languageId, $authorId, $typeId);
         $g_ado_db->Execute($queryStr);
     }
 
@@ -161,7 +162,7 @@ class ArticleAuthor extends DatabaseObject {
     public static function getArticleAuthorList($articleNumber, $languageId)
     {
         global $g_ado_db;
-        $sql ="SELECT Authors.first_name, Authors.last_name
+        $sql ="SELECT Authors.first_name, Authors.last_name, ArticleAuthors.fk_type_id
                 FROM Authors
                 JOIN ArticleAuthors
                 ON Authors.id = fk_author_id

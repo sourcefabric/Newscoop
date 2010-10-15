@@ -100,9 +100,57 @@ class Author extends DatabaseObject {
     	return $this->m_data['last_name'];
     } // fn getLastName
 
+    public function resetTypes()
+    {
+        global $g_ado_db;
+        $sql = "DELETE FROM `AuthorsAuthorsTypes` WHERE fk_author_id=" . $this->getId();
+        $g_ado_db->Execute($sql);
+    }
+
     public function getType()
     {
-        return $this->m_data['type'];
+        global $g_ado_db;
+        $sql = "SELECT fk_type_id FROM `AuthorsAuthorsTypes` WHERE fk_author_id=" . $this->getId() . " order by id  ";
+        return $g_ado_db->GetAll($sql);
+    }
+
+    public function getTypeWithNames()
+    {
+        global $g_ado_db;
+        $sql = "SELECT fk_type_id, type FROM `AuthorsAuthorsTypes` JOIN `AuthorsTypes` ON `AuthorsTypes`.`id` = fk_type_id WHERE fk_author_id=" . $this->getId() . " order by `AuthorsAuthorsTypes`.id  ";
+        return $g_ado_db->GetAll($sql);
+    }
+
+    public static function getTypes()
+    {
+        global $g_ado_db;
+        $sql = "SELECT id, type FROM `AuthorsTypes` order by id  ";
+        return $g_ado_db->GetAll($sql);
+    }
+
+    public static function addAuthorType($p_value)
+    {
+        global $g_ado_db;
+        $types = Author::getTypes();
+        foreach ($types as $type)
+        {
+            if ($type['type']==$p_value) return false;
+        }
+        $sql = "INSERT INTO `AuthorsTypes` (type) VALUES ('%s')";
+        $sql = sprintf($sql, $p_value);
+        $g_ado_db->Execute($sql);
+        return true;
+    }
+
+    public static function removeAuthorType($p_id)
+    {
+        global $g_ado_db;
+        $sql = "DELETE FROM `AuthorsTypes` WHERE id =%d";
+        $sql = sprintf($sql, $p_id);
+        $sql2 = "DELETE FROM `AuthorsAuthorsTypes` WHERE fk_type_id=%d";
+        $sql2 = sprintf($sql2, $p_id);
+        $g_ado_db->Execute($sql);
+        $g_ado_db->Execute($sql2);
     }
     
     public function getSkype()
@@ -200,7 +248,12 @@ class Author extends DatabaseObject {
 
     public function setType($p_value)
     {
-        return $this->setProperty('type', $p_value);
+        global $g_ado_db;
+        $types = $this->getType();
+        if (is_array($types) && in_array(array('fk_type_id'=>$p_value),$types)) return;
+        $sql = "INSERT INTO `AuthorsAuthorsTypes` (fk_author_id, fk_type_id) VALUES (%d,%d)";
+        $sql = sprintf($sql, $this->getId(), $p_value);
+        $g_ado_db->Execute($sql);
     }
     
     public function setSkype($p_value)

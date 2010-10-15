@@ -1,23 +1,15 @@
 <?php
 ini_set("display_errors","2");
 error_reporting(E_ALL);
-function l_getType($type)
+function l_getType($types)
 {
-    switch ($type)
-    {
-        case 1:
-            return "Author";
-            break;
-        case 2:
-            return "Photographer";
-            break;
-        case 3:
-            return "Editor";
-            break;
-       default:
-           return "Default";
-           break;
+    if (!is_array($types)) return;
+    $t = "";
+    foreach ($types as $type){
+        if (strlen($t)>0) $t .= ", ";
+        $t .= $type['type'];
     }
+    return $t;
 }
 ?>
 <a href="#" class="addButtonText" onclick="getRow(0)">Add new Author</a>
@@ -42,8 +34,8 @@ function l_getType($type)
 ?>
         <tr class="<?php echo $class ?>" onclick="getRow(<?php echo $author->getId()?>)"  onmouseover="setPointer(this, 0, 'over');" onmouseout="setPointer(this, 0, 'out');" style="cursor:pointer">
             <td><?php echo $author->getName();  ?></td>
-            <td><?php echo l_getType($author->getType()); ?></td>
-            <td align="right" class="last" id="row_0"><a href="?del_id=<?php echo $author->getId() ?>" onclick="return confirm('Are you sure you want to delete this author;')"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a></td>
+            <td><?php echo l_getType($author->getTypeWithNames()); ?></td>
+            <td align="right" class="last" id="row_0"><a href="?del_id=<?php echo $author->getId() ?>" onclick="return confirm('<?php echo getGS('Are you sure you want to delete this author;')?>')"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a></td>
         </tr>
         <?php
         $i++;

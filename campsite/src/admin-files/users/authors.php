@@ -35,13 +35,29 @@
         Log::Message($logtext, $g_user->getUserId(), 173);
         camp_html_add_msg(getGS("Author deleted.","ok"));
     }
+
+    $add_author_type = Input::Get("add_author","string",null);
+    if ($add_author_type!==null){
+        if (Author::addAuthorType($add_author_type)===true){
+            camp_html_add_msg(getGS("Author type added."), "ok");
+        } else{
+            camp_html_add_msg(getGS("Cannot add author type, this type already exists."));
+        }
+    }
+
+    $del_id_type = Input::Get("del_id_type","int".-1);
+    if ($del_id_type>-1)
+    {
+        Author::removeAuthorType($del_id_type);
+        camp_html_add_msg(getGS("Author type removed."), "ok");
+    }
+
     $first_name =Input::Get("first_name");
     $last_name = Input::Get("last_name");
     $can_save=false;
     if ($id>-1 && strlen($first_name)>0 && strlen($last_name) > 0 ) $can_save = true;
     if ($id>-1 && $can_save)
     {
-
         $author = new Author();
         if ($id>0)
         {
@@ -59,7 +75,14 @@
         $author->setFirstName(Input::Get("first_name"));
         $author->setLastName(Input::Get("last_name"));
         $author->commit();
-        $author->setType(Input::Get("type"));
+
+        $types = Input::Get("type","array");
+        $author->resetTypes();
+        foreach ($types as $type)
+        {
+            $author->setType($type);
+        }
+        
         $author->setSkype(Input::Get("skype"));
         $author->setJabber(Input::Get("jabber"));
         $author->setAim(Input::Get("aim"));
@@ -101,26 +124,25 @@
               <input type="text" id="form_search" onchange="doSearch()" onkeyup="doSearch()" class="input_text" size="41" style="width:370px;"><a href="#" class="arrowButton"></a>
       </div>
         <div class="formBlock formBlockSolo">
-<div class="scrollHolder">
+<div class="scrollHolder"  style="height:100%">
               <div id="pane2" class="scroll-pane">
                 <ul>
                   <li>
                     <input type="checkbox" name="all_authors" id="all_authors" class="input_checkbox"  checked="checked" onclick="typeFilter(0)" />
                     <label for="all_authors">All Author Types</label>
                   </li>
-                  <li>
-                    <input type="checkbox" name="One" id="author_one" class="input_checkbox" onclick="typeFilter(1)"/>
-                    <label for="One">Author</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="Two" id="author_two" class="input_checkbox"  onclick="typeFilter(2)"/>
-                    <label for="Two">Photographer</label>
-                  </li>
-                  <li>
-                    <input type="checkbox" name="Three" id="author_three" class="input_checkbox" onclick="typeFilter(3)"/>
-                    <label for="Three">Editor</label>
-                  </li>
-
+                       <?php
+                            $types = Author::getTypes();
+                              foreach ($types as $type){
+                                    echo '<li>
+                                                <input type="checkbox" name="One" value="' . $type['type'] . '" id="author_' . $type['id'] . '" class="input_checkbox checkbox_filter" onclick="typeFilter(' . $type['id'] . ')"/>
+                                                <label for="One">' . $type['type'] . '</label>
+                                                <a href="?del_id_type=' . $type['id'] . '" onclick="return confirm(\'' . getGS('Are you sure you want to delete this author type?') . '\')" style="float:right"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a>
+                                            </li>';
+                                }
+                      ?>
+                  <li>Add author type:</li>
+                  <li><form method="post" onsubmit="return addAuthorType()"><input type="text" maxlength="35" class="input_text" id="add_author"  name="add_author" style="width:70%;" /><input type="submit" name="save" id="save" value="Add" class="buttonStrong"  /></form></li>
                 </ul>
               </div>
             </div>
@@ -160,6 +182,15 @@
         $("#aliases").append('<input type="text" class="input_text" name="alias[]" size="41" spellcheck="false" style="width:322px;margin-left:127px">');
     }
 
+    function addAuthorType(){
+        var val= $('#add_author').val();
+        val = jQuery.trim(val);
+        if (val.length<3) {
+            alert("<?php echo putGS("Author type must be at least three characters long.") ?>");
+            return false;
+        }
+    }
+
     function getRow(id){
         $.get('authors_ajax/detail.php?id=' + id, function(data)
         {
@@ -195,37 +226,27 @@
     function typeFilter(id)
     {
         if (id==0 && $("#all_authors").attr('checked')){
-            $("#author_one").removeAttr('checked');
-            $("#author_two").removeAttr('checked');
-            $("#author_three").removeAttr('checked');
+            $(".checkbox_filter").removeAttr('checked');
             oTable.fnFilter( '',1 );
             return;
         }
         var str="";
         var multiple=false;
-        if (id==1 || $("#author_one").attr('checked') ){
-            $("#all_authors").removeAttr('checked');
-            str = "Author";
-            multiple=true;
+        var is_checked=false;
+        if (id>0){
+            $("input[type=checkbox][checked][:not('#all_authors')]").not('#all_authors').each(
+                function() {
+                    is_checked=true;
+                    if (multiple) str = str + "|";
+                    str = str +$("#" + this.id).val();
+                    multiple=true;
+                }
+            );
         }
-        if (id==2 || $("#author_two").attr('checked') ){
-            $("#all_authors").removeAttr('checked');
-            var addString="|";
-            if (!multiple) {addString="";}
-            str = str + addString +  "Photographer";
-            multiple=true;
-        }
-        if (id==3 || $("#author_three").attr('checked') ){
-            $("#all_authors").removeAttr('checked');
-            var addString="|";
-            if (!multiple) addString="";
-            str = str + addString + "Editor";
-            multiple=true;
-        }
-        if (!$("#all_authors").attr('checked') && !$("#author_one").attr('checked') && !$("#author_two").attr('checked') && !$("#author_three").attr('checked')){
-            $("#all_authors").attr('checked','checked')
-            str='';
-        }
+        if (is_checked) $("#all_authors").removeAttr('checked')
+        else
+            $("#all_authors").attr('checked','checked');
+
         oTable.fnFilter(str,1 ,true,true);
     }
 

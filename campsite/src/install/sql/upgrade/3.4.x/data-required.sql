@@ -16,4 +16,24 @@ VALUES ('172', 'Add Author', 'N', '1'), ('173', 'Edit Author', 'N', '1'),('174',
 INSERT INTO `SystemPreferences` (`varname`, `value`) VALUES ('PasswordRecovery','Y');
 
 -- call additional db upgrade script
-system php ./update_rights.php
+system php ./update_rights.php;
+
+INSERT INTO `campsite`.`AuthorsTypes` (
+`id` ,
+`type`
+)
+VALUES (
+NULL , 'Writer'
+), (
+NULL , 'Photographer'
+);
+INSERT INTO `campsite`.`AuthorsTypes` (
+`id` ,
+`type`
+)
+VALUES (
+NULL , 'Editor'
+), (
+NULL , 'Columnist'
+);
+

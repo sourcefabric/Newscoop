@@ -1654,6 +1654,15 @@ CREATE TABLE `Authorbiography` (
 
 ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT( 10 ) UNSIGNED NULL ,
 CHANGE `fk_language_id` `fk_language_id` INT( 10 ) UNSIGNED NULL ,
-CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL ;
+CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL,
+ADD `fk_type_id` INT NULL ;
 
-ALTER TABLE `Templates` ADD `CacheLifetime` INT NULL DEFAULT '0';
+CREATE TABLE `AuthorsTypes` (
+`id` INT NULL AUTO_INCREMENT PRIMARY KEY ,
+`type` VARCHAR( 255 ) NULL
+) ENGINE = MYISAM ;
+CREATE TABLE `AuthorsAuthorsTypes` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`fk_author_id` INT NOT NULL ,
+`fk_type_id` INT NOT NULL
+) ENGINE = MYISAM ;

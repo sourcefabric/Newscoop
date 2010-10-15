@@ -6,7 +6,7 @@ require_once($GLOBALS['g_campsiteDir'] . '/classes/Log.php');
 $first_name = "";
 $last_name = "";
 $aliases = "";
-$type = "";
+$type = array();
 $skype = "";
 $jabber = "";
 $aim = "";
@@ -87,14 +87,20 @@ if ($count==0){
                     </span><span onclick="addAlias()"><a href="#" class="addButton"></a></span>
                 </li>
                 <li>
-                    <label>Type:</label>
-                    <select name="type" class="input_select2" onchange="" style="width:324px;">
-                        <option value="0" <?php if ($type==0) echo ' selected="selected"'; ?>>Chose Author Type</option>
-                        <option value="1" <?php if ($type==1) echo ' selected="selected"'; ?>>Author</option>
-                        <option value="2" <?php if ($type==2) echo ' selected="selected"'; ?>>Photographer</option>
-                        <option value="3" <?php if ($type==3) echo ' selected="selected"'; ?>>Editor</option>
-                    </select>
-                  
+                    <span id="types">
+                        <label>Type:</label>
+                        <select name="type[]" class="input_select2" onchange="" style="width:324px;height:100%"  multiple="multiple">
+                      <?php
+                            $types =Author::getTypes();
+                            foreach ($types as $xtype){
+                                  $str =  '<option value="' . $xtype['id'] . '"';
+                                  if (is_array($type) && in_array(array('fk_type_id'=>$xtype['id']),$type)) $str.= ' selected="selected"';
+                                  $str.='>' . $xtype['type'] . '</option>';
+                                  echo $str;
+                                }
+                      ?>
+                        </select>
+                
                 </li>
             </ul>
         </div>

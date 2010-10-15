@@ -44,8 +44,16 @@ function makeRequest(a){
     $("input[type='text'][name='f_article_author[]']").each( 
         function() 
         {
-            query_string += "&f_article_author[]=" + this.value; 
-    });
+            query_string += "&f_article_author[]=" + this.value;
+        }
+    );
+    $(".aaselect").each(
+        function()
+        {
+            query_string += "&f_article_author_type[]=" + this.value;
+        }
+    );
+
     if (query_string.length==0) query_string='f_article_author[]=';
     if (a.length>5) var postAction = '&f_save=' + a.substr(5);
     else var postAction = '&f_save=' + a;
