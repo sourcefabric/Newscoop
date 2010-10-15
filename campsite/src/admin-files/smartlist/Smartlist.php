@@ -191,40 +191,6 @@ class Smartlist
     }
 
     /**
-     * Get sDom property.
-     * @return string
-     */
-    public function getSDom()
-    {
-        return sprintf('<"H"%s%srip>t<"F"ipl>',
-            $this->colVis ? 'C' : '',
-            $this->search ? 'f' : ''
-        );
-    }
-
-    /**
-     * Set search.
-     * @param bool $search
-     * @return Smartlist
-     */
-    public function setSearch($search = FALSE)
-    {
-        $this->search = (bool) $search;
-        return $this;
-    }
-
-    /**
-     * Set ColVis.
-     * @param bool $colVis
-     * @return Smartlist
-     */
-    public function setColVis($colVis = FALSE)
-    {
-        $this->colVis = (bool) $colVis;
-        return $this;
-    }
-
-    /**
      * Render filters.
      * @return Smartlist
      */
