@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0" width="100%" class="breadcrumbHolder"><tr><td class="breadcrumbTD"><span><span class="breadcrumb">Configure</span></span><span class="breadcrumb_separator">&nbsp;</span></td></tr><tr><td class="activeSection" ><span class='breadcrumb_intra_separator'><span class="breadcrumb_active">Manage Author</span></span><span>&nbsp;</span></td></tr></table>
+<table border="0" cellspacing="0" cellpadding="0" width="100%" class="breadcrumbHolder"><tr><td class="breadcrumbTD"><span><span class="breadcrumb">Configure</span></span><span class="breadcrumb_separator">&nbsp;</span></td></tr><tr><td class="activeSection" ><span class='breadcrumb_intra_separator'><span class="breadcrumb_active">Manage Authors</span></span><span>&nbsp;</span></td></tr></table>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
@@ -136,9 +136,10 @@
                               foreach ($types as $type){
                                     echo '<li>
                                                 <input type="checkbox" name="One" value="' . $type['type'] . '" id="author_' . $type['id'] . '" class="input_checkbox checkbox_filter" onclick="typeFilter(' . $type['id'] . ')"/>
-                                                <label for="One">' . $type['type'] . '</label>
-                                                <a href="?del_id_type=' . $type['id'] . '" onclick="return confirm(\'' . getGS('Are you sure you want to delete this author type?') . '\')" style="float:right"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a>
-                                            </li>';
+                                                <label for="One">' . $type['type'] . '</label>';
+                                                //<a href="?del_id_type=' . $type['id'] . '" onclick="" style="float:right"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a>
+                                    echo '<a href="?del_id_type=' . $type['id'] . '" onclick="return deleteType(' . $type['id'] . ')" style="float:right"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a>';
+                                            echo '</li>';
                                 }
                       ?>
                   <li>Add author type:</li>
@@ -190,7 +191,27 @@
             return false;
         }
     }
+function deleteType(id) {
+if (!confirm('<?php echo getGS('Are you sure you want to delete this author type?'); ?>'))
+    return false;
+    $.post('?del_id_type=' + id, function(data) {
+    $.get('authors_ajax/grid.php',function (data){
+            $("#gridtable").html(data);
+            oTable=$('#gridx').dataTable( {
+                "bLengthChange": false,
+                "bFilter": true, 'bJQueryUI':true} );
+            $("#gridx_filter").html('');
+        });
+});
+return false;
+}
 
+function deleteAuthor(id){
+    if (!confirm('<?php echo getGS('Are you sure you want to delete this author;')?>')) return false;
+    $.post('?del_id=' + id, function(data) {
+        window.location.replace("?");
+    });
+}
     function getRow(id){
         $.get('authors_ajax/detail.php?id=' + id, function(data)
         {

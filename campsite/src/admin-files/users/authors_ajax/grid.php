@@ -35,7 +35,7 @@ function l_getType($types)
         <tr class="<?php echo $class ?>" onclick="getRow(<?php echo $author->getId()?>)"  onmouseover="setPointer(this, 0, 'over');" onmouseout="setPointer(this, 0, 'out');" style="cursor:pointer">
             <td><?php echo $author->getName();  ?></td>
             <td><?php echo l_getType($author->getTypeWithNames()); ?></td>
-            <td align="right" class="last" id="row_0"><a href="?del_id=<?php echo $author->getId() ?>" onclick="return confirm('<?php echo getGS('Are you sure you want to delete this author;')?>')"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a></td>
+            <td align="right" class="last" id="row_0"><a href="?del_id=<?php echo $author->getId() ?>" onclick="return deleteAuthor();"><img src="../../css/delete.png" border="0" alt="Delete author" title="Delete author" /></a></td>
         </tr>
         <?php
         $i++;
