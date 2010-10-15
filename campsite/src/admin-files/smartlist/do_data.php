@@ -57,11 +57,12 @@ if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
 // sorting
 $sortOptions = array(
     0 => 'bynumber',
-    2 => 'byname',
-    11 => 'bycomments',
-    12 => 'bypopularity',
-    14 => 'bypublishdate',
-    15 => 'bycreationdate',
+    2 => 'byorder',
+    3 => 'byname',
+    12 => 'bycomments',
+    13 => 'bypopularity',
+    15 => 'bypublishdate',
+    16 => 'bycreationdate',
 );
 
 $sortBy = 'bypublishdate';

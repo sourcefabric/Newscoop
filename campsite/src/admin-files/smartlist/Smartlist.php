@@ -43,6 +43,9 @@ class Smartlist
     private $colVis = FALSE;
 
     /** @var bool */
+    private $order = FALSE;
+
+    /** @var bool */
     private static $renderTable = FALSE;
 
     /** @var bool */
@@ -179,6 +182,17 @@ class Smartlist
     }
 
     /**
+     * Set order.
+     * @param bool $order
+     * @return Smartlist
+     */
+    public function setOrder($order = FALSE)
+    {
+        $this->order = (bool) $order;
+        return $this;
+    }
+
+    /**
      * Render filters.
      * @return Smartlist
      */
@@ -266,6 +280,7 @@ class Smartlist
     return array(
         $article->getArticleNumber(),
         $article->getLanguageId(),
+        $article->getOrder(),
         sprintf('<a href="%s%s" title="%s %s">%s</a>',
             $articleLink, $articleLinkParams,
             getGS('Edit'), $article->getName(),

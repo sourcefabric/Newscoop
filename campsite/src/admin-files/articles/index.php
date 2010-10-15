@@ -6,6 +6,9 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleComment.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
+
+require_once dirname(__FILE__) . '/../smartlist/Smartlist.php';
+
 camp_load_translation_strings("api");
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -117,14 +120,6 @@ camp_html_content_top(getGS('Article List'), $topArray);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
-<link type="text/css" rel="stylesheet" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/skins/sam/container.css">
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/yahoo-dom-event/yahoo-dom-event.js"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/container-min.js"></script>
-<style type="text/css">
-.yui-skin-sam .yui-tt .bd{position:relative;top:0;left:0;z-index:1;color:#000;padding:2px 5px;border-color:#A35ACF #A35ACF #A35ACF #A35ACF;border-width:1px;border-style:solid;background-color:#D5C3DF;}
-</style>
-
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
@@ -135,8 +130,18 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 	<?php  } ?>
 </tr>
 </TABLE>
-<p>
 
+<?php
+    $smartlist = new Smartlist();
+
+    $smartlist->setPublication($f_publication_id);
+    $smartlist->setIssue($f_issue_number);
+    $smartlist->setSection($f_section_number);
+    $smartlist->setOrder(TRUE);
+
+    $smartlist->renderActions();
+    $smartlist->render();
+?>
 <FORM name="article_list" action="do_article_list_action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">

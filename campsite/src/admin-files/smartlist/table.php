@@ -15,6 +15,7 @@
     <tr>
         <th><input type="checkbox" /></th>
         <th><?php echo putGS('Language'); ?></th>
+        <th><?php echo putGS('Order'); ?></th>
         <th><?php echo putGS('Name'); ?></th>
         <th><?php echo putGS('Type'); ?></th>
         <th><?php echo putGS('Created by'); ?></th>
@@ -95,7 +96,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // status workflow
             'fnRender': function(obj) {
-                switch (obj.aData[6]) {
+                switch (obj.aData[7]) {
                     case 'Y':
                         return '<?php putGS('Published'); ?>';
                     case 'N':
@@ -106,15 +107,15 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                         return '<?php putGS('Pub. With Issue'); ?>';
                 }
             },
-            'aTargets': [6]
+            'aTargets': [7]
         },
         { // hide columns
             'bVisible': false,
-            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 4, 9, 10, 13, 15],
+                'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, <?php if (!$this->order) { ?>2, <?php } ?>5, 10, 11, 14, 16],
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 15],
+            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 16],
         },
         { // id
             'sWidth': '10px',
@@ -123,11 +124,11 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // name
             'sWidth': '100px',
-            'aTargets': [2],
+            'aTargets': [3],
         },
         { // short
             'sWidth': '50px',
-            'aTargets': [6, 7, 8, 9, 10, 11, 12]
+            'aTargets': [7, 8, 9, 10, 11, 12, 13]
         },
         { // dates
             'sWidth': '80px',
@@ -139,7 +140,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
     ],
     'oColVis': { // disable Show/hide column
-        'aiExclude': [0, 1]
+        'aiExclude': [0, 1, 2]
     },
     'fnDrawCallback': function() {
         $('table.datatable tbody tr').click(function() {
