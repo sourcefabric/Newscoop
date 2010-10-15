@@ -8,9 +8,9 @@
  * @link http://www.sourcefabric.org
  */
 ?>
-<div class="smartlist table">
+<div class="table">
 
-<table id="smartlist-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
+<table id="table-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
 <thead>
     <tr>
         <th><input type="checkbox" /></th>
@@ -48,18 +48,22 @@
 
 </div>
 
-<?php if (!self::$rendered) { ?>
+<?php if (!self::$renderTable) { ?>
 <style type="text/css">
 @import url(<?php echo $this->web ?>/css/adm/ColVis.css);
 </style>
 <script type="text/javascript" src="<?php echo $this->web; ?>/javascript/jquery/ColVis.min.js"></script>
+<script type="text/javascript">
+tables = [];
+filters = [];
+</script>
 <?php } // render ?>
 
 <script type="text/javascript">
-filters = [];
-
 $(document).ready(function() {
-$('#smartlist-<?php echo $this->id; ?>').dataTable({
+var table = $('#table-<?php echo $this->id; ?>');
+filters['<?php echo $this->id; ?>'] = [];
+tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bProcessing': false,
     <?php if ($this->items === NULL) { ?>
     'bServerSide': true,
@@ -68,17 +72,17 @@ $('#smartlist-<?php echo $this->id; ?>').dataTable({
     'bJQueryUI': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
     'fnServerData': function (sSource, aoData, fnCallback) {
-        for (var i in filters) {
+        for (var i in filters['<?php echo $this->id; ?>']) {
             aoData.push({
                 'name': i,
-                'value': filters[i],
+                'value': filters['<?php echo $this->id; ?>'][i],
             });
         }
         $.getJSON(sSource, aoData, function(json) {
             fnCallback(json);
         });
     }, 
-    'bStateSave': true,
+    //'bStateSave': true,
     'sScrollX': '100%',
     'sScrollXInner': '110%',
     'aoColumnDefs': [
@@ -106,7 +110,7 @@ $('#smartlist-<?php echo $this->id; ?>').dataTable({
         },
         { // hide columns
             'bVisible': false,
-            'aTargets': [1, 4, 9, 10, 13, 15],
+            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 4, 9, 10, 13, 15],
         },
         { // not sortable
             'bSortable': false,
@@ -140,9 +144,9 @@ $('#smartlist-<?php echo $this->id; ?>').dataTable({
     'fnDrawCallback': function() {
         $('table.datatable tbody tr').click(function() {
             $(this).toggleClass('selected');
-            input = $('input[type=checkbox]', $(this)).attr('checked', $(this).hasClass('selected'));
+            input = $('input:checkbox', $(this)).attr('checked', $(this).hasClass('selected'));
         });
-        $('table.datatable tbody input[type=checkbox]').change(function() {
+        $('table.datatable tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
             } else {

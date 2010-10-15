@@ -29,7 +29,7 @@ $sections = Section::GetSections($this->publication, $this->issue, $this->langua
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
 ?>
-<div class="smartlist filters">
+<div class="filters">
 <fieldset class="filters">
     <legend><?php putGS('Filter'); ?></legend>
     <select name="publication">
@@ -114,16 +114,18 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
 </fieldset>
 </div><!-- /.smartlist-filters -->
 
-<?php if (!self::$rendered) { ?>
+<?php if (!self::$renderFilters) { ?>
 <script type="text/javascript">
 $(document).ready(function() {
 
 // filters handle
-$('.filters select, .filters input').change(function() {
+$('.smartlist .filters select, .smartlist .filters input').change(function() {
+    var smartlist = $(this).closest('.smartlist');
+    var smartlistId = smartlist.attr('id').split('-')[1];
     var name = $(this).attr('name');
     var value = $(this).val();
-    filters[name] = value;
-    table.fnDraw(true);
+    filters[smartlistId][name] = value;
+    tables[smartlistId].fnDraw(true);
     return false;
 });
 

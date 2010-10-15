@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 ?>
-<div class="smartlist actions">
+<div class="actions">
 <fieldset class="actions">
     <legend><?php putGS('Select action'); ?></legend>
     <select name="action">
@@ -28,14 +28,15 @@
 </fieldset>
 </div><!-- /.smartlist-actions -->
 
-<?php if (!self::$rendered) { ?>
+<?php if (!self::$renderActions) { ?>
 <script type="text/javascript">
 $(document).ready(function() {
 
 // check all/none
-$('table.datatable thead input[type=checkbox]').change(function() {
+$('.smartlist thead input:checkbox').change(function() {
+    var smartlist = $(this).closest('.smartlist');
     var checked = $(this).attr('checked');
-    $('table.datatable tbody input[type=checkbox]').each(function() {
+    $('tbody input:checkbox', smartlist).each(function() {
         $(this).attr('checked', checked);
         if (checked) {
             $(this).parents('tr').addClass('selected');
@@ -47,12 +48,13 @@ $('table.datatable thead input[type=checkbox]').change(function() {
 
 
 // actions handle
-$('.actions select').change(function() {
+$('.smartlist .actions select').change(function() {
+    var smartlist = $(this).closest('.smartlist');
     var action = $(this).val();
     $(this).val('');
 
     var items = [];
-    $('table.datatable td input:checkbox:checked').each(function() {
+    $('tbody input:checkbox:checked', smartlist).each(function() {
         items.push($(this).attr('name'));
     });
 
@@ -75,7 +77,8 @@ $('.actions select').change(function() {
                 dialog_alert('<?php putGS('Article updated.'); ?>');
             }
         }
-        table.fnDraw(true);
+        var smartlistId = smartlist.attr('id').split('-')[1];
+        tables[smartlistId].fnDraw(true);
     });
 });
 
@@ -108,6 +111,5 @@ function dialog_alert(message, error)
             }
         });
 }
-
 </script>
 <?php } ?>

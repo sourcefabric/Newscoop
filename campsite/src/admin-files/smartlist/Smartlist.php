@@ -33,12 +33,6 @@ class Smartlist
     /** @var array */
     private $filters = array();
 
-    /** @var int */
-    private $start = NULL;
-
-    /** @var int */
-    private $limit = NULL;
-
     /** @var array */
     private $items = NULL;
 
@@ -49,7 +43,13 @@ class Smartlist
     private $colVis = FALSE;
 
     /** @var bool */
-    private static $rendered = FALSE;
+    private static $renderTable = FALSE;
+
+    /** @var bool */
+    private static $renderFilters = FALSE;
+
+    /** @var bool */
+    private static $renderActions = FALSE;
 
     /**
      * @param string $web
@@ -67,6 +67,8 @@ class Smartlist
         camp_load_translation_strings('universal_list');
 
         $this->id = substr(sha1((string) mt_rand()), -6);
+
+        echo '<div id="smartlist-' . $this->id . '" class="smartlist">';
     }
 
     /**
@@ -123,27 +125,6 @@ class Smartlist
     {
         $this->filters[$name] = $value;
         return $this;
-    }
-
-    /**
-     * Set start.
-     * @param int $start
-     * @return Smartlist
-     */
-    public function setStart($start)
-    {
-        $this->start = (int) $start;
-        return $this;
-    }
-
-    /**
-     * Set limit.
-     * @param int $limit
-     * @return Smartlist
-     */
-    public function setLimit($limit)
-    {
-        $this->limit = (int) $limit;
     }
 
     /**
@@ -204,6 +185,7 @@ class Smartlist
     public function renderFilters()
     {
         include dirname(__FILE__) . '/filters.php';
+        self::$renderFilters = TRUE;
         return $this;
     }
 
@@ -214,6 +196,7 @@ class Smartlist
     public function renderActions()
     {
         include dirname(__FILE__) . '/actions.php';
+        self::$renderActions = TRUE;
         return $this;
     }
 
@@ -224,7 +207,8 @@ class Smartlist
     public function render()
     {
         include dirname(__FILE__) . '/table.php';
-        self::$rendered = TRUE;
+        self::$renderTable = TRUE;
+        echo '</div><!-- /#list-' . $this->id . ' -->';
         return $this;
     }
 
