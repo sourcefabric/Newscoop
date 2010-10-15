@@ -9,6 +9,7 @@
  */
 
 header('Content-type: application/json');
+
 require_once dirname(__FILE__) . '/Smartlist.php';
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 

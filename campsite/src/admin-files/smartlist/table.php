@@ -66,6 +66,24 @@
 <script type="text/javascript"><!--
 tables = [];
 filters = [];
+
+function sendOrder(form, hash)
+{
+    var order = $('#table-' + hash + ' tbody').sortable('toArray');
+    $.getJSON('/<?php echo $this->admin; ?>/smartlist/do_order.php',
+        {
+        'order': order,
+        'language': $('input[name=language]', $(form)).val(),
+        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
+        }, function(json) {
+            if (json.success) {
+                tables[hash].fnDraw(true);
+            } else {
+                alert('Error: ' + json.message);
+            }
+        });
+    return false;
+}
 </script>
 <?php } // render ?>
 
