@@ -2804,6 +2804,9 @@ class Article extends DatabaseObject {
                 case 'bypublishdate':
                     $dbField = 'Articles.PublishDate';
                     break;
+                case 'bylastupdate':
+                	$dbField = 'Articles.time_updated';
+                	break;
                 case 'bypublication':
                     $dbField = 'Articles.IdPublication';
                     break;
