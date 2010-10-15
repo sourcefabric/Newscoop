@@ -137,11 +137,13 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
     $smartlist->setPublication($f_publication_id);
     $smartlist->setIssue($f_issue_number);
     $smartlist->setSection($f_section_number);
+    $smartlist->setLanguage($f_language_id);
     $smartlist->setOrder(TRUE);
 
     $smartlist->renderActions();
     $smartlist->render();
 ?>
+
 <FORM name="article_list" action="do_article_list_action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">

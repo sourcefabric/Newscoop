@@ -49,6 +49,19 @@
 
 </div>
 
+<?php if ($this->order) { ?>
+<form method="post" action="<?php echo $this->admin; ?>/do_order.php" onsubmit="return sendOrder(this, '<?php echo $this->id; ?>');">
+    <?php echo SecurityToken::FormParameter(); ?>
+    <input type="hidden" name="language" value="<?php echo $this->language; ?>" />
+    <input type="hidden" name="order" value="" />
+
+<fieldset class="buttons">
+    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
+</fieldset>
+</form>
+<div style="clear: both"></div>
+<?php } ?>
+
 <?php if (!self::$renderTable) { ?>
 <style type="text/css">
 @import url(<?php echo $this->web ?>/css/adm/ColVis.css);
@@ -57,6 +70,24 @@
 <script type="text/javascript">
 tables = [];
 filters = [];
+
+function sendOrder(form, hash)
+{
+    var order = $('#table-' + hash + ' tbody').sortable('toArray');
+    $.getJSON('/<?php echo $this->admin; ?>/smartlist/do_order.php',
+        {
+        'order': order,
+        'language': $('input[name=language]', $(form)).val(),
+        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
+        }, function(json) {
+            if (json.success) {
+                tables[hash].fnDraw(true);
+            } else {
+                alert('Error: ' + json.message);
+            }
+        });
+    return false;
+}
 </script>
 <?php } // render ?>
 
@@ -79,6 +110,13 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 'value': filters['<?php echo $this->id; ?>'][i],
             });
         }
+        <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) {
+            if (!empty($this->$filter)) { ?>
+            aoData.push({
+                'name': '<?php echo $filter; ?>',
+                'value': '<?php echo $this->$filter; ?>',
+            });
+        <?php }} ?>
         $.getJSON(sSource, aoData, function(json) {
             fnCallback(json);
         });
@@ -143,18 +181,29 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         'aiExclude': [0, 1, 2]
     },
     'fnDrawCallback': function() {
-        $('table.datatable tbody tr').click(function() {
+        $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
             $(this).toggleClass('selected');
             input = $('input:checkbox', $(this)).attr('checked', $(this).hasClass('selected'));
         });
-        $('table.datatable tbody input:checkbox').change(function() {
+        $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
             } else {
                 $(this).parents('tr').removeClass('selected');
             }
         });
+        <?php if ($this->order) { ?>
+        $('#table-<?php echo $this->id; ?> tbody').sortable();
+        <?php } ?>
     },
+    <?php if ($this->order) { ?>
+    'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+        var id = $(aData[0]).attr('name').split('_')[0];
+        $(nRow).attr('id', 'article_' + id);
+        return nRow;
+    },
+    'aaSorting': [[2, 'asc']],
+    <?php } ?>
 });
 
 });

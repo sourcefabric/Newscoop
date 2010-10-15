@@ -9,7 +9,7 @@
  */
 
 header('Content-type: application/json');
- 
+
 require_once dirname(__FILE__) . '/Smartlist.php';
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 
@@ -27,6 +27,7 @@ $filters = array(
     'publication' => array('is', 'integer'),
     'issue' => array('is', 'integer'),
     'section' => array('is', 'integer'),
+    'language' => array('is', 'integer'),
     'publish_date' => array('is', 'date'),
     'publish_date_from' => array('greater_equal', 'date'),
     'publish_date_to' => array('smaller_equal', 'date'),
@@ -39,6 +40,7 @@ $filters = array(
 $fields = array(
     'publish_date_from' => 'publish_date',
     'publish_date_to' => 'publish_date',
+    'language' => 'idlanguage',
 );
 
 foreach ($filters as $name => $opts) {
@@ -57,7 +59,7 @@ if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
 // sorting
 $sortOptions = array(
     0 => 'bynumber',
-    2 => 'byorder',
+    2 => 'bysectionorder',
     3 => 'byname',
     12 => 'bycomments',
     13 => 'bypopularity',
@@ -65,8 +67,8 @@ $sortOptions = array(
     16 => 'bycreationdate',
 );
 
-$sortBy = 'bypublishdate';
-$sortDir = 'desc';
+$sortBy = 'bysectionorder';
+$sortDir = 'asc';
 $sortingCols = min(1, (int) $_REQUEST['iSortingCols']);
 for ($i = 0; $i < $sortingCols; $i++) {
     $sortOptionsKey = (int) $_REQUEST['iSortCol_' . $i];
