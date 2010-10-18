@@ -139,6 +139,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
     $smartlist->setSection($f_section_number);
     $smartlist->setLanguage($f_language_id);
     $smartlist->setOrder(TRUE);
+    $smartlist->setSearch(TRUE);
 
     $smartlist->renderActions();
     $smartlist->render();
