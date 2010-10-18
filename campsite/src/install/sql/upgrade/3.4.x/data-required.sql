@@ -23,11 +23,11 @@ INSERT INTO `AuthorsTypes` (
 )
 VALUES (
 NULL , 'Author'
-),
+), (
 NULL , 'Writer'
 ), (
 NULL , 'Photographer'
-),
+), (
 NULL , 'Editor'
 ), (
 NULL , 'Columnist'
