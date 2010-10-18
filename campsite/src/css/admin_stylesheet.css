@@ -34,6 +34,10 @@ form {
 	display:inline;
 }
 
+img {
+    border-style: none;
+}
+
 a:active {
 	color: red;
 }

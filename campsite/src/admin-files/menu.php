@@ -342,7 +342,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 <tbody>
 <tr>
   <td>
-  <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" alt="<?php putGS('Logo'); ?>" /></a>
+    <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" alt="<?php putGS('Logo'); ?>" /></a>
   </td>
 </tr>
 </tbody>
