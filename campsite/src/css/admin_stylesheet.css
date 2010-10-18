@@ -1676,11 +1676,16 @@ fieldset dt {
     width: 100%;
 }
 
-.smartlist td, .smartlist th {
+.smartlist .datatable td, .smartlist .datatable th {
     padding: 3px;
     border: 1px solid #c5dbec;
     border-width: 1px 1px 0 0;
 }
+
+.smartlist td { width: 5em; }
+.smartlist td.id { width: 1em; }
+.smartlist td.name { width: 13em; overflow: hidden; }
+.smartlist td.date { width: 8em; }
 
 .smartlist tbody tr.even td {
     background-color: #f5f5f5;
@@ -1749,4 +1754,25 @@ fieldset dt {
 
 #tabs {
     margin: 13px 21px;
+    font-size: 0.9em;
+}
+
+.smartlist .ui-buttonset {
+    height: 1%;
+    overflow: hidden;
+}
+
+.smartlist .ui-button {
+    float: left;
+    cursor: pointer;
+}
+
+.smartlist .DataTables_sort_wrapper {
+    position: relative;
+}
+
+.smartlist .DataTables_sort_wrapper .ui-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
 }

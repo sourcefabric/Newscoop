@@ -84,7 +84,7 @@ function sendOrder(form, hash)
         });
     return false;
 }
-</script>
+--></script>
 <?php } // render ?>
 
 <script type="text/javascript"><!--
