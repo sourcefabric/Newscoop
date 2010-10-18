@@ -165,7 +165,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // dates
             'sClass': 'date',
-            'aTargets': [-1, -2, -3]
+            'aTargets': [14, 15, 16]
         },
     ],
     'oColVis': { // disable Show/hide column

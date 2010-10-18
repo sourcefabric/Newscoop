@@ -116,9 +116,6 @@ $pager = new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
 camp_html_content_top(getGS('Article List'), $topArray);
-
-include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
-
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -138,6 +135,8 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
     $smartlist->setIssue($f_issue_number);
     $smartlist->setSection($f_section_number);
     $smartlist->setLanguage($f_language_id);
+
+    $smartlist->setColVis(TRUE);
     $smartlist->setOrder(TRUE);
     $smartlist->setSearch(TRUE);
 
