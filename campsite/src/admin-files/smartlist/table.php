@@ -67,7 +67,6 @@ table = $('table.datatable').dataTable({
     }, 
     'bStateSave': true,
     'sScrollX': '100%',
-    'sScrollXInner': '110%',
     'aoColumnDefs': [
         { // inputs for id
             'fnRender': function(obj) {
@@ -100,7 +99,6 @@ table = $('table.datatable').dataTable({
             'aTargets': [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 15],
         },
         { // id
-            'sWidth': '10px',
             'sClass': 'id',
             'aTargets': [0],
         },
@@ -113,12 +111,8 @@ table = $('table.datatable').dataTable({
             'aTargets': [6, 7, 8, 9, 10, 11, 12]
         },
         { // dates
-            'sWidth': '80px',
+            'sClass': 'date',
             'aTargets': [-1, -2, -3]
-        },
-        { // default width
-            'sWidth': '50px',
-            'aTargets': ['_all'],
         },
     ],
     'oColVis': { // disable Show/hide column
