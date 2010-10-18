@@ -42,7 +42,7 @@ CREATE TABLE `Authorbiography` (
 
 ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT( 10 ) UNSIGNED NULL ,
 CHANGE `fk_language_id` `fk_language_id` INT( 10 ) UNSIGNED NULL ,
-CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL
+CHANGE `fk_author_id` `fk_author_id` INT( 10 ) UNSIGNED NULL,
 ADD `fk_type_id` INT NULL ;
 
 CREATE TABLE `AuthorsTypes` (
