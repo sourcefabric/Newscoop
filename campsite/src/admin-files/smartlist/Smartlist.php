@@ -234,9 +234,9 @@ class Smartlist
     public static function ProcessArticle(Article $article)
     {
         $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
-        . '&f_issue_number=' . $article->getIssueNumber() . '&f_section_number=' . $article->getSectionNumber()
-        . '&f_article_number=' . $article->getArticleNumber() . '&f_language_id=' . $article->getLanguageId()
-        . '&f_language_selected=' . $article->getLanguageId();
+        . '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
+        . '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
+        . '&amp;f_language_selected=' . $article->getLanguageId();
     $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
     $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
 

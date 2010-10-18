@@ -161,7 +161,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         <h2><?php putGS('Scheduled Publishing'); ?></h2>
         
         <!-- Scheduled Publishing -->
-        <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="table_list" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
+        <table cellspacing="0" cellpadding="0" class="table_list" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
         <TR class="table_list_header">
             <TD ALIGN="LEFT" VALIGN="TOP" ><?php putGS("Scheduled Publishing"); ?></TD>
             <TD ALIGN="LEFT" VALIGN="TOP" nowrap><?php putGS("Event(s)"); ?></TD>
