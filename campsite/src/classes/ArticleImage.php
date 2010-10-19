@@ -22,6 +22,8 @@ class ArticleImage extends DatabaseObject {
 	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
 	var $m_image = null;
 
+    private static $s_defaultOrder = array(array('field'=>'default', 'dir'=>'ASC'));
+
 	/**
 	 * The ArticleImage table links together Articles with Images.
 	 *
@@ -405,7 +407,7 @@ class ArticleImage extends DatabaseObject {
      * @return array $articleImagesList
      *    An array of Image objects
      */
-    public static function GetList(array $p_parameters, $p_order = null,
+    public static function GetList(array $p_parameters, array $p_order = array(),
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
@@ -469,12 +471,12 @@ class ArticleImage extends DatabaseObject {
         $countClauseObj->addTableFrom('ArticleImages');
         $countClauseObj->addWhere('ArticleImages.IdImage = Images.Id');
 
-        if (!is_array($p_order)) {
-            $p_order = array();
-        }
-
-        // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
+        // sets the ORDER BY condition
+        $p_order = array_merge($p_order, self::$s_defaultOrder);
+        $order = self::ProcessListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $orderColumn = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
             $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
 
@@ -535,6 +537,56 @@ class ArticleImage extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
+
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
+     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
+     *        bypopularity, bycomments
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+            	case 'default':
+                case 'bynumber':
+                    $dbField = 'ArticleImages.Number';
+                    break;
+                case 'bydescription':
+                    $dbField = 'Images.Description';
+                    break;
+                case 'byphotographer':
+                    $dbField = 'Images.Photographer';
+                    break;
+                case 'bydate':
+                    $dbField = 'Images.Date';
+                    break;
+                case 'bylastupdate':
+                	$dbField = 'Images.LastModified';
+                	break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+                $order[] = array('field'=>$dbField, 'dir'=>$direction);
+            }
+        }
+        return $order;
+    }
 
 } // class ArticleImages
 

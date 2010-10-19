@@ -2850,8 +2850,8 @@ class Article extends DatabaseObject {
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
+                $order[] = array('field'=>$dbField, 'dir'=>$direction);
             }
-            $order[] = array('field'=>$dbField, 'dir'=>$direction);
         }
         return $order;
     }
