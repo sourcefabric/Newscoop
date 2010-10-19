@@ -119,7 +119,6 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         });
     }, 
     //'bStateSave': true,
-    'bAutoWidth': false,
     'sScrollX': '100%',
     'aoColumnDefs': [
         { // inputs for id
@@ -169,9 +168,12 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'aTargets': [14, 15, 16]
         },
     ],
+    <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column
-        'aiExclude': [0, 1, 2]
+        'aiExclude': [0, 1, 2],
+        'buttonText': '<?php putGS('Show / hide columns'); ?>',
     },
+    <?php } ?>
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
             $(this).toggleClass('selected');
@@ -200,6 +202,15 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bPaging': false,
     'iDisplayLength': <?php echo sizeof($this->items); ?>,
     <?php } ?>
+    'oLanguage': {
+        'sZeroRecords': '<?php putGS('No records found.'); ?>',
+        'sSearch': '<?php putGS('Search:'); ?>',
+        'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
+        'sEmpty': '<?php putGS('No entries to show'); ?>',
+        'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
+        'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+    },
+    'bAutoWidth': false,
 });
 
 });
