@@ -16,14 +16,7 @@ camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
 
-$f_screen = camp_session_get("f_screen", $defaultScreen);
-$f_submitted_articles_offset = camp_session_get('f_submitted_articles_offset', 0);
-$f_your_articles_offset = camp_session_get('f_your_articles_offset', 0);
-$f_unplaced_articles_offset = camp_session_get('f_unplaced_articles_offset', 0);
-$f_popular_articles_offset = camp_session_get('f_popular_articles_offset', 0);
 $NumDisplayArticles = 20;
-
-
 
 $pendingArticles = ArticlePublish::GetFutureActions($NumDisplayArticles);
 $pendingIssues = IssuePublish::GetFutureActions($NumDisplayArticles);
@@ -35,7 +28,6 @@ $crumbs = array();
 $crumbs[] = array(getGS("Home"), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
-
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
@@ -120,7 +112,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         <h2><?php putGS('Recently Published Articles'); ?></h2>
         <?php
         $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetRecentArticles(10));
+        $smartlist->setItems(Article::GetRecentArticles($NumDisplayArticles));
         $smartlist->render();
         ?>
     </div>
@@ -129,7 +121,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         <h2><?php putGS('Recently Modified Articles'); ?></h2>
         <?php
         $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetRecentlyModifiedArticles(10));
+        $smartlist->setItems(Article::GetRecentlyModifiedArticles($NumDisplayArticles));
         $smartlist->render();
         ?>
     </div>
@@ -154,29 +146,28 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         );
         $smartlist->setItems(Article::GetList($popularArticlesParams,
             array(array('field'=>'bypopularity', 'dir'=>'desc')),
-            NULL, NULL, $count));
+            NULL, $NumDisplayArticles, $count));
         $smartlist->render();
         ?>
     </div>
 
     <div id="scheduled_actions">
         <h2><?php putGS('Scheduled Publishing'); ?></h2>
-        
         <!-- Scheduled Publishing -->
-        <table cellspacing="0" cellpadding="0" class="table_list" id="scheduled_actions" <?php if ($f_screen != "scheduled_actions") { echo 'style="display:none;"'; } ?>>
-        <TR class="table_list_header">
-            <TD ALIGN="LEFT" VALIGN="TOP" ><?php putGS("Scheduled Publishing"); ?></TD>
-            <TD ALIGN="LEFT" VALIGN="TOP" nowrap><?php putGS("Event(s)"); ?></TD>
-            <TD ALIGN="LEFT" VALIGN="TOP" nowrap><?php putGS("Time"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP" nowrap><?php putGS("Publication"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP" nowrap><?php putGS("Issue"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP" nowrap><?php putGS("Section"); ?></TD>
-        </TR>
+        <table cellspacing="0" cellpadding="0" class="table_list" id="scheduled_actions">
+        <tr class="table_list_header">
+            <td><?php putGS("Scheduled Publishing"); ?></td>
+            <td><?php putGS("Event(s)"); ?></td>
+            <td><?php putGS("Time"); ?></td>
+            <td><?php putGS("Publication"); ?></td>
+            <td><?php putGS("Issue"); ?></td>
+            <td><?php putGS("Section"); ?></td>
+        </tr>
         <?php
         if (count($pendingActions) == 0) {
             ?>
-            <TR>
-            <TD colspan="6" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
+            <tr>
+            <td colspan="6" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
             </tr>
             <?php
         }
@@ -197,8 +188,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
             $tmpArticle = new Article($action['IdLanguage'], $action['Number']);
             camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
             ?>
-        <TR class="<?php echo $rowClass ?>">
-            <TD valign="top">
+        <tr class="<?php echo $rowClass ?>">
+            <td>
                 <?php if ($lockInfo) { ?>
                    <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
                 <?php } ?>
@@ -213,8 +204,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                     echo "</a>";
                 }
                 ?>
-            </TD>
-            <td nowrap valign="top">
+            </td>
+            <td>
                 <?PHP
                 $displayActions = array();
                 if ($action["publish_action"] == 'P') {
@@ -239,30 +230,30 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                 ?>
             </td>
 
-            <td nowrap valign="top">
+            <td>
                 <?php echo htmlspecialchars($action["time_action"]); ?>
             </td>
 
-            <td valign="top">
+            <td>
                 <?php p(htmlspecialchars($pub->getName())); ?>
             </td>
 
-            <td valign="top">
+            <td>
                 <?php p(htmlspecialchars($issue->getName())); ?>
             </td>
 
-            <td valign="top">
+            <td>
                 <?php p(htmlspecialchars($section->getName())); ?>
             </td>
 
         <?PHP
         }
         elseif ($action["ObjectType"] == "issue") {
-          ?><TR <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>><?PHP
+          ?><tr <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>><?PHP
             //$language = new Language($action["IdLanguage"]);
             $pub = new Publication($action["IdPublication"]);
             ?>
-            <TD valign="top"><?php putGS("Issue"); ?>:
+            <td><?php putGS("Issue"); ?>:
                 <?PHP
                 if ($g_user->hasPermission('ManageIssue')) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
@@ -273,8 +264,8 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                     echo "</a>";
                 }
                 ?>
-            </TD>
-            <td valign="top" nowrap><?PHP
+            </td>
+            <td><?PHP
             $displayActions = array();
             if ($action["publish_action"] == 'P') {
                 $displayActions[] = getGS("Publish");
@@ -287,7 +278,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
             }
             echo implode("<br>", $displayActions)
             ?></td>
-            <td nowrap valign="top">
+            <td>
                 <?php
                 if ($g_user->hasPermission("Publish")) { ?>
                     <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&event_id=<?php p(urlencode($action["id"])); ?>">
@@ -300,12 +291,12 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
                 ?>
             </td>
 
-            <td valign="top">
+            <td>
                 <?php p(htmlspecialchars($pub->getName())); ?>
             </td>
 
-            <td valign="top"> -----</td>
-            <td valign="top"> -----</td>
+            <td> -----</td>
+            <td> -----</td>
             <?PHP
         }
         ?>

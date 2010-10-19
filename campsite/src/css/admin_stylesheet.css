@@ -1601,6 +1601,12 @@ ul.tree.sortable .icon.delete span {
     margin-left: 8px;
 }
 
+.smartlist fieldset.buttons {
+    float: none;
+    width: auto;
+    margin: 13px 21px;
+}
+
 .smartlist fieldset:first-child {
     margin-left: 21px;
 }

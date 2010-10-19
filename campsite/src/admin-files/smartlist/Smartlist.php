@@ -151,9 +151,15 @@ class Smartlist
      */
     public function getSDom()
     {
-        return sprintf('<"H"%s%srip>t<"F"ipl>',
-            $this->colVis ? 'C' : '',
-            $this->search ? 'f' : ''
+        $colvis = $this->colVis ? 'C' : '';
+        $search = $this->search ? 'f' : '';
+        $paging = $this->items === NULL ? 'ip' : 'i';
+        return sprintf('<"H"%s%s%s>t<"F"%s%s>',
+            $colvis,
+            $search,
+            $paging,
+            $paging,
+            $this->items === NULL ? 'l' : ''
         );
     }
 
@@ -281,8 +287,8 @@ class Smartlist
         $article->getArticleNumber(),
         $article->getLanguageId(),
         $article->getOrder(),
-        sprintf('<a href="%s%s" title="%s %s">%s</a>',
-            $articleLink, $articleLinkParams,
+        sprintf('<a href="%s" title="%s %s">%s</a>',
+            $articleLink,
             getGS('Edit'), $article->getName(),
             $article->getName()),
         $tmpArticleType->getDisplayName(),

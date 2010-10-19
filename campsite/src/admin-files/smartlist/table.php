@@ -196,6 +196,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     },
     'aaSorting': [[2, 'asc']],
     <?php } ?>
+    <?php if ($this->items !== NULL) { ?>
+    'bPaging': false,
+    'iDisplayLength': <?php echo sizeof($this->items); ?>,
+    <?php } ?>
 });
 
 });
