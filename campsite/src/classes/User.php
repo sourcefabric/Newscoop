@@ -256,8 +256,7 @@ class User extends DatabaseObject {
     } // fn FetchUserByName
 
 
-
-        /**
+    /**
      * Fetch the user by given email
      *
      * @param string
@@ -269,7 +268,7 @@ class User extends DatabaseObject {
      *    null No one user found
      *    object User object
      */
-    public static function FetchUserByEamil($p_email, $p_adminOnly = false)
+    public static function FetchUserByEmail($p_email, $p_adminOnly = false)
     {
         global $g_ado_db;
 
@@ -284,7 +283,7 @@ class User extends DatabaseObject {
             return $user;
         }
         return null;
-    } // fn FetchUserByName
+    } // fn FetchUserByEmail
 
 
     /**

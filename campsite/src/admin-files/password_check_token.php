@@ -69,7 +69,7 @@ $action = "msg";
 if (SystemPref::Get("PasswordRecovery") == 'N') {
     $errors[] = getGS('Password recovery is disabled.') . '<br/> <a href="login.php">' . getGS('login') . '</a>';
 } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
-    $usr = User::FetchUserByEamil($email);
+    $usr = User::FetchUserByEmail($email);
     if ($usr != null) {
         if ("|" . strtoupper($usr->getPasswordResetToken()) == $token) {
             $newPassword = Input::Get("f_password","string");
