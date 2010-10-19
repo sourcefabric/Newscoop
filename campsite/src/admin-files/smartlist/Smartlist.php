@@ -233,12 +233,14 @@ class Smartlist
      */
     public static function ProcessArticle(Article $article)
     {
+        global $g_user, $Campsite;
+
         $articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
         . '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
         . '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
         . '&amp;f_language_selected=' . $article->getLanguageId();
-    $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
-    $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
+        $articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
+        $previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
 
     $lockInfo = '';
     $lockHighlight = false;
@@ -268,11 +270,11 @@ class Smartlist
     $onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
     $onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
 
-    $imagesNo = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
-    $topicsNo = ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
+    $imagesNo = (int) ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
+    $topicsNo = (int) ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
     $commentsNo = '';
     if ($article->commentsEnabled()) {
-        $commentsNo = ArticleComment::GetArticleComments($article->getArticleNumber(), $article->getLanguageId(), null, true);
+        $commentsNo = (int) ArticleComment::GetArticleComments($article->getArticleNumber(), $article->getLanguageId(), null, true);
     } else {
         $commentsNo = 'No';
     }
@@ -294,7 +296,7 @@ class Smartlist
         $imagesNo,
         $topicsNo,
         $commentsNo,
-        $article->getReads(),
+        (int) $article->getReads(),
         $article->getCreationDate(),
         $article->getPublishDate(),
         $article->getLastModified(),

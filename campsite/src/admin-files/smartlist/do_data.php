@@ -34,6 +34,7 @@ $filters = array(
     'author' => array('is', 'integer'),
     'topic' => array('is', 'integer'),
     'workflow_status' => array('is', 'string'),
+    'creator' => array('is', 'integer'),
 );
 
 // mapping form name => db name
@@ -41,6 +42,7 @@ $fields = array(
     'publish_date_from' => 'publish_date',
     'publish_date_to' => 'publish_date',
     'language' => 'idlanguage',
+    'creator' => 'iduser',
 );
 
 foreach ($filters as $name => $opts) {

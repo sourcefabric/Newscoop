@@ -46,7 +46,6 @@ $('.smartlist thead input:checkbox').change(function() {
     });
 });
 
-
 // actions handle
 $('.smartlist .actions select').change(function() {
     var smartlist = $(this).closest('.smartlist');
@@ -59,7 +58,7 @@ $('.smartlist .actions select').change(function() {
     });
 
     if (items.length == 0) {
-        dialog_alert('<?php putGS('Select some article first.'); ?>', true);
+        flashMessage('<?php putGS('Select some article first.'); ?>', 'error');
         return;
     }
 
@@ -69,12 +68,12 @@ $('.smartlist .actions select').change(function() {
         '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
     }, function(data, textStatus) {
         if (!data.success) {
-            dialog_alert('<?php putGS('Error'); ?>: ' + data.message, true);
+            flashMessage('<?php putGS('Error'); ?>: ' + data.message, 'error');
         } else {
             if (items.length > 1) {
-                dialog_alert('<?php putGS('Articles updated.'); ?>');
+                flashMessage('<?php putGS('Articles updated.'); ?>');
             } else {
-                dialog_alert('<?php putGS('Article updated.'); ?>');
+                flashMessage('<?php putGS('Article updated.'); ?>');
             }
         }
         var smartlistId = smartlist.attr('id').split('-')[1];
@@ -84,32 +83,5 @@ $('.smartlist .actions select').change(function() {
 
 });
 
-/**
- * Create alert via JQueryUI
- *
- * @param string message
- * @param bool error
- *
- * @return void
- */
-function dialog_alert(message, error)
-{
-    if (error) {
-        title = '<?php putGS('Error'); ?>';
-    } else {
-        title = '<?php putGS('Info'); ?>';
-    }
-
-    $('<div title="' + title + '"><p>' + message + '</p></div>')
-        .appendTo('body')
-        .dialog({
-            modal: true,
-            buttons: {
-                Ok: function() {
-                    $(this).dialog('close');
-                }
-            }
-        });
-}
 </script>
 <?php } ?>

@@ -96,6 +96,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         <li><a href="#popular_articles"><?php putGS("Most Popular Articles"); ?></a></li>
     </ul>
 
+    <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
     <div id="submitted_articles">
         <h2><?php putGS('Submitted Articles'); ?></h2>
         <?php
@@ -104,6 +105,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
         $smartlist->render();
         ?>
     </div>
+    <?php } ?>
 
     <div id="your_articles">
         <h2><?php putGS('Your Articles'); ?></h2>

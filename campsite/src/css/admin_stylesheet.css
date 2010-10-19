@@ -1649,3 +1649,16 @@ fieldset dt {
     top: 0;
     left: 0;
 }
+
+.flash {
+    position: fixed;
+    top: 21px;
+    left: 33%;
+    width: 33%;
+    padding: 8px;
+}
+
+.flash p {
+    margin: 0;
+    padding: 0;
+}

@@ -109,7 +109,9 @@ class Article extends DatabaseObject {
                                                 'published'=>'Articles.Published',
                                                 'workflow_status'=>'Articles.Published',
                                                 'issue_published'=>'Issues.Published',
-                                                'reads'=>'RequestObjects.request_count');
+                                                'reads'=>'RequestObjects.request_count',
+                                                'iduser' => 'Articles.IdUser',
+                                            );
 
     /**
      * Construct by passing in the primary key to access the article in
