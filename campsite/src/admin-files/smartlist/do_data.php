@@ -32,6 +32,7 @@ $filters = array(
     'author' => array('is', 'integer'),
     'topic' => array('is', 'integer'),
     'workflow_status' => array('is', 'string'),
+    'creator' => array('is', 'integer'),
 );
 
 // mapping form name => db name

@@ -49,7 +49,7 @@ $('.actions select').change(function() {
     });
 
     if (items.length == 0) {
-        dialog_alert('<?php putGS('Select some article first.'); ?>', true);
+        flashMessage('<?php putGS('Select some article first.'); ?>', 'error');
         return;
     }
 
@@ -59,12 +59,12 @@ $('.actions select').change(function() {
         '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
     }, function(data, textStatus) {
         if (!data.success) {
-            dialog_alert('<?php putGS('Error'); ?>: ' + data.message, true);
+            flashMessage('<?php putGS('Error'); ?>: ' + data.message, 'error');
         } else {
             if (items.length > 1) {
-                dialog_alert('<?php putGS('Articles updated.'); ?>');
+                flashMessage('<?php putGS('Articles updated.'); ?>');
             } else {
-                dialog_alert('<?php putGS('Article updated.'); ?>');
+                flashMessage('<?php putGS('Article updated.'); ?>');
             }
         }
         table.fnDraw(true);

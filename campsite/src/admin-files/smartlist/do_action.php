@@ -33,6 +33,7 @@ if (!Input::IsValid()) {
 }
 
 $success = false;
+$message = getGS('Access denied.'); // default error
 $articleCodes = array();
 $flatArticleCodes = array();
 $groupedArticleCodes = array();
@@ -110,7 +111,6 @@ case 'workflow_new':
     break;
 case 'switch_onfrontpage':
     foreach ($articleCodes as $articleCode) {
-        if ($row == 'action') continue;
         $articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
         if ($articleObj->userCanModify($g_user)) {
             if ($articleObj->setOnFrontPage(!$articleObj->onFrontPage())) {
