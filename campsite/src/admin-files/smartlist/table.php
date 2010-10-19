@@ -203,6 +203,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'iDisplayLength': <?php echo sizeof($this->items); ?>,
     <?php } ?>
     'oLanguage': {
+        'oPaginate': {
+            'sNext': '<?php putGS('Next'); ?>',
+            'sPrevious': '<?php putGS('Previous'); ?>',
+        },
         'sZeroRecords': '<?php putGS('No records found.'); ?>',
         'sSearch': '<?php putGS('Search:'); ?>',
         'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
