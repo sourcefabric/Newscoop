@@ -78,8 +78,9 @@ function sendOrder(form, hash)
         }, function(json) {
             if (json.success) {
                 tables[hash].fnDraw(true);
+                flashMessage('<?php putGS('Order updated.'); ?>');
             } else {
-                alert('Error: ' + json.message);
+                flashMessage(json.message, 'error');
             }
         });
     return false;
