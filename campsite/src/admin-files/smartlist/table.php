@@ -115,9 +115,11 @@ table = $('table.datatable').dataTable({
             'aTargets': [-1, -2, -3]
         },
     ],
+    <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column
         'aiExclude': [0, 1]
     },
+    <?php } ?>
     'fnDrawCallback': function() {
         $('table.datatable tbody tr').click(function() {
             $(this).toggleClass('selected');
