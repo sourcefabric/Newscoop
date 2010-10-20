@@ -97,7 +97,6 @@ foreach ($topics as $topicPath) {
 ?>
 
     <li id="topic_<?php echo $currentTopic->getTopicId() ?>">
-    <input type="hidden" name="position[<?php echo $currentTopic->getTopicId(); ?>]" />
 
 <?php
 	$isFirstTranslation = true;
@@ -111,13 +110,14 @@ foreach ($topics as $topicPath) {
         $topicId = $currentTopic->getTopicId();
 ?>
 
-        <div><div class="item" title="<?php putGS('Click to hide/show sub-tree. Drag to change order.'); ?>">
-            <span class="lang" title="<?php putGS('Drag to change order'); ?>"><?php echo $topicLanguage->getCode(); ?></span>
-            <strong title="<?php putGS('Click to edit'); ?>"><?php echo htmlspecialchars($topicName); ?></strong>
+        <div class="item"><div>
+            <a class="icon delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&amp;f_topic_language_id=$topicLanguageId"); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>"><span></span>x</a>
+            <a class="edit" title="<?php putGS('Edit'); ?>"><?php putGS('Edit'); ?></a>
 
-            <a class="delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&amp;f_topic_language_id=$topicLanguageId"); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>">
-                <?php putGS("Delete"); ?>
-            </a>
+            <span class="open" title="<?php putGS('Click to edit'); ?>">
+                <span><?php echo $topicLanguage->getCode(); ?></span>
+                <strong><?php echo htmlspecialchars($topicName); ?></strong>
+            </span>
 
             <form method="post" action="do_edit.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
@@ -167,6 +167,7 @@ foreach ($topics as $topicPath) {
             </form>
             <?php } ?>
         </div></div>
+        <input type="hidden" name="position[<?php echo $currentTopic->getTopicId(); ?>]" />
 
     <?php
     } // foreach
@@ -205,43 +206,32 @@ $(document).ready(function() {
 
 var sorting = false;
 
-// add classes for styling
-$('ul.tree.sortable li').each(function() {
-    $(this).children('div').first().addClass('first');
-    $(this).children('div').last().addClass('last');
-});
+// show/hide interaction
+$('ul.tree.sortable .item').each(function() {
+    var fieldsets = $('fieldset', $(this));
+    fieldsets.hide();
 
-// hide subtopics
-$('ul.tree.sortable > li > ul').hide();
+    $('.edit', $(this)).click(function() {
+        if (sorting) {
+            return; // ignore
+        }
+        fieldsets.toggle();
+        return false;
+    });
 
-// show subtopics on click
-$('ul.tree.sortable div.item').click(function() {
-    if (sorting) {
-        return; // ignore
+    var subtopics = $(this).nextAll('ul');
+    subtopics.hide();
+
+    if (subtopics.length == 0) {
+        return;
     }
-    $(this).parent().siblings('ul').toggle();
-});
 
-// add subtupics count
-$('ul.tree.sortable > li').each(function() {
-    var count = $('li', $(this)).length;
-    if (count > 0) {
-        $('.first > div.item', $(this)).first()
-            .append('<span class="sub">' + count + ' <?php putGS('Subtopics'); ?></span>');
-    }
-});
-
-// hide item forms
-$('ul.tree.sortable fieldset').hide();
-
-// show forms on click
-$('ul.tree.sortable div.item strong').click(function() {
-    if (sorting) {
-        return; // ignore
-    }
-    $('fieldset', $(this).parent()).toggle();
-    $(this).parent().toggleClass('active');
-    return false;
+    $('.open', $(this)).click(function() {
+        subtopics.toggle();
+        $('> .item .open', $(this).closest('li'))
+            .toggleClass('closed')
+            .toggleClass('opened');
+    }).addClass('closed');
 });
 
 // make tree sortable
@@ -334,9 +324,9 @@ $('input[name=search]').change(function() {
     $('ul.tree.sortable > li').each(function() {
         var li = $(this);
         $('strong', li).each(function() {
-            if (!li.hasClass('match') && $(this).text().search(re) >= 0) {
+            if ($(this).text().search(re) >= 0) {
                 li.addClass('match');
-                $(this).parent().addClass('match');
+                $(this).closest('.item').addClass('match');
             }
         });
     });

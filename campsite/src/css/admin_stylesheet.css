@@ -1452,87 +1452,114 @@ ul.tree.sortable a, ul.tree.sortable span {
     cursor: auto;
 }
 
-ul.tree.sortable a {
-    cursor: pointer;
+ul.tree.sortable .item {
+    float: left;
+    clear: left;
+    background: #fbfbfb url('adm/images/topics_bg.png') repeat-x 0 0;
+    border: 1px solid #ccc;
+    border-top-width: 0;
+    cursor: move;
 }
 
-ul.tree.sortable div.item {
+ul.tree.sortable .item:first-child {
+    border-top-width: 1px;
+}
+
+ul.tree.sortable .item > div {
     width: 450px;
     height: 1%;
     overflow: hidden;
-    margin: 0 15px 0 0;
-    padding: 3px;
+    margin: 0;
+    padding: 3px 3px 3px 13px;
     font-size: 1em;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-width: 0 1px 1px;
+    background: transparent url('adm/images/topics_drag.png') no-repeat 4px 2px;
+}
+
+ul.tree.sortable .open {
+    background: transparent none no-repeat 3px 3px;
+}
+
+ul.tree.sortable .open.closed {
+    padding-left: 18px;
+    background-image: url('adm/images/topics_open.png');
     cursor: pointer;
 }
 
-ul.tree.sortable div.item.active {
-    background-color: #f9f9f9;
+ul.tree.sortable .open.opened {
+    padding-left: 18px;
+    background-image: url('adm/images/topics_close.png');
+    cursor: pointer;
 }
 
-ul.tree.sortable div.item.match {
-    background-color: #fff56e;
+ul.tree.sortable .open * {
+    cursor: pointer;
 }
 
-ul.tree.sortable li.move div.item {
-    cursor: move;
+ul.tree.sortable .item.active {
+    background: #f9f9f9;
 }
 
-ul.tree.sortable .first > div.item {
-    border-top-width: 1px;
-    -moz-border-radius: 5px 5px 0 0;
-    border-radius: 5px 5px 0 0;
+ul.tree.sortable .item.match {
+    background: #fff56e;
 }
 
-ul.tree.sortable .last > div.item {
-    -moz-border-radius: 0 0 5px 5px;
-    border-radius: 0 0 5px 5px;
-}
-
-ul.tree.sortable .first.last > div.item {
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
-ul.tree.sortable div.item strong {
+ul.tree.sortable .item strong {
     color: #00415b;
     cursor: pointer;
-}
-
-ul.tree.sortable div.item span.sub {
-    padding-left: 8px;
-    color: #999;
-    font-size: 0.8em;
-    font-weight: normal;
-    cursor: pointer;
-}
-
-ul.tree.sortable span.lang {
-    cursor: move;
 }
 
 ul.tree.sortable fieldset {
     margin: 8px 5px;
     padding: 5px;
-    background-color: #fff;
     border: 1px solid #ccc;
-    z-index: 2000;
-}
-
-ul.tree.sortable fieldset legend {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    font-weight: normal;
 }
 
 ul.tree.sortable fieldset select {
     margin-bottom: 3px;
 }
 
-ul.tree.sortable a.delete {
+ul.tree.sortable .icon {
+    position: relative;
+    display: block;
     float: right;
-    color: #cc0000;
+    width: 11px;
+    height: 11px;
+    margin: 3px 5px 0 3px;
+    background: transparent url('adm/images/topics_open_close.png') no-repeat 0 0;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+ul.tree.sortable .icon span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background: transparent none no-repeat 0 0;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+ul.tree.sortable .edit {
+    float: right;
+    margin-right: 8px;
+    padding-top: 2px;
+    padding-left: 21px;
+    font-size: 0.9em;
+    background: transparent url('adm/images/topics_edit.png') no-repeat 0 50%;
+    cursor: pointer;
+}
+
+ul.tree.sortable .icon.delete {
+    float: right;
+    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+ul.tree.sortable .icon.delete span {
+    background-image: url('adm/images/topics_delete.png');
 }
