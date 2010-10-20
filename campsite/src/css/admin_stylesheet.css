@@ -1536,7 +1536,7 @@ ul.tree.sortable .icon.delete span {
     margin: 5px 21px 21px;
 }
 
-/* smartlist */
+/* ArticleList */
 .dataTables_wrapper {
     margin: 13px 21px;
 }
@@ -1808,4 +1808,103 @@ fieldset dt {
 .flash p {
     margin: 0;
     padding: 0;
+}
+
+ul.tree.sortable .item > div {
+    width: 450px;
+    height: 1%;
+    overflow: hidden;
+    margin: 0;
+    padding: 3px 3px 3px 13px;
+    font-size: 1em;
+    background: transparent url('adm/images/topics_drag.png') no-repeat 4px 2px;
+}
+
+ul.tree.sortable .open {
+    background: transparent none no-repeat 3px 3px;
+}
+
+ul.tree.sortable .open.closed {
+    padding-left: 18px;
+    background-image: url('adm/images/topics_open.png');
+    cursor: pointer;
+}
+
+ul.tree.sortable .open.opened {
+    padding-left: 18px;
+    background-image: url('adm/images/topics_close.png');
+    cursor: pointer;
+}
+
+ul.tree.sortable .open * {
+    cursor: pointer;
+}
+
+ul.tree.sortable .item.active {
+    background: #f9f9f9;
+}
+
+ul.tree.sortable .item.match {
+    background: #fff56e;
+}
+
+ul.tree.sortable .item strong {
+    color: #00415b;
+    cursor: pointer;
+}
+
+ul.tree.sortable fieldset {
+    margin: 8px 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+ul.tree.sortable fieldset select {
+    margin-bottom: 3px;
+}
+
+ul.tree.sortable .icon {
+    position: relative;
+    display: block;
+    float: right;
+    width: 11px;
+    height: 11px;
+    margin: 3px 5px 0 3px;
+    background: transparent url('adm/images/topics_open_close.png') no-repeat 0 0;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+ul.tree.sortable .icon span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background: transparent none no-repeat 0 0;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+ul.tree.sortable .edit {
+    float: right;
+    margin-right: 8px;
+    padding-top: 2px;
+    padding-left: 21px;
+    font-size: 0.9em;
+    background: transparent url('adm/images/topics_edit.png') no-repeat 0 50%;
+    cursor: pointer;
+}
+
+ul.tree.sortable .icon.delete {
+    float: right;
+    margin-top: 2px;
+    width: 14px;
+    height: 14px;
+}
+
+ul.tree.sortable .icon.delete span {
+    background-image: url('adm/images/topics_delete.png');
 }
