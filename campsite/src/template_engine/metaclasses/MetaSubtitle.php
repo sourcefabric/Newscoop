@@ -256,36 +256,19 @@ final class MetaSubtitle {
         $imageSize = @getimagesize($imageObj->getImageStorageLocation());
         unset($imageObj);
         $imgParams = '';
-        if (isset($detailsArray['ratio']) && !empty($detailsArray['ratio'])) {
-            $imgParams = '&amp;ImageRatio=' . (int)$detailsArray['ratio'];
-        } else {
-            $imgRatio = SystemPref::Get("EditorImageRatio");
-            if ($imgRatio > 0 && $imgRatio < 100) {
-                $imgParams = '&amp;ImageRatio=' . $imgRatio;
-            } else {
-                $widthSet = false;
-                $heightSet = false;
-	            if (isset($detailsArray['width'])
-                        && !empty($detailsArray['width'])) {
-                    if ($detailsArray['width'] < $imageSize[0]) {
-                        $imgParams = '&amp;ImageWidth=' . (int)$detailsArray['width'];
-                        $widthSet = true;
-                    }
-                }
-                if (!$widthSet && $imgResizeWidth = SystemPref::Get("EditorImageResizeWidth")) {
-                    $imgParams = ($imgResizeWidth > 0 && $imgResizeWidth < $imageSize[0]) ? '&amp;ImageWidth=' . $imgResizeWidth : '';
-                }
-                if (isset($detailsArray['height'])
-                        && !empty($detailsArray['height'])) {
-                    if ($detailsArray['height'] < $imageSize[1]) {
-                        $imgParams .= '&amp;ImageHeight=' . (int)$detailsArray['height'];
-                        $heightSet = true;
-                    }
-                }
-                if (!$heightSet && $imgResizeHeight = SystemPref::Get("EditorImageResizeHeight")) {
-                    $imgParams .= ($imgResizeHeight > 0 && $imgResizeHeight < $imageSize[1]) ? '&amp;ImageHeight=' . $imgResizeHeight : '';
-                }
-            }
+
+        $urlParams = array('ratio'=>'ImageRatio', 'width'=>'ImageWidth', 'height'=>'ImageHeight');
+        $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
+        'height'=>'EditorImageResizeHeight');
+        foreach (array('ratio', 'width', 'height') as $imageOption) {
+        	$customValue = (int)$detailsArray[$imageOption];
+        	$defaultValue = (int)SystemPref::Get($defaultOptions[$imageOption]);
+
+        	if ($customValue > 0) {
+        		$imgParams .= '&amp;' . $urlParams[$imageOption] . '=' . $customValue;
+        	} elseif ($defaultValue > 0) {
+        		$imgParams .= '&amp;' . $urlParams[$imageOption] . '=' . $defaultValue;
+        	}
         }
 
         $imgZoomLink = '';
