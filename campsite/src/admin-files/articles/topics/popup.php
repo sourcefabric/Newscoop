@@ -29,11 +29,14 @@ foreach ($articleTopics as $topic) {
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Expires" CONTENT="now" />
 	<title><?php putGS("Attach Topic To Article"); ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="Expires" CONTENT="now">
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css" />
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
 </head>
 <body>
 <br>
@@ -41,6 +44,11 @@ foreach ($articleTopics as $topic) {
 <?php putGS("Attach Topics"); ?>
 </div>
 <p></p>
+
+<fieldset class="buttons">
+    <input type="text" name="search" class="autocomplete topics" />
+    <input type="submit" value="<?php putGS('Search'); ?>" />
+</fieldset>
 
 <?php if (count($topics) > 0) { ?>
 <form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
@@ -131,6 +139,28 @@ $(document).ready(function() {
             $(this).text('+');
         }
     });
+});
+
+// search
+$('input[name=search]').change(function() {
+    $('ul.tree *').removeClass('match');
+    $('ul.tree > li').show();
+    if ($(this).val() == '') {
+        return;
+    }
+    var re = new RegExp($(this).val(), "i");
+    $('ul.tree > li').each(function() {
+        var li = $(this);
+        $('label', li).each(function() {
+            if ($(this).text().search(re) >= 0) {
+                li.addClass('match');
+                $(this).closest('li').addClass('match');
+                $(this).addClass('match');
+            }
+        });
+    });
+    $('ul.tree > li').not('.match').hide();
+    $('ul.tree > li.match > ul').show();
 });
 </script>
 

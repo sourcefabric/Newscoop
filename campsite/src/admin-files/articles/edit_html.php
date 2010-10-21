@@ -352,7 +352,7 @@ if ($f_edit_mode == "edit") { ?>
                 }
 
                 function drawComboContent($id=0){
-                    $types =Author::getTypes();
+                    $types = (array) Author::getTypes();
                     foreach ($types as $xtype){
                                   $combo .=  '<option value="' . $xtype['id'] . '"';
                                   if ($id==$xtype['id']) $combo.= ' selected="selected" ';
@@ -384,7 +384,7 @@ if ($f_edit_mode == "edit") { ?>
 
                 <td align="right" valign="top" id="author_type">
                     <?php $i=0;
-                    foreach ($types_list as $type){
+                    foreach ((array) $types_list as $type){
                         echo "<div id=\"author_type$i\" style=\"margin-top:1px\">" . drawCombo($types,$type,$i) . "</div>";
                         $i++;
                     }
@@ -398,7 +398,7 @@ if ($f_edit_mode == "edit") { ?>
                     <?php
 
                     
-                        foreach ($author_list as $author){
+                        foreach ((array) $author_list as $author){
                         echo $author;
                     }?>
                         
