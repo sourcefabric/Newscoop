@@ -1367,8 +1367,6 @@ fieldset.controls, fieldset.buttons {
     margin: 13px 21px;
     padding: 10px;
     border: 1px solid #ccc;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
 }
 
 fieldset.buttons.active {

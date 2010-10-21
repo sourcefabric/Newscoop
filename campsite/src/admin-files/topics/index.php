@@ -45,7 +45,7 @@ camp_html_display_msgs("0.5em", 0);
 
 <fieldset class="controls search">
     <legend><?php putGS('Search'); ?></legend>
-    <input type="text" name="search" /> <input type="submit" name="search_submit" value="<?php putGS('Search'); ?>" />
+    <input type="text" name="search" class="autocomplete topics" /> <input type="submit" name="search_submit" value="<?php putGS('Search'); ?>" />
 </fieldset>
 
 <?php  if ($g_user->hasPermission('ManageTopics')) { ?>
