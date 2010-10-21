@@ -311,28 +311,6 @@ function validate(form)
     return true;
 }
 
-// search
-$('input[name=search]').change(function() {
-    $('ul.tree.sortable *').removeClass('match');
-    $('ul.tree.sortable > li').show();
-    $('ul.tree.sortable').sortable('option', 'disabled', true);
-    if ($(this).val() == "") {
-        $('ul.tree.sortable').sortable('option', 'disabled', false);
-        return;
-    }
-    var re = new RegExp($(this).val(), "i");
-    $('ul.tree.sortable > li').each(function() {
-        var li = $(this);
-        $('strong', li).each(function() {
-            if ($(this).text().search(re) >= 0) {
-                li.addClass('match');
-                $(this).closest('.item').addClass('match');
-            }
-        });
-    });
-    $('ul.tree.sortable > li').not('.match').hide();
-    $('ul.tree.sortable > li.match > ul').show();
-});
 --></script>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>
