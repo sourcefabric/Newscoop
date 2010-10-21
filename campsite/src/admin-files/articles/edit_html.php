@@ -397,8 +397,6 @@ if ($f_edit_mode == "edit") { ?>
                     <?php if ($f_edit_mode == "edit") {  ?>
                     <div id="authorAutoComplete">
                     <?php
-
-
                         foreach ((array) $author_list as $author){
                         echo $author;
                     }?>

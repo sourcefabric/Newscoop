@@ -140,6 +140,28 @@ $(document).ready(function() {
         }
     });
 });
+
+// search
+$('input[name=search]').change(function() {
+    $('ul.tree *').removeClass('match');
+    $('ul.tree > li').show();
+    if ($(this).val() == '') {
+        return;
+    }
+    var re = new RegExp($(this).val(), "i");
+    $('ul.tree > li').each(function() {
+        var li = $(this);
+        $('label', li).each(function() {
+            if ($(this).text().search(re) >= 0) {
+                li.addClass('match');
+                $(this).closest('li').addClass('match');
+                $(this).addClass('match');
+            }
+        });
+    });
+    $('ul.tree > li').not('.match').hide();
+    $('ul.tree > li.match > ul').show();
+});
 </script>
 
 <?php } else { ?>

@@ -131,14 +131,23 @@ function callServer(p_callback, p_args, p_handle)
     });
 }
 
+var autocomplete = false;
+var terms = [];
 $(document).ready(function() {
-    var terms = [];
-    $('ul.tree.sortable strong').each(function() {
-        terms.push($(this).text());
-    });
-
+    // topics autocomplete
     $('.autocomplete.topics').autocomplete({
         source: function(request, response) {
+            if (terms.length == 0) { // populate terms
+                $('ul.tree.sortable strong').each(function() {
+                    terms.push($(this).text());
+                });
+            }
+            if (terms.length == 0) { // still needs to populate
+                $('ul.tree label').each(function() {
+                    terms.push($(this).text());
+                });
+            }
+
             var match = [];
             var re = new RegExp(request.term, "i");
             for (i = 0; i < terms.length; i++) {
@@ -147,6 +156,9 @@ $(document).ready(function() {
                 }
             }
             response(match);
-        }
+        },
+        close: function(event, ui) {
+            $('input[name=search]').change();
+        },
     });
 });
