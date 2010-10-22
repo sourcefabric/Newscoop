@@ -163,7 +163,7 @@
 
 
 
-<div id="leftcolumn" class="box_table" style="float:left">
+<div id="leftcolumn" style="float:left">
 <div id="detailtable" class="" >Loading Data...</div>
 </div>
 <script type="text/javascript" charset="utf-8">
@@ -217,7 +217,7 @@ function deleteAuthor(id){
         {
             $("#detailtable").html(data);
            $(function() {
-		$("ul.tabs").tabs("> .pane");
+		$(".tabs").tabs({ selected: 1 });
             });
         });
     }

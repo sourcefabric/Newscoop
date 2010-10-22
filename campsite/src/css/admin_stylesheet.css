@@ -1130,52 +1130,6 @@ a.calendarButton {
     width:700px;
 }
 
-.tabs {
-    list-style-type:none;
-    margin:0;
-    padding:0;
-    width:100%;
-    border-bottom:1px solid #5d99b1;
-    height:25px;
-    overflow:visible;
-}
-
-.tabs li {
-    float:left;
-}
-
-.tabs li a {
-    float:left;
-    margin:0 4px 0 0;
-    height:19px;
-    padding:5px 12px 0 12px;
-    border:1px solid #b5d5e2;
-    border-bottom:none;
-    text-decoration:none;
-    font-size:12px;
-    font-weight:bold;
-    color:#537989;
-    background:#f4fafd;
-    outline:none;
-}
-
-.tabs li a.current {
-    height:20px;
-    background:#edf7fc;
-    border:1px solid #5d99b1;
-    border-bottom:none;
-    color:#015476;
-    position:relative;
-    z-index:10;
-}
-
-.pane {
-    background:#edf7fc;
-    border:1px solid #5d99b1;
-    border-top:none;
-    padding:10px 0 0px 0;
-}
-
 .floatBox {
     float:left;
     margin:20px 0 20px 15px;
@@ -1565,4 +1519,8 @@ ul.tree.sortable .icon.delete {
 
 ul.tree.sortable .icon.delete span {
     background-image: url('adm/images/topics_delete.png');
+}
+
+.tabs.authors {
+    margin: 5px 21px 21px;
 }

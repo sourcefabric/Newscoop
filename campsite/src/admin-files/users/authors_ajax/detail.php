@@ -50,13 +50,12 @@ if ($id > 0) {
 
 <form method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="<?php echo $id; ?>"/>
-<div class="floatBox bigBox">
-    <ul class="tabs">
-        <li><a href="#">General</a></li>
-        <li><a href="#" class="current">Biography</a></li>
+<div class="tabs authors">
+    <ul>
+        <li><a href="#general"><?php putGS('General'); ?></a></li>
+        <li><a href="#biography"><?php putGS('Biography'); ?></a></li>
     </ul>
-    <!--Pane 1-->
-    <div class="pane">
+    <div id="general">
         <div class="formBlock firstBlock firstBlock">
             <ul>
                 <li>
@@ -136,8 +135,8 @@ if ($count==0){
             </ul>
         </div>
     </div>
-    <!--Pane 2-->
-    <div class="pane">
+
+    <div id="biography">
         <div class="formBlock firstBlock">
             <ul>
                 <li><label class="smaller">Languages:</label>
@@ -215,7 +214,6 @@ if ($count==0){
             </ul>
         </div>
     </div>
-    <!--Pane 3-->
 
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
