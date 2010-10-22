@@ -12,6 +12,7 @@
 <?php
 // If the article is locked.
 if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
+	$saveButtonNames = array();
 ?>
 <p>
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
@@ -334,7 +335,7 @@ if ($f_edit_mode == "edit") { ?>
                           $('#author_type').append('<select onchange="buttonEnable(\'save_f_article_author\');" name="f_article_author_type[]" id="article_author_type' +rnumber +  '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none"><?php echo drawComboContent(); ?></select>');
                           $('#authorContainer').append('<input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
                           $('#authorContainer').append('<img border="0" src="./../../css/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
-                          
+
                       }
                       function deleteAuthor(id, empty){
                           $('#f_article_author' + id).remove();
@@ -397,12 +398,12 @@ if ($f_edit_mode == "edit") { ?>
                     <div id="authorAutoComplete">
                     <?php
 
-                    
+
                         foreach ((array) $author_list as $author){
                         echo $author;
                     }?>
-                        
-                          
+
+
                         <div id="authorContainer">
                             <input type="text" style="width:280px" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor"  onkeyup="buttonEnable('save_f_article_author');" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
                         </div>

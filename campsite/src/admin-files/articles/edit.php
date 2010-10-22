@@ -187,11 +187,12 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 
 include ("edit_html.php");
 
-?>
+if ($locked) {
+	camp_html_copyright_notice();
+	return;
+}
 
 
-<?php
-//
 $jsArrayFieldsStr = '';
 for($i = 0; $i < sizeof($fCustomFields); $i++) {
     $jsArrayFieldsStr .= "'" . addslashes($fCustomFields[$i]) . "'";
@@ -215,10 +216,8 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
 }
 
 include ("edit_javascript.php");
-?>
 
 
-<?php
 if ($showComments && $f_show_comments) {
     include("comments/show_comments.php");
 }
