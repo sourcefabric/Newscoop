@@ -35,9 +35,7 @@
         </tr>
         <tr>
           <td width="35%" valign="top">
-            <div class="help">
-              Give your site a title. Be short and descriptive.
-            </div>
+            <div class="help"><p>Give your site a title. Be short and descriptive.</p></div>
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
@@ -56,7 +54,7 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle">Administrator Data:</div>
+            <div class="subtitle"><h3>Administrator Data:</h3></div>
           </td>
         </tr>
         <tr>

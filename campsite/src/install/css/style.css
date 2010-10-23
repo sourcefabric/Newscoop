@@ -7,7 +7,24 @@ body {
     margin: 0;
     padding: 0;
 }
-
+h1 {
+	font-size: 2.4em;
+	color:#015476;
+}
+h2 {
+	font-size: 1.8em;
+	color:#5d99b1;
+}
+h3 {
+	font-size: 1.4em;
+}
+a {
+	color:#1a8cbb;
+	text-decoration:none;
+}
+a:hover {
+	text-decoration:underline;
+}
 table.global {
     width: 70%;
     padding: 8px;
@@ -60,12 +77,17 @@ table.header td, table.right_header td {
 table.view_list {
     margin-top: 6px;
     padding: 0;
+	width:95%;
 }
 table.view_list td {
     margin: 0;
     padding: 4px;
-    font-size: 75%;
+    font-size: 1.2em;
     border-bottom: 1px dotted #dfdfdf;
+	text-align:right;
+}
+table.view_list td.first {
+	text-align:left;
 }
 table td.template-container {
 	/*background:#edf7fc;*/
@@ -89,8 +111,13 @@ div.subtitle {
 
 div.help {
     margin-top: 10px;
+	text-align:left;
 }
 p {
+    font-size: 1.2em;
+	line-height:150%;
+}
+ul, ol {
     font-size: 1.2em;
 	line-height:150%;
 }
@@ -98,21 +125,26 @@ div.help p {
     color: #6a6a6a;
 	line-height:150%;
 	padding:0 0 0 16px;
+	text-align:left;
 }
 div.table_spacer {
 	height:7px;
 }
 
 div.form_field {
-    margin: 8px 0 16px 0;
+    margin: 8px 16px 16px 0;
     padding: 0;
+}
+
+div.form_field label {
+    font-weight: bold;
     font-size: 1.2em;
+    line-height: 200%;
 }
 
 div.message {
     margin-top: 10px;
     padding: 0;
-    font-size: 75%;
     color: red;
 }
 
@@ -145,14 +177,13 @@ div.icon img {
     margin: 0 auto;
 }
 div.icon span {
-    font-size: 75%;
     display: block;
     text-align: center;
 }
 div.demo_img {
     margin-bottom: 15px;
-    width: 350px;
-    height: 135px;
+    width: 430px;
+    height: 152px;
     border: 1px solid #b7b7b7;
 	padding:6px;
 	background-color:#fafafa;
@@ -163,7 +194,6 @@ div.demo_img img {
 	padding:2px;
 	float:left;
 	margin:0 10px 10px 0;
-        width:210px;
 }
 div.demo_img p {
     color:#6a6a6a;
@@ -177,14 +207,14 @@ div.nonwritable {
 }
 
 input.inputbox {
-    font-size: 90%;
+    font-size: 1.2em;
     margin: 0px;
     padding: 2px;
     border: 1px solid #dfdfdf;
 }
 
 ul#steps_list {
-    font-size: 1.2em;
+    font-size: 1.3em;
     margin: 0;
     padding: 0;
     list-style-type: none;

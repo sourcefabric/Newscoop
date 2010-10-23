@@ -42,7 +42,6 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <th colspan="3" align="left" class="innerHead">
-
             <div class="subtitle">Load Sample Data:</div>
           </th>
         </tr>
@@ -69,16 +68,13 @@
               <input id="install_demo_no" name="install_demo" value="0" type="radio" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
             </div>
           {{ foreach from=$sample_templates key="step" item="t" }}
-
-
-        <div class="template-header">
-             <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label>{{ $t }}</label></div>
-
-          <div class="demo_img">
+            <div class="template-header">
+              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label>{{ $t }}</label>
+            </div>
+            <div class="demo_img">
               <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg"  rel="lightbox" title="{{ $t }}" /></a>
               <p>{{include file="./../sample_templates/$t/description.txt"}}</p>
-          </div>
-
+            </div>
           {{ /foreach }}
           </td>
         </tr>

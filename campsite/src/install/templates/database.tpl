@@ -51,7 +51,7 @@
           </td>
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
-            <div class="message">{{ $message }}</div>
+            <div class="message"><p>{{ $message }}</p></div>
             <div class="form_field">
               <label for="db_hostname">Server Name/Address</label>:<br />
               <input class="inputbox" type="text" size="42" maxlength="40"

@@ -17,13 +17,13 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="2">
-            <div class="subtitle">Campsite Successfuly Installed</div>
+            <div class="subtitle"><h2>Campsite Successfuly Installed</h2></div>
           </td>
         </tr>
         <tr>
           <td width="40%" valign="top">
             <div class="help">
-              Click the "Administrator" icon to start Campsite.
+              <p>Click the "Administrator" icon to start Campsite.</p>
             </div>
           </td>
           <td width="60%" align="center">

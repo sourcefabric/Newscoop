@@ -60,13 +60,13 @@ var domTT_styleClass = 'domTTOverlib';
           <td width="60%" valign="top">
             <table class="view_list" cellspacing="0" cellpadding="0">
             <tr>
-              <td><strong>Requirement</strong></td>
+              <td class="first"><strong>Requirement</strong></td>
               <td>&nbsp;</td>
               <td><strong>Status</strong></td>
             </tr>
             {{ foreach from=$php_functions item="phpfunc" }}
             <tr>
-              <td>{{ $phpfunc.tag }}</td>
+              <td class="first">{{ $phpfunc.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">
               {{ if $phpfunc.exists eq 'Yes' }}
@@ -83,7 +83,7 @@ var domTT_styleClass = 'domTTOverlib';
 
             {{ foreach from=$sys_requirements item="sysreq" }}
             <tr>
-              <td>{{ $sysreq.tag }}</td>
+              <td class="first">{{ $sysreq.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">
               {{ if $sysreq.exists eq 'Yes' }}
@@ -112,7 +112,7 @@ var domTT_styleClass = 'domTTOverlib';
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle">Recommended PHP Settings:</div>
+            <div class="subtitle"><h3>Recommended PHP Settings:</h3></div>
           </td>
         </tr>
         <tr>
@@ -132,7 +132,7 @@ var domTT_styleClass = 'domTTOverlib';
           <td width="60%" valign="top">
             <table class="view_list" cellspacing="0" cellpadding="0">
             <tr>
-              <td><strong>Option</strong></td>
+              <td class="first"><strong>Option</strong></td>
               <td>&nbsp;</td>
               <td><strong>Recommended</strong></td>
               <td>&nbsp;</td>
@@ -140,7 +140,7 @@ var domTT_styleClass = 'domTTOverlib';
             </tr>
             {{ foreach from=$php_options item="phpopt" }}
             <tr>
-              <td>{{ $phpopt.tag }}</td>
+              <td class="first">{{ $phpopt.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">{{ $phpopt.rec_state }}</td>
               <td>&nbsp;</td>

@@ -66,7 +66,7 @@
 
             <p><strong>Subscriptions Notifier:</strong> Sends emails to subscribers alerting them when their subscription ends.</p><br />
 
-            <p>You can read more on this in the <a href="http://code.campware.org/manuals/campsite/3.0/index.php?id=198" target="_blank">Campsite manual</a>.</p>
+            <p>You can read more on this in the <a href="http://en.flossmanuals.net/Campsite/AutomatedTasks" target="_blank">Campsite manual</a>.</p>
             </div>
           </td>
         </tr>

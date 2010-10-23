@@ -25,7 +25,7 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="2">
-            <div class="subtitle">GNU/GPL Free Software License:</div>
+            <div class="subtitle"><h2>GNU/GPL Free Software License:</h2></div>
           </td>
         </tr>
         <tr>
