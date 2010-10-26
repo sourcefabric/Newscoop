@@ -59,7 +59,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>{#campsiteinternallink_dlg.title}</title>
+  <title>{#campsiteinternallink.title}</title>
 
   <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
   <script type="text/javascript" src="../../utils/mctabs.js"></script>
@@ -73,17 +73,17 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
   <form onsubmit="insertAction();return false;" action="#">
   <div class="tabs">
     <ul>
-      <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#campsiteinternallink_dlg.general_tab}</a></span></li>
+      <li id="general_tab" class="current"><span><a href="javascript:mcTabs.displayTab('general_tab','general_panel');" onmousedown="return false;">{#campsiteinternallink.general_tab}</a></span></li>
     </ul>
   </div>
   <div class="panel_wrapper">
     <div id="general_panel" class="panel current">
       <fieldset>
-        <legend>{#campsiteinternallink_dlg.general_props}</legend>
+        <legend>{#campsiteinternallink.general_props}</legend>
 
         <table border="0" cellpadding="4" cellspacing="0">
         <tr>
-          <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink_dlg.language}</label></td>
+          <td nowrap="nowrap"><label id="hreflabel" for="href">{#campsiteinternallink.language}</label></td>
           <td>
             <table border="0" cellspacing="0" cellpadding="0">
             <tr>
@@ -105,7 +105,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
           </td>
         </tr>
         <tr id="pickpublicationfrom">
-          <td class="column1"><label for="pickpublication">{#campsiteinternallink_dlg.publication}</label></td>
+          <td class="column1"><label for="pickpublication">{#campsiteinternallink.publication}</label></td>
           <td colspan="2" id="pickpublicationcontainer">
             <input type="hidden" name="publication" id="publication" />
             <select name="IdPublication" id="IdPublication" onchange="this.form.submit();" <?php if ($languageId == 0){ ?>disabled<?php } ?>>
@@ -120,7 +120,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
           </td>
         </tr>
         <tr>
-          <td class="column1"><label for="pickissue">{#campsiteinternallink_dlg.issue}</label></td>
+          <td class="column1"><label for="pickissue">{#campsiteinternallink.issue}</label></td>
           <td colspan="2" id="pickissuecontainer">
             <select name="NrIssue" id="NrIssue" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0)) { ?>disabled<?php } ?>>
               <option value="0">?</option>
@@ -136,7 +136,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
           </td>
         </tr>
         <tr>
-          <td><label id="picksectionfrom" for="picksection">{#campsiteinternallink_dlg.section}</label></td>
+          <td><label id="picksectionfrom" for="picksection">{#campsiteinternallink.section}</label></td>
           <td id="picksectioncontainer">
             <select name="NrSection" id="NrSection" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0)) { ?>disabled<?php } ?>>
               <option value="0">?</option>
@@ -152,7 +152,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
           </td>
         </tr>
         <tr>
-          <td nowrap="nowrap"><label id="pickarticlefrom" for="article">{#campsiteinternallink_dlg.article}</label></td>
+          <td nowrap="nowrap"><label id="pickarticlefrom" for="article">{#campsiteinternallink.article}</label></td>
           <td id="pickarticlecontainer">
             <select name="NrArticle" id="NrArticle" onchange="this.form.submit();" <?php if (($languageId == 0) || ($publicationId == 0) || ($issueId == 0) || ($sectionId == 0)) { ?>disabled<?php } ?>>
               <option value="0">?</option>
@@ -169,7 +169,7 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
         </tr>
         <tr>
           <input type="hidden" name="target" id="target" />
-          <td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink_dlg.target}</label></td>
+          <td class="column1"><label id="targetlistlabel" for="targetlist">{#campsiteinternallink.target}</label></td>
           <td id="targetlistcontainer">&nbsp;</td>
         </tr>
       </table>

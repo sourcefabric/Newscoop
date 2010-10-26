@@ -49,5 +49,6 @@ tabindex:"Tabindex",
 accesskey:"Chave de acesso",
 ltr:"Esquerda para direita",
 rtl:"Direita para esquerda",
-link_list:"Lista de hyperlinks"
+link_list:"Lista de hyperlinks",
+select_text:"You need to select some text before creating a link"
 });

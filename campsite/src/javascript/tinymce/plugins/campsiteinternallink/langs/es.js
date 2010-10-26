@@ -49,5 +49,6 @@ tabindex:"\u00CDndice de tabulaci\u00F3n",
 accesskey:"Tecla de acceso",
 ltr:"Izquierda a derecha",
 rtl:"Derecha a izquierda",
-link_list:"Lista de v\u00EDnculo"
+link_list:"Lista de v\u00EDnculo",
+select_text:"You need to select some text before creating a link"
 });

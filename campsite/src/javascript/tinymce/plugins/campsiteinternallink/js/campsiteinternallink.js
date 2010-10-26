@@ -46,10 +46,10 @@ function init() {
 }
 
 function checkPrefix(n) {
-    if (n.value && Validator.isEmail(n) && !/^\s*mailto:/i.test(n.value) && confirm(tinyMCEPopup.getLang('campsiteinternallink_dlg.is_email')))
+    if (n.value && Validator.isEmail(n) && !/^\s*mailto:/i.test(n.value) && confirm(tinyMCEPopup.getLang('campsiteinternallink.is_email')))
 	n.value = 'mailto:' + n.value;
 
-    if (/^\s*www./i.test(n.value) && confirm(tinyMCEPopup.getLang('campsiteinternallink_dlg.is_external')))
+    if (/^\s*www./i.test(n.value) && confirm(tinyMCEPopup.getLang('campsiteinternallink.is_external')))
 	n.value = 'http://' + n.value;
 }
 
@@ -479,10 +479,10 @@ function getTargetListHTML(elm_id, target_form_element) {
 
     html += '<select id="' + elm_id + '" name="' + elm_id + '" onf2ocus="tinyMCE.addSelectAccessibility(event, this, window);" onchange="this.form.' + target_form_element + '.value=';
     html += 'this.options[this.selectedIndex].value;">';
-    html += '<option value="_self">' + tinyMCEPopup.getLang('campsiteinternallink_dlg.target_same') + '</option>';
-    html += '<option value="_blank">' + tinyMCEPopup.getLang('campsiteinternallink_dlg.target_blank') + ' (_blank)</option>';
-    html += '<option value="_parent">' + tinyMCEPopup.getLang('campsiteinternallink_dlg.target_parent') + ' (_parent)</option>';
-    html += '<option value="_top">' + tinyMCEPopup.getLang('campsiteinternallink_dlg.target_top') + ' (_top)</option>';
+    html += '<option value="_self">' + tinyMCEPopup.getLang('campsiteinternallink.target_same') + '</option>';
+    html += '<option value="_blank">' + tinyMCEPopup.getLang('campsiteinternallink.target_blank') + ' (_blank)</option>';
+    html += '<option value="_parent">' + tinyMCEPopup.getLang('campsiteinternallink.target_parent') + ' (_parent)</option>';
+    html += '<option value="_top">' + tinyMCEPopup.getLang('campsiteinternallink.target_top') + ' (_top)</option>';
 
     for (var i=0; i<targets.length; i++) {
 	var key, value;

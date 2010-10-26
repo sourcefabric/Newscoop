@@ -7,11 +7,11 @@
  * @return void
  */
 function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
-			     $p_editorLanguage, $p_objectType = 'article')
+                             $p_editorLanguage, $p_objectType = 'article')
 {
-	global $Campsite;
+    global $Campsite;
 
-	$stylesheetFile = $Campsite['WEBSITE_URL'] . '/admin/articles/article_stylesheet.css';
+    $stylesheetFile = $Campsite['WEBSITE_URL'] . '/admin/articles/article_stylesheet.css';
 
 	/** STEP 1 ********************************************************
 	 * What are the names of the textareas you will be turning
@@ -21,21 +21,21 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if (is_array($p_dbColumns)) {
 	    foreach ($p_dbColumns as $dbColumn) {
 	        if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
-		    if ($p_articleNumber > 0) {
-		        $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
-		    } else {
-		        $editors[] = $dbColumn->getName();
-		    }
-		}
-	    }
+                if ($p_articleNumber > 0) {
+                    $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
+                } else {
+                    $editors[] = $dbColumn->getName();
+                }
+            }
+        }
 	} else {
 	    if ($p_articleNumber > 0) {
 	        $editors[] = $p_dbColumns.'_'.$p_articleNumber;
 	    } else {
 	        $editors[] = $p_dbColumns;
 	    }
-	}
-	$textareas = implode(",", $editors);
+    }
+    $textareas = implode(",", $editors);
 
 	/** STEP 2 ********************************************************
 	 * Now, what are the plugins you will be using in the editors
@@ -47,7 +47,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $plugins[] = 'paste';
 	}
 	if ($p_user->hasPermission('EditorFindReplace')) {
-	  $plugins[] = 'searchreplace';
+        $plugins[] = 'searchreplace';
 	}
 	if ($p_user->hasPermission('EditorEnlarge')) {
 	    $plugins[] = 'fullscreen';
@@ -192,12 +192,12 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    if ($p_user->hasPermission('EditorListBullet')) {
 	        $toolbar2[] = "|";
 	        $toolbar2[] = "bullist";
-		$hasSeparator = true;
+            $hasSeparator = true;
 	    }
 	    if ($p_user->hasPermission('EditorListNumber')) {
 	        if (!$hasSeparator) {
-		    $toolbar2[] = "|";
-		}
+                $toolbar2[] = "|";
+            }
 	        $toolbar2[] = "numlist";
 	    }
 	}
@@ -222,8 +222,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
 	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
 ?>
-<!-- TinyMCE -->
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js"></script>
+
+<!-- Load TinyMCE -->
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/jquery.tinymce.js"></script>
 <script type="text/javascript">
 function CampsiteSubhead(ed) {
     element = ed.dom.getParent(ed.selection.getNode(), 'span');
@@ -235,73 +236,69 @@ function CampsiteSubhead(ed) {
     }
 } // fn CampsiteSubhead
 
-function editorChanged(inst){
-    // gotta remove _35 from name
-    var name = "save_" + inst.id.substring(0, inst.id.length-3);
-    buttonEnable(name);
-}
+$().ready(function() {
+    $('textarea.tinymce').tinymce({
+        // Location of TinyMCE script
+        script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js',
 
-// Default skin
-tinyMCE.init({
-    // General options
-    language : "<?php p($p_editorLanguage); ?>",
-    mode : "exact",
-    elements : "<?php p($textareas); ?>",
-    theme : "advanced",
-    plugins : "<?php p($plugins_list); ?>",
-    file_browser_callback : "campsitemedia",
-    forced_root_block : "",
-    relative_urls : false,
-    onchange_callback : "editorChanged",
-    extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
+        // General options
+        language : "<?php p($p_editorLanguage); ?>",
+        theme : "advanced",
+        plugins : "<?php p($plugins_list); ?>",
+        file_browser_callback : "campsitemedia",
+        forced_root_block : "",
+        relative_urls : false,
+        onchange_callback : "editorChanged",
+        extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
-    // Theme options
-    theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
-    theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
-    theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
+        // Theme options
+        theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
+        theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
+        theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
 
-    theme_advanced_toolbar_location : "top",
-    theme_advanced_toolbar_align : "left",
-    theme_advanced_resizing : false,
-    theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_resizing : false,
+        theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
-    // Example content CSS (should be your site CSS)
-    content_css : "<?php echo $stylesheetFile; ?>",
+        // Example content CSS (should be your site CSS)
+        content_css : "<?php echo $stylesheetFile; ?>",
 
-    // Drop lists for link/image/media/template dialogs
-    template_external_list_url : "lists/template_list.js",
-    external_link_list_url : "lists/link_list.js",
-    external_image_list_url : "lists/image_list.js",
-    media_external_list_url : "lists/media_list.js",
+        // Drop lists for link/image/media/template dialogs
+        template_external_list_url : "lists/template_list.js",
+        external_link_list_url : "lists/link_list.js",
+        external_image_list_url : "lists/image_list.js",
+        media_external_list_url : "lists/media_list.js",
 
-    // paste options
-    paste_use_dialog: false,
-    paste_auto_cleanup_on_paste: true,
-    paste_convert_headers_to_strong: true,
-    paste_remove_spans: true,
-    paste_remove_styles: true,
+        // paste options
+        paste_use_dialog: false,
+        paste_auto_cleanup_on_paste: true,
+        paste_convert_headers_to_strong: true,
+        paste_remove_spans: true,
+        paste_remove_styles: true,
 
-    <?php if ($p_user->hasPermission('EditorSpellcheckerEnabled')): ?>
+        <?php if ($p_user->hasPermission('EditorSpellcheckerEnabled')): ?>
         gecko_spellcheck : true,
-    <?php endif; ?>
+        <?php endif; ?>
 
-    setup : function(ed) {
-        ed.onKeyUp.add(function(ed, l) {
-	    var idx = ed.id.lastIndexOf('_');
-	    var buttonId = ed.id.substr(0, idx);
-	    buttonEnable('save_' + buttonId);
-	});
+        setup : function(ed) {
+            ed.onKeyUp.add(function(ed, l) {
+                var idx = ed.id.lastIndexOf('_');
+                var buttonId = ed.id.substr(0, idx);
+                buttonEnable('save_' + buttonId);
+            });
 
-    <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
-        ed.addButton('campsite-subhead', {
-            title : '<?php putGS("Campsite Subhead"); ?>',
-            image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
-            onclick : function() {
-                CampsiteSubhead(ed);
-            }
-        });
-    <?php } ?>
-    }
+            <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
+            ed.addButton('campsite-subhead', {
+                title : '<?php putGS("Campsite Subhead"); ?>',
+                image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
+                onclick : function() {
+                    CampsiteSubhead(ed);
+                }
+            });
+            <?php } ?>
+        }
+    });
 });
 
 function campsitemedia(field_name, url, type, win)
@@ -311,14 +308,14 @@ function campsitemedia(field_name, url, type, win)
     langId = topDoc.getElementById('f_language_selected').value;
 
     tinyMCE.activeEditor.windowManager.open({
-	    url: website_url + "/javascript/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
-	    width: 580,
-	    height: 320,
-	    inline : "yes",
-	    close_previous : "no"
-        },{
-            window : win,
-	    input : field_name
+        url: website_url + "/javascript/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
+        width: 580,
+        height: 320,
+        inline : "yes",
+        close_previous : "no"
+    },{
+        window : win,
+        input : field_name
     });
 }
 </script>

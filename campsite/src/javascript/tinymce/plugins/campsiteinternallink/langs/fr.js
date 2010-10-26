@@ -49,5 +49,6 @@ tabindex:"Tabindex",
 accesskey:"Touche d'acc\u00E8s rapide",
 ltr:"Gauche \u00E0 droite",
 rtl:"Droite \u00E0 gauche",
-link_list:"Liste des liens"
+link_list:"Liste des liens",
+select_text:"You need to select some text before creating a link"
 });

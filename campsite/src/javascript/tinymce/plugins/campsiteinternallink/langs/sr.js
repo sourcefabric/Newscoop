@@ -49,5 +49,6 @@ tabindex:"Tabindex",
 accesskey:"Accesskey",
 ltr:"S leva na desno",
 rtl:"S desna na levo",
-link_list:"Lista poveznica"
+link_list:"Lista poveznica",
+select_text:"You need to select some text before creating a link"
 });

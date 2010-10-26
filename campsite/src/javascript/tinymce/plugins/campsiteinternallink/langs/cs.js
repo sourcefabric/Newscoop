@@ -49,5 +49,6 @@ tabindex:"Tabindex",
 accesskey:"P\u0159\u00EDstupov\u00E1 kl\u00E1vesa",
 ltr:"Zleva doprava",
 rtl:"Zprava doleva",
-link_list:"Seznam odkaz\u016F"
+link_list:"Seznam odkaz\u016F",
+select_text:"You need to select some text before creating a link"
 });

@@ -1,5 +1,6 @@
 tinyMCE.addI18n('en.campsiteinternallink',{
 campsiteinternallink_desc:"Insert/edit internal link",
+title:"Insert/edit internal link",
 language:"Language",
 section:"Section",
 article:"Article",
@@ -29,5 +30,6 @@ ltr:"Left to right",
 rtl:"Right to left",
 link_list:"Link list",
 is_email:"The URL you entered seems to be an email address, do you want to add the required mailto: prefix?",
-is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?"
+is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?",
+select_text:"You need to select some text before creating a link"
 });

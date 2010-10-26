@@ -49,5 +49,6 @@ tabindex:"Indice tabulazione",
 accesskey:"Carattere di accesso",
 ltr:"Sinistra verso destra",
 rtl:"Destra verso sinistra",
-link_list:"Lista collegamenti"
+link_list:"Lista collegamenti",
+select_text:"You need to select some text before creating a link"
 });

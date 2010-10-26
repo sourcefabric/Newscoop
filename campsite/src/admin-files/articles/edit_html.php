@@ -18,8 +18,8 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 <table border="0" cellspacing="0" cellpadding="6" class="table_input">
 <tr>
   <td colspan="2">
-    <b><?php  putGS("Article is locked"); ?> </b>
-    <hr noshade size="1" color="black">
+    <b><?php putGS("Article is locked"); ?></b>
+    <hr noshade size="1" color="black" />
   </td>
 </tr>
 <tr>
@@ -45,10 +45,10 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 </tr>
 <tr>
   <td colspan="2">
-    <div align="CENTER">
-      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
-      <input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
-      <input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
+    <div align="center">
+      <input type="button" name="Yes" value="<?php putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
+      <input type="button" name="Yes" value="<?php putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
+      <input type="button" name="No" value="<?php putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>'" />
     </div>
   </td>
 </tr>
@@ -68,12 +68,12 @@ if ($f_edit_mode == "edit") { ?>
 <?php if ($f_publication_id > 0) { ?>
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
 <tr>
-  <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0"></a></td>
+  <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0" /></a></td>
   <td><a href="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><b><?php  putGS("Article List"); ?></b></a></td>
 
   <?php if ($g_user->hasPermission('AddArticle')) { ?>
-  <td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a></td>
-  <td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><b><?php  putGS("Add new article"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
+  <td><a href="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>"><b><?php putGS("Add new article"); ?></b></a></td>
 <?php } ?>
 </tr>
 </table>
@@ -104,31 +104,31 @@ if ($f_edit_mode == "edit") { ?>
         <table border="0" cellspacing="1" cellpadding="0">
         <tr>
           <td style="padding-left: 1em;">
-            <script>
-            function action_selected(dropdownElement) {
-                // Get the index of the "delete" option.
-                deleteOptionIndex = -1;
-                for (var index = 0; index < dropdownElement.options.length; index++) {
-                    if (dropdownElement.options[index].value == "delete") {
-                        deleteOptionIndex = index;
-                    }
-                }
+          <script type="text/javascript">
+          function action_selected(dropdownElement) {
+              // Get the index of the "delete" option.
+              deleteOptionIndex = -1;
+              for (var index = 0; index < dropdownElement.options.length; index++) {
+                  if (dropdownElement.options[index].value == "delete") {
+                      deleteOptionIndex = index;
+                  }
+              }
 
-                // if the user has selected the "delete" option
-                if (dropdownElement.selectedIndex == deleteOptionIndex) {
-                    ok = confirm("<?php putGS("Are you sure you want to delete this article?"); ?>");
-                    if (!ok) {
-                        dropdownElement.options[0].selected = true;
-                        return;
-                    }
-                }
+              // if the user has selected the "delete" option
+              if (dropdownElement.selectedIndex == deleteOptionIndex) {
+                  ok = confirm("<?php putGS("Are you sure you want to delete this article?"); ?>");
+                  if (!ok) {
+                      dropdownElement.options[0].selected = true;
+                      return;
+                  }
+              }
 
-                // do the action if it isnt the first or second option
-                if ((dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1)) {
-                    dropdownElement.form.submit();
-                }
-            }
-            </script>
+              // do the action if it isnt the first or second option
+              if ((dropdownElement.selectedIndex != 0) &&  (dropdownElement.selectedIndex != 1)) {
+                  dropdownElement.form.submit();
+              }
+          }
+          </script>
             <select name="f_action" class="input_select" onchange="action_selected(this);">
               <option value=""><?php putGS("Actions"); ?>...</option>
               <option value="">-----------</option>
@@ -195,48 +195,48 @@ if ($f_edit_mode == "edit") { ?>
           }
           if (count($articleEvents) > 0) {
           ?>
-            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php  putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;">
+            <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/automatic_publishing.png" alt="<?php putGS("Scheduled Publishing"); ?>" title="<?php  putGS("Scheduled Publishing"); ?>" border="0" width="22" height="22" align="middle" style="padding-bottom: 1px;" />
           <?php
           }
           ?>
           </td>
           <!-- END Workflow -->
 
-                    <td style="padding-left: 1em;">
-                        <table border="0" cellspacing="0" cellpadding="3">
-                        <tr>
-                            <td><?php  putGS('Language'); ?>:</td>
-                            <td>
-                                <?php
-                                if (count($articleLanguages) > 1) {
-                                $languageUrl = "edit.php?f_publication_id=$f_publication_id"
-                                    ."&f_issue_number=$f_issue_number"
-                                    ."&f_section_number=$f_section_number"
-                                    ."&f_article_number=$f_article_number"
-                                    ."&f_language_id=$f_language_id"
-                                    ."&f_language_selected=";
-                                ?>
-                                <select name="f_language_selected" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
-                                <?php
-                                foreach ($articleLanguages as $articleLanguage) {
-                                    camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getNativeName()));
-                                }
-                                ?></select>
-                                <?php } else {
-                                    $articleLanguage = camp_array_peek($articleLanguages);
-                                    echo '<b>'.htmlspecialchars($articleLanguage->getNativeName()).'</b>';
-                                }
-                                ?>
-
-                            </td>
-                        </tr>
-                        </table>
-                    </td>
-                </tr>
-                </table>
-                </form>
-                <!-- END the article control bar -->
-            </td>
+          <td style="padding-left: 1em;">
+            <table border="0" cellspacing="0" cellpadding="3">
+            <tr>
+              <td><?php  putGS('Language'); ?>:</td>
+              <td>
+              <?php
+              if (count($articleLanguages) > 1) {
+                  $languageUrl = "edit.php?f_publication_id=$f_publication_id"
+                      ."&f_issue_number=$f_issue_number"
+                      ."&f_section_number=$f_section_number"
+                      ."&f_article_number=$f_article_number"
+                      ."&f_language_id=$f_language_id"
+                      ."&f_language_selected=";
+              ?>
+                <select name="f_language_selected" class="input_select" onchange="dest = '<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
+                <?php
+                foreach ($articleLanguages as $articleLanguage) {
+                    camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getNativeName()));
+                }
+                ?>
+                </select>
+              <?php } else {
+                  $articleLanguage = camp_array_peek($articleLanguages);
+                  echo '<b>'.htmlspecialchars($articleLanguage->getNativeName()).'</b>';
+              }
+              ?>
+              </td>
+            </tr>
+            </table>
+          </td>
+        </tr>
+        </table>
+        </form>
+        <!-- END the article control bar -->
+      </td>
 
             <?php
             if ($articleObj->userCanModify($g_user)) {
@@ -796,7 +796,7 @@ window.location.reload();
                         $fCustomTextareas[] = $textAreaId;
                         ?>
                     <td><textarea name="<?php print($textAreaId); ?>"
-                                  id="<?php print($textAreaId); ?>"
+                                  id="<?php print($textAreaId); ?>" class="tinymce"
                                   rows="20" cols="70" onkeyup="buttonEnable('save_<?php p($dbColumn->getName()); ?>');"><?php print $text; ?></textarea>
                     </td>
                     <?php } else { ?>

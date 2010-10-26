@@ -49,5 +49,6 @@ tabindex:"Tabindex",
 accesskey:"Cheie de acces",
 ltr:"St\u00E2nga la dreapta",
 rtl:"Dreapta la st\u00E2nga",
-link_list:"List\u0103 linkuri"
+link_list:"List\u0103 linkuri",
+select_text:"You need to select some text before creating a link"
 });
