@@ -1,7 +1,7 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php");
-require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
-require_once($GLOBALS['g_campsiteDir']. '/classes/Template.php');
+require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/sections/section_common.php");
+require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
 
 if (!$g_user->hasPermission('ManageSection')) {
     camp_html_display_error(getGS("You do not have the right to modify sections."));
@@ -34,134 +34,122 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
-<TR>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
-	<TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php  p($sectionObj->getLanguageId()); ?>"><B><?php  putGS("Go To Articles"); ?></B></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php  p($sectionObj->getLanguageId()); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" BORDER="0"></A></TD>
-</TR>
-</TABLE>
+<table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
+<tr>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><b><?php putGS("Section List"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php p($sectionObj->getLanguageId()); ?>"><b><?php putGS("Go To Articles"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php p($sectionObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" border="0" /></a></td>
+</tr>
+</table>
 
-<P>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
-<TR>
-	<TD><A HREF="add.php?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="add.php?<?php p($url_args1); ?>" ><B><?php  putGS("Add new section"); ?></B></A></TD>
-
-	<TD style="padding-left: 20px;"><A HREF="duplicate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0"></A></TD>
-	<TD><A HREF="duplicate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Duplicate"); ?></B></A></TD>
-
-	<TD style="padding-left: 20px;"><A HREF="del.php?<?php p($url_args2); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="del.php?<?php p($url_args2); ?>" ><B><?php  putGS("Delete"); ?></B></A></TD>
-</TR>
-</TABLE>
+<p>
+<table border="0" cellspacing="0" cellpadding="1" class="action_buttons">
+<tr>
+  <td><a href="add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
+  <td><a href="add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
+  <td><a href="duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
+  <td><a href="del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
+</tr>
+</table>
 
 <?php camp_html_display_msgs(); ?>
 
-<P>
-<FORM NAME="section_edit" METHOD="POST" ACTION="do_edit.php" >
+<p>
+<form name="section_edit" method="POST" action="do_edit.php">
 <?php echo SecurityToken::FormParameter(); ?>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Configure section"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
-	<TD>
-		<?php  p($sectionObj->getSectionNumber()); ?>
- 	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="TEXT" class="input_text" NAME="cName" SIZE="32" value="<?php  p(htmlspecialchars($sectionObj->getName())); ?>">
- 	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="cShortName" SIZE="32" value="<?php  p(htmlspecialchars($sectionObj->getUrlName())); ?>">
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Subscriptions"); ?>:</TD>
-	<TD>
-		<SELECT NAME="cSubs" class="input_select">
-	   	<OPTION VALUE="n"> --- </OPTION>
-	   	<OPTION VALUE="a"><?php  putGS("Add section to all subscriptions."); ?></OPTION>
-	   	<OPTION VALUE="d"><?php  putGS("Delete section from all subscriptions."); ?></OPTION>
-	  	</SELECT>
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" VALIGN="top" ><?php  putGS("Description"); ?>:</TD>
-	<TD><TEXTAREA name="cDescription"
-			id="cDescription"
-			rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></TEXTAREA>
-	</TD>
-</TR>
-
-<TR>
-	<TD COLSPAN="2" style="padding-top:20px;">
-		<B><?php  putGS("Default templates"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Section Template"); ?>:</TD>
-	<TD>
-		<SELECT NAME="cSectionTplId" class="input_select">
-		<OPTION VALUE="0">---</OPTION>
-		<?php
-		foreach ($templates as $template) {
-			camp_html_select_option($template->getTemplateId(), $sectionObj->getSectionTemplateId(), $template->getName());
-		}
-		?>
-		</SELECT>
-	</TD>
-</TR>
-
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Article Template"); ?>:</TD>
-	<TD>
-		<SELECT NAME="cArticleTplId" class="input_select">
-		<OPTION VALUE="0">---</OPTION>
-		<?php
-		foreach ($templates as $template) {
-			camp_html_select_option($template->getTemplateId(), $sectionObj->getArticleTemplateId(), $template->getName());
-		}
-		?>
-		</SELECT>
-	</TD>
-</TR>
-
-<TR>
-	<TD COLSPAN="2" align="center">
-	  	<INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php  p($Pub); ?>">
-	  	<INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php  p($Issue); ?>">
-	  	<INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php  p($Language); ?>">
-	  	<INPUT TYPE="HIDDEN" NAME="Section" VALUE="<?php  p($Section); ?>">
-                <INPUT TYPE="HIDDEN" NAME="f_language_selected" ID="f_language_selected" VALUE="<?php p($editorLanguage); ?>">
-	  	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	</TD>
-</TR>
-</TABLE>
-</FORM>
-<P>
-<SCRIPT>
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td colspan="2">
+    <b><?php putGS("Configure section"); ?></b>
+    <hr noshade size="1" color="black">
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Number"); ?>:</td>
+  <td>
+    <?php p($sectionObj->getSectionNumber()); ?>
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Name"); ?>:</td>
+  <td>
+    <input type="text" class="input_text" name="cName" size="32" value="<?php p(htmlspecialchars($sectionObj->getName())); ?>" />
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("URL Name"); ?>:</td>
+  <td>
+    <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" />
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Subscriptions"); ?>:</td>
+  <td>
+    <select name="cSubs" class="input_select">
+    <option value="n"> --- </option>
+    <option value="a"><?php putGS("Add section to all subscriptions."); ?></option>
+    <option value="d"><?php putGS("Delete section from all subscriptions."); ?></option>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td align="right" valign="top"><?php putGS("Description"); ?>:</td>
+  <td>
+    <textarea name="cDescription" id="cDescription" class="tinymce"
+    rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></textarea>
+  </td>
+</tr>
+<tr>
+  <td colspan="2" style="padding-top:20px;">
+    <b><?php putGS("Default templates"); ?></b>
+    <hr noshade size="1" color="black" />
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Section Template"); ?>:</td>
+  <td>
+    <select name="cSectionTplId" class="input_select">
+    <option value="0">---</option>
+    <?php
+    foreach ($templates as $template) {
+        camp_html_select_option($template->getTemplateId(), $sectionObj->getSectionTemplateId(), $template->getName());
+    }
+    ?>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Article Template"); ?>:</td>
+  <td>
+    <select name="cArticleTplId" class="input_select">
+    <option value="0">---</option>
+    <?php
+    foreach ($templates as $template) {
+        camp_html_select_option($template->getTemplateId(), $sectionObj->getArticleTemplateId(), $template->getName());
+    }
+    ?>
+    </select>
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="center">
+    <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />
+    <input type="hidden" name="Issue" value="<?php p($Issue); ?>" />
+    <input type="hidden" name="Language" value="<?php p($Language); ?>" />
+    <input type="hidden" name="Section" value="<?php p($Section); ?>" />
+    <input type="hidden" name="f_language_selected" ID="f_language_selected" value="<?php p($editorLanguage); ?>" />
+    <input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>" />
+  </td>
+</tr>
+</table>
+</form>
+<p>
+<script>
 document.section_edit.cName.focus();
-</SCRIPT>
+</script>
 
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <?php camp_html_copyright_notice(); ?>
