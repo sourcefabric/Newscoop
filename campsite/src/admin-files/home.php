@@ -9,6 +9,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticlePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/Area.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
@@ -74,6 +75,33 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 <?php } ?>
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
+
+<div id="columns">
+
+<h1>Dashboard</h1>
+<?php
+    $area = new Extension_Area('dashboard');
+    $area->render();
+?>
+
+<h1>Widgets</h1>
+<?php
+    $area = new Extension_Area();
+    $area->render('preview');
+?>
+
+</div>
+
+    
+<div style="clear: both;"></div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.area').widgets({
+        'url': '/<?php echo $ADMIN; ?>/json.php',
+        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>',
+    });
+});
+</script>
 
 <div id="tabs">
     <ul>
