@@ -39,6 +39,11 @@ class Extension_Area extends DatabaseObject
         $this->m_data['name'] = $name;
         if (!empty($name)) {
             $this->fetch();
+            if (empty($this->m_data['id'])) {
+                $this->create(array(
+                    'name' => $name,
+                ));
+            }
         }
     }
 

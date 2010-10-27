@@ -127,11 +127,11 @@ abstract class Extension_Widget extends DatabaseObject implements Extension_IWid
             return;
         }
 
-        echo '<li id="widget_', $this->getId(), '" class="widget color-green">';
+        echo '<li id="widget_', $this->getId(), '" class="widget">';
         if ($this->getTitle() != NULL) {
-            echo '<div class="widget-head"><h3>', $this->getTitle(), '</h3></div>';
+            echo '<div class="header"><h3>', $this->getTitle(), '</h3></div>';
         }
-        echo '<div class="widget-content">';
+        echo '<div class="content">';
         call_user_func(array($this, $renderMethod));
         echo '</div></li>';
     }

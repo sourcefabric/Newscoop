@@ -76,22 +76,40 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<div id="columns">
-
 <h1>Dashboard</h1>
+<div id="dashboard">
+
+<div class="column">
 <?php
-    $area = new Extension_Area('dashboard');
+    $area = new Extension_Area('dashboard1');
     $area->render();
 ?>
+</div>
+
+<div class="column">
+<?php
+    $area = new Extension_Area('dashboard2');
+    $area->render();
+?>
+</div>
+
+<div class="column">
+<?php
+    $area = new Extension_Area('dashboard3');
+    $area->render();
+?>
+</div>
+
+</div><!-- /#dashboard -->
 
 <h1>Widgets</h1>
+
+<div id="repo">
 <?php
     $area = new Extension_Area();
     $area->render('preview');
 ?>
-
 </div>
-
     
 <div style="clear: both;"></div>
 <script type="text/javascript">
