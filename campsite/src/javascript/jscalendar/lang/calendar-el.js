@@ -85,6 +85,8 @@ Calendar._TT["CLOSE"] = "Κλείσιμο";
 Calendar._TT["TODAY"] = "Σήμερα";
 Calendar._TT["TIME_PART"] = "(Shift-)κλικ ή μετακίνηση για αλλαγή";
 
+Calendar._TT["WEEKEND"] = "0,6";
+
 // date formats
 Calendar._TT["DEF_DATE_FORMAT"] = "dd-mm-y";
 Calendar._TT["TT_DATE_FORMAT"] = "D, d M";
