@@ -117,6 +117,8 @@ class LocalizerLanguage {
         if (substr($p_value, strlen($p_value)-3) == ":en"){
             $p_value = substr($p_value, 0, strlen($p_value)-3);
         }
+        $p_key = str_replace("\n", "\\n", $p_key);
+        $p_value = str_replace("\n", "\\n", $p_value);
         $this->m_translationTable[$p_key] = $p_value;
     } // fn registerString
 

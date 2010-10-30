@@ -96,7 +96,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
             $subject = getGS("Password recovery email");
             $link = curPageURL() . "/admin/password_check_token.php?";
             $TextMessage = getGS("Hi, \nfor password recovery, please follow this link: %s");
-            $HTMLMessage = getGS('Hi, \nfor password recovery, please follow this link: <a href="%s">Recover Password</a>');
+            $HTMLMessage = getGS('Hi, <br>for password recovery, please follow this link: <a href="%s">Recover Password</a>');
             $link = htmlentities($link);
             $TextMessage = sprintf($TextMessage,$link . "token=|" . strtoupper($token) ."&f_email=" . $email);
             $HTMLMessage = sprintf($HTMLMessage,$link . "token=|" . strtoupper($token) ."&f_email=" . $email);
@@ -130,9 +130,9 @@ $HTMLMessage
 
 --$boundary1--
 AKAM;
-           
+
 $Headers     =<<<AKAM
-From: Campsite admin 
+From: Campsite admin
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
     boundary="$boundary1"

@@ -72,7 +72,9 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
     	    // Escape quote characters.
     	    $key = str_replace('"', '\"', $key);
     	    $value = str_replace('"', '\"', $value);
-    		$data .= "regGS(\"$key\", \"$value\");\n";
+    	    // do not insert $key and $value variables in between double quotes
+    	    // escape sequences may be interpreted and this will modify the string
+    	    $data .= "regGS(\"" . $key . "\", \"" . $value . "\");\n";
     	}
     	$data .= "?>";
         $filePath = LocalizerFileFormat_GS::GetFilePath($p_localizerLanguage);
