@@ -84,34 +84,34 @@ if (isset($_REQUEST['image_id'])) {
     <input type="hidden" id="orginal_width" />
     <input type="hidden" id="orginal_height" />
     <tr>
-      <td align="right"><label for="f_alt">Alt</label></td>
+      <td align="right"><label for="f_alt">{#campsiteimage.alt}</label></td>
       <td><input type="text" id="f_alt" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_caption">Caption</label></td>
+      <td align="right"><label for="f_caption">{#campsiteimage.caption}</label></td>
       <td><input type="text" id="f_caption" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_align">Alignment:</label></td>
+      <td align="right"><label for="f_align">{#campsiteimage.alignment}:</label></td>
       <td>
-        <select size="1" id="f_align"  title="Positioning of this image">
-          <option value="">Not set</option>
-          <option value="left">Left</option>
-          <option value="right">Right</option>
-          <option value="middle">Middle</option>
+        <select size="1" id="f_align"  title="{#campsiteimage.positiontitle}">
+          <option value="">{#campsiteimage.notset}</option>
+          <option value="left">{#campsiteimage.left}</option>
+          <option value="right">{#campsiteimage.right}</option>
+          <option value="middle">{#campsiteimage.middle}</option>
         </select>
       </td>
     </tr>
     <tr>
-      <td align="right"><label for="f_ratio">Resizing Ratio:</label></td>
+      <td align="right"><label for="f_ratio">{#campsiteimage.resizeratio}:</label></td>
       <td><input type="text" id="f_ratio" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_resize_width">Resizing Width:</label></td>
+      <td align="right"><label for="f_resize_width">{#campsiteimage.resizewidth}:</label></td>
       <td><input type="text" id="f_resize_width" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_resize_height">Resizing Height:</label></td>
+      <td align="right"><label for="f_resize_height">{#campsiteimage.resizeheight}:</label></td>
       <td><input type="text" id="f_resize_height" class="largelWidth" value="" /></td>
     </tr>
     </table>
@@ -119,11 +119,11 @@ if (isset($_REQUEST['image_id'])) {
     <div style="text-align: right;">
       <hr />
       <?php if (isset($_REQUEST['image_id'])) { ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">Edit</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">{#campsiteimage.edit}</button>
       <?php } else { ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">OK</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">{#campsiteimage.ok}</button>
       <?php } ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.close();">Cancel</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.close();">{#campsiteimage.cancel}</button>
     </div>
   </form>
 </body>

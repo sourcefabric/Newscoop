@@ -49,5 +49,19 @@ tabindex:"\u0418\u043D\u0434\u0435\u043A\u0441 \u0442\u0430\u0431\u0443\u043B\u0
 accesskey:"\u041A\u043B\u0430\u0432\u0438\u0448\u0430 \u0434\u043E\u0441\u0442\u0443\u043F\u0430",
 ltr:"\u0421\u043B\u0435\u0432\u0430 \u043D\u0430\u043F\u0440\u0430\u0432\u043E",
 rtl:"\u0421\u043F\u0440\u0430\u0432\u0430 \u043D\u0430\u043B\u0435\u0432\u043E",
-link_list:"\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0441\u044B\u043B\u043E\u043A"
+link_list:"\u0421\u043F\u0438\u0441\u043E\u043A \u0441\u0441\u044B\u043B\u043E\u043A",
+caption:"Caption",
+alt:"Alt",
+alignment:"Alignment",
+positiontitle:"Positioning of this image",
+notset:"Not set",
+left:"Left",
+right:"Right",
+middle:"Middle",
+resizeratio:"Resizing Ratio",
+resizewidth:"Resizing Width",
+resizeheight:"Resizing Height",
+edit:"Edit",
+ok:"OK",
+cancel:"Cancel"
 });
