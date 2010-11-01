@@ -1,6 +1,6 @@
 <?php 
-regGS("You do not have the right to change authors.", "");
-regGS("User may change authors", "");
+regGS("You do not have the right to change authors.", "Nie masz wystarczających praw by zmienić autorów");
+regGS("User may change authors", "Użytkownik może zmienić autorów");
 regGS("Unable to add new image, target directory is not writable.", "");
 regGS("Author saved.", "");
 regGS("Author information has been changed for \"$1\"", "");
@@ -158,15 +158,16 @@ regGS("User may insert horizontal rules", "");
 regGS("User may change the font color", "");
 regGS("User may use superscripts", "");
 regGS("User may use subscripts", "");
+regGS("User may backup and restore the site data", "");
 regGS("Miscellaneous", "");
 regGS("Staff/Subscribers Management", "");
 regGS("Editor Basic Settings", "");
 regGS("Editor Advanced Font Settings", "");
 regGS("Editor Table Settings", "");
-regGS("Administrative tasks", "");
+regGS("Administrative tasks", "Zadania administracyjne");
 regGS("User will be notified on several events", "");
-regGS("Paid", "");
-regGS("No subscriptions.", "");
-regGS("Editor Miscellaneous Settings", "");
-regGS("No such user account.", "");
+regGS("Paid", "Płatne");
+regGS("No subscriptions.", "Brak subskrypcji");
+regGS("Editor Miscellaneous Settings", "Dodatkowe ustawienia edytora");
+regGS("No such user account.", "Brak użytkownika.");
 ?>

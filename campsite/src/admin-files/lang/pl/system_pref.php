@@ -1,4 +1,7 @@
 <?php 
+regGS("Template Cache Handler:", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
+regGS("Database Cache Engine:", "");
 regGS("Zoom enabled for images in article content?", "");
 regGS("Image Resizing Width:", "");
 regGS("Image Resizing Width", "");
@@ -11,7 +14,6 @@ regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", ""
 regGS("Image Resizing Ratio:", "");
 regGS("Image Resizing Ratio", "");
 regGS("Editor Settings", "");
-regGS("Cache Engine:", "");
 regGS("Session Lifetime", "");
 regGS("Please enter the site title", "");
 regGS("Please enter the site meta keywords", "");
@@ -28,7 +30,6 @@ regGS("SMTP Port:", "Port SMTP:");
 regGS("SMTP Port", "Port SMTP");
 regGS("SMTP Host:", "Host SMTP:");
 regGS("SMTP Host must be at least four character.", "Host SMTP musi mieć co najmniej 4 znaki.");
-regGS("Cache Enabled:", "Cache włączony:");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "");
 regGS("Enable Campcaster audioclip attachments?", "");
 regGS("XML RPC Path:", "");

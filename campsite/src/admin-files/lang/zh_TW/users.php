@@ -6,5 +6,4 @@ regGS("Author saved.", "");
 regGS("Author information has been changed for \"$1\"", "");
 regGS("Author id \"$1\" deleted.", "");
 regGS("Author deleted.", "");
-regGS("Enable Firefox spell checking by default", "");
 ?>

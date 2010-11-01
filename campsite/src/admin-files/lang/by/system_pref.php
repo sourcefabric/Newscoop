@@ -1,4 +1,7 @@
 <?php 
+regGS("Template Cache Handler:", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
+regGS("Database Cache Engine:", "");
 regGS("Zoom enabled for images in article content?", "Ўключыць маштабаванне малюнкаў у артыкулах?");
 regGS("Image Resizing Width:", "Шырыня выявы для маштабавання:");
 regGS("Image Resizing Width", "Шырыня выявы для маштабавання");
@@ -11,7 +14,6 @@ regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "�
 regGS("Image Resizing Ratio:", "Каэфіцыент змянення памераў:");
 regGS("Image Resizing Ratio", "Каэфіцыент змянення памераў");
 regGS("Editor Settings", "Настройкі рэдактара");
-regGS("Cache Engine:", "Механізм кэшавання:");
 regGS("Session Lifetime", "Час жыцця сесіі");
 regGS("Please enter the site title", "Калі ласка, увядзіце загаловак сайта");
 regGS("Please enter the site meta keywords", "Калі ласка, увядзіце ключавыя словы для сайта");
@@ -28,7 +30,6 @@ regGS("SMTP Port:", "SMTP порт:");
 regGS("SMTP Port", "SMTP порт");
 regGS("SMTP Host:", "SMTP хост:");
 regGS("SMTP Host must be at least four character.", "SMTP хост павінен мець прынамсі 4 знака.");
-regGS("Cache Enabled:", "Кэшаванне ўключана:");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Увядзіце значэнне паміж 0 і $1 (максімальны памер вызначаны ў 'php.ini'). Выкарыстайце \"К\" для кілабайта, \"М\" для мегабайта і \"Г\" для гігабайта без знакаў прабелу паміж значэннямі і вышэйапісанымі літарамі, напрыклад 3М.");
 regGS("Enable Campcaster audioclip attachments?", "Улучыць далучэнне аўдыёкліпаў Campcaster?");
 regGS("XML RPC Path:", "Шлях XML RPC:");

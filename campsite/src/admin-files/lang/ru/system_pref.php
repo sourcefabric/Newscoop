@@ -1,4 +1,7 @@
 <?php 
+regGS("Template Cache Handler:", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
+regGS("Database Cache Engine:", "");
 regGS("Zoom enabled for images in article content?", "Включить масштабирование изображений в статьях?");
 regGS("Image Resizing Width:", "Ширина  масштабируемого изображения:");
 regGS("Image Resizing Width", "Ширина  масштабируемого изображения");
@@ -11,7 +14,6 @@ regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "�
 regGS("Image Resizing Ratio:", "Коэффициент изменения размеров:");
 regGS("Image Resizing Ratio", "Коэффициент изменения размеров:");
 regGS("Editor Settings", "Настройки редактора");
-regGS("Cache Engine:", "Механизм кеширования:");
 regGS("Session Lifetime", "Время жизни сессии");
 regGS("Please enter the site title", "Пожалуйста, введите заголовок сайта");
 regGS("Please enter the site meta keywords", "Пожалуйста, введите ключевые слова для сайта");
@@ -28,7 +30,6 @@ regGS("SMTP Port:", "SMTP порт:");
 regGS("SMTP Port", "SMTP порт");
 regGS("SMTP Host:", "SMTP хост:");
 regGS("SMTP Host must be at least four character.", "SMTP хост должен иметь по-крайней мере 4 знака.");
-regGS("Cache Enabled:", "Разрешено кеширование");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Введите значение между 0 и $1(максимальный размер определен в 'php.ini') . Используйте \"К\" для килобайт, \"М\" для мегабайт и \"Г\" для гигабайт без знаков пробела между значениями и вышеописанными буквами, например 3М.");
 regGS("Enable Campcaster audioclip attachments?", "Включить присоединение аудиоклипов Campcaster?");
 regGS("XML RPC Path:", "Путь XML RPC:");

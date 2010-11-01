@@ -1,0 +1,36 @@
+<?php 
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Plik #$1 \"$2\" został odłączony od artykułu #$3 \"$4\"");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Plik #$1 \"$2\" dołączony do artykułu #$3 \"$4\"");
+regGS("Unable to add attachment.", "Załącznik nie został dodany.");
+regGS("There was a problem uploading the file.", "Wystąpił błąd podczas dodawania pliku.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Wgyrwany plik został dodany tylko w części. To częsty błąd gdy czas wgrywania pliku nie jest zgodny z jego rozmiarem. Maksymalny czas wgrywania ustalany jest w pliku 'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "Maksymalny rozmiar pliku nie został skonfigurowany. ");
+regGS("The file exceeds the allowed max file size.", "Plik jest większy od maksymalnego rozmiaru.");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Upewnij się, że aktualizacja bazy danych przebiegła pomyślnie: uruchom $1 w shellu.");
+regGS("Maximum Upload Size", "Maksymalny rozmiar pliku");
+regGS("File Size", "Rozmiar pliku");
+regGS("File Name", "Nazwa pliku");
+regGS("Download", "Pobierz");
+regGS("File '$1' updated.", "Plik '$1' uaktualniony");
+regGS("File '$1' deleted.", "Plik '$1' usunięty.");
+regGS("File '$1' added.", "Plik '$1' dodany.");
+regGS("Edit article", "Edycja artykułu");
+regGS("You do not have the right to delete file attachments.", "Nie masz praw aby usuwać załączniki.");
+regGS("You must select a file to upload.", "Musisz wybrać pliki do dodania.");
+regGS("You do not have the right to delete files.", "Nie masz praw aby usuwać pliki.");
+regGS("You do not have the right to change the article.", "Nie masz praw aby zmieniać artykuł.");
+regGS("You do not have the right to change files.", "Nie masz praw aby zmieniać pliki.");
+regGS("You do not have the right to add files.", "Nie masz praw aby dodawać pliki.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Czy plik powinień być dostępny do tłumaczenia tego artykułu, czy dla wszystkich tłumaczeń?");
+regGS("Please enter a description for the file.", "Dodaj opis do pliku.");
+regGS("Open in the browser", "Otwórz w przeglądarce");
+regGS("Only this translation", "Tylko to tłumaczenie");
+regGS("File information", "Informacja o pliku");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Czy ten plik ma się otwierać w przeglądarce czy pobierać automatycznie?");
+regGS("Change file information", "Zmień info o pliku");
+regGS("Automatically download", "Pobierz automatycznie");
+regGS("Attachments", "Załączniki");
+regGS("Attachment does not exist.", "Załącznik nie istnieje");
+regGS("Attach File to Article", "Załącz plik do artykułu");
+regGS("All translations", "Wszystkie tłumaczenia");
+?>

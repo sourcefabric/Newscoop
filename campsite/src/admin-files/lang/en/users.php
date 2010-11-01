@@ -1,4 +1,11 @@
 <?php 
+regGS("You do not have the right to change authors.", "You do not have the right to change authors.");
+regGS("User may change authors", "User may change authors");
+regGS("Unable to add new image, target directory is not writable.", "Unable to add new image, target directory is not writable.");
+regGS("Author saved.", "Author saved.");
+regGS("Author information has been changed for \"$1\"", "Author information has been changed for \"$1\"");
+regGS("Author id \"$1\" deleted.", "Author id \"$1\" deleted.");
+regGS("Author deleted.", "Author deleted.");
 regGS("Enable Firefox spell checking by default", "Enable Firefox spell checking by default");
 regGS("User account information changed for \"$1\"", "User account information changed for \"$1\"");
 regGS("Permissions changed for user \"$1\"", "Permissions changed for user \"$1\"");

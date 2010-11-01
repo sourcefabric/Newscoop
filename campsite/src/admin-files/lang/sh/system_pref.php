@@ -1,4 +1,7 @@
 <?php 
+regGS("Template Cache Handler:", "");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
+regGS("Database Cache Engine:", "");
 regGS("Zoom enabled for images in article content?", "");
 regGS("Image Resizing Width:", "");
 regGS("Image Resizing Width", "");
@@ -11,7 +14,6 @@ regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", ""
 regGS("Image Resizing Ratio:", "");
 regGS("Image Resizing Ratio", "");
 regGS("Editor Settings", "");
-regGS("Cache Engine:", "");
 regGS("Session Lifetime", "Trajanje sessiona");
 regGS("Please enter the site title", "Unesite naziv sajta");
 regGS("Please enter the site meta keywords", "Unesite meta ključne reči za sajt");
@@ -28,7 +30,6 @@ regGS("SMTP Port:", "SMTP Port:");
 regGS("SMTP Port", "SMTP Port");
 regGS("SMTP Host:", "SMTP Host:");
 regGS("SMTP Host must be at least four character.", "SMTP host mora imati najmanje četiri karaktera");
-regGS("Cache Enabled:", "Omogućeno keširanje?");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Unesite vrednost između 0 i $1 (maksimalna vrednost je definisana u 'php.ini'). Koristite 'K' za kilobajte, 'M' za megabajte i 'g' za gigabajte, bez razmaka između vrednosti i odgovarajućeg slova, npr. '3M'. ");
 regGS("Enable Campcaster audioclip attachments?", "Omogući Kempkaster audioklip atačmente?");
 regGS("XML RPC Path:", "Putanja do XML RPC:");
