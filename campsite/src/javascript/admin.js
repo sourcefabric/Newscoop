@@ -65,7 +65,6 @@ $(document).ready(function() {
         $('ul.tree > li').not('.match').hide();
         $('ul.tree li.match > ul').show();
     });
-
 });
 
 /**

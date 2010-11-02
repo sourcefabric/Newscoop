@@ -15,19 +15,10 @@ $.fn.widgets = function (options) {
     {
         areas.each(function() {
             var area = $(this).attr('id');
-            $.getJSON(settings.url, {
-                'callback': ['Extension_Area', 'SaveWidgets'],
-                'params': {
-                    'area': area,
-                    'widgets': $(this).sortable('toArray'),
-                },
-                'security_token': settings.security_token,
-                }, function(response) {
-                    if (!response.status) {
-                        alert(response.message);
-                    }
-                }
-            );
+            callServer(['Extension_Area', 'SaveWidgets'], {
+                'area': area,
+                'widgets': $(this).sortable('toArray'),
+                });
         });
 
     };
@@ -38,19 +29,11 @@ $.fn.widgets = function (options) {
      */
     var getContent = function(widget)
     {
-        $.getJSON(settings.url, {
-            'callback': ['Extension_Widget', 'GetContent'],
-            'params': {
-                'area': widget.closest('.area').attr('id'),
-                'widget': widget.attr('id'),
-            },
-            'security_token': settings.security_token,
-            }, function(response) {
-                if (!response.status) {
-                    alert(response.message);
-                } else {
-                    $('> .content', widget).html(response.result);
-                }
+        callServer(['Extension_Widget', 'GetContent'], {
+            'area': widget.closest('.area').attr('id'),
+            'widget': widget.attr('id'),
+            }, function(result) {
+                $('> .content', widget).html(result);
             }
         );
     };

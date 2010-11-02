@@ -114,10 +114,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 <div style="clear: both;"></div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.area').widgets({
-        'url': '/<?php echo $ADMIN; ?>/json.php',
-        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>',
-    });
+    $('.area').widgets();
 });
 </script>
 
