@@ -131,8 +131,31 @@ function callServer(p_callback, p_args, p_handle)
     });
 }
 
-var autocomplete = false;
+/**
+ * Call server function
+ * @param {array} p_callback
+ * @param {object} p_params
+ * @param {callback} p_handle
+ * @return bool
+ */
+function callServer(p_callback, p_params, p_handle)
+{
+    var xhr = $.getJSON(g_admin_endpoint, {
+        'callback': p_callback,
+        'params': p_params,
+        'security_token': g_security_token,
+        }, function(data, textStatus, xhr) {
+            if (p_handle) {
+                p_handle(data.result);
+            }
+            return true;
+        }
+    );
+    return false;
+}
+
 var terms = [];
+var autocomplete = false;
 $(document).ready(function() {
 
     // topics search autocomplete
@@ -199,5 +222,4 @@ $(document).ready(function() {
         $('ul.tree > li').not('.match').hide();
         $('ul.tree li.match > ul').show();
     });
-
 });
