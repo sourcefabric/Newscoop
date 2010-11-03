@@ -9,7 +9,8 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticlePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/Area.php');
+
+require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/WidgetContext.php');
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/WidgetContext.php');
 
