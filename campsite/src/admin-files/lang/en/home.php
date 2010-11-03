@@ -1,4 +1,23 @@
 <?php 
+regGS("login", "login");
+regGS("Your password has been reset <br/> you may now proceed to", "Your password has been reset <br/> you may now proceed to");
+regGS("This link is not valid.", "This link is not valid.");
+regGS("Recover password", "Recover password");
+regGS("Please enter your email.", "Please enter your email.");
+regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "Password recovery is disabled.<br/> <a href=\"login.php\">login</a>");
+regGS("Password recovery is disabled.", "Password recovery is disabled.");
+regGS("Password recovery email", "Password recovery email");
+regGS("Password recovery", "Password recovery");
+regGS("Password Recovery", "Password Recovery");
+regGS("No user is registered with this email.", "No user is registered with this email.");
+regGS("Logo", "Logo");
+regGS("Hi, \nfor password recovery, please follow this link: %s", "Hi, \nfor password recovery, please follow this link: %s");
+regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>");
+regGS("Forgot your password?", "Forgot your password?");
+regGS("Email: incorrect format.", "Email: incorrect format.");
+regGS("Email", "Email");
+regGS("Bad input parameters.", "Bad input parameters.");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>");
 regGS("You do not have the right to manage backup.", "You do not have the right to manage backup.");
 regGS("There was an error trying to delete the file $1.", "There was an error trying to delete the file $1.");
 regGS("The file $1 was deleted successfully.", "The file $1 was deleted successfully.");

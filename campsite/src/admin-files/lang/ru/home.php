@@ -1,4 +1,23 @@
 <?php 
+regGS("login", "");
+regGS("Your password has been reset <br/> you may now proceed to", "");
+regGS("This link is not valid.", "");
+regGS("Recover password", "");
+regGS("Please enter your email.", "");
+regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "");
+regGS("Password recovery is disabled.", "");
+regGS("Password recovery email", "");
+regGS("Password recovery", "");
+regGS("Password Recovery", "");
+regGS("No user is registered with this email.", "");
+regGS("Logo", "");
+regGS("Hi, \nfor password recovery, please follow this link: %s", "");
+regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");
+regGS("Forgot your password?", "");
+regGS("Email: incorrect format.", "");
+regGS("Email", "");
+regGS("Bad input parameters.", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "");
 regGS("You do not have the right to manage backup.", "Вы не имеета прав для управления резервным копированием.");
 regGS("There was an error trying to delete the file $1.", "Ошибка при удалении файла $1.");
 regGS("The file $1 was deleted successfully.", "Файл $1 успешно удален.");
@@ -81,5 +100,4 @@ regGS("Login failed", "Ошибка входа");
 regGS("Please make sure that you typed the correct user name and password.", "Пожалуйста, убедитесь в правильности ввода логина и пароля.");
 regGS("If your problem persists please contact the site administrator $1", "Если проблема не решена, обратитесь к администратору сайта $1");
 regGS("Backup/Restore", "Резервное копирование");
-regGS("Instance", "Пример");
 ?>
