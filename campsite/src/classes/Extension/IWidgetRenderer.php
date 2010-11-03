@@ -8,22 +8,22 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . '/IWidget.php'; 
 require_once dirname(__FILE__) . '/IWidgetContext.php';
- 
+
 /**
- * Widget interace
+ * Widget renderer interface
  */
-interface IWidget
+interface IWidgetRenderer
 {
     /**
-     * Get widget title.
-     * @return string|NULL
+     * @param IWidget
      */
-    public function getTitle();
+    public function __construct(IWidget $widget);
 
     /**
      * Render widget.
-     * @param IWidgetContext $context
+     * @param IWidgetContext
      * @return void
      */
     public function render(IWidgetContext $context);

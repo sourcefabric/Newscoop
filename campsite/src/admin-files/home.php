@@ -9,7 +9,8 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticlePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/Area.php');
+
+require_once($GLOBALS['g_campsiteDir'].'/classes/Extension/WidgetContext.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
@@ -81,22 +82,25 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <div class="column">
 <?php
-    $area = new Extension_Area('dashboard1');
-    $area->render();
+    $context = new WidgetContext('dashboard1');
+    $context->setVertical()
+        ->render();
 ?>
 </div>
 
 <div class="column">
 <?php
-    $area = new Extension_Area('dashboard2');
-    $area->render();
+    $context = new WidgetContext('dashboard2');
+    $context->setVertical()
+        ->render();
 ?>
 </div>
 
 <div class="column">
 <?php
-    $area = new Extension_Area('dashboard3');
-    $area->render();
+    $context = new WidgetContext('dashboard3');
+    $context->setVertical()
+        ->render();
 ?>
 </div>
 
@@ -106,15 +110,16 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <div id="repo">
 <?php
-    $area = new Extension_Area();
-    $area->render('preview');
+    $context = new WidgetContext();
+    $context->setHorizontal()
+        ->render();
 ?>
 </div>
     
 <div style="clear: both;"></div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.area').widgets();
+    $('.context').widgets();
 });
 </script>
 

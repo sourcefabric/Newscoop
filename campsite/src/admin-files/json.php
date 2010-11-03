@@ -46,6 +46,7 @@ try {
     // include valid callbacks files
     // TODO replace with autoloading
     require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+    require_once $GLOBALS['g_campsiteDir'] . '/classes/Extension/WidgetManager.php';
 
     // call func
     $result = call_user_func_array($callback, $args);

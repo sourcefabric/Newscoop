@@ -1,7 +1,7 @@
 (function ( $ ) {
 
 $.fn.widgets = function (options) {
-    var areas = this;
+    var contexts = this;
     var settings = {
         'url': '',
         'security_token': '',
@@ -13,12 +13,12 @@ $.fn.widgets = function (options) {
      */
     var updateOrder = function()
     {
-        areas.each(function() {
-            var area = $(this).attr('id');
-            callServer(['Extension_Area', 'SaveWidgets'], {
-                'area': area,
-                'widgets': $(this).sortable('toArray'),
-                });
+        contexts.each(function() {
+            var context = $(this).attr('id');
+            callServer(['WidgetManager', 'SetContextWidgets'], [
+                context,
+                $(this).sortable('toArray'),
+                ]);
         });
 
     };
@@ -29,10 +29,10 @@ $.fn.widgets = function (options) {
      */
     var getContent = function(widget)
     {
-        callServer(['Extension_Widget', 'GetContent'], {
-            'area': widget.closest('.area').attr('id'),
-            'widget': widget.attr('id'),
-            }, function(result) {
+        callServer(['WidgetManager', 'GetWidgetContent'], [
+            widget.attr('id'),
+            widget.closest('.context').attr('id'),
+            ], function(result) {
                 $('> .content', widget).html(result);
             }
         );
@@ -57,7 +57,7 @@ $.fn.widgets = function (options) {
                 .appendTo($('.header', widget))
                 .click(function() {
                     widget.hide('slow', function() {
-                        $(this).detach().appendTo($('.area').last()).show('slow');
+                        $(this).detach().appendTo($('.context').last()).show('slow');
                         updateOrder();
                         getContent($(this));
                     });
@@ -66,7 +66,7 @@ $.fn.widgets = function (options) {
 
         // make sortable
         $(this).sortable({
-            connectWith: areas,
+            connectWith: contexts,
             placeholder: 'widget-placeholder',
             forcePlaceholderSize: true,
             delay: 100,
