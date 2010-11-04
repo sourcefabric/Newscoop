@@ -125,15 +125,6 @@ $(document).ready(function() {
 });
 </script>
 
-    <div id="your_articles">
-        <h2><?php putGS('Your Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetArticlesByUser($g_user->getUserId()));
-        $articlelist->render();
-        ?>
-    </div>
-
     <div id="recently_published_articles">
         <h2><?php putGS('Recently Published Articles'); ?></h2>
         <?php
