@@ -10,8 +10,8 @@
 
 header('Content-type: application/json');
 
-require_once dirname(__FILE__) . '/Smartlist.php';
-require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
+require_once dirname(__FILE__) . '/ArticleList.php';
+require_once WWW_DIR . '/classes/Article.php';
 
 // start >= 0
 $start = max(0,
@@ -86,7 +86,7 @@ $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'd
 
 $return = array();
 foreach($articles as $article) {
-    $return[] = Smartlist::ProcessArticle($article);
+    $return[] = ArticleList::ProcessArticle($article);
 }
 
 echo(json_encode(array(

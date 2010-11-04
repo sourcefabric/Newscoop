@@ -62,7 +62,7 @@ $('.smartlist .actions select').change(function() {
         return;
     }
 
-    $.getJSON('/<?php echo $this->admin; ?>/smartlist/do_action.php', {
+    $.getJSON('<?php echo $this->path; ?>/do_action.php', {
         'action': action,
         'items': items,
         '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'

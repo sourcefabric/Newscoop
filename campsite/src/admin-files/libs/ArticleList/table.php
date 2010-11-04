@@ -50,7 +50,7 @@
 </div>
 
 <?php if ($this->order) { ?>
-<form method="post" action="<?php echo $this->admin; ?>/do_order.php" onsubmit="return sendOrder(this, '<?php echo $this->id; ?>');">
+<form method="post" action="<?php echo $this->path; ?>/do_order.php" onsubmit="return sendOrder(this, '<?php echo $this->id; ?>');">
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="language" value="<?php echo $this->language; ?>" />
     <input type="hidden" name="order" value="" />
@@ -70,7 +70,7 @@ filters = [];
 function sendOrder(form, hash)
 {
     var order = $('#table-' + hash + ' tbody').sortable('toArray');
-    $.getJSON('/<?php echo $this->admin; ?>/smartlist/do_order.php',
+    $.getJSON('<?php echo $this->path; ?>/smartlist/do_order.php',
         {
         'order': order,
         'language': $('input[name=language]', $(form)).val(),
@@ -96,7 +96,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bProcessing': false,
     <?php if ($this->items === NULL) { ?>
     'bServerSide': true,
-    'sAjaxSource': '/<?php echo $this->admin; ?>/smartlist/do_data.php',
+    'sAjaxSource': '<?php echo $this->path; ?>/do_data.php',
     <?php } ?>
     'bJQueryUI': true,
     'sDom': '<?php echo $this->getSDom(); ?>',

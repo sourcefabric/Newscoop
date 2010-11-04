@@ -5,7 +5,10 @@
  * Here you can set up anything that should be applied globally to all scripts.
  */
 
-$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+define('WWW_DIR', dirname(__FILE__));
+define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
+
+$GLOBALS['g_campsiteDir'] = WWW_DIR;
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 .DIRECTORY_SEPARATOR.'campsite_constants.php');

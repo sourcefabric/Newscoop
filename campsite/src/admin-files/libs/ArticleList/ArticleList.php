@@ -7,7 +7,11 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
-class Smartlist
+
+/**
+ * Article list component
+ */
+class ArticleList
 {
     /** @var string */
     private $id = '';
@@ -62,7 +66,7 @@ class Smartlist
 
         // set paths
         $this->web = $Campsite['WEBSITE_URL'];
-        $this->admin = $ADMIN;
+        $this->path = $this->web . '/admin/libs/ArticleList';
 
         camp_load_translation_strings('articles');
         camp_load_translation_strings('universal_list');
@@ -75,7 +79,7 @@ class Smartlist
     /**
      * Set publication.
      * @param int $publication
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setPublication($publication)
     {
@@ -86,7 +90,7 @@ class Smartlist
     /**
      * Set issue.
      * @param int $issue
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setIssue($issue)
     {
@@ -97,7 +101,7 @@ class Smartlist
     /**
      * Set section.
      * @param int $section
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setSection($section)
     {
@@ -108,7 +112,7 @@ class Smartlist
     /**
      * Set language.
      * @param int $language
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setLanguage($language)
     {
@@ -120,7 +124,7 @@ class Smartlist
      * Set filter.
      * @param string $name
      * @param mixed $value
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setFilter($name, $value)
     {
@@ -131,7 +135,7 @@ class Smartlist
     /**
      * Set items.
      * @param array $items
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setItems($items)
     {
@@ -166,7 +170,7 @@ class Smartlist
     /**
      * Set search.
      * @param bool $search
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setSearch($search = FALSE)
     {
@@ -177,7 +181,7 @@ class Smartlist
     /**
      * Set ColVis.
      * @param bool $colVis
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setColVis($colVis = FALSE)
     {
@@ -188,7 +192,7 @@ class Smartlist
     /**
      * Set order.
      * @param bool $order
-     * @return Smartlist
+     * @return ArticleList
      */
     public function setOrder($order = FALSE)
     {
@@ -198,7 +202,7 @@ class Smartlist
 
     /**
      * Render filters.
-     * @return Smartlist
+     * @return ArticleList
      */
     public function renderFilters()
     {
@@ -209,7 +213,7 @@ class Smartlist
 
     /**
      * Render actions.
-     * @return Smartlist
+     * @return ArticleList
      */
     public function renderActions()
     {
@@ -220,7 +224,7 @@ class Smartlist
 
     /**
      * Render table.
-     * @return Smartlist
+     * @return ArticleList
      */
     public function render()
     {

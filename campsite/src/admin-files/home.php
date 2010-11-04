@@ -10,7 +10,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/IssuePublish.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
 
-require_once dirname(__FILE__) . '/smartlist/Smartlist.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
 camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
@@ -92,9 +92,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     <div id="submitted_articles">
         <h2><?php putGS('Submitted Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetSubmittedArticles());
-        $smartlist->render();
+        $articlelist = new ArticleList();
+        $articlelist->setItems(Article::GetSubmittedArticles());
+        $articlelist->render();
         ?>
     </div>
     <?php } ?>
@@ -102,52 +102,52 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     <div id="your_articles">
         <h2><?php putGS('Your Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetArticlesByUser($g_user->getUserId()));
-        $smartlist->render();
+        $articlelist = new ArticleList();
+        $articlelist->setItems(Article::GetArticlesByUser($g_user->getUserId()));
+        $articlelist->render();
         ?>
     </div>
 
     <div id="recently_published_articles">
         <h2><?php putGS('Recently Published Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetRecentArticles($NumDisplayArticles));
-        $smartlist->render();
+        $articlelist = new ArticleList();
+        $articlelist->setItems(Article::GetRecentArticles($NumDisplayArticles));
+        $articlelist->render();
         ?>
     </div>
 
     <div id="recently_modified_articles">
         <h2><?php putGS('Recently Modified Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetRecentlyModifiedArticles($NumDisplayArticles));
-        $smartlist->render();
+        $articlelist = new ArticleList();
+        $articlelist->setItems(Article::GetRecentlyModifiedArticles($NumDisplayArticles));
+        $articlelist->render();
         ?>
     </div>
 
     <div id="unplaced_articles">
         <h2><?php putGS('Pending Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
-        $smartlist->setItems(Article::GetUnplacedArticles());
-        $smartlist->render();
+        $articlelist = new ArticleList();
+        $articlelist->setItems(Article::GetUnplacedArticles());
+        $articlelist->render();
         ?>
     </div>
 
     <div id="popular_articles">
         <h2><?php putGS('Most Popular Articles'); ?></h2>
         <?php
-        $smartlist = new Smartlist();
+        $articlelist = new ArticleList();
         $count = 0;
         $popularArticlesParams = array(
             new ComparisonOperation('published', new Operator('is'), 'true'),
             new ComparisonOperation('reads', new Operator('greater'), '0'),
         );
-        $smartlist->setItems(Article::GetList($popularArticlesParams,
+        $articlelist->setItems(Article::GetList($popularArticlesParams,
             array(array('field'=>'bypopularity', 'dir'=>'desc')),
             NULL, $NumDisplayArticles, $count));
-        $smartlist->render();
+        $articlelist->render();
         ?>
     </div>
 

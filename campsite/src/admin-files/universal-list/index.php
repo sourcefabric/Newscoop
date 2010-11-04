@@ -1,7 +1,8 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
-require_once(dirname(__FILE__) . '/../smartlist/Smartlist.php');
+
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
 camp_load_translation_strings("articles");
 
@@ -18,23 +19,23 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), '');
-$crumbs[] = array(getGS('Article List'), '');
+$crumbs[] = array(getGS('Universal List'), '');
 echo camp_html_breadcrumbs($crumbs);
 
 // set up
-$smartlist = new Smartlist();
-$smartlist->setPublication($f_publication_id);
-$smartlist->setIssue($f_issue_id);
-$smartlist->setSection($f_section_id);
-$smartlist->setLanguage($f_language_id);
+$articlelist = new ArticleList();
+$articlelist->setPublication($f_publication_id);
+$articlelist->setIssue($f_issue_id);
+$articlelist->setSection($f_section_id);
+$articlelist->setLanguage($f_language_id);
 
-$smartlist->setColVis(TRUE);
-$smartlist->setSearch(TRUE);
+$articlelist->setColVis(TRUE);
+$articlelist->setSearch(TRUE);
 
 // render
-$smartlist->renderFilters();
-$smartlist->renderActions();
-$smartlist->render();
+$articlelist->renderFilters();
+$articlelist->renderActions();
+$articlelist->render();
 
 camp_html_copyright_notice();
 ?>

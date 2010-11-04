@@ -7,7 +7,7 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleComment.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
 
-require_once dirname(__FILE__) . '/../smartlist/Smartlist.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
 camp_load_translation_strings("api");
 
@@ -129,19 +129,19 @@ camp_html_content_top(getGS('Article List'), $topArray);
 </TABLE>
 
 <?php
-    $smartlist = new Smartlist();
+    $articlelist = new ArticleList();
 
-    $smartlist->setPublication($f_publication_id);
-    $smartlist->setIssue($f_issue_number);
-    $smartlist->setSection($f_section_number);
-    $smartlist->setLanguage($f_language_id);
+    $articlelist->setPublication($f_publication_id);
+    $articlelist->setIssue($f_issue_number);
+    $articlelist->setSection($f_section_number);
+    $articlelist->setLanguage($f_language_id);
 
-    $smartlist->setColVis(TRUE);
-    $smartlist->setOrder(TRUE);
-    $smartlist->setSearch(TRUE);
+    $articlelist->setColVis(TRUE);
+    $articlelist->setOrder(TRUE);
+    $articlelist->setSearch(TRUE);
 
-    $smartlist->renderActions();
-    $smartlist->render();
+    $articlelist->renderActions();
+    $articlelist->render();
 ?>
 
 <?php camp_html_copyright_notice(); ?>
