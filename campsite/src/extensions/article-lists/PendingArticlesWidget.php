@@ -10,17 +10,17 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
-class YourArticlesWidget extends Widget
+class PendingArticlesWidget extends Widget
 {
     public function getTitle()
     {
-        return getGS('Your Articles');
+        return getGS('Pending Articles');
     }
 
     public function render()
     {
         $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetArticlesByUser($this->getUser()->getUserId()));
+        $articlelist->setItems(Article::GetUnplacedArticles());
         $articlelist->render();
     }
 }

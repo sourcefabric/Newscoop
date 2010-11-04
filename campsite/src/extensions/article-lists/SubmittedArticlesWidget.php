@@ -1,4 +1,12 @@
 <?php
+/**
+ * @package Campsite
+ *
+ * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @copyright 2010 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @link http://www.sourcefabric.org
+ */
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
@@ -6,17 +14,17 @@ class SubmittedArticlesWidget extends Widget
 {
     public function getTitle()
     {
-        return 'Submitted Articles';
+        return getGS('Submitted Articles');
     }
 
     public function render()
     {
         if ($this->getUser()->hasPermission('ChangeArticle') || $this->getUser()->hasPermission('Publish')) {
-            $list = new Smartlist();
-            $list->setItems(Article::GetSubmittedArticles());
-            $list->render();
+            $articlelist = new ArticleList();
+            $articlelist->setItems(Article::GetSubmittedArticles());
+            $articlelist->render();
         } else {
-            echo '<p>Access Denied</p>';
+            echo '<p>', getGS('Access Denied'), '</p>';
         }
     }
 }

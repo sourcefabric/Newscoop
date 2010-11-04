@@ -10,17 +10,17 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
-class YourArticlesWidget extends Widget
+class RecentlyModifiedArticlesWidget extends Widget
 {
     public function getTitle()
     {
-        return getGS('Your Articles');
+        return getGS('Recently Modified Articles');
     }
 
     public function render()
     {
         $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetArticlesByUser($this->getUser()->getUserId()));
+        $articlelist->setItems(Article::GetRecentlyModifiedArticles(20));
         $articlelist->render();
     }
 }

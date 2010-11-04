@@ -1,3 +1,3 @@
 <?php
 
-require_once $GLOBALS['g_campsiteDir'] . '/admin-files/smartlist/Smartlist.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';

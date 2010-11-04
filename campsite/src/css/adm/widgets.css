@@ -27,12 +27,12 @@
     min-height: 400px;
 }
 
-#repo ul {
-    height: 100px;
+ul#preview {
+    height: 1%;
     overflow: hidden;
 }
 
-#repo li {
+ul#preview li {
     width: 200px;
     height: 80px;
     float: left;

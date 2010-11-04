@@ -125,49 +125,6 @@ $(document).ready(function() {
 });
 </script>
 
-    <div id="recently_published_articles">
-        <h2><?php putGS('Recently Published Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetRecentArticles($NumDisplayArticles));
-        $articlelist->render();
-        ?>
-    </div>
-
-    <div id="recently_modified_articles">
-        <h2><?php putGS('Recently Modified Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetRecentlyModifiedArticles($NumDisplayArticles));
-        $articlelist->render();
-        ?>
-    </div>
-
-    <div id="unplaced_articles">
-        <h2><?php putGS('Pending Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetUnplacedArticles());
-        $articlelist->render();
-        ?>
-    </div>
-
-    <div id="popular_articles">
-        <h2><?php putGS('Most Popular Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $count = 0;
-        $popularArticlesParams = array(
-            new ComparisonOperation('published', new Operator('is'), 'true'),
-            new ComparisonOperation('reads', new Operator('greater'), '0'),
-        );
-        $articlelist->setItems(Article::GetList($popularArticlesParams,
-            array(array('field'=>'bypopularity', 'dir'=>'desc')),
-            NULL, $NumDisplayArticles, $count));
-        $articlelist->render();
-        ?>
-    </div>
-
     <div id="scheduled_actions">
         <h2><?php putGS('Scheduled Publishing'); ?></h2>
         <!-- Scheduled Publishing -->
