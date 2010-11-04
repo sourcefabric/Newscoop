@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/IWidgetContext.php';
 /**
  * Widget renderer interface
  */
-interface IWidgetRenderer
+interface IWidgetRenderer extends IWidget
 {
     /**
      * @param IWidget
@@ -26,5 +26,5 @@ interface IWidgetRenderer
      * @param IWidgetContext
      * @return void
      */
-    public function render(IWidgetContext $context);
+    public function render(IWidgetContext $context = NULL);
 }

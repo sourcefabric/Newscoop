@@ -23,8 +23,7 @@ interface IWidget
 
     /**
      * Render widget.
-     * @param IWidgetContext $context
      * @return void
      */
-    public function render(IWidgetContext $context);
+    public function render();
 }

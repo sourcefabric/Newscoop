@@ -19,17 +19,14 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     public $m_dbTableName = 'widget';
 
     /** @var array */
-    public $m_keyColumnNames = array('id');
+    public $m_keyColumnNames = array('filename', 'class');
 
     /** @var array */
     public $m_columnNames = array(
         'id',
         'filename',
         'class',
-        'title',
-        'order',
-        'is_collapsed',
-        'fk_widgetcontext_id',
+        'checksum',
     );
 
     /** @var bool */
@@ -44,16 +41,10 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
      */
     public function __construct(IWidget $widget, array $data = array())
     {
-        global $g_user;
+        parent::__construct($this->m_columnNames);
 
         $this->widget = $widget;
-
-        $this->m_tableName = '(widget w LEFT JOIN widgetcontext_widget wcw ON 
-        (w.id = wcw.fk_widget_id AND wcw.fk_user_id = ' . $g_user->getUserId() . '))';
-
-        parent::__construct($this->m_columnNames);
         $this->m_data = $data;
-
         if (empty($data)) {
             $this->fetch();
         }
@@ -82,20 +73,6 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     }
 
     /**
-     * Get widget filename.
-     * @return string
-     */
-    public function getFilename()
-    {
-        if (empty($this->m_data['filename'])) {
-            $reflection = new ReflectionObject($this->widget);
-            $this->m_data['filename'] = $reflection->getFileName();
-        }
-
-        return $this->m_data['filename'];
-    }
-
-    /**
      * Get widget id.
      * @return int
      */
@@ -111,5 +88,19 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     public function getName()
     {
         return strtolower($this->getClass());
+    }
+
+    /**
+     * Update widget data
+     * @param array $p_columns
+     * @return IWidget
+     */
+    public function update($p_columns = NULL)
+    {
+        if ($this->getId() == 0) { // get id
+            $this->fetch();
+        }
+
+        parent::update($p_columns);
     }
 }

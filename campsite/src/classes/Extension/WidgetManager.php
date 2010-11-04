@@ -10,6 +10,7 @@
 
 require_once dirname(__FILE__) . '/IWidget.php';
 require_once dirname(__FILE__) . '/IWidgetContext.php';
+require_once dirname(__FILE__) . '/Widget.php';
 require_once dirname(__FILE__) . '/WidgetContext.php';
 require_once dirname(__FILE__) . '/WidgetRendererDecorator.php';
 
@@ -23,48 +24,46 @@ class WidgetManager
      * @var array
      */
     private static $dirs = array(
-        '/extensions/',
+        'extensions',
     );
 
     /**
-     * Registered widgets.
+     * Parsed files
      * @var array
      */
-    private static $registered = NULL;
+    private static $indexed = NULL;
 
     /**
-     * Unregistered widgets.
+     * Unregistered widgets
      * @var array
      */
     private static $unregistered = NULL;
 
     /**
-     * Widgets repository.
+     * Widgets repository
      * @var array
      */
     private static $widgets = array();
 
     /**
-     * Get registered widgets.
+     * Get indexed widgets data.
      * @return array
      */
-    private static function GetRegistered()
+    private static function GetIndexed()
     {
         global $g_ado_db;
 
-        if (self::$registered === NULL) {
-            self::$registered = array();
-            $queryStr = 'SELECT filename, class
-                FROM extension_widget';
+        if (self::$indexed === NULL) {
+            self::$indexed = array();
+            $queryStr = 'SELECT id, filename, checksum
+                FROM widget';
             $rows = $g_ado_db->getAll($queryStr);
-            if (!empty($rows)) {
-                foreach ($rows as $row) {
-                    self::$registered[$row['filename']] = $row['class'];
-                }
+            foreach ($rows as $row) {
+                self::$indexed[$row['filename']] = $row;
             }
         }
 
-        return self::$registered;
+        return self::$indexed;
     }
 
     /**
@@ -80,9 +79,9 @@ class WidgetManager
             $queryStr = 'SELECT *
                 FROM widget w LEFT JOIN widgetcontext_widget wcw ON 
                     w.id = wcw.fk_widget_id
-                WHERE wcw.fk_user_id = ' . $g_user->getUserId() . '
-                    AND (wcw.fk_widgetcontext_id IS NULL
-                        OR wcw.fk_widgetcontext_id = 0)';
+                WHERE wcw.fk_widgetcontext_id IS NULL OR (
+                    wcw.fk_user_id <> ' . $g_user->getUserId() . '
+                    OR wcw.fk_widgetcontext_id = 0)';
             self::$unregistered = (array) $g_ado_db->GetAll($queryStr);
         }
 
@@ -98,13 +97,12 @@ class WidgetManager
     {
         global $g_user, $g_ado_db;
 
-        $key = $context->getId() !== NULL ? $context->getName() : '';
+        $key = $context->getName();
         if (!isset(self::$widgets[$key])) {
             self::$widgets[$key] = array();
-            if (empty($key)) { // unregistered
-                foreach (self::$dirs as $dir) {
-                    self::$widgets[$key] += self::scanDir($dir);
-                }
+            if ($context->getId() == 0) { // unregistered
+                // scan for new/updated widgets
+                self::UpdateIndex(self::$dirs);
 
                 foreach (self::GetUnregistered() as $row) {
                     self::$widgets[$key][] = self::GetWidgetInstance($row['filename'], $row['class'], $row);
@@ -144,7 +142,6 @@ class WidgetManager
         $context = self::GetWidgetContext($context);
 
         foreach (self::ParseWidgetIds($widgets) as $order => $id) {
-            echo $context->getId(), $id, $order, "\n";
             $queryStr = 'UPDATE widgetcontext_widget
                 SET fk_widgetcontext_id = ' . $context->getId() . ',
                     `order` = ' . $order . '
@@ -192,44 +189,70 @@ class WidgetManager
     }
 
     /**
-     * Scan directory for classes implementing IWidget
-     * @param string $dirname
-     * @return array
-     *      filename => class
+     * Update dirs index
+     * @param array $dirs
+     * @return void
      */
-    private static function scanDir($dirname)
+    private static function UpdateIndex(array $dirs)
     {
-        $registered = self::getRegistered();
-        $files = array_keys($registered);
+        // scan for files
+        $files = array();
+        foreach ($dirs as $dir) {
+            $path = $GLOBALS['g_campsiteDir'] . "/$dir/*/*.php";
+            $files = array_merge($files, glob($path));
+        }
 
-        // parse and save the rest
-        $extensions = array();
-        foreach (glob($GLOBALS['g_campsiteDir'] . "/$dirname/*.php") as $file) {
-            if (!empty($files[$file])) { // used
+        if (empty($files)) {
+            return $files;
+        }
+
+        // index files
+        $indexed = self::GetIndexed();
+        foreach ($files as $file) {
+            $checksum = sha1_file($file);
+            if (isset($indexed[$file])) { // indexed, check for changes
+                if ($checksum != $indexed[$file]['checksum']) { // update
+                    self::IndexFile($file, $checksum);
+                }
                 continue;
             }
-            $s = file_get_contents($file);
-            $tokens = token_get_all($s);
-            $tokens_size = sizeof($tokens);
-            $classname = '';
-            for ($i = 0; $i < $tokens_size; $i++) {
-                if ($tokens[$i][0] == T_CLASS) {
-                    $classname = $tokens[$i + 2][1];
-                    require_once $file;
-                    $reflection = new ReflectionClass($classname);
-                    if (in_array($interface, $reflection->getInterfaceNames())) {
-                        $extension = new $classname();
-                        $extension->create(array(
-                            'filename' => $file,
-                            'class' => $classname,
-                        )); // gets id
-                        $extensions[] = $extension;
+            self::IndexFile($file, $checksum, TRUE);
+        }
+    }
+
+    /**
+     * Index file classes implementing IWidget
+     * @param string $filename
+     * @param string $checksum
+     * @param bool $update
+     * @return void
+     */
+    private static function IndexFile($filename, $checksum, $new = FALSE)
+    {
+        $s = file_get_contents($filename);
+        $tokens = token_get_all($s);
+        $tokens_size = sizeof($tokens);
+        $class = '';
+        for ($i = 0; $i < $tokens_size; $i++) {
+            if ($tokens[$i][0] == T_CLASS) {
+                $class = $tokens[$i + 2][1];
+                require_once $filename;
+                $reflection = new ReflectionClass($class);
+                if ($reflection->implementsInterface('IWidget')) {
+                    $data = array(
+                        'filename' => $filename,
+                        'class' => $class,
+                        'checksum' => $checksum,
+                    );
+                    $widget = self::GetWidgetInstance($filename, $class, $data);
+                    if ($new) { // new file
+                        $widget->create($data);
+                    } else { // update
+                        $widget->update($data);
                     }
                 }
             }
         }
-
-        return $extensions;
     }
 
     /**

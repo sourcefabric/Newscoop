@@ -8,14 +8,13 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/IWidget.php';
-require_once dirname(__FILE__) . '/IWidgetRenderer.php';
+require_once dirname(__FILE__) . '/IWidgetContext.php';
 require_once dirname(__FILE__) . '/WidgetManagerDecorator.php';
 
 /**
  * Widget renderer implementation
  */
-class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
+class WidgetRendererDecorator extends WidgetManagerDecorator
 {
     /**
      * Render widget
@@ -23,13 +22,15 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
      * @param bool $ajax
      * @return void|string
      */
-    public function render(IWidgetContext $context, $ajax = FALSE)
+    public function render(IWidgetContext $context = NULL, $ajax = FALSE)
     {
+        // get content
         ob_start();
         if ($context->getId() == 0) {
             echo 'widget preview';
         } else {
-            $this->widget->render($context);
+            $this->widget->setContext($context);
+            $this->widget->render();
         }
         $content = ob_get_contents();
         ob_end_clean();

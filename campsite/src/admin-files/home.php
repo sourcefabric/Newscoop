@@ -123,36 +123,9 @@ $(document).ready(function() {
 });
 </script>
 
-<div id="tabs">
-    <ul>
-        <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
-        <li><a href="#submitted_articles"><?php putGS("Submitted Articles"); ?></a></li>
-        <?php } ?>
-        <li><a href="#your_articles"><?php putGS("Your Articles"); ?></a></li>
-        <li><a href="#recently_published_articles"><?php putGS("Recently Published Articles"); ?></a></li>
-        <li><a href="#recently_modified_articles"><?php putGS("Recently Modified Articles"); ?></a></li>
-        <li><a href="#scheduled_actions"><?php putGS("Scheduled Publishing"); ?></a></li>
-        <li><a href="#unplaced_articles"><?php putGS("Pending Articles"); ?></a></li>
-        <li><a href="#popular_articles"><?php putGS("Most Popular Articles"); ?></a></li>
-    </ul>
-
-    <?php if ($g_user->hasPermission('ChangeArticle') || $g_user->hasPermission('Publish')) { ?>
-    <div id="submitted_articles">
-        <h2><?php putGS('Submitted Articles'); ?></h2>
-        <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetSubmittedArticles());
-        $articlelist->render();
-        ?>
-    </div>
-    <?php } ?>
-
     <div id="your_articles">
         <h2><?php putGS('Your Articles'); ?></h2>
         <?php
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetArticlesByUser($g_user->getUserId()));
-        $articlelist->render();
         ?>
     </div>
 
@@ -355,14 +328,6 @@ $(document).ready(function() {
         </table>
         
     </div>
-
-</div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#tabs').tabs();
-});
-</script>
 
 <?php camp_html_copyright_notice(); ?>
 </body>
