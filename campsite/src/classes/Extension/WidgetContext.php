@@ -17,8 +17,6 @@ require_once dirname(__FILE__) . '/WidgetManager.php';
  */
 class WidgetContext extends DatabaseObject implements IWidgetContext
 {
-    const EMPTY_NAME = 'preview';
-
     /** @var string */
     public $m_dbTableName = 'widgetcontext';
 
@@ -37,24 +35,26 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     /** @var bool */
     private $isVertical = FALSE;
 
-    /** @var array */
+    /** @var array of IWidget */
     private $widgets = NULL;
 
     /**
      * @param string $name
      */
-    public function __construct($name = '')
+    public function __construct($name = NULL)
     {
         parent::__construct($this->m_columnNames);
 
-        if (empty($name)) {
-            $name = self::EMPTY_NAME;
+        if ($name === NULL) {
+            $name = self::DEFAULT_NAME;
+        } else {
+            $name = strtolower($name);
         }
 
         $this->m_data['name'] = $name;
-        if ($name != self::EMPTY_NAME) {
+        if ($name != self::DEFAULT_NAME) { // load context id
             $this->fetch();
-            if (empty($this->m_data['id'])) {
+            if (empty($this->m_data['id'])) { // store new context
                 $this->create(array(
                     'name' => $name,
                 ));
@@ -93,9 +93,18 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
+     * Is default?
+     * @return bool
+     */
+    public function isDefault()
+    {
+        return $this->getName() == self::DEFAULT_NAME;
+    }
+
+    /**
      * Set horizontal
      * @param bool $horizontal
-     * @return WidgetContext
+     * @return IWidgetContext
      */
     public function setHorizontal($horizontal = TRUE)
     {
@@ -104,7 +113,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Is horizontal
+     * Is horizontal?
      * @return bool
      */
     public function isHorizontal()
@@ -115,7 +124,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     /**
      * Set vertical
      * @param bool $vertical
-     * @return WidgetContext
+     * @return IWidgetContext
      */
     public function setVertical($vertical = TRUE)
     {
@@ -124,7 +133,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Is vertical
+     * Is vertical?
      * @return bool
      */
     public function isVertical()
@@ -148,7 +157,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
             $classes[] = 'vertical';
         }
 
-        echo '<ul id="', $this->getName(), '" class="', implode(' ', $classes), '">';
+        echo '<ul id="', $this->getName(), '" class="', implode(' ', $classes), '">', "\n";
         foreach ($this->getWidgets() as $widget) {
             $widget->render($this);
         }

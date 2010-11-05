@@ -5,6 +5,7 @@ $.fn.widgets = function (options) {
     var settings = {
         'url': '',
         'security_token': '',
+        'default_context': 'preview',
     };
 
     /**
@@ -29,11 +30,17 @@ $.fn.widgets = function (options) {
      */
     var getContent = function(widget)
     {
+        var context = widget.closest('.context').attr('id');
+        if (context == settings.default_context) {
+            $('> .content', widget).hide();
+            return;
+        }
+
         callServer(['WidgetManager', 'GetWidgetContent'], [
             widget.attr('id'),
             widget.closest('.context').attr('id'),
             ], function(result) {
-                $('> .content', widget).html(result);
+                $('> .content', widget).html(result).show();
             }
         );
     };
@@ -48,7 +55,7 @@ $.fn.widgets = function (options) {
             var widget = $(this);
 
             // set widget
-            widget.css({
+            $('> .header', widget).css({
                 cursor: 'move',
             });
 
@@ -68,6 +75,7 @@ $.fn.widgets = function (options) {
         $(this).sortable({
             connectWith: contexts,
             placeholder: 'widget-placeholder',
+            handle: '.header',
             forcePlaceholderSize: true,
             delay: 100,
             opacity: 0.8,

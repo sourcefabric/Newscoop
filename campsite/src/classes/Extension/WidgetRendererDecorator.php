@@ -26,9 +26,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
     {
         // get content
         ob_start();
-        if ($context->getId() == 0) {
-            echo 'widget preview';
-        } else {
+        if (!$context->isDefault()) {
             $this->widget->setContext($context);
             $this->widget->render();
         }

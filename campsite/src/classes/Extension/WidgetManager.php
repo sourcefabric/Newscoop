@@ -100,7 +100,7 @@ class WidgetManager
         $key = $context->getName();
         if (!isset(self::$widgets[$key])) {
             self::$widgets[$key] = array();
-            if ($context->getId() == 0) { // unregistered
+            if ($context->isDefault()) { // unregistered
                 // scan for new/updated widgets
                 self::UpdateIndex(self::$dirs);
 
@@ -148,7 +148,7 @@ class WidgetManager
                 WHERE fk_widget_id = ' . $id . '
                     AND fk_user_id = ' . $g_user->getUserId();
             $g_ado_db->execute($queryStr);
-            if ($g_ado_db->Affected_Rows() <= 0 && $context->getId() > 0) { // not set
+            if ($g_ado_db->Affected_Rows() <= 0 && !$context->isDefault()) { // not set
                 $queryStr = sprintf('INSERT INTO widgetcontext_widget
                     (fk_widgetcontext_id, fk_widget_id, fk_user_id, `order`) VALUES
                     (%d, %d, %d, %d)',
@@ -238,7 +238,8 @@ class WidgetManager
                 $class = $tokens[$i + 2][1];
                 require_once $filename;
                 $reflection = new ReflectionClass($class);
-                if ($reflection->implementsInterface('IWidget')) {
+                if ($reflection->implementsInterface('IWidget')
+                    && $reflection->isInstantiable()) {
                     $data = array(
                         'filename' => $filename,
                         'class' => $class,

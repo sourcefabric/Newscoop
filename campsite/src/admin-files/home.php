@@ -121,7 +121,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 <div style="clear: both;"></div>
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.context').widgets();
+    $('.context').widgets({
+        default_context: g_default_context,
+    });
 });
 </script>
 
