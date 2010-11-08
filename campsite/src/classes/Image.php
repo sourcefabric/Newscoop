@@ -36,6 +36,9 @@ class Image extends DatabaseObject {
 		'LastModified',
 		'TimeCreated');
 
+	static private $s_defaultOrder = array('default');
+
+
 	/**
 	 * An image is both the orginal image, plus a thumbnail image,
 	 * plus metadata.
@@ -501,7 +504,7 @@ class Image extends DatabaseObject {
     	        }
     	    }
     		chmod($target, 0644);
-    
+
     		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
     		if ($createMethodName != null) {
     			$imageHandler = $createMethodName($target);
@@ -856,18 +859,191 @@ class Image extends DatabaseObject {
      * @return array $issueList
      *    An array of Issue objects
      */
-    public static function GetList($p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0)
+    public static function GetList(array $p_parameters, array $p_order = array(),
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
 
-        if (!is_array($p_parameters)) {
-            return null;
+        if (!$p_skipCache && CampCache::IsEnabled()) {
+        	$paramsArray['parameters'] = serialize($p_parameters);
+        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['start'] = $p_start;
+        	$paramsArray['limit'] = $p_limit;
+        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+        	$imagesList = $cacheListObj->fetchFromCache();
+        	if ($imagesList !== false && is_array($imagesList)) {
+        		return $imagesList;
+        	}
         }
 
-        $sqlClauseObj = new SQLSelectClause();
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
 
+        // sets the where conditions
+        foreach ($p_parameters as $param) {
+            $comparisonOperation = self::ProcessListParameters($param);
+            if (sizeof($comparisonOperation) < 1) {
+                break;
+            }
+
+            $whereCondition = $comparisonOperation['left'] . ' '
+                . $comparisonOperation['symbol'] . " '"
+                . $comparisonOperation['right'] . "' ";
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
+        }
+
+        // sets the columns to be fetched
+        $tmpImage = new Image();
+		$columnNames = $tmpImage->getColumnNames(true);
+        foreach ($columnNames as $columnName) {
+            $selectClauseObj->addColumn($columnName);
+        }
+        $countClauseObj->addColumn('COUNT(*)');
+
+        // sets the base table Attachment
+        $selectClauseObj->setTable($tmpImage->getDbTableName());
+        $countClauseObj->setTable($tmpImage->getDbTableName());
+        unset($tmpImage);
+
+        // sets the ORDER BY condition
+        $p_order = array_merge($p_order, self::$s_defaultOrder);
+        $order = self::ProcessListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $orderColumn = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $selectClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query executes it
+        $selectQuery = $selectClauseObj->buildQuery();
+        $images = $g_ado_db->GetAll($selectQuery);
+        if (is_array($images)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
+
+        	// builds the array of image objects
+        	$imagesList = array();
+        	foreach ($images as $image) {
+        		$imgObj = new Image($image['Id']);
+        		if ($imgObj->exists()) {
+        			$imagesList[] = $imgObj;
+        		}
+        	}
+        } else {
+        	$imagesList = array();
+        	$p_count = 0;
+        }
+        if (!$p_skipCache && CampCache::IsEnabled()) {
+        	$cacheListObj->storeInCache($imagesList);
+        }
+
+        return $imagesList;
     } // fn GetList
+
+
+    /**
+     * Processes a parameter (condition) coming from template tags.
+     *
+     * @param array $p_param
+     *      The array of parameters
+     *
+     * @return array $comparisonOperation;
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListParameters($p_param)
+    {
+    	$comparisonOperation = array();
+    	$comparisonOperation['right'] = $p_param->getRightOperand();
+
+        switch (strtolower($p_param->getLeftOperand())) {
+        case 'description':
+            $comparisonOperation['left'] = 'Images.Description';
+            break;
+        case 'photographer':
+            $comparisonOperation['left'] = 'Images.Photographer';
+            break;
+        case 'place':
+            $comparisonOperation['left'] = 'Images.Place';
+            break;
+        case 'caption':
+            $comparisonOperation['left'] = 'Images.Caption';
+            break;
+        case 'date':
+            $comparisonOperation['left'] = 'Images.Date';
+            break;
+        case 'location':
+            $comparisonOperation['left'] = 'Images.Location';
+            break;
+        case 'type':
+        	$comparisonOperation['left'] = 'Images.ContentType';
+        	$comparisonOperation['right'] = 'image/' . $p_param->getRightOperand();
+        	break;
+        case 'last_modified':
+            $comparisonOperation['left'] = 'Images.LastModified';
+            break;
+        default:
+        	return null;
+        }
+
+        $operatorObj = $p_param->getOperator();
+        $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+
+        return $comparisonOperation;
+    } // fn ProcessListParameters
+
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
+     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
+     *        bypopularity, bycomments
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+            	case 'default':
+                    $dbField = 'Images.Id';
+                    break;
+                case 'bydescription':
+                    $dbField = 'Images.Description';
+                    break;
+                case 'byphotographer':
+                    $dbField = 'Images.Photographer';
+                    break;
+                case 'bydate':
+                    $dbField = 'Images.Date';
+                    break;
+                case 'bylastupdate':
+                	$dbField = 'Images.LastModified';
+                	break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+                $order[] = array('field'=>$dbField, 'dir'=>$direction);
+            }
+        }
+        return $order;
+    }
+
 
     /**
      * Process multi-upload file.
@@ -904,7 +1080,7 @@ class Image extends DatabaseObject {
         } catch (PEAR_Error $e) {
             return NULL;
         }
-            
+
     } // fn ProcessImage
 
 } // class Image

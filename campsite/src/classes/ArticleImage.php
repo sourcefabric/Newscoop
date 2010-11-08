@@ -447,7 +447,7 @@ class ArticleImage extends DatabaseObject {
 
         // validates whether article number was given
         if ($hasArticleNr === false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Article '
+            CampTemplate::singleton()->trigger_error('Missing parameter Article '
                 .'Number in statement list_article_images');
             return;
         }
