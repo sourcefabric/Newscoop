@@ -119,9 +119,7 @@ class ImagesList extends ListObject
     			case 'place':
     			case 'caption':
     			case 'date':
-    			case 'location':
     			case 'type':
-    			case 'last_modified':
 					$operator = new Operator('is', 'string');
 					$this->m_constraints[] = new ComparisonOperation($parameter, $operator, $value);
 					break;
@@ -138,8 +136,14 @@ class ImagesList extends ListObject
     			case 'place_like':
     			case 'caption_like':
 					$operator = new Operator('like', 'string');
-					$this->m_constraints[] = new ComparisonOperation($parameter, $operator, "%$value%");
+					$listParam = substr($parameter, 0, strlen($parameter) - strlen('_like'));
+					$this->m_constraints[] = new ComparisonOperation($listParam, $operator, "%$value%");
 					break;
+    			case 'local':
+    				$opName = strtolower($value) == 'true' ? 'is' : 'not';
+					$operator = new Operator($opName, 'string');
+					$this->m_constraints[] = new ComparisonOperation($parameter, $operator, 'local');
+    				break;
     			default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_images", $p_smarty);
     		}

@@ -36,7 +36,7 @@ class Image extends DatabaseObject {
 		'LastModified',
 		'TimeCreated');
 
-	static private $s_defaultOrder = array('default');
+	static private $s_defaultOrder = array(array('field'=>'default', 'dir'=>'asc'));
 
 
 	/**
@@ -216,6 +216,15 @@ class Image extends DatabaseObject {
 
 
 	/**
+	 * Returns true if the image was stored locally
+	 */
+	public function isLocal()
+	{
+		return (int)$this->m_data['Location'] == 'local';
+	} // fn isLocal
+
+
+	/**
 	 * @return string
 	 */
 	public function getUrl()
@@ -231,6 +240,12 @@ class Image extends DatabaseObject {
 	{
 		return $this->m_data['ContentType'];
 	} // fn getContentType
+
+
+	public function getType()
+	{
+		return substr($this->m_data['ContentType'], strlen('image/'));
+	}
 
 
 	/**
@@ -975,8 +990,9 @@ class Image extends DatabaseObject {
         case 'date':
             $comparisonOperation['left'] = 'Images.Date';
             break;
-        case 'location':
+        case 'local':
             $comparisonOperation['left'] = 'Images.Location';
+            $comparisonOperation['right'] = 'local';
             break;
         case 'type':
         	$comparisonOperation['left'] = 'Images.ContentType';

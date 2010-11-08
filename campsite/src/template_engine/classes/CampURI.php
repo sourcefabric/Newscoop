@@ -1009,8 +1009,8 @@ abstract class CampURI
             		$this->processImageOptions($imageNo, $p_params);
             	}
 
-                if (!is_null($imageNo)) {
-                	$context = CampTemplate::singleton()->context();
+            	$context = CampTemplate::singleton()->context();
+            	if (!is_null($imageNo)) {
                 	$oldImage = $context->image;
                     $articleImage = new ArticleImage($context->article->number, null, $imageNo);
                     $context->image = new MetaImage($articleImage->getImageId());
