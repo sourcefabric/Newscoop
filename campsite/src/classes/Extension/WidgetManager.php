@@ -13,26 +13,13 @@ require_once dirname(__FILE__) . '/IWidgetContext.php';
 require_once dirname(__FILE__) . '/Widget.php';
 require_once dirname(__FILE__) . '/WidgetContext.php';
 require_once dirname(__FILE__) . '/WidgetRendererDecorator.php';
+require_once dirname(__FILE__) . '/Index.php';
 
 /**
  * Widget Manager
  */
 class WidgetManager
 {
-    /**
-     * Widget directories
-     * @var array
-     */
-    private static $dirs = array(
-        'extensions',
-    );
-
-    /**
-     * Parsed files
-     * @var array
-     */
-    private static $indexed = NULL;
-
     /**
      * Unregistered widgets
      * @var array
@@ -44,27 +31,6 @@ class WidgetManager
      * @var array
      */
     private static $widgets = array();
-
-    /**
-     * Get indexed widgets data.
-     * @return array
-     */
-    private static function GetIndexed()
-    {
-        global $g_ado_db;
-
-        if (self::$indexed === NULL) {
-            self::$indexed = array();
-            $queryStr = 'SELECT id, filename, checksum
-                FROM widget';
-            $rows = $g_ado_db->getAll($queryStr);
-            foreach ($rows as $row) {
-                self::$indexed[$row['filename']] = $row;
-            }
-        }
-
-        return self::$indexed;
-    }
 
     /**
      * Get unregistered widgets.
@@ -100,9 +66,18 @@ class WidgetManager
         $key = $context->getName();
         if (!isset(self::$widgets[$key])) {
             self::$widgets[$key] = array();
-            if ($context->isDefault()) { // unregistered
-                // scan for new/updated widgets
-                self::UpdateIndex(self::$dirs);
+            if ($context->isDefault()) {
+                // get all extensions
+                $index = new Extension_Index();
+                $extensions = $index->addDirectory(WWW_DIR . '/extensions')
+                    ->find('IWidget');
+
+                // save new widgets
+                $widgets = array();
+                foreach ($extensions as $extension) {
+                    $widget = self::GetWidgetInstance($extension->getPath(), $extension->getClass());
+                    $widget->save();
+                }
 
                 foreach (self::GetUnregistered() as $row) {
                     self::$widgets[$key][] = self::GetWidgetInstance($row['filename'], $row['class'], $row);
@@ -189,74 +164,6 @@ class WidgetManager
     }
 
     /**
-     * Update dirs index
-     * @param array $dirs
-     * @return void
-     */
-    private static function UpdateIndex(array $dirs)
-    {
-        // scan for files
-        $files = array();
-        foreach ($dirs as $dir) {
-            $path = $GLOBALS['g_campsiteDir'] . "/$dir/*/*.php";
-            $files = array_merge($files, glob($path));
-        }
-
-        if (empty($files)) {
-            return $files;
-        }
-
-        // index files
-        $indexed = self::GetIndexed();
-        foreach ($files as $file) {
-            $checksum = sha1_file($file);
-            if (isset($indexed[$file])) { // indexed, check for changes
-                if ($checksum != $indexed[$file]['checksum']) { // update
-                    self::IndexFile($file, $checksum);
-                }
-                continue;
-            }
-            self::IndexFile($file, $checksum, TRUE);
-        }
-    }
-
-    /**
-     * Index file classes implementing IWidget
-     * @param string $filename
-     * @param string $checksum
-     * @param bool $update
-     * @return void
-     */
-    private static function IndexFile($filename, $checksum, $new = FALSE)
-    {
-        $s = file_get_contents($filename);
-        $tokens = token_get_all($s);
-        $tokens_size = sizeof($tokens);
-        $class = '';
-        for ($i = 0; $i < $tokens_size; $i++) {
-            if ($tokens[$i][0] == T_CLASS) {
-                $class = $tokens[$i + 2][1];
-                require_once $filename;
-                $reflection = new ReflectionClass($class);
-                if ($reflection->implementsInterface('IWidget')
-                    && $reflection->isInstantiable()) {
-                    $data = array(
-                        'filename' => $filename,
-                        'class' => $class,
-                        'checksum' => $checksum,
-                    );
-                    $widget = self::GetWidgetInstance($filename, $class, $data);
-                    if ($new) { // new file
-                        $widget->create($data);
-                    } else { // update
-                        $widget->update($data);
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * Get instance of widget.
      * @param string $filename
      * @param string $class
@@ -267,6 +174,8 @@ class WidgetManager
     {
         require_once $filename;
         $widget = new $class;
+        $data['filename'] = $filename;
+        $data['class'] = $class;
         return new WidgetRendererDecorator($widget, $data);
     }
 

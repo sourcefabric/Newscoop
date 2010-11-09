@@ -26,7 +26,6 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
         'id',
         'filename',
         'class',
-        'checksum',
     );
 
     /** @var bool */
@@ -102,5 +101,19 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
         }
 
         parent::update($p_columns);
+    }
+
+    /**
+     * Save data
+     * @param array $p_columns
+     * @return void
+     */
+    public function save($p_columns = NULL)
+    {
+        if ($this->getId() == 0) {
+            parent::create($p_columns);
+        } else {
+            parent::update($p_columns);
+        }
     }
 }
