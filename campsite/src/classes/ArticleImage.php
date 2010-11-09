@@ -440,7 +440,7 @@ class ArticleImage extends DatabaseObject {
             }
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }

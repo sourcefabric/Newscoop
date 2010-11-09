@@ -2376,8 +2376,8 @@ class Article extends DatabaseObject {
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
-                $firstName = $author['first_name'];
-                $lastName = $author['last_name'];
+                $firstName = $g_ado_db->escape($author['first_name']);
+                $lastName = $g_ado_db->escape($author['last_name']);
                 $whereCondition = "CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol "
                                 . "'$valModifier$firstName $lastName$valModifier'";
                 $selectClauseObj->addWhere($whereCondition);

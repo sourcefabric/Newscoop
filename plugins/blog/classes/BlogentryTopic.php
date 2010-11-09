@@ -32,7 +32,7 @@ class BlogentryTopic extends DatabaseObject {
         );
 
     /**
-     * Construct by passing in the primary key to access the 
+     * Construct by passing in the primary key to access the
      * blogentry <-> topic relations
      *
      * @param int $p_blogentry_id
@@ -43,7 +43,7 @@ class BlogentryTopic extends DatabaseObject {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['fk_entry_id'] = $p_blogentry_id;
         $this->m_data['fk_topic_id'] = $p_topic_id;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -82,51 +82,51 @@ class BlogentryTopic extends DatabaseObject {
      * @return boolean
      */
     function delete()
-    {        
+    {
         // Delete record from the database
         $deleted = parent::delete();
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $deleted;
     } // fn delete
-    
+
     public static function DeleteBlogentryTopics($p_blogentry_id)
     {
         global $g_ado_db;
 
         $query = "DELETE FROM ".BlogentryTopic::$s_dbTableName."
                   WHERE fk_entry_id = $p_blogentry_id";
-         
+
         $return = $g_ado_db->execute($query);
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        return $return;  
+        return $return;
     }
-    
+
     /**
      * Called when blogentry is deleted
      *
      * @param int $p_blogentry_id
      */
     public static function OnBlogentryDelete($p_blogentry_id)
-    {    
+    {
         foreach (BlogentryTopic::GetAssignments($p_blogentry_id) as $record) {
-            $record->delete();   
-        }   
+            $record->delete();
+        }
     }
-    
+
     /**
      * Call this if an topic is deleted
      *
      * @param int $p_topic_id
      */
     public static function OnTopicDelete($p_topic_id)
-    {      
+    {
         foreach (BlogentryTopic::GetAssignments(null, $p_topic_id) as $record) {
-            $record->delete();   
-        }   
+            $record->delete();
+        }
     }
-    
+
     /**
      * Get array of relations between topic and blogentry
      * You have to set param $p_topic_id,
@@ -140,32 +140,32 @@ class BlogentryTopic extends DatabaseObject {
     {
         global $g_ado_db;
         $records = array();
-        
+
         if (!empty($p_blogentry_id)) {
-            $where .= "AND fk_entry_id = $p_blogentry_id ";   
+            $where .= "AND fk_entry_id = $p_blogentry_id ";
         }
         if (!empty($p_topic_id)) {
-            $where .= "AND fk_topic_id = $p_topic_id ";   
+            $where .= "AND fk_topic_id = $p_topic_id ";
         }
-        
+
         if (empty($where)) {
-            return array();   
+            return array();
         }
-        
+
         $query = "SELECT    *
                   FROM      ".BlogentryTopic::$s_dbTableName."
                   WHERE     1 $where
                   ORDER BY  fk_entry_id DESC";
-        
+
         $res = $g_ado_db->selectLimit($query, $p_limit == 0 ? -1 : $p_limit, $p_offset);
-        
+
         while ($row = $res->fetchRow()) {
-            $records[] = new BlogentryTopic($row['fk_entry_id'], $row['fk_topic_id']);      
-        } 
-        
-        return $records;    
+            $records[] = new BlogentryTopic($row['fk_entry_id'], $row['fk_topic_id']);
+        }
+
+        return $records;
     }
-    
+
     /**
      * Get the responding topic object of an record
      *
@@ -174,10 +174,10 @@ class BlogentryTopic extends DatabaseObject {
     public function getTopic()
     {
         $Topic = new Topic($this->m_data['fk_topic_id']);
-        
-        return $Topic;   
+
+        return $Topic;
     }
-    
+
     /**
      * Get the TopicId
      *
@@ -185,9 +185,9 @@ class BlogentryTopic extends DatabaseObject {
      */
     public function getTopicId()
     {
-        return $this->m_data['fk_topic_id'];   
+        return $this->m_data['fk_topic_id'];
     }
-       
+
     /**
      * Get the responding blogentry object for an record
      *
@@ -195,11 +195,11 @@ class BlogentryTopic extends DatabaseObject {
      */
     public function getBlogentry($p_language_id)
     {
-        $BlogEntry = new BlogEntry($p_language_id, $this->m_data['fk_entry_id']); 
-        
-        return $BlogEntry;  
+        $BlogEntry = new BlogEntry($p_language_id, $this->m_data['fk_entry_id']);
+
+        return $BlogEntry;
     }
-    
+
         /**
      * Returns an blog topics list based on the given parameters.
      *
@@ -238,7 +238,7 @@ class BlogentryTopic extends DatabaseObject {
             }
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -317,7 +317,7 @@ class BlogentryTopic extends DatabaseObject {
         return $comparisonOperation;
     } // fn ProcessListParameters
 
-       
+
 } // class BlogentryTopic
 
 ?>

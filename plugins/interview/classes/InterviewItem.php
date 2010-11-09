@@ -653,11 +653,11 @@ class InterviewItem extends DatabaseObject {
             }
 
             if (strpos($comparisonOperation['left'], 'interview_id') !== false) {
-                $interview_id = $comparisonOperation['right'];
+                $interview_id = $g_ado_db->escape($comparisonOperation['right']);
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
                 $selectClauseObj->addWhere($whereCondition);
             }
         }
@@ -675,7 +675,7 @@ class InterviewItem extends DatabaseObject {
         unset($tmpInterviewItem);
 
         // set constraints which ever have to care of
-        $selectClauseObj->addWhere("$mainTblName.fk_interview_id = $interview_id");
+        $selectClauseObj->addWhere("$mainTblName.fk_interview_id = '$interview_id'");
         #$selectClauseObj->addWhere("$mainTblName.is_online = 1");
 
 
