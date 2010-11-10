@@ -10,27 +10,50 @@
 
 header('Content-type: application/json');
 
-// include valid callbacks
-// TODO replace with autoloading
-require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+require_once WWW_DIR . '/classes/User.php';
 
-
-// TODO check rights
+// permission action mapping
+// callback => required permissions
+// callback is Class::method or function
+$rules = array(
+    'ArticleList::doAction' => '', // checked per action
+    'ArticleList::doData' => '', // everyone can see articles
+    'ArticleList::doOrder' => 'Publish',
+);
 
 // parse callback
 $callback = $_REQUEST['callback'];
 $args = (array) $_REQUEST['args'];
 
 try {
+    // check token
     if (!SecurityToken::isValid()) {
         throw new Exception(getGS('Invalid security token.'));
     }
 
+    // check permissions
+    if (is_array($callback)) {
+        $action = implode('::', $callback);
+    } else {
+        $action = (string) $callback;
+    }
+    if (!isset($rules[$action])
+        || (!empty($rules[$action])
+            && !$g_user->hasPermission($rules[$action]))) {
+        throw new Exception(getGS('Access denied.'));
+    }
+
+    // include valid callbacks files
+    // TODO replace with autoloading
+    require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+
+    // call func
     $result = call_user_func_array($callback, $args);
     if ($result === FALSE) {
         throw new Exception('Unknown');
     }
 
+    // return
     echo json_encode($result);
 } catch (Exception $e) {
     echo json_encode(array(

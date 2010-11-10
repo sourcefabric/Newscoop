@@ -331,7 +331,7 @@ class ArticleList
      * @param array $f_params
      * @return void
      */
-    public static function doAction($f_action, $f_items, $f_params)
+    public static function doAction($f_action, $f_items, $f_params = array())
     {
         global $ADMIN_DIR, $g_user, $Campsite, $ADMIN;
         return require_once dirname(__FILE__) . '/do_action.php';
