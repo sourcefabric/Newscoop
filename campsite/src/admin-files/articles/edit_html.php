@@ -8,6 +8,11 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/styles.css" />
 
+<!-- It looks that OpenLayers library may have problems when loaded slowly, thus trying to preload it herein -->
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
+
 
 <?php
 // If the article is locked.
@@ -933,6 +938,11 @@ window.location.reload();
     <!-- BEGIN right side of article screen -->
     <td valign="top" style="border-left: 1px solid #8baed1;" width="200px">
         <table width="100%">
+
+        <tr><td>
+             <?php require('edit_locations_box.php'); ?>
+        </td></tr>
+
         <?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
         <tr><td>
             <!-- BEGIN Scheduled Publishing table -->

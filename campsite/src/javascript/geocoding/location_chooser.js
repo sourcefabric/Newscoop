@@ -72,6 +72,21 @@ geo_locations.ignore_click = false;
 // the used pop-up window
 geo_locations.popup = null;
 
+
+// setting the db based default info
+geo_locations.set_map_info = function(params)
+{
+    //alert("geo_locations.set_map_info");
+}
+geo_locations.set_icons_info = function(params)
+{
+    //alert("geo_locations.set_icons_info");
+}
+geo_locations.set_popups_info = function(params)
+{
+    //alert("geo_locations.set_popups_info");
+}
+
 // setting the edit window for the requested POI (bound on the 'edit' link)
 geo_locations.edit_poi = function(index)
 {
@@ -521,7 +536,7 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
     vector.attributes.m_rank = this.descs_count;
     vector.attributes.m_title = poi_title;
     vector.attributes.m_link = "";
-    vector.attributes.m_description = "nothing here";
+    vector.attributes.m_description = "fill in the POI description";
     vector.attributes.m_image = "";
     vector.attributes.m_embed = "";
     features.push(vector);
@@ -588,6 +603,7 @@ var geo_main_openlayers_init = function(map_div_name, markers)
             if (poi_hover) {
                 if (null !== poi_hover.attributes.m_rank) {
                     geo_locations.poi_rank_out = poi_hover.attributes.m_rank;
+                    //$("#map_poi_side_list").accordion("activate", geo_locations.display_index(geo_locations.poi_rank_out));
                     geo_locations.update_poi_descs(geo_locations.poi_rank_out);
                 }
             }
@@ -653,6 +669,15 @@ var geo_main_openlayers_init = function(map_div_name, markers)
     // for switching between maps
     geo_locations.map.addControl(new OpenLayers.Control.LayerSwitcher());
 
+/*
+    // an initial center point, will be set via parameters
+    var lonLat_cen = new OpenLayers.LonLat(13.92, 51.29)
+          .transform(
+            new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            geo_locations.map.getProjectionObject() // to Spherical Mercator Projection
+          );
+*/
+
     // two initial demo points for center and features/markers
     var lonLat_ini = {'lon': 14.424133, 'lat': 50.089926}
     var lonLat = new OpenLayers.LonLat(lonLat_ini.lon, lonLat_ini.lat)
@@ -660,20 +685,22 @@ var geo_main_openlayers_init = function(map_div_name, markers)
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             geo_locations.map.getProjectionObject() // to Spherical Mercator Projection
           );
-    var lonLat2_ini = {'lon': 17.465087, 'lat': 49.987611}
+    var lonLat2_ini = {'lon': 13.4105, 'lat': 52.5244}
     var lonLat2 = new OpenLayers.LonLat(lonLat2_ini.lon, lonLat2_ini.lat)
           .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
             geo_locations.map.getProjectionObject() // to Spherical Mercator Projection
           );
 
-    var zoom=8; // the 4 should be (probably) the default
+    var zoom = 6; // the 4 should be (probably) the default
 
     var style_map = new OpenLayers.StyleMap({
                 fillOpacity: 1,
                 pointRadius: 10,
                 graphicYOffset: -20,
                 graphicXOffset: -10,
+                //graphicYOffset: -25,
+                //graphicXOffset: -10.5,
                 graphicZIndex: 10,
     });
 
@@ -706,10 +733,10 @@ var geo_main_openlayers_init = function(map_div_name, markers)
     vector = new OpenLayers.Feature.Vector(point, {type: 0, title: "bah A"});
     vector.attributes.m_rank = 0;
     vector.attributes.m_title = "Prague";
-    vector.attributes.m_link = "www.sourcefabric.org";
-    vector.attributes.m_description = "some text";
-    vector.attributes.m_embed = '<object width="425" height="350"><param name="movie" value="http://www.youtube.com/v/CodZlYEMgec"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/CodZlYEMgec" type="application/x-shockwave-flash" wmode="transparent" width="425" height="350"></embed></object>';
-    vector.attributes.m_image = "";
+    vector.attributes.m_link = "http://campsite.sourcefabric.org/";
+    vector.attributes.m_description = "Great Campsite";
+    vector.attributes.m_embed = "";
+    vector.attributes.m_image = "http://www.sourcefabric.org/get_img.php?NrImage=120&NrArticle=6";
     features.push(vector);
 
     geo_locations.poi_markers.push({'lon': lonLat_ini.lon, 'lat': lonLat_ini.lat, 'usage':true, 'map_lon': lonLat.lon, 'map_lat': lonLat.lat, "in_db": true, "db_index": 0});
@@ -717,11 +744,11 @@ var geo_main_openlayers_init = function(map_div_name, markers)
     point = new OpenLayers.Geometry.Point(lonLat2.lon, lonLat2.lat);
     vector2 = new OpenLayers.Feature.Vector(point, {type: 0, title: "bah 2"});
     vector2.attributes.m_rank = 1;
-    vector2.attributes.m_title = "Freudenthal";
-    vector2.attributes.m_link = "http://campsite.sourcefabric.org/";
-    vector2.attributes.m_description = "some another";
-    vector2.attributes.m_embed = "";
-    vector2.attributes.m_image = "http://www.tangloid.net/seminar/spin/tangloid-004.png";
+    vector2.attributes.m_title = "Berlin";
+    vector2.attributes.m_link = "http://www.sourcefabric.org/en/home/articles/226/Sourcecamp-2010---minute-by-minute.htm?tpl=32";
+    vector2.attributes.m_description = "Great Sourcefabric";
+    vector2.attributes.m_embed = '';
+    vector2.attributes.m_image = "http://www.sourcefabric.org/get_img?NrArticle=226&NrImage=1";
     features.push(vector2);
 
     geo_locations.poi_markers.push({'lon': lonLat2_ini.lon, 'lat': lonLat2_ini.lat, 'usage':true, 'map_lon': lonLat2.lon, 'map_lat': lonLat2.lat, "in_db": true, "db_index": 1});
@@ -734,6 +761,7 @@ var geo_main_openlayers_init = function(map_div_name, markers)
     geo_locations.update_poi_descs();
 
     // setting map center
+    //geo_locations.map.setCenter (lonLat_cen, zoom);
     geo_locations.map.setCenter (lonLat, zoom);
 
     geo_locations.map_view_layer_name = geo_locations.map.layers[0].name;
@@ -1118,6 +1146,12 @@ geo_locations.map_height_change = function(size)
 geo_locations.map_save_all = function()
 {
     return;
+};
+
+// storing info on a single POI (the edited one); ajax action
+geo_locations.save_edit_window = function()
+{
+
 };
 
 // storing POI's info on prepared view vs. any html pop-up view

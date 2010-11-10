@@ -9,6 +9,8 @@
 
 .map_menubar {
     font-size: 90%;
+    display: inline;
+    width: 200px;
 }
 .map_mapmenu {
     height: 25;
@@ -78,7 +80,7 @@
     margin-left: 2px;
 }
 .map_geo_ccselect {
-    width: 150;
+    width: 145;
     border: 2px solid #e0e0d0;
 }
 .map_geo_cityname {
@@ -113,7 +115,7 @@ a.map-no-link {
 .map_editinner {
     background: #fefefe;
     width: 610;
-    height: 385;
+    height: 375;
     position: relative;
     top: 10;
     left: 10;
@@ -127,6 +129,7 @@ a.map-no-link {
     top: 13;
     right: 10;
     font-size: 12px;
+    font-weight: bold;
 }
 .geonames_result_table {
 }
@@ -297,3 +300,7 @@ a.edit_marker_one_choice_link {
     border-width: 0px;
 }
 
+.no_city_found {
+    text-align: center;
+    font-size: 12px;
+}

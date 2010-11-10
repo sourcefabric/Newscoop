@@ -96,7 +96,7 @@ geo_names.gotSearchData = function (search_request, results_div)
     }
     catch (e) {
         //alert("probably logged out: " + e);
-        alert(search_response);
+        //alert(search_response);
         alert("probably logged out");
         return;
     }
@@ -149,9 +149,9 @@ geo_names.gotSearchData = function (search_request, results_div)
         {
             country_name = "";
         }
-        
+        var city_name = one_city.name.replace(/'/gi,"\\'");
         var country_link = "<a href=\"#\" class=\"map-no-link\" title=\"" + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\">" + one_city.country.toLowerCase() + "</a>";
-        var city_link = "<a href=\"#\" title=\"" + pop_show + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + one_city.name + "'); return false;\">" + one_city.name + "</a>";
+        var city_link = "<a href=\"#\" title=\"" + pop_show + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + city_name + "'); return false;\">" + one_city.name + "</a>";
         
         found_locs += "<tr>";
         found_locs += "<td>" + country_link + "</td>";
@@ -185,7 +185,8 @@ geo_names.gotSearchData = function (search_request, results_div)
     new_className = new_className.replace(/\s\s+/g, " ");
     display_obj.className = new_className;
     
-    $('.geonames_result_table').flexigrid({height: flexi_height, resizable: false});
+    //$('.geonames_result_table').flexigrid({height: flexi_height, resizable: false});
+    $('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">sorry, no city was found</div>"}});
     geo_locations.map_update_side_desc_height();
     
     return false;

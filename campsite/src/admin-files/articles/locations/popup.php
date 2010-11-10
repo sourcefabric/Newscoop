@@ -1,10 +1,12 @@
-<?PHP
+<?php
 // TODO: during development no access right checking; will be added.
 
 camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
+
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoLocations.php");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -16,17 +18,51 @@ if (!Input::IsValid()) {
 
 $articleObj = new Article($f_language_id, $f_article_number);
 
-header("Content-Type: text/html; charset=utf-8");
+
+
+$cnf_html_dir = $Campsite['HTML_DIR'];
+$cnf_website_url = $Campsite['WEBSITE_URL'];
+
+$geo_map_info = Geo_Locations::GetMapInfo($cnf_html_dir, $cnf_website_url);
+$geo_map_incl = Geo_Locations::PrepareMapIncludes($geo_map_info["incl_obj"]);
+$geo_map_json = "";
+//$geo_map_json .= "geo_locations.set_map_info(";
+$geo_map_json .= json_encode($geo_map_info["json_obj"]);
+//$geo_map_json .= ");";
+
+
+$geo_icons_info = Geo_Locations::GetIconsInfo($cnf_html_dir, $cnf_website_url);
+$geo_icons_json = "";
+//$geo_icons_json .= "geo_locations.set_icons_info(";
+$geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+//$geo_icons_json .= ");";
+
+
+$geo_popups_info = Geo_Locations::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
+$geo_popups_json = "";
+//$geo_popups_json .= "geo_locations.set_icons_info(";
+$geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
+//$geo_popups_json .= ");";
+
+
+//header("Content-Type: text/html; charset=utf-8");
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<?php
+#echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
+?>
 <html>
 <head>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<LINK rel="stylesheet" type="text/css" href="map-picking.css">
+<!--
 	<title><?php putGS("Setting Map Locations"); ?></title>
+-->
+	<title>Setting Map Locations</title>
+<!--
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+-->
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/all/css/ui-lightness/jquery-ui-1.8.5.custom.css">
@@ -34,19 +70,27 @@ header("Content-Type: text/html; charset=utf-8");
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <?php echo $geo_map_incl; ?>
 <!--
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 -->
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
-
+<!--
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/flexigrid/css/flexigrid/flexigrid.css">
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/flexigrid/flexigrid.js"></script>
+-->
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">
+    // prepare map settings
+    geo_locations.set_map_info(<?php echo $geo_map_json; ?>);
+    geo_locations.set_icons_info(<?php echo $geo_icons_json; ?>);
+    geo_locations.set_popups_info(<?php echo $geo_popups_json; ?>);
+
 // city search start; if longitude/latitude provided, immediate results done
 var findLocation = function()
 {
@@ -104,14 +148,37 @@ var findLocation = function()
 
 };
 
+// dispetching search results display
+var showhideState = false;
+var showhideLocation = function()
+{
+    if (showhideState)
+    {
+        hideLocation();
+    }
+    else
+    {
+        showLocation();
+    }
+};
+
 // hides the city search results box
 var hideLocation = function()
 {
-    var display_obj = document.getElementById ? document.getElementById("search_results") : null;
+    showhideState = false;
 
-    var hide_obj = document.getElementById ? document.getElementById("map_geo_hide") : null;
-    var show_obj = document.getElementById ? document.getElementById("map_geo_show") : null;
+    //var display_obj = document.getElementById ? document.getElementById("search_results") : null;
+    $("#search_results").addClass("hidden");
 
+    //var hide_obj = document.getElementById ? document.getElementById("map_geo_hide") : null;
+    //var show_obj = document.getElementById ? document.getElementById("map_geo_show") : null;
+    var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
+    showhide_link.innerHTML = "+";
+    //showhide_link.onClick = function(ev) {showLocation(); return false;};
+
+    $("#map_geo_showhide").removeClass("hidden");
+
+/*
     display_obj.className += " hidden";
     hide_obj.className += " hidden";
 
@@ -121,6 +188,7 @@ var hideLocation = function()
     new_className = show_obj.className.replace(removal, " ");
     new_className = new_className.replace(/\s\s+/g, " ");
     show_obj.className = new_className;
+*/
 
     geo_locations.map_update_side_desc_height();
 
@@ -129,13 +197,22 @@ var hideLocation = function()
 // shows the city search results box
 var showLocation = function()
 {
+    showhideState = true;
+
     $("#map_sidedescs").addClass("hidden");
 
-    var display_obj = document.getElementById ? document.getElementById("search_results") : null;
+    //var display_obj = document.getElementById ? document.getElementById("search_results") : null;
+    $("#search_results").removeClass("hidden");
 
-    var hide_obj = document.getElementById ? document.getElementById("map_geo_hide") : null;
-    var show_obj = document.getElementById ? document.getElementById("map_geo_show") : null;
+    //var hide_obj = document.getElementById ? document.getElementById("map_geo_hide") : null;
+    //var show_obj = document.getElementById ? document.getElementById("map_geo_show") : null;
+    var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
+    showhide_link.innerHTML = "x";
+    //showhide_link.onClick = function(ev) {hideLocation(); return false;};
 
+    $("#map_geo_showhide").removeClass("hidden");
+
+/*
     var new_className = "";
 
     var hidden_class = "hidden";
@@ -150,6 +227,7 @@ var showLocation = function()
     new_className = hide_obj.className.replace(removal, " ");
     new_className = new_className.replace(/\s\s+/g, " ");
     hide_obj.className = new_className;
+*/
 
     geo_locations.map_update_side_desc_height();
     $("#map_sidedescs").removeClass("hidden");
@@ -194,8 +272,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 ?>
 </select>
 <label class="map_geo_search"><a href="#" onClick="findLocation(); return false;">Find</a>&nbsp;</label>
+<label id="map_geo_showhide" class="hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
+<!--
 <label id="map_geo_show" class="hidden">[<a href="#" onClick="showLocation(); return false;">+</a>]</label>
 <label id="map_geo_hide" class="hidden">[<a href="#" onClick="hideLocation(); return false;">x</a>]</label>
+-->
 </div><!-- end of map_menubar -->
 
 <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
@@ -237,7 +318,7 @@ V
 
 <form action="#" onSubmit="return false";>  
 <fieldset>
-<legend class="map_editactions"><a href="#" onClick="geo_locations.close_edit_window(); return false;">close</a></legend>
+<!--<legend class="map_editactions0"><a href="#" onClick="geo_locations.close_edit_window(); return false;">close</a></legend>-->
 
 <div id="edit_tabs_all">
 	<ul>
@@ -246,7 +327,7 @@ V
 		<li><a href="#edit_image">image</a></li>
 		<li><a href="#edit_video">video</a></li>
 		<li><a href="#edit_audio">audio</a></li>
-		<li><a href="#edit_marker">marker</a></li>
+		<li><a href="#edit_marker">icon</a></li>
 	</ul>
 	<div id="edit_basic" class="edit_tabs">
 <ol>
@@ -363,13 +444,18 @@ V
 		<div id="eidt_marker_choices" class="eidt_marker_choices">&nbsp;</div>
 	</div>
 </div>
-
 </fieldset>  
 </form>
 
 </div><!-- end of map_editpart1 -->
 </div><!-- end of map_editinner -->
-<!-- end of map_editactions -->
+
+<div class="map_editactions">
+<a href="#" onClick="geo_locations.save_edit_window(); return false;">save this point</a>
+&nbsp;
+<a href="#" onClick="geo_locations.close_edit_window(); return false;">close window</a>
+</div><!-- end of map_editactions -->
+
 </div><!-- end of map_mapedit -->
 
 </div><!-- end of map_mapmenu -->
