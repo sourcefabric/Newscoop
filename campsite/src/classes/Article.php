@@ -178,8 +178,9 @@ class Article extends DatabaseObject {
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
-        parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
+        $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
         $this->m_cacheUpdate = true;
+        return $status;
     }
 
     /**

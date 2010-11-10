@@ -25,9 +25,22 @@ $issuesNo = is_array($issues) ? sizeof($issues) : 0;
 $menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
 
 // get sections
-$sections = Section::GetSections($this->publication, $this->issue, $this->language);
+$sections = array();
+$section_objects = Section::GetSections($this->publication, $this->issue, $this->language);
+foreach ($section_objects as $object) {
+    if (!isset($sections[$object->getSectionNumber()])) {
+        $sections[$object->getSectionNumber()] = $object->getName();
+    }
+}
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
+
+$topics = array();
+foreach (Topic::GetTree() as $topic) {
+    $topic = array_pop($topic);
+    $topics[$topic->getTopicId()] = $topic->getName($this->language);
+}
+
 ?>
 <div class="filters">
 <fieldset class="filters">
@@ -53,8 +66,8 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
     <select name="section">
         <?php if ($sectionsNo > 0) { ?>
         <option value="0"><?php p($menuSectionTitle); ?></option>
-        <?php foreach($sections as $section) { ?>
-        <option value="<?php echo $section->getSectionNumber(); ?>"><?php echo $section->getName(); ?></option>
+        <?php foreach($sections as $id => $label) { ?>
+        <option value="<?php echo $id; ?>"><?php echo $label; ?></option>
         <?php }
         } ?>
     </select>
@@ -62,15 +75,15 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
     <div class="extra">
 
     <dl>
-        <dt><label for="filter_date"><?php putGS('Date'); ?></label></dt>
+        <dt><label for="filter_date"><?php putGS('Publish date'); ?></label></dt>
         <dd><input id="filter_date" type="text" name="publish_date" class="date" /></dd>
     </dl>
     <dl>
-        <dt><label for="filter_from"><?php putGS('From'); ?></label></dt>
+        <dt><label for="filter_from"><?php putGS('Published after'); ?></label></dt>
         <dd><input id="filter_from" type="text" name="publish_date_from" class="date" /></dd>
     </dl>
     <dl>
-        <dt><label for="filter_to"><?php putGS('To'); ?></label></dt>
+        <dt><label for="filter_to"><?php putGS('Published before'); ?></label></dt>
         <dd><input id="filter_to" type="text" name="publish_date_to" class="date" /></dd>
     </dl>
     <dl>
@@ -78,7 +91,7 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
         <dd><select name="author">
             <option value=""><?php putGS('All'); ?></option>
             <?php foreach (Author::GetAuthors() as $author) { ?>
-            <option value="<?php echo $author->getId(); ?>"><?php echo $author->getName(); ?></option>
+            <option value="<?php echo $author->getName(); ?>"><?php echo $author->getName(); ?></option>
             <?php } ?>
         </select></dd>
     </dl>
@@ -104,8 +117,8 @@ $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections
         <dt><label for="filter_topic"><?php putGS('Topic'); ?></label></dt>
         <dd><select name="topic">
             <option value=""><?php putGS('All'); ?></option>
-            <?php foreach (Topic::GetTopics($f_language_id) as $topic) { ?>
-            <option value="<?php echo $topic->getTopicId(); ?>"><?php echo $topic->getName($f_language_id); ?></option>
+            <?php foreach ($topics as $id => $topic) { ?>
+            <option value="<?php echo $id; ?>"><?php echo $topic; ?></option>
             <?php } ?>
         </select></dd>
     </dl>
@@ -132,6 +145,7 @@ $('.smartlist .filters select, .smartlist .filters input').change(function() {
 // datepicker for dates
 $('input.date').datepicker({
     dateFormat: 'yy-mm-dd',
+    maxDate: '+0d',
 });
 
 // filters managment

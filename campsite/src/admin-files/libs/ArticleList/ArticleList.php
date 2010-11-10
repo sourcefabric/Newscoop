@@ -23,16 +23,16 @@ class ArticleList
     private $admin = '';
 
     /** @var int */
-    private $publication = NULL;
+    private $publication = 0;
 
     /** @var int */
-    private $issue = NULL;
+    private $issue = 0;
 
     /** @var int */
-    private $section = NULL;
+    private $section = 0;
 
     /** @var int */
-    private $language = NULL;
+    private $language = 1;
 
     /** @var array */
     private $filters = array();
@@ -116,7 +116,7 @@ class ArticleList
      */
     public function setLanguage($language)
     {
-        $this->language = empty($language) ? NULL : (int) $language;
+        $this->language = empty($language) ? 1 : (int) $language;
         return $this;
     }
 
@@ -309,5 +309,43 @@ class ArticleList
         $article->getPublishDate(),
         $article->getLastModified(),
     );
+    }
+
+    /**
+     * Handle data
+     * @param array $f_request
+     */
+    public static function doData($f_request)
+    {
+        global $ADMIN_DIR, $g_user;
+        foreach ($_REQUEST['args'] as $arg) {
+            $_REQUEST[$arg['name']] = $arg['value'];
+        }
+        return require_once dirname(__FILE__) . '/do_data.php';
+    }
+
+    /**
+     * Handle action
+     * @param string $f_action
+     * @param array $f_items
+     * @param array $f_params
+     * @return void
+     */
+    public static function doAction($f_action, $f_items, $f_params)
+    {
+        global $ADMIN_DIR, $g_user, $Campsite, $ADMIN;
+        return require_once dirname(__FILE__) . '/do_action.php';
+    }
+
+    /**
+     * Handle order
+     * @param array $f_order
+     * @param int $f_language
+     * @return void
+     */
+    public static function doOrder($f_order, $f_language)
+    {
+        global $ADMIN_DIR;
+        return require_once dirname(__FILE__) . '/do_order.php';
     }
 }

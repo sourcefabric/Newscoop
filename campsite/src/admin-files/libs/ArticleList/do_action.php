@@ -8,29 +8,9 @@
  * @link http://www.sourcefabric.org
  */
 
-header('Content-type: application/json');
+require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
 
-require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
-
-if (!SecurityToken::isValid()) {
-    echo json_encode(array(
-        'success' => false,
-        'message' => getGS('Invalid security token!'),
-    ));
-    exit;
-}
-
-// get input
-$f_action = Input::Get('action', 'string', null, true);
 $f_language_selected = (int) camp_session_get('f_language_selected', 0); 
-$f_items = Input::Get('items', 'array', array(), true);
-if (!Input::IsValid()) {
-    echo json_encode(array(
-        'success' => false,
-        'message' => getGS('Invalid input.'),
-    ));
-    exit;
-}
 
 $success = false;
 $message = getGS('Access denied.'); // default error
@@ -179,28 +159,19 @@ case 'duplicate':
         $message = getGS("Article(s) duplicated");
     }
     break;
+
 case 'duplicate_interactive':
-    $args = $_REQUEST;
-    unset($args["f_article_code"]);
-    $argsStr = camp_implode_keys_and_values($args, "=", "&");
-    $argsStr .= "&f_mode=multi&f_action=duplicate";
-    foreach ($flatArticleCodes as $articleCode) {
-        $argsStr .= '&f_article_code[]=' . $articleCode;
-    }
-    $goto = "/$ADMIN/articles/duplicate.php?".$argsStr;
-    $success = true;
-    break;
 case 'move':
-    $args = $_REQUEST;
+    $args = array_merge($_REQUEST, $f_params);
     unset($args["f_article_code"]);
     $argsStr = camp_implode_keys_and_values($args, "=", "&");
-    $argsStr .= "&f_mode=multi&f_action=move";
+    $argsStr .= '&f_mode=multi&f_action=';
+    $argsStr .= $f_action == 'move' ? 'move' : 'duplicate';
+    $argsStr .= '&f_language_selected=' . ( (int) camp_session_get('f_language_selected', 0));
     foreach ($flatArticleCodes as $articleCode) {
         $argsStr .= '&f_article_code[]=' . $articleCode;
     }
-    $goto = "/$ADMIN/articles/duplicate.php?".$argsStr;
-    $success = true;
-    break;
+    return $Campsite['WEBSITE_URL'] . "/admin/articles/duplicate.php?".$argsStr;
 }
 
 
@@ -249,8 +220,4 @@ if ($f_target == 'art_status') {
     }
 }
 
-echo json_encode(array(
-    'success' => $success,
-    'message' => is_array($message) ? implode("\n", $message) : $message,
-));
-exit;
+return $success;

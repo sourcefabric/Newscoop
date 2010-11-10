@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
+
 ?>
 <div class="actions">
 <fieldset class="actions">
@@ -62,23 +63,33 @@ $('.smartlist .actions select').change(function() {
         return;
     }
 
-    $.getJSON('<?php echo $this->path; ?>/do_action.php', {
-        'action': action,
-        'items': items,
-        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
-    }, function(data, textStatus) {
-        if (!data.success) {
-            flashMessage('<?php putGS('Error'); ?>: ' + data.message, 'error');
-        } else {
-            if (items.length > 1) {
-                flashMessage('<?php putGS('Articles updated.'); ?>');
-            } else {
-                flashMessage('<?php putGS('Article updated.'); ?>');
-            }
+    params = [];
+    if (action == 'delete') {
+        if (!confirm('<?php putGS('Are you sure you want to delete selected articles?'); ?>')) {
+            return;
         }
-        var smartlistId = smartlist.attr('id').split('-')[1];
-        tables[smartlistId].fnDraw(true);
-    });
+    } else if (action == 'move' || action == 'duplicate_interactive') {
+        params = {
+            'f_publication_id': <?php echo (int) $this->publication; ?>,
+            'f_issue_number': <?php echo (int) $this->issue; ?>,
+            'f_section_number': <?php echo (int) $this->section; ?>,
+            'f_language_id': <?php echo (int) $this->language; ?>,
+        }
+    }
+
+    callServer(['ArticleList', 'doAction'], [
+        action,
+        items,
+        params,
+        ], function(data) {
+            if (action == 'duplicate_interactive' || action == 'move') {
+                window.location = data; // redirect
+            }
+            flashMessage('<?php putGS('Articles updated.'); ?>');
+            var smartlistId = smartlist.attr('id').split('-')[1];
+            tables[smartlistId].fnDraw(true);
+        }
+    );
 });
 
 });

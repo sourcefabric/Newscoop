@@ -70,18 +70,12 @@ filters = [];
 function sendOrder(form, hash)
 {
     var order = $('#table-' + hash + ' tbody').sortable('toArray');
-    $.getJSON('<?php echo $this->path; ?>/smartlist/do_order.php',
-        {
-        'order': order,
-        'language': $('input[name=language]', $(form)).val(),
-        '<?php echo SecurityToken::SECURITY_TOKEN; ?>': '<?php echo SecurityToken::GetToken(); ?>'
-        }, function(json) {
-            if (json.success) {
-                tables[hash].fnDraw(true);
-                flashMessage('<?php putGS('Order updated.'); ?>');
-            } else {
-                flashMessage(json.message, 'error');
-            }
+    callServer(['ArticleList', 'doOrder'], [
+        order,
+        $('input[name=language]', $(form)).val(),
+        ], function(data) {
+            tables[hash].fnDraw(true);
+            flashMessage('<?php putGS('Order updated.'); ?>');
         });
     return false;
 }
@@ -93,33 +87,24 @@ $(document).ready(function() {
 var table = $('#table-<?php echo $this->id; ?>');
 filters['<?php echo $this->id; ?>'] = [];
 tables['<?php echo $this->id; ?>'] = table.dataTable({
-    'bProcessing': false,
-    <?php if ($this->items === NULL) { ?>
-    'bServerSide': true,
-    'sAjaxSource': '<?php echo $this->path; ?>/do_data.php',
-    <?php } ?>
+    'bAutoWidth': false,
+    'bDestroy': true,
     'bJQueryUI': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
-    'fnServerData': function (sSource, aoData, fnCallback) {
-        for (var i in filters['<?php echo $this->id; ?>']) {
-            aoData.push({
-                'name': i,
-                'value': filters['<?php echo $this->id; ?>'][i],
-            });
-        }
-        <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) {
-            if (!empty($this->$filter)) { ?>
-            aoData.push({
-                'name': '<?php echo $filter; ?>',
-                'value': '<?php echo $this->$filter; ?>',
-            });
-        <?php }} ?>
-        $.getJSON(sSource, aoData, function(json) {
-            fnCallback(json);
-        });
-    }, 
-    //'bStateSave': true,
     'sScrollX': '100%',
+    'aaSorting': [[2, 'asc']],
+    'oLanguage': {
+        'oPaginate': {
+            'sNext': '<?php putGS('Next'); ?>',
+            'sPrevious': '<?php putGS('Previous'); ?>',
+        },
+        'sZeroRecords': '<?php putGS('No records found.'); ?>',
+        'sSearch': '<?php putGS('Search:'); ?>',
+        'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
+        'sEmpty': '<?php putGS('No entries to show'); ?>',
+        'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
+        'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+    },
     'aoColumnDefs': [
         { // inputs for id
             'fnRender': function(obj) {
@@ -168,12 +153,6 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'aTargets': [14, 15, 16]
         },
     ],
-    <?php if ($this->colVis) { ?>
-    'oColVis': { // disable Show/hide column
-        'aiExclude': [0, 1, 2],
-        'buttonText': '<?php putGS('Show / hide columns'); ?>',
-    },
-    <?php } ?>
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
             $(this).toggleClass('selected');
@@ -190,31 +169,43 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         $('#table-<?php echo $this->id; ?> tbody').sortable();
         <?php } ?>
     },
+    <?php if ($this->items !== NULL) { // display all items ?>
+    'bPaging': false,
+    'iDisplayLength': <?php echo sizeof($this->items); ?>,
+    <?php } else { // no items - server side ?>
+    'bServerSide': true,
+    'sAjaxSource': '<?php echo $this->path; ?>/do_data.php',
+    'sPaginationType': 'full_numbers',
+    'fnServerData': function (sSource, aoData, fnCallback) {
+        for (var i in filters['<?php echo $this->id; ?>']) {
+            aoData.push({
+                'name': i,
+                'value': filters['<?php echo $this->id; ?>'][i],
+            });
+        }
+        <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) {
+            if (!empty($this->$filter)) { ?>
+            aoData.push({
+                'name': '<?php echo $filter; ?>',
+                'value': '<?php echo $this->$filter; ?>',
+            });
+        <?php }} ?>
+            callServer(['ArticleList', 'doData'], aoData, fnCallback);
+    }, 
+    <?php } ?>
+    <?php if ($this->colVis) { ?>
+    'oColVis': { // disable Show/hide column
+        'aiExclude': [0, 1, 2],
+        'buttonText': '<?php putGS('Show / hide columns'); ?>',
+    },
+    <?php } ?>
     <?php if ($this->order) { ?>
     'fnRowCallback': function(nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
         var id = $(aData[0]).attr('name').split('_')[0];
         $(nRow).attr('id', 'article_' + id);
         return nRow;
     },
-    'aaSorting': [[2, 'asc']],
     <?php } ?>
-    <?php if ($this->items !== NULL) { ?>
-    'bPaging': false,
-    'iDisplayLength': <?php echo sizeof($this->items); ?>,
-    <?php } ?>
-    'oLanguage': {
-        'oPaginate': {
-            'sNext': '<?php putGS('Next'); ?>',
-            'sPrevious': '<?php putGS('Previous'); ?>',
-        },
-        'sZeroRecords': '<?php putGS('No records found.'); ?>',
-        'sSearch': '<?php putGS('Search:'); ?>',
-        'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
-        'sEmpty': '<?php putGS('No entries to show'); ?>',
-        'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
-        'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
-    },
-    'bAutoWidth': false,
 });
 
 });

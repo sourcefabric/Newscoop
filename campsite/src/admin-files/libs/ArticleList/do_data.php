@@ -8,8 +8,6 @@
  * @link http://www.sourcefabric.org
  */
 
-header('Content-type: application/json');
-
 require_once dirname(__FILE__) . '/ArticleList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
@@ -65,8 +63,8 @@ $sortOptions = array(
     3 => 'byname',
     12 => 'bycomments',
     13 => 'bypopularity',
+    14 => 'bycreationdate',
     15 => 'bypublishdate',
-    16 => 'bycreationdate',
 );
 
 $sortBy = 'bysectionorder';
@@ -89,10 +87,9 @@ foreach($articles as $article) {
     $return[] = ArticleList::ProcessArticle($article);
 }
 
-echo(json_encode(array(
+return array(
     'iTotalRecords' => Article::GetTotalCount(),
     'iTotalDisplayRecords' => $articlesCount,
-    'sEcho' => $_GET['sEcho'],
+    'sEcho' => (int) $_REQUEST['sEcho'],
     'aaData' => $return,
-)));
-exit;
+);
