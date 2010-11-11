@@ -1,0 +1,3 @@
+<?php 
+regGS("Topics updated.", "");
+?>

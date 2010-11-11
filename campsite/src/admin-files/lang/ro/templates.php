@@ -54,7 +54,6 @@ regGS("You must select a file to upload.", "Trebuie să selectezi un fişier pen
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Poţi înlocui un fişier numai cu alt fişier de acelaşi tip. Fişierul original este de tip \"$1\", iar fişierul încărcat în sistem este de tip \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Fişierul '$1' nu a putut fi salvat în '$2'.");
 regGS("Replace", "Înlocuieşte");
-regGS("File \"$1\" uploaded.", "Fişierul \"$1\" a fost încărcat în sistem.");
 regGS("File \"$1\" replaced.", "Fişierul \"$1\" a fost înlocuit.");
 regGS("The folder name can't be '..' or '.'", "Numele folderului nu poate fi '..' sau '.'");
 regGS("The template '$1' was saved successfully.", "Şablonul '$1' a fost salvat.");
@@ -69,7 +68,6 @@ regGS("Folders", "Directoare");
 regGS("No folders.", "Nu există directoare.");
 regGS("Files", "Fişiere");
 regGS("No templates.", "Nu există şabloane.");
-regGS("File", "Fişier");
 regGS("Create new template", "Crează un şablon nou");
 regGS("Duplicate template", "Duplică şablonul");
 regGS("Edit template", "Modifică şablonul");

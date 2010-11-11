@@ -54,7 +54,6 @@ regGS("You must select a file to upload.", "Debe seleccionar un archivo para car
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Solo puede reemplazar un archivo con otro del mismo tipo.  El archivo original es de tipo \"$1\", y el que cargó es del tipo \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "No fue posible almacenar el archivo '$1' al path '$2'");
 regGS("Replace", "Reemplazar");
-regGS("File \"$1\" uploaded.", "Se cargó el archivo \"$1\"");
 regGS("File \"$1\" replaced.", "Se reemplazo el archivo \"$1\".");
 regGS("The folder name can't be '..' or '.'", "El nombre del folder no puede ser '..' o '.'");
 regGS("The template '$1' was saved successfully.", "La plantilla '$1' se almacenó con éxito");
@@ -69,7 +68,6 @@ regGS("Folders", "Directorios");
 regGS("No folders.", "Sin directorios");
 regGS("Files", "Archivos");
 regGS("No templates.", "Sin plantillas");
-regGS("File", "Archivo");
 regGS("Create new template", "Crear nueva plantilla");
 regGS("Duplicate template", "Duplicar plantilla");
 regGS("Edit template", "Editar plantilla");

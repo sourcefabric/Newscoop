@@ -1,7 +1,22 @@
 <?php 
+regGS("You do not have the right to add images.", "");
+regGS("Use for all", "");
+regGS("Stop current upload", "");
+regGS("Start uploading queue", "");
+regGS("Start upload", "");
+regGS("Specify image url if you want to load it.", "");
+regGS("Size", "");
+regGS("Select files", "");
+regGS("No images for multi editing.", "");
+regGS("Images updated.", "");
+regGS("Filename", "");
+regGS("Edit images", "");
+regGS("Drag files here.", "");
+regGS("Add files to the upload queue and click the start button.", "");
+regGS("Add files", "");
+regGS("\"$1\" files uploaded.", "");
 regGS("Unable to add new image.", "Немагчыма дадаць новы графiчны файл.");
 regGS("Image updated.", "Графiчны файл абноўлены.");
-regGS("Image added.", "Графiчны файл даданы.");
 regGS("Image '$1' deleted.", "Графiчны файл '$1' выдалены.");
 regGS("Image is in use, it cannot be deleted.", "Графiчны файл выкарыстоўваецца i ня можа быць выдалены.");
 regGS("You must select an image file to upload.", "Вы павiнны выбраць графiчны файл для  загрузкі.");

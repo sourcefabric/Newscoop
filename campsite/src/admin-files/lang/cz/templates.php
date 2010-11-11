@@ -54,7 +54,6 @@ regGS("You must select a file to upload.", "Zvolte soubor, který chcete nahrát
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Soubor nelze nahradit souborem jiného typu. Původní typ souboru je \"$1\" a typ vašeho souboru \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Nezdařilo se uložit soubor '$1' do '$2'.     ");
 regGS("Replace", "Nahradit");
-regGS("File \"$1\" uploaded.", "Soubor \"$1\" nahrán.");
 regGS("File \"$1\" replaced.", "Soubor \"$1\" nahrazen.");
 regGS("The folder name can't be '..' or '.'", "Složku nelze pojmenovat '..' nebo '.'");
 regGS("The template '$1' was saved successfully.", "Šablona '$1' byla úspěšně uložena.");
@@ -69,7 +68,6 @@ regGS("Folders", "Složky");
 regGS("No folders.", "Žádné složky");
 regGS("Files", "Soubory");
 regGS("No templates.", "Žádné šablony");
-regGS("File", "Soubor");
 regGS("Create new template", "Vytvořit novou šablonu");
 regGS("Duplicate template", "Duplikovat šablonu");
 regGS("Edit template", "Editovat šablonu");

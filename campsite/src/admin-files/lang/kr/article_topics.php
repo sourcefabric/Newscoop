@@ -1,5 +1,5 @@
 <?php 
-regGS("Topics added.", "");
+regGS("Topics updated.", "");
 regGS("Topic does not exist.", "");
 regGS("The topic '$1' has been removed from article.", "");
 regGS("You do not have the right to detach topics from articles.", "기사에서 토픽을 띄어내기할 권한이 없습니다.");

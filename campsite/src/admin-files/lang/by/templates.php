@@ -54,7 +54,6 @@ regGS("You must select a file to upload.", "Вы павiнны азначыць 
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Вы можаце толькi замяніць файл файлам таго жа тыпу. Арыгінальны файл мае тып \"$1\", а загружаны - \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Немагчыма захаваць файл '$1' у '$2'.");
 regGS("Replace", "Замянiць:");
-regGS("File \"$1\" uploaded.", "Файл \"$1\" загружаны.");
 regGS("File \"$1\" replaced.", "Файл \"$1\" заменены.");
 regGS("The folder name can't be '..' or '.'", "Назва папкi ня можа быць '..' цi '.' ");
 regGS("The template '$1' was saved successfully.", "Шаблён '$1' быў пасьпяхова захаваны.");
@@ -69,7 +68,6 @@ regGS("Folders", "Папкi");
 regGS("No folders.", "Няма папак.");
 regGS("Files", "Файлы");
 regGS("No templates.", "Няма шаблёнаў");
-regGS("File", "Файл");
 regGS("Create new template", "Стварыць новы шаблён");
 regGS("Duplicate template", "Дубляваць шаблён");
 regGS("Edit template", "Рэдагаваць шаблён");

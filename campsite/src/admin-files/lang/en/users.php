@@ -1,5 +1,12 @@
 <?php 
-regGS("You do not have the right to change authors.", "You do not have the right to change authors.");
+regGS("You do not have the permission to change authors.", "You do not have the permission to change authors.");
+regGS("Please fill at least first name and last name.", "Please fill at least first name and last name.");
+regGS("Cannot add author type, this type already exists.", "Cannot add author type, this type already exists.");
+regGS("Author type removed.", "Author type removed.");
+regGS("Author type must be at least three characters long.", "Author type must be at least three characters long.");
+regGS("Author type added.", "Author type added.");
+regGS("Are you sure you want to delete this author;", "Are you sure you want to delete this author;");
+regGS("Are you sure you want to delete this author type?", "Are you sure you want to delete this author type?");
 regGS("User may change authors", "User may change authors");
 regGS("Unable to add new image, target directory is not writable.", "Unable to add new image, target directory is not writable.");
 regGS("Author saved.", "Author saved.");

@@ -1,5 +1,5 @@
 <?php 
-regGS("Topics added.", "");
+regGS("Topics updated.", "");
 regGS("Topic does not exist.", "");
 regGS("The topic '$1' has been removed from article.", "");
 regGS("You do not have the right to detach topics from articles.", "Je hebt niet de rechten om onderwerpen van artikelen af te scheiden.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Campsite Subhead", "");
 regGS("Unable to reach Campsite. Please check your internet connection.", "");
 regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");
 regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "");

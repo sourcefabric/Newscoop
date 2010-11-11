@@ -1,0 +1,3 @@
+<?php 
+regGS("Campsite Subhead", "");
+?>
