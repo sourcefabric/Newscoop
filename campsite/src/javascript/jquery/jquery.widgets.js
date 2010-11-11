@@ -66,12 +66,15 @@ $.fn.widgets = function (options) {
             $('<a class="close" href="#">x</a>')
                 .appendTo(controls)
                 .click(function() {
-                    widget.hide(500, function() {
-                        $(this).detach().appendTo($('.context').last()).show();
-                        updateOrder();
-                        getContent($(this));
+                    callServer(['WidgetManager', 'RemoveWidget'], [
+                        widget.attr('id'),
+                        ], function(json) {
+                            widget.hide(500, function() {
+                                $(this).detach();
+                                updateOrder();
+                            })
+                        });
                     });
-                });
 
             // ui interaction
             widget.hover(function() {

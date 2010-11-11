@@ -19,20 +19,20 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     public $m_dbTableName = 'widget';
 
     /** @var array */
-    public $m_keyColumnNames = array('filename', 'class');
+    public $m_keyColumnNames = array('path', 'class');
 
     /** @var array */
     public $m_columnNames = array(
         'id',
-        'filename',
+        'path',
         'class',
     );
 
-    /** @var bool */
-    public $m_keyIsAutoIncrement = TRUE;
-
     /** @var IWidget */
     protected $widget = NULL;
+
+    /** @var array */
+    private $meta = NULL;
 
     /**
      * @param IWidget $widget
@@ -40,22 +40,20 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
      */
     public function __construct(IWidget $widget, array $data = array())
     {
-        parent::__construct($this->m_columnNames);
-
         $this->widget = $widget;
         $this->m_data = $data;
-        if (empty($data)) {
-            $this->fetch();
+
+        if (!empty($data) && empty($data['id'])) {
+            $this->fetch(); // load id
         }
     }
 
     /**
-     * Get title.
-     * @return string|NULL
+     * Get author
      */
-    public function getTitle()
+    public function getAuthor()
     {
-        return $this->widget->getTitle();
+        return $this->getMeta('author');
     }
 
     /**
@@ -72,35 +70,71 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     }
 
     /**
+     * Get description
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->getMeta('description');
+    }
+
+    /**
+     * Get homepage
+     * @return string
+     */
+    public function getHomepage()
+    {
+        return $this->getMeta('homepage');
+    }
+
+    /**
      * Get widget id.
+     * @param bool $generate
      * @return int
      */
-    public function getId()
+    public function getId($generate = FALSE)
     {
+        if (empty($this->m_data['id']) && $generate) {
+            parent::create();
+            $this->fetch();
+        }
+
         return (int) $this->m_data['id'];
     }
 
     /**
-     * Get system name.
+     * Get widget file path
      * @return string
      */
-    public function getName()
+    public function getPath()
     {
-        return strtolower($this->getClass());
+        if (empty($this->m_data['path'])) {
+            $reflector = new ReflectionObject($this->widget);
+            $this->m_data['path'] = $reflector->getFileName();
+        }
+
+        return (string) $this->m_data['path'];
     }
 
     /**
-     * Update widget data
-     * @param array $p_columns
-     * @return IWidget
+     * Get title.
+     * @return string
      */
-    public function update($p_columns = NULL)
+    public function getTitle()
     {
-        if ($this->getId() == 0) { // get id
-            $this->fetch();
+        if (method_exists($this->widget, 'getTitle')) {
+            return $this->widget->getTitle();
         }
+        return $this->getMeta('name');
+    }
 
-        parent::update($p_columns);
+    /**
+     * Get version
+     * @return string
+     */
+    public function getVersion()
+    {
+        return $this->getMeta('version');
     }
 
     /**
@@ -115,5 +149,31 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
         } else {
             parent::update($p_columns);
         }
+    }
+
+    /**
+     * Get metadata
+     * @param string $key
+     * @return string
+     */
+    private function getMeta($key)
+    {
+        if ($this->meta === NULL) {
+            $this->meta = array();
+
+            // load ini
+            $dirname = dirname($this->getPath());
+            $inifile = $dirname . '/' . basename($dirname) . '.ini';
+            if (file_exists($inifile)) {
+                $this->meta = parse_ini_file($inifile, TRUE);
+                if (!empty($this->meta[$this->getClass()])) {
+                    foreach ($this->meta[$this->getClass()] as $k => $v) {
+                        $this->meta[$k] = $v;
+                    }
+                }
+            }
+        }
+
+        return empty($this->meta[$key]) ? '' : (string) $this->meta[$key];
     }
 }

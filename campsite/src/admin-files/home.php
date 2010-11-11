@@ -79,7 +79,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<h1>Dashboard</h1>
+<h2>Dashboard</h1>
+<p><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php putGS('Add more widgets'); ?>"><?php putGS('Add more widgets'); ?></a></p>
+
 <div id="dashboard">
 
 <div class="column">
@@ -108,16 +110,6 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 </div><!-- /#dashboard -->
 
-<h1>Widgets</h1>
-
-<div id="repo">
-<?php
-    $context = new WidgetContext();
-    $context->setHorizontal()
-        ->render();
-?>
-</div>
-    
 <div style="clear: both;"></div>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -126,163 +118,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
-    <div id="scheduled_actions">
-        <h2><?php putGS('Scheduled Publishing'); ?></h2>
-        <!-- Scheduled Publishing -->
-        <table cellspacing="0" cellpadding="0" class="table_list" id="scheduled_actions">
-        <tr class="table_list_header">
-            <td><?php putGS("Scheduled Publishing"); ?></td>
-            <td><?php putGS("Event(s)"); ?></td>
-            <td><?php putGS("Time"); ?></td>
-            <td><?php putGS("Publication"); ?></td>
-            <td><?php putGS("Issue"); ?></td>
-            <td><?php putGS("Section"); ?></td>
-        </tr>
-        <?php
-        if (count($pendingActions) == 0) {
-            ?>
-            <tr>
-            <td colspan="6" class="list_row_odd"><?php putGS("There are no pending items to be published."); ?></td>
-            </tr>
-            <?php
-        }
-        // Warning: the next section is a big hack!
-        // Hopefully will be fixed in 2.4
-        $color = 0;
-        foreach ($pendingActions as $action) {
-        if ($action["ObjectType"] == "article") {
-            $language = new Language($action["IdLanguage"]);
-            $pub = new Publication($action["IdPublication"]);
-            $issue = new Issue($action["IdPublication"],
-                                $action["IdLanguage"],
-                                $action["NrIssue"]);
-            $section = new Section($action["IdPublication"],
-                                    $action["NrIssue"],
-                                    $action["IdLanguage"],
-                                    $action["NrSection"]);
-            $tmpArticle = new Article($action['IdLanguage'], $action['Number']);
-            camp_set_article_row_decoration($tmpArticle, $lockInfo, $rowClass, $color);
-            ?>
-        <tr class="<?php echo $rowClass ?>">
-            <td>
-                <?php if ($lockInfo) { ?>
-                   <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/lock-16x16.png" width="16" height="16" border="0" alt="<?php  p($lockInfo); ?>" title="<?php p($lockInfo); ?>">
-                <?php } ?>
-                <?php putGS("Article"); ?>:
-                <?PHP
-                if ($g_user->hasPermission('ChangeArticle')) { ?>
-                    <a href="/<?php p($ADMIN); ?>/articles/edit.php?f_publication_id=<?php p($action["IdPublication"]); ?>&f_issue_number=<?php p($action["NrIssue"]); ?>&f_section_number=<?php p($action["NrSection"]); ?>&f_article_number=<?php p($action["Number"]); ?>&f_language_id=<?php p($action["IdLanguage"]); ?>&f_language_selected=<?php p($action["IdLanguage"]); ?>">
-                    <?PHP
-                }
-                echo htmlspecialchars($action["Name"]." (".$language->getNativeName().")");
-                if ($g_user->hasPermission('ChangeArticle')) {
-                    echo "</a>";
-                }
-                ?>
-            </td>
-            <td>
-                <?PHP
-                $displayActions = array();
-                if ($action["publish_action"] == 'P') {
-                    $displayActions[] = getGS("Publish");
-                }
-                if ($action["publish_action"] == 'U') {
-                    $displayActions[] = getGS("Unpublish");
-                }
-                if ($action["publish_on_front_page"] == 'S') {
-                    $displayActions[] = getGS("Show on front page");
-                }
-                if ($action["publish_on_front_page"] == 'R') {
-                    $displayActions[] = getGS("Remove from front page");
-                }
-                if ($action["publish_on_section_page"] == 'S') {
-                    $displayActions[] = getGS("Show on section page");
-                }
-                if ($action["publish_on_section_page"] == 'R') {
-                    $displayActions[] = getGS("Remove from section page");
-                }
-                echo implode("<br>", $displayActions)
-                ?>
-            </td>
-
-            <td>
-                <?php echo htmlspecialchars($action["time_action"]); ?>
-            </td>
-
-            <td>
-                <?php p(htmlspecialchars($pub->getName())); ?>
-            </td>
-
-            <td>
-                <?php p(htmlspecialchars($issue->getName())); ?>
-            </td>
-
-            <td>
-                <?php p(htmlspecialchars($section->getName())); ?>
-            </td>
-
-        <?PHP
-        }
-        elseif ($action["ObjectType"] == "issue") {
-          ?><tr <?php if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>><?PHP
-            //$language = new Language($action["IdLanguage"]);
-            $pub = new Publication($action["IdPublication"]);
-            ?>
-            <td><?php putGS("Issue"); ?>:
-                <?PHP
-                if ($g_user->hasPermission('ManageIssue')) { ?>
-                    <a href="/<?php p($ADMIN); ?>/issues/edit.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>">
-                    <?PHP
-                }
-                echo htmlspecialchars($action["Name"]);
-                if ($g_user->hasPermission('ManageIssue')) {
-                    echo "</a>";
-                }
-                ?>
-            </td>
-            <td><?PHP
-            $displayActions = array();
-            if ($action["publish_action"] == 'P') {
-                $displayActions[] = getGS("Publish");
-            }
-            if ($action["publish_action"] == 'U') {
-                $displayActions[] = getGS("Unpublish");
-            }
-            if ($action["do_publish_articles"] == 'Y') {
-                $displayActions[] = getGS("Publish articles");
-            }
-            echo implode("<br>", $displayActions)
-            ?></td>
-            <td>
-                <?php
-                if ($g_user->hasPermission("Publish")) { ?>
-                    <a href="/<?php p($ADMIN); ?>/issues/autopublish.php?Pub=<?php p($action["IdPublication"]); ?>&Issue=<?php p($action["Number"]); ?>&Language=<?php p($action["IdLanguage"]); ?>&event_id=<?php p(urlencode($action["id"])); ?>">
-                    <?PHP
-                }
-                echo htmlspecialchars($action["time_action"]);
-                if ($g_user->hasPermission("Publish")) {
-                    echo "</a>";
-                }
-                ?>
-            </td>
-
-            <td>
-                <?php p(htmlspecialchars($pub->getName())); ?>
-            </td>
-
-            <td> -----</td>
-            <td> -----</td>
-            <?PHP
-        }
-        ?>
-        </tr>
-        <?php
-        } // for
-        ?>
-        </table>
-        
-    </div>
 
 <?php camp_html_copyright_notice(); ?>
 </body>

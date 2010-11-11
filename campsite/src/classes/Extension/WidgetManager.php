@@ -20,38 +20,47 @@ require_once dirname(__FILE__) . '/Index.php';
  */
 class WidgetManager
 {
-    /**
-     * Unregistered widgets
-     * @var array
-     */
-    private static $unregistered = NULL;
+    const TABLE = 'widgetcontext_widget';
 
     /**
-     * Widgets repository
-     * @var array
+     * Get available widgets for specified user
+     * @param int $p_user_id
+     * @return array of IWidget
      */
-    private static $widgets = array();
-
-    /**
-     * Get unregistered widgets.
-     * @return array
-     */
-    private static function GetUnregistered()
+    public static function GetAvailable($p_user_id)
     {
-        global $g_ado_db, $g_user;
+        global $g_ado_db;
 
-        if (self::$unregistered === NULL) {
-            self::$unregistered = array();
-            $queryStr = 'SELECT *
-                FROM widget w LEFT JOIN widgetcontext_widget wcw ON 
-                    w.id = wcw.fk_widget_id
-                WHERE wcw.fk_widgetcontext_id IS NULL OR (
-                    wcw.fk_user_id <> ' . $g_user->getUserId() . '
-                    OR wcw.fk_widgetcontext_id = 0)';
-            self::$unregistered = (array) $g_ado_db->GetAll($queryStr);
+        // get all widgets
+        $index = new Extension_Index();
+        $widgets = $index->addDirectory(WWW_DIR . '/extensions')
+            ->find('IWidget');
+
+        // get used by user
+        $user_widgets = array();
+        $queryStr = 'SELECT id, path, class, fk_widgetcontext_id
+            FROM widget w LEFT JOIN widgetcontext_widget wcw
+                ON (w.id = wcw.fk_widget_id AND wcw.fk_user_id = ' . ((int) $p_user_id) . ')';
+        $rows = $g_ado_db->GetAll($queryStr);
+        foreach ($rows as $row) {
+            $user_widgets[self::FormatId($row['path'], $row['class'])] = $row;
         }
 
-        return self::$unregistered;
+        // filter widgets
+        $available = array();
+        foreach ($widgets as $widget) {
+            $id = self::FormatId($widget->getPath(), $widget->getClass());
+            if (!empty($user_widgets[$id])
+                && !empty($user_widgets[$id]['fk_widgetcontext_id'])) {
+                continue;
+            }
+
+            $data = empty($user_widgets[$id]) ? array() : $user_widgets[$id];
+            $available[] = self::getWidgetInstance($widget->getPath(),
+                $widget->getClass(), $data);
+        }
+
+        return $available;
     }
 
     /**
@@ -63,41 +72,19 @@ class WidgetManager
     {
         global $g_user, $g_ado_db;
 
-        $key = $context->getName();
-        if (!isset(self::$widgets[$key])) {
-            self::$widgets[$key] = array();
-            if ($context->isDefault()) {
-                // get all extensions
-                $index = new Extension_Index();
-                $extensions = $index->addDirectory(WWW_DIR . '/extensions')
-                    ->find('IWidget');
+        $queryStr = 'SELECT *
+            FROM widget w INNER JOIN widgetcontext_widget wcw
+                ON w.id = wcw.fk_widget_id
+            WHERE wcw.fk_user_id = ' . $g_user->getUserId() . '
+                AND wcw.fk_widgetcontext_id = ' . $context->getId() . '
+            ORDER BY `order`';
+        $rows = $g_ado_db->GetAll($queryStr);
 
-                // save new widgets
-                $widgets = array();
-                foreach ($extensions as $extension) {
-                    $widget = self::GetWidgetInstance($extension->getPath(), $extension->getClass());
-                    $widget->save();
-                }
-
-                foreach (self::GetUnregistered() as $row) {
-                    self::$widgets[$key][] = self::GetWidgetInstance($row['filename'], $row['class'], $row);
-                }
-            } else { // registered
-                $queryStr = 'SELECT *
-                    FROM widget w LEFT JOIN widgetcontext_widget wcw ON 
-                        w.id = wcw.fk_widget_id
-                    WHERE wcw.fk_user_id = ' . $g_user->getUserId() . '
-                        AND wcw.fk_widgetcontext_id = ' . $context->getId() . '
-                    ORDER BY `order`';
-                $rows = $g_ado_db->GetAll($queryStr);
-                foreach ($rows as $row) {
-                    self::$widgets[$key][] = self::GetWidgetInstance($row['filename'],
-                        $row['class'], (array) $row);
-
-                }
-            }
+        $widgets = array();
+        foreach ($rows as $row) {
+            $widgets[] = self::GetWidgetInstance($row['path'], $row['class'], (array) $row);
         }
-        return self::$widgets[$key];
+        return $widgets;
     }
 
     /**
@@ -134,7 +121,62 @@ class WidgetManager
                 $g_ado_db->execute($queryStr);
             }
         }
+        $queryStr = 'DELETE FROM widgetcontext_widget WHERE fk_widgetcontext_id = 0';
+        $g_ado_db->execute($queryStr);
 
+        return TRUE;
+    }
+
+    /**
+     * Add widget to user dashboard
+     * @param int $widget_id
+     * @param string $context_name
+     * @return bool
+     */
+    public static function AddWidget($widget_id, $context_name)
+    {
+        global $g_ado_db, $g_user;
+
+        // get context object
+        $context = self::GetWidgetContext($context_name);
+
+        // insert before - move others
+        $queryStr = 'UPDATE widgetcontext_widget
+            SET `order` = `order` + 1
+            WHERE fk_widgetcontext_id = ' . $context->getId();
+        $g_ado_db->execute($queryStr);
+
+        // insert
+        $queryStr = sprintf('INSERT INTO widgetcontext_widget
+            (fk_widgetcontext_id, fk_widget_id, fk_user_id, `order`) VALUES
+            (%d, %d, %d, 0)',
+            $context->getId(),
+            (int) $widget_id,
+            $g_user->getUserId());
+        $g_ado_db->execute($queryStr);
+        return TRUE;
+    }
+
+    /**
+     * Remove widget from user dashboard
+     * @param string $widget_id
+     * @return bool
+     */
+    public static function RemoveWidget($widget_id)
+    {
+        global $g_ado_db, $g_user;
+
+        try { // parse id
+            list(, $id) = explode('_', (string) $widget_id);
+        } catch (Exception $e) {
+            $id = 0;
+        }
+
+        // delete
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_user_id = ' . $g_user->getUserId() . '
+                AND fk_widget_id = ' . ((int) $id);
+        $g_ado_db->execute($queryStr);
         return TRUE;
     }
 
@@ -174,8 +216,6 @@ class WidgetManager
     {
         require_once $filename;
         $widget = new $class;
-        $data['filename'] = $filename;
-        $data['class'] = $class;
         return new WidgetRendererDecorator($widget, $data);
     }
 
@@ -208,5 +248,15 @@ class WidgetManager
         } else {
             throw new LogicException("Can't create context");
         }
+    }
+
+    /**
+     * Format widget id
+     * @param string $path
+     * @param string $class
+     */
+    private static function FormatId($path, $class)
+    {
+        return implode(':', array($path, $class));
     }
 }
