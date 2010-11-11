@@ -135,10 +135,14 @@ class ImagesList extends ListObject
     			case 'photographer_like':
     			case 'place_like':
     			case 'caption_like':
-					$operator = new Operator('like', 'string');
+					$operator = new Operator('match', 'string');
 					$listParam = substr($parameter, 0, strlen($parameter) - strlen('_like'));
-					$this->m_constraints[] = new ComparisonOperation($listParam, $operator, "%$value%");
+					$this->m_constraints[] = new ComparisonOperation($listParam, $operator, $value);
 					break;
+    			case 'search':
+					$operator = new Operator('match', 'string');
+					$this->m_constraints[] = new ComparisonOperation($parameter, $operator, $value);
+    				break;
     			case 'local':
     				$opName = strtolower($value) == 'true' ? 'is' : 'not';
 					$operator = new Operator($opName, 'string');

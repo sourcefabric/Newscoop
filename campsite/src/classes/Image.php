@@ -901,9 +901,14 @@ class Image extends DatabaseObject {
                 break;
             }
 
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            if ($comparisonOperation['symbol'] == 'match') {
+            	$whereCondition = 'MATCH('.$comparisonOperation['left'].") AGAINST('"
+            	.$g_ado_db->escape($comparisonOperation['right']) . "' IN BOOLEAN MODE)";
+            } else {
+            	$whereCondition = $comparisonOperation['left'] . ' '
+            	. $comparisonOperation['symbol'] . " '"
+            	. $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -974,36 +979,39 @@ class Image extends DatabaseObject {
     	$comparisonOperation = array();
     	$comparisonOperation['right'] = $p_param->getRightOperand();
 
-        switch (strtolower($p_param->getLeftOperand())) {
-        case 'description':
-            $comparisonOperation['left'] = 'Images.Description';
-            break;
-        case 'photographer':
-            $comparisonOperation['left'] = 'Images.Photographer';
-            break;
-        case 'place':
-            $comparisonOperation['left'] = 'Images.Place';
-            break;
-        case 'caption':
-            $comparisonOperation['left'] = 'Images.Caption';
-            break;
-        case 'date':
-            $comparisonOperation['left'] = 'Images.Date';
-            break;
-        case 'local':
-            $comparisonOperation['left'] = 'Images.Location';
-            $comparisonOperation['right'] = 'local';
-            break;
-        case 'type':
-        	$comparisonOperation['left'] = 'Images.ContentType';
-        	$comparisonOperation['right'] = 'image/' . $p_param->getRightOperand();
-        	break;
-        case 'last_modified':
-            $comparisonOperation['left'] = 'Images.LastModified';
-            break;
-        default:
-        	return null;
-        }
+    	switch (strtolower($p_param->getLeftOperand())) {
+    		case 'search':
+    			$comparisonOperation['left'] = 'Images.Description, Images.Photographer, Images.Place, Images.Caption';
+    			break;
+    		case 'description':
+    			$comparisonOperation['left'] = 'Images.Description';
+    			break;
+    		case 'photographer':
+    			$comparisonOperation['left'] = 'Images.Photographer';
+    			break;
+    		case 'place':
+    			$comparisonOperation['left'] = 'Images.Place';
+    			break;
+    		case 'caption':
+    			$comparisonOperation['left'] = 'Images.Caption';
+    			break;
+    		case 'date':
+    			$comparisonOperation['left'] = 'Images.Date';
+    			break;
+    		case 'local':
+    			$comparisonOperation['left'] = 'Images.Location';
+    			$comparisonOperation['right'] = 'local';
+    			break;
+    		case 'type':
+    			$comparisonOperation['left'] = 'Images.ContentType';
+    			$comparisonOperation['right'] = 'image/' . $p_param->getRightOperand();
+    			break;
+    		case 'last_modified':
+    			$comparisonOperation['left'] = 'Images.LastModified';
+    			break;
+    		default:
+    			return null;
+    	}
 
         $operatorObj = $p_param->getOperator();
         $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');

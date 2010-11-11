@@ -34,6 +34,7 @@ class Operator
                                                      'greater' => '>',
                                                      'not' => '<>',
                                                      'like' => 'like',
+													 'match'=> 'match'
                                                ),
                                       'php' => array('is' => '==',
                                                      'smaller_equal' => '<=',
@@ -62,7 +63,8 @@ class Operator
 	                                                        'smaller',
 	                                                        'greater',
 	                                                        'not',
-	                                                        'like'
+	                                                        'like',
+                                                       		'match'
 	                                                  ),
                                             'boolean'=>array('is',
 	                                                      'not'

@@ -56,3 +56,9 @@ CREATE TABLE `AuthorsAuthorsTypes` (
 ) ENGINE = MYISAM ;
 
 ALTER TABLE `liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL  AFTER `isActive` ;
+
+
+ALTER TABLE Images ADD FULLTEXT(Description);
+ALTER TABLE Images ADD FULLTEXT(Photographer);
+ALTER TABLE Images ADD FULLTEXT(Place);
+ALTER TABLE Images ADD FULLTEXT(Caption);
