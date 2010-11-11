@@ -1919,3 +1919,7 @@ body > h2, body > p {
     margin-left: 14px;
     margin-right: 14px;
 }
+
+.widget .dataTables_wrapper {
+    margin: 0;
+}

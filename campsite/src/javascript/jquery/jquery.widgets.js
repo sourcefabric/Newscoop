@@ -11,9 +11,6 @@ $.fn.widgets = function (options) {
         default_context: 'preview',
         widgets: '> .widget',
         controls: '> .header',
-        controls_fadein: 300,
-        controls_fadeout: 800,
-        controls_delay: 2100,
     };
 
     /**
@@ -86,18 +83,6 @@ $.fn.widgets = function (options) {
                         });
                     return false;
                 });
-
-            // ui interaction
-            widget.hover(function() {
-                controls.clearQueue();
-                controls.fadeTo(settings.controls_fadein, 1);
-            }, function () {
-                controls.delay(settings.controls_delay)
-                    .fadeTo(settings.controls_fadeout, 0);
-            });
-
-            // init controls
-            controls.delay(settings.controls_delay).fadeTo(settings.controls_fadeout, 0);
         });
 
         // make sortable

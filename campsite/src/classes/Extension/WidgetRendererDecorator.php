@@ -49,9 +49,9 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         if ($this->getTitle() !== NULL) {
             echo '<div class="header"><h3>', $this->getTitle(), '</h3></div>';
         }
-        echo '<div class="content">';
+        echo '<div class="content"><div class="scroll">', "\n";
         echo $content;
-        echo '</div>', "\n";
+        echo '</div></div>', "\n";
         $this->renderMeta();
         echo '</li>', "\n";
     }

@@ -11,17 +11,21 @@
 }
 
 .widget > .header {
-    padding: 3px 5px;
+    padding: 3px 8px;
     position: relative;
     cursor: move;
 }
 
 .widget > .content {
-    max-height: 400px; overflow: hidden;
     padding: 5px;
     border: 1px solid #ccc;
     -moz-border-radius: 5px;
     border-radius: 5px;
+}
+
+.widget > .content > .scroll {
+    max-height: 400px;
+    overflow: auto;
 }
 
 .widget .header h3 {
@@ -47,16 +51,18 @@
 #dashboard {
     height: 1%;
     overflow: hidden;
+    margin: 0 14px;
 }
 
 #dashboard > .column {
     float: left;
-    width: 400px;
+    width: 49%;
     min-height: 400px;
+    max-width: 800px;
 }
 
 #dashboard > .column > .context {
-    margin: 0 21px;
+    margin: 0 13px;
     padding: 0;
 }
 
