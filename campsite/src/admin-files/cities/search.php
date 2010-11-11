@@ -15,19 +15,35 @@ $found_cities = '{"status":"200","cities":[';
 $security_problem = '["status":"403","description":"Invalid security token!"]';
 $unknown_request = '["status":"404","description":"Unknown request!"]';
 
+
 // take input parameters, ask the search class to find the cities, returnes json
 if (Input::Get('search')) {
 
-    $city_name = Input::Get('f_city_name', 'string', "", false);
-    if (0 == strlen($city_name)) {
-        echo $found_cities . ']}';
-        exit();
+    $found_list = array();
+
+    $longitude = Input::Get('f_longitude', 'string', "", false);
+    $latitude = Input::Get('f_latitude', 'string', "", false);
+    if ((0 != strlen($longitude)) && (0 != strlen($latitude))) {
+
+        $found_list = Geo_Names::FindCitiesByPosition($longitude, $latitude);
+        //echo $found_list;
+        //return;
+    }
+    else
+    {
+        $city_name = Input::Get('f_city_name', 'string', "", false);
+        if (0 == strlen($city_name)) {
+            echo $found_cities . ']}';
+            exit();
+        }
+
+        $city_name = base64_decode($city_name);
+        $country_code = Input::Get('f_country_code', 'string', "", false);
+
+        $found_list = Geo_Names::FindCitiesByName($city_name, $country_code);
     }
 
-    $city_name = base64_decode($city_name);
-    $country_code = Input::Get('f_country_code', 'string', "", false);
 
-    $found_list = Geo_Names::FindCitiesByName($city_name, $country_code);
     $first_item = true;
     foreach ($found_list as $one_city) {
         if (!$first_item) {

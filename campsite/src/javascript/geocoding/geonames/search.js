@@ -20,6 +20,44 @@ var getHTTPObject = function ()
 
 var geo_names = {};
 
+// initializes the ajax query on position search
+geo_names.askForNearCities = function(longitude, latitude, script_dir, results_div)
+{
+    //if (undefined === country_code) {
+    //   country_code = "";
+    //}
+
+    var search_request = getHTTPObject();
+
+    search_request.onreadystatechange = function()
+    {
+        if (4 == search_request.readyState)
+        {
+            geo_names.gotSearchData(search_request, results_div);
+        }
+    };
+
+    try
+    {
+        //city_name = Base64.encode(city_name);
+        if (undefined === script_dir)
+        {
+            script_dir = "";
+        }
+        script_path = script_dir + "search.php";
+        search_request.open("GET", script_path + "?search=1&f_longitude=" + longitude + "&f_latitude=" + latitude, true); 
+        search_request.send(null);
+    }
+    catch (e)
+    {
+        search_request.onreadystatechange = function() {}
+        search_request = null;
+        return;
+    }
+
+    return false;
+};
+
 // initializes the ajax query on city search
 geo_names.askForCityLocation = function(city_name, country_code, script_dir, results_div)
 {

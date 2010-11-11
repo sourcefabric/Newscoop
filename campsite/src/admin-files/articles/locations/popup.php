@@ -126,11 +126,14 @@ var findLocation = function()
         test_list = cities_term.split(/[\s;][\s,;]*/);
     }
     
+    geonames_dir = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/cities/";
+
+    var direct_coords = true;
     if (2 <= test_list.length)
     {
         latitude = parseFloat(test_list[0].replace(",", "."));
         longitude = parseFloat(test_list[1].replace(",", "."));
-        var direct_coords = true;
+        //var direct_coords = true;
         if ((isNaN(latitude)) || (isNaN(longitude)))
         {
             direct_coords = false;
@@ -139,11 +142,13 @@ var findLocation = function()
         {
             geo_locations.center_lonlat (longitude, latitude);
             geo_locations.insert_poi('EPSG:4326', null, longitude, latitude);
+
+            var found_cits = geo_names.askForNearCities(longitude, latitude, geonames_dir, "search_results");
             return;
         }
     }
     
-    geonames_dir = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/cities/";
+    //geonames_dir = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/cities/";
     var found_locs = geo_names.askForCityLocation(cities_term, cc_code, geonames_dir, "search_results");
 
 };
