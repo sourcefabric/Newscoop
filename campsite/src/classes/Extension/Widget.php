@@ -9,6 +9,8 @@
  */
 
 require_once dirname(__FILE__) . '/IWidget.php';
+
+camp_load_translation_strings('Widget');
  
 /**
  * Widget interace
@@ -16,6 +18,7 @@ require_once dirname(__FILE__) . '/IWidget.php';
 abstract class Widget implements IWidget
 {
     const DEFAULT_VIEW = 'default';
+    const FULLSCREEN_VIEW = 'fullscreen';
 
     /** @var string */
     private $view = self::DEFAULT_VIEW;
@@ -48,5 +51,25 @@ abstract class Widget implements IWidget
     {
         global $g_user;
         return $g_user;
+    }
+
+    /**
+     * Is view fullscreen?
+     * @return bool
+     */
+    final public function isFullscreen()
+    {
+        return $this->getView() == self::FULLSCREEN_VIEW;
+    }
+
+    /**
+     * Allow widgets to be translatable
+     * @param string $translateString
+     * @return string
+     */
+    final public function _($translateString)
+    {
+        $args = func_get_args();
+        return call_user_func_array('getGS', $args);
     }
 }
