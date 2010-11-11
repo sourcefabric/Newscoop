@@ -79,7 +79,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<h2>Dashboard</h1>
+<h2>Dashboard</h2>
 <p><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php putGS('Add more widgets'); ?>"><?php putGS('Add more widgets'); ?></a></p>
 
 <div id="dashboard">

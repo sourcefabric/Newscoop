@@ -1,3 +1,4 @@
+/* dashboard */
 .context > .widget, .widget-placeholder {
     margin-top: 13px;
     background-color: #fff;
@@ -53,13 +54,47 @@
     padding: 0;
 }
 
-#preview {
+/* widget manager */
+#widgets {
     height: 1%;
+    max-width: 1000px;
     overflow: hidden;
 }
 
-#preview > * {
+#widgets li {
     float: left;
-    width: 200px;
-    margin-right: 13px;
+    min-width: 300px;
+    margin: 13px 13px 0 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#widgets h3 {
+    margin: 0 0 8px;
+    padding: 5px;
+}
+
+#widgets p {
+    margin: 0 5px 8px;
+}
+
+#widgets dl.meta {
+    background-color: #f5f5f5;
+    border-top: 1px solid #ccc;
+    margin: 8px 0 0;
+    padding: 2px 5px 5px;
+    font-size: 0.9em;
+}
+
+#widgets dl.meta > * {
+    margin: 0;
+}
+
+#widgets dl.meta dt {
+    margin-top: 3px;
+}
+
+#widgets dl.meta dd {
 }

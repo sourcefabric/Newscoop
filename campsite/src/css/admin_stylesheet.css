@@ -1914,3 +1914,8 @@ ul.tree.sortable .icon.delete {
 ul.tree.sortable .icon.delete span {
     background-image: url('adm/images/topics_delete.png');
 }
+
+body > h2, body > p {
+    margin-left: 14px;
+    margin-right: 14px;
+}
