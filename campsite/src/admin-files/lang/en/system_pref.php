@@ -1,4 +1,5 @@
 <?php 
+regGS("Allow password recovery:", "Allow password recovery:");
 regGS("Template Cache Handler:", "Template Cache Handler:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Invalid: You need PHP $1 enabled in order to use the template caching system.");
 regGS("Database Cache Engine:", "Database Cache Engine:");

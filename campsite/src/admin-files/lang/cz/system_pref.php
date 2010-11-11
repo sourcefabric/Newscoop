@@ -1,5 +1,6 @@
 <?php 
-regGS("Template Cache Handler:", "");
+regGS("Allow password recovery:", "Obnovení hesla povoleno:");
+regGS("Template Cache Handler:", "Cache Handler Šablon");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Neplatné: Je třeba povolit PHP $1 k použití caching systému šablon.");
 regGS("Database Cache Engine:", "Cache Engin Databáze:");
 regGS("Zoom enabled for images in article content?", "Povolit zoom pro obrázky ve článcích?");
@@ -8,8 +9,8 @@ regGS("Image Resizing Width", "Změna velikosti (Šířka)");
 regGS("Image Resizing Height:", "Změna velikosti (Výška):");
 regGS("Image Resizing Height", "Změna velikosti (Výška)");
 regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Prosím vložte platnou hodnotu (1 - 100)  pro '$1' pole.");
-regGS("Imagecache Lifetime:", "");
-regGS("Templates filter mask (separated by comma)", "");
+regGS("Imagecache Lifetime:", "Imagecache Lifetime:");
+regGS("Templates filter mask (separated by comma)", "Filtrování šablon (odděleno čárkou)");
 regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Neplatné: Potřebujete PHP $1, aby jste mohli použít caching system.");
 regGS("Image Resizing Ratio:", "Poměr Změny Velikosti:");
 regGS("Image Resizing Ratio", "Poměr Změny Velikosti");
@@ -35,7 +36,7 @@ regGS("Enable Campcaster audioclip attachments?", "Povolit audioklipové přílo
 regGS("XML RPC Path:", "XML RPC Cesta:");
 regGS("XML RPC File:", "XML RPC Soubor:");
 regGS("System preferences updated", "Systémové předvolby aktualizovány");
-regGS("Setting up a Campsite Replication Server?", "");
+regGS("Setting up a Campsite Replication Server?", "Nastavení Campsite Replication Serveru?");
 regGS("Reader subscriptions managed externally?", "Spravovat čtenářské předplatné externě?");
 regGS("Port:", "Port:");
 regGS("Maximum upload file size:", "Maximální velikost uploadovaného souboru:");
@@ -43,11 +44,11 @@ regGS("Max Upload File Size", "Maximální Velikost Uploadovaného Souboru");
 regGS("Invalid Max Upload File Size value submitted", "Zadána neplatná maximální velikost uploadovaného souboru");
 regGS("Hostname / IP Address:", "Hostname / IP Adresa:");
 regGS("General Settings", "Obecné Nastavení");
-regGS("Database Replication data incomplete", "");
-regGS("Database Replication User:", "");
-regGS("Database Replication Port:", "");
-regGS("Database Replication Password:", "");
-regGS("Database Replication Host:", "");
+regGS("Database Replication data incomplete", "Database Replication data neúplná");
+regGS("Database Replication User:", "Database Replication uživatel:");
+regGS("Database Replication Port:", "Database Replication Port:");
+regGS("Database Replication Password:", "Database Replication heslo:");
+regGS("Database Replication Host:", "Database Replication Host:");
 regGS("Campsite Online Server Database", "Databáze Campsite Online Serveru");
 regGS("Campcaster Server", "Campcaster Server");
 regGS("System preferences updated.", "Systémové předvolby aktualizovány.");
@@ -59,5 +60,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Počet neúsp
 regGS("Keyword separator:", "Klíčový oddělovač:");
 regGS("Time Zone:", "Časové pásmo:");
 regGS("disabled", "vypnuto");
-regGS("Run cron tasks externaly?", "");
+regGS("Run cron tasks externaly?", "Spustit cron úkoly externě?");
 ?>

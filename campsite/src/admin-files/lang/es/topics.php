@@ -1,4 +1,9 @@
 <?php 
+regGS("Topics order saved.", "");
+regGS("Show languages", "");
+regGS("Save order", "");
+regGS("Click to edit", "");
+regGS("Add root topic", "");
 regGS("Topics order changed.", "Los tópicos cambiaron de orden.");
 regGS("Topic was deleted.", "Se eliminó el tópico.");
 regGS("Topic does not exist.", "El tópico no existe.");

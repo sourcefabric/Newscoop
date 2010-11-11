@@ -1,4 +1,9 @@
 <?php 
+regGS("Topics order saved.", "Pořadí témat uloženo.");
+regGS("Show languages", "Ukázat jazyky");
+regGS("Save order", "Uložit pořadí");
+regGS("Click to edit", "Klikněte pro možnost úpravy");
+regGS("Add root topic", "Přidat zdrojové téma");
 regGS("Topics order changed.", "Pořadí témat změněno.");
 regGS("Topic was deleted.", "Téma bylo odstraněno.");
 regGS("Topic does not exist.", "Téma neexistuje.");
@@ -11,7 +16,7 @@ regGS("Add translation:", "Přidat překlad:");
 regGS("Add subtopic:", "Přidat témata:");
 regGS("Add subtopic", "Přidat podtéma");
 regGS("Add root topic:", "Přidat zdrojové téma:");
-regGS("Top", "");
+regGS("Top", "Nahoře");
 regGS("You do not have the right to add topics.", "Nemáte právo přidat témata");
 regGS("You do not have the right to delete topics.", "Nemáte právo mazat témata");
 regGS("Are you sure you want to delete the topic $1?", "Určitě chcete smazat téma $1?");

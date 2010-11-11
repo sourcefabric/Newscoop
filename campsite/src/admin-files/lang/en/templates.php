@@ -1,4 +1,15 @@
 <?php 
+regGS("Stop current upload", "Stop current upload");
+regGS("Start uploading queue", "Start uploading queue");
+regGS("Start upload", "Start upload");
+regGS("Size", "Size");
+regGS("Select files", "Select files");
+regGS("Filename", "Filename");
+regGS("Drag files here.", "Drag files here.");
+regGS("Cache lifetime, sec", "Cache lifetime, sec");
+regGS("Add files to the upload queue and click the start button.", "Add files to the upload queue and click the start button.");
+regGS("Add files", "Add files");
+regGS("\"$1\" files uploaded.", "\"$1\" files uploaded.");
 regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.");
 regGS("Replace current with:", "Replace current with:");
 regGS("Edit template:", "Edit template:");
