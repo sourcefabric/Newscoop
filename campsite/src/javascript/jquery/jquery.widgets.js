@@ -30,22 +30,6 @@ $.fn.widgets = function (options) {
     };
 
     /**
-     * Get content for widget.
-     * @param object widget
-     */
-    var getContent = function(widget)
-    {
-        var context = widget.closest('.context').attr('id');
-        callServer(['WidgetManager', 'GetWidgetContent'], [
-            widget.attr('id'),
-            context,
-            ], function(result) {
-                $('> .content', widget).html(result).show();
-            }
-        );
-    };
-
-    /**
      * Widgets plugin init
      * @return JQuery
      */
@@ -59,6 +43,44 @@ $.fn.widgets = function (options) {
             var widget = $(this);
             var controls = $(settings.controls, widget);
             var meta = $('dl.meta', widget);
+
+            // add min/max button
+            $('<a class="minmax" href="#" title="Fullscreen">Fullscreen</a>')
+                .prependTo(controls)
+                .click(function() {
+                    var dashboard = widget.closest('#dashboard');
+                    var columns = $('.column', dashboard);
+                    var full = widget.clone().hide().appendTo(dashboard);
+
+                    // hide columns
+                    columns.hide();
+
+                    // make widget fullscreen
+                    full.css('width', (dashboard.width()) + 'px').css('float', 'left');
+
+                    // close button
+                    $('a.close', full).click(function() {
+                        full.hide();
+                        columns.show();
+                        return false;
+                    }).html('Close');
+
+                    // hide other buttons
+                    $('a.info, a.minmax', full).detach();
+
+                    // load content
+                    callServer(['WidgetManager', 'GetWidgetContent'], [
+                        widget.attr('id'),
+                        'fullscreen',
+                        ], function(json) {
+                            $('> .content > .scroll', full).html(json);
+                        });
+                    
+                    // display
+                    full.show();
+                    
+                    return false;
+                });
 
             // add info button
             $('<a class="info" href="#" title="Info">i</a>')
