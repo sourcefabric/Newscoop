@@ -26,16 +26,6 @@ interface IWidgetContext
     public function isDefault();
 
     /**
-     * @return bool
-     */
-    public function isHorizontal();
-
-    /**
-     * @return bool
-     */
-    public function isVertical();
-
-    /**
      * Render context
      * @return void
      */

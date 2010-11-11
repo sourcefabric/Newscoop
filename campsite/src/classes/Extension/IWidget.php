@@ -16,13 +16,7 @@ require_once dirname(__FILE__) . '/IWidgetContext.php';
 interface IWidget
 {
     /**
-     * Get widget title.
-     * @return string|NULL
-     */
-    public function getTitle();
-
-    /**
-     * Render widget.
+     * Render widget
      * @return void
      */
     public function render();

@@ -19,16 +19,9 @@ echo $breadcrumbs;
     <?php foreach (WidgetManager::GetAvailable($g_user->getUserId()) as $widget) { ?>
     <li>
         <h3><?php echo $widget->getTitle(); ?></h3>
-        <p><a href="#<?php echo $widget->getId(TRUE); ?>" class="add"><?php putGS('Add to dashboard'); ?></a></p>
+        <p><a href="#<?php echo $widget->getId(TRUE); ?>" class="add"><?php putGS('Add to dashboard'); ?></a>&nbsp;</p>
         <p><?php echo $widget->getDescription(); ?></p>
-        <dl class="meta">
-            <dt><?php putGS('Author'); ?>:</dt>
-            <dd><?php echo $widget->getAuthor(); ?></dd>
-            <dt><?php putGS('Version'); ?>:</dt>
-            <dd><?php echo $widget->getVersion(); ?></dd>
-            <dt><?php putGS('Homepage'); ?>:</dt>
-            <dd><a href="<?php echo $widget->getHomepage(); ?>"><?php echo $widget->getHomepage(); ?></a></dd>
-        </dl>
+        <?php $widget->renderMeta(); ?>
     </li>
     <?php } ?>
 </ul>

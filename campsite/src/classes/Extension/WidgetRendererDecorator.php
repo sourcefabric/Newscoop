@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/IWidgetContext.php';
+require_once dirname(__FILE__) . '/Widget.php';
 require_once dirname(__FILE__) . '/WidgetManagerDecorator.php';
 
 /**
@@ -16,22 +16,27 @@ require_once dirname(__FILE__) . '/WidgetManagerDecorator.php';
  */
 class WidgetRendererDecorator extends WidgetManagerDecorator
 {
+    /** @var array */
+    private static $metakeys = array(
+        'Author', 'Version', 'Homepage',
+    );
+
     /**
      * Render widget
-     * @param IWidgetContext $context
+     * @param string $view
      * @param bool $ajax
      * @return void|string
      */
-    public function render(IWidgetContext $context = NULL, $ajax = FALSE)
+    public function render($view = Widget::DEFAULT_VIEW, $ajax = FALSE)
     {
+        // set view if possible
+        if (method_exists($this->widget, 'setView')) {
+            $this->widget->setView($view);
+        }
+
         // get content
         ob_start();
-        if (!$context->isDefault()) {
-            $this->widget->setContext($context);
-            $this->widget->render();
-        } else { // preview
-            echo $this->widget->getTitle(), ' preview';
-        }
+        $this->widget->render();
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -39,13 +44,39 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
             return $content;
         }
 
-        // render widget
+        // render whole widget
         echo '<li id="widget_', $this->getId(), '" class="widget">';
         if ($this->getTitle() !== NULL) {
             echo '<div class="header"><h3>', $this->getTitle(), '</h3></div>';
         }
         echo '<div class="content">';
         echo $content;
-        echo '</div></li>';
+        echo '</div>', "\n";
+        $this->renderMeta();
+        echo '</li>', "\n";
+    }
+
+    /**
+     * Render widget metadata
+     * @return void
+     */
+    public function renderMeta()
+    {
+        echo '<dl class="meta">', "\n";
+        foreach (self::$metakeys as $key) {
+            $method = 'get' . $key;
+            if (!method_exists($this, $method)) {
+                continue;
+            }
+
+            $value = $this->$method();
+            if (empty($value)) {
+                continue;
+            }
+
+            echo '<dt>', getGS($key), ':</dt>', "\n";
+            echo '<dd>', $value, '</dd>', "\n";
+        }
+        echo '</dl>', "\n";
     }
 }

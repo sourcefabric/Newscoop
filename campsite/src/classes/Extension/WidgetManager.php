@@ -181,28 +181,25 @@ class WidgetManager
     }
 
     /**
-     * Get widget content for specified context.
+     * Get widget content for specified view
      * @param int $widget_id
-     * @param string $context
+     * @param string $view
      * @return string
      */
-    public static function GetWidgetContent($widget_id, $context)
+    public static function GetWidgetContent($widget_id, $view)
     {
         global $g_ado_db;
 
         list(,$widget_id) = explode('_', $widget_id);
 
-        $context = self::GetWidgetContext($context);
-
         // get widget file & class info
-        $queryStr = 'SELECT filename, class
+        $queryStr = 'SELECT id, path, class
             FROM widget
             WHERE id = ' . ( (int) $widget_id);
         $row = $g_ado_db->getRow($queryStr);
 
-        $widget = self::GetWidgetInstance($row['filename'], $row['class'], (array) $row);
-
-        return $widget->render($context, TRUE);
+        $widget = self::GetWidgetInstance($row['path'], $row['class'], (array) $row);
+        return $widget->render($view, TRUE);
     }
 
     /**

@@ -61,10 +61,20 @@ $.fn.widgets = function (options) {
         $(this).find(settings.widgets).each(function() {
             var widget = $(this);
             var controls = $(settings.controls, widget);
+            var meta = $('dl.meta', widget);
+
+            // add info button
+            $('<a class="info" href="#" title="Info">i</a>')
+                .prependTo(controls)
+                .click(function() {
+                    meta.toggle();
+                    return false;
+                });
+            meta.hide().click(function() { $(this).hide(); });
 
             // add close button
-            $('<a class="close" href="#">x</a>')
-                .appendTo(controls)
+            $('<a class="close" href="#" title="Remove">x</a>')
+                .prependTo(controls)
                 .click(function() {
                     callServer(['WidgetManager', 'RemoveWidget'], [
                         widget.attr('id'),
@@ -74,7 +84,8 @@ $.fn.widgets = function (options) {
                                 updateOrder();
                             })
                         });
-                    });
+                    return false;
+                });
 
             // ui interaction
             widget.hover(function() {

@@ -29,12 +29,6 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
         'name',
     );
 
-    /** @var bool */
-    private $isHorizontal = FALSE;
-
-    /** @var bool */
-    private $isVertical = FALSE;
-
     /** @var array of IWidget */
     private $widgets = NULL;
 
@@ -102,46 +96,6 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Set horizontal
-     * @param bool $horizontal
-     * @return IWidgetContext
-     */
-    public function setHorizontal($horizontal = TRUE)
-    {
-        $this->isHorizontal = (bool) $horizontal;
-        return $this;
-    }
-
-    /**
-     * Is horizontal?
-     * @return bool
-     */
-    public function isHorizontal()
-    {
-        return $this->isHorizontal;
-    }
-
-    /**
-     * Set vertical
-     * @param bool $vertical
-     * @return IWidgetContext
-     */
-    public function setVertical($vertical = TRUE)
-    {
-        $this->isVertical = (bool) $vertical;
-        return $this;
-    }
-
-    /**
-     * Is vertical?
-     * @return bool
-     */
-    public function isVertical()
-    {
-        return $this->isVertical;
-    }
-
-    /**
      * Render context.
      * @return void
      */
@@ -149,18 +103,10 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     {
         $classes = array('context');
 
-        if ($this->isHorizontal()) {
-            $classes[] = 'horizontal';
-        }
-
-        if ($this->isVertical()) {
-            $classes[] = 'vertical';
-        }
-
         echo '<ul id="', $this->getName(), '" class="', implode(' ', $classes), '">', "\n";
         foreach ($this->getWidgets() as $widget) {
-            $widget->render($this);
+            $widget->render();
         }
-        echo '</ul>';
+        echo '</ul>', "\n";
     }
 }

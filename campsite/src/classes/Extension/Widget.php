@@ -15,37 +15,36 @@ require_once dirname(__FILE__) . '/IWidget.php';
  */
 abstract class Widget implements IWidget
 {
-    /**
-     * Widget context
-     * @var IWidgetContext
-     */
-    private $context = NULL;
+    const DEFAULT_VIEW = 'default';
+
+    /** @var string */
+    private $view = self::DEFAULT_VIEW;
 
     /**
-     * Set context
-     * @param IWidgetContext $context
+     * Set view
+     * @param string $view
      * @return IWidget
      */
-    public function setContext(IWidgetContext $context = NULL)
+    final public function setView($view = self::DEFAULT_VIEW)
     {
-        $this->context = $context;
+        $this->view = (string) $view;
         return $this;
     }
 
     /**
-     * Get context
-     * @return IWidgetContext
+     * Get view
+     * @return string
      */
-    protected function getContext()
+    final protected function getView()
     {
-        return $this->context;
+        return $this->view;
     }
 
     /**
      * Get user
      * @return User
      */
-    public function getUser()
+    final public function getUser()
     {
         global $g_user;
         return $g_user;
