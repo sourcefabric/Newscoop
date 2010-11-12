@@ -104,7 +104,10 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 <script type="text/javascript">
 $(document).ready(function() {
     $('.context').widgets({
-        default_context: g_default_context,
+        localizer: {
+            remove: '<?php putGS('Remove widget'); ?>',
+            info: '<?php putGS('Widget info'); ?>',
+        }
     });
 });
 </script>

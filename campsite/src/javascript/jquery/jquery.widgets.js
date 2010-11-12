@@ -6,11 +6,9 @@
 $.fn.widgets = function (options) {
     var contexts = this;
     var settings = {
-        url: '',
-        security_token: '',
-        default_context: 'preview',
         widgets: '> .widget',
         controls: '> .header',
+        localizer: {},
     };
 
     /**
@@ -45,7 +43,7 @@ $.fn.widgets = function (options) {
             var meta = $('dl.meta', widget);
 
             // add min/max button
-            $('<a class="minmax" href="#" title="Fullscreen">Fullscreen</a>')
+            $('<a class="minmax" href="#">full</a>')
                 .prependTo(controls)
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
@@ -68,6 +66,9 @@ $.fn.widgets = function (options) {
                     // hide other buttons
                     $('a.info, a.minmax', full).detach();
 
+                    // normal cursor
+                    $(settings.controls, full).css('cursor', 'auto');
+
                     // load content
                     callServer(['WidgetManager', 'GetWidgetContent'], [
                         widget.attr('id'),
@@ -83,7 +84,7 @@ $.fn.widgets = function (options) {
                 });
 
             // add info button
-            $('<a class="info" href="#" title="Info">i</a>')
+            $('<a class="info" href="#" title="' + settings.localizer.info + '">i</a>')
                 .prependTo(controls)
                 .click(function() {
                     meta.toggle();
@@ -92,7 +93,7 @@ $.fn.widgets = function (options) {
             meta.hide().click(function() { $(this).hide(); });
 
             // add close button
-            $('<a class="close" href="#" title="Remove">x</a>')
+            $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
                 .prependTo(controls)
                 .click(function() {
                     callServer(['WidgetManager', 'RemoveWidget'], [
@@ -100,11 +101,13 @@ $.fn.widgets = function (options) {
                         ], function(json) {
                             widget.hide(500, function() {
                                 $(this).detach();
-                                updateOrder();
                             })
                         });
                     return false;
                 });
+
+            // add move cursor
+            controls.css('cursor', 'move');
         });
 
         // make sortable
@@ -113,12 +116,17 @@ $.fn.widgets = function (options) {
             placeholder: 'widget-placeholder',
             handle: '.header',
             forcePlaceholderSize: true,
-            delay: 100,
             opacity: 0.8,
             containment: 'document',
             stop: function(event, ui) {
+                // reload content
+                callServer(['WidgetManager', 'GetWidgetContent'], [
+                    ui.item.attr('id'),
+                    'default',
+                    ], function(json) {
+                        $('> .content > .scroll', ui.item).html(json);
+                    });
                 updateOrder();
-                getContent(ui.item);
             },
         }).css({
             minHeight: '40px',

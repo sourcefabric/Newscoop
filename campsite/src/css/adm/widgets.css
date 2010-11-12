@@ -2,8 +2,6 @@
 .context > .widget, .widget-placeholder {
     position: relative;
     margin-top: 13px;
-    background-color: #fff;
-    border: 3px solid #fff; /* same width as placeholder, color as bg */
 }
 
 .widget-placeholder {
@@ -13,11 +11,11 @@
 .widget > .header {
     padding: 3px 8px;
     position: relative;
-    cursor: move;
 }
 
 .widget > .content {
     padding: 5px;
+    background-color: #fff;
     border: 1px solid #ccc;
     -moz-border-radius: 5px;
     border-radius: 5px;
