@@ -25,18 +25,18 @@ class PollAnswerAttachment extends DatabaseObject {
     var $m_columnNames = array(
         // int - poll nr
         'fk_poll_nr',
-        
+
          // int - poll answer nr
         'fk_pollanswer_nr',
-        
+
         // int - attachment id
         'fk_attachment_id'
         );
-        
+
     private static $s_defaultOrder = array('byidentifier'=>'asc');
 
     /**
-     * Construct by passing in the primary key to access the 
+     * Construct by passing in the primary key to access the
      * pollanswer <-> attachment relations
      *
      * @param int $p_poll_nr
@@ -49,7 +49,7 @@ class PollAnswerAttachment extends DatabaseObject {
         $this->m_data['fk_poll_nr'] = $p_poll_nr;
         $this->m_data['fk_pollanswer_nr'] = $p_pollanswer_nr;
         $this->m_data['fk_attachment_id'] = $p_attachment_id;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -85,10 +85,10 @@ class PollAnswerAttachment extends DatabaseObject {
         $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
         Log::Message($logtext, null, 31);
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        
+
         return true;
     } // fn create
 
@@ -98,15 +98,15 @@ class PollAnswerAttachment extends DatabaseObject {
      * @return boolean
      */
     function delete()
-    {    
+    {
         // delete correspondending Attachment object if not used by other PollAnswers
         $PollAnswerAttachments = PollAnswerAttachment::getPollAnswerAttachments(null, null, $this->getProperty('fk_attachment_id'));
         if (count($PollAnswerAttachments) === 1) {
             $PollAnswerAttachment = current($PollAnswerAttachments);
-            $PollAnswerAttachment->getAttachment()->delete();   
+            $PollAnswerAttachment->getAttachment()->delete();
         }
-        
-            
+
+
         // Delete record from the database
         $deleted = parent::delete();
 
@@ -123,26 +123,26 @@ class PollAnswerAttachment extends DatabaseObject {
             Log::Message($logtext, null, 32);
         }
         */
-        
+
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
-        
+
         return $deleted;
     } // fn delete
 
-    
+
     /**
      * Call this if an PollAnswer is deleted
      *
      * @param int $p_publication_id
      */
     public static function OnPollAnswerDelete($p_poll_nr, $p_pollanswer_nr)
-    {      
+    {
         foreach (self::getPollAnswerAttachments($p_poll_nr, $p_pollanswer_nr) as $record) {
-            $record->delete();   
-        }   
+            $record->delete();
+        }
     }
-    
+
     /**
      * Get array of PollAnswerAttachment objects
      *
@@ -154,49 +154,49 @@ class PollAnswerAttachment extends DatabaseObject {
     {
         global $g_ado_db;
         $PollAnswerAttachments = array();
-        
+
         $PollAnswerAttachment = new PollAnswerAttachment();
-        
+
         if (!empty($p_poll_nr)) {
-            $where .= "AND fk_poll_nr = $p_poll_nr ";   
+            $where .= "AND fk_poll_nr = $p_poll_nr ";
         }
         if (!empty($p_pollanswer_nr)) {
-            $where .= "AND fk_pollanswer_nr = $p_pollanswer_nr ";   
+            $where .= "AND fk_pollanswer_nr = $p_pollanswer_nr ";
         }
         if (!empty($p_attachment_id)) {
-            $where .= "AND fk_attachment_id = $p_attachment_id ";   
+            $where .= "AND fk_attachment_id = $p_attachment_id ";
         }
-        
+
         if (empty($where)) {
-            return array();   
+            return array();
         }
-        
+
         $query = "SELECT    fk_poll_nr, fk_pollanswer_nr, fk_attachment_id
                   FROM      {$PollAnswerAttachment->m_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_pollanswer_nr";
         $res = $g_ado_db->query($query);
-         
+
         while ($row = $res->fetchRow()) {
-            $PollAnswerAttachments[] = new PollAnswerAttachment($row['fk_poll_nr'], $row['fk_pollanswer_nr'], $row['fk_attachment_id']);      
-        } 
-        
-        return $PollAnswerAttachments;    
+            $PollAnswerAttachments[] = new PollAnswerAttachment($row['fk_poll_nr'], $row['fk_pollanswer_nr'], $row['fk_attachment_id']);
+        }
+
+        return $PollAnswerAttachments;
     }
-    
+
     /**
-     * Get the correspondending Attachment object 
+     * Get the correspondending Attachment object
      * for an PollAnswerAttachment
      *
      * @return object Attachment
      */
     public function getAttachment()
     {
-        $Attachment = new Attachment($this->getProperty('fk_attachment_id'));   
-        
+        $Attachment = new Attachment($this->getProperty('fk_attachment_id'));
+
         return $Attachment;
     }
-    
+
         /**
      * Create a copy of an answer set.
      *
@@ -209,27 +209,27 @@ class PollAnswerAttachment extends DatabaseObject {
     {
         $ParentPoll = new Poll($p_language_id, $p_parent_nr);
         $parentAnswers = $ParentPoll->getAnswers();
-        
+
         foreach ($parentAnswers as $ParentPollAnswer) {
-            $TargetPollAnswer = new PollAnswer($p_language_id, 
-                                               $p_poll_nr, 
+            $TargetPollAnswer = new PollAnswer($p_language_id,
+                                               $p_poll_nr,
                                                $ParentPollAnswer->getNumber());
-            if ($TargetPollAnswer->exists()) {                                   
+            if ($TargetPollAnswer->exists()) {
                 $parentPollAnswerAttachments = $ParentPollAnswer->getPollAnswerAttachments();
-                
+
                 foreach ($parentPollAnswerAttachments as $ParentPollAnswerAttachment) {
                     $TargetPollAnswerAttachment = new PollAnswerAttachment($p_poll_nr,
                                                                            $ParentPollAnswerAttachment->getProperty('fk_pollanswer_nr'),
                                                                            $ParentPollAnswerAttachment->getProperty('fk_attachment_id'));
-                    $TargetPollAnswerAttachment->create();    
+                    $TargetPollAnswerAttachment->create();
                 }
             }
         }
     }
 
-    
+
     /////////////////// Special template engine methods below here /////////////////////////////
-    
+
     /**
      * Gets an issue list based on the given parameters.
      *
@@ -246,14 +246,14 @@ class PollAnswerAttachment extends DatabaseObject {
     public static function GetList(array $p_parameters, $p_order = null, $p_start = 0, $p_limit = 0, &$p_count)
     {
         global $g_ado_db;
-        
+
         if (!is_array($p_parameters)) {
             return null;
         }
-        
+
         // adodb::selectLimit() interpretes -1 as unlimited
         if ($p_limit == 0) {
-            $p_limit = -1;   
+            $p_limit = -1;
         }
 
         // sets the where conditions
@@ -269,9 +269,9 @@ class PollAnswerAttachment extends DatabaseObject {
                 $pollanswer_nr = $comparisonOperation['right'];
             }
         }
-        
+
         $sqlClauseObj = new SQLSelectClause();
-        
+
         // sets the columns to be fetched
         $tmpPollAnswerAttachment = new PollAnswerAttachment($language_id, $poll_nr);
 		$columnNames = $tmpPollAnswerAttachment->getColumnNames(true);
@@ -283,15 +283,15 @@ class PollAnswerAttachment extends DatabaseObject {
         $mainTblName = $tmpPollAnswerAttachment->getDbTableName();
         $sqlClauseObj->setTable($mainTblName);
         unset($tmpPollAnswerAttachment);
-        
+
 
         if (empty($pollanswer_nr) || empty($poll_nr)) {
-            return;   
+            return;
         }
-             
-        $sqlClauseObj->addWhere("fk_poll_nr = $poll_nr");
-        $sqlClauseObj->addWhere("fk_pollanswer_nr = $pollanswer_nr");  
-        
+
+        $sqlClauseObj->addWhere("fk_poll_nr = '" . $g_ado_db->escape($poll_nr) . "'");
+        $sqlClauseObj->addWhere("fk_pollanswer_nr = '" . $g_ado_db->escape($pollanswer_nr) . "'");
+
         if (!is_array($p_order)) {
             $p_order = array();
         }
@@ -302,16 +302,16 @@ class PollAnswerAttachment extends DatabaseObject {
         foreach ($order as $orderColumn => $orderDirection) {
             $sqlClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
         }
-        
+
         $sqlQuery = $sqlClauseObj->buildQuery();
-        
+
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
         $p_count = $countRes->recordCount();
-        
+
         //get the wanted rows
         $pollAnswerAttachments = $g_ado_db->Execute($sqlQuery);
-        
+
         // builds the array of poll objects
         $pollAnswerAttachmentsList = array();
         while ($pollAnswerAttachment = $pollAnswerAttachments->FetchRow()) {
@@ -323,7 +323,7 @@ class PollAnswerAttachment extends DatabaseObject {
 
         return $pollAnswerAttachmentsList;
     } // fn GetList
-    
+
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
@@ -354,7 +354,7 @@ class PollAnswerAttachment extends DatabaseObject {
 
         return $comparisonOperation;
     } // fn ProcessListParameters
-    
+
    /**
      * Processes an order directive coming from template tags.
      *
@@ -372,7 +372,7 @@ class PollAnswerAttachment extends DatabaseObject {
             switch (strtolower($field)) {
                 case 'byidentifier':
                     $dbField = 'fk_attachment_id';
-                    break;                   
+                    break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';

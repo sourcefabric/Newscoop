@@ -75,7 +75,7 @@ class ArticleAuthor extends DatabaseObject {
         return $this->m_data['fk_author_id'];
     } // fn getAuthorId
 
-    
+
     public function createRow($articleNumber, $languageId, $authorId, $typeId)
     {
         global $g_ado_db;
@@ -172,7 +172,7 @@ class ArticleAuthor extends DatabaseObject {
         $sql = sprintf($sql,  $languageId,$articleNumber);
         return $g_ado_db->Execute($sql);
     }
-    
+
     public static function OnArticleLanguageDelete($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
@@ -259,13 +259,13 @@ class ArticleAuthor extends DatabaseObject {
 
             switch (key($comparisonOperation)) {
             case 'fk_article_number':
-                $whereCondition = 'fk_article_number = '
-                    .$comparisonOperation['fk_article_number'];
+                $whereCondition = "fk_article_number = '"
+                    .$g_ado_db->escape($comparisonOperation['fk_article_number']) . "'";
                 $hasArticleNr = true;
                 break;
             case 'fk_language_id':
-                $whereCondition = '(fk_language_id IS NULL OR '
-                    .'fk_language_id = '.$comparisonOperation['fk_language_id'].')';
+                $whereCondition = "(fk_language_id IS NULL OR fk_language_id = '"
+                	.$g_ado_db->escape($comparisonOperation['fk_language_id'])."')";
                 break;
             }
 
