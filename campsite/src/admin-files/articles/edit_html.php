@@ -989,9 +989,6 @@ window.location.reload();
 <span id="dialogBox" style="display:none">
     <img src="http://us.i1.yimg.com/us.yimg.com/i/us/per/gr/gp/rel_interstitial_loading.gif" />
 </span>
-<style>
-@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.5.custom.css);
-</style>
 <script type="text/javascript">
 // datepicker for date
 $('.datepicker').datepicker({
