@@ -39,7 +39,7 @@ $(document).ready(function() {
                 flashMessage('<?php putGS('Widget added to dashboard.'); ?>');
                 a.hide();
                 dashboard_id = dashboard_id + 1;
-                if (dashboard_id > 3) {
+                if (dashboard_id > 2) {
                     dashboard_id = 1;
                 }
                 a.closest('li').addClass('ui-state-highlight');
