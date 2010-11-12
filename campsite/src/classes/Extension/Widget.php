@@ -9,8 +9,7 @@
  */
 
 require_once dirname(__FILE__) . '/IWidget.php';
-
-camp_load_translation_strings('Widget');
+require_once WWW_DIR . '/admin-files/localizer/Localizer.php';
  
 /**
  * Widget interace
@@ -38,7 +37,7 @@ abstract class Widget implements IWidget
      * Get view
      * @return string
      */
-    final protected function getView()
+    final public function getView()
     {
         return $this->view;
     }

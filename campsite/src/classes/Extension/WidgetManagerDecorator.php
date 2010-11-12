@@ -8,6 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . '/../DatabaseObject.php';
 require_once dirname(__FILE__) . '/IWidget.php';
 
 /**
@@ -95,8 +96,10 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     public function getId($generate = FALSE)
     {
         if (empty($this->m_data['id']) && $generate) {
-            parent::create();
-            $this->fetch();
+            $this->save();
+            $this->fetch(); // load id
+        } else if (!isset($this->m_data['id'])) {
+            $this->m_data['id'] = 0;
         }
 
         return (int) $this->m_data['id'];
@@ -144,6 +147,10 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
      */
     public function save($p_columns = NULL)
     {
+        // init vals
+        $this->getPath();
+        $this->getClass();
+
         if ($this->getId() == 0) {
             parent::create($p_columns);
         } else {

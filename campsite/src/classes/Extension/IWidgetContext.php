@@ -13,17 +13,10 @@
  */
 interface IWidgetContext
 {
-    const DEFAULT_NAME = 'preview';
-
     /**
      * @return string
      */
     public function getName();
-
-    /**
-     * @return bool
-     */
-    public function isDefault();
 
     /**
      * Render context

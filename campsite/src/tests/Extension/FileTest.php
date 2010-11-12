@@ -1,6 +1,14 @@
 <?php
-
-require_once dirname(__FILE__) . '/../bootstrap.php';
+/**
+ * @package Campsite
+ *
+ * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @copyright 2010 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @link http://www.sourcefabric.org
+ */
+ 
+require_once dirname(__FILE__) . '/AllTests.php';
 require_once WWW_DIR . '/classes/Extension/File.php';
 
 class Extension_FileTest extends PHPUnit_Framework_TestCase

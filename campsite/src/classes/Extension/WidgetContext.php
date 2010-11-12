@@ -35,29 +35,20 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     /**
      * @param string $name
      */
-    public function __construct($name = NULL)
+    public function __construct($name)
     {
         parent::__construct($this->m_columnNames);
-
-        if ($name === NULL) {
-            $name = self::DEFAULT_NAME;
-        } else {
-            $name = strtolower($name);
-        }
-
-        $this->m_data['name'] = $name;
-        if ($name != self::DEFAULT_NAME) { // load context id
-            $this->fetch();
-            if (empty($this->m_data['id'])) { // store new context
-                $this->create(array(
-                    'name' => $name,
-                ));
-            }
+        $this->m_data['name'] = strtolower($name);
+        $this->fetch();
+        if (empty($this->m_data['id'])) { // store new context
+            $this->create(array(
+                'name' => $this->getName(),
+            ));
         }
     }
 
     /**
-     * Get id.
+     * Get id
      * @return int
      */
     public function getId()
@@ -66,7 +57,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Get name.
+     * Get name
      * @return string
      */
     public function getName()
@@ -75,7 +66,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Get context widgets.
+     * Get context widgets
      * @return array of IWidget
      */
     public function getWidgets()
@@ -87,23 +78,15 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
-     * Is default?
-     * @return bool
-     */
-    public function isDefault()
-    {
-        return $this->getName() == self::DEFAULT_NAME;
-    }
-
-    /**
-     * Render context.
+     * Render context
      * @return void
      */
     public function render()
     {
         $classes = array('context');
 
-        echo '<ul id="', $this->getName(), '" class="', implode(' ', $classes), '">', "\n";
+        echo '<ul id="', $this->getName();
+        echo '" class="', implode(' ', $classes), '">', "\n";
         foreach ($this->getWidgets() as $widget) {
             $widget->render();
         }

@@ -24,12 +24,11 @@ class WidgetManager
 
     /**
      * Get available widgets for specified user
-     * @param int $p_user_id
      * @return array of IWidget
      */
-    public static function GetAvailable($p_user_id)
+    public static function GetAvailable()
     {
-        global $g_ado_db;
+        global $g_ado_db, $g_user;
 
         // get all widgets
         $index = new Extension_Index();
@@ -40,7 +39,8 @@ class WidgetManager
         $user_widgets = array();
         $queryStr = 'SELECT id, path, class, fk_widgetcontext_id
             FROM widget w LEFT JOIN widgetcontext_widget wcw
-                ON (w.id = wcw.fk_widget_id AND wcw.fk_user_id = ' . ((int) $p_user_id) . ')';
+                ON (w.id = wcw.fk_widget_id
+                AND wcw.fk_user_id = ' . $g_user->getUserId() . ')';
         $rows = $g_ado_db->GetAll($queryStr);
         foreach ($rows as $row) {
             $user_widgets[self::FormatId($row['path'], $row['class'])] = $row;

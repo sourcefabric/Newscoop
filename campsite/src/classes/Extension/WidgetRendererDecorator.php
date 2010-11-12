@@ -62,7 +62,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
      */
     public function renderMeta()
     {
-        echo '<dl class="meta">', "\n";
+        ob_start();
         foreach (self::$metakeys as $key) {
             $method = 'get' . $key;
             if (!method_exists($this, $method)) {
@@ -75,8 +75,21 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
             }
 
             echo '<dt>', getGS($key), ':</dt>', "\n";
-            echo '<dd>', $value, '</dd>', "\n";
+            echo '<dd>';
+            if (preg_match('#^http://#', $value)) { // generate link
+                $title = str_replace('http://', '', $value);
+                echo '<a href="', $value, '" target="_blank">';
+                echo $title, '</a>';
+            } else {
+                echo $value;
+            }
+            echo '</dd>', "\n";
         }
-        echo '</dl>', "\n";
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        if (!empty($content)) {
+            echo "<dl class=\"meta\">\n$content\n</dl>";
+        }
     }
 }
