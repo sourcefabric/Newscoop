@@ -70,7 +70,8 @@ final class CampContext
 	                         'searchresults'=>array('class'=>'SearchResults',
 	                                                'list'=>'search_results', 'url_id'=>'src'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
-	                         					'url_id'=>'tp')
+	                         					'url_id'=>'tp'),
+    						 'images'=>array('class'=>'Images', 'list'=>'images', 'url'=>'img')
     );
 
     /**

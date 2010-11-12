@@ -251,13 +251,13 @@ class ArticleAudioclip extends DatabaseObject {
 
             switch (key($comparisonOperation)) {
             case 'fk_article_number':
-                $whereCondition = 'fk_article_number = '
-                    .$comparisonOperation['fk_article_number'];
+                $whereCondition = "fk_article_number = '"
+                    .$g_ado_db->escape($comparisonOperation['fk_article_number']) . "'";
                 $hasArticleNr = true;
                 break;
             case 'fk_language_id':
-                $whereCondition = '(fk_language_id IS NULL OR '
-                    .'fk_language_id = '.$comparisonOperation['fk_language_id'].')';
+                $whereCondition = "(fk_language_id IS NULL OR fk_language_id = '"
+                	.$g_ado_db->escape($comparisonOperation['fk_language_id'])."')";
                 break;
             }
 

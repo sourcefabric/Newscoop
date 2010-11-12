@@ -26,6 +26,8 @@ final class MetaImage extends MetaDbObject {
         $this->m_properties['place'] = 'Place';
         $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
+        $this->m_properties['last_update'] = 'LastModified';
+        $this->m_properties['caption'] = 'Caption';
 
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';
@@ -41,6 +43,8 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['imageurl'] = 'getImageUrl';
         $this->m_customProperties['thumbnailurl'] = 'getThumbnailUrl';
+        $this->m_customProperties['is_local'] = 'isLocal';
+        $this->m_customProperties['type'] = 'getType';
     } // fn __construct
 
 
@@ -110,15 +114,15 @@ final class MetaImage extends MetaDbObject {
 
     public function getImageUrl()
     {
-        $url = $this->m_dbObject->getImageUrl(); 
-        return $url;   
+        $url = $this->m_dbObject->getImageUrl();
+        return $url;
     }
 
 
     public function getThumbnailUrl()
     {
-        $url = $this->m_dbObject->getThumbnailUrl(); 
-        return $url;   
+        $url = $this->m_dbObject->getThumbnailUrl();
+        return $url;
     }
 
 
@@ -131,6 +135,17 @@ final class MetaImage extends MetaDbObject {
     protected function getWeekDayName() {
         $dateTime = new MetaDatetime($this->m_dbObject->getProperty('Date'));
         return $dateTime->getWeekDayName();
+    }
+
+
+    protected function isLocal()
+    {
+    	return $this->m_dbObject->isLocal();
+    }
+
+    protected function getType()
+    {
+    	return $this->m_dbObject->getType();
     }
 
 

@@ -1002,38 +1002,22 @@ abstract class CampURI
                 }
                 break;
             case 'image':
-                $imageNo = isset($p_params[0]) ? array_shift($p_params) : null;
-                $context = CampTemplate::singleton()->context();
-                if (!is_null($imageNo)) {
-                    $oldImage = $context->image;
+            	$this->m_buildQueryArray = array();
+            	if (isset($p_params[0]) && is_numeric($p_params[0])) {
+            		$this->processOldImageOptions($imageNo, $p_params);
+            	} else {
+            		$this->processImageOptions($imageNo, $p_params);
+            	}
+
+            	$context = CampTemplate::singleton()->context();
+            	if (!is_null($imageNo)) {
+                	$oldImage = $context->image;
                     $articleImage = new ArticleImage($context->article->number, null, $imageNo);
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
-                if ($context->image->article_index !== null) {
-                    $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/get_img';
-                    $this->m_buildQueryArray = array();
-                    $this->m_buildQueryArray['NrImage'] = $context->image->article_index;
-                    $this->m_buildQueryArray['NrArticle'] = $context->article->number;
-                    if(isset($p_params[0]) && is_numeric($p_params[0])) {
-                        $this->m_buildQueryArray['ImageRatio'] = $p_params[0];
-                    } else {
-                    	while (isset($p_params[0])) {
-                    		$option = strtolower(array_shift($p_params));
-                    		if ($option != 'width' && $option != 'height') {
-                    			CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
-                    			break;
-                    		}
-                    		if (isset($p_params[0]) && is_numeric($p_params[0])) {
-                    			$option_value = array_shift($p_params);
-                    		} else {
-                    			CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
-                    			break;
-                    		}
-                    		$param = 'Image' . ucfirst($option);
-                    		$this->m_buildQueryArray[$param] = $option_value;
-                    	}
-                    }
-                }
+                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/get_img';
+                $this->m_validURI = $context->image->defined();
+                $this->m_buildQueryArray['ImageId'] = $context->image->number;
                 if (!is_null($imageNo)) {
                     $context->image = $oldImage;
                 }
@@ -1099,6 +1083,70 @@ abstract class CampURI
             default:
                 ;
         }
+    }
+
+
+    /**
+     * Process the image options given in the new format:
+     * <attribute> <value>
+     * where <attribute> may be one of: number, ratio, width, height
+     * and <value> an integer
+     * @param integer $p_imageNo
+     * @param array $p_params
+     */
+    private function processImageOptions(&$p_imageNo, array $p_params)
+    {
+    	$p_imageNo = null;
+    	for ($parIndex = 0; isset($p_params[$parIndex]); $parIndex++) {
+    		$parameter = strtolower($p_params[$parIndex]);
+    		$parIndex++;
+    		if (!in_array($parameter, array('number', 'ratio', 'width', 'height'))) {
+    			CampTemplate::trigger_error("Invalid image parameter '$parameter' in URL statement");
+    			break;
+    		}
+    		if (!isset($p_params[$parIndex]) || !is_numeric($p_params[$parIndex])) {
+    			CampTemplate::trigger_error("Invalid image $parameter in URL statement");
+    			break;
+    		}
+    		if ($parameter == 'number') {
+    			$p_imageNo = $p_params[$parIndex];
+    		} else {
+    			$this->m_buildQueryArray['Image' . ucfirst($parameter)] = $p_params[$parIndex];
+    		}
+    	}
+    }
+
+
+    /**
+     * Process the image options given in the old format (for compatibility):
+     * [<image_number> [<image_ratio>]]
+     * or:
+     * [<image_number> [width <image_width> | height <image_height>]
+     * @param integer $p_imageNo
+     * @param array $p_params
+     */
+    private function processOldImageOptions(&$p_imageNo, array $p_params)
+    {
+    	$p_imageNo = isset($p_params[0]) ? array_shift($p_params) : null;
+    	if(isset($p_params[0]) && is_numeric($p_params[0])) {
+    		$this->m_buildQueryArray['ImageRatio'] = $p_params[0];
+    	} else {
+    		while (isset($p_params[0])) {
+    			$option = strtolower(array_shift($p_params));
+    			if ($option != 'width' && $option != 'height') {
+    				CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
+    				break;
+    			}
+    			if (isset($p_params[0]) && is_numeric($p_params[0])) {
+    				$option_value = array_shift($p_params);
+    			} else {
+    				CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
+    				break;
+    			}
+    			$param = 'Image' . ucfirst($option);
+    			$this->m_buildQueryArray[$param] = $option_value;
+    		}
+    	}
     }
 
 

@@ -3,7 +3,6 @@
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 
 /**
@@ -71,20 +70,21 @@ class CampGetImage
     /**
      * Class constructor.
      *
-     * @param integer $p_imageNr
-     *      The image number within the article
-     * @param integer $p_articleNr
-     *      The article number
+     * @param integer $p_imageId
+     *      The image identifier
      * @param integer $p_imageRatio
      *      The ratio for image resize
+     * @param integer $p_imageWidth
+     *      The max width for image resize
+     * @param integer $p_imageHeight
+     *      The max height for image resize
      */
-    public function __construct($p_imageNr, $p_articleNr, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0)
+    public function __construct($p_imageId, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0)
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
         $this->m_ttl = SystemPref::Get('ImagecacheLifetime');
 
-        if (empty($p_articleNr) || empty($p_imageNr)
-        || !is_numeric($p_articleNr) || !is_numeric($p_imageNr)) {
+        if (empty($p_imageId) || !is_numeric($p_imageId)) {
             $this->ExitError('Invalid parameters');
         }
         if($p_imageRatio > 0 && $p_imageRatio < 100) {
@@ -96,7 +96,7 @@ class CampGetImage
         if($p_imageHeight > 0) {
             $this->m_resizeHeight = $p_imageHeight;
         }
-        $this->GetImage($p_imageNr, $p_articleNr);
+        $this->GetImage($p_imageId);
     }   // fn __construct
 
 
@@ -305,17 +305,11 @@ class CampGetImage
     /**
      * Receives image name, type and url if any from DB.
      *
-     * @param string $p_imageNr
-     * @param string $p_articleNr
+     * @param string $p_imageId
      */
-    private function GetImage($p_imageNr, $p_articleNr)
+    private function GetImage($p_imageId)
     {
-        $articleImage = new ArticleImage($p_articleNr, null, $p_imageNr);
-        if (!$articleImage->exists()) {
-        	$this->ExitError('Image not found');
-        }
-        $this->m_image = new Image($articleImage->getImageId());
-
+        $this->m_image = new Image($p_imageId);
         if (!$this->m_image->exists()) {
             $this->ExitError('Image not found');
         }
