@@ -62,3 +62,32 @@ ALTER TABLE Images ADD FULLTEXT(Description);
 ALTER TABLE Images ADD FULLTEXT(Photographer);
 ALTER TABLE Images ADD FULLTEXT(Place);
 ALTER TABLE Images ADD FULLTEXT(Caption);
+
+DROP TABLE IF EXISTS `widget`;
+CREATE TABLE IF NOT EXISTS `widget` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) NOT NULL DEFAULT '',
+  `class` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`path`, `class`)
+);
+
+DROP TABLE IF EXISTS `widgetcontext`;
+CREATE TABLE IF NOT EXISTS `widgetcontext` (
+  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+);
+
+DROP TABLE IF EXISTS `widgetcontext_widget`;
+CREATE TABLE IF NOT EXISTS `widgetcontext_widget` (
+  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
+  `fk_widget_id` mediumint(8) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL,
+  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `is_collapsed` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_user_id`, `fk_widget_id`),
+  INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
+);
+
