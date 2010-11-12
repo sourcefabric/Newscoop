@@ -1,13 +1,12 @@
 <?php
 class HelloWorld extends Widget
 {
-    public function getTitle()
-    {
-        return 'Hello world';
-    }
-
     public function render()
     {
-        echo '<p>Hello world!</p>';
+        echo '<p>', $this->_('Hello world!'), '</p>';
+
+        if ($this->isFullscreen()) {
+            echo '<p>Hi!</p>';
+        }
     }
 }
