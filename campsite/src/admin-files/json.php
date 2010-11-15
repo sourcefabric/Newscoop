@@ -19,6 +19,10 @@ $rules = array(
     'ArticleList::doAction' => '', // checked per action
     'ArticleList::doData' => '', // everyone can see articles
     'ArticleList::doOrder' => 'Publish',
+    'WidgetManager::AddWidget' => '',
+    'WidgetManager::RemoveWidget' => '',
+    'WidgetManager::GetWidgetContent' => '',
+    'WidgetManager::SetContextWidgets' => '',
 );
 
 // parse callback
