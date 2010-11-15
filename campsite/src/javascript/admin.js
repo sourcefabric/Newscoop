@@ -106,7 +106,7 @@ function callServer(p_callback, p_args, p_handle)
 {
     var flash = flashMessage('Processing...', null, true);
     $.ajax({
-        'url': g_admin_endpoint,
+        'url': g_admin_url + '/json.php',
         'type': 'POST',
         'data': {
             'security_token': g_security_token,
@@ -126,7 +126,29 @@ function callServer(p_callback, p_args, p_handle)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
-            flashMessage(g_msg_session_expired, 'error', true);
+            var login = window.open(g_admin_url + '/login.php', 'login', 'height=400,width=500');
+            login.focus();
+            request = { // store request
+                callback: p_callback,
+                args: p_args,
+                handle: p_handle,
+            };
+            flash.hide();
+            popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
         },
     });
+}
+
+/**
+ * Set security token and call stored request
+ * @param string security_token
+ * @return void
+ */
+function setSecurityToken(security_token)
+{
+    g_security_token = security_token;
+    callServer(request.callback, request.args, request.handle);
+    if (popupFlash) {
+        popupFlash.hide();
+    }
 }

@@ -332,9 +332,13 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/widgets.css" />
   <script type="text/javascript">
     var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
-    var g_admin_endpoint = '/<?php echo $ADMIN; ?>/json.php';
+    var g_admin_url = '/<?php echo $ADMIN; ?>';
     var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
-    var g_msg_session_expired = '<?php putGS('Session expired. Please <a href="/$1">Log in</a> again.', "$ADMIN/login.php"); ?>';
+    if (opener && !opener.closed && opener.setSecurityToken) {
+        opener.setSecurityToken(g_security_token);
+        opener.focus();
+        window.close();
+    }
   </script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
