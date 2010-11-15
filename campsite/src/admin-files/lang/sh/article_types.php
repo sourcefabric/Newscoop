@@ -1,6 +1,6 @@
 <?php 
-regGS("Rename article type '$1'", "");
-regGS("Invalid article type '$1'.", "");
+regGS("Rename article type '$1'", "Preimenuj tip teksta '$1'");
+regGS("Invalid article type '$1'.", "Pogrešan tip teksta '$1'.");
 regGS("You cannot merge the same type into itself.", "Ne možete spojiti tip članka sa samim sobom.");
 regGS("View the source ($1) version of $2", "Pogledajte izvornu ($1) verziju $2");
 regGS("View of original ($1) $2", "Pogledaj originalni ($1) $2");

@@ -1,7 +1,7 @@
 <?php 
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "");
+regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Zakazana akcija obrisana iz izdanja #$1: \"$2\" (Publikacija: $3)");
+regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Zakazana akcija $1 za izdanje #$2: \"$3\" (Publikacija: $4)");
+regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Izdanje \"$1\" ($2) izmenjeno u publikaciji \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednosti koje pokušavate da podesite su u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u ovoj publikaciji za isti jezik.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jezik i URL naziv moraju biti jedinstveni za svako izdanje u publikaciji.");

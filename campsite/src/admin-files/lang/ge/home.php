@@ -99,4 +99,5 @@ regGS("You do not have the right to access this page.", "");
 regGS("Login failed", "");
 regGS("Please make sure that you typed the correct user name and password.", "");
 regGS("If your problem persists please contact the site administrator $1", "");
+regGS("Backup/Restore", "");
 ?>

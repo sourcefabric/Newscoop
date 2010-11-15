@@ -1,8 +1,8 @@
 <?php 
-regGS("Allow password recovery:", "");
-regGS("Template Cache Handler:", "");
-regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
-regGS("Database Cache Engine:", "");
+regGS("Allow password recovery:", "Разрешить восстановление пароля:");
+regGS("Template Cache Handler:", "Шаблон управления кешированием:");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Ошибка: PHP $1должен быть доступен для системы кеширования шаблона.");
+regGS("Database Cache Engine:", "Инструмент кеширования Базы данных:");
 regGS("Zoom enabled for images in article content?", "Включить масштабирование изображений в статьях?");
 regGS("Image Resizing Width:", "Ширина  масштабируемого изображения:");
 regGS("Image Resizing Width", "Ширина  масштабируемого изображения");

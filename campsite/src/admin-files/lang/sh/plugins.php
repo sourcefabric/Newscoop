@@ -1,5 +1,5 @@
 <?php 
-regGS("Some plugins have to be updated. Please press the save button.", "");
+regGS("Some plugins have to be updated. Please press the save button.", "Neki plaginovi moraju biti apdejtovani. Pritisnite dugme 'snimi'.");
 regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Potrebna je potvrda za brisanje plugina $1! Svi podaci vezani za ovaj plugin biće obrisani!");
 regGS("You do not have the right to manage plugins.", "Nemate pravo upravljanja pluginovima");
 regGS("Version", "Verzija");

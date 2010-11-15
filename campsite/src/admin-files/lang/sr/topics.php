@@ -1,11 +1,11 @@
 <?php 
-regGS("Topics order saved.", "");
-regGS("Show languages", "");
-regGS("Save order", "");
-regGS("Click to edit", "");
-regGS("Add root topic", "");
-regGS("Topic was deleted.", "");
-regGS("The topic name is already in use by another topic.", "");
+regGS("Topics order saved.", "Редослед тема је сниљен.");
+regGS("Show languages", "Прикажи језике");
+regGS("Save order", "Сними редослед");
+regGS("Click to edit", "Клик за уређивање");
+regGS("Add root topic", "Додај основну тему");
+regGS("Topic was deleted.", "Тема је обрисана");
+regGS("The topic name is already in use by another topic.", "Назив теме је већ у употреби");
 regGS("You must enter a name for the topic.", "Морате унети име теме.");
 regGS("You must choose a language for the topic.", "Морате изабрати језик за тему.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Ова тема има под-теме, па не може бити обрисана.");

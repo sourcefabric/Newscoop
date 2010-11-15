@@ -1,9 +1,9 @@
 <?php 
-regGS("Topics order saved.", "");
-regGS("Show languages", "");
-regGS("Save order", "");
-regGS("Click to edit", "");
-regGS("Add root topic", "");
+regGS("Topics order saved.", "Порядок тем сохранен.");
+regGS("Show languages", "Отобразить языки");
+regGS("Save order", "Сохранить порядок");
+regGS("Click to edit", "Кликните для редактирования");
+regGS("Add root topic", "Добавить основную тему");
 regGS("Topic was deleted.", "Тема удалена.");
 regGS("The topic name is already in use by another topic.", "Название этой темы уже используется в другой теме.");
 regGS("You must enter a name for the topic.", "Вы должны ввести название темы.");

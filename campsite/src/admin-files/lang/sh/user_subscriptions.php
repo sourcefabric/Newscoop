@@ -1,6 +1,6 @@
 <?php 
-regGS("Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)", "");
-regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "");
+regGS("Subscription added for user #$1 (Publication: $2, Active: $3, Type: $4)", "Pretplata dodata za korisnika #$1 (Publikacija: $2, Aktivna: $3, Tip: $4)");
+regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "Pretplata #$1 obrisana za korisnika #$2 (Publikacija: $3)");
 regGS("Please select one or more languages.", "Molimo izaberite jedan ili više jezika.");
 regGS("Regardless of the language", "Nezavisno od jezika");
 regGS("Individual languages", "Pojedinačni jezici");
