@@ -67,7 +67,7 @@ DROP TABLE IF EXISTS `widget`;
 CREATE TABLE IF NOT EXISTS `widget` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `path` varchar(255) NOT NULL DEFAULT '',
-  `class` varchar(255) NOT NULL DEFAULT '',
+  `class` varchar(78) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY (`path`, `class`)
 );
