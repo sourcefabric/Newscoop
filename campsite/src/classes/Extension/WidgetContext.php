@@ -17,8 +17,10 @@ require_once dirname(__FILE__) . '/WidgetManager.php';
  */
 class WidgetContext extends DatabaseObject implements IWidgetContext
 {
+    const TABLE = 'WidgetContext';
+
     /** @var string */
-    public $m_dbTableName = 'widgetcontext';
+    public $m_dbTableName = self::TABLE;
 
     /** @var string */
     public $m_keyColumnNames = array('name');

@@ -20,7 +20,8 @@ require_once dirname(__FILE__) . '/Index.php';
  */
 class WidgetManager
 {
-    const TABLE = 'widgetcontext_widget';
+    const TABLE = 'WidgetContext_Widget';
+    const TABLE_WIDGET = WidgetManagerDecorator::TABLE; // shortcut
 
     /**
      * Get available widgets for specified user
@@ -38,7 +39,7 @@ class WidgetManager
         // get used by user
         $user_widgets = array();
         $queryStr = 'SELECT id, path, class, fk_widgetcontext_id
-            FROM widget w LEFT JOIN widgetcontext_widget wcw
+            FROM ' . self::TABLE_WIDGET . ' w LEFT JOIN . ' . self::TABLE . ' wcw
                 ON (w.id = wcw.fk_widget_id
                 AND wcw.fk_user_id = ' . $g_user->getUserId() . ')';
         $rows = $g_ado_db->GetAll($queryStr);
@@ -73,7 +74,7 @@ class WidgetManager
         global $g_user, $g_ado_db;
 
         $queryStr = 'SELECT *
-            FROM widget w INNER JOIN widgetcontext_widget wcw
+            FROM ' . self::TABLE_WIDGET . ' w INNER JOIN ' . self::TABLE . ' wcw
                 ON w.id = wcw.fk_widget_id
             WHERE wcw.fk_user_id = ' . $g_user->getUserId() . '
                 AND wcw.fk_widgetcontext_id = ' . $context->getId() . '
@@ -104,14 +105,14 @@ class WidgetManager
         $context = self::GetWidgetContext($context);
 
         foreach (self::ParseWidgetIds($widgets) as $order => $id) {
-            $queryStr = 'UPDATE widgetcontext_widget
+            $queryStr = 'UPDATE ' . self::TABLE . '
                 SET fk_widgetcontext_id = ' . $context->getId() . ',
                     `order` = ' . $order . '
                 WHERE fk_widget_id = ' . $id . '
                     AND fk_user_id = ' . $g_user->getUserId();
             $g_ado_db->execute($queryStr);
-            if ($g_ado_db->Affected_Rows() <= 0 && !$context->isDefault()) { // not set
-                $queryStr = sprintf('INSERT INTO widgetcontext_widget
+            if ($g_ado_db->Affected_Rows() <= 0) { // not set
+                $queryStr = sprintf('INSERT INTO ' . self::TABLE . '
                     (fk_widgetcontext_id, fk_widget_id, fk_user_id, `order`) VALUES
                     (%d, %d, %d, %d)',
                     $context->getId(),
@@ -121,7 +122,7 @@ class WidgetManager
                 $g_ado_db->execute($queryStr);
             }
         }
-        $queryStr = 'DELETE FROM widgetcontext_widget WHERE fk_widgetcontext_id = 0';
+        $queryStr = 'DELETE FROM ' . self::TABLE . ' WHERE fk_widgetcontext_id = 0';
         $g_ado_db->execute($queryStr);
 
         return TRUE;
@@ -141,13 +142,13 @@ class WidgetManager
         $context = self::GetWidgetContext($context_name);
 
         // insert before - move others
-        $queryStr = 'UPDATE widgetcontext_widget
+        $queryStr = 'UPDATE ' . self::TABLE . '
             SET `order` = `order` + 1
             WHERE fk_widgetcontext_id = ' . $context->getId();
         $g_ado_db->execute($queryStr);
 
         // insert
-        $queryStr = sprintf('INSERT INTO widgetcontext_widget
+        $queryStr = sprintf('INSERT INTO ' . self::TABLE . '
             (fk_widgetcontext_id, fk_widget_id, fk_user_id, `order`) VALUES
             (%d, %d, %d, 0)',
             $context->getId(),
@@ -194,7 +195,7 @@ class WidgetManager
 
         // get widget file & class info
         $queryStr = 'SELECT id, path, class
-            FROM widget
+            FROM ' . self::TABLE_WIDGET . '
             WHERE id = ' . ( (int) $widget_id);
         $row = $g_ado_db->getRow($queryStr);
 

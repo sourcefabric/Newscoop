@@ -16,8 +16,10 @@ require_once dirname(__FILE__) . '/IWidget.php';
  */
 abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
 {
+    const TABLE = 'Widget';
+
     /** @var string */
-    public $m_dbTableName = 'widget';
+    public $m_dbTableName = self::TABLE;
 
     /** @var array */
     public $m_keyColumnNames = array('path', 'class');
