@@ -1,5 +1,5 @@
 <?php 
-regGS("Campsite Subhead", "");
+regGS("Campsite Subhead", "Podtitulek Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Nezdařilo se spojit s Campsite. Prosím zkontrolujte připojení k internetu.");
 regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Plánovaná činnost přidána pro článek #$1: \"$2\" (Publikace: $3, Vydání: $4, Rubrika: $5, Jazyk: $6)");
 regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Obsah upraven pro článek #$1: \"$2\" (Publikace: $3, Vydání: $4, Rubrika: $5, Jazyk: $6)");
@@ -138,4 +138,8 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit audio soubor \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

@@ -1,12 +1,12 @@
 <?php 
-regGS("You do not have the permission to change authors.", "");
-regGS("Please fill at least first name and last name.", "");
-regGS("Cannot add author type, this type already exists.", "");
-regGS("Author type removed.", "");
-regGS("Author type must be at least three characters long.", "");
-regGS("Author type added.", "");
-regGS("Are you sure you want to delete this author;", "");
-regGS("Are you sure you want to delete this author type?", "");
+regGS("You do not have the permission to change authors.", "Nemáte oprávnění měnit autory.");
+regGS("Please fill at least first name and last name.", "Prosíme vyplňte alespoň jméno a příjmení.");
+regGS("Cannot add author type, this type already exists.", "Není možné přidat typ autora, tento typ již existuje.");
+regGS("Author type removed.", "Typ autora odstraněn.");
+regGS("Author type must be at least three characters long.", "Typ autora musí obsahovat alespoň tři znaky.");
+regGS("Author type added.", "Typ autora přidán.");
+regGS("Are you sure you want to delete this author;", "Jste si jist, že chcete vymazat tohoto autora;");
+regGS("Are you sure you want to delete this author type?", "Jste si jist, že chcete vymazat tento typ autora?");
 regGS("User may change authors", "Uživatel smí měnit autory.");
 regGS("Unable to add new image, target directory is not writable.", "Nezdařilo se přidat nový obrázek. Do cílové složky nelze zapisovat.");
 regGS("Author saved.", "Autor uložen.");

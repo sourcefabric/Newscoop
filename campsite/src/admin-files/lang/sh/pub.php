@@ -1,10 +1,10 @@
 <?php 
-regGS("click to see issues", "");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
-regGS("Subscription default time for \"$1\":$2 deleted", "");
-regGS("Default subscription time for \"$1\":$2 changed", "");
+regGS("click to see issues", "kliknite da vidite izdanja");
+regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Sajt alias za publikaciju \"$1\" je promenjen u \"$2\".");
+regGS("The site alias \"$1\" has been added to publication \"$2\".", "Sajt alias \"$1\" je dodat publikaciji \"$2\".");
+regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Alias \"$1\" je obrisan iz publikacije \"$2\".");
+regGS("Subscription default time for \"$1\":$2 deleted", "Podrazumevano trajanje pretplate za \"$1\":$2 je obrisano");
+regGS("Default subscription time for \"$1\":$2 changed", "Podrazumevano trajanje pretplate za \"$1\":$2 je promenjeno");
 regGS("Moderator Address", "Adresa moderatora");
 regGS("From Address", "Adresa sa koje se šalje");
 regGS("Use CAPTCHA to prevent spam?", "Koristi CAPTCHA za prevenciju spama?");
@@ -76,4 +76,9 @@ regGS("There are $1 issue(s) left.", "Preostalo je $1 izdanja.");
 regGS("Time Unit", "Vremenska jedinica");
 regGS("Currency", "Valuta");
 regGS("Edit languages", "Uredi jezike");
+regGS("Search engine optimization", "Optimizacija pretraživača");
+regGS("Article title", "Naslov teksta");
+regGS("Article keywords", "Ključne reči");
+regGS("Article topics", "Teme");
+regGS("Invalid URL Template", "Šablon za prikaz pri pogrešnom URLu");
 ?>

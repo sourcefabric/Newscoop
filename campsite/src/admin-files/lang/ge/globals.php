@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "პლაგინები");
+regGS("Manage Plugins", "");
 regGS("Account", "მომხმარებლის მონაცემი");
 regGS("Items per page", "რაოდენობა ყოველ გვერდზე");
 regGS("Add new", "დამატება");
@@ -232,7 +234,6 @@ regGS("Approved", "დადასტურებული");
 regGS("Subject", "თემა");
 regGS("IP address:", "IP მისამართი");
 regGS("Email:", "Email:");
-regGS("Author:", "ავტორი:");
 regGS("Author", "ავტორი");
 regGS("Article name", "სტატიის სათაური");
 regGS("Hide article", "სტატიის დამალვა");
@@ -257,7 +258,10 @@ regGS("(optional)", "დამატებით");
 regGS("The URL you entered is invalid: '$1'", "შეყვანილი URL არასწორია: $1");
 regGS("There was an error logging in to the Campcaster server", "დაშვებული იყო შეცდომა Campcaster –ის სერვერში შესვლისას");
 regGS("Reads", "წაკითხვები");
-regGS("Plugins", "პლაგინები");
+regGS("Publish with issue", "");
+regGS("Universal List", "");
+regGS("Invalid security token!", "");
+regGS("Author:", "ავტორი:");
 regGS("User name", "მომხმარებელი");
 regGS("User Types", "მომხმარებლის ტიპები");
 regGS("Add new user account", "დაამატე ახალი მომხმარებლის მონაცემის ჩანაწერი");
@@ -273,7 +277,4 @@ regGS("There are $1 issue(s) left.", "დარჩა $1 ნომერი/ჟ�
 regGS("There are $1 keyword(s) left.", "დარჩა $1 საკვანძო სიტყვები: ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "");
 regGS("New field", "ახალი ველი");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
 ?>

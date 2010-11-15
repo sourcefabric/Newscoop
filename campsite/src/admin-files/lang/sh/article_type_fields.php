@@ -1,8 +1,8 @@
 <?php 
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
-regGS("The property '$1' is already in use.", "");
-regGS("Precision", "");
-regGS("Can not convert the field $1 from $2 to type $3.", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Ime polja je već u upotrebi kao osnovno svojstvo teksta. Sadržaj polja neće biti prikazan u šablonima.");
+regGS("The property '$1' is already in use.", "Svojstvo '$1' je već u upotrebi.");
+regGS("Precision", "Preciznost");
+regGS("Can not convert the field $1 from $2 to type $3.", "Nije moguće konvertovati polje $1 iz $2 u tip $3.");
 regGS("Are you sure you want to make $1 a $2 field?", "Da li ste sigurni da želite da od $1 napravite $2 polje");
 regGS("Is Content", "Sadržaj");
 regGS("Back to Article Types List", "Nazad na listu tipova članaka");

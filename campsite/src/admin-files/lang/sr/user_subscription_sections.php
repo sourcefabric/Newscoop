@@ -1,6 +1,6 @@
 <?php 
-regGS("Please select one or more sections.", "");
-regGS("There are no sections in this publication.", "");
+regGS("Please select one or more sections.", "Молимо изаберите једну или више рубрика");
+regGS("There are no sections in this publication.", "Нема рубрика у овој публикацији");
 regGS("You must input a number greater or equal to 0 into the $1 field.", "Морате унети број већи или једнак нули у поље $1.");
 regGS("Regardless of the language", "Независно од језика");
 regGS("Individual languages", "Појединачни језици");
