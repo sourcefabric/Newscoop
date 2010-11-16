@@ -1,0 +1,120 @@
+<?php
+/**
+ * @package Campsite
+ *
+ * @author Petr Jasek <petr.jasek@sourcefabric.org>
+ * @copyright 2010 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
+ * @link http://www.sourcefabric.org
+ */
+
+require_once dirname(__FILE__) . '/User.php';
+require_once dirname(__FILE__) . '/SecurityToken.php';
+require_once dirname(__FILE__) . '/../admin-files/localizer/Localizer.php';
+
+/**
+ * Server request class
+ */
+class ServerRequest
+{
+    const ERROR_NOT_CALLABLE = 1;
+    const ERROR_SECURITY_TOKEN = 2;
+    const ERROR_PERMISSION = 3;
+
+    /** @var callback */
+    private $callback = NULL;
+
+    /** @var string */
+    private $callable_name = '';
+
+    /** @var array */
+    private $args = array();
+
+    /** @var array */
+    private $rules = array();
+
+    /**
+     * @param callback $callback
+     * @param array $args
+     */
+    public function __construct($callback, $args = array())
+    {
+        $this->callback = $callback;
+        $this->args = (array) $args;
+
+        // check if callable
+        if (!is_callable($this->callback, false, $this->callable_name)) {
+            throw new InvalidArgumentException(
+                getGS("Callback '$1' is not callable.", $this->callable_name),
+                self::ERROR_NOT_CALLABLE
+            );
+        }
+    }
+
+    /**
+     * Allow certain callback
+     * @param string $callable_name
+     * @param string $permissions_required
+     * @return ServerRequest
+     */
+    public function allow($callable_name, $permission_required = '')
+    {
+        $this->rules[(string) $callable_name] = (string) $permission_required;
+        return $this;
+    }
+
+    /**
+     * Execute callback
+     * @return mixed
+     */
+    public function execute()
+    {
+        // token check
+        if (!$this->checkToken()) {
+            throw new InvalidArgumentException(
+                getGS('Invalid security token.'),
+                self::ERROR_SECURITY_TOKEN
+            );
+        }
+
+        // authorisation check
+        if (!$this->checkPermission()) {
+            throw new LogicException(
+                getGS('Access denied.'),
+                self::ERROR_PERMISSION
+            );
+        }
+
+        // TODO create object instance for non-static methods
+        return call_user_func_array($this->callable_name, $this->args);
+    }
+
+    /**
+     * Check permission
+     * @return bool
+     */
+    public function checkPermission()
+    {
+        global $g_user;
+
+        if (!isset($this->rules[$this->callable_name])) {
+            return FALSE;
+        }
+
+        $permission = $this->rules[$this->callable_name];
+        if (!empty($permission) && !$g_user->hasPermission($permission)) {
+            return FALSE;
+        }
+
+        return TRUE;
+    }
+
+    /**
+     * Check token
+     * @return bool
+     */
+    public function checkToken()
+    {
+        return SecurityToken::isValid();
+    }
+}

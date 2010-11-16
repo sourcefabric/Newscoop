@@ -10,60 +10,34 @@
 
 header('Content-type: application/json');
 
-require_once WWW_DIR . '/classes/User.php';
+require_once WWW_DIR . '/classes/ServerRequest.php';
 
-// permission action mapping
-// callback => required permissions
-// callback is Class::method or function
-$rules = array(
-    'ArticleList::doAction' => '', // checked per action
-    'ArticleList::doData' => '', // everyone can see articles
-    'ArticleList::doOrder' => 'Publish',
-    'WidgetManager::AddWidget' => '',
-    'WidgetManager::RemoveWidget' => '',
-    'WidgetManager::GetWidgetContent' => '',
-    'WidgetManager::SetContextWidgets' => '',
-);
-
-// parse callback
-$callback = $_REQUEST['callback'];
-$args = (array) $_REQUEST['args'];
+// include valid callbacks files
+// TODO replace with Zend_Loader
+require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
+require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
 
 try {
-    // check token
-    if (!SecurityToken::isValid()) {
-        throw new Exception(getGS('Invalid security token.'));
-    }
+    // init request
+    $serverRequest = new ServerRequest($_POST['callback'],
+        (array) $_POST['args']);
 
-    // check permissions
-    if (is_array($callback)) {
-        $action = implode('::', $callback);
-    } else {
-        $action = (string) $callback;
-    }
-    if (!isset($rules[$action])
-        || (!empty($rules[$action])
-            && !$g_user->hasPermission($rules[$action]))) {
-        throw new Exception(getGS('Access denied.'));
-    }
+    // set permissions
+    $serverRequest->allow('ArticleList::doAction'); // checked in handler
+    $serverRequest->allow('ArticleList::doData');
+    $serverRequest->allow('ArticleList::doOrder', 'Publish');
+    $serverRequest->allow('WidgetManager::AddWidget');
+    $serverRequest->allow('WidgetManager::RemoveWidget');
+    $serverRequest->allow('WidgetManager::GetWidgetContent');
+    $serverRequest->allow('WidgetManager::SetContextWidgets');
 
-    // include valid callbacks files
-    // TODO replace with autoloading
-    require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
-    require_once $GLOBALS['g_campsiteDir'] . '/classes/Extension/WidgetManager.php';
-
-    // call func
-    $result = call_user_func_array($callback, $args);
-    if ($result === FALSE) {
-        throw new Exception('Unknown');
-    }
-
-    // return
+    // get result
+    $result = $serverRequest->execute();
     echo json_encode($result);
 } catch (Exception $e) {
     echo json_encode(array(
-        'error' => TRUE,
-        'message' => getGS('Error:') . ' ' . $e->getMessage(),
+        'error_code' => $e->getCode(),
+        'error_message' => getGS('Error') . ': ' . $e->getMessage(),
     ));
 }
 
