@@ -116,8 +116,9 @@ function callServer(p_callback, p_args, p_handle)
         'dataType': 'json',
         'success': function(json) {
             flash.fadeOut();
-            if (json.error) {
-                flashMessage(json.message, 'error');
+
+            if (json.error_code) {
+                flashMessage(json.error_message, 'error', true);
                 return;
             }
 
@@ -126,29 +127,26 @@ function callServer(p_callback, p_args, p_handle)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
+            flash.hide();
             var login = window.open(g_admin_url + '/login.php', 'login', 'height=400,width=500');
             login.focus();
-            request = { // store request
-                callback: p_callback,
-                args: p_args,
-                handle: p_handle,
-            };
-            flash.hide();
             popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
         },
     });
 }
 
 /**
- * Set security token and call stored request
+ * Set security token
  * @param string security_token
  * @return void
  */
 function setSecurityToken(security_token)
 {
     g_security_token = security_token;
-    callServer(request.callback, request.args, request.handle);
+
     if (popupFlash) {
         popupFlash.hide();
     }
+
+    flashMessage('Now you can repeat your action.');
 }
