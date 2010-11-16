@@ -1,3 +1,48 @@
+// reading a requested cookie
+var getCookie = function (name)
+{
+    //alert("cookies: " + document.cookie);
+
+    var name_eq = name + "=";
+    var cookies_array = document.cookie.split(';');
+    var cookies_count = cookies_array.length;
+    for(var cind = 0; cind < cookies_count; cind++) {
+        var one_cookie = cookies_array[cind];
+        while (one_cookie.charAt(0) == ' ')
+        {
+            one_cookie = one_cookie.substring(1, one_cookie.length);
+        }
+        if (one_cookie.indexOf(name_eq) == 0)
+        {
+            return one_cookie.substring(name_eq.length, one_cookie.length);
+        }
+    }
+    return null;
+};
+
+// preparing security token parameter
+// see: classes/SecurityToken.php, template_engine/classes/CampSession.php
+var getSecParam = function(prepend, postpend)
+{
+    var sec_param = "";
+    //return sec_param;
+
+    var sectoken = getCookie("sectokensrc");
+
+    if (null !== sectoken)
+    {
+        if (undefined !== prepend) {sec_param += prepend;}
+
+        sec_param += "security_token=" + sectoken;
+
+        if (undefined !== postpend) {sec_param += postpend;}
+
+    }
+
+    //alert("sec_param: " + sec_param);
+    return sec_param;
+};
+
 // just a wrapper for ajax; should be swithed for the jquery methods
 var getHTTPObject = function ()
 {
@@ -23,10 +68,6 @@ var geo_names = {};
 // initializes the ajax query on position search
 geo_names.askForNearCities = function(longitude, latitude, script_dir, results_div)
 {
-    //if (undefined === country_code) {
-    //   country_code = "";
-    //}
-
     var search_request = getHTTPObject();
 
     search_request.onreadystatechange = function()
@@ -39,13 +80,13 @@ geo_names.askForNearCities = function(longitude, latitude, script_dir, results_d
 
     try
     {
-        //city_name = Base64.encode(city_name);
         if (undefined === script_dir)
         {
             script_dir = "";
         }
-        script_path = script_dir + "search.php";
-        search_request.open("GET", script_path + "?search=1&f_longitude=" + longitude + "&f_latitude=" + latitude, true); 
+        var script_path = script_dir + "search.php";
+        var sec_param = getSecParam("", "&");
+        search_request.open("GET", script_path + "?" + sec_param + "search=1&f_longitude=" + longitude + "&f_latitude=" + latitude, true);
         search_request.send(null);
     }
     catch (e)
@@ -82,8 +123,9 @@ geo_names.askForCityLocation = function(city_name, country_code, script_dir, res
         {
             script_dir = "";
         }
-        script_path = script_dir + "search.php";
-        search_request.open("GET", script_path + "?search=1&f_city_name=" + city_name + "&f_country_code=" + country_code, true); 
+        var script_path = script_dir + "search.php";
+        var sec_param = getSecParam("", "&");
+        search_request.open("GET", script_path + "?" + sec_param + "search=1&f_city_name=" + city_name + "&f_country_code=" + country_code, true);
         search_request.send(null);
     }
     catch (e)
@@ -136,6 +178,18 @@ geo_names.gotSearchData = function (search_request, results_div)
         //alert("probably logged out: " + e);
         //alert(search_response);
         alert("probably logged out");
+        return;
+    }
+
+    if ("200" != received_obj.status)
+    {
+        var err_msg = "";
+        if (received_obj.description)
+        {
+            err_msg += received_obj.description + "\n\n";
+        }
+        err_msg += "Re-login, please.";
+        alert(err_msg);
         return;
     }
 

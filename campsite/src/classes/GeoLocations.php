@@ -39,6 +39,10 @@ class Geo_Locations extends DatabaseObject {
 	 */
 public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
 {
+    $map_width = SystemPref::Get("MapViewWidthDefault");
+    if (!$map_width) {$map_width = 600;}
+    $map_height = SystemPref::Get("MapViewHeightDefault");
+    if (!$map_height) {$map_height = 400;}
 
     $map_view_long = SystemPref::Get("MapCenterLongitudeDefault");
     $map_view_lat = SystemPref::Get("MapCenterLatitudeDefault");
@@ -122,6 +126,8 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
     $res_map_info["latitude"] = $map_view_lat;
     $res_map_info["resolution"] = $map_view_resol;
     $res_map_info["providers"] = $providers_usage_arr;
+    $res_map_info["width"] = $map_width;
+    $res_map_info["height"] = $map_height;
 
     return array("json_obj" => $res_map_info, "incl_obj" => $map_prov_includes);
 } // fn GetMapInfo
@@ -223,6 +229,8 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
             //echo "$web_path<br />\n";
             if (!$img_info) {continue;}
 
+            $img_width = "" . $img_info[0];
+            $img_height = "" . $img_info[1];
             $img_width_off = "-" . floor($img_info[0] / 2);
             $img_height_off = "-" . ($img_info[1] - 0); // the "-5" is done so that the default icons fit
             //echo "$img_width_off x $img_height_off<br />\n";
@@ -238,7 +246,7 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
             }
 
             //array_push($use_icons, array('label' => $img_label, 'path' => $web_path, 'width_off' => $img_width_off, 'height_off' => $img_height_off));
-            $use_icons[] = array('label' => $img_label, 'name' => $one_name, 'path' => $web_path, 'width_off' => $img_width_off, 'height_off' => $img_height_off);
+            $use_icons[] = array('label' => $img_label, 'name' => $one_name, 'path' => $web_path, 'width_off' => $img_width_off, 'height_off' => $img_height_off, 'width' => $img_width, 'height' => $img_height);
 
             if ("" == $icons_first_name) {$icons_first_name = $one_name;}
             if ($one_name == $icons_default_name) {$icons_default_name_exists = true;}
@@ -338,7 +346,7 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
         $one_audio_type = SystemPref::Get("MapAudioType" . ucfirst($one_audio_label));
         if (!$one_audio_type) {continue;}
 
-        $audio_types_usage[$one_audio_label] = $one_audio_type;
+        $audio_types_usage[] = array('type' => $one_audio_label, 'mime' => $one_audio_type);
 
         if ("" == $audio_name_first) {$audio_name_first = $one_audio_label;}
         if ($one_audio_label == $audio_default) {$audio_default_found = true;}

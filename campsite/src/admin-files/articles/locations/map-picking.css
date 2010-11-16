@@ -251,6 +251,20 @@ position: relative;
     margin-left: auto;
     margin-right: auto;
 }
+.action_disabled {
+    color: #808080;
+    font-style: italic;
+}
+.poi_coors {
+    float: right;
+    margin-right: 30px;
+}
+.poi_coors_input {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
 .map_save_part {
     margin-left: 2px;
     margin-top: 2px;
@@ -266,11 +280,11 @@ a.map_save_off {
     color: #a0a0a0;
 }
 .map_save_on {
-    background-color: #ffffff;
+    background-color: #fffff8;
 }
 a.map_save_on {
     float: left;
-    color: #00ff00;
+    color: #b06000;
 }
 .map_save_info {
     float: left;
@@ -281,11 +295,11 @@ a.map_save_on {
 
 }
 
-.eidt_marker_selected {
+.edit_marker_selected {
     float: left;
 
 }
-.eidt_marker_choices {
+.edit_marker_choices {
     float: right;
     margin-right: 20px;
     margin-top: 10px;

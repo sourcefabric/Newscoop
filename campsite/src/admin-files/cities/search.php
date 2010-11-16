@@ -5,8 +5,18 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoNames.php');
 
 /*
-if (!$g_user->hasPermission('geonames_search')) {
-    camp_html_display_error(getGS("You do not have the right to search at geonames."));
+if (!SecurityToken::isValid()) {
+    //camp_html_display_error(getGS('Invalid security token!'));
+    $sec_err_array = array("status" => "403", "description" => getGS('Invalid security token!'));
+
+    echo json_encode($sec_err_array);
+    exit;
+}
+*/
+
+/*
+if (!$g_user->hasPermission('POI manage')) {
+    camp_html_display_error(getGS("You do not have the right to manage POIs."));
     exit();
 }
 */
@@ -21,8 +31,8 @@ if (Input::Get('search')) {
 
     $found_list = array();
 
-    $longitude = Input::Get('f_longitude', 'string', "", false);
-    $latitude = Input::Get('f_latitude', 'string', "", false);
+    $longitude = Input::Get('f_longitude', 'string', "", true);
+    $latitude = Input::Get('f_latitude', 'string', "", true);
     if ((0 != strlen($longitude)) && (0 != strlen($latitude))) {
 
         $found_list = Geo_Names::FindCitiesByPosition($longitude, $latitude);
@@ -31,14 +41,14 @@ if (Input::Get('search')) {
     }
     else
     {
-        $city_name = Input::Get('f_city_name', 'string', "", false);
+        $city_name = Input::Get('f_city_name', 'string', "", true);
         if (0 == strlen($city_name)) {
             echo $found_cities . ']}';
             exit();
         }
 
         $city_name = base64_decode($city_name);
-        $country_code = Input::Get('f_country_code', 'string', "", false);
+        $country_code = Input::Get('f_country_code', 'string', "", true);
 
         $found_list = Geo_Names::FindCitiesByName($city_name, $country_code);
     }
