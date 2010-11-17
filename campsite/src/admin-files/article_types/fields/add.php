@@ -69,10 +69,11 @@ function UpdateArticleFieldContext() {
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <input type="hidden" name="show_precision" id="show_precision" value="false">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?></TD></TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("Template Field Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_field_name" SIZE="20" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("You may only use letters or the underscore (_) character."); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_field_name" SIZE="20" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("The template name may only contain letters and the underscore (_) character."); ?>">
 	</TD>
 </TR>
 <TR>

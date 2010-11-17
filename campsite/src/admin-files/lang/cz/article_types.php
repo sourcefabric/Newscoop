@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Přejmenovat typ článku '$1'");
 regGS("Invalid article type '$1'.", "Neplatný typ článku '$1'.");
 regGS("You cannot merge the same type into itself.", "Nelze vnořit stejný typ do sebe sama.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Zvolte jazyk pro typ 
 regGS("You do not have the right to rename article types.", "Nemáte oprávnění přejmenovávat typy článků.");
 regGS("You do not have the right to merge article types.", "Nemáte oprávnění vnořovat typy článků.");
 regGS("The translation could not be added.", "Nezdařilo se přidat překlad.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Pole Název může obsahovat pouze písmena a podtržítko (_).");
 regGS("The article type $1 does not exist.", "Typ článku $1 neexistuje.");
 regGS("Template Type Name", "Název Typu Šablony");
 regGS("Show/Hide", "Zobrazit/Skrýt");

@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
 regGS("The property '$1' is already in use.", "");
 regGS("Precision", "");
@@ -10,11 +11,9 @@ regGS("show", "εμφάνιση");
 regGS("hide", "απόκρυψη");
 regGS("You must enter a name for the field.", "Πρέπει να εισάγετε όνομα για το πεδίο.");
 regGS("You must choose a language for the field.", "Πρέπει να επιλέξετε γλώσσα για το πεδίο.");
-regGS("You may only use letters or the underscore (_) character.", "");
 regGS("You do not have the right to rename article type fields.", "");
 regGS("You do not have the right to reassign a field type.", "");
 regGS("You do not have the right to add article types.", "");
-regGS("You can only use letters or the underscore (_).", "");
 regGS("Translating field", "");
 regGS("The translation could not be added.", "");
 regGS("The field $1 does not exist.", "Το πεδίο $1 δεν υπάρχει.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "The template name may only contain letters and the underscore (_) character.");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "The field name was already in use as a base property of the article. The field content will not be displayed in the templates.");
 regGS("The property '$1' is already in use.", "The property '$1' is already in use.");
 regGS("Precision", "Precision");
@@ -10,11 +11,9 @@ regGS("show", "show");
 regGS("hide", "hide");
 regGS("You must enter a name for the field.", "You must enter a name for the field.");
 regGS("You must choose a language for the field.", "You must choose a language for the field.");
-regGS("You may only use letters or the underscore (_) character.", "You may only use letters or the underscore (_) character.");
 regGS("You do not have the right to rename article type fields.", "You do not have the right to rename article type fields.");
 regGS("You do not have the right to reassign a field type.", "You do not have the right to reassign a field type.");
 regGS("You do not have the right to add article types.", "You do not have the right to add article types.");
-regGS("You can only use letters or the underscore (_).", "You can only use letters or the underscore (_).");
 regGS("Translating field", "Translating field");
 regGS("The translation could not be added.", "The translation could not be added.");
 regGS("The field $1 does not exist.", "The field $1 does not exist.");
