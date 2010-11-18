@@ -846,13 +846,23 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
     this.poi_rank_out = this.descs_count;
     vector.attributes.m_rank = this.descs_count;
     vector.attributes.m_title = poi_title;
+    vector.attributes.m_perex = "";
+    vector.attributes.m_direct = false;
+    vector.attributes.m_content = "";
     vector.attributes.m_link = "";
     vector.attributes.m_text = "fill in the POI description";
-    vector.attributes.m_perex = "";
+    vector.attributes.m_image_source = "";
+    vector.attributes.m_image_width = "";
+    vector.attributes.m_image_height = "";
+    vector.attributes.m_video_type = "";
+    vector.attributes.m_video_id = "";
+    vector.attributes.m_video_width = "";
+    vector.attributes.m_video_height = "";
     vector.attributes.m_image = "";
     vector.attributes.m_embed = "";
     vector.attributes.m_disabled = false;
     vector.attributes.m_type = this.marker_src_default_ind;
+
     features.push(vector);
 
     this.select_control.destroy();
@@ -1828,9 +1838,9 @@ geo_locations.map_pois_load = function(script_dir)
 // it throws away all the current POI info
 geo_locations.got_load_data = function (load_request)
 {
-    return;
-
+    //return;
     //alert(load_request.responseText);
+
     var load_status = load_request.status;
     var http_status_ok = 200;
 
@@ -1932,6 +1942,8 @@ geo_locations.got_load_data = function (load_request)
 
     this.update_poi_descs();
 
+    this.set_save_state(false);
+
 };
 
 geo_locations.put_poi_into_insertions = function(storage, index)
@@ -1941,27 +1953,29 @@ geo_locations.put_poi_into_insertions = function(storage, index)
 
     var cur_obj = {
         'index': cur_marker['tmp_index'],
-        'lon': cur_marker['lon'],
-        'lat': cur_marker['lat'],
-        'usage': cur_marker['usage'],
+        'longitude': cur_marker['lon'],
+        'latitude': cur_marker['lat'],
+        //'usage': cur_marker['usage'],
     };
 
     var poi_prop_names = {};
-    poi_prop_names['label'] = "name";
-    poi_prop_names['direct'] = "direct";
-    poi_prop_names['video_type'] = "video_type";
-    poi_prop_names['icon_name'] = "icon_name";
 
+    poi_prop_names['title'] = "name";
     poi_prop_names['perex'] = "perex";
+    poi_prop_names['content'] = "content";
     poi_prop_names['text'] = "text";
     poi_prop_names['link'] = "link";
-    poi_prop_names['content'] = "content";
-    poi_prop_names['image_source'] = "image";
+
+    poi_prop_names['image_source'] = "image_src";
     poi_prop_names['image_width'] = "image_width";
     poi_prop_names['image_height'] = "image_height";
-    poi_prop_names['video_id'] = "video";
+
+    poi_prop_names['video_id'] = "video_id";
+    poi_prop_names['video_type'] = "video_type";
     poi_prop_names['video_width'] = "video_width";
     poi_prop_names['video_height'] = "video_height";
+
+    //poi_prop_names['icon_name'] = "icon_name";
 
     for (one_name in poi_prop_names)
     {
@@ -1972,6 +1986,19 @@ geo_locations.put_poi_into_insertions = function(storage, index)
         if (!one_value) {one_value = "";}
         cur_obj[obj_property] = one_value;
     }
+
+    var img_label = this.marker_src_labels[cur_attrs.m_type];
+    var img_icon = this.marker_src_icons[img_label];
+    var img_name = img_icon["name"];
+    cur_obj["style"] = img_name;
+
+    var content_type = 1;
+    if (cur_attrs.m_direct) {content_type = 0;}
+    cur_obj["content_type"] = content_type;
+
+    var display_poi = 1;
+    if (cur_attrs.m_disabled) {display_poi = 0;}
+    cur_obj["display"] = display_poi;
 
     storage.push(cur_obj);
 };
@@ -2116,7 +2143,7 @@ geo_locations.map_save_all = function(script_dir)
         store_data += "&f_update_con=" + update_poi_con_str;
     }
 
-    alert("010");
+    //alert("010");
     store_request.onreadystatechange = function()
     {
         if (4 == store_request.readyState)
@@ -2136,7 +2163,7 @@ geo_locations.map_save_all = function(script_dir)
 
         store_request.open("POST", script_path, true);
         store_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        store_request.send("" + "?store=1&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
+        store_request.send("" + "store=1&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
     }
     catch (e)
     {
@@ -2145,7 +2172,7 @@ geo_locations.map_save_all = function(script_dir)
         return;
     }
 
-    alert("020");
+    //alert("020");
     return false;
 /*
 */

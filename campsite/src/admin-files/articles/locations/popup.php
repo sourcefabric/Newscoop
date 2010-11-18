@@ -310,7 +310,7 @@ V
 <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
 </li>
 <li>
-<label class="edit_label" for="point_perex">Perex:</label>
+<label class="edit_label" for="point_perex">Lede:</label>
 <textarea rows="4" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
 </textarea>
 </li>

@@ -139,6 +139,8 @@ class Geo_LocationContents extends DatabaseObject {
 
 	public static function RemovePoints($p_article_number, $p_language_id, $p_removal)
     {
+		global $g_ado_db;
+
         // removal: it removes this from all languages of the article
         // the POI itself is removed if not used at other articles
         $queryStr_con_re = "DELETE FROM LocationContents WHERE id = ?";
@@ -171,36 +173,48 @@ class Geo_LocationContents extends DatabaseObject {
         return true;
     }
 
-	public static function InsertPoints($p_article_number, $p_language_id, $p_insertion)
+	public static function InsertPoints($p_article_number, $p_language_id, $p_insertion, &$indices)
     {
+		global $g_ado_db;
+
         // insertion: just for newly added POIs, next changes are just updates/removals
 		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius) VALUES (";
         $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0";
         $queryStr_loc_in .= ")";
 
-        $queryStr_con_in = "INSERT INTO LocationContents (fk_article_number, fk_language_id, fk_location_id, fk_event_id, publish_date, poi_display, poi_style, poi_name, poi_content_usage, poi_content, poi_perex, poi_link, poi_text, poi_image_src, poi_video_id, poi_video_type, poi_video_height, poi_video_width) VALUES (";
+        //$queryStr_con_in = "INSERT INTO LocationContents (fk_article_number, fk_language_id, fk_location_id, fk_event_id, publish_date,
+        // poi_display, poi_style, poi_name, poi_content_usage, poi_content, poi_perex, poi_link, poi_text, poi_image_src,
+        // poi_video_id, poi_video_type, poi_video_height, poi_video_width) VALUES (";
+
+        $queryStr_con_in = "INSERT INTO LocationContents (fk_article_number, fk_language_id, fk_location_id";
+        $queryStr_con_in .= ", poi_display, poi_style, poi_name, poi_perex";
+        $queryStr_con_in .= ", poi_content_type, poi_content, ";
+        $queryStr_con_in .= "poi_text, poi_link, poi_image_src, poi_image_width, poi_image_height";
+        $queryStr_con_in .= ", poi_video_id, poi_video_type, poi_video_width, poi_video_height";
+        $queryStr_con_in .= ") VALUES (";
 
         $quest_marks = array();
         for ($ind = 0; $ind < 18; $ind++) {$quest_marks[] = "?";}
         $queryStr_con_in .= implode(", ", $quest_marks);
+
         $queryStr_con_in .= ")";
 
-        $languages = ReadLanguages($p_article_number);
+        $languages = Geo_LocationContents::ReadLanguages($p_article_number);
 
-        $indices = array();
+        //$indices = array();
 
-        // updating current POIs, inserting new POIs
-        //$poi_rank = 0;
-        foreach ($p_insertion as $poi)
+        foreach ($p_insertion as $poi_obj)
         {
-            //$poi_state = $poi["state"];
-            //$poi_rank += 1;
+            $poi = get_object_vars($poi_obj);
 
             // insert POI location, then rank and content for all languages, but the other languages have usage set to false
             //if ("new" == $poi_state)
             {
+                //print_r($poi);
                 $loc_in_params = array();
                 $loc_in_params[] = $poi["latitude"];
+                //$loc_in_params[] = $poi->{"latitude"};
+
                 $loc_in_params[] = $poi["longitude"];
                 $loc_in_params[] = $poi["latitude"];
                 $loc_in_params[] = $poi["longitude"];
@@ -211,37 +225,41 @@ class Geo_LocationContents extends DatabaseObject {
                 $loc_id = $g_ado_db->Insert_ID();
 
                 $con_in_params = array();
-                $con_in_params[] = $p_article_number;
-                $con_in_params[] = $p_language_id;
-                $con_in_params[] = $loc_id;
-                $con_in_params[] = 0; // event id
-                $con_in_params[] = null; // publish date
-                $con_in_params[] = $poi["display"];
-                $con_in_params[] = $poi["poi_style"];
-                $con_in_params[] = $poi["name"];
-                $con_in_params[] = $poi["content_usage"];
-                $con_in_params[] = $poi["content"];
-                $con_in_params[] = $poi["perex"];
-                $con_in_params[] = $poi["link"];
-                $con_in_params[] = $poi["text"];
-                $con_in_params[] = $poi["image"];
-                $con_in_params[] = $poi["video_id"];
-                $con_in_params[] = $poi["video_type"];
-                $con_in_params[] = $poi["video_width"];
-                $con_in_params[] = $poi["video_height"];
+                $con_in_params[] = 0 + $p_article_number;
+                $con_in_params[] = 0 + $p_language_id;
+                $con_in_params[] = 0 + $loc_id;
+
+                $con_in_params[] = 0 + $poi["display"];
+                $con_in_params[] = "" . $poi["style"];
+
+                $con_in_params[] = "" . $poi["name"];
+                $con_in_params[] = "" . $poi["perex"];
+                $con_in_params[] = 0 + $poi["content_type"];
+                $con_in_params[] = "" . $poi["content"];
+                $con_in_params[] = "" . $poi["text"];
+                $con_in_params[] = "" . $poi["link"];
+
+                $con_in_params[] = "" . $poi["image_src"];
+                $con_in_params[] = "" . $poi["image_width"];
+                $con_in_params[] = "" . $poi["image_height"];
+
+                $con_in_params[] = "" . $poi["video_id"];
+                $con_in_params[] = "" . $poi["video_type"];
+                $con_in_params[] = "" . $poi["video_width"];
+                $con_in_params[] = "" . $poi["video_height"];
 
                 // insert the POI content on the used language
                 $success = $g_ado_db->Execute($queryStr_con_in, $con_in_params);
 
                 $con_id = $g_ado_db->Insert_ID();
 
-                $indices[] = array({'loc' => $loc_id, 'con' => $con_id});
+                $indices[] = array('loc' => $loc_id, 'con' => $con_id);
 
                 // insert the POI content for the other article's languages
                 foreach ($languages as $one_lang)
                 {
-                    $con_in_params[0] = $one_lang;
-                    $con_in_params[5] = false; // display;
+                    $con_in_params[1] = $one_lang;
+                    $con_in_params[3] = false; // display;
 
                     $success = $g_ado_db->Execute($queryStr_con_in, $con_in_params);
                 }
@@ -253,11 +271,13 @@ class Geo_LocationContents extends DatabaseObject {
         }
 
 
-        return $indices;
+        //return $indices;
+        return true;
     }
 
 	public static function UpdateLocations($p_article_number, $p_language_id, $p_locations)
     {
+		global $g_ado_db;
 
 		$queryStr_loc_up = "UPDATE Locations SET poi_location = GeomFromText('POINT(? ?)'), poi_center = GeomFromText('POINT(? ?)') ";
         $queryStr_loc_up .= "WHERE id = ?";
@@ -288,13 +308,18 @@ class Geo_LocationContents extends DatabaseObject {
         }
 
         ;
-        ;
+        return true;
     }
 
 	public static function UpdateContents($p_article_number, $p_language_id, $p_contents)
     {
+		global $g_ado_db;
+
         // updates: even for setting a non-usage of a POI at a article/language
-        $queryStr_con_up = "UPDATE LocationContents SET poi_display = ?, poi_style = ?, poi_name = ?, poi_content_usage = ?, poi_content = ?, poi_perex = ?, poi_link = ?, poi_text = ?, poi_image_src = ?, poi_video_id = ?, poi_video_type = ?, poi_video_height = ?, poi_video_width = ? ";
+        $queryStr_con_up = "UPDATE LocationContents SET poi_display = ?, poi_style = ?, poi_name = ?, poi_perex = ?, ";
+        $queryStr_con_up .= "poi_content_type = ?, poi_content = ?, ";
+        $queryStr_con_up .= "poi_text = ?, poi_link = ?, poi_image_src = ?, poi_image_width = ?, poi_image_height = ? ";
+        $queryStr_con_up .= "poi_video_id = ?, poi_video_type = ?, poi_video_width = ?, poi_video_height = ? ";
         $queryStr_con_up .= "WHERE id = ?";
 
 
@@ -314,19 +339,21 @@ class Geo_LocationContents extends DatabaseObject {
 
             // preparing all the (rest) parameters
             $sql_params = array();
-            $sql_params[] = $poi['poi_display']; // poi display
-            $sql_params[] = $poi['poi_style']; // poi style
+            $sql_params[] = $poi['display']; // poi display
+            $sql_params[] = $poi['style']; // poi style
             $sql_params[] = $poi['name'];
-            $sql_params[] = $poi['content_usage'];
-            $sql_params[] = $poi['content'];
             $sql_params[] = $poi['perex'];
-            $sql_params[] = $poi['link'];
+            $sql_params[] = $poi['content_type'];
+            $sql_params[] = $poi['content'];
             $sql_params[] = $poi['text'];
+            $sql_params[] = $poi['link'];
             $sql_params[] = $poi['image_src'];
+            $sql_params[] = $poi['image_width'];
+            $sql_params[] = $poi['image_height'];
             $sql_params[] = $poi['video_id'];
             $sql_params[] = $poi['video_type'];
-            $sql_params[] = $poi['video_height'];
             $sql_params[] = $poi['video_width'];
+            $sql_params[] = $poi['video_height'];
 
             $sql_params[] = $poi['id'];
 
@@ -334,11 +361,13 @@ class Geo_LocationContents extends DatabaseObject {
         }
 
         ;
-        ;
+        return true;
     }
 
 	public static function UpdateOrder($p_article_number, $p_language_id, $p_reorder, $p_indices)
     {
+		global $g_ado_db;
+
         // the rank is to be updated on all article's languages
         $queryStr_rnk_up = "UPDATE LocationContents SET rank = ? WHERE fk_article_number = ? AND fk_location_id = ?";
 
@@ -381,7 +410,7 @@ class Geo_LocationContents extends DatabaseObject {
 
         }
 
-        return;
+        return true;
     }
 
 

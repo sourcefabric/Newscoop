@@ -157,6 +157,7 @@ CREATE TABLE Locations (
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
 -- poi contents, together with relations among locations and articles, events
 -- this would be alike articles, i.e. contents plus foreign keys to unique specifiers
 CREATE TABLE LocationContents (
@@ -170,6 +171,11 @@ CREATE TABLE LocationContents (
     fk_location_id int(10) unsigned NOT NULL DEFAULT 0,
 -- and to put event_id here too; for now zeroed
     fk_event_id int(10) unsigned NOT NULL DEFAULT 0,
+-- if more maps for article at some future
+    fk_map_id int(10) unsigned NOT NULL DEFAULT 0,
+
+-- display sequence rank
+    rank int NOT NULL DEFAULT 0,
 
 -- published date, put here too (from the Articles table) for faster search
     publish_date date,
@@ -181,48 +187,38 @@ CREATE TABLE LocationContents (
 -- pop-up style features
 -- whether the POI should have popup enaibled
     poi_popup tinyint NOT NULL DEFAULT 1,
--- popup default size, [system default]
-    poi_popup_size_width int NOT NULL,
-    poi_popup_size_height int NOT NULL,
+    poi_style VARCHAR(1023) NOT NULL,
 
+-- textual content
 -- main label for the POI
     poi_name VARCHAR(1023),
+-- short description to be shown at a side panel
+    poi_perex VARCHAR(15100),
 
 -- whether to use content of poi's popup directly instead of link, image, etc. [false]
 --  to use either the (rich) content or link/text/image/video/audio
-    poi_content_usage tinyint NOT NULL DEFAULT 0,
+    poi_content_type smallint NOT NULL DEFAULT 1,
 -- the whole html content for POI popup (if set to be used)
     poi_content TEXT NOT NULL DEFAULT "",
 
--- textual content
--- short description to be shown at a side panel
-    poi_perex VARCHAR(15100),
---    poi_perex TEXT,
--- link from the POI popup window
-    poi_link VARCHAR(1023),
 -- text at the POI popup content
     poi_text TEXT,
+-- link from the POI popup window
+    poi_link VARCHAR(1023),
 
 -- multimedia content
 -- image at the POI popup content
     poi_image_src VARCHAR(1023) NOT NULL DEFAULT "",
+    poi_image_width VARCHAR(255) NOT NULL DEFAULT "",
+    poi_image_height VARCHAR(255) NOT NULL DEFAULT "",
 
 -- embedded video object at the POI popup content
     poi_video_id VARCHAR(1023) NOT NULL DEFAULT "",
 -- type of the embedded video object, [system default]
     poi_video_type VARCHAR(255),
 -- video display size, [system default]
-    poi_video_height int,
-    poi_video_width int,
-
--- embedded audio object at the POI popup content
-    poi_audio_usage tinyint NOT NULL DEFAULT 0,
--- type of the embedded audio object, [system default]
-    poi_audio_type VARCHAR(255),
--- audio track specification
-    poi_audio_site VARCHAR(1023),
-    poi_audio_track VARCHAR(1023) NOT NULL DEFAULT "",
-    poi_audio_auto tinyint NOT NULL DEFAULT 0,
+    poi_video_width VARCHAR(255) NOT NULL DEFAULT "",
+    poi_video_height VARCHAR(255) NOT NULL DEFAULT "",
 
 -- management related things
     fk_user_id int(10) unsigned DEFAULT NULL,
@@ -237,6 +233,9 @@ CREATE TABLE LocationContents (
     KEY fk_language_id (fk_language_id),
     KEY fk_location_id (fk_location_id),
     KEY fk_event_id (fk_event_id),
+    KEY fk_map_id (fk_map_id),
+
+    KEY rank (rank),
 
     KEY publish_date (publish_date),
     KEY poi_display (poi_display),
