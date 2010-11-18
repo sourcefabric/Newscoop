@@ -152,6 +152,16 @@ INSERT  IGNORE INTO `Authors` (id, first_name, last_name, email) VALUES (1,'Doug
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `AuthorTypes`
+--
+
+LOCK TABLES `AuthorTypes` WRITE;
+/*!40000 ALTER TABLE `AuthorTypes` DISABLE KEYS */;
+INSERT  IGNORE INTO `AuthorTypes` (`id`,`type`) VALUES (1,'Author'),(2,'Writer'),(3,'Photographer'),(4,'Editor'),(5,'Columnist');
+/*!40000 ALTER TABLE `AuthorTypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `AutoId`
 --
 
@@ -790,18 +800,3 @@ UNLOCK TABLES;
 
 -- Dump completed on 2010-09-30 17:31:02
 ALTER TABLE `Templates` ADD `CacheLifetime` INT NULL DEFAULT '0';
-INSERT INTO `AuthorsTypes` (
-`id` ,
-`type`
-)
-VALUES (
-NULL , 'Author'
-), (
-NULL , 'Writer'
-), (
-NULL , 'Photographer'
-), (
-NULL , 'Editor'
-), (
-NULL , 'Columnist'
-);
