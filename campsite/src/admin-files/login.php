@@ -6,6 +6,10 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
+// Get request.
+$requestId = Input::Get('request', 'string', '', TRUE);
+$request = camp_session_get("request_$requestId", '');
+
 // Fix for CS-2276
 $LiveUser->logout();
 // Delete the cookies
@@ -18,12 +22,6 @@ camp_session_set('xorkey', $key);
 // Delete any cookies they currently have.
 setcookie("LoginUserId", "", time() - 86400);
 setcookie("LoginUserKey", "", time() - 86400);
-
-// Get last visited page if any
-$lastVisitPage = '';
-if (camp_session_get('lastVisitPage', '')) {
-    $lastVisitPage = camp_session_get('lastVisitPage', '');
-}
 
 // This can be "userpass", "captcha", "upgrade"
 $error_code = isset($_REQUEST['error_code']) ? $_REQUEST['error_code'] : '';
@@ -80,6 +78,9 @@ if (isset($_REQUEST['TOL_Language'])) {
 	$_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 
+// Store request again.
+camp_session_set("request_$requestId", $request);
+
 // Load the language files.
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
@@ -101,10 +102,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
-<form name="login_form" method="post" action="do_login.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-<?php if ($lastVisitPage) { ?>
-<input type="hidden" name="f_redirect" value="<?php p(urlencode($lastVisitPage)); ?>" />
-<?php } ?>
+<form name="login_form" method="post" action="do_login.php?request=<?php echo $requestId; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0" />
 <?php } else { ?>
