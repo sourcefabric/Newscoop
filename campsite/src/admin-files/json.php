@@ -23,6 +23,7 @@ try {
         (array) $_POST['args']);
 
     // set permissions
+    $serverRequest->allow('ping');
     $serverRequest->allow('ArticleList::doAction'); // checked in handler
     $serverRequest->allow('ArticleList::doData');
     $serverRequest->allow('ArticleList::doOrder', 'Publish');
@@ -42,3 +43,12 @@ try {
 }
 
 exit;
+
+/**
+ * Connection check function
+ * @return bool
+ */
+function ping()
+{
+    return TRUE;
+}

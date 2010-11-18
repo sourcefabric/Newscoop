@@ -95,6 +95,8 @@ function flashMessage(message, type, fixed)
     return flash;
 }
 
+var queue = [];
+
 /**
  * Call server function
  * @param {array} p_callback
@@ -104,6 +106,10 @@ function flashMessage(message, type, fixed)
  */
 function callServer(p_callback, p_args, p_handle)
 {
+    if (!p_args) {
+        p_args = [];
+    }
+
     var flash = flashMessage('Processing...', null, true);
     $.ajax({
         'url': g_admin_url + '/json.php',
@@ -131,6 +137,13 @@ function callServer(p_callback, p_args, p_handle)
             var login = window.open(g_admin_url + '/login.php', 'login', 'height=400,width=500');
             login.focus();
             popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
+
+            // store request
+            queue.push({
+                callback: p_callback,
+                args: p_args,
+                handle: p_handle,
+            });
         },
     });
 }
@@ -143,10 +156,15 @@ function callServer(p_callback, p_args, p_handle)
 function setSecurityToken(security_token)
 {
     g_security_token = security_token;
+    $('input[name=security_token]').val(security_token);
 
     if (popupFlash) {
         popupFlash.hide();
     }
 
-    flashMessage('Now you can repeat your action.');
+    // restore request
+    for (var i = 0; i < queue.length; i++) {
+        var request = queue[i];
+        callServer(request.callback, request.args, request.handle);
+    }
 }
