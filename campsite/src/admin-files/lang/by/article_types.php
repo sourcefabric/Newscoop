@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Пераіменаваць тып артыкула  '$1' ");
 regGS("Invalid article type '$1'.", "Няправільны тып артыкула '$1'.");
 regGS("You cannot merge the same type into itself.", "Вы ня можаце аб'яднаць тып сам з сабой.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Вы павiнны в
 regGS("You do not have the right to rename article types.", "Вы ня маеце права пераймяноўваць тыпы артыкулаў.");
 regGS("You do not have the right to merge article types.", "Вы ня маеце права аб'ядноўваць тыпы артыкулаў.");
 regGS("The translation could not be added.", "Пераклад нельга дадаць.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Поле тыпа можа зьмяшчаць толькi лiтары i сымбаль падкрэсьлiваньня (_).");
 regGS("The article type $1 does not exist.", "Тып артыкула $1 не iснуе.");
 regGS("Template Type Name", "Назва тыпу шаблёну");
 regGS("Show/Hide", "Паказаць/схаваць");

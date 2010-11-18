@@ -261,15 +261,15 @@ class Localizer {
     public static function FindTranslationStrings($p_directory)
     {
         global $g_localizerConfig;
-        
+
         if (($pos = strpos($p_directory, '*')) === false) {
             $startDirectory = $p_directory;
-            $deepth = 1;  /* 1 means no subdirectories! */ 
+            $deepth = 1;  /* 1 means no subdirectories! */
         } else {
             $startDirectory = substr($p_directory, 0, $pos-1);
             $deepth = substr_count($p_directory, '*') + 1;
         }
-        
+
         // like get GS('edit "$1"', ...);  '
         $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';
         // like get GS("edit '$1'", ...);
@@ -323,11 +323,11 @@ class Localizer {
         // All .php files
         $filePattern = '/(.*).php$/';
         $filelist = array();
-        
+
         foreach ($p_entries as $subdir => $entry) {
             if (is_array($entry)) {
                 $subdir = isset($p_subdir) ? $p_subdir.DIR_SEP.$subdir : $subdir;
-                $filelist = array_merge($filelist, self::CompilePhpFileList($entry, $subdir));    
+                $filelist = array_merge($filelist, self::CompilePhpFileList($entry, $subdir));
             } else {
                 if (preg_match($filePattern, $entry)) {
                 	// list of .php-scripts in this folder
@@ -401,7 +401,7 @@ class Localizer {
       	// then all the language files must be updated with the new key.
         if ($p_languageId == $g_localizerConfig['DEFAULT_LANGUAGE']) {
 	        $languages = Localizer::GetLanguages();
-	        $saveResults = true;
+	        $saveResults = array();
 	        foreach ($languages as $language) {
 
 	        	// Load the language file
@@ -433,7 +433,7 @@ class Localizer {
 					$saveResults[] = $tmpResult;
 				}
 	        }
-	        return $saveResults;
+	        return count($saveResults) == 0 ? true : $saveResults;
         }
       	// We only need to change the values in one file.
         else {
@@ -719,7 +719,7 @@ class Localizer {
         @rmdir($langDir);
         return true;
     } // fn DeleteLanguageFiles
-    
+
     /**
      * Return information about overall, translated and untralslated string count.
      *
@@ -730,7 +730,7 @@ class Localizer {
     public static function GetTranslationStatus($prefix, $target_lang)
     {
         global $g_localizerConfig;
-        
+
         $defaultLang = new LocalizerLanguage($prefix, $g_localizerConfig['DEFAULT_LANGUAGE']);
         $targetLang = new LocalizerLanguage($prefix, $target_lang);
         $mode = Localizer::GetMode();
@@ -738,15 +738,15 @@ class Localizer {
         $targetLang->loadFile($mode);
         $sourceStrings = $defaultLang->getTranslationTable();
         $targetStrings = $targetLang->getTranslationTable();
-        
+
         $translated = 0;
         $untranslated = 0;
-        
+
         foreach ($sourceStrings as $k => $v) {
             if (strlen($targetStrings[$k])) {
                 $translated++;
             } else {
-                $untranslated++;   
+                $untranslated++;
             }
         }
         return array('all' => count($sourceStrings), 'translated' => $translated, 'untranslated' => $untranslated);

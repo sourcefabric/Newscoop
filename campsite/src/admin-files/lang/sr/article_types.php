@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Преименуј тип текста '$1'");
 regGS("Invalid article type '$1'.", "Погрешан тип текста '$1'");
 regGS("You cannot merge the same type into itself.", "Не можете спојити тип текста са самим собом");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Морате изаб
 regGS("You do not have the right to rename article types.", "Немате право да преименујете типове текстова.");
 regGS("You do not have the right to merge article types.", "Немате право да спајате типове текстова");
 regGS("The translation could not be added.", "ПРевод не може бити додат.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Име поља може се састојати једино од слова и доње црте (_).");
 regGS("The article type $1 does not exist.", "Тип текста $1 не постоји");
 regGS("Template Type Name", "Назив типа шаблона");
 regGS("Show/Hide", "Прикажи/сакри");

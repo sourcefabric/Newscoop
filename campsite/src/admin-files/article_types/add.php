@@ -28,12 +28,12 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 		<B><?php putGS("Add new article type"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 </TR>
-<TR><TD COLSPAN="2">The name field may only contain letters and the underscore (_) character.<BR>
+<TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?><BR>
 </TD></TR>
 <TR>
-	<TD ALIGN="LEFT" ><?php  putGS("Name"); ?>:</TD>
+	<TD ALIGN="LEFT" ><?php putGS("Template Type Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emsg="<?php putGS("The name field may only contain letters and the underscore (_) character."); ?>" SIZE="15" MAXLENGTH="15">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" ALT="alnum|1|A|0|0|_" emsg="<?php putGS("The template name may only contain letters and the underscore (_) character."); ?>" SIZE="15" MAXLENGTH="15">
 	</TD>
 </TR>
 <TR>

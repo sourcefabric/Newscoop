@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "");
 regGS("Invalid article type '$1'.", "");
 regGS("You cannot merge the same type into itself.", "Nu poţi combina acelaşi tip cu el însuşi.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Trebuie să alegi o l
 regGS("You do not have the right to rename article types.", "Nu ai dreptul să redenumeşti tipurile de articol.");
 regGS("You do not have the right to merge article types.", "Nu ai dreptul să combini tipuri de articole.");
 regGS("The translation could not be added.", "Traducerea nu a putut fi adăugată.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Câmpul pentru nume nu poate conţine decât litere şi caracterul underscore (_).");
 regGS("The article type $1 does not exist.", "Tipul $1 al articolului nu există.");
 regGS("Template Type Name", "Numele tipului şablonului");
 regGS("Show/Hide", "Arată/Ascunde");

@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "");
 regGS("Invalid article type '$1'.", "");
 regGS("You cannot merge the same type into itself.", "");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "");
 regGS("You do not have the right to rename article types.", "");
 regGS("You do not have the right to merge article types.", "");
 regGS("The translation could not be added.", "");
-regGS("The name field may only contain letters and the underscore (_) character.", "");
 regGS("The article type $1 does not exist.", "");
 regGS("Template Type Name", "");
 regGS("Show/Hide", "");

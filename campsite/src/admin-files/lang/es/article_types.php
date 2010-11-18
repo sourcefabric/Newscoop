@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Renombrar artículo tipo '$1'");
 regGS("Invalid article type '$1'.", "El tipo de artículo '$1' es inválido.");
 regGS("You cannot merge the same type into itself.", "No puede combinar el mismo tipo en sí mismo.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Debe elegir un idioma
 regGS("You do not have the right to rename article types.", "No tiene privilegios para renombrar los tipos de artículo.");
 regGS("You do not have the right to merge article types.", "No tiene privilegios para combinar tipos de artículo.");
 regGS("The translation could not be added.", "No se pudo agregar la traducción.");
-regGS("The name field may only contain letters and the underscore (_) character.", "El nombre del campo solo puede contener letras y el caracter de guión mayor (_).");
 regGS("The article type $1 does not exist.", "El tipo de artículo $1 no existe.");
 regGS("Template Type Name", "Nombre del tipo de plantilla");
 regGS("Show/Hide", "Mostrar/ocultar");
