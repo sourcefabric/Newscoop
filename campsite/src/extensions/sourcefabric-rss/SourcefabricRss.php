@@ -13,9 +13,8 @@ class SourcefabricRss extends Widget
     public function render()
     {
         ob_start();
-        $xml = simplexml_load_file($this->url);
         $even = false;
-        foreach ($xml->item as $item) {
+        foreach ($this->getItems($this->url) as $item) {
             if ($this->count <= 0) {
                 break;
             } else {
@@ -46,5 +45,21 @@ class SourcefabricRss extends Widget
             echo $content;
             echo '</ul>', "\n";
         }
+    }
+
+    /**
+     * Get feed items from specified url or cache
+     * @param string $url
+     * @return SimpleXMLElement
+     */
+    private function getItems($url)
+    {
+        $cache = $this->getCache();
+        $feed = $cache->fetch($url);
+        if (empty($feed)) {
+            $feed = file_get_contents($url);
+            $cache->add($url, $feed, 300);
+        }
+        return simplexml_load_string($feed);
     }
 }

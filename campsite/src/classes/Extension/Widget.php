@@ -19,8 +19,23 @@ abstract class Widget implements IWidget
     const DEFAULT_VIEW = 'default';
     const FULLSCREEN_VIEW = 'fullscreen';
 
+    /** @var CampCache */
+    private $cache = NULL;
+
     /** @var string */
     private $view = self::DEFAULT_VIEW;
+
+    /**
+     * Get cache object
+     * @return CampCache
+     */
+    public function getCache()
+    {
+        if ($this->cache === NULL) {
+            $this->cache = CampCache::singleton();
+        }
+        return $this->cache;
+    }
 
     /**
      * Set view
