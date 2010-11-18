@@ -54,7 +54,7 @@ $.fn.widgets = function (options) {
                     columns.hide();
 
                     // make widget fullscreen
-                    full.css('width', (dashboard.width()) + 'px').css('float', 'left');
+                    full.css('width', (dashboard.width() - 20) + 'px').css('float', 'left');
 
                     // close button
                     $('a.close', full).click(function() {
