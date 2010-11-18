@@ -48,8 +48,8 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<LINK rel="stylesheet" type="text/css" href="map-picking.css">
-	<LINK rel="stylesheet" type="text/css" href="map-popups.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/map-picking.css">
+	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/map-popups.css">
 <!--
 	<title><?php putGS("Setting Map Locations"); ?></title>
 -->
@@ -59,8 +59,8 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 -->
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/all/css/ui-lightness/jquery-ui-1.8.5.custom.css">
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/all/js/jquery-ui-1.8.5.custom.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.6.custom.css">
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
@@ -73,10 +73,6 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
-<!--
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/flexigrid/css/flexigrid/flexigrid.css">
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/flexigrid/flexigrid.js"></script>
--->
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">

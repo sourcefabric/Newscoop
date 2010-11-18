@@ -5,6 +5,10 @@ var geo_locations = {};
 geo_locations.article_number = 0;
 geo_locations.language_id = 0;
 
+// flags for what has been changed
+geo_locations.map_spec_changed = false;
+geo_locations.poi_order_changed = false;
+
 // marker icons paths and names, set during initialization
 geo_locations.marker_src_base = "";
 geo_locations.marker_src_default = "";
@@ -14,7 +18,13 @@ geo_locations.marker_src_labels = [];
 geo_locations.marker_src_icons = {};
 
 // what map provider should be used, and map position
-geo_locations.map_view_layer_providers = {"googlev3": false, "osm": false};
+geo_locations.map_view_layer_google = "googlev3";
+geo_locations.map_view_layer_osm = "osm";
+geo_locations.map_view_layer_providers = {};
+geo_locations.map_view_layer_providers[geo_locations.map_view_layer_google] = false;
+geo_locations.map_view_layer_providers[geo_locations.map_view_layer_osm] = false;
+
+geo_locations.map_view_layer_names_all = {};
 geo_locations.map_view_layer_default = "";
 geo_locations.map_view_layer_name = "";
 geo_locations.map_view_layer_center_ini = {};
@@ -396,7 +406,7 @@ geo_locations.remove_poi = function(index)
     var cur_marker = this.poi_markers[index];
     if (cur_marker.in_db)
     {
-        this.poi_deletion.push(cur_marker.db_index);
+        this.poi_deletion.push({'content_id': cur_marker.con_index, 'location_id': cur_marker.loc_index});
     }
 
     this.poi_markers.splice(index, 1);
@@ -838,7 +848,7 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
     vector.attributes.m_title = poi_title;
     vector.attributes.m_link = "";
     vector.attributes.m_text = "fill in the POI description";
-    vector.attributes.m_description = "";
+    vector.attributes.m_perex = "";
     vector.attributes.m_image = "";
     vector.attributes.m_embed = "";
     vector.attributes.m_disabled = false;
@@ -862,7 +872,11 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
         lonlat = lonlat_ini.clone();
     }
 
-    this.poi_markers.push({'lon':lonlat.lon, 'lat':lonlat.lat, 'usage':true, 'map_lon': map_lon, 'map_lat': map_lat, "in_db": false});
+    this.poi_markers.push({
+        'lon':lonlat.lon, 'lat':lonlat.lat, 'map_lon': map_lon, 'map_lat': map_lat,
+        'usage':true, "location_changed": false, "content_changed": false,
+        "in_db": false, "con_index": 0, "loc_index": 0, "tmp_index": this.descs_count_inc
+    });
 
     this.poi_order_user.push(this.descs_count);
     this.update_poi_descs(this.descs_count);
@@ -964,25 +978,32 @@ var geo_main_openlayers_init = function(map_div_name)
     var map_gsm = null;
     var map_osm = null;
 
-    if (geo_locations.map_view_layer_providers["googlev3"])
+    geo_locations.map_view_layer_names_all = {};
+
+    var google_label = geo_locations.map_view_layer_google;
+    var osm_label = geo_locations.map_view_layer_osm;
+
+    if (geo_locations.map_view_layer_providers[google_label])
     {
         // google map v3
         map_gsm = new OpenLayers.Layer.Google(
             "Google Streets", // the default
             {numZoomLevels: 20, 'sphericalMercator': true}
         );
-        if ("googlev3" == geo_locations.map_view_layer_default)
+        geo_locations.map_view_layer_names_all[google_label] = map_gsm.name;
+        if (google_label == geo_locations.map_view_layer_default)
         {
             //map_default = map_gsm;
             map_provs.push(map_gsm);
         }
     }
 
-    if (geo_locations.map_view_layer_providers["osm"])
+    if (geo_locations.map_view_layer_providers[osm_label])
     {
         // openstreetmap
         var map_osm = new OpenLayers.Layer.OSM();
-        if ("osm" == geo_locations.map_view_layer_default)
+        geo_locations.map_view_layer_names_all[osm_label] = map_osm.name;
+        if (osm_label == geo_locations.map_view_layer_default)
         {
             //map_default = map_osm;
             map_provs.push(map_osm);
@@ -990,11 +1011,11 @@ var geo_main_openlayers_init = function(map_div_name)
     }
 
     //map_provs.push(map_default);
-    if (map_gsm && ("googlev3" != geo_locations.map_view_layer_default))
+    if (map_gsm && (google_label != geo_locations.map_view_layer_default))
     {
         map_provs.push(map_gsm);
     }
-    if (map_osm && ("osm" != geo_locations.map_view_layer_default))
+    if (map_osm && (osm_label != geo_locations.map_view_layer_default))
     {
         map_provs.push(map_osm);
     }
@@ -1463,20 +1484,6 @@ geo_locations.map_height_change = function(size)
 
 };
 
-// saving data, on the main 'save' user action; do ajax here
-geo_locations.map_save_all = function()
-{
-    return;
-};
-
-/*
-// storing info on a single POI (the edited one); ajax action
-geo_locations.save_edit_window = function()
-{
-
-};
-*/
-
 // the data that should be loaded on POI edit start
 geo_locations.load_point_data = function()
 {
@@ -1790,7 +1797,7 @@ geo_locations.map_pois_load = function(script_dir)
     {
         if (4 == load_request.readyState)
         {
-            geo_locations.gotLoadData(load_request);
+            geo_locations.got_load_data(load_request);
         }
     };
 
@@ -1819,24 +1826,27 @@ geo_locations.map_pois_load = function(script_dir)
 
 // the main action on ajax data retrieval for cities search
 // it throws away all the current POI info
-geo_locations.gotLoadData = function (load_request)
+geo_locations.got_load_data = function (load_request)
 {
+    return;
+
+    //alert(load_request.responseText);
     var load_status = load_request.status;
     var http_status_ok = 200;
-    
+
     var load_response = "";
     if (load_status == http_status_ok)
     {
         load_response = load_request.responseText;
     }
-    
+
     if (load_status != http_status_ok)
     {
         load_response = "failed: " + load_status;
         alert(load_response);
         return;
     }
-    
+
     var received_obj = null;
     try {
         received_obj = JSON.parse(load_response);
@@ -1902,9 +1912,11 @@ geo_locations.gotLoadData = function (load_request)
 
         vector.attributes.m_rank = pind;
         vector.attributes.m_title = one_poi['title'];
-        vector.attributes.m_description = one_poi['description'];
+        vector.attributes.m_perex = one_poi['perex'];
+        vector.attributes.m_text = one_poi['text'];
         vector.attributes.m_link = one_poi['link'];
-        vector.attributes.m_image = one_poi['image'];
+        vector.attributes.m_image_source = one_poi['image'];
+        vector.attributes.m_image = "";
         vector.attributes.m_embed = "";
 
     }
@@ -1922,6 +1934,231 @@ geo_locations.gotLoadData = function (load_request)
 
 };
 
+geo_locations.put_poi_into_insertions = function(storage, index)
+{
+    var cur_marker = this.poi_markers[index];
+    var cur_attrs = this.layer.features[index].attributes;
+
+    var cur_obj = {
+        'index': cur_marker['tmp_index'],
+        'lon': cur_marker['lon'],
+        'lat': cur_marker['lat'],
+        'usage': cur_marker['usage'],
+    };
+
+    var poi_prop_names = {};
+    poi_prop_names['label'] = "name";
+    poi_prop_names['direct'] = "direct";
+    poi_prop_names['video_type'] = "video_type";
+    poi_prop_names['icon_name'] = "icon_name";
+
+    poi_prop_names['perex'] = "perex";
+    poi_prop_names['text'] = "text";
+    poi_prop_names['link'] = "link";
+    poi_prop_names['content'] = "content";
+    poi_prop_names['image_source'] = "image";
+    poi_prop_names['image_width'] = "image_width";
+    poi_prop_names['image_height'] = "image_height";
+    poi_prop_names['video_id'] = "video";
+    poi_prop_names['video_width'] = "video_width";
+    poi_prop_names['video_height'] = "video_height";
+
+    for (one_name in poi_prop_names)
+    {
+        var poi_property = "m_" + one_name;
+        var obj_property = poi_prop_names[one_name];
+
+        var one_value = cur_attrs[poi_property];
+        if (!one_value) {one_value = "";}
+        cur_obj[obj_property] = one_value;
+    }
+
+    storage.push(cur_obj);
+};
+
+geo_locations.put_into_poi_locations = function(storage, index)
+{
+    var cur_marker = this.poi_markers[index];
+    //var cur_attrs = this.layer.features[index].attributes;
+
+    var cur_obj = {
+        'id': cur_marker['loc_index'],
+        'longitude': cur_marker['lon'],
+        'latitude': cur_marker['lat'],
+    };
+
+    storage.push(cur_obj);
+};
+
+geo_locations.put_into_poi_contents = function(storage, index)
+{
+    var cur_marker = this.poi_markers[index];
+    var cur_attrs = this.layer.features[index].attributes;
+
+    var cur_obj = {
+        'id': cur_marker['con_index'],
+    };
+
+    var poi_prop_names = {};
+    poi_prop_names['label'] = "name";
+    poi_prop_names['direct'] = "direct";
+    poi_prop_names['video_type'] = "video_type";
+    poi_prop_names['icon_name'] = "icon_name";
+
+    poi_prop_names['perex'] = "perex";
+    poi_prop_names['text'] = "text";
+    poi_prop_names['link'] = "link";
+    poi_prop_names['content'] = "content";
+    poi_prop_names['image_source'] = "image";
+    poi_prop_names['image_width'] = "image_width";
+    poi_prop_names['image_height'] = "image_height";
+    poi_prop_names['video_id'] = "video";
+    poi_prop_names['video_width'] = "video_width";
+    poi_prop_names['video_height'] = "video_height";
+
+    for (one_name in poi_prop_names)
+    {
+        var poi_property = "m_" + one_name;
+        var obj_property = poi_prop_names[one_name];
+
+        var one_value = cur_attrs[poi_property];
+        if (!one_value) {one_value = "";}
+        cur_obj[obj_property] = one_value;
+    }
+
+    storage.push(cur_obj);
+
+};
+
+// saving data, on the main 'save' user action; do ajax here
+geo_locations.map_save_all = function(script_dir)
+{
+    //alert(this.map_view_layer_name);
+    var store_request = getHTTPObject();
+    var cur_marker = null;
+
+    var store_data = "";
+    if (this.map_spec_changed)
+    {
+        var prov_label = "";
+        for (var one_prov_name in this.map_view_layer_names_all)
+        {
+            if (this.map_view_layer_names_all[one_prov_name] == this.map_view_layer_name) {prov_label = one_prov_name;}
+        }
+
+        var store_map_obj = {
+            'prov': prov_label,
+            'lon': this.map_view_layer_center.lon,
+            'lat': this.map_view_layer_center.lat,
+            'zoom': this.map_view_layer_zoom,
+            'width': this.map_art_view_width,
+            'height': this.map_art_view_height
+        };
+        var store_map_str = Base64.encode(JSON.stringify(store_map_obj));
+        store_data += "&f_map=" + store_map_str;
+    }
+
+    if (0 < this.poi_deletion.length)
+    {
+        var remove_poi_str = Base64.encode(JSON.stringify(this.poi_deletion));
+        store_data += "&f_remove=" + remove_poi_str;
+    }
+
+    var order_length = this.poi_order_user.length;
+    if (this.poi_order_changed && (0 < order_length))
+    {
+        var order_ids = [];
+        for (var oind = 0; oind < order_length; oind++)
+        {
+            cur_marker = this.poi_markers[oind];
+            if (cur_marker.in_db) {order_ids.push({'state': 'old', 'content': cur_marker.con_index, 'location': cur_marker.loc_index});}
+            else {order_ids.push({'state': 'new', 'index': cur_marker.tmp_index});}
+        }
+        var order_poi_str = Base64.encode(JSON.stringify(order_ids));
+        store_data += "&f_order=" + order_poi_str;
+    }
+
+    var insert_poi_new_array = [];
+    var update_poi_loc_array = [];
+    var update_poi_con_array = [];
+
+    var marker_count = this.poi_markers.length;
+    for (var mind = 0; mind < marker_count; mind++)
+    {
+        cur_marker = this.poi_markers[mind];
+        if (!cur_marker.in_db)
+        {
+            this.put_poi_into_insertions(insert_poi_new_array, mind);
+            continue;
+        }
+        if (cur_marker.location_changed)
+        {
+            this.put_into_poi_locations(update_poi_loc_array, mind);
+        }
+        if (cur_marker.content_changed)
+        {
+            this.put_into_poi_contents(update_poi_con_array, mind);
+        }
+    }
+    if (0 < insert_poi_new_array.length)
+    {
+        var insert_poi_new_str = Base64.encode(JSON.stringify(insert_poi_new_array));
+        store_data += "&f_insert_new=" + insert_poi_new_str;
+    }
+    if (0 < update_poi_loc_array.length)
+    {
+        var update_poi_loc_str = Base64.encode(JSON.stringify(update_poi_loc_array));
+        store_data += "&f_update_loc=" + update_poi_loc_str;
+    }
+    if (0 < update_poi_con_array.length)
+    {
+        var update_poi_con_str = Base64.encode(JSON.stringify(update_poi_con_array));
+        store_data += "&f_update_con=" + update_poi_con_str;
+    }
+
+    alert("010");
+    store_request.onreadystatechange = function()
+    {
+        if (4 == store_request.readyState)
+        {
+            geo_locations.got_load_data(store_request);
+        }
+    };
+
+    //alert("015");
+    try
+    {
+        if (undefined === script_dir)
+        {
+            script_dir = "";
+        }
+        var script_path = script_dir + "manage.php";
+
+        store_request.open("POST", script_path, true);
+        store_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        store_request.send("" + "?store=1&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
+    }
+    catch (e)
+    {
+        store_request.onreadystatechange = function() {}
+        store_request = null;
+        return;
+    }
+
+    alert("020");
+    return false;
+/*
+*/
+
+};
+
+/*
+// storing info on a single POI (the edited one); ajax action
+geo_locations.save_edit_window = function()
+{
+
+};
+*/
 
 
 

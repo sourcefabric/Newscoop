@@ -3,6 +3,7 @@
 Datepicker
 Tabs
 Dialog
+Accordion
 Autocomplete
 Button
 Sortable

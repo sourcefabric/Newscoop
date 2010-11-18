@@ -34,6 +34,16 @@ if (Input::Get('load')) {
     exit();
 }
 
+if (Input::Get('store')) {
+
+    $store_status = Geo_LocationContents::WriteArticlePoints($f_article_number, $f_language_id);
+    $found_list = Geo_LocationContents::ReadArticlePoints($f_article_number, $f_language_id);
+    $poi_array = array("status" => "200", "pois" => $found_list);
+    $poi_json = json_encode($poi_array);
+    echo $poi_json;
+    exit();
+}
+
 echo $unknown_request;
 exit();
 
