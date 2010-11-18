@@ -19,6 +19,9 @@ abstract class RssWidget extends Widget
     /** @var int */
     protected $count = 8;
 
+    /** @var int */
+    protected $ttl = 900; // 15m
+
     public function render()
     {
         ob_start();
@@ -67,7 +70,7 @@ abstract class RssWidget extends Widget
         $feed = $cache->fetch($url);
         if (empty($feed)) {
             $feed = file_get_contents($url);
-            $cache->add($url, $feed, 300);
+            $cache->add($url, $feed, $this->ttl);
         }
         return simplexml_load_string($feed);
     }
