@@ -14,6 +14,7 @@ require_once dirname(__FILE__) . '/Widget.php';
 require_once dirname(__FILE__) . '/WidgetContext.php';
 require_once dirname(__FILE__) . '/WidgetRendererDecorator.php';
 require_once dirname(__FILE__) . '/Index.php';
+require_once dirname(__FILE__) . '/RssWidget.php';
 
 /**
  * Widget Manager
