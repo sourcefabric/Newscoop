@@ -10,13 +10,11 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
+/**
+ * @title Your Articles
+ */
 class YourArticlesWidget extends Widget
 {
-    public function getTitle()
-    {
-        return getGS('Your Articles');
-    }
-
     public function render()
     {
         $articlelist = new ArticleList();

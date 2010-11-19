@@ -46,8 +46,8 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
 
         // render whole widget
         echo '<li id="widget_', $this->getId(), '" class="widget">';
-        if ($this->getTitle() !== NULL) {
-            echo '<div class="header"><h3>', $this->getTitle(), '</h3></div>';
+        if ($this->widget->getTitle() !== NULL) {
+            echo '<div class="header"><h3>', getGS($this->widget->getTitle()), '</h3></div>';
         }
         echo '<div class="content"><div class="scroll">', "\n";
         echo $content;
@@ -68,11 +68,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         ob_start();
         foreach (self::$metakeys as $key) {
             $method = 'get' . $key;
-            if (!method_exists($this, $method)) {
-                continue;
-            }
-
-            $value = $this->$method();
+            $value = $this->widget->$method();
             if (empty($value)) {
                 continue;
             }

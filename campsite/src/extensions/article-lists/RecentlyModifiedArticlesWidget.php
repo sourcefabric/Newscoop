@@ -10,13 +10,11 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
+/**
+ * @title Recently Modified Articles
+ */
 class RecentlyModifiedArticlesWidget extends Widget
 {
-    public function getTitle()
-    {
-        return getGS('Recently Modified Articles');
-    }
-
     public function render()
     {
         $articlelist = new ArticleList();

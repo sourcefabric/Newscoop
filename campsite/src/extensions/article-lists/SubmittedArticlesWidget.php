@@ -10,13 +10,11 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
+/**
+ * @title Submitted Articles
+ */
 class SubmittedArticlesWidget extends Widget
 {
-    public function getTitle()
-    {
-        return getGS('Submitted Articles');
-    }
-
     public function render()
     {
         if ($this->getUser()->hasPermission('ChangeArticle') || $this->getUser()->hasPermission('Publish')) {

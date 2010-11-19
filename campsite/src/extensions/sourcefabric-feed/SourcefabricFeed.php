@@ -1,6 +1,6 @@
 <?php
 /**
- * Sourcefabric feed reader
+ * @title Sourcefabric.org feed reader
  */
 class SourcefabricFeed extends FeedWidget
 {

@@ -1,4 +1,11 @@
 <?php
+/**
+ * @title Hello World
+ * @author Petr Jašek
+ * @description Widget sample.
+ * @homepage http://www.sourcefabric.org
+ * @version 1.0
+ */
 class HelloWorld extends Widget
 {
     public function render()

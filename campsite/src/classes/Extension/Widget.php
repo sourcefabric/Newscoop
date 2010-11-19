@@ -26,7 +26,13 @@ abstract class Widget implements IWidget
     private $view = self::DEFAULT_VIEW;
 
     /** @var array */
-    private $settings = array();
+    private $settings = NULL;
+
+    /** @var array */
+    private $annotations = NULL;
+
+    /** @var WidgetManagerDecorator */
+    private $manager = NULL;
 
     /**
      * Get cache object
@@ -71,26 +77,6 @@ abstract class Widget implements IWidget
     }
 
     /**
-     * Get setting
-     * @param string $name
-     * return mixed
-     */
-    public function getSetting($name)
-    {
-        return isset($this->settings[$name]) ? $this->settings[$name] : $this->$name;
-    }
-
-    /**
-     * Set widget settings
-     * @param array $settings
-     * @return IWidget
-     */
-    public function setSettings(array $settings = array())
-    {
-        $this->settings = $settings;
-    }
-
-    /**
      * Is view fullscreen?
      * @return bool
      */
@@ -108,5 +94,94 @@ abstract class Widget implements IWidget
     {
         $args = func_get_args();
         return call_user_func_array('getGS', $args);
+    }
+
+    /**
+     * Set widget settings
+     * @param array $settings
+     * @return IWidget
+     */
+    public function setSettings(array $settings = array())
+    {
+        $this->settings = $settings;
+    }
+
+    /**
+     * Get setting
+     * @param string $name
+     * return mixed
+     */
+    public function getSetting($name)
+    {
+        if ($this->settings === NULL) {
+            $this->settings = array();
+        }
+        return isset($this->settings[$name]) ? $this->settings[$name] : NULL;
+    }
+
+    /**
+     * Get annotation
+     * @param string $name
+     * return string
+     */
+    public function getAnnotation($name)
+    {
+        if ($this->annotations === NULL) {
+            $this->annotations = array();
+            $reflection = new ReflectionObject($this);
+            $doc = $reflection->getDocComment();
+            $matches = array();
+            if (preg_match_all('/@([a-zA-Z]+) ([^*]+)\*/', $doc, $matches)) {
+                for ($i = 0, $size = sizeof($matches[1]); $i < $size; $i++) {
+                    $this->annotations[$matches[1][$i]] = trim($matches[2][$i]);
+                }
+            }
+        }
+        return isset($this->annotations[$name]) ? $this->annotations[$name] : NULL;
+    }
+
+    /**
+     * Set widget manager
+     * @param WidgetManagerDecorator $manager
+     * @return IWidget
+     */
+    public function setManager(WidgetManagerDecorator $manager)
+    {
+        $this->manager = $manager;
+        return $this;
+    }
+
+    /**
+     * Get property value
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments) {
+        $matches = array();
+        if (!preg_match('/^get([A-Z][a-zA-Z0-9_-]+)$/', $name, $matches)) {
+            return NULL;
+        }
+
+        // extract name
+        $property = $matches[1];
+        $property[0] = strtolower($property[0]); // lowercase 1st
+
+        // get value
+        if (isset($this->settings[$property])) { // from db
+            $value = $this->getSetting($property);
+        } else if (property_exists($this, $property)) { // from property
+            $value = $this->$property;
+        } else { // from annotation
+            $value = $this->getAnnotation($property);
+        }
+
+        if ($value === NULL) { // ini file
+            $value = $this->manager->getMeta($property);
+        }
+
+        // return value
+        // TODO set type by property if exists
+        return $value;
     }
 }

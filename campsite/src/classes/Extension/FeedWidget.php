@@ -17,23 +17,27 @@ abstract class FeedWidget extends Widget
      * @var string
      * @setting
      */
-    protected $url = 'http://www.sourcefabric.org/en/?tpl=259';
+    protected $url = '';
 
     /**
      * @var int
      * @setting
      */
-    protected $count = 8;
+    protected $count = 5;
 
     /** @var int */
     protected $ttl = 900; // 15m
 
+    /**
+     * Render feeds
+     * @return void
+     */
     public function render()
     {
         ob_start();
         $even = false;
-        $count = $this->getSetting('count');
-        foreach ($this->getItems($this->getSetting('url')) as $item) {
+        $count = $this->getCount();
+        foreach ($this->getItems($this->getUrl()) as $item) {
             if ($count <= 0) {
                 break;
             } else {
@@ -69,15 +73,19 @@ abstract class FeedWidget extends Widget
     /**
      * Get feed items from specified url or cache
      * @param string $url
-     * @return SimpleXMLElement
+     * @return Iterator
      */
     private function getItems($url)
     {
+        if (empty($url)) {
+            return array();
+        }
+
         $cache = $this->getCache();
         $feed = $cache->fetch($url);
         if (empty($feed)) {
             $feed = file_get_contents($url);
-            $cache->add($url, $feed, $this->ttl);
+            $cache->add($url, $feed, $this->getTtl());
         }
         return simplexml_load_string($feed);
     }

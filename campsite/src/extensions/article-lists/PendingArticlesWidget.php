@@ -10,13 +10,11 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
+/**
+ * @title Pending Articles
+ */
 class PendingArticlesWidget extends Widget
 {
-    public function getTitle()
-    {
-        return getGS('Pending Articles');
-    }
-
     public function render()
     {
         $articlelist = new ArticleList();

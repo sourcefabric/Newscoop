@@ -50,17 +50,11 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
             $this->widget->setSettings($data['settings']);
         }
 
+        $this->widget->setManager($this);
+
         if (!empty($data) && empty($data['id'])) {
             $this->fetch(); // load id
         }
-    }
-
-    /**
-     * Get author
-     */
-    public function getAuthor()
-    {
-        return $this->getMeta('author');
     }
 
     /**
@@ -74,24 +68,6 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
         }
 
         return $this->m_data['class'];
-    }
-
-    /**
-     * Get description
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->getMeta('description');
-    }
-
-    /**
-     * Get homepage
-     * @return string
-     */
-    public function getHomepage()
-    {
-        return $this->getMeta('homepage');
     }
 
     /**
@@ -126,27 +102,6 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
     }
 
     /**
-     * Get title.
-     * @return string
-     */
-    public function getTitle()
-    {
-        if (method_exists($this->widget, 'getTitle')) {
-            return $this->widget->getTitle();
-        }
-        return $this->getMeta('name');
-    }
-
-    /**
-     * Get version
-     * @return string
-     */
-    public function getVersion()
-    {
-        return $this->getMeta('version');
-    }
-
-    /**
      * Save data
      * @param array $p_columns
      * @return void
@@ -169,7 +124,7 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
      * @param string $key
      * @return string
      */
-    private function getMeta($key)
+    public function getMeta($key)
     {
         if ($this->meta === NULL) {
             $this->meta = array();
@@ -178,15 +133,20 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
             $dirname = dirname($this->getPath());
             $inifile = $dirname . '/' . basename($dirname) . '.ini';
             if (file_exists($inifile)) {
-                $this->meta = parse_ini_file($inifile, TRUE);
-                if (!empty($this->meta[$this->getClass()])) {
-                    foreach ($this->meta[$this->getClass()] as $k => $v) {
-                        $this->meta[$k] = $v;
-                    }
-                }
+                $this->meta = parse_ini_file($inifile);
             }
         }
 
         return empty($this->meta[$key]) ? '' : (string) $this->meta[$key];
+    }
+
+    /**
+     * Calls forwarded to widget
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call($name, $arguments) {
+        return call_user_func_array(array($this->widget, $name), $arguments);
     }
 }

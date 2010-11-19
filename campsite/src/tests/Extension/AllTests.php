@@ -38,6 +38,10 @@ class Extension_AllTests
     }
 }
 
+/**
+ * @title Test
+ * @description toc
+ */
 class TestWidget extends Widget
 {
     public function render()

@@ -10,13 +10,11 @@
 
 require_once dirname(__FILE__) . '/bootstrap.php';
 
+/**
+ * @title Most Popular Articles
+ */
 class MostPopularArticlesWidget extends Widget
 {
-    public function getTitle()
-    {
-        return getGS('Most Popular Articles');
-    }
-
     public function render()
     {
         $articlelist = new ArticleList();
