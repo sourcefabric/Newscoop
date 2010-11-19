@@ -108,11 +108,13 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
             }
             $property->setAccessible(TRUE);
 
+            $method = 'get' . ucfirst($property->getName());
+
             echo '<dl>';
             echo '<dt><label>', getGS($property->getName()), '</label></dt>';
             printf('<dd><input type="text" name="%s" value="%s" /></dd>',
                 $property->getName(),
-                $this->widget->getSetting($property->getName()));
+                $this->widget->$method());
             echo '</dl>', "\n";
         }
         $settings = ob_get_clean();

@@ -167,16 +167,21 @@ abstract class Widget implements IWidget
         $property = $matches[1];
         $property[0] = strtolower($property[0]); // lowercase 1st
 
-        // get value
-        if (isset($this->settings[$property])) { // from db
-            $value = $this->getSetting($property);
-        } else if (property_exists($this, $property)) { // from property
+        // get value from db
+        $value = $this->getSetting($property);
+
+        // get value from property
+        if (empty($value) && property_exists($this, $property)) {
             $value = $this->$property;
-        } else { // from annotation
+        }
+
+        // get value from annotation
+        if (empty($value)) {
             $value = $this->getAnnotation($property);
         }
 
-        if ($value === NULL) { // ini file
+        // get value from ini file
+        if (empty($value)) {
             $value = $this->manager->getMeta($property);
         }
 
