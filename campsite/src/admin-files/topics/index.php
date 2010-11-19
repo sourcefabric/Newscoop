@@ -72,7 +72,7 @@ camp_html_display_msgs("0.5em", 0);
 <?php
 if (count($topics) == 0) { ?>
 <blockquote>
-	<p><?php  putGS('No topics'); ?></p>
+	<p><?php putGS('No topics'); ?></p>
 </blockquote>>
 
 <?php } else { ?>
@@ -175,11 +175,12 @@ foreach ($topics as $topicPath) {
 echo str_repeat('</li></ul>', $level);
 ?>
 
-<form method="post" action="do_order.php" onsubmit="return updateOrder(this);">
+<form method="post" action="do_order.php">
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="languages" value="<?php echo implode('_', $f_show_languages); ?>" />
 <fieldset class="buttons">
     <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
+    <input type="reset" name="Reset" value="<?php putGS('Reset order'); ?>" />
 </fieldset>
 </form>
 
@@ -234,52 +235,73 @@ $('ul.tree.sortable .item').each(function() {
     }).addClass('closed');
 });
 
+var sortables = 'ul.tree.sortable, ul.tree.sortable ul';
+
 // make tree sortable
-$('ul.tree.sortable, ul.tree.sortable ul').sortable({
-    revert: 100,
-    distance: 5,
-    start: function(event, ui) {
-        sorting = true;
-        ui.item.addClass('move');
-    },
-    stop: function(event, ui) {
-        sorting = false;
-        ui.item.removeClass('move');
-        $('fieldset.buttons').addClass('active');
+makeSortable(sortables);
+
+// reset
+$('input:reset').click(function() {
+    $('fieldset.buttons').removeClass('active');
+    $(sortables).each(function() {
+        $(this).sortable('cancel');
+    });
+    makeSortable(sortables);
+});
+
+// save
+$('form[action^=do_order]').submit(function(e) {
+    e.preventDefault();
+
+    var positions = {};
+    $('ul.sortable, ul.sortable ul').each(function() {
+        var parentId = $(this).parent('li').attr('id');
+        if (!parentId) {
+            parentId = 'topic_0';
+        }
+        positions[parentId] = $(this).sortable('toArray');
+    });
+    callServer(['Topic', 'UpdateOrder'], [
+        positions,
+        '<?php echo implode('_', $f_show_languages); ?>',
+        ], function(json) {
+            $('fieldset.buttons').removeClass('active');
+            flashMessage('Order saved');
+        });
+    return false;
+});
+
+// check for changes before reload
+$('ul.sortable input:submit, ul.sortable a.delete').click(function() {
+    if ($('fieldset.buttons').hasClass('active')) {
+        return confirm('<?php putGS('Order changes will be lost. Are you sure you want to continue?'); ?>');
     }
 });
 
 }); // /document.ready
 
 /**
- * Update one list order.
- *
- * @param object list
- * @param object form
- *
+ * Make items sortable.
+ * @param string selector
  * @return void
  */
-function updateListOrder(list, form)
+function makeSortable(selector)
 {
-    var orderAry = list.sortable('toArray');
-    for (var i = 0; i < orderAry.length; i++) {
-        var elem = $('#' + orderAry[i] + ' > input[type=hidden]').first().val(i + 1);
-        elem.appendTo(form);
-    }
-}
-
-/**
- * Update order info in tree
- *
- * @return bool
- */
-function updateOrder(form)
-{
-    updateListOrder($('ul.tree.sortable'), form);
-    $('ul.tree.sortable ul').each(function() {
-        updateListOrder($(this), form);
+    $(selector).sortable({
+        revert: 100,
+        distance: 5,
+        start: function(event, ui) {
+            sorting = true;
+            ui.item.addClass('move');
+        },
+        stop: function(event, ui) {
+            sorting = false;
+            ui.item.removeClass('move');
+        },
+        update: function(event, ui) {
+            $('fieldset.buttons').addClass('active');
+        },
     });
-    return true;
 }
 
 /**
@@ -304,7 +326,7 @@ function validate(form)
     }
 
     if (emsg.length > 0) {
-        alert(emsg.join("\n"));
+        flashMessage(emsg.join("<br />\n"), 'error');
         return false;
     }
 

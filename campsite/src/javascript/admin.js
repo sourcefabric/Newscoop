@@ -1,6 +1,5 @@
 var terms = [];
 $(document).ready(function() {
-
     // topics search autocomplete
     $('input[name=search].topics').each(function() {
         var input = $(this);
@@ -35,8 +34,17 @@ $(document).ready(function() {
         $('ul.tree *').removeClass('match');
         $('ul.tree li, ul.tree ul').show();
         $('ul.tree.sortable').sortable('option', 'disabled', true);
+        $('span.open', $('ul.tree')).each(function() {
+            $(this).removeClass('opened');
+            if ($('ul', $(this).closest('li')).size()) {
+                $(this).addClass('closed');
+            }
+        });
+        $('> a', 'ul.tree li').text('+');
+
         if ($(this).val() == '') {
             $('ul.tree.sortable').sortable('option', 'disabled', false);
+            $('ul.tree ul').hide();
             return;
         }
 
@@ -56,7 +64,7 @@ $(document).ready(function() {
                 if ($(this).text().search(re) >= 0) {
                     li.addClass('match');
                     $(this).addClass('match');
-                    $(this).closest(elemParent).addClass('match');
+                    $(this).parentsUntil('ul.tree').addClass('match');
                 }
             });
         });
@@ -64,6 +72,13 @@ $(document).ready(function() {
         // hide non matching
         $('ul.tree > li').not('.match').hide();
         $('ul.tree li.match > ul').show();
+        $('span.open', $('ul.tree li.match')).each(function() {
+            $(this).removeClass('closed');
+            if ($('ul', $(this).closest('li')).size()) {
+                $(this).addClass('opened');
+            }
+        });
+        $('> a', 'ul.tree li.match').text('-');
     });
 });
 
@@ -84,6 +99,7 @@ function flashMessage(message, type, fixed)
 
     var flash = $('<div class="flash ui-state-' + messageClass + '"><p>' + message + '</p></div>')
         .appendTo('body')
+        .css('z-index', '10000')
         .click(function() {
             $(this).hide();
         });

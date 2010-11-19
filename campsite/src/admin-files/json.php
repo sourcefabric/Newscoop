@@ -32,6 +32,7 @@ try {
     $serverRequest->allow('WidgetManager::GetWidgetContent');
     $serverRequest->allow('WidgetManager::SetContextWidgets');
     $serverRequest->allow('WidgetManager::SaveWidgetSettings');
+    $serverRequest->allow('Topic::UpdateOrder');
 
     // get result
     $result = $serverRequest->execute();
