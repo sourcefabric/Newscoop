@@ -25,6 +25,9 @@ abstract class Widget implements IWidget
     /** @var string */
     private $view = self::DEFAULT_VIEW;
 
+    /** @var array */
+    private $settings = array();
+
     /**
      * Get cache object
      * @return CampCache
@@ -65,6 +68,26 @@ abstract class Widget implements IWidget
     {
         global $g_user;
         return $g_user;
+    }
+
+    /**
+     * Get setting
+     * @param string $name
+     * return mixed
+     */
+    public function getSetting($name)
+    {
+        return isset($this->settings[$name]) ? $this->settings[$name] : $this->$name;
+    }
+
+    /**
+     * Set widget settings
+     * @param array $settings
+     * @return IWidget
+     */
+    public function setSettings(array $settings = array())
+    {
+        $this->settings = $settings;
     }
 
     /**

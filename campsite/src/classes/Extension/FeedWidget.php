@@ -9,14 +9,20 @@
  */
 
 /**
- * Base RSS widget
+ * Base feed widget
  */
-abstract class RssWidget extends Widget
+abstract class FeedWidget extends Widget
 {
-    /** @var string */
+    /**
+     * @var string
+     * @setting
+     */
     protected $url = 'http://www.sourcefabric.org/en/?tpl=259';
 
-    /** @var int */
+    /**
+     * @var int
+     * @setting
+     */
     protected $count = 8;
 
     /** @var int */
@@ -26,11 +32,12 @@ abstract class RssWidget extends Widget
     {
         ob_start();
         $even = false;
-        foreach ($this->getItems($this->url) as $item) {
-            if ($this->count <= 0) {
+        $count = $this->getSetting('count');
+        foreach ($this->getItems($this->getSetting('url')) as $item) {
+            if ($count <= 0) {
                 break;
             } else {
-                $this->count--;
+                $count--;
             }
 
             echo $even ? '<li class="even">' : '<li>';
@@ -51,7 +58,7 @@ abstract class RssWidget extends Widget
         $content = ob_get_clean();
 
         if (empty($content)) {
-            echo '<p>', getGS("No news from '$1'.", $this->url), '</p>';
+            echo '<p>', getGS("No news from '$1'.", $this->getSetting('url')), '</p>';
         } else {
             echo '<ul class="rss">', "\n";
             echo $content;

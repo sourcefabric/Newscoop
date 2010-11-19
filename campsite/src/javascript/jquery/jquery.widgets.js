@@ -64,7 +64,7 @@ $.fn.widgets = function (options) {
                     }).html('Close');
 
                     // hide other buttons
-                    $('a.info, a.minmax', full).detach();
+                    $('a.info, a.minmax, a.settings', full).detach();
 
                     // normal cursor
                     $(settings.controls, full).css('cursor', 'auto');
@@ -82,6 +82,41 @@ $.fn.widgets = function (options) {
                     
                     return false;
                 });
+
+            $('form.settings', widget).each(function() {
+
+            // add settings button
+            $('<a href="#" class="settings">settings</a>')
+                .prependTo(controls)
+                .click(function() {
+                    $('.settings fieldset', widget).toggle();
+                });
+
+            // hide form on init
+            $('.settings fieldset').hide();
+
+            // ajax submit
+            $('form.settings', widget).submit(function() {
+                var settings = {};
+                $('input:text', $(this)).each(function() {
+                    settings[$(this).attr('name')] = $(this).val();
+                });
+                callServer(['WidgetManager', 'SaveWidgetSettings'], [
+                    widget.attr('id'),
+                    settings,
+                    ], function(json) {
+                    // reload content
+                    callServer(['WidgetManager', 'GetWidgetContent'], [
+                        widget.attr('id'),
+                        widget.closest('.context').attr('id'),
+                        ], function(json) {
+                            $('> .content > .scroll', widget).html(json);
+                        });
+                });
+                return false;
+            });
+
+            }); // /form.settings
 
             // add info button
             $('<a class="info" href="#" title="' + settings.localizer.info + '">i</a>')

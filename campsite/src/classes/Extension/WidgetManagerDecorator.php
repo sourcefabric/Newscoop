@@ -46,6 +46,10 @@ abstract class WidgetManagerDecorator extends DatabaseObject implements IWidget
         $this->widget = $widget;
         $this->m_data = $data;
 
+        if (!empty($data['settings'])) {
+            $this->widget->setSettings($data['settings']);
+        }
+
         if (!empty($data) && empty($data['id'])) {
             $this->fetch(); // load id
         }

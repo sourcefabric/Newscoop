@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/Widget.php';
 require_once dirname(__FILE__) . '/WidgetContext.php';
 require_once dirname(__FILE__) . '/WidgetRendererDecorator.php';
 require_once dirname(__FILE__) . '/Index.php';
-require_once dirname(__FILE__) . '/RssWidget.php';
+require_once dirname(__FILE__) . '/FeedWidget.php';
 
 /**
  * Widget Manager
@@ -184,24 +184,46 @@ class WidgetManager
 
     /**
      * Get widget content for specified view
-     * @param int $widget_id
+     * @param string $widget_id
      * @param string $view
      * @return string
      */
     public static function GetWidgetContent($widget_id, $view)
     {
-        global $g_ado_db;
+        global $g_ado_db, $g_user;
 
         list(,$widget_id) = explode('_', $widget_id);
 
         // get widget file & class info
-        $queryStr = 'SELECT id, path, class
-            FROM ' . self::TABLE_WIDGET . '
-            WHERE id = ' . ( (int) $widget_id);
+        $queryStr = 'SELECT id, path, class, settings
+            FROM ' . self::TABLE_WIDGET . ' tw
+            INNER JOIN ' . self::TABLE . ' t ON tw.id = t.fk_widget_id
+            WHERE id = ' . ((int) $widget_id) . '
+            AND fk_user_id = ' . $g_user->getUserId();
         $row = $g_ado_db->getRow($queryStr);
 
         $widget = self::GetWidgetInstance($row['path'], $row['class'], (array) $row);
         return $widget->render($view, TRUE);
+    }
+
+    /**
+     * Set widget settings
+     * @param string $widget_id
+     * @param array $settings
+     * @return bool
+     */
+    public static function SaveWidgetSettings($widget_id, array $settings)
+    {
+        global $g_ado_db, $g_user;
+
+        list(,$widget_id) = explode('_', $widget_id);
+
+        $queryStr = 'UPDATE ' . self::TABLE . "
+            SET settings = '" . json_encode($settings) . "'
+            WHERE fk_widget_id = " . ((int) $widget_id) . '
+                AND fk_user_id = ' . $g_user->getUserId();
+        $g_ado_db->execute($queryStr);
+        return $queryStr;
     }
 
     /**
@@ -215,6 +237,11 @@ class WidgetManager
     {
         require_once $filename;
         $widget = new $class;
+
+        if (!empty($data['settings'])) {
+            $data['settings'] = (array) json_decode($data['settings']);
+        }
+
         return new WidgetRendererDecorator($widget, $data);
     }
 

@@ -53,3 +53,40 @@ ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT(
 
 -- Add new column to store the token in password recovering
 ALTER TABLE `liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL AFTER `isActive`;
+
+ALTER TABLE Images ADD FULLTEXT(Description);
+ALTER TABLE Images ADD FULLTEXT(Photographer);
+ALTER TABLE Images ADD FULLTEXT(Place);
+ALTER TABLE Images ADD FULLTEXT(Caption);
+
+--- Create table for widgets
+DROP TABLE IF EXISTS `Widget`;
+CREATE TABLE IF NOT EXISTS `Widget` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) NOT NULL DEFAULT '',
+  `class` varchar(78) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`path`, `class`)
+);
+
+--- Create table for widget context
+DROP TABLE IF EXISTS `WidgetContext`;
+CREATE TABLE IF NOT EXISTS `WidgetContext` (
+  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+);
+
+-- Create table for widget context - widget relation
+DROP TABLE IF EXISTS `WidgetContext_Widget`;
+CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
+  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
+  `fk_widget_id` mediumint(8) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL,
+  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `is_collapsed` tinyint(1) NOT NULL DEFAULT '0',
+  `settings` TEXT(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`fk_user_id`, `fk_widget_id`),
+  INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
+);

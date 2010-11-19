@@ -31,6 +31,7 @@ try {
     $serverRequest->allow('WidgetManager::RemoveWidget');
     $serverRequest->allow('WidgetManager::GetWidgetContent');
     $serverRequest->allow('WidgetManager::SetContextWidgets');
+    $serverRequest->allow('WidgetManager::SaveWidgetSettings');
 
     // get result
     $result = $serverRequest->execute();

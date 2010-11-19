@@ -52,7 +52,10 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         echo '<div class="content"><div class="scroll">', "\n";
         echo $content;
         echo '</div></div>', "\n";
+        echo '<div class="extra">';
         $this->renderMeta();
+        $this->renderSettings();
+        echo '</div>';
         echo '</li>', "\n";
     }
 
@@ -91,5 +94,41 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         if (!empty($content)) {
             echo "<dl class=\"meta\">\n$content\n</dl>";
         }
+    }
+
+    /**
+     * Render widget settings form
+     * @return void
+     */
+    public function renderSettings()
+    {
+        ob_start();
+        $reflection = new ReflectionObject($this->widget);
+        $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
+        foreach ($reflection->getProperties($filter) as $property) {
+            $doc = $property->getDocComment();
+            if (strpos($doc, '@setting') === FALSE) {
+                continue;
+            }
+            $property->setAccessible(TRUE);
+
+            echo '<dl>';
+            echo '<dt><label>', getGS($property->getName()), '</label></dt>';
+            printf('<dd><input type="text" name="%s" value="%s" /></dd>',
+                $property->getName(),
+                $this->widget->getSetting($property->getName()));
+            echo '</dl>', "\n";
+        }
+        $settings = ob_get_clean();
+
+        if (empty($settings)) {
+            return;
+        }
+
+        echo '<form class="settings" action="" method="">';
+        echo '<fieldset>', $settings;
+        echo '<input type="submit" value="', getGS('Save'), '" />';
+        echo '</fieldset>';
+        echo '</form>';
     }
 }
