@@ -8,24 +8,22 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/ArticlesWidget.php';
 
 /**
  * @title Most Popular Articles
  */
-class MostPopularArticlesWidget extends Widget
+class MostPopularArticlesWidget extends ArticlesWidget
 {
-    public function render()
+    public function beforeRender()
     {
-        $articlelist = new ArticleList();
         $count = 0;
         $popularArticlesParams = array(
             new ComparisonOperation('published', new Operator('is'), 'true'),
             new ComparisonOperation('reads', new Operator('greater'), '0'),
         );
-        $articlelist->setItems(Article::GetList($popularArticlesParams,
+        $this->items = Article::GetList($popularArticlesParams,
             array(array('field'=>'bypopularity', 'dir'=>'desc')),
-            NULL, $NumDisplayArticles, $count));
-        $articlelist->render();
+            NULL, $NumDisplayArticles, $count);
     }
 }

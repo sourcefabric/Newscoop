@@ -34,6 +34,11 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
             $this->widget->setView($view);
         }
 
+        // run beforeRender method
+        if (method_exists($this->widget, 'beforeRender')) {
+            $this->widget->beforeRender();
+        }
+
         // get content
         ob_start();
         $this->widget->render();

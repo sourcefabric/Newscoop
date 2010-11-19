@@ -46,9 +46,7 @@
 <?php } ?>
 </tbody>
 </table>
-
 </div>
-
 <?php if ($this->order) { ?>
 <form method="post" action="<?php echo $this->path; ?>/do_order.php" onsubmit="return sendOrder(this, '<?php echo $this->id; ?>');">
     <?php echo SecurityToken::FormParameter(); ?>
@@ -61,7 +59,6 @@
 </form>
 <div style="clear: both"></div>
 <?php } ?>
-
 <?php if (!self::$renderTable) { ?>
 <script type="text/javascript"><!--
 tables = [];
@@ -81,7 +78,6 @@ function sendOrder(form, hash)
 }
 --></script>
 <?php } // render ?>
-
 <script type="text/javascript"><!--
 $(document).ready(function() {
 var table = $('#table-<?php echo $this->id; ?>');
@@ -130,7 +126,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // hide columns
             'bVisible': false,
-                'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 14, 16],
+            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 14, 16,
+                <?php echo implode(', ', $this->hidden); ?>
+            ],
         },
         { // not sortable
             'bSortable': false,

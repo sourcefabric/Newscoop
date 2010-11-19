@@ -223,7 +223,7 @@ class WidgetManager
             WHERE fk_widget_id = " . ((int) $widget_id) . '
                 AND fk_user_id = ' . $g_user->getUserId();
         $g_ado_db->execute($queryStr);
-        return $queryStr;
+        return TRUE;
     }
 
     /**

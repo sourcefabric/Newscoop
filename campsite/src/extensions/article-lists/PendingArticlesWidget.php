@@ -8,17 +8,15 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/ArticlesWidget.php';
 
 /**
  * @title Pending Articles
  */
-class PendingArticlesWidget extends Widget
+class PendingArticlesWidget extends ArticlesWidget
 {
-    public function render()
+    public function beforeRender()
     {
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetUnplacedArticles());
-        $articlelist->render();
+        $this->items = Article::GetUnplacedArticles();
     }
 }

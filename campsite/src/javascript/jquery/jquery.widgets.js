@@ -22,7 +22,7 @@ $.fn.widgets = function (options) {
             callServer(['WidgetManager', 'SetContextWidgets'], [
                 context,
                 $(this).sortable('toArray'),
-                ]);
+            ]);
         });
 
     };
@@ -48,18 +48,21 @@ $.fn.widgets = function (options) {
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
                     var columns = $('.column', dashboard);
-                    var full = widget.clone().hide().appendTo(dashboard);
+                    var full = widget.clone()
+                        .hide()
+                        .appendTo(dashboard)
+                        .css('list-style-type', 'none')
+                        .css('width', (dashboard.width() - 14) + 'px')
+                        .css('float', 'left')
+                        .css('margin-top', '13px');
 
                     // hide columns
                     columns.hide();
 
-                    // make widget fullscreen
-                    full.css('width', (dashboard.width() - 20) + 'px').css('float', 'left');
-
                     // close button
                     $('a.close', full).click(function() {
-                        full.hide();
                         columns.show();
+                        full.detach();
                         return false;
                     }).html('Close');
 
@@ -70,15 +73,14 @@ $.fn.widgets = function (options) {
                     $(settings.controls, full).css('cursor', 'auto');
 
                     // load content
+                    full.show();
+                    $('> .content .scroll', full).html('<p>Loading..</p>');
                     callServer(['WidgetManager', 'GetWidgetContent'], [
                         widget.attr('id'),
                         'fullscreen',
                         ], function(json) {
                             $('> .content > .scroll', full).html(json);
                         });
-                    
-                    // display
-                    full.show();
                     
                     return false;
                 });
@@ -90,6 +92,8 @@ $.fn.widgets = function (options) {
                 .prependTo(controls)
                 .click(function() {
                     $('.settings fieldset', widget).toggle();
+                    $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
+                    return false;
                 });
 
             // hide form on init
@@ -97,6 +101,7 @@ $.fn.widgets = function (options) {
 
             // ajax submit
             $('form.settings', widget).submit(function() {
+                var fieldset = $('fieldset', $(this));
                 var settings = {};
                 $('input:text', $(this)).each(function() {
                     settings[$(this).attr('name')] = $(this).val();
@@ -111,7 +116,8 @@ $.fn.widgets = function (options) {
                         widget.closest('.context').attr('id'),
                         ], function(json) {
                             $('> .content > .scroll', widget).html(json);
-                        });
+                            fieldset.fadeOut();
+                    });
                 });
                 return false;
             });
@@ -123,9 +129,13 @@ $.fn.widgets = function (options) {
                 .prependTo(controls)
                 .click(function() {
                     meta.toggle();
+                    $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
                     return false;
                 });
-            meta.hide().click(function() { $(this).hide(); });
+            meta.hide().click(function() {
+                $(this).hide();
+                $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
+            });
 
             // add close button
             $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
@@ -152,7 +162,6 @@ $.fn.widgets = function (options) {
             handle: '.header',
             forcePlaceholderSize: true,
             opacity: 0.8,
-            containment: 'document',
             stop: function(event, ui) {
                 // reload content
                 callServer(['WidgetManager', 'GetWidgetContent'], [
