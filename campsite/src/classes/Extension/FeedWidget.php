@@ -95,6 +95,7 @@ abstract class FeedWidget extends Widget
         }
 
         // parse xml
+        libxml_use_internal_errors(true);
         $xml = simplexml_load_string($feed);
         if (!$xml) { // not well-formed xml
             return array();

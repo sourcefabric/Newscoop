@@ -18,6 +18,7 @@ require_once dirname(__FILE__) . '/WidgetRendererDecoratorTest.php';
 require_once dirname(__FILE__) . '/WidgetManagerDecoratorTest.php';
 require_once dirname(__FILE__) . '/WidgetContextTest.php';
 require_once dirname(__FILE__) . '/WidgetManagerTest.php';
+require_once dirname(__FILE__) . '/FeedWidgetTest.php';
 
 class Extension_AllTests
 {
@@ -33,6 +34,7 @@ class Extension_AllTests
         $suite->addTestSuite('WidgetManagerDecoratorTest');
         $suite->addTestSuite('WidgetContextTest');
         $suite->addTestSuite('WidgetManagerTest');
+        $suite->addTestSuite('FeedWidgetTest');
 
         return $suite;
     }
