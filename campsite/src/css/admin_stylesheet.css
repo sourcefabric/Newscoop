@@ -1354,6 +1354,12 @@ fieldset.closed {
     border-radius: 0;
 }
 
+fieldset.filters a.reset {
+    display: inline-block;
+    margin: 8px 2px 0;
+    font-size: 0.9em;
+}
+
 /** basic tree */
 ul.tree {
     width: 300px;
