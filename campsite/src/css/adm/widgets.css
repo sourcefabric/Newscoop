@@ -137,3 +137,8 @@ dl.meta dt:first-child {
 .widget .extra fieldset input[type=text] {
     width: 21em;
 }
+
+.widget .settings fieldset dt {
+    float: none;
+    width: 99%;
+}

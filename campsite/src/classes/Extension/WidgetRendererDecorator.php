@@ -111,16 +111,31 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
             if (strpos($doc, '@setting') === FALSE) {
                 continue;
             }
+
             $property->setAccessible(TRUE);
+
+            // get label
+            $matches = array();
+            if (preg_match('/@label ([^*]+)/', $doc, $matches)) {
+                $label = trim($matches[1]);
+            } else {
+                $label = $property->getName();
+            }
+
+            // generate id
+            $id = $reflection->getName() . '-' . $property->getName();
+            $id = strtolower($id);
 
             $method = 'get' . ucfirst($property->getName());
 
-            echo '<dl>';
-            echo '<dt><label>', getGS($property->getName()), '</label></dt>';
-            printf('<dd><input type="text" name="%s" value="%s" /></dd>',
+            echo '<dl><dt>';
+            echo '<label for="', $id, '">', getGS($label), '</label>';
+            echo '</dt><dd>';
+            printf('<input id="%s" type="text" name="%s" value="%s" />',
+                $id,
                 $property->getName(),
                 $this->widget->$method());
-            echo '</dl>', "\n";
+            echo '</dd></dl>', "\n";
         }
         $settings = ob_get_clean();
 
