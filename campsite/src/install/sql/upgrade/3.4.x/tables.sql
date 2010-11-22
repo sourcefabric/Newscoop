@@ -59,7 +59,7 @@ ALTER TABLE Images ADD FULLTEXT(Photographer);
 ALTER TABLE Images ADD FULLTEXT(Place);
 ALTER TABLE Images ADD FULLTEXT(Caption);
 
---- Create table for widgets
+-- Create table for widgets
 DROP TABLE IF EXISTS `Widget`;
 CREATE TABLE IF NOT EXISTS `Widget` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `Widget` (
   UNIQUE KEY (`path`, `class`)
 );
 
---- Create table for widget context
+-- Create table for widget context
 DROP TABLE IF EXISTS `WidgetContext`;
 CREATE TABLE IF NOT EXISTS `WidgetContext` (
   `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
