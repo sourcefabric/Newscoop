@@ -81,12 +81,26 @@ abstract class FeedWidget extends Widget
             return array();
         }
 
+        // get url content
         $cache = $this->getCache();
         $feed = $cache->fetch($url);
         if (empty($feed)) {
-            $feed = file_get_contents($url);
+            $feed = '';
+            $headers = get_headers($url);
+            if (is_array($headers)
+                && strpos($headers[0], '200') !== FALSE) { // OK
+                $feed = file_get_contents($url);
+            }
             $cache->add($url, $feed, $this->getTtl());
         }
-        return simplexml_load_string($feed);
+
+        // parse xml
+        $xml = simplexml_load_string($feed);
+        if (!$xml) { // not well-formed xml
+            return array();
+        }
+
+        // return items
+        return empty($xml->item) ? $xml->channel->item : $xml->item;
     }
 }
