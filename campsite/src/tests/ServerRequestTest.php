@@ -79,10 +79,22 @@ class ServerRequestTest extends PHPUnit_Framework_TestCase
         $this->setToken();
         $this->object->allow('min');
         $this->assertEquals(min($this->args), $this->object->execute());
+
+        $sr = new ServerRequest(array('StaticMethodTest', 'tic'));
+        $sr->allow('StaticMethodTest::tic');
+        $this->assertEquals('toc', $sr->execute());
     }
 
     private function setToken()
     {
         $_REQUEST[SecurityToken::SECURITY_TOKEN] = SecurityToken::GetToken();
+    }
+}
+
+class StaticMethodTest
+{
+    public static function tic()
+    {
+        return 'toc';
     }
 }
