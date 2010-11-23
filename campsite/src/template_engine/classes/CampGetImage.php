@@ -364,7 +364,7 @@ class CampGetImage
     private function sendCachedImage()
     {
         header('Campsite-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
-        readfile($this->getTargetPath());
+        return readfile($this->getTargetPath()) !== false;
     }
 
     private function createImage($p_target=null)
@@ -411,6 +411,7 @@ class CampGetImage
      * @return boolean
      */
     static private function MkdirRecursive($p_dir) {
+    	$subdir = '';
         foreach (explode('/', $p_dir) as $piece) {
             $subdir .= '/'.$piece;
             @mkdir($subdir);
