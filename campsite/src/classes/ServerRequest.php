@@ -85,8 +85,29 @@ class ServerRequest
             );
         }
 
-        // TODO create object instance for non-static methods
-        return call_user_func_array($this->callable_name, $this->args);
+        // function
+        if (function_exists($this->callable_name)) {
+            return call_user_func_array($this->callable_name, $this->args);
+        }
+
+        list($class, $method) = explode('::', $this->callable_name);
+        $methodRef = new ReflectionMethod($class, $method);
+
+        // static method
+        if ($methodRef->isStatic()) {
+            return call_user_func_array($this->callable_name, $this->args);
+        }
+
+        // object method - create object instance
+        $classRef = $methodRef->getDeclaringClass();
+        $cargsNum = $classRef->getConstructor()
+            ->getNumberOfParameters();
+        $cargs = array_slice($this->args, 0, $cargsNum);
+        $instance = $classRef->newInstanceArgs($cargs);
+
+        // call instance method
+        $args = array_slice($this->args, $cargsNum);
+        return $methodRef->invokeArgs($instance, $args);
     }
 
     /**

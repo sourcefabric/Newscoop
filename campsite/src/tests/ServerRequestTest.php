@@ -76,13 +76,21 @@ class ServerRequestTest extends PHPUnit_Framework_TestCase
 
     public function testExecute()
     {
+        // test func
         $this->setToken();
         $this->object->allow('min');
         $this->assertEquals(min($this->args), $this->object->execute());
 
-        $sr = new ServerRequest(array('StaticMethodTest', 'tic'));
-        $sr->allow('StaticMethodTest::tic');
+        // test static method
+        $sr = new ServerRequest(array('NonConstructorTest', 'staticTic'));
+        $sr->allow('NonConstructorTest::staticTic');
         $this->assertEquals('toc', $sr->execute());
+
+        $num = mt_rand();
+        $add = mt_rand();
+        $sr = new ServerRequest(array('ConstructorTest', 'getNum'), array($num, $add));
+        $sr->allow('ConstructorTest::getNum');
+        $this->assertEquals($num + $add, $sr->execute());
     }
 
     private function setToken()
@@ -91,10 +99,33 @@ class ServerRequestTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class StaticMethodTest
+class NonConstructorTest
 {
-    public static function tic()
+    public $msg = 'toc';
+
+    public static function staticTic()
     {
         return 'toc';
+    }
+
+
+    public function getTic()
+    {
+        return $this->msg;
+    }
+}
+
+class ConstructorTest
+{
+    private $num = NULL;
+
+    public function __construct($num = NULL)
+    {
+        $this->num = $num;
+    }
+
+    public function getNum($add)
+    {
+        return $this->num + $add;
     }
 }
