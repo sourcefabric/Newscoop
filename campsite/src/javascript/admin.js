@@ -150,7 +150,7 @@ function callServer(p_callback, p_args, p_handle)
         },
         'error': function(xhr, textStatus, errorThrown) {
             flash.hide();
-            var login = window.open(g_admin_url + '/login.php', 'login', 'height=400,width=500');
+            var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
             login.focus();
             popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
 

@@ -9,6 +9,12 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 // Get request.
 $requestId = Input::Get('request', 'string', '', TRUE);
 $request = camp_session_get("request_$requestId", '');
+$requestIsPost = FALSE;
+if (!empty($request)) {
+    $tmp = unserialize($request);
+    $requestIsPost = !empty($tmp['post']);
+    unset($tmp);
+}
 
 // Fix for CS-2276
 $LiveUser->logout();
@@ -140,6 +146,18 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     ?>
 
 <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
+<?php if (!empty($_GET['request'])) { ?>
+<tr>
+    <td colspan="2"><strong class="light">
+        <?php
+        if ($_GET['request'] == 'ajax' || $requestIsPost) {
+            putGS('Your work has been saved.');
+        }
+        putGS('Please login to continue.');
+        ?>
+    </strong></td>
+</tr>
+<?php } ?>
 <tr>
   <td colspan="2"><span class="light"><?php putGS('Please enter your user name and password'); ?></span></td>
 </tr>
