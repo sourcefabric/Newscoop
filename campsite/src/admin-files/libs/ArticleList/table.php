@@ -95,7 +95,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'sPrevious': '<?php putGS('Previous'); ?>',
         },
         'sZeroRecords': '<?php putGS('No records found.'); ?>',
-        'sSearch': '<?php putGS('Search:'); ?>',
+        'sSearch': '<?php putGS('Search'); ?>:',
         'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
         'sEmpty': '<?php putGS('No entries to show'); ?>',
         'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
@@ -119,7 +119,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                     case 'S':
                         return '<?php putGS('Submitted'); ?>';
                     case 'M':
-                        return '<?php putGS('Pub. With Issue'); ?>';
+                        return '<?php putGS('Publish with issue'); ?>';
                 }
             },
             'aTargets': [7]
@@ -189,7 +189,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             });
         <?php }} ?>
             callServer(['ArticleList', 'doData'], aoData, fnCallback);
-    }, 
+    },
     <?php } ?>
     <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column
