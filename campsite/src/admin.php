@@ -180,9 +180,7 @@ if (($extension == '.php') || ($extension == '')) {
 
         // Update security token.
         $token_field = SecurityToken::SECURITY_TOKEN;
-        if (!empty($request['post'][$token_field])) {
-            $request['post'][$token_field] = SecurityToken::GetToken();
-        }
+        $request['post'][$token_field] = SecurityToken::GetToken();
 
         // Set values.
         foreach ($request['post'] as $key => $val) {
