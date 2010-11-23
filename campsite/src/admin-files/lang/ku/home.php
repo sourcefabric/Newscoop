@@ -1,4 +1,13 @@
 <?php 
+regGS("Your work has been saved.", "");
+regGS("Widgets", "");
+regGS("Widget info", "");
+regGS("Widget added to dashboard.", "");
+regGS("Remove widget", "");
+regGS("Please login to continue.", "");
+regGS("Go to home", "");
+regGS("Add to dashboard", "");
+regGS("Add more widgets", "");
 regGS("login", "");
 regGS("Your password has been reset <br/> you may now proceed to", "");
 regGS("This link is not valid.", "");
@@ -44,14 +53,7 @@ regGS("There were errors setting the author for articles of type '$1' from the f
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "نوسه ر به سه رکه وتویی دانرا بۆ بابه ته کانی جۆری '$1' له زه مینه ی '$2'. خ   ");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "با به ته که به سترا له رێگه ی  $1 ($2) $3 چرکه له مه و پێش ");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "بابه ته که به سترا له ڕێگه ی  $1 ($2) $3 کاتژمێر و $4 چرکه له مه و پێش   ");
-regGS("Recently Modified Articles", "بابه ته کانی به م د وا یانه گۆڕانکاری تیا کراو");
-regGS("Publish Schedule", "د یاری کردنی کاتی بڵاو کرد نه وه");
-regGS("No articles have been modified yet.", "هیچ بابه تێك هێشتا گۆڕانکاری تیا نه کراوه");
-regGS("Modification Date", "به رواری گۆڕانکاری");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "هه ڵه له کاتی دانانی نوسه ر  \"$1\" بۆ بابه تی ژماره .  $2 (\"$3\") له جۆری $4.خ  ");
-regGS("There are currently no articles in statistics.", "ئێستا هیچ بابه تێك نی یه  له ئا ماردا");
-regGS("Publish date", "به رواری بڵاو کردنه وه");
-regGS("Most Popular Articles", "سه رنجڕا کێش ترین با به ته کان");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "نه توانرا په یوه ند ی بکا ت به سێر ڤه ری که مکاسته ره وه ، تکا یه بزانه سێر ڤه ری که مکاسته ر باش دامه زراوه");
 regGS("Clear system cache", "سڕینه وه ی هه ڵگره کانی سیسته م");
 regGS("Campsite cache was cleaned up", "هه ڵگره کانی که مپسایت سڕایه وه");
@@ -81,16 +83,6 @@ regGS("Please enter your password.", "تکا یه وشه ی نهێنی خۆت ب
 regGS("Please enter the code shown in the image.", "تکا یه ئه و کۆد ه ی که له وێنه که دایه وه ك خۆ ی بینو سه ");
 regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "که مپسایت ڕێ و شوێنی ئه منی خۆی پێش خست . به مه به ستی برد نه سه ری ڕێ و شوێنی ئه منی حه سابه که بۆ که ڵك وه ر گرتن له م ئا سایشه ، تۆ ئه بێ دوو باره وشه ی نهێنی خۆ ت بنوسی");
 regGS("CAPTCHA code is not valid.  Please try again.", "کۆ د  ی که پچا با یه خدا ر نی یه. تکا یه دوو باره  هه وڵ بد ه");
-regGS("There are no pending articles.", "هیچ با به تێك له ژێر چاو پیا خشا ند ا نی یه");
-regGS("Pending Articles", "با به ته کا نی ژێر چاو پیا خشا ند ن");
-regGS("You haven't written any articles yet.", "تۆ هێشتا هیچ با به تێکت نه نو سیوه");
-regGS("There are no pending items to be published.", "هیچ بابه تێك له ژێر چاو پیا خشا ند ندا نی یه بۆ بڵاو بونه وه");
-regGS("There are currently no submitted articles.", "تا هه نوکه هیچ با به تێك نه نێرد را وه");
-regGS("Recently Published Articles", "با به ته کانی به د وا یا نه بڵاو کراوه");
-regGS("Publish articles", "با به ت بڵاو بکه وه");
-regGS("Publish Date", "به روا ری بڵاو کرد نه وه");
-regGS("No articles have been published yet.", "هیچ با به تێك هێشتا  بڵاو نه کراوه ته وه");
-regGS("Event(s)", "بۆ نه کا ن  ");
 regGS("Signed in: $1", "ها ته ژووره وه: $1");
 regGS("Help", "یار مه تی");
 regGS("About", "له باره ی");
