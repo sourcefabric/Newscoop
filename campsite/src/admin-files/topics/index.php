@@ -235,18 +235,26 @@ $('ul.tree.sortable .item').each(function() {
     }).addClass('closed');
 });
 
-var sortables = 'ul.tree.sortable, ul.tree.sortable ul';
-
 // make tree sortable
-makeSortable(sortables);
+$('ul.tree.sortable, ul.tree.sortable ul').sortable({
+    revert: 100,
+    distance: 5,
+    start: function(event, ui) {
+        sorting = true;
+        ui.item.addClass('move');
+    },
+    stop: function(event, ui) {
+        sorting = false;
+        ui.item.removeClass('move');
+    },
+    update: function(event, ui) {
+        $('fieldset.buttons').addClass('active');
+    },
+});
 
 // reset
 $('input:reset').click(function() {
-    $('fieldset.buttons').removeClass('active');
-    $(sortables).each(function() {
-        $(this).sortable('cancel');
-    });
-    makeSortable(sortables);
+    window.location.reload();
 });
 
 // save
@@ -279,30 +287,6 @@ $('ul.sortable input:submit, ul.sortable a.delete').click(function() {
 });
 
 }); // /document.ready
-
-/**
- * Make items sortable.
- * @param string selector
- * @return void
- */
-function makeSortable(selector)
-{
-    $(selector).sortable({
-        revert: 100,
-        distance: 5,
-        start: function(event, ui) {
-            sorting = true;
-            ui.item.addClass('move');
-        },
-        stop: function(event, ui) {
-            sorting = false;
-            ui.item.removeClass('move');
-        },
-        update: function(event, ui) {
-            $('fieldset.buttons').addClass('active');
-        },
-    });
-}
 
 /**
  * Validate form.
