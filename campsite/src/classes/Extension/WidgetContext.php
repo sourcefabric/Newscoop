@@ -68,6 +68,23 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
     }
 
     /**
+     * Set context widgets
+     * @param array $widgets
+     * @return bool
+     */
+    public function setWidgets(array $widgets = array())
+    {
+        foreach ($widgets as $order => $widgetId) {
+            $widget = new WidgetManagerDecorator($widgetId);
+            $widget->update(array(
+                'fk_widgetcontext_id' => $this->getId(),
+                'order' => $order,
+            ));
+        }
+        return TRUE;
+    }
+
+    /**
      * Get context widgets
      * @return array of IWidget
      */

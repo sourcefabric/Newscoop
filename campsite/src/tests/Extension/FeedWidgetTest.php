@@ -17,11 +17,17 @@ class FeedWidgetTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $widget = new OkFeedWidget();
-        $this->ok = new WidgetRendererDecorator($widget);
+        $this->ok = new WidgetRendererDecorator(array(
+            'id' => 'wok',
+            'class' => 'OkFeedWidget',
+            'path' => __FILE__,
+        ));
 
-        $widget = new ErrorFeedWidget();
-        $this->error = new WidgetRendererDecorator($widget); 
+        $this->error = new WidgetRendererDecorator(array(
+            'id' => 'werror',
+            'class' => 'ErrorFeedWidget',
+            'path' => __FILE__,
+        )); 
     }
 
     public function testRender()

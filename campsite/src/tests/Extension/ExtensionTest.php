@@ -19,12 +19,12 @@ class Extension_ExtensionTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->file = new Extension_File(dirname(__FILE__) . '/IndexTest.php');
-        $this->object = new Extension_Extension('ITest', 'TestClass', $this->file);
+        $this->object = new Extension_Extension('TestClass', $this->file->getPath(), 'ITest');
     }
 
     public function testGetFile()
     {
-        $this->assertEquals($this->file, $this->object->getFile());
+        $this->assertEquals($this->file->getPath(), $this->object->getPath());
     }
 
     public function testHasInterface()

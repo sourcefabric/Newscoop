@@ -16,10 +16,10 @@ echo $breadcrumbs;
 <p><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/" title="<?php putGS('Go to home'); ?>"><?php putGS('Go to home'); ?></a></p>
 
 <ul id="widgets">
-    <?php foreach (WidgetManager::GetAvailable($g_user->getUserId()) as $widget) { ?>
+    <?php foreach (WidgetManager::GetAvailable() as $widget) { ?>
     <li>
         <h3><?php echo $widget->getTitle(); ?></h3>
-        <p><a href="#<?php echo $widget->getId(TRUE); ?>" class="add"><?php putGS('Add to dashboard'); ?></a>&nbsp;</p>
+        <p><a href="#<?php echo $widget->getExtension()->getId(); ?>" class="add"><?php putGS('Add to dashboard'); ?></a>&nbsp;</p>
         <p><?php echo $widget->getDescription(); ?></p>
         <?php $widget->renderMeta(); ?>
     </li>

@@ -8,35 +8,44 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/File.php';
+require_once dirname(__FILE__) . '/../DatabaseObject.php';
 
 /**
  * Extension
  */
-class Extension_Extension
+class Extension_Extension extends DatabaseObject
 {
+    const TABLE = 'Widget';
+
+    /** @var string */
+    public $m_dbTableName = self::TABLE;
+
+    /** @var array */
+    public $m_keyColumnNames = array('path', 'class');
+
+    /** @var array */
+    public $m_columnNames = array(
+        'id',
+        'path',
+        'class',
+    );
+
     /** @var string */
     private $interface = '';
-
-    /** @var string */
-    private $class = '';
-
-    /** @var Extension_File */
-    private $file = NULL;
-
-    /** @var object */
-    private static $instance = NULL;
 
     /**
      * @param string $interface
      * @param string $class
      * @param Extension_File $file
      */
-    public function __construct($interface, $class, Extension_File $file)
+    public function __construct($class, $path, $interface = '')
     {
         $this->interface = $interface;
-        $this->class = $class;
-        $this->file = $file;
+        $this->m_data = array(
+            'id' => NULL,
+            'class' => (string) $class,
+            'path' => (string) $path,
+        );
     }
 
     /**
@@ -45,16 +54,7 @@ class Extension_Extension
      */
     public function getClass()
     {
-        return (string) $this->class;
-    }
-
-    /**
-     * Get file
-     * @return Extension_File
-     */
-    public function getFile()
-    {
-        return $this->file;
+        return (string) $this->m_data['class'];
     }
 
     /**
@@ -63,7 +63,23 @@ class Extension_Extension
      */
     public function getPath()
     {
-        return $this->getFile()->getPath();
+        return (string) $this->m_data['path'];
+    }
+
+    /**
+     * Get id
+     * @return int
+     */
+    public function getId()
+    {
+        if ($this->m_data['id'] === NULL) {
+            $this->fetch();
+            if (empty($this->m_data['id'])) {
+                $this->create();
+                $this->fetch();
+            }
+        }
+        return (int) $this->m_data['id'];
     }
 
     /**
@@ -72,12 +88,9 @@ class Extension_Extension
      */
     public function getInstance()
     {
-        if (self::$instance === NULL) {
-            require_once $this->getFile()->getPath();
-            $classname = $this->getClass();
-            self::$instance = new $classname;
-        }
-        return self::$instance;
+        require_once $this->getPath();
+        $class = $this->getClass();
+        return new $class;
     }
 
     /**
@@ -88,5 +101,21 @@ class Extension_Extension
     public function hasInterface($interface)
     {
         return $interface === $this->interface;
+    }
+
+    /**
+     * Get Extension by id
+     * @param int $id
+     * @return Extension_Extension
+     */
+    public static function GetById($id)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT *
+            FROM ' . self::TABLE . '
+            WHERE id = ' . ((int) $id);
+        $row = $g_ado_db->GetRow($queryStr);
+        return new self($row['class'], $row['path']);
     }
 }

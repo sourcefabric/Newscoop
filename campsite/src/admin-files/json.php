@@ -28,15 +28,14 @@ try {
     $serverRequest->allow('ArticleList::doData');
     $serverRequest->allow('ArticleList::doOrder', 'Publish');
     $serverRequest->allow('WidgetManager::AddWidget');
-    $serverRequest->allow('WidgetManager::RemoveWidget');
-    $serverRequest->allow('WidgetManager::GetWidgetContent');
-    $serverRequest->allow('WidgetManager::SetContextWidgets');
-    $serverRequest->allow('WidgetManager::SaveWidgetSettings');
+    $serverRequest->allow('WidgetManagerDecorator::delete');
+    $serverRequest->allow('WidgetRendererDecorator::render');
+    $serverRequest->allow('WidgetContext::setWidgets');
+    $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
 
-    // get result
-    $result = $serverRequest->execute();
-    echo json_encode($result);
+    // execute
+    echo json_encode($serverRequest->execute());
 } catch (Exception $e) {
     echo json_encode(array(
         'error_code' => $e->getCode(),

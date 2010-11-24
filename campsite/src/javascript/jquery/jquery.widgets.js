@@ -19,7 +19,7 @@ $.fn.widgets = function (options) {
     {
         contexts.each(function() {
             var context = $(this).attr('id');
-            callServer(['WidgetManager', 'SetContextWidgets'], [
+            callServer(['WidgetContext', 'setWidgets'], [
                 context,
                 $(this).sortable('toArray'),
             ]);
@@ -75,9 +75,10 @@ $.fn.widgets = function (options) {
                     // load content
                     full.show();
                     $('> .content .scroll', full).html('<p>Loading..</p>');
-                    callServer(['WidgetManager', 'GetWidgetContent'], [
+                    callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         'fullscreen',
+                        true,
                         ], function(json) {
                             $('> .content > .scroll', full).html(json);
                         });
@@ -106,14 +107,15 @@ $.fn.widgets = function (options) {
                 $('input:text', $(this)).each(function() {
                     settings[$(this).attr('name')] = $(this).val();
                 });
-                callServer(['WidgetManager', 'SaveWidgetSettings'], [
+                callServer(['WidgetManagerDecorator', 'update'], [
                     widget.attr('id'),
-                    settings,
+                    {'settings': settings},
                     ], function(json) {
                     // reload content
-                    callServer(['WidgetManager', 'GetWidgetContent'], [
+                    callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         widget.closest('.context').attr('id'),
+                        true,
                         ], function(json) {
                             $('> .content > .scroll', widget).html(json);
                             fieldset.fadeOut();
@@ -141,7 +143,7 @@ $.fn.widgets = function (options) {
             $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
                 .prependTo(controls)
                 .click(function() {
-                    callServer(['WidgetManager', 'RemoveWidget'], [
+                    callServer(['WidgetManagerDecorator', 'delete'], [
                         widget.attr('id'),
                         ], function(json) {
                             widget.hide(500, function() {
@@ -164,9 +166,10 @@ $.fn.widgets = function (options) {
             opacity: 0.8,
             stop: function(event, ui) {
                 // reload content
-                callServer(['WidgetManager', 'GetWidgetContent'], [
+                callServer(['WidgetRendererDecorator', 'render'], [
                     ui.item.attr('id'),
                     'default',
+                    true,
                     ], function(json) {
                         $('> .content > .scroll', ui.item).html(json);
                     });

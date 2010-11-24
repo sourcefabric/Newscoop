@@ -1,6 +1,7 @@
 <?php
 /**
  * @title Feed reader
+ * @multi
  */
 class FeedReader extends FeedWidget
 {

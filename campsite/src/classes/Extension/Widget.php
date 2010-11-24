@@ -131,7 +131,7 @@ abstract class Widget implements IWidget
             $reflection = new ReflectionObject($this);
             $doc = $reflection->getDocComment();
             $matches = array();
-            if (preg_match_all('/@([a-zA-Z]+) ([^*]+)\*/', $doc, $matches)) {
+            if (preg_match_all('/@([a-zA-Z]+)([^*]+)\*/', $doc, $matches)) {
                 for ($i = 0, $size = sizeof($matches[1]); $i < $size; $i++) {
                     $this->annotations[$matches[1][$i]] = trim($matches[2][$i]);
                 }

@@ -14,13 +14,8 @@ require_once dirname(__FILE__) . '/WidgetManagerDecorator.php';
 /**
  * Widget renderer implementation
  */
-class WidgetRendererDecorator extends WidgetManagerDecorator
+class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
 {
-    /** @var array */
-    private static $metakeys = array(
-        'Author', 'Version', 'Homepage',
-    );
-
     /**
      * Render widget
      * @param string $view
@@ -29,6 +24,8 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
      */
     public function render($view = Widget::DEFAULT_VIEW, $ajax = FALSE)
     {
+        $this->getWidget(); // init
+
         // set view if possible
         if (method_exists($this->widget, 'setView')) {
             $this->widget->setView($view);
@@ -50,7 +47,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         }
 
         // render whole widget
-        echo '<li id="widget_', $this->getId(), '" class="widget">';
+        echo '<li id="', $this->getId(), '" class="widget">';
         if ($this->widget->getTitle() !== NULL) {
             echo '<div class="header"><h3>', getGS($this->widget->getTitle()), '</h3></div>';
         }
@@ -70,10 +67,14 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
      */
     public function renderMeta()
     {
+        static $meta = array(
+            'Author', 'Version', 'Homepage',
+        );
+
         ob_start();
-        foreach (self::$metakeys as $key) {
+        foreach ($meta as $key) {
             $method = 'get' . $key;
-            $value = $this->widget->$method();
+            $value = $this->getWidget()->$method();
             if (empty($value)) {
                 continue;
             }
