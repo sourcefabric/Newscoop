@@ -68,7 +68,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
     public function renderMeta()
     {
         static $meta = array(
-            'Author', 'Version', 'Homepage',
+            'Author', 'Version', 'Homepage', 'License',
         );
 
         ob_start();
