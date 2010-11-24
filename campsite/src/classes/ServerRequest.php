@@ -99,7 +99,7 @@ class ServerRequest
         }
 
         // object method - create object instance
-        $classRef = $methodRef->getDeclaringClass();
+        $classRef = new ReflectionClass($class);
         $cargsNum = $classRef->getConstructor()
             ->getNumberOfParameters();
         $cargs = array_slice($this->args, 0, $cargsNum);
