@@ -142,3 +142,5 @@ dl.meta dt:first-child {
     float: none;
     width: 99%;
 }
+
+.widget iframe { border: 1px solid #fff; }
