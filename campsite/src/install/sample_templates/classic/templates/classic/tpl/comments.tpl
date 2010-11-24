@@ -49,7 +49,7 @@
 
 {{ comment_form submit_button="Send comment" }}
     <div class="form-element">
-      <label for="CommentSubject">{{ if $campsite->language->name == "English" }}Your name (mandatory):{{ else }}Tu nombre (obligatorio):{{ /if }}</label>{{ camp_edit object="comment" attribute="subject" }}
+      <label for="CommentNickname">{{ if $campsite->language->name == "English" }}Your name (mandatory):{{ else }}Tu nombre (obligatorio):{{ /if }}</label>{{ camp_edit object="comment" attribute="nickname" }}
     </div>
    
     <div class="form-element">
@@ -57,7 +57,7 @@
     </div>
 
     <div class="form-element">
-      <label for="CommentNickname">{{ if $campsite->language->name == "English" }}Comment subject:{{ else }}Comentar tema{{ /if }}</label>{{ camp_edit object="comment" attribute="nickname" }}
+      <label for="CommentSubject">{{ if $campsite->language->name == "English" }}Comment subject:{{ else }}Comentar tema{{ /if }}</label>{{ camp_edit object="comment" attribute="subject" }}
     </div>
     
     <div class="form-element">
