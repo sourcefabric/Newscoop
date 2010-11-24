@@ -1,4 +1,13 @@
 <?php 
+regGS("Your work has been saved.", "");
+regGS("Widgets", "");
+regGS("Widget info", "");
+regGS("Widget added to dashboard.", "");
+regGS("Remove widget", "");
+regGS("Please login to continue.", "");
+regGS("Go to home", "");
+regGS("Add to dashboard", "");
+regGS("Add more widgets", "");
 regGS("login", "Σύνδεση");
 regGS("Your password has been reset <br/> you may now proceed to", "");
 regGS("This link is not valid.", "Το link είναι άκυρο.");
@@ -44,14 +53,7 @@ regGS("There were errors setting the author for articles of type '$1' from the f
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
-regGS("Recently Modified Articles", "Προσφάτως Τροποποιημένα Αρχεία");
-regGS("Publish Schedule", "");
-regGS("No articles have been modified yet.", "Κανένα άρθρο δεν έχει τροποποιηθεί μέχρι τώρα.");
-regGS("Modification Date", "Ημερομηνία Τροποποίησης");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
-regGS("There are currently no articles in statistics.", "");
-regGS("Publish date", "");
-regGS("Most Popular Articles", "Δημοφιλέστερα Άρθρα");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
 regGS("Clear system cache", "");
 regGS("Campsite cache was cleaned up", "");
@@ -81,16 +83,6 @@ regGS("Please enter your password.", "Παρακαλώ εισάγετε τον �
 regGS("Please enter the code shown in the image.", "Παρακαλώ εισάγετε τον κωδικό που εμφανίζεται στην εικόνα.");
 regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
 regGS("CAPTCHA code is not valid.  Please try again.", "");
-regGS("There are no pending articles.", "");
-regGS("Pending Articles", "");
-regGS("You haven't written any articles yet.", "Δεν έχετε γράψει άρθρα μέχρι στιγμής.");
-regGS("There are no pending items to be published.", "");
-regGS("There are currently no submitted articles.", "");
-regGS("Recently Published Articles", "");
-regGS("Publish articles", "");
-regGS("Publish Date", "");
-regGS("No articles have been published yet.", "");
-regGS("Event(s)", "Event(s)");
 regGS("Signed in: $1", "");
 regGS("Help", "Βοήθεια");
 regGS("About", "");
@@ -100,5 +92,4 @@ regGS("Login failed", "");
 regGS("Please make sure that you typed the correct user name and password.", "");
 regGS("If your problem persists please contact the site administrator $1", "");
 regGS("Backup/Restore", "");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "");
 ?>
