@@ -217,6 +217,11 @@ $('ul.tree.sortable .item').each(function() {
             return; // ignore
         }
         fieldsets.toggle();
+
+        // blank space workaround
+        var li = fieldsets.closest('li').first();
+        $('> ul', li).detach().appendTo(li);
+
         return false;
     });
 
