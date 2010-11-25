@@ -646,7 +646,8 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "&nbsp;";
 */
         descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>remove</a>)</div>";
-        descs_inner += "<span id='" + voi_id + "' class='" + voi_class + "'>(<span class='action_disabled'>removal&nbsp;after&nbsp;disabling</span>)</span>";
+        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>remove</a>)</div>";
+        //descs_inner += "<span id='" + voi_id + "' class='" + voi_class + "'>(<span class='action_disabled'>removal&nbsp;after&nbsp;disabling</span>)</span>";
 
         descs_inner += "</div>";
         descs_inner += "</div>";
@@ -1831,15 +1832,19 @@ geo_locations.set_edit_direct = function(direct_usage)
     if (direct_usage)
     {
         //alert("direct");
+        $("#edit_html_text_message").removeClass("hidden");
         $("#edit_part_content").removeClass("hidden");
+        $("#edit_plain_text_message").addClass("hidden");
         $("#edit_part_text").addClass("hidden");
         //$("#edit_part_link").addClass("hidden");
-        $('#edit_tabs_all').tabs("option", "disabled", [2, 3]);
+        $('#edit_tabs_all').tabs("option", "disabled", [3, 4]);
     }
     else
     {
         //alert("predefined");
+        $("#edit_html_text_message").addClass("hidden");
         $("#edit_part_content").addClass("hidden");
+        $("#edit_plain_text_message").removeClass("hidden");
         $("#edit_part_text").removeClass("hidden");
         //$("#edit_part_link").removeClass("hidden");
         $('#edit_tabs_all').tabs("option", "disabled", []);

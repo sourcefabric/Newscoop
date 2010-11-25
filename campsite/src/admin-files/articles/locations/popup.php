@@ -298,7 +298,8 @@ V
 
 <div id="edit_tabs_all">
 	<ul>
-		<li><a href="#edit_basic">name</a></li>
+		<li><a href="#edit_basic">basic</a></li>
+		<li><a href="#edit_form">form</a></li>
 		<li><a href="#edit_html">text</a></li>
 		<li><a href="#edit_image" id="image_edit_part">image</a></li>
 		<li><a href="#edit_video" id="video_edit_part">video</a></li>
@@ -311,34 +312,60 @@ V
 <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
 </li>
 <li id="edit_part_link" class="">
-<label class="edit_label" for="point_link">Link:</label>
+<label class="edit_label" for="point_link">Label link:</label>
 <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
 </li>
 <li>
-<label class="edit_label" for="point_perex">Lede:</label>
-<textarea rows="3" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
+<label class="edit_label" for="point_perex">Short description:</label>
+<textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
 </textarea>
 </li>
 </ol>
 	</div>
-	<div id="edit_html" class="edit_tabs">
+
+	<div id="edit_form" class="edit_tabs">
 <ol>
 <li class="edit_label_top">
-<label class="edit_label" for="point_predefined">Text form:</label>
+<label class="edit_label" for="point_predefined">Pop-up content:</label>
 <!--<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />-->
 <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
 <option value="0" selected="true">predefined</option>
 <option value="1">html content</option>
 </select>
+</li>
+<li>
+<div>
+<ul>
+<li>
+&nbsp;
+</li>
+<li>
+The 'predefined' form is for usage of several distinct pieces to form the pop-up content.
+</li>
+<li>
+The 'html content' form is for usage of any html content for the pop-up.
+</li>
+</ul>
+</div>
+</li>
+</ol>
+	</div>
 
+	<div id="edit_html" class="edit_tabs">
+<ol>
+<li id="edit_plain_text_message">
+Plain text part of the predefined pop-up content<br />&nbsp;
+</li>
+<li id="edit_html_text_message">
+HTML content for the pop-up content<br />&nbsp;
 </li>
 <li id="edit_part_text" class="">
-<label class="edit_label" for="point_descr">Textual description:</label>
+<label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
 <textarea rows="4" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
 </li>
 <li id="edit_part_content" class="hidden">
-<label class="edit_label" for="point_content">HTML pop-up content:</label>
+<label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
 <textarea rows="4" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
 </li>
@@ -349,6 +376,9 @@ V
 <li class="edit_label_top">
 <label class="edit_label" for="point_image">Image URL:</label>
 <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
+</li>
+<li>
+&nbsp;
 </li>
 <li>
 <label class="edit_label" for="point_image_height">width:</label>
@@ -367,6 +397,9 @@ V
 <input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
 <input id="point_video_type_youtube" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'youtube'); return false;" />Youtube
 <input id="point_video_type_vimeo" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'vimeo'); return false;" />Vimeo
+</li>
+<li>
+&nbsp;
 </li>
 <li>
 <label class="edit_label" for="point_video">Video ID:</label>
