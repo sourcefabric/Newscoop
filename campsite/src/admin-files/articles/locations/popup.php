@@ -1,12 +1,14 @@
 <?php
 // TODO: during development no access right checking; will be added.
 
-camp_load_translation_strings("article_files");
-require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+//camp_load_translation_strings("article_files");
+//require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
 
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoLocations.php");
+camp_load_translation_strings("api");
+camp_load_translation_strings("geolocation");
 
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -50,10 +52,10 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/map-picking.css">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/map-popups.css">
-<!--
 	<title><?php putGS("Setting Map Locations"); ?></title>
--->
+<!--
 	<title>Setting Map Locations</title>
+-->
 <!--
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 -->
@@ -239,19 +241,19 @@ var on_load_proc = function()
 <div class="map_editor">
 <div class="map_sidepan">
 <div id="map_save_part" class="map_save_part">
-<a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;">save</a> 
-<div id="map_save_info" class="map_save_info">&nbsp;no change yet</div>
+<a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;"><?php putGS("save"); ?></a> 
+<div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search">fill in map name</a><input id="map_name_input" class="map_name_input hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;"><!--<?php putGS("no change yet"); ?>--></div>
 </div><!-- end of map_save_part -->
 <div class="map_menubar">
 <select class="map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
-<option value="" selected="true">any country</option>
+<option value="" selected="true"><?php putGS("any country"); ?></option>
 <?php
 foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     echo '<option value="' . $cc_value . '">' . $cc_name . '</option>' . "\n";
 }
 ?>
 </select>
-<label class="map_geo_search"><a href="#" onClick="findLocation(); return false;">Find</a>&nbsp;</label>
+<label class="map_geo_search"><a href="#" onClick="findLocation(); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
 <label id="map_geo_showhide" class="hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
 </div><!-- end of map_menubar -->
 
@@ -267,12 +269,12 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
-<a href="#" onClick="geo_locations.map_showview(); return false;">show article view</a>
+<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a>
 &nbsp;|&nbsp;
-<a href="#" onClick="geo_locations.map_setview(); return false;">set as the article view</a>
+<a href="#" onClick="geo_locations.map_setview(); return false;"><?php putGS("set as the article view"); ?></a>
 </div><!-- end of map initview -->
 <div class="map_resizing">
-&nbsp;resize article view:&nbsp;
+&nbsp;<?php putGS("resize article view"); ?>:&nbsp;
 <a href="#" onClick="geo_locations.map_width_change(-10); return false;">&lt;&lt;</a>
 H
 <a href="#" onClick="geo_locations.map_width_change(10); return false;">&gt;&gt;</a>
@@ -298,12 +300,12 @@ V
 
 <div id="edit_tabs_all">
 	<ul>
-		<li><a href="#edit_basic">basic</a></li>
-		<li><a href="#edit_form">form</a></li>
-		<li><a href="#edit_html">text</a></li>
-		<li><a href="#edit_image" id="image_edit_part">image</a></li>
-		<li><a href="#edit_video" id="video_edit_part">video</a></li>
-		<li><a href="#edit_marker">icon</a></li>
+		<li><a href="#edit_basic"><?php putGS("basic"); ?></a></li>
+		<li><a href="#edit_form"><?php putGS("form"); ?></a></li>
+		<li><a href="#edit_html"><?php putGS("text"); ?></a></li>
+		<li><a href="#edit_image" id="image_edit_part"><?php putGS("image"); ?></a></li>
+		<li><a href="#edit_video" id="video_edit_part"><?php putGS("video"); ?></a></li>
+		<li><a href="#edit_marker"><?php putGS("icon"); ?></a></li>
 	</ul>
 	<div id="edit_basic" class="edit_tabs">
 <ol>

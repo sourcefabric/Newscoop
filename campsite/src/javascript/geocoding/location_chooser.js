@@ -56,6 +56,8 @@ geo_locations.map_art_view_height_display = 400;
 geo_locations.map_art_view_top_display = 70;
 geo_locations.map_art_view_right_display = 105;
 
+geo_locations.map_label_name = "";
+
 // currently edited (via the edit link) point
 geo_locations.edited_point = 0;
 
@@ -1923,19 +1925,19 @@ geo_locations.map_edit_prepare_markers = function()
 geo_locations.set_save_state = function(state)
 {
     var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
-    var info_obj = document.getElementById ? document.getElementById("map_save_info") : null;
+    //var info_obj = document.getElementById ? document.getElementById("map_save_info") : null;
 
     if (state)
     {
         $(save_obj).removeClass("map_save_off");
         $(save_obj).addClass("map_save_on");
-        info_obj.innerHTML = "&nbsp;to store data";
+        //info_obj.innerHTML = "&nbsp;to store data";
     }
     else
     {
         $(save_obj).removeClass("map_save_on");
         $(save_obj).addClass("map_save_off");
-        info_obj.innerHTML = "&nbsp;no change yet";
+        //info_obj.innerHTML = "&nbsp;no change yet";
     }
 
 };
@@ -1975,6 +1977,42 @@ geo_locations.map_pois_load = function(script_dir)
 
 
 };
+/*
+geo_locations.map_edit_nametags = function()
+{
+
+}
+*/
+
+geo_locations.map_edit_name = function()
+{
+    $("#map_name_display").addClass("hidden");
+    $("#map_name_input").removeClass("hidden");
+
+    var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
+    input_obj.focus();
+};
+geo_locations.map_display_name = function()
+{
+    this.map_save_name();
+
+    $("#map_name_display").removeClass("hidden");
+    $("#map_name_input").addClass("hidden");
+};
+geo_locations.map_save_name = function()
+{
+    var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
+    var display_obj = document.getElementById ? document.getElementById("map_name_display") : null;
+
+    var name_value = input_obj.value;
+    if ("" != name_value)
+    {
+        display_obj.innerHTML = name_value;
+    }
+    this.map_label_name = name_value;
+
+};
+
 
 // the main action on ajax data retrieval for cities search
 // it throws away all the current POI info

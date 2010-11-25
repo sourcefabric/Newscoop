@@ -6,7 +6,28 @@
     width: 1010;
     height: 200;
 }
-
+a.map_name_display:link {
+    text-decoration: none;
+}
+a.map_name_display:visited {
+    text-decoration: none;
+}
+a.map_name_display:hover {
+    text-decoration: none;
+    background: #ffffe8;
+    color: #404020;
+/*
+    color: blue;
+*/
+}
+.map_name_input {
+    font-size: 10px;
+    width: 100px;
+/*
+    margin: 0px;
+    border: 1px;
+*/
+}
 .map_menubar {
     font-size: 90%;
     display: inline;
@@ -314,11 +335,15 @@ a.map_save_on {
     color: #6000f0;
 }
 .map_save_info {
+    float: right;
+    margin-right: 10px;
+/*
+    margin-left: 5px;
     float: left;
+*/
     color: #a0a0a0;
     font-size: 16px;
     margin-top: 2px;
-    margin-left: 2px;
 
 }
 
