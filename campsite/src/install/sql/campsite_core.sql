@@ -2744,6 +2744,40 @@ LOCK TABLES `phorum_users` WRITE;
 /*!40000 ALTER TABLE `phorum_users` DISABLE KEYS */;
 /*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- Create table for widgets
+DROP TABLE IF EXISTS `Widget`;
+CREATE TABLE IF NOT EXISTS `Widget` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) NOT NULL DEFAULT '',
+  `class` varchar(78) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY (`path`, `class`)
+);
+
+-- Create table for widget context
+DROP TABLE IF EXISTS `WidgetContext`;
+CREATE TABLE IF NOT EXISTS `WidgetContext` (
+  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+);
+
+-- Create table for widget context - widget relation
+DROP TABLE IF EXISTS `WidgetContext_Widget`;
+CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
+  `id` varchar(13) NOT NULL,
+  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
+  `fk_widget_id` mediumint(8) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL,
+  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `settings` TEXT(500) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`, `fk_user_id`),
+  INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
+);
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
