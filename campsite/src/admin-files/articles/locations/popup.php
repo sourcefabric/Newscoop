@@ -92,7 +92,6 @@ var useSystemParameters = function()
 // city search start; if longitude/latitude provided, immediate results done
 var findLocation = function()
 {
-
     var city_obj = document.getElementById ? document.getElementById("search-city") : null;
     var cc_obj = document.getElementById ? document.getElementById("search-country") : null;
     
@@ -205,6 +204,7 @@ var init_search = function ()
     var city_obj = document.getElementById ? document.getElementById("search-city") : null;
     if ("" != city_obj.value)
     {
+        //alert("a002");
         findLocation();
     }
 };
@@ -218,9 +218,10 @@ var on_load_proc = function()
 (function($){
     $(document).ready(function()
     {
-        init_search();
         $("#edit_tabs_all").tabs();
         on_load_proc();
+        init_search();
+        //alert("a001");
     });
 })(jQuery);
 	</script>
@@ -299,40 +300,45 @@ V
 	<ul>
 		<li><a href="#edit_basic">name</a></li>
 		<li><a href="#edit_html">text</a></li>
-		<li><a href="#edit_image">image</a></li>
-		<li><a href="#edit_video">video</a></li>
+		<li><a href="#edit_image" id="image_edit_part">image</a></li>
+		<li><a href="#edit_video" id="video_edit_part">video</a></li>
 		<li><a href="#edit_marker">icon</a></li>
 	</ul>
 	<div id="edit_basic" class="edit_tabs">
 <ol>
-<li>
+<li class="edit_label_top">
 <label class="edit_label" for="point_label">Label:</label>
 <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
 </li>
+<li id="edit_part_link" class="">
+<label class="edit_label" for="point_link">Link:</label>
+<input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
+</li>
 <li>
 <label class="edit_label" for="point_perex">Lede:</label>
-<textarea rows="4" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
+<textarea rows="3" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
 </textarea>
 </li>
 </ol>
 	</div>
 	<div id="edit_html" class="edit_tabs">
 <ol>
-<li>
-<label class="edit_label" for="point_predefined">Predefined form:</label>
-<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />
-</li>
-<li id="edit_part_link" class="">
-<label class="edit_label" for="point_link">Link:</label>
-<input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
+<li class="edit_label_top">
+<label class="edit_label" for="point_predefined">Text form:</label>
+<!--<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />-->
+<select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
+<option value="0" selected="true">predefined</option>
+<option value="1">html content</option>
+</select>
+
 </li>
 <li id="edit_part_text" class="">
-<label class="edit_label" for="point_descr">Description:</label>
+<label class="edit_label" for="point_descr">Textual description:</label>
 <textarea rows="4" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
 </li>
 <li id="edit_part_content" class="hidden">
-<label class="edit_label" for="point_content">Pop-up Content:</label>
+<label class="edit_label" for="point_content">HTML pop-up content:</label>
 <textarea rows="4" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
 </li>
@@ -340,8 +346,8 @@ V
 	</div>
 	<div id="edit_image" class="edit_tabs">
 <ol>
-<li>
-<label class="edit_label" for="point_image">Image source:</label>
+<li class="edit_label_top">
+<label class="edit_label" for="point_image">Image URL:</label>
 <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
 </li>
 <li>
@@ -356,7 +362,7 @@ V
 	</div>
 	<div id="edit_video" class="edit_tabs">
 <ol>
-<li>
+<li class="edit_label_top">
 <label class="edit_label" for="point_video_type">Video:</label>
 <input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
 <input id="point_video_type_youtube" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'youtube'); return false;" />Youtube
@@ -378,9 +384,10 @@ V
 	</div>
 	<div id="edit_marker" class="edit_tabs">
 		<div id="edit_marker_selected" class="edit_marker_selected">
-		selected marker:<br /><img id="edit_marker_selected_src" src="">
+		selected marker:&nbsp;</div>
+		<div><img id="edit_marker_selected_src" src="">
 		</div>
-		<div id="edit_marker_choices" class="edit_marker_choices">&nbsp;</div>
+		<div class="edit_marker_choices"><div id="edit_marker_choices">&nbsp;</div></div>
 	</div>
 </div>
 </fieldset>  

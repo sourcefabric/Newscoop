@@ -170,6 +170,17 @@ legend {
     float: left;
     clear: left;
     width: 100%;
+/*
+    padding-bottom: 5px;
+*/
+    padding-bottom: 1em;
+}
+/*
+.edit_label_top {
+    padding-bottom: 1em;
+}
+*/
+.edit_marker_selected {
     padding-bottom: 1em;
 }
 
@@ -254,6 +265,19 @@ position: relative;
     margin-left: auto;
     margin-right: auto;
 }
+.poi_removal {
+/*
+    margin-left: auto;
+    margin-right: auto;
+*/
+    float: left;
+    margin-left: 0px;
+}
+.list_change_poi_void {
+/*
+    font-size: 12px;
+*/
+}
 .action_disabled {
     color: #808080;
     font-style: italic;
@@ -305,13 +329,20 @@ a.map_save_on {
 .edit_marker_choices {
     float: right;
     margin-right: 20px;
-    margin-top: 10px;
-
+    margin-top: 2em;
+    overflow: auto;
+    height: 150px;
+    width: 500px;
+/*
+    top: 100px;
+*/
 }
 .edit_marker_one_choice {
-    border-width: 0px;
-    margin-top: 1px;
+    border-width: 1px;
+    margin-top: 20px;
     margin-bottom: 1px;
+    margin-left: 1px;
+    margin-right: 1px;
 }
 a.edit_marker_one_choice_link {
     border-width: 0px;

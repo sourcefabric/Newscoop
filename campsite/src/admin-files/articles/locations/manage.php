@@ -152,7 +152,7 @@ if (Input::Get('store')) {
         exit();
     }
 
-    $f_contents = Input::Get('f_update_con', 'string', 0, false);
+    $f_contents = Input::Get('f_update_con', 'string', "", false);
     if ("" != $f_contents)
     {
         $contents_data = array();
@@ -177,7 +177,8 @@ if (Input::Get('store')) {
         exit();
     }
 
-    $f_order = Input::Get('f_order', 'string', 0, false);
+    $f_order = Input::Get('f_order', 'string', "", false);
+    //echo "\nf_order: $f_order\n";
     if ("" != $f_order)
     {
         $order_data = array();
