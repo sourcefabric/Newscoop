@@ -807,7 +807,7 @@ class Blog extends DatabaseObject {
     ?>
 
     <!-- TinyMCE -->
-    <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js"></script>
     <script type="text/javascript">
     function CampsiteSubhead(ed) {
         element = ed.dom.getParent(ed.selection.getNode(), 'span');
