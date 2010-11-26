@@ -10,3 +10,4 @@ Draggable
 Droppable
 Selectable
 Resizable
+Slider

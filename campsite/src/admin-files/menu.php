@@ -331,21 +331,51 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/ColVis.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/widgets.css" />
   <script type="text/javascript">
+  <!--
     var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
     var g_admin_url = '/<?php echo $ADMIN; ?>';
     var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+    <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
     if (opener && !opener.closed && opener.setSecurityToken) {
         opener.setSecurityToken(g_security_token);
         opener.focus();
         window.close();
     }
+    <?php } ?>
+    var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
+    var g_localizer = {
+        datepicker: {
+            dayNames: [
+                '<?php putGS('Sunday'); ?>',
+                '<?php putGS('Monday'); ?>',
+                '<?php putGS('Tuesday'); ?>',
+                '<?php putGS('Wednesday'); ?>',
+                '<?php putGS('Thursday'); ?>',
+                '<?php putGS('Friday'); ?>',
+                '<?php putGS('Saturday'); ?>',
+            ],
+            dayNamesMin: [
+                '<?php putGS('Su'); ?>',
+                '<?php putGS('Mo'); ?>',
+                '<?php putGS('Tu'); ?>',
+                '<?php putGS('We'); ?>',
+                '<?php putGS('Th'); ?>',
+                '<?php putGS('Fr'); ?>',
+                '<?php putGS('Sa'); ?>',
+            ],
+            firstDay: 1,
+        },
+    };
+    var popupFlash = false;
+    //-->
   </script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.5.custom.min.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
   <?php echo $menu_root->createMenu("myMenu"); ?>

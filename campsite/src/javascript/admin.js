@@ -80,6 +80,37 @@ $(document).ready(function() {
         });
         $('> a', 'ul.tree li.match').text('-');
     });
+
+    // set date pickers
+    $('input.date, input.datetime').each(function() {
+        // common settings
+        var settings = {
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'hh:mm:ss',
+            showSeconds: true,
+            showOn: 'both',
+            buttonImage: g_admin_img + '/calendar.gif',
+            buttonImageOnly: true,
+            dayNames: g_localizer.datepicker.dayNames,
+            dayNamesMin: g_localizer.datepicker.dayNamesMin,
+            firstDay: g_localizer.datepicker.firstDay,
+        };
+
+        // update settings by classes
+        var classes = $(this).attr('class').split(' ');
+        for (var i = classes.length; i > 0; i--) {
+            var class_ary = classes[i-1].split('_');
+            if (class_ary.length == 2) {
+                settings[class_ary[0]] = class_ary[1];
+            }
+        }
+
+        if ($(this).hasClass('date')) {
+            $(this).datepicker(settings);
+        } else {
+            $(this).datetimepicker(settings);
+        }
+    });
 });
 
 /**

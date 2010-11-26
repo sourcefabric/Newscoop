@@ -64,19 +64,6 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	$publishHour = $publishTime[0];
 	$publishMinute = $publishTime[1];
 ?>
-<html>
-<head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Schedule a new action"); ?></title>
-	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-</head>
-<body>
 
 <?php camp_html_display_msgs(); ?>
 
@@ -94,39 +81,21 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 <TR>
 	<TD COLSPAN="2">
 		<B><?php putGS("Schedule a new action"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
+            <HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
 		<?php $now = getdate(); ?>
-		<div id="calendar-container"></div>
-		<script type="text/javascript">
-		function dateChanged(calendar) {
-			// Beware that this function is called even if the end-user only
-			// changed the month/year.  In order to determine if a date was
-			// clicked you can use the dateClicked property of the calendar:
-			if (calendar.dateClicked) {
-			  // OK, a date was clicked, redirect to /yyyy/mm/dd/index.php
-			  var y = calendar.date.getFullYear();
-			  var m = calendar.date.getMonth()+1;     // integer, 0..11
-			  var d = calendar.date.getDate();      // integer, 1..31
-			  document.forms.autopublish.f_publish_date.value = y+"-"+m+"-"+d;
-			}
-		};
-
-		Calendar.setup(
-			{
-	          range:new Array(<?php p($now["year"]); ?>, 2020),
-			  flat         : "calendar-container", // ID of the parent element
-			  flatCallback : dateChanged           // our callback function
-			}
-		);
-		</script>
-		<p>
-		<input type="text" name="f_publish_date" value="" class="input_text_disabled" size="10" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>">
-		<?php putGS('YYYY-MM-DD'); ?>
+		<input type="text" name="f_publish_date" value="" class="input_text date minDate_0" size="10" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>" />
+        <script type="text/javascript">
+        <!--
+        $(document).ready(function() {
+            $('input[name=f_publish_date]').focus();
+        });
+        -->
+        </script>
 	</TD>
 </TR>
 <TR>
@@ -199,5 +168,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	</BLOCKQUOTE>
 <?php
 }
-//camp_html_copyright_notice();
+camp_html_copyright_notice();
 ?>
+</body>
+</html>

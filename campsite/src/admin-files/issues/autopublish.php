@@ -42,10 +42,6 @@ if (!is_null($event_id)) {
 camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $publicationObj, 'Issue' => $issueObj), true, true);
 
 ?>
-<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -80,27 +76,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
 		<?php $now = getdate(); ?>
-		<table cellpadding="0" cellspacing="2"><tr>
-			<td><INPUT TYPE="TEXT" class="input_text" NAME="publish_date" id="publish_date" maxlength="10" SIZE="11" VALUE="<?php p($publish_date); ?>" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>"></td>
-			<td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
-		    	 style="cursor: pointer; border: 1px solid red;"
-		     	 title="Date selector"
-		     	 onmouseover="this.style.background='red';"
-		     	 onmouseout="this.style.background=''" /></td>
-		  	<td><?php putGS('YYYY-MM-DD'); ?></td>
-		</tr></table>
-		<script type="text/javascript">
-		    Calendar.setup({
-		        inputField:"publish_date",
-		        ifFormat:"%Y-%m-%d",
-		        showsTime:false,
-		        showOthers:true,
-		        weekNumbers:false,
-		        range:new Array(<?php p($now["year"]); ?>, 2020),
-		        button:"f_trigger_c"
-		    });
-		</script>
-
+		<input type="text" class="input_text date minDate_0" name="publish_date" id="publish_date" maxlength="10" size="11" value="<?php p($publish_date); ?>" alt="date|yyyy/mm/dd|-|4|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date')."'"); ?> <?php putGS("The date must be in the future."); ?>" />
 	</TD>
 </TR>
 <TR>
