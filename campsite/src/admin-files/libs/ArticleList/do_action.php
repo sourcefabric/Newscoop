@@ -172,6 +172,17 @@ case 'move':
         $argsStr .= '&f_article_code[]=' . $articleCode;
     }
     return $Campsite['WEBSITE_URL'] . "/admin/articles/duplicate.php?".$argsStr;
+    break;
+
+case 'publish_schedule':
+    $args = array_merge($_REQUEST, $f_params);
+    $argsStr = camp_implode_keys_and_values($args, "=", "&");
+    $argsStr .= '&f_language_selected=' . ( (int) camp_session_get('f_language_selected', 0));
+    foreach ($flatArticleCodes as $articleCode) {
+        $argsStr .= '&f_article_code[]=' . $articleCode;
+    }
+    return $Campsite['WEBSITE_URL'] . "/admin/articles/multi_autopublish.php?".$argsStr;
+    break;
 }
 
 
