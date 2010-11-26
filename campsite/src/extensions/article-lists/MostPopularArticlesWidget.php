@@ -26,4 +26,16 @@ class MostPopularArticlesWidget extends ArticlesWidget
             array(array('field'=>'bypopularity', 'dir'=>'desc')),
             NULL, $NumDisplayArticles, $count);
     }
+
+    public function render()
+    {
+        $articlelist = new ArticleList();
+        $articlelist->setItems($this->items);
+        if (!$this->isFullscreen()) {
+            $articlelist->setHidden(7);
+            $articlelist->setHidden(12);
+            $articlelist->setHidden(15);
+        }
+        $articlelist->render();
+    }
 }
