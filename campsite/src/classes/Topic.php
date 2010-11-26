@@ -341,10 +341,16 @@ class Topic extends DatabaseObject {
 		return $stack;
 	} // fn getPath
 
+
+	/**
+	 * Returns true if it was a root topic
+	 * @return boolean
+	 */
     public function isRoot()
     {
         return $this->m_data['ParentId'] == 0;
-    }
+    } // fn isRoot
+
 
 	/**
 	 * Return true if this topic has subtopics.
@@ -392,7 +398,7 @@ class Topic extends DatabaseObject {
 	    }
 
 	    return $topics[0];
-	}
+	} // fn GetByFullName
 
 
 	/**
@@ -482,6 +488,11 @@ class Topic extends DatabaseObject {
 	} // fn GetTopics
 
 
+	/**
+	 * Returns the subtopics from the next level (not all levels below) in an array
+	 * of topic identifiers.
+	 * @param array $p_returnIds
+	 */
 	public function getSubtopics($p_returnIds = false)
 	{
         global $g_ado_db;
@@ -493,7 +504,7 @@ class Topic extends DatabaseObject {
 			$topics[] = $p_returnIds ? $row['Id'] : new Topic($row['Id']);
 		}
 		return $topics;
-	}
+	} // getSubtopics
 
 
 	/**
