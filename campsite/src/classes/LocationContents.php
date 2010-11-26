@@ -355,7 +355,6 @@ class Geo_LocationContents extends DatabaseObject {
         $queryStr_con_up .= "poi_video_id = ?, poi_video_type = ?, poi_video_width = ?, poi_video_height = ? ";
         $queryStr_con_up .= "WHERE id = ?";
 
-
         // updating current POIs, inserting new POIs
         //$poi_rank = 0;
         foreach ($p_contents as $poi_obj)

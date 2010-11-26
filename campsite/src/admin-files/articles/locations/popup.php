@@ -213,7 +213,9 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    //alert("bah 002");
     geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
+    //alert("bah 003");
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -238,6 +240,7 @@ var on_load_proc = function()
 */
 ?>
 <body onLoad="return false;">
+<!--<div id="data_outputs" class="hidden">debug purposes</div>-->
 <div class="map_editor">
 <div class="map_sidepan">
 <div id="map_save_part" class="map_save_part">
@@ -301,7 +304,7 @@ V
 <div id="edit_tabs_all">
 	<ul>
 		<li><a href="#edit_basic"><?php putGS("basic"); ?></a></li>
-		<li><a href="#edit_form"><?php putGS("form"); ?></a></li>
+<!--		<li><a href="#edit_form"><?php putGS("form"); ?></a></li>-->
 		<li><a href="#edit_html"><?php putGS("text"); ?></a></li>
 		<li><a href="#edit_image" id="image_edit_part"><?php putGS("image"); ?></a></li>
 		<li><a href="#edit_video" id="video_edit_part"><?php putGS("video"); ?></a></li>
@@ -318,23 +321,15 @@ V
 <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
 </li>
 <li>
-<label class="edit_label" for="point_perex">Short description:</label>
+<label class="edit_label" for="point_perex">Short description<br />for points listing:</label>
 <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
 </textarea>
 </li>
 </ol>
 	</div>
-
+<!--
 	<div id="edit_form" class="edit_tabs">
 <ol>
-<li class="edit_label_top">
-<label class="edit_label" for="point_predefined">Pop-up content:</label>
-<!--<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />-->
-<select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
-<option value="0" selected="true">predefined</option>
-<option value="1">html content</option>
-</select>
-</li>
 <li>
 <div>
 <ul>
@@ -352,24 +347,44 @@ The 'html content' form is for usage of any html content for the pop-up.
 </li>
 </ol>
 	</div>
-
+-->
 	<div id="edit_html" class="edit_tabs">
 <ol>
+<li class="edit_label_top">
+<label class="edit_label" for="point_predefined">Pop-up content:</label>
+<!--<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />-->
+<select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
+<option value="0" selected="true">plain text</option>
+<option value="1">html content</option>
+</select>
+<!--
+</li>
+<li class="edit_text_mode">
+<label class="edit_label" for="point_edit_mode">Mode:</label>
+-->
+<input id="point_edit_mode_edit" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('edit'); return false;" checked />Edit
+<input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" />View
+</li>
+<!--
 <li id="edit_plain_text_message">
 Plain text part of the predefined pop-up content<br />&nbsp;
 </li>
 <li id="edit_html_text_message">
 HTML content for the pop-up content<br />&nbsp;
 </li>
+-->
 <li id="edit_part_text" class="">
 <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
-<textarea rows="4" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
+<textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
 </li>
 <li id="edit_part_content" class="hidden">
 <label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
-<textarea rows="4" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
+<textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
+</li>
+<li id="edit_part_preview_outer" class="hidden">
+<div class="popup_preview hidden" id="edit_part_preview"> </div>
 </li>
 </ol>
 	</div>
@@ -379,8 +394,13 @@ HTML content for the pop-up content<br />&nbsp;
 <label class="edit_label" for="point_image">Image URL:</label>
 <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
 </li>
-<li>
+<li class="poi_image_type_placehold">
 &nbsp;
+</li>
+<li>
+<label class="edit_label" for="point_image_share">share:</label>
+<input id="point_image_share" name="point_image_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('image_share', this.checked); return false;" checked />
+with other languages
 </li>
 <li>
 <label class="edit_label" for="point_image_height">width:</label>
@@ -395,17 +415,32 @@ HTML content for the pop-up content<br />&nbsp;
 	<div id="edit_video" class="edit_tabs">
 <ol>
 <li class="edit_label_top">
-<label class="edit_label" for="point_video_type">Video:</label>
-<input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
-<input id="point_video_type_youtube" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'youtube'); return false;" />Youtube
-<input id="point_video_type_vimeo" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'vimeo'); return false;" />Vimeo
+<label class="edit_label" for="point_video">Video ID:</label>
+<input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
 </li>
+<!--
 <li>
 &nbsp;
 </li>
+-->
 <li>
-<label class="edit_label" for="point_video">Video ID:</label>
-<input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
+<label class="edit_label" for="point_video_type">source:</label>
+<select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
+<option value="none" selected="true">None</option>
+<option value="youtube">Youtube</option>
+<option value="vimeo">Vimeo</option>
+<option value="flash">Flash</option>
+</select>
+<!--
+<input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
+<input id="point_video_type_youtube" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'youtube'); return false;" />Youtube
+<input id="point_video_type_vimeo" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'vimeo'); return false;" />Vimeo
+-->
+</li>
+<li>
+<label class="edit_label" for="point_video_share">share:</label>
+<input id="point_video_share" name="point_video_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('image_video', this.checked); return false;" checked />
+with other languages
 </li>
 <li>
 <label class="edit_label" for="point_video_width">width:</label>
@@ -445,6 +480,6 @@ HTML content for the pop-up content<br />&nbsp;
 <div id="map_mapcanvas" class="map_mapcanvas"></div>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_editor -->
-
+<!--<div id="error_messages" class="hidden">debug purposes</div>-->
 </body>
 </html>

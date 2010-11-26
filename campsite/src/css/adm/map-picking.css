@@ -152,6 +152,24 @@ a.map-no-link {
     font-size: 12px;
     font-weight: bold;
 }
+.popup_preview {
+    width: 500px;
+    height: 160px;
+    overflow: auto;
+}
+.edit_popup_preview {
+    background: #ffffff;
+}
+.poi_video_type_selection {
+    margin: 0px;
+/*
+    border: 0px;
+*/
+}
+.poi_image_type_placehold {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
 .geonames_result_table {
 }
 

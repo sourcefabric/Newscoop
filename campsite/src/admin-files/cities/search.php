@@ -47,6 +47,8 @@ if (Input::Get('search')) {
             exit();
         }
 
+        $city_name = str_replace("%2B", "+", $city_name);
+        $city_name = str_replace("%2F", "/", $city_name);
         $city_name = base64_decode($city_name);
         $country_code = Input::Get('f_country_code', 'string', "", true);
 

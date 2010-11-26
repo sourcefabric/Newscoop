@@ -119,6 +119,8 @@ geo_names.askForCityLocation = function(city_name, country_code, script_dir, res
     try
     {
         city_name = Base64.encode(city_name);
+        city_name.replace(/\+/gi, "%2B");
+        city_name.replace(/\//gi, "%2F");
         if (undefined === script_dir)
         {
             script_dir = "";

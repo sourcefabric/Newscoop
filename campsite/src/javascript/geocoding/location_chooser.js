@@ -60,6 +60,9 @@ geo_locations.map_label_name = "";
 
 // currently edited (via the edit link) point
 geo_locations.edited_point = 0;
+geo_locations.edit_text_mode = 'plain';
+geo_locations.edit_view_mode = 'edit';
+
 
 // the order of the pois done by drag-n-drop; we do not reorder pois in the layer
 geo_locations.poi_order_user = [];
@@ -203,9 +206,12 @@ geo_locations.set_popups_info = function(params)
             "source": cur_video["source"],
             "width": cur_video["width"],
             "height": cur_video["height"],
+            "server": cur_video["server"],
+            "directory": cur_video["directory"],
         };
     }
 
+/*
     var audio = params.audio;
 
     this.popup_audio_auto = audio.auto;
@@ -224,7 +230,7 @@ geo_locations.set_popups_info = function(params)
             "mime": cur_audio["mime"],
         };
     }
-
+*/
 };
 
 geo_locations.update_poi_position = function(index, coordinate, value, input)
@@ -1267,16 +1273,10 @@ var geo_hook_on_feature_unselect = function(evt)
 
 };
 
-// when a feature pop-up should be diplayed on map event
-var geo_hook_on_feature_select = function(evt)
+geo_locations.create_popup_content = function(feature)
 {
-    var feature = evt.feature;
-    if (!feature) {return;}
-
-    var attrs = feature.attributes;
-    if (!attrs) {return;}
-
 /*
+    return "";
     if (0 < pop_link.length) {
         var to_prepend = true;
         if ("http://" == pop_link.substr(0, 7)) {
@@ -1294,6 +1294,14 @@ var geo_hook_on_feature_select = function(evt)
         if (to_prepend) {pop_link = "http://" + pop_link;}
     }
 */
+
+    var none_info = {'inner_html': "", 'min_width': 0, 'min_height': 0};
+
+    if (!feature) {return none_info;}
+
+    var attrs = feature.attributes;
+    if (!attrs) {return none_info;}
+
     var pop_text = "";
     {
         var pop_link = attrs.m_link;
@@ -1309,30 +1317,64 @@ var geo_hook_on_feature_select = function(evt)
         pop_text += "</div>";
     }
 
-    if (attrs.m_direct)
+    var with_embed = false;
     {
-        var content = attrs.m_content;
-        if (!content) {content = "";}
-        pop_text += "<div class='popup_content'>" + content + "</div>";
-    }
-    else
-    {
-        var with_embed = false;
+        if (feature.attributes.m_image)
+        {
+            pop_text += "<div class='popup_image'>" + feature.attributes.m_image + "</div>";
+        }
         if (feature.attributes.m_embed)
         {
             pop_text += "<div class='popup_video'>" + feature.attributes.m_embed + "</div>";
             with_embed = true;
         }
-        else
-        {
-            if (feature.attributes.m_image)
-            {
-                pop_text += "<div class='popup_image'>" + feature.attributes.m_image + "</div>";
-            }
-        }
-    
-        pop_text += "<div class='popup_text'>" + feature.attributes.m_text + "</div>";
     }
+
+    //alert("direct: " + attrs.m_direct)
+    if (attrs.m_direct)
+    {
+        var content = attrs.m_content;
+        if (!content) {content = "";}
+        //content = "html_content";
+        pop_text += "<div class='popup_content'>" + content + "</div>";
+    }
+    else
+    {
+        var plain_text = feature.attributes.m_text;
+        //plain_text = "plain_text";
+        plain_text.replace(/&/gi, "&amp;");
+        plain_text.replace(/>/gi, "&gt;");
+        plain_text.replace(/</gi, "&lt;");
+        plain_text.replace(/\r\n/gi, "</p><p>");
+        plain_text.replace(/\n/gi, "</p><p>");
+        plain_text.replace(/\r/gi, "</p><p>");
+
+        pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
+    }
+
+    var min_width = geo_locations.popup_width;
+    var min_height = geo_locations.popup_height;
+    if (with_embed) {
+        var min_width_embed = feature.attributes.m_embed_width + 100;
+        var min_height_embed = feature.attributes.m_embed_height + 100;
+        if (min_width_embed > min_width) {min_width = min_width_embed;}
+        if (min_height_embed > min_height) {min_height = min_height_embed;}
+    }
+
+    return {'inner_html': pop_text, 'min_width': min_width, 'min_height': min_height};
+};
+
+// when a feature pop-up should be diplayed on map event
+var geo_hook_on_feature_select = function(evt)
+{
+    var feature = evt.feature;
+    if (!feature) {return;}
+
+    var attrs = feature.attributes;
+    if (!attrs) {return;}
+
+    var pop_info = geo_locations.create_popup_content(feature);
+    var pop_text = pop_info['inner_html'];
 
     geo_locations.cur_pop_rank += 1;
     geo_locations.popup = new OpenLayers.Popup.FramedCloud("featurePopup_" + geo_locations.cur_pop_rank,
@@ -1341,12 +1383,8 @@ var geo_hook_on_feature_select = function(evt)
         pop_text,
         null, true, geo_hook_on_popup_close);
 
-    var min_width = geo_locations.popup_width;
-    var min_height = geo_locations.popup_height;
-    if (with_embed) {
-        min_width = feature.attributes.m_embed_width + 100;
-        min_height = feature.attributes.m_embed_height + 100;
-    }
+    var min_width = pop_info['min_width'];
+    var min_height = pop_info['min_height'];
 
     geo_locations.popup.minSize = new OpenLayers.Size(min_width, min_height);
 
@@ -1371,6 +1409,8 @@ geo_locations.open_edit_window = function ()
 // the entry initialization point
 var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name, names_show, names_hide, editing)
 {
+    //alert(111);
+
     // doing the divs show/hide task first
     // the show/hide part was used mainly at the initial version
     var map_canvas = document.getElementById ? document.getElementById(div_name) : null;
@@ -1576,14 +1616,17 @@ geo_locations.store_point_label = function()
     var cur_marker = this.layer.features[use_index];
     var cur_poi_info = this.poi_markers[use_index];
 
+    var update_preview = false;
     if (cur_poi_info.in_db)
     {
         if (label_obj.value != cur_marker.attributes.m_title)
         {
             cur_poi_info.content_changed = true;
+            update_preview = true;
         }
     }
     cur_marker.attributes.m_title = label_obj.value;
+    if (update_preview) {this.update_edit_preview();}
 
     this.update_poi_descs(this.edited_point);
 };
@@ -1647,8 +1690,31 @@ geo_locations.set_embed_tag = function(attrs)
         var vid_width = attrs.m_video_width;
         if ((!vid_width) || ("" == vid_width)) {vid_width = vid_define["width"];}
 
+        var vid_server = vid_define["server"];
+        if (!vid_server) {vid_server = "";}
+        var vid_directory = vid_define["directory"];
+        if (!vid_directory) {vid_directory = "";}
+
         vid_value = vid_value.replace(/%%h%%/g, vid_height);
         vid_value = vid_value.replace(/%%w%%/g, vid_width);
+
+        var emptify_server_part = false;
+        var full_url_starts = ["http://", "https://", "ftp://", "ftps://"];
+        var full_url_starts_count = full_url_starts.length;
+        for (var uind = 0; uind < full_url_starts_count; uind++)
+        {
+            var one_url_start = full_url_starts[uind];
+            if (one_url_start == vid_id.substring(0, one_url_start.length)) {emptify_server_part = true; break;}
+            //alert(one_url_start + " - " + vid_id.substring(0, one_url_start.length));
+        }
+        if (emptify_server_part)
+        {
+            vid_server = "";
+            vid_directory = "";
+        }
+
+        vid_value = vid_value.replace(/%%s%%/g, vid_server);
+        vid_value = vid_value.replace(/%%d%%/g, vid_directory);
 
         attrs.m_embed = vid_value;
         attrs.m_embed_height = parseInt(vid_height);
@@ -1671,11 +1737,13 @@ geo_locations.store_point_property = function(property, value)
     var attrs = cur_marker.attributes;
 
     var cur_poi_info = this.poi_markers[use_index];
+    var update_preview = false;
     if (cur_poi_info.in_db)
     {
         if (value != attrs[poi_property])
         {
             cur_poi_info.content_changed = true;
+            update_preview = true;
         }
     }
     attrs[poi_property] = value;
@@ -1689,6 +1757,7 @@ geo_locations.store_point_property = function(property, value)
     {
         this.set_embed_tag(attrs);
     }
+    if (update_preview) {this.update_edit_preview();}
 
 };
 
@@ -1720,9 +1789,9 @@ geo_locations.load_point_properties = function()
         if (!one_value) {one_value = "";}
         div_obj.value = one_value;
     }
-
-    video_type_names = ['none', 'youtube', 'vimeo'];
-    video_type_count = video_type_names.length;
+/*
+    var video_type_names = ['none', 'youtube', 'vimeo'];
+    var video_type_count = video_type_names.length;
     for (var vind = 0; vind < video_type_count; vind++)
     {
         var one_video_type = video_type_names[vind];
@@ -1736,6 +1805,16 @@ geo_locations.load_point_properties = function()
     var video_div_name = 'point_video_type_' + video_type;
     var video_div_obj = document.getElementById ? document.getElementById(video_div_name) : null;
     video_div_obj.checked = true;
+*/
+    var video_type_names = {'none': 0, 'youtube': 1, 'vimeo': 2, 'flash': 3};
+
+    var video_type = cur_marker.attributes['m_video_type'];
+    if (!video_type) {video_type = "none";}
+    var video_index = video_type_names[video_type];
+    if (!video_index) {video_index = 0;}
+
+    var video_type_obj = document.getElementById ? document.getElementById("point_video_type") : null;
+    video_type_obj.selectedIndex = video_index;
 
 };
 
@@ -1763,14 +1842,16 @@ geo_locations.store_point_direct = function(direct_usage)
     //alert("du0: " + direct_usage);
     var direct_num = 0;
     var direct_bool = false;
+    this.edit_text_mode = 'plain';
     if (direct_usage && (0 != direct_usage))
     {
         //alert("is direct");
         direct_num = 1;
         direct_bool = true;
+        this.edit_text_mode = 'html';
     }
 
-    //alert(direct);
+    //alert(direct_num);
 
     this.set_save_state(true);
 
@@ -1778,17 +1859,22 @@ geo_locations.store_point_direct = function(direct_usage)
     var cur_marker = this.layer.features[use_index];
 
     var cur_poi_info = this.poi_markers[use_index];
+    var update_preview = false;
     if (cur_poi_info.in_db)
     {
         if (direct_bool != cur_marker.attributes.m_direct)
         {
             cur_poi_info.content_changed = true;
+            update_preview = true;
         }
     }
 
     cur_marker.attributes.m_direct = direct_bool;
+    if (update_preview) {this.update_edit_preview();}
 
-    this.set_edit_direct(direct_num);
+    //this.set_edit_direct(direct_num);
+    //this.update_edit_preview();
+    this.set_edit_direct();
 };
 
 geo_locations.load_point_direct = function()
@@ -1805,12 +1891,54 @@ geo_locations.load_point_direct = function()
     if (cur_direct) {selIndex = 1;}
     predef_obj.selectedIndex = selIndex;
 
-    this.set_edit_direct(cur_direct);
+    this.edit_text_mode = 'plain';
+    if (cur_direct)
+    {
+        this.edit_text_mode = 'html';
+    }
+    this.edit_view_mode = 'edit';
+
+    //this.set_edit_direct(cur_direct);
+    this.update_edit_preview();
+    this.set_edit_direct();
+    this.edit_set_mode();
+};
+
+geo_locations.update_edit_preview = function()
+{
+    var use_index = this.display_index(this.edited_point);
+    if (this.layer && this.layer.features && this.layer.features[use_index])
+    {
+        var cur_marker = this.layer.features[use_index];
+        var popup_info = this.create_popup_content(cur_marker);
+        var popup_content = popup_info['inner_html'];
+        //alert(popup_content);
+        var min_width = popup_info['min_width'];
+        var min_height = popup_info['min_height'];
+
+        var content_obj = document.getElementById ? document.getElementById("edit_part_preview") : null;
+        //content_obj.innerHTML = "<div style=\"height:" + min_height + ";width:" + min_width + "\">" + popup_content + "</div>";
+        content_obj.innerHTML = "<div id=\"edit_popup_preview\" class=\"edit_popup_preview\">" + popup_content + "</div>";
+
+        var preview_obj = document.getElementById ? document.getElementById("edit_popup_preview") : null;
+        //preview_obj.style.height = min_height + "px";
+        //preview_obj.style.width = min_width + "px";
+
+        var height_taken = preview_obj.offsetHeight;
+        var width_taken = preview_obj.offsetWidth;
+        if (height_taken < min_height) {preview_obj.style.height = min_height + "px";}
+        if (width_taken < min_width) {preview_obj.style.width = min_width + "px";}
+
+    }
 };
 
 // displaying appropriate part for text input for the POI content
-geo_locations.set_edit_direct = function(direct_usage)
+//geo_locations.set_edit_direct = function(direct_usage)
+geo_locations.set_edit_direct = function()
 {
+    direct_usage = false;
+    if ('html' == this.edit_text_mode) {direct_usage = true;}
+
     //alert("du: " + direct_usage);
     var direct_num = 0;
     var direct_bool = false;
@@ -1820,6 +1948,7 @@ geo_locations.set_edit_direct = function(direct_usage)
         direct_bool = true;
     }
 
+/*
     var predef_names = ['point_image', 'point_image_width', 'point_image_height', 'point_video_type_none', 'point_video_type_youtube', 'point_video_type_vimeo', 'point_video', 'point_video_width', 'point_video_height', 'image_edit_part', 'video_edit_part'];
 
     var predef_count = predef_names.length;
@@ -1829,29 +1958,81 @@ geo_locations.set_edit_direct = function(direct_usage)
         var one_predef_obj = document.getElementById ? document.getElementById(one_predef_name) : null;
         one_predef_obj.disabled = direct_bool;
     }
+*/
+
+    //alert(this.edit_view_mode);
+    //alert(this.edit_text_mode);
 
     //alert("bbb");
     if (direct_usage)
     {
         //alert("direct");
-        $("#edit_html_text_message").removeClass("hidden");
-        $("#edit_part_content").removeClass("hidden");
-        $("#edit_plain_text_message").addClass("hidden");
+        //$("#edit_html_text_message").removeClass("hidden");
+        if ('edit' == this.edit_view_mode)
+        {
+            $("#edit_part_content").removeClass("hidden");
+        }
+        //$("#edit_plain_text_message").addClass("hidden");
         $("#edit_part_text").addClass("hidden");
         //$("#edit_part_link").addClass("hidden");
-        $('#edit_tabs_all').tabs("option", "disabled", [3, 4]);
+        //$('#edit_tabs_all').tabs("option", "disabled", [3, 4]);
     }
     else
     {
         //alert("predefined");
-        $("#edit_html_text_message").addClass("hidden");
+        //$("#edit_html_text_message").addClass("hidden");
         $("#edit_part_content").addClass("hidden");
-        $("#edit_plain_text_message").removeClass("hidden");
-        $("#edit_part_text").removeClass("hidden");
+        //$("#edit_plain_text_message").removeClass("hidden");
+        if ('edit' == this.edit_view_mode)
+        {
+            $("#edit_part_text").removeClass("hidden");
+        }
         //$("#edit_part_link").removeClass("hidden");
-        $('#edit_tabs_all').tabs("option", "disabled", []);
+        //$('#edit_tabs_all').tabs("option", "disabled", []);
     }
     //alert("ccc");
+
+};
+
+geo_locations.edit_set_mode = function(mode)
+{
+    var edit_obj = document.getElementById ? document.getElementById("point_edit_mode_edit") : null;
+    var view_obj = document.getElementById ? document.getElementById("point_edit_mode_view") : null;
+
+    if ('view' == mode)
+    {
+        this.edit_view_mode = 'view';
+        $("#edit_part_content").addClass("hidden");
+        //$("#edit_plain_text_message").addClass("hidden");
+        $("#edit_part_text").addClass("hidden");
+
+        $("#edit_part_preview").removeClass("hidden");
+        $("#edit_part_preview_outer").removeClass("hidden");
+
+        edit_obj.checked = false;
+        view_obj.checked = true;
+
+        this.update_edit_preview();
+
+    }
+    else
+    {
+        this.edit_view_mode = 'edit';
+        if ('html' == this.edit_text_mode)
+        {
+            $("#edit_part_content").removeClass("hidden");
+        }
+        else
+        {
+            //$("#edit_plain_text_message").removeClass("hidden");
+            $("#edit_part_text").removeClass("hidden");
+        }
+        $("#edit_part_preview").addClass("hidden");
+        $("#edit_part_preview_outer").addClass("hidden");
+
+        view_obj.checked = false;
+        edit_obj.checked = true;
+    }
 
 };
 
@@ -2038,11 +2219,20 @@ geo_locations.got_load_data = function (load_request)
     }
 
     var received_obj = null;
+    //var mssg_obj = document.getElementById ? document.getElementById("error_messages") : null;
+    //mssg_obj.innerHTML = " ";
+    //$("#error_messages").addClass("hidden");
     try {
+        //load_response.replace(/%2B/gi, "+");
+        //load_response.replace(/%2F/gi, "/");
         received_obj = JSON.parse(load_response);
     }
     catch (e) {
-        alert("probably logged out: " + e);
+        //var mssg_obj = document.getElementById ? document.getElementById("error_messages") : null;
+        //mssg_obj.innerHTML = load_response;
+        //$("#error_messages").removeClass("hidden");
+        alert("probably logged out");
+        //alert("probably logged out: " + e + "\n" + load_response);
         return;
     }
 
@@ -2332,6 +2522,8 @@ geo_locations.map_save_all = function(script_dir)
             'height': this.map_art_view_height
         };
         var store_map_str = Base64.encode(JSON.stringify(store_map_obj));
+        store_map_str.replace(/\+/gi, "%2B");
+        store_map_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(store_map_obj));
         store_data += "&f_map=" + store_map_str;
     }
@@ -2339,6 +2531,8 @@ geo_locations.map_save_all = function(script_dir)
     if (0 < this.poi_deletion.length)
     {
         var remove_poi_str = Base64.encode(JSON.stringify(this.poi_deletion));
+        remove_poi_str.replace(/\+/gi, "%2B");
+        remove_poi_str.replace(/\//gi, "%2F");
         store_data += "&f_remove=" + remove_poi_str;
     }
 
@@ -2355,6 +2549,8 @@ geo_locations.map_save_all = function(script_dir)
             else {order_ids.push({'state': 'new', 'index': cur_marker.tmp_index});}
         }
         var order_poi_str = Base64.encode(JSON.stringify(order_ids));
+        order_poi_str.replace(/\+/gi, "%2B");
+        order_poi_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(order_ids));
         store_data += "&f_order=" + order_poi_str;
     }
@@ -2384,18 +2580,24 @@ geo_locations.map_save_all = function(script_dir)
     if (0 < insert_poi_new_array.length)
     {
         var insert_poi_new_str = Base64.encode(JSON.stringify(insert_poi_new_array));
+        insert_poi_new_str.replace(/\+/gi, "%2B");
+        insert_poi_new_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(insert_poi_new_array));
         store_data += "&f_insert_new=" + insert_poi_new_str;
     }
     if (0 < update_poi_loc_array.length)
     {
         var update_poi_loc_str = Base64.encode(JSON.stringify(update_poi_loc_array));
+        update_poi_loc_str.replace(/\+/gi, "%2B");
+        update_poi_loc_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(update_poi_loc_array));
         store_data += "&f_update_loc=" + update_poi_loc_str;
     }
     if (0 < update_poi_con_array.length)
     {
         var update_poi_con_str = Base64.encode(JSON.stringify(update_poi_con_array));
+        update_poi_con_str.replace(/\+/gi, "%2B");
+        update_poi_con_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(update_poi_con_array));
         store_data += "&f_update_con=" + update_poi_con_str;
     }
@@ -2418,9 +2620,16 @@ geo_locations.map_save_all = function(script_dir)
         }
         var script_path = script_dir + "manage.php";
 
+
+    //var mssg_obj = document.getElementById ? document.getElementById("data_outputs") : null;
+    //mssg_obj.innerHTML = "'''" + store_data + "'''";
+    //$("#error_messages").removeClass("hidden");
+
         store_request.open("POST", script_path, true);
+        //alert(script_path);
         store_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         //alert("" + "store=1&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
+        //alert(store_data);
         store_request.send("" + "store=1&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
     }
     catch (e)

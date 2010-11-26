@@ -31,6 +31,8 @@ if (Input::Get('load')) {
     $found_list = Geo_LocationContents::ReadArticlePoints($f_article_number, $f_language_id);
     $poi_array = array("status" => "200", "pois" => $found_list);
     $poi_json = json_encode($poi_array);
+    //$poi_json = str_replace("+", "%2B", $poi_json);
+    //$poi_json = str_replace("/", "%2F", $poi_json);
     echo $poi_json;
     exit();
 }
@@ -48,6 +50,8 @@ if (Input::Get('store')) {
         $map_data = array();
         try
         {
+            $f_map = str_replace("%2B", "+", $f_map);
+            $f_map = str_replace("%2F", "/", $f_map);
             $map_json = base64_decode($f_map);
             $map_data = json_decode($map_json);
         }
@@ -73,6 +77,8 @@ if (Input::Get('store')) {
         $remove_data = array();
         try
         {
+            $remove_data = str_replace("%2B", "+", $remove_data);
+            $remove_data = str_replace("%2F", "/", $remove_data);
             $remove_json = base64_decode($f_remove);
             $remove_data = json_decode($remove_json);
         }
@@ -99,6 +105,8 @@ if (Input::Get('store')) {
         $insert_data = array();
         try
         {
+            $insert_json = str_replace("%2B", "+", $insert_json);
+            $insert_json = str_replace("%2F", "/", $insert_json);
             $insert_json = base64_decode($f_insert);
             //echo $insert_json;
             //exit();
@@ -133,6 +141,8 @@ if (Input::Get('store')) {
         $locations_data = array();
         try
         {
+            $locations_json = str_replace("%2B", "+", $locations_json);
+            $locations_json = str_replace("%2F", "/", $locations_json);
             $locations_json = base64_decode($f_locations);
             $locations_data = json_decode($locations_json);
         }
@@ -153,12 +163,26 @@ if (Input::Get('store')) {
     }
 
     $f_contents = Input::Get('f_update_con', 'string', "", false);
+//$fh = fopen("/tmp/wtf002.txt", "w");
+//fwrite($fh, $f_contents);
+//fclose($fh);
+
     if ("" != $f_contents)
     {
         $contents_data = array();
         try
         {
+            //echo "cont: $f_contents\n";
+            $contents_json = str_replace("%2B", "+", $contents_json);
+            $contents_json = str_replace("%2F", "/", $contents_json);
             $contents_json = base64_decode($f_contents);
+//fwrite($fh, "\n");
+//fwrite($fh, $contents_json);
+//fclose($fh);
+            //exit();
+
+            //echo "json: $contents_json\n";
+            //exit();
             $contents_data = json_decode($contents_json);
         }
         catch (Exception $exc)
@@ -184,6 +208,8 @@ if (Input::Get('store')) {
         $order_data = array();
         try
         {
+            $order_json = str_replace("%2B", "+", $order_json);
+            $order_json = str_replace("%2F", "/", $order_json);
             $order_json = base64_decode($f_order);
             $order_data = json_decode($order_json);
         }
@@ -207,6 +233,8 @@ if (Input::Get('store')) {
     $found_list = Geo_LocationContents::ReadArticlePoints($f_article_number, $f_language_id);
     $poi_array = array("status" => "200", "pois" => $found_list);
     $poi_json = json_encode($poi_array);
+    //$poi_json = str_replace("+", "%2B", $poi_json);
+    //$poi_json = str_replace("/", "%2F", $poi_json);
     echo $poi_json;
     exit();
 }

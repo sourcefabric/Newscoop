@@ -315,13 +315,33 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $youtube_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>';
     $vimeo_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>';
+    $flash_src_default = '<object width="%%w%%px" %%h%%="360px"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%s%%%%d%%%%id%%"/><embed src="%%s%%%%d%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
 
     // if nothing configured, use the default
-    if (0 == count($video_names_usage))
+    //if (0 == count($video_names_usage))
     {
+        //echo "$p_websiteUrl";
+        $domain_end = strpos($p_websiteUrl, "/", 8);
+        if (false === $domain_end)
+        {
+            $flash_server = $p_websiteUrl;
+            $flash_directory = "/";
+        }
+        else
+        {
+            $flash_server = substr($p_websiteUrl, 0, $domain_end);
+            $flash_directory = substr($p_websiteUrl, $domain_end);
+            if (1 < strlen(strrchr($flash_directory, "/")))
+            {
+                $flash_directory .= "/";
+            }
+        }
+        $flash_directory .= "videos/";
+
         $video_default = "YouTube";
         $video_names_usage[] = array("label" => "YouTube", "source" => $youtube_src_default, "width" => '425', "height" => '350');
         $video_names_usage[] = array("label" => "Vimeo", "source" => $vimeo_src_default, "width" => '400', "height" => '225');
+        $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => '300', "height" => '200', "server" => $flash_server, "directory" => $flash_directory);
     }
 
     $video_info = array("default" => $video_default, "labels" => $video_names_usage);
