@@ -115,7 +115,7 @@ if ($f_publication_id > 0) {
 	<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
-		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text" SIZE="11" MAXLENGTH="10">
+		<input type="text" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text date" size="11" maxlength="10" />
 		<?php } else {
 			echo htmlspecialchars($imageObj->getDate());
 		} ?>

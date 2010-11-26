@@ -4,7 +4,7 @@ regGS("Unable to connect to the Online Server", "Nezdařilo se připojit Online 
 regGS("No connected to Online server", "Nepřipojeno k Online serveru");
 regGS("Comments Disabled: you are either offline or not able to reach the Online server", "Komentáře vypnuty: jste buď offline nebo se nezdařilo připojit k Online serveru");
 regGS("You do not have the right to moderate comments.", "Nemáte oprávnění moderovat komentáře.");
-regGS("Thread", "");
+regGS("Thread", "Vlákno");
 regGS("The user is now allowed to post comments.", "Uživatel nemá oprávnění psát komentáře.");
 regGS("The user has been banned.  Any future attempts by the user to post comments will not be allowed.", "Uživateli byl udělen BAN. Uživatel již nebude moci psát komentáře.");
 regGS("No comments", "Žádné komentáře");

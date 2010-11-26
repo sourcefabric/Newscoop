@@ -484,7 +484,8 @@ $sqlFile = "$tempDirName/$origDbName-database.sql";
 camp_restore_database($sqlFile);
 $cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
     . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
-    . $Campsite['DATABASE_SERVER_PORT'];
+    . $Campsite['DATABASE_SERVER_PORT']
+    . ' --default-character-set=utf8';
 echo "done.\n";
 flush_output($flush);
 

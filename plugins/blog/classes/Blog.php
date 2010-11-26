@@ -525,7 +525,7 @@ class Blog extends DatabaseObject {
     public static function GetMoodList($p_language_id)
     {
         $options = array(0 => '------');
-      
+
         foreach (Topic::GetTree((int)SystemPref::Get('PLUGIN_BLOG_ROOT_MOOD_ID')) as $path) {
             $currentTopic = camp_array_peek($path, false, -1);
             $name = $currentTopic->getName($p_language_id);
@@ -807,7 +807,7 @@ class Blog extends DatabaseObject {
     ?>
 
     <!-- TinyMCE -->
-    <script type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js"></script>
     <script type="text/javascript">
     function CampsiteSubhead(ed) {
         element = ed.dom.getParent(ed.selection.getNode(), 'span');
@@ -931,7 +931,7 @@ class Blog extends DatabaseObject {
 
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
                 $selectClauseObj->addWhere($whereCondition);
             }
         }

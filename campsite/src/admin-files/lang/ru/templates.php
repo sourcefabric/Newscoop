@@ -1,4 +1,15 @@
 <?php 
+regGS("Stop current upload", "Остановить текущую загрузку");
+regGS("Start uploading queue", "Начать загрузку из очереди");
+regGS("Start upload", "Начать загрузку");
+regGS("Size", "Размер");
+regGS("Select files", "Выбрать файлы");
+regGS("Filename", "Имя файла");
+regGS("Drag files here.", "Перетащить файл сюда.");
+regGS("Cache lifetime, sec", "Время жизни кеш, сек");
+regGS("Add files to the upload queue and click the start button.", "Добавить файл в очередь загрузки и нажать кнопку для начала процесса");
+regGS("Add files", "Добавить файлы");
+regGS("\"$1\" files uploaded.", "Файл \"$1\" загружен");
 regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Несколько файлов непрочитаны, поэтому Campsite не может определить, используется ли '$1' или нет.");
 regGS("Replace current with:", "Перезаписать текущий на");
 regGS("Edit template:", "Редактировать шаблон");
@@ -43,7 +54,6 @@ regGS("You must select a file to upload.", "Вы должны указать ф�
 regGS("You can only replace a file with a file of the same type.  The original file is of type \"$1\", and the file you uploaded was of type \"$2\".", "Вы можете только заместить файл файлом того же типа. Оригинальный файл имеет тип \"$1\", а загруженный - \"$2\".");
 regGS("Unable to save the file '$1' to the path '$2'.", "Невозможно сохранить файл '$1' в '$2'.");
 regGS("Replace", "Заменить:");
-regGS("File \"$1\" uploaded.", "Файл \"$1\" загружен.");
 regGS("File \"$1\" replaced.", "Файл \"$1\" заменен.");
 regGS("The folder name can't be '..' or '.'", "Название папки не может быть '..' или '.'");
 regGS("The template '$1' was saved successfully.", "Шаблон '$1' был успешно сохранен.");
@@ -58,7 +68,6 @@ regGS("Folders", "Папки");
 regGS("No folders.", "Нет папок.");
 regGS("Files", "Файлы");
 regGS("No templates.", "Нет шаблонов");
-regGS("File", "Файл");
 regGS("Create new template", "Создать новый шаблон");
 regGS("Duplicate template", "Дублировать шаблон");
 regGS("Edit template", "Редактировать шаблон");

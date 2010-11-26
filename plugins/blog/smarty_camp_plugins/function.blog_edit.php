@@ -46,7 +46,7 @@ function smarty_function_blog_edit($p_params, &$p_smarty)
             $html .= "<textarea name=\"f_blog_info\" id=\"f_blog_info\" {$p_params['html_code']} />$value</textarea>";
             
             if ($p_params['wysiwyg']) {
-                $html .='<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
+                $html .='<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/javascript/tinymce/tiny_mce.js"></script>'.
                         '<script language="javascript" type="text/javascript">'.
                         '     tinyMCE.init({'.
                         '     	mode : "exact",'.

@@ -1,5 +1,5 @@
 <?php 
-regGS("Topics added.", "Subiectele de discuţie au fost adăugate.");
+regGS("Topics updated.", "");
 regGS("Topic does not exist.", "Subiectul de discuţie nu există.");
 regGS("The topic '$1' has been removed from article.", "Subiectul de discuţie '$1' a fost îndepărtat de la articol.");
 regGS("You do not have the right to detach topics from articles.", "Nu ai dreptul să detaşezi subiecte de articole.");

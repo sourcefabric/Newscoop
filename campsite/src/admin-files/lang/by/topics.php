@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "Сартаванне тэм змененае.");
+regGS("Topics order saved.", "Парадак тым захаваны.");
+regGS("Show languages", "Паказаць мовы");
+regGS("Save order", "Захаваць парадак");
+regGS("Click to edit", "Клікніце для рэдагавання");
+regGS("Add root topic", "Дадаць асноўную тэму");
 regGS("Topic was deleted.", "Тэма выдаленая.");
-regGS("Topic does not exist.", "Тема не існуе. ");
 regGS("The topic name is already in use by another topic.", "Назва гэтай тэмы ўжо выкарыстоўваецца ў iншай тэме.");
 regGS("You must enter a name for the topic.", "Вы павiнны ўвесьцi назву тэмы.");
 regGS("You must choose a language for the topic.", "Вы павiнны выбраць мову для тэмы.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Гэта тэма мае падтэму, таму яе нельга выдаліць.");
-regGS("Show languages:", "Паказаць мовы:");
 regGS("Add translation:", "Дадаць пераклад:");
 regGS("Add subtopic:", "Дадаць падтэму:");
-regGS("Add subtopic", "Дадаць падтэму");
-regGS("Add root topic:", "Дадаць каранёвую тэму");
 regGS("Top", "Верх");
 regGS("You do not have the right to add topics.", "Вы ня маеце права дадаваць новыя тэмы.");
 regGS("You do not have the right to delete topics.", "Вы ня маеце права доступу для выдаленьня новых тэм.");

@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "");
-regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
-regGS("The topic name is already in use by another topic.", "");
+regGS("Topics order saved.", "Редослед тема је сниљен.");
+regGS("Show languages", "Прикажи језике");
+regGS("Save order", "Сними редослед");
+regGS("Click to edit", "Клик за уређивање");
+regGS("Add root topic", "Додај основну тему");
+regGS("Topic was deleted.", "Тема је обрисана");
+regGS("The topic name is already in use by another topic.", "Назив теме је већ у употреби");
 regGS("You must enter a name for the topic.", "Морате унети име теме.");
 regGS("You must choose a language for the topic.", "Морате изабрати језик за тему.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Ова тема има под-теме, па не може бити обрисана.");
-regGS("Show languages:", "Прикажи језике:");
 regGS("Add translation:", "Додај превод:");
 regGS("Add subtopic:", "Додај под-тему:");
-regGS("Add subtopic", "Додај под-тему");
-regGS("Add root topic:", "Додај основну тему:");
 regGS("Top", "врх");
 regGS("You do not have the right to add topics.", "Немате право да додајете теме");
 regGS("You do not have the right to delete topics.", "Немате право да бришете теме");

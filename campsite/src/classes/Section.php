@@ -543,7 +543,7 @@ class Section extends DatabaseObject {
 
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -579,7 +579,7 @@ class Section extends DatabaseObject {
 
         $selectClauseObj->addGroupField('Number');
         $selectClauseObj->addGroupField('IdLanguage');
-        
+
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
 

@@ -1,6 +1,7 @@
 <?php 
-regGS("Rename article type '$1'", "");
-regGS("Invalid article type '$1'.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("Rename article type '$1'", "Preimenuj tip teksta '$1'");
+regGS("Invalid article type '$1'.", "Pogrešan tip teksta '$1'.");
 regGS("You cannot merge the same type into itself.", "Ne možete spojiti tip članka sa samim sobom.");
 regGS("View the source ($1) version of $2", "Pogledajte izvornu ($1) verziju $2");
 regGS("View of original ($1) $2", "Pogledaj originalni ($1) $2");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Morate iabrati jezik 
 regGS("You do not have the right to rename article types.", "Nemate pravo da preimenujete tipove članaka.");
 regGS("You do not have the right to merge article types.", "Nemate pravo da spajate tipove članka");
 regGS("The translation could not be added.", "Prevod ne može biti dodat.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Ime polja može se satojati jedino od slova i donje crte (_).");
 regGS("The article type $1 does not exist.", "Tip članka $1 ne postoji.");
 regGS("Template Type Name", "Naziv tipa šablona");
 regGS("Show/Hide", "Prikaži/sakri");

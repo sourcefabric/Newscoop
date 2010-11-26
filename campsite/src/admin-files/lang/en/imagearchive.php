@@ -1,7 +1,22 @@
 <?php 
+regGS("You do not have the right to add images.", "You do not have the right to add images.");
+regGS("Use for all", "Use for all");
+regGS("Stop current upload", "Stop current upload");
+regGS("Start uploading queue", "Start uploading queue");
+regGS("Start upload", "Start upload");
+regGS("Specify image url if you want to load it.", "Specify image url if you want to load it.");
+regGS("Size", "Size");
+regGS("Select files", "Select files");
+regGS("No images for multi editing.", "No images for multi editing.");
+regGS("Images updated.", "Images updated.");
+regGS("Filename", "Filename");
+regGS("Edit images", "Edit images");
+regGS("Drag files here.", "Drag files here.");
+regGS("Add files to the upload queue and click the start button.", "Add files to the upload queue and click the start button.");
+regGS("Add files", "Add files");
+regGS("\"$1\" files uploaded.", "\"$1\" files uploaded.");
 regGS("Unable to add new image.", "Unable to add new image.");
 regGS("Image updated.", "Image updated.");
-regGS("Image added.", "Image added.");
 regGS("Image '$1' deleted.", "Image '$1' deleted.");
 regGS("Image is in use, it cannot be deleted.", "Image is in use, it cannot be deleted.");
 regGS("You must select an image file to upload.", "You must select an image file to upload.");

@@ -57,11 +57,6 @@ $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 camp_html_content_top(getGS("Article automatic publishing schedule"), $topArray, true, false, $crumbs);
 
 ?>
-<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-
 
 <?php
 if (count($errorArticles) > 0) {
@@ -125,30 +120,12 @@ if (count($articles) > 0) {
 <TR>
 	<TD ALIGN="RIGHT" valign="top" style="padding-top: 12px;"><?php  putGS("Date"); ?>:</TD>
 	<TD>
-		<div id="calendar-container"></div>
-		<script type="text/javascript">
-		function dateChanged(calendar) {
-			// Beware that this function is called even if the end-user only
-			// changed the month/year.  In order to determine if a date was
-			// clicked you can use the dateClicked property of the calendar:
-			if (calendar.dateClicked) {
-			  // OK, a date was clicked, redirect to /yyyy/mm/dd/index.php
-			  var y = calendar.date.getFullYear();
-			  var m = calendar.date.getMonth()+1;     // integer, 0..11
-			  var d = calendar.date.getDate();      // integer, 1..31
-			  document.forms.autopublish.f_publish_date.value = y+"-"+m+"-"+d;
-			}
-		};
-
-		Calendar.setup(
-			{
-			  flat         : "calendar-container", // ID of the parent element
-			  flatCallback : dateChanged           // our callback function
-			}
-		);
-		</script>
-		<p>
-		<input type="text" name="f_publish_date" value="" readonly class="input_text_disabled">
+		<input type="text" name="f_publish_date" value="" class="input_text date minDate_0" />
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('input[name=f_publish_date]').focus();
+            });
+        </script>
 	</TD>
 </TR>
 <TR>

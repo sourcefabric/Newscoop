@@ -1,16 +1,16 @@
 <?php 
-regGS("The section number $1 was already in use.", "");
-regGS("Delete all articles written in $1 language from this section", "");
-regGS("Delete all articles and all of their translations", "");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "");
-regGS("Delete only this section ($1)", "");
-regGS("Delete all translations of this section", "");
-regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "");
-regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "");
-regGS("Section updated", "");
-regGS("There are $1 subscriptions which will be affected.", "");
-regGS("There are $1 articles in this section.", "");
+regGS("The section number $1 was already in use.", "Рубрика број $1 је већ у употреби.");
+regGS("Delete all articles written in $1 language from this section", "Обриши све текстове из ове рубрике написане на језику: $1");
+regGS("Delete all articles and all of their translations", "Обриши све текстове и њихове преводе");
+regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Рубрика \"$1\" је дуплирана у  $2. \"$3\" од \"$4\"");
+regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Рубрика \"$1\" ($2) измењена. (Публикација: $3, Издање: $4)");
+regGS("Delete only this section ($1)", "Обриши само ову рубрику ($1)");
+regGS("Delete all translations of this section", "Обриши преводе ове рубрике");
+regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Број текстова<BR><SMALL>(публикованих/укупно)</SMALL>");
+regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "УРЛ назив мора бити јединствен за све рубрике у оквиру издања. <br>УРЛ назив који сте унели (\"$1\") је у конфликту са рубриком \"$2 $3. $4 $5\"");
+regGS("Section updated", "Рубрика је измењена");
+regGS("There are $1 subscriptions which will be affected.", "Постоји $1 претплата на које ће се одразити ова измена.");
+regGS("There are $1 articles in this section.", "Укупно је $1 текстова у овој рубрици.");
 regGS("Go To Articles", "Иди на текстове");
 regGS("Add section to all subscriptions.", "Додај рубрику у све претплате.");
 regGS("Delete section from all subscriptions.", "Обриши рубрику из свих претплата.");
@@ -49,9 +49,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Упозорење");
 regGS("You must select a section.", "Морате изабрати рубрику");
 regGS("You must specify a name for the section.", "Морате унети име рубрике.");
+regGS("The section could not be added.", "Рубрика не може бити додата");
+regGS("Add new section", "Додај нову рубрику");
 regGS("Please check if another section with the same number does not already exist.", "Проверите да ли већ не постоји рубрика са истим бројем");
 regGS("Short Name", "Скраћено име");
 regGS("Destination section number", "Број циљне рубрике");
-regGS("The section could not be added.", "Рубрика не може бити додата");
-regGS("Add new section", "Додај нову рубрику");
 ?>

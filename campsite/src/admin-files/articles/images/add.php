@@ -39,7 +39,6 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
 ?>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
 <script>
 function checkAddForm(form) {
 	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
@@ -89,7 +88,7 @@ function checkAddForm(form) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD>
-		<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php  p($q_now); ?>" class="input_text" SIZE="11" MAXLENGTH="10"> <?php  putGS('YYYY-MM-DD'); ?>
+		<input type="text" name="f_image_date" value="<?php  p($q_now); ?>" class="input_text date" size="11" maxlength="10" />
 	</TD>
 </TR>
 <TR>

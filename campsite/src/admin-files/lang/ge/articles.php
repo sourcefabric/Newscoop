@@ -1,4 +1,5 @@
 <?php 
+regGS("Campsite Subhead", "");
 regGS("Unable to reach Campsite. Please check your internet connection.", "შეუძლებელია Campsite–თან მიერთება. გთხოვთ შეამოწმეთ თქვენი ინტერნეტის სიგნალი");
 regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "დაგეგმილი მოქმედება დამატებულია სტატიისთვის #$1: \"$2\" (გამოცემა:$3, ნომერი: $4, რუბრიკა:$5, ენა: $6 ");
 regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "შინაარსი რედაქტირებულია #$1 სტატიისთვის (გამოცემა: $3, ნომერი:$, რუბრიკა: $5, ენა:$6");

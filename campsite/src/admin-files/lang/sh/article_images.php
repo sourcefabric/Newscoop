@@ -1,5 +1,5 @@
 <?php 
-regGS("The image \"$1\" has been removed from the article.", "");
+regGS("The image \"$1\" has been removed from the article.", "Slika \"$1\" je uklonjena iz teksta.");
 regGS("Unable to add new image.", "Nije moguće dodati novu sliku.");
 regGS("Image number '$1' already exists", "Slika broj '$1' već postoji");
 regGS("You do not have the right to change image information.", "Nemate pravo menjanja podataka o slikama.");

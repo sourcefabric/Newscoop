@@ -32,10 +32,11 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <?php echo SecurityToken::FormParameter(); ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
+<TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?></TD></TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+	<TD ALIGN="LEFT" ><?php  putGS("Template Field Name"); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("You can only use letters or the underscore (_).") ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_new_field_name" SIZE="20" VALUE="<?php print htmlspecialchars($articleTypeFieldName); ?>" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("The template name may only contain letters and the underscore (_) character.") ?>">
 	</TD>
 </TR>
 

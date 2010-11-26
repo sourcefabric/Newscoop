@@ -1,7 +1,8 @@
 <?php 
-regGS("Template Cache Handler:", "");
-regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
-regGS("Database Cache Engine:", "");
+regGS("Allow password recovery:", "Дазволіць аднаўленне пароля:");
+regGS("Template Cache Handler:", "Шаблон кіравання кэшаваннем:");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Памылка: PHP $ 1павінны быць даступным для сістэмы кэшавання шаблону.");
+regGS("Database Cache Engine:", "Інструмент кэшавання Базы даных:");
 regGS("Zoom enabled for images in article content?", "Ўключыць маштабаванне малюнкаў у артыкулах?");
 regGS("Image Resizing Width:", "Шырыня выявы для маштабавання:");
 regGS("Image Resizing Width", "Шырыня выявы для маштабавання");
@@ -46,7 +47,7 @@ regGS("General Settings", "Агульныя налады");
 regGS("Database Replication data incomplete", "Налады рэплікацыі базы дадзеных няпоўныя");
 regGS("Database Replication User:", "Карыстач рэплікацыі базы дадзеных:");
 regGS("Database Replication Port:", "Порт рэплікацыі базы дадзеных:");
-regGS("Database Replication Password:", "Пароль рэплікацыі базы дадзеных:");
+regGS("Database Replication Password:", "Пароль рэплікацыі базы даных:");
 regGS("Database Replication Host:", "Хост рэплікацыі базы дадзеных:");
 regGS("Campsite Online Server Database", "База дадзеных анлайн сервера Campsite");
 regGS("Campcaster Server", "Сервер Campcaster");

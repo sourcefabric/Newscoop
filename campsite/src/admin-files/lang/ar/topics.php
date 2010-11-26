@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "");
+regGS("Topics order saved.", "");
+regGS("Show languages", "");
+regGS("Save order", "");
+regGS("Click to edit", "");
+regGS("Add root topic", "");
 regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
 regGS("The topic name is already in use by another topic.", "");
 regGS("You must enter a name for the topic.", "عليك إدخال أسم للموضوع.");
 regGS("You must choose a language for the topic.", "عليك إختيار لغة للموضوع.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "لهذا الموضوع مواضيع فرعية وعلية لا يمكن إلغاءه.");
-regGS("Show languages:", "أعرض اللغات:");
 regGS("Add translation:", "أضف ترجمة:");
 regGS("Add subtopic:", "أضف موضوع فرعي:");
-regGS("Add subtopic", "أضف موضوع فرعي");
-regGS("Add root topic:", "أضف موضوع أساسي");
 regGS("Top", "الأعلى");
 regGS("You do not have the right to add topics.", "لا يحق لك إضافة المواضيع");
 regGS("You do not have the right to delete topics.", "لا يحق لك إلغاء المواضيع");

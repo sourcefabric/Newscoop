@@ -6,6 +6,7 @@ regGS("Size", "Velikost");
 regGS("Select files", "Vybrat soubory");
 regGS("Filename", "Název souboru");
 regGS("Drag files here.", "Přetáhněte soubory sem.");
+regGS("Cache lifetime, sec", "Doba životnosti Cache, sec");
 regGS("Add files to the upload queue and click the start button.", "Přidejte soubory do fronty a klikněte na tlačítko start.");
 regGS("Add files", "Přidat soubory");
 regGS("\"$1\" files uploaded.", "\"$1\" soubory nahrány.");

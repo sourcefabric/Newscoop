@@ -1,4 +1,5 @@
 <?php 
+regGS("Campsite Subhead", "Падзагаловак Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Немагчыма трапіць у адміністратыўны інтэрфэйс  Campsite. Праверце настройкі інтэрнэт-злучэння");
 regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Запланаванае дзеянне дададзена для артыкула #$1: \"$2\" (Выданне: $3, Выпуск: $4, Рубрыка: $5, Мова: $6) ");
 regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Быў зменены змест артыкула #$1: \"$2\" (Выданне: $3, Выпуск: $4, Рубрыка: $5, Мова: $6) )");
@@ -143,4 +144,8 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \\'$1\\' з гэтага артыкула?");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>

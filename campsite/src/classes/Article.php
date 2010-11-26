@@ -109,7 +109,9 @@ class Article extends DatabaseObject {
                                                 'published'=>'Articles.Published',
                                                 'workflow_status'=>'Articles.Published',
                                                 'issue_published'=>'Issues.Published',
-                                                'reads'=>'RequestObjects.request_count');
+                                                'reads'=>'RequestObjects.request_count',
+                                                'iduser' => 'Articles.IdUser',
+                                            );
 
     /**
      * Construct by passing in the primary key to access the article in
@@ -176,8 +178,9 @@ class Article extends DatabaseObject {
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
-        parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
+        $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
         $this->m_cacheUpdate = true;
+        return $status;
     }
 
     /**
@@ -2376,8 +2379,8 @@ class Article extends DatabaseObject {
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
-                $firstName = $author['first_name'];
-                $lastName = $author['last_name'];
+                $firstName = $g_ado_db->escape($author['first_name']);
+                $lastName = $g_ado_db->escape($author['last_name']);
                 $whereCondition = "CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol "
                                 . "'$valModifier$firstName $lastName$valModifier'";
                 $selectClauseObj->addWhere($whereCondition);
@@ -2512,6 +2515,18 @@ class Article extends DatabaseObject {
         return $articlesList;
     } // fn GetList
 
+    /**
+     * Get total articles count in db.
+     *
+     * @return int
+     */
+    public static function GetTotalCount()
+    {
+        global $g_ado_db;
+
+        $sql = 'SELECT COUNT(*) FROM Articles';
+        return $g_ado_db->GetOne($sql);
+    }
 
     private static function ProcessCustomField(array $p_comparisonOperation, $p_languageId = null)
     {

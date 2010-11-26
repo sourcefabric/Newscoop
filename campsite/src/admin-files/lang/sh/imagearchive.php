@@ -1,7 +1,22 @@
 <?php 
+regGS("You do not have the right to add images.", "Nemate pravo da dodajete slike.");
+regGS("Use for all", "Koristi za sve.");
+regGS("Stop current upload", "Prekini trenutni aploud");
+regGS("Start uploading queue", "Započni aploud reda");
+regGS("Start upload", "Započni aploud");
+regGS("Specify image url if you want to load it.", "Odredite URL slike ako želite da je učitate.");
+regGS("Size", "Veličina");
+regGS("Select files", "Izaberi fajlove");
+regGS("No images for multi editing.", "Nema slika za višestruko uređivanje");
+regGS("Images updated.", "slike izmenjene.");
+regGS("Filename", "Naziv fajla");
+regGS("Edit images", "Uredi slike");
+regGS("Drag files here.", "Prevuci fajlove ovde.");
+regGS("Add files to the upload queue and click the start button.", "Dodajte fajlove u red za apploud i kliknite dugme za početak.");
+regGS("Add files", "Dodaj fajlove");
+regGS("\"$1\" files uploaded.", "\"$1\" fajlova aploudovano.");
 regGS("Unable to add new image.", "Nije moguće dodati novu sliku.");
 regGS("Image updated.", "slika izmenjena");
-regGS("Image added.", "Slika dodata");
 regGS("Image '$1' deleted.", "slika '41' je obrisana.");
 regGS("Image is in use, it cannot be deleted.", "slika se koristi i ne može biti obrisana.");
 regGS("You must select an image file to upload.", "Morate izabrati sliku za aploud.");

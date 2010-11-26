@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "Сортировка тем изменена.");
+regGS("Topics order saved.", "Порядок тем сохранен.");
+regGS("Show languages", "Отобразить языки");
+regGS("Save order", "Сохранить порядок");
+regGS("Click to edit", "Кликните для редактирования");
+regGS("Add root topic", "Добавить основную тему");
 regGS("Topic was deleted.", "Тема удалена.");
-regGS("Topic does not exist.", "Тема не существует.");
 regGS("The topic name is already in use by another topic.", "Название этой темы уже используется в другой теме.");
 regGS("You must enter a name for the topic.", "Вы должны ввести название темы.");
 regGS("You must choose a language for the topic.", "Вы должны выбрать язык для темы.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Эта тема имеет подтему, следовательно не может быть удалена.");
-regGS("Show languages:", "Показать языки:");
 regGS("Add translation:", "Добавить перевод:");
 regGS("Add subtopic:", "Добавить подтему:");
-regGS("Add subtopic", "Добавить подтему");
-regGS("Add root topic:", "Добавить корневую тему");
 regGS("Top", "Верх");
 regGS("You do not have the right to add topics.", "Вы не имеете прав доступа для добавления новых тем.");
 regGS("You do not have the right to delete topics.", "Вы не имеете прав доступа для удаления новых тем.");

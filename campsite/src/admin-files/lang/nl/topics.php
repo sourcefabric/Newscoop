@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "");
+regGS("Topics order saved.", "");
+regGS("Show languages", "");
+regGS("Save order", "");
+regGS("Click to edit", "");
+regGS("Add root topic", "");
 regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
 regGS("The topic name is already in use by another topic.", "");
 regGS("You must enter a name for the topic.", "Je moet een naam invullen voor het onderwerp.");
 regGS("You must choose a language for the topic.", "Je moet een taal kiezen voor het onderwerp.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Het onderwerp heeft deelonderwerpen, daarom kan het niet worden gewist.");
-regGS("Show languages:", "Toon talen:");
 regGS("Add translation:", "Voeg vertaling toe:");
 regGS("Add subtopic:", "Voeg deelonderwerp toe:");
-regGS("Add subtopic", "Voeg deelonderwerp toe");
-regGS("Add root topic:", "Voeg hoofd onderwerp toe");
 regGS("Top", "Top");
 regGS("You do not have the right to add topics.", "Je hebt niet de rechten om onderwerpen toe te voegen.");
 regGS("You do not have the right to delete topics.", "Je hebt niet de rechten om onderwerpen te verwijderen.");

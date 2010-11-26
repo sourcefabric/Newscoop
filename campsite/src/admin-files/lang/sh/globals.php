@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "Pluginovi");
+regGS("Manage Plugins", "Upravljanje plaginovima");
 regGS("Account", "Nalog");
 regGS("Items per page", "Stavki po strani");
 regGS("Add new", "Dodaj novi");
@@ -256,14 +258,14 @@ regGS("(optional)", "(opciono)");
 regGS("The URL you entered is invalid: '$1'", "URL koji ste uneli je neispravan: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Došlo je do greške pri prijavljivanju na Kempkaster server");
 regGS("Reads", "čitanja");
-regGS("Plugins", "Pluginovi");
+regGS("Publish with issue", "Objavi zajedno sa izdanjem");
+regGS("Universal List", "Univerzalna lista");
+regGS("Invalid security token!", "Pogrešan sigurnosni simbol");
 regGS("User name", "Korisničko ime");
 regGS("User Types", "Tipovi korisnika");
 regGS("Add new user account", "Dodaj novog korisnika");
 regGS("Schedule a new publish action", "Zakaži novu akciju objavljivanja");
 regGS("User may add/change user accounts and passwords", "Korisnik može da dodaje/menja korisničke naloge i lozinke");
 regGS("User may delete user accounts", "Korisnik može da briše korisničke naloge");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Da li ste sigurni da želite da obrišete sliku \\'$1\\'?");
 ?>

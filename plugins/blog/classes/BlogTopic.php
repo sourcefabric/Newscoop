@@ -32,7 +32,7 @@ class BlogTopic extends DatabaseObject {
         );
 
     /**
-     * Construct by passing in the primary key to access the 
+     * Construct by passing in the primary key to access the
      * blog <-> topic relations
      *
      * @param int $p_blog_id
@@ -43,7 +43,7 @@ class BlogTopic extends DatabaseObject {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['fk_blog_id'] = $p_blog_id;
         $this->m_data['fk_topic_id'] = $p_topic_id;
-        
+
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -82,48 +82,48 @@ class BlogTopic extends DatabaseObject {
      * @return boolean
      */
     function delete()
-    {        
+    {
         // Delete record from the database
         $deleted = parent::delete();
         $CampCache = CampCache::singleton();
         $CampCache->clear('user');
         return $deleted;
     } // fn delete
-    
+
     public static function DeleteBlogTopics($p_blog_id)
     {
         global $g_ado_db;
-        
+
         $query = "DELETE FROM ".BlogTopic::$s_dbTableName."
                   WHERE fk_blog_id = $p_blog_id";
-         
-        return $g_ado_db->execute($query);  
+
+        return $g_ado_db->execute($query);
     }
-    
+
     /**
      * Called when blog is deleted
      *
      * @param int $p_blog_id
      */
     public static function OnBlogDelete($p_blog_id)
-    {    
+    {
         foreach (BlogTopic::GetAssignments($p_blog_id) as $record) {
-            $record->delete();   
-        }   
+            $record->delete();
+        }
     }
-    
+
     /**
      * Call this if an topic is deleted
      *
      * @param int $p_topic_id
      */
     public static function OnTopicDelete($p_topic_id)
-    {      
+    {
         foreach (BlogTopic::GetAssignments(null, $p_topic_id) as $record) {
-            $record->delete();   
-        }   
+            $record->delete();
+        }
     }
-    
+
     /**
      * Get array of relations between topic and blog
      * You have to set param $p_topic_id,
@@ -137,32 +137,32 @@ class BlogTopic extends DatabaseObject {
     {
         global $g_ado_db;
         $records = array();
-        
+
         if (!empty($p_blog_id)) {
-            $where .= "AND fk_blog_id = $p_blog_id ";   
+            $where .= "AND fk_blog_id = $p_blog_id ";
         }
         if (!empty($p_topic_id)) {
-            $where .= "AND fk_topic_id = $p_topic_id ";   
+            $where .= "AND fk_topic_id = $p_topic_id ";
         }
-        
+
         if (empty($where)) {
-            return array();   
+            return array();
         }
-        
+
         $query = "SELECT    *
                   FROM      ".BlogTopic::$s_dbTableName."
                   WHERE     1 $where
                   ORDER BY  fk_blog_id DESC";
-        
+
         $res = $g_ado_db->selectLimit($query, $p_limit == 0 ? -1 : $p_limit, $p_offset);
-        
+
         while ($row = $res->fetchRow()) {
-            $records[] = new BlogTopic($row['fk_blog_id'], $row['fk_topic_id']);      
-        } 
-        
-        return $records;    
+            $records[] = new BlogTopic($row['fk_blog_id'], $row['fk_topic_id']);
+        }
+
+        return $records;
     }
-    
+
     /**
      * Get the responding topic object of an record
      *
@@ -171,10 +171,10 @@ class BlogTopic extends DatabaseObject {
     public function getTopic()
     {
         $Topic = new Topic($this->m_data['fk_topic_id']);
-        
-        return $Topic;   
+
+        return $Topic;
     }
-    
+
     /**
      * Get the fk_topic_id
      *
@@ -182,9 +182,9 @@ class BlogTopic extends DatabaseObject {
      */
     public function getfk_topic_id()
     {
-        return $this->m_data['fk_topic_id'];   
+        return $this->m_data['fk_topic_id'];
     }
-       
+
     /**
      * Get the responding blog object for an record
      *
@@ -192,13 +192,13 @@ class BlogTopic extends DatabaseObject {
      */
     public function getBlog($p_language_id)
     {
-        $blog = new Blog($p_language_id, $this->m_data['fk_blog_id']); 
-        
-        return $blog;  
+        $blog = new Blog($p_language_id, $this->m_data['fk_blog_id']);
+
+        return $blog;
     }
-    
-    
-    
+
+
+
     /**
 	 * Get the Blogs that have the given Topic.
 	 * @param int $p_fk_topic_id
@@ -295,7 +295,7 @@ class BlogTopic extends DatabaseObject {
             }
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
-                . $comparisonOperation['right'] . "' ";
+                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }
@@ -374,7 +374,7 @@ class BlogTopic extends DatabaseObject {
         return $comparisonOperation;
     } // fn ProcessListParameters
 
-       
+
 } // class BlogTopic
 
 ?>

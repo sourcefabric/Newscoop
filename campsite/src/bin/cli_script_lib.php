@@ -453,7 +453,8 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         $cmd_prefix = "cd " . escapeshellarg($upgrade_dir)
             . " && mysql --user=" . $Campsite['DATABASE_USER']
             . " --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
-            . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
+            . " --port=" . $Campsite['DATABASE_SERVER_PORT']
+            . ' --default-character-set=utf8';
         if ($Campsite['DATABASE_PASSWORD'] != "") {
             $cmd_prefix .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
         }
@@ -901,7 +902,8 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
 
     $cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
     . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
-    . $Campsite['DATABASE_SERVER_PORT'];
+    . $Campsite['DATABASE_SERVER_PORT']
+    . ' --default-character-set=utf8';
     if ($Campsite['DATABASE_PASSWORD'] != "") {
         $cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
     }

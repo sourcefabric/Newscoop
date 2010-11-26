@@ -1,7 +1,22 @@
 <?php 
+regGS("You do not have the right to add images.", "");
+regGS("Use for all", "");
+regGS("Stop current upload", "");
+regGS("Start uploading queue", "");
+regGS("Start upload", "");
+regGS("Specify image url if you want to load it.", "");
+regGS("Size", "");
+regGS("Select files", "");
+regGS("No images for multi editing.", "");
+regGS("Images updated.", "");
+regGS("Filename", "");
+regGS("Edit images", "");
+regGS("Drag files here.", "");
+regGS("Add files to the upload queue and click the start button.", "");
+regGS("Add files", "");
+regGS("\"$1\" files uploaded.", "");
 regGS("Unable to add new image.", "No fue posible añadir una nueva imagen.");
 regGS("Image updated.", "Se actualizó la imagen");
-regGS("Image added.", "Se añadió la imagen");
 regGS("Image '$1' deleted.", "Se eliminó la imagen '$1' ");
 regGS("Image is in use, it cannot be deleted.", "La imagen está en uso, no se puede eliminar.");
 regGS("You must select an image file to upload.", "Debe seleccionar un archivo de imagen para cargar.");

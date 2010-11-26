@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Переименовать тип статьи '$1'");
 regGS("Invalid article type '$1'.", "Неправильный тип статьи '$1'.");
 regGS("You cannot merge the same type into itself.", "Вы не можете объединить тип сам с собой.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Вы должны в�
 regGS("You do not have the right to rename article types.", "Вы не имеете прав доступа для переименования типов статей.");
 regGS("You do not have the right to merge article types.", "Вы не имеете прав доступа для объединения типов статей.");
 regGS("The translation could not be added.", "Перевод не может быть добавлен.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Поле типа может содержать только буквы и символ подчеркивания (_).");
 regGS("The article type $1 does not exist.", "Тип статьи $1 не существует.");
 regGS("Template Type Name", "Название типа шаблона");
 regGS("Show/Hide", "Показать/скрыть");

@@ -1,7 +1,22 @@
 <?php 
+regGS("You do not have the right to add images.", "Nemáte oprávnění přidávat obrázky.");
+regGS("Use for all", "Použití pro všechny");
+regGS("Stop current upload", "Zastavení probíhajícího nahrávání");
+regGS("Start uploading queue", "Začít nahrávat fronty");
+regGS("Start upload", "Začít nahrávat");
+regGS("Specify image url if you want to load it.", "Upřesněte URL obrázku, pokud ho chcete nahrát.");
+regGS("Size", "Velikost");
+regGS("Select files", "Vyber soubor");
+regGS("No images for multi editing.", "Žádné obrázky k vícečetné editaci.");
+regGS("Images updated.", "Obrázky aktualizovány");
+regGS("Filename", "Název souboru");
+regGS("Edit images", "Editovat obrázky");
+regGS("Drag files here.", "Přetáhnout soubory sem.");
+regGS("Add files to the upload queue and click the start button.", "Přidat soubory do nahrávací fronty a kliknout na tlačítko START. ");
+regGS("Add files", "Přidat soubory");
+regGS("\"$1\" files uploaded.", "\"$1\" soubory nahrány ");
 regGS("Unable to add new image.", "Nezdařilo se přidat nový obrázek.");
 regGS("Image updated.", "Obrázek aktualizován.");
-regGS("Image added.", "Obrázek přidán.");
 regGS("Image '$1' deleted.", "Obrázek '$1' odstraněn.");
 regGS("Image is in use, it cannot be deleted.", "Obrázek se používá, nelze jej odstranit.");
 regGS("You must select an image file to upload.", "Vyberte soubor k nahrání,");

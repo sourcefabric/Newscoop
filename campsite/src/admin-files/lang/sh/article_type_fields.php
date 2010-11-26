@@ -1,8 +1,9 @@
 <?php 
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
-regGS("The property '$1' is already in use.", "");
-regGS("Precision", "");
-regGS("Can not convert the field $1 from $2 to type $3.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Ime polja je već u upotrebi kao osnovno svojstvo teksta. Sadržaj polja neće biti prikazan u šablonima.");
+regGS("The property '$1' is already in use.", "Svojstvo '$1' je već u upotrebi.");
+regGS("Precision", "Preciznost");
+regGS("Can not convert the field $1 from $2 to type $3.", "Nije moguće konvertovati polje $1 iz $2 u tip $3.");
 regGS("Are you sure you want to make $1 a $2 field?", "Da li ste sigurni da želite da od $1 napravite $2 polje");
 regGS("Is Content", "Sadržaj");
 regGS("Back to Article Types List", "Nazad na listu tipova članaka");
@@ -10,11 +11,9 @@ regGS("show", "prikaži");
 regGS("hide", "sakri");
 regGS("You must enter a name for the field.", "Morate umeti ime polja.");
 regGS("You must choose a language for the field.", "Morate izabrati jezik za polje.");
-regGS("You may only use letters or the underscore (_) character.", "Možete koristiti isključivo slova ili donju crtu (_).");
 regGS("You do not have the right to rename article type fields.", "Nemate pravo da preimenujete polja tipa članka.");
 regGS("You do not have the right to reassign a field type.", "Nemate pravo da dodeljujete tipove polja");
 regGS("You do not have the right to add article types.", "Nemate pravo da dodajete tipove članaka");
-regGS("You can only use letters or the underscore (_).", "Možete koristiti isključivo slova i donju crtu (_).");
 regGS("Translating field", "Prevođenje polja");
 regGS("The translation could not be added.", "Prevod ne može biti dodat.");
 regGS("The field $1 does not exist.", "Polje $1 ne postoji.");

@@ -1,16 +1,16 @@
 <?php 
-regGS("Topics order changed.", "");
+regGS("Topics order saved.", "");
+regGS("Show languages", "");
+regGS("Save order", "");
+regGS("Click to edit", "");
+regGS("Add root topic", "");
 regGS("Topic was deleted.", "");
-regGS("Topic does not exist.", "");
 regGS("The topic name is already in use by another topic.", "Numele subiectului de discuţie este deja folosit de un alt subiect de discuţie.");
 regGS("You must enter a name for the topic.", "Trebuie să selectezi o denumire pentru subiect.");
 regGS("You must choose a language for the topic.", "Trebuie să selectezi o limbă pentru subiect.");
 regGS("This topic has subtopics, therefore it cannot be deleted.", "Subiectul are sub-subiecte şi de aceea nu poate fi şters.");
-regGS("Show languages:", "Arată limbile:");
 regGS("Add translation:", "Adaugă traducere:");
 regGS("Add subtopic:", "Adaugă sub-subiect:");
-regGS("Add subtopic", "Adaugă subiect");
-regGS("Add root topic:", "Adaugă subiect de bază:");
 regGS("Top", "Sus");
 regGS("You do not have the right to add topics.", "Nu ai dreptul să adăugi subiecte.");
 regGS("You do not have the right to delete topics.", "Nu ai dreptul să ştergi subiecte.");

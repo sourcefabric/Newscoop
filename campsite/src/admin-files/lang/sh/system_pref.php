@@ -1,19 +1,20 @@
 <?php 
-regGS("Template Cache Handler:", "");
-regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "");
-regGS("Database Cache Engine:", "");
-regGS("Zoom enabled for images in article content?", "");
-regGS("Image Resizing Width:", "");
-regGS("Image Resizing Width", "");
-regGS("Image Resizing Height:", "");
-regGS("Image Resizing Height", "");
-regGS("Please enter a valid value (1 - 100) for the '$1' field.", "");
-regGS("Imagecache Lifetime:", "");
-regGS("Templates filter mask (separated by comma)", "");
-regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "");
-regGS("Image Resizing Ratio:", "");
-regGS("Image Resizing Ratio", "");
-regGS("Editor Settings", "");
+regGS("Allow password recovery:", "Dozvoli povrćaj lozinke:");
+regGS("Template Cache Handler:", "Rukovalac šablonskim kešom:");
+regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Greška: potrebno je da PHP $1 bude omogućen da biste koristili šablonski sistem keširanja.");
+regGS("Database Cache Engine:", "Keširanje baze podataka:");
+regGS("Zoom enabled for images in article content?", "Uvećavanje je omogućeno za slike u tekstu?");
+regGS("Image Resizing Width:", "Širina za promenu veličine slike:");
+regGS("Image Resizing Width", "Širina za promenu veličine slike");
+regGS("Image Resizing Height:", "Visina za promenu veličine slike:");
+regGS("Image Resizing Height", "Visina za promenu veličine slike");
+regGS("Please enter a valid value (1 - 100) for the '$1' field.", "Molimo unesiite ispravnu vrednost (1-100) za polje '$1'.");
+regGS("Imagecache Lifetime:", "Trajanje keširanja za slike");
+regGS("Templates filter mask (separated by comma)", "Filter šablona (razdvojeno zarezom)");
+regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "Greška: potrebno je da PHP $1 bude omogućeno da biste koristili sistem keširanja.");
+regGS("Image Resizing Ratio:", "Razmera promene veličine slike:");
+regGS("Image Resizing Ratio", "Razmera promene veličine slike");
+regGS("Editor Settings", "Podešavanje editora");
 regGS("Session Lifetime", "Trajanje sessiona");
 regGS("Please enter the site title", "Unesite naziv sajta");
 regGS("Please enter the site meta keywords", "Unesite meta ključne reči za sajt");
@@ -57,4 +58,7 @@ regGS("Keyword separator must be at least one character.", "Separator ključnih 
 regGS("You do not have the right to change system preferences.", "Nemate pravo promene sistemskih postavki.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Broj neuspelih pokušaja prijave pre nego što se prikaže CAPTCHA:");
 regGS("Keyword separator:", "Seprator ključnih reči:");
+regGS("Time Zone:", "Vremenska zona:");
+regGS("disabled", "onemogućeno");
+regGS("Run cron tasks externaly?", "Vozi Cron taskove eksterno?");
 ?>
