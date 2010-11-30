@@ -77,7 +77,8 @@ $no_menu_scripts = array(
     '/users/authors_ajax/detail.php',
     '/users/authors_ajax/grid.php',
     $prefix . 'password_recovery.php',
-    $prefix . 'password_check_token.php'
+    $prefix . 'password_check_token.php',
+    '/articles/locations/popup.php',
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
