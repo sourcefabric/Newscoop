@@ -609,31 +609,36 @@ function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowCl
 
 function camp_get_calendar_include($p_languageCode = null)
 {
-	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jscalendar';
-    $calendarLocalization = "lang/calendar-$p_languageCode.js";
+	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jquery/';
+    $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
     if (!file_exists("$calendarPath/$calendarLocalization")) {
         $codeParts = explode('_', $p_languageCode);
         if (count($codeParts) > 1) {
             $p_languageCode = $codeParts[0];
-            $calendarLocalization = "lang/calendar-$p_languageCode.js";
+            $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
             if (!file_exists("$calendarPath/$calendarLocalization")) {
                 $p_languageCode = 'en';
-                $calendarLocalization = "lang/calendar-$p_languageCode.js";
+                $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
             }
         } else {
             $p_languageCode = 'en';
-            $calendarLocalization = "lang/calendar-$p_languageCode.js";
+            $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
         }
     }
 
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
-	$calendarURL = "$websiteURL/javascript/jscalendar";
+	$calendarURL = "$websiteURL/javascript/jquery";
 	ob_start();
 ?>
-<style type="text/css">@import url(<?php echo htmlspecialchars($calendarURL); ?>/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar.js"></script>
+<style type="text/css">@import url(<?php echo $websiteURL; ?>/css/jquery-ui-1.8.6.datepicker.css);</style>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
+<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/calendar-setup.js"></script>
+<script type="text/javascript"><!--
+    $(document).ready(function() {
+        $.datepicker.setDefaults( $.datepicker.regional['<?php echo $p_languageCode; ?>'] );
+    });
+//--></script>
 <?php
 	return ob_get_clean();
 }
@@ -642,9 +647,7 @@ function camp_get_calendar_include($p_languageCode = null)
 function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
                                  $p_showTime = false, $p_htmlCode = null)
 {
-	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
 	$showTime = $p_showTime ? 'true' : 'false';
-	$buttonName = $p_fieldName . '_trigger';
 	$size = $p_showTime ? 19 : 10;
 	$format = $p_showTime ? "%Y-%m-%d %H:%M:00" : "%Y-%m-%d";
 	ob_start();
@@ -654,25 +657,21 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
     id="<?php echo htmlspecialchars($p_fieldName); ?>"
     size="<?php echo $size; ?>" maxlength="<?php echo $size; ?>"
     <?php echo $p_htmlCode; ?> />
-<img src="<?php echo htmlspecialchars($websiteURL); ?>/css/calendar.gif"
-    id="<?php echo htmlspecialchars($buttonName); ?>"
-    style="cursor: pointer; border: 1px solid red;"
-    title="Date selector"
-    onmouseover="this.style.background='red';"
-    onmouseout="this.style.background=''" />
-<script type="text/javascript">
-    Calendar.setup({
-        inputField:"<?php echo htmlspecialchars($p_fieldName); ?>",
-        ifFormat:"<?php echo $format; ?>",
-        displayArea:"<?php echo htmlspecialchars($p_fieldName); ?>",
-        daFormat:"<?php echo $format; ?>",
-        showsTime:<?php echo $showTime; ?>,
-        showOthers:true,
-        weekNumbers:false,
-        range:new Array(1990, 2020),
-        button:"<?php echo htmlspecialchars($buttonName); ?>"
-    });
-</script>
+    <script type="text/javascript"><!--
+        $('#<?php echo htmlspecialchars($p_fieldName); ?>').each(function() {
+            var settings = {
+                minDate: 1990,
+                maxDate: 2020,
+                dateFormat: 'yy-mm-dd',
+                timeFormat: 'hh:mm:ss',
+            };
+            <?php if ($p_showTime) { ?>
+            $(this).datetimepicker(settings);
+            <?php } else { ?>
+            $(this).datepicker(settings);
+            <?php } ?>
+        });
+    </script>
 <?php
     return ob_get_clean();
 }

@@ -91,9 +91,6 @@ $(document).ready(function() {
             showOn: 'both',
             buttonImage: g_admin_img + '/calendar.gif',
             buttonImageOnly: true,
-            dayNames: g_localizer.datepicker.dayNames,
-            dayNamesMin: g_localizer.datepicker.dayNamesMin,
-            firstDay: g_localizer.datepicker.firstDay,
         };
 
         // update settings by classes
