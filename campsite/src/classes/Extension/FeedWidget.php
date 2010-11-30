@@ -16,6 +16,13 @@ abstract class FeedWidget extends Widget
     /**
      * @var string
      * @setting
+     * @label Title
+     */
+    protected $title = 'Feed reader';
+
+    /**
+     * @var string
+     * @setting
      */
     protected $url = '';
 
@@ -62,7 +69,7 @@ abstract class FeedWidget extends Widget
         $content = ob_get_clean();
 
         if (empty($content)) {
-            echo '<p>', getGS("No news from '$1'.", $this->getSetting('url')), '</p>';
+            echo '<p>', getGS('No news.'), '</p>';
         } else {
             echo '<ul class="rss">', "\n";
             echo $content;
@@ -72,26 +79,31 @@ abstract class FeedWidget extends Widget
 
     /**
      * Get feed items from specified url or cache
-     * @param string $url
+     * @param string $p_url
      * @return Iterator
      */
-    private function getItems($url)
+    private function getItems($p_url)
     {
-        if (empty($url)) {
+        // check url
+        $p_url = (string) $p_url;
+        $parts = @parse_url($p_url);
+        if (!$parts
+            || empty($parts['scheme'])
+            || !in_array($parts['scheme'], array('http', 'https'))) {
             return array();
         }
 
         // get url content
         $cache = $this->getCache();
-        $feed = $cache->fetch($url);
+        $feed = $cache->fetch($p_url);
         if (empty($feed)) {
             $feed = '';
-            $headers = get_headers($url);
+            $headers = @get_headers($p_url);
             if (is_array($headers)
                 && strpos($headers[0], '200') !== FALSE) { // OK
-                $feed = file_get_contents($url);
+                $feed = file_get_contents($p_url);
             }
-            $cache->add($url, $feed, $this->getTtl());
+            $cache->add($p_url, $feed, $this->getTtl());
         }
 
         // parse xml

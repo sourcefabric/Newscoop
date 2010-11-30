@@ -30,6 +30,7 @@ try {
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
     $serverRequest->allow('WidgetRendererDecorator::render');
+    $serverRequest->allow('WidgetManagerDecorator::getSetting');
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');

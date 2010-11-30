@@ -198,6 +198,16 @@ class WidgetManagerDecorator extends DatabaseObject
     }
 
     /**
+     * Get widget setting
+     * @param string $p_setting
+     * @return mixed
+     */
+    public function getSetting($p_setting)
+    {
+        return $this->getWidget()->getSetting($p_setting);
+    }
+
+    /**
      * Calls forwarded to widget
      * @param string $name
      * @param array $arguments

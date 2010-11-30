@@ -113,8 +113,6 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
                 continue;
             }
 
-            $property->setAccessible(TRUE);
-
             // get label
             $matches = array();
             if (preg_match('/@label ([^*]+)/', $doc, $matches)) {
@@ -127,12 +125,14 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             $id = $reflection->getName() . '-' . $property->getName();
             $id = strtolower($id);
 
+            // value getter
+            $property->setAccessible(TRUE);
             $method = 'get' . ucfirst($property->getName());
 
             echo '<dl><dt>';
             echo '<label for="', $id, '">', getGS($label), '</label>';
             echo '</dt><dd>';
-            printf('<input id="%s" type="text" name="%s" value="%s" />',
+            printf('<input id="%s" type="text" name="%s" value="%s" maxlength="255" />',
                 $id,
                 $property->getName(),
                 $this->widget->$method());

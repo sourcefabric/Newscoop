@@ -120,6 +120,16 @@ $.fn.widgets = function (options) {
                             $('> .content > .scroll', widget).html(json);
                             fieldset.fadeOut();
                     });
+
+                    // reload title if needed
+                    if (settings['title']) {
+                        callServer(['WidgetManagerDecorator', 'getSetting'], [
+                            widget.attr('id'),
+                            'title',
+                            ], function(json) {
+                                $('> .header h3', widget).text(json);
+                        });
+                    }
                 });
                 return false;
             });
