@@ -166,8 +166,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 
 $articleObj->setIsLocked(false);
 
-$logtext = getGS('Content edited for article #$1: "$2" (Publication: $3, Issue: $4, Section: $5, Language: $6)', $articleObj->getArticleNumber(), $articleObj->getTitle(), $articleObj->getPublicationId(), $articleObj->getIssueNumber(), $articleObj->getSectionNumber(), $articleObj->getLanguageId());
-Log::Message($logtext, $g_user->getUserId(), 37);
+Log::ArticleMessage($articleObj, getGS('Content edited'), $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'), false);

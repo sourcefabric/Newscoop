@@ -299,9 +299,7 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Article #$1 "$2" ($3) created.',
-            $this->m_data['Number'], $this->m_data['Name'], $this->getLanguageName());
-        Log::Message($logtext, null, 31);
+        Log::ArticleMessage($this, getGS('Article created.'), null, 31, TRUE);
     } // fn create
 
 
@@ -447,13 +445,12 @@ class Article extends DatabaseObject {
 
             $newArticles[] = $articleCopy;
             $languageObj = new Language($copyMe->getLanguageId());
-            $logtext .= getGS('Article #$1 "$2" ($3) copied to Article #$4 (publication $5, issue $6, section $7).',
-                $copyMe->getArticleNumber(), $copyMe->getName(), $languageObj->getCode(),
+            $logtext .= getGS('Article copied to Article #$4 (publication $5, issue $6, section $7).',
                 $articleCopy->getArticleNumber(), $articleCopy->getPublicationId(),
                 $articleCopy->getIssueNumber(), $articleCopy->getSectionNumber());
         }
 
-        Log::Message($logtext, null, 155);
+        Log::ArticleMessage($copyMe, $logtext, null, 155);
         if ($p_copyTranslations) {
             return $newArticles;
         } else {
@@ -589,10 +586,9 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Article #$1 "$2" ($3) translated to "$4" ($5)',
-            $this->getArticleNumber(), $this->getTitle(), $this->getLanguageName(),
+        $logtext = getGS('Article translated to "$4" ($5)',
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
-        Log::Message($logtext, null, 31);
+        Log::ArticleMessage($this, $logtext, null, 31);
 
         return $articleCopy;
     } // fn createTranslation
@@ -647,6 +643,7 @@ class Article extends DatabaseObject {
             $this->m_data['IdLanguage']);
         $articleData->delete();
 
+        $tmpObj = clone $this; // for log
         $tmpData = $this->m_data;
         $tmpData['languageName'] = $this->getLanguageName();
         // Delete row from Articles table.
@@ -656,12 +653,7 @@ class Article extends DatabaseObject {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Article #$1 "$2" ($3) deleted.',
-                $tmpData['Number'], $tmpData['Name'],	$tmpData['languageName'])
-                ." (".getGS("Publication")." ".$tmpData['IdPublication'].", "
-                ." ".getGS("Issue")." ".$tmpData['NrIssue'].", "
-                ." ".getGS("Section")." ".$tmpData['NrSection'].")";
-            Log::Message($logtext, null, 32);
+            Log::ArticleMessage($tmpObj, getGS('Article deleted.'), null, 32);
         }
         $this->m_cacheUpdate = true;
         return $deleted;
@@ -1390,13 +1382,9 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Article #$1 "$2" status changed from $3 to $4.',
-            $this->m_data['Number'], $this->m_data['Name'],
-            $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value))
-            ." (".getGS("Publication")." ".$this->m_data['IdPublication'].", "
-            ." ".getGS("Issue")." ".$this->m_data['NrIssue'].", "
-            ." ".getGS("Section")." ".$this->m_data['NrSection'].")";
-        Log::Message($logtext, null, 35);
+        $logtext = getGS('Article status changed from $3 to $4.',
+            $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value));
+        Log::ArticleMessage($this, $logtext, null, 35);
         return true;
     } // fn setWorkflowStatus
 
