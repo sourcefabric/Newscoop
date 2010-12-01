@@ -53,16 +53,18 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/map-picking.css">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/map-popups.css">
 	<title><?php putGS("Setting Map Locations"); ?></title>
-<!--
-	<title>Setting Map Locations</title>
--->
-<!--
-	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
--->
 
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/adm/jquery-ui-1.8.6.custom.css">
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    <!--
+        var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
+        var g_admin_url = '/<?php echo $ADMIN; ?>';
+        var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+    //-->
+    </script>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>

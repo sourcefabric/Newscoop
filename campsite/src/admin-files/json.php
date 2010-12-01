@@ -16,6 +16,7 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 // TODO replace with Zend_Loader
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
 require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+require_once WWW_DIR . '/classes/GeoNames.php';
 
 try {
     // init request
@@ -33,6 +34,8 @@ try {
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
+    $serverRequest->allow('Geo_Names::FindCitiesByLocation');
+    $serverRequest->allow('Geo_Names::FindCitiesByName');
 
     // execute
     echo json_encode($serverRequest->execute());
