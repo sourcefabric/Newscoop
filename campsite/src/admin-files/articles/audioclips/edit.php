@@ -81,19 +81,19 @@ switch($f_action) {
 ?>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta http-equiv="Expires" content="now" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
-    <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-    <script language="JavaScript">
-    function spread(element, name)
-    {
-        if (document.forms['audioclip_metadata'].elements['f_Main_'+name]) document.forms['audioclip_metadata'].elements['f_Main_'+name].value = element.value;
-        if (document.forms['audioclip_metadata'].elements['f_Music_'+name]) document.forms['audioclip_metadata'].elements['f_Music_'+name].value = element.value;
-        if (document.forms['audioclip_metadata'].elements['f_Voice_'+name]) document.forms['audioclip_metadata'].elements['f_Voice_'+name].value = element.value;
-    } // fn spread
-    </script>
-	<title><?php putGS("Edit Audioclip Metadata"); ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+  <script language="JavaScript">
+  function spread(element, name)
+  {
+      if (document.forms['audioclip_metadata'].elements['f_Main_'+name]) document.forms['audioclip_metadata'].elements['f_Main_'+name].value = element.value;
+      if (document.forms['audioclip_metadata'].elements['f_Music_'+name]) document.forms['audioclip_metadata'].elements['f_Music_'+name].value = element.value;
+      if (document.forms['audioclip_metadata'].elements['f_Voice_'+name]) document.forms['audioclip_metadata'].elements['f_Voice_'+name].value = element.value;
+  } // fn spread
+  </script>
+  <title><?php putGS("Edit Audioclip Metadata"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>

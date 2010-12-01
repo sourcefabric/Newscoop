@@ -61,7 +61,7 @@ hr {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	border: 1px solid #015476;
-	background: #bbd4e0 url(button_bg.png) repeat-x 0 0;
+	background: #bbd4e0 url(images/button_bg.png) repeat-x 0 0;
 	color: #2e4a58;
 	font-weight: bold;
 	text-transform:uppercase;
@@ -74,23 +74,23 @@ hr {
 
 .buttonStrong {
 	border-color: #3a7304;
-	background: #73ca1d url(button_bg.png) repeat-x 0 -75px;
+	background: #73ca1d url(images/button_bg.png) repeat-x 0 -75px;
 	color: #2c5703;	
 	text-shadow:0 1px 0 #d4eeb9;
 }
 
 .buttonStrong:hover {
-	background: #41a908 url(button_bg.png) repeat-x 0 -100px;
+	background: #41a908 url(images/button_bg.png) repeat-x 0 -100px;
 	text-shadow:0 1px 0 #d4eeb9;
 }
 
 .button:hover {
-	background: #bbd4e0 url(button_bg.png) repeat-x 0 -25px;
+	background: #bbd4e0 url(images/button_bg.png) repeat-x 0 -25px;
 }
 
 .button_disabled {
 	border: 1px solid #b5d5e2;
-	background: #bbd4e0 url(button_bg.png) repeat-x 0 0;
+	background: #bbd4e0 url(images/button_bg.png) repeat-x 0 0;
 	color: #a1bdc9;
 	text-shadow:0 1px 0 #e2ecf6;
 }
@@ -101,14 +101,14 @@ hr {
 
 .input_text {
 	border: 1px solid #015476;
-	background:#fff url(input_bg.png) repeat-x 0 0;
+	background:#fff url(images/input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
 	font-size: 13px;
 }
 
 .input_text_area {
 	border: 1px solid #015476;
-	background:#fff url(input_bg.png) repeat-x 0 0;
+	background:#fff url(images/input_bg.png) repeat-x 0 0;
 	text-indent: 3px;
 	font-size: 13px;
 }
@@ -248,7 +248,7 @@ a.breadcrumb:hover {
 .breadcrumb_separator {
 	padding-left: 8px;
 	padding-right: 8px;
-	background: url(breadcrumb_separator2.png) no-repeat center 0;
+	background: url(images/breadcrumb_separator2.png) no-repeat center 0;
 	height:23px;
 	width:15px;
 	float:left;
@@ -418,12 +418,12 @@ END clearfix ---------------------------------------------
 }
 
 .naviHolder {
-    background: url(main_navi_bg.png) repeat-x 0 0;
+    background: url(images/main_navi_bg.png) repeat-x 0 0;
     border-bottom:1px solid #5a7490;
 }
 
 .breadcrumbHolder .breadcrumbTD {
-    background:#ecf6fc url(breadcrumb_bg.png) repeat-x 0 0;
+    background:#ecf6fc url(images/breadcrumb_bg.png) repeat-x 0 0;
     border-bottom:1px solid #5d99b1;
     padding:0px 0 0px 13px;
     font-size:11px;
@@ -432,7 +432,7 @@ END clearfix ---------------------------------------------
 }
 
 .breadcrumbHolder .activeSection {
-    background:#edf7fc url(breadcrumb_bg.png) repeat-x 0 -30px;
+    background:#edf7fc url(images/breadcrumb_bg.png) repeat-x 0 -30px;
     border-bottom:1px solid #b5d5e2;
     padding:7px 0 7px 14px;
 }
@@ -498,18 +498,18 @@ fieldset {
 
 .topBox .button,.topBox .button_disabled {
     float:right;
-    background:url(button_bg.png) repeat-x 0 0;
+    background:url(images/button_bg.png) repeat-x 0 0;
     border:1px solid #015476;
     margin:0;
 }
 
 .topBox .button:hover {
-    background:url(button_bg.png) repeat-x 0 -25px;
+    background:url(images/button_bg.png) repeat-x 0 -25px;
 }
 
 .topBox .button_disabled {
     float:right;
-    background:url(button_bg.png) repeat-x 0 -50px;
+    background:url(images/button_bg.png) repeat-x 0 -50px;
     border:1px solid #015476;
     color:#5d8091;
     text-shadow:0 1px 0 #ccdfe8;
@@ -587,7 +587,7 @@ fieldset {
     width:350px;
     float:left;
     border: 1px solid #015476;
-    background:#fff url(input_bg.png) repeat-x 0 0;
+    background:#fff url(images/input_bg.png) repeat-x 0 0;
     text-indent: 3px;
     font-size: 12px;
     margin:0;
@@ -632,7 +632,7 @@ fieldset {
 a.calendarButton {
     width: 21px;
     height:16px;
-    background:url(calendar.png) no-repeat 0 0;
+    background:url(images/calendar.png) no-repeat 0 0;
     margin:0 0 0 6px;
     float:left;
     outline:none;
@@ -649,7 +649,7 @@ a.calendarButton {
 }
 
 .sideBox h3 {
-    background:url(sidebar-heading_bg.png) repeat-x 0 0;
+    background:url(images/sidebar-heading_bg.png) repeat-x 0 0;
     font-size:13px;
     margin:0;
     padding:5px 0 5px 7px;
@@ -658,7 +658,7 @@ a.calendarButton {
 
 .addSmall {
     display:block;
-    background:url(add-small_bg.png) no-repeat 0 0;
+    background:url(images/add-small_bg.png) no-repeat 0 0;
     padding:4px 0 4px 24px;
     font-size:12px;
     border-bottom:1px solid #aec6df;
@@ -667,7 +667,7 @@ a.calendarButton {
 }
 
 .addSmall:hover {
-    background:url(add-small_bg.png) no-repeat 0 -25px;
+    background:url(images/add-small_bg.png) no-repeat 0 -25px;
     color:#3a7304;
     text-decoration:none;
 }
@@ -704,7 +704,7 @@ a.calendarButton {
     margin:0 0 5px 0;
     padding:0 0 0 10px;
     list-style-type:none;
-    background:url(bullet_smal.png) no-repeat 0 4px;
+    background:url(images/bullet_smal.png) no-repeat 0 4px;
     border-bottom:none;
     font-size:11px;
     color:#537989;
@@ -728,7 +728,7 @@ a.calendarButton {
 .addArticle {
     border:1px solid #5bac0b;
     padding:6px 12px 7px 32px;
-    background:#deecd0 url(add-big_bg.png) no-repeat 0 0;
+    background:#deecd0 url(images/add-big_bg.png) no-repeat 0 0;
     text-decoration:none;
     text-transform:uppercase;
     font-size:12px;
@@ -748,7 +748,7 @@ a.calendarButton {
 .goBack {
     padding:6px 12px 7px 33px;
     border:1px solid #b5d5e2;
-    background:#f4fafd url(arrow_left.png) no-repeat 5px center;
+    background:#f4fafd url(images/arrow_left.png) no-repeat 5px center;
     text-decoration:none;
     text-transform:uppercase;
     font-size:12px;
@@ -765,7 +765,7 @@ a.calendarButton {
 }
 
 .buttonLink {
-    background:url("button_bg.png") repeat-x scroll 0 0 #BBD4E0;
+    background:url("images/button_bg.png") repeat-x scroll 0 0 #BBD4E0;
     border:1px solid #015476;
     color:#2E4A58;
     font-family:Verdana,Arial,Helvetica,sans-serif;
@@ -781,7 +781,7 @@ a.calendarButton {
 }
 
 .buttonLink:hover {
-    background: #bbd4e0 url(button_bg.png) repeat-x 0 -25px;
+    background: #bbd4e0 url(images/button_bg.png) repeat-x 0 -25px;
     color:#2E4A58;
 }
 
@@ -807,7 +807,7 @@ a.calendarButton {
     padding:0;
     list-style-type:0;
     border-bottom:1px solid #b5d5e2;
-    background:#d3e4eb url(sidebar-heading_bg.png) repeat-x 0 0;
+    background:#d3e4eb url(images/sidebar-heading_bg.png) repeat-x 0 0;
     height: 32px
 }
 
@@ -882,7 +882,7 @@ a.calendarButton {
 }
 
 .table_list_header td {
-    background: #c4e1ed url(table_head_bg.png) repeat-x 0 0;
+    background: #c4e1ed url(images/table_head_bg.png) repeat-x 0 0;
     color: #000;
     font-weight: normal;
     border-bottom:1px solid #5d99b1;
@@ -999,7 +999,7 @@ a.calendarButton {
 
 .footer, .footer_plain {
     display:block;
-    background:url(footer_bg.png) repeat-x 0 0;
+    background:url(images/footer_bg.png) repeat-x 0 0;
     height:40px;
     border-top:1px solid #b5d5e2;
     clear:both; color:#666;
@@ -1028,14 +1028,14 @@ a.calendarButton {
 
 .login_box {
     border:1px solid #015476;
-    background:#f5fbfd url(login_bg.png) repeat-x 0 bottom;
+    background:#f5fbfd url(images/login_bg.png) repeat-x 0 bottom;
     margin:40px auto 0 auto;
     text-align:center;
     width:420px;
 }
 
 .login_box h2 {
-    background:#d3e6eb url(login_header_bg.png) repeat-x 0 0;
+    background:#d3e6eb url(images/login_header_bg.png) repeat-x 0 0;
     border-bottom:1px solid #b5d9e2;
     margin:0;
     padding:3px 0 4px 8px;
@@ -1046,7 +1046,7 @@ a.calendarButton {
 }
 
 .logobox {
-    background:url(logobar_bg.png) repeat-x 0 0;
+    background:url(images/logobar_bg.png) repeat-x 0 0;
     height:102px;
     text-align:center;
 }
@@ -1197,7 +1197,7 @@ a.calendarButton {
 
 .addButton, .arrowButton {
     display:block;
-    background:url(add-button_bg.png) no-repeat 0 0;
+    background:url(images/add-button_bg.png) no-repeat 0 0;
     width:22px;
     height:21px;
     padding:0;
@@ -1207,7 +1207,7 @@ a.calendarButton {
 }
 
 .arrowButton {
-    background:url(arrow-button_bg.png) no-repeat 0 0;
+    background:url(images/arrow-button_bg.png) no-repeat 0 0;
     width:24px;
     margin:0;
     border:1px solid #015476;
@@ -1263,7 +1263,7 @@ a.calendarButton {
 .addButtonText{
     border:1px solid #95c26a;
     padding:5px 12px 0 23px;
-    background:url(add-button_bg.png) no-repeat 0 0;
+    background:url(images/add-button_bg.png) no-repeat 0 0;
     text-decoration:none;
     text-transform:uppercase;
     font-size:11px;
@@ -1429,7 +1429,7 @@ ul.tree.sortable a, ul.tree.sortable span {
 ul.tree.sortable .item {
     float: left;
     clear: left;
-    background: #fbfbfb url('adm/images/topics_bg.png') repeat-x 0 0;
+    background: #fbfbfb url('images/topics_bg.png') repeat-x 0 0;
     border: 1px solid #ccc;
     border-top-width: 0;
     cursor: move;
@@ -1446,7 +1446,7 @@ ul.tree.sortable .item > div {
     margin: 0;
     padding: 3px 3px 3px 13px;
     font-size: 1em;
-    background: transparent url('adm/images/topics_drag.png') no-repeat 4px 2px;
+    background: transparent url('images/topics_drag.png') no-repeat 4px 2px;
 }
 
 ul.tree.sortable .open {
@@ -1455,13 +1455,13 @@ ul.tree.sortable .open {
 
 ul.tree.sortable .open.closed {
     padding-left: 18px;
-    background-image: url('adm/images/topics_open.png');
+    background-image: url('images/topics_open.png');
     cursor: pointer;
 }
 
 ul.tree.sortable .open.opened {
     padding-left: 18px;
-    background-image: url('adm/images/topics_close.png');
+    background-image: url('images/topics_close.png');
     cursor: pointer;
 }
 
@@ -1499,7 +1499,7 @@ ul.tree.sortable .icon {
     width: 11px;
     height: 11px;
     margin: 3px 5px 0 3px;
-    background: transparent url('adm/images/topics_open_close.png') no-repeat 0 0;
+    background: transparent url('images/topics_open_close.png') no-repeat 0 0;
     cursor: pointer;
     text-decoration: none;
     font-size: 0.9em;
@@ -1523,7 +1523,7 @@ ul.tree.sortable .edit {
     padding-top: 2px;
     padding-left: 21px;
     font-size: 0.9em;
-    background: transparent url('adm/images/topics_edit.png') no-repeat 0 50%;
+    background: transparent url('images/topics_edit.png') no-repeat 0 50%;
     cursor: pointer;
 }
 
@@ -1541,7 +1541,7 @@ body > h2, body > p {
 }
 
 ul.tree.sortable .icon.delete span {
-    background-image: url('adm/images/topics_delete.png');
+    background-image: url('images/topics_delete.png');
 }
 
 .tabs.authors {
@@ -1829,7 +1829,7 @@ ul.tree.sortable .item > div {
     margin: 0;
     padding: 3px 3px 3px 13px;
     font-size: 1em;
-    background: transparent url('adm/images/topics_drag.png') no-repeat 4px 2px;
+    background: transparent url('images/topics_drag.png') no-repeat 4px 2px;
 }
 
 ul.tree.sortable .open {
@@ -1838,13 +1838,13 @@ ul.tree.sortable .open {
 
 ul.tree.sortable .open.closed {
     padding-left: 18px;
-    background-image: url('adm/images/topics_open.png');
+    background-image: url('images/topics_open.png');
     cursor: pointer;
 }
 
 ul.tree.sortable .open.opened {
     padding-left: 18px;
-    background-image: url('adm/images/topics_close.png');
+    background-image: url('images/topics_close.png');
     cursor: pointer;
 }
 
@@ -1882,7 +1882,7 @@ ul.tree.sortable .icon {
     width: 11px;
     height: 11px;
     margin: 3px 5px 0 3px;
-    background: transparent url('adm/images/topics_open_close.png') no-repeat 0 0;
+    background: transparent url('images/topics_open_close.png') no-repeat 0 0;
     cursor: pointer;
     text-decoration: none;
     font-size: 0.9em;
@@ -1906,7 +1906,7 @@ ul.tree.sortable .edit {
     padding-top: 2px;
     padding-left: 21px;
     font-size: 0.9em;
-    background: transparent url('adm/images/topics_edit.png') no-repeat 0 50%;
+    background: transparent url('images/topics_edit.png') no-repeat 0 50%;
     cursor: pointer;
 }
 
@@ -1918,7 +1918,7 @@ ul.tree.sortable .icon.delete {
 }
 
 ul.tree.sortable .icon.delete span {
-    background-image: url('adm/images/topics_delete.png');
+    background-image: url('images/topics_delete.png');
 }
 
 body > h2, body > p {
