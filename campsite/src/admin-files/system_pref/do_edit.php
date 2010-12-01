@@ -64,13 +64,21 @@ $f_geo = array(
     'map_center_latitude_default' => Input::Get('f_map_center_latitude_default', 'float'),
     'map_center_longitude_default' => Input::Get('f_map_center_longitude_default', 'float'),
     'map_display_resolution_default' => Input::Get('f_map_display_resolution_default', 'int'),
-    'map_default_width' => Input::Get('f_map_default_width', 'int', 600, true),
-    'map_default_height' => Input::Get('f_map_default_height', 'int', 400, true),
+    'map_default_width' => Input::Get('f_map_default_width', 'int'),
+    'map_default_height' => Input::Get('f_map_default_height', 'int'),
     'map_provider_available_google_v3' => Input::Get('f_map_provider_available_google_v3', 'int'),
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int'),
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
     'map_marker_directory' => Input::Get('f_map_marker_directory', 'string'),
     'map_marker_names' => Input::Get('f_map_marker_names', 'string'),
+    'map_popup_width_min' => Input::Get('f_map_popup_width_min', 'int'),
+    'map_popup_height_min' => Input::Get('f_map_popup_height_min', 'int'),
+    'map_video_width_you_tube' => Input::Get('f_map_video_width_you_tube', 'int'),
+    'map_video_height_you_tube' => Input::Get('f_map_video_height_you_tube', 'int'),
+    'map_video_width_vimeo' => Input::Get('f_map_video_width_vimeo', 'int'),
+    'map_video_height_vimeo' => Input::Get('f_map_video_height_vimeo', 'int'),
+    'map_video_width_flash' => Input::Get('f_map_video_width_flash', 'int'),
+    'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
 );
 
 // geomarkers

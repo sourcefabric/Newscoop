@@ -537,6 +537,82 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Popup Minimal Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_popup_width_min" value="<?php p(SystemPref::Get('MapPopupWidthMin')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Popup Minimal Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_popup_height_min" value="<?php p(SystemPref::Get('MapPopupHeightMin')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Youtube Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_you_tube" value="<?php p(SystemPref::Get('MapVideoWidthYouTube')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Youtube Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_you_tube" value="<?php p(SystemPref::Get('MapVideoHeightYouTube')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Vimeo Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_vimeo" value="<?php p(SystemPref::Get('MapVideoWidthVimeo')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Vimeo Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_vimeo" value="<?php p(SystemPref::Get('MapVideoHeightVimeo')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Flash Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_flash" value="<?php p(SystemPref::Get('MapVideoWidthFlash')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Flash Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_flash" value="<?php p(SystemPref::Get('MapVideoHeightFlash')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <tr>
     <td colspan="2" align="center" style="padding-top: 10px;">
