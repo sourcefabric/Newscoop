@@ -48,8 +48,9 @@ CREATE TABLE IF NOT EXISTS `AuthorTypes` (
 -- Add new fields to store some more author data
 ALTER TABLE `Authors` ADD `type` INT(10) UNSIGNED NULL, ADD `skype` VARCHAR(255) NULL, ADD `jabber` VARCHAR(255) NULL, ADD `aim` VARCHAR(255) NULL, ADD `biography` TEXT NULL, ADD `image` INT NULL;
 
--- Change fileds to proper data type
-ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT(10) UNSIGNED NULL, CHANGE `fk_language_id` `fk_language_id` INT(10) UNSIGNED NULL, CHANGE `fk_author_id` `fk_author_id` INT(10) UNSIGNED NULL, ADD `fk_type_id` INT(10) UNSIGNED NULL;
+-- Change fields to proper data type, add new fk_type_id and change primary key to include the new field as part of it
+ALTER TABLE ArticleAuthors DROP PRIMARY KEY;
+ALTER TABLE `ArticleAuthors` CHANGE `fk_article_number` `fk_article_number` INT(10) UNSIGNED NULL DEFAULT '0', CHANGE `fk_language_id` `fk_language_id` INT(10) UNSIGNED NULL DEFAULT '0', CHANGE `fk_author_id` `fk_author_id` INT(10) UNSIGNED NULL DEFAULT '0', ADD `fk_type_id` INT(10) UNSIGNED NULL DEFAULT '0', ADD PRIMARY KEY(`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`);
 
 -- Add new column to store the token in password recovering
 ALTER TABLE `liveuser_users` ADD COLUMN `password_reset_token` VARCHAR(85) NULL AFTER `isActive`;

@@ -15,23 +15,28 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 /**
  * @package Campsite
  */
-class ArticleAuthor extends DatabaseObject {
-    var $m_keyColumnNames = array('fk_article_number', 'fk_language_id', 'fk_author_id');
+class ArticleAuthor extends DatabaseObject
+{
+    var $m_keyColumnNames = array('fk_article_number',
+                                  'fk_language_id',
+                                  'fk_author_id',
+                                  'fk_type_id');
     var $m_dbTableName = 'ArticleAuthors';
     var $m_columnNames = array('fk_article_number',
                                'fk_language_id',
-                               'fk_author_id');
+                               'fk_author_id',
+                               'fk_type_id');
 
 
     /**
-     * The article authors table links together articles with authors.
+     * The ArticleAuthors table links together articles with authors.
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
      * @param int $p_authorId
-     *
+     * @param int $p_typeId
      */
-    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null)
+    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
@@ -42,11 +47,14 @@ class ArticleAuthor extends DatabaseObject {
         if (is_numeric($p_authorId)) {
             $this->m_data['fk_author_id'] = $p_authorId;
         }
+        if (is_numeric($p_typeId)) {
+            $this->m_data['fk_type_id'] = $p_typeId;
+        }
         if (!is_null($p_articleNumber) && !is_null($p_languageId)
-        && !is_null($p_authorId)) {
+                && !is_null($p_authorId) && !is_null($p_typeId)) {
             $this->fetch();
         }
-    } // constructor
+    } // fn constructor
 
 
     /**
@@ -76,16 +84,14 @@ class ArticleAuthor extends DatabaseObject {
     } // fn getAuthorId
 
 
-    public function createRow($articleNumber, $languageId, $authorId, $typeId)
+    /**
+     * @return int
+     */
+    public function getTypeId()
     {
-        global $g_ado_db;
-        if ($authorId==0) return;
-        $queryStr = "INSERT IGNORE INTO ArticleAuthors
-                     (fk_article_number, fk_language_id, fk_author_id, fk_type_id)
-                     VALUES ('%d','%d','%d','%d')";
-        $queryStr= sprintf($queryStr, $articleNumber, $languageId, $authorId, $typeId);
-        $g_ado_db->Execute($queryStr);
-    }
+        return $this->m_data['fk_type_id'];
+    } // fn getTypeId
+
 
     /**
      * Get all the authors that wrote this article.
@@ -96,8 +102,7 @@ class ArticleAuthor extends DatabaseObject {
      * @return array $returnArray
      *      An array of Author objects
      */
-    public static function GetAuthorsByArticle($p_articleNumber,
-                                               $p_languageId = null)
+    public static function GetAuthorsByArticle($p_articleNumber, $p_languageId = null)
     {
         global $g_ado_db;
 
@@ -127,19 +132,29 @@ class ArticleAuthor extends DatabaseObject {
 
 
     /**
+     * Copy all the pointers for the given article.
      *
-     * @param int $p_id
+     * @param int $p_srcArticleNumber
+     * @param int $p_destArticleNumber
      *
      * @return void
      */
-    public static function OnAuthorDelete($p_id)
+    public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors
-                     WHERE fk_author_id = '$p_id'";
-        $g_ado_db->Execute($queryStr);
-    } // fn OnAuthorDelete
+        $queryStr = "SELECT fk_language_id, fk_author_id, fk_type_id
+                     FROM ArticleAuthors
+                     WHERE fk_article_number='$p_srcArticleNumber'";
+        $rows = $g_ado_db->GetAll($queryStr);
+        foreach ($rows as $row) {
+            $tmpArticleAuthorObj = new ArticleAuthor($p_destArticleNumber,
+                $row['fk_language_id'], $row['fk_author_id'], $row['fk_type_id']);
+            if (!$tmpArticleAuthorObj->exists()) {
+                $tmpArticleAuthorObj->create();
+            }
+        }
+    } // fn OnArticleCopy
 
 
     /**
@@ -153,61 +168,71 @@ class ArticleAuthor extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors
-                     WHERE fk_article_number = '$p_articleNumber'";
-
+        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_article_number = '$p_articleNumber'";
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
 
-    public static function getArticleAuthorList($articleNumber, $languageId)
-    {
-        global $g_ado_db;
-        $sql ="SELECT Authors.first_name, Authors.last_name, ArticleAuthors.fk_type_id
-                FROM Authors
-                JOIN ArticleAuthors
-                ON Authors.id = fk_author_id
-                WHERE
-                fk_language_id=%d
-                AND fk_article_number=%d";
-        $sql = sprintf($sql,  $languageId,$articleNumber);
-        return $g_ado_db->Execute($sql);
-    }
 
+    /**
+     * @param int $p_id
+     *
+     * @return void
+     */
     public static function OnArticleLanguageDelete($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
 
         $queryStr = "DELETE FROM ArticleAuthors
                      WHERE fk_article_number = '$p_articleNumber' AND fk_language_id='$p_languageId'";
-
         $g_ado_db->Execute($queryStr);
     } // fn OnArticleDelete
 
+
     /**
-     * Copy all the pointers for the given article.
-     *
-     * @param int $p_srcArticleNumber
-     * @param int $p_destArticleNumber
+     * Remove article pointers for the given author.
+     * @param int $p_id
      *
      * @return void
      */
-    public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
+    public static function OnAuthorDelete($p_authorId)
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT fk_language_id, fk_author_id
-                     FROM ArticleAuthors
-                     WHERE fk_article_number='$p_srcArticleNumber'";
-        $rows = $g_ado_db->GetAll($queryStr);
-        foreach ($rows as $row) {
-            $queryStr = "INSERT IGNORE INTO ArticleAuthors
-                         (fk_article_number, fk_language_id, fk_author_id)
-                         VALUES ('$p_destArticleNumber', '"
-                        .$row['fk_language_id']."', '"
-                        .$row['fk_author_id']."')";
-            $g_ado_db->Execute($queryStr);
-        }
-    } // fn OnArticleCopy
+        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_author_id = '$p_authorId'";
+        $g_ado_db->Execute($queryStr);
+    } // fn OnAuthorDelete
+
+
+    /**
+     * Remove author pointers for the given author type.
+     *
+     * @param int $p_authorTypeId
+     *
+     * @return void
+     */
+    public static function OnAuthorTypeDelete($p_authorTypeId)
+    {
+        global $g_ado_db;
+
+        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_type_id = '$p_authorTypeId'";
+        $g_ado_db->Execute($queryStr);
+    } // fn OnAuthorTypeDelete
+
+
+    /**
+     * @return array
+     */
+    public static function GetArticleAuthorList($p_articleNumber, $p_languageId)
+    {
+        global $g_ado_db;
+
+        $sql = "SELECT Authors.first_name, Authors.last_name, ArticleAuthors.fk_type_id
+                FROM Authors JOIN ArticleAuthors
+                ON Authors.id = fk_author_id
+                WHERE fk_language_id = '$p_languageId'
+                AND fk_article_number = '$p_articleNumber'";
+        return $g_ado_db->Execute($sql);
+    } // fn GetArticleAuthorList
 
 
     /**
@@ -259,13 +284,13 @@ class ArticleAuthor extends DatabaseObject {
 
             switch (key($comparisonOperation)) {
             case 'fk_article_number':
-                $whereCondition = "fk_article_number = '"
-                    .$g_ado_db->escape($comparisonOperation['fk_article_number']) . "'";
+                $whereCondition = 'fk_article_number = '
+                    .$comparisonOperation['fk_article_number'];
                 $hasArticleNr = true;
                 break;
             case 'fk_language_id':
-                $whereCondition = "(fk_language_id IS NULL OR fk_language_id = '"
-                	.$g_ado_db->escape($comparisonOperation['fk_language_id'])."')";
+                $whereCondition = '(fk_language_id IS NULL OR '
+                    .'fk_language_id = '.$comparisonOperation['fk_language_id'].')';
                 break;
             }
 
