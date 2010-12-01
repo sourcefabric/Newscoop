@@ -128,142 +128,6 @@ CREATE TABLE CityNames (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-
-
--- article info should be set during the article creation/modification
-ALTER TABLE Articles ADD COLUMN MapUsage tinyint NOT NULL DEFAULT 0;
--- initial map center
-ALTER TABLE Articles ADD COLUMN MapCenterLongitude REAL NOT NULL DEFAULT 0;
-ALTER TABLE Articles ADD COLUMN MapCenterLatitude REAL NOT NULL DEFAULT 0;
--- initial map resolution
-ALTER TABLE Articles ADD COLUMN MapDisplayResolution smallint NOT NULL DEFAULT 0;
--- the map to be used for readers
-ALTER TABLE Articles ADD COLUMN MapProvider VARCHAR(1023) NOT NULL DEFAULT "";
-
-
--- locations stored at a table, alike attachments and images, but languages are dealt differently
--- one location may be used at more articles, languages, events, e.g. those with complex descriptions
--- was thinking about collections of pois (for feature sharing), but it would be hard for search and so
-CREATE TABLE Locations (
---  ordinary row id
-    id int(10) unsigned NOT NULL AUTO_INCREMENT,
-
--- geometrical location of the points of interests, [via map]
--- can be POINT, LINE, POLYGON
-    poi_location GEOMETRY NOT NULL,
--- what is geometry of the poi (point, line, area) [point]
--- may be to set the type to enum('point', 'line', 'area')
-    poi_type VARCHAR(40) NOT NULL,
-
--- how the poi should be displayed, a style name, e.g. marker name [system default]
-    poi_type_style VARCHAR(1023) NOT NULL,
-
--- geometry simplification
-    poi_center POINT NOT NULL,
-    poi_radius REAL NOT NULL DEFAULT 0,
-
--- management related things
-    fk_user_id int(10) unsigned DEFAULT NULL,
-    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-
-    PRIMARY KEY (id),
-    SPATIAL INDEX poi_location (poi_location),
-    KEY poi_type (poi_type),
-    KEY poi_type_style (poi_type),
-    SPATIAL INDEX poi_center (poi_center),
-    KEY poi_radius (poi_radius)
-
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- poi contents, together with relations among locations and articles, events
--- this would be alike articles, i.e. contents plus foreign keys to unique specifiers
-CREATE TABLE LocationContents (
---  ordinary row id
-    id int(10) unsigned NOT NULL AUTO_INCREMENT,
--- specifying the article by its number and language
-    fk_article_number int(10) unsigned NOT NULL DEFAULT 0,
---  language of the poi, different languages shall have different texts
-    fk_language_id int(10) unsigned NOT NULL DEFAULT 0,
--- specifying the location by its id
-    fk_location_id int(10) unsigned NOT NULL DEFAULT 0,
--- and to put event_id here too; for now zeroed
-    fk_event_id int(10) unsigned NOT NULL DEFAULT 0,
--- if more maps for article at some future
-    fk_map_id int(10) unsigned NOT NULL DEFAULT 0,
-
--- display sequence rank
-    rank int NOT NULL DEFAULT 0,
-
--- published date, put here too (from the Articles table) for faster search
-    publish_date date,
-
--- usage of the POI for the article/language/event
--- i.e. whether the POI should be displayed for readers
-    poi_display tinyint NOT NULL DEFAULT 1,
-
--- pop-up style features
--- whether the POI should have popup enaibled
-    poi_popup tinyint NOT NULL DEFAULT 1,
-    poi_style VARCHAR(1023) NOT NULL,
-
--- textual content
--- main label for the POI
-    poi_name VARCHAR(1023),
--- short description to be shown at a side panel
-    poi_perex VARCHAR(15100),
-
--- whether to use content of poi's popup directly instead of link, image, etc. [false]
---  to use either the (rich) content or link/text/image/video/audio
-    poi_content_type smallint NOT NULL DEFAULT 1,
--- the whole html content for POI popup (if set to be used)
-    poi_content TEXT NOT NULL DEFAULT "",
-
--- text at the POI popup content
-    poi_text TEXT,
--- link from the POI popup window
-    poi_link VARCHAR(1023),
-
--- multimedia content
--- image at the POI popup content
-    poi_image_src VARCHAR(1023) NOT NULL DEFAULT "",
-    poi_image_width VARCHAR(255) NOT NULL DEFAULT "",
-    poi_image_height VARCHAR(255) NOT NULL DEFAULT "",
-
--- embedded video object at the POI popup content
-    poi_video_id VARCHAR(1023) NOT NULL DEFAULT "",
--- type of the embedded video object, [system default]
-    poi_video_type VARCHAR(255),
--- video display size, [system default]
-    poi_video_width VARCHAR(255) NOT NULL DEFAULT "",
-    poi_video_height VARCHAR(255) NOT NULL DEFAULT "",
-
--- management related things
-    fk_user_id int(10) unsigned DEFAULT NULL,
-    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-
--- specifying the rows by unique way
-    PRIMARY KEY (id),
-    UNIQUE KEY article_location_index (fk_article_number, fk_language_id, fk_location_id, fk_event_id),
--- keys for reasonable access
-    KEY fk_article_number (fk_article_number),
-    KEY fk_language_id (fk_language_id),
-    KEY fk_location_id (fk_location_id),
-    KEY fk_event_id (fk_event_id),
-    KEY fk_map_id (fk_map_id),
-
-    KEY rank (rank),
-
-    KEY publish_date (publish_date),
-    KEY poi_display (poi_display),
-    KEY poi_popup (poi_popup),
-
-    KEY poi_name (poi_name)
-
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 -- Create table for widget context - widget relation
 DROP TABLE IF EXISTS `WidgetContext_Widget`;
 CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
@@ -276,3 +140,204 @@ CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
   PRIMARY KEY (`id`, `fk_user_id`),
   INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
 );
+
+
+
+-- it goes from Articles into Maps (one Map at a single Article),
+--   and then from Maps via MapLocations into Locations
+-- NOTE: the Maps-Locations relationships is M:N because of COW,
+--   otherwise a location would be at a single map
+
+-- SELECT DISTINCT m.fk_article_number AS art FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN
+--  Locations AS l ON ml.fk_location_id = l.id WHERE
+--  MBRIntersects(GeomFromText(’Polygon((x0 y0,x0 y1,x1 y1,x1 y0,x0 y0))’),l.poi_location);
+
+-- basic info on maps themselves
+CREATE TABLE Maps
+(
+--  ordinary row id
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  link to the respective article
+    fk_article_number int(10) unsigned NOT NULL DEFAULT 0,
+
+--  rank of the map in the article
+    MapRank int unsigned NOT NULL DEFAULT 1,
+--  so that it will be possible to disable the map for an article without any deletion
+    MapUsage tinyint NOT NULL DEFAULT 1,
+
+--  initial map center
+    MapCenterLongitude REAL NOT NULL DEFAULT 0,
+    MapCenterLatitude REAL NOT NULL DEFAULT 0,
+--  initial map resolution
+    MapDisplayResolution smallint NOT NULL DEFAULT 0,
+--  the map to be used for readers
+    MapProvider VARCHAR(255) NOT NULL DEFAULT "",
+--  the map div size
+    MapWidth int NOT NULL DEFAULT 0,
+    MapHeight int NOT NULL DEFAULT 0,
+--  the map name
+    MapName VARCHAR(255) NOT NULL,
+
+    PRIMARY KEY (id),
+    KEY maps_article_number (fk_article_number),
+    KEY maps_map_name (MapName)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- connecting maps and locations
+-- NOTE: copy-on-write is done for positions
+CREATE TABLE MapLocations
+(
+--  ordinary row id
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  link to the respective map
+    fk_map_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  link to the respective point
+    fk_location_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  how the poi should be displayed, a style name, e.g. marker name [system default]
+    poi_style VARCHAR(1023) NOT NULL,
+
+--  display sequence rank
+--  NOTE: this is shared between all languages of a single map
+    rank int NOT NULL,
+
+    PRIMARY KEY (id),
+    KEY map_locations_point_id (fk_location_id),
+    KEY map_locations_map_id (fk_map_id),
+    KEY(rank)
+
+-- UNIQUE KEY map_locations_map_location_orig (fk_map_id, fk_location_orig)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE MapLocationLanguages
+(
+--  ordinary row id
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  description belongs to a map-location point and a language
+    fk_maplocation_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  the language for a POI content
+    fk_language_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  link to the content itself
+    fk_content_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  whether the POI should be displayed for readers
+    poi_display tinyint NOT NULL DEFAULT 1,
+
+    PRIMARY KEY (id),
+
+    KEY map_location_languages_maplocation_id (fk_maplocation_id),
+    KEY map_location_languages_language_id (fk_language_id),
+    UNIQUE KEY map_locations_languages_maplocation_id_language (fk_maplocation_id, fk_language_id)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- geographical locations by themselves
+CREATE TABLE Locations (
+--  ordinary row id
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  geometrical location of the points of interests, [via map]
+--  can be POINT, LINE, POLYGON
+    poi_location GEOMETRY NOT NULL,
+--  what is geometry of the poi (point, line, area) [point]
+--  may be to set the type to enum('point', 'line', 'area')
+    poi_type VARCHAR(40) NOT NULL,
+--  spec. of visual representation of the POI, if any
+    poi_type_style int NOT NULL DEFAULT 0,
+
+--  geometry simplification
+    poi_center POINT NOT NULL,
+    poi_radius REAL NOT NULL DEFAULT 0,
+
+--  management related things
+    fk_user_id int(10) unsigned DEFAULT NULL,
+    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+
+    PRIMARY KEY (id),
+    SPATIAL INDEX poi_location (poi_location),
+    KEY poi_type (poi_type),
+    KEY poi_type_style (poi_type_style),
+    SPATIAL INDEX poi_center (poi_center),
+    KEY poi_radius (poi_radius)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- descriptions for locations, with COW
+CREATE TABLE LocationContents (
+--  ordinary row id
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  main label for the POI
+    poi_name VARCHAR(1023) NOT NULL,
+--  link from the POI popup window
+    poi_link VARCHAR(1023) NOT NULL DEFAULT "",
+
+--  textual content
+--  short description to be shown at a side panel
+    poi_perex VARCHAR(15100) NOT NULL DEFAULT "",
+--  to use either the html content (0) or plain text (1)
+--    for now, both of them with label_link/image/video if provided
+    poi_content_type tinyint NOT NULL DEFAULT 0,
+--  the whole html content for POI popup (if set to be used)
+    poi_content TEXT NOT NULL DEFAULT "",
+--  text at the POI popup content
+    poi_text TEXT NOT NULL DEFAULT "",
+
+--  management related things
+--    fk_user_id int(10) unsigned DEFAULT NULL,
+--    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+
+--  specifying the rows by unique way
+    PRIMARY KEY (id),
+
+    KEY poi_name (poi_name)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE Multimedia (
+
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  image / video / ...
+    media_type VARCHAR(255) NOT NULL DEFAULT "",
+
+--  for video: none/youtube/vimeo/flash
+    media_spec VARCHAR(255) NOT NULL DEFAULT "",
+
+--  media at the POI popup content
+    media_src VARCHAR(1023) NOT NULL DEFAULT "",
+--  video display size
+    media_height int NOT NULL DEFAULT 0,
+    media_width int NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (id)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE MapLocationMultimedia (
+
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+--  description belongs to a map-location point and a language
+    fk_maplocation_id int(10) unsigned NOT NULL DEFAULT 0,
+
+--  description belongs to a map-location point and a language
+    fk_multimedia_id int(10) unsigned NOT NULL DEFAULT 0,
+
+    PRIMARY KEY (id),
+
+    KEY mapLocationmultimedia_maplocation_id (fk_maplocation_id),
+    KEY mapLocationmultimedia_multimedia_id (fk_multimedia_id)
+
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+

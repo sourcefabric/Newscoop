@@ -60,27 +60,41 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetYGreen', 
 -- default marker figure to be used
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault', 'gold');
 
+
 -- Pop-up setting
 -- default pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthDefault', '100');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '100');
 -- default pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightDefault', '100');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '100');
 
 -- Pop-up multimedia content
 -- video providers available
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoNames', 'YouTube,Vimeo');
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoNames', 'YouTube,Vimeo');
 -- youtube wideo setting
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableYouTube', '1');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceYouTube', '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>');
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableYouTube', '1');
+
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceYouTube', '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthYouTube', '425');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightYouTube', '350');
 -- vimeo video setting
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableVimeo', '1');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceVimeo', '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>');
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableVimeo', '1');
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceVimeo', '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthVimeo', '400');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightVimeo', '225');
 -- default video provider
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoDefault', 'YouTube');
+-- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoDefault', 'YouTube');
+
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthFlash', '425');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightFlash', '350');
+
+
+
+
+
+
+
+
+
 -- names of audio type available
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAudioNames', 'ogg,mp3,wav');
 -- settings for audio types
