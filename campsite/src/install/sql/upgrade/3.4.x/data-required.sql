@@ -63,8 +63,10 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault',
 
 -- Pop-up setting
 -- default pop-up width
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthDefault', '100');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '100');
 -- default pop-up width
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightDefault', '100');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '100');
 
 -- Pop-up multimedia content
@@ -86,11 +88,6 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightVimeo', '2
 
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthFlash', '425');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightFlash', '350');
-
-
-
-
-
 
 
 
