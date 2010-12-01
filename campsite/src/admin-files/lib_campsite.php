@@ -630,7 +630,7 @@ function camp_get_calendar_include($p_languageCode = null)
 	$calendarURL = "$websiteURL/javascript/jquery";
 	ob_start();
 ?>
-<style type="text/css">@import url(<?php echo $websiteURL; ?>/css/jquery-ui-1.8.6.datepicker.css);</style>
+<style type="text/css">@import url(<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.datepicker.css);</style>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
