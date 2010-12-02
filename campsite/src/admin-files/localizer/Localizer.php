@@ -308,7 +308,7 @@ class Localizer {
             }
 
             // translate annotations
-            if (preg_match_all('/@(' . self::ANNOTATIONS . ') (.*)$/', $line, $m)) {
+            if (preg_match_all('/\* @(' . self::ANNOTATIONS . ') (.*)$/', $line, $m)) {
                 foreach ($m[2] as $match) {
                     $match = trim($match);
                     if (!empty($match)) {
