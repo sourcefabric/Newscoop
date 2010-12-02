@@ -46,9 +46,7 @@
 <?php } ?>
 </tbody>
 </table>
-
 </div>
-
 <?php if ($this->order) { ?>
 <form method="post" action="<?php echo $this->path; ?>/do_order.php" onsubmit="return sendOrder(this, '<?php echo $this->id; ?>');">
     <?php echo SecurityToken::FormParameter(); ?>
@@ -61,7 +59,6 @@
 </form>
 <div style="clear: both"></div>
 <?php } ?>
-
 <?php if (!self::$renderTable) { ?>
 <script type="text/javascript"><!--
 tables = [];
@@ -81,7 +78,6 @@ function sendOrder(form, hash)
 }
 --></script>
 <?php } // render ?>
-
 <script type="text/javascript"><!--
 $(document).ready(function() {
 var table = $('#table-<?php echo $this->id; ?>');
@@ -99,7 +95,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'sPrevious': '<?php putGS('Previous'); ?>',
         },
         'sZeroRecords': '<?php putGS('No records found.'); ?>',
-        'sSearch': '<?php putGS('Search:'); ?>',
+        'sSearch': '<?php putGS('Search'); ?>:',
         'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
         'sEmpty': '<?php putGS('No entries to show'); ?>',
         'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
@@ -123,14 +119,16 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                     case 'S':
                         return '<?php putGS('Submitted'); ?>';
                     case 'M':
-                        return '<?php putGS('Pub. With Issue'); ?>';
+                        return '<?php putGS('Publish with issue'); ?>';
                 }
             },
             'aTargets': [7]
         },
         { // hide columns
             'bVisible': false,
-                'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 14, 16],
+            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 14, 16,
+                <?php echo implode(', ', $this->hidden); ?>
+            ],
         },
         { // not sortable
             'bSortable': false,
@@ -191,7 +189,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             });
         <?php }} ?>
             callServer(['ArticleList', 'doData'], aoData, fnCallback);
-    }, 
+    },
     <?php } ?>
     <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column

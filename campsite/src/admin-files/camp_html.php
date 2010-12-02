@@ -355,10 +355,20 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
  * Send the user to the given page.
  *
  * @param string $p_link
+ * @param bool $p_exit
+ * @param array $p_params
  * @return void
  */
-function camp_html_goto_page($p_link, $p_exit = true)
+function camp_html_goto_page($p_link, $p_exit = true, array $p_params = array())
 {
+    if (!empty($p_params)) {
+        $p_link .= strpos($p_link, '?') === FALSE ? '?' : '&';
+        foreach ($p_params as $key => $val) {
+            $p_link .= "$key=$val&";
+        }
+        $p_link = rtrim($p_link, '&');
+    }
+
 	header("Location: $p_link");
 	if ($p_exit) {
 	    exit;

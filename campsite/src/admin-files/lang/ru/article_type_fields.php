@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Это имя поля уже используется как базовое свойство статьи. Содержимое этого поля не может быть отображено в шаблоне.");
 regGS("The property '$1' is already in use.", "Свойство '$1' уже используется.");
 regGS("Precision", "Точность");
@@ -10,11 +11,9 @@ regGS("show", "Показать");
 regGS("hide", "Спрятать");
 regGS("You must enter a name for the field.", "Вы должны ввести название поля.");
 regGS("You must choose a language for the field.", "Вы должны выбрать язык для поля.");
-regGS("You may only use letters or the underscore (_) character.", "Вы можете использовать только буквы и символ подчеркивания (_).");
 regGS("You do not have the right to rename article type fields.", "Вы не имеете прав доступа для переименования поля типа статей.");
 regGS("You do not have the right to reassign a field type.", "Вы не имеете прав доступа для переназначения типа поля.");
 regGS("You do not have the right to add article types.", "Вы не имеете прав доступа для добавления типов статей.");
-regGS("You can only use letters or the underscore (_).", "Вы можете использовать только буквы и символ подчеркивания (_).");
 regGS("Translating field", "Поле перевода");
 regGS("The translation could not be added.", "Перевод не может быть добавлен.");
 regGS("The field $1 does not exist.", "Поле $1 не существует.");

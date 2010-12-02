@@ -13,11 +13,25 @@ require_once WWW_DIR . '/classes/Extension/WidgetRendererDecorator.php';
 
 class WidgetManagerDecoratorTest extends PHPUnit_Framework_TestCase
 {
+    protected $id;
     protected $object;
+    protected $default;
+    protected $extension;
 
     public function setUp()
     {
-        $this->object = $this->getInstance('TestWidget');
+        $this->id = 'w' . substr(sha1(uniqid()), -12);
+        $this->object = new WidgetManagerDecorator(array(
+            'id' => $this->id,
+            'class' => 'TestWidget',
+            'path' => dirname(__FILE__) . '/AllTests.php',
+        ));
+
+        $this->default = new WidgetManagerDecorator(array(
+            'id' => 'wdefault',
+            'class' => 'DefaultWidget',
+            'path' => __FILE__,
+        ));
     }
 
     public function testGetAuthor()
@@ -25,17 +39,15 @@ class WidgetManagerDecoratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('sourcefabric', $this->object->getAuthor());
     }
 
-    public function testGetClass()
+    public function testGetExtension()
     {
-        $this->assertEquals('TestWidget', $this->object->getClass());
+        $this->assertTrue(is_a($this->object->getExtension(), 'Extension_Extension'));
     }
 
     public function testGetDescription()
     {
         $this->assertEquals('toc', $this->object->getDescription());
-
-        $default = $this->getInstance('DefaultWidget');
-        $this->assertEquals('tic', $default->getDescription());
+        $this->assertEquals('tic', $this->default->getDescription());
     }
 
     public function testGetHomepage()
@@ -46,33 +58,18 @@ class WidgetManagerDecoratorTest extends PHPUnit_Framework_TestCase
 
     public function testGetId()
     {
-        $this->assertEquals(0, $this->object->getId());
-        //$this->assertGreaterThan(0, $this->object->getId(TRUE));
-    }
-
-    public function testGetPath()
-    {
-        $this->assertEquals(realpath(dirname(__FILE__) . '/AllTests.php'),
-            $this->object->getPath());
+        $this->assertEquals($this->id, $this->object->getId());
     }
 
     public function testGetTitle()
     {
         $this->assertEquals('Test', $this->object->getTitle());
-
-        $default = $this->getInstance('DefaultWidget');
-        $this->assertEquals('', $default->getTitle());
+        $this->assertEquals('', $this->default->getTitle());
     }
 
     public function testGetVersion()
     {
         $this->assertEquals('1.0', $this->object->getVersion());
-    }
-
-    public function getInstance($class)
-    {
-        $widget = new $class;
-        return new WidgetRendererDecorator($widget);
     }
 }
 

@@ -38,6 +38,9 @@ var dialog=  $("#dialogBox").dialog({
     });
 
 function makeRequest(a){
+    // check for connection
+    callServer('ping', [], function(json) {
+
     $("#dialogBox").dialog("open");
 
     var query_string = ''; 
@@ -115,6 +118,8 @@ function makeRequest(a){
     } else {
         buttonDisable(a);
     }
+
+    }); // /ping
 }
 $(function() {
     var authorsList = [

@@ -20,7 +20,11 @@ class WidgetRendererDecoratorTest extends PHPUnit_Framework_TestCase
     {
         $this->content = sha1(uniqid());
         $widget = new TestWidget;
-        $this->object = new WidgetRendererDecorator($widget);
+        $this->object = new WidgetRendererDecorator(array(
+            'id' => 'w12345',
+            'class' => 'TestWidget',
+            'path' => dirname(__FILE__) . '/AllTests.php',
+        ));
     }
 
     public function testRender()
@@ -39,8 +43,7 @@ class WidgetRendererDecoratorTest extends PHPUnit_Framework_TestCase
     {
         ob_start();
         $this->object->renderMeta();
-        $meta = ob_get_contents();
-        ob_end_clean();
+        $meta = ob_get_clean();
 
         // info form Extension.ini
         $this->assertRegExp('/sourcefabric/', $meta);

@@ -150,33 +150,72 @@ $('input.date').datepicker({
 
 // filters managment
 $('fieldset.filters .extra').each(function() {
-    $('dl', $(this)).hide();
+    var extra = $(this);
+    $('dl', extra).hide();
     $('<select class="filters"></select>')
-        .appendTo($(this))
-        .change(function() {
-        var value = $(this).val();
-        $('option', $(this)).detach();
-        $(this).append('<option value=""><?php putGS('Filter by...'); ?></option>');
-        $('dl', $(this).parent()).each(function() {
-            var label = $('label', $(this)).text();
-            if (label == value) {
-                $(this).show();
-                $(this).insertBefore($('select.filters', $(this).parent()));
-                if ($('a', $(this)).length == 0) {
-                    $('<a class="detach">X</a>').appendTo($('dd', $(this)))
-                        .click(function() {
-                            $(this).parents('dl').hide();
-                            $('input, select', $(this).parent()).val('').change();
-                            $('select.filters').change();
-                        });
+        .appendTo(extra)
+        .each(function() { // init options
+            var select = $(this);
+            $('<option value=""><?php putGS('Filter by...'); ?></option>')
+                .appendTo(select);
+            $('dl dt label', extra).each(function() {
+                var label = $(this).text();
+                $('<option value="'+label+'">'+label+'</option>')
+                    .appendTo(select);
+            });
+        }).change(function() {
+            var select = $(this);
+            var value = $(this).val();
+            $(this).val('');
+            $('dl', $(this).parent()).each(function() {
+                var label = $('label', $(this)).text();
+                var option = $('option[value="' + label + '"]', select);
+                if (label == value) {
+                    $(this).show();
+                    $(this).insertBefore($('select.filters', $(this).parent()));
+                    if ($('a', $(this)).length == 0) {
+                        $('<a class="detach">X</a>').appendTo($('dd', $(this)))
+                            .click(function() {
+                                $(this).parents('dl').hide();
+                                $('input, select', $(this).parent()).val('').change();
+                                select.change();
+                                option.show();
+                            });
+                    }
+                    option.hide();
                 }
-            } else if ($(this).css('display') == 'none') {
-                $(this).siblings('select.filters').append('<option value="'+label+'">'+label+'</option>');
-            }
-        });
-    }).change();
+            });
+    }); // change
 });
 
+$('fieldset.filters').each(function() {
+    var fieldset = $(this);
+    var smartlist = fieldset.closest('.smartlist');
+    var smartlistId = smartlist.attr('id').split('-')[1];
+
+    // reset all button
+    var resetMsg = '<?php putGS('Reset all filters'); ?>';
+    $('<a href="#" class="reset" title="'+resetMsg+'">'+resetMsg+'</a>')
+        .appendTo(fieldset)
+        .click(function() {
+            // reset extra filters
+            $('.extra dl', fieldset).each(function() {
+                $(this).hide();
+                $('select, input', $(this)).val('');
+            });
+            $('select.filters', fieldset).val('');
+            $('select.filters option', fieldset).show();
+
+            // reset main filters
+            $('> select', fieldset).val('0').change();
+
+            // redraw table
+            filters[smartlistId] = {};
+            tables[smartlistId].fnDraw(true);
+            return false;
+        });
 });
+
+}); // document.ready
 </script>
 <?php } ?>

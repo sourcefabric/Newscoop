@@ -36,9 +36,9 @@ if (!isset($connectedToOnlineServer)
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="Expires" content="now" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 	<title><?php putGS("Comment ban settings"); ?></title>
 </head>
 <body>
@@ -48,20 +48,20 @@ if (isset($connectedToOnlineServer)
     && $connectedToOnlineServer == false) {
 ?>
 <center>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-        <TD >
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td>
 <?php
 	camp_html_display_msgs("0.25em", "0.25em");
 ?>
-	</TD>
-</TR>
-<TR>
-	<TD style="padding-left: 15px;">
-		<INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
-	</TD>
-</TR>
-</TABLE>
+  </td>
+</tr>
+<tr>
+  <td style="padding-left: 15px;">
+    <input type="button" name="close" value="<?php putGS('Close'); ?>" class="button" onclick="window.close();" />
+  </td>
+</tr>
+</table>
 </center>
 <?php
     exit;
@@ -70,53 +70,55 @@ if (isset($connectedToOnlineServer)
 <center>
 <form action="/<?php p($ADMIN); ?>/comments/do_ban.php" method="GET">
 <?php echo SecurityToken::FormParameter(); ?>
-<INPUT type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-	<TD >
-		<table cellpadding="0" cellspacing="0" width="100%">
-		<tr><td style="border-bottom: 1px solid black; padding-bottom: 3px;" align="left">
-			<B><?php putGS("Comment ban settings"); ?> </B>
-		</td></tr>
-		</table>
-	</TD>
-</TR>
-<TR>
-	<TD align="center">
-		<table border="0" cellpadding="1" cellspacing="1">
-		<tr>
-			<td align="center"><b><?php putGS("Ban?"); ?></b></td>
-			<td>&nbsp;</td>
-		</tr>
-		<tr>
-		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_name" class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_NAMES])) { ?>checked<?php } ?> align="middle"></td>
-		    <td><?php putGS("Name"); ?>: <?php p($comment->getAuthor()); ?></td>
-		</tr>
-		<tr>
-		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_email"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_EMAILS])) { ?>checked<?php } if ($comment->getEmail() == '') { ?>disabled<?php } ?>></td>
-		    <td><?php putGS("Email:"); ?> <?php p($comment->getEmail()); ?></td>
-		</tr>
-		<tr>
-		    <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_ip"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_IPS])) { ?>checked<?php } ?>></td>
-		    <td><?php putGS("IP address:"); ?> <?php p($comment->getIpAddress()); ?></td>
-		</tr>
-		</table>
-	</TD>
-</TR>
-<TR>
-	<TD align="center" style="padding-top: 5px;">
-		<table>
-		<tr>
-			<td>
-			<INPUT TYPE="submit" NAME="save" VALUE="<?php putGS('Save'); ?>" class="button">
-			</TD>
-			<TD style="padding-left: 15px;">
-				<INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
-			</TD>
-		</tr>
-		</table>
-	</td>
-</TR>
-</TABLE>
+<input type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>" />
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td>
+    <table cellpadding="0" cellspacing="0" width="100%">
+    <tr>
+      <td style="border-bottom: 1px solid black; padding-bottom: 3px;" align="left">
+        <b><?php putGS("Comment ban settings"); ?> </b>
+      </td>
+    </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td align="center">
+    <table border="0" cellpadding="1" cellspacing="1">
+    <tr>
+      <td align="center"><b><?php putGS("Ban?"); ?></b></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_name" class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_NAMES])) { ?>checked<?php } ?> align="middle"></td>
+      <td><?php putGS("Name"); ?>: <?php p($comment->getAuthor()); ?></td>
+    </tr>
+    <tr>
+      <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_email"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_EMAILS])) { ?>checked<?php } if ($comment->getEmail() == '') { ?>disabled<?php } ?>></td>
+      <td><?php putGS("Email:"); ?> <?php p($comment->getEmail()); ?></td>
+    </tr>
+    <tr>
+      <td align="center" style="padding-left: 10px;"><input type="checkbox" name="f_ban_ip"  class="input_checkbox" <?php if (isset($bans[PHORUM_BAD_IPS])) { ?>checked<?php } ?>></td>
+      <td><?php putGS("IP address:"); ?> <?php p($comment->getIpAddress()); ?></td>
+    </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td align="center" style="padding-top: 5px;">
+    <table>
+    <tr>
+      <td>
+        <input type="submit" name="save" value="<?php putGS('Save'); ?>" class="button" />
+      </td>
+      <td style="padding-left: 15px;">
+        <input type="button" name="close" value="<?php putGS('Close'); ?>" class="button" onclick="window.close();" />
+      </td>
+    </tr>
+    </table>
+  </td>
+</tr>
+</table>
 </form>
 </center>

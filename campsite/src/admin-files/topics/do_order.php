@@ -21,11 +21,8 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-// explode languages
-$languages = explode('_', $f_languages);
-
 // set position
-Topic::UpdateOrder($f_position, $languages);
+Topic::UpdateOrder($f_position);
 
 camp_html_add_msg(getGS("Topics order saved."), "ok");
 camp_html_goto_page("/$ADMIN/topics/");

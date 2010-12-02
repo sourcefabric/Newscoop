@@ -1,4 +1,4 @@
-<?PHP
+<?php
 camp_load_translation_strings("article_images");
 camp_load_translation_strings('api');
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
@@ -26,10 +26,10 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Attach Image To Article"); ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <title><?php putGS("Attach Image To Article"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>

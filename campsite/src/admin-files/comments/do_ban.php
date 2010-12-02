@@ -80,10 +80,10 @@ if (!isset($connectedToOnlineServer)
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Ban user from comments"); ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <title><?php putGS("Ban user from comments"); ?></title>
 </head>
 <body>
 <?php
@@ -91,46 +91,46 @@ if (isset($connectedToOnlineServer)
         && $connectedToOnlineServer == false) {
 ?>
 <center>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-        <TD >
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td>
 <?php
-        camp_html_display_msgs("0.25em", "0.25em");
+  camp_html_display_msgs("0.25em", "0.25em");
 ?>
-        </TD>
-</TR>
-<TR>
-        <TD style="padding-left: 15px;">
-                <INPUT TYPE="button" NAME="close" VALUE="<?php putGS('Close'); ?>" class="button" onclick="window.close();">
-        </TD>
-</TR>
-</TABLE>
+  </td>
+</tr>
+<tr>
+  <td style="padding-left: 15px;">
+    <input type="button" name="close" value="<?php putGS('Close'); ?>" class="button" onclick="window.close();" />
+  </td>
+</tr>
+</table>
 </center>
-</BODY>
-</HTML>
+</body>
+</html>
 <?php
 }
 ?>
 <script type="text/javascript">
 window.opener.location.reload();
 </script>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-	<TD align="center">
-		<b>
-		<?PHP
-		if ($banned) {
-			putGS("The user has been banned.  Any future attempts by the user to post comments will not be allowed.");
-		} else {
-			putGS("The user is now allowed to post comments.");
-		}
-		?>
-		</b>
-	</TD>
-</TR>
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
-	<td align="center">
-		<INPUT type="button" name="close" value="<?php putGS("Close"); ?>" class="button" onclick="window.close();">
-	</td>
+  <td align="center">
+    <b>
+    <?php
+    if ($banned) {
+        putGS("The user has been banned.  Any future attempts by the user to post comments will not be allowed.");
+    } else {
+        putGS("The user is now allowed to post comments.");
+    }
+    ?>
+    </b>
+  </td>
+</tr>
+<tr>
+  <td align="center">
+    <input type="button" name="close" value="<?php putGS("Close"); ?>" class="button" onclick="window.close();" />
+  </td>
 </tr>
 </table>

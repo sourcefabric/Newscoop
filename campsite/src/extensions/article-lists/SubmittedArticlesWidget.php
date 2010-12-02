@@ -8,21 +8,22 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/ArticlesWidget.php';
 
-class SubmittedArticlesWidget extends Widget
+/**
+ * @title Submitted Articles
+ */
+class SubmittedArticlesWidget extends ArticlesWidget
 {
-    public function getTitle()
+    public function beforeRender()
     {
-        return getGS('Submitted Articles');
+        $this->items = Article::GetSubmittedArticles();
     }
 
     public function render()
     {
         if ($this->getUser()->hasPermission('ChangeArticle') || $this->getUser()->hasPermission('Publish')) {
-            $articlelist = new ArticleList();
-            $articlelist->setItems(Article::GetSubmittedArticles());
-            $articlelist->render();
+            parent::render();
         } else {
             echo '<p>', getGS('Access Denied'), '</p>';
         }

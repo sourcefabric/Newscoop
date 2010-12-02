@@ -1,6 +1,5 @@
 var terms = [];
 $(document).ready(function() {
-
     // topics search autocomplete
     $('input[name=search].topics').each(function() {
         var input = $(this);
@@ -35,8 +34,17 @@ $(document).ready(function() {
         $('ul.tree *').removeClass('match');
         $('ul.tree li, ul.tree ul').show();
         $('ul.tree.sortable').sortable('option', 'disabled', true);
+        $('span.open', $('ul.tree')).each(function() {
+            $(this).removeClass('opened');
+            if ($('ul', $(this).closest('li')).size()) {
+                $(this).addClass('closed');
+            }
+        });
+        $('> a', 'ul.tree li').text('+');
+
         if ($(this).val() == '') {
             $('ul.tree.sortable').sortable('option', 'disabled', false);
+            $('ul.tree ul').hide();
             return;
         }
 
@@ -56,7 +64,7 @@ $(document).ready(function() {
                 if ($(this).text().search(re) >= 0) {
                     li.addClass('match');
                     $(this).addClass('match');
-                    $(this).closest(elemParent).addClass('match');
+                    $(this).parentsUntil('ul.tree').addClass('match');
                 }
             });
         });
@@ -64,6 +72,41 @@ $(document).ready(function() {
         // hide non matching
         $('ul.tree > li').not('.match').hide();
         $('ul.tree li.match > ul').show();
+        $('span.open', $('ul.tree li.match')).each(function() {
+            $(this).removeClass('closed');
+            if ($('ul', $(this).closest('li')).size()) {
+                $(this).addClass('opened');
+            }
+        });
+        $('> a', 'ul.tree li.match').text('-');
+    });
+
+    // set date pickers
+    $('input.date, input.datetime').each(function() {
+        // common settings
+        var settings = {
+            dateFormat: 'yy-mm-dd',
+            timeFormat: 'hh:mm:ss',
+            showSeconds: true,
+            showOn: 'both',
+            buttonImage: g_admin_img + '/calendar.gif',
+            buttonImageOnly: true,
+        };
+
+        // update settings by classes
+        var classes = $(this).attr('class').split(' ');
+        for (var i = classes.length; i > 0; i--) {
+            var class_ary = classes[i-1].split('_');
+            if (class_ary.length == 2) {
+                settings[class_ary[0]] = class_ary[1];
+            }
+        }
+
+        if ($(this).hasClass('date')) {
+            $(this).datepicker(settings);
+        } else {
+            $(this).datetimepicker(settings);
+        }
     });
 });
 
@@ -84,6 +127,7 @@ function flashMessage(message, type, fixed)
 
     var flash = $('<div class="flash ui-state-' + messageClass + '"><p>' + message + '</p></div>')
         .appendTo('body')
+        .css('z-index', '10000')
         .click(function() {
             $(this).hide();
         });
@@ -95,6 +139,8 @@ function flashMessage(message, type, fixed)
     return flash;
 }
 
+var queue = [];
+
 /**
  * Call server function
  * @param {array} p_callback
@@ -104,6 +150,10 @@ function flashMessage(message, type, fixed)
  */
 function callServer(p_callback, p_args, p_handle)
 {
+    if (!p_args) {
+        p_args = [];
+    }
+
     var flash = flashMessage('Processing...', null, true);
     $.ajax({
         'url': g_admin_url + '/json.php',
@@ -116,8 +166,9 @@ function callServer(p_callback, p_args, p_handle)
         'dataType': 'json',
         'success': function(json) {
             flash.fadeOut();
-            if (json.error) {
-                flashMessage(json.message, 'error');
+
+            if (json.error_code) {
+                flashMessage(json.error_message, 'error', true);
                 return;
             }
 
@@ -126,29 +177,38 @@ function callServer(p_callback, p_args, p_handle)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
-            var login = window.open(g_admin_url + '/login.php', 'login', 'height=400,width=500');
+            flash.hide();
+            var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
             login.focus();
-            request = { // store request
+            popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
+
+            // store request
+            queue.push({
                 callback: p_callback,
                 args: p_args,
                 handle: p_handle,
-            };
-            flash.hide();
-            popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
+            });
         },
     });
 }
 
 /**
- * Set security token and call stored request
+ * Set security token
  * @param string security_token
  * @return void
  */
 function setSecurityToken(security_token)
 {
     g_security_token = security_token;
-    callServer(request.callback, request.args, request.handle);
+    $('input[name=security_token]').val(security_token);
+
     if (popupFlash) {
         popupFlash.hide();
+    }
+
+    // restore request
+    for (var i = 0; i < queue.length; i++) {
+        var request = queue[i];
+        callServer(request.callback, request.args, request.handle);
     }
 }

@@ -87,7 +87,7 @@ echo $breadcrumbs;
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_date" VALUE="<?php echo htmlspecialchars($imageObj->getDate()); ?>" SIZE="11" MAXLENGTH="10" class="input_text"> <?php putGS('YYYY-MM-DD'); ?>
+	<input type="text" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
 	</TD>
 </TR>
 <?php

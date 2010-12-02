@@ -49,6 +49,9 @@ class ArticleList
     /** @var bool */
     private $order = FALSE;
 
+    /** @var array */
+    private $hidden = array();
+
     /** @var bool */
     private static $renderTable = FALSE;
 
@@ -197,6 +200,17 @@ class ArticleList
     public function setOrder($order = FALSE)
     {
         $this->order = (bool) $order;
+        return $this;
+    }
+
+    /**
+     * Set column to be hidden.
+     * @param int $id
+     * @return ArticleList
+     */
+    public function setHidden($id)
+    {
+        $this->hidden[] = (int) $id;
         return $this;
     }
 

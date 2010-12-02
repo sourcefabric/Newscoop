@@ -8,6 +8,11 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/styles.css" />
 
+<!-- It looks that OpenLayers library may have problems when loaded slowly, thus trying to preload it herein -->
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
+
 
 <?php
 // If the article is locked.
@@ -57,13 +62,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 <?php
    return;
 }
-
-if ($f_edit_mode == "edit") { ?>
-<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
-<?php } // if edit mode ?>
+?>
 
 <?php if ($f_publication_id > 0) { ?>
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
@@ -476,28 +475,19 @@ if ($f_edit_mode == "edit") { ?>
                         <td align="right" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></td>
                         <td align="left" valign="top" nowrap>
                             <?php if ($f_edit_mode == "edit") { ?>
-                            <input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date" />
                             <table cellpadding="0" cellspacing="2"><tr>
-                                <td><span id="show_c_date"><?php p($articleObj->getCreationDate()); ?></span></td>
-                                <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_c"
-                                     style="cursor: pointer; border: 1px solid red;"
-                                      title="Date selector"
-                                      onmouseover="this.style.background='red';"
-                                      onmouseout="this.style.background=''" /></td>
+                                <td><span id="show_c_date"></span></td>
+                                <td valign="top" align="left">
+                                    <input type="hidden" name="f_creation_date" value="<?php p($articleObj->getCreationDate()); ?>" id="f_creation_date" class="datetime" />
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            $('input[name=f_creation_date]').change(function() {
+                                                $('#show_c_date').text($(this).val());
+                                            }).change();
+                                        });
+                                    </script>
+                                </td>
                             </tr></table>
-                            <script type="text/javascript">
-                                Calendar.setup({
-                                    inputField:"f_creation_date",
-                                    ifFormat:"%Y-%m-%d %H:%M:00",
-                                    displayArea:"show_c_date",
-                                    daFormat:"%Y-%m-%d %H:%M:00",
-                                    showsTime:true,
-                                    showOthers:true,
-                                    weekNumbers:false,
-                                    range:new Array(1990, 2020),
-                                    button:"f_trigger_c"
-                                });
-                            </script>
                             <?php } else { ?>
                             <?php print htmlspecialchars($articleObj->getCreationDate()); ?>
                             <?php } ?>
@@ -509,28 +499,19 @@ if ($f_edit_mode == "edit") { ?>
                         <td align="right" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></td>
                         <td align="left" valign="top">
                             <?php if ($f_edit_mode == "edit" && $articleObj->isPublished()) { ?>
-                            <input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date" />
                             <table cellpadding="0" cellspacing="2"><tr>
-                                <td><span id="show_p_date"><?php p($articleObj->getPublishDate()); ?></span></td>
-                                <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_p"
-                                     style="cursor: pointer; border: 1px solid red;"
-                                      title="Date selector"
-                                      onmouseover="this.style.background='red';"
-                                      onmouseout="this.style.background=''" /></td>
+                                <td><span id="show_p_date"></span></td>
+                                <td valign="top" align="left">
+                                    <input type="hidden" name="f_publish_date" value="<?php p($articleObj->getPublishDate()); ?>" id="f_publish_date" class="datetime" />
+                                    <script type="text/javascript">
+                                        $(document).ready(function() {
+                                            $('input[name=f_publish_date]').change(function() {
+                                                $('#show_p_date').text($(this).val());
+                                            }).change();
+                                        });
+                                    </script>
+                                </td>
                             </tr></table>
-                            <script type="text/javascript">
-                                Calendar.setup({
-                                    inputField:"f_publish_date",
-                                    ifFormat:"%Y-%m-%d %H:%M:00",
-                                    displayArea:"show_p_date",
-                                    daFormat:"%Y-%m-%d %H:%M:00",
-                                    showsTime:true,
-                                    showOthers:true,
-                                    weekNumbers:false,
-                                    range:new Array(1990, 2020),
-                                    button:"f_trigger_p"
-                                });
-                            </script>
                             <?php } elseif ($articleObj->isPublished()) { ?>
                             <?php print htmlspecialchars($articleObj->getPublishDate()); ?>
                             <?php } else { ?>
@@ -931,6 +912,11 @@ window.location.reload();
     <!-- BEGIN right side of article screen -->
     <td valign="top" style="border-left: 1px solid #8baed1;" width="200px">
         <table width="100%">
+
+        <tr><td>
+             <?php require('edit_locations_box.php'); ?>
+        </td></tr>
+
         <?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
         <tr><td>
             <!-- BEGIN Scheduled Publishing table -->

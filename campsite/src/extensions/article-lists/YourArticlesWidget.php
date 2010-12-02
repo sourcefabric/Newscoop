@@ -8,19 +8,15 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/ArticlesWidget.php';
 
-class YourArticlesWidget extends Widget
+/**
+ * @title Your Articles
+ */
+class YourArticlesWidget extends ArticlesWidget
 {
-    public function getTitle()
+    public function beforeRender()
     {
-        return getGS('Your Articles');
-    }
-
-    public function render()
-    {
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetArticlesByUser($this->getUser()->getUserId()));
-        $articlelist->render();
+        $this->items = Article::GetArticlesByUser($this->getUser()->getUserId());
     }
 }

@@ -1,14 +1,14 @@
 <?php 
+regGS("en", "en");
+regGS("Your work has been saved.", "Your work has been saved.");
 regGS("Widgets", "Widgets");
 regGS("Widget info", "Widget info");
 regGS("Widget added to dashboard.", "Widget added to dashboard.");
 regGS("Remove widget", "Remove widget");
-regGS("Invalid security token.", "Invalid security token.");
+regGS("Please login to continue.", "Please login to continue.");
 regGS("Go to home", "Go to home");
-regGS("Error:", "Error:");
 regGS("Add to dashboard", "Add to dashboard");
 regGS("Add more widgets", "Add more widgets");
-regGS("Access denied.", "Access denied.");
 regGS("login", "login");
 regGS("Your password has been reset <br/> you may now proceed to", "Your password has been reset <br/> you may now proceed to");
 regGS("This link is not valid.", "This link is not valid.");

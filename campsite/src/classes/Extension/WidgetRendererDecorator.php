@@ -14,13 +14,8 @@ require_once dirname(__FILE__) . '/WidgetManagerDecorator.php';
 /**
  * Widget renderer implementation
  */
-class WidgetRendererDecorator extends WidgetManagerDecorator
+class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
 {
-    /** @var array */
-    private static $metakeys = array(
-        'Author', 'Version', 'Homepage',
-    );
-
     /**
      * Render widget
      * @param string $view
@@ -29,9 +24,16 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
      */
     public function render($view = Widget::DEFAULT_VIEW, $ajax = FALSE)
     {
+        $this->getWidget(); // init
+
         // set view if possible
         if (method_exists($this->widget, 'setView')) {
             $this->widget->setView($view);
+        }
+
+        // run beforeRender method
+        if (method_exists($this->widget, 'beforeRender')) {
+            $this->widget->beforeRender();
         }
 
         // get content
@@ -45,14 +47,17 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         }
 
         // render whole widget
-        echo '<li id="widget_', $this->getId(), '" class="widget">';
-        if ($this->getTitle() !== NULL) {
-            echo '<div class="header"><h3>', $this->getTitle(), '</h3></div>';
+        echo '<li id="', $this->getId(), '" class="widget">';
+        if ($this->widget->getTitle() !== NULL) {
+            echo '<div class="header"><h3>', getGS($this->widget->getTitle()), '</h3></div>';
         }
         echo '<div class="content"><div class="scroll">', "\n";
         echo $content;
         echo '</div></div>', "\n";
+        echo '<div class="extra">';
         $this->renderMeta();
+        $this->renderSettings();
+        echo '</div>';
         echo '</li>', "\n";
     }
 
@@ -62,14 +67,14 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
      */
     public function renderMeta()
     {
-        ob_start();
-        foreach (self::$metakeys as $key) {
-            $method = 'get' . $key;
-            if (!method_exists($this, $method)) {
-                continue;
-            }
+        static $meta = array(
+            'Author', 'Version', 'Homepage', 'License',
+        );
 
-            $value = $this->$method();
+        ob_start();
+        foreach ($meta as $key) {
+            $method = 'get' . $key;
+            $value = $this->getWidget()->$method();
             if (empty($value)) {
                 continue;
             }
@@ -91,5 +96,58 @@ class WidgetRendererDecorator extends WidgetManagerDecorator
         if (!empty($content)) {
             echo "<dl class=\"meta\">\n$content\n</dl>";
         }
+    }
+
+    /**
+     * Render widget settings form
+     * @return void
+     */
+    public function renderSettings()
+    {
+        ob_start();
+        $reflection = new ReflectionObject($this->widget);
+        $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
+        foreach ($reflection->getProperties($filter) as $property) {
+            $doc = $property->getDocComment();
+            if (strpos($doc, '@setting') === FALSE) {
+                continue;
+            }
+
+            // get label
+            $matches = array();
+            if (preg_match('/@label ([^*]+)/', $doc, $matches)) {
+                $label = trim($matches[1]);
+            } else {
+                $label = $property->getName();
+            }
+
+            // generate id
+            $id = $reflection->getName() . '-' . $property->getName();
+            $id = strtolower($id);
+
+            // value getter
+            $property->setAccessible(TRUE);
+            $method = 'get' . ucfirst($property->getName());
+
+            echo '<dl><dt>';
+            echo '<label for="', $id, '">', getGS($label), '</label>';
+            echo '</dt><dd>';
+            printf('<input id="%s" type="text" name="%s" value="%s" maxlength="255" />',
+                $id,
+                $property->getName(),
+                $this->widget->$method());
+            echo '</dd></dl>', "\n";
+        }
+        $settings = ob_get_clean();
+
+        if (empty($settings)) {
+            return;
+        }
+
+        echo '<form class="settings" action="" method="">';
+        echo '<fieldset>', $settings;
+        echo '<input type="submit" value="', getGS('Save'), '" />';
+        echo '</fieldset>';
+        echo '</form>';
     }
 }

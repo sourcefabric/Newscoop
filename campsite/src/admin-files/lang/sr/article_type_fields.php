@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Име поља је већ у употреби као основно својство текста. Садржај поља неће бити приказан у шаблонима.");
 regGS("The property '$1' is already in use.", "Својство '$1' је већ у употреби");
 regGS("Precision", "Прецизност");
@@ -10,11 +11,9 @@ regGS("show", "прикажи");
 regGS("hide", "сакри");
 regGS("You must enter a name for the field.", "Морате унети име поља");
 regGS("You must choose a language for the field.", "Морате изабрати језик за поље");
-regGS("You may only use letters or the underscore (_) character.", "Можете користити искључиво слова или доњу црту (_)");
 regGS("You do not have the right to rename article type fields.", "Немате право да преименујете поља типа текста");
 regGS("You do not have the right to reassign a field type.", "Немате право да додељујете типове поља");
 regGS("You do not have the right to add article types.", "Немате право да додајете типове текстова");
-regGS("You can only use letters or the underscore (_).", "Можете користити искључиво слова и доњу црту (_).");
 regGS("Translating field", "Превођење поља");
 regGS("The translation could not be added.", "Превод не може бити додат");
 regGS("The field $1 does not exist.", "Поље $1 не постоји");

@@ -19,10 +19,10 @@ $.fn.widgets = function (options) {
     {
         contexts.each(function() {
             var context = $(this).attr('id');
-            callServer(['WidgetManager', 'SetContextWidgets'], [
+            callServer(['WidgetContext', 'setWidgets'], [
                 context,
                 $(this).sortable('toArray'),
-                ]);
+            ]);
         });
 
     };
@@ -48,55 +48,112 @@ $.fn.widgets = function (options) {
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
                     var columns = $('.column', dashboard);
-                    var full = widget.clone().hide().appendTo(dashboard);
+                    var full = widget.clone()
+                        .hide()
+                        .appendTo(dashboard)
+                        .css('list-style-type', 'none')
+                        .css('width', (dashboard.width() - 14) + 'px')
+                        .css('float', 'left')
+                        .css('margin-top', '13px');
 
                     // hide columns
                     columns.hide();
 
-                    // make widget fullscreen
-                    full.css('width', (dashboard.width()) + 'px').css('float', 'left');
-
                     // close button
                     $('a.close', full).click(function() {
-                        full.hide();
                         columns.show();
+                        full.detach();
                         return false;
                     }).html('Close');
 
                     // hide other buttons
-                    $('a.info, a.minmax', full).detach();
+                    $('a.info, a.minmax, a.settings', full).detach();
 
                     // normal cursor
                     $(settings.controls, full).css('cursor', 'auto');
 
                     // load content
-                    callServer(['WidgetManager', 'GetWidgetContent'], [
+                    full.show();
+                    $('> .content .scroll', full).html('<p>Loading..</p>');
+                    callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         'fullscreen',
+                        true,
                         ], function(json) {
                             $('> .content > .scroll', full).html(json);
                         });
                     
-                    // display
-                    full.show();
-                    
                     return false;
                 });
+
+            $('form.settings', widget).each(function() {
+
+            // add settings button
+            $('<a href="#" class="settings">settings</a>')
+                .prependTo(controls)
+                .click(function() {
+                    $('.settings fieldset', widget).toggle();
+                    $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
+                    return false;
+                });
+
+            // hide form on init
+            $('.settings fieldset').hide();
+
+            // ajax submit
+            $('form.settings', widget).submit(function() {
+                var fieldset = $('fieldset', $(this));
+                var settings = {};
+                $('input:text', $(this)).each(function() {
+                    settings[$(this).attr('name')] = $(this).val();
+                });
+                callServer(['WidgetManagerDecorator', 'update'], [
+                    widget.attr('id'),
+                    {'settings': settings},
+                    ], function(json) {
+                    // reload content
+                    callServer(['WidgetRendererDecorator', 'render'], [
+                        widget.attr('id'),
+                        widget.closest('.context').attr('id'),
+                        true,
+                        ], function(json) {
+                            $('> .content > .scroll', widget).html(json);
+                            fieldset.fadeOut();
+                    });
+
+                    // reload title if needed
+                    if (settings['title']) {
+                        callServer(['WidgetManagerDecorator', 'getSetting'], [
+                            widget.attr('id'),
+                            'title',
+                            ], function(json) {
+                                $('> .header h3', widget).text(json);
+                        });
+                    }
+                });
+                return false;
+            });
+
+            }); // /form.settings
 
             // add info button
             $('<a class="info" href="#" title="' + settings.localizer.info + '">i</a>')
                 .prependTo(controls)
                 .click(function() {
                     meta.toggle();
+                    $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
                     return false;
                 });
-            meta.hide().click(function() { $(this).hide(); });
+            meta.hide().click(function() {
+                $(this).hide();
+                $('.scroll', widget).css('min-height', $('.extra', widget).height() + 'px');
+            });
 
             // add close button
             $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
                 .prependTo(controls)
                 .click(function() {
-                    callServer(['WidgetManager', 'RemoveWidget'], [
+                    callServer(['WidgetManagerDecorator', 'delete'], [
                         widget.attr('id'),
                         ], function(json) {
                             widget.hide(500, function() {
@@ -117,12 +174,12 @@ $.fn.widgets = function (options) {
             handle: '.header',
             forcePlaceholderSize: true,
             opacity: 0.8,
-            containment: 'document',
             stop: function(event, ui) {
                 // reload content
-                callServer(['WidgetManager', 'GetWidgetContent'], [
+                callServer(['WidgetRendererDecorator', 'render'], [
                     ui.item.attr('id'),
                     'default',
+                    true,
                     ], function(json) {
                         $('> .content > .scroll', ui.item).html(json);
                     });

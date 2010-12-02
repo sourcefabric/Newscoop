@@ -48,7 +48,7 @@ function smarty_function_blogcomment_edit($p_params, &$p_smarty)
             $value = isset($_REQUEST['f_blogcomment_content']) ? Input::Get('f_blogcomment_content') : $campsite->blogcomment->content;
             $html .= "<textarea name=\"f_blogcomment_content\" id=\"f_blogcomment_content\" {$p_params['html_code']} />$value</textarea>";
             if ($p_params['wysiwyg']) {
-                $html .='<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
+                $html .='<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/javascript/tinymce/tiny_mce.js"></script>'.
                         '<script language="javascript" type="text/javascript">'.
                         '     tinyMCE.init({'.
                         '     	mode : "exact",'.

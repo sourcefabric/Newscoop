@@ -20,6 +20,9 @@
         <option value="switch_onfrontpage"><?php putGS("Toggle: 'On Front Page'"); ?></option>
         <option value="switch_onsectionpage"><?php putGS("Toggle: 'On Section Page'"); ?></option>
         <option value="switch_comments"><?php putGS("Toggle: 'Comments'"); ?></option>
+        <?php if ($this->publication > 0 && $this->issue > 0 && $this->section > 0) { ?>
+        <option value="publish_schedule"><?php putGS('Publish Schedule'); ?></option>
+        <?php } ?>
         <option value="unlock"><?php putGS('Unlock'); ?></option>
         <option value="delete"><?php putGS('Delete'); ?></option>
         <option value="duplicate"><?php putGS('Duplicate'); ?></option>
@@ -68,7 +71,9 @@ $('.smartlist .actions select').change(function() {
         if (!confirm('<?php putGS('Are you sure you want to delete selected articles?'); ?>')) {
             return;
         }
-    } else if (action == 'move' || action == 'duplicate_interactive') {
+    } else if (action == 'move'
+        || action == 'duplicate_interactive'
+        || action == 'publish_schedule') {
         params = {
             'f_publication_id': <?php echo (int) $this->publication; ?>,
             'f_issue_number': <?php echo (int) $this->issue; ?>,
@@ -82,7 +87,9 @@ $('.smartlist .actions select').change(function() {
         items,
         params,
         ], function(data) {
-            if (action == 'duplicate_interactive' || action == 'move') {
+            if (action == 'duplicate_interactive'
+                || action == 'move'
+                || action == 'publish_schedule') {
                 window.location = data; // redirect
             }
             flashMessage('<?php putGS('Articles updated.'); ?>');

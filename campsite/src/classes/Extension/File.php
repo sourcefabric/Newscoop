@@ -108,8 +108,8 @@ class Extension_File
             }
 
             foreach ($reflector->getInterfaceNames() as $interface) {
-                $this->extensions[] = new Extension_Extension($interface,
-                    $class, $this);
+                $this->extensions[] = new Extension_Extension(
+                    $class, $this->getPath(), $interface);
             }
         }
 

@@ -1,0 +1,146 @@
+/* dashboard */
+.context > .widget, .widget-placeholder {
+    position: relative;
+    margin-top: 13px;
+}
+
+.widget-placeholder {
+    border: 3px dashed #ccc;
+}
+
+.widget > .header {
+    padding: 3px 8px;
+    position: relative;
+}
+
+.widget > .content {
+    padding: 5px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.widget > .content > .scroll {
+    padding-bottom: 10px;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.widget .header h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;
+}
+
+.widget .header a {
+    float: right;
+    margin-left: 1px; 
+    padding: 0 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-decoration: none;
+    border-right: 1px solid #ccc;
+}
+
+.widget .header a:first-child {
+    border-right: none;
+}
+
+#dashboard {
+    height: 1%;
+    overflow: hidden;
+    margin: 0 0 0 14px;
+}
+
+#dashboard > .column {
+    float: left;
+    width: 50%;
+    min-height: 400px;
+    max-width: 800px;
+}
+
+#dashboard > .column > .context {
+    margin: 0 14px 0 0;
+    padding: 0;
+}
+
+/* widget manager */
+#widgets {
+    height: 1%;
+    max-width: 1000px;
+    overflow: hidden;
+    margin: 0 0 0 14px;
+    padding: 0;
+}
+
+#widgets li {
+    float: left;
+    min-width: 300px;
+    margin: 13px 14px 0 0;
+    padding: 0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+#widgets h3 {
+    margin: 0 0 8px;
+    padding: 5px;
+}
+
+#widgets p {
+    margin: 0 5px 8px;
+}
+
+dl.meta {
+    background-color: #f5f5f5;
+    border-top: 1px solid #ccc;
+    margin: 8px 0 0;
+    padding: 5px;
+    font-size: 0.9em;
+}
+
+dl.meta > * {
+    margin: 0;
+}
+
+dl.meta dt {
+    margin-top: 3px;
+}
+
+dl.meta dt:first-child {
+    margin-top: 0;
+}
+
+.widget .extra {
+    position: absolute;
+    top: 19px;
+    right: 0;
+}
+
+.widget .extra fieldset, .widget .extra dl.meta {
+    float: right;
+    clear: right;
+    margin: 0 0 5px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.widget .extra dl.meta {
+    margin-top: 0;
+}
+
+.widget .extra fieldset input[type=text] {
+    width: 21em;
+}
+
+.widget .settings fieldset dt {
+    float: none;
+    width: 99%;
+}
+
+.widget iframe { border: 1px solid #fff; }

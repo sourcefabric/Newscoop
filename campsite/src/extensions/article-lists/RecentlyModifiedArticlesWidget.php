@@ -8,19 +8,18 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/ArticlesWidget.php';
 
-class RecentlyModifiedArticlesWidget extends Widget
+/**
+ * @title Recently Modified Articles
+ */
+class RecentlyModifiedArticlesWidget extends ArticlesWidget
 {
-    public function getTitle()
-    {
-        return getGS('Recently Modified Articles');
-    }
+    /** @setting */
+    protected $count = 20;
 
-    public function render()
+    public function beforeRender()
     {
-        $articlelist = new ArticleList();
-        $articlelist->setItems(Article::GetRecentlyModifiedArticles(20));
-        $articlelist->render();
+        $this->items = Article::GetRecentlyModifiedArticles($this->getCount());
     }
 }

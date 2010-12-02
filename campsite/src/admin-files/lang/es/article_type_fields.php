@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "El campo ya estaba en uso como una propriedad del articulo. El contenido no se mostrará en las plantillas.");
 regGS("The property '$1' is already in use.", "La propiedad '$1' ya estaba en uso.");
 regGS("Precision", "Precisión.");
@@ -10,11 +11,9 @@ regGS("show", "mostrar");
 regGS("hide", "ocultar");
 regGS("You must enter a name for the field.", "Debe ingresar un nombre para este campo.");
 regGS("You must choose a language for the field.", "Debe elegir un idioma para el campo.");
-regGS("You may only use letters or the underscore (_) character.", "Solo puede usar letras o el caracter de guión mayor (_).");
 regGS("You do not have the right to rename article type fields.", "No tiene privilegios para renombrar los campos de tipo de artículo.");
 regGS("You do not have the right to reassign a field type.", "No tiene privilegios para reasignar un tipo de campo.");
 regGS("You do not have the right to add article types.", "No tiene privilegios para añadir tipos de artículo.");
-regGS("You can only use letters or the underscore (_).", "Solo puede usar letras o el caracter de guión mayor (_).");
 regGS("Translating field", "Campo de traducción");
 regGS("The translation could not be added.", "No se pudo agregar la traducción.");
 regGS("The field $1 does not exist.", "El campo $1 no existe.");

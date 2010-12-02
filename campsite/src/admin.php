@@ -58,7 +58,6 @@ $no_menu_scripts = array(
     '/issues/empty.php',
     '/ad_popup.php',
     '/articles/preview.php',
-    '/articles/autopublish.php',
     '/articles/autopublish_do_add.php',
     '/articles/images/popup.php',
     '/articles/images/view.php',
@@ -78,7 +77,8 @@ $no_menu_scripts = array(
     '/users/authors_ajax/detail.php',
     '/users/authors_ajax/grid.php',
     $prefix . 'password_recovery.php',
-    $prefix . 'password_check_token.php'
+    $prefix . 'password_check_token.php',
+    '/articles/locations/popup.php',
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
@@ -117,8 +117,18 @@ if (($extension == '.php') || ($extension == '')) {
                 print("window.close();");
                 print("</script>");
             }
-            // If not logged in, show the login screen.
-            header('Location: /' . $ADMIN . $prefix . 'login.php');
+
+            // If not logged in:
+            // store request
+            $request = serialize(array(
+                'uri' => $_SERVER['REQUEST_URI'],
+                'post' => $_POST,
+            ));
+            $requestId = sha1($request);
+            camp_session_set("request_$requestId", $request);
+
+            // show the login screen
+            header("Location: /{$ADMIN}{$prefix}login.php?request=$requestId");
             exit(0);
         }
     }
@@ -161,6 +171,22 @@ if (($extension == '.php') || ($extension == '')) {
     unset($question_mark);
     unset($no_menu_scripts);
     unset($request_uri);
+
+    // Restore POST request
+    $requestId = Input::Get('request', 'string', '', TRUE);
+    $request = camp_session_get("request_$requestId", '');
+    if (!empty($request)) {
+        $request = unserialize($request);
+
+        // Update security token.
+        $token_field = SecurityToken::SECURITY_TOKEN;
+        $request['post'][$token_field] = SecurityToken::GetToken();
+
+        // Set values.
+        foreach ($request['post'] as $key => $val) {
+            $_POST[$key] = $_REQUEST[$key] = $val;
+        }
+    }
 
     if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
         CampCache::singleton()->clear('user');

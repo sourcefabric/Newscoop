@@ -1,4 +1,4 @@
-<?PHP
+<?php
 camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
@@ -32,73 +32,73 @@ camp_html_display_msgs();
 ?>
 <html>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Attach File to Article"); ?></title>
-	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <title><?php putGS("Attach File to Article"); ?></title>
+  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
 
-<br>
-<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/files/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<br/ >
+<form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/articles/files/do_add.php" enctype="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Attach File to Article"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS("File"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="HIDDEN" NAME="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
-		<INPUT TYPE="FILE" NAME="f_file" SIZE="32" class="input_file" /><BR />
-		<?php putGS("Maximum Upload Size"); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_description" VALUE="" SIZE="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="left" colspan="2" style="padding-left: 15px;"><?php  putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></TD>
-</TR>
-<TR>
-	<TD colspan="2" class="indent"  style="padding-left: 30px;">
-	<INPUT type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br>
-	<INPUT type="radio" name="f_language_specific" value="no" checked><?php putGS("All translations"); ?>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="left" colspan="2"  style="padding-left: 15px;"><?php  putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></TD>
-</TR>
-<TR>
-	<TD colspan="2" style="padding-left: 30px;">
-	<INPUT type="radio" name="f_content_disposition" value=""><?php putGS("Open in the browser"); ?><br>
-	<INPUT type="radio" name="f_content_disposition" value="attachment" checked><?php putGS("Automatically download"); ?>
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-    <INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
-    <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
-<?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>
-	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-	&nbsp;&nbsp;
-<?php } ?>
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-</FORM>
-<P>
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td colspan="2">
+    <b><?php  putGS("Attach File to Article"); ?></b>
+    <hr noshade size="1" color="black" />
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("File"); ?>:</td>
+  <td>
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
+    <input type="file" name="f_file" size="32" class="input_file" /><br />
+    <?php putGS("Maximum Upload Size"); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Description"); ?>:</td>
+  <td>
+    <input type="text" name="f_description" value="" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>" />
+  </td>
+</tr>
+<tr>
+  <td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></td>
+</tr>
+<tr>
+  <td colspan="2" class="indent"  style="padding-left: 30px;">
+    <input type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br />
+    <input type="radio" name="f_language_specific" value="no" checked /><?php putGS("All translations"); ?>
+  </td>
+</tr>
+<tr>
+  <td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></td>
+</tr>
+<tr>
+  <td colspan="2" style="padding-left: 30px;">
+    <input type="radio" name="f_content_disposition" value=""><?php putGS("Open in the browser"); ?><br />
+    <input type="radio" name="f_content_disposition" value="attachment" checked /><?php putGS("Automatically download"); ?>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div align="center">
+      <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+      <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>" />
+      <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+      <input type="hidden" name="BackLink" value="<?php  p($_SERVER['REQUEST_URI']); ?>" />
+      <?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>
+      <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button" />
+      &nbsp;&nbsp;
+      <?php } ?>
+      <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();" />
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+<p>
 </body>
 </html>

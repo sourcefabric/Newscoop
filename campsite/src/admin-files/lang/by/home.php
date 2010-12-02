@@ -1,14 +1,14 @@
 <?php 
+regGS("en", "");
+regGS("Your work has been saved.", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
 regGS("Widget added to dashboard.", "");
 regGS("Remove widget", "");
-regGS("Invalid security token.", "");
+regGS("Please login to continue.", "");
 regGS("Go to home", "");
-regGS("Error:", "");
 regGS("Add to dashboard", "");
 regGS("Add more widgets", "");
-regGS("Access denied.", "");
 regGS("login", "Уваход");
 regGS("Your password has been reset <br/> you may now proceed to", "Ваш пароль быў скінуты <br/> Вы можаце прыступіць да");
 regGS("This link is not valid.", "Гэтая спасылка няправільная!");
