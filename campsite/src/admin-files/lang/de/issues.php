@@ -48,6 +48,11 @@ regGS("Issue Publishing Schedule", "Veröffentlichung der Ausgabe automatisieren
 regGS("Invalid Input: $1", "Ungültige Eingabe: $1");
 regGS("Issue Number", "Ausgabennummer");
 regGS("Go To Sections", "Gehe zu den Rubriken");
+regGS("There was an error reading the language parameter.", "Fehler beim Lesen der Spracheinstellung");
+regGS("There was an error reading the publication parameter.", "Fehler beim Lesen der Publikationseinstellung");
+regGS("There was an error reading the issue parameter.", "Fehler beim Lesen der Ausgabeneinstellung");
+regGS("There was an error scheduling the $1 action on $2", "Fehler bei der Automatisierung von $1 am $2");
+regGS("The action scheduled on $1 could not be deleted.", "Die Aktion vom $1 konnte nicht gelöscht werden");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Template der Startseite");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Template für Artikel");
 regGS("Changing issue status", "Status der Ausgabe wird geändert");
@@ -68,9 +73,4 @@ regGS("The template has been successfully changed.", "Die Template wurde veränd
 regGS("Issue template for publication $1 changed to $2", "Template der Ausgabe in Publikation $1 nach $2 geändert");
 regGS("Issue template for single articles from $1 changed to $2", "Template der Ausgabe für Artikel $1 nach $2 geändert");
 regGS("The template could not be changed.", "Die Template konnte nicht geändert werden");
-regGS("There was an error reading the language parameter.", "Fehler beim Lesen der Spracheinstellung");
-regGS("There was an error reading the publication parameter.", "Fehler beim Lesen der Publikationseinstellung");
-regGS("There was an error reading the issue parameter.", "Fehler beim Lesen der Ausgabeneinstellung");
-regGS("There was an error scheduling the $1 action on $2", "Fehler bei der Automatisierung von $1 am $2");
-regGS("The action scheduled on $1 could not be deleted.", "Die Aktion vom $1 konnte nicht gelöscht werden");
 ?>

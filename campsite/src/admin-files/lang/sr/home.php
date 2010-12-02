@@ -1,4 +1,14 @@
 <?php 
+regGS("Widgets", "");
+regGS("Widget info", "");
+regGS("Widget added to dashboard.", "");
+regGS("Remove widget", "");
+regGS("Invalid security token.", "");
+regGS("Go to home", "");
+regGS("Error:", "");
+regGS("Add to dashboard", "");
+regGS("Add more widgets", "");
+regGS("Access denied.", "");
 regGS("login", "пријава");
 regGS("Your password has been reset <br/> you may now proceed to", "Ваша лозинка је поништена  <br/>можете наставити на");
 regGS("This link is not valid.", "Овај линк је неисправан");
@@ -44,14 +54,7 @@ regGS("There were errors setting the author for articles of type '$1' from the f
 regGS("The author was set successfuly for articles of type '$1' from the field '$2'.", "аутор је успешно постављен за текстове типа '$1'коришћењем поља '$2'");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Текст је закључан од стране $1 ($2) пре $3 минут(а).");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а).");
-regGS("Recently Modified Articles", "скорије мењани текстови");
-regGS("Publish Schedule", "Распоред објављивања");
-regGS("No articles have been modified yet.", "Ниједан текст још ние мењан.");
-regGS("Modification Date", "Датум промене");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Грешка при подешавању аутора \"$1\" за текст број $2 (\"$3\") типа $4.");
-regGS("There are currently no articles in statistics.", "Тренутно нема текстова у статистици.");
-regGS("Publish date", "Датум објављивања");
-regGS("Most Popular Articles", "Најпопуларнији текстови");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Није могуће повезати се на Кемпкастер сервер, молимо Вас проверите поставке за Кемпкастер сервер.");
 regGS("Clear system cache", "Обриши системски кеш");
 regGS("Campsite cache was cleaned up", "Кемпсајт кеш је обрисан");
@@ -81,16 +84,6 @@ regGS("Please enter your password.", "Унесите своју лозинку."
 regGS("Please enter the code shown in the image.", "Унесите код приказан на слици.");
 regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Кемпсајт је унапредио своје сигурносне мере. Да би ваш налог користио ове нове поставке, молимо Вас да унесете своју лозинку поново.");
 regGS("CAPTCHA code is not valid.  Please try again.", "CAPTCHA код није исправан. Покушајте поново.");
-regGS("There are no pending articles.", "Нема текстова на чекању.");
-regGS("Pending Articles", "Текстови на чекању");
-regGS("You haven't written any articles yet.", "Нема ваших текстова.");
-regGS("There are no pending items to be published.", "Нема ставки за објављивање.");
-regGS("There are currently no submitted articles.", "Тренутно нема предатих текстова.");
-regGS("Recently Published Articles", "Последње објављени текстови");
-regGS("Publish articles", "Објави текстове");
-regGS("Publish Date", "Датум објављивања");
-regGS("No articles have been published yet.", "За сада нема објављених текстова.");
-regGS("Event(s)", "Догађај(и)");
 regGS("Signed in: $1", "Пријављено: $1");
 regGS("Help", "Помоћ");
 regGS("About", "О пројекту");
@@ -100,5 +93,4 @@ regGS("Login failed", "Неуспешна пријава");
 regGS("Please make sure that you typed the correct user name and password.", "Проверите да ли сте исправно уписали корисничко име и лозинку");
 regGS("If your problem persists please contact the site administrator $1", "Ако се проблем понови контактирајте администратора сајта $1");
 regGS("Backup/Restore", "Бекап/враћање");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Здраво, \\nза повраћај лозинке, молимо следите овај линк: %s");
 ?>
