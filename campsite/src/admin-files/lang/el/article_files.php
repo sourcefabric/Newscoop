@@ -1,0 +1,36 @@
+<?php 
+regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Ακύρωση επισύνναψης αρχείου #$1 \"$2\" από το άρθρο #$3 \"$4\"");
+regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Το αρχείο #$1 \"$2\" επισυνάφθηκε στο άρθρο #$3 \"$4\"");
+regGS("Unable to add attachment.", "Η προσθήκη συννημένου ήταν αδύνατη.");
+regGS("There was a problem uploading the file.", "Υπήρξε ένα πρόβλημα κατά το ανέβασμα του αρχείου.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος ενός αρχείου είναι χαμηλός σε αντίθεση με το μέγεθος αρχείου που προσπαθείτε να εισάγετε. Ο μέγιστος χρόνος εισαγωγής  καθορίστηκε στο 'php.ini'");
+regGS("The maximum file upload size was not configured in Campsite.", "Το μέγιστο μέγεθος ανεβάσματος αρχείου δεν διαμορφώθηκε στο Campsite.");
+regGS("The file exceeds the allowed max file size.", "Το αρχείο υπερβαίνει το επιτρεπόμενο μέγιστο μέγεθος αρχείου.");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Παρακαλούμε βεβαιωθείτε ότι αναβαθμίσατε την βάση δεδομένων σωστά: τρέξτε $1 σε ενα κελί. ");
+regGS("Maximum Upload Size", "Μέγιστο Μέγεθος Ανεβάσματος");
+regGS("File Size", "Μέγεθος Αρχείου");
+regGS("File Name", "Όνομα Αρχείου");
+regGS("Download", "Download");
+regGS("File '$1' updated.", "Το αρχείο '$1' ανανεώθηκε.");
+regGS("File '$1' deleted.", "Το αρχείο '$1' διαγράφτηκε.");
+regGS("File '$1' added.", "Το αρχείο '$1' προστέθηκε.");
+regGS("Edit article", "Επεξεργασία άρθρου");
+regGS("You do not have the right to delete file attachments.", "Δεν έχετε το δικαίωμα να διαγράψετε συννημένα αρχεία.");
+regGS("You must select a file to upload.", "Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.");
+regGS("You do not have the right to delete files.", "Δεν έχετε το δικαίωμα να διαγράψετε αρχεία.");
+regGS("You do not have the right to change the article.", "Δεν έχετε το δικαίωμα να πραγματοποιήσετε αλλαγές στο άρθρο.");
+regGS("You do not have the right to change files.", "Δεν έχετε το δικαίωμα να αλλάξετε αρχεία.");
+regGS("You do not have the right to add files.", "Δεν έχετε το δικαίωμα να προσθέσετε αρχεία.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Να είναι αυτό το αρχείο διαθέσιμο μόνο για αυτή τη μετάφραση του άρθρου ή για όλες τις μεταφράσεις;");
+regGS("Please enter a description for the file.", "Παρακαλώ εισάγετε μια περιγραφή για το αρχείο.");
+regGS("Open in the browser", "Άνοιγμα στο πρόγραμμα περιήγησης");
+regGS("Only this translation", "Μόνο αυτή η μετάφραση");
+regGS("File information", "Πληροφορίες αρχείου");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Θέλετε αυτό το αρχείο να ανοίξει στο πρόγραμμα περιήγησης του χρήστη ή να πραγματοποιήσει αυτόματα download;");
+regGS("Change file information", "Αλλαγή πληροφοριών αρχείου");
+regGS("Automatically download", "Αυτόματο download");
+regGS("Attachments", "Συννημένα");
+regGS("Attachment does not exist.", "Το συννημένο δεν υπάρχει.");
+regGS("Attach File to Article", "Επισύναψη Αρχείου στο Άρθρο");
+regGS("All translations", "Όλες οι μεταφράσεις");
+?>

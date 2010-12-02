@@ -1,6 +1,6 @@
 <?php 
 regGS("Some plugins have to be updated. Please press the save button.", "Algunos plugins deben ser renovados. Por favor presione guardar.");
-regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Por favor confirme la desinstalación del plugin $1. ¡Toda la información del plugin será borrada!");
+regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "Por favor confirme la desinstalación del plugin $1. ¡Toda la información del plugin será borrada!");
 regGS("You do not have the right to manage plugins.", "No puedes administrar los plugins.");
 regGS("Version", "Versión");
 regGS("Upload Plugin", "Cargar plugin.");

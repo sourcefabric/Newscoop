@@ -258,9 +258,9 @@ regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "Die angegebene URL is ungültig: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Fehler beim Einloggen in Campcaster");
 regGS("Reads", "Gelesen");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
+regGS("Publish with issue", "Mit Ausgabe veröffentlichen");
+regGS("Universal List", "Universelle Liste und Suche");
+regGS("Invalid security token!", "Invalider security token!");
 regGS("User name", "Benutzername");
 regGS("User Types", "Benutzertypen");
 regGS("Subscription Default Time", "Standard Abonement Laufzeit");
@@ -275,4 +275,5 @@ regGS("There are $1 issue(s) left.", "Es sind noch $1 Ausgaben vorhanden");
 regGS("There are $1 keyword(s) left.", "Es sind noch $1 Stichworte vorhanden");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Name (bearbeiten, bitte anklicken)");
 regGS("New field", "Neues Feld");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Soll Bild '$1' gelöscht werden?");
 ?>

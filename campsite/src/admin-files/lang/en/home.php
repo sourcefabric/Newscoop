@@ -1,4 +1,5 @@
 <?php 
+regGS("en", "en");
 regGS("Your work has been saved.", "Your work has been saved.");
 regGS("Widgets", "Widgets");
 regGS("Widget info", "Widget info");

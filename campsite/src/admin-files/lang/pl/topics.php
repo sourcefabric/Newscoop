@@ -1,9 +1,9 @@
 <?php 
-regGS("Topics order saved.", "");
-regGS("Show languages", "");
-regGS("Save order", "");
-regGS("Click to edit", "");
-regGS("Add root topic", "");
+regGS("Topics order saved.", "Porządek tematów zachowany.");
+regGS("Show languages", "Pokaż języki");
+regGS("Save order", "Zapisz porządek");
+regGS("Click to edit", "Kliknij aby edytować");
+regGS("Add root topic", "Dodaj główny temat");
 regGS("Topic was deleted.", "Temat został usunięty.");
 regGS("The topic name is already in use by another topic.", "Nazwa tematu już zajęta przez inny.");
 regGS("You must enter a name for the topic.", "Musisz podać nową nazwę dla tematu.");

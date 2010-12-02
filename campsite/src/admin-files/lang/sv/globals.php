@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "");
+regGS("Manage Plugins", "");
 regGS("Account", "Konto");
 regGS("Items per page", "Föremål per sida");
 regGS("Add new", "Lägg till ny");
@@ -256,7 +258,6 @@ regGS("(optional)", "(frivilligt)");
 regGS("The URL you entered is invalid: '$1'", "Den URL du skrev in är ogiltig: '$1'");
 regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
-regGS("Plugins", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
