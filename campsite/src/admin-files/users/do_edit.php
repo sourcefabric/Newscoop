@@ -117,6 +117,13 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	}
 }
 
+// unsubscribe
+$unsubscribe = Input::Get('unsubscribe', 'bool', false);
+if ($unsubscribe 
+    && ($canManage || $editUser->getUserId() == $g_user->getUserId())) {
+    $editUser->setPermission('MailNotify', false);
+}
+
 camp_html_add_msg(getGS("User '$1' information was changed successfully.",
 	$editUser->getUserName()), "ok");
 $editUser->fetch();

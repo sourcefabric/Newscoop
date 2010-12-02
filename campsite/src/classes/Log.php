@@ -102,6 +102,7 @@ class Log extends DatabaseObject {
         echo getGS('Article Number'), ': ', $p_article->getArticleNumber(), "\n";
         echo getGS('Language'), ': ', $p_article->getLanguageName(), "\n";
 
+        echo "\n";
         echo getGS('Action') . ': ', $p_text;
 
         $message = ob_get_clean();
