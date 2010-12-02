@@ -71,10 +71,11 @@ DROP TABLE IF EXISTS `ArticleAuthors`;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
 CREATE TABLE `ArticleAuthors` (
-  `fk_article_number` int(10) unsigned NOT NULL,
-  `fk_language_id` int(10) unsigned NOT NULL,
-  `fk_author_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`fk_article_number`,`fk_language_id`,`fk_author_id`)
+  `fk_article_number` int(10) unsigned NOT NULL default '0',
+  `fk_language_id` int(10) unsigned NOT NULL default '0',
+  `fk_author_id` int(10) unsigned NOT NULL default '0',
+  `fk_type_id` int(10) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 SET character_set_client = @saved_cs_client;
 
