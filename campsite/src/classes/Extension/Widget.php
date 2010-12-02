@@ -90,7 +90,7 @@ abstract class Widget implements IWidget
      * @param string $translateString
      * @return string
      */
-    final public function _($translateString)
+    final public function getGS($translateString)
     {
         $args = func_get_args();
         return call_user_func_array('getGS', $args);
