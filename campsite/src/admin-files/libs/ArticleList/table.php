@@ -91,8 +91,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'aaSorting': [[2, 'asc']],
     'oLanguage': {
         'oPaginate': {
+            'sFirst': '<?php putGS('First'); ?>',
             'sNext': '<?php putGS('Next'); ?>',
             'sPrevious': '<?php putGS('Previous'); ?>',
+            'sLast': '<?php putGS('Last'); ?>',
         },
         'sZeroRecords': '<?php putGS('No records found.'); ?>',
         'sSearch': '<?php putGS('Search'); ?>:',

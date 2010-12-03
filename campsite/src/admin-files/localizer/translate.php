@@ -99,7 +99,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay[] = "";
     $mapPrefixToDisplay["globals"] = getGS("Globals");
     $mapPrefixToDisplay["home"] = getGS("Home");
-    $mapPrefixToDisplay["universal_list"] = getGS("Universal List");
+    $mapPrefixToDisplay["universal_list"] = getGS("Content Search");
     $mapPrefixToDisplay["api"] = getGS("API");
     $mapPrefixToDisplay["pub"] = getGS("Publications");
     $mapPrefixToDisplay["issues"] = getGS("Issues");

@@ -61,11 +61,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	        $plugins[] = 'campsiteattachment';
 	    }
 	}
-	if ($p_user->hasPermission('EditorImage')) {
-	    if ($p_objectType == 'article') {
+	if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
 	        $plugins[] = 'campsiteimage';
             $plugins[] = 'media';
-	    }
 	}
 	$plugins[] = 'iframe';
 	$plugins[] = 'codehighlighting';
@@ -138,11 +136,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorSubhead')) {
 	    $toolbar1[] = "campsite-subhead";
 	}
-	if ($p_user->hasPermission('EditorImage')) {
-	    if ($p_objectType == 'article') {
+	if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
 	        $toolbar1[] = "campsiteimage";
-		$toolbar1[] = "media";
-	    }
+		    $toolbar1[] = "media";
 	}
 	if ($p_user->hasPermission('EditorSourceView')) {
 	    $toolbar1[] = "code";
@@ -226,6 +222,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 <!-- Load TinyMCE -->
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/jquery.tinymce.js"></script>
 <script type="text/javascript">
+<?php if ($p_objectType == 'article') { ?>
 function CampsiteSubhead(ed) {
     element = ed.dom.getParent(ed.selection.getNode(), 'span');
     if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
@@ -235,6 +232,7 @@ function CampsiteSubhead(ed) {
         ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
     }
 } // fn CampsiteSubhead
+<?php } ?>
 
 $().ready(function() {
     $('textarea.tinymce').tinymce({
@@ -281,6 +279,7 @@ $().ready(function() {
         gecko_spellcheck : true,
         <?php endif; ?>
 
+        <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
         setup : function(ed) {
             ed.onKeyUp.add(function(ed, l) {
                 var idx = ed.id.lastIndexOf('_');
@@ -288,7 +287,6 @@ $().ready(function() {
                 buttonEnable('save_' + buttonId);
             });
 
-            <?php if ($p_user->hasPermission('EditorSubhead')) { ?>
             ed.addButton('campsite-subhead', {
                 title : '<?php putGS("Campsite Subhead"); ?>',
                 image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
@@ -296,11 +294,12 @@ $().ready(function() {
                     CampsiteSubhead(ed);
                 }
             });
-            <?php } ?>
         }
+        <?php } ?>
     });
 });
 
+<?php if ($p_objectType == 'article') { ?>
 function campsitemedia(field_name, url, type, win)
 {
     topDoc = window.top.document;
@@ -318,6 +317,7 @@ function campsitemedia(field_name, url, type, win)
         input : field_name
     });
 }
+<?php } ?>
 </script>
 <!-- /TinyMCE -->
 <?php

@@ -21,7 +21,7 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), '');
-$crumbs[] = array(getGS('Universal List'), '');
+$crumbs[] = array(getGS('Search'), '');
 echo camp_html_breadcrumbs($crumbs);
 
 // set up
