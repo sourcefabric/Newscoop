@@ -19,7 +19,7 @@ $f_image_place = Input::Get('f_image_place');
 $f_image_date = Input::Get('f_image_date');
 //$f_image_url = Input::Get('f_image_url', 'string', '', true);
 if (!Input::IsValid() || ($f_image_id <= 0)) {
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $imageObj = new Image($f_image_id);
@@ -38,5 +38,5 @@ $updateArray = array('Description' => $f_image_description,
 $imageObj->update($updateArray);
 
 camp_html_add_msg(getGS("Image updated."), "ok");
-camp_html_goto_page("/$ADMIN/imagearchive/edit.php?f_image_id=$f_image_id");
+camp_html_goto_page("/$ADMIN/media-archive/edit.php?f_image_id=$f_image_id");
 ?>

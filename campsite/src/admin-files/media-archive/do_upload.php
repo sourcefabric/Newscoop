@@ -25,7 +25,7 @@ $nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
 
 if (empty($f_image_url) && empty($nrOfFiles)) {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
-	camp_html_goto_page("/$ADMIN/imagearchive/add.php");
+	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 
 // process image url
@@ -56,7 +56,7 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
 
 if ($result != NULL) {
     camp_html_add_msg(getGS('"$1" files uploaded.', $nrOfFiles), "ok");
-    camp_html_goto_page("/$ADMIN/imagearchive/multiedit.php");
+    camp_html_goto_page("/$ADMIN/media-archive/multiedit.php");
 } else {
     camp_html_add_msg($f_path . DIR_SEP . basename($newFilePath));
     camp_html_goto_page($backLink);

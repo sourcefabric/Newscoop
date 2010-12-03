@@ -9,14 +9,14 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 $imageObj = new Image($f_image_id);
 $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Image Archive"), "/$ADMIN/imagearchive/index.php");
+$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php");
 if ($g_user->hasPermission('ChangeImage')) {
 	$crumbs[] = array(getGS('Change image information'), "");
 }

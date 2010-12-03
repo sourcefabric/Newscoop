@@ -18,14 +18,14 @@ $f_image_date = Input::Get('f_image_date');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 
 if (!Input::IsValid()) {
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 $uploadFileSpecified = isset($_FILES['f_image_file'])
   					   && isset($_FILES['f_image_file']['name'])
   					   && !empty($_FILES['f_image_file']['name']);
 if (empty($f_image_url) && !$uploadFileSpecified) {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
-	camp_html_goto_page("/$ADMIN/imagearchive/add.php");
+	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 if (!$g_user->hasPermission('AddImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");
@@ -40,19 +40,19 @@ if (!empty($f_image_url)) {
 		$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
 	} else {
 		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
-		camp_html_goto_page("/$ADMIN/imagearchive/add.php");
+		camp_html_goto_page("/$ADMIN/media-archive/add.php");
 	}
 } elseif (!empty($_FILES['f_image_file'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
-	camp_html_goto_page("/$ADMIN/imagearchive/add.php");
+	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 
 // Check if image was added successfully
 if (PEAR::isError($image)) {
 	camp_html_add_msg($image->getMessage());
-	camp_html_goto_page("/$ADMIN/imagearchive/add.php");
+	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 
 ?>

@@ -28,7 +28,7 @@ if ($f_order_direction == 'DESC') {
 	$ReverseOrderDirection = "DESC";
 	$OrderSign = "<img src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/ascending.png\" border=\"0\">";
 }
-$orderDirectionUrl = "/$ADMIN/imagearchive/index.php?&f_order_direction=$ReverseOrderDirection";
+$orderDirectionUrl = "/$ADMIN/media-archive/index.php?&f_order_direction=$ReverseOrderDirection";
 
 $TotalImages = Image::GetTotalImages();
 if ($f_image_offset >= $TotalImages) {
@@ -44,7 +44,7 @@ $uploadedByUsers = Image::GetUploadUsers();
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Image Archive'), "");
+$crumbs[] = array(getGS('Media Archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
@@ -114,7 +114,7 @@ if ($g_user->hasPermission('AddImage')) { ?>
 
 <?php
 if (count($imageData) > 0) {
-  	$pagerUrl = "/$ADMIN/imagearchive/index.php?";
+  	$pagerUrl = "/$ADMIN/media-archive/index.php?";
     $pager = new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 ?>
 <table class="action_buttons">

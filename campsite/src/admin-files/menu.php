@@ -52,7 +52,7 @@ if ($g_user->hasPermission('CommentModerate')) {
     $menu_content->addItem($menu_item);
 }
 
-$menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php",
+$menu_item =& DynMenuItem::Create(getGS('Media Archive'), "/$ADMIN/media-archive/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
 

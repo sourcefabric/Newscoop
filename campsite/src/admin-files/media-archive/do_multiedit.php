@@ -32,5 +32,5 @@ foreach ($_POST['image'] as $id => $values) {
 }
 
 camp_html_add_msg(getGS("Images updated."), "ok");
-camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+camp_html_goto_page("/$ADMIN/media-archive/index.php");
 ?>

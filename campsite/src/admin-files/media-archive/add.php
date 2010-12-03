@@ -21,13 +21,13 @@ $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
 	camp_html_add_msg(getGS("Unable to add new image."));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 	exit;
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php");
+$crumbs[] = array(getGS('Media Archive'), "/$ADMIN/media-archive/index.php");
 $crumbs[] = array(getGS('Add new image'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 

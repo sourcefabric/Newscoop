@@ -14,7 +14,7 @@ if (!SecurityToken::isValid()) {
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
 if (!Input::IsValid() || ($f_image_id <= 0)) {
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $imageObj = new Image($f_image_id);
@@ -25,7 +25,7 @@ if (!$g_user->hasPermission('DeleteImage')) {
 }
 if ($imageObj->inUse()) {
 	camp_html_add_msg(getGS("Image is in use, it cannot be deleted."));
-	camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $imageDescription = $imageObj->getDescription();
@@ -36,6 +36,6 @@ if (PEAR::isError($result)) {
 	// Go back to article image list.
 	camp_html_add_msg(getGS("Image '$1' deleted.", $imageDescription), "ok");
 }
-camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+camp_html_goto_page("/$ADMIN/media-archive/index.php");
 
 ?>

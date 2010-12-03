@@ -24,12 +24,12 @@ $imageData = $imageSearch->getImages();
 
 if (empty($imageData)) {
     camp_html_add_msg(getGS('No images for multi editing.'), 'ok');
-    camp_html_goto_page("/$ADMIN/imagearchive/index.php");
+    camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $crumbs = array();
 $crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php");
+$crumbs[] = array(getGS('Media Archive'), "/$ADMIN/media-archive/index.php");
 $crumbs[] = array(getGS('Edit images'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
