@@ -1,4 +1,5 @@
 <?php 
+regGS("Geo-location", "");
 regGS("Translation status:", "Κατάσταση μετάφρασης:");
 regGS("Editor Media Plugin", "Επεξεργαστής Προσθέτου Media ");
 regGS("$1 of $2 strings translated", "$1 από $2 σειρές μεταφράστηκαν");

@@ -1,8 +1,8 @@
 <?php 
+regGS("Scheduled action added", "");
+regGS("Content edited", "");
 regGS("Campsite Subhead", "Подзаголовок Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Невозможно попасть в административный интерфейс Campsite. Проверьте настройки интернет-соединения.");
-regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Запланированное действие добавлено для статьи #$1: \"$2\" (Издание: $3, Выпуск: $4, Рубрика: $5, Язык: $6)");
-regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Было изменено содержание статьи #$1: \"$2\" (Издание: $3, Выпуск: $4, Рубрика: $5, Язык: $6)");
 regGS("You must select an article language.", "Вы должны выбрать язык статьи.");
 regGS("You must select a publication.", "Вы должны выбрать издание.");
 regGS("You must select a file to upload.", "Вы должны выбрать файл для загрузки.");

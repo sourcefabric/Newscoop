@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Opublikuj z wydaniem");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Artykuł #$1 \"$2\" ($3) skopiowany do artykułu #$4 (publikacja $5, wydanie $6, sekcja $7).");
 regGS("unknown", "nieznane");
 regGS("User type \"$1\" deleted", "Typ użytkownika \"$1\" usunięty");
 regGS("User type \"$1\" added", "Typ użytkownika \"$1\" dodany");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Pole typu artykułu \"$1\" utworzone
 regGS("Article type field \"$1\" changed", "Pole typu artykułu \"$1\" zmienione");
 regGS("Article type \"$1\" translation updated", "Tłumaczenie typu artykułu \"$1\" zaktualizowane");
 regGS("Article topic $1 deleted from article $2", "Temat artykułu $1 usunięte z artykułu $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Status artykułu #$1 \"$2\" zmieniony z  $3 na $4.");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Artykuł #$1 \"$2\" ($3) przetłumaczony na \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Artykuł #$1 \"$2\" ($3) usunięty.");
 regGS("The uploaded file format is unsupported.", "Format wgranego pliku nie jest obsługiwany.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Wgrane archiwum nie zawiera ważnego pluginu Campsite.");
 regGS("The following fields are mandatory:", "Poniższe pola są obowiązkowe:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Grupa IP $1 dodana do użytkownika $2");
 regGS("Issue $1 changed status to $2", "Wydanie $2 zmieniło status na $2");
 regGS("Last", "Ostatni");
 regGS("First", "Pierwszy");
-regGS("Article #$1 \"$2\" ($3) created.", "Artykuł #$1 \"$2\" ($3) utworzony.");
 regGS("Single-line Text", "Tekst jednoliniowy");
 regGS("Multi-line Text with WYSIWYG", "Tekst jednoliniowy z WYSIWYG");
 regGS("Image $1 linked to article $2", "Zdjęcie $1 podlinkowane do artykułu $2");

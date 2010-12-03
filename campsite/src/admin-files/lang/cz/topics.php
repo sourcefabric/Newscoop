@@ -1,4 +1,6 @@
 <?php 
+regGS("Reset order", "Přenastavit pořadí");
+regGS("Order changes will be lost. Are you sure you want to continue?", "Požadované změny budou ztraceny. Jste si jisti, že chcete pokračovat?");
 regGS("Topics order saved.", "Pořadí témat uloženo.");
 regGS("Show languages", "Ukázat jazyky");
 regGS("Save order", "Uložit pořadí");

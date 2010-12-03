@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Објави заједно са издањем");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Текст #$1 \"$2\" ($3) копиран у текст #$4 (публикација $5, издање $6, рубрика $7).");
 regGS("unknown", "непознато");
 regGS("User type \"$1\" deleted", "Тип корисника \"$1\" обрисан");
 regGS("User type \"$1\" added", "Тип корисника \"$1\" додат");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Поље типа текста \"$1\
 regGS("Article type field \"$1\" changed", "Поље типа текста \"$1\" промењено");
 regGS("Article type \"$1\" translation updated", "Превод поља типа текста \"$1\" је измењен");
 regGS("Article topic $1 deleted from article $2", "Тема текста $1 обрисана из текста $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Статус текста #$1 \"$2\" промењен из $3 у $4.");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Текст #$1 \"$2\" ($3) преведен у \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Текст #$1 \"$2\" ($3) обрисан.");
 regGS("The uploaded file format is unsupported.", "Формат аплоудованог фајла није подржан.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Аплоудована архива не садржи исправан Кемпсајт плагин.");
 regGS("The following fields are mandatory:", "Следећа поља су обавезна:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "ИП група $1 додата за к�
 regGS("Issue $1 changed status to $2", "Издању $1 промењен статус у $2");
 regGS("Last", "Последњи");
 regGS("First", "Први");
-regGS("Article #$1 \"$2\" ($3) created.", "Чланак #$1 \"$2\" ($3) је креиран.");
 regGS("Single-line Text", "текст");
 regGS("Multi-line Text with WYSIWYG", "Сложен текст");
 regGS("Image $1 linked to article $2", "Слика $1 јењ повезана са чланком $2.");
