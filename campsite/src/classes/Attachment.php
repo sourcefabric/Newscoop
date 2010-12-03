@@ -86,7 +86,7 @@ class Attachment extends DatabaseObject {
 	 */
 	public function getLanguageId()
 	{
-		return $this->m_data['fk_language_id'];
+		return (int) $this->m_data['fk_language_id'];
 	} // fn getLanguageId
 
 

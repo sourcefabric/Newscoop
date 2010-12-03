@@ -10,7 +10,7 @@
 ?>
 <div class="table">
 
-<table id="table-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
+<table id="table-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable <?php echo strtolower(get_class($this)); ?>">
 <thead>
     <tr>
         <?php foreach ($this->cols as $title) { ?>
@@ -66,8 +66,8 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'aoColumnDefs': [
         { // inputs for id
             'fnRender': function(obj) {
-                var id = obj.aData[0] + '_' + obj.aData[1];
-                return '<input type="checkbox" name="' + id + '" />';
+                var id = obj.aData[0];
+                return '<input type="checkbox" name="attachment_' + id + '" />';
             },
             'aTargets': [0]
         },

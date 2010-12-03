@@ -54,11 +54,11 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 <div id="archive">
 <ul>
-    <li><a href="#imagearchive"><?php putGS('Image archive'); ?></a></li>
-    <li><a href="#attachmentsarchive"><?php putGS('Attachments archive'); ?></a></li>
+    <li><a href="#images"><?php putGS('Image archive'); ?></a></li>
+    <li><a href="#attachments"><?php putGS('Attachments archive'); ?></a></li>
 </ul>
 
-<div id="imagearchive">
+<div id="images">
 
 <p>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
@@ -214,7 +214,7 @@ foreach ($imageData as $image) {
 }
 ?>
 </div><!-- /#imagearchive -->
-<div id="attachmentsarchive">
+<div id="attachments">
     <h2>Attachments</h2>
     <?php
         $list = new MediaList;
@@ -222,7 +222,7 @@ foreach ($imageData as $image) {
         $list->setSearch(TRUE);
         $list->render();
     ?>
-</div><!-- /#attachmentarchive -->
+</div><!-- /#attachments -->
 
 </div><!-- /#archive -->
 <script type="text/javascript">

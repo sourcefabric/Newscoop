@@ -1957,3 +1957,35 @@ ul.rss p {
 .ui-timepicker-div td { font-size: 90%; }
 
 .ui-tabs.ui-widget { font-size: 1em; }
+
+body > h2 > span {
+    font-size: 0.7em;
+}
+
+p.dates {
+    margin-top: -8px;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+dl.attachment {
+    margin: 0 14px 21px;
+}
+
+dl.attachment dt {
+    float: left;
+}
+
+body > form > fieldset {
+    margin: 0 14px 21px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+body > form > fieldset dt {
+    width: 8em;
+}
+
+.smartlist .datatable.medialist .name {
+    width: 50%;
+}

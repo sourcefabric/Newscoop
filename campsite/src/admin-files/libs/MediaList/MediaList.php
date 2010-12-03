@@ -29,9 +29,6 @@ class MediaList extends BaseList
         $this->cols = array(
             'id' => NULL,
             'file_name' => getGS('Filename'),
-            'extension' => getGS('Extension'),
-            'content_disposition' => getGS('Disposition'),
-            'http_charset' => getGS('Charset'),
             'mime_type' => getGS('Type'),
             'size_in_bytes' => getGS('Size'),
             'last_modified' => getGS('Last modified'),
@@ -67,7 +64,8 @@ class MediaList extends BaseList
         if (!empty($aoData['sSearch'])) {
             $search = array();
             foreach (array('file_name', 'extension', 'mime_type') as $col) {
-                $search[] = sprintf('%s LIKE "%%%s%%"', $col, $aoData['sSearch']);
+                $search[] = sprintf('%s LIKE "%%%s%%"', $col,
+                    mysql_real_escape_string($aoData['sSearch']));
             }
             $queryStr .= ' WHERE ' . implode(' OR ', $search);
         }
@@ -84,17 +82,15 @@ class MediaList extends BaseList
 
         $attachments = array();
         $rows = (array) $g_ado_db->GetAll($queryStr);
-        $units = array(' B', ' KB', ' MB', ' GB', ' TB');
         foreach ($rows as $row) {
             $item = (array) $row;
 
+            // edit link
+            $item['file_name'] = sprintf('<a href="edit-attachment.php?f_attachment_id=%d">%s</a>',
+                $item['id'], $item['file_name']);
+
             // human readable size
-            // credits joaoptm [http://php.net/manual/en/function.filesize.php]
-            $size = (int) $item['size_in_bytes'];
-            for ($i = 0; $size >= 1024 && $i < 4; $i++) {
-                $size /= 1024;
-            }
-            $item['size_in_bytes'] = round($size, 2) . $units[$i];
+            $item['size_in_bytes'] = self::FormatFileSize($item['size_in_bytes']);
 
             $attachments[] = array_values($item);
         }
@@ -110,5 +106,23 @@ class MediaList extends BaseList
             'sEcho' => (int) $aoData['sEcho'],
             'aaData' => $attachments,
         );
+    }
+
+    /**
+     * Get human readable filesize
+     * @credits joaoptm [http://php.net/manual/en/function.filesize.php]
+     * @param int $size
+     * @return string
+     */
+    public static function FormatFileSize($size)
+    {
+        static $units = array(' B', ' KB', ' MB', ' GB', ' TB');
+
+        $size = (int) $size;
+        for ($i = 0; $size >= 1024 && $i < 4; $i++) {
+            $size /= 1024;
+        }
+
+        return round($size, 2) . $units[$i];
     }
 }
