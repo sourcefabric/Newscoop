@@ -15,7 +15,8 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 // include valid callbacks files
 // TODO replace with Zend_Loader
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
-require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/MediaList/MediaList.php';
 
 try {
     // init request
@@ -34,6 +35,7 @@ try {
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
+    $serverRequest->allow('MediaList::doData');
 
     // execute
     echo json_encode($serverRequest->execute());

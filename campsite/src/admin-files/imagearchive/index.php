@@ -6,6 +6,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SimplePager.php');
 camp_load_translation_strings("api");
 
+require_once LIBS_DIR . '/MediaList/MediaList.php';
+
 // Initialize input variables ///////////////////////////////////////////////////
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
@@ -49,6 +51,15 @@ echo $breadcrumbs;
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
+
+<div id="archive">
+<ul>
+    <li><a href="#imagearchive"><?php putGS('Image archive'); ?></a></li>
+    <li><a href="#attachmentsarchive"><?php putGS('Attachments archive'); ?></a></li>
+</ul>
+
+<div id="imagearchive">
+
 <p>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
 <tr>
@@ -202,4 +213,24 @@ foreach ($imageData as $image) {
 <?php
 }
 ?>
+</div><!-- /#imagearchive -->
+<div id="attachmentsarchive">
+    <h2>Attachments</h2>
+    <?php
+        $list = new MediaList;
+        $list->setColVis(TRUE);
+        $list->setSearch(TRUE);
+        $list->render();
+    ?>
+</div><!-- /#attachmentarchive -->
+
+</div><!-- /#archive -->
+<script type="text/javascript">
+<!--
+    $('#archive').tabs();
+//-->
+</script>
+
 <?php camp_html_copyright_notice(); ?>
+</body>
+</html>
