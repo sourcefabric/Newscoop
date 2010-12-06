@@ -12,44 +12,93 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
 
+<?php camp_html_display_msgs(); ?>
+
 <div id="archive">
 <ul>
-    <li><a href="#images"><?php putGS('Image archive'); ?></a></li>
-    <li><a href="#attachments"><?php putGS('Attachments archive'); ?></a></li>
+    <li><a href="#images"><?php putGS('Images archive'); ?></a></li>
+    <li><a href="#files"><?php putGS('Files archive'); ?></a></li>
 </ul>
 
 <div id="images">
 
-<?php if ($g_user->hasPermission('AddImage')) { ?>
-<p class="actions">
-    <a href="add.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php  putGS('Add new image'); ?>"> <?php putGS('Add new image'); ?></a>
-</p>
-<?php } ?>
+    <?php if ($g_user->hasPermission('AddImage')) { ?>
+    <p class="actions">
+        <a href="add.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php  putGS('Add new image'); ?>"> <?php putGS('Add new image'); ?></a>
+    </p>
+    <?php } ?>
 
-<?php camp_html_display_msgs(); ?>
+    <?php
+        $list = new ImageList;
+        $list->setSearch(TRUE);
+        $list->render();
+    ?>
 
-<?php
-    $list = new ImageList;
-    $list->setSearch(TRUE);
-    $list->render();
-?>
-
+    <fieldset class="actions">
+        <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
+    </fieldset>
 </div><!-- /#images -->
 
-<div id="attachments">
+<div id="files">
     <?php
         $list = new MediaList;
         $list->setColVis(TRUE);
         $list->setSearch(TRUE);
         $list->render();
     ?>
-</div><!-- /#attachments -->
+
+    <fieldset class="actions">
+        <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
+    </fieldset>
+</div><!-- /#files -->
 
 </div><!-- /#archive -->
 <script type="text/javascript">
 <!--
+$(document).ready(function() {
+    // tabs
     $('#archive').tabs()
         .css('border', 'none');
+
+    // delete button
+    $('input[name=delete]').click(function() {
+        var tab = $(this).closest('div');
+        var table = $('table.datatable', tab);
+        var items = $('tbody input:checked', table);
+
+        // check for items
+        if (!items.size()) {
+            alert('<?php putGS('Select some items first.'); ?>');
+            return false;
+        }
+
+        // confirm
+        if (!confirm('<?php putGS('Are you sure you want to delete selected items?'); ?>')) {
+            return false;
+        }
+
+        // get ids
+        var ids = [];
+        items.each(function() {
+            ids.push($(this).attr('name'));
+        });
+
+        // delete
+        var callback = [];
+        if (table.hasClass('medialist')) { // files
+            callback = ['MediaList', 'doDelete'];
+        } else {
+            callback = ['ImageList', 'doDelete'];
+        }
+        callServer(callback, [ids], function (json) {
+            var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
+            tables[smartlistId].fnDraw(true);
+            flashMessage('<?php putGS('Items deleted.'); ?>');
+        });
+
+        return false;
+    });
+});
 //-->
 </script>
 

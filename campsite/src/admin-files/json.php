@@ -41,6 +41,8 @@ try {
     $serverRequest->allow('Geo_Names::FindCitiesByName');
     $serverRequest->allow('MediaList::doData');
     $serverRequest->allow('ImageList::doData');
+    $serverRequest->allow('MediaList::doDelete');
+    $serverRequest->allow('ImageList::doDelete');
 
     // execute
     echo json_encode($serverRequest->execute());

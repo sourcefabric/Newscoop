@@ -68,7 +68,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         { // inputs for id
             'fnRender': function(obj) {
                 var id = obj.aData[0];
-                return '<input type="checkbox" name="item' + id + '" />';
+                return '<input type="checkbox" name="item_' + id + '" />';
             },
             'aTargets': [0]
         },

@@ -328,6 +328,23 @@ class BaseList
         return $this;
     }
 
+    /**
+     * Handle delete
+     * @param array $ids
+     * @return bool
+     */
+    public function doDelete($ids)
+    {
+        $class = get_class($this->model);
+
+        foreach ((array) $ids as $id) {
+            list(, $id) = explode('_', $id);
+            $object = new $class($id);
+            $object->delete();
+        }
+
+        return TRUE;
+    }
 
     /**
      * Get human readable filesize
