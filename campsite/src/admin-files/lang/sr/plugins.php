@@ -1,6 +1,6 @@
 <?php 
 regGS("Some plugins have to be updated. Please press the save button.", "Неки плагинови морају бити апдејтовани. Притисни дугме 'сними'.");
-regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Потребна је потврда за брисање плагина $1! Сви подаци везани за овај плагин биће обрисани!");
+regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "Потребна је потврда за брисање плагина $1! Сви подаци везани за овај плагин биће обрисани!");
 regGS("You do not have the right to manage plugins.", "Немате право управљања плагиновима");
 regGS("Version", "Верзија");
 regGS("Upload Plugin", "Аплоудуј плагин");

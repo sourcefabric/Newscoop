@@ -1,6 +1,6 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Plik #$1 \"$2\" został odłączony od artykułu #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Plik #$1 \"$2\" dołączony do artykułu #$3 \"$4\"");
+regGS("File #$1 \"$2\" unattached", "");
+regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "Załącznik nie został dodany.");
 regGS("There was a problem uploading the file.", "Wystąpił błąd podczas dodawania pliku.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Wgyrwany plik został dodany tylko w części. To częsty błąd gdy czas wgrywania pliku nie jest zgodny z jego rozmiarem. Maksymalny czas wgrywania ustalany jest w pliku 'php.ini'");

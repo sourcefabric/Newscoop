@@ -15,7 +15,8 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 // include valid callbacks files
 // TODO replace with Zend_Loader
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
-require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/MediaList/MediaList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
 
 try {
@@ -31,11 +32,13 @@ try {
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
     $serverRequest->allow('WidgetRendererDecorator::render');
+    $serverRequest->allow('WidgetManagerDecorator::getSetting');
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
     $serverRequest->allow('Geo_Names::FindCitiesByLocation');
     $serverRequest->allow('Geo_Names::FindCitiesByName');
+    $serverRequest->allow('MediaList::doData');
 
     // execute
     echo json_encode($serverRequest->execute());

@@ -492,6 +492,15 @@ class User extends DatabaseObject {
             // special case for the "Reader" property
             $this->setProperty("Reader", $p_value);
         } else {
+            // check for user type
+            $oldType = UserType::GetUserTypeFromConfig($this->m_config);
+            if (!empty($oldType)) { // must set all not to delete permissions #2364
+                $permissions = $oldType->m_config;
+                $permissions[$p_varName] = $p_value;
+                $this->updatePermissions($permissions);
+                return;
+            }
+
             $rightId = $right[0]['right_id'];
             $params = array('right_id' => $rightId,
                             'perm_user_id' => $this->getPermUserId());

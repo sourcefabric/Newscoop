@@ -76,5 +76,10 @@ regGS("There are $1 issue(s) left.", "$1 Ausgaben sind übrig.");
 regGS("Time Unit", "Zeiteinheit");
 regGS("Currency", "Währung");
 regGS("Edit languages", "Sprachen bearbeiten");
+regGS("Search engine optimization", "");
+regGS("Article title", "");
+regGS("Article keywords", "");
+regGS("Article topics", "");
+regGS("Invalid URL Template", "");
 regGS("Change publication information", "Information der Publikation ändern");
 ?>

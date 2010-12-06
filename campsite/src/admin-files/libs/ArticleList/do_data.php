@@ -82,9 +82,10 @@ for ($i = 0; $i < $sortingCols; $i++) {
 // get articles
 $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
 
+$list = new ArticleList(TRUE);
 $return = array();
 foreach($articles as $article) {
-    $return[] = ArticleList::ProcessArticle($article);
+    $return[] = $list->processItem($article);
 }
 
 return array(

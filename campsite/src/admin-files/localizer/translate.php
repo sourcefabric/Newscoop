@@ -99,7 +99,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay[] = "";
     $mapPrefixToDisplay["globals"] = getGS("Globals");
     $mapPrefixToDisplay["home"] = getGS("Home");
-    $mapPrefixToDisplay["universal_list"] = getGS("Universal List");
+    $mapPrefixToDisplay["universal_list"] = getGS("Content Search");
     $mapPrefixToDisplay["api"] = getGS("API");
     $mapPrefixToDisplay["pub"] = getGS("Publications");
     $mapPrefixToDisplay["issues"] = getGS("Issues");
@@ -110,7 +110,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["article_topics"] = getGS("Article Topics");
     $mapPrefixToDisplay["article_comments"] = getGS("Article Comments");
     $mapPrefixToDisplay["article_audioclips"] = getGS("Article Audioclips");
-    $mapPrefixToDisplay["imagearchive"] = getGS("Image Archive");
+    $mapPrefixToDisplay["media_archive"] = getGS("Media Archive");
     $mapPrefixToDisplay["geolocation"] = getGS("Geo-location");
     $mapPrefixToDisplay["comments"] = getGS("Comments");
     $mapPrefixToDisplay["system_pref"] = getGS("System Preferences");
@@ -131,6 +131,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["preview"] = getGS("Preview Window");
     $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
+    $mapPrefixToDisplay["extensions"] = getGS("Extensions");
 
     foreach (CampPlugin::GetPluginsInfo(true) as $info) {
     	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {

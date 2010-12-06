@@ -53,10 +53,9 @@ if (!is_writable(dirname($filePath))) {
 	exit;
 }
 ArticleAttachment::RemoveAttachmentFromArticle($f_attachment_id, $f_article_number);
-$logtext = getGS('File #$1 "$2" unattached from article #$3 "$4"',
-		 $attachmentObj->getAttachmentId(), $attachmentObj->getFileName(),
-		 $articleObj->getArticleNumber(), $articleObj->getName());
-Log::Message($logtext, null, 39);
+$logtext = getGS('File #$1 "$2" unattached',
+		 $attachmentObj->getAttachmentId(), $attachmentObj->getFileName());
+Log::ArticleMessage($articleObj, $logtext, null, 39);
 
 $attachmentFileName = $attachmentObj->getFileName();
 $attachmentObj->delete();

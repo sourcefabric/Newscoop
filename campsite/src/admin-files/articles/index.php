@@ -115,7 +115,7 @@ $pager = new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Article List'), $topArray);
+camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $topArray);
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

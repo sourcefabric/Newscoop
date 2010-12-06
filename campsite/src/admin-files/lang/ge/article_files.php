@@ -1,6 +1,6 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "ფაილები #$1 \"$2\" წაშლილია სტატიებიდან #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "ფაილი #$1 \"$2\" მიმაგრებულია სტატიებს #$3 \"$4\"");
+regGS("File #$1 \"$2\" unattached", "");
+regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "შეუძლებელია ათთაჩმენთის დამატება ");
 regGS("There was a problem uploading the file.", "პრობლემა იყო ფაილის ატვირთვისას");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "ატვირთული ფაილი მხოლოდ ნაწილობრივ აიტვირთა. ეს მაშინ ხდება, როცა ფაილის ასატვირთი მაქსიმალური დრო არ შეესაბამება  ფაილის ზომას, რომლის ატვირთვასაც ცდილობთ. შეტანის მაქსიმალური დრო განსაზღვრულია'php.ini' –ში ");

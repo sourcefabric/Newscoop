@@ -32,9 +32,9 @@ if (PEAR::isError($xrc) && $xrc->getCode() != 805) {
 ?>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css" />
-    <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-	<title><?php putGS("Campcaster Login"); ?></title>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+  <title><?php putGS("Campcaster Login"); ?></title>
 </head>
 <body>
 <?php camp_html_display_msgs(); ?>

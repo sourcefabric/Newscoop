@@ -1,4 +1,5 @@
 <?php 
+regGS("Publish Schedule", "Publish Schedule");
 regGS("You do not have the right to delete articles.", "You do not have the right to delete articles.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
 regGS("Toggle: 'On Section Page'", "Toggle: 'On Section Page'");

@@ -101,8 +101,8 @@ CREATE TABLE `ArticleAuthors` (
   `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_author_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_type_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`fk_article_number`,`fk_language_id`,`fk_author_id`)
+  `fk_type_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -756,7 +756,7 @@ CREATE TABLE `Events` (
 LOCK TABLES `Events` WRITE;
 /*!40000 ALTER TABLE `Events` DISABLE KEYS */;
 INSERT INTO `Events` VALUES
-(1,'Add Publication','N',1),(2,'Delete Publication','N',1),(3,'Change publication information','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(36,'Change article template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(111,'Add templates','N',1),(112,'Delete templates','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),('172','Add Author','N','1'),('173','Edit Author','N','1'),('174', 'Delete Author', 'N', '01');
+(1,'Add Publication','N',1),(2,'Delete Publication','N',1),(3,'Change publication information','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(36,'Change article template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(111,'Add templates','N',1),(112,'Delete templates','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
 /*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2745,27 +2745,64 @@ LOCK TABLES `phorum_users` WRITE;
 /*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
--- Create table for widgets
+--
+-- Table structure for table `Widget`
+--
+
 DROP TABLE IF EXISTS `Widget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `Widget` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `path` varchar(255) NOT NULL DEFAULT '',
   `class` varchar(78) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY (`path`, `class`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Create table for widget context
+--
+-- Dumping data for table `Widget`
+--
+
+LOCK TABLES `Widget` WRITE;
+/*!40000 ALTER TABLE `Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Widget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Table structure for table `WidgetContext`
+--
+
 DROP TABLE IF EXISTS `WidgetContext`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `WidgetContext` (
   `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- Create table for widget context - widget relation
+--
+-- Dumping data for table `WidgetContext`
+--
+
+LOCK TABLES `WidgetContext` WRITE;
+/*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Table structure for table `WidgetContext_Widget`
+--
+
 DROP TABLE IF EXISTS `WidgetContext_Widget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
   `id` varchar(13) NOT NULL,
   `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
@@ -2775,8 +2812,17 @@ CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
   `settings` TEXT(500) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`, `fk_user_id`),
   INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `WidgetContext_Widget`
+--
+
+LOCK TABLES `WidgetContext_Widget` WRITE;
+/*!40000 ALTER TABLE `WidgetContext_Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

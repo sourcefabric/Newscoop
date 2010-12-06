@@ -1,10 +1,9 @@
 <?php 
-regGS("Your work has been saved.", "");
+regGS("en", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
 regGS("Widget added to dashboard.", "");
 regGS("Remove widget", "");
-regGS("Please login to continue.", "");
 regGS("Go to home", "");
 regGS("Add to dashboard", "");
 regGS("Add more widgets", "");
@@ -20,7 +19,9 @@ regGS("Password recovery", "");
 regGS("Password Recovery", "");
 regGS("No user is registered with this email.", "");
 regGS("Logo", "");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "");
+regGS("Your work has been saved.", "");
+regGS("Please login to continue.", "");
+regGS("Hi, \nfor password recovery, please follow this link: %s", "Hi, \nUm das Kennwort wiederherzustellen, bitte diesem Link folgen: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");
 regGS("Forgot your password?", "");
 regGS("Email: incorrect format.", "");

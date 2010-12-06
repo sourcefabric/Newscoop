@@ -99,10 +99,9 @@ if (PEAR::isError($file)) {
 
 ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
 
-$logtext = getGS('File #$1 "$2" attached to article #$3 "$4"',
-		 $file->getAttachmentId(), $file->getFileName(),
-		 $articleObj->getArticleNumber(), $articleObj->getName());
-Log::Message($logtext, null, 38);
+$logtext = getGS('File #$1 "$2" attached to article',
+    $file->getAttachmentId(), $file->getFileName());
+Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 ?>
 <script>
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";

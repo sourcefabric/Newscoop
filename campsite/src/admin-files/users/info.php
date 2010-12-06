@@ -204,6 +204,12 @@ if (!$isNewUser) {
 	echo "<input type=\"hidden\" name=\"Type\" value=\"$uType\">\n";
 }
 ?>
+        <?php if ($editUser->hasPermission('MailNotify')) { ?>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input id="unsubscribe" type="checkbox" name="unsubscribe" value="1" /> <label for="unsubscribe"><?php putGS('Unsubscribe email notifications'); ?></label></td>
+        </tr>
+        <?php } ?>
 		</table>
 	</td>
 </tr>

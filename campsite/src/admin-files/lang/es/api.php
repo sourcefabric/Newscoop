@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Publicar con edición");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "El artículo #$1 \"$2\" ($3) se copió al artículo #$4 (publicación $5, edición $6, sección $7). 	");
 regGS("unknown", "desconocido");
 regGS("User type \"$1\" deleted", "Usuario tipo \"$1\" borrado");
 regGS("User type \"$1\" added", "Usuario tipo \"$1\" añadido.");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Artículo de campo tipo \"$1\"");
 regGS("Article type field \"$1\" changed", "Artículo de campo tipo \"$1\" cambiado");
 regGS("Article type \"$1\" translation updated", "Artículo tipo \"$1\" traduccion actualizada");
 regGS("Article topic $1 deleted from article $2", "Tema de artículo $1 borrado del artículo $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Artículo #$1 \"$2\" estatus cambiado de $3 a $4.");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Artículo #$1 \"$2\" ($3) traducida de \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Artículo #$1 \"$2\" ($3) borrado.");
 regGS("The uploaded file format is unsupported.", "El formato del archivo subido no es apoyado.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "El archivo subido no contiene un plugin de campsite válido.");
 regGS("The following fields are mandatory:", "Los siguientes campos son obligatorios:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Se ha agregado el grupo IP $1 para el us
 regGS("Issue $1 changed status to $2", "La edición $1 cambió de estatus a $2.");
 regGS("Last", "Último");
 regGS("First", "Primero");
-regGS("Article #$1 \"$2\" ($3) created.", "Se creó el artículo #$1 \"$2\" ($3)");
 regGS("Single-line Text", "Texto");
 regGS("Multi-line Text with WYSIWYG", "Cuerpo del artículo");
 regGS("Image $1 linked to article $2", "La imagen $1 está vinculada con el artículo $2");
