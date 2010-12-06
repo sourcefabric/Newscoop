@@ -1,8 +1,8 @@
 <?php 
+regGS("Scheduled action added", "");
+regGS("Content edited", "");
 regGS("Campsite Subhead", "Nagłówek Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Nie można połączyć z Campsite. Sprawdź swoje połączenie z Internetem.");
-regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Zaplanowana akcja dodana do artykułu #$1: \"$2\" (Publikacja: $3, Wydanie: $4, Sekcja: $5, Język: $6)");
-regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Zawartość edytowana do artykułu #$1: \"$2\" (Publikacja: $3, Wydanie: $4, Sekcja: $5, Język: $6)");
 regGS("You must select an article language.", "Musisz wybrać język artykułu.");
 regGS("You must select a publication.", "Musisz wybrać publikację.");
 regGS("You must select a file to upload.", "Musisz wybrać plik do wgrania.");
@@ -101,8 +101,8 @@ regGS("Duplicate?", "Duplikować?");
 regGS("Duplicate articles", "Duplikuj artykuły");
 regGS("Article name ($1)", "Nazwa artykułu ($1)");
 regGS("Article List", "Lista artykułów");
-regGS("Are you sure you want to remove the topic \'$1\' from the article?", "");
-regGS("Are you sure you want to remove the file \'$1\' from the article?", "");
+regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Czy na pewno chcesz usunąć temat \'$1\' z artykułu?");
+regGS("Are you sure you want to remove the file \'$1\' from the article?", "Czy na pewno chcesz usunąć plik \'$1\' z artykułu?");
 regGS("Are you sure you want to remove the event scheduled on $1?", "Czy na pewno chcesz usunąć wydarzenie zaplanowane na $1?");
 regGS("Are you sure you want to delete this article?", "Czy na pewno chcesz usunąć ten artykuł?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Wydanie musi zostać utworzone do wybranego języka. Podaj nazwę wydanie i URL nazwy.");
@@ -131,8 +131,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Ten artykuł nie może być podejrzany. Upewnij się, że szablon strony głównej jest wybrany.");
 regGS("No such article.", "Brak artykułu.");
 regGS("No such section.", "Brak sekcji.");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Czy na pewno chcesz usunąc plik audio \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Czy na pewno chcesz usunąć temat \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Czy na pewno chcesz usunąć plik \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Czy na pewno chcesz usunąć obraz \\'$1\\' z artykułu?");
 ?>

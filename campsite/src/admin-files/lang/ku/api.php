@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "نه زانراوه");
 regGS("User type \"$1\" deleted", "به کارهێنه ری جۆری  \"$1\" سڕایه وه");
 regGS("User type \"$1\" added", "به کارهێنه ری جۆری  \"$1\" زیاد بوو");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "زه مینه ی با به تی جۆ
 regGS("Article type field \"$1\" changed", "زه مینه ی با به تی جۆری \"$1\" گۆڕ د را");
 regGS("Article type \"$1\" translation updated", "وه رگێرا نی با به تی جۆ ری  \"$1\" نوێ بو یه وه");
 regGS("Article topic $1 deleted from article $2", "ته وه ری با به تی  $1 سڕا یه وه له با به تی  $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "با به تی  #$1 \"$2\" گۆڕ د را  بۆ \"$4\" ($5)خ");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "با به تی  #$1 \"$2\" ($3) وه ڕ گێر د را بۆ  \"$4\" ($5)خ");
-regGS("Article #$1 \"$2\" ($3) deleted.", "با به تی #$1 \"$2\" ($3) سڕا یه وه");
 regGS("The uploaded file format is unsupported.", "پشتیو انی له به رز کردنه وه ئه و جۆره فا یلا نه نا که ین");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "ئه و پڵا گینه له ئا رشیڤه به رزکرا وه که دا نی یه");
 regGS("The following fields are mandatory:", "ئه و زه مینا نه پێویستن");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "گروپی ئا ی پی  $1 زیا د ب
 regGS("Issue $1 changed status to $2", "چا پی $1 گۆڕ د را بۆ  $2");
 regGS("Last", "دواترین");
 regGS("First", "یه که م");
-regGS("Article #$1 \"$2\" ($3) created.", "با به تی #$1 \"$2\" ($3) خوڵقێند را");
 regGS("Single-line Text", "تێکستی یه ك د ێڕی");
 regGS("Multi-line Text with WYSIWYG", "تێکستی چه ند د ێڕی   WYSIWYGله گه ڵ   ");
 regGS("Image $1 linked to article $2", "وێنه ی $1 لینک د را به با به تی $2");

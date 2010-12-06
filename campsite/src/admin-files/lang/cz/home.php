@@ -1,14 +1,14 @@
 <?php 
-regGS("en", "");
-regGS("Your work has been saved.", "");
-regGS("Widgets", "");
-regGS("Widget info", "");
-regGS("Widget added to dashboard.", "");
-regGS("Remove widget", "");
-regGS("Please login to continue.", "");
-regGS("Go to home", "");
-regGS("Add to dashboard", "");
-regGS("Add more widgets", "");
+regGS("en", "AJ");
+regGS("Your work has been saved.", "Vaše práce byla uložena.");
+regGS("Widgets", "Widgety");
+regGS("Widget info", "Widget info");
+regGS("Widget added to dashboard.", "Wiget přidán na hlavní panel.");
+regGS("Remove widget", "Odstranit widget");
+regGS("Please login to continue.", "Prosím přihlašte se aby jste mohli pokračovat.");
+regGS("Go to home", "Návrat na hlavní stránku");
+regGS("Add to dashboard", "Přidat na hlavní panel");
+regGS("Add more widgets", "Přidat další widety");
 regGS("login", "Přihlásit se ");
 regGS("Your password has been reset <br/> you may now proceed to", "Vaše heslo bylo obnoveno  <br/> nyní můžete přejít k");
 regGS("This link is not valid.", "Tento link je neplatný");
@@ -93,4 +93,5 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
+regGS("Hi, \\nfor password recovery, please follow this link: %s", "Ahoj, \\nfor obnova hesla, prosím následuj tento odkaz: %s");
 ?>

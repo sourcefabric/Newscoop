@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Апублiкаваць выпуск");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Артыкул  №$1 \"$2\" ($3) скапіраваны ў артыкул №$4 (выданне $5, выпуск $6, падзел $7).");
 regGS("unknown", "невядома");
 regGS("User type \"$1\" deleted", "Тып карыстальніка \"$1 выдалены");
 regGS("User type \"$1\" added", "Тып карыстальніка \"$1 дададзены");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Поле артыкула \"$1\" с�
 regGS("Article type field \"$1\" changed", "Поле артыкула \"$1\" зменена");
 regGS("Article type \"$1\" translation updated", "Пераклад для поля артыкула \"$1\" абноўлены");
 regGS("Article topic $1 deleted from article $2", "Тэма артыкула $1 выдалена з артыкула $2 ");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Статус артыкула #$1 \"$2\" зменены з $3 у $4");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Артыкул #$1 \"$2\" ($3) перакладзены ў \"$4\" ($5) ");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Артыкул #$1 \"$2\" ($3) выдалены.");
 regGS("The uploaded file format is unsupported.", "Фармат файлу для загрузкі не падтрымліваецца сыстэмай.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Архіў для загрузкі не зьмяшчае патрэбнага плагіну Campsite.");
 regGS("The following fields are mandatory:", "Дадзеныя палі абавязковыя  для запаўненьня");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Група IP-адрасоў $1 была
 regGS("Issue $1 changed status to $2", "Выпуск $1 зьмянiў свой стан на $2 ");
 regGS("Last", "Апошнi");
 regGS("First", "Першы");
-regGS("Article #$1 \"$2\" ($3) created.", "Артыкул #$1 \"$2\" ($3) створаны.");
 regGS("Single-line Text", "Тэкст");
 regGS("Multi-line Text with WYSIWYG", "Цела артыкула");
 regGS("Image $1 linked to article $2", "Графiчны файл $1 дададзены да артыкула $2");

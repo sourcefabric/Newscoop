@@ -1,6 +1,6 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Фајл #$1 \"$2\" откачен од текста #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Фајл #$1 \"$2\" закачен за текст #$3 \"$4\"");
+regGS("File #$1 \"$2\" unattached", "");
+regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "Није могуће закачити фајл.");
 regGS("There was a problem uploading the file.", "Дошло је до проблема при аплоуду фајла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Фајл је делимично аплоудован. Ово се обично дешава када је макс. време за аплоуд кратко у односу на величину фајла. Максимална величина се подешава у 'php.ini'");

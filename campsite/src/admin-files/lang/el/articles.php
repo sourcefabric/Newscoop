@@ -1,8 +1,8 @@
 <?php 
+regGS("Scheduled action added", "");
+regGS("Content edited", "");
 regGS("Campsite Subhead", "Υποκεφαλίδα Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Η πρόσβαση στο Campsite ήταν αδύνατη. Παρακαλούμε ελέγξτε τη σύνδεση διαδικτύου σας.");
-regGS("Scheduled action added for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Η προγραμματισμένη ενέργεια προστέθηκε για το άρθρο #$1: \"$2\" (Δημοσίευση: $3, Τεύχος: $4, Ενότητα: $5, Γλώσσα: $6)");
-regGS("Content edited for article #$1: \"$2\" (Publication: $3, Issue: $4, Section: $5, Language: $6)", "Επεξεργασμένο περιεχόμενο για το άρθρο #$1: \"$2\" (Δημοσίευση: $3, Τεύχος: $4. Ενότητα: $5, Γλώσσα: $6)");
 regGS("You must select an article language.", "Πρέπει να επιλέξετε μια γλώσσα για το άρθρο.");
 regGS("You must select a publication.", "Πρέπει να επιλέξετε μια δημοσίευση.");
 regGS("You must select a file to upload.", "Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.");
@@ -131,8 +131,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι επιθυμείται να αφαιρέσετε το αρχείο ήχου \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>

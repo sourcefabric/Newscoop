@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Опубликовать выпуск");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Статья №$1 \"$2\" ($3) скопирована в статью №$4 (издание $5, выпуск $6, раздел $7).");
 regGS("unknown", "неизвестно");
 regGS("User type \"$1\" deleted", "Пользовательский тип \"$1\" удален");
 regGS("User type \"$1\" added", "Пользовательский тип \"$1\" добавлен");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Поле статьи \"$1\" соз�
 regGS("Article type field \"$1\" changed", "Поле статьи \"$1\" изменено");
 regGS("Article type \"$1\" translation updated", "Перевод для поля статьи \"$1\" обновлено");
 regGS("Article topic $1 deleted from article $2", "Тема статьи $1 удалена из статьи $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Статус статьи #$1 \"$2\" изменен из $3 в $4.");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Статья #$1 \"$2\" ($3) переведена в \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Статья #$1 \"$2\" ($3) удалена.");
 regGS("The uploaded file format is unsupported.", "Формат файл для загрузки не поддерживается системой.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Архив для загрузки не содержит нужного плагина Campsite.");
 regGS("The following fields are mandatory:", "Данные поля обязательны для заполнения:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Группа IP-адресов $1доб�
 regGS("Issue $1 changed status to $2", "Выпуск $1 изменил состояние на $2");
 regGS("Last", "Последний");
 regGS("First", "Первый");
-regGS("Article #$1 \"$2\" ($3) created.", "Статья #$1 \"$2\" ($3) создана.");
 regGS("Single-line Text", "Текст");
 regGS("Multi-line Text with WYSIWYG", "Тело статьи");
 regGS("Image $1 linked to article $2", "Изображение $1 добавлено к статье $2");

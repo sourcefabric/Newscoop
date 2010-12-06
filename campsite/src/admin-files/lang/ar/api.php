@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("unknown", "");
 regGS("User type \"$1\" deleted", "");
 regGS("User type \"$1\" added", "");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "");
 regGS("Article type field \"$1\" changed", "");
 regGS("Article type \"$1\" translation updated", "");
 regGS("Article topic $1 deleted from article $2", "");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "");
-regGS("Article #$1 \"$2\" ($3) deleted.", "");
 regGS("The uploaded file format is unsupported.", "");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "");
 regGS("The following fields are mandatory:", "");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "تم إضافة مجموعة آي بي $
 regGS("Issue $1 changed status to $2", "تم تغير حالة العدد $1 إلى $2");
 regGS("Last", "الأخير");
 regGS("First", "الأول");
-regGS("Article #$1 \"$2\" ($3) created.", "تم إنشاء المقالة رقم $1 \"$2\" ($3)");
 regGS("Single-line Text", "نص");
 regGS("Multi-line Text with WYSIWYG", "نص متقدم");
 regGS("Image $1 linked to article $2", "تم ربط الصورة 1$ بالمقال 2$");

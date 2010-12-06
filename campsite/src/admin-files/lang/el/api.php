@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "");
+regGS("Callback '$1' is not callable.", "");
+regGS("Author type $1 linked to author $2", "");
+regGS("Author type \"$1\" created.", "");
+regGS("Author #$1 \"$2\" deleted.", "");
+regGS("Article type \"$1\" deleted.", "");
+regGS("Article translated to \"$4\" ($5)", "");
+regGS("Article status changed from $3 to $4.", "");
+regGS("Article deleted.", "");
+regGS("Article created.", "");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
+regGS("Article URL", "");
+regGS("Article Number", "");
+regGS("Access denied.", "");
 regGS("Publish with issue", "Δημοσίευση με τεύχος");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Το Άρθρο #$1 \"$2\" ($3) αντιγράφτηκε στο Άρθρο #$4 (δημοσίευση $5, τεύχος $6, κατηγορία $7). ");
 regGS("unknown", "άγνωστο");
 regGS("User type \"$1\" deleted", "Ο Τύπος χρήστη \"$1\" διαγράφτηκε");
 regGS("User type \"$1\" added", "Ο Τύπος χρήστη \"$1\" προστέθηκε");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Ο τύπος πεδίου άρθρ�
 regGS("Article type field \"$1\" changed", "Ο τύπος πεδίου άρθρου \"$1\" άλλαξε");
 regGS("Article type \"$1\" translation updated", "Η μετάφραση τύπου άρθρου \"$1\" ανανεώθηκε");
 regGS("Article topic $1 deleted from article $2", "Το θέμα άρθρου $1 διαγράφτηκε από το άρθρο $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Η κατάσταση του άρθρου #$1 \"$2\" άλλαξε από $3 σε $4.");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Το άρθρο #$1 \"$2\" ($3) μεταφράστηκε σε \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Το άρθρο #$1 \"$2\" ($3) διαγράφτηκε.");
 regGS("The uploaded file format is unsupported.", "Η μορφή του αρχείου που ανέβηκε δεν υποστηρίζεται.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Το ανεβασμένο αρχείο περιέχει ένα μη έγκυρο πρόσθετο campsite.");
 regGS("The following fields are mandatory:", "Τα παρακάτω πεδία είναι υποχρεωτικά:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Η ομάδα IP $1 προστέθηκε
 regGS("Issue $1 changed status to $2", "Η κατάσταση του τεύχους $1 άλλαξε σε $2");
 regGS("Last", "Τελευταίο");
 regGS("First", "Πρώτο");
-regGS("Article #$1 \"$2\" ($3) created.", "To άρθρο #$1 \"$2\" ($3) δημιουργήθηκε.");
 regGS("Single-line Text", "Κείμενο σε μία γραμμή");
 regGS("Multi-line Text with WYSIWYG", "Κείμενο πολλαπλών γραμμών με WYSIWYG");
 regGS("Image $1 linked to article $2", "Η εικόνα $1 συνδέθηκε με το άρθρο $2");

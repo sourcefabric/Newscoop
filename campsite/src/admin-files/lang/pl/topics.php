@@ -1,4 +1,6 @@
 <?php 
+regGS("Reset order", "");
+regGS("Order changes will be lost. Are you sure you want to continue?", "");
 regGS("Topics order saved.", "Porządek tematów zachowany.");
 regGS("Show languages", "Pokaż języki");
 regGS("Save order", "Zapisz porządek");
