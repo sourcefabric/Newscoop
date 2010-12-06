@@ -34,7 +34,7 @@ echo $breadcrumbs;
     $list->render();
 ?>
 
-</div><!-- /#imagearchive -->
+</div><!-- /#images -->
 
 <div id="attachments">
     <?php
