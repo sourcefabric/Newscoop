@@ -15,12 +15,11 @@ $security_problem = '{"status":"403","description":"Invalid security token!"}';
 $unknown_request = '{"status":"404","description":"Unknown request!"}';
 $data_wrong = '{"status":"404","description":"Wrong data."}';
 
+$f_map_id = Input::Get('f_map_id', 'int', -1, false);
 $f_article_number = Input::Get('f_article_number', 'int', 0, false);
 $f_language_id = Input::Get('f_language_id', 'int', 0, false);
 
-//echo "f_article_number: $f_article_number, f_language_id: $f_language_id<br />\n";
-//exit();
-if ((0 == $f_article_number) || (0 == $f_language_id)) {
+if ((-1 == $f_map_id) || (0 == $f_article_number) || (0 == $f_language_id)) {
     echo $unknown_request;
     exit();
 }
@@ -28,23 +27,22 @@ if ((0 == $f_article_number) || (0 == $f_language_id)) {
 // take input parameters, ask the manage class to load/store the locations, returns json
 if (Input::Get('load')) {
 
-    $found_list = Geo_LocationContents::ReadArticlePoints($f_article_number, $f_language_id);
-    $poi_array = array("status" => "200", "pois" => $found_list);
+    $found_list = Geo_LocationContents::ReadMapPoints($f_map_id, $f_language_id);
+
+    $geo_map_usage = Geo_LocationContents::ReadMapInfo("map", $f_map_id);
+
+    $poi_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
     $poi_json = json_encode($poi_array);
-    //$poi_json = str_replace("+", "%2B", $poi_json);
-    //$poi_json = str_replace("/", "%2F", $poi_json);
     echo $poi_json;
     exit();
 }
-
-//echo json_encode($_REQUEST);
-//exit();
 
 if (Input::Get('store')) {
 
     $status = true;
 
     $f_map = Input::Get('f_map', 'string', "", false);
+
     if ("" != $f_map)
     {
         $map_data = array();
@@ -53,6 +51,7 @@ if (Input::Get('store')) {
             $f_map = str_replace("%2B", "+", $f_map);
             $f_map = str_replace("%2F", "/", $f_map);
             $map_json = base64_decode($f_map);
+
             $map_data = json_decode($map_json);
         }
         catch (Exception $exc)
@@ -61,7 +60,7 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::UpdateMap($f_article_number, $f_language_id, $map_data);
+            $status = Geo_LocationContents::UpdateMap($f_map_id, $f_article_number, $map_data);
         }
     }
 
@@ -88,7 +87,9 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::RemovePoints($f_article_number, $f_language_id, $remove_data);
+
+            $status = Geo_LocationContents::RemovePoints($f_map_id, $remove_data);
+
         }
     }
 
@@ -108,8 +109,7 @@ if (Input::Get('store')) {
             $insert_json = str_replace("%2B", "+", $insert_json);
             $insert_json = str_replace("%2F", "/", $insert_json);
             $insert_json = base64_decode($f_insert);
-            //echo $insert_json;
-            //exit();
+
             $insert_data = json_decode($insert_json);
         }
         catch (Exception $exc)
@@ -118,22 +118,18 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::InsertPoints($f_article_number, $f_language_id, $insert_data, $new_ids);
-            //echo "asdf 3";
-            //exit();
+            $status = Geo_LocationContents::InsertPoints($f_map_id, $f_language_id, $f_article_number, $insert_data, $new_ids);
+
         }
     }
 
 
-    //echo "asdf 4";
-    //exit();
     if (!$status)
     {
         echo $data_wrong;
         exit();
     }
-    //echo "asdf 5";
-    //exit();
+
 
     $f_locations = Input::Get('f_update_loc', 'string', 0, false);
     if ("" != $f_locations)
@@ -152,7 +148,8 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::UpdateLocations($f_article_number, $f_language_id, $locations_data);
+
+            $status = Geo_LocationContents::UpdateLocations($f_map_id, $locations_data);
         }
     }
 
@@ -163,26 +160,17 @@ if (Input::Get('store')) {
     }
 
     $f_contents = Input::Get('f_update_con', 'string', "", false);
-//$fh = fopen("/tmp/wtf002.txt", "w");
-//fwrite($fh, $f_contents);
-//fclose($fh);
 
     if ("" != $f_contents)
     {
         $contents_data = array();
         try
         {
-            //echo "cont: $f_contents\n";
+
             $contents_json = str_replace("%2B", "+", $contents_json);
             $contents_json = str_replace("%2F", "/", $contents_json);
             $contents_json = base64_decode($f_contents);
-//fwrite($fh, "\n");
-//fwrite($fh, $contents_json);
-//fclose($fh);
-            //exit();
 
-            //echo "json: $contents_json\n";
-            //exit();
             $contents_data = json_decode($contents_json);
         }
         catch (Exception $exc)
@@ -191,7 +179,7 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::UpdateContents($f_article_number, $f_language_id, $contents_data);
+            $status = Geo_LocationContents::UpdateContents($f_map_id, $contents_data);
         }
     }
 
@@ -202,7 +190,7 @@ if (Input::Get('store')) {
     }
 
     $f_order = Input::Get('f_order', 'string', "", false);
-    //echo "\nf_order: $f_order\n";
+
     if ("" != $f_order)
     {
         $order_data = array();
@@ -219,7 +207,7 @@ if (Input::Get('store')) {
         }
         if ($status)
         {
-            $status = Geo_LocationContents::UpdateOrder($f_article_number, $f_language_id, $order_data, $new_ids);
+            $status = Geo_LocationContents::UpdateOrder($f_map_id, $order_data, $new_ids);
         }
     }
 
@@ -229,12 +217,14 @@ if (Input::Get('store')) {
         exit();
     }
 
-    //$store_status = Geo_LocationContents::WriteArticlePoints($f_article_number, $f_language_id);
-    $found_list = Geo_LocationContents::ReadArticlePoints($f_article_number, $f_language_id);
-    $poi_array = array("status" => "200", "pois" => $found_list);
+    $geo_map_usage = Geo_LocationContents::ReadMapInfo("map", $f_map_id);
+
+
+    $found_list = Geo_LocationContents::ReadMapPoints($f_map_id, $f_language_id);
+
+    $poi_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
     $poi_json = json_encode($poi_array);
-    //$poi_json = str_replace("+", "%2B", $poi_json);
-    //$poi_json = str_replace("/", "%2F", $poi_json);
+
     echo $poi_json;
     exit();
 }

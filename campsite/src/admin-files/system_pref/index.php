@@ -36,7 +36,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 
 <?php camp_html_display_msgs(); ?>
 
-<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -404,6 +404,210 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <?php putGS("Run cron tasks externaly?"); ?>
         <input type="radio" name="f_external_cron_management" value="Y" <?php if (SystemPref::Get("ExternalCronManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_external_cron_management" value="N" <?php if (SystemPref::Get("ExternalCronManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td colspan="2" align="left">
+        <strong><?php putGS("Geolocation Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Center Latitude:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_center_latitude_default" value="<?php p(SystemPref::Get('MapCenterLatitudeDefault')); ?>" maxlength="10" size="10" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Center Longitude:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_center_longitude_default" value="<?php p(SystemPref::Get('MapCenterLongitudeDefault')); ?>" maxlength="10" size="10" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Zoom Level:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_display_resolution_default" value="<?php p(SystemPref::Get('MapDisplayResolutionDefault')); ?>" maxlength="2" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_default_width" value="<?php p(SystemPref::Get('MapDefaultWidth')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_default_height" value="<?php p(SystemPref::Get('MapDefaultHeight')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Allow Google Map Provider:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_map_provider_available_google_v3" value="1" <?php echo SystemPref::Get('MapProviderAvailableGoogleV3') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Allow OpenStreet Map Provider:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_map_provider_available_oSM" value="1" <?php echo SystemPref::Get('MapProviderAvailableOSM') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Default Map Provider:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_map_provider_default" class="input_select">
+            <?php
+            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Map');
+            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreet Map');
+            ?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Marker Directory:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_marker_directory" value="<?php p(SystemPref::Get('MapMarkerDirectory')); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Marker Names:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_marker_names" value="<?php p(SystemPref::Get('MapMarkerNames')); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
+<?php foreach (explode(',', SystemPref::Get('MapMarkerNames')) as $name) { ?>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php echo ucfirst($name), ' ', getGS('Marker Source'); ?>
+    </td>
+    <td align="left" valign="top">
+    <input type="text" name="f_map_marker_source_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerSource' . ucfirst($name)); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php echo ucfirst($name), ' ', getGS('Marker Offset X'); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_marker_offsetX_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerOffsetX' . ucfirst($name)); ?>" maxlength="4" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php echo ucfirst($name), ' ', getGS('Marker Offset Y'); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_marker_offsetY_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerOffsetY' . ucfirst($name)); ?>" maxlength="4" size="4" class="input_text" />
+    </td>
+</tr>
+<?php } // foreach ?>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Popup Minimal Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_popup_width_min" value="<?php p(SystemPref::Get('MapPopupWidthMin')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Popup Minimal Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_popup_height_min" value="<?php p(SystemPref::Get('MapPopupHeightMin')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Youtube Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_you_tube" value="<?php p(SystemPref::Get('MapVideoWidthYouTube')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Youtube Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_you_tube" value="<?php p(SystemPref::Get('MapVideoHeightYouTube')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Vimeo Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_vimeo" value="<?php p(SystemPref::Get('MapVideoWidthVimeo')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Vimeo Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_vimeo" value="<?php p(SystemPref::Get('MapVideoHeightVimeo')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Flash Default Width:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_width_flash" value="<?php p(SystemPref::Get('MapVideoWidthFlash')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Flash Default Height:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_video_height_flash" value="<?php p(SystemPref::Get('MapVideoHeightFlash')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
 <tr>
