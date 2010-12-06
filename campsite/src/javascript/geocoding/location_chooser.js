@@ -1,6 +1,23 @@
 // the main object to hold geo-things
 var geo_locations = {};
 
+geo_locations.display_strings = {
+    fill_in_map_name: "fill in map name",
+    this_should_not_happen_now: "problem at point processing, please send error report",
+    really_to_delete_the_point: "Really to delete the point?",
+    the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
+    fill_in_the_point_description: "fill in the point description",
+    not_logged_in: "not logged in?",
+    probably_logged_out: "probably logged out",
+    edit: "edit",
+    center: "center",
+    enable: "enable",
+    disable: "disable",
+    remove: "remove"
+};
+
+geo_locations.something_to_save = false;
+
 // specifying the article that the map is for
 geo_locations.article_number = 0;
 geo_locations.language_id = 0;
@@ -36,15 +53,17 @@ geo_locations.map_art_view_height_default = 0;
 // values for popup style properties
 geo_locations.popup_width = 0;
 geo_locations.popup_height = 0;
-geo_locations.popup_video_default = "";
+//geo_locations.popup_video_default = "";
 geo_locations.popup_video_labels = [];
 geo_locations.popup_video_props = {};
+/*
 geo_locations.popup_audio_default = "";
 geo_locations.popup_audio_types = [];
 geo_locations.popup_audio_props = {};
 geo_locations.popup_audio_auto = "";
 geo_locations.popup_audio_site = "";
 geo_locations.popup_audio_object = "";
+*/
 
 // values for the lines to display the proposed map size
 geo_locations.map_art_view_width = 600;
@@ -117,6 +136,38 @@ geo_locations.popup = null;
 geo_locations.image_share = true;
 geo_locations.video_share = true;
 */
+
+geo_locations.set_display_strings = function(local_strings)
+{
+    if (!local_strings) {return;}
+
+    var display_string_names = [
+        "fill_in_map_name",
+        "this_should_not_happen_now",
+        "really_to_delete_the_point",
+        "the_removal_is_from_all_languages",
+        "fill_in_the_point_description",
+        "not_logged_in",
+        "probably_logged_out",
+        "edit",
+        "center",
+        "enable",
+        "disable",
+        "remove",
+    ];
+
+    var str_count = display_string_names.length;
+    for (var sind = 0; sind < str_count; sind++)
+    {
+        var cur_str_name = display_string_names[sind];
+
+        if (undefined !== local_strings[cur_str_name])
+        {
+            this.display_strings[cur_str_name] = local_strings[cur_str_name];
+        }
+    }
+
+};
 
 // setting the article info
 geo_locations.set_article_spec = function(params)
@@ -300,7 +351,7 @@ geo_locations.set_popups_info = function(params)
 
     var video = params.video;
 
-    this.popup_video_default = video.default;
+    //this.popup_video_default = video.default;
     var video_len = video.labels.length;
     for (var vind = 0; vind < video_len; vind++)
     {
@@ -311,8 +362,9 @@ geo_locations.set_popups_info = function(params)
             "source": cur_video["source"],
             "width": cur_video["width"],
             "height": cur_video["height"],
-            "server": cur_video["server"],
-            "directory": cur_video["directory"],
+            //"server": cur_video["server"],
+            //"directory": cur_video["directory"],
+            "path": cur_video["path"],
         };
     }
 
@@ -439,7 +491,7 @@ geo_locations.display_index = function(index)
         if (this.poi_markers[rind]['usage']) {real_index += 1;}
         else
         {
-            alert("this should not happen now 0");
+            alert(this.display_strings.this_should_not_happen_now);
             alert(rind + " / " + index);
             alert(this.poi_markers[rind]);
         }
@@ -527,7 +579,12 @@ geo_locations.set_usage_poi = function(index, usage, div_ids)
 // removal of the requested POI (bound on the 'remove' link)
 geo_locations.remove_poi = function(index)
 {
-    var really = confirm("Really to delete the point?\n\nThe removal is from all language versions of the article.");
+    var confirm_string = this.display_strings.really_to_delete_the_point;
+    confirm_string += "\n\n";
+    confirm_string += this.display_strings.the_removal_is_from_all_languages;
+
+    //var really = confirm("Really to delete the point?\n\nThe removal is from all language versions of the article.");
+    var really = confirm(confirm_string);
     if (!really) {return;}
 
     this.set_save_state(true);
@@ -623,7 +680,8 @@ geo_locations.poi_order_revert = function(index)
         }
     }
 
-    if (!found) {alert("can not revert!");}
+    //if (!found) {alert("can not revert!");}
+    if (!found) {alert(this.display_strings.this_should_not_happen_now + " - " + "reversion");}
 
     return rev_index;
 };
@@ -662,7 +720,7 @@ geo_locations.update_poi_descs = function(active, index_type)
         disp_index = pind + 1;
 
         var cur_poi = this.poi_markers[pind];
-        if (!cur_poi.usage) {alert("this should not happen now 1"); continue;}
+        if (!cur_poi.usage) {alert(this.display_strings.this_should_not_happen_now); continue;}
 
         // these two helper classes are not used now
         var use_class = "";
@@ -693,10 +751,10 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<a class='poi_name' href=\"#\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions'>";
         descs_inner += "<div class='poi_actions'>";
-        descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>edit</a>)&nbsp;";
+        descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>)&nbsp;";
         //descs_inner += "</div>";
         //descs_inner += "<div class='poi_actions'>";
-        descs_inner += "(<a href='#' onclick='geo_locations.center_poi(" + pind + ");return false;'>center</a>)";
+        descs_inner += "(<a href='#' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>)";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_actions'>";
         //descs_inner += "(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>remove</a>)&nbsp;";
@@ -735,8 +793,8 @@ geo_locations.update_poi_descs = function(active, index_type)
         //if (cur_marker && cur_marker.attributes.m_disabled) {disable_value = " disabled=disabled";}
 
         descs_inner += "&nbsp;";
-        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>enable</a>)</span>";
-        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>disable</a>)</span>";
+        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a>)</span>";
+        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_coors'>";
@@ -763,8 +821,8 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>disable</a>)</span>";
         descs_inner += "&nbsp;";
 */
-        descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>remove</a>)</div>";
-        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>remove</a>)</div>";
+        descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
+        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
         //descs_inner += "<span id='" + voi_id + "' class='" + voi_class + "'>(<span class='action_disabled'>removal&nbsp;after&nbsp;disabling</span>)</span>";
 
         descs_inner += "</div>";
@@ -1022,7 +1080,8 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
     vector.attributes.m_direct = false;
     vector.attributes.m_content = "";
     vector.attributes.m_link = "";
-    vector.attributes.m_text = "fill in the POI description";
+    //vector.attributes.m_text = "fill in the POI description";
+    vector.attributes.m_text = this.display_strings.fill_in_the_point_description;
     vector.attributes.m_image_mm = 0;
     vector.attributes.m_image_source = "";
     vector.attributes.m_image_width = "";
@@ -1842,10 +1901,14 @@ geo_locations.set_embed_tag = function(attrs)
         var vid_width = attrs.m_video_width;
         if ((!vid_width) || ("" == vid_width)) {vid_width = vid_define["width"];}
 
+/*
         var vid_server = vid_define["server"];
         if (!vid_server) {vid_server = "";}
         var vid_directory = vid_define["directory"];
         if (!vid_directory) {vid_directory = "";}
+*/
+        var vid_path = vid_define["path"];
+        if (!vid_path) {vid_path = "";}
 
         vid_value = vid_value.replace(/%%h%%/g, vid_height);
         vid_value = vid_value.replace(/%%w%%/g, vid_width);
@@ -1861,12 +1924,14 @@ geo_locations.set_embed_tag = function(attrs)
         }
         if (emptify_server_part)
         {
-            vid_server = "";
-            vid_directory = "";
+            //vid_server = "";
+            //vid_directory = "";
+            vid_path = "";
         }
 
-        vid_value = vid_value.replace(/%%s%%/g, vid_server);
-        vid_value = vid_value.replace(/%%d%%/g, vid_directory);
+        //vid_value = vid_value.replace(/%%s%%/g, vid_server);
+        //vid_value = vid_value.replace(/%%d%%/g, vid_directory);
+        vid_value = vid_value.replace(/%%path%%/g, vid_path);
 
         //alert(vid_value);
         attrs.m_embed = vid_value;
@@ -2332,12 +2397,16 @@ geo_locations.set_save_state = function(state)
 
     if (state)
     {
+        this.something_to_save = true;
+
         $(save_obj).removeClass("map_save_off");
         $(save_obj).addClass("map_save_on");
         //info_obj.innerHTML = "&nbsp;to store data";
     }
     else
     {
+        this.something_to_save = false;
+
         $(save_obj).removeClass("map_save_on");
         $(save_obj).addClass("map_save_off");
         //info_obj.innerHTML = "&nbsp;no change yet";
@@ -2441,7 +2510,7 @@ geo_locations.map_load_name = function()
     }
     else
     {
-        display_obj.innerHTML = "fill in map name";
+        display_obj.innerHTML = this.display_strings.fill_in_map_name;
     }
 
 };
@@ -2482,14 +2551,16 @@ geo_locations.got_load_data = function (load_request)
         //var mssg_obj = document.getElementById ? document.getElementById("error_messages") : null;
         //mssg_obj.innerHTML = load_response;
         //$("#error_messages").removeClass("hidden");
-        alert("probably logged out");
+        //alert("probably logged out");
+        alert(this.display_strings.probably_logged_out);
         //alert("probably logged out: " + e + "\n" + load_response);
         return;
     }
 
     if ("200" != ("" + received_obj.status))
     {
-        alert("not logged in?" + " " + received_obj.status);
+        //alert("not logged in?" + " " + received_obj.status);
+        alert(this.display_strings.not_logged_in + " " + received_obj.status);
         return;
     }
 
@@ -2789,6 +2860,8 @@ geo_locations.put_into_poi_contents = function(storage, index)
 // saving data, on the main 'save' user action; do ajax here
 geo_locations.map_save_all = function(script_dir)
 {
+    if (!this.something_to_save) {return;}
+
     //alert(this.map_view_layer_name);
     var store_request = getHTTPObject();
     var cur_marker = null;

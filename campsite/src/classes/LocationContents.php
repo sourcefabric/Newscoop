@@ -302,12 +302,13 @@ class Geo_LocationContents extends DatabaseObject {
 	public static function UpdateMap(&$p_mapId, $p_articleNumber = 0, $p_map)
     {
 		global $g_ado_db;
+        global $g_user;
 
         $p_map = get_object_vars($p_map);
 
         // creating a new map, if the map does not exist yet
-        $queryStr_map_new = "INSERT INTO Maps (MapCenterLongitude, MapCenterLatitude, MapDisplayResolution, MapProvider, MapWidth, MapHeight, MapName, MapRank, fk_article_number) ";
-        $queryStr_map_new .= "VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?)";
+        $queryStr_map_new = "INSERT INTO Maps (MapCenterLongitude, MapCenterLatitude, MapDisplayResolution, MapProvider, MapWidth, MapHeight, MapName, MapRank, fk_article_number, IdUser) ";
+        $queryStr_map_new .= "VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, %%user_id%%)";
 
         // update the map, if it already exists
         $queryStr_map_up = "UPDATE Maps SET MapCenterLongitude = ?, MapCenterLatitude = ?, MapDisplayResolution = ?, MapProvider = ?, MapWidth = ?, MapHeight = ?, MapName = ? WHERE id = ?";
@@ -328,6 +329,10 @@ class Geo_LocationContents extends DatabaseObject {
             {
                 $map_val_params[] = $p_articleNumber;
                 // create the new map
+
+                // it has to be safe to use the user id directly
+                $queryStr_map_new = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_map_new);
+
                 $success = $g_ado_db->Execute($queryStr_map_new, $map_val_params);
                 // taking the map ID
                 $p_mapId = $g_ado_db->Insert_ID();
@@ -580,16 +585,17 @@ class Geo_LocationContents extends DatabaseObject {
 	public static function InsertMultimedia($ml_id, $poi)
     {
 		global $g_ado_db;
+        global $g_user;
 
         $queryStr_mm = "INSERT INTO Multimedia (";
-        $queryStr_mm .= "media_type, media_spec, media_src, media_width, media_height";
+        $queryStr_mm .= "media_type, media_spec, media_src, media_width, media_height, IdUser";
         $queryStr_mm .= ") VALUES (";
 
         $quest_marks = array();
         for ($ind = 0; $ind < 5; $ind++) {$quest_marks[] = "?";}
         $queryStr_mm .= implode(", ", $quest_marks);
 
-        $queryStr_mm .= ")";
+        $queryStr_mm .= ", %%user_id%%)";
 
         $queryStr_loc_mm = "INSERT INTO MapLocationMultimedia (";
         $queryStr_loc_mm .= "fk_maplocation_id, fk_multimedia_id";
@@ -606,9 +612,23 @@ class Geo_LocationContents extends DatabaseObject {
             $mm_params[] = 0 + $poi["image_width"];
             $mm_params[] = 0 + $poi["image_height"];
 
-            $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
 
-            $mm_id = $g_ado_db->Insert_ID();
+            $mm_options = ""; // currently no options used
+            $reuse_id = Geo_LocationContents::FindMedia("image", "", $poi["image_src"], $poi["image_width"], $poi["image_height"], $mm_options);
+
+            $mm_id = 0;
+            if ($reuse_id && (0 < $reuse_id))
+            {
+                $mm_id = $reuse_id;
+            }
+            else
+            {
+                $queryStr_mm = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_mm);
+
+                $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
+    
+                $mm_id = $g_ado_db->Insert_ID();
+            }
 
             $loc_mm_params = array();
             $loc_mm_params[] = $ml_id;
@@ -638,21 +658,25 @@ class Geo_LocationContents extends DatabaseObject {
         }
     }
 
-
 	public static function InsertContent($poi)
     {
 		global $g_ado_db;
+        global $g_user;
 
         $queryStr_con_in = "INSERT INTO LocationContents (";
         $queryStr_con_in .= "poi_name, poi_link, poi_perex, ";
-        $queryStr_con_in .= "poi_content_type, poi_content, poi_text";
+        $queryStr_con_in .= "poi_content_type, poi_content, poi_text, IdUser";
         $queryStr_con_in .= ") VALUES (";
 
         $quest_marks = array();
         for ($ind = 0; $ind < 6; $ind++) {$quest_marks[] = "?";}
         $queryStr_con_in .= implode(", ", $quest_marks);
 
-        $queryStr_con_in .= ")";
+        $queryStr_con_in .= ", %%user_id%%)";
+
+        $queryStr_con_sl = "SELECT id FROM LocationContents WHERE poi_name = ? AND poi_link = ? ";
+        $queryStr_con_sl .= "AND poi_perex = ? AND poi_content_type = ? AND poi_content = ? AND poi_text = ? ";
+        $queryStr_con_sl .= "ORDER BY id LIMIT 1";
 
         // ad B 3)
         $con_in_params = array();
@@ -664,11 +688,26 @@ class Geo_LocationContents extends DatabaseObject {
         $con_in_params[] = 0 + $poi["content_type"];
         $con_in_params[] = "" . $poi["content"];
         $con_in_params[] = "" . $poi["text"];
-        // insert the POI content on the used language
-        $success = $g_ado_db->Execute($queryStr_con_in, $con_in_params);
 
-        // ad B 4)
-        $con_id = $g_ado_db->Insert_ID();
+        $con_id = 0;
+
+        $rows = $g_ado_db->GetAll($queryStr_con_sl, $con_in_params);
+        if (is_array($rows)) {
+            foreach ($rows as $row) {
+                $con_id = $row['id'];
+            }
+        }
+
+        if ((!$con_id) || (0 == $con_id))
+        {
+            // insert the POI content on the used language
+            $queryStr_con_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_con_in);
+
+            $success = $g_ado_db->Execute($queryStr_con_in, $con_in_params);
+
+            // ad B 4)
+            $con_id = $g_ado_db->Insert_ID();
+        }
 
         return $con_id;
     }
@@ -676,6 +715,7 @@ class Geo_LocationContents extends DatabaseObject {
 	public static function InsertPoints($p_mapId, $p_languageId, $p_articleNumber, $p_insertion, &$p_indices)
     {
 		global $g_ado_db;
+        global $g_user;
 
         // this should not happen
         if (0 == $p_mapId) {return array();}
@@ -698,8 +738,8 @@ class Geo_LocationContents extends DatabaseObject {
 */
 
         // ad B 1)
-		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius) VALUES (";
-        $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0";
+		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
+        $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 3)
         // ad B 5)
@@ -717,19 +757,38 @@ class Geo_LocationContents extends DatabaseObject {
         {
             $poi = get_object_vars($poi_obj);
             {
-                // ad B 1)
-                $loc_in_params = array();
-                $loc_in_params[] = $poi["latitude"];
 
-                $loc_in_params[] = $poi["longitude"];
-                $loc_in_params[] = $poi["latitude"];
-                $loc_in_params[] = $poi["longitude"];
+                $loc_id = null;
+    
+                $new_loc = array();
+                $new_loc[] = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
+                $new_cen = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
+                $new_style = 0;
+                $new_radius = 0;
+                $reuse_id = Geo_LocationContents::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
+    
+                if ($reuse_id && (0 < $reuse_id))
+                {
+                    $loc_id = $reuse_id;
+                }
+                else
+                {
+                    // ad B 1)
+                    $loc_in_params = array();
+                    $loc_in_params[] = $poi["latitude"];
+    
+                    $loc_in_params[] = $poi["longitude"];
+                    $loc_in_params[] = $poi["latitude"];
+                    $loc_in_params[] = $poi["longitude"];
+    
+                    // the POI itself insertion
+                    $queryStr_loc_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_loc_in);
 
-                // the POI itself insertion
-                $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
-                // ad B 2)
-                // taking its ID for the next processing
-                $loc_id = $g_ado_db->Insert_ID();
+                    $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
+                    // ad B 2)
+                    // taking its ID for the next processing
+                    $loc_id = $g_ado_db->Insert_ID();
+                }
 
                 // ad B 3/4)
                 $con_id = Geo_LocationContents::InsertContent($poi);
@@ -783,9 +842,61 @@ class Geo_LocationContents extends DatabaseObject {
         //return true;
     }
 
+    // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
+    public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
+    {
+		global $g_ado_db;
+
+        if ("point" != $p_type) {return null;}
+
+        $queryStr_point = "SELECT id FROM Locations WHERE poi_location = GeomFromText('POINT(? ?)') AND poi_type = 'point' ";
+        $queryStr_point .= "AND poi_type_style= ? AND poi_center = PointFromText('POINT(? ?)') AND poi_radius = ?";
+
+        $loc_id = 0;
+
+        // here checking for points; nothing else yet
+        if ("point" == $p_type)
+        {
+            try
+            {
+                $loc_latitude = $p_location[0]['latitude'];
+                $loc_longitude = $p_location[0]['longitude'];
+                $cen_latitude = $p_center['latitude'];
+                $cen_longitude = $p_center['longitude'];
+
+                $sql_params = array();
+    
+                $sql_params[] = "" . $loc_latitude;
+                $sql_params[] = "" . $loc_longitude;
+                $sql_params[] = "" . $p_style;
+                $sql_params[] = "" . $cen_latitude;
+                $sql_params[] = "" . $cen_longitude;
+                $sql_params[] = 0 + $p_radius;
+    
+                //$queryStr = str_replace("%%location%%", $p_location, $queryStr);
+                //$queryStr = str_replace("%%center%%", $p_center, $queryStr);
+    
+                $rows = $g_ado_db->GetAll($queryStr, $sql_params);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $loc_id = $row['id'];
+                    }
+                }
+            }
+            catch (Exception $exc)
+            {
+                return false;
+            }
+        }
+
+        return $loc_id;
+    }
+
 	public static function UpdateLocations($p_mapId, $p_locations)
     {
 		global $g_ado_db;
+        global $g_user;
+
 /*
     A)
         1) given article_number, language_id, map_id, list of map_loc_id / new locations
@@ -803,8 +914,8 @@ class Geo_LocationContents extends DatabaseObject {
         // ad B 1)
         $queryStr_loc_id = "SELECT fk_location_id AS loc FROM MapLocations WHERE id = ?";
         // ad B 2)
-		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius) VALUES (";
-        $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0";
+		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
+        $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 4)
         $queryStr_map_up = "UPDATE MapLocations SET fk_location_id = ? WHERE id = ?";
@@ -837,20 +948,38 @@ class Geo_LocationContents extends DatabaseObject {
 
             if (null === $loc_old_id) {continue;}
 
-            // ad B 2)
+            $loc_new_id = null;
+
+            $new_loc = array();
+            $new_loc[] = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
+            $new_cen = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
+            $new_style = 0;
+            $new_radius = 0;
+            $reuse_id = Geo_LocationContents::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
+
+            if ($reuse_id && (0 < $reuse_id))
             {
-                $loc_in_params = array();
-                $loc_in_params[] = $poi["latitude"];
-                $loc_in_params[] = $poi["longitude"];
-                $loc_in_params[] = $poi["latitude"];
-                $loc_in_params[] = $poi["longitude"];
-
-                $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
+                $loc_new_id = $reuse_id;
             }
+            else
+            {
+                // ad B 2)
+                {
+                    $loc_in_params = array();
+                    $loc_in_params[] = $poi["latitude"];
+                    $loc_in_params[] = $poi["longitude"];
+                    $loc_in_params[] = $poi["latitude"];
+                    $loc_in_params[] = $poi["longitude"];
+    
+                    $queryStr_loc_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_loc_in);
 
-            // ad B 3)
-            // taking its ID for the next processing
-            $loc_new_id = $g_ado_db->Insert_ID();
+                    $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
+                }
+    
+                // ad B 3)
+                // taking its ID for the next processing
+                $loc_new_id = $g_ado_db->Insert_ID();
+            }
 
             // ad B 4)
             {
@@ -907,9 +1036,43 @@ class Geo_LocationContents extends DatabaseObject {
         $success = $g_ado_db->Execute($queryStr, $sql_params);
     }
 
+    public static function FindMedia($p_type, $p_spec, $p_src, $p_width, $p_height, $p_options)
+    {
+		global $g_ado_db;
+
+        $queryStr = "SELECT id FROM Multimedia WHERE media_type = ? AND media_spec = ? AND media_src = ? AND media_width = ? AND media_height = ? AND options = ?";
+
+        $med_id = 0;
+        try
+        {
+            $sql_params = array();
+
+            $sql_params[] = "" . $p_type;
+            $sql_params[] = "" . $p_spec;
+            $sql_params[] = "" . $p_src;
+            $sql_params[] = 0 + $p_width;
+            $sql_params[] = 0 + $p_height;
+            $sql_params[] = "" . $p_options;
+
+            $rows = $g_ado_db->GetAll($queryStr, $sql_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $med_id = $row['id'];
+                }
+            }
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        return $med_id;
+    }
+
     public static function UpdateMedia($poi, $mm_type)
     {
 		global $g_ado_db;
+        global $g_user;
 
 /*
     A)
@@ -929,9 +1092,9 @@ class Geo_LocationContents extends DatabaseObject {
         $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM MapLocationMultimedia WHERE id = ?";
         // ad B 2)
 
-		$queryStr_med_in = "INSERT INTO Multimedia (media_type, media_spec, media_src, media_height, media_width) VALUES (";
+		$queryStr_med_in = "INSERT INTO Multimedia (media_type, media_spec, media_src, media_height, media_width, IdUser) VALUES (";
         $queryStr_med_in .= "?, ?, ?, ?, ?";
-        $queryStr_med_in .= ")";
+        $queryStr_med_in .= ", %%user_id%%)";
 
         // ad B 4)
         $queryStr_map_up = "UPDATE MapLocationMultimedia SET fk_multimedia_id = ? WHERE id = ?";
@@ -1001,19 +1164,31 @@ class Geo_LocationContents extends DatabaseObject {
         // insert (and connect) just when there is something to insert
         if ($mm_insert)
         {
-            $med_ins_params = array();
-            $med_ins_params[] = "" . $mm_type;
-            $med_ins_params[] = "" . $mm_spec;
-            $med_ins_params[] = "" . $mm_src;
-            $med_ins_params[] = 0 + $mm_width;
-            $med_ins_params[] = 0 + $mm_height;
-    
-            //echo "queryStr_med_in";
-            //print_r($med_ins_params);
-            $success = $g_ado_db->Execute($queryStr_med_in, $med_ins_params);
-    
-            // ad B 3)
-            $med_new_id = $g_ado_db->Insert_ID();
+            $mm_options = ""; // currently no options used
+            $reuse_id = Geo_LocationContents::FindMedia($mm_type, $mm_spec, $mm_src, $mm_width, $mm_height, $mm_options);
+
+            if ($reuse_id && (0 < $reuse_id))
+            {
+                $med_new_id = $reuse_id;
+            }
+            else
+            {
+                $med_ins_params = array();
+                $med_ins_params[] = "" . $mm_type;
+                $med_ins_params[] = "" . $mm_spec;
+                $med_ins_params[] = "" . $mm_src;
+                $med_ins_params[] = 0 + $mm_width;
+                $med_ins_params[] = 0 + $mm_height;
+        
+                //echo "queryStr_med_in";
+                //print_r($med_ins_params);
+                $queryStr_med_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_med_in);
+
+                $success = $g_ado_db->Execute($queryStr_med_in, $med_ins_params);
+        
+                // ad B 3)
+                $med_new_id = $g_ado_db->Insert_ID();
+            }
 
             // ad B 4) -- was no media for this connector, thus create a new one
             if (null === $med_old_id)

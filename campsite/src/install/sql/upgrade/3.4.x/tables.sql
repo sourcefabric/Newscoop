@@ -180,8 +180,14 @@ CREATE TABLE Maps
 --  the map name
     MapName VARCHAR(255) NOT NULL,
 
+--  management related things
+    IdUser int(10) unsigned NOT NULL DEFAULT 0,
+    time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
     PRIMARY KEY (id),
     KEY maps_article_number (fk_article_number),
+    KEY maps_article_number_usage (fk_article_number, MapUsage),
+    KEY maps_article_number_rank (fk_article_number, MapRank),
     KEY maps_map_name (MapName)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -208,7 +214,7 @@ CREATE TABLE MapLocations
     PRIMARY KEY (id),
     KEY map_locations_point_id (fk_location_id),
     KEY map_locations_map_id (fk_map_id),
-    KEY(rank)
+    KEY map_locations_rank (rank)
 
 -- UNIQUE KEY map_locations_map_location_orig (fk_map_id, fk_location_orig)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -234,6 +240,7 @@ CREATE TABLE MapLocationLanguages
 
     KEY map_location_languages_maplocation_id (fk_maplocation_id),
     KEY map_location_languages_language_id (fk_language_id),
+    KEY map_location_languages_content_id (fk_content_id),
     UNIQUE KEY map_locations_languages_maplocation_id_language (fk_maplocation_id, fk_language_id)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -257,16 +264,15 @@ CREATE TABLE Locations (
     poi_radius REAL NOT NULL DEFAULT 0,
 
 --  management related things
-    fk_user_id int(10) unsigned DEFAULT NULL,
-    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+    IdUser int(10) unsigned NOT NULL DEFAULT 0,
+    time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id),
-    SPATIAL INDEX poi_location (poi_location),
-    KEY poi_type (poi_type),
-    KEY poi_type_style (poi_type_style),
-    SPATIAL INDEX poi_center (poi_center),
-    KEY poi_radius (poi_radius)
+    SPATIAL INDEX locations_poi_location (poi_location),
+    KEY locations_poi_type (poi_type),
+    KEY locations_poi_type_style (poi_type_style),
+    SPATIAL INDEX locations_poi_center (poi_center),
+    KEY locations_poi_radius (poi_radius)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -277,7 +283,7 @@ CREATE TABLE LocationContents (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
 
 --  main label for the POI
-    poi_name VARCHAR(1023) NOT NULL,
+    poi_name VARCHAR(255) NOT NULL,
 --  link from the POI popup window
     poi_link VARCHAR(1023) NOT NULL DEFAULT "",
 
@@ -293,14 +299,13 @@ CREATE TABLE LocationContents (
     poi_text TEXT NOT NULL DEFAULT "",
 
 --  management related things
---    fk_user_id int(10) unsigned DEFAULT NULL,
---    last_modified timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
---    time_created timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+    IdUser int(10) unsigned NOT NULL DEFAULT 0,
+    time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
 --  specifying the rows by unique way
     PRIMARY KEY (id),
 
-    KEY poi_name (poi_name)
+    KEY location_contents_poi_name (poi_name)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -323,6 +328,13 @@ CREATE TABLE Multimedia (
 --  other options, e.g. for a player
     options VARCHAR(1023) NOT NULL DEFAULT "",
 
+--  management related things
+    IdUser int(10) unsigned NOT NULL DEFAULT 0,
+    time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    KEY multimedia_media_type (media_type),
+    KEY multimedia_media_src (media_src),
+
     PRIMARY KEY (id)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -339,8 +351,8 @@ CREATE TABLE MapLocationMultimedia (
 
     PRIMARY KEY (id),
 
-    KEY mapLocationmultimedia_maplocation_id (fk_maplocation_id),
-    KEY mapLocationmultimedia_multimedia_id (fk_multimedia_id)
+    KEY maplocationmultimedia_maplocation_id (fk_maplocation_id),
+    KEY maplocationmultimedia_multimedia_id (fk_multimedia_id)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
