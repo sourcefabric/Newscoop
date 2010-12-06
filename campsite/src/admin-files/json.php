@@ -17,6 +17,7 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+require_once LIBS_DIR . '/ImageList/ImageList.php';
 
 try {
     // init request
@@ -36,6 +37,7 @@ try {
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
     $serverRequest->allow('MediaList::doData');
+    $serverRequest->allow('ImageList::doData');
 
     // execute
     echo json_encode($serverRequest->execute());
