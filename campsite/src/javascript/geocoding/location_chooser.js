@@ -2451,7 +2451,7 @@ geo_locations.map_load_name = function()
 geo_locations.got_load_data = function (load_request)
 {
     //return;
-    alert(load_request.responseText);
+    //alert(load_request.responseText);
 
     var load_status = load_request.status;
     var http_status_ok = 200;
