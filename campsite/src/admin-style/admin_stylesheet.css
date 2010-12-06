@@ -1989,3 +1989,7 @@ body > form > fieldset dt {
 .smartlist .datatable.medialist .name {
     width: 50%;
 }
+
+.mediaplayer {
+    margin: 14px;
+}

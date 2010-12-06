@@ -4,6 +4,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
@@ -33,8 +34,11 @@ echo $breadcrumbs;
 <?php camp_html_display_msgs(); ?>
 <p></p>
 
-<h2><?php echo $object->getFileName(); ?> <span>[<a href="<?php echo $object->getAttachmentUrl(); ?>" title="<?php echo getGS('Download'), ' ', $object->getFileName(); ?>"><?php putGS('link'); ?></a>]</span></h2>
+<h2><?php echo $object->getFileName(); ?></h2>
 <p class="dates"><?php putGS('Created'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php putGS('Last modified'); ?>: <?php echo $object->getLastModified(); ?></p>
+
+<?php echo new MediaPlayer($object->getAttachmentUrl(), $object->getMimeType()); ?>
+
 <dl class="attachment">
     <dt><?php putGS('Type'); ?>:</dt>
     <dd><?php echo $object->getMimeType(); ?></dd>
