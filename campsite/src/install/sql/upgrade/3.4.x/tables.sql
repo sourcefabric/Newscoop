@@ -320,6 +320,9 @@ CREATE TABLE Multimedia (
     media_height int NOT NULL DEFAULT 0,
     media_width int NOT NULL DEFAULT 0,
 
+--  other options, e.g. for a player
+    options VARCHAR(1023) NOT NULL DEFAULT "",
+
     PRIMARY KEY (id)
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
