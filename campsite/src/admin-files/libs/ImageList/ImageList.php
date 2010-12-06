@@ -40,7 +40,8 @@ class ImageList extends BaseList
             'Place',
         );
 
-        $this->notSortable[] = 1;
+        $this->defaultSorting = 6;
+        $this->defaultSortingDir = 'desc';
     }
 
     /**

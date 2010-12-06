@@ -49,8 +49,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bAutoWidth': true,
     'bDestroy': true,
     'bJQueryUI': true,
+    'bStateSave': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
-    'aaSorting': [[1, 'asc']],
+    'aaSorting': [<?php echo $this->getSorting(); ?>],
     'oLanguage': {
         'oPaginate': {
             'sNext': '<?php putGS('Next'); ?>',

@@ -43,6 +43,12 @@ class BaseList
     /** @var array */
     protected $hidden = array();
 
+    /** @var string */
+    protected $defaultSorting = NULL;
+
+    /** @var string */
+    protected $defaultSortingDir = 'asc';
+
     /** @var array */
     protected $notSortable = array();
 
@@ -68,7 +74,7 @@ class BaseList
         camp_load_translation_strings('articles');
         camp_load_translation_strings('universal_list');
 
-        $this->id = substr(sha1((string) mt_rand()), -6);
+        $this->id = substr(sha1(get_class($this)), -6);
     }
 
     /**
@@ -87,6 +93,18 @@ class BaseList
             $paging,
             $this->items === NULL ? 'l' : ''
         );
+    }
+
+    /**
+     * Get default sorting
+     * @return string
+     */
+    public function getSorting()
+    {
+        return json_encode(array(
+            (int) $this->defaultSorting,
+            $this->defaultSortingDir,
+        ));
     }
 
     /**

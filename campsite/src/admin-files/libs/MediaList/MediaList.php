@@ -29,12 +29,16 @@ class MediaList extends BaseList
             'file_name' => getGS('Filename'),
             'mime_type' => getGS('Type'),
             'size_in_bytes' => getGS('Size'),
+            'time_created' => getGS('Added'),
             'last_modified' => getGS('Last modified'),
         );
         
         $this->searchCols = array(
             'file_name', 'extension', 'mime_type',
         );
+
+        $this->defaultSorting = 4;
+        $this->defaultSortingDir = 'desc';
     }
 
     /**

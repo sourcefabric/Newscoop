@@ -37,6 +37,16 @@ class ArticleList extends BaseList
     protected static $renderActions = FALSE;
 
     /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // generate random ids - more tables per page
+        $this->id = substr(sha1((string) mt_rand()), -6);
+    }
+
+    /**
      * Set publication.
      * @param int $publication
      * @return ArticleList
