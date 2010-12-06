@@ -407,9 +407,11 @@ HTML content for the pop-up content<br />&nbsp;
 &nbsp;
 </li>
 <li>
+<!--
 <label class="edit_label" for="point_image_share">share:</label>
 <input id="point_image_share" name="point_image_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('image_share', this.checked); return false;" checked />
 with other languages
+-->
 </li>
 <li>
 <label class="edit_label" for="point_image_height">width:</label>
@@ -438,7 +440,8 @@ with other languages
 <option value="none" selected="true">None</option>
 <option value="youtube">Youtube</option>
 <option value="vimeo">Vimeo</option>
-<option value="flash">Flash</option>
+<option value="flash">Flash (sfw)</option>
+<option value="flv">Flash (flv)</option>
 </select>
 <!--
 <input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
@@ -447,9 +450,11 @@ with other languages
 -->
 </li>
 <li>
+<!--
 <label class="edit_label" for="point_video_share">share:</label>
 <input id="point_video_share" name="point_video_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('video_share', this.checked); return false;" checked />
 with other languages
+-->
 </li>
 <li>
 <label class="edit_label" for="point_video_width">width:</label>

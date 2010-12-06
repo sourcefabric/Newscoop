@@ -315,7 +315,8 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $youtube_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>';
     $vimeo_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>';
-    $flash_src_default = '<object width="%%w%%px" %%h%%="360px"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%s%%%%d%%%%id%%"/><embed src="%%s%%%%d%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
+    $flash_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%s%%%%d%%%%id%%"/><embed src="%%s%%%%d%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
+    $flv_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="%%s%%%%d%%player.swf"></param><param name="flashvars" value="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="%%s%%%%d%%player.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%%w%%" height="%%h%%" flashvars="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></embed></object>';
 
     // if nothing configured, use the default
     //if (0 == count($video_names_usage))
@@ -342,6 +343,7 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
         $video_names_usage[] = array("label" => "YouTube", "source" => $youtube_src_default, "width" => '425', "height" => '350');
         $video_names_usage[] = array("label" => "Vimeo", "source" => $vimeo_src_default, "width" => '400', "height" => '225');
         $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => '300', "height" => '200', "server" => $flash_server, "directory" => $flash_directory);
+        $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => '300', "height" => '280', "server" => $flash_server, "directory" => $flash_directory);
     }
 
     $video_info = array("default" => $video_default, "labels" => $video_names_usage);

@@ -936,6 +936,7 @@ class Geo_LocationContents extends DatabaseObject {
         // ad B 4)
         $queryStr_map_up = "UPDATE MapLocationMultimedia SET fk_multimedia_id = ? WHERE id = ?";
         $queryStr_map_in = "INSERT INTO MapLocationMultimedia (fk_maplocation_id, fk_multimedia_id) VALUES (?, ?)";
+        $queryStr_map_rm = "DELETE FROM MapLocationMultimedia WHERE id = ?";
         // ad B 6)
         $queryStr_med_rm = "DELETE FROM Multimedia WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocationMultimedia WHERE fk_multimedia_id = ?)";
 
@@ -946,13 +947,16 @@ class Geo_LocationContents extends DatabaseObject {
         $mm_src = "";
         $mm_width = "";
         $mm_height = "";
+        $mm_insert = false;
         if ("image" == $mm_type)
         {
+            //print_r($poi);
             $mm_id = $poi["image_mm"];
             $mm_spec = "";
-            $mm_src = $poi["image_source"];
+            $mm_src = $poi["image_src"];
             $mm_width = $poi["image_width"];
             $mm_height = $poi["image_height"];
+            if ("" != $mm_src) {$mm_insert = true;}
         }
         if ("video" == $mm_type)
         {
@@ -961,6 +965,7 @@ class Geo_LocationContents extends DatabaseObject {
             $mm_src = $poi["video_id"];
             $mm_width = $poi["video_width"];
             $mm_height = $poi["video_height"];
+            if ("" != $mm_src) {$mm_insert = true;}
         }
         if (null === $mm_id) {return;}
 
@@ -987,38 +992,59 @@ class Geo_LocationContents extends DatabaseObject {
     
             if (null === $med_old_id) {return;}
         }
+        //echo "$med_old_id";
 
         // ad B 2)
-        $med_ins_params = array();
-        $med_ins_params[] = "" . $mm_type;
-        $med_ins_params[] = "" . $mm_spec;
-        $med_ins_params[] = "" . $mm_src;
-        $med_ins_params[] = 0 + $mm_width;
-        $med_ins_params[] = 0 + $mm_height;
 
-        $success = $g_ado_db->Execute($queryStr_med_in, $med_ins_params);
+        $med_new_id = 0;
 
-        // ad B 3)
-        $med_new_id = $g_ado_db->Insert_ID();
-
-        if (null === $med_old_id)
+        // insert (and connect) just when there is something to insert
+        if ($mm_insert)
         {
-            $map_in_params = array();
-            $map_in_params[] = $poi["location_id"];
-            $map_in_params[] = $med_new_id;
+            $med_ins_params = array();
+            $med_ins_params[] = "" . $mm_type;
+            $med_ins_params[] = "" . $mm_spec;
+            $med_ins_params[] = "" . $mm_src;
+            $med_ins_params[] = 0 + $mm_width;
+            $med_ins_params[] = 0 + $mm_height;
+    
+            //echo "queryStr_med_in";
+            //print_r($med_ins_params);
+            $success = $g_ado_db->Execute($queryStr_med_in, $med_ins_params);
+    
+            // ad B 3)
+            $med_new_id = $g_ado_db->Insert_ID();
 
-            $success = $g_ado_db->Execute($queryStr_map_in, $map_in_params);
-
-            return;
+            // ad B 4) -- was no media for this connector, thus create a new one
+            if (null === $med_old_id)
+            {
+                $map_in_params = array();
+                $map_in_params[] = $poi["location_id"];
+                $map_in_params[] = $med_new_id;
+    
+                $success = $g_ado_db->Execute($queryStr_map_in, $map_in_params);
+    
+                return;
+            }
+            else // -- already had a media, thus just update the connector
+            {
+                $map_up_params = array();
+                $map_up_params[] = $med_new_id;
+                $map_up_params[] = $mm_id;
+    
+                $success = $g_ado_db->Execute($queryStr_map_up, $map_up_params);
+            }
         }
-
-        // ad B 4)
+        else // here: nothing to left connected, thus deleting the old connector if any
         {
-            $map_up_params = array();
-            $map_up_params[] = $med_new_id;
-            $map_up_params[] = $mm_id;
-
-            $success = $g_ado_db->Execute($queryStr_map_up, $map_up_params);
+            if ($mm_id) // if a connector was there
+            {
+                // ad B 4) deleting the old connector;
+                $map_rm_params = array();
+                $map_rm_params[] = $mm_id;
+    
+                $success = $g_ado_db->Execute($queryStr_map_rm, $map_rm_params);
+            }
         }
 
         // ad B 6)
@@ -1028,6 +1054,8 @@ class Geo_LocationContents extends DatabaseObject {
             $med_rm_params[] = $med_old_id;
             $med_rm_params[] = $med_old_id;
 
+            //echo "$queryStr_med_rm";
+            //print_r($med_rm_params);
             $success = $g_ado_db->Execute($queryStr_med_rm, $med_rm_params);
         }
         catch (Exception $exc)
@@ -1038,9 +1066,7 @@ class Geo_LocationContents extends DatabaseObject {
 
     }
 
-
-
-	public static function UpdateContents($p_mapId, $p_contents)
+    public static function UpdateText($poi)
     {
 		global $g_ado_db;
 
@@ -1068,30 +1094,7 @@ class Geo_LocationContents extends DatabaseObject {
         // ad B 6)
         $queryStr_con_rm = "DELETE FROM LocationContents WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocationLanguages WHERE fk_content_id = ?)";
 
-
-        foreach ($p_contents as $poi_obj)
         {
-            $poi = get_object_vars($poi_obj);
-
-            if ($poi["icon_changed"])
-            {
-                Geo_LocationContents::UpdateIcon($poi);
-            }
-            if ($poi["state_changed"])
-            {
-                Geo_LocationContents::UpdateState($poi);
-            }
-            if ($poi["image_changed"])
-            {
-                Geo_LocationContents::UpdateMedia($poi, "image");
-            }
-            if ($poi["video_changed"])
-            {
-                Geo_LocationContents::UpdateMedia($poi, "video");
-            }
-
-            if (!$poi["text_changed"]) {continue;}
-
             // ad B 1)
             $con_old_id = null;
             try
@@ -1141,7 +1144,40 @@ class Geo_LocationContents extends DatabaseObject {
                 return false;
             }
 
+        }
 
+    }
+
+	public static function UpdateContents($p_mapId, $p_contents)
+    {
+		global $g_ado_db;
+
+        foreach ($p_contents as $poi_obj)
+        {
+            $poi = get_object_vars($poi_obj);
+
+            if ($poi["icon_changed"])
+            {
+                Geo_LocationContents::UpdateIcon($poi);
+            }
+            if ($poi["state_changed"])
+            {
+                Geo_LocationContents::UpdateState($poi);
+            }
+            if ($poi["image_changed"])
+            {
+                Geo_LocationContents::UpdateMedia($poi, "image");
+            }
+            if ($poi["video_changed"])
+            {
+                Geo_LocationContents::UpdateMedia($poi, "video");
+            }
+
+            //if (!$poi["text_changed"]) {continue;}
+            if ($poi["text_changed"])
+            {
+                Geo_LocationContents::UpdateText($poi);
+            }
 
         }
 
