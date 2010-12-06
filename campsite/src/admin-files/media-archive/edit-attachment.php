@@ -9,14 +9,14 @@ require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_goto_page("/$ADMIN/media-archive/index.php#attachments");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 }
 
 $object = new Attachment($f_attachment_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#attachments");
+$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#files");
 if ($g_user->hasPermission('ChangeImage')) {
 	$crumbs[] = array(getGS('Change attachment information'), "");
 }

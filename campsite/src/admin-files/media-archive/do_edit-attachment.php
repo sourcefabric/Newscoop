@@ -13,7 +13,7 @@ if (!SecurityToken::isValid()) {
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 $f_description = Input::Get('f_description', 'string', '');
 if (!Input::IsValid() || ($f_attachment_id <= 0)) {
-	camp_html_goto_page("/$ADMIN/media-archive/index.php#attachments");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 }
 
 $object = new Attachment($f_attachment_id);
