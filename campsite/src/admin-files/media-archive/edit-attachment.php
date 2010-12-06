@@ -1,21 +1,22 @@
 <?php
-camp_load_translation_strings("imagearchive");
+camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_goto_page("/$ADMIN/media-archive/index.php#attachments");
+	camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 }
 
 $object = new Attachment($f_attachment_id);
 
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#attachments");
+$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#files");
 if ($g_user->hasPermission('ChangeImage')) {
 	$crumbs[] = array(getGS('Change attachment information'), "");
 }
@@ -33,8 +34,11 @@ echo $breadcrumbs;
 <?php camp_html_display_msgs(); ?>
 <p></p>
 
-<h2><?php echo $object->getFileName(); ?> <span>[<a href="<?php echo $object->getAttachmentUrl(); ?>" title="<?php echo getGS('Download'), ' ', $object->getFileName(); ?>"><?php putGS('link'); ?></a>]</span></h2>
+<h2><?php echo $object->getFileName(); ?></h2>
 <p class="dates"><?php putGS('Created'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php putGS('Last modified'); ?>: <?php echo $object->getLastModified(); ?></p>
+
+<?php echo new MediaPlayer($object->getAttachmentUrl(), $object->getMimeType()); ?>
+
 <dl class="attachment">
     <dt><?php putGS('Type'); ?>:</dt>
     <dd><?php echo $object->getMimeType(); ?></dd>

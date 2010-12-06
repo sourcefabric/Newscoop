@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("imagearchive");
+camp_load_translation_strings("media_archive");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));

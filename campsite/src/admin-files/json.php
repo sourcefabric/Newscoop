@@ -17,6 +17,7 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
 
 try {
@@ -39,6 +40,9 @@ try {
     $serverRequest->allow('Geo_Names::FindCitiesByLocation');
     $serverRequest->allow('Geo_Names::FindCitiesByName');
     $serverRequest->allow('MediaList::doData');
+    $serverRequest->allow('ImageList::doData');
+    $serverRequest->allow('MediaList::doDelete');
+    $serverRequest->allow('ImageList::doDelete');
 
     // execute
     echo json_encode($serverRequest->execute());

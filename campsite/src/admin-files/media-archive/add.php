@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("imagearchive");
+camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');

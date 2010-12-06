@@ -37,6 +37,16 @@ class ArticleList extends BaseList
     protected static $renderActions = FALSE;
 
     /**
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // generate random ids - more tables per page
+        $this->id = substr(sha1((string) mt_rand()), -6);
+    }
+
+    /**
      * Set publication.
      * @param int $publication
      * @return ArticleList
@@ -98,6 +108,8 @@ class ArticleList extends BaseList
      */
     public function renderFilters()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/filters.php';
         self::$renderFilters = TRUE;
         return $this;
@@ -109,6 +121,8 @@ class ArticleList extends BaseList
      */
     public function renderActions()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/actions.php';
         self::$renderActions = TRUE;
         return $this;
@@ -120,6 +134,8 @@ class ArticleList extends BaseList
      */
     public function render()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/table.php';
         self::$renderTable = TRUE;
         echo '</div><!-- /#list-' . $this->id . ' -->';
@@ -207,7 +223,7 @@ class ArticleList extends BaseList
      * Handle data
      * @param array $f_request
      */
-    public static function doData($f_request)
+    public function doData($f_request)
     {
         global $ADMIN_DIR, $g_user;
         foreach ($_REQUEST['args'] as $arg) {
