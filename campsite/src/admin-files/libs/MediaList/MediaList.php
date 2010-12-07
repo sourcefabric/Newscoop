@@ -29,6 +29,7 @@ class MediaList extends BaseList
             'file_name' => getGS('Filename'),
             'mime_type' => getGS('Type'),
             'size_in_bytes' => getGS('Size'),
+            'content_disposition' => getGS('Open in browser'),
             'time_created' => getGS('Added'),
             'last_modified' => getGS('Last modified'),
         );
@@ -37,7 +38,7 @@ class MediaList extends BaseList
             'file_name', 'extension', 'mime_type',
         );
 
-        $this->defaultSorting = 4;
+        $this->defaultSorting = 5;
         $this->defaultSortingDir = 'desc';
     }
 
@@ -57,6 +58,9 @@ class MediaList extends BaseList
 
         // human readable size
         $row['size_in_bytes'] = parent::FormatFileSize($row['size_in_bytes']);
+
+        // yes/no disposition
+        $row['content_disposition'] = empty($row['content_disposition']) ? getGS('Yes') : getGS('No');
 
         return array_values($row);
     }

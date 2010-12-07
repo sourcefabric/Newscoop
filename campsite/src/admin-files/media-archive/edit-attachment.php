@@ -1,5 +1,6 @@
 <?php
 camp_load_translation_strings("media_archive");
+camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
@@ -64,6 +65,13 @@ echo $breadcrumbs;
         <dt><label for="description"><?php putGS("Description"); ?>:</label</dt>
         <dd><input id="description" type="text" name="f_description" value="<?php echo htmlspecialchars($object->getDescription($object->getLanguageId())); ?>" size="50" maxlength="255" class="input_text" /></dd>
     </dl>
+
+    <dl>
+        <dt><label><?php putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></label></dt>
+        <dd><input id="disposition0" type="radio" name="f_content_disposition" value=""<?php if ($object->getContentDisposition() == NULL) { echo ' checked="checked"'; } ?> /> <label for="disposition0"><?php putGS("Open in the browser"); ?></label></dd>
+        <dd><input id="disposition1" type="radio" name="f_content_disposition" value="attachment"<?php if ($object->getContentDisposition() == 'attachment') { echo ' checked="checked"'; } ?> /> <label for="disposition1"><?php putGS("Automatically download"); ?></label></dd>
+    </dl>
+
     <dl class="buttons">
         <dt>&nbsp;</dt>
         <dd><input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button" /></dd>
