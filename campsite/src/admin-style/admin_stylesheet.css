@@ -1982,8 +1982,14 @@ body > form > fieldset {
     border: 1px solid #ccc;
 }
 
+body > form > fieldset dl {
+    height: 1%;
+    overflow: hidden;
+}
+
 body > form > fieldset dt {
-    width: 8em;
+    width: 10em;
+    margin-right: 1em;
 }
 
 .smartlist .datatable.medialist .name {
