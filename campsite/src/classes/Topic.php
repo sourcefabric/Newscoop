@@ -15,7 +15,8 @@ class Topic extends DatabaseObject {
 
 	var $m_dbTableName = 'Topics';
 
-	var $m_columnNames = array('Id', 'LanguageId', 'Name', 'ParentId', 'TopicOrder');
+	var $m_columnNames = array('Id', 'LanguageId', 'Name', 'ParentId', 'TopicOrder',
+	'node_left', 'node_right');
 
 	var $m_hasSubtopics = null;
 
@@ -77,6 +78,8 @@ class Topic extends DatabaseObject {
 				$this->m_data['Id'] = $row['Id'];
 				$this->m_data['ParentId'] = $row['ParentId'];
 				$this->m_data['TopicOrder'] = $row['TopicOrder'];
+				$this->m_data['node_left'] = $row['node_left'];
+				$this->m_data['node_right'] = $row['node_right'];
 				$this->m_names[$row['LanguageId']] = $row['Name'];
 				foreach ($rows as $row) {
 					$this->m_names[$row['LanguageId']] = $row['Name'];
@@ -105,6 +108,9 @@ class Topic extends DatabaseObject {
 	public function create($p_values = null)
 	{
 		global $g_ado_db;
+
+		$g_ado_db->Execute("LOCK TABLE Topics WRITE, AutoId WRITE");
+
 		$queryStr = "UPDATE AutoId SET TopicId = LAST_INSERT_ID(TopicId + 1)";
 		$g_ado_db->Execute($queryStr);
 		$this->m_data['Id'] = $g_ado_db->Insert_ID();
@@ -117,20 +123,25 @@ class Topic extends DatabaseObject {
 			$this->m_names[$this->m_data['LanguageId']] = $p_values['Name'];
 		}
 
-		// compute topic order number
-		$queryStr = "SELECT MIN(TopicOrder) AS min FROM Topics";
-		$topicOrder = $g_ado_db->GetOne($queryStr) - 1;
-		if ($topicOrder < 0) {
-			$topicOrder = $this->m_data['Id'];
+		if (!empty($p_values['ParentId'])) {
+			$parent = new Topic($p_values['ParentId']);
+			if (!$parent->exists()) {
+				$g_ado_db->Execute("UNLOCK TABLES");
+				return false;
+			}
+			$parentLeft = (int)$parent->getLeft();
+		} else {
+			$parentLeft = 0;
 		}
-		if ($topicOrder == 0) {
-			$queryStr = "UPDATE Topics SET TopicOrder = TopicOrder + 1";
-			$g_ado_db->Execute($queryStr);
-			$topicOrder = 1;
-		}
-		$p_values['TopicOrder'] = $topicOrder;
+
+		$g_ado_db->Execute("UPDATE Topics SET node_left = node_left + 2 WHERE node_left > $parentLeft");
+		$g_ado_db->Execute("UPDATE Topics SET node_right = node_right + 2 WHERE node_right > $parentLeft");
+
+		$this->m_data['node_left'] = $parentLeft + 1;
+		$this->m_data['node_right'] = $parentLeft + 2;
 
 		$success = parent::create($p_values);
+		$g_ado_db->Execute("UNLOCK TABLES");
 		if ($success) {
 			$this->m_exists = true;
 			if (function_exists("camp_load_translation_strings")) {
@@ -145,48 +156,111 @@ class Topic extends DatabaseObject {
 
 
 	/**
+	 * Returns the node left order
+	 * @param bool $p_forceFetchFromDatabase
+	 */
+	public function getLeft($p_forceFetchFromDatabase = false)
+	{
+		return $this->getProperty('node_left', $p_forceFetchFromDatabase);
+	} // fn getLeft
+
+
+	/**
+	 * Returns the node right order
+	 * @param bool $p_forceFetchFromDatabase
+	 */
+	public function getRight($p_forceFetchFromDatabase = false)
+	{
+		return $this->getProperty('node_right', $p_forceFetchFromDatabase);
+	} // fn getRight
+
+
+	/**
+	 * Set the given column name to the given value.
+	 * The object's internal variable will also be updated.
+	 * If the value hasn't changed, the database will not be updated.
+	 *
+	 * Note: Returns false when setting the fields node_left and node_right.
+	 * We don't want to allow direct update of these fields.
+	 *
+	 * Note: You cannot set $p_commit to FALSE and $p_isSql to TRUE
+	 * at the same time.
+	 *
+	 * @param string $p_dbColumnName
+	 *		The name of the column that is to be updated.
+	 *
+	 * @param string $p_value
+	 *		The value to set.
+	 *
+	 * @param boolean $p_commit
+	 *		If set to true, the value will be written to the database immediately.
+	 *		If set to false, the value will not be written to the database.
+	 *		Default is true.
+	 *
+	 * @param boolean $p_isSql
+	 *		Set this to TRUE if p_value consists of SQL commands.
+	 *		There is no way to know what the result of the command is,
+	 *		so we will need to refetch the value from the database in
+	 *		order to update the internal variable's value.
+	 *
+	 * @return boolean
+	 *		TRUE on success, FALSE on error.
+	 */
+	public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
+	{
+		if ($p_dbColumnName == 'node_left' || $p_dbColumnName == 'node_right') {
+			return false;
+		}
+		return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
+	} // fn setProperty
+
+
+	/**
 	 * Delete the topic.
 	 * @return boolean
 	 */
 	public function delete($p_languageId = null)
 	{
 		global $g_ado_db;
-		$deleted = false;
-		if (is_null($p_languageId)) {
-			// Delete all translations
-			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id'];
+
+		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicFields WRITE, ArticleTypeMetadata WRITE");
+
+		if ($p_languageId > 0 && $this->getNumTranslations() > 1) {
+			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".(int)$p_languageId;
 			$deleted = $g_ado_db->Execute($sql);
-		} elseif (is_numeric($p_languageId)) {
-			// Delete specific translation
-			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".$p_languageId;
+		} else {
+			// Delete the article type field metadata
+			if ($deleted) {
+				$sql = "SELECT * FROM TopicFields WHERE RootTopicId IN "
+				."(SELECT DISTINCT Id FROM Topics WHERE node_left >= ". $this->m_data['node_left']
+				." AND node_right < " . $this->m_data['node_right'] . ")";
+				$row = $g_ado_db->GetAll($sql);
+				foreach ($rows as $row) {
+					$delATF = new ArticleTypeField($row['ArticleType'], $row['FieldName']);
+					$delATF->delete();
+				}
+			}
+
+			// Delete children and itself
+			$sql = "DELETE FROM Topics WHERE node_left >= ".$this->m_data['node_left']
+			. ' AND node_right < '.$this->m_data['node_right'];
 			$deleted = $g_ado_db->Execute($sql);
+
+			if ($deleted) {
+				$myWidth = $this->m_data['node_right'] - $this->m_data['node_left'] + 1;
+				$sql = "UPDATE Topics SET node_left = node_left - $myWidth WHERE node_left > " . $this->m_data['node_left'];
+				$g_ado_db->Execute($sql);
+				$sql = "UPDATE Topics SET node_right = node_right - $myWidth WHERE node_right > " . $this->m_data['node_right'];
+				$g_ado_db->Execute($sql);
+			}
+
+			$this->m_data = array();
+			$this->m_exists = false;
 		}
 
-		// Change TopicOrder of another topics
-		// if all translations of this topic removed
-		if ($deleted) {
-		    $sql = "SELECT COUNT(*) FROM Topics WHERE Id=".$this->m_data['Id'];
-		    $qty = (int)$g_ado_db->GetOne($sql);
-		    if (!$qty) {
-    		    $sql = 'UPDATE Topics SET TopicOrder = TopicOrder - 1 WHERE TopicOrder > '.$this->m_data['TopicOrder'];
-                $g_ado_db->Execute($sql);
-		    }
-        }
-
-		// Delete the ATF metadata
-        if ($deleted) {
-
-            $sql = "SELECT * FROM TopicFields WHERE RootTopicId=". $this->m_data['Id'];
-
-            $row = $g_ado_db->GetRow($sql);
-            if ($row) {
-                $delATF = new ArticleTypeField($row['ArticleType'], $row['FieldName']);
-                $deleted = $delATF->delete();
-            }
-        }
+		$g_ado_db->Execute("UNLOCK TABLES");
 
 		if ($deleted) {
-			$this->m_exists = false;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -246,7 +320,9 @@ class Topic extends DatabaseObject {
 					.", Id=".$this->m_data['Id']
 					.", LanguageId=$p_languageId"
 					.", TopicOrder=".$this->m_data['TopicOrder']
-					.", ParentId=".$this->m_data['ParentId'];
+					.", ParentId=".$this->m_data['ParentId']
+					.", node_left = " . $this->getLeft()
+					.", node_right = " . $this->getRight();
 			$changed = $g_ado_db->Execute($sql);
 		}
 		if ($changed) {
@@ -298,7 +374,12 @@ class Topic extends DatabaseObject {
 	 */
 	public function getParentId()
 	{
-		return $this->m_data['ParentId'];
+		global $g_ado_db;
+
+		$sql = 'SELECT DISTINCT Id FROM Topics WHERE node_left < ' . $this->getLeft()
+		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC LIMIT 0, 1';
+		$parentId = $g_ado_db->GetOne($sql);
+		return $parentId;
 	} // fn getParentId
 
 	/**
@@ -348,7 +429,12 @@ class Topic extends DatabaseObject {
 	 */
     public function isRoot()
     {
-        return $this->m_data['ParentId'] == 0;
+    	global $g_ado_db;
+
+    	$sql = 'SELECT COUNT(*) FROM Topics WHERE node_left < ' . $this->getLeft()
+    	. ' AND node_right > ' . $this->getRight();
+    	$parentsCount = $g_ado_db->GetOne($sql);
+    	return $parentsCount == 0;
     } // fn isRoot
 
 
@@ -359,14 +445,7 @@ class Topic extends DatabaseObject {
 	 */
 	public function hasSubtopics()
 	{
-		global $g_ado_db;
-		// Returned the cached value if available.
-		if (!is_null($this->m_hasSubtopics)) {
-			return $this->m_hasSubtopics;
-		}
-		$queryStr = 'SELECT COUNT(*) FROM Topics WHERE ParentId = '.$this->m_data['Id'];
-		$numRows = $g_ado_db->GetOne($queryStr);
-		return ($numRows > 0);
+		return ($this->getRight() - $this->getLeft()) > 1;
 	} // fn hasSubtopics
 
 
@@ -508,170 +587,6 @@ class Topic extends DatabaseObject {
 
 
 	/**
-	 * Traverse the tree from the given topic ID.
-	 *
-	 * @param array $p_tree
-	 * @param array $p_path
-	 * @param int $p_topicId
-	 */
-	private static function __TraverseTree(&$p_tree, $p_path, $p_topicId = 0)
-	{
-		global $g_ado_db;
-		$sql = "SELECT * FROM Topics WHERE ParentId = ".$p_topicId
-				." ORDER BY TopicOrder ASC, LanguageId ASC";
-		$rows = $g_ado_db->GetAll($sql);
-		if ($rows) {
-			$previousTopic = new Topic();
-
-			$currentTopics = array();
-
-			// Get all the topics at the current level of the tree.
-			// Translations of a topic are merged into a single topic.
-			foreach ($rows as $row) {
-				// If its a translation of the previous topic, add it as a translation.
-				if ($previousTopic->m_data['Id'] == $row['Id']){
-					$previousTopic->m_names[$row['LanguageId']] = $row['Name'];
-				} else {
-					// This is a new topic, not a translation.
-					$currentTopics[$row['Id']] = new Topic();
-					$currentTopics[$row['Id']]->fetch($row);
-
-					// Remember this topic so we know if the next topic
-					// is a translation of this one.
-					$previousTopic =& $currentTopics[$row['Id']];
-
-					// Create the entry in the tree for the current topic.
-
-					// Copy the current path.  We need to make a copy
-					// because if we added to $p_path, it would get longer
-					// each time around the loop.
-					$newPath = $p_path;
-
-					// Add the current topic to the path.
-					$newPath[$row['Id']] =& $currentTopics[$row['Id']];
-
-					// Add the path to the tree.
-					$p_tree[] = $newPath;
-
-					// Descend the tree - dont worry, the translations will be added
-					// the next time around the loop.
-					Topic::__TraverseTree($p_tree, $newPath, $row['Id']);
-				}
-			} // foreach
-
-		}
-	} // fn __TraverseTree
-
-
-	/**
-	 * Change the topic's position in the order sequence
-	 * relative to its current position.
-	 *
-	 * @param string $p_direction -
-	 * 		Can be "up" or "down".  "Up" means towards the beginning of the list,
-	 * 		and "down" means towards the end of the list.
-	 *
-	 * @param int $p_spacesToMove -
-	 *		The number of spaces to move the article.
-	 *
-	 * @return boolean
-	 */
-	public function positionRelative($p_direction, $p_spacesToMove = 1)
-	{
-		global $g_ado_db;
-
-		CampCache::singleton()->clear('user');
-		$this->fetch();
-		// Get the article that is in the final position where this
-		// article will be moved to.
-		$compareOperator = ($p_direction == 'up') ? '<' : '>';
-		$order = ($p_direction == 'up') ? 'desc' : 'asc';
-		$queryStr = 'SELECT DISTINCT(Id), TopicOrder FROM Topics '
-					.' WHERE TopicOrder '.$compareOperator.' '.$this->m_data['TopicOrder']
-					.' AND ParentId='.$this->m_data['ParentId']
-					.' ORDER BY TopicOrder ' . $order
-		     		.' LIMIT '.($p_spacesToMove - 1).', 1';
-		$destRow = $g_ado_db->GetRow($queryStr);
-		if (!$destRow) {
-			return false;
-		}
-		// Change position of the destination.
-		if ($p_direction == 'up') {
-		    $operator = '+';
-		    $compareOperator = '>=';
-		    $compareOperator2 = '<';
-		} else {
-		    $operator = '-';
-		    $compareOperator = '<=';
-		    $compareOperator2 = '>';
-		}
-		$queryStr2 = 'UPDATE Topics SET TopicOrder = TopicOrder '.$operator.' 1 '
-					.' WHERE TopicOrder '.$compareOperator.' '.$destRow['TopicOrder']
-					.' AND TopicOrder '.$compareOperator2.' '.$this->m_data['TopicOrder'];
-		$g_ado_db->Execute($queryStr2);
-
-		// Change position of this topic to the destination position.
-		$queryStr3 = 'UPDATE Topics SET TopicOrder = ' . $destRow['TopicOrder']
-					.' WHERE Id = ' . $this->m_data['Id'];
-		$g_ado_db->Execute($queryStr3);
-		CampCache::singleton()->clear('user');
-
-		// Re-fetch this article to get the updated article order.
-		$this->fetch();
-		return true;
-	} // fn positionRelative
-
-
-	/**
-	 * Move the topic to the given position (i.e. reorder the topic).
-	 * @param int $p_moveToPosition
-	 * @return boolean
-	 */
-	public function positionAbsolute($p_moveToPosition = 1)
-	{
-		global $g_ado_db;
-
-		CampCache::singleton()->clear('user');
-		$this->fetch();
-		// Get the topic that is in the location we are moving
-		// this one to.
-		$queryStr = 'SELECT Id, LanguageId, TopicOrder FROM Topics '
-					.' WHERE ParentId='.$this->m_data['ParentId']
-					.' AND TopicOrder='.$p_moveToPosition
-					.' ORDER BY TopicOrder ASC LIMIT 1';
-		$destRow = $g_ado_db->GetRow($queryStr);
-		if (!$destRow) {
-			return false;
-		}
-
-		// Reposition destination topic.
-		$operator = $destRow['TopicOrder'] < $this->m_data['TopicOrder'] ? '+' : '-';
-		if ($destRow['TopicOrder'] > $this->m_data['TopicOrder']) {
-		    $compareOperator =  '>';
-		    $compareOperator2 =  '<=';
-		} else {
-		    $compareOperator =  '<';
-		    $compareOperator2 =  '>=';
-		}
-		$queryStr = 'UPDATE Topics '
-					.' SET TopicOrder = TopicOrder '.$operator.' 1 '
-					.' WHERE TopicOrder '.$compareOperator.' '.$this->m_data['TopicOrder']
-					.' AND TopicOrder '.$compareOperator2.' '.$destRow['TopicOrder'];
-		$g_ado_db->Execute($queryStr);
-
-		// Reposition this topic.
-		$queryStr = 'UPDATE Topics '
-					.' SET TopicOrder='.$destRow['TopicOrder']
-					.' WHERE Id='.$this->m_data['Id'];
-		$g_ado_db->Execute($queryStr);
-		CampCache::singleton()->clear('user');
-
-		$this->fetch();
-		return true;
-	} // fn positionAbsolute
-
-
-	/**
 	 * Get all the topics in an array, where each element contains the entire
 	 * path for each topic.  Each topic will be indexed by its ID.
 	 * For example, if we have the following topic structure (IDs are
@@ -707,6 +622,7 @@ class Topic extends DatabaseObject {
 		Topic::__TraverseTree($tree, $path, $p_startingTopicId);
 		return $tree;
 	} // fn GetTree
+
 
     /**
      * Update order for all items in tree.

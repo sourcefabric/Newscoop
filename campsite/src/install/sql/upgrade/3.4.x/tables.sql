@@ -277,3 +277,8 @@ CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
   PRIMARY KEY (`id`, `fk_user_id`),
   INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
 );
+
+
+-- Topics table refactoring
+ALTER TABLE Topics ADD COLUMN node_left int(10) unsigned NOT NULL;
+ALTER TABLE Topics ADD COLUMN node_right int(10) unsigned NOT NULL;
