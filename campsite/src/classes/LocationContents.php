@@ -766,7 +766,8 @@ class Geo_LocationContents extends DatabaseObject {
                 $new_style = 0;
                 $new_radius = 0;
                 $reuse_id = Geo_LocationContents::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
-    
+                //$reuse_id = 0;
+
                 if ($reuse_id && (0 < $reuse_id))
                 {
                     $loc_id = $reuse_id;
@@ -876,7 +877,7 @@ class Geo_LocationContents extends DatabaseObject {
                 //$queryStr = str_replace("%%location%%", $p_location, $queryStr);
                 //$queryStr = str_replace("%%center%%", $p_center, $queryStr);
     
-                $rows = $g_ado_db->GetAll($queryStr, $sql_params);
+                $rows = $g_ado_db->GetAll($queryStr_point, $sql_params);
                 if (is_array($rows)) {
                     foreach ($rows as $row) {
                         $loc_id = $row['id'];
