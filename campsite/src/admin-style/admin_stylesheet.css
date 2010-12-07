@@ -1993,3 +1993,12 @@ body > form > fieldset dt {
 .mediaplayer {
     margin: 14px;
 }
+
+p.actions a {
+    text-decoration: none;
+}
+
+p.actions a img {
+    margin-right: 0.25em;
+    vertical-align: bottom;
+}

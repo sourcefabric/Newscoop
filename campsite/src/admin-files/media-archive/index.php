@@ -24,7 +24,7 @@ echo $breadcrumbs;
 
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <p class="actions">
-        <a href="./add.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
+        <a href="./add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
     </p>
     <?php } ?>
 
@@ -44,7 +44,7 @@ echo $breadcrumbs;
 <div id="files">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
     <p class="actions">
-        <a id="new_file" href="<?php echo "/$ADMIN"; ?>/articles/files/popup.php?archive=1" target="_blank"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
+        <a id="new_file" href="<?php echo "/$ADMIN"; ?>/articles/files/popup.php?archive=1" target="_blank" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
     </p>
     <script type="text/javascript"><!--
         $(document).ready(function() {
@@ -119,6 +119,10 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * Function to be called from popup after file is uploaded
+ * @return void
+ */
 function onUpload()
 {
     var smartlistId = $('table.medialist').attr('id').split('-')[1];
