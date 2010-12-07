@@ -6,8 +6,9 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
 
-require_once($GLOBALS['g_campsiteDir']."/classes/GeoLocations.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/LocationContents.php");
+//require_once($GLOBALS['g_campsiteDir']."/classes/GeoLocation.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
@@ -27,21 +28,21 @@ $articleObj = new Article($f_language_id, $f_article_number);
 $cnf_html_dir = $Campsite['HTML_DIR'];
 $cnf_website_url = $Campsite['WEBSITE_URL'];
 
-$geo_map_info = Geo_Locations::GetMapInfo($cnf_html_dir, $cnf_website_url);
-$geo_map_incl = Geo_Locations::PrepareMapIncludes($geo_map_info["incl_obj"]);
+$geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+$geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
 $geo_map_json = "";
 $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
-$geo_map_usage = Geo_LocationContents::ReadMapInfo("article", $f_article_number);
+$geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
 $geo_map_usage_json = "";
 $geo_map_usage_json .= json_encode($geo_map_usage);
 
-$geo_icons_info = Geo_Locations::GetIconsInfo($cnf_html_dir, $cnf_website_url);
+$geo_icons_info = Geo_Preferences::GetIconsInfo($cnf_html_dir, $cnf_website_url);
 $geo_icons_json = "";
 $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
 
 
-$geo_popups_info = Geo_Locations::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
+$geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
 $geo_popups_json = "";
 $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
@@ -96,7 +97,7 @@ var set_local_strings = function()
     local_strings["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
     local_strings["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
     local_strings["fill_in_the_point_description"] = "<?php putGS("fill in the point description"); ?>";
-    local_strings["not_logged_in"] = "<?php putGS("not logged in?"); ?>";
+    local_strings["problem_with_map_processing"] = "<?php putGS("problem with map processing"); ?>";
     local_strings["probably_logged_out"] = "<?php putGS("probably logged out"); ?>";
     local_strings["edit"] = "<?php putGS("edit"); ?>";
     local_strings["center"] = "<?php putGS("center"); ?>";
