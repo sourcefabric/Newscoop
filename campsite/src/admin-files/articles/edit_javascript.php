@@ -21,7 +21,7 @@ function buttonDisable(buttonId) {
     $("#" + buttonId).button("option", "label", "<?php putGS('Saved');?>");
 }
 
-var sUrl = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/post.php";
+var sUrl = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php";
 
 var dialog = $("#dialogBox").dialog({
     autoOpen: false,
@@ -89,15 +89,15 @@ function makeRequest(a) {
             data: newQS + postAction + query_string,
             success: function(data, status, p) {
                 if (p.responseText !== undefined) {
-                    $("#yui-connection-message").show().html('<?php putGS("Article Saved"); ?>');
-                    $('#yui-saved','#yui-connection-error').hide();
+                    $("#connection-message").show().html('<?php putGS("Article Saved"); ?>');
+                    $('#saved','#connection-error').hide();
                     $("#dialogBox").dialog('close');
                 }
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    $("#yui-connection-message").hide();
-                    $("#yui-connection-error").show().html('<?php putGS("Unable to reach Campsite. Please check your internet connection."); ?>');
+                    $("#connection-message").hide();
+                    $("#connection-error").show().html('<?php putGS("Unable to reach Campsite. Please check your internet connection."); ?>');
                     $("#dialogBox").dialog('close');
                 }
             }

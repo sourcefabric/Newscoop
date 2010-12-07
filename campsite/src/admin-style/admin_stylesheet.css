@@ -2008,3 +2008,33 @@ p.actions a img {
     margin-right: 0.25em;
     vertical-align: bottom;
 }
+
+/* Article edit screen */
+div#connection-container {display:none;}
+div#connection-message, div#connection-error {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.75em;
+    font-size: 14pt;
+    font-weight: bold;
+}
+div#connection-message { color: green; }
+div#connection-error { color: red; }
+div#saved-box{
+    background-color: #9cd465;
+    color: #FFF;
+    font-weight: bold;
+    border: 1px solid white;
+    padding: 3px 8px 3px 8px;
+	float:right;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+div#authorAutoComplete {
+    width:352px; /* set width here or else widget will expand to fit its container */
+    padding-bottom:2em;
+	float:left;
+}
+fieldset#pushbuttonsfrommarkup {
+    border: 0;
+}

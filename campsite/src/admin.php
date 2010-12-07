@@ -67,7 +67,7 @@ $no_menu_scripts = array(
     '/articles/audioclips/popup.php',
     '/articles/audioclips/edit.php',
     '/articles/empty.php',
-    '/articles/yui-assets/post.php',
+    '/articles/post.php',
     '/comments/ban.php',
     '/comments/do_ban.php',
     '/imagearchive/do_add.php',

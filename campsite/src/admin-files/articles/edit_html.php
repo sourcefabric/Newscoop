@@ -64,9 +64,9 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<div id="yui-connection-container"></div>
-<div id="yui-connection-message"></div>
-<div id="yui-connection-error"></div>
+<div id="connection-container"></div>
+<div id="connection-message"></div>
+<div id="connection-error"></div>
 
 <table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
 <tr>
@@ -237,12 +237,12 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                  </td>
 
                  <td nowrap>
-                   <div id="yui-saved-box">
-                 <div id="yui-connection-saved"></div>
-                 <div id="yui-saved">
+                   <div id="saved-box">
+                 <div id="connection-saved"></div>
+                 <div id="saved">
                                  <script>
                     var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
-                        if (document.getElementById('yui-connection-saved').value == undefined) {
+                        if (document.getElementById('connection-saved').value == undefined) {
                         document.write('<?php putGS("Saved:"); ?> ' + dateTime);
                     }
                  </script>
@@ -262,7 +262,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
     <!-- BEGIN article content -->
     <form name="article_edit" action="do_edit.php" method="POST" id="mainForm">
     <?php echo SecurityToken::FormParameter(); ?>
-    <fieldset id="pushbuttonsfrommarkup" class=" yui-skin-sam">
+    <fieldset id="pushbuttonsfrommarkup">
     <input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
     <input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
     <input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
@@ -376,7 +376,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                 <select name="article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
                     <?php echo drawComboContent(); ?></select>
                 </td>
-                <td align="left" valign="top" class="yui-skin-sam">
+                <td align="left" valign="top">
                     <?php if ($f_edit_mode == "edit") {  ?>
                     <div id="authorAutoComplete">
                     <?php

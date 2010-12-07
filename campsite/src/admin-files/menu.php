@@ -366,7 +366,7 @@ $locale = trim(getGS('en'), ' (*)');
   </script>
   <?php echo $menu_root->createMenu("myMenu"); ?>
 </head>
-<body class="yui-skin-sam">
+<body>
 <table cellpadding="0" cellspacing="0" class="logoTable">
 <tbody>
 <tr>
