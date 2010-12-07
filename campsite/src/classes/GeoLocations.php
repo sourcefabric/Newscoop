@@ -57,8 +57,10 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
     if (!$map_prov_default) {$map_prov_default = "";}
     else {$map_prov_default = strtolower($map_prov_default);}
 
-    $map_prov_names_str = SystemPref::Get("MapProviderNames");
-    $map_prov_names_arr = explode(",", $map_prov_names_str);
+    // we only have support for googlev3 and osm for now
+    //$map_prov_names_str = SystemPref::Get("MapProviderNames");
+    //$map_prov_names_arr = explode(",", $map_prov_names_str);
+    $map_prov_names_arr = array("googlev3", "osm");
 
     $map_prov_includes = array();
     $map_prov_info_arr = array();
@@ -73,7 +75,12 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
         if ("" == $one_prov_name) {continue;}
 
         $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($one_prov_name));
-        $one_prov_include = SystemPref::Get("MapProviderInclude" . ucfirst($one_prov_name));
+        //$one_prov_include = SystemPref::Get("MapProviderInclude" . ucfirst($one_prov_name));
+        $one_prov_include = "";
+        if ("googlev3" == $one_prov_name)
+        {
+            $one_prov_include = "http://maps.google.com/maps/api/js?sensor=false";
+        }
 
         if (!$one_prov_usage) {continue;}
         if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
@@ -83,7 +90,7 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
         if (!array_key_exists($one_prov_label, $map_prov_names_arr)) {continue;}
 
         $known_providers[$one_prov_label] = true;
-        if ($one_prov_include)
+        if ($one_prov_include && ("" != $one_prov_include))
         {
             $map_prov_includes[] = $one_prov_include;
         }
@@ -272,82 +279,153 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
 	 */
 public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
 {
-    $popup_width = SystemPref::Get("MapPopupWidthDefault");
-    if (!$popup_width) {$popup_width = 100;}
-    $popup_height = SystemPref::Get("MapPopupHeightDefault");
-    if (!$popup_height) {$popup_height = 100;}
+    //$popup_width = SystemPref::Get("MapPopupWidthDefault");
+    $popup_width = SystemPref::Get("MapPopupWidthMin");
+    if (!$popup_width) {$popup_width = 300;}
+    //$popup_height = SystemPref::Get("MapPopupHeightDefault");
+    $popup_height = SystemPref::Get("MapPopupHeightMin");
+    if (!$popup_height) {$popup_height = 200;}
 
     $size_info = array("width" => $popup_width, "height" => $popup_height);
 
-    $video_default = SystemPref::Get("MapVideoDefault");
-    if (!$video_default) {$video_default = "YouTube";}
+    //$video_default = SystemPref::Get("MapVideoDefault");
+    //if (!$video_default) {$video_default = "YouTube";}
 
-    $video_names_str = SystemPref::Get("MapVideoNames");
-    if (!$video_names_str) {$video_names_str = "";}
+    //$video_names_str = SystemPref::Get("MapVideoNames");
+    //if (!$video_names_str) {$video_names_str = "";}
 
-    $video_names_arr = explode(",", $video_names_str);
-    $video_names_usage = array();
+    //$video_names_arr = explode(",", $video_names_str);
+    $video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
+    $video_names_info = array();
+    $video_names_info["YouTube"] = array("width" => '425', "height" => '350');
+    $video_names_info["Vimeo"] = array("width" => '400', "height" => '225');
+    $video_names_info["Flash"] = array("width" => '300', "height" => '200');
+    $video_names_info["Flv"] = array("width" => '300', "height" => '280');
 
-    $video_name_first = "";
-    $video_default_found = false;
+    //$video_name_first = "";
+    //$video_default_found = false;
     foreach ($video_names_arr as $one_video_label)
     {
         if ("" == $one_video_label) {continue;}
 
-        $video_avail = SystemPref::Get("MapVideoAvailable_" . $one_video_label);
-        if (!$video_avail) {continue;}
-        if (in_array(strtolower($video_avail), array("0", "false", "no"))) {continue;}
+        //$video_avail = SystemPref::Get("MapVideoAvailable_" . $one_video_label);
+        //if (!$video_avail) {continue;}
+        //if (in_array(strtolower($video_avail), array("0", "false", "no"))) {continue;}
 
-        $video_source = SystemPref::Get("MapVideoSource" . ucfirst($one_video_label));
+        //$video_source = SystemPref::Get("MapVideoSource" . ucfirst($one_video_label));
         $video_width = SystemPref::Get("MapVideoWidth" . ucfirst($one_video_label));
         $video_height = SystemPref::Get("MapVideoHeight" . ucfirst($one_video_label));
-        if (!$video_source) {continue;}
-        if (!$video_width) {continue;}
-        if (!$video_height) {continue;}
+        //if (!$video_source) {continue;}
+        if ((!$video_width) && ("" == $video_width)) {continue;}
+        if ((!$video_height) && ("" == $video_height)) {continue;}
 
-        $video_names_usage[] = array("label" => $one_video_label, "source" => $video_source, "width" => $video_width, "height" => $video_height);
+        //$video_names_info[] = array("label" => $one_video_label, "source" => $video_source, "width" => $video_width, "height" => $video_height);
+        $video_names_info[$one_video_label]["width"] = $video_width;
+        $video_names_info[$one_video_label]["height"] = $video_height;
 
-        if ("" == $video_name_first) {$video_name_first = $one_video_label;}
-        if ($one_video_label == $video_default) {$video_default_found = true;}
+        //if ("" == $video_name_first) {$video_name_first = $one_video_label;}
+        //if ($one_video_label == $video_default) {$video_default_found = true;}
     }
-    if (!$video_default_found) {$video_default = $video_name_first;}
-
+    //if (!$video_default_found) {$video_default = $video_name_first;}
 
     $youtube_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>';
     $vimeo_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>';
-    $flash_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%s%%%%d%%%%id%%"/><embed src="%%s%%%%d%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
-    $flv_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="%%s%%%%d%%player.swf"></param><param name="flashvars" value="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="%%s%%%%d%%player.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%%w%%" height="%%h%%" flashvars="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></embed></object>';
+    //$flash_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%s%%%%d%%%%id%%"/><embed src="%%s%%%%d%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
+    //$flv_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="%%s%%%%d%%player.swf"></param><param name="flashvars" value="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="%%s%%%%d%%player.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%%w%%" height="%%h%%" flashvars="src=%%s%%%%d%%%%id%%&amp;poster=%%s%%%%d%%%%ps%%&amp;controlBarAutoHide=true"></embed></object>';
+    $flash_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%path%%%%id%%"/><embed src="%%path%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
+    $flv_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="%%path%%player.swf"></param><param name="flashvars" value="src=%%path%%%%id%%&amp;poster=%%path%%%%ps%%&amp;controlBarAutoHide=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="%%path%%player.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%%w%%" height="%%h%%" flashvars="src=%%path%%%%id%%&amp;poster=%%path%%%%ps%%&amp;controlBarAutoHide=true"></embed></object>';
 
     // if nothing configured, use the default
     //if (0 == count($video_names_usage))
+    $flash_server = "";
+    $flash_directory = "";
     {
-        //echo "$p_websiteUrl";
-        $domain_end = strpos($p_websiteUrl, "/", 8);
-        if (false === $domain_end)
+        $flash_server_setting = SystemPref::Get("FlashServer");
+        $flash_directory_setting = SystemPref::Get("FlashDirectory");
+        //echo "--- $flash_directory_setting ---\n";
+
+        // if not a flash server set, use the cs server
+        if ((!$flash_server_setting) || ("" == $flash_server_setting))
         {
             $flash_server = $p_websiteUrl;
-            $flash_directory = "/";
+            if ("/" != strrchr($flash_server, "/"))
+            {
+                $flash_server .= "/";
+            }
+
+/*
+            //echo "$p_websiteUrl";
+            $domain_end = strpos($p_websiteUrl, "/", 8);
+            if (false === $domain_end)
+            {
+                $flash_server = $p_websiteUrl;
+                $flash_directory = "/";
+            }
+            else
+            {
+                $flash_server = substr($p_websiteUrl, 0, $domain_end);
+                $flash_directory = substr($p_websiteUrl, $domain_end);
+                if (1 < strlen(strrchr($flash_directory, "/")))
+                {
+                    $flash_directory .= "/";
+                }
+            }
+
+            if ((!$flash_directory_setting) || ("" == $flash_directory_setting))
+            {
+                $flash_directory .= "videos/";
+            }
+            else
+            {
+                $flash_directory .= $flash_directory_setting;
+            }
+*/
+        }
+        else // use the set server for the flash files
+        {
+            $flash_server = $flash_server_setting;
+        }
+
+        // if not flash directory set, just assure that the server/dir ends with a '/'
+        if ((!$flash_directory_setting) || ("" == $flash_directory_setting))
+        {
+            if ("/" == strrchr($flash_server, "/"))
+            {
+                $flash_directory = "";
+            }
+            else
+            {
+                $flash_directory = "/";
+            }
         }
         else
         {
-            $flash_server = substr($p_websiteUrl, 0, $domain_end);
-            $flash_directory = substr($p_websiteUrl, $domain_end);
-            if (1 < strlen(strrchr($flash_directory, "/")))
-            {
-                $flash_directory .= "/";
-            }
+            $flash_directory = $flash_directory_setting;
         }
-        $flash_directory .= "videos/";
 
-        $video_default = "YouTube";
-        $video_names_usage[] = array("label" => "YouTube", "source" => $youtube_src_default, "width" => '425', "height" => '350');
-        $video_names_usage[] = array("label" => "Vimeo", "source" => $vimeo_src_default, "width" => '400', "height" => '225');
-        $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => '300', "height" => '200', "server" => $flash_server, "directory" => $flash_directory);
-        $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => '300', "height" => '280', "server" => $flash_server, "directory" => $flash_directory);
+        $flash_path = $flash_server. $flash_directory;
+        if ("/" != strrchr($flash_path, "/"))
+        {
+            $flash_path .= "/";
+        }
+
+        //$video_default = "YouTube";
+        $cur_info = $video_names_info["YouTube"];
+        $video_names_usage[] = array("label" => "YouTube", "source" => $youtube_src_default, "width" => $cur_info['width'], "height" => $cur_info['height']);
+        $cur_info = $video_names_info["Vimeo"];
+        $video_names_usage[] = array("label" => "Vimeo", "source" => $vimeo_src_default, "width" => $cur_info['width'], "height" => $cur_info['height']);
+        $cur_info = $video_names_info["Flash"];
+        //$video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path, "server" => $flash_server, "directory" => $flash_directory);
+        $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
+        $cur_info = $video_names_info["Flv"];
+        //$video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path, "server" => $flash_server, "directory" => $flash_directory);
+        $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
     }
 
-    $video_info = array("default" => $video_default, "labels" => $video_names_usage);
+    //$video_info = array("default" => $video_default, "labels" => $video_names_usage);
+    $video_info = array("labels" => $video_names_usage);
 
+/*
     $audio_default = SystemPref::Get("MapAudioTypeDefault");
     if (!$audio_default) {$audio_default = "ogg";}
 
@@ -398,8 +476,10 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
 
 
     $audio_info = array("default" => $audio_default, "types" => $audio_types_usage, "auto" => $audio_start, "site" => $audio_site, "object" => $audio_object);
+*/
 
-    $res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info, "audio" => $audio_info);
+    //$res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info, "audio" => $audio_info);
+    $res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info);
     return array("json_obj" => $res_popups_info);
 } // fn getPopupsInfo
 
