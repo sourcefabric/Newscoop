@@ -98,6 +98,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             }
         });
     },
+	'fnCookieCallback': function (sName, oData, sExpires, sPath) {
+        oData['abVisCols'] = []; // don't save visibility
+		return sName + "="+JSON.stringify(oData)+"; expires=" + sExpires +"; path=" + sPath;
+	},
     <?php if ($this->items !== NULL) { // display all items ?>
     'bPaging': false,
     'iDisplayLength': <?php echo sizeof($this->items); ?>,

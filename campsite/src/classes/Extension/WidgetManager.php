@@ -65,7 +65,10 @@ class WidgetManager
 
         $widgets = array();
         foreach ($rows as $row) {
-            $widgets[] = new WidgetRendererDecorator((array) $row);
+            $widget = new WidgetRendererDecorator((array) $row);
+            if ($widget->getWidget() !== NULL) {
+                $widgets[] = $widget;
+            }
         }
         return $widgets;
     }

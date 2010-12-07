@@ -29,9 +29,20 @@ if (!ini_get('safe_mode')) {
 	set_time_limit(0);
 }
 
-$f_language_id = Input::Get('f_language_id', 'int', 0);
-$f_language_selected = Input::Get('f_language_selected', 'int', 0);
-$f_article_number = Input::Get('f_article_number', 'int', 0);
+$inArchive = !empty($_REQUEST['archive']);
+
+if (!$inArchive) {
+    $f_language_id = Input::Get('f_language_id', 'int', 0);
+    $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+    $f_article_number = Input::Get('f_article_number', 'int', 0);
+
+    $articleObj = new Article($f_language_selected, $f_article_number);
+    if (!$articleObj->exists()) {
+	    camp_html_display_error(getGS("Article does not exist."), null, true);
+	    exit;
+    }
+}
+
 $f_description = Input::Get('f_description');
 $f_language_specific = Input::Get('f_language_specific');
 $f_content_disposition = Input::Get('f_content_disposition');
@@ -66,12 +77,6 @@ if (!Input::IsValid()) {
 	exit;
 }
 
-$articleObj = new Article($f_language_selected, $f_article_number);
-if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."), null, true);
-	exit;
-}
-
 $description = new Translation($f_language_selected);
 $description->create($f_description);
 
@@ -97,14 +102,25 @@ if (PEAR::isError($file)) {
 	camp_html_goto_page($BackLink);
 }
 
-ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
+if (!$inArchive) {
+    ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
 
-$logtext = getGS('File #$1 "$2" attached to article',
-    $file->getAttachmentId(), $file->getFileName());
-Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
+    $logtext = getGS('File #$1 "$2" attached to article',
+        $file->getAttachmentId(), $file->getFileName());
+    Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 ?>
 <script>
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";
 window.opener.document.forms.article_edit.submit();
 window.close();
 </script>
+
+<?php } else { ?>
+<script type="text/javascript"><!--
+    if (opener && !opener.closed && opener.onUpload) {
+        opener.onUpload();
+        opener.focus();
+        window.close();
+    }
+//--></script>
+<?php } ?>

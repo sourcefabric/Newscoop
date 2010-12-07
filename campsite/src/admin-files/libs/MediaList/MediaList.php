@@ -48,8 +48,11 @@ class MediaList extends BaseList
      */
     public function processRow(array $row)
     {
+        global $ADMIN;
+
         // edit link
-        $row['file_name'] = sprintf('<a href="edit-attachment.php?f_attachment_id=%d">%s</a>',
+        $row['file_name'] = sprintf('<a href="/%s/media-archive/edit-attachment.php?f_attachment_id=%d">%s</a>',
+            $ADMIN,
             $row['id'], $row['file_name']);
 
         // human readable size

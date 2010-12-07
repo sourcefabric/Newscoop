@@ -40,8 +40,10 @@ class ImageList extends BaseList
             'Place',
         );
 
+        // set sorting
         $this->defaultSorting = 6;
         $this->defaultSortingDir = 'desc';
+        $this->notSortable[] = 1;
     }
 
     /**
@@ -51,7 +53,7 @@ class ImageList extends BaseList
      */
     public function processRow(array $row)
     {
-        global $Campsite;
+        global $Campsite, $ADMIN;
 
         // set thumbnail
         $row['ThumbnailFileName'] = sprintf('<img src="%s" alt="%s" />',
@@ -59,7 +61,8 @@ class ImageList extends BaseList
             $row['Description']);
 
         // create link for desc
-        $row['Description'] = sprintf('<a href="edit.php?f_image_id=%d">%s</a>',
+        $row['Description'] = sprintf('<a href="/%s/media-archive/edit.php?f_image_id=%d">%s</a>',
+            $ADMIN,
             $row['Id'],
             $row['Description']);
 

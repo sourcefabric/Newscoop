@@ -84,11 +84,16 @@ class Extension_Extension extends DatabaseObject
 
     /**
      * Get instance
-     * @return object
+     * @return IWidget|NULL
      */
     public function getInstance()
     {
-        require_once $this->getPath();
+        $file = $this->getPath();
+        if (!file_exists($file)) {
+            return NULL;
+        }
+
+        require_once $file;
         $class = $this->getClass();
         return new $class;
     }
