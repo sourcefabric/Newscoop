@@ -24,7 +24,7 @@ echo $breadcrumbs;
 
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <p class="actions">
-        <a href="add.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php  putGS('Add new image'); ?>"> <?php putGS('Add new image'); ?></a>
+        <a href="./add.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
     </p>
     <?php } ?>
 
@@ -34,12 +34,29 @@ echo $breadcrumbs;
         $list->render();
     ?>
 
+    <?php if ($g_user->hasPermission('DeleteImage')) { ?>
     <fieldset class="actions">
         <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
     </fieldset>
+    <?php } ?>
 </div><!-- /#images -->
 
 <div id="files">
+    <?php if ($g_user->hasPermission('AddFile')) { ?>
+    <p class="actions">
+        <a id="new_file" href="<?php echo "/$ADMIN"; ?>/articles/files/popup.php?archive=1" target="_blank"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
+    </p>
+    <script type="text/javascript"><!--
+        $(document).ready(function() {
+            $('a#new_file').click(function() {
+                var url = $(this).attr('href');
+                window.open(url, 'new_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');
+                return false;
+            });
+        });
+    //--></script>
+    <?php } ?>
+
     <?php
         $list = new MediaList;
         $list->setColVis(TRUE);
@@ -47,9 +64,11 @@ echo $breadcrumbs;
         $list->render();
     ?>
 
+    <?php if ($g_user->hasPermission('DeleteFile')) { ?>
     <fieldset class="actions">
         <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
     </fieldset>
+    <?php } ?>
 </div><!-- /#files -->
 
 </div><!-- /#archive -->
@@ -99,6 +118,13 @@ $(document).ready(function() {
         return false;
     });
 });
+
+function onUpload()
+{
+    var smartlistId = $('table.medialist').attr('id').split('-')[1];
+    tables[smartlistId].fnDraw(true);
+    flashMessage('<?php putGS('File uploaded.'); ?>');
+}
 //-->
 </script>
 

@@ -3,16 +3,22 @@ camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 
-$f_publication_id = Input::Get('f_publication_id', 'int', 0);
-$f_issue_number = Input::Get('f_issue_number', 'int', 0);
-$f_section_number = Input::Get('f_section_number', 'int', 0);
-$f_language_id = Input::Get('f_language_id', 'int', 0);
-$f_language_selected = Input::Get('f_language_selected', 'int', 0);
-$f_article_number = Input::Get('f_article_number', 'int', 0);
+$inArchive = !empty($_REQUEST['archive']);
 
-if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-	exit;
+if (!$inArchive) {
+    $f_publication_id = Input::Get('f_publication_id', 'int', 0);
+    $f_issue_number = Input::Get('f_issue_number', 'int', 0);
+    $f_section_number = Input::Get('f_section_number', 'int', 0);
+    $f_language_id = Input::Get('f_language_id', 'int', 0);
+    $f_language_selected = Input::Get('f_language_selected', 'int', 0);
+    $f_article_number = Input::Get('f_article_number', 'int', 0);
+
+    if (!Input::IsValid()) {
+	    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	    exit;
+    }
+
+    $articleObj = new Article($f_language_selected, $f_article_number);
 }
 
 if (camp_convert_bytes((SystemPref::Get('MaxUploadFileSize'))) == false) {
@@ -26,22 +32,20 @@ if (!is_writable($Campsite['FILE_DIRECTORY'])) {
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['FILE_DIRECTORY']));
 }
 
-$articleObj = new Article($f_language_selected, $f_article_number);
-
 camp_html_display_msgs();
 ?>
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <title><?php putGS("Attach File to Article"); ?></title>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
 
-<br/ >
-<form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/articles/files/do_add.php" enctype="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<p></p>
+<form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/articles/files/do_add.php?archive=<?php echo (int) $inArchive; ?>" enctype="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
