@@ -69,8 +69,9 @@ class MediaPlayer
                 echo '<object width="320" height="240">';
                 echo '<param name="movie" value="', $player, '"></param>';
                 echo '<param name="flashvars" value="src=', urlencode($this->src), '"></param>';
-                echo '<embed src="', $player, '" type="application/x-shockwave-flash" width="320" height="240" flashvars="src=', urlencode($this->src), '"></embed>';
-                echo '</object>';
+                echo '<param name="allowFullScreen" value="true"></param>';
+                echo '<param name="allowscriptaccess" value="always"></param>';
+                echo '<embed src="', $player, '" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="240" flashvars="src=', urlencode($this->src), '"></embed></object>';
                 break;
 
             default:

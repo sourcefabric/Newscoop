@@ -46,10 +46,4 @@ class WidgetTest extends PHPUnit_Framework_TestCase
         $this->object->setView(Widget::FULLSCREEN_VIEW);
         $this->assertTrue($this->object->isFullscreen());
     }
-
-    public function test_()
-    {
-        $test = 'Test';
-        $this->assertEquals(getGS($test), $this->object->_($test));
-    }
 }
