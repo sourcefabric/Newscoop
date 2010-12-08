@@ -15,7 +15,11 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 // include valid callbacks files
 // TODO replace with Zend_Loader
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
-require_once dirname(__FILE__) . '/libs/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/MediaList/MediaList.php';
+require_once LIBS_DIR . '/ImageList/ImageList.php';
+require_once WWW_DIR . '/classes/GeoNames.php';
+require_once WWW_DIR . '/classes/GeoMap.php';
 
 try {
     // init request
@@ -34,6 +38,14 @@ try {
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
+    $serverRequest->allow('Geo_Names::FindCitiesByLocation');
+    $serverRequest->allow('Geo_Names::FindCitiesByName');
+    $serverRequest->allow('Geo_Map::LoadMapData');
+    $serverRequest->allow('Geo_Map::StoreMapData', 'ChangeArticle');
+    $serverRequest->allow('MediaList::doData');
+    $serverRequest->allow('ImageList::doData');
+    $serverRequest->allow('MediaList::doDelete');
+    $serverRequest->allow('ImageList::doDelete');
 
     // execute
     echo json_encode($serverRequest->execute());

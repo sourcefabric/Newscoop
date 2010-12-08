@@ -157,8 +157,11 @@ class WidgetManagerDecorator extends DatabaseObject
             }
 
             $this->widget = $this->extension->getInstance();
-            $this->widget->setManager($this);
+            if ($this->widget === NULL) {
+                return $this->widget;
+            }
 
+            $this->widget->setManager($this);
             if (!empty($this->m_data['settings'])) {
                 $settings = json_decode($this->m_data['settings']);
                 $this->widget->setSettings((array) $settings);

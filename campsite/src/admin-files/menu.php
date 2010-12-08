@@ -52,11 +52,11 @@ if ($g_user->hasPermission('CommentModerate')) {
     $menu_content->addItem($menu_item);
 }
 
-$menu_item =& DynMenuItem::Create(getGS('Image Archive'), "/$ADMIN/imagearchive/index.php",
+$menu_item =& DynMenuItem::Create(getGS('Media Archive'), "/$ADMIN/media-archive/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
 
-$menu_item =& DynMenuItem::Create(getGS('Universal List'), "/$ADMIN/universal-list/index.php",
+$menu_item =& DynMenuItem::Create(getGS('Search'), "/$ADMIN/universal-list/index.php",
                 array('icon' => sprintf($iconTemplateStr, 'logs.png'), 'id' => 'universal_list'));
 $menu_content->addItem($menu_item);
 
@@ -366,7 +366,7 @@ $locale = trim(getGS('en'), ' (*)');
   </script>
   <?php echo $menu_root->createMenu("myMenu"); ?>
 </head>
-<body class="yui-skin-sam">
+<body>
 <table cellpadding="0" cellspacing="0" class="logoTable">
 <tbody>
 <tr>

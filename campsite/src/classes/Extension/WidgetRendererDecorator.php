@@ -46,10 +46,13 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             return $content;
         }
 
+        // title
+        $title = rtrim(getGS($this->widget->getTitle()), ' (*)');
+
         // render whole widget
         echo '<li id="', $this->getId(), '" class="widget">';
         if ($this->widget->getTitle() !== NULL) {
-            echo '<div class="header"><h3>', getGS($this->widget->getTitle()), '</h3></div>';
+            echo '<div class="header"><h3>', $title, '</h3></div>';
         }
         echo '<div class="content"><div class="scroll">', "\n";
         echo $content;
@@ -130,7 +133,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             $method = 'get' . ucfirst($property->getName());
 
             echo '<dl><dt>';
-            echo '<label for="', $id, '">', getGS($label), '</label>';
+            echo '<label for="', $id, '">', rtrim(getGS($label), ' (*)'), '</label>';
             echo '</dt><dd>';
             printf('<input id="%s" type="text" name="%s" value="%s" maxlength="255" />',
                 $id,

@@ -1378,7 +1378,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine','APC','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-09-25 18:41:37'),(36,'PasswordRecovery','Y','2010-09-25 18:41:37');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine','','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-09-25 18:41:37'),(36,'PasswordRecovery','Y','2010-09-25 18:41:37'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-07 09:23:48'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-07 09:23:48'),(39,'MapDisplayResolutionDefault','4','2010-12-07 09:23:48'),(40,'MapViewWidthDefault','600','2010-12-07 09:23:48'),(41,'MapViewHeightDefault','400','2010-12-07 09:23:48'),(42,'MapProviderAvailableGoogleV3','1','2010-12-07 09:23:48'),(43,'MapProviderAvailableOSM','1','2010-12-07 09:23:48'),(44,'MapProviderDefault','GoogleV3','2010-12-07 09:23:48'),(45,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-07 09:23:48'),(46,'MapMarkerNames','gold,blue,red,green','2010-12-07 09:23:48'),(47,'MapMarkerSourceGold','marker-gold.png','2010-12-07 09:23:48'),(48,'MapMarkerOffsetXGold','-10','2010-12-07 09:23:48'),(49,'MapMarkerOffsetYGold','-20','2010-12-07 09:23:48'),(50,'MapMarkerSourceBlue','marker-blue.png','2010-12-07 09:23:48'),(51,'MapMarkerOffsetXBlue','-10','2010-12-07 09:23:48'),(52,'MapMarkerOffsetYBlue','-20','2010-12-07 09:23:48'),(53,'MapMarkerSourceRed','marker-red.png','2010-12-07 09:23:48'),(54,'MapMarkerOffsetXRed','-10','2010-12-07 09:23:48'),(55,'MapMarkerOffsetYRed','-20','2010-12-07 09:23:48'),(56,'MapMarkerSourceGreen','marker-green.png','2010-12-07 09:23:48'),(57,'MapMarkerOffsetXGreen','-10','2010-12-07 09:23:48'),(58,'MapMarkerOffsetYGreen','-20','2010-12-07 09:23:48'),(59,'MapMarkerSourceDefault','gold','2010-12-07 09:23:48'),(60,'MapPopupWidthMin','300','2010-12-07 09:23:48'),(61,'MapPopupHeightMin','200','2010-12-07 09:23:48'),(62,'MapVideoWidthYouTube','425','2010-12-07 09:23:48'),(63,'MapVideoHeightYouTube','350','2010-12-07 09:23:48'),(64,'MapVideoWidthVimeo','400','2010-12-07 09:23:48'),(65,'MapVideoHeightVimeo','225','2010-12-07 09:23:48'),(66,'MapVideoWidthFlash','425','2010-12-07 09:23:48'),(67,'MapVideoHeightFlash','350','2010-12-07 09:23:48'),(68,'MapVideoWidthFlv','300','2010-12-07 09:23:48'),(69,'MapVideoHeightFlv','280','2010-12-07 09:23:48'),(70,'FlashServer','','2010-12-07 09:23:48'),(71,'FlashDirectory','videos/','2010-12-07 09:23:48');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2824,6 +2824,214 @@ LOCK TABLES `WidgetContext_Widget` WRITE;
 /*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `Maps`
+--
+
+DROP TABLE IF EXISTS `Maps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Maps` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
+  `MapRank` int(10) unsigned NOT NULL DEFAULT '1',
+  `MapUsage` tinyint(4) NOT NULL DEFAULT '1',
+  `MapCenterLongitude` double NOT NULL DEFAULT '0',
+  `MapCenterLatitude` double NOT NULL DEFAULT '0',
+  `MapDisplayResolution` smallint(6) NOT NULL DEFAULT '0',
+  `MapProvider` varchar(255) NOT NULL DEFAULT '',
+  `MapWidth` int(11) NOT NULL DEFAULT '0',
+  `MapHeight` int(11) NOT NULL DEFAULT '0',
+  `MapName` varchar(255) NOT NULL,
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `maps_article_number` (`fk_article_number`),
+  KEY `maps_article_number_usage` (`fk_article_number`,`MapUsage`),
+  KEY `maps_article_number_rank` (`fk_article_number`,`MapRank`),
+  KEY `maps_map_name` (`MapName`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Multimedia`
+--
+
+DROP TABLE IF EXISTS `Multimedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Multimedia` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `media_type` varchar(255) NOT NULL DEFAULT '',
+  `media_spec` varchar(255) NOT NULL DEFAULT '',
+  `media_src` varchar(1023) NOT NULL DEFAULT '',
+  `media_height` int(11) NOT NULL DEFAULT '0',
+  `media_width` int(11) NOT NULL DEFAULT '0',
+  `options` varchar(1023) NOT NULL DEFAULT '',
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `multimedia_media_type` (`media_type`),
+  KEY `multimedia_media_src` (`media_src`(333))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Locations`
+--
+
+DROP TABLE IF EXISTS `Locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Locations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poi_location` geometry NOT NULL,
+  `poi_type` varchar(40) NOT NULL,
+  `poi_type_style` int(11) NOT NULL DEFAULT '0',
+  `poi_center` point NOT NULL,
+  `poi_radius` double NOT NULL DEFAULT '0',
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `locations_poi_location` (`poi_location`),
+  KEY `locations_poi_type` (`poi_type`),
+  KEY `locations_poi_type_style` (`poi_type_style`),
+  SPATIAL KEY `locations_poi_center` (`poi_center`),
+  KEY `locations_poi_radius` (`poi_radius`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `LocationContents`
+--
+
+DROP TABLE IF EXISTS `LocationContents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LocationContents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poi_name` varchar(255) NOT NULL,
+  `poi_link` varchar(1023) NOT NULL DEFAULT '',
+  `poi_perex` varchar(15100) NOT NULL DEFAULT '',
+  `poi_content_type` tinyint(4) NOT NULL DEFAULT '0',
+  `poi_content` text NOT NULL,
+  `poi_text` text NOT NULL,
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `location_contents_poi_name` (`poi_name`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `MapLocations`
+--
+
+DROP TABLE IF EXISTS `MapLocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_location_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `poi_style` varchar(1023) NOT NULL,
+  `rank` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `map_locations_point_id` (`fk_location_id`),
+  KEY `map_locations_map_id` (`fk_map_id`),
+  KEY `map_locations_rank` (`rank`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `MapLocationLanguages`
+--
+
+DROP TABLE IF EXISTS `MapLocationLanguages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocationLanguages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_content_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `poi_display` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `map_locations_languages_maplocation_id_language` (`fk_maplocation_id`,`fk_language_id`),
+  KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
+  KEY `map_location_languages_language_id` (`fk_language_id`),
+  KEY `map_location_languages_content_id` (`fk_content_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `MapLocationMultimedia`
+--
+
+DROP TABLE IF EXISTS `MapLocationMultimedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocationMultimedia` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_multimedia_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `maplocationmultimedia_maplocation_id` (`fk_maplocation_id`),
+  KEY `maplocationmultimedia_multimedia_id` (`fk_multimedia_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `CityLocations`
+--
+
+DROP TABLE IF EXISTS `CityLocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityLocations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int(10) unsigned NOT NULL,
+  `city_type` varchar(10) DEFAULT NULL,
+  `population` int(10) unsigned NOT NULL,
+  `position` point NOT NULL,
+  `latitude` float NOT NULL,
+  `longitude` float NOT NULL,
+  `elevation` int(11) DEFAULT NULL,
+  `country_code` char(2) NOT NULL,
+  `time_zone` varchar(1023) NOT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `city_id` (`city_id`),
+  KEY `city_type` (`city_type`),
+  KEY `population` (`population`),
+  SPATIAL KEY `position` (`position`),
+  KEY `latitude` (`latitude`),
+  KEY `longitude` (`longitude`),
+  KEY `elevation` (`elevation`),
+  KEY `country_code` (`country_code`),
+  KEY `time_zone` (`time_zone`(333))
+) ENGINE=MyISAM AUTO_INCREMENT=197059 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `CityNames`
+--
+
+DROP TABLE IF EXISTS `CityNames`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityNames` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int(10) NOT NULL,
+  `city_name` varchar(1023) NOT NULL,
+  `name_type` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `city_id` (`city_id`),
+  KEY `city_name` (`city_name`(333)),
+  KEY `name_type` (`name_type`)
+) ENGINE=MyISAM AUTO_INCREMENT=606457 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2834,4 +3042,5 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-07-28 19:18:39
+-- Dump completed on 2010-12-07 11:06:40
+

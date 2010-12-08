@@ -8,75 +8,43 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
+require_once WWW_DIR . '/classes/GeoMap.php';
+
 /**
  * Article list component
  */
-class ArticleList
+class ArticleList extends BaseList
 {
-    /** @var string */
-    private $id = '';
-
-    /** @var string */
-    private $web = '';
-
-    /** @var string */
-    private $admin = '';
+    /** @var int */
+    protected $publication = 0;
 
     /** @var int */
-    private $publication = 0;
+    protected $issue = 0;
 
     /** @var int */
-    private $issue = 0;
+    protected $section = 0;
 
     /** @var int */
-    private $section = 0;
-
-    /** @var int */
-    private $language = 1;
+    protected $language = 1;
 
     /** @var array */
-    private $filters = array();
-
-    /** @var array */
-    private $items = NULL;
+    protected $filters = array();
 
     /** @var bool */
-    private $search = FALSE;
+    protected static $renderFilters = FALSE;
 
     /** @var bool */
-    private $colVis = FALSE;
-
-    /** @var bool */
-    private $order = FALSE;
-
-    /** @var array */
-    private $hidden = array();
-
-    /** @var bool */
-    private static $renderTable = FALSE;
-
-    /** @var bool */
-    private static $renderFilters = FALSE;
-
-    /** @var bool */
-    private static $renderActions = FALSE;
+    protected static $renderActions = FALSE;
 
     /**
      */
     public function __construct()
     {
-        global $Campsite, $ADMIN;
+        parent::__construct();
 
-        // set paths
-        $this->web = $Campsite['WEBSITE_URL'];
-        $this->path = $this->web . '/admin/libs/ArticleList';
-
-        camp_load_translation_strings('articles');
-        camp_load_translation_strings('universal_list');
-
+        // generate random ids - more tables per page
         $this->id = substr(sha1((string) mt_rand()), -6);
-
-        echo '<div id="smartlist-' . $this->id . '" class="smartlist">';
     }
 
     /**
@@ -136,90 +104,13 @@ class ArticleList
     }
 
     /**
-     * Set items.
-     * @param array $items
-     * @return ArticleList
-     */
-    public function setItems($items)
-    {
-        if (is_array($items[0])) {
-            $items = $items[0];
-        }
-        $this->items = array();
-        foreach ((array) $items as $item) {
-            $this->items[] = self::ProcessArticle($item);
-        }
-        return $this;
-    }
-
-    /**
-     * Get sDom property.
-     * @return string
-     */
-    public function getSDom()
-    {
-        $colvis = $this->colVis ? 'C' : '';
-        $search = $this->search ? 'f' : '';
-        $paging = $this->items === NULL ? 'ip' : 'i';
-        return sprintf('<"H"%s%s%s>t<"F"%s%s>',
-            $colvis,
-            $search,
-            $paging,
-            $paging,
-            $this->items === NULL ? 'l' : ''
-        );
-    }
-
-    /**
-     * Set search.
-     * @param bool $search
-     * @return ArticleList
-     */
-    public function setSearch($search = FALSE)
-    {
-        $this->search = (bool) $search;
-        return $this;
-    }
-
-    /**
-     * Set ColVis.
-     * @param bool $colVis
-     * @return ArticleList
-     */
-    public function setColVis($colVis = FALSE)
-    {
-        $this->colVis = (bool) $colVis;
-        return $this;
-    }
-
-    /**
-     * Set order.
-     * @param bool $order
-     * @return ArticleList
-     */
-    public function setOrder($order = FALSE)
-    {
-        $this->order = (bool) $order;
-        return $this;
-    }
-
-    /**
-     * Set column to be hidden.
-     * @param int $id
-     * @return ArticleList
-     */
-    public function setHidden($id)
-    {
-        $this->hidden[] = (int) $id;
-        return $this;
-    }
-
-    /**
      * Render filters.
      * @return ArticleList
      */
     public function renderFilters()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/filters.php';
         self::$renderFilters = TRUE;
         return $this;
@@ -231,6 +122,8 @@ class ArticleList
      */
     public function renderActions()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/actions.php';
         self::$renderActions = TRUE;
         return $this;
@@ -242,6 +135,8 @@ class ArticleList
      */
     public function render()
     {
+        $this->beforeRender();
+        
         include dirname(__FILE__) . '/table.php';
         self::$renderTable = TRUE;
         echo '</div><!-- /#list-' . $this->id . ' -->';
@@ -249,11 +144,11 @@ class ArticleList
     }
 
     /**
-     * Process article for rendering.
+     * Process item
      * @param Article $article
      * @return array
      */
-    public static function ProcessArticle(Article $article)
+    public function processItem(Article $article)
     {
         global $g_user, $Campsite;
 
@@ -319,6 +214,8 @@ class ArticleList
         $topicsNo,
         $commentsNo,
         (int) $article->getReads(),
+        Geo_Map::GetArticleMapId($article) != NULL ? getGS('Yes') : getGS('No'),
+        (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
         $article->getCreationDate(),
         $article->getPublishDate(),
         $article->getLastModified(),
@@ -329,7 +226,7 @@ class ArticleList
      * Handle data
      * @param array $f_request
      */
-    public static function doData($f_request)
+    public function doData($f_request)
     {
         global $ADMIN_DIR, $g_user;
         foreach ($_REQUEST['args'] as $arg) {

@@ -1,4 +1,5 @@
 <?php 
+regGS("Geo-location", "");
 regGS("Translation status:", "Estado de la traducción:");
 regGS("Editor Media Plugin", "Plugin de media para el editor");
 regGS("$1 of $2 strings translated", "$1 de $2 cadenas traducidas");

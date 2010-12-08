@@ -113,6 +113,9 @@ function regGS($p_key, $p_value)
  */
 class Localizer {
 
+    // annotations to be translated, separated with |
+    const ANNOTATIONS = 'label|title';
+
     /**
      * Return the type of files we are currently using, currently
      * either 'gs' or 'xml'.  If not set in the config file, we will
@@ -301,6 +304,16 @@ class Localizer {
                 foreach ($m[4] as $match) {
                     $match = str_replace("\\\\", "\\", $match);
                     $matches[$match] = $match;
+                }
+            }
+
+            // translate annotations
+            if (preg_match_all('/\* @(' . self::ANNOTATIONS . ') (.*)$/', $line, $m)) {
+                foreach ($m[2] as $match) {
+                    $match = trim($match);
+                    if (!empty($match)) {
+                        $matches[$match] = $match;
+                    }
                 }
             }
         }

@@ -48,6 +48,10 @@ $.fn.widgets = function (options) {
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
                     var columns = $('.column', dashboard);
+
+                    // destroy widget content
+                    $('> .content .scroll *', widget).detach();
+
                     var full = widget.clone()
                         .hide()
                         .appendTo(dashboard)
@@ -63,6 +67,14 @@ $.fn.widgets = function (options) {
                     $('a.close', full).click(function() {
                         columns.show();
                         full.detach();
+                        $('> .content .scroll', widget).html('<p>Loading..</p>');
+                        callServer(['WidgetRendererDecorator', 'render'], [
+                            widget.attr('id'),
+                            '',
+                            true,
+                            ], function(json) {
+                                $('> .content > .scroll', widget).html(json);
+                            });
                         return false;
                     }).html('Close');
 

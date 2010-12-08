@@ -1,6 +1,6 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Ακύρωση επισύνναψης αρχείου #$1 \"$2\" από το άρθρο #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Το αρχείο #$1 \"$2\" επισυνάφθηκε στο άρθρο #$3 \"$4\"");
+regGS("File #$1 \"$2\" unattached", "");
+regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "Η προσθήκη συννημένου ήταν αδύνατη.");
 regGS("There was a problem uploading the file.", "Υπήρξε ένα πρόβλημα κατά το ανέβασμα του αρχείου.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος ενός αρχείου είναι χαμηλός σε αντίθεση με το μέγεθος αρχείου που προσπαθείτε να εισάγετε. Ο μέγιστος χρόνος εισαγωγής  καθορίστηκε στο 'php.ini'");

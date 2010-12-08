@@ -1,17 +1,17 @@
 <?php 
-regGS("video", "");
-regGS("text", "");
-regGS("show article view", "");
-regGS("set as the article view", "");
-regGS("save", "");
-regGS("resize article view", "");
-regGS("no change yet", "");
-regGS("image", "");
-regGS("icon", "");
-regGS("form", "");
-regGS("basic", "");
-regGS("any country", "");
-regGS("You do not have the right to manage geolocations.", "");
-regGS("Setting Map Locations", "");
-regGS("Find", "");
+regGS("video", "video");
+regGS("text", "text");
+regGS("show article view", "ukázat zobrazení článku");
+regGS("set as the article view", "nastavit jako zobrazení článku");
+regGS("save", "uložit");
+regGS("resize article view", "změnit velikost zobrazení článku");
+regGS("no change yet", "doposud žádané změny ");
+regGS("image", "obrázek");
+regGS("icon", "ikona");
+regGS("form", "forma");
+regGS("basic", "základní");
+regGS("any country", "jakákoliv země");
+regGS("You do not have the right to manage geolocations.", "Máte oprávnění řídit geolokace.");
+regGS("Setting Map Locations", "Nastavení Lokací Map");
+regGS("Find", "Najít");
 ?>

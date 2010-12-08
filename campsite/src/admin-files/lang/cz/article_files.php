@@ -1,6 +1,6 @@
 <?php 
-regGS("File #$1 \"$2\" unattached from article #$3 \"$4\"", "Soubor #$1 \"$2\" odpojen z článku #$3 \"$4\"");
-regGS("File #$1 \"$2\" attached to article #$3 \"$4\"", "Soubor #$1 \"$2\" přiložen k článku #$3 \"$4\"");
+regGS("File #$1 \"$2\" unattached", "Soubor #$1 \"$2\" nepřipojen");
+regGS("File #$1 \"$2\" attached to article", "Soubor #$1 \"$2\" připojen ke článku");
 regGS("Unable to add attachment.", "Nezdařilo se přidat přílohu.");
 regGS("There was a problem uploading the file.", "Vyskytl se problém při nahrávání souboru.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");

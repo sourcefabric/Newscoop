@@ -19,6 +19,7 @@ require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 camp_load_translation_strings("home");
 camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
+camp_load_translation_strings("extensions");
 
 $NumDisplayArticles = 20;
 

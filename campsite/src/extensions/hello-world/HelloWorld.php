@@ -9,7 +9,7 @@
  */
 
 /**
- * @title Hello World
+ * @title Hello World!
  * @author Sourcefabric o.p.s.
  * @description Widget sample.
  * @homepage http://www.sourcefabric.org
@@ -20,6 +20,6 @@ class HelloWorld extends Widget
 {
     public function render()
     {
-        echo '<p>', $this->_('Hello world!'), '</p>';
+        echo '<p>', $this->getGS('Hello world!'), '</p>';
     }
 }

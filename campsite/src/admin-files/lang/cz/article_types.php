@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Jméno šablony může obsahovat písmena a podtržítko (_).");
 regGS("Rename article type '$1'", "Přejmenovat typ článku '$1'");
 regGS("Invalid article type '$1'.", "Neplatný typ článku '$1'.");
 regGS("You cannot merge the same type into itself.", "Nelze vnořit stejný typ do sebe sama.");

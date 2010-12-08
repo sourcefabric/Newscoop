@@ -1955,3 +1955,86 @@ ul.rss p {
 .ui-timepicker-div dl dt{ height: 25px; }
 .ui-timepicker-div dl dd{ margin: -25px 0 10px 65px; }
 .ui-timepicker-div td { font-size: 90%; }
+
+.ui-tabs.ui-widget { font-size: 1em; }
+
+body > h2 > span {
+    font-size: 0.7em;
+}
+
+p.dates {
+    margin-top: -8px;
+    font-size: 0.9em;
+    font-style: italic;
+}
+
+dl.attachment {
+    margin: 0 14px 21px;
+}
+
+dl.attachment dt {
+    float: left;
+}
+
+body > form > fieldset {
+    margin: 0 14px 21px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+body > form > fieldset dl {
+    height: 1%;
+    overflow: hidden;
+}
+
+body > form > fieldset dt {
+    width: 10em;
+    margin-right: 1em;
+}
+
+.smartlist .datatable.medialist .name {
+    width: 50%;
+}
+
+.mediaplayer {
+    margin: 14px;
+}
+
+p.actions a {
+    text-decoration: none;
+}
+
+p.actions a img {
+    margin-right: 0.25em;
+    vertical-align: bottom;
+}
+
+/* Article edit screen */
+div#connection-container {display:none;}
+div#connection-message, div#connection-error {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 0.75em;
+    font-size: 14pt;
+    font-weight: bold;
+}
+div#connection-message { color: green; }
+div#connection-error { color: red; }
+div#saved-box{
+    background-color: #9cd465;
+    color: #FFF;
+    font-weight: bold;
+    border: 1px solid white;
+    padding: 3px 8px 3px 8px;
+	float:right;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+div#authorAutoComplete {
+    width:352px; /* set width here or else widget will expand to fit its container */
+    padding-bottom:2em;
+	float:left;
+}
+fieldset#pushbuttonsfrommarkup {
+    border: 0;
+}

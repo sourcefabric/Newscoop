@@ -1,6 +1,19 @@
 <?php 
+regGS("Invalid security token.", "Neplatný bezpečnostní symbol.");
+regGS("Callback '$1' is not callable.", "Volání '$1' není možné.");
+regGS("Author type $1 linked to author $2", "Typ autora $1 je provázaný s autorem $2");
+regGS("Author type \"$1\" created.", "Typ autora $1 vytořen.");
+regGS("Author #$1 \"$2\" deleted.", "Autor #$1 \"$2\" smazán.");
+regGS("Article type \"$1\" deleted.", "Typ článku \"$1\" smazán.");
+regGS("Article translated to \"$4\" ($5)", "Článek přeložen do \"$4\" ($5)");
+regGS("Article status changed from $3 to $4.", "Status článku změněn z $3 do $4.");
+regGS("Article deleted.", "Článek smazán.");
+regGS("Article created.", "Článek vytvořen.");
+regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Článek kopírován do článku #$4 (publikace $5, vydání $6, sekce $7).");
+regGS("Article URL", "Článek URL");
+regGS("Article Number", "Číslo Článku");
+regGS("Access denied.", "Přístup byl odepřen.");
 regGS("Publish with issue", "Publikovat s vydáním");
-regGS("Article #$1 \"$2\" ($3) copied to Article #$4 (publication $5, issue $6, section $7).", "Článek #$1 \"$2\" ($3) zkopírován do Článku #$4 (publikace $5, vydání $6, rubrika $7).");
 regGS("unknown", "neznámý");
 regGS("User type \"$1\" deleted", "Vymazán uživatel typu '$1'");
 regGS("User type \"$1\" added", "Přidán uživatel typu '$1'");
@@ -43,9 +56,6 @@ regGS("Article type field \"$1\" created", "Pole typu článku \"$1\" vytvořeno
 regGS("Article type field \"$1\" changed", "Pole typu článku \"$1\" změněno");
 regGS("Article type \"$1\" translation updated", "Typ článku \"$1\" překlad aktualizován");
 regGS("Article topic $1 deleted from article $2", "Téma článku $1 odstraněno z článku $2");
-regGS("Article #$1 \"$2\" status changed from $3 to $4.", "Změněn status článku z $3 na $4 pro Článek #$1 \"$2\".");
-regGS("Article #$1 \"$2\" ($3) translated to \"$4\" ($5)", "Článek #$1 \"$2\" ($3) přeložen do \"$4\" ($5)");
-regGS("Article #$1 \"$2\" ($3) deleted.", "Článek #$1 \"$2\" ($3) odstraněn.");
 regGS("The uploaded file format is unsupported.", "Formát nahrávaného souboru není podporován.");
 regGS("The uploaded archive does not contain an valid campsite plugin.", "Nahraný archív neobsahuje validní campsite plugin.");
 regGS("The following fields are mandatory:", "Následující pole jsou povinné:");
@@ -76,7 +86,6 @@ regGS("IP Group $1 added for user $2", "Skupina IP adres $1 přidána pro uživa
 regGS("Issue $1 changed status to $2", "Změněn status vydání $1 na $2");
 regGS("Last", "Poslední");
 regGS("First", "První");
-regGS("Article #$1 \"$2\" ($3) created.", "Článek #$1 \"$2\" ($3) vytvořen.");
 regGS("Single-line Text", "Jednořádkový text");
 regGS("Multi-line Text with WYSIWYG", "Více řádkový text WYSIWYG");
 regGS("Image $1 linked to article $2", "Obrázek $1 připojen k článku $2");

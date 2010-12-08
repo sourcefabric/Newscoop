@@ -63,7 +63,7 @@ $mapPrefixToDir[""] = null;
 $mapPrefixToDir["globals"] = null;
 $mapPrefixToDir["home"] = "/admin-files/";
 $mapPrefixToDir["universal_list"] = "/admin-files/libs/ArticleList";
-$mapPrefixToDir["api"] = "/classes/";
+$mapPrefixToDir["api"] = "/classes/*";
 $mapPrefixToDir["pub"] = "/admin-files/pub";
 $mapPrefixToDir["issues"] = "/admin-files/issues";
 $mapPrefixToDir["sections"] = "/admin-files/sections";
@@ -73,7 +73,7 @@ $mapPrefixToDir["article_files"] = "/admin-files/articles/files";
 $mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
 $mapPrefixToDir["article_comments"] = "/admin-files/articles/comments";
 $mapPrefixToDir["article_audioclips"] = "/admin-files/articles/audioclips";
-$mapPrefixToDir["imagearchive"] = "/admin-files/imagearchive";
+$mapPrefixToDir["media_archive"] = "/admin-files/media-archive";
 $mapPrefixToDir["geolocation"] = "/admin-files/articles/locations";
 $mapPrefixToDir["comments"] = "/admin-files/comments";
 $mapPrefixToDir["system_pref"] = "/admin-files/system_pref";
@@ -94,6 +94,7 @@ $mapPrefixToDir["feedback"] = "/admin-files/feedback";
 $mapPrefixToDir["preview"] = "/template_engine/classes";
 $mapPrefixToDir["tiny_media_plugin"] = "/javascript/tinymce/plugins/campsitemedia";
 $mapPrefixToDir["plugins"] = "/admin-files/plugins";
+$mapPrefixToDir["extensions"] = "/extensions/*";
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {
 	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {

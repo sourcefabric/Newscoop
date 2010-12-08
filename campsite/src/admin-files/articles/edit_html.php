@@ -1,19 +1,3 @@
-
-<!-- CSS file (default YUI Sam Skin) -->
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/autocomplete/assets/skins/sam/autocomplete.css" />
-
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/button/assets/skins/sam/button.css" />
-
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/yui/build/container/assets/container.css" />
-
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/yui-assets/styles.css" />
-
-<!-- It looks that OpenLayers library may have problems when loaded slowly, thus trying to preload it herein -->
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
-
-
 <?php
 // If the article is locked.
 if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) {
@@ -80,9 +64,9 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<div id="yui-connection-container"></div>
-<div id="yui-connection-message"></div>
-<div id="yui-connection-error"></div>
+<div id="connection-container"></div>
+<div id="connection-message"></div>
+<div id="connection-error"></div>
 
 <table border="0" cellspacing="1" cellpadding="0" class="table_input" width="900px" style="margin-top: 5px;">
 <tr>
@@ -253,12 +237,12 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                  </td>
 
                  <td nowrap>
-                   <div id="yui-saved-box">
-                 <div id="yui-connection-saved"></div>
-                 <div id="yui-saved">
+                   <div id="saved-box">
+                 <div id="connection-saved"></div>
+                 <div id="saved">
                                  <script>
                     var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
-                        if (document.getElementById('yui-connection-saved').value == undefined) {
+                        if (document.getElementById('connection-saved').value == undefined) {
                         document.write('<?php putGS("Saved:"); ?> ' + dateTime);
                     }
                  </script>
@@ -278,7 +262,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
     <!-- BEGIN article content -->
     <form name="article_edit" action="do_edit.php" method="POST" id="mainForm">
     <?php echo SecurityToken::FormParameter(); ?>
-    <fieldset id="pushbuttonsfrommarkup" class=" yui-skin-sam">
+    <fieldset id="pushbuttonsfrommarkup">
     <input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>" />
     <input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>" />
     <input type="hidden" name="f_section_number" value="<?php  p($f_section_number); ?>" />
@@ -333,7 +317,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                           var rnumber=Math.floor(Math.random()*9876)
                           $('#author_type').append('<select onchange="buttonEnable(\'save_f_article_author\');" name="f_article_author_type[]" id="article_author_type' +rnumber +  '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none"><?php echo drawComboContent(); ?></select>');
                           $('#authorContainer').append('<input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" onkeyup="buttonEnable(\'save_f_article_author\');" />');
-                          $('#authorContainer').append('<img border="0" src="./../../css/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
+                          $('#authorContainer').append('<img border="0" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/unlink.png" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" />');
 
                       }
                       function deleteAuthor(id, empty){
@@ -344,81 +328,80 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                        }
                 </script>
                 <?php
-                function drawCombo($types, $id, $pos){
+                function drawCombo($types, $id, $pos) {
                     $combo='<select  onchange="buttonEnable(\'save_f_article_author\');" name="f_article_author_type[]" id="article_author_type' . $pos . '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none">';
                     $combo .= drawComboContent($id);
                     $combo .='    </select>    ';
                     return $combo;
                 }
 
-                function drawComboContent($id=0){
-                    $types = (array) Author::getTypes();
-                    foreach ($types as $xtype){
-                                  $combo .=  '<option value="' . $xtype['id'] . '"';
-                                  if ($id==$xtype['id']) $combo.= ' selected="selected" ';
-                                  $combo.='>' . $xtype['type'] . '</option>';
-                                }
-                                return $combo;
+                function drawComboContent($id = 0) {
+                    $types = AuthorType::GetAuthorTypes();
+                    foreach ($types as $xtype) {
+                        $combo .=  '<option value="' . $xtype->getId() . '"';
+                        if ($id == $xtype->getId()) {
+                            $combo.= ' selected="selected" ';
+                        }
+                        $combo.='>' . $xtype->getName() . '</option>';
+                    }
+                    return $combo;
                 }
 
+                $types = AuthorType::GetAuthorTypes();
+                $authors = ArticleAuthor::GetArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
 
-                    $types =Author::getTypes();
-                    $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-
-                    if (!empty($authors))
-                    {
-                        $i=0;
-                        $author_list=  array();
-                        $types_list= array();
-                        foreach ($authors as $author)
-                        { ob_start();?><div><?php //echo $combo ?>
-                         <input type="text" name="f_article_author[]" style="width:280px" id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor"  value="<?php print  htmlspecialchars($author['first_name']); echo " "; print  htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" />
-                         <img border="0" src="./../../css/unlink.png" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i;?>');">
-                            </div>
-                          <?php  $author_list[] = ob_get_clean();
-                          $types_list[] = $author['fk_type_id'];
-                          $i++;
-                        }
+                if (!empty($authors)) {
+                    $i = 0;
+                    $author_list = array();
+                    $types_list = array();
+                    foreach ($authors as $author) { ob_start(); ?><div>
+                        <input type="text" name="f_article_author[]" style="width:280px" id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor"  value="<?php print htmlspecialchars($author['first_name']); echo " "; print htmlspecialchars($author['last_name']); ?>" onkeyup="buttonEnable('save_f_article_author');" />
+                        <img border="0" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/unlink.png" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i;?>');">
+                      </div>
+                      <?php $author_list[] = ob_get_clean();
+                        $types_list[] = $author['fk_type_id'];
+                        $i++;
                     }
+                }
                 ?>
 
                 <td align="right" valign="top" id="author_type">
-                    <?php $i=0;
-                    foreach ((array) $types_list as $type){
-                        echo "<div id=\"author_type$i\" style=\"margin-top:1px\">" . drawCombo($types,$type,$i) . "</div>";
-                        $i++;
-                    }
-                    ?>
+                <?php
+                $i = 0;
+                foreach ((array) $types_list as $type) {
+                    echo "<div id=\"author_type$i\" style=\"margin-top:1px\">" . drawCombo($types,$type,$i) . "</div>";
+                    $i++;
+                }
+                ?>
                 <select name="article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
                     <?php echo drawComboContent(); ?></select>
                 </td>
-                <td align="left" valign="top" class="yui-skin-sam">
+                <td align="left" valign="top">
                     <?php if ($f_edit_mode == "edit") {  ?>
                     <div id="authorAutoComplete">
                     <?php
-                        foreach ((array) $author_list as $author){
+                    foreach ((array) $author_list as $author) {
                         echo $author;
                     }?>
-
-
                         <div id="authorContainer">
-                            <input type="text" style="width:280px" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor"  onkeyup="buttonEnable('save_f_article_author');" /><img border="0" src="./../../css/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');">
+                            <input type="text" style="width:280px" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor" onkeyup="buttonEnable('save_f_article_author');" /><img border="0" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');" />
                         </div>
                         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()">
                     </div>
                     <?php } else {
-                        $ath='';
-                        $authors = ArticleAuthor::getArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-                        foreach ($authors as $author)
-                        {
-                            if (strlen($ath)>0) $ath.=", ";
-                            $ath .=$author['first_name'] . ' ' . $author['last_name'];
+                        $ath = '';
+                        $authors = ArticleAuthor::GetArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+                        foreach ($authors as $author) {
+                            if (strlen($ath)>0) {
+                                $ath.=", ";
+                            }
+                            $ath .= $author['first_name'] . ' ' . $author['last_name'];
                         }
-                            print wordwrap(htmlspecialchars($ath), 60, "<br>");
-                          }
+                        print wordwrap(htmlspecialchars($ath), 60, "<br>");
+                    }
                     ?>
                 </td>
-                <td align="right" valign="top" style="padding-right: 0.5em;"><b><?php  putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
+                <td align="right" valign="top" style="padding-right: 0.5em;"><b><?php putGS("Created by"); ?>:</b> <?php p(htmlspecialchars($articleCreator->getRealName())); ?></td>
             </tr>
             </table>
 
@@ -472,7 +455,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 
                     <!-- Creation Date -->
                     <tr>
-                        <td align="right" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></td>
+                        <td align="right" valign="top" style="padding-left: 1em;"><b><nobr><?php putGS("Creation date"); ?>:</nobr></b></td>
                         <td align="left" valign="top" nowrap>
                             <?php if ($f_edit_mode == "edit") { ?>
                             <table cellpadding="0" cellspacing="2"><tr>
@@ -496,7 +479,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                     <!-- End creation date -->
 
                     <tr>
-                        <td align="right" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></td>
+                        <td align="right" valign="top" style="padding-left: 1em;"><b><?php putGS("Publish date"); ?>:</b></td>
                         <td align="left" valign="top">
                             <?php if ($f_edit_mode == "edit" && $articleObj->isPublished()) { ?>
                             <table cellpadding="0" cellspacing="2"><tr>
@@ -914,7 +897,9 @@ window.location.reload();
         <table width="100%">
 
         <tr><td>
-             <?php require('edit_locations_box.php'); ?>
+            <!-- BEGIN Geo-locations table -->
+            <?php require('edit_locations_box.php'); ?>
+            <!-- END Geo-locations table -->
         </td></tr>
 
         <?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
