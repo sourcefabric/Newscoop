@@ -3032,12 +3032,6 @@ CREATE TABLE `CityNames` (
 ) ENGINE=MyISAM AUTO_INCREMENT=606457 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Reading data for tables `CityLocations` and `CityNames` by GeoNames
---
-
-source geonames.sql
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
