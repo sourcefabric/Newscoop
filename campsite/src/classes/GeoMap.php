@@ -86,7 +86,7 @@ class Geo_Map extends DatabaseObject {
 	} // fn getMapId
 
 	/**
-	 * @return array
+	 * @return int
 	 */
 	public static function GetArticleMapId($p_articleObj)
 	{
@@ -107,7 +107,7 @@ class Geo_Map extends DatabaseObject {
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $map_ids[] = $row['id'];
+                    $map_id = $row['id'];
                 }
             }
         }
@@ -116,7 +116,7 @@ class Geo_Map extends DatabaseObject {
             return null;
         }
 
-		return $map_ids;
+		return $map_id;
 	} // fn getMapIdByArticle
 
 	/**
@@ -1252,6 +1252,10 @@ class Geo_Map extends DatabaseObject {
     $art = new Article(1, 35);
     $locs = Geo_map::GetLocationsByArticle($art);
     print_r($locs);
+
+    $art = new Article(2, 35);
+    $map_id = Geo_map::GetArticleMapId($art);
+    echo "map_id: $map_id";
 */
 
 ?>
