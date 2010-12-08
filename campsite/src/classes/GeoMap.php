@@ -12,6 +12,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 //require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 //require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
@@ -157,9 +158,9 @@ class Geo_Map extends DatabaseObject {
 		global $g_ado_db;
 
         $queryStr = "SELECT lc.poi_name AS name FROM Maps AS m INNER JOIN MapLocations AS ml ON ml.fk_map_id = m.id ";
-        $queryStr = "INNER JOIN MapLocationLanguages AS mll ON mll.fk_maplocation_id = ml.id ";
-        $queryStr = "INNER JOIN LocationContents AS lc ON lc.id = mll.fk_content_id ";
-        $queryStr = "WHERE m.fk_article_number = ? AND mll.fk_language_id = ? ";
+        $queryStr .= "INNER JOIN MapLocationLanguages AS mll ON mll.fk_maplocation_id = ml.id ";
+        $queryStr .= "INNER JOIN LocationContents AS lc ON lc.id = mll.fk_content_id ";
+        $queryStr .= "WHERE m.fk_article_number = ? AND mll.fk_language_id = ? ORDER BY ml.rank, ml.id";
 
         $article_number = $p_articleObj->getArticleNumber();
         $language_id = $p_articleObj->getLanguageId();
@@ -1246,5 +1247,11 @@ class Geo_Map extends DatabaseObject {
     }
 
 } // class ArticleAttachment
+
+/* testing:
+    $art = new Article(1, 35);
+    $locs = Geo_map::GetLocationsByArticle($art);
+    print_r($locs);
+*/
 
 ?>
