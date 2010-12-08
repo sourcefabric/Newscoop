@@ -214,6 +214,7 @@ class ArticleList extends BaseList
         $topicsNo,
         $commentsNo,
         (int) $article->getReads(),
+        Geo_Map::GetArticleMapId($article) != NULL ? getGS('Yes') : getGS('No'),
         (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
         $article->getCreationDate(),
         $article->getPublishDate(),
