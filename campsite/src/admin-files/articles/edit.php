@@ -8,6 +8,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
+
+require_once WWW_DIR . '/classes/GeoMap.php';
+
 camp_load_translation_strings("article_comments");
 if (SystemPref::Get('UseCampcasterAudioclips') == 'Y') {
 	camp_load_translation_strings("article_audioclips");
