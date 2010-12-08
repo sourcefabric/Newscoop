@@ -2137,37 +2137,13 @@ geo_locations.set_save_state = function(state)
 // loading the POI data, for the initial phase
 geo_locations.map_pois_load = function(script_dir)
 {
-    var load_request = getHTTPObject();
-
-    load_request.onreadystatechange = function()
-    {
-        if (4 == load_request.readyState)
-        {
-            geo_locations.got_load_data(load_request);
-        }
-    };
-
-    try
-    {
-        if (undefined === script_dir)
-        {
-            script_dir = "";
-        }
-        var script_path = script_dir + "manage.php";
-
-        load_request.open("GET", script_path + "?load=1&f_map_id=" + this.map_id + "&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id, true);
-        load_request.send(null);
-    }
-    catch (e)
-    {
-        load_request.onreadystatechange = function() {}
-        load_request = null;
-        return;
-    }
-
-    return false;
-
-
+    callServer(['Geo_Map', 'LoadMapData'], [
+        this.map_id,
+        this.language_id,
+        this.article_number,
+        ], function(json) {
+            geo_locations.got_load_data(json);
+        });
 };
 
 geo_locations.map_edit_name = function()
@@ -2225,50 +2201,8 @@ geo_locations.map_load_name = function()
 
 // the main action on ajax data retrieval for cities search
 // it throws away all the current POI info
-geo_locations.got_load_data = function (load_request)
+geo_locations.got_load_data = function (received_obj)
 {
-    //return;
-    //alert(load_request.responseText);
-
-    var load_status = load_request.status;
-    var http_status_ok = 200;
-
-    var load_response = "";
-    if (load_status == http_status_ok)
-    {
-        load_response = load_request.responseText;
-    }
-
-    if (load_status != http_status_ok)
-    {
-        load_response = "failed: " + load_status;
-        alert(load_response);
-        return;
-    }
-
-    var received_obj = null;
-    //var mssg_obj = document.getElementById ? document.getElementById("error_messages") : null;
-    //mssg_obj.innerHTML = " ";
-    //$("#error_messages").addClass("hidden");
-    try {
-        received_obj = JSON.parse(load_response);
-    }
-    catch (e) {
-        //var mssg_obj = document.getElementById ? document.getElementById("error_messages") : null;
-        //mssg_obj.innerHTML = load_response;
-        //$("#error_messages").removeClass("hidden");
-        alert(this.display_strings.probably_logged_out);
-        //alert("probably logged out: " + e + "\n" + load_response);
-        return;
-    }
-
-    if ("200" != ("" + received_obj.status))
-    {
-        //alert("not logged in?" + " " + received_obj.status);
-        alert(this.display_strings.problem_with_map_processing + " " + received_obj.status);
-        return;
-    }
-
     this.select_control.destroy();
 
     this.edited_point = 0;
@@ -2525,10 +2459,18 @@ geo_locations.map_save_all = function(script_dir)
 {
     if (!this.something_to_save) {return;}
 
-    var store_request = getHTTPObject();
     var cur_marker = null;
 
-    var store_data = "";
+    // init args
+    var args = {
+        'f_map': '',
+        'f_remove': '',
+        'f_order': '',
+        'f_insert_new': '',
+        'f_update_loc': '',
+        'f_update_con': '',
+    };
+
     if ((0 == this.map_id) || (this.map_spec_changed))
     {
         var prov_label = "";
@@ -2555,7 +2497,7 @@ geo_locations.map_save_all = function(script_dir)
         store_map_str.replace(/\+/gi, "%2B");
         store_map_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(store_map_obj));
-        store_data += "&f_map=" + store_map_str;
+        args['f_map'] = store_map_str;
     }
 
     if (0 < this.poi_deletion.length)
@@ -2563,7 +2505,7 @@ geo_locations.map_save_all = function(script_dir)
         var remove_poi_str = Base64.encode(JSON.stringify(this.poi_deletion));
         remove_poi_str.replace(/\+/gi, "%2B");
         remove_poi_str.replace(/\//gi, "%2F");
-        store_data += "&f_remove=" + remove_poi_str;
+        args['f_remove'] = remove_poi_str;
     }
 
     var order_length = this.poi_order_user.length;
@@ -2581,7 +2523,7 @@ geo_locations.map_save_all = function(script_dir)
         order_poi_str.replace(/\+/gi, "%2B");
         order_poi_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(order_ids));
-        store_data += "&f_order=" + order_poi_str;
+        args['f_order'] = order_poi_str;
     }
 
     var insert_poi_new_array = [];
@@ -2612,7 +2554,7 @@ geo_locations.map_save_all = function(script_dir)
         insert_poi_new_str.replace(/\+/gi, "%2B");
         insert_poi_new_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(insert_poi_new_array));
-        store_data += "&f_insert_new=" + insert_poi_new_str;
+        args['f_insert_new'] = insert_poi_new_str;
     }
     if (0 < update_poi_loc_array.length)
     {
@@ -2620,7 +2562,7 @@ geo_locations.map_save_all = function(script_dir)
         update_poi_loc_str.replace(/\+/gi, "%2B");
         update_poi_loc_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(update_poi_loc_array));
-        store_data += "&f_update_loc=" + update_poi_loc_str;
+        args['f_update_loc']= update_poi_loc_str;
     }
     if (0 < update_poi_con_array.length)
     {
@@ -2628,38 +2570,20 @@ geo_locations.map_save_all = function(script_dir)
         update_poi_con_str.replace(/\+/gi, "%2B");
         update_poi_con_str.replace(/\//gi, "%2F");
         //alert(JSON.stringify(update_poi_con_array));
-        store_data += "&f_update_con=" + update_poi_con_str;
+        args['f_update_con'] = update_poi_con_str;
     }
 
-    store_request.onreadystatechange = function()
-    {
-        if (4 == store_request.readyState)
-        {
-            geo_locations.got_load_data(store_request);
-        }
-    };
-
-    try
-    {
-        if (undefined === script_dir)
-        {
-            script_dir = "";
-        }
-        var script_path = script_dir + "manage.php";
-
-        store_request.open("POST", script_path, true);
-        store_request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        store_request.send("" + "store=1&f_map_id=" + this.map_id + "&f_article_number=" + this.article_number + "&f_language_id=" + this.language_id + store_data);
-    }
-    catch (e)
-    {
-        store_request.onreadystatechange = function() {}
-        store_request = null;
-        return;
-    }
-
-    return false;
-
+    callServer(['Geo_Map', 'StoreMapData'], [
+        this.map_id,
+        this.language_id,
+        this.article_number,
+        args['f_map'],
+        args['f_remove'],
+        args['f_insert_new'],
+        args['f_update_loc'],
+        args['f_update_con'],
+        args['f_order'],
+        ], function(json) {
+            geo_locations.got_load_data(json);
+        });
 };
-
-
