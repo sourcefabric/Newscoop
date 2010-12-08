@@ -737,12 +737,14 @@ this.got_load_data = function (load_data)
         return;
     }
 
+/*
     if ("200" != ("" + received_obj.status))
     {
         //alert("not logged in?" + " " + received_obj.status);
         //alert(this.display_strings.problem_with_map_processing + " " + received_obj.status);
         return;
     }
+*/
 
     this.select_control.destroy();
 
