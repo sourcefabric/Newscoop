@@ -35,7 +35,8 @@ class MostPopularArticlesWidget extends ArticlesWidget
             $articlelist->setHidden(7);
             $articlelist->setHidden(12);
             $articlelist->setHidden(14);
-            $articlelist->setHidden(16);
+            $articlelist->setHidden(15);
+            $articlelist->setHidden(17);
         }
         $articlelist->render();
     }

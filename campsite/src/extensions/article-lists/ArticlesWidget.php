@@ -25,7 +25,8 @@ abstract class ArticlesWidget extends Widget
             $articlelist->setHidden(12);
             $articlelist->setHidden(13);
             $articlelist->setHidden(14);
-            $articlelist->setHidden(16);
+            $articlelist->setHidden(15);
+            $articlelist->setHidden(17);
         }
         $articlelist->render();
     }

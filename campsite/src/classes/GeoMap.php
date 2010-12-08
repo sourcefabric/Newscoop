@@ -381,19 +381,22 @@ class Geo_Map extends DatabaseObject {
 
     // ajax processing handlers
 
+    /**
+     * Load map data
+     *
+     * @param int $p_mapId
+     * @param int $p_languageId
+     * @param int $p_articleNumber
+     *
+     * @return array
+     */
 	public static function LoadMapData($p_mapId, $p_languageId, $p_articleNumber)
 	{
-		//global $g_ado_db;
-
-        $found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
-
-        $geo_map_usage = Geo_Map::ReadMapInfo("map", $p_mapId);
-
-        $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
-
-        return $res_array;
+        return array(
+            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId),
+            'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
+        );
     }
-
 
 	public static function StoreMapData($p_mapId, $p_languageId, $p_articleNumber, $p_map = "", $p_remove = "", $p_insert = "", $p_locations = "", $p_contents = "", $p_order = "")
 	{
