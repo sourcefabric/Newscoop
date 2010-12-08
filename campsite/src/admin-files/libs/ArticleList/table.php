@@ -27,6 +27,7 @@
         <th><?php echo putGS('Topics'); ?></th>
         <th><?php echo putGS('Comments'); ?></th>
         <th><?php echo putGS('Reads'); ?></th>
+        <th><?php echo putGS('Locations'); ?></th>
         <th><?php echo putGS('Create Date'); ?></th>
         <th><?php echo putGS('Publish Date'); ?></th>
         <th><?php echo putGS('Last Modified'); ?></th>
@@ -34,7 +35,7 @@
 </thead>
 <tbody>
 <?php if ($this->items === NULL) { ?>
-    <tr><td colspan="17"><?php putGS('Loading data'); ?></td></tr>
+    <tr><td colspan="18"><?php putGS('Loading data'); ?></td></tr>
 <?php } else if (!empty($this->items)) { ?>
     <?php foreach ($this->items as $item) { ?>
     <tr>
@@ -128,13 +129,13 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // hide columns
             'bVisible': false,
-            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 14, 16,
+            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 15, 17,
                 <?php echo implode(', ', $this->hidden); ?>
             ],
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 16],
+            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 17],
         },
         { // id
             'sClass': 'id',
@@ -150,7 +151,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // dates
             'sClass': 'date',
-            'aTargets': [14, 15, 16]
+            'aTargets': [15, 16, 17]
         },
     ],
     'fnDrawCallback': function() {

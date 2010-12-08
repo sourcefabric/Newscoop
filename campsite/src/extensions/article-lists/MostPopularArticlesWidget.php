@@ -34,7 +34,8 @@ class MostPopularArticlesWidget extends ArticlesWidget
         if (!$this->isFullscreen()) {
             $articlelist->setHidden(7);
             $articlelist->setHidden(12);
-            $articlelist->setHidden(15);
+            $articlelist->setHidden(14);
+            $articlelist->setHidden(16);
         }
         $articlelist->render();
     }
