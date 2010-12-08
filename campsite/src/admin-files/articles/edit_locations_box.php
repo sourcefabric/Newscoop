@@ -23,11 +23,11 @@ $locations = Geo_Map::GetLocationsByArticle($articleObj);
 if (!empty($locations)) { ?>
 <tr>
     <td>
-        <ul class="points">
+        <ol class="points">
             <?php foreach ($locations as $location) { ?>
             <li><?php echo $location; ?></li>
             <?php } ?>
-        </ul>
+        </ol>
     </td>
 </tr>
 <?php } ?>
