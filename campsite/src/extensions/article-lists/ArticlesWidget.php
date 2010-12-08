@@ -24,7 +24,8 @@ abstract class ArticlesWidget extends Widget
         if (!$this->isFullscreen()) {
             $articlelist->setHidden(12);
             $articlelist->setHidden(13);
-            $articlelist->setHidden(15);
+            $articlelist->setHidden(14);
+            $articlelist->setHidden(16);
         }
         $articlelist->render();
     }

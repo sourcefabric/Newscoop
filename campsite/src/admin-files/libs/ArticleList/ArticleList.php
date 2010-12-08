@@ -9,6 +9,7 @@
  */
 
 require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
+require_once WWW_DIR . '/classes/GeoMap.php';
 
 /**
  * Article list component
@@ -213,6 +214,7 @@ class ArticleList extends BaseList
         $topicsNo,
         $commentsNo,
         (int) $article->getReads(),
+        (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
         $article->getCreationDate(),
         $article->getPublishDate(),
         $article->getLastModified(),
