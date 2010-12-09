@@ -24,8 +24,6 @@
  */
 function smarty_block_list_images($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
     // gets the context variable
     $campContext = $p_smarty->get_template_vars('campsite');
 
@@ -35,12 +33,12 @@ function smarty_block_list_images($p_params, $p_content, &$p_smarty, &$p_repeat)
         if ($imagesList->isEmpty()) {
             $campContext->setCurrentList($imagesList, array());
             $campContext->resetCurrentList();
-        	$p_repeat = false;
+            $p_repeat = false;
             return null;
         }
-    	$campContext->setCurrentList($imagesList, array('image'));
-    	$campContext->image = $campContext->current_images_list->current;
-    	$p_repeat = true;
+        $campContext->setCurrentList($imagesList, array('image'));
+        $campContext->image = $campContext->current_images_list->current;
+        $p_repeat = true;
     } else {
         $campContext->current_images_list->defaultIterator()->next();
         if (!is_null($campContext->current_images_list->current)) {

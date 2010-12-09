@@ -2038,3 +2038,8 @@ div#authorAutoComplete {
 fieldset#pushbuttonsfrommarkup {
     border: 0;
 }
+
+ol.points {
+    margin: 0 0 0 21px;
+    padding: 0 5px;
+}

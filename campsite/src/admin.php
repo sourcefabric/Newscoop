@@ -79,6 +79,7 @@ $no_menu_scripts = array(
     $prefix . 'password_recovery.php',
     $prefix . 'password_check_token.php',
     '/articles/locations/popup.php',
+    '/articles/locations/preview.php',
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
