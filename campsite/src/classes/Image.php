@@ -242,10 +242,13 @@ class Image extends DatabaseObject {
 	} // fn getContentType
 
 
-	public function getType()
-	{
-		return substr($this->m_data['ContentType'], strlen('image/'));
-	}
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return substr($this->m_data['ContentType'], strlen('image/'));
+    } // fn getType
 
 
 	/**
@@ -902,12 +905,12 @@ class Image extends DatabaseObject {
             }
 
             if ($comparisonOperation['symbol'] == 'match') {
-            	$whereCondition = 'MATCH('.$comparisonOperation['left'].") AGAINST('"
-            	.$g_ado_db->escape($comparisonOperation['right']) . "' IN BOOLEAN MODE)";
+            	$whereCondition = 'MATCH(' . $comparisonOperation['left'] . ") AGAINST('"
+            	    . $g_ado_db->escape($comparisonOperation['right']) . "' IN BOOLEAN MODE)";
             } else {
             	$whereCondition = $comparisonOperation['left'] . ' '
-            	. $comparisonOperation['symbol'] . " '"
-            	. $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            	    . $comparisonOperation['symbol'] . " '"
+            	    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
@@ -921,7 +924,7 @@ class Image extends DatabaseObject {
         }
         $countClauseObj->addColumn('COUNT(*)');
 
-        // sets the base table Attachment
+        // sets the base table
         $selectClauseObj->setTable($tmpImage->getDbTableName());
         $countClauseObj->setTable($tmpImage->getDbTableName());
         unset($tmpImage);
@@ -938,7 +941,7 @@ class Image extends DatabaseObject {
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
 
-        // builds the query executes it
+        // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
         $images = $g_ado_db->GetAll($selectQuery);
         if (is_array($images)) {
@@ -1027,9 +1030,7 @@ class Image extends DatabaseObject {
      *      The array of order directives in the format:
      *      array('field'=>field_name, 'dir'=>order_direction)
      *      field_name can take one of the following values:
-     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
-     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
-     *        bypopularity, bycomments
+     *        bydescription, byphotographer, bydate, bylastdate
      *      order_direction can take one of the following values:
      *        asc, desc
      *
@@ -1108,4 +1109,5 @@ class Image extends DatabaseObject {
     } // fn ProcessImage
 
 } // class Image
+
 ?>
