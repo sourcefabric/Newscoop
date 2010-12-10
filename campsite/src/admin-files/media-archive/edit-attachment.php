@@ -38,7 +38,7 @@ echo $breadcrumbs;
 <h2><?php echo $object->getFileName(); ?></h2>
 <p class="dates"><?php putGS('Created'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php putGS('Last modified'); ?>: <?php echo $object->getLastModified(); ?></p>
 
-<?php echo new MediaPlayer($object->getAttachmentUrl(), $object->getMimeType()); ?>
+<?php echo new MediaPlayer($Campsite['WEBSITE_URL'] . '/attachment/' . basename($object->getStorageLocation()) . '?g_show_in_browser=1', $object->getMimeType()); ?>
 
 <dl class="attachment">
     <dt><?php putGS('Type'); ?>:</dt>
