@@ -409,7 +409,7 @@ class DatabaseObject {
 		// If so, automatically set these values when we create the row.
 		foreach ($this->m_columnNames as $columnName) {
 			if (!empty($this->m_data[$columnName])) {
-				$columns[$columnName] = "'".mysql_real_escape_string($this->m_data[$columnName])."'";
+				$columns[$columnName] = "'".$g_ado_db->escape($this->m_data[$columnName])."'";
 			}
 		}
 
@@ -418,9 +418,11 @@ class DatabaseObject {
 		if (!is_null($p_values)) {
 			$parts = array();
 			foreach ($p_values as $columnName => $value) {
-				// Construct value string for the SET clause.
-				$columns[$columnName] = "'".mysql_real_escape_string($value)."'";
-				$this->m_data[$columnName] = $value;
+				if (in_array($columnName, $this->m_columnNames)) {
+					// Construct value string for the SET clause.
+					$columns[$columnName] = "'".$g_ado_db->escape($value)."'";
+					$this->m_data[$columnName] = $value;
+				}
 			}
 		}
 

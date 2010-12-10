@@ -132,4 +132,5 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('FlashDirectory', 'videos
 -- Geo Names
 source geonames.sql
 
-
+-- Topics refactoring
+system php ./transfer_topics.php

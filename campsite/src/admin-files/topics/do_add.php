@@ -35,9 +35,8 @@ if (!empty($f_topic_name)) {
 	if ($f_topic_id == 0) {
 		// Create new topic
 		$topic = new Topic();
-		$created = $topic->create(array('Name' => $f_topic_name,
-										'ParentId' => $f_topic_parent_id,
-										'LanguageId'=>$f_topic_language_id));
+		$created = $topic->create(array('parent_id' => $f_topic_parent_id,
+		'names'=>array($f_topic_language_id=>$f_topic_name)));
 	} else {
 		// Translate existing topic
 		$topic = new Topic($f_topic_id);

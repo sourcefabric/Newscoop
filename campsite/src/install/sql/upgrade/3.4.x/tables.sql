@@ -358,5 +358,19 @@ CREATE TABLE MapLocationMultimedia (
 
 
 -- Topics table refactoring
-ALTER TABLE Topics ADD COLUMN node_left int(10) unsigned NOT NULL;
-ALTER TABLE Topics ADD COLUMN node_right int(10) unsigned NOT NULL;
+ALTER TABLE Topics RENAME TopicsOld;
+
+CREATE TABLE Topics (
+    id int(10) unsigned NOT NULL AUTO_INCREMENT,
+    node_left int(10) unsigned NOT NULL,
+    node_right int(10) unsigned NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE TopicNames (
+    fk_topic_id int(10) unsigned NOT NULL,
+    fk_language_id int(10) unsigned NOT NULL,
+    name varchar(255) NOT NULL DEFAULT '',
+    PRIMARY KEY (fk_topic_id, fk_language_id),
+    UNIQUE KEY (fk_language_id, name)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
