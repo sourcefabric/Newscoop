@@ -22,11 +22,12 @@ abstract class ArticlesWidget extends Widget
         $articlelist = new ArticleList();
         $articlelist->setItems($this->items);
         if (!$this->isFullscreen()) {
-            $articlelist->setHidden(12);
-            $articlelist->setHidden(13);
-            $articlelist->setHidden(14);
-            $articlelist->setHidden(15);
-            $articlelist->setHidden(17);
+            $articlelist->setHidden('Comments');
+            $articlelist->setHidden('Reads');
+            $articlelist->setHidden('UseMap');
+            $articlelist->setHidden('Locations');
+            $articlelist->setHidden('CreateDate');
+            $articlelist->setHidden('PublishDate');
         }
         $articlelist->render();
     }
