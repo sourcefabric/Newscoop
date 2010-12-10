@@ -805,7 +805,11 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`Id`),
+  FULLTEXT KEY `Description` (`Description`),
+  FULLTEXT KEY `Photographer` (`Photographer`),
+  FULLTEXT KEY `Place` (`Place`),
+  FULLTEXT KEY `Caption` (`Caption`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
