@@ -130,6 +130,14 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('FlashDirectory', 'videos
 -- INSERT INTO SystemPreferences (varname, value) VALUES ('MapAudioObject', '<object><param name="src" value="%%site%%%%track%%"><param name="autostart" value="%%auto%%"><param name="autoplay" value="%%auto%%"><param name="controller" value="true"><embed src="%%site%%%%track%%" controller="true" autoplay="%%auto%%" autostart="%%auto%%" type="%%type%%" /></object>');
 
 -- Geo Names
-source geonames.sql
+TRUNCATE `CityNames`;
+TRUNCATE `CityLocations`;
 
+ALTER TABLE `CityNames` DISABLE KEYS;
+ALTER TABLE `CityLocations` DISABLE KEYS;
 
+LOAD DATA LOCAL INFILE '../../CityNames.csv' INTO TABLE `CityNames` FIELDS TERMINATED BY ';' ENCLOSED BY '"';
+LOAD DATA LOCAL INFILE '../../CityLocations.csv' INTO TABLE `CityLocations` FIELDS TERMINATED BY ';' ENCLOSED BY '"';
+
+ALTER TABLE `CityNames` ENABLE KEYS;
+ALTER TABLE `CityLocations` ENABLE KEYS;

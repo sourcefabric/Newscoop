@@ -37,7 +37,7 @@ geo_names.askForNearCities = function(longitude, latitude, script_dir, results_d
         longitude,
         latitude,
         ], function(json) {
-            geo_names.gotSearchData(search_request, results_div);
+            geo_names.gotSearchData(json, results_div);
         });
 };
 
