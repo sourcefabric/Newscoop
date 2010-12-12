@@ -836,42 +836,49 @@ class DatabaseObject {
 		if (!is_null($p_sqlOptions)) {
             if (isset($p_sqlOptions['GROUP BY'])) {
                 if (!is_array($p_sqlOptions['GROUP BY'])) {
-                    $p_queryStr .= ' GROUP BY '.$p_sqlOptions['GROUP BY'];
+                    $p_queryStr .= " \nGROUP BY ".$p_sqlOptions['GROUP BY'];
                 } else {
-                    $p_queryStr .= ' GROUP BY ';
+                    $p_queryStr .= " \nGROUP BY ";
                     $tmpItems = array();
                     foreach ($p_sqlOptions['GROUP BY'] as $key => $orderItem) {
                         // We assume here that the column name is not numeric
                         if (is_numeric($key)) {
                             // Not using the ASC/DESC option
-                            $tmpItems[] = '`'.$orderItem.'`';
+                            $tmpItems[] = $orderItem;
                         } else {
                             $orderItem = strtoupper($orderItem);
                             if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
                                 // Using the ASC/DESC option
-                                $tmpItems[] = '`'.$key.'` '.$orderItem;
+                                $tmpItems[] = $key.' '.$orderItem;
                             }
                         }
                     }
                     $p_queryStr .= implode(',', $tmpItems);
                 }
             }
-			if (isset($p_sqlOptions['ORDER BY'])) {
-				if (!is_array($p_sqlOptions['ORDER BY'])) {
-					$p_queryStr .= ' ORDER BY '.$p_sqlOptions['ORDER BY'];
+			if (isset($p_sqlOptions['HAVING'])) {
+				if (!is_array($p_sqlOptions['HAVING'])) {
+					$p_queryStr .= " \nHAVING ".$p_sqlOptions['HAVING'];
 				} else {
-					$p_queryStr .= ' ORDER BY ';
+					$p_queryStr .= " \nHAVING " . implode(', ', $p_sqlOptions['HAVING']);
+				}
+			}
+            if (isset($p_sqlOptions['ORDER BY'])) {
+				if (!is_array($p_sqlOptions['ORDER BY'])) {
+					$p_queryStr .= " \nORDER BY ".$p_sqlOptions['ORDER BY'];
+				} else {
+					$p_queryStr .= " \nORDER BY ";
 					$tmpItems = array();
 					foreach ($p_sqlOptions['ORDER BY'] as $key => $orderItem) {
 						// We assume here that the column name is not numeric
 						if (is_numeric($key)) {
 							// Not using the ASC/DESC option
-							$tmpItems[] = '`'.$orderItem.'`';
+							$tmpItems[] = $orderItem;
 						} else {
 							$orderItem = strtoupper($orderItem);
 							if (($orderItem == 'ASC') || ($orderItem == 'DESC')) {
 								// Using the ASC/DESC option
-								$tmpItems[] = '`'.$key.'` '.$orderItem;
+								$tmpItems[] = $key.' '.$orderItem;
 							}
 						}
 					}
@@ -880,10 +887,10 @@ class DatabaseObject {
 			}
 			if (isset($p_sqlOptions['LIMIT'])) {
 				if (is_array($p_sqlOptions['LIMIT'])) {
-					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT']['START']
+					$p_queryStr .= " \nLIMIT ".$p_sqlOptions['LIMIT']['START']
 						.','.$p_sqlOptions['LIMIT']['MAX_ROWS'];
 				} else {
-					$p_queryStr .= ' LIMIT '.$p_sqlOptions['LIMIT'];
+					$p_queryStr .= " \nLIMIT ".$p_sqlOptions['LIMIT'];
 				}
 			}
 		}

@@ -486,48 +486,71 @@ class Topic extends DatabaseObject {
             }
         }
 
-		$tmpObj = new Topic();
-		$topicsTable = $tmpObj->m_dbTableName;
-		$tmpObj = new TopicName();
-		$topicNamesTable = $tmpObj->m_dbTableName;
+
+        $topicObj = new Topic();
+		$topicTable = '`' . $topicObj->m_dbTableName . '`';
+		$topicNameObj = new TopicName();
+		$topicNameTable = '`' . $topicNameObj->m_dbTableName . '`';
+
+        $in_columns[] = 't.id';
+        $in_tables[] = "$topicTable AS t";
+		$in_sqlOptions['GROUP BY'] = array('t.id');
 
         $constraints = array();
-		if (!is_null($p_id)) {
-			$constraints[] = "t.id = '$p_id'";
+		$in_constraints = array();
+		if (!is_null($p_id) && is_numeric($p_id)) {
+			$in_constraints[] = "t.id = '$p_id'";
 		}
-		if (!is_null($p_languageId)) {
+		if (!is_null($p_languageId) && is_numeric($p_languageId)) {
 			$constraints[] = "tn.fk_language_id = '$p_languageId'";
 		}
 		if (!is_null($p_name)) {
 			$constraints[] = "tn.name = '". $g_ado_db->escape($p_name) . "'";
 		}
 		if (!is_null($p_parentId)) {
-			$constraints[] = "`ParentId` = '$p_parentId'";
+			$in_tables[] = "$topicTable AS parent";
+			$in_constraints[] = 't.node_left BETWEEN parent.node_left AND parent.node_right';
+			$in_tables[] = "$topicTable AS sub_parent";
+			$in_constraints[] = 't.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right';
+			$in_tables[] = "(SELECT child.id, (COUNT(d_parent.id) - 1) AS depth\n"
+					  . "  FROM $topicTable AS child, $topicTable AS d_parent\n"
+					  . "  WHERE child.node_left BETWEEN d_parent.node_left AND d_parent.node_right\n"
+					  . "    AND child.id = '$p_parentId'\n"
+					  . "  GROUP BY child.id\n"
+					  . "  ORDER BY child.node_left) AS sub_tree";
+			$in_constraints[] = 'sub_parent.id = sub_tree.id';
+			$in_sqlOptions['HAVING'] = 'depth = 1';
+			$in_columns[] = '(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth';
 		}
-		if (is_array($p_order) && count($p_order) > 0) {
-			$order = array();
-			foreach ($p_order as $orderCond) {
-				switch (strtolower($orderCond['field'])) {
-					case 'default':
-						$order['t.node_left'] = $orderCond['dir'];
-						break;
-                	case 'byname':
-                		$order['tn.name'] = $orderCond['dir'];
-                		break;
-                	case 'bynumber':
-                		$order['t.id'] = $orderCond['dir'];
-                		break;
-                }
-			}
-			if (count($order) > 0) {
-				$p_sqlOptions['ORDER BY'] = $order;
-			}
-		}
-        $queryStr = "SELECT DISTINCT id FROM `$topicsTable` AS t LEFT JOIN `$topicNamesTable` AS tn"
-        . ' ON t.id = tn.fk_topic_id';
-        if (count($constraints) > 0) {
-        	$queryStr .= " WHERE ".implode(" AND ", $constraints);
+		$queryStr = "SELECT " . implode(', ', $in_columns) . " \nFROM " . implode(",\n  ", $in_tables);
+        if (count($in_constraints) > 0) {
+        	$queryStr .= " \nWHERE ".implode("\n  AND ", $in_constraints);
         }
+        $queryStr = DatabaseObject::ProcessOptions($queryStr, $in_sqlOptions);
+        $constraints[] = "t.id = in_query.id";
+
+		if (!is_array($p_order) || count($p_order) == 0) {
+			$p_order = array(array('field'=>'default', 'dir'=>'asc'));
+		}
+		foreach ($p_order as $orderCond) {
+			switch (strtolower($orderCond['field'])) {
+				case 'default':
+					$order['t.node_left'] = $orderCond['dir'];
+					break;
+				case 'byname':
+					$order['tn.name'] = $orderCond['dir'];
+					break;
+				case 'bynumber':
+					$order['t.id'] = $orderCond['dir'];
+					break;
+			}
+		}
+		$p_sqlOptions['ORDER BY'] = $order;
+
+        $queryStr = "SELECT DISTINCT t.id \n"
+        ."FROM $topicTable AS t LEFT JOIN $topicNameTable AS tn ON t.id = tn.fk_topic_id, \n"
+        ."  ($queryStr) AS in_query\n"
+        ."WHERE " . implode("\n  AND ", $constraints);
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
         if ($p_countOnly) {
         	$queryStr = "SELECT COUNT(*) FROM ($queryStr) AS topics";
