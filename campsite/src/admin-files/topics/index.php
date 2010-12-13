@@ -241,6 +241,7 @@ $('ul.tree.sortable .item').each(function() {
 });
 
 // make tree sortable
+var orderChanges = {};
 $('ul.tree.sortable, ul.tree.sortable ul').sortable({
     revert: 100,
     distance: 5,
@@ -254,6 +255,11 @@ $('ul.tree.sortable, ul.tree.sortable ul').sortable({
     },
     update: function(event, ui) {
         $('fieldset.buttons').addClass('active');
+        var parentId = ui.item.closest('ul').closest('li').attr('id');
+        if (!parentId) {
+            parentId = 'topic_0';
+        }
+        orderChanges[parentId] = ui.item.closest('ul').sortable('toArray');
     },
 });
 
@@ -265,18 +271,8 @@ $('input:reset').click(function() {
 // save
 $('form[action^=do_order]').submit(function(e) {
     e.preventDefault();
-
-    var positions = {};
-    $('ul.sortable, ul.sortable ul').each(function() {
-        var parentId = $(this).parent('li').attr('id');
-        if (!parentId) {
-            parentId = 'topic_0';
-        }
-        positions[parentId] = $(this).sortable('toArray');
-    });
     callServer(['Topic', 'UpdateOrder'], [
-        positions,
-        '<?php echo implode('_', $f_show_languages); ?>',
+        orderChanges,
         ], function(json) {
             $('fieldset.buttons').removeClass('active');
             flashMessage('Order saved');
