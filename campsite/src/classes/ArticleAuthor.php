@@ -17,16 +17,28 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
  */
 class ArticleAuthor extends DatabaseObject
 {
-    var $m_keyColumnNames = array('fk_article_number',
+    const TABLE = 'ArticleAuthors';
+
+    /**
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
+     * @var array
+     */
+    public $m_keyColumnNames = array('fk_article_number',
+                                     'fk_language_id',
+                                     'fk_author_id',
+                                     'fk_type_id');
+
+    /**
+     * @var array
+     */
+    public $m_columnNames = array('fk_article_number',
                                   'fk_language_id',
                                   'fk_author_id',
                                   'fk_type_id');
-    var $m_dbTableName = 'ArticleAuthors';
-    var $m_columnNames = array('fk_article_number',
-                               'fk_language_id',
-                               'fk_author_id',
-                               'fk_type_id');
-
 
     /**
      * The ArticleAuthors table links together articles with authors.
@@ -54,25 +66,23 @@ class ArticleAuthor extends DatabaseObject
                 && !is_null($p_authorId) && !is_null($p_typeId)) {
             $this->fetch();
         }
-    } // fn constructor
-
+    }
 
     /**
      * @return int
      */
     public function getArticleNumber()
     {
-        return $this->m_data['fk_article_number'];
-    } // fn getArticleNumber
-
+        return (int) $this->m_data['fk_article_number'];
+    }
 
     /**
      * @return int
      */
     public function getLanguageId()
     {
-        return $this->m_data['fk_language_id'];
-    } // fn getLanguageId
+        return (int) $this->m_data['fk_language_id'];
+    }
 
 
     /**
@@ -80,29 +90,48 @@ class ArticleAuthor extends DatabaseObject
      */
     public function getAuthorId()
     {
-        return $this->m_data['fk_author_id'];
-    } // fn getAuthorId
-
+        return (int) $this->m_data['fk_author_id'];
+    }
 
     /**
      * @return int
      */
     public function getTypeId()
     {
-        return $this->m_data['fk_type_id'];
-    } // fn getTypeId
+        return (int) $this->m_data['fk_type_id'];
+    }
 
+    /**
+     * @param int $p_authorId
+     * @return array
+     */
+    public static function GetArticlesByAuthor($p_authorId)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT fk_article_number, fk_language_id, fk_type_id
+                     FROM ' . self::TABLE . '
+                     WHERE fk_author_id = '. (int) $p_authorId;
+        $rows = $g_ado_db->GetAll($queryStr);
+
+        $returnArray = array();
+        foreach ($rows as $row) {
+            $article = new Article((int) $row['fk_language_id'], (int) $row['fk_article_number']);
+            $type = new AuthorType((int) $row['fk_type_id']);
+            $returnArray[] = array('article' => $article, 'type' => $type);
+        }
+		return $returnArray;
+    }
 
     /**
      * Get all the authors that wrote this article.
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
-     *
      * @return array $returnArray
      *      An array of Author objects
      */
-    public static function GetAuthorsByArticle($p_articleNumber, $p_languageId = null)
+    public static function GetAuthorsByArticle($p_articleNumber, $p_languageId = NULL)
     {
         global $g_ado_db;
 
@@ -111,11 +140,11 @@ class ArticleAuthor extends DatabaseObject
         } else {
             $langConstraint = "fk_language_id = $p_languageId";
         }
-        $queryStr = "SELECT fk_author_id
-                     FROM ArticleAuthors
-                     WHERE fk_article_number = '$p_articleNumber'
-                     AND (fk_language_id IS NULL OR $langConstraint)
-                     ORDER BY order_no";
+        $queryStr = 'SELECT fk_author_id
+                     FROM ' . self::TABLE . '
+                     WHERE fk_article_number = '. (int) $p_articleNumber . '
+                     AND (fk_language_id IS NULL OR ' . $langConstraint .')
+                     ORDER BY order_no';
         $rows = $g_ado_db->GetAll($queryStr);
         $returnArray = array();
         if (is_array($rows)) {
@@ -128,24 +157,22 @@ class ArticleAuthor extends DatabaseObject
         }
 
 		return $returnArray;
-    } // fn GetAuthorsByArticle
-
+    }
 
     /**
      * Copy all the pointers for the given article.
      *
      * @param int $p_srcArticleNumber
      * @param int $p_destArticleNumber
-     *
      * @return void
      */
     public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT fk_language_id, fk_author_id, fk_type_id
-                     FROM ArticleAuthors
-                     WHERE fk_article_number='$p_srcArticleNumber'";
+        $queryStr = 'SELECT fk_language_id, fk_author_id, fk_type_id
+                     FROM ' . self::TABLE . '
+                     WHERE fk_article_number = ' . (int) $p_srcArticleNumber;
         $rows = $g_ado_db->GetAll($queryStr);
         foreach ($rows as $row) {
             $tmpArticleAuthorObj = new ArticleAuthor($p_destArticleNumber,
@@ -154,70 +181,65 @@ class ArticleAuthor extends DatabaseObject
                 $tmpArticleAuthorObj->create();
             }
         }
-    } // fn OnArticleCopy
-
+    }
 
     /**
      * Remove author pointers for the given article.
      *
      * @param int $p_articleNumber
-     *
      * @return void
      */
     public static function OnArticleDelete($p_articleNumber)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_article_number = '$p_articleNumber'";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_article_number = ' . (int) $p_articleNumber;
         $g_ado_db->Execute($queryStr);
-    } // fn OnArticleDelete
-
+    }
 
     /**
      * @param int $p_id
-     *
      * @return void
      */
     public static function OnArticleLanguageDelete($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors
-                     WHERE fk_article_number = '$p_articleNumber' AND fk_language_id='$p_languageId'";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_article_number = ' . (int) $p_articleNumber . '
+            AND fk_language_id = ' . (int) $p_languageId;
         $g_ado_db->Execute($queryStr);
-    } // fn OnArticleDelete
-
+    }
 
     /**
      * Remove article pointers for the given author.
      * @param int $p_id
-     *
      * @return void
      */
     public static function OnAuthorDelete($p_authorId)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_author_id = '$p_authorId'";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_author_id = ' . (int) $p_authorId;
         $g_ado_db->Execute($queryStr);
-    } // fn OnAuthorDelete
-
+    }
 
     /**
      * Remove author pointers for the given author type.
      *
      * @param int $p_authorTypeId
-     *
      * @return void
      */
     public static function OnAuthorTypeDelete($p_authorTypeId)
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM ArticleAuthors WHERE fk_type_id = '$p_authorTypeId'";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_type_id = ' . (int) $p_authorTypeId;
         $g_ado_db->Execute($queryStr);
-    } // fn OnAuthorTypeDelete
-
+    }
 
     /**
      * @return array
@@ -226,14 +248,13 @@ class ArticleAuthor extends DatabaseObject
     {
         global $g_ado_db;
 
-        $sql = "SELECT Authors.first_name, Authors.last_name, ArticleAuthors.fk_type_id
-                FROM Authors JOIN ArticleAuthors
+        $sql = 'SELECT Authors.first_name, Authors.last_name, ArticleAuthors.fk_type_id
+                FROM ' . Author::TABLE . ' JOIN ' . self::TABLE . '
                 ON Authors.id = fk_author_id
-                WHERE fk_language_id = '$p_languageId'
-                AND fk_article_number = '$p_articleNumber'";
+                WHERE fk_language_id = ' . (int) $p_languageId . '
+                AND fk_article_number = ' . (int) $p_articleNumber;
         return $g_ado_db->Execute($sql);
-    } // fn GetArticleAuthorList
-
+    }
 
     /**
      * Returns an article authors list based on the given parameters.
@@ -347,15 +368,13 @@ class ArticleAuthor extends DatabaseObject
         }
 
         return $articleAuthorsList;
-    } // fn GetList
-
+    }
 
     /**
      * Processes a paremeter (condition) coming from template tags.
      *
      * @param array $p_param
      *      The array of parameters
-     *
      * @return array $parameter
      *      The array containing processed values of the condition
      */
@@ -373,8 +392,5 @@ class ArticleAuthor extends DatabaseObject
         }
 
         return $parameter;
-    } // fn ProcessListParameters
-
-} // class ArticleAuthor
-
-?>
+    }
+}
