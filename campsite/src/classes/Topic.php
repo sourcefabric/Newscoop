@@ -19,9 +19,7 @@ class Topic extends DatabaseObject {
 
 	var $m_columnNames = array('id', 'node_left', 'node_right');
 
-	var $m_hasSubtopics = null;
-
-	var $m_names = array();
+	private $m_names = array();
 
 
 	/**
@@ -384,7 +382,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	public function getPath()
+	public function getPath($p_returnIds = false)
 	{
 		global $g_ado_db;
 
@@ -393,7 +391,7 @@ class Topic extends DatabaseObject {
 		. ' AND node_right >= ' . $this->getRight() . ' ORDER BY node_left ASC';
 		$rows = $g_ado_db->GetAll($sql);
 		foreach ($rows as $row) {
-			$stack[] = new Topic($row['id']);
+			$stack[$row['id']] = $p_returnIds ? $row['id'] : new Topic($row['id']);
 		}
 		return $stack;
 	} // fn getPath
@@ -579,6 +577,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @param integer $p_topicId - topic identifier
 	 * @param integer $p_indent - query formatting: indent the query $p_indent times
+	 * @return SQLSelectClause
 	 */
 	public static function BuildDepthQuery($p_topicId, $p_indent = 0)
 	{
@@ -604,6 +603,7 @@ class Topic extends DatabaseObject {
 	 * @param integer $p_parentId - parent topic identifier
 	 * @param integer $p_depth - depth of the subtopic tree; default 1; 0 for unlimitted
 	 * @param integer $p_indent - query formatting: indent the query $p_indent times
+	 * @return SQLSelectClause
 	 */
 	public static function BuildSubtopicsQuery($p_parentId, $p_depth = 1, $p_indent = 0)
 	{
@@ -627,6 +627,7 @@ class Topic extends DatabaseObject {
         	$query->addHaving('depth > 0');
         	$query->addHaving('depth <= ' . (int)$p_depth);
         }
+        $query->addOrderBy('node.node_left');
         return $query;
 	}
 
@@ -662,10 +663,51 @@ class Topic extends DatabaseObject {
 	 */
 	public static function GetTree($p_startingTopicId = 0)
 	{
-		$tree = array();
-		$path = array();
-		Topic::__TraverseTree($tree, $path, $p_startingTopicId);
-		return $tree;
+		global $g_ado_db;
+
+		$topicObj = new Topic();
+		$query = new SQLSelectClause();
+		$query->addColumn('node.id');
+		$query->addColumn('(COUNT(parent.id) - 1) AS depth');
+		$query->setTable($topicObj->m_dbTableName . ' AS node');
+		$query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
+		$query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
+		if ($p_startingTopicId > 0) {
+			$query->addTableFrom($topicObj->m_dbTableName . ' AS sub_parent');
+			$query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
+			$query->addWhere('sub_parent.id = ' . (int)$p_startingTopicId);
+		}
+		$query->addGroupField('node.id');
+		$query->addOrderBy('node.node_left');
+		$rows = $g_ado_db->GetAll($query->buildQuery());
+
+		$p_tree = array();
+		$startDepth = null;
+		$currentPath = array();
+		foreach ($rows as $row) {
+			$topicId = $row['id'];
+			$depth = $row['depth'];
+			$topic = new Topic($topicId);
+			if (is_null($startDepth)) {
+				$startDepth = $depth;
+				if ($depth > 0) {
+					$currentPath = $topic->getPath();
+				} else {
+					$currentPath[$topicId] = $topic;
+				}
+			} elseif ($depth > count($currentPath)) {
+				$currentPath[$topicId] = $topic;
+			} elseif ($depth == $startDepth) {
+				$currentPath = $topic->getPath();
+			} else {
+				while ($depth < count($currentPath)) {
+					array_pop($currentPath);
+				}
+				$currentPath[$topicId] = $topic;
+			}
+			$p_tree[] = $currentPath;
+		}
+		return $p_tree;
 	} // fn GetTree
 
 
