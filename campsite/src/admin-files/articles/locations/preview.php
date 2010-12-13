@@ -11,7 +11,10 @@ require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
 
-$f_language_id = Input::Get('f_language_id', 'int', 0);
+$f_language_id = Input::Get('f_language_selected', 'int', 0);
+if (0 == $f_language_id) {
+    $f_language_id = Input::Get('f_language_id', 'int', 0);
+}
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {

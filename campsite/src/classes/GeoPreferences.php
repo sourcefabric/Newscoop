@@ -220,7 +220,9 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
         return $no_arr;
     }
 
+    //$icons_default_label = SystemPref::Set("MapMarkerSourceDefault", 'blue');
     $icons_default_label = SystemPref::Get("MapMarkerSourceDefault");
+    //echo "\nmmsd: $icons_default_label<br />\n";
     if (!$icons_default_label) {$icons_default_label = "";}
     $icons_default_name = "";
 
