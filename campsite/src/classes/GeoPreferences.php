@@ -37,7 +37,7 @@ class Geo_Preferences extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
+public static function GetMapInfo($p_htmlDir, $p_websiteUrl, $p_mapProvider = "")
 {
     $map_width = SystemPref::Get("MapViewWidthDefault");
     if (!$map_width) {$map_width = 600;}
@@ -53,28 +53,60 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
     if (!$map_view_lat) {$map_view_lat = "50.089926";}
     if (!$map_view_resol) {$map_view_resol = "4";}
 
-    $map_prov_default = SystemPref::Get("MapProviderDefault");
-    if (!$map_prov_default) {$map_prov_default = "";}
-    else {$map_prov_default = strtolower($map_prov_default);}
+    //echo "mp: '$p_mapProvider'\n";
+    $use_single_provider = false; // whether we already know which single map provider has to be used
+    if ("" != $p_mapProvider)
+    {
+        $use_single_provider = true;
+    }
+
+    $map_prov_default = "";
+    if ($use_single_provider)
+    {
+        $map_prov_default = $p_mapProvider;
+    }
+    else
+    {
+        $map_prov_default = SystemPref::Get("MapProviderDefault");
+        if (!$map_prov_default) {$map_prov_default = "";}
+        else {$map_prov_default = strtolower($map_prov_default);}
+    }
 
     // we only have support for googlev3 and osm for now
     //$map_prov_names_str = SystemPref::Get("MapProviderNames");
     //$map_prov_names_arr = explode(",", $map_prov_names_str);
+
     $map_prov_names_arr = array("googlev3", "osm");
+    if ($use_single_provider)
+    {
+        $map_prov_names_arr = array($p_mapProvider);
+    }
 
     $map_prov_includes = array();
     $map_prov_info_arr = array();
 
     $known_providers = array("googlev3" => false, "osm" => false);
+    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
     $usage_providers_count = 0;
 
     $map_prov_first = "";
     $map_prov_default_found = false;
+    //print_r($map_prov_names_arr);
     foreach ($map_prov_names_arr as $one_prov_name)
     {
         if ("" == $one_prov_name) {continue;}
 
-        $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($one_prov_name));
+        //$one_prov_usage = "true";
+        if (!$use_single_provider)
+        {
+            //if ("googlev3" == $one_prov_name) {continue;}
+            //echo "MapProviderAvailable" . ucfirst($sys_pref_names[$one_prov_name]);
+            $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$one_prov_name]));
+            //echo " opu: $one_prov_usage\n ";
+            if (!$one_prov_usage) {continue;}
+            if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
+        }
+
         //$one_prov_include = SystemPref::Get("MapProviderInclude" . ucfirst($one_prov_name));
         $one_prov_include = "";
         if ("googlev3" == $one_prov_name)
@@ -82,12 +114,12 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
             $one_prov_include = "http://maps.google.com/maps/api/js?sensor=false";
         }
 
-        if (!$one_prov_usage) {continue;}
-        if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
-
         // up to now, we know how to deal with just a few map providers
         $one_prov_label = strtolower($one_prov_name);
-        if (!array_key_exists($one_prov_label, $map_prov_names_arr)) {continue;}
+        //print_r($map_prov_names_arr);
+        //echo "opl: '$one_prov_label'";
+        //if (!array_key_exists($one_prov_label, $map_prov_names_arr)) {continue;}
+        if (!in_array($one_prov_label, $map_prov_names_arr)) {continue;}
 
         $known_providers[$one_prov_label] = true;
         if ($one_prov_include && ("" != $one_prov_include))
@@ -96,10 +128,12 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
         }
 
         if ("" == $map_prov_first) {$map_prov_first = $one_prov_label;}
+        //echo "eq: $one_prov_label == $map_prov_default\n";
         if ($one_prov_label == $map_prov_default) {$map_prov_default_found = true;}
 
         $usage_providers_count += 1;
     }
+    //echo " usp: $usage_providers_count\n";
 
     if (!$map_prov_default_found)
     {
