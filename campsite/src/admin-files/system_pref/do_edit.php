@@ -71,6 +71,7 @@ $f_geo = array(
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
     'map_marker_directory' => Input::Get('f_map_marker_directory', 'string'),
     'map_marker_names' => Input::Get('f_map_marker_names', 'string'),
+    'map_marker_source_default' => Input::Get('f_map_marker_source_default', 'string'),
     'map_popup_width_min' => Input::Get('f_map_popup_width_min', 'int'),
     'map_popup_height_min' => Input::Get('f_map_popup_height_min', 'int'),
     'map_video_width_you_tube' => Input::Get('f_map_video_width_you_tube', 'int'),
