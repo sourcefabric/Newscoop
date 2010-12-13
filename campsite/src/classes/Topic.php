@@ -371,8 +371,8 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		$sql = 'SELECT DISTINCT id FROM Topics WHERE node_left < ' . $this->getLeft()
-		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC LIMIT 0, 1';
+		$sql = 'SELECT id FROM Topics WHERE node_left < ' . $this->getLeft()
+		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC';
 		$parentId = $g_ado_db->GetOne($sql);
 		return $parentId;
 	} // fn getParentId
@@ -467,7 +467,7 @@ class Topic extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
-					                 $p_parentId = null, $p_sqlOptions = null,
+					                 $p_parentId = null, $p_depth = 1, $p_sqlOptions = null,
 					                 $p_order = null, $p_countOnly = false)
 	{
         global $g_ado_db;
@@ -476,6 +476,7 @@ class Topic extends DatabaseObject {
             $paramsArray['language_id'] = (is_null($p_languageId)) ? '' : $p_languageId;
             $paramsArray['name'] = (is_null($p_name)) ? '' : $p_name;
             $paramsArray['parent_id'] = (is_null($p_parentId)) ? '' : $p_parentId;
+            $paramsArray['depth'] = (is_null($p_depth)) ? '' : $p_depth;
             $paramsArray['sql_options'] = $p_sqlOptions;
             $paramsArray['order'] = $p_order;
             $paramsArray['count_only'] = (int)$p_countOnly;
@@ -486,48 +487,32 @@ class Topic extends DatabaseObject {
             }
         }
 
-
-        $topicObj = new Topic();
-		$topicTable = '`' . $topicObj->m_dbTableName . '`';
+		$query = new SQLSelectClause();
+		$query->addColumn('t.id');
+		$topicObj = new Topic();
 		$topicNameObj = new TopicName();
-		$topicNameTable = '`' . $topicNameObj->m_dbTableName . '`';
-
-        $in_columns[] = 't.id';
-        $in_tables[] = "$topicTable AS t";
-		$in_sqlOptions['GROUP BY'] = array('t.id');
+		if ((!is_null($p_languageId) && is_numeric($p_languageId)) || !is_null($p_name)) {
+			$query->setTable($topicObj->m_dbTableName . ' AS t LEFT JOIN '
+			. $topicNameObj->m_dbTableName . ' AS tn ON t.id = tn.fk_topic_id');
+		} else {
+			$query->setTable($topicObj->m_dbTableName . ' AS t');
+		}
 
         $constraints = array();
-		$in_constraints = array();
 		if (!is_null($p_id) && is_numeric($p_id)) {
-			$in_constraints[] = "t.id = '$p_id'";
+			$query->addWhere("t.id = '$p_id'");
 		}
 		if (!is_null($p_languageId) && is_numeric($p_languageId)) {
-			$constraints[] = "tn.fk_language_id = '$p_languageId'";
+			$query->addWhere("tn.fk_language_id = '$p_languageId'");
 		}
 		if (!is_null($p_name)) {
-			$constraints[] = "tn.name = '". $g_ado_db->escape($p_name) . "'";
+			$query->addWhere("tn.name = '". $g_ado_db->escape($p_name) . "'");
 		}
 		if (!is_null($p_parentId)) {
-			$in_tables[] = "$topicTable AS parent";
-			$in_constraints[] = 't.node_left BETWEEN parent.node_left AND parent.node_right';
-			$in_tables[] = "$topicTable AS sub_parent";
-			$in_constraints[] = 't.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right';
-			$in_tables[] = "(SELECT child.id, (COUNT(d_parent.id) - 1) AS depth\n"
-					  . "  FROM $topicTable AS child, $topicTable AS d_parent\n"
-					  . "  WHERE child.node_left BETWEEN d_parent.node_left AND d_parent.node_right\n"
-					  . "    AND child.id = '$p_parentId'\n"
-					  . "  GROUP BY child.id\n"
-					  . "  ORDER BY child.node_left) AS sub_tree";
-			$in_constraints[] = 'sub_parent.id = sub_tree.id';
-			$in_sqlOptions['HAVING'] = 'depth = 1';
-			$in_columns[] = '(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth';
+			$subtopicsQuery = self::BuildSubtopicsQuery($p_parentId, $p_depth, 1);
+			$query->addTableFrom('(' . $subtopicsQuery->buildQuery() . ') AS in_query');
+			$query->addWhere("t.id = in_query.id");
 		}
-		$queryStr = "SELECT " . implode(', ', $in_columns) . " \nFROM " . implode(",\n  ", $in_tables);
-        if (count($in_constraints) > 0) {
-        	$queryStr .= " \nWHERE ".implode("\n  AND ", $in_constraints);
-        }
-        $queryStr = DatabaseObject::ProcessOptions($queryStr, $in_sqlOptions);
-        $constraints[] = "t.id = in_query.id";
 
 		if (!is_array($p_order) || count($p_order) == 0) {
 			$p_order = array(array('field'=>'default', 'dir'=>'asc'));
@@ -547,10 +532,7 @@ class Topic extends DatabaseObject {
 		}
 		$p_sqlOptions['ORDER BY'] = $order;
 
-        $queryStr = "SELECT DISTINCT t.id \n"
-        ."FROM $topicTable AS t LEFT JOIN $topicNameTable AS tn ON t.id = tn.fk_topic_id, \n"
-        ."  ($queryStr) AS in_query\n"
-        ."WHERE " . implode("\n  AND ", $constraints);
+		$queryStr = $query->buildQuery();
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
         if ($p_countOnly) {
         	$queryStr = "SELECT COUNT(*) FROM ($queryStr) AS topics";
@@ -575,19 +557,78 @@ class Topic extends DatabaseObject {
 	 * Returns the subtopics from the next level (not all levels below) in an array
 	 * of topic identifiers.
 	 * @param array $p_returnIds
+	 * @param integer $p_depth
 	 */
-	public function getSubtopics($p_returnIds = false)
+	public function getSubtopics($p_returnIds = false, $p_depth = 1)
 	{
         global $g_ado_db;
 
-		$sql = "SELECT DISTINCT Id FROM Topics WHERE ParentId = " . (int)$this->m_data['Id'];
-		$rows = $g_ado_db->GetAll($sql);
+        $parentDepthQuery = self::BuildSubtopicsQuery($this->getTopicId());
+		$rows = $g_ado_db->GetAll($parentDepthQuery->buildQuery());
 		$topics = array();
 		foreach ($rows as $row) {
-			$topics[] = $p_returnIds ? $row['Id'] : new Topic($row['Id']);
+			$topics[] = $p_returnIds ? $row['id'] : new Topic($row['id']);
 		}
 		return $topics;
 	} // getSubtopics
+
+
+	/**
+	 * Returns an SQLSelectClause object that builds a query for retrieving the
+	 * depth of the given topic.
+	 *
+	 * @param integer $p_topicId - topic identifier
+	 * @param integer $p_indent - query formatting: indent the query $p_indent times
+	 */
+	public static function BuildDepthQuery($p_topicId, $p_indent = 0)
+	{
+		$topicObj = new Topic();
+
+        $depthQuery = new SQLSelectClause($p_indent);
+        $depthQuery->setTable($topicObj->m_dbTableName . ' as node');
+        $depthQuery->addTableFrom($topicObj->m_dbTableName . ' as parent');
+        $depthQuery->addColumn('node.id');
+        $depthQuery->addColumn('(COUNT(parent.id) - 1) AS depth');
+        $depthQuery->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
+        $depthQuery->addWhere('node.id = ' . (int)$p_topicId);
+        $depthQuery->addGroupField('node.id');
+        $depthQuery->addOrderBy('node.node_left');
+        return $depthQuery;
+	}
+
+
+	/**
+	 * Returns an SQLSelectClause object that builds a query for retrieving the
+	 * subtopics of the given parent.
+	 *
+	 * @param integer $p_parentId - parent topic identifier
+	 * @param integer $p_depth - depth of the subtopic tree; default 1; 0 for unlimitted
+	 * @param integer $p_indent - query formatting: indent the query $p_indent times
+	 */
+	public static function BuildSubtopicsQuery($p_parentId, $p_depth = 1, $p_indent = 0)
+	{
+		$topicObj = new Topic();
+
+		$query = new SQLSelectClause($p_indent);
+		$query->addColumn('node.id');
+		$query->addColumn('(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth');
+		$query->setTable($topicObj->m_dbTableName . ' as node');
+        $query->addTableFrom($topicObj->m_dbTableName . ' as parent');
+        $query->addTableFrom($topicObj->m_dbTableName . ' as sub_parent');
+        $parentDepthQuery = self::BuildDepthQuery($p_parentId, $p_indent+1);
+        $query->addTableFrom('(' . $parentDepthQuery->buildQuery() . ') as sub_tree');
+        $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
+        $query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
+        $query->addWhere('sub_parent.id = sub_tree.id');
+        $query->addGroupField('node.id');
+        if ($p_depth < 1) {
+        	$query->addHaving('depth > 0');
+        } else {
+        	$query->addHaving('depth > 0');
+        	$query->addHaving('depth <= ' . (int)$p_depth);
+        }
+        return $query;
+	}
 
 
 	/**

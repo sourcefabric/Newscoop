@@ -44,9 +44,9 @@ class SubtopicsList extends ListObject
 	    }
 
 	    $topicsList = Topic::GetTopics(null, $p_parameters['language_id'], null,
-	                                   $rootTopicId, $sqlOptions, $this->m_order);
+	                                   $rootTopicId, 1, $sqlOptions, $this->m_order);
 	    $p_count = Topic::GetTopics(null, $p_parameters['language_id'], null,
-	                                $rootTopicId, null, null, true);
+	                                $rootTopicId, 1, null, null, true);
 	    $metaTopicsList = array();
 	    $index = 0;
 	    foreach ($topicsList as $topic) {

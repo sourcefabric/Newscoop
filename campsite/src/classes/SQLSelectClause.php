@@ -10,11 +10,13 @@
  * @link http://www.sourcefabric.org
  */
 
-define ('SQL', "SELECT %s\nFROM %s");
-define ('SQL_WHERE', "\nWHERE %s");
-define ('SQL_GROUP_BY', "\nGROUP BY %s");
-define ('SQL_ORDER_BY', "\nORDER BY %s");
-define ('SQL_LIMIT', "\nLIMIT %d, %d");
+define ('SQL_COLUMNS', "SELECT %s");
+define ('SQL_FROM', "FROM %s");
+define ('SQL_WHERE', "WHERE %s");
+define ('SQL_GROUP_BY', "GROUP BY %s");
+define ('SQL_HAVING', "HAVING %s");
+define ('SQL_ORDER_BY', "ORDER BY %s");
+define ('SQL_LIMIT', "LIMIT %d, %d");
 define ('SQL_DISTINCT', 'DISTINCT(%s)');
 
 /**
@@ -54,20 +56,26 @@ class SQLSelectClause {
      * @var array
      */
     private $m_where = null;
-    
+
     /**
      * Conditional where clauses (separated by 'OR' operator)
      *
      * @var array
      */
     private $m_conditionalWhere = null;
-    
+
     /**
      * Fields we want to group the result by.
      *
      * @var array
      */
     private $m_group = null;
+
+    /**
+     * Having conditions
+     * @var array
+     */
+    private $m_having = null;
 
     /**
      * The columns list and directions to order by.
@@ -96,19 +104,31 @@ class SQLSelectClause {
      * @var string
      */
     private $m_distinctMode = false;
-    
+
     /**
      * The column which fetched DISTINCT.
      *
      * @var string
      */
     private $m_distinctColumn = null;
-    
-    
+
+    /**
+     *
+     * @var integer
+     */
+    private $m_indentCount = 0;
+
+    /**
+     *
+     * @var string
+     */
+    private $m_indentWidth = 4;
+
+
     /**
      * Class constructor
      */
-    public function __construct()
+    public function __construct($p_indent = 0)
     {
         $this->m_columns = array();
         $this->m_from = array();
@@ -117,6 +137,7 @@ class SQLSelectClause {
         $this->m_orderBy = array();
         $this->m_limitStart = 0;
         $this->m_limitOffset = 0;
+        $this->m_indentCount = $p_indent;
     } // fn __construct
 
 
@@ -188,12 +209,28 @@ class SQLSelectClause {
     {
         $this->m_conditionalWhere[] = $p_condition;
     } // fn addConditionalWhere
-    
-    
+
+
+    /**
+     * Add group field
+     *
+     * @param $p_field
+     */
     public function addGroupField($p_field)
     {
         $this->m_group[] = $p_field;
-    }
+    } // fn addGroupField
+
+
+    /**
+     * Add HAVING condition
+     *
+     * @param $p_condition
+     */
+    public function addHaving($p_condition)
+    {
+    	$this->m_having[] = $p_condition;
+    } // fn addHaving
 
 
     /**
@@ -254,8 +291,8 @@ class SQLSelectClause {
         $this->m_distinctMode = true;
         $this->m_distinctColumn = $p_column;
     } // fn setDistinct
-    
-    
+
+
     /**
      * Builds the SQL query from the object attributes.
      *
@@ -267,25 +304,31 @@ class SQLSelectClause {
         $sql = '';
         $columns = $this->buildColumns();
         $from = $this->buildFrom();
-        $sql = sprintf(SQL, $columns, $from);
+        $sql = sprintf(SQL_COLUMNS, $columns);
+        $sql .= "\n" . $this->indent() . sprintf(SQL_FROM, $from);
 
         $where = $this->buildWhere();
         if (strlen($where)) {
-            $sql .= sprintf(SQL_WHERE, $where);
+            $sql .= "\n" . $this->indent() . sprintf(SQL_WHERE, $where);
         }
-        
+
         $groupBy = $this->buildGroupBy();
         if (!empty($groupBy)) {
-            $sql .= sprintf(SQL_GROUP_BY, $groupBy);
+            $sql .= "\n" . $this->indent() . sprintf(SQL_GROUP_BY, $groupBy);
+        }
+
+        $having = $this->buildHaving();
+        if (!empty($having)) {
+            $sql .= "\n" . $this->indent() . sprintf(SQL_HAVING, $having);
         }
 
         if (count($this->m_orderBy) > 0) {
             $orderBy = $this->buildOrderBy();
-            $sql .= sprintf(SQL_ORDER_BY, $orderBy);
+            $sql .= "\n" . $this->indent() . sprintf(SQL_ORDER_BY, $orderBy);
         }
 
         if (!empty($this->m_limitOffset)) {
-            $sql .= sprintf(SQL_LIMIT, $this->m_limitStart, $this->m_limitOffset);
+            $sql .= "\n" . $this->indent() . sprintf(SQL_LIMIT, $this->m_limitStart, $this->m_limitOffset);
         }
 
         return $sql;
@@ -317,6 +360,17 @@ class SQLSelectClause {
 
 
     /**
+     * Returns the indentation string
+     *
+     * @return string
+     */
+    private function indent($p_inner = 0)
+    {
+    	return str_pad('', ($this->m_indentCount + $p_inner) * $this->m_indentWidth);
+    }
+
+
+    /**
      * Builds the list of columns to be retrieved by the query.
      *
      * @return string $columns
@@ -335,18 +389,18 @@ class SQLSelectClause {
                 $columns = '*';
             }
         }
-        
+
         if (!empty($columns) && $this->m_distinctMode) {
-            $columns = sprintf(SQL_DISTINCT, $columns);   
+            $columns = sprintf(SQL_DISTINCT, $columns);
         }
 
         if (empty($columns)) {
             foreach ($this->m_columns as $column) {
                 if ($this->m_distinctMode === true && $this->m_distinctColumn === $column) {
-                    $columns .= sprintf(SQL_DISTINCT, $column).', ';    
-                } else { 
-                    $columns .=  $column.', ';   
-                } 
+                    $columns .= sprintf(SQL_DISTINCT, $column).', ';
+                } else {
+                    $columns .=  $column.', ';
+                }
             }
             $columns = substr($columns, 0, -2);
         }
@@ -367,11 +421,11 @@ class SQLSelectClause {
         $from = $this->m_table;
 
         if ($this->hasFrom()) {
-            $from .= ',';
-            $from .= implode (', ', $this->m_from);
+            $from .= ",\n" . $this->indent(1);
+            $from .= implode (",\n" . $this->indent(1), $this->m_from);
         } elseif ($this->hasJoins()) {
             foreach ($this->m_joins as $join) {
-                $from .= ' '.$join;
+                $from .= "\n".$this->indent(1).$join;
             }
         }
 
@@ -389,11 +443,11 @@ class SQLSelectClause {
     {
         $conditionalWhere = null;
         if (is_array($this->m_conditionalWhere)) {
-            $conditionalWhere = implode("\n        OR ", $this->m_conditionalWhere);
+            $conditionalWhere = implode("\n" . $this->indent(2) . "OR ", $this->m_conditionalWhere);
         }
         $where = null;
         if (is_array($this->m_where)) {
-            $where = implode("\n    AND ", $this->m_where);
+            $where = implode("\n" . $this->indent(1) . "AND ", $this->m_where);
         }
         if (empty($conditionalWhere) && empty($where)) {
             return null;
@@ -402,12 +456,12 @@ class SQLSelectClause {
             return $conditionalWhere;
         }
         if (!empty($conditionalWhere)) {
-            $where .= "\n    AND (" . $conditionalWhere . ")";
+            $where .= "\n" . $this->indent(1) . "AND (" . $conditionalWhere . ")";
         }
         return $where;
     } // fn buildWhere
-    
-    
+
+
     /**
      * Builds the GROUP BY clause.
      *
@@ -419,7 +473,21 @@ class SQLSelectClause {
             return null;
         }
         return implode(', ', $this->m_group);
-    }
+    } // fn buildGroupBy
+
+
+    /**
+     * Builds the HAVING clause.
+     *
+     * @return string
+     */
+    private function buildHaving()
+    {
+    	if (!is_array($this->m_having) || count($this->m_having) == 0) {
+    		return null;
+    	}
+    	return implode(' AND ', $this->m_having);
+    } // fn buildHaving
 
 
     /**
