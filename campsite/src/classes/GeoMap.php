@@ -167,7 +167,8 @@ class Geo_Map extends DatabaseObject {
     {
 		global $g_ado_db;
 
-        $queryStr = "SELECT lc.poi_name AS name FROM Maps AS m INNER JOIN MapLocations AS ml ON ml.fk_map_id = m.id ";
+        $queryStr = "SELECT lc.poi_name AS name, mll.poi_display AS display ";
+        $queryStr .= "FROM Maps AS m INNER JOIN MapLocations AS ml ON ml.fk_map_id = m.id ";
         $queryStr .= "INNER JOIN MapLocationLanguages AS mll ON mll.fk_maplocation_id = ml.id ";
         $queryStr .= "INNER JOIN LocationContents AS lc ON lc.id = mll.fk_content_id ";
         $queryStr .= "WHERE m.fk_article_number = ? AND mll.fk_language_id = ? ORDER BY ml.rank, ml.id";
@@ -187,7 +188,7 @@ class Geo_Map extends DatabaseObject {
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $poi_names[] = $row['name'];
+                    $poi_names[] = array("name" => $row['name'], "display" => $row['display']);
                 }
             }
         }
@@ -227,6 +228,29 @@ class Geo_Map extends DatabaseObject {
 
 		$g_ado_db->Execute($queryStr);
 	} // fn Foo
+
+	public static function UnlinkArticle($p_articleObj)
+	{
+		global $g_ado_db;
+
+        $article_number = $p_articleObj->getArticleNumber();
+
+        $queryStr = "UPDATE Maps SET fk_article_number = 0 WHERE fk_article_number = ?";
+
+        try
+        {
+            $sel_params = array();
+            $sel_params[] = $article_number;
+
+            $g_ado_db->Execute($queryStr, $sel_params);
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        return true;
+    }
 
 
 	/**
