@@ -107,7 +107,7 @@ class ImagesList extends ListObject
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_images");
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_images");
     					}
 	    				$parameters[$parameter] = (int)$value;
     				} else {

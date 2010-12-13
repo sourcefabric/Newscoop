@@ -223,6 +223,16 @@ class CampInstallationBase
             return false;
         }
 
+        // load geonames
+        set_time_limit(0);
+        foreach (array('CityNames', 'CityLocations') as $table) {
+            $g_db->Execute("TRUNCATE `$table`");
+            $g_db->Execute("ALTER TABLE `$table` DISABLE KEYS");
+            $csvFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP."$table.csv";
+            $g_db->Execute("LOAD DATA LOCAL INFILE '$csvFile' INTO TABLE $table FIELDS TERMINATED BY ';' ENCLOSED BY '\"'");
+            $g_db->Execute("ALTER TABLE `$table` ENABLE KEYS");
+        }
+
         $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
                                             'hostport' => $db_hostport,

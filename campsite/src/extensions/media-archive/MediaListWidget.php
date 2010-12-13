@@ -19,7 +19,7 @@ class MediaListWidget extends Widget
     public function render()
     {
         $list = new MediaList;
-        $list->setHidden(0);
+        $list->setHidden('id');
         $list->render();
     }
 }

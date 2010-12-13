@@ -32,11 +32,11 @@ class MostPopularArticlesWidget extends ArticlesWidget
         $articlelist = new ArticleList();
         $articlelist->setItems($this->items);
         if (!$this->isFullscreen()) {
-            $articlelist->setHidden(7);
-            $articlelist->setHidden(12);
-            $articlelist->setHidden(14);
-            $articlelist->setHidden(15);
-            $articlelist->setHidden(17);
+            $articlelist->setHidden('Status');
+            $articlelist->setHidden('Comments');
+            $articlelist->setHidden('UseMap');
+            $articlelist->setHidden('Locations');
+            $articlelist->setHidden('PublishDate');
         }
         $articlelist->render();
     }

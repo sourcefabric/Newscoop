@@ -805,7 +805,11 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`Id`),
+  FULLTEXT KEY `Description` (`Description`),
+  FULLTEXT KEY `Photographer` (`Photographer`),
+  FULLTEXT KEY `Place` (`Place`),
+  FULLTEXT KEY `Caption` (`Caption`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2989,28 +2993,16 @@ DROP TABLE IF EXISTS `CityLocations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CityLocations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `city_id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `city_type` varchar(10) DEFAULT NULL,
   `population` int(10) unsigned NOT NULL,
   `position` point NOT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL,
   `elevation` int(11) DEFAULT NULL,
   `country_code` char(2) NOT NULL,
   `time_zone` varchar(1023) NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `city_id` (`city_id`),
-  KEY `city_type` (`city_type`),
-  KEY `population` (`population`),
-  SPATIAL KEY `position` (`position`),
-  KEY `latitude` (`latitude`),
-  KEY `longitude` (`longitude`),
-  KEY `elevation` (`elevation`),
-  KEY `country_code` (`country_code`),
-  KEY `time_zone` (`time_zone`(333))
-) ENGINE=MyISAM AUTO_INCREMENT=197059 DEFAULT CHARSET=utf8;
+  SPATIAL KEY `position` (`position`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3021,15 +3013,12 @@ DROP TABLE IF EXISTS `CityNames`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CityNames` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `city_id` int(10) NOT NULL,
-  `city_name` varchar(1023) NOT NULL,
+  `fk_citylocations_id` int(10) NOT NULL,
+  `city_name` varchar(1024) NOT NULL,
   `name_type` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `city_id` (`city_id`),
-  KEY `city_name` (`city_name`(333)),
-  KEY `name_type` (`name_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=606457 DEFAULT CHARSET=utf8;
+  KEY (`fk_citylocations_id`),
+  KEY (`city_name`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

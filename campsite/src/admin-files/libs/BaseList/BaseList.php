@@ -142,12 +142,21 @@ class BaseList
 
     /**
      * Set column to be hidden.
-     * @param int $id
+     * @param int|string $key
      * @return ArticleList
      */
-    public function setHidden($id)
+    public function setHidden($key)
     {
-        $this->hidden[] = (int) $id;
+        if (is_int($key)) {
+            $this->hidden[] = (int) $key;
+        } else {
+            foreach(array_keys($this->cols) as $id => $val) {
+                if ($key == $val) {
+                    $this->hidden[] = $id;
+                    break;
+                }
+            }
+        }
         return $this;
     }
 
