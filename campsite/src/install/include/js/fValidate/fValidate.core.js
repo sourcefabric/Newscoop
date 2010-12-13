@@ -776,18 +776,20 @@ Array.prototype.toArgString = function()
 	return a.toString();
 }
 
-/*	Prototype push if missing
-------------------------------------------- */
-if ( typeof Array.push == 'undefined' )
-Array.prototype.push = function()
+/* Prototype push if missing 
+------------------------------------------- */ 
+if (( typeof Array.push == 'undefined' ) && ( (!Array.prototype) || (typeof Array.prototype.push == 'undefined') )) 
 {
-	var arg, i = 0;
-	while( arg = arguments[i++] )
-	{
-		this[this.length] = arg;
-	}
-	return this.length;
-}
+    Array.prototype.push = function() 
+    { 
+        var arg, i = 0; 
+        while( undefined !== (arg = arguments[i++]) ) 
+        { 
+            this[this.length] = arg; 
+        } 
+        return this.length; 
+    } 
+} 
 
 /*	Returns last item of the array
 ------------------------------------------- */
