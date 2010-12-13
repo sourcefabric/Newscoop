@@ -38,8 +38,6 @@ class Author extends DatabaseObject
 	 */
     public function __construct($p_idOrName = null)
     {
-        global $g_ado_db;
-
         parent::__construct($this->m_columnNames);
         if (is_numeric($p_idOrName)) {
             $this->m_data['id'] = (int) $p_idOrName;

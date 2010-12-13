@@ -374,7 +374,7 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
                     $i++;
                 }
                 ?>
-                <select name="article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
+                <select name="f_article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
                     <?php echo drawComboContent(); ?></select>
                 </td>
                 <td align="left" valign="top">
