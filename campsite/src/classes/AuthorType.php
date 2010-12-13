@@ -15,57 +15,71 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
  */
 class AuthorType extends DatabaseObject
 {
-    var $m_dbTableName = 'AuthorTypes';
-    var $m_keyColumnNames = array('id');
-    var $m_keyIsAutoIncrement = true;
-    var $m_columnNames = array('id', 'type');
-    var $m_exists = false;
+    const TABLE = 'AuthorTypes';
 
+    /**
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
+     * @var array
+     */
+    public $m_keyColumnNames = array('id');
+
+    /**
+     * @var array
+     */
+    public $m_columnNames = array('id', 'type');
+
+    /**
+     * @var bool
+     */
+    public $m_keyIsAutoIncrement = true;
+
+    /**
+     * @var bool
+     */
+    public $m_exists = false;
 
     /**
      * Constructor
      *
-     * @param string
-     *    $p_authorTypeId (optional) The author type identifier
-     *
+     * @param int $p_authorTypeId
+     *      (optional) The author type identifier
      * @return void
      */
     public function __construct($p_authorTypeId = null)
     {
-        parent::DatabaseObject($this->m_columnNames);
+        parent::__construct($this->m_columnNames);
         if (is_numeric($p_authorTypeId) && $p_authorTypeId > 0) {
             $this->m_data['id'] = $p_authorTypeId;
             if ($this->keyValuesExist()) {
                 $this->fetch();
             }
         }
-    } // fn constructor
-
+    }
 
     /**
-     * @param string
-     *    $p_name
-     *
-     * @return boolean
-     *    TRUE on success, FALSE on failure
+     * @param string $p_name
+     * @return bool
      */
     public function create($p_name)
     {
         if (empty($p_name)) {
             return false;
         }
-        $columns['type'] = $p_name;
+        $columns['type'] = (string) $p_name;
         $result = parent::create($columns);
         if ($result) {
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Author type "$1" created.', $p_name);
-            Log::Message($logtext, null, 175);
+            $logText = getGS('Author type "$1" created.', $p_name);
+            Log::Message($logText, null, 175);
         }
         return $result;
-    } // fn create
-
+    }
 
     /**
      * @return boolean
@@ -87,12 +101,11 @@ class AuthorType extends DatabaseObject
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('Article type "$1" deleted.', $authorType);
-            Log::Message($logtext, null, 176);
+            $logText = getGS('Article type "$1" deleted.', $authorType);
+            Log::Message($logText, null, 176);
         }
         return $result;
-    } // fn delete
-
+    }
 
     /**
      * Get the id of the author type.
@@ -101,9 +114,8 @@ class AuthorType extends DatabaseObject
      */
     public function getId()
     {
-        return $this->m_data['id'];
-    } // fn getId
-
+        return (int) $this->m_data['id'];
+    }
 
     /**
      * Get the name of the author type.
@@ -112,22 +124,21 @@ class AuthorType extends DatabaseObject
      */
     public function getName()
     {
-        return $this->m_data['type'];
-    } // fn getName
-
+        return (string) $this->m_data['type'];
+    }
 
     /**
      * Get the name of the author type.
      *
+     * @param string $p_value
      * @return string
      */
     public function setName($p_value)
     {
         if (!empty($p_value)) {
-            return $this->setProperty('type', $p_value);
+            return $this->setProperty('type', (string) $p_value);
         }
-    } // fn setName
-
+    }
 
     /**
      * Get all the author types.
@@ -139,7 +150,9 @@ class AuthorType extends DatabaseObject
     {
         global $g_ado_db;
 
-        $queryStr = 'SELECT id FROM AuthorTypes ORDER BY id';
+        $queryStr = 'SELECT id
+            FROM ' . self::TABLE . '
+            ORDER BY id';
         $result = $g_ado_db->GetAll($queryStr);
         if (!$result) {
             return array();
@@ -151,8 +164,5 @@ class AuthorType extends DatabaseObject
             $authorTypes[] = $tmpAuthorType;
         }
         return $authorTypes;
-    } // fn GetAuthorTypes
-
-} // class AuthorType
-
-?>
+    }
+}

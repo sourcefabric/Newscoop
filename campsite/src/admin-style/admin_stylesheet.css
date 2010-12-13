@@ -2043,3 +2043,10 @@ ol.points {
     margin: 0 0 0 21px;
     padding: 0 5px;
 }
+
+.aliasContainer {
+    width: 480px;
+}
+div.authorAliasItem {
+    margin-bottom: 2px;
+}
