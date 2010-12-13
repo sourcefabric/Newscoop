@@ -11,6 +11,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/UserType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+require_once $GLOBALS['g_campsiteDir'].'/classes/Extension/WidgetManager.php';
 
 
 /**
@@ -127,6 +128,8 @@ class User extends DatabaseObject {
             $logtext = getGS('User account "$1" ($2) created', $this->m_data['Name'], $this->m_data['UName']);
             Log::Message($logtext, null, 51);
 
+            // add default widgets
+            WidgetManager::SetDefaultWidgets($p_values['Id']);
             return true;
         }
 
