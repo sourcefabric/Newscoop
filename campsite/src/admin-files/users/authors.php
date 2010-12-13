@@ -135,7 +135,7 @@ if ($can_save) {
     camp_html_add_msg(getGS("Please fill at least first name and last name."));
 }
 
-if (!$id) {
+if (!$id || $id == -1) {
     $author = new Author(1);
     if ($id == -1) {
         $id = 0;
@@ -177,7 +177,7 @@ echo $breadcrumbs;
                     <input type="checkbox" name="One" value="' . $type->getName() . '" id="author_' . $type->getId() . '" class="input_checkbox checkbox_filter" onclick="typeFilter(' . $type->getId() . ')" />
                     <label for="One">' . $type->getName() . '</label>';
                 echo '<a href="?del_id_type=' . $type->getId() . '" onclick="return deleteAuthorType(' . $type->getId() . ')" style="float:right"><img
-                  src="../../css/delete.png" border="0" alt="' . getGS('Delete author type') . '" title="' . getGS('Delete author type') . '" /></a>';
+                  src="' . $Campsite['ADMIN_STYLE_URL'] . '/images/delete.png" border="0" alt="' . getGS('Delete author type') . '" title="' . getGS('Delete author type') . '" /></a>';
                 echo '</li>';
             }
             ?>
@@ -223,7 +223,7 @@ $(document).ready(function() {
 });
 
 function addAlias() {
-    $("#aliases").append('<input type="text" class="input_text" name="alias[]" size="41" spellcheck="false" style="width:322px;margin-left:127px">');
+    $("#aliases").append('<div class="authorAliasItem"><input type="text" class="input_text authorAlias" name="alias[]" size="41" spellcheck="false" style="width:322px;margin-left:127px"></div>');
 }
 
 function addAuthorType() {

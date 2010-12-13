@@ -15,9 +15,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Author.php');
  */
 class AuthorAssignedType extends DatabaseObject
 {
-    var $m_dbTableName = 'AuthorAssignedTypes';
-    var $m_columnNames = array('fk_author_id', 'fk_type_id');
-    var $m_keyColumnNames = array('fk_author_id', 'fk_type_id');
+    const TABLE = 'AuthorAssignedTypes';
+
+    public $m_dbTableName = self::TABLE;
+    public $m_keyColumnNames = array('fk_author_id', 'fk_type_id');
+    public $m_columnNames = array('fk_author_id', 'fk_type_id');
 
     /**
      * Constructor
@@ -25,54 +27,50 @@ class AuthorAssignedType extends DatabaseObject
      * @param int $p_authorId
      * @param int $p_authorTypeId
      */
-	public function __construct($p_authorId = null, $p_authorTypeId = null)
-	{
-		if (is_numeric($p_authorId)) {
-			$this->m_data['fk_author_id'] = $p_authorId;
-		}
-		if (is_numeric($p_authorTypeId)) {
-			$this->m_data['fk_type_id'] = $p_authorTypeId;
-		}
-	} // fn constructor
-
+    public function __construct($p_authorId = null, $p_authorTypeId = null)
+    {
+        if (is_numeric($p_authorId)) {
+            $this->m_data['fk_author_id'] = $p_authorId;
+        }
+        if (is_numeric($p_authorTypeId)) {
+            $this->m_data['fk_type_id'] = $p_authorTypeId;
+        }
+    }
 
     /**
      * @return int
      */
     public function getAuthorId()
     {
-        return $this->m_data['fk_author_id'];
-    } // fn getAuthorId
-
+        return (int) $this->m_data['fk_author_id'];
+    }
 
     /**
      * @return int
      */
     public function getAuthorTypeId()
     {
-        return $this->m_data['fk_type_id'];
-    } // fn getAuthorTypeId
-
+        return (int) $this->m_data['fk_type_id'];
+    }
 
     /**
      * @param int $p_authorId
      * @param int $p_authorTypeId
-     *
      * @return void
      */
     public static function AddAuthorTypeToAuthor($p_authorId, $p_authorTypeId)
     {
         global $g_ado_db;
-        $queryStr = 'INSERT IGNORE INTO AuthorAssignedTypes (fk_author_id, fk_type_id)'
-            . ' VALUES ('.$p_authorId.', '.$p_authorTypeId.')';
+
+        $queryStr = 'INSERT IGNORE INTO ' . self::TABLE . ' (fk_author_id, fk_type_id)
+            VALUES (' . (int) $p_authorId . ', ' . (int) $p_authorTypeId . ')';
         $g_ado_db->Execute($queryStr);
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
         $logText = getGS('Author type $1 linked to author $2', $p_authorTypeId, $p_authorId);
         Log::Message($logText, null, 175);
-    } // fn AddAuthorTypeToAuthor
-
+    }
 
     /**
      * @param int $p_authorId
@@ -81,8 +79,8 @@ class AuthorAssignedType extends DatabaseObject
     {
         global $g_ado_db;
 
-        $queryStr = 'SELECT * FROM AuthorAssignedTypes '
-                    ." WHERE fk_author_id = $p_authorId";
+        $queryStr = 'SELECT * FROM ' . self::TABLE . '
+            WHERE fk_author_id = ' . $p_authorId;
         $query = $g_ado_db->Execute($queryStr);
         $authorTypes = array();
         while ($row = $query->FetchRow()) {
@@ -92,8 +90,7 @@ class AuthorAssignedType extends DatabaseObject
         }
 
         return $authorTypes;
-    } // fn GetAuthorTypesByAuthor
-
+    }
 
     /**
      * This is called when an author type is deleted.
@@ -106,10 +103,10 @@ class AuthorAssignedType extends DatabaseObject
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM AuthorAssignedTypes WHERE fk_type_id = $p_authorTypeId";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_type_id = ' . (int) $p_authorTypeId;
         $g_ado_db->Execute($queryStr);
-    } // fn OnAuthorTypeDelete
-
+    }
 
     /**
      * Remove author type pointers for the given author.
@@ -121,10 +118,10 @@ class AuthorAssignedType extends DatabaseObject
     {
         global $g_ado_db;
 
-        $queryStr = "DELETE FROM AuthorAssignedTypes WHERE fk_author_id = $p_authorId";
+        $queryStr = 'DELETE FROM ' . self::TABLE . '
+            WHERE fk_author_id = ' . $p_authorId;
         $g_ado_db->Execute($queryStr);
-    } // fn OnAuthorDelete
-
+    }
 
     /**
      * @param int $p_authorId
@@ -135,12 +132,8 @@ class AuthorAssignedType extends DatabaseObject
         if (!is_null($p_authorId)) {
             self::OnAuthorDelete($p_authorId);
         } else {
-            $queryStr = 'DELETE FROM AuthorAssignedTypes';
+            $queryStr = 'DELETE FROM ' . self::TABLE;
             $g_ado_db->Execute($queryStr);
         }
     }
-    // fn ResetAuthorTypes
-
-} // class AuthorAssignedType
-
-?>
+}

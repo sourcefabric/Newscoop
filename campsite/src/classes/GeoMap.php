@@ -390,13 +390,36 @@ class Geo_Map extends DatabaseObject {
      *
      * @return array
      */
-	public static function LoadMapData($p_mapId, $p_languageId, $p_articleNumber)
+	public static function LoadMapData($p_mapId, $p_languageId, $p_articleNumber, $p_preview = false, $p_textOnly = false)
 	{
         return array(
-            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId),
+            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
     }
+
+/*
+	public static function LoadMapDataPreview($p_mapId, $p_languageId, $p_articleNumber)
+	{
+        $preview = true;
+
+        return array(
+            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $preview),
+            'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
+        );
+    }
+
+	public static function LoadMapDataPreviewText($p_mapId, $p_languageId, $p_articleNumber)
+	{
+        $preview = true;
+        $text_only = true;
+
+        return array(
+            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $preview, $text_only),
+            'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
+        );
+    }
+*/
 
 	public static function StoreMapData($p_mapId, $p_languageId, $p_articleNumber, $p_map = "", $p_remove = "", $p_insert = "", $p_locations = "", $p_contents = "", $p_order = "")
 	{
@@ -642,7 +665,7 @@ class Geo_Map extends DatabaseObject {
     }
 
 
-	public static function ReadMapPoints($p_mapId, $p_languageId)
+	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false)
 	{
         if (0 == $p_mapId) {return array();}
 
@@ -665,6 +688,12 @@ class Geo_Map extends DatabaseObject {
         $queryStr .= "INNER JOIN LocationContents AS c ON c.id = mll.fk_content_id ";
 
         $queryStr .= "WHERE ml.fk_map_id = ? AND mll.fk_language_id = ? ";
+
+        if ($p_preview)
+        {
+            $queryStr .= "AND mll.poi_display = 1 ";
+        }
+
         $queryStr .= "ORDER BY ml.rank, ml.id, mll.id";
 
         $queryStr_mm = "SELECT m.id AS m_id, mlm.id AS mlm_id, ml.id AS ml_id, ";
@@ -727,6 +756,7 @@ class Geo_Map extends DatabaseObject {
         }
 
         if (0 == count($maploc_ids)) {return $dataArray;}
+        if ($p_textOnly) {return $dataArray;}
 
         $loc_ids_list = implode(", ", $maploc_ids);
 
@@ -1262,7 +1292,7 @@ class Geo_Map extends DatabaseObject {
 
 
     // presentation functions
-    public static function GetMapTagHeader($p_articleNumber, $p_languageId)
+    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0)
     {
         global $Campsite;
         $tag_string = "";
@@ -1275,15 +1305,25 @@ class Geo_Map extends DatabaseObject {
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
         
-        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+        $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_usage['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_usage['height'] = $p_mapHeight;
+        }
+        //print_r($geo_map_usage);
+
+        $geo_map_usage_json = "";
+        $geo_map_usage_json .= json_encode($geo_map_usage);
+
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
         $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
-        
-        $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
-        $geo_map_usage_json = "";
-        $geo_map_usage_json .= json_encode($geo_map_usage);
-        
+
         $geo_icons_info = Geo_Preferences::GetIconsInfo($cnf_html_dir, $cnf_website_url);
         $geo_icons_json = "";
         $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
@@ -1293,7 +1333,10 @@ class Geo_Map extends DatabaseObject {
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
         
         $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-        $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
+        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
+        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
+        $preview = true;
+        $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
         
         $poi_info_json = json_encode($poi_info);
         
@@ -1310,9 +1353,9 @@ class Geo_Map extends DatabaseObject {
 
 <script type="text/javascript">
     //alert("0123");
-    geo_object = new geo_locations();
+    geo_object'. $map_suffix .' = new geo_locations();
     //alert("1234");
-    //geo_obj = geo_object;
+    //geo_obj = geo_object' . $map_suffix . ';
 
 var useSystemParameters = function()
 {
@@ -1322,15 +1365,15 @@ var useSystemParameters = function()
     $article_spec = json_encode($article_spec_arr);
 
     $tag_string .= "\n";
-    $tag_string .= "geo_object.set_article_spec($article_spec);";
+    $tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
     $tag_string .= "\n";
-    $tag_string .= "geo_object.set_map_info($geo_map_json);";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
     $tag_string .= "\n";
-    $tag_string .= "geo_object.set_map_usage($geo_map_usage_json);";
+    $tag_string .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
     $tag_string .= "\n";
-    $tag_string .= "geo_object.set_icons_info($geo_icons_json);";
+    $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
     $tag_string .= "\n";
-    $tag_string .= "geo_object.set_popups_info($geo_popups_json);";
+    $tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
     $tag_string .= "\n";
 
 
@@ -1349,9 +1392,9 @@ var on_load_proc = function()
         map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
         map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         //alert("001");
-        geo_main_selecting_locations(geo_object, "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
+        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
         //alert("002");
-        geo_object.got_load_data(\'' . $poi_info_json . '\');
+        geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
         //alert("003");
     }
 };
@@ -1376,10 +1419,72 @@ var on_load_proc = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>";
+#        $tag_string .='
+#<div class="map_mapmenu">
+#<a href="#" onClick="geo_object' . $map_suffix . '.map_showview(); return false;">';
+#putGS("show initial map view");
+#        $tag_string .='</a>
+#</div><!-- end of map_mapmenu -->
+#';
+
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
     }
+
+    public static function GetMapTagCenter($p_articleNumber, $p_languageId)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_article_number = $p_articleNumber;
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
+
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+
+        return $tag_string;
+    }
+
+    public static function GetMapTagList($p_articleNumber, $p_languageId)
+    {
+        global $Campsite;
+
+        $f_article_number = $p_articleNumber;
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
+
+        $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
+        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
+        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
+        //$poi_info = Geo_Map::LoadMapDataPreviewText($map_id, $f_language_id, $f_article_number);
+        $preview = true;
+        $text_only = true;
+        $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview, $text_only);
+
+        //print_r($poi_info);
+
+        //$geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
+
+        $pind = 0;
+        foreach ($poi_info["pois"] as $rank => $poi)
+        {
+            $cur_lon = $poi["longitude"];
+            $cur_lat = $poi["latitude"];
+            $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
+
+            $poi_info["pois"][$rank]["center"] = $center;
+
+            $poi_info["pois"][$rank]["open"] = "geo_hook_on_map_feature_select(geo_object$map_suffix, $pind);";
+
+            $pind += 1;
+        }
+
+        return $poi_info;
+    }
+
 
 } // class GeoMap
 
