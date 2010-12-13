@@ -505,6 +505,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_marker_names" value="<?php p(SystemPref::Get('MapMarkerNames')); ?>" maxlength="80" size="40" class="input_text" />
     </td>
 </tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map Marker Default:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_marker_source_default" value="<?php p(SystemPref::Get('MapMarkerSourceDefault')); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
 <?php foreach (explode(',', SystemPref::Get('MapMarkerNames')) as $name) { ?>
 <tr>
     <td colspan="2"><hr /></td>
