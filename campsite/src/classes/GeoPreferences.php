@@ -181,7 +181,7 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl, $p_mapProvider = ""
 	 *
 	 * @return string
 	 */
-public static function prepareMapIncludes($p_inclInfo)
+public static function PrepareMapIncludes($p_inclInfo)
 {
     $map_includes = "";
     foreach ($p_inclInfo as $js_source)
@@ -190,7 +190,7 @@ public static function prepareMapIncludes($p_inclInfo)
     }
 
     return $map_includes;
-} // fn prepareMapIncludes
+} // fn PrepareMapIncludes
 
 	/**
 	 * Gets info on marker icons
@@ -200,7 +200,7 @@ public static function prepareMapIncludes($p_inclInfo)
 	 *
 	 * @return array
 	 */
-public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
+public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
 {
     $no_arr = array("json_obj" => array('webdir' => "", 'default' => "", 'icons' => array()));
 
@@ -303,7 +303,39 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
 
     $res_icons_info = array('webdir' => $icons_webdir, 'default' => $icons_default_name, 'icons' => $use_icons);
     return array("json_obj" => $res_icons_info);
-} // fn getIconsInfo
+} // fn GetIconsInfo
+
+
+public static function GetSearchInfo($p_htmlDir, $p_websiteUrl)
+{
+    $no_arr = array("json_obj" => array('webdir' => "", 'default' => "", 'icons' => array()));
+
+    $use_icons = array();
+
+    $icons_subpath = "/javascript/geocoding/search";
+    $icon_filename = "search.png";
+
+    $icons_subdir = $p_htmlDir . $icons_subpath;
+    //echo $icons_subdir;
+    $icons_webdir = $p_websiteUrl . $icons_subpath;
+
+    $icons_default_name = "search";
+    $search_icon = array(
+        "label" => "search",
+        "name" => $icon_filename,
+        "path" => $icons_webdir . "/" . $icon_filename,
+        "width" => "200",
+        "height" => "150",
+        "width_off" => "-100",
+        "height_off" => "-75",
+    );
+
+    $use_icons[] = $search_icon;
+
+    $res_icons_info = array('webdir' => $icons_webdir, 'default' => $icons_default_name, 'icons' => $use_icons);
+    return array("json_obj" => $res_icons_info);
+} // fn GetIconsInfo
+
 
 	/**
 	 * Gets info on popups
@@ -313,7 +345,7 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
 	 *
 	 * @return array
 	 */
-public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
+public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
 {
     //$popup_width = SystemPref::Get("MapPopupWidthDefault");
     $popup_width = SystemPref::Get("MapPopupWidthMin");
@@ -517,7 +549,7 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
     //$res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info, "audio" => $audio_info);
     $res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info);
     return array("json_obj" => $res_popups_info);
-} // fn getPopupsInfo
+} // fn GetPopupsInfo
 
 
 } // class Geo_Locations

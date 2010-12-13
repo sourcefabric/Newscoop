@@ -1109,7 +1109,7 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.PanZoomBar(),
+            //new OpenLayers.Control.PanZoomBar(),
             geo_locations.pzb_ctrl,
             new OpenLayers.Control.ScaleLine(),
             //new OpenLayers.Control.LayerSwitcher({'ascending':false}),

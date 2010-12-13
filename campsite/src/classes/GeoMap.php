@@ -1509,6 +1509,155 @@ var on_load_proc = function()
         return $poi_info;
     }
 
+    // search functions
+    public static function GetMapSearchHeader($p_mapWidth = 0, $p_mapHeight = 0)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_search";
+
+        $cnf_html_dir = $Campsite['HTML_DIR'];
+        $cnf_website_url = $Campsite['WEBSITE_URL'];
+        
+/*
+        $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_usage['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_usage['height'] = $p_mapHeight;
+        }
+        //print_r($geo_map_usage);
+
+        $geo_map_usage_json = "";
+        $geo_map_usage_json .= json_encode($geo_map_usage);
+*/
+
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+        $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_json = "";
+        $geo_map_json .= json_encode($geo_map_info["json_obj"]);
+
+        $geo_icons_info = Geo_Preferences::GetSearchInfo($cnf_html_dir, $cnf_website_url);
+        $geo_icons_json = "";
+        $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+
+/*
+        
+        $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
+        $geo_popups_json = "";
+        $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
+*/
+
+/*
+        
+        $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
+        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
+        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
+        $preview = true;
+        $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
+        
+        $poi_info_json = json_encode($poi_info);
+*/
+        
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+
+
+        $tag_string .= $geo_map_incl;
+        $tag_string .= "\n";
+
+        $tag_string .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_search.js"></script>
+
+<script type="text/javascript">
+    //alert("0123");
+    geo_object'. $map_suffix .' = new geo_locations();
+    //alert("1234");
+    //geo_obj = geo_object' . $map_suffix . ';
+
+var useSystemParameters = function()
+{
+';
+
+    //$article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
+    //$article_spec = json_encode($article_spec_arr);
+
+    $tag_string .= "\n";
+    //$tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
+    //$tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string .= "\n";
+    //$tag_string .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
+    //$tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
+    $tag_string .= "\n";
+    //$tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
+    //$tag_string .= "\n";
+
+
+        //geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
+        //alert("003");
+
+        $tag_string .= '
+};
+var on_load_proc = function()
+{
+
+    //alert(123);
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        //alert(456);
+        //map_obj.style.width = "800px";
+        //map_obj.style.height = "200px";
+        map_obj.style.width = "' . $geo_map_info["width"] . 'px";
+        map_obj.style.height = "' . $geo_map_info["height"] . 'px";
+        //alert("001");
+        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
+        //alert("002");
+    }
+};
+    $(document).ready(function()
+    {
+        on_load_proc();
+    });
+</script>
+';
+
+        return $tag_string;
+
+    }
+
+    public static function GetMapSearchBody()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_search";
+
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
+
+        return $tag_string;
+    }
+
+    public static function GetMapSearchCenter()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_search";
+
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+
+        return $tag_string;
+    }
+
+
 
 } // class GeoMap
 
