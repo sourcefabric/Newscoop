@@ -216,7 +216,7 @@ geo_locations.set_map_height = function(height)
 geo_locations.set_map_info = function(params)
 {
     //alert("geo_locations.set_map_info");
-    this.map_view_layer_default = params.default;
+    this.map_view_layer_default = params['default'];
     var prov_len = params.providers.length;
     for (var pind = 0; pind < prov_len; pind++)
     {
@@ -274,7 +274,7 @@ geo_locations.set_map_usage = function(params)
 geo_locations.set_icons_info = function(params)
 {
     this.marker_src_base = params.webdir;
-    this.marker_src_default = params.default;
+    this.marker_src_default = params['default'];
     this.marker_src_labels = [];
     this.marker_src_icons = {};
 
