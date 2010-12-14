@@ -14,6 +14,12 @@
 interface IGeoMap
 {
     /**
+     * Get map id
+     * @return int
+     */
+    public function getId();
+
+    /**
      * Get map locations
      * @return array of IGeoMapLocation
      */

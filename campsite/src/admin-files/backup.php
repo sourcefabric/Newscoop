@@ -82,6 +82,18 @@ switch ($action) {
         }
         fclose($fp);
         exit(0);
+
+    case 'upload':
+        foreach ($_FILES as $file) {
+            if ($file['type'] == 'application/x-tar' || $file['type'] == 'application/x-gzip') {
+                move_uploaded_file($file["tmp_name"], CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name']);
+                camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
+            } else {
+                camp_html_add_msg(getGS("You have tried to upload wrong backup file."));
+            }
+        }
+        $files = getBackupList();
+        break;
 }
 
 // show breadcrumbs
@@ -95,7 +107,7 @@ echo $breadcrumbs;
 // view template
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<p />
+<br />
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
     <tr>
     <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
@@ -106,8 +118,24 @@ echo $breadcrumbs;
         <b><?php putGS("Make new backup")?></b>
         </a>
     </td>
+    <td valign="bottom" style="padding-left: 10px;">
+        <a href="#" onclick="$('#uploader').show();">
+        <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" border="0">
+        <b><?php putGS("Upload backup file")?></b>
+        </a>
+    </td>
     </tr>
 </table>
+<p />
+<div id="uploader" style="display:none">
+<center>
+<form method="POST" enctype="multipart/form-data">
+<input type="hidden" name="action" value="upload" />
+<input type="file" name="archivefile" size="30">
+<input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />
+</form>
+</center>
+</div>
 <p />
 <?php
 camp_html_display_msgs();
@@ -174,7 +202,7 @@ function getBackupList() {
             continue;
         }
         $fileType = filetype($fullPath);
-        if ($fileType != "link" && $fileType != "dir" && substr($file, 0, 6) == 'backup') {
+        if ($fileType != "link" && $fileType != "dir" && $file != '.htaccess') {
             $tmp = array();
             $tmp['name'] = $file;
             $tmp['size'] = ceil(getRealSize($fullPath)/1024/1024);
