@@ -11,11 +11,10 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
 $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
-
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_article_author = Input::Get('f_article_author','array',array(),true);
-$f_article_author_type = Input::Get('f_article_author_type','array',array(),true);
+$f_article_author = Input::Get('f_article_author', 'array', array(), true);
+$f_article_author_type = Input::Get('f_article_author_type', 'array', array(), true);
 $f_on_front_page = Input::Get('f_on_front_page', 'string', '', true);
 $f_on_section_page = Input::Get('f_on_section_page', 'string', '', true);
 $f_is_public = Input::Get('f_is_public', 'string', '', true);
@@ -93,30 +92,28 @@ if ($f_article_title != $articleObj->getTitle()) {
 }
 
 // Update the article author
-    if (!empty($f_article_author))
-    {
-        $articleAuthorsObj = new ArticleAuthor();
-        ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-        $i=0;
-        foreach ($f_article_author as $author)
-        {
-            $authorObj = new Author($author);
-            if (!$authorObj->exists()  && strlen(trim($author))>0) {
-                $authorData = Author::ReadName($author);
-                $authorObj->create($authorData);
-            }
-            $type = $f_article_author_type[$i];
-            $authorObj->setType($type);
-            $articleAuthorsObj->createRow($articleObj->getArticleNumber(),$articleObj->getLanguageId(),$authorObj->getId(), $type);
-            $i++;
+if (!empty($f_article_author)) {
+    ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+    $i = 0;
+    foreach ($f_article_author as $author) {
+        $authorObj = new Author($author);
+        if (!$authorObj->exists()  && strlen(trim($author)) > 0) {
+            $authorData = Author::ReadName($author);
+            $authorObj->create($authorData);
         }
+        // Sets the author type selected
+        $author_type = $f_article_author_type[$i];
+        $authorObj->setType($author_type);
+        // Links the author to the article
+        $articleAuthorObj = new ArticleAuthor($articleObj->getArticleNumber(),
+                                              $articleObj->getLanguageId(),
+                                              $authorObj->getId(), $author_type);
+        if (!$articleAuthorObj->exists()) {
+            $articleAuthorObj->create();
+        }
+        $i++;
     }
-/*$authorObj = new Author($f_article_author);
-if (!$authorObj->exists()) {
-	$authorData = Author::ReadName($f_article_author);
-	$authorObj->create($authorData);
 }
-$articleObj->setAuthorId($authorObj->getId());*/
 
 // Update the article.
 $articleObj->setOnFrontPage(!empty($f_on_front_page));
