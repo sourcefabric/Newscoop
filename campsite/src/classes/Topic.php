@@ -757,6 +757,9 @@ class Topic extends DatabaseObject {
 		global $g_ado_db;
 
         $g_ado_db->StartTrans();
+//		$g_ado_db->Execute("LOCK TABLE Topics WRITE");
+
+		$orderChanged = false;
         foreach ($p_order as $parentId => $order) {
         	list(, $parentId) = explode('_', $parentId);
 
@@ -775,10 +778,18 @@ class Topic extends DatabaseObject {
 
                 	$subtopics[$oldTopicOrder] = $subtopics[$newTopicOrder];
                 	$subtopics[$newTopicOrder] = $topicId;
+
+                	$orderChanged = true;
                 }
             }
         }
+
+        $g_ado_db->Execute("UNLOCK TABLES");
         $g_ado_db->CompleteTrans();
+
+        if ($orderChanged) {
+        	CampCache::singleton()->clear('user');
+        }
 
         return TRUE;
     } // fn UpdateOrder
@@ -795,14 +806,6 @@ class Topic extends DatabaseObject {
     	global $g_ado_db;
 
     	$topicTable = $p_parentTopic->m_dbTableName;
-
-    	if ($p_parentTopic->exists()) {
-    		$parentLeft = $p_parentTopic->getLeft();
-    		$parentRight = $p_parentTopic->getRight();
-    	} else {
-    		$parentLeft = 0;
-    		$parentRight = 0;
-    	}
 
 		$maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
 
