@@ -11,7 +11,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/UserType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
-require_once $GLOBALS['g_campsiteDir'].'/classes/Extension/WidgetManager.php';
 
 
 /**
