@@ -148,7 +148,8 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         if ("point" != $p_type) {return null;}
 
-        $queryStr_point = "SELECT id FROM Locations WHERE poi_location = GeomFromText('POINT(? ?)') AND poi_type = 'point' ";
+        $queryStr_point = 'SELECT id FROM ' . self::TABLE
+            . ' WHERE poi_location = GeomFromText(\'POINT(? ?)\') AND poi_type = "point"';
         $queryStr_point .= "AND poi_type_style= ? AND poi_center = PointFromText('POINT(? ?)') AND poi_radius = ?";
 
         $loc_id = 0;
@@ -211,15 +212,15 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 1)
-        $queryStr_loc_id = "SELECT fk_location_id AS loc FROM MapLocations WHERE id = ?";
+        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' . Geo_MapLocations::TABLE . ' WHERE id = ?';
         // ad B 2)
-		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
+		$queryStr_loc_in = "INSERT INTO " . self::TABLE . " (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
         $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 4)
-        $queryStr_map_up = "UPDATE MapLocations SET fk_location_id = ? WHERE id = ?";
+        $queryStr_map_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET fk_location_id = ? WHERE id = ?';
         // ad B 6)
-        $queryStr_loc_rm = "DELETE FROM Locations WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
+        $queryStr_loc_rm = 'DELETE FROM ' . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
 
         // updating current POIs, inserting new POIs
         foreach ($p_locations as $poi_obj)
@@ -254,7 +255,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
             $new_cen = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
             $new_style = 0;
             $new_radius = 0;
-            $reuse_id = Geo_Location::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
+            $reuse_id = self::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
 
             if ($reuse_id && (0 < $reuse_id))
             {
@@ -313,7 +314,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     {
 		global $g_ado_db;
 
-        $queryStr = "UPDATE MapLocations SET poi_style = ? WHERE id = ?";
+        $queryStr = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET poi_style = ? WHERE id = ?';
 
         $sql_params = array();
         $sql_params[] = $poi["style"];
@@ -332,7 +333,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
             if ($poi["icon_changed"])
             {
-                Geo_Location::UpdateIcon($poi);
+                self::UpdateIcon($poi);
             }
             if ($poi["state_changed"])
             {
@@ -377,7 +378,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 2)
-        $queryStr_rnk_up = "UPDATE MapLocations SET rank = ? WHERE id = ?";
+        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET rank = ? WHERE id = ?';
 
         $rank = 0;
         foreach ($p_reorder as $poi_obj)
