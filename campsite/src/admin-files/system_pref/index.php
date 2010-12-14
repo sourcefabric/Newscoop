@@ -444,7 +444,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <?php putGS("Map Default Width:"); ?>
     </td>
     <td align="left" valign="top">
-        <input type="text" name="f_map_default_width" value="<?php p(SystemPref::Get('MapDefaultWidth')); ?>" maxlength="3" size="4" class="input_text" />
+        <input type="text" name="f_map_view_width_default" value="<?php p(SystemPref::Get('MapViewWidthDefault')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
 <tr>
@@ -452,7 +452,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <?php putGS("Map Default Height:"); ?>
     </td>
     <td align="left" valign="top">
-        <input type="text" name="f_map_default_height" value="<?php p(SystemPref::Get('MapDefaultHeight')); ?>" maxlength="3" size="4" class="input_text" />
+        <input type="text" name="f_map_view_height_default" value="<?php p(SystemPref::Get('MapViewHeightDefault')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
 <tr>

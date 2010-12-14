@@ -48,63 +48,33 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapViewWidthDefault', '6
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapViewHeightDefault', '400');
 
 -- map providers available to be set for articles
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderNames', 'GoogleV3,OSM');
 -- Google map provider available to be set for articles
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderAvailableGoogleV3', '1');
--- JS script to include for Google maps api v3
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderIncludeGoogleV3', 'http://maps.google.com/maps/api/js?sensor=false');
 -- OpenStreetMap map provider available to be set for articles
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderAvailableOSM', '1');
--- OpenStreetMap API is inside the OpenLayers
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderIncludeOSM', '');
 -- the default map provider is Google maps api v3
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderDefault', 'GoogleV3');
 
 -- POI markers
 -- what marker figures are available
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerDirectory', '/javascript/geocoding/markers/');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerNames', 'gold,blue,red,green');
--- file names of POI markers, with shifts of the marker figures so that its tips point correctly
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceGold', 'marker-gold.png');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetXGold', '-10');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetYGold', '-20');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceBlue', 'marker-blue.png');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetXBlue', '-10');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetYBlue', '-20');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceRed', 'marker-red.png');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetXRed', '-10');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetYRed', '-20');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceGreen', 'marker-green.png');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetXGreen', '-10');
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerOffsetYGreen', '-20');
 -- default marker figure to be used
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault', 'gold');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault', 'marker-gold.png');
 
 
 -- Pop-up setting
--- default pop-up width
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthDefault', '300');
+-- min. pop-up width
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '300');
--- default pop-up width
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightDefault', '200');
+-- min. pop-up width
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '200');
 
 -- Pop-up multimedia content
--- video providers available
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoNames', 'YouTube,Vimeo');
 -- youtube wideo setting
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableYouTube', '1');
-
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceYouTube', '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthYouTube', '425');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightYouTube', '350');
 -- vimeo video setting
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoAvailableVimeo', '1');
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoSourceVimeo', '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthVimeo', '400');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightVimeo', '225');
--- default video provider
--- INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoDefault', 'YouTube');
 
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoWidthFlash', '425');
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapVideoHeightFlash', '350');
