@@ -6,6 +6,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
     camp_html_display_error(getGS("You do not have the right to change system preferences."));
@@ -499,49 +500,29 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Map Marker Names:"); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="text" name="f_map_marker_names" value="<?php p(SystemPref::Get('MapMarkerNames')); ?>" maxlength="80" size="40" class="input_text" />
-    </td>
-</tr>
-<tr>
-    <td align="left" width="400px">
         <?php putGS("Map Marker Default:"); ?>
     </td>
     <td align="left" valign="top">
+<?php
+    $marker_icons = Geo_Preferences::GetIconsFiles();
+    if (0 < count($marker_icons))
+    {
+        echo '<select name="f_map_marker_source_default" class="input_select">' . "\n";
+        foreach ($marker_icons as $one_icon)
+        {
+            camp_html_select_option($one_icon, SystemPref::Get('MapMarkerSourceDefault'), $one_icon);
+        }
+        echo "</select>\n";
+    }
+    else
+    {
+?>
         <input type="text" name="f_map_marker_source_default" value="<?php p(SystemPref::Get('MapMarkerSourceDefault')); ?>" maxlength="80" size="40" class="input_text" />
+<?php
+    }
+?>
     </td>
 </tr>
-<?php foreach (explode(',', SystemPref::Get('MapMarkerNames')) as $name) { ?>
-<tr>
-    <td colspan="2"><hr /></td>
-</tr>
-<tr>
-    <td align="left" width="400px">
-        <?php echo ucfirst($name), ' ', getGS('Marker Source'); ?>
-    </td>
-    <td align="left" valign="top">
-    <input type="text" name="f_map_marker_source_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerSource' . ucfirst($name)); ?>" maxlength="80" size="40" class="input_text" />
-    </td>
-</tr>
-<tr>
-    <td align="left" width="400px">
-        <?php echo ucfirst($name), ' ', getGS('Marker Offset X'); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="text" name="f_map_marker_offsetX_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerOffsetX' . ucfirst($name)); ?>" maxlength="4" size="4" class="input_text" />
-    </td>
-</tr>
-<tr>
-    <td align="left" width="400px">
-        <?php echo ucfirst($name), ' ', getGS('Marker Offset Y'); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="text" name="f_map_marker_offsetY_<?php echo $name; ?>" value="<?php echo SystemPref::Get('MapMarkerOffsetY' . ucfirst($name)); ?>" maxlength="4" size="4" class="input_text" />
-    </td>
-</tr>
-<?php } // foreach ?>
 <tr>
     <td colspan="2"><hr /></td>
 </tr>

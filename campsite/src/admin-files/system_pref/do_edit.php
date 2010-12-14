@@ -70,7 +70,6 @@ $f_geo = array(
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int', 0, true),
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
     'map_marker_directory' => Input::Get('f_map_marker_directory', 'string'),
-    'map_marker_names' => Input::Get('f_map_marker_names', 'string'),
     'map_marker_source_default' => Input::Get('f_map_marker_source_default', 'string'),
     'map_popup_width_min' => Input::Get('f_map_popup_width_min', 'int'),
     'map_popup_height_min' => Input::Get('f_map_popup_height_min', 'int'),
@@ -81,16 +80,6 @@ $f_geo = array(
     'map_video_width_flash' => Input::Get('f_map_video_width_flash', 'int'),
     'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
 );
-
-// geomarkers
-$f_geo_markers = array();
-foreach (explode(',', $f_geo['map_marker_names']) as $name) {
-    $f_geo += array(
-        "map_marker_source_$name" => Input::Get("f_map_marker_source_$name", 'string', '', true),
-        "map_marker_offsetX_$name" => Input::Get("f_map_marker_offsetX_$name", 'int', 0, true),
-        "map_marker_offsetY_$name" => Input::Get("f_map_marker_offsetY_$name", 'int', 0, true),
-    );
-}
 
 if (!Input::IsValid()) {
     camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
