@@ -1510,7 +1510,7 @@ var on_load_proc = function()
     }
 
     // search functions
-    public static function GetMapSearchHeader($p_mapWidth = 0, $p_mapHeight = 0)
+    public static function GetMapSearchHeader($p_mapWidth = 0, $p_mapHeight = 0, $p_bboxDivs = null)
     {
         global $Campsite;
         $tag_string = "";
@@ -1519,24 +1519,18 @@ var on_load_proc = function()
 
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
-        
-/*
-        $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
+
+        $map_provider = Geo_Preferences::GetMapProviderDefault();
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $map_provider);
         if (0 < $p_mapWidth)
         {
-            $geo_map_usage['width'] = $p_mapWidth;
+            $geo_map_info['width'] = $p_mapWidth;
         }
         if (0 < $p_mapHeight)
         {
-            $geo_map_usage['height'] = $p_mapHeight;
+            $geo_map_info['height'] = $p_mapHeight;
         }
-        //print_r($geo_map_usage);
 
-        $geo_map_usage_json = "";
-        $geo_map_usage_json .= json_encode($geo_map_usage);
-*/
-
-        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
         $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
@@ -1544,6 +1538,9 @@ var on_load_proc = function()
         $geo_icons_info = Geo_Preferences::GetSearchInfo($cnf_html_dir, $cnf_website_url);
         $geo_icons_json = "";
         $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+
+        //$geo_map_usage_json = "";
+        //$geo_map_usage_json .= json_encode($geo_map_usage);
 
 /*
         
@@ -1603,6 +1600,19 @@ var useSystemParameters = function()
         //geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
         //alert("003");
 
+
+//    $bbox_divs = array("tl_lon" => 'top_left_longitude', "tl_lat" => 'top_left_latitude', "br_lon" => 'bottom_right_longitude', "br_lat" => 'bottom_right_latitude')
+
+        if ($p_bboxDivs)
+        {
+            $bbox_divs_json = "";
+            $bbox_divs_json .= json_encode($p_bboxDivs);
+
+            $tag_string .= "geo_object$map_suffix.set_bbox_divs($bbox_divs_json);";
+            $tag_string .= "\n";
+
+        }
+
         $tag_string .= '
 };
 var on_load_proc = function()
@@ -1657,6 +1667,65 @@ var on_load_proc = function()
         return $tag_string;
     }
 
+    public static function GetGeoSearchSQLQuery($p_coordinates)
+    {
+        $queryStr = "";
+        $queryStr_1 = "";
+        $queryStr_2 = "";
+        $queryStr_end = "";
+        //$use_single = true;
+
+        $queryStr .= "SELECT DISTINCT m.fk_article_number AS art FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
+        $queryStr .= "Locations AS l ON ml.fk_location_id = l.id WHERE ";
+
+        $queryStr_1 .= "MBRIntersects(GeomFromText('Polygon((%%x0%% %%y0%%,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% %%y0%%,%%x0%% %%y0%%))'),l.poi_location) ";
+        $queryStr_2 .= "MBRIntersects(GeomFromText('MultiPolygon(((%%x0%% %%y0%%,%%x0%% 180,%%x1%% 180,%%x1%% %%y0%%,%%x0%% %%y0%%)),((%%x0%% -180,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% -180,%%x0%% -180)))'),l.poi_location) ";
+
+        $queryStr_end .= "AND m.fk_article_number != 0";
+
+        $loc_left = $p_coordinates[0];
+        $loc_right = $p_coordinates[1];
+
+        $left_lon = "" . $loc_left["longitude"];
+        $left_lat = "" . $loc_left["latitude"];
+        $right_lon = "" . $loc_right["longitude"];
+        $right_lat = "" . $loc_right["latitude"];
+
+        if (!is_numeric($left_lon)) {$left_lon = "0";}
+        if (!is_numeric($left_lat)) {$left_lat = "0";}
+        if (!is_numeric($right_lon)) {$right_lon = "0";}
+        if (!is_numeric($right_lat)) {$right_lat = "0";}
+
+        $south_lat = $right_lat;
+        $north_lat = $left_lat;
+        if ($south_lat > $north_lat)
+        {
+            $south_lat = $left_lat;
+            $north_lat = $right_lat;
+        }
+
+        $east_lon = $left_lon;
+        $west_lon = $right_lon;
+
+        if ($east_lon > $west_lon)
+        {
+            //$use_single = false;
+            $queryStr .= $queryStr_2;
+        }
+        else
+        {
+            $queryStr .= $queryStr_1;
+        }
+        $queryStr .= $queryStr_end;
+
+        $queryStr = str_replace("%%y0%%", $east_lon, $queryStr);
+        $queryStr = str_replace("%%y1%%", $west_lon, $queryStr);
+        $queryStr = str_replace("%%x0%%", $south_lat, $queryStr);
+        $queryStr = str_replace("%%x1%%", $north_lat, $queryStr);
+
+        return $queryStr;
+    }
+
 
 
 } // class GeoMap
@@ -1669,6 +1738,20 @@ var on_load_proc = function()
     $art = new Article(2, 35);
     $map_id = Geo_map::GetArticleMapId($art);
     echo "map_id: $map_id";
+
+    // going east to west over the 180/-180, and south to north
+    $p_coordinates = array();
+    $p_coordinates[] = array("longitude" => "150", "latitude" => "20");
+    $p_coordinates[] = array("longitude" => "40", "latitude" => "60");
+
+    // going directly west to east, and north to south
+    $p_coordinates = array();
+    $p_coordinates[] = array("longitude" => "-10", "latitude" => "60");
+    $p_coordinates[] = array("longitude" => "40", "latitude" => "-20");
+
+    $query = Geo_Map::GetGeoSearchSQLQuery($p_coordinates);
+    echo $query;
 */
 
 ?>
+

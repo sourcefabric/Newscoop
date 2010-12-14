@@ -6,46 +6,140 @@
 /**
  * Includes
  */
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
-
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
 
 /**
  * @package Campsite
  */
-class Geo_Location extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'LocationContents';
-	//var $m_columnNames = array('id', 'city_id', 'city_type', 'population', 'position', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified');
+class Geo_Location extends DatabaseObject implements IGeoLocation
+{
+    const TABLE = 'Locations';
+
+    /**
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
+     * @var array
+     */
+    public $m_keyColumnNames = array('id');
+
+    /**
+     * @var array
+     */
+    public $m_columnNames = array(
+        'id',
+        'poi_location',
+        'poi_type',
+        'poi_type_style',
+        'poi_center',
+        'poi_radius',
+        'IdUser',
+        'time_updated'
+    );
+
+    /**
+     * @var bool
+     */
+    public $m_keyIsAutoIncrement = true;
 
 	/**
-	 * The geo location contents class is for load/store of POI data.
+     * @param mixed $row
 	 */
-	public function Geo_Location()
-	{
-	} // constructor
+    public function __construct($row = NULL)
+    {
+        parent::__construct($this->m_columnNames);
 
+        if (is_array($row)) {
+            $this->m_data = $row;
+        }
+    }
 
-	/**
-	 * Finds POIs on given article and language
-	 *
-	 * @param string $p_articleNumber
-	 * @param string $p_languageId
-	 *
-	 * @return array
-	 */
-/*
-	public static function ReadArticlePoints($p_articleNumber, $p_languageId)
-	{
-		global $g_ado_db;
-		$sql_params = array($p_articleNumber, $p_languageId);
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
-	} // fn ReadArticlePoints
-*/
+    /**
+     * Get latitude
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return (float) $this->m_data['latitude'];
+    }
+
+    /**
+     * Get longitude
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return (float) $this->m_data['longitude'];
+    }
+
+    /**
+     * @return
+     */
+    public function getPOILocation()
+    {
+        return $this->m_data['poi_location'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPOIType()
+    {
+        return (string) $this->m_data['poi_type'];
+    }
+
+    /**
+     * @return
+     */
+    public function getPOITypeStyle()
+    {
+        return (int) $this->m_data['poi_type_style'];
+    }
+
+    /**
+     * @return
+     */
+    public function getPOICenter()
+    {
+        return $this->m_data['poi_center'];
+    }
+
+    /**
+     * @return double
+     */
+    public function getPOIRadius()
+    {
+        return (double) $this->m_data['poi_radius'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return (int) $this->m_data['IdUser'];
+    }
+
+    /**
+     * @return timestamp
+     */
+    public function getLastModified()
+    {
+        return $this->m_data['time_updated'];
+    }
 
     // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
     public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
@@ -54,7 +148,8 @@ class Geo_Location extends DatabaseObject {
 
         if ("point" != $p_type) {return null;}
 
-        $queryStr_point = "SELECT id FROM Locations WHERE poi_location = GeomFromText('POINT(? ?)') AND poi_type = 'point' ";
+        $queryStr_point = 'SELECT id FROM ' . self::TABLE
+            . ' WHERE poi_location = GeomFromText(\'POINT(? ?)\') AND poi_type = "point"';
         $queryStr_point .= "AND poi_type_style= ? AND poi_center = PointFromText('POINT(? ?)') AND poi_radius = ?";
 
         $loc_id = 0;
@@ -117,15 +212,15 @@ class Geo_Location extends DatabaseObject {
 */
 
         // ad B 1)
-        $queryStr_loc_id = "SELECT fk_location_id AS loc FROM MapLocations WHERE id = ?";
+        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' . Geo_MapLocations::TABLE . ' WHERE id = ?';
         // ad B 2)
-		$queryStr_loc_in = "INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
+		$queryStr_loc_in = "INSERT INTO " . self::TABLE . " (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
         $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 4)
-        $queryStr_map_up = "UPDATE MapLocations SET fk_location_id = ? WHERE id = ?";
+        $queryStr_map_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET fk_location_id = ? WHERE id = ?';
         // ad B 6)
-        $queryStr_loc_rm = "DELETE FROM Locations WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
+        $queryStr_loc_rm = 'DELETE FROM ' . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
 
         // updating current POIs, inserting new POIs
         foreach ($p_locations as $poi_obj)
@@ -160,7 +255,7 @@ class Geo_Location extends DatabaseObject {
             $new_cen = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
             $new_style = 0;
             $new_radius = 0;
-            $reuse_id = Geo_Location::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
+            $reuse_id = self::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
 
             if ($reuse_id && (0 < $reuse_id))
             {
@@ -219,7 +314,7 @@ class Geo_Location extends DatabaseObject {
     {
 		global $g_ado_db;
 
-        $queryStr = "UPDATE MapLocations SET poi_style = ? WHERE id = ?";
+        $queryStr = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET poi_style = ? WHERE id = ?';
 
         $sql_params = array();
         $sql_params[] = $poi["style"];
@@ -238,7 +333,7 @@ class Geo_Location extends DatabaseObject {
 
             if ($poi["icon_changed"])
             {
-                Geo_Location::UpdateIcon($poi);
+                self::UpdateIcon($poi);
             }
             if ($poi["state_changed"])
             {
@@ -283,7 +378,7 @@ class Geo_Location extends DatabaseObject {
 */
 
         // ad B 2)
-        $queryStr_rnk_up = "UPDATE MapLocations SET rank = ? WHERE id = ?";
+        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET rank = ? WHERE id = ?';
 
         $rank = 0;
         foreach ($p_reorder as $poi_obj)
@@ -329,7 +424,4 @@ class Geo_Location extends DatabaseObject {
 
         return true;
     }
-
-} // class Geo_LocationContents
-
-?>
+}

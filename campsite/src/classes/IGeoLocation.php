@@ -9,7 +9,7 @@
  */
 
 /**
- * Geolocations Location interace
+ * Geo Location interace
  */
 interface IGeoLocation
 {
@@ -24,11 +24,4 @@ interface IGeoLocation
      * @return float
      */
     public function getLongitude();
-    
-    /**
-     * Get location content
-     * @param int $language
-     * @return IGeoLocationContent
-     */
-    public function getContent($language);
 }

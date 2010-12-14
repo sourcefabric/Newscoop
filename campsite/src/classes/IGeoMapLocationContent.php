@@ -9,9 +9,9 @@
  */
 
 /**
- * Geolocations Location Content interace
+ * Geo Map Location Content interace
  */
-interface IGeoLocationContent
+interface IGeoMapLocationContent
 {
     /**
      * Get name
@@ -24,4 +24,10 @@ interface IGeoLocationContent
      * @return string
      */
     public function getContent();
+
+    /**
+     * Get plain text
+     * @return string
+     */
+    public function getText();
 }
