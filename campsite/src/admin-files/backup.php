@@ -86,10 +86,10 @@ switch ($action) {
     case 'upload':
         foreach ($_FILES as $file) {
             if ($file['type'] == 'application/x-tar' || $file['type'] == 'application/x-gzip') {
-                move_uploaded_file($file["tmp_name"], WWW_DIR . DIR_SEP . 'backup' . DIR_SEP . $file['name']);
+                move_uploaded_file($file["tmp_name"], CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name']);
                 camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
             } else {
-                camp_html_add_msg(getGS("You have tried to upload wrong archive file."));
+                camp_html_add_msg(getGS("You have tried to upload wrong backup file."));
             }
         }
         $files = getBackupList();
@@ -119,9 +119,9 @@ echo $breadcrumbs;
         </a>
     </td>
     <td valign="bottom" style="padding-left: 10px;">
-        <a href="#" onclick="document.getElementById('uploader').setAttribute('style', '');">
+        <a href="#" onclick="$('#uploader').show();">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" border="0">
-        <b><?php putGS("Upload backup archive")?></b>
+        <b><?php putGS("Upload backup file")?></b>
         </a>
     </td>
     </tr>
