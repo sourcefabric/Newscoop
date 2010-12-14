@@ -48,15 +48,14 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     public $m_keyIsAutoIncrement = true;
 
 	/**
-	 * Constructor.
-	 *
-	 * @param int $p_id
+     * @param mixed $row
 	 */
-    public function __construct($p_id)
+    public function __construct($row = NULL)
     {
-		$this->m_data['id'] = (int) $p_id;
-        if ($this->keyValuesExist()) {
-            $this->fetch();
+        parent::__construct($this->m_columnNames);
+
+        if (is_array($row)) {
+            $this->m_data = $row;
         }
     }
 
@@ -66,6 +65,24 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     public function getId()
     {
         return (int) $this->m_data['id'];
+    }
+
+    /**
+     * Get latitude
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return (float) $this->m_data['latitude'];
+    }
+
+    /**
+     * Get longitude
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return (float) $this->m_data['longitude'];
     }
 
     /**
@@ -124,22 +141,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         return $this->m_data['time_updated'];
     }
 
-    /**
-     * @return float
-     */
-    public function getLatitude()
-    {
-    
-    }
-
-    /**
-     * @return float
-     */
-    public function getLongitude()
-    {
-    
-    }
-    
     // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
     public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
     {

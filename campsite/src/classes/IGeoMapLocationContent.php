@@ -24,4 +24,10 @@ interface IGeoMapLocationContent
      * @return string
      */
     public function getContent();
+
+    /**
+     * Get plain text
+     * @return string
+     */
+    public function getText();
 }
