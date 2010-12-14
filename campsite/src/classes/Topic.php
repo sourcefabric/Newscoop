@@ -13,13 +13,13 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 class Topic extends DatabaseObject {
 	var $m_keyColumnNames = array('id');
 
-	var $m_keyIsAutoIncrement = false;
+	var $m_keyIsAutoIncrement = true;
 
 	var $m_dbTableName = 'Topics';
 
 	var $m_columnNames = array('id', 'node_left', 'node_right');
 
-	private $m_names = array();
+	var $m_names = array();
 
 
 	/**
@@ -561,7 +561,7 @@ class Topic extends DatabaseObject {
 	{
         global $g_ado_db;
 
-        $parentDepthQuery = self::BuildSubtopicsQuery($this->getTopicId());
+        $parentDepthQuery = self::BuildSubtopicsQuery($this->getTopicId(), $p_depth);
 		$rows = $g_ado_db->GetAll($parentDepthQuery->buildQuery());
 		$topics = array();
 		foreach ($rows as $row) {
@@ -605,27 +605,34 @@ class Topic extends DatabaseObject {
 	 * @param integer $p_indent - query formatting: indent the query $p_indent times
 	 * @return SQLSelectClause
 	 */
-	public static function BuildSubtopicsQuery($p_parentId, $p_depth = 1, $p_indent = 0)
+	public static function BuildSubtopicsQuery($p_parentId = 0, $p_depth = 1, $p_indent = 0)
 	{
 		$topicObj = new Topic();
 
+		$depthGreater = $p_parentId > 0 ? 'depth > 0' : 'depth >= 0';
+		$depthMax = $p_parentId > 0 ? (int)$p_depth : $p_depth - 1;
+
 		$query = new SQLSelectClause($p_indent);
 		$query->addColumn('node.id');
-		$query->addColumn('(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth');
 		$query->setTable($topicObj->m_dbTableName . ' as node');
         $query->addTableFrom($topicObj->m_dbTableName . ' as parent');
-        $query->addTableFrom($topicObj->m_dbTableName . ' as sub_parent');
-        $parentDepthQuery = self::BuildDepthQuery($p_parentId, $p_indent+1);
-        $query->addTableFrom('(' . $parentDepthQuery->buildQuery() . ') as sub_tree');
+        if ($p_parentId > 0) {
+        	$query->addColumn('(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth');
+        	$query->addTableFrom($topicObj->m_dbTableName . ' as sub_parent');
+        	$parentDepthQuery = self::BuildDepthQuery($p_parentId, $p_indent+1);
+        	$query->addTableFrom('(' . $parentDepthQuery->buildQuery() . ') as sub_tree');
+        	$query->addWhere('sub_parent.id = sub_tree.id');
+        	$query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
+        } else {
+        	$query->addColumn('(COUNT(parent.id) - 1) AS depth');
+        }
         $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        $query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
-        $query->addWhere('sub_parent.id = sub_tree.id');
         $query->addGroupField('node.id');
         if ($p_depth < 1) {
-        	$query->addHaving('depth > 0');
+        	$query->addHaving($depthGreater);
         } else {
-        	$query->addHaving('depth > 0');
-        	$query->addHaving('depth <= ' . (int)$p_depth);
+        	$query->addHaving($depthGreater);
+        	$query->addHaving('depth <= ' . $depthMax);
         }
         $query->addOrderBy('node.node_left');
         return $query;
@@ -726,18 +733,38 @@ class Topic extends DatabaseObject {
 
         $g_ado_db->StartTrans();
         foreach ($p_order as $parentId => $order) {
-            foreach ($order as $topicOrder => $topicId) {
+        	list(, $parentId) = explode('_', $parentId);
+
+        	$parentTopic = new Topic((int)$parentId);
+        	$subtopics = $parentTopic->getSubtopics(true);
+
+            foreach ($order as $newTopicOrder => $topicId) {
                 list(, $topicId) = explode('_', $topicId);
-                $queryStr = 'UPDATE Topics
-                    SET TopicOrder = ' . ((int) $topicOrder) . '
-                    WHERE Id = ' . ((int) $topicId);
-                $g_ado_db->Execute($queryStr);
+
+                if ($subtopics[$newTopicOrder] != $topicId) {
+                	$oldTopicOrder = array_search($topicId, $subtopics);
+                	self::MoveTopic($topicId, $parentTopic, $subtopics, $oldTopicOrder, $newTopicOrder);
+                }
             }
         }
         $g_ado_db->CompleteTrans();
 
         return TRUE;
     } // fn UpdateOrder
+
+
+    /**
+     *
+     * @param integer $p_topicId
+     * @param integer $p_oldTopicOrder
+     * @param integer $p_newTopicOrder
+     */
+    private static function MoveTopic($p_topicId, $p_parentTopic, &$p_topicsList,
+    $p_oldTopicOrder, $p_newTopicOrder)
+    {
+    	$p_topicsList[$p_oldTopicOrder] = $p_topicsList[$p_newTopicOrder];
+    	$p_topicsList[$p_newTopicOrder] = $p_topicId;
+    } // fn MoveTopic
 
 } // class Topics
 

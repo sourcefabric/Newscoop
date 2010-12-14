@@ -2353,7 +2353,7 @@ class Article extends DatabaseObject {
                 // on the operator
                 $topic = new Topic($comparisonOperation['right']);
                 if ($topic->exists()) {
-                    $topicIds = $topic->getSubtopics(true);
+                    $topicIds = $topic->getSubtopics(true, 0);
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;
