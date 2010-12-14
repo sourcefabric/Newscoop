@@ -48,79 +48,37 @@ if (!Input::IsValid()) {
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
 
 <?php
-    $map_width = 0;
-    $map_height = 0;
-    echo Geo_Map::GetMapSearchHeader($map_width, $map_height);
+    $bbox_divs = array("tl_lon" => 'top_left_longitude', "tl_lat" => 'top_left_latitude', "br_lon" => 'bottom_right_longitude', "br_lat" => 'bottom_right_latitude');
+
+    $map_width = 600;
+    $map_height = 400;
+    echo Geo_Map::GetMapSearchHeader($map_width, $map_height, $bbox_divs);
 ?>
 
 </head>
 <body onLoad="return false;">
-<div class="map_preview">
-<div class="map_sidepan">
-
-<?php
-/*
-    //$map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-    //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
-
-    $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
-
-    $geo_info = Geo_Map::GetMapTagList($f_article_number, $f_language_id);
-
-    $map_info = $geo_info["map"];
-    $poi_info = $geo_info["pois"];
-
-    echo "<div><dl class='map_preview_map_name'>\n";
-    echo "<dt class='map_preview_map_name_label'>";
-    putGS("map"); 
-    echo ":</dt><dd class='map_preview_map_name_value'>" . $map_info["name"] . "</dd>\n";
-    echo "</dl></div>\n";
-    echo "<div id=\"side_info\" class=\"side_info\">\n";
-
-    $pind = 0;
-
-    foreach ($poi_info as $poi)
-    {
-        $cur_label = $poi["title"];
-        $cur_perex = $poi["perex"];
-        //$cur_lon = $poi["longitude"];
-        //$cur_lat = $poi["latitude"];
-        $cur_center = $poi["center"];
-        $cur_open = $poi["open"];
-
-        $descs_inner = "";
-        $descs_inner .= "<div id=\"poi_seq_" . $pind . "\">";
-
-        //$descs_inner .= "<a class='map_preview_poi_name' href=\"#\" onClick=\"geo_hook_on_map_feature_select(geo_object$map_suffix, " . $pind . "); return false;\" >" . $cur_label . "</a>";
-        $descs_inner .= "<a class='map_preview_poi_name' href=\"#\" onClick=\"$cur_open return false;\" >" . $cur_label . "</a>";
-        $descs_inner .= "<div class='map_preview_poi_perex'>" . $cur_perex . "</div>";
-
-        //$descs_inner .= "<div class='map_preview_poi_center'><a href='#' onClick='geo_object.center_lonlat($cur_lon, $cur_lat); return false;'>";
-        $descs_inner .= "<div class='map_preview_poi_center'><a href='#' onClick='$cur_center return false;'>";
-        echo $descs_inner;
-        putGS("center");
-        $descs_inner = "</a></div>";
-
-        $descs_inner .= "<div class='map_preview_poi_spacer'>&nbsp;</div>";
-        $descs_inner .= "</div>\n";
-
-        $pind += 1;
-        echo $descs_inner;
-
-    }
-*/
-?>
-</div><!--end of side_info -->
-</div><!-- end of map_sidepan -->
-<div class="map_mappart_outer">
-<div class="map_mappart">
-<div class="map_mapmenu">
+<div class="map_preview_serach">
+<div class="map_mappart_outer_serach">
+<div class="map_mappart_serach">
+<div class="map_mapmenu_serach">
 <a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><? putGS("show initial map view"); ?></a>
 </div><!-- end of map_mapmenu -->
 <?php echo Geo_Map::GetMapSearchBody(); ?>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_mappart_outer -->
 </div><!-- end of map_preview -->
+<div class="map_search_rectangle">
+<ol>Top left
+<li>longitude: <span id="top_left_longitude"> </span></li>
+<li>latitude: <span id="top_left_latitude"> </span></li>
+</ol>
+</div>
+<div>
+<ol>Bottom right
+<li>longitude: <span id="bottom_right_longitude"> </span></li>
+<li>latitude: <span id="bottom_right_latitude"> </span></li>
+</ol>
+</div><!-- end of map_search_rectangle -->
 </body>
 </html>
 
