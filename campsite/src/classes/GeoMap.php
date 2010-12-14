@@ -1519,8 +1519,9 @@ var on_load_proc = function()
 
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
-        
-        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+
+        $map_provider = Geo_Preferences::GetMapProviderDefault();
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $map_provider);
         if (0 < $p_mapWidth)
         {
             $geo_map_info['width'] = $p_mapWidth;
@@ -1748,7 +1749,7 @@ var on_load_proc = function()
     $p_coordinates[] = array("longitude" => "-10", "latitude" => "60");
     $p_coordinates[] = array("longitude" => "40", "latitude" => "-20");
 
-    $query = Geo_map::GetGeoSearchSQLQuery($p_coordinates);
+    $query = Geo_Map::GetGeoSearchSQLQuery($p_coordinates);
     echo $query;
 */
 

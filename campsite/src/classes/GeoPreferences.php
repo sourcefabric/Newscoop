@@ -28,6 +28,41 @@ class Geo_Preferences extends DatabaseObject {
 	{
 	} // constructor
 
+public static function GetMapProviderDefault()
+{
+    $map_prov_default = SystemPref::Get("MapProviderDefault");
+    if (!$map_prov_default) {$map_prov_default = "googlev3";}
+    else {$map_prov_default = strtolower($map_prov_default);}
+
+    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
+
+    $provider_available = true;
+
+    $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$map_prov_default]));
+    if (!$one_prov_usage) {$provider_available = false;}
+    if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {$provider_available = false;}
+
+    if (!$provider_available)
+    {
+        foreach ($sys_pref_names as $one_provider => $one_prov_name)
+        {
+            $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$one_prov_name]));
+
+            if (!$one_prov_usage) {continue;}
+            if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
+
+            $map_prov_default = $one_provider;
+            $provider_available = true;
+        }
+    }
+
+    if (!$provider_available)
+    {
+        $map_prov_default = "googlev3";
+    }
+
+    return $map_prov_default;
+}
 
 	/**
 	 * Gets info on map view
@@ -550,6 +585,13 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
     $res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info);
     return array("json_obj" => $res_popups_info);
 } // fn GetPopupsInfo
+
+
+public static function GetIconsFiles($p_htmlDir, $p_websiteUrl)
+{
+
+
+}
 
 
 } // class Geo_Locations
