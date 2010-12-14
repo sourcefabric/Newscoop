@@ -160,21 +160,34 @@ class Topic extends DatabaseObject {
 	/**
 	 * Returns the node left order
 	 * @param bool $p_forceFetchFromDatabase
+	 * @return integer
 	 */
 	public function getLeft($p_forceFetchFromDatabase = false)
 	{
-		return $this->getProperty('node_left', $p_forceFetchFromDatabase);
+		return (int)$this->getProperty('node_left', $p_forceFetchFromDatabase);
 	} // fn getLeft
 
 
 	/**
 	 * Returns the node right order
 	 * @param bool $p_forceFetchFromDatabase
+	 * @return integer
 	 */
 	public function getRight($p_forceFetchFromDatabase = false)
 	{
-		return $this->getProperty('node_right', $p_forceFetchFromDatabase);
+		return (int)$this->getProperty('node_right', $p_forceFetchFromDatabase);
 	} // fn getRight
+
+
+	/**
+	 * Returns the node right width: right order - left order
+	 * @param bool $p_forceFetchFromDatabase
+	 * @return integer
+	 */
+	public function getWidth($p_forceFetchFromDatabase = false)
+	{
+		return $this->getRight() - $this->getLeft();
+	} // fn getWidth
 
 
 	/**
@@ -248,7 +261,7 @@ class Topic extends DatabaseObject {
 
 			// Delete children and itself
 			$sql = "DELETE FROM Topics WHERE node_left >= ".$this->m_data['node_left']
-			. ' AND node_right < '.$this->m_data['node_right'];
+			. ' AND node_right <= '.$this->m_data['node_right'];
 			$deleted = $g_ado_db->Execute($sql);
 
 			if ($deleted) {
@@ -369,6 +382,10 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 
+		if (!$this->exists()) {
+			return null;
+		}
+
 		$sql = 'SELECT id FROM Topics WHERE node_left < ' . $this->getLeft()
 		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC';
 		$parentId = $g_ado_db->GetOne($sql);
@@ -385,6 +402,10 @@ class Topic extends DatabaseObject {
 	public function getPath($p_returnIds = false)
 	{
 		global $g_ado_db;
+
+		if (!$this->exists()) {
+			return array();
+		}
 
 		$stack = array();
 		$sql = 'SELECT * FROM Topics WHERE node_left <= ' . $this->getLeft()
@@ -404,6 +425,10 @@ class Topic extends DatabaseObject {
     public function isRoot()
     {
     	global $g_ado_db;
+
+		if (!$this->exists()) {
+			return null;
+		}
 
     	$sql = 'SELECT COUNT(*) FROM Topics WHERE node_left < ' . $this->getLeft()
     	. ' AND node_right > ' . $this->getRight();
@@ -737,13 +762,19 @@ class Topic extends DatabaseObject {
 
         	$parentTopic = new Topic((int)$parentId);
         	$subtopics = $parentTopic->getSubtopics(true);
+        	if (count($subtopics) != count($order)) {
+        		return false;
+        	}
 
             foreach ($order as $newTopicOrder => $topicId) {
                 list(, $topicId) = explode('_', $topicId);
 
                 if ($subtopics[$newTopicOrder] != $topicId) {
                 	$oldTopicOrder = array_search($topicId, $subtopics);
-                	self::MoveTopic($topicId, $parentTopic, $subtopics, $oldTopicOrder, $newTopicOrder);
+                	self::SwitchTopics($subtopics[$newTopicOrder], $topicId, $parentTopic);
+
+                	$subtopics[$oldTopicOrder] = $subtopics[$newTopicOrder];
+                	$subtopics[$newTopicOrder] = $topicId;
                 }
             }
         }
@@ -759,11 +790,90 @@ class Topic extends DatabaseObject {
      * @param integer $p_oldTopicOrder
      * @param integer $p_newTopicOrder
      */
-    private static function MoveTopic($p_topicId, $p_parentTopic, &$p_topicsList,
-    $p_oldTopicOrder, $p_newTopicOrder)
+    private static function SwitchTopics($p_leftTopicId, $p_rightTopicId, Topic $p_parentTopic)
     {
-    	$p_topicsList[$p_oldTopicOrder] = $p_topicsList[$p_newTopicOrder];
-    	$p_topicsList[$p_newTopicOrder] = $p_topicId;
+    	global $g_ado_db;
+
+    	$topicTable = $p_parentTopic->m_dbTableName;
+
+    	if ($p_parentTopic->exists()) {
+    		$parentLeft = $p_parentTopic->getLeft();
+    		$parentRight = $p_parentTopic->getRight();
+    	} else {
+    		$parentLeft = 0;
+    		$parentRight = 0;
+    	}
+
+		$maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
+
+		$leftTopic = new Topic($p_leftTopicId);
+		$rightTopic = new Topic($p_rightTopicId);
+
+		// 1. move the left topic to the right by:
+		//    max(right) - left_topic.node_left + 1
+		// result: [left_of_left] [empty_left] [between_left_&_right] [right]
+		//         [right_of_right] .. [end] [left]
+		// where empty_left width is left_topic.width + 1
+		//       end is the end of the whole topic tree
+		$distance = $maxRight - $leftTopic->getLeft() + 1;
+		$sql = "UPDATE `$topicTable` "
+		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
+		. "WHERE node_left >= " . $leftTopic->getLeft()
+		. "  AND node_right <= " . $leftTopic->getRight();
+		$g_ado_db->Execute($sql);
+		$leftTopicTmpLeft = $leftTopic->getLeft() + $distance;
+		$leftTopicTmpRight = $leftTopic->getRight() + $distance;
+
+		// 2. move the right topic to the right by:
+		//    max(right) - right_topic.node_left + left_topic.width + 2
+		// result: [left_of_left] [empty_left] [between_left_&_right] [empty_right]
+		//         [right_of_right] .. [end] [left] [right]
+		// where empty_right width is right_topic.width + 1
+		$distance = $maxRight - $rightTopic->getLeft() + $leftTopic->getWidth() + 2;
+		$sql = "UPDATE `$topicTable` "
+		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
+		. "WHERE node_left >= " . $rightTopic->getLeft()
+		. "  AND node_right <= " . $rightTopic->getRight();
+		$g_ado_db->Execute($sql);
+		$rightTopicTmpLeft = $rightTopic->getLeft() + $distance;
+		$rightTopicTmpRight = $rightTopic->getRight() + $distance;
+
+		// 3. move the topics in between the left and right topic to the right by:
+		//    right_topic.width - left_topic.width
+		// result: [left_of_left] [empty_left] [between_left_&_right] [empty_right]
+		//         [right_of_right] .. [end] [left] [right]
+		// where empty_left width is right_topic.width + 1
+		// where empty_right width is left_topic.width + 1
+		$distance = $rightTopic->getWidth() - $leftTopic->getWidth();
+		$sql = "UPDATE `$topicTable` "
+		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
+		. "WHERE node_left > " . $leftTopic->getRight()
+		. "  AND node_right < " . $rightTopic->getLeft();
+		$g_ado_db->Execute($sql);
+
+		// 4. move the left topic to the left by:
+		//    max(right) - right_topic.left + 1 - (right_topic.width - left_topic.width)
+		// result: [left_of_left] [empty_left] [between_left_&_right] [left]
+		//         [right_of_right] .. [end] [empty] [right]
+		// where empty width is left_topic.width + 1
+		$distance = $maxRight - $rightTopic->getLeft() + 1 - ($rightTopic->getWidth() - $leftTopic->getWidth());
+		$sql = "UPDATE `$topicTable` "
+		. "SET node_left = node_left - $distance, node_right = node_right - $distance "
+		. "WHERE node_left >= " . $leftTopicTmpLeft
+		. "  AND node_right <= " . $leftTopicTmpRight;
+		$g_ado_db->Execute($sql);
+
+		// 5. move the right topic to the left by:
+		//    max(right) - left_topic.left + 1 + (left_topic.width + 1)
+		// result: [left_of_left] [right] [between_left_&_right] [left]
+		//         [right_of_right] .. [end]
+		// where empty width is left_topic.width + 1
+		$distance = $maxRight - $leftTopic->getLeft() + 1 + ($leftTopic->getWidth() + 1);
+		$sql = "UPDATE `$topicTable` "
+		. "SET node_left = node_left - $distance, node_right = node_right - $distance "
+		. "WHERE node_left >= " . $rightTopicTmpLeft
+		. "  AND node_right <= " . $rightTopicTmpRight;
+		$g_ado_db->Execute($sql);
     } // fn MoveTopic
 
 } // class Topics

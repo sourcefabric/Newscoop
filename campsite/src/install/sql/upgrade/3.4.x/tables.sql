@@ -364,7 +364,9 @@ CREATE TABLE Topics (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
     node_left int(10) unsigned NOT NULL,
     node_right int(10) unsigned NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    INDEX(node_left),
+    INDEX(node_right)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE TopicNames (

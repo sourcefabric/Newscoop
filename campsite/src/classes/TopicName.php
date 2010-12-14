@@ -56,9 +56,10 @@ class TopicName extends DatabaseObject {
 	 */
 	public static function DeleteTopicNames($p_topicId)
 	{
-		$g_ado_db;
+		global $g_ado_db;
 
-		$sql = "DELETE FROM `" . $this->m_dbTableName . "` WHERE fk_topic_id = '" . (int)$p_topicId . "'";
+		$topicNameObj = new TopicName();
+		$sql = "DELETE FROM `" . $topicNameObj->m_dbTableName . "` WHERE fk_topic_id = '" . (int)$p_topicId . "'";
 		return $g_ado_db->Execute($sql);
 	} // fn DeleteTopicNames
 
