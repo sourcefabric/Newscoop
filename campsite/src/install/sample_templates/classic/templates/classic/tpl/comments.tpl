@@ -65,7 +65,7 @@
     </div>
     {{ if $campsite->publication->captcha_enabled }}
     <div class="form-element clearfix">
-      <img src="{{ captcha_image_link }}"><br />
+      <img src="http://{{ $campsite->publication->site }}/{{ captcha_image_link }}"><br />
       <label for="f_captcha_code">{{ if $campsite->language->name == "English" }}Enter the code:{{ else }}Introduce el código:{{ /if }} </label>{{ camp_edit object="captcha" attribute="code" }}
     </div>
     {{ /if }}
