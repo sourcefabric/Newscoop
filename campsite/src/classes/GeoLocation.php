@@ -6,47 +6,140 @@
 /**
  * Includes
  */
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
-
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
 
 /**
  * @package Campsite
  */
-class Geo_Location extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'LocationContents';
-	//var $m_columnNames = array('id', 'city_id', 'city_type', 'population', 'position', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified');
+class Geo_Location extends DatabaseObject implements IGeoLocation
+{
+    const TABLE = 'Locations';
+
+    /**
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
+     * @var array
+     */
+    public $m_keyColumnNames = array('id');
+
+    /**
+     * @var array
+     */
+    public $m_columnNames = array(
+        'id',
+        'poi_location',
+        'poi_type',
+        'poi_type_style',
+        'poi_center',
+        'poi_radius',
+        'IdUser',
+        'time_updated'
+    );
+
+    /**
+     * @var bool
+     */
+    public $m_keyIsAutoIncrement = true;
 
 	/**
-	 * The geo location contents class is for load/store of POI data.
-	 */
-	public function Geo_Location()
-	{
-	} // constructor
-
-
-	/**
-	 * Finds POIs on given article and language
+	 * Constructor.
 	 *
-	 * @param string $p_articleNumber
-	 * @param string $p_languageId
-	 *
-	 * @return array
+	 * @param int $p_id
 	 */
-/*
-	public static function ReadArticlePoints($p_articleNumber, $p_languageId)
-	{
-		global $g_ado_db;
-		$sql_params = array($p_articleNumber, $p_languageId);
+    public function __construct($p_id)
+    {
+		$this->m_data['id'] = (int) $p_id;
+        if ($this->keyValuesExist()) {
+            $this->fetch();
+        }
+    }
 
-	} // fn ReadArticlePoints
-*/
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
+    /**
+     * @return
+     */
+    public function getPOILocation()
+    {
+        return $this->m_data['poi_location'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getPOIType()
+    {
+        return (string) $this->m_data['poi_type'];
+    }
+
+    /**
+     * @return
+     */
+    public function getPOITypeStyle()
+    {
+        return (int) $this->m_data['poi_type_style'];
+    }
+
+    /**
+     * @return
+     */
+    public function getPOICenter()
+    {
+        return $this->m_data['poi_center'];
+    }
+
+    /**
+     * @return double
+     */
+    public function getPOIRadius()
+    {
+        return (double) $this->m_data['poi_radius'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getUserId()
+    {
+        return (int) $this->m_data['IdUser'];
+    }
+
+    /**
+     * @return timestamp
+     */
+    public function getLastModified()
+    {
+        return $this->m_data['time_updated'];
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude()
+    {
+    
+    }
+
+    /**
+     * @return float
+     */
+    public function getLongitude()
+    {
+    
+    }
+    
     // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
     public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
     {
@@ -329,7 +422,4 @@ class Geo_Location extends DatabaseObject {
 
         return true;
     }
-
-} // class Geo_LocationContents
-
-?>
+}
