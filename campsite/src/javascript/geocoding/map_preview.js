@@ -117,10 +117,12 @@ var geo_hook_map_dragged = function(geo_obj, pixel)
     var new_center = geo_obj.map.center.clone();
     geo_obj.map.setCenter(new_center);
 
+/**/
     geo_obj.select_control.destroy();
     geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
     geo_obj.map.addControl(geo_obj.select_control);
     geo_obj.select_control.activate();
+/**/
 };
 
 // to insert new POI on map click, but not on a click that closes a pop-up
@@ -134,10 +136,12 @@ var geo_hook_trigger_on_map_click = function(geo_obj, e)
 
     var lonlat = geo_obj.map.getLonLatFromViewPortPx(e.xy);
 
+/**/
     geo_obj.select_control.destroy();
     geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
     geo_obj.map.addControl(geo_obj.select_control);
     geo_obj.select_control.activate();
+/**/
 
     //alert(123);
 };
@@ -746,7 +750,10 @@ this.got_load_data = function (load_data)
     }
 */
 
-    this.select_control.destroy();
+    if (this.select_control)
+    {
+        this.select_control.destroy();
+    }
 
     this.edited_point = 0;
     this.poi_rank_out = 0;
@@ -1119,9 +1126,9 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     geo_obj.map.addControl(drag_map);
     drag_map.activate();
 
-    geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
-    geo_obj.map.addControl(geo_obj.select_control);
-    geo_obj.select_control.activate();
+    //geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
+    //geo_obj.map.addControl(geo_obj.select_control);
+    //geo_obj.select_control.activate();
 
     geo_obj.layer.events.on({
         'featureselected': geo_hook_on_feature_select,
