@@ -211,15 +211,15 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 1)
-        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' Geo_MapLocations::TABLE . ' WHERE id = ?';
+        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' . Geo_MapLocations::TABLE . ' WHERE id = ?';
         // ad B 2)
-		$queryStr_loc_in = 'INSERT INTO ' . self::TABLE . ' (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
+		$queryStr_loc_in = "INSERT INTO " . self::TABLE . " (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
         $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 4)
         $queryStr_map_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET fk_location_id = ? WHERE id = ?';
         // ad B 6)
-        $queryStr_loc_rm = 'DELETE FROM ' . self::TABLE . ' WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
+        $queryStr_loc_rm = 'DELETE FROM ' . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
 
         // updating current POIs, inserting new POIs
         foreach ($p_locations as $poi_obj)
