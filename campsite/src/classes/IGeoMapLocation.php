@@ -8,20 +8,17 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . 'IGeoLocation.php';
+
 /**
- * Geolocations Location Content interace
+ * Geo Map Location interace
  */
-interface IGeoLocationContent
+interface IGeoMapLocation extends IGeoLocation
 {
     /**
-     * Get name
-     * @return string
-     */
-    public function getName();
-
-    /**
      * Get content
-     * @return string
+     * @param int $language
+     * @return IGeoLocationContent
      */
-    public function getContent();
+    public function getContent($language);
 }

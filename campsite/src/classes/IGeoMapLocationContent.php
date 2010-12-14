@@ -9,19 +9,19 @@
  */
 
 /**
- * Geo Location interace
+ * Geo Map Location Content interace
  */
-interface IGeoLocation
+interface IGeoMapLocationContent
 {
     /**
-     * Get location latitude
-     * @return float
+     * Get name
+     * @return string
      */
-    public function getLatitude();
-    
+    public function getName();
+
     /**
-     * Get location longitude
-     * @return float
+     * Get content
+     * @return string
      */
-    public function getLongitude();
+    public function getContent();
 }

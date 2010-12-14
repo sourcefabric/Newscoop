@@ -15,7 +15,7 @@ interface IGeoMap
 {
     /**
      * Get map locations
-     * @return array of IGeoLocation
+     * @return array of IGeoMapLocation
      */
     public function getLocations();
 }
