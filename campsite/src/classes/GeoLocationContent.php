@@ -3,53 +3,23 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
+require_once dirname(__FILE__) . '/GeoMapLocationLanguage.php';
 
 /**
+ * The geo location contents class is for load/store of POI data.
  * @package Campsite
  */
-class Geo_LocationContent extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'LocationContents';
-	//var $m_columnNames = array('id', 'city_id', 'city_type', 'population', 'position', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified');
-
-	/**
-	 * The geo location contents class is for load/store of POI data.
-	 */
-	public function Geo_LocationContent()
-	{
-	} // constructor
-
-
-	/**
-	 * Finds POIs on given article and language
-	 *
-	 * @param string $p_articleNumber
-	 * @param string $p_languageId
-	 *
-	 * @return array
-	 */
-/*
-	public static function ReadArticlePoints($p_articleNumber, $p_languageId)
-	{
-		global $g_ado_db;
-		$sql_params = array($p_articleNumber, $p_languageId);
-
-	} // fn ReadArticlePoints
-*/
+class Geo_LocationContent
+{
+    const TABLE = Geo_MapLocationContent::TABLE;
 
 	public static function InsertContent($poi)
     {
 		global $g_ado_db;
         global $g_user;
 
-        $queryStr_con_in = "INSERT INTO LocationContents (";
+        $queryStr_con_in = "INSERT INTO " . self::TABLE . " (";
         $queryStr_con_in .= "poi_name, poi_link, poi_perex, ";
         $queryStr_con_in .= "poi_content_type, poi_content, poi_text, IdUser";
         $queryStr_con_in .= ") VALUES (";
@@ -60,7 +30,7 @@ class Geo_LocationContent extends DatabaseObject {
 
         $queryStr_con_in .= ", %%user_id%%)";
 
-        $queryStr_con_sl = "SELECT id FROM LocationContents WHERE poi_name = ? AND poi_link = ? ";
+        $queryStr_con_sl = "SELECT id FROM " . self::TABLE . " WHERE poi_name = ? AND poi_link = ? ";
         $queryStr_con_sl .= "AND poi_perex = ? AND poi_content_type = ? AND poi_content = ? AND poi_text = ? ";
         $queryStr_con_sl .= "ORDER BY id LIMIT 1";
 
@@ -102,7 +72,7 @@ class Geo_LocationContent extends DatabaseObject {
     {
 		global $g_ado_db;
 
-        $queryStr = "UPDATE MapLocationLanguages SET poi_display = ? WHERE id = ?";
+        $queryStr = "UPDATE " . Geo_MapLocationLanguage::TABLE . " SET poi_display = ? WHERE id = ?";
 
         $sql_params = array();
         $sql_params[] = $poi["display"];
@@ -131,13 +101,13 @@ class Geo_LocationContent extends DatabaseObject {
 
 
         // ad B 1)
-        $queryStr_con_id = "SELECT fk_content_id AS con FROM MapLocationLanguages WHERE id = ?";
+        $queryStr_con_id = "SELECT fk_content_id AS con FROM " . Geo_MapLocationLanguage::TABLE . " WHERE id = ?";
         // ad B 2)
         // call InsertContent();
         // ad B 4)
-        $queryStr_map_up = "UPDATE MapLocationLanguages SET fk_content_id = ? WHERE id = ?";
+        $queryStr_map_up = "UPDATE " . Geo_MapLocationLanguage::TABLE . " SET fk_content_id = ? WHERE id = ?";
         // ad B 6)
-        $queryStr_con_rm = "DELETE FROM LocationContents WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocationLanguages WHERE fk_content_id = ?)";
+        $queryStr_con_rm = "DELETE FROM " .  self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM " . Geo_MapLocationLanguage::TABLE . " WHERE fk_content_id = ?)";
 
         {
             // ad B 1)
