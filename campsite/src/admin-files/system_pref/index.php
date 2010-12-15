@@ -1,5 +1,7 @@
 <?php
 camp_load_translation_strings("system_pref");
+//camp_load_translation_strings("geolocation");
+
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");

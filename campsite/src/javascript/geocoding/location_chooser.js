@@ -2,6 +2,8 @@
 var geo_locations = {};
 
 geo_locations.display_strings = {
+    google_map: "Google Map",
+    openstreet_map: "OpenStreet Map",
     fill_in_map_name: "fill in map name",
     point_markers: "Point markers",
     this_should_not_happen_now: "problem at point processing, please send error report",
@@ -9,8 +11,8 @@ geo_locations.display_strings = {
     the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
     point_number: "Point no.",
     fill_in_the_point_description: "fill in the point description",
-    problem_with_map_processing: "problem with map processing",
-    probably_logged_out: "probably logged out",
+    //problem_with_map_processing: "problem with map processing",
+    //probably_logged_out: "probably logged out",
     edit: "edit",
     center: "center",
     enable: "enable",
@@ -131,6 +133,8 @@ geo_locations.set_display_strings = function(local_strings)
     if (!local_strings) {return;}
 
     var display_string_names = [
+        "google_map",
+        "openstreet_map",
         "fill_in_map_name",
         "point_markers",
         "this_should_not_happen_now",
@@ -138,8 +142,8 @@ geo_locations.set_display_strings = function(local_strings)
         "the_removal_is_from_all_languages",
         "point_number",
         "fill_in_the_point_description",
-        "problem_with_map_processing",
-        "probably_logged_out",
+        //"problem_with_map_processing",
+        //"probably_logged_out",
         "edit",
         "center",
         "enable",
@@ -1141,7 +1145,8 @@ var geo_main_openlayers_init = function(map_div_name)
     {
         // google map v3
         map_gsm = new OpenLayers.Layer.Google(
-            "Google Streets",
+            //"Google Map",
+            geo_locations.display_strings.google_map,
             {numZoomLevels: 20, 'sphericalMercator': true}
         );
         geo_locations.map_view_layer_names_all[google_label] = map_gsm.name;
@@ -1154,7 +1159,10 @@ var geo_main_openlayers_init = function(map_div_name)
     if (geo_locations.map_view_layer_providers[osm_label])
     {
         // openstreetmap
-        var map_osm = new OpenLayers.Layer.OSM();
+        var map_osm = new OpenLayers.Layer.OSM(
+            //"OpenStreet Map",
+            geo_locations.display_strings.openstreet_map
+        );
         geo_locations.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_locations.map_view_layer_default)
         {

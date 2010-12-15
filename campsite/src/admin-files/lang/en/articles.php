@@ -1,4 +1,7 @@
 <?php 
+regGS("Locations", "Locations");
+regGS("Authors", "Authors");
+regGS("Are you sure you want to remove the map from the article?", "Are you sure you want to remove the map from the article?");
 regGS("Scheduled action added", "Scheduled action added");
 regGS("Content edited", "Content edited");
 regGS("Campsite Subhead", "Campsite Subhead");

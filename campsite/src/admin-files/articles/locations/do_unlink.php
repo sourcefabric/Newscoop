@@ -6,6 +6,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+camp_load_translation_strings("api");
+camp_load_translation_strings("geolocation");
+
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
