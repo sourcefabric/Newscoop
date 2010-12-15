@@ -10,9 +10,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoMap.php');
 
@@ -1574,7 +1573,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 }
 
                 // ad B 3/4)
-                $con_id = Geo_LocationContent::InsertContent($poi);
+                $con_id = Geo_MapLocationContent::InsertContent($poi);
 
                 // ad B 5)
                 $maploc_params = array();

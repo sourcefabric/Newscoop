@@ -35,7 +35,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     /** @var IGeoLocation */
     private $location = NULL;
 
-    /** @var array of IGeoLocationContent */
+    /** @var array of IGeoMapLocationContent */
     private $contents = array();
 
     /** @var array of IGeoMultimedia */
