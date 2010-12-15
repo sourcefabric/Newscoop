@@ -143,10 +143,21 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
     ],
     'fnDrawCallback': function() {
-        $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
-            $(this).toggleClass('selected');
-            input = $('input:checkbox', $(this)).attr('checked', $(this).hasClass('selected'));
+        $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
+            if (event.target.type == 'checkbox') {
+                return; // checkbox click, handled by it's change
+            }
+
+            var input = $('input:checkbox', $(this));
+            if (input.attr('checked')) {
+                input.removeAttr('checked');
+            } else {
+                input.attr('checked', 'checked');
+            }
+            input.change();
         });
+
+
         $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
@@ -154,6 +165,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 $(this).parents('tr').removeClass('selected');
             }
         });
+
         <?php if ($this->order) { ?>
         $('#table-<?php echo $this->id; ?> tbody').sortable();
         <?php } ?>

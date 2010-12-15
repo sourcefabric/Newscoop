@@ -9,7 +9,7 @@
  */
 
 /**
- * Geo Map Location Content interace
+ * Geo Map Location Content interface
  */
 interface IGeoMapLocationContent
 {

@@ -43,7 +43,7 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
 
         $queryStr = 'SELECT lc.' . implode(', lc.', $this->m_columnNames) . '
             FROM ' . self::TABLE . ' lc
-                INNER JOIN MapLocationLanguages ll on lc.id = ll.fk_content_id
+                INNER JOIN ' . Geo_MapLocationLanguage::TABLE . ' ll on lc.id = ll.fk_content_id
             WHERE ll.fk_maplocation_id = ' . $mapLocation->getId() . '
                 AND fk_language_id = ' . ((int) $languageId);
         $this->m_data = $g_ado_db->GetRow($queryStr);

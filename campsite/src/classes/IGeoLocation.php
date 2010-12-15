@@ -9,7 +9,7 @@
  */
 
 /**
- * Geo Location interace
+ * Geo Location interface
  */
 interface IGeoLocation
 {
