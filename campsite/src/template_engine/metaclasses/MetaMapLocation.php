@@ -4,6 +4,7 @@
  */
 
 require_once dirname(__FILE__) . '/MetaDbObject.php';
+require_once dirname(__FILE__) . '/MetaMapLocationMultimedia.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
 
 /**
@@ -18,16 +19,21 @@ final class MetaMapLocation extends MetaDbObject
         'longitude' => 'getLongitude',
         'text' => 'getText',
         'content' => 'getContent',
+        'multimedia' => 'getMultimedia',
 	);
 
     /** @var IGeoMapLocationContent */
     private $m_content = NULL;
+
+    /** @var array of MetaMapLocationMultimedia */
+    private $multimedia = NULL;
 
     /**
      * @param IGeoMapLocation $p_dbObject
      */
     public function __construct(IGeoMapLocation $p_dbObject)
     {
+        $this->m_properties = array();
         $this->m_customProperties = self::$m_defaultCustomProperties;
         $this->m_dbObject = $p_dbObject;
 
@@ -78,5 +84,20 @@ final class MetaMapLocation extends MetaDbObject
     public function getContent()
     {
         $this->m_content->getContent();
+    }
+
+    /**
+     * Get multimedia
+     * @return array of MetaMapLocationMultimedia
+     */
+    public function getMultimedia()
+    {
+        if ($this->multimedia === NULL) {
+            $this->multimedia = array();
+            foreach ($this->m_dbObject->getMultimedia() as $multimedia) {
+                $this->multimedia[] = new MetaMapLocationMultimedia($multimedia);
+            }
+        }
+        return $this->multimedia;
     }
 }

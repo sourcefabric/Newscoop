@@ -52,13 +52,18 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	 */
     public function __construct($arg)
     {
+        global $g_ado_db;
+
         parent::__construct($this->m_columnNames);
 
         if (is_array($arg)) {
             $this->m_data = $arg;
         } else if (is_numeric($arg)) {
             $this->m_data['id'] = (int) $arg;
-            $this->fetch();
+            $queryStr = 'SELECT *, X(poi_location) as latitude, Y(poi_location) as longitude
+                FROM ' . self::TABLE . '
+                WHERE id = ' . $this->getId();
+            $this->m_data = $g_ado_db->GetRow($queryStr);
         }
     }
 
