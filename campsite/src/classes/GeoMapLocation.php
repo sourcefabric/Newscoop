@@ -145,7 +145,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             FROM ' . self::TABLE . ' ml
                 INNER JOIN ' . Geo_Location::TABLE . ' l
                     ON ml.fk_location_id = l.id
-            WHERE ml.fk_map_id = ' . $map->getId();
+            WHERE ml.fk_map_id = ' . $map->getId() . '
+            ORDER BY ml.rank, ml.id';
         $rows = $g_ado_db->GetAll($queryStr);
 
         $mapLocations = array();
