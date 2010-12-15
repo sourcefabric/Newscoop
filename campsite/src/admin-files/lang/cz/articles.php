@@ -1,4 +1,7 @@
 <?php 
+regGS("Locations", "");
+regGS("Authors", "");
+regGS("Are you sure you want to remove the map from the article?", "");
 regGS("Scheduled action added", "Plánovaná akce přidána");
 regGS("Content edited", "Obsah editován");
 regGS("Campsite Subhead", "Podtitulek Campsite");
@@ -132,8 +135,4 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit audio soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

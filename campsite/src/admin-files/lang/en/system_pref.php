@@ -1,4 +1,23 @@
 <?php 
+regGS("Youtube Default Width:", "Youtube Default Width:");
+regGS("Youtube Default Height:", "Youtube Default Height:");
+regGS("Vimeo Default Width:", "Vimeo Default Width:");
+regGS("Vimeo Default Height:", "Vimeo Default Height:");
+regGS("Map Zoom Level:", "Map Zoom Level:");
+regGS("Map Popup Minimal Width:", "Map Popup Minimal Width:");
+regGS("Map Popup Minimal Height:", "Map Popup Minimal Height:");
+regGS("Map Marker Directory:", "Map Marker Directory:");
+regGS("Map Marker Default:", "Map Marker Default:");
+regGS("Map Default Width:", "Map Default Width:");
+regGS("Map Default Height:", "Map Default Height:");
+regGS("Map Center Longitude:", "Map Center Longitude:");
+regGS("Map Center Latitude:", "Map Center Latitude:");
+regGS("Geolocation Settings", "Geolocation Settings");
+regGS("Flash Default Width:", "Flash Default Width:");
+regGS("Flash Default Height:", "Flash Default Height:");
+regGS("Default Map Provider:", "Default Map Provider:");
+regGS("Allow OpenStreet Map Provider:", "Allow OpenStreet Map Provider:");
+regGS("Allow Google Map Provider:", "Allow Google Map Provider:");
 regGS("Allow password recovery:", "Allow password recovery:");
 regGS("Template Cache Handler:", "Template Cache Handler:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Invalid: You need PHP $1 enabled in order to use the template caching system.");

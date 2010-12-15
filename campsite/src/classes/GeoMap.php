@@ -440,7 +440,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         return true;
 	} // fn OnLanguageDelete
 
-	public function Delete()
+
+	/**
+	 * Deletes the map with all its points, translations, and other associated data.
+	 * This does real removals, unlike the OnArticleDelete/UnlinkArticle methods.
+	 *
+	 * @return void
+	 */
+	public function delete()
 	{
 		global $g_ado_db;
 
@@ -471,7 +478,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         try
         {
             $del_params = array();
-            $del_params[] = $row["id"];
+            $del_params[] = $this->m_data['id'];
 
             $g_ado_db->Execute($queryStr_del, $del_params);
         }
@@ -662,7 +669,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                     $ins_params[] = $row["ml_id"];
                     $ins_params[] = (int) $p_destLanguageId;
                     $ins_params[] = $row["con_id"];
-                    $ins_params[] = $row["display"];
+                    //$ins_params[] = $row["display"];
+                    $ins_params[] = 0;
 
                     $g_ado_db->Execute($queryStr_ins, $ins_params);
                 }
@@ -1379,7 +1387,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             $rows = $g_ado_db->GetAll($queryStr_maplocmed_sel, $maplocmed_sel_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $media_ids[] = $row['con'];
+                    $media_ids[] = $row['med'];
                 }
             }
         }

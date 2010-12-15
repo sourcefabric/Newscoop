@@ -165,7 +165,7 @@ CREATE TABLE Maps
     MapWidth int NOT NULL DEFAULT 0,
     MapHeight int NOT NULL DEFAULT 0,
 --  the map name
-    MapName VARCHAR(255) NOT NULL,
+    MapName VARCHAR(1023) NOT NULL,
 
 --  management related things
     IdUser int(10) unsigned NOT NULL DEFAULT 0,
@@ -175,7 +175,7 @@ CREATE TABLE Maps
     KEY maps_article_number (fk_article_number),
     KEY maps_article_number_usage (fk_article_number, MapUsage),
     KEY maps_article_number_rank (fk_article_number, MapRank),
-    KEY maps_map_name (MapName)
+    KEY maps_map_name (MapName(64))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- connecting maps and locations
@@ -270,7 +270,7 @@ CREATE TABLE LocationContents (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
 
 --  main label for the POI
-    poi_name VARCHAR(255) NOT NULL,
+    poi_name VARCHAR(1023) NOT NULL,
 --  link from the POI popup window
     poi_link VARCHAR(1023) NOT NULL DEFAULT "",
 
@@ -292,7 +292,7 @@ CREATE TABLE LocationContents (
 --  specifying the rows by unique way
     PRIMARY KEY (id),
 
-    KEY location_contents_poi_name (poi_name)
+    KEY location_contents_poi_name (poi_name(64))
 
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -319,8 +319,8 @@ CREATE TABLE Multimedia (
     IdUser int(10) unsigned NOT NULL DEFAULT 0,
     time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    KEY multimedia_media_type (media_type),
-    KEY multimedia_media_src (media_src),
+    KEY multimedia_media_type (media_type(32)),
+    KEY multimedia_media_src (media_src(64)),
 
     PRIMARY KEY (id)
 

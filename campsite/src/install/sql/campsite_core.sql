@@ -2846,14 +2846,14 @@ CREATE TABLE `Maps` (
   `MapProvider` varchar(255) NOT NULL DEFAULT '',
   `MapWidth` int(11) NOT NULL DEFAULT '0',
   `MapHeight` int(11) NOT NULL DEFAULT '0',
-  `MapName` varchar(255) NOT NULL,
+  `MapName` varchar(1023) NOT NULL,
   `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `maps_article_number` (`fk_article_number`),
   KEY `maps_article_number_usage` (`fk_article_number`,`MapUsage`),
   KEY `maps_article_number_rank` (`fk_article_number`,`MapRank`),
-  KEY `maps_map_name` (`MapName`)
+  KEY `maps_map_name` (`MapName`(64))
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2875,8 +2875,8 @@ CREATE TABLE `Multimedia` (
   `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `multimedia_media_type` (`media_type`),
-  KEY `multimedia_media_src` (`media_src`(333))
+  KEY `multimedia_media_type` (`media_type`(32)),
+  KEY `multimedia_media_src` (`media_src`(64))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2914,7 +2914,7 @@ DROP TABLE IF EXISTS `LocationContents`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `LocationContents` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `poi_name` varchar(255) NOT NULL,
+  `poi_name` varchar(1023) NOT NULL,
   `poi_link` varchar(1023) NOT NULL DEFAULT '',
   `poi_perex` varchar(15100) NOT NULL DEFAULT '',
   `poi_content_type` tinyint(4) NOT NULL DEFAULT '0',
@@ -2923,7 +2923,7 @@ CREATE TABLE `LocationContents` (
   `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `location_contents_poi_name` (`poi_name`)
+  KEY `location_contents_poi_name` (`poi_name`(64))
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

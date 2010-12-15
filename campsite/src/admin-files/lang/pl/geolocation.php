@@ -37,16 +37,4 @@ regGS("Map Preview", "");
 regGS("Label link", "");
 regGS("Label", "");
 regGS("Image URL", "");
-regGS("video", "video");
-regGS("text", "text");
-regGS("show article view", "ukázat zobrazení článku");
-regGS("set as the article view", "nastavit jako zobrazení článku");
-regGS("save", "uložit");
-regGS("resize article view", "změnit velikost zobrazení článku");
-regGS("image", "obrázek");
-regGS("icon", "ikona");
-regGS("basic", "základní");
-regGS("any country", "jakákoliv země");
-regGS("Setting Map Locations", "Nastavení Lokací Map");
-regGS("Find", "Najít");
 ?>

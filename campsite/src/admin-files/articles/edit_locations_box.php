@@ -1,4 +1,6 @@
 <?php
+//camp_load_translation_strings("geolocation");
+
 $locations = array();
 $map = $articleObj->getMap();
 if (is_object($map) && $map->exists()) {
@@ -12,14 +14,14 @@ $detachUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publi
     <table cellpadding="3" cellspacing="0" style="width: 100%; background-color: #eee;">
     <tr>
       <td style="text-align: left">
-        <strong>Locations</strong>
+        <strong><?php putGS("Locations"); ?></strong>
       </td>
       <td style="text-align: right">
         <table cellpadding="2" cellspacing="0">
         <tr>
           <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('ChangeArticle')) {  ?>
           <td><img src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/add.png" /></td>
-          <td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1050, height=600, top=200, left=200');">Edit</a></td>
+          <td><a href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1050, height=600, top=200, left=200');"><?php putGS("Edit"); ?></a></td>
           <?php } ?>
         </tr>
         </table>
@@ -52,8 +54,10 @@ if (!empty($locations)) { ?>
   <td>
     <ol class="points">
       <?php
+      $language_usage = $f_language_selected;
+      if (!$language_usage) {$language_usage = $f_language_id;}
       foreach ($locations as $location) {
-          $content = $location->getContent($f_language_id);
+          $content = $location->getContent($language_usage);
           if ($location->isEnabled($f_language_id)) {
               echo '<li class="map_list_location_enabled">' . $content->getName() . '</li>';
           } else {

@@ -96,6 +96,8 @@ var set_local_strings = function()
 {
     var local_strings = {};
 
+    local_strings["google_map"] = "<?php putGS("Google Map"); ?>";
+    local_strings["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
     local_strings["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
     local_strings["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
@@ -103,8 +105,6 @@ var set_local_strings = function()
     local_strings["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
     local_strings["point_number"] = "<?php putGS("Point no."); ?>";
     local_strings["fill_in_the_point_description"] = "<?php putGS("fill in the point description"); ?>";
-    local_strings["problem_with_map_processing"] = "<?php putGS("problem with map processing"); ?>";
-    local_strings["probably_logged_out"] = "<?php putGS("probably logged out"); ?>";
     local_strings["edit"] = "<?php putGS("edit"); ?>";
     local_strings["center"] = "<?php putGS("center"); ?>";
     local_strings["enable"] = "<?php putGS("enable"); ?>";
