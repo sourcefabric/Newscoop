@@ -332,7 +332,7 @@ class Topic extends DatabaseObject {
 			$changed = $topicName->create(array('name'=>$p_value));
 		}
 		if ($changed) {
-			$this->m_names[$p_languageId] = $p_value;
+			$this->m_names[$p_languageId] = $topicName;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
