@@ -10,6 +10,7 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
 
 /**
  * @package Campsite
@@ -48,14 +49,22 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     public $m_keyIsAutoIncrement = true;
 
 	/**
-     * @param mixed $row
+     * @param mixed $arg
 	 */
-    public function __construct($row = NULL)
+    public function __construct($arg)
     {
+        global $g_ado_db;
+
         parent::__construct($this->m_columnNames);
 
-        if (is_array($row)) {
-            $this->m_data = $row;
+        if (is_array($arg)) {
+            $this->m_data = $arg;
+        } else if (is_numeric($arg)) {
+            $this->m_data['id'] = (int) $arg;
+            $queryStr = 'SELECT *, X(poi_location) as latitude, Y(poi_location) as longitude
+                FROM ' . self::TABLE . '
+                WHERE id = ' . $this->getId();
+            $this->m_data = $g_ado_db->GetRow($queryStr);
         }
     }
 
@@ -212,13 +221,13 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 1)
-        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' . Geo_MapLocations::TABLE . ' WHERE id = ?';
+        $queryStr_loc_id = 'SELECT fk_location_id AS loc FROM ' . Geo_MapLocation::TABLE . ' WHERE id = ?';
         // ad B 2)
 		$queryStr_loc_in = "INSERT INTO " . self::TABLE . " (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (";
         $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
         $queryStr_loc_in .= ")";
         // ad B 4)
-        $queryStr_map_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET fk_location_id = ? WHERE id = ?';
+        $queryStr_map_up = 'UPDATE ' . Geo_MapLocation::TABLE . ' SET fk_location_id = ? WHERE id = ?';
         // ad B 6)
         $queryStr_loc_rm = 'DELETE FROM ' . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocations WHERE fk_location_id = ?)";
 
@@ -314,7 +323,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     {
 		global $g_ado_db;
 
-        $queryStr = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET poi_style = ? WHERE id = ?';
+        $queryStr = 'UPDATE ' . Geo_MapLocation::TABLE . ' SET poi_style = ? WHERE id = ?';
 
         $sql_params = array();
         $sql_params[] = $poi["style"];
@@ -337,7 +346,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
             }
             if ($poi["state_changed"])
             {
-                Geo_LocationContent::UpdateState($poi);
+                Geo_MapLocationContent::UpdateState($poi);
             }
             if ($poi["image_changed"])
             {
@@ -351,7 +360,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
             //if (!$poi["text_changed"]) {continue;}
             if ($poi["text_changed"])
             {
-                Geo_LocationContent::UpdateText($poi);
+                Geo_MapLocationContent::UpdateText($poi);
             }
 
         }
@@ -378,7 +387,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 2)
-        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET rank = ? WHERE id = ?';
+        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocation::TABLE . ' SET rank = ? WHERE id = ?';
 
         $rank = 0;
         foreach ($p_reorder as $poi_obj)

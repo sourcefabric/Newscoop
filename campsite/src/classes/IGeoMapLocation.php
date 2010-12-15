@@ -11,7 +11,7 @@
 require_once dirname(__FILE__) . '/IGeoLocation.php';
 
 /**
- * Geo Map Location interace
+ * Geo Map Location interface
  */
 interface IGeoMapLocation extends IGeoLocation
 {
@@ -24,7 +24,7 @@ interface IGeoMapLocation extends IGeoLocation
     /**
      * Get content
      * @param int $language
-     * @return IGeoLocationContent
+     * @return IGeoMapLocationContent
      */
     public function getContent($language);
 }

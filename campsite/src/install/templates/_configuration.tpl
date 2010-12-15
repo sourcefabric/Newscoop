@@ -86,6 +86,7 @@ function __autoload($p_className)
     require_once($GLOBALS['g_campsiteDir'].'/classes/CampPlugin.php');
 
     static $classDirectories = array('classes',
+                              'classes/Extension',
                               'template_engine/classes',
                               'template_engine/metaclasses');
 

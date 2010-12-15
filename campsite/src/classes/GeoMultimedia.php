@@ -3,54 +3,125 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
+require_once dirname(__FILE__) . '/IGeoMultimedia.php';
+require_once dirname(__FILE__) . '/IGeoMapLocation.php';
 
 /**
  * @package Campsite
  */
-class Geo_Multimedia extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'LocationContents';
-	//var $m_columnNames = array('id', 'city_id', 'city_type', 'population', 'position', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified');
+class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
+{
+    const TABLE = 'Multimedia';
+    const TABLE_JOIN = 'MapLocationMultimedia';
+
+    /** @var string */
+	public $m_dbTableName = self::TABLE;
+
+    /** @var array */
+	public $m_keyColumnNames = array('id');
+
+    /** @var array */
+    public $m_columnNames = array(
+        'id',
+        'media_type',
+        'media_spec',
+        'media_src',
+        'media_height',
+        'media_width',
+        'options',
+        'IdUser',
+    );
 
 	/**
-	 * The geo location contents class is for load/store of POI data.
+     * @param mixed $arg
 	 */
-	public function Geo_Multimedia()
+	public function __construct($arg)
 	{
-	} // constructor
+        parent::__construct($this->m_columnNames);
 
+        if (is_array($arg)) {
+            $this->m_data = $arg;
+        } else if (is_numeric($arg)) {
+            $this->m_data['id'] = (int) $arg;
+            $this->fetch();
+        }
+	}
 
-	/**
-	 * Finds POIs on given article and language
-	 *
-	 * @param string $p_articleNumber
-	 * @param string $p_languageId
-	 *
-	 * @return array
-	 */
-/*
-	public static function ReadArticlePoints($p_articleNumber, $p_languageId)
-	{
-		global $g_ado_db;
-		$sql_params = array($p_articleNumber, $p_languageId);
+    /**
+     * Get height
+     * @return int
+     */
+    public function getHeight()
+    {
+        return (int) $this->m_data['media_height'];
+    }
 
-	} // fn ReadArticlePoints
-*/
+    /**
+     * Get spec
+     * @return string
+     */
+    public function getSpec()
+    {
+        return (string) $this->m_data['media_spec'];
+    }
 
+    /**
+     * Get src
+     * @return string
+     */
+    public function getSrc()
+    {
+        return (string) $this->m_data['media_src'];
+    }
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType()
+    {
+        return (string) $this->m_data['media_type'];
+    }
+
+    /**
+     * Get width
+     * @return int
+     */
+    public function getWidth()
+    {
+        return (int) $this->m_data['media_width'];
+    }
+
+    /**
+     * Get multimedia for map location
+     * @param IGeoMapLocation $p_mapLocation
+     * @return array of IGeoMultimedia
+     */
+    public static function GetByMapLocation(IGeoMapLocation $p_mapLocation)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT m.*
+            FROM ' . self::TABLE . ' m
+                INNER JOIN ' . self::TABLE_JOIN . ' mlm
+                    ON m.id = mlm.fk_multimedia_id
+            WHERE mlm.fk_maplocation_id = ' . $p_mapLocation->getId();
+        $rows = $g_ado_db->GetAll($queryStr);
+
+        $items = array();
+        foreach ((array) $rows as $row) {
+            $items[] = new self((array) $row);
+        }
+        return $items;
+    }
 
 	public static function InsertMultimedia($ml_id, $poi)
     {
 		global $g_ado_db;
         global $g_user;
 
-        $queryStr_mm = "INSERT INTO Multimedia (";
+        $queryStr_mm = "INSERT INTO " . self::TABLE . " (";
         $queryStr_mm .= "media_type, media_spec, media_src, media_width, media_height, IdUser";
         $queryStr_mm .= ") VALUES (";
 
@@ -60,7 +131,7 @@ class Geo_Multimedia extends DatabaseObject {
 
         $queryStr_mm .= ", %%user_id%%)";
 
-        $queryStr_loc_mm = "INSERT INTO MapLocationMultimedia (";
+        $queryStr_loc_mm = "INSERT INTO " . self::TABLE_JOIN . " (";
         $queryStr_loc_mm .= "fk_maplocation_id, fk_multimedia_id";
         $queryStr_loc_mm .= ") VALUES (";
         $queryStr_loc_mm .= "?, ?";
@@ -109,9 +180,22 @@ class Geo_Multimedia extends DatabaseObject {
             $mm_params[] = 0 + $poi["video_width"];
             $mm_params[] = 0 + $poi["video_height"];
 
-            $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
+            $mm_options = ""; // currently no options used
+            $reuse_id = Geo_Multimedia::FindMedia("video", $poi["video_type"], $poi["video_id"], $poi["video_width"], $poi["video_height"], $mm_options);
 
-            $mm_id = $g_ado_db->Insert_ID();
+            $mm_id = 0;
+            if ($reuse_id && (0 < $reuse_id))
+            {
+                $mm_id = $reuse_id;
+            }
+            else
+            {
+                $queryStr_mm = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_mm);
+
+                $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
+
+                $mm_id = $g_ado_db->Insert_ID();
+            }
 
             $loc_mm_params = array();
             $loc_mm_params[] = $ml_id;
@@ -125,7 +209,7 @@ class Geo_Multimedia extends DatabaseObject {
     {
 		global $g_ado_db;
 
-        $queryStr = "SELECT id FROM Multimedia WHERE media_type = ? AND media_spec = ? AND media_src = ? AND media_width = ? AND media_height = ? AND options = ?";
+        $queryStr = "SELECT id FROM " . self::TABLE . " WHERE media_type = ? AND media_spec = ? AND media_src = ? AND media_width = ? AND media_height = ? AND options = ?";
 
         $med_id = 0;
         try
@@ -174,19 +258,19 @@ class Geo_Multimedia extends DatabaseObject {
 */
 
         // ad B 1)
-        $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM MapLocationMultimedia WHERE id = ?";
+        $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM " . self::TABLE_JOIN . " WHERE id = ?";
         // ad B 2)
 
-		$queryStr_med_in = "INSERT INTO Multimedia (media_type, media_spec, media_src, media_height, media_width, IdUser) VALUES (";
+		$queryStr_med_in = "INSERT INTO " . self::TABLE . " (media_type, media_spec, media_src, media_width, media_height, IdUser) VALUES (";
         $queryStr_med_in .= "?, ?, ?, ?, ?";
         $queryStr_med_in .= ", %%user_id%%)";
 
         // ad B 4)
-        $queryStr_map_up = "UPDATE MapLocationMultimedia SET fk_multimedia_id = ? WHERE id = ?";
-        $queryStr_map_in = "INSERT INTO MapLocationMultimedia (fk_maplocation_id, fk_multimedia_id) VALUES (?, ?)";
-        $queryStr_map_rm = "DELETE FROM MapLocationMultimedia WHERE id = ?";
+        $queryStr_map_up = "UPDATE " . self::TABLE_JOIN . " SET fk_multimedia_id = ? WHERE id = ?";
+        $queryStr_map_in = "INSERT INTO " . self::TABLE_JOIN . " (fk_maplocation_id, fk_multimedia_id) VALUES (?, ?)";
+        $queryStr_map_rm = "DELETE FROM " . self::TABLE_JOIN . " WHERE id = ?";
         // ad B 6)
-        $queryStr_med_rm = "DELETE FROM Multimedia WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocationMultimedia WHERE fk_multimedia_id = ?)";
+        $queryStr_med_rm = "DELETE FROM " . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM " . self::TABLE_JOIN . " WHERE fk_multimedia_id = ?)";
 
         // ad B 1)
 
@@ -326,6 +410,4 @@ class Geo_Multimedia extends DatabaseObject {
 
     }
 
-} // class Geo_LocationContents
-
-?>
+}

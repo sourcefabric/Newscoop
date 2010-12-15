@@ -8,128 +8,233 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
-
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoMap.php');
 
 /**
  * @package Campsite
  */
-class Geo_Map extends DatabaseObject {
+class Geo_Map extends DatabaseObject implements IGeoMap
+{
+    const TABLE = 'Maps';
+
     /**
-     * The column names used for the primary key.
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
      * @var array
      */
-    var $m_keyColumnNames = array('id');
+    public $m_keyColumnNames = array('id');
 
-    var $m_dbTableName = 'Maps';
-
-    var $m_columnNames = array(
-        // int - Map ID
-        'id',
-
-        // int - link to the respective article
-        'fk_article_number',
-
-        // int - rank of the map in the article
-        'MapRank',
-
-        // int - map enabled
-        'MapUsage',
-
-        // real - initial map center
-        'MapCenterLongitude',
+    /**
+     * @var array
+     */
+    public $m_columnNames = array(
+        'id', // int - Map ID
+        'fk_article_number', // int - link to the respective article
+        'MapRank', // int - rank of the map in the article
+        'MapUsage', // int - map enabled
+        'MapCenterLongitude', // real - initial map center
         'MapCenterLatitude',
-
-        // int - initial map resolution
-        'MapDisplayResolution',
-
-        // string - the map to be used for readers
-        'MapProvider',
-
-        // int - the map div size
-        'MapWidth',
+        'MapDisplayResolution', // int - initial map resolution
+        'MapProvider', // string - the map to be used for readers
+        'MapWidth', // int - the map div size
         'MapHeight',
+        'MapName', // string - the map name
+        'IdUser', // int - management related things
+        'time_updated' // timestamp
+    );
 
-        // string - the map name
-        'MapName',
+    /**
+     * Constructor
+     *
+     * @param int $p_id
+     * @return Map
+     */
+    public function __construct($p_id = null)
+    {
+        if (is_numeric($p_id)) {
+            $this->m_data['id'] = $p_id;
+            $this->fetch();
+        }
+    }
 
-        // int - management related things
-        'IdUser',
-        // timestamp
-        'time_updated');
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
-	/**
-	 * The article attachment table links together articles with Attachments.
-	 *
-	 * @param int $p_id
-	 * @return Map
-	 */
-	public function Geo_Map($p_id = null)
-	{
-		if (is_numeric($p_id)) {
-			$this->m_data['id'] = $p_id;
-		}
-	} // constructor
+    /**
+     * TODO: obsolete, use $this->getId() instead.
+     */
+    public function GetMapId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
-	/**
-	 * @return int
-	 */
-	public function GetMapId()
-	{
-		return $this->m_data['id'];
-	} // fn getMapId
+    /**
+     * @return int
+     */
+    public function getArticleNumber()
+    {
+        return (int) $this->m_data['fk_article_number'];
+    }
 
-	/**
-	 * @return int
-	 */
-	public static function GetArticleMapId($p_articleObj)
-	{
+    /**
+     * @return double
+     */
+    public function getInitialCenterLongitude()
+    {
+        return (double) $this->m_data['MapCenterLongitude'];
+    }
+
+    /**
+     * @return double
+     */
+    public function getInitialCenterLatitude()
+    {
+        return (double) $this->m_data['MapCenterLatitude'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getDisplayResolution()
+    {
+        return (int) $this->m_data['MapDisplayResolution'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getMapProvider()
+    {
+        return (string) $this->m_data['MapProvider'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDimensions()
+    {
+        return array('width' => (int) $this->m_data['MapWidth'],
+            'height' => (int) $this->m_data['MapHeight']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return (string) $this->m_data['MapName'];
+    }
+
+    /**
+     * @return User|NULL
+     */
+    public function getUser()
+    {
+        $userObj = new User($this->m_data['IdUser']);
+        return ($userObj->exists()) ? $userObj : NULL;
+    }
+
+    /**
+     * @return timestamp
+     */
+    public function getLastModified()
+    {
+        return $this->m_data['time_updated'];
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return (bool) ((int) $this->m_data['MapUsage']);
+    }
+
+    /**
+     * @return array of IGeoMapLocation
+     */
+    public function getLocations()
+    {
+        $locations = Geo_MapLocation::GetByMap($this);
+        return (array) $locations;
+    }
+
+    /**
+     * @param int $p_articleNumber
+     * @return Geo_Map
+     */
+    public static function GetMapByArticle($p_articleNumber)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT id
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ' . (int) $p_articleNumber . '
+            AND MapUsage = 1
+            ORDER BY MapRank, id';
+        $mapId = $g_ado_db->GetOne($queryStr);
+        $map = new self((int) $mapId);
+        return $map;
+    }
+
+
+    /**
+     * @param Article
+     * @return int
+     */
+    public static function GetArticleMapId($p_articleObj)
+    {
 		global $g_ado_db;
 
         $article_number = $p_articleObj->getArticleNumber();
-
-        $map_id = Geo_Map::GetMapIdByArticle($article_number);
+        $map_id = self::GetMapIdByArticle($article_number);
         return $map_id;
     }
 
+    /**
+     * @param int $p_articleNumber
+     * @return int $map_id
+     */
 	public static function GetMapIdByArticle($p_articleNumber)
 	{
 		global $g_ado_db;
 
-        $article_number = $p_articleNumber;
-
-        $queryStr = "SELECT id FROM Maps WHERE fk_article_number = ? AND MapUsage = 1 ORDER BY MapRank, id LIMIT 1";
-
+        $queryStr = 'SELECT id
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ? AND MapUsage = 1
+            ORDER BY MapRank, id
+            LIMIT 1';
         $map_id = null;
-
-        try
-        {
+        try {
             $sql_params = array();
-
-            $sql_params[] = $article_number;
-
+            $sql_params[] = (int) $p_articleNumber;
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $map_id = $row['id'];
+                    $map_id = (int) $row['id'];
                 }
             }
-        }
-        catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             return null;
         }
-
 		return $map_id;
-	} // fn getMapIdByArticle
+    }
 
 	/**
+	 * @param object Article
 	 * @return array
 	 */
 	public static function GetMapIdsByArticle($p_articleObj)
@@ -137,31 +242,28 @@ class Geo_Map extends DatabaseObject {
 		global $g_ado_db;
 
         $article_number = $p_articleObj->getArticleNumber();
-
-        $queryStr = "SELECT id, MapUsage AS usage FROM Maps WHERE fk_article_number = ? ORDER BY MapRank, id";
-
+        $queryStr = 'SELECT id, MapUsage AS usage
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ?
+            ORDER BY MapRank, id';
         $map_ids = array();
-
-        try
-        {
+        try {
             $sql_params = array();
-
             $sql_params[] = $article_number;
-
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $map_ids[] = array("id" => $row['id'], "usage" => $row['usage']);
+                    $map_ids[] = array("id" => (int) $row['id'],
+                                       "usage" => (int) $row['usage']);
                 }
             }
-        }
-        catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             return array();
         }
 
 		return $map_ids;
-	} // fn getMapIdByArticle
+	}
+
 
     public static function GetLocationsByArticle($p_articleObj)
     {
@@ -200,40 +302,21 @@ class Geo_Map extends DatabaseObject {
         return $poi_names;
     }
 
-
-	/**
-	 * @return int
-	 */
-	public function getArticleNumber()
-	{
-		return $this->m_data['fk_article_number'];
-	} // fn getArticleNumber
-
-
-	/**
-	 * Foo.
-	 *
-	 * @param int $p_bar0
-	 * @param int $p_bar1
-	 *
-	 * @return void
-	 */
-	public static function Foo($p_bar0, $p_bar1)
-	{
-        return;
-
-		global $g_ado_db;
-
-		$queryStr = '';
-
-		$g_ado_db->Execute($queryStr);
-	} // fn Foo
-
-	public static function UnlinkArticle($p_articleObj)
+	public static function UnlinkArticle($p_articleObj = null, $p_articleNumber = 0)
 	{
 		global $g_ado_db;
 
-        $article_number = $p_articleObj->getArticleNumber();
+        $article_number = 0;
+
+        if ($p_articleObj)
+        {
+            $article_number = $p_articleObj->getArticleNumber();
+        }
+        else
+        {
+            $article_number = $p_articleNumber;
+        }
+        if ((!$article_number) || (0 == $article_number)) {return;}
 
         $queryStr = "UPDATE Maps SET fk_article_number = 0 WHERE fk_article_number = ?";
 
@@ -252,10 +335,36 @@ class Geo_Map extends DatabaseObject {
         return true;
     }
 
+	/**
+	 * This is called when the (last language of the) article is deleted
+	 * Remove map pointers to the given article.
+	 * After article removal (with all its languages), the map is preserved with just the last language.
+	 *
+	 * @param int $p_articleNumber
+	 *
+	 * @return void
+	 */
+	public static function OnArticleDelete($p_articleNumber)
+	{
+        return Geo_Map::UnlinkArticle(null, $p_articleNumber);
+
+/*
+		global $g_ado_db;
+
+		$queryStr = "UPDATE Maps SET fk_article_number = 0 WHERE fk_article_number = ?";
+
+        $sql_params = array();
+        $sql_params[] = $p_articleNumber;
+
+		$g_ado_db->Execute($queryStr, $sql_params);
+*/
+	} // fn OnArticleDelete
+
 
 	/**
-	 * This is called when a language is deleted.
+	 * This is called when a (non-last) language is deleted.
 	 * It will remove the links on location contents, and the possible free contents.
+	 * Finally left maps are just with the last language (that is not processed herein).
 	 *
 	 * @param int $p_articleNumber
 	 * @param int $p_languageId
@@ -263,11 +372,7 @@ class Geo_Map extends DatabaseObject {
 	 */
 	public static function OnLanguageDelete($p_articleNumber, $p_languageId)
 	{
-        return;
-
 		global $g_ado_db;
-
-		//$queryStr = "DELETE FROM ArticleAttachments WHERE fk_attachment_id=$p_attachmentId";
 
         $queryStr_sel = "SELECT mll.id AS mll_id, mll.fk_content_id AS con_id FROM MapLocationLanguages AS mll ";
         $queryStr_sel .= "INNER JOIN MapLocations AS ml ON mll.fk_maplocation_id = ml.id ";
@@ -335,72 +440,241 @@ class Geo_Map extends DatabaseObject {
         return true;
 	} // fn OnLanguageDelete
 
-/*
-	public static function Delete($p_id)
+	public function Delete()
 	{
 		global $g_ado_db;
 
+        $queryStr_sel = "SELECT id FROM MapLocations WHERE fk_map_id = ?";
 
+        $queryStr_del = "DELETE FROM Maps WHERE id = ?";
+
+        $ml_ids = array();
+        try
+        {
+            $sel_params = array();
+            $sel_params[] = $this->m_data['id'];
+
+            $rows = $g_ado_db->GetAll($queryStr_sel, $sel_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $ml_ids[] = array("location_id" => $row["id"]);
+                }
+            }
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        Geo_Map::RemovePoints($this->m_data['id'], $ml_ids);
+
+        try
+        {
+            $del_params = array();
+            $del_params[] = $row["id"];
+
+            $g_ado_db->Execute($queryStr_del, $del_params);
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        return true;
     }
-*/
+
 
 	/**
-	 * Remove attachment pointers for the given article.
+	 * Copy all the map-related pointers for the given article.
+	 *  - read and copy all links / basic data on:
+	 *    - maps (Map table) with links into the given src article, set link into dest art no.
+	 *    - points (MapLocation table) with links into read map ids, set link into new map ids
+	 *    - text contents (MapLocationLanguages table) with links into read maploc ids and into the given languages
+	 *    - multimedia (MapLocationMultimedia table) with links into read maploc ids
+	 *
+	 * @param int $p_srcArticleNumber
+	 * @param int $p_destArticleNumber
+	 * @param array $p_copyTranslations
+	 * @return void
+	 */
+	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber, $p_copyTranslations, $p_userId = null)
+	{
+		global $g_ado_db;
+        $list_fill = "%%id_list%%";
+        $lang_fill = "%%id_langs%%";
+
+        $map_columns = array("fk_article_number", "MapRank", "MapUsage", "MapCenterLongitude", "MapCenterLatitude", "MapDisplayResolution", "MapProvider", "MapWidth", "MapHeight", "MapName", "IdUser");
+        $map_colstr = implode(", ", $map_columns);
+        $map_colqms = implode(", ", str_split(str_repeat("?", count($map_columns))));
+        $queryStr_map_sel = "SELECT id, $map_colstr FROM Maps WHERE fk_article_number = ?";
+        $queryStr_map_ins = "INSERT INTO Maps ($map_colstr) VALUES ($map_colqms)";
+
+        $maploc_columns = array("fk_map_id", "fk_location_id", "poi_style", "rank");
+        $maploc_colstr = implode(", ", $maploc_columns);
+        $maploc_colqms = implode(", ", str_split(str_repeat("?", count($maploc_columns))));
+        $queryStr_maploc_sel = "SELECT id, $maploc_colstr FROM MapLocations WHERE fk_map_id IN (%%id_list%%)";
+        $queryStr_maploc_ins = "INSERT INTO MapLocations ($maploc_colstr) VALUES ($maploc_colqms)";
+
+        $maploclan_columns = array("fk_maplocation_id", "fk_language_id", "fk_content_id", "poi_display");
+        $maploclan_colstr = implode(", ", $maploclan_columns);
+        $maploclan_colqms = implode(", ", str_split(str_repeat("?", count($maploclan_columns))));
+        $queryStr_maploclan_sel = "SELECT $maploclan_colstr FROM MapLocationLanguages WHERE fk_maplocation_id IN (%%id_list%%) AND fk_language_id IN (%%id_langs%%)";
+        $queryStr_maploclan_ins = "INSERT INTO MapLocationLanguages ($maploclan_colstr) VALUES ($maploclan_colqms)";
+
+        $maplocmed_columns = array("fk_maplocation_id", "fk_multimedia_id");
+        $maplocmed_colstr = implode(", ", $maplocmed_columns);
+        $maplocmed_colqms = implode(", ", str_split(str_repeat("?", count($maplocmed_columns))));
+        $queryStr_maplocmed_sel = "SELECT $maplocmed_colstr FROM MapLocationMultimedia WHERE fk_maplocation_id IN (%%id_list%%)";
+        $queryStr_maplocmed_ins = "INSERT INTO MapLocationMultimedia ($maplocmed_colstr) VALUES ($maplocmed_colqms)";
+
+        if (0 == count($p_copyTranslations)) {return;}
+        $lang_str = implode(", ", $p_copyTranslations);
+
+
+        $map_ids = array();
+
+        $map_sel_params = array();
+        $map_sel_params[] = $p_srcArticleNumber;
+		$rows = $g_ado_db->GetAll($queryStr_map_sel, $map_sel_params);
+		foreach ($rows as $row) {
+            $old_map_id = $row["id"];
+            $new_user_id = $p_userId;
+            if (is_null($new_user_id)) {$new_user_id = $row["IdUser"];}
+
+            $map_ins_params = array();
+            $map_ins_params[] = $p_destArticleNumber;
+            $map_ins_params[] = $row["MapRank"];
+            $map_ins_params[] = $row["MapUsage"];
+            $map_ins_params[] = $row["MapCenterLongitude"];
+            $map_ins_params[] = $row["MapCenterLatitude"];
+            $map_ins_params[] = $row["MapDisplayResolution"];
+            $map_ins_params[] = $row["MapProvider"];
+            $map_ins_params[] = $row["MapWidth"];
+            $map_ins_params[] = $row["MapHeight"];
+            $map_ins_params[] = $row["MapName"];
+            $map_ins_params[] = $new_user_id;
+
+            $success = $g_ado_db->Execute($queryStr_map_ins, $map_ins_params);
+            // taking the map ID
+            $new_map_id = $g_ado_db->Insert_ID();
+            $map_ids[$old_map_id] = $new_map_id;
+        }
+        if (0 == count($map_ids)) {return;}
+
+        $map_ids_str = implode(", ", array_keys($map_ids));
+
+
+        $queryStr_maploc_sel = str_replace($list_fill, $map_ids_str, $queryStr_maploc_sel);
+        $maploc_ids = array();
+
+        $maploc_sel_params = array();
+
+		$rows = $g_ado_db->GetAll($queryStr_maploc_sel, $maploc_sel_params);
+		foreach ($rows as $row) {
+            $old_maploc_id = $row["id"];
+            $old_map_id = $row["fk_map_id"];
+            $new_map_id = $map_ids[$old_map_id];
+
+            $maploc_ins_params = array();
+            $maploc_ins_params[] = $new_map_id;
+            $maploc_ins_params[] = $row["fk_location_id"];
+            $maploc_ins_params[] = $row["poi_style"];
+            $maploc_ins_params[] = $row["rank"];
+
+            $success = $g_ado_db->Execute($queryStr_maploc_ins, $maploc_ins_params);
+            // taking the map ID
+            $new_maploc_id = $g_ado_db->Insert_ID();
+            $maploc_ids[$old_maploc_id] = $new_maploc_id;
+        }
+        if (0 == count($maploc_ids)) {return;}
+
+        $maploc_ids_str = implode(", ", array_keys($maploc_ids));
+
+
+        $queryStr_maploclan_sel = str_replace($list_fill, $maploc_ids_str, $queryStr_maploclan_sel);
+        $queryStr_maploclan_sel = str_replace($lang_fill, $lang_str, $queryStr_maploclan_sel);
+        $maploclan_sel_params = array();
+
+		$rows = $g_ado_db->GetAll($queryStr_maploclan_sel, $maploclan_sel_params);
+		foreach ($rows as $row) {
+            $old_maploc_id = $row["fk_maplocation_id"];
+            $new_maploc_id = $maploc_ids[$old_maploc_id];
+
+            $maploclan_ins_params = array();
+            $maploclan_ins_params[] = $new_maploc_id;
+            $maploclan_ins_params[] = $row["fk_language_id"];
+            $maploclan_ins_params[] = $row["fk_content_id"];
+            $maploclan_ins_params[] = $row["poi_display"];
+
+            $success = $g_ado_db->Execute($queryStr_maploclan_ins, $maploclan_ins_params);
+        }
+
+
+        $queryStr_maplocmed_sel = str_replace($list_fill, $maploc_ids_str, $queryStr_maplocmed_sel);
+        $maplocmed_sel_params = array();
+
+		$rows = $g_ado_db->GetAll($queryStr_maplocmed_sel, $maplocmed_sel_params);
+		foreach ($rows as $row) {
+            $old_maploc_id = $row["fk_maplocation_id"];
+            $new_maploc_id = $maploc_ids[$old_maploc_id];
+
+            $maplocmed_ins_params = array();
+            $maplocmed_ins_params[] = $new_maploc_id;
+            $maplocmed_ins_params[] = $row["fk_multimedia_id"];
+
+            $success = $g_ado_db->Execute($queryStr_maplocmed_ins, $maplocmed_ins_params);
+        }
+
+
+	} // fn OnArticleCopy
+	/**
+
+	 * Copy all the pointers for the given article.
 	 * @param int $p_articleNumber
+	 * @param int $p_srcLanguageId
+	 * @param int $p_destLanguageId
 	 * @return void
 	 */
-	public static function OnArticleDelete($p_articleNumber)
+	public static function OnCreateTranslation($p_articleNumber, $p_srcLanguageId, $p_destLanguageId)
 	{
 		global $g_ado_db;
 
-		$queryStr = "UPDATE Map SET fk_article_number = 0 WHERE fk_article_number = ?";
+        $queryStr_sel = "SELECT mll.fk_maplocation_id AS ml_id, mll.fk_content_id AS con_id, mll.poi_display AS display ";
+        $queryStr_sel .= "FROM Maps AS m INNER JOIN MapLocations AS ml ON ml.fk_map_id = m.id ";
+        $queryStr_sel .= "INNER JOIN MapLocationLanguages AS mll ON mll.fk_maplocation_id = ml.id ";
+        $queryStr_sel .= "WHERE m.fk_article_number = ? AND mll.fk_language_id = ?";
 
-        $sql_params = array();
-        $sql_params[] = $p_articleNumber;
+        $queryStr_ins = "INSERT INTO MapLocationLanguages (fk_maplocation_id, fk_language_id, fk_content_id, poi_display) ";
+        $queryStr_ins .= "VALUES (?, ?, ?, ?)";
 
-		$g_ado_db->Execute($queryStr, $sql_params);
-	} // fn OnArticleDelete
+        $poi_names = array();
 
+        try
+        {
+            $sel_params = array();
+            $sel_params[] = $p_articleNumber;
+            $sel_params[] = $p_srcLanguageId;
 
-	/**
-	 * Copy all the pointers for the given article.
-	 * @param int $p_srcArticleNumber
-	 * @param int $p_destArticleNumber
-	 * @return void
-	 */
-	public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber)
-	{
-		global $g_ado_db;
-/*
-		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
-		$rows = $g_ado_db->GetAll($queryStr);
-		foreach ($rows as $row) {
-			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
-						." VALUES($p_destArticleNumber, ".$row['fk_attachment_id'].")";
-			$g_ado_db->Execute($queryStr);
-		}
-*/
-	} // fn OnArticleCopy
-	/**
+            $rows = $g_ado_db->GetAll($queryStr_sel, $sel_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $ins_params = array();
+                    $ins_params[] = $row["ml_id"];
+                    $ins_params[] = (int) $p_destLanguageId;
+                    $ins_params[] = $row["con_id"];
+                    $ins_params[] = $row["display"];
 
-	 * Copy all the pointers for the given article.
-	 * @param int $p_srcArticleNumber
-	 * @param int $p_destArticleNumber
-	 * @return void
-	 */
-	public static function OnLanguageCopy($p_articleNumber, $p_srcLanguageId, $p_destLanguageId)
-	{
-		global $g_ado_db;
-/*
-		$queryStr = 'SELECT fk_attachment_id FROM ArticleAttachments WHERE fk_article_number='.$p_srcArticleNumber;
-		$rows = $g_ado_db->GetAll($queryStr);
-		foreach ($rows as $row) {
-			$queryStr = 'INSERT IGNORE INTO ArticleAttachments(fk_article_number, fk_attachment_id)'
-						." VALUES($p_destArticleNumber, ".$row['fk_attachment_id'].")";
-			$g_ado_db->Execute($queryStr);
-		}
-*/
-	} // fn OnArticleCopy
+                    $g_ado_db->Execute($queryStr_ins, $ins_params);
+                }
+            }
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        return true;
+	} // fn OnCreateTranslation
 
 
     // ajax processing handlers
@@ -840,8 +1114,33 @@ class Geo_Map extends DatabaseObject {
 
 	} // fn ReadMapPoints
 
+	public static function ReadLanguagesByMap($p_mapId)
+    {
+		global $g_ado_db;
 
-	public static function ReadLanguages($p_articleNumber)
+        $queryStr_langs = "SELECT mll.fk_language_id AS lang FROM MapLocationLanguages AS mll ";
+        $queryStr_langs .= "INNER JOIN MapLocations AS ml ON mll.fk_maplocation_id = ml.id ";
+        $queryStr_langs .= "INNER JOIN Maps AS m ON ml.fk_map_id = m.id ";
+        $queryStr_langs .= "WHERE m.id = ?";
+
+        // first, read ids of languages of the article
+        $map_langs_arr = array();
+        {
+            $langs_params = array();
+            $langs_params[] = $p_mapId;
+
+            $rows = $g_ado_db->GetAll($queryStr_langs, $langs_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $map_langs_arr[] = $row['lang'];
+                }
+            }
+        }
+
+        return $map_langs_arr;
+    } // ReadLanguagesByMap
+
+	public static function ReadLanguagesByArticle($p_articleNumber)
     {
 		global $g_ado_db;
 
@@ -903,8 +1202,10 @@ class Geo_Map extends DatabaseObject {
 		global $g_ado_db;
         global $g_user;
 
-        $p_map = get_object_vars($p_map);
-
+        if (is_object($p_map))
+        {
+            $p_map = get_object_vars($p_map);
+        }
         // creating a new map, if the map does not exist yet
         $queryStr_map_new = "INSERT INTO Maps (MapCenterLongitude, MapCenterLatitude, MapDisplayResolution, MapProvider, MapWidth, MapHeight, MapName, MapRank, fk_article_number, IdUser) ";
         $queryStr_map_new .= "VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, %%user_id%%)";
@@ -988,7 +1289,10 @@ class Geo_Map extends DatabaseObject {
         $map_loc_ids = array();
         foreach ($p_removal as $one_rem)
         {
-            $one_rem = get_object_vars($one_rem);
+            if (is_object($one_rem))
+            {
+                $one_rem = get_object_vars($one_rem);
+            }
 
             $val_rem = $one_rem["location_id"];
             if (is_numeric($val_rem))
@@ -1220,12 +1524,19 @@ class Geo_Map extends DatabaseObject {
         $queryStr_maploclan .= "VALUES (?, ?, ?, ?)";
 
 
-        $languages = Geo_Map::ReadLanguages($p_articleNumber);
-
-
-        foreach ($p_insertion as $poi_obj)
+        if ($p_articleNumber)
         {
-            $poi = get_object_vars($poi_obj);
+            $languages = Geo_Map::ReadLanguagesByArticle($p_articleNumber);
+        }
+        else
+        {
+            $languages = Geo_Map::ReadLanguagesByMap($p_mapId);
+        }
+
+        foreach ($p_insertion as $poi)
+        {
+            if (is_object($poi)) {$poi = get_object_vars($poi);}
+
             {
 
                 $loc_id = null;
@@ -1262,7 +1573,7 @@ class Geo_Map extends DatabaseObject {
                 }
 
                 // ad B 3/4)
-                $con_id = Geo_LocationContent::InsertContent($poi);
+                $con_id = Geo_MapLocationContent::InsertContent($poi);
 
                 // ad B 5)
                 $maploc_params = array();
@@ -1675,7 +1986,7 @@ var on_load_proc = function()
         $queryStr_end = "";
         //$use_single = true;
 
-        $queryStr .= "SELECT DISTINCT m.fk_article_number AS art FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
+        $queryStr .= "SELECT DISTINCT m.fk_article_number AS Number FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
         $queryStr .= "Locations AS l ON ml.fk_location_id = l.id WHERE ";
 
         $queryStr_1 .= "MBRIntersects(GeomFromText('Polygon((%%x0%% %%y0%%,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% %%y0%%,%%x0%% %%y0%%))'),l.poi_location) ";
@@ -1752,6 +2063,3 @@ var on_load_proc = function()
     $query = Geo_Map::GetGeoSearchSQLQuery($p_coordinates);
     echo $query;
 */
-
-?>
-
