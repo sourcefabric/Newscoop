@@ -805,7 +805,11 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`Id`),
+  FULLTEXT KEY `Description` (`Description`),
+  FULLTEXT KEY `Photographer` (`Photographer`),
+  FULLTEXT KEY `Place` (`Place`),
+  FULLTEXT KEY `Caption` (`Caption`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1378,7 +1382,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine','','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-09-25 18:41:37'),(36,'PasswordRecovery','Y','2010-09-25 18:41:37'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-07 09:23:48'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-07 09:23:48'),(39,'MapDisplayResolutionDefault','4','2010-12-07 09:23:48'),(40,'MapViewWidthDefault','600','2010-12-07 09:23:48'),(41,'MapViewHeightDefault','400','2010-12-07 09:23:48'),(42,'MapProviderAvailableGoogleV3','1','2010-12-07 09:23:48'),(43,'MapProviderAvailableOSM','1','2010-12-07 09:23:48'),(44,'MapProviderDefault','GoogleV3','2010-12-07 09:23:48'),(45,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-07 09:23:48'),(46,'MapMarkerNames','gold,blue,red,green','2010-12-07 09:23:48'),(47,'MapMarkerSourceGold','marker-gold.png','2010-12-07 09:23:48'),(48,'MapMarkerOffsetXGold','-10','2010-12-07 09:23:48'),(49,'MapMarkerOffsetYGold','-20','2010-12-07 09:23:48'),(50,'MapMarkerSourceBlue','marker-blue.png','2010-12-07 09:23:48'),(51,'MapMarkerOffsetXBlue','-10','2010-12-07 09:23:48'),(52,'MapMarkerOffsetYBlue','-20','2010-12-07 09:23:48'),(53,'MapMarkerSourceRed','marker-red.png','2010-12-07 09:23:48'),(54,'MapMarkerOffsetXRed','-10','2010-12-07 09:23:48'),(55,'MapMarkerOffsetYRed','-20','2010-12-07 09:23:48'),(56,'MapMarkerSourceGreen','marker-green.png','2010-12-07 09:23:48'),(57,'MapMarkerOffsetXGreen','-10','2010-12-07 09:23:48'),(58,'MapMarkerOffsetYGreen','-20','2010-12-07 09:23:48'),(59,'MapMarkerSourceDefault','gold','2010-12-07 09:23:48'),(60,'MapPopupWidthMin','300','2010-12-07 09:23:48'),(61,'MapPopupHeightMin','200','2010-12-07 09:23:48'),(62,'MapVideoWidthYouTube','425','2010-12-07 09:23:48'),(63,'MapVideoHeightYouTube','350','2010-12-07 09:23:48'),(64,'MapVideoWidthVimeo','400','2010-12-07 09:23:48'),(65,'MapVideoHeightVimeo','225','2010-12-07 09:23:48'),(66,'MapVideoWidthFlash','425','2010-12-07 09:23:48'),(67,'MapVideoHeightFlash','350','2010-12-07 09:23:48'),(68,'MapVideoWidthFlv','300','2010-12-07 09:23:48'),(69,'MapVideoHeightFlv','280','2010-12-07 09:23:48'),(70,'FlashServer','','2010-12-07 09:23:48'),(71,'FlashDirectory','videos/','2010-12-07 09:23:48');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine','','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-09-25 18:41:37'),(36,'PasswordRecovery','Y','2010-09-25 18:41:37'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-07 09:23:48'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-07 09:23:48'),(39,'MapDisplayResolutionDefault','4','2010-12-07 09:23:48'),(40,'MapViewWidthDefault','600','2010-12-07 09:23:48'),(41,'MapViewHeightDefault','400','2010-12-07 09:23:48'),(42,'MapProviderAvailableGoogleV3','1','2010-12-07 09:23:48'),(43,'MapProviderAvailableOSM','1','2010-12-07 09:23:48'),(44,'MapProviderDefault','GoogleV3','2010-12-07 09:23:48'),(45,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-07 09:23:48'),(46,'MapMarkerSourceDefault','marker-gold.png','2010-12-14 19:25:00'),(47,'MapPopupWidthMin','300','2010-12-07 09:23:48'),(48,'MapPopupHeightMin','200','2010-12-07 09:23:48'),(49,'MapVideoWidthYouTube','425','2010-12-07 09:23:48'),(50,'MapVideoHeightYouTube','350','2010-12-07 09:23:48'),(51,'MapVideoWidthVimeo','400','2010-12-07 09:23:48'),(52,'MapVideoHeightVimeo','225','2010-12-07 09:23:48'),(53,'MapVideoWidthFlash','425','2010-12-07 09:23:48'),(54,'MapVideoHeightFlash','350','2010-12-07 09:23:48'),(55,'MapVideoWidthFlv','300','2010-12-07 09:23:48'),(56,'MapVideoHeightFlv','280','2010-12-07 09:23:48'),(57,'FlashServer','','2010-12-07 09:23:48'),(58,'FlashDirectory','videos/','2010-12-07 09:23:48');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2989,28 +2993,16 @@ DROP TABLE IF EXISTS `CityLocations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CityLocations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `city_id` int(10) unsigned NOT NULL,
+  `id` int(10) unsigned NOT NULL,
   `city_type` varchar(10) DEFAULT NULL,
   `population` int(10) unsigned NOT NULL,
   `position` point NOT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL,
   `elevation` int(11) DEFAULT NULL,
   `country_code` char(2) NOT NULL,
   `time_zone` varchar(1023) NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `city_id` (`city_id`),
-  KEY `city_type` (`city_type`),
-  KEY `population` (`population`),
-  SPATIAL KEY `position` (`position`),
-  KEY `latitude` (`latitude`),
-  KEY `longitude` (`longitude`),
-  KEY `elevation` (`elevation`),
-  KEY `country_code` (`country_code`),
-  KEY `time_zone` (`time_zone`(333))
-) ENGINE=MyISAM AUTO_INCREMENT=197059 DEFAULT CHARSET=utf8;
+  SPATIAL KEY `position` (`position`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3021,15 +3013,12 @@ DROP TABLE IF EXISTS `CityNames`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `CityNames` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `city_id` int(10) NOT NULL,
-  `city_name` varchar(1023) NOT NULL,
+  `fk_citylocations_id` int(10) NOT NULL,
+  `city_name` varchar(1024) NOT NULL,
   `name_type` varchar(10) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `city_id` (`city_id`),
-  KEY `city_name` (`city_name`(333)),
-  KEY `name_type` (`name_type`)
-) ENGINE=MyISAM AUTO_INCREMENT=606457 DEFAULT CHARSET=utf8;
+  KEY (`fk_citylocations_id`),
+  KEY (`city_name`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

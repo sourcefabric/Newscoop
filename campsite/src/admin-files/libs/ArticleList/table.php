@@ -13,30 +13,17 @@
 <table id="table-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
 <thead>
     <tr>
+        <?php foreach ($this->cols as $label) { ?>
+        <?php if (!isset($label)) { ?>
         <th><input type="checkbox" /></th>
-        <th><?php echo putGS('Language'); ?></th>
-        <th><?php echo putGS('Order'); ?></th>
-        <th><?php echo putGS('Name'); ?></th>
-        <th><?php echo putGS('Type'); ?></th>
-        <th><?php echo putGS('Created by'); ?></th>
-        <th><?php echo putGS('Author'); ?></th>
-        <th><?php echo putGS('Status'); ?></th>
-        <th><?php echo putGS('On Front Page'); ?></th>
-        <th><?php echo putGS('On Section Page'); ?></th>
-        <th><?php echo putGS('Images'); ?></th>
-        <th><?php echo putGS('Topics'); ?></th>
-        <th><?php echo putGS('Comments'); ?></th>
-        <th><?php echo putGS('Reads'); ?></th>
-        <th><?php echo putGS('Use Map'); ?></th>
-        <th><?php echo putGS('Locations'); ?></th>
-        <th><?php echo putGS('Create Date'); ?></th>
-        <th><?php echo putGS('Publish Date'); ?></th>
-        <th><?php echo putGS('Last Modified'); ?></th>
+        <?php } else { ?> 
+        <th><?php echo $label; ?></th>
+        <?php }} ?>
     </tr>
 </thead>
 <tbody>
 <?php if ($this->items === NULL) { ?>
-    <tr><td colspan="19"><?php putGS('Loading data'); ?></td></tr>
+    <tr><td colspan="<?php echo sizeof($this->cols); ?>"><?php putGS('Loading data'); ?></td></tr>
 <?php } else if (!empty($this->items)) { ?>
     <?php foreach ($this->items as $item) { ?>
     <tr>
@@ -156,10 +143,21 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
     ],
     'fnDrawCallback': function() {
-        $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
-            $(this).toggleClass('selected');
-            input = $('input:checkbox', $(this)).attr('checked', $(this).hasClass('selected'));
+        $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
+            if (event.target.type == 'checkbox') {
+                return; // checkbox click, handled by it's change
+            }
+
+            var input = $('input:checkbox', $(this));
+            if (input.attr('checked')) {
+                input.removeAttr('checked');
+            } else {
+                input.attr('checked', 'checked');
+            }
+            input.change();
         });
+
+
         $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
@@ -167,6 +165,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 $(this).parents('tr').removeClass('selected');
             }
         });
+
         <?php if ($this->order) { ?>
         $('#table-<?php echo $this->id; ?> tbody').sortable();
         <?php } ?>

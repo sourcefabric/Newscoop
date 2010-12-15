@@ -20,10 +20,10 @@ class ImageListWidget extends Widget
     {
         $list = new ImageList;
 
-        $list->setHidden(0);
+        $list->setHidden('Id');
         if (!$this->isFullscreen()) {
-            $list->setHidden(6);
-            $list->setHidden(7);
+            $list->setHidden('TimeCreated');
+            $list->setHidden('LastModified');
         }
 
         $list->render();

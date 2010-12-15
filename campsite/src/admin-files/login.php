@@ -151,7 +151,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     <td colspan="2"><strong class="light">
         <?php
         if ($_GET['request'] == 'ajax' || $requestIsPost) {
-            putGS('Your work has been saved.');
+            putGS('Your changes will be saved after login.');
             echo '<br />';
         }
         putGS('Please login to continue.');

@@ -5,4 +5,4 @@
 {{ /if }}
 {{ /list_article_attachments }}
 
-{{ if $has_audio == "1" }}<img style="border: none; margin-right: 5px" alt="This article has an audio attachment" src="/templates/classic/img/Speaker_32.png" />{{ /if }}
+{{ if $has_audio == "1" }}<img style="border: none; margin-right: 5px" alt="This article has an audio attachment" src="http://{{ $campsite->publication->site }}/templates/classic/img/Speaker_32.png" />{{ /if }}

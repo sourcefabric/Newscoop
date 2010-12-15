@@ -87,9 +87,9 @@ function onCommentsActivated(p_checkbox)
         	<SELECT NAME="f_url_type" class="input_select"
         	onchange="
         	   if (this.value == '2') {
-        	       document.getElementById('seo').setAttribute('style', '');
+        	       $('#seo').show();
         	   } else {
-        	       document.getElementById('seo').setAttribute('style', 'display:none;');
+        	       $('#seo').hide();
         	   }">
         	<?php
         	   $selectedUrlType = '2';

@@ -61,6 +61,9 @@ if ($id > 0) {
   <ul>
     <li><a href="#generalContainer"><?php putGS('General'); ?></a></li>
     <li><a href="#biographyContainer"><?php putGS('Biography'); ?></a></li>
+    <?php if (is_object($author)) { ?>
+    <li><a href="#contentContainer"><?php putGS('Content'); ?></a></li>
+    <?php } ?>
   </ul>
   <div id="generalContainer">
     <div class="formBlock firstBlock firstBlock">
@@ -75,32 +78,26 @@ if ($id > 0) {
         </li>
         <li>
           <label>Aliases:</label>
-          <span id="aliases">
+          <div id="aliases" class="aliasContainer">
           <?php
           $count = 0;
           if (isset($aliases) && is_array($aliases)) {
               foreach ($aliases as $alias) {
                   $count++;
-                  $input = '<div class="author_alias_item">';
-                  $input.= '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px" value="%s" />';
-                  $input.= '</div>';
+                  $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px;" value="%s" />';
+                  echo '<div class="authorAliasItem">';
                   echo sprintf($input, $alias->getName());
                   echo '<a href="?id=' . $author->getId() . '&del_id_alias=' . $alias->getId() . '" onclick="return deleteAuthorAlias(' . $alias->getId() . ',' . $author->getId() . ')" style="float:right"><img
-                      src="../../css/delete.png" border="0" alt="' . getGS('Delete author alias') . '" title="' . getGS('Delete author alias') . '" /></a>';
+                      src="' . $Campsite['ADMIN_STYLE_URL'] . '/images/delete.png" border="0" alt="' . getGS('Delete author alias') . '" title="' . getGS('Delete author alias') . '" /></a>';
+                  echo '</div>';
               }
           }
-          //if ($count==0) {
           ?>
-            <div class="author_alias_item">
-              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px" />
+            <div class="authorAliasItem">
+              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px;" />
             </div>
-          <?php // } else { ?>
-            <!-- <div class="author_alias_item">
-              <input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;" value="" />
-            </div> -->
-          <?php // } ?>
-          </span>
-          <span onclick="addAlias()"><a href="#" class="addButton"></a></span>
+          </div>
+          <span onclick="addAlias();"><a href="#" class="addButton"></a></span>
         </li>
         <li>
           <span id="types">
@@ -241,6 +238,32 @@ if ($id > 0) {
     </div>
     <br style="clear:both;" />
   </div>
+
+  <?php
+  if (is_object($author)) {
+  ?>
+  <div id="contentContainer">
+    <table>
+    <?php
+    $authoringList = ArticleAuthor::GetArticlesByAuthor($author->getId());
+    $authoringCount = sizeof($authoringList);
+    foreach ($authoringList as $authoringItem) {
+        $articleUrl = $Campsite['WEBSITE_URL'] . '/' . $ADMIN . '/articles/edit.php';
+        $articleUrl .= '?f_publication_id=' . $authoringItem['article']->getPublicationId()
+            . '&f_issue_number=' . $authoringItem['article']->getIssueNumber()
+            . '&f_section_number=' . $authoringItem['article']->getSectionNumber()
+            . '&f_article_number=' . $authoringItem['article']->getArticleNumber()
+            . '&f_language_id=' . $authoringItem['article']->getLanguageId();
+    ?>
+    <tr>
+      <td><?php echo $authoringItem['type']->getName(); ?></td>
+      <td><a href="<?php echo $articleUrl; ?>"><?php echo $authoringItem['article']->getName(); ?></a></td>
+    </tr>
+    <?php } ?>
+    </ul>
+  </div>
+  <?php } ?>
+  
   <div class="formBlock lastBlock">
     <ul>
       <li>

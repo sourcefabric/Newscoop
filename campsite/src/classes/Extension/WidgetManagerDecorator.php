@@ -172,9 +172,10 @@ class WidgetManagerDecorator extends DatabaseObject
 
     /**
      * Is available?
+     * @param int $uid
      * @return bool
      */
-    public function isAvailable()
+    public function isAvailable($uid)
     {
         global $g_user, $g_ado_db;
 
@@ -187,7 +188,7 @@ class WidgetManagerDecorator extends DatabaseObject
         if ($used === NULL) { 
             $queryStr = 'SELECT id, fk_widget_id
                 FROM ' . self::TABLE . '
-                WHERE fk_user_id = ' . $g_user->getUserId();
+                WHERE fk_user_id = ' . ((int) $uid);
             $rows = $g_ado_db->GetAll($queryStr);
 
             $used = array();

@@ -28,6 +28,41 @@ class Geo_Preferences extends DatabaseObject {
 	{
 	} // constructor
 
+public static function GetMapProviderDefault()
+{
+    $map_prov_default = SystemPref::Get("MapProviderDefault");
+    if (!$map_prov_default) {$map_prov_default = "googlev3";}
+    else {$map_prov_default = strtolower($map_prov_default);}
+
+    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
+
+    $provider_available = true;
+
+    $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$map_prov_default]));
+    if (!$one_prov_usage) {$provider_available = false;}
+    if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {$provider_available = false;}
+
+    if (!$provider_available)
+    {
+        foreach ($sys_pref_names as $one_provider => $one_prov_name)
+        {
+            $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$one_prov_name]));
+
+            if (!$one_prov_usage) {continue;}
+            if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
+
+            $map_prov_default = $one_provider;
+            $provider_available = true;
+        }
+    }
+
+    if (!$provider_available)
+    {
+        $map_prov_default = "googlev3";
+    }
+
+    return $map_prov_default;
+}
 
 	/**
 	 * Gets info on map view
@@ -37,8 +72,16 @@ class Geo_Preferences extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
+public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapProvider = "")
 {
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+
     $map_width = SystemPref::Get("MapViewWidthDefault");
     if (!$map_width) {$map_width = 600;}
     $map_height = SystemPref::Get("MapViewHeightDefault");
@@ -53,41 +96,67 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
     if (!$map_view_lat) {$map_view_lat = "50.089926";}
     if (!$map_view_resol) {$map_view_resol = "4";}
 
-    $map_prov_default = SystemPref::Get("MapProviderDefault");
-    if (!$map_prov_default) {$map_prov_default = "";}
-    else {$map_prov_default = strtolower($map_prov_default);}
+    //echo "mp: '$p_mapProvider'\n";
+    $use_single_provider = false; // whether we already know which single map provider has to be used
+    if ("" != $p_mapProvider)
+    {
+        $use_single_provider = true;
+    }
+
+    $map_prov_default = "";
+    if ($use_single_provider)
+    {
+        $map_prov_default = $p_mapProvider;
+    }
+    else
+    {
+        $map_prov_default = SystemPref::Get("MapProviderDefault");
+        if (!$map_prov_default) {$map_prov_default = "";}
+        else {$map_prov_default = strtolower($map_prov_default);}
+    }
 
     // we only have support for googlev3 and osm for now
     //$map_prov_names_str = SystemPref::Get("MapProviderNames");
     //$map_prov_names_arr = explode(",", $map_prov_names_str);
+
     $map_prov_names_arr = array("googlev3", "osm");
+    if ($use_single_provider)
+    {
+        $map_prov_names_arr = array($p_mapProvider);
+    }
 
     $map_prov_includes = array();
     $map_prov_info_arr = array();
 
     $known_providers = array("googlev3" => false, "osm" => false);
+    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
     $usage_providers_count = 0;
 
     $map_prov_first = "";
     $map_prov_default_found = false;
+    //print_r($map_prov_names_arr);
     foreach ($map_prov_names_arr as $one_prov_name)
     {
         if ("" == $one_prov_name) {continue;}
 
-        $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($one_prov_name));
-        //$one_prov_include = SystemPref::Get("MapProviderInclude" . ucfirst($one_prov_name));
+        //$one_prov_usage = "true";
+        if (!$use_single_provider)
+        {
+            $one_prov_usage = SystemPref::Get("MapProviderAvailable" . ucfirst($sys_pref_names[$one_prov_name]));
+            //echo " opu: $one_prov_usage\n ";
+            if (!$one_prov_usage) {continue;}
+            if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
+        }
+
         $one_prov_include = "";
         if ("googlev3" == $one_prov_name)
         {
             $one_prov_include = "http://maps.google.com/maps/api/js?sensor=false";
         }
 
-        if (!$one_prov_usage) {continue;}
-        if (in_array(strtolower($one_prov_usage), array("0", "false", "no"))) {continue;}
-
         // up to now, we know how to deal with just a few map providers
         $one_prov_label = strtolower($one_prov_name);
-        if (!array_key_exists($one_prov_label, $map_prov_names_arr)) {continue;}
+        if (!in_array($one_prov_label, $map_prov_names_arr)) {continue;}
 
         $known_providers[$one_prov_label] = true;
         if ($one_prov_include && ("" != $one_prov_include))
@@ -119,8 +188,6 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
 
     }
 
-    //$cen_ini = array("long" => $map_view_long, "lat" => $map_view_lat, "res" => $map_view_resol);
-
     $providers_usage_arr = array();
     foreach ($known_providers as $provider => $usage)
     {
@@ -147,7 +214,7 @@ public static function GetMapInfo($p_htmlDir, $p_websiteUrl)
 	 *
 	 * @return string
 	 */
-public static function prepareMapIncludes($p_inclInfo)
+public static function PrepareMapIncludes($p_inclInfo)
 {
     $map_includes = "";
     foreach ($p_inclInfo as $js_source)
@@ -156,7 +223,7 @@ public static function prepareMapIncludes($p_inclInfo)
     }
 
     return $map_includes;
-} // fn prepareMapIncludes
+} // fn PrepareMapIncludes
 
 	/**
 	 * Gets info on marker icons
@@ -166,8 +233,15 @@ public static function prepareMapIncludes($p_inclInfo)
 	 *
 	 * @return array
 	 */
-public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
+public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
 {
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
     $no_arr = array("json_obj" => array('webdir' => "", 'default' => "", 'icons' => array()));
 
     $use_icons = array();
@@ -178,43 +252,21 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
         $icons_subpath = "/javascript/geocoding/markers";
     }
 
-    $icons_subdir = $p_htmlDir . $icons_subpath;
+    $icons_subdir = $cnf_html_dir . $icons_subpath;
     //echo $icons_subdir;
-    $icons_webdir = $p_websiteUrl . $icons_subpath;
+    $icons_webdir = $cnf_website_url . $icons_subpath;
     if (!is_dir($icons_subdir))
     {
         return $no_arr;
     }
 
-    $icons_default_label = SystemPref::Get("MapMarkerSourceDefault");
-    if (!$icons_default_label) {$icons_default_label = "";}
-    $icons_default_name = "";
+    //$icons_default_label = SystemPref::Set("MapMarkerSourceDefault", '');
+    $icons_default_name = SystemPref::Get("MapMarkerSourceDefault");
+    if (!$icons_default_name) {$icons_default_name = "";}
 
-    $sys_icons_arr = array();
-    $sys_icons_labels_str = SystemPref::Get("MapMarkerNames");
-    if ($sys_icons_labels_str)
-    {
-        $sys_icons_labels_arr = explode(",", $sys_icons_labels_str);
-        foreach ($sys_icons_labels_arr as $one_icon_pref_label)
-        {
-            if ("" == $one_icon_pref_label) {continue;}
-
-            $one_icon_pref_source = SystemPref::Get("MapMarkerSource" . ucfirst($one_icon_pref_label));
-            if (!$one_icon_pref_source)
-            {
-                continue;
-            }
-            $one_icon_pref_offx = SystemPref::Get("MapMarkerOffsetX" . ucfirst($one_icon_pref_label));
-            $one_icon_pref_offy = SystemPref::Get("MapMarkerOffsetY" . ucfirst($one_icon_pref_label));
-            //echo "$one_icon_pref_offx";
-            $sys_icons_arr[$one_icon_pref_source] = array('label' => $one_icon_pref_label, 'offx' => $one_icon_pref_offx, 'offy' => $one_icon_pref_offy);
-
-            if ($one_icon_pref_label == $icons_default_label)
-            {
-                $icons_default_name = $one_icon_pref_source;
-            }
-        }
-    }
+    $img_suffixes = array("png", "gif", "jpg", "jpe", "jpeg", "svg", "pbm", "bmp", "xpm", "xbm", "tif", "tiff");
+    $offset_x_names = array("offsetx", "offset_x", "offset x", "width offset");
+    $offset_y_names = array("offsety", "offset_y", "offset y", "height offset");
 
     $icons_first_name = "";
     $icons_default_name_exists = false;
@@ -224,38 +276,78 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
     foreach ($icons_arr as $one_name)
     {
         $img_label_arr = explode(".", $one_name);
-        if (2 != count($img_label_arr)) {continue;} // we expect that regyukar image files shall be icon_name.suffix
+        if (2 != count($img_label_arr)) {continue;} // we expect that regular image files shall be icon_name.suffix
         $img_label = $img_label_arr[0] . " (" . $img_label_arr[1] . ")";
 
         $web_path = $icons_webdir . "/" . $one_name;
         $one_path = $icons_subdir . "/" . $one_name;
         if (is_file($one_path))
         {
+            $one_name_parts = explode(".", $one_path);
+            $one_name_size = count($one_name_parts);
+            if (2 > $one_name_size) {continue;}
+            if (!in_array($one_name_parts[$one_name_size - 1], $img_suffixes)) {continue;}
+
             $img_info = getimagesize($one_path);
-            //echo "$one_path<br />\n";
-            //echo "$web_path<br />\n";
             if (!$img_info) {continue;}
 
+            $img_width_value = 0 + $img_info[0];
+            $img_height_value = 0 + $img_info[1];
             $img_width = "" . $img_info[0];
             $img_height = "" . $img_info[1];
             $img_width_off = "-" . floor($img_info[0] / 2);
-            $img_height_off = "-" . ($img_info[1] - 0); // the "-5" is done so that the default icons fit
+            $img_height_off = "-" . ($img_info[1] - 0);
             //echo "$img_width_off x $img_height_off<br />\n";
 
-            //$img_label = $one_name;
-            //echo $one_name . " \n";
-            if (array_key_exists($one_name, $sys_icons_arr))
+            $one_name_parts[$one_name_size - 1] = "ini";
+            $one_name_desc = implode(".", $one_name_parts);
+            $one_file_desc = fopen($one_name_desc, "r");
+            if (!$one_file_desc)
             {
-                $one_use_pref = $sys_icons_arr[$one_name];
-                if ($one_use_pref['label']) {$img_label = $one_use_pref['label'];}
-                if ($one_use_pref['offx']) {$img_width_off = $one_use_pref['offx'];}
-                if ($one_use_pref['offy']) {$img_height_off = $one_use_pref['offy'];}
+                $one_name_parts[$one_name_size - 1] = "txt";
+                $one_name_desc = implode(".", $one_name_parts);
+                $one_file_desc = fopen($one_name_desc, "r");
             }
 
-            //array_push($use_icons, array('label' => $img_label, 'path' => $web_path, 'width_off' => $img_width_off, 'height_off' => $img_height_off));
+            if ($one_file_desc)
+            {
+                while (true)
+                {
+                    $one_img_info = fgets($one_file_desc);
+                    if (!$one_img_info) {break;}
+
+                    $one_img_info = trim($one_img_info);
+                    if (0 == strlen($one_img_info)) {continue;}
+                    if ("#" == $one_img_info[0]) {continue;}
+
+                    $info_arr = explode(":", $one_img_info);
+                    if (2 > count($info_arr))
+                    {
+                        $info_arr = explode(",", $one_img_info);
+                    }
+                    if (2 > count($info_arr)) {continue;}
+
+                    $one_param = strtolower(trim($info_arr[0]));
+                    $one_value = trim($info_arr[1]);
+
+                    if (in_array($one_param, $offset_x_names))
+                    {
+                        if (is_numeric($one_value)) {$img_width_off = "" . ($one_value - $img_width_value);}
+                    }
+                    if (in_array($one_param, $offset_y_names))
+                    {
+                        if (is_numeric($one_value)) {$img_height_off = "" . ($one_value - $img_height_value);}
+                    }
+
+                }
+
+                fclose($one_file_desc);
+            }
+
             $use_icons[] = array('label' => $img_label, 'name' => $one_name, 'path' => $web_path, 'width_off' => $img_width_off, 'height_off' => $img_height_off, 'width' => $img_width, 'height' => $img_height);
 
             if ("" == $icons_first_name) {$icons_first_name = $one_name;}
+            //echo "$one_name == $icons_default_name";
             if ($one_name == $icons_default_name) {$icons_default_name_exists = true;}
         }
     }
@@ -267,7 +359,47 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
 
     $res_icons_info = array('webdir' => $icons_webdir, 'default' => $icons_default_name, 'icons' => $use_icons);
     return array("json_obj" => $res_icons_info);
-} // fn getIconsInfo
+} // fn GetIconsInfo
+
+
+public static function GetSearchInfo($p_htmlDir, $p_websiteUrl)
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+
+    $no_arr = array("json_obj" => array('webdir' => "", 'default' => "", 'icons' => array()));
+
+    $use_icons = array();
+
+    $icons_subpath = "/javascript/geocoding/search";
+    $icon_filename = "search.png";
+
+    $icons_subdir = $cnf_html_dir . $icons_subpath;
+    //echo $icons_subdir;
+    $icons_webdir = $cnf_website_url . $icons_subpath;
+
+    $icons_default_name = "search";
+    $search_icon = array(
+        "label" => "search",
+        "name" => $icon_filename,
+        "path" => $icons_webdir . "/" . $icon_filename,
+        "width" => "200",
+        "height" => "150",
+        "width_off" => "-100",
+        "height_off" => "-75",
+    );
+
+    $use_icons[] = $search_icon;
+
+    $res_icons_info = array('webdir' => $icons_webdir, 'default' => $icons_default_name, 'icons' => $use_icons);
+    return array("json_obj" => $res_icons_info);
+} // fn GetIconsInfo
+
 
 	/**
 	 * Gets info on popups
@@ -277,8 +409,16 @@ public static function getIconsInfo($p_htmlDir, $p_websiteUrl)
 	 *
 	 * @return array
 	 */
-public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
+public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
 {
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+
     //$popup_width = SystemPref::Get("MapPopupWidthDefault");
     $popup_width = SystemPref::Get("MapPopupWidthMin");
     if (!$popup_width) {$popup_width = 300;}
@@ -288,13 +428,6 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $size_info = array("width" => $popup_width, "height" => $popup_height);
 
-    //$video_default = SystemPref::Get("MapVideoDefault");
-    //if (!$video_default) {$video_default = "YouTube";}
-
-    //$video_names_str = SystemPref::Get("MapVideoNames");
-    //if (!$video_names_str) {$video_names_str = "";}
-
-    //$video_names_arr = explode(",", $video_names_str);
     $video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
     $video_names_info = array();
     $video_names_info["YouTube"] = array("width" => '425', "height" => '350');
@@ -302,31 +435,20 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
     $video_names_info["Flash"] = array("width" => '300', "height" => '200');
     $video_names_info["Flv"] = array("width" => '300', "height" => '280');
 
-    //$video_name_first = "";
-    //$video_default_found = false;
     foreach ($video_names_arr as $one_video_label)
     {
         if ("" == $one_video_label) {continue;}
 
-        //$video_avail = SystemPref::Get("MapVideoAvailable_" . $one_video_label);
-        //if (!$video_avail) {continue;}
-        //if (in_array(strtolower($video_avail), array("0", "false", "no"))) {continue;}
-
-        //$video_source = SystemPref::Get("MapVideoSource" . ucfirst($one_video_label));
         $video_width = SystemPref::Get("MapVideoWidth" . ucfirst($one_video_label));
         $video_height = SystemPref::Get("MapVideoHeight" . ucfirst($one_video_label));
-        //if (!$video_source) {continue;}
+
         if ((!$video_width) && ("" == $video_width)) {continue;}
         if ((!$video_height) && ("" == $video_height)) {continue;}
 
-        //$video_names_info[] = array("label" => $one_video_label, "source" => $video_source, "width" => $video_width, "height" => $video_height);
         $video_names_info[$one_video_label]["width"] = $video_width;
         $video_names_info[$one_video_label]["height"] = $video_height;
 
-        //if ("" == $video_name_first) {$video_name_first = $one_video_label;}
-        //if ($one_video_label == $video_default) {$video_default_found = true;}
     }
-    //if (!$video_default_found) {$video_default = $video_name_first;}
 
     $youtube_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="http://www.youtube.com/v/%%id%%"></param><param name="wmode" value="transparent"></param><embed src="http://www.youtube.com/v/%%id%%" type="application/x-shockwave-flash" wmode="transparent" width="%%w%%" height="%%h%%"></embed></object>';
     $vimeo_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" /><embed src="http://www.vimeo.com/moogaloop.swf?clip_id=%%id%%&server=www.vimeo.com&show_title=1&show_byline=1&show_portrait=0&color=&fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="%%w%%" height="%%h%%"></object>';
@@ -335,51 +457,20 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
     $flash_src_default = '<object width="%%w%%" height="%%h%%"><param name="allowFullScreen" value="true"/><param name="wmode" value="transparent"/><param name="movie" value="%%path%%%%id%%"/><embed src="%%path%%%%id%%" width="%%w%%" height="%%h%%" allowFullScreen="true" type="application/x-shockwave-flash" wmode="transparent"/></object>';
     $flv_src_default = '<object width="%%w%%" height="%%h%%"><param name="movie" value="%%path%%player.swf"></param><param name="flashvars" value="src=%%path%%%%id%%&amp;poster=%%path%%%%ps%%&amp;controlBarAutoHide=true"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="%%path%%player.swf" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="%%w%%" height="%%h%%" flashvars="src=%%path%%%%id%%&amp;poster=%%path%%%%ps%%&amp;controlBarAutoHide=true"></embed></object>';
 
-    // if nothing configured, use the default
-    //if (0 == count($video_names_usage))
     $flash_server = "";
     $flash_directory = "";
     {
         $flash_server_setting = SystemPref::Get("FlashServer");
         $flash_directory_setting = SystemPref::Get("FlashDirectory");
-        //echo "--- $flash_directory_setting ---\n";
 
         // if not a flash server set, use the cs server
         if ((!$flash_server_setting) || ("" == $flash_server_setting))
         {
-            $flash_server = $p_websiteUrl;
+            $flash_server = $cnf_website_url;
             if ("/" != strrchr($flash_server, "/"))
             {
                 $flash_server .= "/";
             }
-
-/*
-            //echo "$p_websiteUrl";
-            $domain_end = strpos($p_websiteUrl, "/", 8);
-            if (false === $domain_end)
-            {
-                $flash_server = $p_websiteUrl;
-                $flash_directory = "/";
-            }
-            else
-            {
-                $flash_server = substr($p_websiteUrl, 0, $domain_end);
-                $flash_directory = substr($p_websiteUrl, $domain_end);
-                if (1 < strlen(strrchr($flash_directory, "/")))
-                {
-                    $flash_directory .= "/";
-                }
-            }
-
-            if ((!$flash_directory_setting) || ("" == $flash_directory_setting))
-            {
-                $flash_directory .= "videos/";
-            }
-            else
-            {
-                $flash_directory .= $flash_directory_setting;
-            }
-*/
         }
         else // use the set server for the flash files
         {
@@ -409,7 +500,6 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
             $flash_path .= "/";
         }
 
-        //$video_default = "YouTube";
         $cur_info = $video_names_info["YouTube"];
         $video_names_usage[] = array("label" => "YouTube", "source" => $youtube_src_default, "width" => $cur_info['width'], "height" => $cur_info['height']);
         $cur_info = $video_names_info["Vimeo"];
@@ -422,7 +512,6 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
         $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
     }
 
-    //$video_info = array("default" => $video_default, "labels" => $video_names_usage);
     $video_info = array("labels" => $video_names_usage);
 
 /*
@@ -481,9 +570,72 @@ public static function getPopupsInfo($p_htmlDir, $p_websiteUrl)
     //$res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info, "audio" => $audio_info);
     $res_popups_info = array("width" => $size_info["width"], "height" => $size_info["height"], "video" => $video_info);
     return array("json_obj" => $res_popups_info);
-} // fn getPopupsInfo
+} // fn GetPopupsInfo
 
 
-} // class Geo_Locations
+public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+    $no_arr = array();
+
+    $use_icons = array();
+
+    $icons_subpath = SystemPref::Get("MapMarkerDirectory");
+    if (!$icons_subpath)
+    {
+        $icons_subpath = "/javascript/geocoding/markers";
+    }
+
+    $icons_subdir = $cnf_html_dir . $icons_subpath;
+    //echo $icons_subdir;
+    $icons_webdir = $cnf_website_url . $icons_subpath;
+    if (!is_dir($icons_subdir))
+    {
+        return $no_arr;
+    }
+
+    $img_suffixes = array("png", "gif", "jpg", "jpe", "jpeg", "svg", "pbm", "bmp", "xpm", "xbm", "tif", "tiff");
+    $offset_x_names = array("offsetx", "offset_x", "offset x", "offset\tx", "width offset");
+    $offset_y_names = array("offsety", "offset_y", "offset y", "offset\ty", "height offset");
+
+    $icons_arr = scandir($icons_subdir);
+    //print_r($sys_icons_arr);
+    foreach ($icons_arr as $one_name)
+    {
+        $img_label_arr = explode(".", $one_name);
+        if (2 != count($img_label_arr)) {continue;} // we expect that regular image files shall be icon_name.suffix
+        $img_label = $img_label_arr[0] . " (" . $img_label_arr[1] . ")";
+
+        $web_path = $icons_webdir . "/" . $one_name;
+        $one_path = $icons_subdir . "/" . $one_name;
+        if (is_file($one_path))
+        {
+            $one_name_parts = explode(".", $one_path);
+            $one_name_size = count($one_name_parts);
+            if (2 > $one_name_size) {continue;}
+            if (!in_array($one_name_parts[$one_name_size - 1], $img_suffixes)) {continue;}
+
+            $img_info = getimagesize($one_path);
+            //echo "$one_path<br />\n";
+            //echo "$web_path<br />\n";
+            if (!$img_info) {continue;}
+
+            $use_icons[] = $one_name;
+
+        }
+    }
+
+    return $use_icons;
+
+}
+
+
+} // class Geo_Preferences
 
 ?>

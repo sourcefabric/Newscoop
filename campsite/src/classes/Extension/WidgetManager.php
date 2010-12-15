@@ -21,13 +21,28 @@ require_once dirname(__FILE__) . '/FeedWidget.php';
  */
 class WidgetManager
 {
+    /** @var array */
+    private static $defaults = array(
+        'MostPopularArticlesWidget',
+        'PendingArticlesWidget',
+        'RecentlyModifiedArticlesWidget',
+        'RecentlyPublishedArticlesWidget',
+        'SubmittedArticlesWidget',
+        'YourArticlesWidget',
+    );
+
     /**
      * Get available widgets for user
+     * @param int|NULL $uid
      * @return array of IWidget
      */
-    public static function GetAvailable()
+    public static function GetAvailable($uid = NULL)
     {
-        global $g_ado_db, $g_user;
+        global $g_user;
+
+        if ($uid === NULL) {
+            $uid = $g_user->getUserId();
+        }
 
         // get all widget extensions
         $index = new Extension_Index();
@@ -38,7 +53,7 @@ class WidgetManager
         $widgets = array();
         foreach ($extensions as $extension) {
             $widget = WidgetManagerDecorator::GetByExtension($extension);
-            if ($widget->isAvailable()) {
+            if ($widget->isAvailable($uid)) {
                 $widgets[] = $widget;
             }
         }
@@ -77,24 +92,51 @@ class WidgetManager
      * Add widget to user dashboard
      * @param int $widgetId
      * @param string $contextName
+     * @param int $uid
      * @return bool
      */
-    public static function AddWidget($widgetId, $contextName)
+    public static function AddWidget($widgetId, $contextName, $uid = NULL)
     {
         global $g_ado_db, $g_user;
 
         // get context object
         $context = new WidgetContext($contextName);
 
+        // set uid
+        if (empty($uid)) {
+            $uid = $g_user->getUserId();
+        }
+
         $id = 'w' . substr(sha1(uniqid() . $g_user->getUserId()), -12);
         $widget = new WidgetManagerDecorator(array(
             'id' => $id,
             'fk_widget_id' => (int) $widgetId,
             'fk_widgetcontext_id' => $context->getId(),
-            'fk_user_id' => $g_user->getUserId(),
+            'fk_user_id' => (int) $uid,
             'order' => 'MIN(`order`) - 1',
         ));
         $widget->create();
         return $id;
+    }
+
+    /**
+     * Set default widgets for g_user
+     * @param int $p_uid
+     * @return void
+     */
+    public static function SetDefaultWidgets($p_uid)
+    {
+        $contexts = array(
+            new WidgetContext('dashboard1'),
+            new WidgetContext('dashboard2'),
+        );
+        $context = 0;
+        foreach (WidgetManager::GetAvailable($p_uid) as $widget) {
+            $extension = $widget->getExtension();
+            if (in_array($extension->getClass(), self::$defaults)) {
+                self::AddWidget($extension->getId(), $contexts[$context]->getName(), (int) $p_uid);
+                $context = ($context + 1) % 2;
+            }
+        }
     }
 }

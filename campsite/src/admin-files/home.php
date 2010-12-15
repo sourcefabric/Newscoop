@@ -21,13 +21,12 @@ camp_load_translation_strings("articles");
 camp_load_translation_strings("api");
 camp_load_translation_strings("extensions");
 
-$NumDisplayArticles = 20;
-
-$pendingArticles = ArticlePublish::GetFutureActions($NumDisplayArticles);
-$pendingIssues = IssuePublish::GetFutureActions($NumDisplayArticles);
-$pendingActions = array_merge($pendingArticles, $pendingIssues);
-ksort($pendingActions);
-$pendingActions = array_slice($pendingActions, 0, $NumDisplayArticles);
+ // install default widgets for admin
+if ($g_user->getUserId() == 1
+    && SystemPref::Get('AdminWidgetsInstalled') == NULL) {
+    WidgetManager::SetDefaultWidgets(1);
+    SystemPref::Set('AdminWidgetsInstalled', time());
+}
 
 $crumbs = array();
 $crumbs[] = array(getGS("Home"), "");

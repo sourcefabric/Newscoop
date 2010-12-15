@@ -3,9 +3,11 @@ var geo_locations = {};
 
 geo_locations.display_strings = {
     fill_in_map_name: "fill in map name",
+    point_markers: "Point markers",
     this_should_not_happen_now: "problem at point processing, please send error report",
     really_to_delete_the_point: "Really to delete the point?",
     the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
+    point_number: "Point no.",
     fill_in_the_point_description: "fill in the point description",
     problem_with_map_processing: "problem with map processing",
     probably_logged_out: "probably logged out",
@@ -130,9 +132,11 @@ geo_locations.set_display_strings = function(local_strings)
 
     var display_string_names = [
         "fill_in_map_name",
+        "point_markers",
         "this_should_not_happen_now",
         "really_to_delete_the_point",
         "the_removal_is_from_all_languages",
+        "point_number",
         "fill_in_the_point_description",
         "problem_with_map_processing",
         "probably_logged_out",
@@ -216,7 +220,7 @@ geo_locations.set_map_height = function(height)
 geo_locations.set_map_info = function(params)
 {
     //alert("geo_locations.set_map_info");
-    this.map_view_layer_default = params.default;
+    this.map_view_layer_default = params['default'];
     var prov_len = params.providers.length;
     for (var pind = 0; pind < prov_len; pind++)
     {
@@ -274,7 +278,7 @@ geo_locations.set_map_usage = function(params)
 geo_locations.set_icons_info = function(params)
 {
     this.marker_src_base = params.webdir;
-    this.marker_src_default = params.default;
+    this.marker_src_default = params['default'];
     this.marker_src_labels = [];
     this.marker_src_icons = {};
 
@@ -967,7 +971,10 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
         );
     }
 
-    var poi_title = "POI no. " + (this.descs_count_inc + 1);
+    //var poi_title = "Point no. " + (this.descs_count_inc + 1);
+    //var poi_title = "POI no. " + (this.descs_count_inc + 1);
+    var poi_title = this.display_strings.point_number + " " + (this.descs_count_inc + 1);
+
     if (undefined !== label)
     {
         poi_title = label;
@@ -1109,7 +1116,7 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
-            new OpenLayers.Control.PanZoomBar(),
+            //new OpenLayers.Control.PanZoomBar(),
             geo_locations.pzb_ctrl,
             new OpenLayers.Control.ScaleLine(),
             //new OpenLayers.Control.LayerSwitcher({'ascending':false}),
@@ -1214,7 +1221,8 @@ var geo_main_openlayers_init = function(map_div_name)
 
     // layer for features
     geo_locations.layer = new OpenLayers.Layer.Vector(
-        "POI markers",
+        //"POI markers",
+        geo_locations.display_strings.point_markers,
         {
             styleMap: style_map,
             isBaseLayer: false,

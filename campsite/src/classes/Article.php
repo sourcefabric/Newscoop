@@ -10,9 +10,11 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleData.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
+require_once dirname(__FILE__) . '/GeoMap.php';
 
 /**
  * @package Campsite
@@ -374,6 +376,23 @@ class Article extends DatabaseObject {
         }
         $newArticleNumber = $this->__generateArticleNumber();
 
+        // geo-map copying
+        if (0 < count($copyArticles))
+        {
+            $map_user_id = $p_userId;
+            if (is_null($map_user_id)) {
+                $map_user_id = $this->m_data['IdUser'];
+            }
+
+            $map_artilce_src = (int)$this->m_data['Number'];
+            $map_artilce_dest = (int)$newArticleNumber;
+            $map_translations = array();
+            foreach ($copyArticles as $copyMe) {
+                $map_translations[] = (int)$copyMe->m_data['IdLanguage'];
+            }
+            Geo_Map::OnArticleCopy($map_artilce_src, $map_artilce_dest, $map_translations, $map_user_id);
+        }
+
         // Load translation file for log message.
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
@@ -590,6 +609,9 @@ class Article extends DatabaseObject {
             $articleCopy->getTitle(), $articleCopy->getLanguageName());
         Log::ArticleMessage($this, $logtext, null, 31);
 
+        // geo-map processing
+        Geo_Map::OnCreateTranslation($this->m_data['Number'], $this->m_data['IdLanguage'], $p_languageId);
+
         return $articleCopy;
     } // fn createTranslation
 
@@ -635,6 +657,17 @@ class Article extends DatabaseObject {
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
                 $this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
+        }
+
+        // geo-map processing
+        // is this the last translation?
+        if (count($this->getLanguages()) <= 1) {
+            // unlink the article-map pointers
+            Geo_Map::OnArticleDelete($this->m_data['Number']);
+        }
+        else {
+            // removing non-last translation of the map poi contents
+            Geo_Map::OnLanguageDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
         }
 
         // Delete row from article type table.
@@ -1643,6 +1676,14 @@ class Article extends DatabaseObject {
     } // fn setCommentsLocked
 
 
+    /**
+     * @return GeoMap
+     */
+    public function getMap()
+    {
+        return Geo_Map::GetMapByArticle($this->getArticleNumber());
+    }
+
     /*****************************************************************/
     /** Static Functions                                             */
     /*****************************************************************/
@@ -2376,6 +2417,21 @@ class Article extends DatabaseObject {
                 $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right']);
                 $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
                 $selectClauseObj->addWhere($mainClauseConstraint);
+            } elseif ($leftOperand == 'location') {
+                $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
+                if (preg_match("/($num) ($num), ($num) ($num)/",
+                    trim($comparisonOperation['right']), $matches)) {
+                    $queryLocation = Geo_Map::GetGeoSearchSQLQuery(array(
+                        array(
+                            'latitude' => $matches[1],
+                            'longitude' => $matches[2],
+                        ), array(
+                            'latitude' => $matches[3],
+                            'longitude' => $matches[4],
+                        ),
+                    ));
+                    $selectClauseObj->addWhere("Articles.Number IN ($queryLocation)");
+                }
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields

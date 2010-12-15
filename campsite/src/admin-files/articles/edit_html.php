@@ -367,35 +367,45 @@ if ($articleObj->userCanModify($g_user) && $locked && ($f_edit_mode == "edit")) 
 
                 <td align="right" valign="top" id="author_type">
                 <?php
+                if ($f_edit_mode == "edit") {
                 $i = 0;
                 foreach ((array) $types_list as $type) {
                     echo "<div id=\"author_type$i\" style=\"margin-top:1px\">" . drawCombo($types,$type,$i) . "</div>";
                     $i++;
                 }
                 ?>
-                <select name="article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
+                <select name="f_article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" onchange="buttonEnable('save_f_article_author');" style="width:130px;height:100%;float:none">
                     <?php echo drawComboContent(); ?></select>
                 </td>
                 <td align="left" valign="top">
-                    <?php if ($f_edit_mode == "edit") {  ?>
                     <div id="authorAutoComplete">
                     <?php
                     foreach ((array) $author_list as $author) {
                         echo $author;
-                    }?>
+                    }
+                    ?>
                         <div id="authorContainer">
                             <input type="text" style="width:280px" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text aauthor" onkeyup="buttonEnable('save_f_article_author');" /><img border="0" src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/unlink.png" id="removeauthorxx" onclick="deleteAuthor('xx');" />
                         </div>
-                        <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()">
+                        <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" onclick="addAuthor()" />
                     </div>
-                    <?php } else {
+                    <?php } else { ?>
+                  <b><?php putGS("Authors"); ?>:</b>
+                </td>
+                <td align="left" valign="top">
+                    <?php
                         $ath = '';
                         $authors = ArticleAuthor::GetArticleAuthorList($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-                        foreach ($authors as $author) {
-                            if (strlen($ath)>0) {
-                                $ath.=", ";
+                        if (!empty($authors)) {
+                            foreach ($authors as $author) {
+                                if (strlen($ath) > 0) {
+                                    $ath .= ", ";
+                                }
+                                $athType = new AuthorType($author['fk_type_id']);
+                                $ath .= $athType->getName() . ': ';
+                                $ath .= $author['first_name'] . ' ' . $author['last_name'];
+                                
                             }
-                            $ath .= $author['first_name'] . ' ' . $author['last_name'];
                         }
                         print wordwrap(htmlspecialchars($ath), 60, "<br>");
                     }

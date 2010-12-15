@@ -45,6 +45,28 @@ class ArticleList extends BaseList
 
         // generate random ids - more tables per page
         $this->id = substr(sha1((string) mt_rand()), -6);
+
+        $this->cols = array(
+            'Number' => NULL,
+            'Language' => getGS('Language'),
+            'Order' => getGS('Order'),
+            'Name' => getGS('Name'),
+            'Type' => getGS('Type'),
+            'Created' => getGS('Created by'),
+            'Author' => getGS('Author'),
+            'Status' => getGS('Status'),
+            'OnFronPage' => getGS('On Front Page'),
+            'OnSectionPage' => getGS('On Section Page'),
+            'Images' => getGS('Images'),
+            'Topics' => getGS('Topics'),
+            'Comments' => getGS('Comments'),
+            'Reads' => getGS('Reads'),
+            'UseMap' => getGS('Use Map'),
+            'Locations' => getGS('Locations'),
+            'CreateDate' => getGS('Create Date'),
+            'PublishDate' => getGS('Publish Date'),
+            'LastModified' => getGS('Last Modified'),
+        );
     }
 
     /**

@@ -80,6 +80,7 @@ $no_menu_scripts = array(
     $prefix . 'password_check_token.php',
     '/articles/locations/popup.php',
     '/articles/locations/preview.php',
+    '/articles/locations/search.php',
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);

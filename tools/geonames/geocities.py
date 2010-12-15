@@ -39,12 +39,12 @@ LCOL_CC, LCOL_CCOTHER, LCOL_A1C, LCOL_A2C, LCOL_A3C, LCOL_A4C  = list(range(8, (
 LCOL_POP, LCOL_ELE, LCOL_ELEAVG, LCOL_TZONE = list(range(14, (14 + 4)))
 LCOL_MOD = 18
 
-CITY_COLUMNS = ['city_id', 'city_type', 'population', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified']
+CITY_COLUMNS = ['id', 'city_type', 'population', 'elevation', 'country_code', 'time_zone']
 CITY_COLUMNS_STR = ", ".join(CITY_COLUMNS)
 CITY_QM = ['%%s'] * len(CITY_COLUMNS)
 CITY_QM_STR = ", ".join(CITY_QM)
 
-NAME_COLUMNS = ['city_id', 'city_name', 'name_type']
+NAME_COLUMNS = ['fk_citylocations_id', 'city_name', 'name_type']
 NAME_COLUMNS_STR = ", ".join(NAME_COLUMNS)
 NAME_QM = ['%s'] * len(NAME_COLUMNS)
 NAME_QM_STR = ", ".join(NAME_QM)
@@ -156,9 +156,9 @@ class GeoNamesLoader(object):
                 continue
             city_ids.append(city_id)
 
-            city_name_main = line_list[LCOL_MAIN]
-            city_name_ascii = line_list[LCOL_ASCII]
-            city_name_lower = city_name_ascii.lower()
+            city_name_main = line_list[LCOL_MAIN].strip()
+            city_name_ascii = line_list[LCOL_ASCII].strip()
+            city_name_lower = city_name_ascii.lower().strip()
             city_name_other = line_list[LCOL_OTHER].split(",")
 
             city_type = line_list[LCOL_FCODE]
@@ -179,12 +179,12 @@ class GeoNamesLoader(object):
 
             city_mod = line_list[LCOL_MOD]
 
-            city_data = [city_id, city_type, city_pop, city_lat, city_lon, city_ele, city_cc, city_tz, city_mod]
+            city_data = [city_id, city_type, city_pop, city_ele, city_cc, city_tz]
             res = self.insert_city(city_data, city_pos)
             if not res:
                 return -1
 
-            used_names = []
+            used_names = [""]
             #for one_name, one_type in [[city_name_main, "main"], [city_name_ascii, "ascii"], [city_name_lower, "lower"]]:
             for one_name, one_type in [[city_name_main, "main"], [city_name_ascii, "ascii"]]:
                 if one_name in used_names:
@@ -195,6 +195,7 @@ class GeoNamesLoader(object):
                     return -1
 
             for one_name in city_name_other:
+                one_name = one_name.strip()
                 if one_name in used_names:
                     continue
                 used_names.append(one_name);
