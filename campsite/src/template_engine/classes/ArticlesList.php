@@ -375,7 +375,7 @@ class ArticlesList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
         }
 
-        if (!empty($parameters['location']) && false) {
+        if (!empty($parameters['location'])) {
             $this->m_constraints[] = new ComparisonOperation('location',
                 new Operator('is', 'string'), $parameters['location']);
         }
