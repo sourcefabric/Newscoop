@@ -180,9 +180,22 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             $mm_params[] = 0 + $poi["video_width"];
             $mm_params[] = 0 + $poi["video_height"];
 
-            $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
+            $mm_options = ""; // currently no options used
+            $reuse_id = Geo_Multimedia::FindMedia("video", $poi["video_type"], $poi["video_id"], $poi["video_width"], $poi["video_height"], $mm_options);
 
-            $mm_id = $g_ado_db->Insert_ID();
+            $mm_id = 0;
+            if ($reuse_id && (0 < $reuse_id))
+            {
+                $mm_id = $reuse_id;
+            }
+            else
+            {
+                $queryStr_mm = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_mm);
+
+                $success = $g_ado_db->Execute($queryStr_mm, $mm_params);
+
+                $mm_id = $g_ado_db->Insert_ID();
+            }
 
             $loc_mm_params = array();
             $loc_mm_params[] = $ml_id;
