@@ -9,7 +9,7 @@
  */
 
 /**
- * Geolocations Map interace
+ * Geolocations Map interface
  */
 interface IGeoMap
 {

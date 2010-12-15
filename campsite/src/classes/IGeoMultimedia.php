@@ -9,7 +9,7 @@
  */
 
 /**
- * Geo Multimedia interace
+ * Geo Multimedia interface
  */
 interface IGeoMultimedia
 {

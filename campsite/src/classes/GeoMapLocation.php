@@ -7,6 +7,7 @@ require_once dirname(__FILE__) . '/DatabaseObject.php';
 require_once dirname(__FILE__) . '/GeoLocation.php';
 require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
+require_once dirname(__FILE__) . '/GeoMapLocationLanguage.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 require_once dirname(__FILE__) . '/IGeoMapLocation.php';
 
@@ -118,6 +119,17 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $this->multimedia = Geo_Multimedia::GetByMapLocation($this);
         }
         return $this->multimedia;
+    }
+
+    /**
+     * Point is displayable?
+     * @return bool
+     */
+    public function isEnabled($language)
+    {
+        $language = (int) $language;
+        $contentLanguage = new Geo_MapLocationLanguage($this, $language);
+        return $contentLanguage->isEnabled();
     }
 
     /**
