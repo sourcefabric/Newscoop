@@ -10,6 +10,7 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
 
 /**
  * @package Campsite
@@ -345,7 +346,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
             }
             if ($poi["state_changed"])
             {
-                Geo_LocationContent::UpdateState($poi);
+                Geo_MapLocationContent::UpdateState($poi);
             }
             if ($poi["image_changed"])
             {
@@ -359,7 +360,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
             //if (!$poi["text_changed"]) {continue;}
             if ($poi["text_changed"])
             {
-                Geo_LocationContent::UpdateText($poi);
+                Geo_MapLocationContent::UpdateText($poi);
             }
 
         }

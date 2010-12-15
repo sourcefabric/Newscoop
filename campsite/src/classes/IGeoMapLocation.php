@@ -24,7 +24,7 @@ interface IGeoMapLocation extends IGeoLocation
     /**
      * Get content
      * @param int $language
-     * @return IGeoLocationContent
+     * @return IGeoMapLocationContent
      */
     public function getContent($language);
 }
