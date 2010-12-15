@@ -1525,9 +1525,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $queryStr_maploclan .= "VALUES (?, ?, ?, ?)";
 
 
-        //$languages = Geo_Map::ReadLanguagesByArticle($p_articleNumber);
-        $languages = Geo_Map::ReadLanguagesByMap($p_mapId);
-
+        if ($p_articleNumber)
+        {
+            $languages = Geo_Map::ReadLanguagesByArticle($p_articleNumber);
+        }
+        else
+        {
+            $languages = Geo_Map::ReadLanguagesByMap($p_mapId);
+        }
 
         foreach ($p_insertion as $poi)
         {
