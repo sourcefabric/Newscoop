@@ -8,128 +8,234 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
-
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocationContent.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoMap.php');
 
 /**
  * @package Campsite
  */
-class Geo_Map extends DatabaseObject {
+class Geo_Map extends DatabaseObject implements IGeoMap
+{
+    const TABLE = 'Maps';
+
     /**
-     * The column names used for the primary key.
+     * @var string
+     */
+    public $m_dbTableName = self::TABLE;
+
+    /**
      * @var array
      */
-    var $m_keyColumnNames = array('id');
+    public $m_keyColumnNames = array('id');
 
-    var $m_dbTableName = 'Maps';
-
-    var $m_columnNames = array(
-        // int - Map ID
-        'id',
-
-        // int - link to the respective article
-        'fk_article_number',
-
-        // int - rank of the map in the article
-        'MapRank',
-
-        // int - map enabled
-        'MapUsage',
-
-        // real - initial map center
-        'MapCenterLongitude',
+    /**
+     * @var array
+     */
+    public $m_columnNames = array(
+        'id', // int - Map ID
+        'fk_article_number', // int - link to the respective article
+        'MapRank', // int - rank of the map in the article
+        'MapUsage', // int - map enabled
+        'MapCenterLongitude', // real - initial map center
         'MapCenterLatitude',
-
-        // int - initial map resolution
-        'MapDisplayResolution',
-
-        // string - the map to be used for readers
-        'MapProvider',
-
-        // int - the map div size
-        'MapWidth',
+        'MapDisplayResolution', // int - initial map resolution
+        'MapProvider', // string - the map to be used for readers
+        'MapWidth', // int - the map div size
         'MapHeight',
+        'MapName', // string - the map name
+        'IdUser', // int - management related things
+        'time_updated' // timestamp
+    );
 
-        // string - the map name
-        'MapName',
+    /**
+     * Constructor
+     *
+     * @param int $p_id
+     * @return Map
+     */
+    public function __construct($p_id = null)
+    {
+        if (is_numeric($p_id)) {
+            $this->m_data['id'] = $p_id;
+            $this->fetch();
+        }
+    }
 
-        // int - management related things
-        'IdUser',
-        // timestamp
-        'time_updated');
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
-	/**
-	 * The article attachment table links together articles with Attachments.
-	 *
-	 * @param int $p_id
-	 * @return Map
-	 */
-	public function Geo_Map($p_id = null)
-	{
-		if (is_numeric($p_id)) {
-			$this->m_data['id'] = $p_id;
-		}
-	} // constructor
+    /**
+     * TODO: obsolete, use $this->getId() instead.
+     */
+    public function GetMapId()
+    {
+        return (int) $this->m_data['id'];
+    }
 
-	/**
-	 * @return int
-	 */
-	public function GetMapId()
-	{
-		return $this->m_data['id'];
-	} // fn getMapId
+    /**
+     * @return int
+     */
+    public function getArticleNumber()
+    {
+        return (int) $this->m_data['fk_article_number'];
+    }
 
-	/**
-	 * @return int
-	 */
-	public static function GetArticleMapId($p_articleObj)
-	{
+    /**
+     * @return double
+     */
+    public function getInitialCenterLongitude()
+    {
+        return (double) $this->m_data['MapCenterLongitude'];
+    }
+
+    /**
+     * @return double
+     */
+    public function getInitialCenterLatitude()
+    {
+        return (double) $this->m_data['MapCenterLatitude'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getDisplayResolution()
+    {
+        return (int) $this->m_data['MapDisplayResolution'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getMapProvider()
+    {
+        return (string) $this->m_data['MapProvider'];
+    }
+
+    /**
+     * @return array
+     */
+    public function getDimensions()
+    {
+        return array('width' => (int) $this->m_data['MapWidth'],
+            'height' => (int) $this->m_data['MapHeight']);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return (string) $this->m_data['MapName'];
+    }
+
+    /**
+     * @return User|NULL
+     */
+    public function getUser()
+    {
+        $userObj = new User($this->m_data['IdUser']);
+        return ($userObj->exists()) ? $userObj : NULL;
+    }
+
+    /**
+     * @return timestamp
+     */
+    public function getLastModified()
+    {
+        return $this->m_data['time_updated'];
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled()
+    {
+        return (bool) ((int) $this->m_data['MapUsage']);
+    }
+
+    /**
+     * @return array of IGeoMapLocation
+     */
+    public function getLocations()
+    {
+        $locations = Geo_MapLocation::GetByMap($this);
+        return (array) $locations;
+    }
+
+    /**
+     * @param int $p_articleNumber
+     * @return Geo_Map
+     */
+    public static function GetMapByArticle($p_articleNumber)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT id
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ' . (int) $p_articleNumber . '
+            AND MapUsage = 1
+            ORDER BY MapRank, id';
+        $mapId = $g_ado_db->GetOne($queryStr);
+        $map = new self((int) $mapId);
+        return $map;
+    }
+
+
+    /**
+     * @param Article
+     * @return int
+     */
+    public static function GetArticleMapId($p_articleObj)
+    {
 		global $g_ado_db;
 
         $article_number = $p_articleObj->getArticleNumber();
-
-        $map_id = Geo_Map::GetMapIdByArticle($article_number);
+        $map_id = self::GetMapIdByArticle($article_number);
         return $map_id;
     }
 
+    /**
+     * @param int $p_articleNumber
+     * @return int $map_id
+     */
 	public static function GetMapIdByArticle($p_articleNumber)
 	{
 		global $g_ado_db;
 
-        $article_number = $p_articleNumber;
-
-        $queryStr = "SELECT id FROM Maps WHERE fk_article_number = ? AND MapUsage = 1 ORDER BY MapRank, id LIMIT 1";
-
+        $queryStr = 'SELECT id
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ? AND MapUsage = 1
+            ORDER BY MapRank, id
+            LIMIT 1';
         $map_id = null;
-
-        try
-        {
+        try {
             $sql_params = array();
-
-            $sql_params[] = $article_number;
-
+            $sql_params[] = (int) $p_articleNumber;
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $map_id = $row['id'];
+                    $map_id = (int) $row['id'];
                 }
             }
-        }
-        catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             return null;
         }
-
 		return $map_id;
-	} // fn getMapIdByArticle
+    }
 
 	/**
+	 * @param object Article
 	 * @return array
 	 */
 	public static function GetMapIdsByArticle($p_articleObj)
@@ -137,31 +243,28 @@ class Geo_Map extends DatabaseObject {
 		global $g_ado_db;
 
         $article_number = $p_articleObj->getArticleNumber();
-
-        $queryStr = "SELECT id, MapUsage AS usage FROM Maps WHERE fk_article_number = ? ORDER BY MapRank, id";
-
+        $queryStr = 'SELECT id, MapUsage AS usage
+            FROM ' . self::TABLE . '
+            WHERE fk_article_number = ?
+            ORDER BY MapRank, id';
         $map_ids = array();
-
-        try
-        {
+        try {
             $sql_params = array();
-
             $sql_params[] = $article_number;
-
             $rows = $g_ado_db->GetAll($queryStr, $sql_params);
             if (is_array($rows)) {
                 foreach ($rows as $row) {
-                    $map_ids[] = array("id" => $row['id'], "usage" => $row['usage']);
+                    $map_ids[] = array("id" => (int) $row['id'],
+                                       "usage" => (int) $row['usage']);
                 }
             }
-        }
-        catch (Exception $exc)
-        {
+        } catch (Exception $exc) {
             return array();
         }
 
 		return $map_ids;
-	} // fn getMapIdByArticle
+	}
+
 
     public static function GetLocationsByArticle($p_articleObj)
     {
@@ -199,15 +302,6 @@ class Geo_Map extends DatabaseObject {
 
         return $poi_names;
     }
-
-
-	/**
-	 * @return int
-	 */
-	public function getArticleNumber()
-	{
-		return $this->m_data['fk_article_number'];
-	} // fn getArticleNumber
 
 
 	/**
@@ -1752,6 +1846,3 @@ var on_load_proc = function()
     $query = Geo_Map::GetGeoSearchSQLQuery($p_coordinates);
     echo $query;
 */
-
-?>
-

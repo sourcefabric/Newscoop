@@ -10,6 +10,7 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleData.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
@@ -1642,6 +1643,14 @@ class Article extends DatabaseObject {
         return $this->setProperty('comments_locked', $p_value);
     } // fn setCommentsLocked
 
+
+    /**
+     * @return GeoMap
+     */
+    public function getMap()
+    {
+        return Geo_Map::GetMapByArticle($this->getArticleNumber());
+    }
 
     /*****************************************************************/
     /** Static Functions                                             */
