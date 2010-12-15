@@ -248,7 +248,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
         $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM " . self::TABLE_JOIN . " WHERE id = ?";
         // ad B 2)
 
-		$queryStr_med_in = "INSERT INTO " . self::TABLE . " (media_type, media_spec, media_src, media_height, media_width, IdUser) VALUES (";
+		$queryStr_med_in = "INSERT INTO " . self::TABLE . " (media_type, media_spec, media_src, media_width, media_height, IdUser) VALUES (";
         $queryStr_med_in .= "?, ?, ?, ?, ?";
         $queryStr_med_in .= ", %%user_id%%)";
 
