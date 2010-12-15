@@ -342,6 +342,14 @@ class ArticlesList extends ListObject
                     $value = isset($value) && (strtolower($value) != 'false');
                     $parameters[$parameter] = $value;
                     break;
+                case 'location':
+                    $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
+                    if (preg_match("/$num $num, $num $num/", trim($value))) {
+                        $parameters[$parameter] = $value;
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_articles");
+                    }
+                    break;
     		    default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
     		}
@@ -367,9 +375,13 @@ class ArticlesList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
         }
 
+        if (!empty($parameters['location']) && false) {
+            $this->m_constraints[] = new ComparisonOperation('location',
+                new Operator('is', 'string'), $parameters['location']);
+        }
+
     	return $parameters;
 	}
-
 
 	private static function ReadArticleTypes()
 	{

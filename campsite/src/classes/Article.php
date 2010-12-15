@@ -14,6 +14,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
+require_once dirname(__FILE__) . '/GeoMap.php';
 
 /**
  * @package Campsite
@@ -2385,6 +2386,21 @@ class Article extends DatabaseObject {
                 $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right']);
                 $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
                 $selectClauseObj->addWhere($mainClauseConstraint);
+            } elseif ($leftOperand == 'location') {
+                $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
+                if (preg_match("/($num) ($num), ($num) ($num)/",
+                    trim($comparisonOperation['right']), $matches)) {
+                    $queryLocation = Geo_Map::GetGeoSearchSQLQuery(array(
+                        array(
+                            'latitude' => $matches[1],
+                            'longitude' => $matches[2],
+                        ), array(
+                            'latitude' => $matches[3],
+                            'longitude' => $matches[4],
+                        ),
+                    ));
+                    $selectClauseObj->addWhere("Articles.Number IN ($queryLocation)");
+                }
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
