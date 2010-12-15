@@ -83,7 +83,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     public function getContent()
     {
-        $this->m_content->getContent();
+        return $this->m_content->getContent();
     }
 
     /**

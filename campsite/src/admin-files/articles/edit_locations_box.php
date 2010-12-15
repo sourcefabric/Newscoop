@@ -25,7 +25,7 @@ $detachUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publi
         </table>
       </td>
     </tr>
-    <?php if ($map_id) { ?>
+    <?php if ($map->exists()) { ?>
     <tr>
       <td align="center" colspan="2">
         <table>
