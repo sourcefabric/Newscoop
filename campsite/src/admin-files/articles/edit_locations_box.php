@@ -1,10 +1,8 @@
 <?php
 $locations = array();
 $map = $articleObj->getMap();
-$map_id = 0;
 if (is_object($map) && $map->exists()) {
     $locations = $map->getLocations();
-    $map_id = $map->getId();
 }
 $detachUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
 ?>
@@ -27,7 +25,7 @@ $detachUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publi
         </table>
       </td>
     </tr>
-    <?php if ($map_id) { ?>
+    <?php if ($map->exists()) { ?>
     <tr>
       <td align="center" colspan="2">
         <table>

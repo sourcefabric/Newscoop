@@ -13,6 +13,7 @@ require_once dirname(__FILE__) . '/IGeoMapLocation.php';
 class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 {
     const TABLE = 'Multimedia';
+    const TABLE_JOIN = 'MapLocationMultimedia';
 
     /** @var string */
 	public $m_dbTableName = self::TABLE;
@@ -103,7 +104,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 
         $queryStr = 'SELECT m.*
             FROM ' . self::TABLE . ' m
-                INNER JOIN MapLocationMultimedia mlm
+                INNER JOIN ' . self::TABLE_JOIN . ' mlm
                     ON m.id = mlm.fk_multimedia_id
             WHERE mlm.fk_maplocation_id = ' . $p_mapLocation->getId();
         $rows = $g_ado_db->GetAll($queryStr);
@@ -120,7 +121,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 		global $g_ado_db;
         global $g_user;
 
-        $queryStr_mm = "INSERT INTO Multimedia (";
+        $queryStr_mm = "INSERT INTO " . self::TABLE . " (";
         $queryStr_mm .= "media_type, media_spec, media_src, media_width, media_height, IdUser";
         $queryStr_mm .= ") VALUES (";
 
@@ -130,7 +131,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 
         $queryStr_mm .= ", %%user_id%%)";
 
-        $queryStr_loc_mm = "INSERT INTO MapLocationMultimedia (";
+        $queryStr_loc_mm = "INSERT INTO " . self::TABLE_JOIN . " (";
         $queryStr_loc_mm .= "fk_maplocation_id, fk_multimedia_id";
         $queryStr_loc_mm .= ") VALUES (";
         $queryStr_loc_mm .= "?, ?";
@@ -195,7 +196,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
     {
 		global $g_ado_db;
 
-        $queryStr = "SELECT id FROM Multimedia WHERE media_type = ? AND media_spec = ? AND media_src = ? AND media_width = ? AND media_height = ? AND options = ?";
+        $queryStr = "SELECT id FROM " . self::TABLE . " WHERE media_type = ? AND media_spec = ? AND media_src = ? AND media_width = ? AND media_height = ? AND options = ?";
 
         $med_id = 0;
         try
@@ -244,19 +245,19 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 */
 
         // ad B 1)
-        $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM MapLocationMultimedia WHERE id = ?";
+        $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM " . self::TABLE_JOIN . " WHERE id = ?";
         // ad B 2)
 
-		$queryStr_med_in = "INSERT INTO Multimedia (media_type, media_spec, media_src, media_width, media_height, IdUser) VALUES (";
+		$queryStr_med_in = "INSERT INTO " . self::TABLE . " (media_type, media_spec, media_src, media_width, media_height, IdUser) VALUES (";
         $queryStr_med_in .= "?, ?, ?, ?, ?";
         $queryStr_med_in .= ", %%user_id%%)";
 
         // ad B 4)
-        $queryStr_map_up = "UPDATE MapLocationMultimedia SET fk_multimedia_id = ? WHERE id = ?";
-        $queryStr_map_in = "INSERT INTO MapLocationMultimedia (fk_maplocation_id, fk_multimedia_id) VALUES (?, ?)";
-        $queryStr_map_rm = "DELETE FROM MapLocationMultimedia WHERE id = ?";
+        $queryStr_map_up = "UPDATE " . self::TABLE_JOIN . " SET fk_multimedia_id = ? WHERE id = ?";
+        $queryStr_map_in = "INSERT INTO " . self::TABLE_JOIN . " (fk_maplocation_id, fk_multimedia_id) VALUES (?, ?)";
+        $queryStr_map_rm = "DELETE FROM " . self::TABLE_JOIN . " WHERE id = ?";
         // ad B 6)
-        $queryStr_med_rm = "DELETE FROM Multimedia WHERE id = ? AND NOT EXISTS (SELECT id FROM MapLocationMultimedia WHERE fk_multimedia_id = ?)";
+        $queryStr_med_rm = "DELETE FROM " . self::TABLE . " WHERE id = ? AND NOT EXISTS (SELECT id FROM " . self::TABLE_JOIN . " WHERE fk_multimedia_id = ?)";
 
         // ad B 1)
 
