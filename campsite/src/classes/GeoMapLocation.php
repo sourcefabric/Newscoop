@@ -5,6 +5,7 @@
 
 require_once dirname(__FILE__) . '/DatabaseObject.php';
 require_once dirname(__FILE__) . '/GeoLocation.php';
+require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 require_once dirname(__FILE__) . '/IGeoMapLocation.php';
@@ -36,15 +37,21 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     /** @var array of IGeoLocationContent */
     private $contents = array();
 
+    /** @var array of IGeoMultimedia */
+    private $multimedia = NULL;
+
 	/**
-     * @param mixed $row
+     * @param mixed $arg
 	 */
-	public function __construct($row = NULL)
+	public function __construct($arg)
 	{
         parent::__construct($this->m_columnNames);
 
-        if (is_array($row)) {
-            $this->m_data = $row;
+        if (is_array($arg)) {
+            $this->m_data = $arg;
+        } else if (is_numeric($arg)) {
+            $this->m_data['id'] = (int) $arg;
+            $this->fetch();
         }
 	}
 
@@ -98,8 +105,19 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         if ($this->location === NULL) {
             $this->location = new Geo_Location($this->m_data['fk_location_id']);
         }
-
         return $this->location;
+    }
+
+    /**
+     * Get multimedia
+     * @return array of IGeoMultimedia
+     */
+    public function getMultimedia()
+    {
+        if ($this->multimedia === NULL) {
+            $this->multimedia = Geo_Multimedia::GetByMapLocation($this);
+        }
+        return $this->multimedia;
     }
 
     /**

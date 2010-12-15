@@ -48,14 +48,17 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
     public $m_keyIsAutoIncrement = true;
 
 	/**
-     * @param mixed $row
+     * @param mixed $arg
 	 */
-    public function __construct($row = NULL)
+    public function __construct($arg)
     {
         parent::__construct($this->m_columnNames);
 
-        if (is_array($row)) {
-            $this->m_data = $row;
+        if (is_array($arg)) {
+            $this->m_data = $arg;
+        } else if (is_numeric($arg)) {
+            $this->m_data['id'] = (int) $arg;
+            $this->fetch();
         }
     }
 

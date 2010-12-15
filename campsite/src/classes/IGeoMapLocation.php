@@ -27,4 +27,10 @@ interface IGeoMapLocation extends IGeoLocation
      * @return IGeoLocationContent
      */
     public function getContent($language);
+
+    /**
+     * Get multimedia
+     * @return array of IGeoMultimedia
+     */
+    public function getMultimedia();
 }

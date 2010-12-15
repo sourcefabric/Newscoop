@@ -3,47 +3,117 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-//require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-//require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
+require_once dirname(__FILE__) . '/IGeoMultimedia.php';
+require_once dirname(__FILE__) . '/IGeoMapLocation.php';
 
 /**
  * @package Campsite
  */
-class Geo_Multimedia extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = 'LocationContents';
-	//var $m_columnNames = array('id', 'city_id', 'city_type', 'population', 'position', 'latitude', 'longitude', 'elevation', 'country_code', 'time_zone', 'modified');
+class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
+{
+    const TABLE = 'Multimedia';
+
+    /** @var string */
+	public $m_dbTableName = self::TABLE;
+
+    /** @var array */
+	public $m_keyColumnNames = array('id');
+
+    /** @var array */
+    public $m_columnNames = array(
+        'id',
+        'media_type',
+        'media_spec',
+        'media_src',
+        'media_height',
+        'media_width',
+        'options',
+        'IdUser',
+    );
 
 	/**
-	 * The geo location contents class is for load/store of POI data.
+     * @param mixed $arg
 	 */
-	public function Geo_Multimedia()
+	public function __construct($arg)
 	{
-	} // constructor
+        parent::__construct($this->m_columnNames);
 
+        if (is_array($arg)) {
+            $this->m_data = $arg;
+        } else if (is_numeric($arg)) {
+            $this->m_data['id'] = (int) $arg;
+            $this->fetch();
+        }
+	}
 
-	/**
-	 * Finds POIs on given article and language
-	 *
-	 * @param string $p_articleNumber
-	 * @param string $p_languageId
-	 *
-	 * @return array
-	 */
-/*
-	public static function ReadArticlePoints($p_articleNumber, $p_languageId)
-	{
-		global $g_ado_db;
-		$sql_params = array($p_articleNumber, $p_languageId);
+    /**
+     * Get height
+     * @return int
+     */
+    public function getHeight()
+    {
+        return (int) $this->m_data['media_height'];
+    }
 
-	} // fn ReadArticlePoints
-*/
+    /**
+     * Get spec
+     * @return string
+     */
+    public function getSpec()
+    {
+        return (string) $this->m_data['media_spec'];
+    }
 
+    /**
+     * Get src
+     * @return string
+     */
+    public function getSrc()
+    {
+        return (string) $this->m_data['media_src'];
+    }
+
+    /**
+     * Get type
+     * @return string
+     */
+    public function getType()
+    {
+        return (string) $this->m_data['media_type'];
+    }
+
+    /**
+     * Get width
+     * @return int
+     */
+    public function getWidth()
+    {
+        return (int) $this->m_data['media_width'];
+    }
+
+    /**
+     * Get multimedia for map location
+     * @param IGeoMapLocation $p_mapLocation
+     * @return array of IGeoMultimedia
+     */
+    public static function GetByMapLocation(IGeoMapLocation $p_mapLocation)
+    {
+        global $g_ado_db;
+
+        $queryStr = 'SELECT m.*
+            FROM ' . self::TABLE . ' m
+                INNER JOIN MapLocationMultimedia mlm
+                    ON m.id = mlm.fk_multimedia_id
+            WHERE mlm.fk_maplocation_id = ' . $p_mapLocation->getId();
+        $rows = $g_ado_db->GetAll($queryStr);
+
+        $items = array();
+        foreach ((array) $rows as $row) {
+            $items[] = new self((array) $row);
+        }
+        return $items;
+    }
 
 	public static function InsertMultimedia($ml_id, $poi)
     {
@@ -326,6 +396,4 @@ class Geo_Multimedia extends DatabaseObject {
 
     }
 
-} // class Geo_LocationContents
-
-?>
+}
