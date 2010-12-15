@@ -25,11 +25,11 @@ function transfer_topics_3_5($p_parentId = 0)
 			transfer_topics_3_5($topic->getTopicId());
 		}
 	}
-
-	$g_ado_db->Execute('DROP TABLE TopicsOld');
 } // fn transfer_topics_3_5
 
 
 transfer_topics_3_5();
+
+$GLOBALS['g_ado_db']->Execute('DROP TABLE TopicsOld');
 
 ?>
