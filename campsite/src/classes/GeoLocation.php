@@ -386,7 +386,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 */
 
         // ad B 2)
-        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocations::TABLE . ' SET rank = ? WHERE id = ?';
+        $queryStr_rnk_up = 'UPDATE ' . Geo_MapLocation::TABLE . ' SET rank = ? WHERE id = ?';
 
         $rank = 0;
         foreach ($p_reorder as $poi_obj)
