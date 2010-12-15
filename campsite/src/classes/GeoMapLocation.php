@@ -158,4 +158,115 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
         return $mapLocations;
     }
+
+    /**
+     * Returns map locations list based on the given parameters.
+     *
+     * @param array $p_parameters
+     *    An array of ComparionOperation objects
+     * @param string $p_order
+     *    An array of columns and directions to order by
+     * @param integer $p_start
+     *    The record number to start the list
+     * @param integer $p_limit
+     *    The offset. How many records from $p_start will be retrieved.
+     *
+     * @return array of IGeoMapLocation
+     */
+    public static function GetList(array $p_parameters, array $p_order = array(),
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+    {
+        global $g_ado_db;
+
+        $selectClauseObj = new SQLSelectClause();
+        $countClauseObj = new SQLSelectClause();
+
+        // set columns
+        $tmpMapLoc = new self(NULL);
+        $tmpLoc = new Geo_Location(NULL);
+        $columnNames = array_merge($tmpMapLoc->getColumnNames(true),
+            $tmpLoc->getColumnNames(true));
+        foreach ($columnNames as $columnName) {
+            $selectClauseObj->addColumn($columnName);
+        }
+        $selectClauseObj->addColumn('X(poi_location) as latitude');
+        $selectClauseObj->addColumn('Y(poi_location) as longitude');
+        $countClauseObj->addColumn('COUNT(*)');
+
+        // sets the base table
+        $selectClauseObj->setTable($tmpMapLoc->getDbTableName());
+        $selectClauseObj->addJoin(sprintf('INNER JOIN `%s` ON fk_location_id = %s.id',
+            $tmpLoc->getDbTableName(),
+            $tmpLoc->getDbTableName()));
+        $countClauseObj->setTable($tmpMapLoc->getDbTableName());
+        unset($tmpMapLoc);
+        unset($tmpLoc);
+
+        // sets the ORDER BY condition
+        $order = self::ProcessListOrder($p_order);
+        foreach ($order as $orderDesc) {
+            $orderColumn = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
+            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        }
+
+        // sets the limit
+        $selectClauseObj->setLimit($p_start, $p_limit);
+
+        // builds the query and executes it
+        $selectQuery = $selectClauseObj->buildQuery();
+        $rows = $g_ado_db->GetAll($selectQuery);
+
+        $list = array();
+        $p_count = 0;
+        if (is_array($rows)) {
+        	$countQuery = $countClauseObj->buildQuery();
+        	$p_count = $g_ado_db->GetOne($countQuery);
+
+        	// builds the array of image objects
+        	foreach ($rows as $row) {
+                $list[] = new self((array) $row);
+        	}
+        }
+
+        return $list;
+    }
+
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives in the format:
+     *      array('field'=>field_name, 'dir'=>order_direction)
+     *      field_name can take one of the following values:
+     *        bydescription, byphotographer, bydate, bylastdate
+     *      order_direction can take one of the following values:
+     *        asc, desc
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            $dbField = null;
+            switch (strtolower($field)) {
+            	case 'default':
+                    $dbField = self::TABLE . '.rank';
+                    break;
+            }
+
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+                $order[] = array(
+                    'field' => $dbField,
+                    'dir' => $direction,
+                );
+            }
+        }
+        return $order;
+    }
 }
