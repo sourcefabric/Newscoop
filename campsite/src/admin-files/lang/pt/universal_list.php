@@ -1,4 +1,8 @@
 <?php 
+regGS("Use Map", "");
+regGS("Locations", "");
+regGS("Last", "");
+regGS("First", "");
 regGS("Publish Schedule", "");
 regGS("You do not have the right to delete articles.", "");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "");

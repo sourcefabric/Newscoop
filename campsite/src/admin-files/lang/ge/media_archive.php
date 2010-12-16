@@ -1,4 +1,22 @@
 <?php 
+regGS("View attachment", "");
+regGS("Select some items first.", "");
+regGS("Open in the browser", "");
+regGS("Media Archive", "");
+regGS("Last modified", "");
+regGS("Items deleted.", "");
+regGS("Images archive", "");
+regGS("Files archive", "");
+regGS("File uploaded.", "");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "");
+regGS("Delete selected", "");
+regGS("Created", "");
+regGS("Charset", "");
+regGS("Change attachment information", "");
+regGS("Automatically download", "");
+regGS("Attachment updated.", "");
+regGS("Are you sure you want to delete selected items?", "");
+regGS("Add new file", "");
 regGS("You do not have the right to add images.", "");
 regGS("Use for all", "");
 regGS("Stop current upload", "");

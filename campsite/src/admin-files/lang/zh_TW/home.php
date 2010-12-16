@@ -1,6 +1,10 @@
 <?php 
+regGS("Your changes will be saved after login.", "");
+regGS("You have tried to upload wrong backup file.", "");
+regGS("Upload backup file", "");
+regGS("The file $1 has been uploaded successfully.", "");
+regGS("Media Archive", "");
 regGS("en", "");
-regGS("Your work has been saved.", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
 regGS("Widget added to dashboard.", "");
