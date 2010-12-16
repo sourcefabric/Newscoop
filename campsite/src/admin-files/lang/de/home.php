@@ -1,4 +1,9 @@
 <?php 
+regGS("Your changes will be saved after login.", "");
+regGS("You have tried to upload wrong backup file.", "");
+regGS("Upload backup file", "");
+regGS("The file $1 has been uploaded successfully.", "");
+regGS("Media Archive", "");
 regGS("en", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
@@ -19,7 +24,6 @@ regGS("Password recovery", "");
 regGS("Password Recovery", "");
 regGS("No user is registered with this email.", "");
 regGS("Logo", "");
-regGS("Your work has been saved.", "");
 regGS("Please login to continue.", "");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Hi, \nUm das Kennwort wiederherzustellen, bitte diesem Link folgen: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");

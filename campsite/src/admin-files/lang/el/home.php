@@ -1,4 +1,9 @@
 <?php 
+regGS("Your changes will be saved after login.", "");
+regGS("You have tried to upload wrong backup file.", "");
+regGS("Upload backup file", "");
+regGS("The file $1 has been uploaded successfully.", "");
+regGS("Media Archive", "");
 regGS("en", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
@@ -7,7 +12,6 @@ regGS("Remove widget", "");
 regGS("Go to home", "");
 regGS("Add to dashboard", "");
 regGS("Add more widgets", "");
-regGS("Your work has been saved.", "");
 regGS("Please login to continue.", "");
 regGS("login", "Σύνδεση");
 regGS("Your password has been reset <br/> you may now proceed to", "Ο κωδικός ασφαλείας σας έχει επαναρυθμιστεί <br/> Τώρα μπορείτε να προχωρήσετε σε");

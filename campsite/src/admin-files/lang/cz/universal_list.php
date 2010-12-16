@@ -1,4 +1,8 @@
 <?php 
+regGS("Use Map", "");
+regGS("Locations", "");
+regGS("Last", "");
+regGS("First", "");
 regGS("Publish Schedule", "Publikovaný Harmonogram");
 regGS("You do not have the right to delete articles.", "Nejste oprávněn mazat články.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Máte oprávnění změnit status článku. Předložený článek může být změněn pouze oprávněným uživatelem.");
