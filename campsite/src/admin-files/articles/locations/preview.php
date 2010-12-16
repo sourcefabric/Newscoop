@@ -1,9 +1,4 @@
 <?php
-// TODO: during development no access right checking; will be added.
-
-//camp_load_translation_strings("article_files");
-//require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
-//require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
 
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
@@ -56,8 +51,6 @@ if (!Input::IsValid()) {
 <div class="map_sidepan">
 
 <?php
-    //$map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-    //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
 
     $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
@@ -79,19 +72,16 @@ if (!Input::IsValid()) {
     {
         $cur_label = $poi["title"];
         $cur_perex = $poi["perex"];
-        //$cur_lon = $poi["longitude"];
-        //$cur_lat = $poi["latitude"];
+
         $cur_center = $poi["center"];
         $cur_open = $poi["open"];
 
         $descs_inner = "";
         $descs_inner .= "<div id=\"poi_seq_" . $pind . "\">";
 
-        //$descs_inner .= "<a class='map_preview_poi_name' href=\"#\" onClick=\"geo_hook_on_map_feature_select(geo_object$map_suffix, " . $pind . "); return false;\" >" . $cur_label . "</a>";
         $descs_inner .= "<a class='map_preview_poi_name' href=\"#\" onClick=\"$cur_open return false;\" >" . $cur_label . "</a>";
         $descs_inner .= "<div class='map_preview_poi_perex'>" . $cur_perex . "</div>";
 
-        //$descs_inner .= "<div class='map_preview_poi_center'><a href='#' onClick='geo_object.center_lonlat($cur_lon, $cur_lat); return false;'>";
         $descs_inner .= "<div class='map_preview_poi_center'><a href='#' onClick='$cur_center return false;'>";
         echo $descs_inner;
         putGS("center");

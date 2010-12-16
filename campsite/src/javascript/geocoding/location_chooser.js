@@ -1,6 +1,7 @@
 // the main object to hold geo-things
 var geo_locations = {};
 
+// localization strings
 geo_locations.display_strings = {
     google_map: "Google Map",
     openstreet_map: "OpenStreet Map",
@@ -20,6 +21,7 @@ geo_locations.display_strings = {
     remove: "remove"
 };
 
+// flag saved state
 geo_locations.something_to_save = false;
 
 // specifying the article that the map is for
@@ -34,7 +36,6 @@ geo_locations.poi_order_changed = false;
 geo_locations.marker_src_base = "";
 geo_locations.marker_src_default = "";
 geo_locations.marker_src_default_ind = 0;
-//geo_locations.marker_src_names = [];
 geo_locations.marker_src_labels = [];
 geo_locations.marker_src_icons = {};
 
@@ -44,7 +45,7 @@ geo_locations.map_view_layer_osm = "osm";
 geo_locations.map_view_layer_providers = {};
 geo_locations.map_view_layer_providers[geo_locations.map_view_layer_google] = false;
 geo_locations.map_view_layer_providers[geo_locations.map_view_layer_osm] = false;
-
+// basic map display info
 geo_locations.map_view_layer_names_all = {};
 geo_locations.map_view_layer_default = "";
 geo_locations.map_view_layer_name = "";
@@ -70,7 +71,7 @@ geo_locations.map_art_view_width_display = 600;
 geo_locations.map_art_view_height_display = 400;
 geo_locations.map_art_view_top_display = 70;
 geo_locations.map_art_view_right_display = 105;
-
+// basic map info
 geo_locations.map_label_name = "";
 geo_locations.map_id = 0;
 
@@ -128,6 +129,7 @@ geo_locations.ignore_click = false;
 // the used pop-up window
 geo_locations.popup = null;
 
+// setting the localized strings
 geo_locations.set_display_strings = function(local_strings)
 {
     if (!local_strings) {return;}
@@ -171,11 +173,13 @@ geo_locations.set_article_spec = function(params)
     this.language_id = parseInt(params.language_id);
 };
 
+// max map sizes
 geo_locations.map_limit_width_display = 800;
 geo_locations.map_limit_height_display = 500;
 geo_locations.map_limit_width_view = 1200;
 geo_locations.map_limit_height_view = 1200;
 
+// setting the map width
 geo_locations.set_map_width = function(width)
 {
     var partial_change = false;
@@ -198,6 +202,7 @@ geo_locations.set_map_width = function(width)
 
 };
 
+// setting the map height
 geo_locations.set_map_height = function(height)
 {
     var partial_change = false;
@@ -223,7 +228,6 @@ geo_locations.set_map_height = function(height)
 // setting the db based default info
 geo_locations.set_map_info = function(params)
 {
-    //alert("geo_locations.set_map_info");
     this.map_view_layer_default = params['default'];
     var prov_len = params.providers.length;
     for (var pind = 0; pind < prov_len; pind++)
@@ -242,6 +246,7 @@ geo_locations.set_map_info = function(params)
 
 };
 
+// setting the basic map info for the current map
 geo_locations.set_map_usage = function(params)
 {
     this.map_id = params["id"];
@@ -279,6 +284,7 @@ geo_locations.set_map_usage = function(params)
 
 };
 
+// setting info on available marker icons
 geo_locations.set_icons_info = function(params)
 {
     this.marker_src_base = params.webdir;
@@ -309,6 +315,8 @@ geo_locations.set_icons_info = function(params)
     }
 
 };
+
+// setting popups properties
 geo_locations.set_popups_info = function(params)
 {
 
@@ -333,6 +341,7 @@ geo_locations.set_popups_info = function(params)
 
 };
 
+// moving point to a position
 geo_locations.update_poi_position = function(index, coordinate, value, input)
 {
     var feature = this.layer.features[index];
@@ -442,6 +451,7 @@ geo_locations.display_index = function(index)
     return real_index;
 };
 
+// setting the point visibility state
 geo_locations.set_usage_poi = function(index, usage, div_ids)
 {
     this.set_save_state(true);
@@ -1303,6 +1313,7 @@ var geo_hook_on_feature_unselect = function(evt)
 
 };
 
+// prepares html content for a popup, plus size info
 geo_locations.create_popup_content = function(feature)
 {
 
@@ -1658,6 +1669,7 @@ geo_locations.load_point_label = function()
 
 };
 
+// preparing image html tag for a point popup
 geo_locations.set_image_tag = function(attrs)
 {
     attrs.m_image = "";
@@ -1677,6 +1689,7 @@ geo_locations.set_image_tag = function(attrs)
     }
 };
 
+// preparing video html tag for a point popup
 geo_locations.set_embed_tag = function(attrs)
 {
     attrs.m_embed = "";
@@ -1800,30 +1813,6 @@ geo_locations.store_point_property = function(property, value)
 
 };
 
-geo_locations.update_image_share_button = function()
-{
-    return 0;
-
-    var use_index = this.display_index(this.edited_point);
-    var cur_attrs = this.layer.features[use_index].attributes;
-
-    var image_share_obj = document.getElementById ? document.getElementById("point_image_share") : null;
-    image_share_obj.checked = cur_attrs.m_image_share;
-
-};
-
-geo_locations.update_video_share_button = function()
-{
-    return 0;
-
-    var use_index = this.display_index(this.edited_point);
-    var cur_attrs = this.layer.features[use_index].attributes;
-
-    var video_share_obj = document.getElementById ? document.getElementById("point_video_share") : null;
-    video_share_obj.checked = cur_attrs.m_video_share;
-
-};
-
 // loading POI's properties
 geo_locations.load_point_properties = function()
 {
@@ -1866,6 +1855,7 @@ geo_locations.load_point_properties = function()
     this.update_video_label();
 };
 
+// setting the proper video label at point editing
 geo_locations.update_video_label = function()
 {
     var video_type_obj = document.getElementById ? document.getElementById("point_video_type") : null;
@@ -1936,6 +1926,7 @@ geo_locations.store_point_direct = function(direct_usage)
     this.set_edit_direct();
 };
 
+// getting info for point editing
 geo_locations.load_point_direct = function()
 {
     var predef_obj = document.getElementById ? document.getElementById("point_predefined") : null;
@@ -1962,6 +1953,7 @@ geo_locations.load_point_direct = function()
     this.edit_set_mode();
 };
 
+// updating the preview view at point editing
 geo_locations.update_edit_preview = function()
 {
     var use_index = this.display_index(this.edited_point);
@@ -2021,6 +2013,7 @@ geo_locations.set_edit_direct = function()
 
 };
 
+// adjusting text/preview at point editing
 geo_locations.edit_set_mode = function(mode)
 {
     var edit_obj = document.getElementById ? document.getElementById("point_edit_mode_edit") : null;
@@ -2129,6 +2122,7 @@ geo_locations.map_edit_prepare_markers = function()
 
 };
 
+// setting the saved state flag
 geo_locations.set_save_state = function(state)
 {
     var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
@@ -2162,6 +2156,7 @@ geo_locations.map_pois_load = function(script_dir)
         });
 };
 
+// setting the map for editing its name
 geo_locations.map_edit_name = function()
 {
     $("#map_name_display").addClass("hidden");
@@ -2170,6 +2165,8 @@ geo_locations.map_edit_name = function()
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
     input_obj.focus();
 };
+
+// setting the map for displaying its name
 geo_locations.map_display_name = function()
 {
     this.map_save_name();
@@ -2178,6 +2175,8 @@ geo_locations.map_display_name = function()
     $("#map_name_input").addClass("hidden");
 
 };
+
+// saving the name of the map
 geo_locations.map_save_name = function()
 {
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
@@ -2195,6 +2194,7 @@ geo_locations.map_save_name = function()
 
 };
 
+// putting map name into the editing page
 geo_locations.map_load_name = function()
 {
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
@@ -2215,7 +2215,7 @@ geo_locations.map_load_name = function()
 
 };
 
-// the main action on ajax data retrieval for cities search
+// the main action on ajax data retrieval
 // it throws away all the current POI info
 geo_locations.got_load_data = function (received_obj)
 {
@@ -2375,6 +2375,7 @@ geo_locations.got_load_data = function (received_obj)
 
 };
 
+// setting point information for ajax based saving of it
 geo_locations.set_save_content_on_poi = function(save_obj, poi_attrs, marker_info)
 {
     var poi_prop_names = {};
@@ -2426,6 +2427,7 @@ geo_locations.set_save_content_on_poi = function(save_obj, poi_attrs, marker_inf
     save_obj['video_changed'] = marker_info["video_changed"];
 };
 
+// prepare info of new points for saving
 geo_locations.put_poi_into_insertions = function(storage, index)
 {
     var cur_marker = this.poi_markers[index];
@@ -2441,6 +2443,7 @@ geo_locations.put_poi_into_insertions = function(storage, index)
     storage.push(cur_obj);
 };
 
+// prepare info on points with changed positions for saving of it
 geo_locations.put_into_poi_locations = function(storage, index)
 {
     var cur_marker = this.poi_markers[index];
@@ -2454,6 +2457,7 @@ geo_locations.put_into_poi_locations = function(storage, index)
     storage.push(cur_obj);
 };
 
+// prepare info on points with changed contents for saving of it
 geo_locations.put_into_poi_contents = function(storage, index)
 {
     var cur_marker = this.poi_markers[index];
@@ -2512,7 +2516,6 @@ geo_locations.map_save_all = function(script_dir)
         var store_map_str = Base64.encode(JSON.stringify(store_map_obj));
         store_map_str.replace(/\+/gi, "%2B");
         store_map_str.replace(/\//gi, "%2F");
-        //alert(JSON.stringify(store_map_obj));
         args['f_map'] = store_map_str;
     }
 
@@ -2538,7 +2541,6 @@ geo_locations.map_save_all = function(script_dir)
         var order_poi_str = Base64.encode(JSON.stringify(order_ids));
         order_poi_str.replace(/\+/gi, "%2B");
         order_poi_str.replace(/\//gi, "%2F");
-        //alert(JSON.stringify(order_ids));
         args['f_order'] = order_poi_str;
     }
 
@@ -2569,7 +2571,6 @@ geo_locations.map_save_all = function(script_dir)
         var insert_poi_new_str = Base64.encode(JSON.stringify(insert_poi_new_array));
         insert_poi_new_str.replace(/\+/gi, "%2B");
         insert_poi_new_str.replace(/\//gi, "%2F");
-        //alert(JSON.stringify(insert_poi_new_array));
         args['f_insert_new'] = insert_poi_new_str;
     }
     if (0 < update_poi_loc_array.length)
@@ -2577,7 +2578,6 @@ geo_locations.map_save_all = function(script_dir)
         var update_poi_loc_str = Base64.encode(JSON.stringify(update_poi_loc_array));
         update_poi_loc_str.replace(/\+/gi, "%2B");
         update_poi_loc_str.replace(/\//gi, "%2F");
-        //alert(JSON.stringify(update_poi_loc_array));
         args['f_update_loc']= update_poi_loc_str;
     }
     if (0 < update_poi_con_array.length)
@@ -2585,7 +2585,6 @@ geo_locations.map_save_all = function(script_dir)
         var update_poi_con_str = Base64.encode(JSON.stringify(update_poi_con_array));
         update_poi_con_str.replace(/\+/gi, "%2B");
         update_poi_con_str.replace(/\//gi, "%2F");
-        //alert(JSON.stringify(update_poi_con_array));
         args['f_update_con'] = update_poi_con_str;
     }
 

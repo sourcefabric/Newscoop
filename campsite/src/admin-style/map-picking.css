@@ -16,17 +16,10 @@ a.map_name_display:hover {
     text-decoration: none;
     background: #ffffe8;
     color: #404020;
-/*
-    color: blue;
-*/
 }
 .map_name_input {
     font-size: 10px;
     width: 100px;
-/*
-    margin: 0px;
-    border: 1px;
-*/
 }
 .map_menubar {
     font-size: 90%;
@@ -162,9 +155,6 @@ a.map-no-link {
 }
 .poi_video_type_selection {
     margin: 0px;
-/*
-    border: 0px;
-*/
 }
 .poi_image_type_placehold {
     margin-top: 4px;
@@ -198,9 +188,6 @@ legend {
 }
 
 .edit_tabs ol {
-/*
-    padding: 1em 1em 0 1em;
-*/
     padding: 1px 1px 0 1px;
     list-style: none;
 }
@@ -209,16 +196,8 @@ legend {
     float: left;
     clear: left;
     width: 100%;
-/*
-    padding-bottom: 5px;
-*/
     padding-bottom: 1em;
 }
-/*
-.edit_label_top {
-    padding-bottom: 1em;
-}
-*/
 .edit_marker_selected {
     padding-bottom: 1em;
 }
@@ -305,17 +284,10 @@ position: relative;
     margin-right: auto;
 }
 .poi_removal {
-/*
-    margin-left: auto;
-    margin-right: auto;
-*/
     float: left;
     margin-left: 0px;
 }
 .list_change_poi_void {
-/*
-    font-size: 12px;
-*/
 }
 .action_disabled {
     color: #808080;
@@ -355,10 +327,6 @@ a.map_save_on {
 .map_save_info {
     float: right;
     margin-right: 10px;
-/*
-    margin-left: 5px;
-    float: left;
-*/
     color: #a0a0a0;
     font-size: 16px;
     margin-top: 2px;
@@ -376,9 +344,6 @@ a.map_save_on {
     overflow: auto;
     height: 150px;
     width: 500px;
-/*
-    top: 100px;
-*/
 }
 .edit_marker_one_choice {
     border-width: 1px;
@@ -402,12 +367,4 @@ a.edit_marker_one_choice_link {
 .map-shown {
   display: default;
 }
-/*
-.poi_std {
-  background-color:#f0f0f0;
-}
-.poi_out {
-  background-color:#fffff0;
-}
-*/
 

@@ -1752,10 +1752,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
 
 <script type="text/javascript">
-    //alert("0123");
     geo_object'. $map_suffix .' = new geo_locations();
-    //alert("1234");
-    //geo_obj = geo_object' . $map_suffix . ';
 
 var useSystemParameters = function()
 {
@@ -1782,20 +1779,16 @@ var useSystemParameters = function()
 var on_load_proc = function()
 {
 
-    //alert(123);
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
-        //alert(456);
-        //map_obj.style.width = "800px";
-        //map_obj.style.height = "200px";
         map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
         map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
-        //alert("001");
+
         geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
-        //alert("002");
+
         geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
-        //alert("003");
+
     }
 };
     $(document).ready(function()
@@ -1949,10 +1942,8 @@ var on_load_proc = function()
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_search.js"></script>
 
 <script type="text/javascript">
-    //alert("0123");
+
     geo_object'. $map_suffix .' = new geo_locations();
-    //alert("1234");
-    //geo_obj = geo_object' . $map_suffix . ';
 
 var useSystemParameters = function()
 {
@@ -1979,18 +1970,14 @@ var useSystemParameters = function()
 var on_load_proc = function()
 {
 
-    //alert(123);
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
-        //alert(456);
-        //map_obj.style.width = "800px";
-        //map_obj.style.height = "200px";
         map_obj.style.width = "' . $geo_map_info["width"] . 'px";
         map_obj.style.height = "' . $geo_map_info["height"] . 'px";
-        //alert("001");
+
         geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
-        //alert("002");
+
     }
 };
     $(document).ready(function()
