@@ -136,10 +136,6 @@ CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
 -- NOTE: the Maps-Locations relationships is M:N because of COW,
 --   otherwise a location would be at a single map
 
--- SELECT DISTINCT m.fk_article_number AS art FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN
---  Locations AS l ON ml.fk_location_id = l.id WHERE
---  MBRIntersects(GeomFromText(’Polygon((x0 y0,x0 y1,x1 y1,x1 y0,x0 y0))’),l.poi_location);
-
 -- basic info on maps themselves
 CREATE TABLE Maps
 (
@@ -173,8 +169,6 @@ CREATE TABLE Maps
 
     PRIMARY KEY (id),
     KEY maps_article_number (fk_article_number),
-    KEY maps_article_number_usage (fk_article_number, MapUsage),
-    KEY maps_article_number_rank (fk_article_number, MapRank),
     KEY maps_map_name (MapName(64))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -200,10 +194,7 @@ CREATE TABLE MapLocations
 
     PRIMARY KEY (id),
     KEY map_locations_point_id (fk_location_id),
-    KEY map_locations_map_id (fk_map_id),
-    KEY map_locations_rank (rank)
-
--- UNIQUE KEY map_locations_map_location_orig (fk_map_id, fk_location_orig)
+    KEY map_locations_map_id (fk_map_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE MapLocationLanguages
@@ -226,10 +217,7 @@ CREATE TABLE MapLocationLanguages
     PRIMARY KEY (id),
 
     KEY map_location_languages_maplocation_id (fk_maplocation_id),
-    KEY map_location_languages_language_id (fk_language_id),
-    KEY map_location_languages_content_id (fk_content_id),
-    UNIQUE KEY map_locations_languages_maplocation_id_language (fk_maplocation_id, fk_language_id)
-
+    KEY map_location_languages_content_id (fk_content_id)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- geographical locations by themselves
@@ -255,12 +243,7 @@ CREATE TABLE Locations (
     time_updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     PRIMARY KEY (id),
-    SPATIAL INDEX locations_poi_location (poi_location),
-    KEY locations_poi_type (poi_type),
-    KEY locations_poi_type_style (poi_type_style),
-    SPATIAL INDEX locations_poi_center (poi_center),
-    KEY locations_poi_radius (poi_radius)
-
+    SPATIAL INDEX locations_poi_location (poi_location)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
