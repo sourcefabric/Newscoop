@@ -602,6 +602,22 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
 </tr>
 <tr>
+    <td align="left" width="400px">
+        <?php putGS("Local Flash Server:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_flash_server" value="<?php p(SystemPref::Get('FlashServer')); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Local Flash Directory:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_flash_directory" value="<?php p(SystemPref::Get('FlashDirectory')); ?>" maxlength="80" size="40" class="input_text" />
+    </td>
+</tr>
+<tr>
     <td colspan="2"><hr /></td>
 </tr>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
