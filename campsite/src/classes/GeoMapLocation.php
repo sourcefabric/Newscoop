@@ -240,4 +240,4 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         return $list;
     }
-}
+} // class Geo_MapLocation

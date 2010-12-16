@@ -78,6 +78,13 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
     }
     
 
+	/**
+	 * Inserts text content of the poi
+	 *
+	 * @param array $poi
+	 *
+	 * @return int
+	 */
     public static function InsertContent($poi)
     {
 		global $g_ado_db;
@@ -130,8 +137,15 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
         }
 
         return $con_id;
-    }
+    } // fn InsertContent
 
+	/**
+	 * Updates visibility state of the poi
+	 *
+	 * @param array $poi
+	 *
+	 * @return void
+	 */
     public static function UpdateState($poi)
     {
 		global $g_ado_db;
@@ -143,8 +157,15 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
         $sql_params[] = $poi["id"];
 
         $success = $g_ado_db->Execute($queryStr, $sql_params);
-    }
+    } // fn UpdateState
 
+	/**
+	 * Updates text content of the poi
+	 *
+	 * @param array $poi
+	 *
+	 * @return void
+	 */
     public static function UpdateText($poi)
     {
 		global $g_ado_db;
@@ -225,5 +246,5 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
 
         }
 
-    }
-}
+    } // fn UpdateText
+} // class Geo_MapLocationContent

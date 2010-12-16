@@ -193,6 +193,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
 
     /**
+     * Gives map id of the article
+     *
      * @param Article
      * @return int
      */
@@ -203,7 +205,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $article_number = $p_articleObj->getArticleNumber();
         $map_id = self::GetMapIdByArticle($article_number);
         return $map_id;
-    } // GetArticleMapId
+    } // fn GetArticleMapId
 
     /**
      * @param int $p_articleNumber
@@ -232,7 +234,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             return null;
         }
 		return $map_id;
-    } // GetMapIdByArticle
+    } // fn GetMapIdByArticle
 
 	/**
 	 * Gives array of article's maps, with usage flags.
@@ -265,7 +267,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
 		return $map_ids;
-	} // GetMapIdsByArticle
+	} // fn GetMapIdsByArticle
 
 	/**
 	 * Gives array of artilce's map's points: just point names (of the article object language) and usage flags.
@@ -308,7 +310,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $poi_names;
-    } // GetLocationsByArticle
+    } // fn GetLocationsByArticle
 
 	/**
 	 * Sets the article's map to be without an article link, to stay as a lone map.
@@ -348,7 +350,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return true;
-    } // UnlinkArticle
+    } // fn UnlinkArticle
 
 	/**
 	 * This is called when the (last language of the) article is deleted
@@ -492,7 +494,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return true;
-    } // delete
+    } // fn delete
 
 
 	/**
@@ -706,7 +708,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
-    } // LoadMapData
+    } // fn LoadMapData
 
     /**
      * The main dispatcher for ajax based editing of maps
@@ -900,7 +902,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
         return $res_array;
-    } // StoreMapData
+    } // fn StoreMapData
 
     // the functions for map editing are below
 
@@ -962,7 +964,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $map_info;
-    } // ReadMapInfo
+    } // fn ReadMapInfo
 
 
     /**
@@ -1153,7 +1155,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $map_langs_arr;
-    } // ReadLanguagesByMap
+    } // fn ReadLanguagesByMap
 
     /**
      * Gives languages used at the map's article
@@ -1182,7 +1184,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $art_langs_arr;
-    } // ReadLanguagesByArticle
+    } // fn ReadLanguagesByArticle
 
     /**
      * Gives id of article's map id
@@ -1224,7 +1226,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $map_id;
-    } // ReadMapId
+    } // fn ReadMapId
 
     /**
      * Updates the basic information on the map.
@@ -1299,7 +1301,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $p_mapId;
-    } // UpdateMap
+    } // fn UpdateMap
 
     /**
      * Removes points (with locations and other contents) from the map.
@@ -1531,7 +1533,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         return true;
 
-    } // RemovePoints
+    } // fn RemovePoints
 
 
     /**
@@ -1680,7 +1682,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $p_indices;
-    } // InsertPoints
+    } // fn InsertPoints
 
 
 
@@ -1809,7 +1811,7 @@ var on_load_proc = function()
 
         return $tag_string;
 
-    } // GetMapTagHeader
+    } // fn GetMapTagHeader
 
     /**
      * Gives the body map-placement part for the map front end presentation
@@ -1832,7 +1834,7 @@ var on_load_proc = function()
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
-    } // GetMapTagBody
+    } // fn GetMapTagBody
 
     /**
      * Gives the body map-centering (js call) part for the map front end presentation
@@ -1855,7 +1857,7 @@ var on_load_proc = function()
         $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
 
         return $tag_string;
-    } // GetMapTagCenter
+    } // fn GetMapTagCenter
 
     /**
      * Gives the body map-info and point-list part for the map front end presentation
@@ -1895,7 +1897,7 @@ var on_load_proc = function()
         }
 
         return $poi_info;
-    } // GetMapTagList
+    } // fn GetMapTagList
 
     // search functions
 
@@ -2004,7 +2006,7 @@ var on_load_proc = function()
 
         return $tag_string;
 
-    } // GetMapSearchHeader
+    } // fn GetMapSearchHeader
 
     /**
      * Gives the body map-placement part for the map front end search by map-based rectangle selection
@@ -2021,7 +2023,7 @@ var on_load_proc = function()
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
-    } // GetMapSearchBody
+    } // fn GetMapSearchBody
 
     /**
      * Gives the body map-centering (js call) part for the map front end search by map-based rectangle selection
@@ -2038,7 +2040,7 @@ var on_load_proc = function()
         $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
 
         return $tag_string;
-    } // GetMapSearchCenter
+    } // fn GetMapSearchCenter
 
     /**
      * Gives the SQL query for article searching via their point inside the box specified by the p_coordinates.
@@ -2103,11 +2105,11 @@ var on_load_proc = function()
         $queryStr = str_replace("%%x1%%", $north_lat, $queryStr);
 
         return $queryStr;
-    } // GetGeoSearchSQLQuery
+    } // fn GetGeoSearchSQLQuery
 
 
 
-} // class GeoMap
+} // class Geo_Map
 
 /* testing:
     // going east to west over the 180/-180, and south to north

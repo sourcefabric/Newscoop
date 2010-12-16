@@ -52,4 +52,4 @@ class Geo_MapLocationLanguage extends DatabaseObject implements IGeoMapLocationL
     {
         return (bool) ((int) $this->m_data['poi_display']);
     }
-}
+} // class Geo_MapLocationLanguage
