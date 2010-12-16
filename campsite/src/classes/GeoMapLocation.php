@@ -202,13 +202,22 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         unset($tmpMapLoc);
         unset($tmpLoc);
 
-        // sets the ORDER BY condition
-        $order = self::ProcessListOrder($p_order);
-        foreach ($order as $orderDesc) {
-            $orderColumn = $orderDesc['field'];
-            $orderDirection = $orderDesc['dir'];
-            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        // process params
+        foreach ($p_parameters as $param) {
+            switch ($param->getLeftOperand()) {
+                case 'article':
+                    $searchQuery = sprintf('fk_map_id IN (SELECT id FROM %s WHERE fk_article_number = %d)',
+                        Geo_Map::TABLE,
+                        $param->getRightOperand());
+                    $selectClauseObj->addWhere($searchQuery);
+                    $countClauseObj->addWhere($searchQuery);
+                    break;
+            }
         }
+
+        // set order by rank and id
+        $selectClauseObj->addOrderBy(self::TABLE . '.rank');
+        $selectClauseObj->addOrderBy(self::TABLE . '.id');
 
         // sets the limit
         $selectClauseObj->setLimit($p_start, $p_limit);
@@ -230,43 +239,5 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
         return $list;
-    }
-
-    /**
-     * Processes an order directive coming from template tags.
-     *
-     * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bydescription, byphotographer, bydate, bylastdate
-     *      order_direction can take one of the following values:
-     *        asc, desc
-     *
-     * @return array
-     *      The array containing processed values of the condition
-     */
-    private static function ProcessListOrder(array $p_order)
-    {
-        $order = array();
-        foreach ($p_order as $orderDesc) {
-            $field = $orderDesc['field'];
-            $direction = $orderDesc['dir'];
-            $dbField = null;
-            switch (strtolower($field)) {
-            	case 'default':
-                    $dbField = self::TABLE . '.rank';
-                    break;
-            }
-
-            if (!is_null($dbField)) {
-                $direction = !empty($direction) ? $direction : 'asc';
-                $order[] = array(
-                    'field' => $dbField,
-                    'dir' => $direction,
-                );
-            }
-        }
-        return $order;
     }
 }
