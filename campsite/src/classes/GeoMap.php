@@ -202,7 +202,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $article_number = $p_articleObj->getArticleNumber();
         $map_id = self::GetMapIdByArticle($article_number);
         return $map_id;
-    }
+    } // GetArticleMapId
 
     /**
      * @param int $p_articleNumber
@@ -231,9 +231,11 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             return null;
         }
 		return $map_id;
-    }
+    } // GetMapIdByArticle
 
 	/**
+	 * Gives array of article's maps, with usage flags.
+	 *
 	 * @param object Article
 	 * @return array
 	 */
@@ -262,9 +264,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
 		return $map_ids;
-	}
+	} // GetMapIdsByArticle
 
-
+	/**
+	 * Gives array of artilce's map's points: just point names (of the article object language) and usage flags.
+	 *
+	 * @param object Article
+	 * @return array
+	 */
     public static function GetLocationsByArticle($p_articleObj)
     {
 		global $g_ado_db;
@@ -300,8 +307,15 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $poi_names;
-    }
+    } // GetLocationsByArticle
 
+	/**
+	 * Sets the article's map to be without an article link, to stay as a lone map.
+	 *
+	 * @param object Article
+	 * @param int
+	 * @return array
+	 */
 	public static function UnlinkArticle($p_articleObj = null, $p_articleNumber = 0)
 	{
 		global $g_ado_db;
@@ -333,7 +347,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return true;
-    }
+    } // UnlinkArticle
 
 	/**
 	 * This is called when the (last language of the) article is deleted
@@ -477,7 +491,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return true;
-    }
+    } // delete
 
 
 	/**
@@ -691,8 +705,23 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
-    }
+    } // LoadMapData
 
+    /**
+     * The main dispatcher for ajax based editing of maps
+     *
+     * @param int $p_mapId
+     * @param int $p_languageId
+     * @param int $p_articleNumber
+     * @param mixed $p_map
+     * @param mixed $p_remove
+     * @param mixed $p_insert
+     * @param mixed $p_locations
+     * @param mixed $p_contents
+     * @param mixed $p_order
+     *
+     * @return array
+     */
 	public static function StoreMapData($p_mapId, $p_languageId, $p_articleNumber, $p_map = "", $p_remove = "", $p_insert = "", $p_locations = "", $p_contents = "", $p_order = "")
 	{
         $security_problem = array("status" => "403", "description" => "Invalid security token!");
@@ -870,10 +899,18 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
         return $res_array;
-    }
+    } // StoreMapData
 
     // the functions for map editing are below
 
+    /**
+     * Provides general information on a map, specified by map id or article number
+     *
+     * @param string $p_type
+     * @param int $p_id
+     *
+     * @return array
+     */
 	public static function ReadMapInfo($p_type, $p_id)
 	{
 		global $g_ado_db;
@@ -924,9 +961,19 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $map_info;
-    }
+    } // ReadMapInfo
 
 
+    /**
+     * Provides information on map's points
+     *
+     * @param int $p_mapId
+     * @param int $p_languageId
+     * @param bool $p_preview
+     * @param bool $p_textOnly
+     *
+     * @return array
+     */
 	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false)
 	{
         if (0 == $p_mapId) {return array();}
@@ -1075,6 +1122,13 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
 	} // fn ReadMapPoints
 
+    /**
+     * Gives languages used at the map text contents
+     *
+     * @param int $p_mapId
+     *
+     * @return array
+     */
 	public static function ReadLanguagesByMap($p_mapId)
     {
 		global $g_ado_db;
@@ -1100,6 +1154,13 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         return $map_langs_arr;
     } // ReadLanguagesByMap
 
+    /**
+     * Gives languages used at the map's article
+     *
+     * @param int $p_articleNumber
+     *
+     * @return array
+     */
 	public static function ReadLanguagesByArticle($p_articleNumber)
     {
 		global $g_ado_db;
@@ -1120,8 +1181,16 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $art_langs_arr;
-    }
+    } // ReadLanguagesByArticle
 
+    /**
+     * Gives id of article's map id
+     *
+     * @param int $p_articleNumber
+     * @param int $p_rank
+     *
+     * @return int
+     */
 	public static function ReadMapId($p_articleNumber, $p_rank = 1)
     {
 		global $g_ado_db;
@@ -1154,8 +1223,19 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $map_id;
-    }
+    } // ReadMapId
 
+    /**
+     * Updates the basic information on the map.
+     * If the p_mapId is not set, a new map is created (and the p_mapId is set then)
+     * on the p_articleNumber article.
+     *
+     * @param int $p_mapId
+     * @param int $p_articleNumber
+     * @param array $p_map
+     *
+     * @return int
+     */
 	public static function UpdateMap(&$p_mapId, $p_articleNumber = 0, $p_map)
     {
 		global $g_ado_db;
@@ -1218,8 +1298,16 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         return $p_mapId;
-    }
+    } // UpdateMap
 
+    /**
+     * Removes points (with locations and other contents) from the map.
+     *
+     * @param int $p_mapId
+     * @param array $p_removal
+     *
+     * @return bool
+     */
 	public static function RemovePoints($p_mapId, $p_removal)
     {
 		global $g_ado_db;
@@ -1442,9 +1530,22 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         return true;
 
-    }
+    } // RemovePoints
 
 
+    /**
+     * Inserts points (with locations and other contents) into the map.
+     * NB: The result indices are used at the point order updating, since that order-updating
+     * would not know id's of the new points otherwise.
+     *
+     * @param int $p_mapId
+     * @param int $p_languageId
+     * @param int $p_articleNumber
+     * @param array $p_insertion
+     * @param array $p_indices
+     *
+     * @return array
+     */
 	public static function InsertPoints($p_mapId, $p_languageId, $p_articleNumber, $p_insertion, &$p_indices)
     {
 		global $g_ado_db;
@@ -1577,14 +1678,23 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         }
 
-
         return $p_indices;
-        //return true;
-    }
+    } // InsertPoints
 
 
 
     // presentation functions
+
+    /**
+     * Gives the header part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     *
+     * @return string
+     */
     public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0)
     {
         global $Campsite;
@@ -1698,8 +1808,16 @@ var on_load_proc = function()
 
         return $tag_string;
 
-    }
+    } // GetMapTagHeader
 
+    /**
+     * Gives the body map-placement part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return string
+     */
     public static function GetMapTagBody($p_articleNumber, $p_languageId)
     {
         global $Campsite;
@@ -1713,8 +1831,16 @@ var on_load_proc = function()
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
-    }
+    } // GetMapTagBody
 
+    /**
+     * Gives the body map-centering (js call) part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return string
+     */
     public static function GetMapTagCenter($p_articleNumber, $p_languageId)
     {
         global $Campsite;
@@ -1728,8 +1854,16 @@ var on_load_proc = function()
         $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
 
         return $tag_string;
-    }
+    } // GetMapTagCenter
 
+    /**
+     * Gives the body map-info and point-list part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return array
+     */
     public static function GetMapTagList($p_articleNumber, $p_languageId)
     {
         global $Campsite;
@@ -1760,9 +1894,21 @@ var on_load_proc = function()
         }
 
         return $poi_info;
-    }
+    } // GetMapTagList
 
     // search functions
+
+    /**
+     * Gives the header part for the map front end search by map-based rectangle selection
+     * the optional p_bboxDivs array of divs for automatical setting of the box corners coordinates.
+     * The bounding-box corners are available by js calls too (see e.g. locations/search.php).
+     *
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     * @param mixed $p_bboxDivs
+     *
+     * @return string
+     */
     public static function GetMapSearchHeader($p_mapWidth = 0, $p_mapHeight = 0, $p_bboxDivs = null)
     {
         global $Campsite;
@@ -1857,8 +2003,13 @@ var on_load_proc = function()
 
         return $tag_string;
 
-    }
+    } // GetMapSearchHeader
 
+    /**
+     * Gives the body map-placement part for the map front end search by map-based rectangle selection
+     *
+     * @return string
+     */
     public static function GetMapSearchBody()
     {
         global $Campsite;
@@ -1869,8 +2020,13 @@ var on_load_proc = function()
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
-    }
+    } // GetMapSearchBody
 
+    /**
+     * Gives the body map-centering (js call) part for the map front end search by map-based rectangle selection
+     *
+     * @return string
+     */
     public static function GetMapSearchCenter()
     {
         global $Campsite;
@@ -1881,8 +2037,16 @@ var on_load_proc = function()
         $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
 
         return $tag_string;
-    }
+    } // GetMapSearchCenter
 
+    /**
+     * Gives the SQL query for article searching via their point inside the box specified by the p_coordinates.
+     * The (two) corner lon/lat coordinates should go west to east.
+     *
+     * @param array $p_coordinates
+     *
+     * @return string
+     */
     public static function GetGeoSearchSQLQuery($p_coordinates)
     {
         $queryStr = "";
@@ -1938,7 +2102,7 @@ var on_load_proc = function()
         $queryStr = str_replace("%%x1%%", $north_lat, $queryStr);
 
         return $queryStr;
-    }
+    } // GetGeoSearchSQLQuery
 
 
 
