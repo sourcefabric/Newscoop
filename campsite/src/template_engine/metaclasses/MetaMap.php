@@ -101,17 +101,20 @@ final class MetaMap extends MetaDbObject
      * @param int $p_language
      * @return string
      */
-    public static function GetMapTagList($p_articleNumber, $p_languageId)
+    public static function GetMapTagList($p_articleNumber, $p_languageId, array $p_local)
     {
         $geo = Geo_Map::GetMapTagList((int) $p_articleNumber, (int) $p_languageId);
         $map = $geo['map'];
         $pois = $geo['pois'];
 
+        $mapStr = isset($p_local['map']) ? (string) $p_local['map'] : 'Map';
+        $ctrStr = isset($p_local['center']) ? (string) $p_local['center'] : 'Center';
+
         $html = '
             <div class="geomap_info">
               <dl class="geomap_map_name">
                 <dt class="geomap_map_name_label">' .
-                  'Map' . ':
+                  $mapStr . ':
                 </dt>
                 <dd class="geomap_map_name_value">' .
                   $map['name'] . '
@@ -127,7 +130,7 @@ final class MetaMap extends MetaDbObject
                 <div class="geomap_poi_perex">' . $poi['perex'] . '</div>
                 <div class="geomap_poi_center">
                     <a href="#" onClick="' . $poi['center'] . ' return false;">'
-                        . 'Center' . '
+                        . $ctrStr . '
                     </a>
                 </div>
                 <div class="geomap_poi_spacer">&nbsp;</div>
