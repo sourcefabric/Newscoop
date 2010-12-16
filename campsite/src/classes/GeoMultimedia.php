@@ -36,7 +36,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 	/**
      * @param mixed $arg
 	 */
-	public function __construct($arg)
+	public function __construct($arg = NULL)
 	{
         parent::__construct($this->m_columnNames);
 

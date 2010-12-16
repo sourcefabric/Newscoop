@@ -3,30 +3,12 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
-
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once dirname(__FILE__) . '/SystemPref.php';
 
 /**
  * @package Campsite
  */
 class Geo_Preferences extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-	var $m_dbTableName = '';
-	var $m_columnNames = array('id');
-
-	/**
-	 * The geo locations class is auxiliar class for e.g. preferences access on geo things.
-	 */
-	public function Geo_Preferences()
-	{
-	} // constructor
 
 public static function GetMapProviderDefault()
 {
