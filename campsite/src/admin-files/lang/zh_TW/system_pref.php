@@ -1,4 +1,6 @@
 <?php 
+regGS("Local Flash Server:", "");
+regGS("Local Flash Directory:", "");
 regGS("Youtube Default Width:", "");
 regGS("Youtube Default Height:", "");
 regGS("Vimeo Default Width:", "");
