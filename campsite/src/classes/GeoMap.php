@@ -347,17 +347,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 	public static function OnArticleDelete($p_articleNumber)
 	{
         return Geo_Map::UnlinkArticle(null, $p_articleNumber);
-
-/*
-		global $g_ado_db;
-
-		$queryStr = "UPDATE Maps SET fk_article_number = 0 WHERE fk_article_number = ?";
-
-        $sql_params = array();
-        $sql_params[] = $p_articleNumber;
-
-		$g_ado_db->Execute($queryStr, $sql_params);
-*/
 	} // fn OnArticleDelete
 
 
@@ -704,34 +693,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         );
     }
 
-/*
-	public static function LoadMapDataPreview($p_mapId, $p_languageId, $p_articleNumber)
-	{
-        $preview = true;
-
-        return array(
-            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $preview),
-            'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
-        );
-    }
-
-	public static function LoadMapDataPreviewText($p_mapId, $p_languageId, $p_articleNumber)
-	{
-        $preview = true;
-        $text_only = true;
-
-        return array(
-            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $preview, $text_only),
-            'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
-        );
-    }
-*/
-
 	public static function StoreMapData($p_mapId, $p_languageId, $p_articleNumber, $p_map = "", $p_remove = "", $p_insert = "", $p_locations = "", $p_contents = "", $p_order = "")
 	{
-        //$security_problem = '{"status":"403","description":"Invalid security token!"}';
-        //$unknown_request = '{"status":"404","description":"Unknown request!"}';
-        //$data_wrong = '{"status":"404","description":"Wrong data."}';
         $security_problem = array("status" => "403", "description" => "Invalid security token!");
         $unknown_request = array("status" => "404", "description" => "Unknown request!");
         $data_wrong = array("status" => "404", "description" => "Wrong data.");
@@ -763,7 +726,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
         if ("" != $p_remove)
@@ -789,7 +751,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
         $new_ids = array();
@@ -819,7 +780,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
     
@@ -847,7 +807,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
     
@@ -876,7 +835,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
         if ("" != $p_order)
@@ -902,7 +860,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         if (!$status)
         {
             return $data_wrong;
-            //exit();
         }
     
         $geo_map_usage = Geo_Map::ReadMapInfo("map", $p_mapId);
@@ -917,7 +874,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
     // the functions for map editing are below
 
-	//public static function ReadMapInfo($p_articleNumber, $p_languageId)
 	public static function ReadMapInfo($p_type, $p_id)
 	{
 		global $g_ado_db;
@@ -1028,10 +984,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
                 $tmpPoint['loc_id'] = $row['ml_id'];
                 $tmpPoint['con_id'] = $row['mll_id'];
-                //$tmpPoint['maploc_id'] = $row['ml_id'];
-                //$tmpPoint['maploclan_id'] = $row['mll_id'];
-                //$tmpPoint['loc_id'] = $row['loc_id'];
-                //$tmpPoint['con_id'] = $row['con_id'];
+
                 $tmpPoint['style'] = $row['poi_style'];
                 $tmpPoint['rank'] = $row['rank'];
                 $tmpPoint['display'] = $row['poi_display'];
@@ -1131,7 +1084,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $queryStr_langs .= "INNER JOIN Maps AS m ON ml.fk_map_id = m.id ";
         $queryStr_langs .= "WHERE m.id = ?";
 
-        // first, read ids of languages of the article
         $map_langs_arr = array();
         {
             $langs_params = array();
@@ -1154,7 +1106,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $queryStr_langs = "SELECT IdLanguage AS lang FROM Articles WHERE Number = ?";
 
-        // first, read ids of languages of the article
         $art_langs_arr = array();
         {
             $langs_params = array();
@@ -1555,7 +1506,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $new_style = 0;
                 $new_radius = 0;
                 $reuse_id = Geo_Location::FindLocation($new_loc, 'point', $new_style, $new_cen, $new_radius);
-                //$reuse_id = 0;
 
                 if ($reuse_id && (0 < $reuse_id))
                 {
@@ -1657,7 +1607,6 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         {
             $geo_map_usage['height'] = $p_mapHeight;
         }
-        //print_r($geo_map_usage);
 
         $geo_map_usage_json = "";
         $geo_map_usage_json .= json_encode($geo_map_usage);
@@ -1676,8 +1625,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
         
         $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
-        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
+
         $preview = true;
         $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
         
@@ -1762,14 +1710,6 @@ var on_load_proc = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-#        $tag_string .='
-#<div class="map_mapmenu">
-#<a href="#" onClick="geo_object' . $map_suffix . '.map_showview(); return false;">';
-#putGS("show initial map view");
-#        $tag_string .='</a>
-#</div><!-- end of map_mapmenu -->
-#';
-
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
 
         return $tag_string;
@@ -1800,16 +1740,10 @@ var on_load_proc = function()
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
         $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
-        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
-        //$poi_info = Geo_Map::LoadMapDataPreviewText($map_id, $f_language_id, $f_article_number);
+
         $preview = true;
         $text_only = true;
         $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview, $text_only);
-
-        //print_r($poi_info);
-
-        //$geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
 
         $pind = 0;
         foreach ($poi_info["pois"] as $rank => $poi)
@@ -1858,27 +1792,6 @@ var on_load_proc = function()
         $geo_icons_json = "";
         $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
 
-        //$geo_map_usage_json = "";
-        //$geo_map_usage_json .= json_encode($geo_map_usage);
-
-/*
-        
-        $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
-        $geo_popups_json = "";
-        $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
-*/
-
-/*
-        
-        $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
-        //$poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number);
-        //$poi_info = Geo_Map::LoadMapDataPreview($map_id, $f_language_id, $f_article_number);
-        $preview = true;
-        $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
-        
-        $poi_info_json = json_encode($poi_info);
-*/
-        
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
 
@@ -1900,27 +1813,11 @@ var useSystemParameters = function()
 {
 ';
 
-    //$article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
-    //$article_spec = json_encode($article_spec_arr);
-
     $tag_string .= "\n";
-    //$tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
-    //$tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
     $tag_string .= "\n";
-    //$tag_string .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
-    //$tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
     $tag_string .= "\n";
-    //$tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
-    //$tag_string .= "\n";
-
-
-        //geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
-        //alert("003");
-
-
-//    $bbox_divs = array("tl_lon" => 'top_left_longitude', "tl_lat" => 'top_left_latitude', "br_lon" => 'bottom_right_longitude', "br_lat" => 'bottom_right_latitude')
 
         if ($p_bboxDivs)
         {
@@ -1992,7 +1889,6 @@ var on_load_proc = function()
         $queryStr_1 = "";
         $queryStr_2 = "";
         $queryStr_end = "";
-        //$use_single = true;
 
         $queryStr .= "SELECT DISTINCT m.fk_article_number AS Number FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
         $queryStr .= "Locations AS l ON ml.fk_location_id = l.id WHERE ";
@@ -2028,7 +1924,6 @@ var on_load_proc = function()
 
         if ($east_lon > $west_lon)
         {
-            //$use_single = false;
             $queryStr .= $queryStr_2;
         }
         else
@@ -2050,14 +1945,6 @@ var on_load_proc = function()
 } // class GeoMap
 
 /* testing:
-    $art = new Article(1, 35);
-    $locs = Geo_map::GetLocationsByArticle($art);
-    print_r($locs);
-
-    $art = new Article(2, 35);
-    $map_id = Geo_map::GetArticleMapId($art);
-    echo "map_id: $map_id";
-
     // going east to west over the 180/-180, and south to north
     $p_coordinates = array();
     $p_coordinates[] = array("longitude" => "150", "latitude" => "20");

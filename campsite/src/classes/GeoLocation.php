@@ -157,9 +157,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         if ("point" != $p_type) {return null;}
 
-        //$queryStr_point = 'SELECT id FROM ' . self::TABLE
-        //    . ' WHERE poi_location = GeomFromText(\'POINT(? ?)\') AND poi_type = "point" ';
-        //$queryStr_point .= "AND poi_type_style = ? AND poi_center = PointFromText('POINT(? ?)') AND poi_radius = ?";
         $queryStr_point = 'SELECT id FROM ' . self::TABLE
             . ' WHERE poi_location = GeomFromText(\'POINT(%%poi_lat%% %%poi_lon%%)\') AND poi_type = "point" ';
         $queryStr_point .= "AND poi_type_style = ? AND poi_center = PointFromText('POINT(%%cen_lat%% %%cen_lon%%)') AND poi_radius = ?";
@@ -366,7 +363,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
                 Geo_Multimedia::UpdateMedia($poi, "video");
             }
 
-            //if (!$poi["text_changed"]) {continue;}
             if ($poi["text_changed"])
             {
                 Geo_MapLocationContent::UpdateText($poi);
