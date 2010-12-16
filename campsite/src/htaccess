@@ -22,6 +22,7 @@ Options -Indexes FollowSymLinks -MultiViews
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+css
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+images
     RewriteCond %{REQUEST_URI} !/+templates
+    RewriteCond %{REQUEST_URI} !/+videos
     RewriteRule . index.php [L]
 
     RewriteCond %{REQUEST_URI} .tpl$
