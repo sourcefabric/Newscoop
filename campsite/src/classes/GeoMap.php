@@ -13,6 +13,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoMap.php');
 
 /**
