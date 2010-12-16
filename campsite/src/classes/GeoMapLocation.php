@@ -44,7 +44,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 	/**
      * @param mixed $arg
 	 */
-	public function __construct($arg)
+	public function __construct($arg = NULL)
 	{
         parent::__construct($this->m_columnNames);
 

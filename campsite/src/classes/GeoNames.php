@@ -3,10 +3,7 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
 
 /**
  * The geo names class is for search on data per request

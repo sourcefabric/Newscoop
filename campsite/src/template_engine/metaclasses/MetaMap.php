@@ -134,6 +134,7 @@ final class MetaMap extends MetaDbObject
             </div>';
             $poiIdx += 1;
         }
+        $html .= '</div>';
         return $html;
     }
 }

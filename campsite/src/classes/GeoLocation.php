@@ -6,11 +6,9 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
+require_once dirname(__FILE__) . '/IGeoLocation.php';
+require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
 
 /**
  * @package Campsite
@@ -51,7 +49,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	/**
      * @param mixed $arg
 	 */
-    public function __construct($arg)
+    public function __construct($arg = NULL)
     {
         global $g_ado_db;
 

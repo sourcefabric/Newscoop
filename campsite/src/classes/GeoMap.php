@@ -3,18 +3,14 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMultimedia.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoMap.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
+require_once dirname(__FILE__) . '/Article.php';
+require_once dirname(__FILE__) . '/GeoLocation.php';
+require_once dirname(__FILE__) . '/GeoMapLocation.php';
+require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
+require_once dirname(__FILE__) . '/GeoMultimedia.php';
+require_once dirname(__FILE__) . '/GeoPreferences.php';
+require_once dirname(__FILE__) . '/IGeoMap.php';
 
 /**
  * @package Campsite
