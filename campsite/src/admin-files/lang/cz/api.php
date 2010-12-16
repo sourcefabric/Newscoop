@@ -1,4 +1,6 @@
 <?php 
+regGS("Title", "");
+regGS("No news.", "");
 regGS("Invalid security token.", "Neplatný bezpečnostní symbol.");
 regGS("Callback '$1' is not callable.", "Volání '$1' není možné.");
 regGS("Author type $1 linked to author $2", "Typ autora $1 je provázaný s autorem $2");

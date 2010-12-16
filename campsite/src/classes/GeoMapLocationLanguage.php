@@ -31,11 +31,15 @@ class Geo_MapLocationLanguage extends DatabaseObject implements IGeoMapLocationL
      * @param IGeoMapLocation $mapLocation
      * @param int $languageId
 	 */
-	public function __construct(IGeoMapLocation $mapLocation, $languageId)
+	public function __construct(IGeoMapLocation $mapLocation = NULL, $languageId = 0)
 	{
         global $g_ado_db;
 
         parent::__construct($this->m_columnNames);
+
+        if ($mapLocation === NULL) {
+            return;
+        }
 
         $queryStr = 'SELECT ' . implode(', ', $this->m_columnNames) . '
             FROM ' . self::TABLE . '
@@ -52,4 +56,4 @@ class Geo_MapLocationLanguage extends DatabaseObject implements IGeoMapLocationL
     {
         return (bool) ((int) $this->m_data['poi_display']);
     }
-}
+} // class Geo_MapLocationLanguage

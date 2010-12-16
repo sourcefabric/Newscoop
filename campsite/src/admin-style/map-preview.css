@@ -2,10 +2,6 @@
     float: left;
     width: 150px;
     margin-left: 20px;
-/*
-    width: 20%;
-    height: 90%;
-*/
     font-size: 90%;
 }
 
@@ -13,17 +9,8 @@
 
 }
 .map_mappart_outer {
-/*
-    float: right;
-*/
     width: 800px;
     height: 500px;
-
-/*
-    overflow: auto;
-    overflow-x: auto;
-    overflow-y: auto;
-*/
 
 }
 

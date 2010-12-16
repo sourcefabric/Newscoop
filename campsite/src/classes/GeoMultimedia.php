@@ -36,7 +36,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 	/**
      * @param mixed $arg
 	 */
-	public function __construct($arg)
+	public function __construct($arg = NULL)
 	{
         parent::__construct($this->m_columnNames);
 
@@ -114,8 +114,16 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             $items[] = new self((array) $row);
         }
         return $items;
-    }
+    } // fn GetByMapLocation
 
+    /**
+     * Inserts multimedia of a point
+     *
+     * @param int $ml_id
+     * @param array $poi
+     *
+     * @return void
+     */
 	public static function InsertMultimedia($ml_id, $poi)
     {
 		global $g_ado_db;
@@ -203,8 +211,20 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 
             $success = $g_ado_db->Execute($queryStr_loc_mm, $loc_mm_params);
         }
-    }
+    } // fn InsertMultimedia
 
+    /**
+     * Looks whether a media are already in the database, for the COW work
+     *
+     * @param string $p_type
+     * @param string $p_spec
+     * @param string $p_src
+     * @param int $p_width
+     * @param int $p_height
+     * @param string $p_options
+     *
+     * @return int
+     */
     public static function FindMedia($p_type, $p_spec, $p_src, $p_width, $p_height, $p_options)
     {
 		global $g_ado_db;
@@ -236,8 +256,16 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
         }
 
         return $med_id;
-    }
+    } // fn FindMedia
 
+    /**
+     * Updates media associated to a point
+     *
+     * @param string $poi
+     * @param string $mm_type
+     *
+     * @return void
+     */
     public static function UpdateMedia($poi, $mm_type)
     {
 		global $g_ado_db;
@@ -324,7 +352,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
     
             if (null === $med_old_id) {return;}
         }
-        //echo "$med_old_id";
 
         // ad B 2)
 
@@ -349,8 +376,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
                 $med_ins_params[] = 0 + $mm_width;
                 $med_ins_params[] = 0 + $mm_height;
         
-                //echo "queryStr_med_in";
-                //print_r($med_ins_params);
                 $queryStr_med_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_med_in);
 
                 $success = $g_ado_db->Execute($queryStr_med_in, $med_ins_params);
@@ -398,8 +423,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             $med_rm_params[] = $med_old_id;
             $med_rm_params[] = $med_old_id;
 
-            //echo "$queryStr_med_rm";
-            //print_r($med_rm_params);
             $success = $g_ado_db->Execute($queryStr_med_rm, $med_rm_params);
         }
         catch (Exception $exc)
@@ -408,6 +431,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
         }
 
 
-    }
+    } // fn UpdateMedia
 
-}
+} // class Geo_Multimedia

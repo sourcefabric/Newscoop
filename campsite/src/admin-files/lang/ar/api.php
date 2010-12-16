@@ -1,4 +1,6 @@
 <?php 
+regGS("Title", "");
+regGS("No news.", "");
 regGS("Invalid security token.", "");
 regGS("Callback '$1' is not callable.", "");
 regGS("Author type $1 linked to author $2", "");

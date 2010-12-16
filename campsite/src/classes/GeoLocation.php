@@ -6,11 +6,9 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/IGeoLocation.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMapLocationContent.php');
+require_once dirname(__FILE__) . '/DatabaseObject.php';
+require_once dirname(__FILE__) . '/IGeoLocation.php';
+require_once dirname(__FILE__) . '/GeoMapLocationContent.php';
 
 /**
  * @package Campsite
@@ -51,7 +49,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	/**
      * @param mixed $arg
 	 */
-    public function __construct($arg)
+    public function __construct($arg = NULL)
     {
         global $g_ado_db;
 
@@ -150,7 +148,18 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         return $this->m_data['time_updated'];
     }
 
-    // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
+    /**
+     * Looks whether the location is llready at the database
+     * NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
+     *
+     * @param array $p_location
+     * @param string $p_type
+     * @param int $p_style
+     * @param array $p_center
+     * @param int $p_radius
+     *
+     * @return int
+     */
     public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
     {
 		global $g_ado_db;
@@ -158,8 +167,8 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         if ("point" != $p_type) {return null;}
 
         $queryStr_point = 'SELECT id FROM ' . self::TABLE
-            . ' WHERE poi_location = GeomFromText(\'POINT(? ?)\') AND poi_type = "point"';
-        $queryStr_point .= "AND poi_type_style= ? AND poi_center = PointFromText('POINT(? ?)') AND poi_radius = ?";
+            . ' WHERE poi_location = GeomFromText(\'POINT(%%poi_lat%% %%poi_lon%%)\') AND poi_type = "point" ';
+        $queryStr_point .= "AND poi_type_style = ? AND poi_center = PointFromText('POINT(%%cen_lat%% %%cen_lon%%)') AND poi_radius = ?";
 
         $loc_id = 0;
 
@@ -168,27 +177,33 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         {
             try
             {
-                $loc_latitude = $p_location[0]['latitude'];
-                $loc_longitude = $p_location[0]['longitude'];
-                $cen_latitude = $p_center['latitude'];
-                $cen_longitude = $p_center['longitude'];
+                $loc_latitude = "" . $p_location[0]['latitude'];
+                $loc_longitude = "" . $p_location[0]['longitude'];
+                $cen_latitude = "" . $p_center['latitude'];
+                $cen_longitude = "" . $p_center['longitude'];
+
+                $correct_coords = true;
+                if (!is_numeric($loc_latitude)) {$correct_coords = false;}
+                if (!is_numeric($loc_longitude)) {$correct_coords = false;}
+                if (!is_numeric($cen_latitude)) {$correct_coords = false;}
+                if (!is_numeric($cen_longitude)) {$correct_coords = false;}
+                if (!$correct_coords) {return 0;}
+
+                $queryStr_point = str_replace("%%poi_lat%%", $loc_latitude, $queryStr_point);
+                $queryStr_point = str_replace("%%poi_lon%%", $loc_longitude, $queryStr_point);
+                $queryStr_point = str_replace("%%cen_lat%%", $cen_latitude, $queryStr_point);
+                $queryStr_point = str_replace("%%cen_lon%%", $cen_longitude, $queryStr_point);
 
                 $sql_params = array();
     
-                $sql_params[] = "" . $loc_latitude;
-                $sql_params[] = "" . $loc_longitude;
-                $sql_params[] = "" . $p_style;
-                $sql_params[] = "" . $cen_latitude;
-                $sql_params[] = "" . $cen_longitude;
+                $sql_params[] = 0 + $p_style;
                 $sql_params[] = 0 + $p_radius;
-    
-                //$queryStr = str_replace("%%location%%", $p_location, $queryStr);
-                //$queryStr = str_replace("%%center%%", $p_center, $queryStr);
-    
+
                 $rows = $g_ado_db->GetAll($queryStr_point, $sql_params);
                 if (is_array($rows)) {
                     foreach ($rows as $row) {
                         $loc_id = $row['id'];
+                        if ($loc_id && (0 < $loc_id)) {break;}
                     }
                 }
             }
@@ -199,8 +214,16 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         }
 
         return $loc_id;
-    }
+    } // fn FindLocation
 
+    /**
+     * Updates the location, the COW way
+     *
+     * @param int $p_mapId
+     * @param array $p_locations
+     *
+     * @return bool
+     */
 	public static function UpdateLocations($p_mapId, $p_locations)
     {
 		global $g_ado_db;
@@ -317,8 +340,15 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         ;
         return true;
-    }
+    } // fn UpdateLocations
 
+    /**
+     * Updates the point marker icon file name
+     *
+     * @param array $poi
+     *
+     * @return void
+     */
     public static function UpdateIcon($poi)
     {
 		global $g_ado_db;
@@ -330,8 +360,16 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         $sql_params[] = $poi["location_id"];
 
         $success = $g_ado_db->Execute($queryStr, $sql_params);
-    }
+    } // fn UpdateIcon
 
+    /**
+     * Updates the point text content, the COW way
+     *
+     * @param int $p_mapId
+     * @param array $p_contents
+     *
+     * @return bool
+     */
 	public static function UpdateContents($p_mapId, $p_contents)
     {
 		global $g_ado_db;
@@ -357,7 +395,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
                 Geo_Multimedia::UpdateMedia($poi, "video");
             }
 
-            //if (!$poi["text_changed"]) {continue;}
             if ($poi["text_changed"])
             {
                 Geo_MapLocationContent::UpdateText($poi);
@@ -367,8 +404,18 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         ;
         return true;
-    }
+    } // fn UpdateContents
 
+    /**
+     * Updates the point ordering at the map
+     * NB: p_indices are used for the newly inserted points from the ajax request
+     *
+     * @param int $p_mapId
+     * @param array $p_reorder
+     * @param array $p_indices
+     *
+     * @return bool
+     */
 	public static function UpdateOrder($p_mapId, $p_reorder, $p_indices)
     {
 		global $g_ado_db;
@@ -432,5 +479,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         }
 
         return true;
-    }
-}
+    } // fn UpdateOrder
+} // class Geo_Location
+

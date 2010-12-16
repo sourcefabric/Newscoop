@@ -1,4 +1,9 @@
 <?php 
+regGS("Your changes will be saved after login.", "");
+regGS("You have tried to upload wrong backup file.", "");
+regGS("Upload backup file", "");
+regGS("The file $1 has been uploaded successfully.", "");
+regGS("Media Archive", "");
 regGS("en", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
@@ -29,7 +34,6 @@ regGS("An email with instructions on how to recover you password has been sent t
 regGS("You do not have the right to manage backup.", "");
 regGS("There was an error trying to delete the file $1.", "");
 regGS("The file $1 was deleted successfully.", "");
-regGS("Your work has been saved.", "");
 regGS("Please login to continue.", "");
 regGS("Size", "Rozmiar");
 regGS("Restore file", "Przywróć plik");

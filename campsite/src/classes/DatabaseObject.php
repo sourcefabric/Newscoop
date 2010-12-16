@@ -6,12 +6,12 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
-require_once(CS_PATH_PEAR_LOCAL.'/PEAR.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Exceptions.php');
+require_once dirname(__FILE__) . '/../include/campsite_constants.php';
+require_once dirname(__FILE__) . '/../include/pear/PEAR.php';
+require_once dirname(__FILE__) . '/DbObjectArray.php';
+require_once dirname(__FILE__) . '/SystemPref.php';
+require_once dirname(__FILE__) . '/CampCache.php';
+require_once dirname(__FILE__) . '/Exceptions.php';
 
 
 /**

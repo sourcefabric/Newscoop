@@ -132,6 +132,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
     $mapPrefixToDisplay["extensions"] = getGS("Extensions");
+    $mapPrefixToDisplay["template_plugins"] = getGS("Template Engine Plugins");
 
     foreach (CampPlugin::GetPluginsInfo(true) as $info) {
     	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {

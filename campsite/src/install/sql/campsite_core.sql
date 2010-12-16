@@ -2851,8 +2851,6 @@ CREATE TABLE `Maps` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `maps_article_number` (`fk_article_number`),
-  KEY `maps_article_number_usage` (`fk_article_number`,`MapUsage`),
-  KEY `maps_article_number_rank` (`fk_article_number`,`MapRank`),
   KEY `maps_map_name` (`MapName`(64))
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2897,11 +2895,7 @@ CREATE TABLE `Locations` (
   `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  SPATIAL KEY `locations_poi_location` (`poi_location`),
-  KEY `locations_poi_type` (`poi_type`),
-  KEY `locations_poi_type_style` (`poi_type_style`),
-  SPATIAL KEY `locations_poi_center` (`poi_center`),
-  KEY `locations_poi_radius` (`poi_radius`)
+  SPATIAL KEY `locations_poi_location` (`poi_location`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2942,8 +2936,7 @@ CREATE TABLE `MapLocations` (
   `rank` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `map_locations_point_id` (`fk_location_id`),
-  KEY `map_locations_map_id` (`fk_map_id`),
-  KEY `map_locations_rank` (`rank`)
+  KEY `map_locations_map_id` (`fk_map_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2961,9 +2954,7 @@ CREATE TABLE `MapLocationLanguages` (
   `fk_content_id` int(10) unsigned NOT NULL DEFAULT '0',
   `poi_display` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `map_locations_languages_maplocation_id_language` (`fk_maplocation_id`,`fk_language_id`),
   KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
-  KEY `map_location_languages_language_id` (`fk_language_id`),
   KEY `map_location_languages_content_id` (`fk_content_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

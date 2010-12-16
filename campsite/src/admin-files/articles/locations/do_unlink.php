@@ -17,8 +17,6 @@ if (!SecurityToken::isValid()) {
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-//$f_image_id = Input::Get('f_image_id', 'int', 0);
-//$f_image_template_id = Input::Get('f_image_template_id', 'int', 0);
 
 // Check input
 if (!Input::IsValid()) {
@@ -40,9 +38,6 @@ if ((!$language_usage) || (0 == $language_usage))
 }
 
 $articleObj = new Article($f_language_selected, $f_article_number);
-//$imageObj = new Image($f_image_id);
-//$articleImage = new ArticleImage($f_article_number, $f_image_id, $f_image_template_id);
-//$articleImage->delete();
 Geo_Map::UnlinkArticle($articleObj);
 
 camp_html_add_msg(getGS('The map has been removed from the article.'), "ok");

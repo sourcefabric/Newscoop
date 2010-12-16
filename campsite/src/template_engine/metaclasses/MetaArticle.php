@@ -8,6 +8,7 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
@@ -62,6 +63,8 @@ final class MetaArticle extends MetaDbObject {
     'author'=>'getAuthor',
     'defined'=>'defined',
     'has_attachments'=>'hasAttachments',
+    'has_map'=>'hasMap',
+    'map'=>'getMap',
     'image_index'=>'getImageIndex',
     'comment_count'=>'getCommentCount',
     'content_accessible'=>'isContentAccessible',
@@ -396,13 +399,32 @@ final class MetaArticle extends MetaDbObject {
         return new MetaTemplate($articleIssue->getArticleTemplateId());
     }
 
-
     protected function hasAttachments()
     {
         $attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
         return (int)(sizeof($attachments) > 0);
     }
 
+    /**
+     * Has Article a map?
+     *
+     * @return bool
+     */
+    protected function hasMap()
+    {
+        $map = Geo_Map::GetMapByArticle($this->m_dbObject->getProperty('Number'));
+        return (bool) $map->exists();
+    }
+
+    /**
+     * Get Map for this article
+     *
+     * @return Geo_Map
+     */
+    protected function getMap() {
+        $map = Geo_Map::GetMapByArticle($this->m_dbObject->getProperty('Number'));
+        return new MetaMap($map);
+    }
 
     protected function getCommentsEnabled()
     {

@@ -79,6 +79,8 @@ $f_geo = array(
     'map_video_height_vimeo' => Input::Get('f_map_video_height_vimeo', 'int'),
     'map_video_width_flash' => Input::Get('f_map_video_width_flash', 'int'),
     'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
+    'flash_server' => Input::Get('f_flash_server', 'string'),
+    'flash_directory' => Input::Get('f_flash_directory', 'string'),
 );
 
 if (!Input::IsValid()) {
