@@ -11,13 +11,14 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
  * @package Campsite
  */
 class Topic extends DatabaseObject {
-	var $m_keyColumnNames = array('id');
-
-	var $m_keyIsAutoIncrement = true;
+	var $m_keyColumnNames = array('Id');
 
 	var $m_dbTableName = 'Topics';
 
-	var $m_columnNames = array('id', 'node_left', 'node_right');
+	var $m_columnNames = array('Id', 'LanguageId', 'Name', 'ParentId', 'TopicOrder',
+	'node_left', 'node_right');
+
+	var $m_hasSubtopics = null;
 
 	var $m_names = array();
 
@@ -32,12 +33,12 @@ class Topic extends DatabaseObject {
 		parent::DatabaseObject($this->m_columnNames);
 
 		if (preg_match('/^[\d]+$/', $p_idOrName) > 0) {
-            $this->m_data['id'] = $p_idOrName;
+            $this->m_data['Id'] = $p_idOrName;
             $this->fetch();
 		} elseif (is_string($p_idOrName) && !empty($p_idOrName)) {
 		    $topic = Topic::GetByFullName($p_idOrName);
 		    if (!is_null($topic)) {
-		        $this->duplicateObject($topic);
+		        $this->fetch($topic->m_data);
 		    }
 		}
 	} // constructor
@@ -46,23 +47,13 @@ class Topic extends DatabaseObject {
 	/**
 	 * Fetch the topic and all its translations.
 	 *
-	 * The values array may have the following keys:
-	 * - id - topic identifier; if not supplied generated automatically
-	 * - node_left
-	 * - node_right
-	 * - names - array of topic translations of the form: language_id => name
-	 *
 	 * @return void
 	 */
 	public function fetch($p_columns = null)
 	{
 		global $g_ado_db;
-
 		if (!is_null($p_columns)) {
-			if (!isset($p_columns['names'])) {
-				return false;
-			}
-			if ($this->readFromCache($p_columns) !== false) {
+            if ($this->readFromCache($p_columns) !== false) {
                 return true;
             }
 			foreach ($p_columns as $columnName => $value) {
@@ -70,16 +61,33 @@ class Topic extends DatabaseObject {
 					$this->m_data[$columnName]  = $value;
 				}
 			}
-			$this->m_names = $p_columns['names'];
+			if (isset($p_columns['LanguageId']) && isset($p_columns['Name'])) {
+				$this->m_names[$p_columns['LanguageId']] = $p_columns['Name'];
+			}
 			$this->m_exists = true;
 		} else {
             if ($this->readFromCache() !== false) {
                 return true;
             }
-            parent::fetch();
-            if ($this->exists()) {
-				$this->m_names = TopicName::GetTopicNames($this->getTopicId());
-            }
+			$columnNames = implode(",", $this->m_columnNames);
+			$queryStr = "SELECT $columnNames FROM ".$this->m_dbTableName
+						." WHERE Id=".$this->m_data['Id'];
+			$rows = $g_ado_db->GetAll($queryStr);
+			if ($rows && (count($rows) > 0)) {
+				$row = array_pop($rows);
+				$this->m_data['Id'] = $row['Id'];
+				$this->m_data['ParentId'] = $row['ParentId'];
+				$this->m_data['TopicOrder'] = $row['TopicOrder'];
+				$this->m_data['node_left'] = $row['node_left'];
+				$this->m_data['node_right'] = $row['node_right'];
+				$this->m_names[$row['LanguageId']] = $row['Name'];
+				foreach ($rows as $row) {
+					$this->m_names[$row['LanguageId']] = $row['Name'];
+				}
+				$this->m_exists = true;
+			} else {
+				$this->m_exists = false;
+			}
 		}
 
 		if ($this->m_exists) {
@@ -94,13 +102,6 @@ class Topic extends DatabaseObject {
 	/**
 	 * Create a new topic.
 	 *
-	 * The values array may have the following keys:
-	 * - parent_id - parent topic identifier
-	 * - id - topic identifier; if not supplied generated automatically
-	 * - node_left
-	 * - node_right
-	 * - names - array of topic translations of the form: language_id => name
-	 *
 	 * @param array $p_values
 	 * @return boolean
 	 */
@@ -108,16 +109,22 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		if (!isset($p_values['names'])) {
-			return false;
+		$g_ado_db->Execute("LOCK TABLE Topics WRITE, AutoId WRITE");
+
+		$queryStr = "UPDATE AutoId SET TopicId = LAST_INSERT_ID(TopicId + 1)";
+		$g_ado_db->Execute($queryStr);
+		$this->m_data['Id'] = $g_ado_db->Insert_ID();
+		$this->m_data['LanguageId'] = 1;
+		if (isset($p_values['LanguageId'])) {
+			$this->m_data['LanguageId'] = $p_values['LanguageId'];
+		}
+		$this->m_data['Name'] = "";
+		if (isset($p_values['Name'])) {
+			$this->m_names[$this->m_data['LanguageId']] = $p_values['Name'];
 		}
 
-		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicNames WRITE");
-
-		$this->m_names = $p_values['names'];
-
-		if (!empty($p_values['parent_id'])) {
-			$parent = new Topic($p_values['parent_id']);
+		if (!empty($p_values['ParentId'])) {
+			$parent = new Topic($p_values['ParentId']);
 			if (!$parent->exists()) {
 				$g_ado_db->Execute("UNLOCK TABLES");
 				return false;
@@ -133,23 +140,14 @@ class Topic extends DatabaseObject {
 		$this->m_data['node_left'] = $parentLeft + 1;
 		$this->m_data['node_right'] = $parentLeft + 2;
 
-		// create node
-		if ($success = parent::create($p_values)) {
-			// create topic names
-			foreach ($this->m_names as $languageId=>$name) {
-				$topicName = new TopicName($this->getTopicId(), $languageId);
-				$topicName->create(array('name'=>$name));
-			}
-		}
-
+		$success = parent::create($p_values);
 		$g_ado_db->Execute("UNLOCK TABLES");
-
 		if ($success) {
 			$this->m_exists = true;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic "$1" ($2) added', implode(', ', $this->m_names), $this->m_data['id']);
+			$logtext = getGS('Topic "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
 			Log::Message($logtext, null, 141);
 		}
 		CampCache::singleton()->clear('user');
@@ -160,34 +158,21 @@ class Topic extends DatabaseObject {
 	/**
 	 * Returns the node left order
 	 * @param bool $p_forceFetchFromDatabase
-	 * @return integer
 	 */
 	public function getLeft($p_forceFetchFromDatabase = false)
 	{
-		return (int)$this->getProperty('node_left', $p_forceFetchFromDatabase);
+		return $this->getProperty('node_left', $p_forceFetchFromDatabase);
 	} // fn getLeft
 
 
 	/**
 	 * Returns the node right order
 	 * @param bool $p_forceFetchFromDatabase
-	 * @return integer
 	 */
 	public function getRight($p_forceFetchFromDatabase = false)
 	{
-		return (int)$this->getProperty('node_right', $p_forceFetchFromDatabase);
+		return $this->getProperty('node_right', $p_forceFetchFromDatabase);
 	} // fn getRight
-
-
-	/**
-	 * Returns the node right width: right order - left order
-	 * @param bool $p_forceFetchFromDatabase
-	 * @return integer
-	 */
-	public function getWidth($p_forceFetchFromDatabase = false)
-	{
-		return $this->getRight() - $this->getLeft();
-	} // fn getWidth
 
 
 	/**
@@ -238,11 +223,11 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicNames WRITE, TopicFields READ, ArticleTypeMetadata WRITE");
+		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicFields WRITE, ArticleTypeMetadata WRITE");
 
 		if ($p_languageId > 0 && $this->getNumTranslations() > 1) {
-			$topicName = new TopicName($this->getTopicId(), $p_languageId);
-			$deleted = $topicName->delete();
+			$sql = "DELETE FROM Topics WHERE Id=".$this->m_data['Id']." AND LanguageId=".(int)$p_languageId;
+			$deleted = $g_ado_db->Execute($sql);
 		} else {
 			// Delete the article type field metadata
 			if ($deleted) {
@@ -256,12 +241,9 @@ class Topic extends DatabaseObject {
 				}
 			}
 
-			// Delete topic names
-			TopicName::DeleteTopicNames($this->getTopicId());
-
 			// Delete children and itself
 			$sql = "DELETE FROM Topics WHERE node_left >= ".$this->m_data['node_left']
-			. ' AND node_right <= '.$this->m_data['node_right'];
+			. ' AND node_right < '.$this->m_data['node_right'];
 			$deleted = $g_ado_db->Execute($sql);
 
 			if ($deleted) {
@@ -301,7 +283,7 @@ class Topic extends DatabaseObject {
 	public function getName($p_languageId)
 	{
 		if (is_numeric($p_languageId) && isset($this->m_names[$p_languageId])) {
-			return $this->m_names[$p_languageId]->getName();
+			return $this->m_names[$p_languageId];;
 		} else {
 			return "";
 		}
@@ -326,22 +308,29 @@ class Topic extends DatabaseObject {
 
 		if (isset($this->m_names[$p_languageId])) {
 			// Update the name.
-			$oldName = $this->m_names[$p_languageId]->getName();
-			$changed = $this->m_names[$p_languageId]->setName($p_value);
+			$oldValue = $this->m_names[$p_languageId];
+			$sql = "UPDATE Topics SET Name='".mysql_real_escape_string($p_value)."' "
+					." WHERE Id=".$this->m_data['Id']
+					." AND LanguageId=".$p_languageId;
+			$changed = $g_ado_db->Execute($sql);
 		} else {
-			$topicName = new TopicName($this->getTopicId(), $p_languageId);
-			$changed = $topicName->create(array('name'=>$p_value));
-			$this->m_names[$p_languageId] = $topicName;
+			// Insert the new translation.
+			$oldValue = "";
+			$sql = "INSERT INTO Topics SET Name='".mysql_real_escape_string($p_value)."' "
+					.", Id=".$this->m_data['Id']
+					.", LanguageId=$p_languageId"
+					.", TopicOrder=".$this->m_data['TopicOrder']
+					.", ParentId=".$this->m_data['ParentId']
+					.", node_left = " . $this->getLeft()
+					.", node_right = " . $this->getRight();
+			$changed = $g_ado_db->Execute($sql);
 		}
 		if ($changed) {
+			$this->m_names[$p_languageId] = $p_value;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			if (!empty($oldName)) {
-				$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['id'], $oldName, $this->m_names[$p_languageId]);
-			} else {
-				$logtext = getGS('Topic "$1" ($2) added', $this->m_names[$p_languageId], $this->m_data['id']);
-			}
+			$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['Id'], $oldValue, $this->m_names[$p_languageId]);
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;
@@ -353,7 +342,7 @@ class Topic extends DatabaseObject {
 	 */
 	public function getTopicId()
 	{
-		return $this->m_data['id'];
+		return $this->m_data['Id'];
 	} // fn getTopicId
 
 
@@ -387,16 +376,19 @@ class Topic extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		if (!$this->exists()) {
-			return null;
-		}
-
-		$sql = 'SELECT id FROM Topics WHERE node_left < ' . $this->getLeft()
-		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC';
+		$sql = 'SELECT DISTINCT Id FROM Topics WHERE node_left < ' . $this->getLeft()
+		. ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC LIMIT 0, 1';
 		$parentId = $g_ado_db->GetOne($sql);
 		return $parentId;
 	} // fn getParentId
 
+	/**
+	 * @return int
+	 */
+	public function getTopicOrder()
+	{
+		return $this->m_data['TopicOrder'];
+	} // fn getTopicOrder
 
 	/**
 	 * Return an array of Topics starting from the root down
@@ -404,20 +396,28 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return array
 	 */
-	public function getPath($p_returnIds = false)
+	public function getPath()
 	{
 		global $g_ado_db;
-
-		if (!$this->exists()) {
-			return array();
-		}
-
+		$done = false;
+		$currentId = $this->m_data['Id'];
 		$stack = array();
-		$sql = 'SELECT * FROM Topics WHERE node_left <= ' . $this->getLeft()
-		. ' AND node_right >= ' . $this->getRight() . ' ORDER BY node_left ASC';
-		$rows = $g_ado_db->GetAll($sql);
-		foreach ($rows as $row) {
-			$stack[$row['id']] = $p_returnIds ? $row['id'] : new Topic($row['id']);
+		while (!$done) {
+			$queryStr = 'SELECT * FROM Topics WHERE Id = '.$currentId;
+			$rows = $g_ado_db->GetAll($queryStr);
+			if (($rows !== false) && (count($rows) > 0)) {
+				$row = array_pop($rows);
+				$topic = new Topic();
+				$topic->fetch($row);
+				// Get all the translations
+				foreach ($rows as $row) {
+					$topic->m_names[$row['LanguageId']] = $row['Name'];
+				}
+				array_unshift($stack, $topic);
+				$currentId = $topic->getParentId();
+			} else {
+				$done = true;
+			}
 		}
 		return $stack;
 	} // fn getPath
@@ -430,10 +430,6 @@ class Topic extends DatabaseObject {
     public function isRoot()
     {
     	global $g_ado_db;
-
-		if (!$this->exists()) {
-			return null;
-		}
 
     	$sql = 'SELECT COUNT(*) FROM Topics WHERE node_left < ' . $this->getLeft()
     	. ' AND node_right > ' . $this->getRight();
@@ -495,8 +491,8 @@ class Topic extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
-					                 $p_parentId = null, $p_depth = 1, $p_sqlOptions = null,
-					                 $p_order = null, $p_countOnly = false, $p_skipCache = false)
+					                 $p_parentId = null, $p_sqlOptions = null,
+					                 $p_order = null, $p_countOnly = false)
 	{
         global $g_ado_db;
 		if (!$p_skipCache && CampCache::IsEnabled()) {
@@ -504,7 +500,6 @@ class Topic extends DatabaseObject {
             $paramsArray['language_id'] = (is_null($p_languageId)) ? '' : $p_languageId;
             $paramsArray['name'] = (is_null($p_name)) ? '' : $p_name;
             $paramsArray['parent_id'] = (is_null($p_parentId)) ? '' : $p_parentId;
-            $paramsArray['depth'] = (is_null($p_depth)) ? '' : $p_depth;
             $paramsArray['sql_options'] = $p_sqlOptions;
             $paramsArray['order'] = $p_order;
             $paramsArray['count_only'] = (int)$p_countOnly;
@@ -515,52 +510,43 @@ class Topic extends DatabaseObject {
             }
         }
 
-		$query = new SQLSelectClause();
-		$query->addColumn('t.id');
-		$topicObj = new Topic();
-		$topicNameObj = new TopicName();
-		if ((!is_null($p_languageId) && is_numeric($p_languageId)) || !is_null($p_name)) {
-			$query->setTable($topicObj->m_dbTableName . ' AS t LEFT JOIN '
-			. $topicNameObj->m_dbTableName . ' AS tn ON t.id = tn.fk_topic_id');
-		} else {
-			$query->setTable($topicObj->m_dbTableName . ' AS t');
+		$constraints = array();
+		if (!is_null($p_id)) {
+			$constraints[] = "`Id` = '$p_id'";
 		}
-
-        $constraints = array();
-		if (!is_null($p_id) && is_numeric($p_id)) {
-			$query->addWhere("t.id = '$p_id'");
-		}
-		if (!is_null($p_languageId) && is_numeric($p_languageId)) {
-			$query->addWhere("tn.fk_language_id = '$p_languageId'");
+		if (!is_null($p_languageId)) {
+			$constraints[] = "`LanguageId` = '$p_languageId'";
 		}
 		if (!is_null($p_name)) {
-			$query->addWhere("tn.name = '". $g_ado_db->escape($p_name) . "'");
+			$constraints[] = "`Name` = '$p_name'";
 		}
 		if (!is_null($p_parentId)) {
-			$subtopicsQuery = self::BuildSubtopicsQuery($p_parentId, $p_depth, 1);
-			$query->addTableFrom('(' . $subtopicsQuery->buildQuery() . ') AS in_query');
-			$query->addWhere("t.id = in_query.id");
+			$constraints[] = "`ParentId` = '$p_parentId'";
 		}
-
-		if (!is_array($p_order) || count($p_order) == 0) {
-			$p_order = array(array('field'=>'default', 'dir'=>'asc'));
-		}
-		foreach ($p_order as $orderCond) {
-			switch (strtolower($orderCond['field'])) {
-				case 'default':
-					$order['t.node_left'] = $orderCond['dir'];
-					break;
-				case 'byname':
-					$order['tn.name'] = $orderCond['dir'];
-					break;
-				case 'bynumber':
-					$order['t.id'] = $orderCond['dir'];
-					break;
+		if (is_array($p_order) && count($p_order) > 0) {
+			$order = array();
+			foreach ($p_order as $orderCond) {
+				switch (strtolower($orderCond['field'])) {
+					case 'default':
+						$order['TopicOrder'] = $orderCond['dir'];
+						break;
+                	case 'byname':
+                		$order['Name'] = $orderCond['dir'];
+                		break;
+                	case 'bynumber':
+                		$order['Id'] = $orderCond['dir'];
+                		break;
+                }
+			}
+			if (count($order) > 0) {
+				$p_sqlOptions['ORDER BY'] = $order;
 			}
 		}
-		$p_sqlOptions['ORDER BY'] = $order;
-
-		$queryStr = $query->buildQuery();
+		$tmpObj = new Topic();
+        $queryStr = "SELECT DISTINCT Id FROM ".$tmpObj->m_dbTableName;
+        if (count($constraints) > 0) {
+        	$queryStr .= " WHERE ".implode(" AND ", $constraints);
+        }
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
         if ($p_countOnly) {
         	$queryStr = "SELECT COUNT(*) FROM ($queryStr) AS topics";
@@ -569,7 +555,7 @@ class Topic extends DatabaseObject {
         	$topics = array();
         	$rows = $g_ado_db->GetAll($queryStr);
         	foreach ($rows as $row) {
-        		$topics[] = new Topic($row['id']);
+        		$topics[] = new Topic($row['Id']);
         	}
         }
 
@@ -585,88 +571,19 @@ class Topic extends DatabaseObject {
 	 * Returns the subtopics from the next level (not all levels below) in an array
 	 * of topic identifiers.
 	 * @param array $p_returnIds
-	 * @param integer $p_depth
 	 */
-	public function getSubtopics($p_returnIds = false, $p_depth = 1)
+	public function getSubtopics($p_returnIds = false)
 	{
         global $g_ado_db;
 
-        $parentDepthQuery = self::BuildSubtopicsQuery($this->getTopicId(), $p_depth);
-		$rows = $g_ado_db->GetAll($parentDepthQuery->buildQuery());
+		$sql = "SELECT DISTINCT Id FROM Topics WHERE ParentId = " . (int)$this->m_data['Id'];
+		$rows = $g_ado_db->GetAll($sql);
 		$topics = array();
 		foreach ($rows as $row) {
-			$topics[] = $p_returnIds ? $row['id'] : new Topic($row['id']);
+			$topics[] = $p_returnIds ? $row['Id'] : new Topic($row['Id']);
 		}
 		return $topics;
 	} // getSubtopics
-
-
-	/**
-	 * Returns an SQLSelectClause object that builds a query for retrieving the
-	 * depth of the given topic.
-	 *
-	 * @param integer $p_topicId - topic identifier
-	 * @param integer $p_indent - query formatting: indent the query $p_indent times
-	 * @return SQLSelectClause
-	 */
-	public static function BuildDepthQuery($p_topicId, $p_indent = 0)
-	{
-		$topicObj = new Topic();
-
-        $depthQuery = new SQLSelectClause($p_indent);
-        $depthQuery->setTable($topicObj->m_dbTableName . ' as node');
-        $depthQuery->addTableFrom($topicObj->m_dbTableName . ' as parent');
-        $depthQuery->addColumn('node.id');
-        $depthQuery->addColumn('(COUNT(parent.id) - 1) AS depth');
-        $depthQuery->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        $depthQuery->addWhere('node.id = ' . (int)$p_topicId);
-        $depthQuery->addGroupField('node.id');
-        $depthQuery->addOrderBy('node.node_left');
-        return $depthQuery;
-	}
-
-
-	/**
-	 * Returns an SQLSelectClause object that builds a query for retrieving the
-	 * subtopics of the given parent.
-	 *
-	 * @param integer $p_parentId - parent topic identifier
-	 * @param integer $p_depth - depth of the subtopic tree; default 1; 0 for unlimitted
-	 * @param integer $p_indent - query formatting: indent the query $p_indent times
-	 * @return SQLSelectClause
-	 */
-	public static function BuildSubtopicsQuery($p_parentId = 0, $p_depth = 1, $p_indent = 0)
-	{
-		$topicObj = new Topic();
-
-		$depthGreater = $p_parentId > 0 ? 'depth > 0' : 'depth >= 0';
-		$depthMax = $p_parentId > 0 ? (int)$p_depth : $p_depth - 1;
-
-		$query = new SQLSelectClause($p_indent);
-		$query->addColumn('node.id');
-		$query->setTable($topicObj->m_dbTableName . ' as node');
-        $query->addTableFrom($topicObj->m_dbTableName . ' as parent');
-        if ($p_parentId > 0) {
-        	$query->addColumn('(COUNT(parent.id) - (sub_tree.depth + 1)) AS depth');
-        	$query->addTableFrom($topicObj->m_dbTableName . ' as sub_parent');
-        	$parentDepthQuery = self::BuildDepthQuery($p_parentId, $p_indent+1);
-        	$query->addTableFrom('(' . $parentDepthQuery->buildQuery() . ') as sub_tree');
-        	$query->addWhere('sub_parent.id = sub_tree.id');
-        	$query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
-        } else {
-        	$query->addColumn('(COUNT(parent.id) - 1) AS depth');
-        }
-        $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        $query->addGroupField('node.id');
-        if ($p_depth < 1) {
-        	$query->addHaving($depthGreater);
-        } else {
-        	$query->addHaving($depthGreater);
-        	$query->addHaving('depth <= ' . $depthMax);
-        }
-        $query->addOrderBy('node.node_left');
-        return $query;
-	}
 
 
 	/**
@@ -700,51 +617,10 @@ class Topic extends DatabaseObject {
 	 */
 	public static function GetTree($p_startingTopicId = 0)
 	{
-		global $g_ado_db;
-
-		$topicObj = new Topic();
-		$query = new SQLSelectClause();
-		$query->addColumn('node.id');
-		$query->addColumn('(COUNT(parent.id) - 1) AS depth');
-		$query->setTable($topicObj->m_dbTableName . ' AS node');
-		$query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
-		$query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-		if ($p_startingTopicId > 0) {
-			$query->addTableFrom($topicObj->m_dbTableName . ' AS sub_parent');
-			$query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
-			$query->addWhere('sub_parent.id = ' . (int)$p_startingTopicId);
-		}
-		$query->addGroupField('node.id');
-		$query->addOrderBy('node.node_left');
-		$rows = $g_ado_db->GetAll($query->buildQuery());
-
-		$p_tree = array();
-		$startDepth = null;
-		$currentPath = array();
-		foreach ($rows as $row) {
-			$topicId = $row['id'];
-			$depth = $row['depth'];
-			$topic = new Topic($topicId);
-			if (is_null($startDepth)) {
-				$startDepth = $depth;
-				if ($depth > 0) {
-					$currentPath = $topic->getPath();
-				} else {
-					$currentPath[$topicId] = $topic;
-				}
-			} elseif ($depth > count($currentPath)) {
-				$currentPath[$topicId] = $topic;
-			} elseif ($depth == $startDepth) {
-				$currentPath = $topic->getPath();
-			} else {
-				while ($depth < count($currentPath)) {
-					array_pop($currentPath);
-				}
-				$currentPath[$topicId] = $topic;
-			}
-			$p_tree[] = $currentPath;
-		}
-		return $p_tree;
+		$tree = array();
+		$path = array();
+		Topic::__TraverseTree($tree, $path, $p_startingTopicId);
+		return $tree;
 	} // fn GetTree
 
 
@@ -761,136 +637,20 @@ class Topic extends DatabaseObject {
     {
 		global $g_ado_db;
 
-		$topicObj = new Topic();
-		$topicTable = $topicObj->getDbTableName();
-		$topicNameObj = new TopicName();
-		$topicNameTable = $topicNameObj->getDbTableName();
-		$languageObj = new Language();
-		$languageTable = $languageObj->getDbTableName();
-
-        $result = $g_ado_db->Execute("LOCK TABLE `$topicTable` WRITE, `$topicTable` AS node WRITE, "
-        . "`$topicTable` AS parent WRITE, `$topicTable` AS sub_parent WRITE, "
-        . "`$topicTable` AS sub_tree WRITE, `$topicTable` AS t WRITE, `$topicNameTable` READ, "
-        . "`$topicNameTable` AS tn READ, `$languageTable` READ");
-
-        $orderChanged = false;
+        $g_ado_db->StartTrans();
         foreach ($p_order as $parentId => $order) {
-        	list(, $parentId) = explode('_', $parentId);
-
-        	$parentTopic = new Topic((int)$parentId);
-        	$subtopics = $parentTopic->getSubtopics(true);
-        	if (count($subtopics) != count($order)) {
-        		return false;
-        	}
-
-        	foreach ($order as $newTopicOrder => $topicId) {
+            foreach ($order as $topicOrder => $topicId) {
                 list(, $topicId) = explode('_', $topicId);
-
-                if ($subtopics[$newTopicOrder] != $topicId) {
-                	$oldTopicOrder = array_search($topicId, $subtopics);
-                	self::SwitchTopics($subtopics[$newTopicOrder], $topicId, $parentTopic);
-
-                	$subtopics[$oldTopicOrder] = $subtopics[$newTopicOrder];
-                	$subtopics[$newTopicOrder] = $topicId;
-
-                	$orderChanged = true;
-                }
+                $queryStr = 'UPDATE Topics
+                    SET TopicOrder = ' . ((int) $topicOrder) . '
+                    WHERE Id = ' . ((int) $topicId);
+                $g_ado_db->Execute($queryStr);
             }
         }
-
-        $g_ado_db->Execute("UNLOCK TABLES");
-
-        if ($orderChanged) {
-        	CampCache::singleton()->clear('user');
-        }
+        $g_ado_db->CompleteTrans();
 
         return TRUE;
     } // fn UpdateOrder
-
-
-    /**
-     *
-     * @param integer $p_topicId
-     * @param integer $p_oldTopicOrder
-     * @param integer $p_newTopicOrder
-     */
-    private static function SwitchTopics($p_leftTopicId, $p_rightTopicId, Topic $p_parentTopic)
-    {
-    	global $g_ado_db;
-
-    	$topicTable = $p_parentTopic->m_dbTableName;
-
-		$maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
-
-		$leftTopic = new Topic($p_leftTopicId);
-		$rightTopic = new Topic($p_rightTopicId);
-
-		// 1. move the left topic to the right by:
-		//    max(right) - left_topic.node_left + 1
-		// result: [left_of_left] [empty_left] [between_left_&_right] [right]
-		//         [right_of_right] .. [end] [left]
-		// where empty_left width is left_topic.width + 1
-		//       end is the end of the whole topic tree
-		$distance = $maxRight - $leftTopic->getLeft() + 1;
-		$sql = "UPDATE `$topicTable` "
-		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
-		. "WHERE node_left >= " . $leftTopic->getLeft()
-		. "  AND node_right <= " . $leftTopic->getRight();
-		$g_ado_db->Execute($sql);
-		$leftTopicTmpLeft = $leftTopic->getLeft() + $distance;
-		$leftTopicTmpRight = $leftTopic->getRight() + $distance;
-
-		// 2. move the right topic to the right by:
-		//    max(right) - right_topic.node_left + left_topic.width + 2
-		// result: [left_of_left] [empty_left] [between_left_&_right] [empty_right]
-		//         [right_of_right] .. [end] [left] [right]
-		// where empty_right width is right_topic.width + 1
-		$distance = $maxRight - $rightTopic->getLeft() + $leftTopic->getWidth() + 2;
-		$sql = "UPDATE `$topicTable` "
-		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
-		. "WHERE node_left >= " . $rightTopic->getLeft()
-		. "  AND node_right <= " . $rightTopic->getRight();
-		$g_ado_db->Execute($sql);
-		$rightTopicTmpLeft = $rightTopic->getLeft() + $distance;
-		$rightTopicTmpRight = $rightTopic->getRight() + $distance;
-
-		// 3. move the topics in between the left and right topic to the right by:
-		//    right_topic.width - left_topic.width
-		// result: [left_of_left] [empty_left] [between_left_&_right] [empty_right]
-		//         [right_of_right] .. [end] [left] [right]
-		// where empty_left width is right_topic.width + 1
-		// where empty_right width is left_topic.width + 1
-		$distance = $rightTopic->getWidth() - $leftTopic->getWidth();
-		$sql = "UPDATE `$topicTable` "
-		. "SET node_left = node_left + $distance, node_right = node_right + $distance "
-		. "WHERE node_left > " . $leftTopic->getRight()
-		. "  AND node_right < " . $rightTopic->getLeft();
-		$g_ado_db->Execute($sql);
-
-		// 4. move the left topic to the left by:
-		//    max(right) - right_topic.left + 1 - (right_topic.width - left_topic.width)
-		// result: [left_of_left] [empty_left] [between_left_&_right] [left]
-		//         [right_of_right] .. [end] [empty] [right]
-		// where empty width is left_topic.width + 1
-		$distance = $maxRight - $rightTopic->getLeft() + 1 - ($rightTopic->getWidth() - $leftTopic->getWidth());
-		$sql = "UPDATE `$topicTable` "
-		. "SET node_left = node_left - $distance, node_right = node_right - $distance "
-		. "WHERE node_left >= " . $leftTopicTmpLeft
-		. "  AND node_right <= " . $leftTopicTmpRight;
-		$g_ado_db->Execute($sql);
-
-		// 5. move the right topic to the left by:
-		//    max(right) - left_topic.left + 1 + (left_topic.width + 1)
-		// result: [left_of_left] [right] [between_left_&_right] [left]
-		//         [right_of_right] .. [end]
-		// where empty width is left_topic.width + 1
-		$distance = $maxRight - $leftTopic->getLeft() + 1 + ($leftTopic->getWidth() + 1);
-		$sql = "UPDATE `$topicTable` "
-		. "SET node_left = node_left - $distance, node_right = node_right - $distance "
-		. "WHERE node_left >= " . $rightTopicTmpLeft
-		. "  AND node_right <= " . $rightTopicTmpRight;
-		$g_ado_db->Execute($sql);
-    } // fn MoveTopic
 
 } // class Topics
 
