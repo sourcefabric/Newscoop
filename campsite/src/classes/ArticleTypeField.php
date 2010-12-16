@@ -158,7 +158,7 @@ class ArticleTypeField extends DatabaseObject {
 			. $this->getName() . '` ' . $types[$p_type];
 			$success = $g_ado_db->Execute($queryStr);
 		}
-		if ($success || $this->getPrintName() == 'NULL') {
+		if ($this->getPrintName() == 'NULL' || $success) {
 			$data = array();
 			if ($this->getPrintName() != 'NULL') {
 				if ($p_type == self::TYPE_BODY && isset($p_params['is_content'])) {
@@ -628,6 +628,9 @@ class ArticleTypeField extends DatabaseObject {
 	 * @return 0 or phrase id (int)
 	 */
 	public function translationExists($p_languageId) {
+		if (!isset($this->m_data['fk_phrase_id'])) {
+			return false;
+		}
 		$translation = new Translation($p_languageId, $this->m_data['fk_phrase_id']);
 		return $translation->exists();
 	} // fn translationExists

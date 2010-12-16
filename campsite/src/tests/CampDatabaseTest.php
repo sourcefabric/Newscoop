@@ -61,8 +61,12 @@ class CampDatabaseTest extends PHPUnit_Framework_TestCase
 
     public function testIsConnected()
     {
+    	global $g_ado_db;
+
         $this->m_dbObj = CampDatabase::singleton();
-    	$this->assertEquals(1, $this->m_dbObj->m_db->IsConnected());
+    	$this->assertEquals(true, $this->m_dbObj->m_db->IsConnected());
+    	$g_ado_db = $this->m_dbObj->m_db;
+    	$this->assertEquals(true, $g_ado_db->IsConnected());
     }
 }
 

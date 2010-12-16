@@ -66,7 +66,7 @@ class ArticleType {
 	public function create()
 	{
 		global $g_ado_db;
-		
+
 		if (strlen($this->m_dbTableName) <= 1) {
 			return false;
 		}
@@ -159,6 +159,7 @@ class ArticleType {
 			return false;
 		}
 
+		$oldName = $this->m_name;
 		$oldNameEsc = $g_ado_db->escape($this->m_name);
 		$newNameEsc = $g_ado_db->escape($p_newName);
 
@@ -613,7 +614,7 @@ class ArticleType {
         if (!$g_ado_db->Execute($sql)) {
         	return 0;
         }
-        
+
         $sql = "DELETE FROM X$p_src";
         $g_ado_db->Execute($sql);
         CampCache::singleton()->clear('user');

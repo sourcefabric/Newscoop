@@ -149,7 +149,7 @@ class Topic extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
+			$logtext = getGS('Topic "$1" ($2) added', implode(', ', $this->m_names), $this->m_data['id']);
 			Log::Message($logtext, null, 141);
 		}
 		CampCache::singleton()->clear('user');
@@ -326,17 +326,22 @@ class Topic extends DatabaseObject {
 
 		if (isset($this->m_names[$p_languageId])) {
 			// Update the name.
+			$oldName = $this->m_names[$p_languageId]->getName();
 			$changed = $this->m_names[$p_languageId]->setName($p_value);
 		} else {
 			$topicName = new TopicName($this->getTopicId(), $p_languageId);
 			$changed = $topicName->create(array('name'=>$p_value));
+			$this->m_names[$p_languageId] = $topicName;
 		}
 		if ($changed) {
-			$this->m_names[$p_languageId] = $topicName;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['Id'], $oldValue, $this->m_names[$p_languageId]);
+			if (!empty($oldName)) {
+				$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['id'], $oldName, $this->m_names[$p_languageId]);
+			} else {
+				$logtext = getGS('Topic "$1" ($2) added', $this->m_names[$p_languageId], $this->m_data['id']);
+			}
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;

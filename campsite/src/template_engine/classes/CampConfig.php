@@ -103,7 +103,7 @@ final class CampConfig
         $varname = $settingVar['varname'];
         $namespace = $settingVar['namespace'];
 
-        if (!is_array($this->m_config[$namespace])
+        if (!isset($this->m_config[$namespace]) || !is_array($this->m_config[$namespace])
         		|| !array_key_exists($varname, $this->m_config[$namespace])) {
             return null;
         }

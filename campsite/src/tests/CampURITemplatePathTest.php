@@ -45,7 +45,7 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
     protected function setUp()
    	{
         $uri = 'http://campsite.localhost.localdomain/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43';
-        $this->m_uri = CampURITemplatePath::singleton($uri);
+        $this->m_uri = new CampURITemplatePath($uri);
     }
 
     /**
@@ -57,17 +57,17 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
-    
+
     public function testGetHost()
     {
         $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getHost());
     }
-    
+
     public function testGetRequestURI()
     {
         $this->assertEquals('/look/article.tpl?IdPublication=1&IdLanguage=1&NrIssue=1&NrSection=40&NrArticle=43', $this->m_uri->getRequestURI());
     }
-    
+
     public function testGetTemplate()
     {
         $this->assertEquals('article.tpl', $this->m_uri->getTemplate());
@@ -87,12 +87,12 @@ class CampURITemplatePathTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals(1, $this->m_uri->getQueryVar('NrIssue'));
     }
-    
+
     public function testGetSectionNumber()
     {
         $this->assertEquals(40, $this->m_uri->getQueryVar('NrSection'));
     }
-    
+
     public function testGetArticleNumber()
     {
         $this->assertEquals(43, $this->m_uri->getQueryVar('NrArticle'));
