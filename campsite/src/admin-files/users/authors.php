@@ -27,8 +27,6 @@ if ($del_id > -1) {
     $author = new Author($del_id);
     if ($author->delete()) {
         camp_html_add_msg(getGS('Author deleted.', 'ok'));
-    } else {
-        camp_html_add_msg(getGS(''));
     }
 }
 
@@ -115,7 +113,7 @@ if ($can_save) {
         }
         $author->setImage($image->getImageId());
     }
-        
+
     $aliases = Input::Get("alias", "array");
     if (!empty($aliases)) {
         $author->setAliases($aliases);

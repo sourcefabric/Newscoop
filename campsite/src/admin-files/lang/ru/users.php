@@ -12,7 +12,6 @@ regGS("Are you sure you want to delete this author?", "");
 regGS("Are you sure you want to delete this author alias?", "");
 regGS("All Author Types", "");
 regGS("Add author type", "");
-regGS("", "");
 regGS("You do not have the permission to change authors.", "У Вас нет прав доступа для изменения информации об авторах.");
 regGS("Please fill at least first name and last name.", "Введите имя и фамилию.");
 regGS("Cannot add author type, this type already exists.", "Невозможно добавить такой тип автора, он уже существует.");

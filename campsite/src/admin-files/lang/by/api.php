@@ -1,4 +1,6 @@
 <?php 
+regGS("Map", "");
+regGS("Center", "");
 regGS("Title", "");
 regGS("No news.", "");
 regGS("Invalid security token.", "");
