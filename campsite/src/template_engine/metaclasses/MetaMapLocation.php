@@ -6,7 +6,6 @@
 require_once dirname(__FILE__) . '/MetaDbObject.php';
 require_once dirname(__FILE__) . '/MetaMapLocationMultimedia.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/GeoMapLocation.php';
-require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
 
 /**
  * @package Campsite
