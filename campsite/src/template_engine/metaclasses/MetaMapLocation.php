@@ -5,6 +5,7 @@
 
 require_once dirname(__FILE__) . '/MetaDbObject.php';
 require_once dirname(__FILE__) . '/MetaMapLocationMultimedia.php';
+require_once $GLOBALS['g_campsiteDir'] . '/classes/GeoMapLocation.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
 
 /**
@@ -37,13 +38,10 @@ final class MetaMapLocation extends MetaDbObject
         $this->m_customProperties = self::$m_defaultCustomProperties;
         if (!is_null($p_dbObject)) {
         	$this->m_dbObject = $p_dbObject;
-        } else {
-        	$this->m_dbObject = new Geo_MapLocation();
-        }
-
-        if (!is_null($p_dbObject)) {
         	$languageId = (int) CampTemplate::singleton()->context()->language->number;
         	$this->m_content = $this->m_dbObject->getContent($languageId);
+        } else {
+        	$this->m_dbObject = new Geo_MapLocation();
         }
     }
 
