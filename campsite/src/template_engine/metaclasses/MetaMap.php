@@ -105,43 +105,8 @@ final class MetaMap extends MetaDbObject
      * @param int $p_language
      * @return string
      */
-    public static function GetMapTagList($p_articleNumber, $p_languageId, array $p_local)
+    public static function GetMapTagList($p_articleNumber, $p_languageId)
     {
-        $geo = Geo_Map::GetMapTagList((int) $p_articleNumber, (int) $p_languageId);
-        $map = $geo['map'];
-        $pois = $geo['pois'];
-
-        $mapStr = isset($p_local['map']) ? (string) $p_local['map'] : 'Map';
-        $ctrStr = isset($p_local['center']) ? (string) $p_local['center'] : 'Center';
-
-        $html = '
-            <div class="geomap_info">
-              <dl class="geomap_map_name">
-                <dt class="geomap_map_name_label">' .
-                  $mapStr . ':
-                </dt>
-                <dd class="geomap_map_name_value">' .
-                  $map['name'] . '
-                </dd>
-              </dl>
-            </div>
-            <div id="side_info" class="geo_side_info">';
-        $poiIdx = 0;
-        foreach ($pois as $poi) {
-            $html .= '<div id="poi_seq_' . $poiIdx . '">
-                <a class="geomap_poi_name" href="#" onClick="'
-                . $poi['open'] . ' return false;">' . $poi['title'] . '</a>
-                <div class="geomap_poi_perex">' . $poi['perex'] . '</div>
-                <div class="geomap_poi_center">
-                    <a href="#" onClick="' . $poi['center'] . ' return false;">'
-                        . $ctrStr . '
-                    </a>
-                </div>
-                <div class="geomap_poi_spacer">&nbsp;</div>
-            </div>';
-            $poiIdx += 1;
-        }
-        $html .= '</div>';
-        return $html;
+        return Geo_Map::GetMapTagList((int) $p_articleNumber, (int) $p_languageId);
     }
 }

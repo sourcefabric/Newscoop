@@ -1,17 +1,13 @@
-.map_sidepan {
+.geomap_locations {
     float: left;
     width: 150px;
     margin-left: 20px;
     font-size: 90%;
 }
-
-.map_mappart {
-
-}
-.map_mappart_outer {
+.geomap_mappart {}
+.geomap_container {
     width: 800px;
     height: 500px;
-
 }
 
 
