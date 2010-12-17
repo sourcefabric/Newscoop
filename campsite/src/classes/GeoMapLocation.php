@@ -49,7 +49,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         parent::__construct($this->m_columnNames);
 
         if (is_array($arg)) {
-            $this->m_data = $arg;
+        	$this->fetch($arg);
         } else if (is_numeric($arg)) {
             $this->m_data['id'] = (int) $arg;
             $this->fetch();

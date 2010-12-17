@@ -51,19 +51,53 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	 */
     public function __construct($arg = NULL)
     {
-        global $g_ado_db;
-
         parent::__construct($this->m_columnNames);
 
+        if (is_numeric($arg)) {
+        	$this->m_data['id'] = (int) $arg;
+        	$this->fetch();
+        } else {
+        	$this->fetch($arg);
+        }
+    }
+
+	/**
+	 * Fetch a single record from the database for the given key.
+	 *
+	 * @param array $p_arg
+	 *		If the record has already been fetched and we just need to
+	 * 		assign the data to the object's internal member variable.
+	 *
+	 * @return boolean
+	 *		TRUE on success, FALSE on failure
+	 */
+    public function fetch($arg = null)
+    {
+    	global $g_ado_db;
+
         if (is_array($arg)) {
-            $this->m_data = $arg;
-        } else if (is_numeric($arg)) {
-            $this->m_data['id'] = (int) $arg;
-            $queryStr = 'SELECT *, X(poi_location) as latitude, Y(poi_location) as longitude
+        	return parent::fetch($arg);
+        }
+
+        if (!$this->keyValuesExist()) {
+        	return false;
+        }
+        if ($this->readFromCache() !== false) {
+        	return true;
+        }
+
+        $queryStr = 'SELECT *, X(poi_location) as latitude, Y(poi_location) as longitude
                 FROM ' . self::TABLE . '
                 WHERE id = ' . $this->getId();
-            $this->m_data = $g_ado_db->GetRow($queryStr);
-        }
+        $this->m_data = $g_ado_db->GetRow($queryStr);
+        $this->m_exists = count($this->m_data) > 0;
+
+        if ($this->m_exists) {
+		    // Write the object to cache
+		    $this->writeCache();
+		}
+
+        return $this->m_exists;
     }
 
     /**
@@ -195,7 +229,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
                 $queryStr_point = str_replace("%%cen_lon%%", $cen_longitude, $queryStr_point);
 
                 $sql_params = array();
-    
+
                 $sql_params[] = 0 + $p_style;
                 $sql_params[] = 0 + $p_radius;
 
@@ -302,12 +336,12 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
                     $loc_in_params[] = $poi["longitude"];
                     $loc_in_params[] = $poi["latitude"];
                     $loc_in_params[] = $poi["longitude"];
-    
+
                     $queryStr_loc_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_loc_in);
 
                     $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
                 }
-    
+
                 // ad B 3)
                 // taking its ID for the next processing
                 $loc_new_id = $g_ado_db->Insert_ID();

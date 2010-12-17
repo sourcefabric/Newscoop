@@ -32,6 +32,7 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
         'time_updated',
     );
 
+
 	/**
      * @param IGeoMapLocation $mapLocation
      * @param int $languageId
@@ -42,17 +43,21 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
 
         parent::__construct($this->m_columnNames);
 
-        if ($mapLocation === NULL) {
+        if ($mapLocation === NULL || $languageId == 0) {
             return;
         }
 
-        $queryStr = 'SELECT lc.' . implode(', lc.', $this->m_columnNames) . '
-            FROM ' . self::TABLE . ' lc
-                INNER JOIN ' . Geo_MapLocationLanguage::TABLE . ' ll on lc.id = ll.fk_content_id
-            WHERE ll.fk_maplocation_id = ' . $mapLocation->getId() . '
-                AND fk_language_id = ' . ((int) $languageId);
-        $this->m_data = $g_ado_db->GetRow($queryStr);
+        $locationLanguage = new Geo_MapLocationLanguage($mapLocation, $languageId);
+
+        if ($locationLanguage->exists()) {
+        	$this->m_data['id'] = $locationLanguage->getContentId();
+        	$this->fetch();
+        } else {
+        	$this->m_data = array();
+        	$this->m_exists = false;
+        }
 	}
+
 
     /**
      * Get content
@@ -61,7 +66,8 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
     public function getContent()
     {
         return (string) $this->m_data['poi_content'];
-    }
+    } // fn getContent
+
 
     /**
      * Get text
@@ -70,7 +76,8 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
     public function getText()
     {
         return (string) $this->m_data['poi_text'];
-    }
+    } // fn getText
+
 
     /**
      * Get name
@@ -79,8 +86,8 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
     public function getName()
     {
         return (string) $this->m_data['poi_name'];
-    }
-    
+    } // fn getName
+
 
 	/**
 	 * Inserts text content of the poi
@@ -143,6 +150,7 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
         return $con_id;
     } // fn InsertContent
 
+
 	/**
 	 * Updates visibility state of the poi
 	 *
@@ -162,6 +170,7 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
 
         $success = $g_ado_db->Execute($queryStr, $sql_params);
     } // fn UpdateState
+
 
 	/**
 	 * Updates text content of the poi
