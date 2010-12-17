@@ -916,19 +916,26 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
                         this.repositionTimer = window.setTimeout(OpenLayers.Function.bind(this.repositionMapElements, this), 250);
                         return false;
                     }
-                
+
                     var cache = OpenLayers.Layer.Google.cache[this.map.id];
                     var container = this.map.viewPortDiv;
+
                     var termsOfUse = div.lastChild;
-                
                     container.appendChild(termsOfUse);
-                
+                    termsOfUse.style.zIndex = "1100";
+                    termsOfUse.style.bottom = "";
+                    termsOfUse.className = "olLayerGoogleCopyright olLayerGoogleV3";
+                    //termsOfUse.style.display = "";
+                    //cache.termsOfUse = termsOfUse;
+
                     var poweredBy = div.lastChild;
-                
                     container.appendChild(poweredBy);
-                
+                    poweredBy.style.zIndex = "1100";
+                    poweredBy.style.bottom = "";
+                    poweredBy.className = "olLayerGooglePoweredBy olLayerGoogleV3 gmnoprint";
+                    poweredBy.style.display = "";
                     cache.poweredBy = poweredBy;
-                
+
                     this.setGMapVisibility(this.visibility);
                 }
             }
