@@ -35,7 +35,11 @@ final class MetaMapLocation extends MetaDbObject
     {
         $this->m_properties = array();
         $this->m_customProperties = self::$m_defaultCustomProperties;
-        $this->m_dbObject = $p_dbObject;
+        if (!is_null($p_dbObject)) {
+        	$this->m_dbObject = $p_dbObject;
+        } else {
+        	$this->m_dbObject = new Geo_MapLocation();
+        }
 
         if (!is_null($p_dbObject)) {
         	$languageId = (int) CampTemplate::singleton()->context()->language->number;
