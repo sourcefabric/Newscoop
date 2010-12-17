@@ -1,7 +1,7 @@
 <?php
 $info = array(
     'name' => 'blog',
-    'version' => '3.4.x-0.2.1',
+    'version' => '0.3.0',
     'label' => 'Blogs',
     'description' => 'This plugin provides blogs.',
     'menu' => array(

@@ -1,7 +1,7 @@
 <?php
 $info = array(
     'name' => 'interview',
-    'version' => '3.4.x-0.3',
+    'version' => '0.4.0',
     'label' => 'Interview',
     'description' => 'This plugin provides functionality to perform online interviews.',
     'menu' => array(
