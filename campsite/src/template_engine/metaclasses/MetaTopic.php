@@ -23,7 +23,7 @@ final class MetaTopic extends MetaDbObject {
             $this->m_dbObject = new Topic();
         }
 
-        $this->m_properties['identifier'] = 'Id';
+        $this->m_properties['identifier'] = 'id';
 
         $this->m_customProperties['name'] = 'getName';
         $this->m_customProperties['value'] =  'getValue';
