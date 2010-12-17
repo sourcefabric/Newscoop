@@ -37,6 +37,8 @@ class AliasTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected $testPublicationId = 88888888;
 
+	protected $testAliasId = null;
+
 	/**
 	 * Deletes the test data.
 	 *
@@ -79,7 +81,16 @@ class AliasTest extends PHPUnit_Framework_TestCase {
 		$query = "INSERT INTO Aliases (Name, IdPublication) VALUES('"
     			. $this->testName . "', " . $this->testPublicationId . ")";
     	$g_ado_db->Execute($query);
+
+    	$query = "SELECT COUNT(*) FROM Aliases WHERE Name = '" . $this->testName
+    			. "' AND IdPublication = " . $this->testPublicationId;
+    	$count = $g_ado_db->GetOne($query);
+    	echo "query: $query\n";
+    	echo "count: $count\n";
+
     	$this->alias = new Alias($g_ado_db->Insert_ID());
+    	$this->testAliasId = $g_ado_db->Insert_ID();
+    	echo "new " . $this->testAliasId . "\n";
     }
 
     /**
@@ -91,6 +102,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     protected function tearDown()
     {
     	$this->clear();
+    	echo "clear\n";
     }
 
     /**
@@ -110,6 +122,8 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     			. "' AND IdPublication = " . $this->testPublicationId;
     	$this->assertNotEquals(0, $g_ado_db->GetOne($query));
     	$this->assertNotEquals(0, $this->alias->getId());
+		$this->assertEquals($this->testName, $this->alias->getName());
+		$this->testAliasId = $this->alias->getId();
     }
 
     /**
@@ -117,7 +131,13 @@ class AliasTest extends PHPUnit_Framework_TestCase {
      */
     public function testGetId()
     {
-    	$this->assertNotEquals(0, $this->alias->getId());
+    	global $g_ado_db;
+
+    	echo "alias: ";
+    	print_r($this->testAliasId);
+    	exit(0);
+    	$this->assertEquals($this->testAliasId, $this->alias->getId());
+		$this->assertEquals($this->testName, $this->alias->getName());
     }
 
     /**
@@ -184,8 +204,7 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     	$aliasId = $this->alias->getId();
     	$this->alias->delete();
     	$query = "SELECT COUNT(*) FROM Aliases WHERE Id = " . $aliasId;
-    	$this->assertEquals(0, $g_ado_db->GetOne($query));
-    	$this->assertEquals(0, $this->alias->getId());
+    	$this->assertEquals(false, $g_ado_db->GetOne($query));
     }
 }
 

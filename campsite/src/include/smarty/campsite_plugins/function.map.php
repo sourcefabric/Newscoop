@@ -4,6 +4,7 @@
  * @package Campsite
  */
 
+require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
 
 /**
  * Campsite Map function plugin
@@ -22,8 +23,7 @@
  */
 function smarty_function_map($p_params, &$p_smarty)
 {
-    global $g_ado_db;
-
+    // Default text for the reset link
     define('DEFAULT_RESET_TEXT', 'Show original map');
 
     // get the context variable
@@ -40,15 +40,15 @@ function smarty_function_map($p_params, &$p_smarty)
         return;
     }
 
-    $articleNr = (int) $campsite->article->number;
-    $languageNr = (int) $campsite->language->number;
+    // get article and language from context
+    $article = (int) $campsite->article->number;
+    $language = (int) $campsite->language->number;
 
     // get show locations list parameter
     $showLocationsList = FALSE;
-    if (isset($p_params['show_locations_list'])) {
-        if (strtolower(trim((string) $p_params['show_locations_list'])) == 'true') {
-            $showLocationsList = TRUE;
-        }
+    if (isset($p_params['show_locations_list'])
+            && (strtolower(trim((string) $p_params['show_locations_list'])) == 'true')) {
+        $showLocationsList = TRUE;
     }
 
     // get show reset link parameter
@@ -69,9 +69,8 @@ function smarty_function_map($p_params, &$p_smarty)
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
 
     // get core pieces to display the map
-    // $map = new MetaMap($campsite->article->map);
-    $mapHeader = MetaMap::GetMapTagHeader($articleNr, $languageNr, $width, $height);
-    $mapMain = MetaMap::GetMapTagBody($articleNr, $languageNr);
+    $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height);
+    $mapMain = MetaMap::GetMapTagBody($article, $language);
 
     // build javascript code
     $html = '
@@ -79,14 +78,15 @@ function smarty_function_map($p_params, &$p_smarty)
         . $mapHeader . '
         <div class="geomap_container">';
     if ($showLocationsList == TRUE) {
-        $mapLocationsList = MetaMap::GetMapTagList($articleNr, $languageNr);
+        $local = array('map' => getGS('Map'), 'center' => getGS('Center'));
+        $mapLocationsList = MetaMap::GetMapTagList($article, $language, $local);
         $html .= '
             <div class="geomap_locations">'
             . $mapLocationsList . '
             </div>';
     }
     if ($showResetLink == TRUE) {
-        $mapResetLink = MetaMap::GetMapTagCenter($articleNr, $languageNr);
+        $mapResetLink = MetaMap::GetMapTagCenter($article, $language);
         $html .= '
             <div class="geomap_menu">
                 <a href="#" onClick="' . $mapResetLink . '

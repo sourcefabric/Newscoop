@@ -115,10 +115,10 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
         $operator = new Operator('is');
         $this->assertEquals('=', $operator->getSymbol('sql'));
 
-        $operator = new Operator('equal_smaller');
+        $operator = new Operator('smaller_equal');
         $this->assertEquals('<=', $operator->getSymbol('sql'));
 
-        $operator = new Operator('equal_greater');
+        $operator = new Operator('greater_equal');
         $this->assertEquals('>=', $operator->getSymbol('sql'));
 
         $operator = new Operator('smaller');
@@ -133,10 +133,10 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
         $operator = new Operator('is');
         $this->assertEquals('==', $operator->getSymbol('php'));
 
-        $operator = new Operator('equal_smaller');
+        $operator = new Operator('smaller_equal');
         $this->assertEquals('<=', $operator->getSymbol('php'));
 
-        $operator = new Operator('equal_greater');
+        $operator = new Operator('greater_equal');
         $this->assertEquals('>=', $operator->getSymbol('php'));
 
         $operator = new Operator('smaller');
@@ -153,12 +153,14 @@ class OperatorTest extends PHPUnit_Framework_TestCase {
      * @todo Implement testGetOperators().
      */
     public function testGetOperators() {
-        $allOperators = array('is', 'equal_smaller', 'equal_greater', 'smaller',
+        $allOperators = array('is', 'smaller_equal', 'greater_equal', 'smaller',
                               'greater', 'not');
+        $stringOperators = array('is', 'smaller_equal', 'greater_equal', 'smaller',
+                              'greater', 'not', 'like', 'match');
         $identityOperators = array('is', 'not');
 
-        $this->assertEquals($allOperators, Operator::GetOperators('int'));
-        $this->assertEquals($allOperators, Operator::GetOperators('string'));
+        $this->assertEquals($allOperators, Operator::GetOperators('integer'));
+        $this->assertEquals($stringOperators, Operator::GetOperators('string'));
         $this->assertEquals($identityOperators, Operator::GetOperators('boolean'));
         $this->assertEquals($allOperators, Operator::GetOperators('date'));
         $this->assertEquals($allOperators, Operator::GetOperators('datetime'));

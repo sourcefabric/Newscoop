@@ -1,28 +1,10 @@
 <?php
-// TODO: during development no access right checking; will be added.
-
-//camp_load_translation_strings("article_files");
-//require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
-//require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
 
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
-
-/*
-$f_language_id = Input::Get('f_language_selected', 'int', 0);
-if (0 == $f_language_id) {
-    $f_language_id = Input::Get('f_language_id', 'int', 0);
-}
-$f_article_number = Input::Get('f_article_number', 'int', 0);
-
-if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
-	exit;
-}
-*/
 
 //header("Content-Type: text/html; charset=utf-8");
 ?>

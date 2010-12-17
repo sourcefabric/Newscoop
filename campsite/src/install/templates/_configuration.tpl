@@ -9,7 +9,7 @@
  * @link http://www.sourcefabric.org
  */
 
-global $Campsite;
+global $Campsite, $ADMIN_DIR;
 
 $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 

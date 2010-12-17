@@ -85,7 +85,7 @@ class Geo_Names extends DatabaseObject
 		}
 
 		return $cities;
-	}
+	} // fn FindCitiesByName
 
 	/**
 	 * Finds cities on given position
@@ -128,5 +128,5 @@ class Geo_Names extends DatabaseObject
                 return $cities;
             }
 		}
-	}
-}
+	} // fn FindCitiesByPosition
+} // class Geo_Names

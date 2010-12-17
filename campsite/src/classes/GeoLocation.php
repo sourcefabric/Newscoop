@@ -148,7 +148,18 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         return $this->m_data['time_updated'];
     }
 
-    // NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
+    /**
+     * Looks whether the location is llready at the database
+     * NOTE: the 'location' ('center') parameters should be array with points (a point) with lat/lon values
+     *
+     * @param array $p_location
+     * @param string $p_type
+     * @param int $p_style
+     * @param array $p_center
+     * @param int $p_radius
+     *
+     * @return int
+     */
     public static function FindLocation($p_location, $p_type, $p_style, $p_center, $p_radius)
     {
 		global $g_ado_db;
@@ -203,8 +214,16 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         }
 
         return $loc_id;
-    }
+    } // fn FindLocation
 
+    /**
+     * Updates the location, the COW way
+     *
+     * @param int $p_mapId
+     * @param array $p_locations
+     *
+     * @return bool
+     */
 	public static function UpdateLocations($p_mapId, $p_locations)
     {
 		global $g_ado_db;
@@ -321,8 +340,15 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         ;
         return true;
-    }
+    } // fn UpdateLocations
 
+    /**
+     * Updates the point marker icon file name
+     *
+     * @param array $poi
+     *
+     * @return void
+     */
     public static function UpdateIcon($poi)
     {
 		global $g_ado_db;
@@ -334,8 +360,16 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         $sql_params[] = $poi["location_id"];
 
         $success = $g_ado_db->Execute($queryStr, $sql_params);
-    }
+    } // fn UpdateIcon
 
+    /**
+     * Updates the point text content, the COW way
+     *
+     * @param int $p_mapId
+     * @param array $p_contents
+     *
+     * @return bool
+     */
 	public static function UpdateContents($p_mapId, $p_contents)
     {
 		global $g_ado_db;
@@ -370,8 +404,18 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 
         ;
         return true;
-    }
+    } // fn UpdateContents
 
+    /**
+     * Updates the point ordering at the map
+     * NB: p_indices are used for the newly inserted points from the ajax request
+     *
+     * @param int $p_mapId
+     * @param array $p_reorder
+     * @param array $p_indices
+     *
+     * @return bool
+     */
 	public static function UpdateOrder($p_mapId, $p_reorder, $p_indices)
     {
 		global $g_ado_db;
@@ -435,5 +479,6 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         }
 
         return true;
-    }
-}
+    } // fn UpdateOrder
+} // class Geo_Location
+

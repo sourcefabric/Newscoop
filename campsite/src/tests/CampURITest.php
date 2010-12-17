@@ -12,7 +12,7 @@ require_once('template_engine/classes/CampURI.php');
 require_once('set_path.php');
 
 /**
- * Class wrapper for CampURI as it is abstract class. 
+ * Class wrapper for CampURI as it is abstract class.
  */
 class CampURIWrapper extends CampURI
 {
@@ -28,6 +28,8 @@ class CampURIWrapper extends CampURI
     public function getURLParameters($p_param = null) {}
 
     public function getParameterName($p_paramKey) {}
+
+    public function isRestrictedParameter($p_parameterName) {}
 
     /**
      * Wrapper method for the actual protected CampURI::QueryArrayToString() method

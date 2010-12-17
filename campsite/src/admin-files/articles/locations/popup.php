@@ -1,12 +1,8 @@
 <?php
-// TODO: during development no access right checking; will be added.
 
-//camp_load_translation_strings("article_files");
-//require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_codes.php");
 
-//require_once($GLOBALS['g_campsiteDir']."/classes/GeoLocation.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
@@ -17,7 +13,6 @@ $f_language_id = Input::Get('f_language_selected', 'int', 0);
 if (0 == $f_language_id) {
     $f_language_id = Input::Get('f_language_id', 'int', 0);
 }
-//$f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
@@ -80,9 +75,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
     <?php echo $geo_map_incl; ?>
-<!--
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
--->
+
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
 
@@ -91,7 +84,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">
-    // prepare map settings
+// prepare localized strings
 var set_local_strings = function()
 {
     var local_strings = {};
@@ -122,7 +115,7 @@ var set_local_strings = function()
     geo_names.set_display_strings(local_strings);
 
 };
-
+// prepare map settings
 var useSystemParameters = function()
 {
 <?php
@@ -177,7 +170,7 @@ var findLocation = function()
     {
         latitude = parseFloat(test_list[0].replace(",", "."));
         longitude = parseFloat(test_list[1].replace(",", "."));
-        //var direct_coords = true;
+
         if ((isNaN(latitude)) || (isNaN(longitude)))
         {
             direct_coords = false;
@@ -251,16 +244,13 @@ var init_search = function ()
     var city_obj = document.getElementById ? document.getElementById("search-city") : null;
     if ("" != city_obj.value)
     {
-        //alert("a002");
         findLocation();
     }
 };
 
 var on_load_proc = function()
 {
-    //alert("bah 002");
     geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
-    //alert("bah 003");
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -271,22 +261,12 @@ var on_load_proc = function()
         $("#edit_tabs_all").tabs();
         on_load_proc();
         init_search();
-        //alert("a001");
     });
 })(jQuery);
 	</script>
 </head>
 <?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/'; ?>
-<?php
-/*
-<!--
-<body onLoad="geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true); return false;">
-<body onLoad="on_load_proc(); return false;">
--->
-*/
-?>
 <body onLoad="return false;">
-<!--<div id="data_outputs" class="hidden">debug purposes</div>-->
 <div class="map_editor">
 <div class="map_sidepan">
 <div id="map_save_part" class="map_save_part">
@@ -372,52 +352,20 @@ V
 </li>
 </ol>
 	</div>
-<!--
-	<div id="edit_form" class="edit_tabs">
-<ol>
-<li>
-<div>
-<ul>
-<li>
-&nbsp;
-</li>
-<li>
-The 'predefined' form is for usage of several distinct pieces to form the pop-up content.
-</li>
-<li>
-The 'html content' form is for usage of any html content for the pop-up.
-</li>
-</ul>
-</div>
-</li>
-</ol>
-	</div>
--->
 	<div id="edit_html" class="edit_tabs">
 <ol>
 <li class="edit_label_top">
 <label class="edit_label" for="point_predefined"><?php putGS("Pop-up content"); ?>:</label>
-<!--<input id="point_predefined" name="point_predefined" class="text" type="checkbox" onChange="geo_locations.store_point_direct(!this.checked); return false;" checked />-->
+
 <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
 <option value="0" selected="true"><?php putGS("plain text"); ?></option>
 <option value="1"><?php putGS("html content"); ?></option>
 </select>
-<!--
-</li>
-<li class="edit_text_mode">
-<label class="edit_label" for="point_edit_mode">Mode:</label>
--->
+
 <input id="point_edit_mode_edit" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('edit'); return false;" checked /><?php putGS("Edit"); ?>
 <input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" /><?php putGS("View"); ?>
 </li>
-<!--
-<li id="edit_plain_text_message">
-Plain text part of the predefined pop-up content<br />&nbsp;
-</li>
-<li id="edit_html_text_message">
-HTML content for the pop-up content<br />&nbsp;
-</li>
--->
+
 <li id="edit_part_text" class="">
 <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
 <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
@@ -443,11 +391,7 @@ HTML content for the pop-up content<br />&nbsp;
 &nbsp;
 </li>
 <li>
-<!--
-<label class="edit_label" for="point_image_share">share:</label>
-<input id="point_image_share" name="point_image_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('image_share', this.checked); return false;" checked />
-with other languages
--->
+
 </li>
 <li>
 <label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
@@ -465,11 +409,7 @@ with other languages
 <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="hidden"><?php putGS("Video file"); ?>:</span></label>
 <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
 </li>
-<!--
-<li>
-&nbsp;
-</li>
--->
+
 <li>
 <label class="edit_label" for="point_video_type"><?php putGS("source"); ?>:</label>
 <select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
@@ -479,18 +419,10 @@ with other languages
 <option value="flash">Flash (sfw)</option>
 <option value="flv">Flash (flv)</option>
 </select>
-<!--
-<input id="point_video_type_none" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'none'); return false;" checked />None
-<input id="point_video_type_youtube" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'youtube'); return false;" />Youtube
-<input id="point_video_type_vimeo" name="point_video_type" class="text" type="radio" onChange="geo_locations.store_point_property('video_type', 'vimeo'); return false;" />Vimeo
--->
+
 </li>
 <li>
-<!--
-<label class="edit_label" for="point_video_share">share:</label>
-<input id="point_video_share" name="point_video_share" class="text" type="checkbox" onChange="geo_locations.store_point_property('video_share', this.checked); return false;" checked />
-with other languages
--->
+
 </li>
 <li>
 <label class="edit_label" for="point_video_width"><?php putGS("width"); ?>:</label>
@@ -517,10 +449,7 @@ with other languages
 </div><!-- end of map_editinner -->
 
 <div class="map_editactions">
-<!--
-<a href="#" onClick="geo_locations.save_edit_window(); return false;">save this point</a>
-&nbsp;
--->
+
 <a href="#" onClick="geo_locations.close_edit_window(); return false;"><?php putGS("close window"); ?></a>
 </div><!-- end of map_editactions -->
 
