@@ -3,6 +3,7 @@
 define('WWW_DIR', dirname(dirname(__FILE__)));
 define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
 $GLOBALS['g_campsiteDir'] = WWW_DIR;
+$GLOBALS['ADMIN_DIR'] = '/admin-files';
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 .DIRECTORY_SEPARATOR.'campsite_constants.php');
