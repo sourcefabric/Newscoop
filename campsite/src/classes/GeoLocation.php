@@ -38,7 +38,9 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         'poi_center',
         'poi_radius',
         'IdUser',
-        'time_updated'
+        'time_updated',
+        'latitude',
+        'longitude',
     );
 
     /**
