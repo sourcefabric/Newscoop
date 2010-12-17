@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: campsite_3_5_rc1
+-- Host: localhost    Database: campsite35
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.6
+-- Server version	5.1.49-1ubuntu8.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -942,56 +942,6 @@ CREATE TABLE `Translations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Widget`
---
-
-DROP TABLE IF EXISTS `Widget`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Widget` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) NOT NULL DEFAULT '',
-  `class` varchar(78) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `path` (`path`,`class`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `WidgetContext`
---
-
-DROP TABLE IF EXISTS `WidgetContext`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `WidgetContext` (
-  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `WidgetContext_Widget`
---
-
-DROP TABLE IF EXISTS `WidgetContext_Widget`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `WidgetContext_Widget` (
-  `id` varchar(13) NOT NULL,
-  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
-  `fk_widget_id` mediumint(8) unsigned NOT NULL,
-  `fk_user_id` int(10) unsigned NOT NULL,
-  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `settings` text NOT NULL,
-  PRIMARY KEY (`id`,`fk_user_id`),
-  KEY `fk_user_id` (`fk_user_id`,`fk_widgetcontext_id`,`order`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `Xnews_article`
 --
 
@@ -1123,7 +1073,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=125 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1900,4 +1850,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-17 20:06:37
+-- Dump completed on 2010-12-17 22:31:51

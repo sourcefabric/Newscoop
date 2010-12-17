@@ -60,9 +60,6 @@ TABLES="
  TopicNames\
  Topics\
  Translations\
- Widget\
- WidgetContext\
- WidgetContext_Widget\
  Xnews_article\
  liveuser_grouprights\
  liveuser_groups\
