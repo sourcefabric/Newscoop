@@ -4,7 +4,9 @@
  */
 
 require_once dirname(__FILE__) . '/MetaDbObject.php';
+require_once $GLOBALS['g_campsiteDir'] . '/classes/GeoMultimedia.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMultimedia.php';
+require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
 
 /**
  * @package Campsite
@@ -23,11 +25,16 @@ final class MetaMapLocationMultimedia extends MetaDbObject
     /**
      * @param IGeoMultimedia $p_dbObject
      */
-    public function __construct(IGeoMultimedia $p_dbObject)
+    public function __construct(IGeoMultimedia $p_dbObject = NULL)
     {
         $this->m_properties = array();
         $this->m_customProperties = self::$m_defaultCustomProperties;
-        $this->m_dbObject = $p_dbObject;
+
+        if (!is_null($p_dbObject)) {
+            $this->m_dbObject = $p_dbObject;
+        } else {
+            $this->m_dbObject = new Geo_Multimedia;
+        }
     }
 
     /**

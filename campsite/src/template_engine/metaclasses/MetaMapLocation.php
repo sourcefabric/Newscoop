@@ -5,7 +5,7 @@
 
 require_once dirname(__FILE__) . '/MetaDbObject.php';
 require_once dirname(__FILE__) . '/MetaMapLocationMultimedia.php';
-require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
+require_once $GLOBALS['g_campsiteDir'] . '/classes/GeoMapLocation.php';
 
 /**
  * @package Campsite
@@ -31,14 +31,17 @@ final class MetaMapLocation extends MetaDbObject
     /**
      * @param IGeoMapLocation $p_dbObject
      */
-    public function __construct(IGeoMapLocation $p_dbObject)
+    public function __construct(IGeoMapLocation $p_dbObject = null)
     {
         $this->m_properties = array();
         $this->m_customProperties = self::$m_defaultCustomProperties;
-        $this->m_dbObject = $p_dbObject;
-
-        $languageId = (int) CampTemplate::singleton()->context()->language->number;
-        $this->m_content = $this->m_dbObject->getContent($languageId);
+        if (!is_null($p_dbObject)) {
+        	$this->m_dbObject = $p_dbObject;
+        	$languageId = (int) CampTemplate::singleton()->context()->language->number;
+        	$this->m_content = $this->m_dbObject->getContent($languageId);
+        } else {
+        	$this->m_dbObject = new Geo_MapLocation();
+        }
     }
 
     /**
@@ -47,7 +50,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getName()
     {
-        return $this->m_content->getName();
+        return !is_null($this->m_content) ? $this->m_content->getName() : null;
     }
 
     /**
@@ -74,23 +77,23 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getText()
     {
-        return $this->m_content->getText();
+        return !is_null($this->m_content) ? $this->m_content->getText() : null;
     }
 
     /**
      * Get content
      * @return string
      */
-    public function getContent()
+    protected function getContent()
     {
-        return $this->m_content->getContent();
+        return !is_null($this->m_content) ? $this->m_content->getContent() : null;
     }
 
     /**
      * Get multimedia
      * @return array of MetaMapLocationMultimedia
      */
-    public function getMultimedia()
+    protected function getMultimedia()
     {
         if ($this->multimedia === NULL) {
             $this->multimedia = array();

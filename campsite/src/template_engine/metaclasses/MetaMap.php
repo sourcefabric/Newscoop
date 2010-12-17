@@ -30,28 +30,39 @@ final class MetaMap extends MetaDbObject
 	);
 
     /**
-     * @var array of IGeoMapLocation
+     * @var array of MetaMapLocation
      */
     private $m_locations = NULL;
 
     /**
-     * @param IGeoMapLocation $p_dbObject
+     * @param IGeoMap $p_dbObject
      */
-    public function __construct(IGeoMap $p_dbObject)
+    public function __construct(IGeoMap $p_dbObject  = null)
     {
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
-        $this->m_dbObject = $p_dbObject;
+        if (!is_null($p_dbObject)) {
+        	$this->m_dbObject = $p_dbObject;
+        } else {
+        	$this->m_dbObject = new Geo_Map();
+        }
     }
 
     /**
      * Get locations
      *
-     * @return array of IGeoMapLocation
+     * @return array of MetaMapLocation
      */
-    public function getLocations()
+    protected function getLocations()
     {
-        return $this->m_dbObject->getLocations();
+        if ($this->m_locations === NULL) {
+            $locations = array();
+            foreach ($this->m_dbObject->getLocations() as $location) {
+                $locations[] = new MetaMapLocation($location);
+            }
+            $this->m_locations = $locations;
+        }
+        return $this->m_locations;
     }
 
     /**
@@ -59,7 +70,7 @@ final class MetaMap extends MetaDbObject
      *
      * @return bool
      */
-    public function isEnabled()
+    protected function isEnabled()
     {
         return $this->m_dbObject->isEnabled();
     }

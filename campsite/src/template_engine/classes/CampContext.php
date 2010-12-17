@@ -38,7 +38,8 @@ final class CampContext
 								    'topic'=>array('class'=>'Topic',
                                                    'handler'=>'setTopicHandler'),
 								    'user'=>array('class'=>'User'),
-								    'template'=>array('class'=>'Template')
+								    'template'=>array('class'=>'Template'),
+    								'location'=>array('class'=>'MapLocation')
     );
 
     // Defines the list objects
@@ -51,7 +52,10 @@ final class CampContext
 	                         				   'url_id'=>'sec'),
 	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
 	                         				   'url_id'=>'art'),
-	                         'articleimages'=>array('class'=>'ArticleImages',
+	                         'articlelocations'=>array('class'=>'ArticleLocations',
+	                                                'list'=>'article_locations',
+	                                                'url_id'=>'alc'),
+    						 'articleimages'=>array('class'=>'ArticleImages',
 	                                                'list'=>'article_images',
 	                                                'url_id'=>'aim'),
     						 'articleattachments'=>array('class'=>'ArticleAttachments',
@@ -1003,6 +1007,7 @@ final class CampContext
         unset($this->m_objects['attachment']);
         unset($this->m_objects['audioclip']);
         unset($this->m_objects['comment']);
+        unset($this->m_objects['location']);
         $this->m_readonlyProperties['url']->article = $p_newArticle;
         $formParameters = $this->m_readonlyProperties['url']->form_parameters;
         foreach ($formParameters as $parameter) {
