@@ -104,3 +104,5 @@ function smarty_function_map($p_params, &$p_smarty)
 
     return $html;
 }
+
+?>

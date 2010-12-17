@@ -574,7 +574,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         // google map v3
         map_gsm = new OpenLayers.Layer.Google(
             "Google Streets",
-            {numZoomLevels: 20, 'sphericalMercator': true}
+            {numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {}}
         );
         geo_obj.map_view_layer_names_all[google_label] = map_gsm.name;
         if (google_label == geo_obj.map_view_layer_default)
