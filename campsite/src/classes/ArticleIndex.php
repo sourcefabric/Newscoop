@@ -147,7 +147,7 @@ class ArticleIndex extends DatabaseObject {
 	        $limit = $rowsLimit > 0 ? "LIMIT 0, $rowsLimit" : null;
 	        // selects articles not yet indexed
 	        $sql_query = 'SELECT IdPublication, NrIssue, NrSection, Number, '
-	        . 'IdLanguage, Type, Keywords, Name, '
+	        . 'IdLanguage, a.Type, Keywords, Name, '
 	        . "TRIM(CONCAT(first_name, ' ', last_name)) AS AuthorName \n"
 	        . "FROM Articles as a LEFT JOIN Authors as auth \n"
 	        . "  ON a.fk_default_author_id = auth.Id \n"
