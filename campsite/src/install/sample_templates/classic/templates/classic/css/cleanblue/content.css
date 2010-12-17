@@ -102,3 +102,14 @@ td.caption {
   color: #666;
   text-align: left;
 }
+
+/* Map */
+dt.geomap_map_name_label {
+  float: left;
+  margin-right: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+dd.geomap_map_name_value {
+  font-size: 1.2em;
+}

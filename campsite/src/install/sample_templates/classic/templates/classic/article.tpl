@@ -22,6 +22,7 @@
             <h1>{{ $campsite->article->name }}</h1>
             <div class="byline">{{ $campsite->article->author->name }}</div>
 
+            {{ include file="classic/tpl/if-map.tpl" }}
             {{ include file="classic/tpl/if-video.tpl" }}
             {{ include file="classic/tpl/if-audio.tpl" }}
             
