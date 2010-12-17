@@ -100,6 +100,28 @@ var geo_hook_trigger_on_map_click = function(geo_obj, e)
         geo_obj.ignore_click = false;
     }
 
+    if ("object" != (typeof e.originalTarget))
+    {
+        return true;
+    }
+
+    if (e.originalTarget instanceof HTMLSpanElement)
+    {
+        return true;
+    }
+    if (e.originalTarget instanceof HTMLDivElement)
+    {
+        return true;
+    }
+
+/*
+    // this would be probably wrong at ie
+    if (!(e.originalTarget instanceof SVGSVGElement))
+    {
+        return true;
+    }
+*/
+
     var lonlat = geo_obj.map.getLonLatFromViewPortPx(e.xy);
 
     var pixel = e.xy;
@@ -574,7 +596,37 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         // google map v3
         map_gsm = new OpenLayers.Layer.Google(
             "Google Streets",
-            {numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {}}
+            {
+                numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {
+                    google.maps.event.trigger(this.mapObject, "resize");
+                    var div = this.mapObject.getDiv().firstChild;
+                    if (!div || div.childNodes.length < 3) {
+                        this.repositionTimer = window.setTimeout(OpenLayers.Function.bind(this.repositionMapElements, this), 250);
+                        return false;
+                    }
+
+                    var cache = OpenLayers.Layer.Google.cache[this.map.id];
+                    var container = this.map.viewPortDiv;
+
+                    var termsOfUse = div.lastChild;
+                    container.appendChild(termsOfUse);
+                    termsOfUse.style.zIndex = "1100";
+                    termsOfUse.style.bottom = "";
+                    termsOfUse.className = "olLayerGoogleCopyright olLayerGoogleV3";
+                    //termsOfUse.style.display = "";
+                    //cache.termsOfUse = termsOfUse;
+
+                    var poweredBy = div.lastChild;
+                    container.appendChild(poweredBy);
+                    poweredBy.style.zIndex = "1100";
+                    poweredBy.style.bottom = "";
+                    poweredBy.className = "olLayerGooglePoweredBy olLayerGoogleV3 gmnoprint";
+                    poweredBy.style.display = "";
+                    cache.poweredBy = poweredBy;
+
+                    this.setGMapVisibility(this.visibility);
+                }
+            }
         );
         geo_obj.map_view_layer_names_all[google_label] = map_gsm.name;
         if (google_label == geo_obj.map_view_layer_default)

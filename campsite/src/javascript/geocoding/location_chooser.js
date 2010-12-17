@@ -942,10 +942,36 @@ var geo_hook_poi_dragged = function(feature, pixel)
 // to insert new POI on map click, but not on a click that closes a pop-up
 var geo_hook_trigger_on_map_click = function(e)
 {
+    geo_locations.select_control.destroy();
+    geo_locations.select_control = new OpenLayers.Control.SelectFeature(geo_locations.layer);
+    geo_locations.map.addControl(geo_locations.select_control);
+    geo_locations.select_control.activate();
+
     if (geo_locations.ignore_click) {
         geo_locations.ignore_click = false;
-        return;
+        return true;
     }
+
+    if ("object" != (typeof e.originalTarget))
+    {
+        return true;
+    }
+
+    if (e.originalTarget instanceof HTMLSpanElement)
+    {
+        return true;
+    }
+    if (e.originalTarget instanceof HTMLDivElement)
+    {
+        return true;
+    }
+
+/*
+    if (!(e.originalTarget instanceof SVGSVGElement))
+    {
+        return true;
+    }
+*/
 
     var lonlat = geo_locations.map.getLonLatFromViewPortPx(e.xy);
 
@@ -985,8 +1011,6 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
         );
     }
 
-    //var poi_title = "Point no. " + (this.descs_count_inc + 1);
-    //var poi_title = "POI no. " + (this.descs_count_inc + 1);
     var poi_title = this.display_strings.point_number + " " + (this.descs_count_inc + 1);
 
     if (undefined !== label)
@@ -1025,8 +1049,6 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
 
     features.push(vector);
 
-    this.select_control.destroy();
-
     // setting feature-based classical-shaped marker
     this.layer.addFeatures(features);
 
@@ -1054,10 +1076,6 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
 
     this.descs_count += 1;
     this.descs_count_inc += 1;
-
-    this.select_control = new OpenLayers.Control.SelectFeature(this.layer);
-    this.map.addControl(this.select_control);
-    this.select_control.activate();
 
     return true;
 };
@@ -1157,8 +1175,39 @@ var geo_main_openlayers_init = function(map_div_name)
         map_gsm = new OpenLayers.Layer.Google(
             //"Google Map",
             geo_locations.display_strings.google_map,
-            {numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {}}
+            {
+                numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {
+                    google.maps.event.trigger(this.mapObject, "resize");
+                    var div = this.mapObject.getDiv().firstChild;
+                    if (!div || div.childNodes.length < 3) {
+                        this.repositionTimer = window.setTimeout(OpenLayers.Function.bind(this.repositionMapElements, this), 250);
+                        return false;
+                    }
+
+                    var cache = OpenLayers.Layer.Google.cache[this.map.id];
+                    var container = this.map.viewPortDiv;
+
+                    var termsOfUse = div.lastChild;
+                    container.appendChild(termsOfUse);
+                    termsOfUse.style.zIndex = "1100";
+                    termsOfUse.style.bottom = "";
+                    termsOfUse.className = "olLayerGoogleCopyright olLayerGoogleV3";
+                    //termsOfUse.style.display = "";
+                    //cache.termsOfUse = termsOfUse;
+
+                    var poweredBy = div.lastChild;
+                    container.appendChild(poweredBy);
+                    poweredBy.style.zIndex = "1100";
+                    poweredBy.style.bottom = "";
+                    poweredBy.className = "olLayerGooglePoweredBy olLayerGoogleV3 gmnoprint";
+                    poweredBy.style.display = "";
+                    cache.poweredBy = poweredBy;
+
+                    this.setGMapVisibility(this.visibility);
+                }
+            }
         );
+
         geo_locations.map_view_layer_names_all[google_label] = map_gsm.name;
         if (google_label == geo_locations.map_view_layer_default)
         {
