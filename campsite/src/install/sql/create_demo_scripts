@@ -25,44 +25,55 @@ TABLES="
  Articles\
  Attachments\
  AudioclipMetadata\
+ AuthorAliases\
+ AuthorAssignedTypes\
+ AuthorBiographies\
  AuthorTypes \
  Authors\
  AutoId\
- Cache\
- Classes\
- Countries\
- Dictionary\
  EnumerationElements\
  Enumerations\
- Errors\
- Events\
  Images\
  IssuePublish\
  Issues\
- KeywordClasses\
  KeywordIndex\
- Languages\
+ LocationContents\
+ Locations\
+ Log\
+ MapLocationLanguages\
+ MapLocationMultimedia\
+ MapLocations\
+ Maps\
+ Multimedia\
  ObjectTypes\
  Plugins\
  Publications\
+ RequestObjects\
+ RequestStats\
+ Requests\
  Sections\
  SubsDefTime\
  SubsSections\
  Subscriptions\
- TemplateTypes\
  Templates\
- TimeUnits\
  TopicFields\
+ TopicNames\
  Topics\
  Translations\
- URLTypes\
- XArticle\
- XInterview\
- XService\
- XSpecial\
- Xlink\
+ Widget\
+ WidgetContext\
+ WidgetContext_Widget\
  Xnews_article\
- Xsava\
+ liveuser_grouprights\
+ liveuser_groups\
+ liveuser_groups_group_id_seq\
+ liveuser_groupusers\
+ liveuser_perm_users\
+ liveuser_perm_users_perm_user_id_seq\
+ liveuser_rights\
+ liveuser_rights_right_id_seq\
+ liveuser_users\
+ liveuser_users_auth_user_id_seq\
  phorum_banlists\
  phorum_files\
  phorum_forum_group_xref\
@@ -80,6 +91,7 @@ TABLES="
  phorum_user_group_xref\
  phorum_user_newflags\
  phorum_user_permissions\
+ phorum_users\
  plugin_blog_blog\
  plugin_blog_comment\
  plugin_blog_entry\

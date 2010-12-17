@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: campsite34
+-- Host: localhost    Database: campsite35
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.3
+-- Server version	5.1.49-1ubuntu8.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -413,7 +413,7 @@ CREATE TABLE `AuthorAliases` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `AuthorAliases 
+-- Dumping data for table `AuthorAliases`
 --
 
 LOCK TABLES `AuthorAliases` WRITE;
@@ -436,7 +436,7 @@ CREATE TABLE `AuthorAssignedTypes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `AuthorAssignedTypes 
+-- Dumping data for table `AuthorAssignedTypes`
 --
 
 LOCK TABLES `AuthorAssignedTypes` WRITE;
@@ -462,7 +462,7 @@ CREATE TABLE `AuthorBiographies` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `AuthorBiographies 
+-- Dumping data for table `AuthorBiographies`
 --
 
 LOCK TABLES `AuthorBiographies` WRITE;
@@ -481,11 +481,11 @@ CREATE TABLE `AuthorTypes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `AuthorTypes 
+-- Dumping data for table `AuthorTypes`
 --
 
 LOCK TABLES `AuthorTypes` WRITE;
@@ -506,7 +506,7 @@ CREATE TABLE `Authors` (
   `first_name` varchar(100) NOT NULL DEFAULT '',
   `last_name` varchar(100) NOT NULL DEFAULT '',
   `email` varchar(255) DEFAULT NULL,
-  `type` int(11) unsigned DEFAULT NULL,
+  `type` int(10) unsigned DEFAULT NULL,
   `skype` varchar(255) DEFAULT NULL,
   `jabber` varchar(255) DEFAULT NULL,
   `aim` varchar(255) DEFAULT NULL,
@@ -560,12 +560,12 @@ DROP TABLE IF EXISTS `Cache`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Cache` (
-  `language` int(11) unsigned default NULL,
-  `publication` int(11) unsigned default NULL,
-  `issue` int(11) unsigned default NULL,
-  `section` int(11) unsigned default NULL,
-  `article` int(11) unsigned default NULL,
-  `params` varchar(128) default NULL,
+  `language` int(11) unsigned DEFAULT NULL,
+  `publication` int(11) unsigned DEFAULT NULL,
+  `issue` int(11) unsigned DEFAULT NULL,
+  `section` int(11) unsigned DEFAULT NULL,
+  `article` int(11) unsigned DEFAULT NULL,
+  `params` varchar(128) DEFAULT NULL,
   `template` varchar(128) NOT NULL,
   `expired` int(11) NOT NULL,
   `content` mediumtext,
@@ -581,6 +581,60 @@ CREATE TABLE `Cache` (
 LOCK TABLES `Cache` WRITE;
 /*!40000 ALTER TABLE `Cache` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Cache` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CityLocations`
+--
+
+DROP TABLE IF EXISTS `CityLocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityLocations` (
+  `id` int(10) unsigned NOT NULL,
+  `city_type` varchar(10) DEFAULT NULL,
+  `population` int(10) unsigned NOT NULL,
+  `position` point NOT NULL,
+  `elevation` int(11) DEFAULT NULL,
+  `country_code` char(2) NOT NULL,
+  `time_zone` varchar(1023) NOT NULL,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `position` (`position`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CityLocations`
+--
+
+LOCK TABLES `CityLocations` WRITE;
+/*!40000 ALTER TABLE `CityLocations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CityLocations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `CityNames`
+--
+
+DROP TABLE IF EXISTS `CityNames`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityNames` (
+  `fk_citylocations_id` int(10) NOT NULL,
+  `city_name` varchar(1024) NOT NULL,
+  `name_type` varchar(10) NOT NULL,
+  KEY `fk_citylocations_id` (`fk_citylocations_id`),
+  KEY `city_name` (`city_name`(32))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `CityNames`
+--
+
+LOCK TABLES `CityNames` WRITE;
+/*!40000 ALTER TABLE `CityNames` DISABLE KEYS */;
+/*!40000 ALTER TABLE `CityNames` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -755,8 +809,7 @@ CREATE TABLE `Events` (
 
 LOCK TABLES `Events` WRITE;
 /*!40000 ALTER TABLE `Events` DISABLE KEYS */;
-INSERT INTO `Events` VALUES
-(1,'Add Publication','N',1),(2,'Delete Publication','N',1),(3,'Change publication information','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(36,'Change article template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(111,'Add templates','N',1),(112,'Delete templates','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
+INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
 /*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -987,7 +1040,7 @@ CREATE TABLE `Languages` (
   `ShortWDay7` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -996,8 +1049,69 @@ CREATE TABLE `Languages` (
 
 LOCK TABLES `Languages` WRITE;
 /*!40000 ALTER TABLE `Languages` DISABLE KEYS */;
-INSERT INTO `Languages` VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Mai','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,'Dutch','','Nederlands','nl','januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december','zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,'Belarusian','','Беларуская','by','студзеня','лютага','сакавiка','красавiка','мая','чэрвеня','лiпеня','жніўня','верасьня','кастрычнiка','сьнежня','студзеня','нядзеля','панядзелак','аўторак','серада','чацверг','пятнiца','субота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,'Georgian','','ქართული','GE','იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი','კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24, 'Chinese (Traditional)', '', '繁體中文', 'zh_TW', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),(25, 'Polish', '', 'Polski', 'pl', 'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień', 'Niedziela:', 'Poniedziałek', 'Wtorek:', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Sty:', 'Lt:', 'Mar:', 'Kw:', 'Ma:', 'Cz:', 'Lip:', 'Sier:', 'Wrz:', 'Paź:', 'Lis:', 'Gru:', 'Nd:', 'Pon:', 'Wt:', 'Śr:', 'Czw:', 'Pt:', 'Sob:');
+INSERT INTO `Languages` VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Mai','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(16,'Chinese','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(19,'Korean','','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(20,'Dutch','','Nederlands','nl','januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december','zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(22,'Belarusian','','Беларуская','by','студзеня','лютага','сакавiка','красавiка','мая','чэрвеня','лiпеня','жніўня','верасьня','кастрычнiка','сьнежня','студзеня','нядзеля','панядзелак','аўторак','серада','чацверг','пятнiца','субота',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(23,'Georgian','','ქართული','GE','იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი','კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(24,'Chinese (Traditional)','','繁體中文','zh_TW','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期日','星期一','星期二','星期三','星期四','星期五','星期六','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期日','星期一','星期二','星期三','星期四','星期五','星期六'),(25,'Polish','','Polski','pl','Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień','Niedziela:','Poniedziałek','Wtorek:','Środa','Czwartek','Piątek','Sobota','Sty:','Lt:','Mar:','Kw:','Ma:','Cz:','Lip:','Sier:','Wrz:','Paź:','Lis:','Gru:','Nd:','Pon:','Wt:','Śr:','Czw:','Pt:','Sob:');
 /*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LocationContents`
+--
+
+DROP TABLE IF EXISTS `LocationContents`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LocationContents` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poi_name` varchar(1023) NOT NULL,
+  `poi_link` varchar(1023) NOT NULL DEFAULT '',
+  `poi_perex` varchar(15100) NOT NULL DEFAULT '',
+  `poi_content_type` tinyint(4) NOT NULL DEFAULT '0',
+  `poi_content` text NOT NULL,
+  `poi_text` text NOT NULL,
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `location_contents_poi_name` (`poi_name`(64))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LocationContents`
+--
+
+LOCK TABLES `LocationContents` WRITE;
+/*!40000 ALTER TABLE `LocationContents` DISABLE KEYS */;
+/*!40000 ALTER TABLE `LocationContents` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Locations`
+--
+
+DROP TABLE IF EXISTS `Locations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Locations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `poi_location` geometry NOT NULL,
+  `poi_type` varchar(40) NOT NULL,
+  `poi_type_style` int(11) NOT NULL DEFAULT '0',
+  `poi_center` point NOT NULL,
+  `poi_radius` double NOT NULL DEFAULT '0',
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `locations_poi_location` (`poi_location`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Locations`
+--
+
+LOCK TABLES `Locations` WRITE;
+/*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1024,6 +1138,156 @@ CREATE TABLE `Log` (
 LOCK TABLES `Log` WRITE;
 /*!40000 ALTER TABLE `Log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `Log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MapLocationLanguages`
+--
+
+DROP TABLE IF EXISTS `MapLocationLanguages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocationLanguages` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_content_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `poi_display` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
+  KEY `map_location_languages_content_id` (`fk_content_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MapLocationLanguages`
+--
+
+LOCK TABLES `MapLocationLanguages` WRITE;
+/*!40000 ALTER TABLE `MapLocationLanguages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MapLocationLanguages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MapLocationMultimedia`
+--
+
+DROP TABLE IF EXISTS `MapLocationMultimedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocationMultimedia` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_multimedia_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `maplocationmultimedia_maplocation_id` (`fk_maplocation_id`),
+  KEY `maplocationmultimedia_multimedia_id` (`fk_multimedia_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MapLocationMultimedia`
+--
+
+LOCK TABLES `MapLocationMultimedia` WRITE;
+/*!40000 ALTER TABLE `MapLocationMultimedia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MapLocationMultimedia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `MapLocations`
+--
+
+DROP TABLE IF EXISTS `MapLocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `MapLocations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_map_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_location_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `poi_style` varchar(1023) NOT NULL,
+  `rank` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `map_locations_point_id` (`fk_location_id`),
+  KEY `map_locations_map_id` (`fk_map_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `MapLocations`
+--
+
+LOCK TABLES `MapLocations` WRITE;
+/*!40000 ALTER TABLE `MapLocations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `MapLocations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Maps`
+--
+
+DROP TABLE IF EXISTS `Maps`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Maps` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
+  `MapRank` int(10) unsigned NOT NULL DEFAULT '1',
+  `MapUsage` tinyint(4) NOT NULL DEFAULT '1',
+  `MapCenterLongitude` double NOT NULL DEFAULT '0',
+  `MapCenterLatitude` double NOT NULL DEFAULT '0',
+  `MapDisplayResolution` smallint(6) NOT NULL DEFAULT '0',
+  `MapProvider` varchar(255) NOT NULL DEFAULT '',
+  `MapWidth` int(11) NOT NULL DEFAULT '0',
+  `MapHeight` int(11) NOT NULL DEFAULT '0',
+  `MapName` varchar(1023) NOT NULL,
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `maps_article_number` (`fk_article_number`),
+  KEY `maps_map_name` (`MapName`(64))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Maps`
+--
+
+LOCK TABLES `Maps` WRITE;
+/*!40000 ALTER TABLE `Maps` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Maps` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Multimedia`
+--
+
+DROP TABLE IF EXISTS `Multimedia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Multimedia` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `media_type` varchar(255) NOT NULL DEFAULT '',
+  `media_spec` varchar(255) NOT NULL DEFAULT '',
+  `media_src` varchar(1023) NOT NULL DEFAULT '',
+  `media_height` int(11) NOT NULL DEFAULT '0',
+  `media_width` int(11) NOT NULL DEFAULT '0',
+  `options` varchar(1023) NOT NULL DEFAULT '',
+  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `multimedia_media_type` (`media_type`(32)),
+  KEY `multimedia_media_src` (`media_src`(64))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Multimedia`
+--
+
+LOCK TABLES `Multimedia` WRITE;
+/*!40000 ALTER TABLE `Multimedia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Multimedia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1072,6 +1336,7 @@ CREATE TABLE `Plugins` (
 
 LOCK TABLES `Plugins` WRITE;
 /*!40000 ALTER TABLE `Plugins` DISABLE KEYS */;
+INSERT INTO `Plugins` VALUES ('interview','3.4.x-0.3',1),('blog','3.4.x-0.2.1',1),('poll','3.4.x-0.2.1',1);
 /*!40000 ALTER TABLE `Plugins` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1373,7 +1638,7 @@ CREATE TABLE `SystemPreferences` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `varname` (`varname`)
-) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1382,7 +1647,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','16M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine','','2009-06-15 17:21:08'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-09-25 18:41:37'),(36,'PasswordRecovery','Y','2010-09-25 18:41:37'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-07 09:23:48'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-07 09:23:48'),(39,'MapDisplayResolutionDefault','4','2010-12-07 09:23:48'),(40,'MapViewWidthDefault','600','2010-12-07 09:23:48'),(41,'MapViewHeightDefault','400','2010-12-07 09:23:48'),(42,'MapProviderAvailableGoogleV3','1','2010-12-07 09:23:48'),(43,'MapProviderAvailableOSM','1','2010-12-07 09:23:48'),(44,'MapProviderDefault','GoogleV3','2010-12-07 09:23:48'),(45,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-07 09:23:48'),(46,'MapMarkerSourceDefault','marker-gold.png','2010-12-14 19:25:00'),(47,'MapPopupWidthMin','300','2010-12-07 09:23:48'),(48,'MapPopupHeightMin','200','2010-12-07 09:23:48'),(49,'MapVideoWidthYouTube','425','2010-12-07 09:23:48'),(50,'MapVideoHeightYouTube','350','2010-12-07 09:23:48'),(51,'MapVideoWidthVimeo','400','2010-12-07 09:23:48'),(52,'MapVideoHeightVimeo','225','2010-12-07 09:23:48'),(53,'MapVideoWidthFlash','425','2010-12-07 09:23:48'),(54,'MapVideoHeightFlash','350','2010-12-07 09:23:48'),(55,'MapVideoWidthFlv','300','2010-12-07 09:23:48'),(56,'MapVideoHeightFlv','280','2010-12-07 09:23:48'),(57,'FlashServer','','2010-12-07 09:23:48'),(58,'FlashDirectory','videos/','2010-12-07 09:23:48');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2010-12-17 18:02:35'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-12-17 18:02:35'),(36,'PasswordRecovery','Y','2010-12-17 18:02:35'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-17 18:02:35'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-17 18:02:35'),(39,'MapDisplayResolutionDefault','4','2010-12-17 18:02:35'),(40,'MapViewWidthDefault','600','2010-12-17 18:02:35'),(41,'MapViewHeightDefault','400','2010-12-17 18:02:35'),(42,'MapProviderAvailableGoogleV3','1','2010-12-17 18:02:35'),(43,'MapProviderAvailableOSM','1','2010-12-17 18:02:35'),(44,'MapProviderDefault','GoogleV3','2010-12-17 18:02:35'),(45,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-17 18:02:35'),(46,'MapMarkerSourceDefault','marker-gold.png','2010-12-17 18:02:35'),(47,'MapPopupWidthMin','300','2010-12-17 18:02:35'),(48,'MapPopupHeightMin','200','2010-12-17 18:02:35'),(49,'MapVideoWidthYouTube','425','2010-12-17 18:02:35'),(50,'MapVideoHeightYouTube','350','2010-12-17 18:02:35'),(51,'MapVideoWidthVimeo','400','2010-12-17 18:02:35'),(52,'MapVideoHeightVimeo','225','2010-12-17 18:02:35'),(53,'MapVideoWidthFlash','425','2010-12-17 18:02:35'),(54,'MapVideoHeightFlash','350','2010-12-17 18:02:35'),(55,'MapVideoWidthFlv','300','2010-12-17 18:02:35'),(56,'MapVideoHeightFlv','280','2010-12-17 18:02:35'),(57,'FlashServer','','2010-12-17 18:02:35'),(58,'FlashDirectory','videos/','2010-12-17 18:02:35');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1423,7 +1688,7 @@ CREATE TABLE `Templates` (
   `Name` char(255) NOT NULL DEFAULT '',
   `Type` int(10) unsigned NOT NULL DEFAULT '1',
   `Level` int(10) unsigned NOT NULL DEFAULT '0',
-  `CacheLifetime` int(10) unsigned NULL DEFAULT '0',
+  `CacheLifetime` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1488,6 +1753,31 @@ LOCK TABLES `TopicFields` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `TopicNames`
+--
+
+DROP TABLE IF EXISTS `TopicNames`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TopicNames` (
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`fk_topic_id`,`fk_language_id`),
+  UNIQUE KEY `fk_language_id` (`fk_language_id`,`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TopicNames`
+--
+
+LOCK TABLES `TopicNames` WRITE;
+/*!40000 ALTER TABLE `TopicNames` DISABLE KEYS */;
+/*!40000 ALTER TABLE `TopicNames` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Topics`
 --
 
@@ -1495,14 +1785,12 @@ DROP TABLE IF EXISTS `Topics`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Topics` (
-  `Id` int(10) unsigned NOT NULL DEFAULT '0',
-  `LanguageId` int(10) unsigned NOT NULL DEFAULT '0',
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `TopicOrder` int(11) NOT NULL DEFAULT '0',
-  `ParentId` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`,`LanguageId`),
-  UNIQUE KEY `Name` (`LanguageId`,`Name`),
-  KEY `topic_id` (`Id`)
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `node_left` int(10) unsigned NOT NULL,
+  `node_right` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `node_left` (`node_left`),
+  KEY `node_right` (`node_right`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1567,6 +1855,83 @@ LOCK TABLES `URLTypes` WRITE;
 /*!40000 ALTER TABLE `URLTypes` DISABLE KEYS */;
 INSERT INTO `URLTypes` VALUES (1,'template path',''),(2,'short names','');
 /*!40000 ALTER TABLE `URLTypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Widget`
+--
+
+DROP TABLE IF EXISTS `Widget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Widget` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) NOT NULL DEFAULT '',
+  `class` varchar(78) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `path` (`path`,`class`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Widget`
+--
+
+LOCK TABLES `Widget` WRITE;
+/*!40000 ALTER TABLE `Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Widget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `WidgetContext`
+--
+
+DROP TABLE IF EXISTS `WidgetContext`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `WidgetContext` (
+  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `WidgetContext`
+--
+
+LOCK TABLES `WidgetContext` WRITE;
+/*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `WidgetContext_Widget`
+--
+
+DROP TABLE IF EXISTS `WidgetContext_Widget`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `WidgetContext_Widget` (
+  `id` varchar(13) NOT NULL,
+  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
+  `fk_widget_id` mediumint(8) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL,
+  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `settings` text NOT NULL,
+  PRIMARY KEY (`id`,`fk_user_id`),
+  KEY `fk_user_id` (`fk_user_id`,`fk_widgetcontext_id`,`order`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `WidgetContext_Widget`
+--
+
+LOCK TABLES `WidgetContext_Widget` WRITE;
+/*!40000 ALTER TABLE `WidgetContext_Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1754,7 +2119,7 @@ CREATE TABLE `liveuser_grouprights` (
 
 LOCK TABLES `liveuser_grouprights` WRITE;
 /*!40000 ALTER TABLE `liveuser_grouprights` DISABLE KEYS */;
-INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,2,3),(1,3,3),(1,4,3),(1,5,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,52,3),(1,53,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,71,3),(1,73,3),(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,52,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,2,3),(4,3,3),(4,4,3),(4,5,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,25,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3),(1,54,3),(1,74,3),(1,72,3),(1,75,3);
+INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,2,3),(1,3,3),(1,4,3),(1,5,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,53,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,71,3),(1,73,3),(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,2,3),(4,3,3),(4,4,3),(4,5,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3),(1,54,3),(1,74,3),(1,72,3),(1,92,3),(1,91,3),(2,91,3),(1,97,3),(1,98,3),(2,98,3),(1,101,3),(2,101,3),(3,101,3),(1,103,3);
 /*!40000 ALTER TABLE `liveuser_grouprights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1971,7 +2336,7 @@ CREATE TABLE `liveuser_rights` (
 
 LOCK TABLES `liveuser_rights` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
-INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(2,0,'AddAudioclip',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(5,0,'AttachAudioclipToArticle',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(71,0,'SyncPhorumUsers',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(75,0,'EditAuthors',1);
+INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(2,0,'AddAudioclip',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(5,0,'AttachAudioclipToArticle',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(71,0,'SyncPhorumUsers',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
 /*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1985,7 +2350,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1994,7 +2359,7 @@ CREATE TABLE `liveuser_rights_right_id_seq` (
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (88);
+INSERT INTO `liveuser_rights_right_id_seq` VALUES (103);
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2145,7 +2510,7 @@ CREATE TABLE `liveuser_users` (
   `time_created` timestamp NULL DEFAULT NULL,
   `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
   `isActive` tinyint(1) DEFAULT '1',
-  `password_reset_token` VARCHAR(85) NULL,
+  `password_reset_token` varchar(85) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -2157,7 +2522,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2010-07-28 16:18:16','0000-00-00 00:00:00','2010-07-28 19:17:07',1,'');
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2010-07-28 16:18:16','0000-00-00 00:00:00','2010-07-28 19:17:07',1,NULL);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2750,268 +3115,423 @@ LOCK TABLES `phorum_users` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Widget`
+-- Table structure for table `plugin_blog_blog`
 --
 
-DROP TABLE IF EXISTS `Widget`;
+DROP TABLE IF EXISTS `plugin_blog_blog`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `Widget` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `path` varchar(255) NOT NULL DEFAULT '',
-  `class` varchar(78) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY (`path`, `class`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE `plugin_blog_blog` (
+  `blog_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
+  `info` text NOT NULL,
+  `admin_remark` text NOT NULL,
+  `request_text` text NOT NULL,
+  `status` enum('online','offline','moderated') NOT NULL DEFAULT 'online',
+  `admin_status` enum('online','offline','moderated','readonly','pending') NOT NULL DEFAULT 'pending',
+  `entries_online` int(10) unsigned NOT NULL DEFAULT '0',
+  `entries_offline` int(10) unsigned NOT NULL DEFAULT '0',
+  `comments_online` int(10) unsigned NOT NULL,
+  `comments_offline` int(10) unsigned NOT NULL,
+  `feature` varchar(255) NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`blog_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `Widget`
+-- Dumping data for table `plugin_blog_blog`
 --
 
-LOCK TABLES `Widget` WRITE;
-/*!40000 ALTER TABLE `Widget` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Widget` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
--- Table structure for table `WidgetContext`
---
-
-DROP TABLE IF EXISTS `WidgetContext`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `WidgetContext` (
-  `id` smallint(3) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(80) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `WidgetContext`
---
-
-LOCK TABLES `WidgetContext` WRITE;
-/*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
-/*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
--- Table structure for table `WidgetContext_Widget`
---
-
-DROP TABLE IF EXISTS `WidgetContext_Widget`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
-  `id` varchar(13) NOT NULL,
-  `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
-  `fk_widget_id` mediumint(8) unsigned NOT NULL,
-  `fk_user_id` int(10) unsigned NOT NULL,
-  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `settings` TEXT(500) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`, `fk_user_id`),
-  INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `WidgetContext_Widget`
---
-
-LOCK TABLES `WidgetContext_Widget` WRITE;
-/*!40000 ALTER TABLE `WidgetContext_Widget` DISABLE KEYS */;
-/*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
+LOCK TABLES `plugin_blog_blog` WRITE;
+/*!40000 ALTER TABLE `plugin_blog_blog` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_blog_blog` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `Maps`
+-- Table structure for table `plugin_blog_comment`
 --
 
-DROP TABLE IF EXISTS `Maps`;
+DROP TABLE IF EXISTS `plugin_blog_comment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Maps` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `MapRank` int(10) unsigned NOT NULL DEFAULT '1',
-  `MapUsage` tinyint(4) NOT NULL DEFAULT '1',
-  `MapCenterLongitude` double NOT NULL DEFAULT '0',
-  `MapCenterLatitude` double NOT NULL DEFAULT '0',
-  `MapDisplayResolution` smallint(6) NOT NULL DEFAULT '0',
-  `MapProvider` varchar(255) NOT NULL DEFAULT '',
-  `MapWidth` int(11) NOT NULL DEFAULT '0',
-  `MapHeight` int(11) NOT NULL DEFAULT '0',
-  `MapName` varchar(1023) NOT NULL,
-  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `maps_article_number` (`fk_article_number`),
-  KEY `maps_map_name` (`MapName`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `plugin_blog_comment` (
+  `comment_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_entry_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_blog_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_name` varchar(255) NOT NULL,
+  `user_email` varchar(255) NOT NULL,
+  `date` datetime NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `fk_mood_id` varchar(255) NOT NULL,
+  `status` enum('online','offline','pending') NOT NULL DEFAULT 'pending',
+  `admin_status` enum('online','offline','pending') NOT NULL DEFAULT 'pending',
+  `feature` varchar(255) NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`comment_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Multimedia`
+-- Dumping data for table `plugin_blog_comment`
 --
 
-DROP TABLE IF EXISTS `Multimedia`;
+LOCK TABLES `plugin_blog_comment` WRITE;
+/*!40000 ALTER TABLE `plugin_blog_comment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_blog_comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_blog_entry`
+--
+
+DROP TABLE IF EXISTS `plugin_blog_entry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Multimedia` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `media_type` varchar(255) NOT NULL DEFAULT '',
-  `media_spec` varchar(255) NOT NULL DEFAULT '',
-  `media_src` varchar(1023) NOT NULL DEFAULT '',
-  `media_height` int(11) NOT NULL DEFAULT '0',
-  `media_width` int(11) NOT NULL DEFAULT '0',
-  `options` varchar(1023) NOT NULL DEFAULT '',
-  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `multimedia_media_type` (`media_type`(32)),
-  KEY `multimedia_media_src` (`media_src`(64))
+CREATE TABLE `plugin_blog_entry` (
+  `entry_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_blog_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `fk_user_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `date` datetime NOT NULL,
+  `released` datetime NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `fk_mood_id` int(10) unsigned NOT NULL,
+  `status` enum('online','offline') NOT NULL DEFAULT 'online',
+  `admin_status` enum('online','offline','pending') NOT NULL DEFAULT 'pending',
+  `comments_online` int(10) unsigned NOT NULL DEFAULT '0',
+  `comments_offline` int(10) unsigned NOT NULL DEFAULT '0',
+  `feature` varchar(255) NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`entry_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plugin_blog_entry`
+--
+
+LOCK TABLES `plugin_blog_entry` WRITE;
+/*!40000 ALTER TABLE `plugin_blog_entry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_blog_entry` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_blog_entry_topic`
+--
+
+DROP TABLE IF EXISTS `plugin_blog_entry_topic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_blog_entry_topic` (
+  `fk_entry_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`fk_entry_id`,`fk_topic_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Locations`
+-- Dumping data for table `plugin_blog_entry_topic`
 --
 
-DROP TABLE IF EXISTS `Locations`;
+LOCK TABLES `plugin_blog_entry_topic` WRITE;
+/*!40000 ALTER TABLE `plugin_blog_entry_topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_blog_entry_topic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_blog_topic`
+--
+
+DROP TABLE IF EXISTS `plugin_blog_topic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Locations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `poi_location` geometry NOT NULL,
-  `poi_type` varchar(40) NOT NULL,
-  `poi_type_style` int(11) NOT NULL DEFAULT '0',
-  `poi_center` point NOT NULL,
-  `poi_radius` double NOT NULL DEFAULT '0',
-  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  SPATIAL KEY `locations_poi_location` (`poi_location`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `plugin_blog_topic` (
+  `fk_blog_id` int(10) unsigned NOT NULL,
+  `fk_topic_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`fk_blog_id`,`fk_topic_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `LocationContents`
+-- Dumping data for table `plugin_blog_topic`
 --
 
-DROP TABLE IF EXISTS `LocationContents`;
+LOCK TABLES `plugin_blog_topic` WRITE;
+/*!40000 ALTER TABLE `plugin_blog_topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_blog_topic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_interview_interviews`
+--
+
+DROP TABLE IF EXISTS `plugin_interview_interviews`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LocationContents` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `poi_name` varchar(1023) NOT NULL,
-  `poi_link` varchar(1023) NOT NULL DEFAULT '',
-  `poi_perex` varchar(15100) NOT NULL DEFAULT '',
-  `poi_content_type` tinyint(4) NOT NULL DEFAULT '0',
-  `poi_content` text NOT NULL,
-  `poi_text` text NOT NULL,
-  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `location_contents_poi_name` (`poi_name`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `plugin_interview_interviews` (
+  `interview_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `fk_moderator_user_id` int(10) unsigned NOT NULL,
+  `fk_guest_user_id` int(10) unsigned NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `fk_image_id` int(10) unsigned DEFAULT NULL,
+  `description_short` varchar(256) NOT NULL,
+  `description` text NOT NULL,
+  `interview_begin` datetime NOT NULL,
+  `interview_end` datetime NOT NULL,
+  `questions_begin` datetime NOT NULL,
+  `questions_end` datetime NOT NULL,
+  `questions_limit` int(10) unsigned NOT NULL,
+  `status` enum('draft','pending','published','rejected') NOT NULL,
+  `invitation_sender` varchar(256) NOT NULL,
+  `invitation_subject` varchar(256) NOT NULL,
+  `invitation_template_guest` text NOT NULL,
+  `invitation_template_questioneer` text NOT NULL,
+  `guest_invitation_sent` datetime DEFAULT NULL,
+  `questioneer_invitation_sent` datetime DEFAULT NULL,
+  `invitation_password` varchar(10) NOT NULL,
+  `position` int(10) unsigned NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`interview_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `MapLocations`
+-- Dumping data for table `plugin_interview_interviews`
 --
 
-DROP TABLE IF EXISTS `MapLocations`;
+LOCK TABLES `plugin_interview_interviews` WRITE;
+/*!40000 ALTER TABLE `plugin_interview_interviews` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_interview_interviews` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_interview_items`
+--
+
+DROP TABLE IF EXISTS `plugin_interview_items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `MapLocations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_map_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_location_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `poi_style` varchar(1023) NOT NULL,
-  `rank` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `map_locations_point_id` (`fk_location_id`),
-  KEY `map_locations_map_id` (`fk_map_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+CREATE TABLE `plugin_interview_items` (
+  `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_interview_id` int(10) unsigned NOT NULL,
+  `fk_questioneer_user_id` int(11) DEFAULT NULL,
+  `question` text NOT NULL,
+  `question_date` datetime NOT NULL,
+  `status` enum('draft','pending','published','rejected') NOT NULL DEFAULT 'draft',
+  `answer` text NOT NULL,
+  `answer_date` datetime NOT NULL,
+  `position` int(10) unsigned NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `MapLocationLanguages`
+-- Dumping data for table `plugin_interview_items`
 --
 
-DROP TABLE IF EXISTS `MapLocationLanguages`;
+LOCK TABLES `plugin_interview_items` WRITE;
+/*!40000 ALTER TABLE `plugin_interview_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_interview_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll`
+--
+
+DROP TABLE IF EXISTS `plugin_poll`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `MapLocationLanguages` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
+CREATE TABLE `plugin_poll` (
+  `poll_nr` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_content_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `poi_display` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
-  KEY `map_location_languages_content_id` (`fk_content_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `MapLocationMultimedia`
---
-
-DROP TABLE IF EXISTS `MapLocationMultimedia`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `MapLocationMultimedia` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_maplocation_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_multimedia_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `maplocationmultimedia_maplocation_id` (`fk_maplocation_id`),
-  KEY `maplocationmultimedia_multimedia_id` (`fk_multimedia_id`)
+  `parent_poll_nr` int(11) NOT NULL,
+  `is_extended` tinyint(4) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `date_begin` date NOT NULL DEFAULT '0000-00-00',
+  `date_end` date NOT NULL DEFAULT '0000-00-00',
+  `nr_of_answers` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `votes_per_user` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `nr_of_votes` int(10) unsigned NOT NULL,
+  `nr_of_votes_overall` int(10) unsigned NOT NULL,
+  `percentage_of_votes_overall` float unsigned NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`poll_nr`,`fk_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `CityLocations`
+-- Dumping data for table `plugin_poll`
 --
 
-DROP TABLE IF EXISTS `CityLocations`;
+LOCK TABLES `plugin_poll` WRITE;
+/*!40000 ALTER TABLE `plugin_poll` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll_answer`
+--
+
+DROP TABLE IF EXISTS `plugin_poll_answer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CityLocations` (
-  `id` int(10) unsigned NOT NULL,
-  `city_type` varchar(10) DEFAULT NULL,
-  `population` int(10) unsigned NOT NULL,
-  `position` point NOT NULL,
-  `elevation` int(11) DEFAULT NULL,
-  `country_code` char(2) NOT NULL,
-  `time_zone` varchar(1023) NOT NULL,
-  PRIMARY KEY (`id`),
-  SPATIAL KEY `position` (`position`)
+CREATE TABLE `plugin_poll_answer` (
+  `fk_poll_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `nr_answer` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `answer` varchar(255) NOT NULL,
+  `nr_of_votes` int(10) unsigned NOT NULL DEFAULT '0',
+  `percentage` float unsigned NOT NULL,
+  `percentage_overall` float unsigned NOT NULL,
+  `value` int(11) NOT NULL,
+  `average_value` float NOT NULL,
+  `on_hitlist` tinyint(4) NOT NULL,
+  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY `NrPoll` (`fk_poll_nr`,`fk_language_id`,`nr_answer`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `CityNames`
+-- Dumping data for table `plugin_poll_answer`
 --
 
-DROP TABLE IF EXISTS `CityNames`;
+LOCK TABLES `plugin_poll_answer` WRITE;
+/*!40000 ALTER TABLE `plugin_poll_answer` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll_answer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll_article`
+--
+
+DROP TABLE IF EXISTS `plugin_poll_article`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `CityNames` (
-  `fk_citylocations_id` int(10) NOT NULL,
-  `city_name` varchar(1024) NOT NULL,
-  `name_type` varchar(10) NOT NULL,
-  KEY (`fk_citylocations_id`),
-  KEY (`city_name`(32))
+CREATE TABLE `plugin_poll_article` (
+  `fk_poll_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_article_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_article_language_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`fk_poll_nr`,`fk_article_nr`,`fk_article_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `plugin_poll_article`
+--
+
+LOCK TABLES `plugin_poll_article` WRITE;
+/*!40000 ALTER TABLE `plugin_poll_article` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll_article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll_issue`
+--
+
+DROP TABLE IF EXISTS `plugin_poll_issue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_poll_issue` (
+  `fk_poll_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_issue_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_issue_language_id` int(10) unsigned NOT NULL,
+  `fk_publication_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_poll_nr`,`fk_issue_nr`,`fk_issue_language_id`,`fk_publication_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plugin_poll_issue`
+--
+
+LOCK TABLES `plugin_poll_issue` WRITE;
+/*!40000 ALTER TABLE `plugin_poll_issue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll_issue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll_publication`
+--
+
+DROP TABLE IF EXISTS `plugin_poll_publication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_poll_publication` (
+  `fk_poll_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_publication_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_poll_nr`,`fk_publication_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plugin_poll_publication`
+--
+
+LOCK TABLES `plugin_poll_publication` WRITE;
+/*!40000 ALTER TABLE `plugin_poll_publication` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll_publication` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_poll_section`
+--
+
+DROP TABLE IF EXISTS `plugin_poll_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_poll_section` (
+  `fk_poll_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_section_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_section_language_id` int(10) unsigned NOT NULL,
+  `fk_issue_nr` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_publication_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_poll_nr`,`fk_section_nr`,`fk_section_language_id`,`fk_issue_nr`,`fk_publication_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plugin_poll_section`
+--
+
+LOCK TABLES `plugin_poll_section` WRITE;
+/*!40000 ALTER TABLE `plugin_poll_section` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_poll_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `plugin_pollanswer_attachment`
+--
+
+DROP TABLE IF EXISTS `plugin_pollanswer_attachment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_pollanswer_attachment` (
+  `fk_poll_nr` int(11) NOT NULL,
+  `fk_pollanswer_nr` int(11) NOT NULL,
+  `fk_attachment_id` int(11) NOT NULL,
+  PRIMARY KEY (`fk_poll_nr`,`fk_pollanswer_nr`,`fk_attachment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `plugin_pollanswer_attachment`
+--
+
+LOCK TABLES `plugin_pollanswer_attachment` WRITE;
+/*!40000 ALTER TABLE `plugin_pollanswer_attachment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `plugin_pollanswer_attachment` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -3022,5 +3542,4 @@ CREATE TABLE `CityNames` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-07 11:06:40
-
+-- Dump completed on 2010-12-17 20:07:27
