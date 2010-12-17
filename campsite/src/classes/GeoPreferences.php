@@ -132,7 +132,7 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         $one_prov_include = "";
         if ("googlev3" == $one_prov_name)
         {
-            $one_prov_include = "http://maps.google.com/maps/api/js?sensor=false";
+            $one_prov_include = "http://maps.google.com/maps/api/js?v=3.2&sensor=false";
         }
 
         // up to now, we know how to deal with just a few map providers
@@ -165,7 +165,7 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         }
 
         $map_prov_default = "googlev3";
-        $map_prov_includes[] = "http://maps.google.com/maps/api/js?sensor=false";
+        $map_prov_includes[] = "http://maps.google.com/maps/api/js?v=3.2&sensor=false";
 
     }
 
