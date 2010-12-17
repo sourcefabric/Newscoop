@@ -33,7 +33,7 @@
   </div><!-- .teaserhead -->
           <div class="teasercontent content">
           <h2 class="title title_big"><a href="{{ uri options="article" }}">{{ $campsite->article->name }}</a></h2>
-          <p class="text">{{ if $campsite->language->name == "English" }}Section{{ else }}Sección{{ /if }} <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>, {{ $campsite->article->Date }} {{ $campsite->article->Time }}) {{ $campsite->article->Deck }}</p>
+          <p class="text">{{ if $campsite->language->name == "English" }}Section{{ else }}Sección{{ /if }} <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>, ({{ $campsite->article->publish_date|camp_date_format:"%d-%m-%Y" }}) {{ $campsite->article->Deck }}</p>
           </div><!-- .teasercontent content -->
         </div><!-- .teaserframebiginner -->
         </div><!-- .teaserframebig -->
