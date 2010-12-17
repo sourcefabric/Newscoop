@@ -9,6 +9,7 @@ require_once('PHPUnit/TextUI/TestRunner.php');
 require_once('Framework_AllTests.php');
 
 require_once('set_path.php');
+require_once('bootstrap.php');
 
 class AllTests
 {

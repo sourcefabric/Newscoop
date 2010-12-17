@@ -2050,3 +2050,7 @@ ol.points {
 div.authorAliasItem {
     margin-bottom: 2px;
 }
+.geomap_list_location_enabled {}
+.geomap_list_location_disabled {
+    text-decoration: line-through;
+}

@@ -132,10 +132,10 @@ class Localizer {
     	}
 	    $defaultLang = new LocalizerLanguage('globals',
 	                                         $g_localizerConfig['DEFAULT_LANGUAGE']);
-	    if ($defaultLang->loadGsFile()) {
+	    if ($defaultLang->loadFile('GS')) {
 	    	return 'gs';
 	    }
-	    elseif ($defaultLang->loadXmlFile()) {
+	    elseif ($defaultLang->loadFile('XML')) {
 	    	return 'xml';
 	    }
 	    else {

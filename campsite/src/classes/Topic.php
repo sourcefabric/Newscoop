@@ -149,7 +149,7 @@ class Topic extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
+			$logtext = getGS('Topic "$1" ($2) added', implode(', ', $this->m_names), $this->m_data['id']);
 			Log::Message($logtext, null, 141);
 		}
 		CampCache::singleton()->clear('user');
@@ -326,17 +326,22 @@ class Topic extends DatabaseObject {
 
 		if (isset($this->m_names[$p_languageId])) {
 			// Update the name.
+			$oldName = $this->m_names[$p_languageId]->getName();
 			$changed = $this->m_names[$p_languageId]->setName($p_value);
 		} else {
 			$topicName = new TopicName($this->getTopicId(), $p_languageId);
 			$changed = $topicName->create(array('name'=>$p_value));
+			$this->m_names[$p_languageId] = $topicName;
 		}
 		if ($changed) {
-			$this->m_names[$p_languageId] = $topicName;
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['Id'], $oldValue, $this->m_names[$p_languageId]);
+			if (!empty($oldName)) {
+				$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['id'], $oldName, $this->m_names[$p_languageId]);
+			} else {
+				$logtext = getGS('Topic "$1" ($2) added', $this->m_names[$p_languageId], $this->m_data['id']);
+			}
 			Log::Message($logtext, null, 143);
 		}
 		return $changed;
@@ -491,7 +496,7 @@ class Topic extends DatabaseObject {
 	 */
 	public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
 					                 $p_parentId = null, $p_depth = 1, $p_sqlOptions = null,
-					                 $p_order = null, $p_countOnly = false)
+					                 $p_order = null, $p_countOnly = false, $p_skipCache = false)
 	{
         global $g_ado_db;
 		if (!$p_skipCache && CampCache::IsEnabled()) {
@@ -756,10 +761,19 @@ class Topic extends DatabaseObject {
     {
 		global $g_ado_db;
 
-        $g_ado_db->StartTrans();
-//		$g_ado_db->Execute("LOCK TABLE Topics WRITE");
+		$topicObj = new Topic();
+		$topicTable = $topicObj->getDbTableName();
+		$topicNameObj = new TopicName();
+		$topicNameTable = $topicNameObj->getDbTableName();
+		$languageObj = new Language();
+		$languageTable = $languageObj->getDbTableName();
 
-		$orderChanged = false;
+        $result = $g_ado_db->Execute("LOCK TABLE `$topicTable` WRITE, `$topicTable` AS node WRITE, "
+        . "`$topicTable` AS parent WRITE, `$topicTable` AS sub_parent WRITE, "
+        . "`$topicTable` AS sub_tree WRITE, `$topicTable` AS t WRITE, `$topicNameTable` READ, "
+        . "`$topicNameTable` AS tn READ, `$languageTable` READ");
+
+        $orderChanged = false;
         foreach ($p_order as $parentId => $order) {
         	list(, $parentId) = explode('_', $parentId);
 
@@ -769,7 +783,7 @@ class Topic extends DatabaseObject {
         		return false;
         	}
 
-            foreach ($order as $newTopicOrder => $topicId) {
+        	foreach ($order as $newTopicOrder => $topicId) {
                 list(, $topicId) = explode('_', $topicId);
 
                 if ($subtopics[$newTopicOrder] != $topicId) {
@@ -785,7 +799,6 @@ class Topic extends DatabaseObject {
         }
 
         $g_ado_db->Execute("UNLOCK TABLES");
-        $g_ado_db->CompleteTrans();
 
         if ($orderChanged) {
         	CampCache::singleton()->clear('user');

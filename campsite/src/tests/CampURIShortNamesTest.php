@@ -44,8 +44,9 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
    	{
+   		$_SERVER['REQUEST_METHOD'] = 'GET';
         $uri = 'http://campsite.localhost.localdomain/en/first/opensource/43/';
-        $this->m_uri = CampURIShortNames::singleton($uri);
+        $this->m_uri = new CampURIShortNames($uri);
     }
 
     /**
@@ -57,12 +58,12 @@ class CampURIShortNamesTest extends PHPUnit_Framework_TestCase
     protected function tearDown()
     {
     }
-    
+
     public function testGetHost()
     {
         $this->assertEquals('campsite.localhost.localdomain', $this->m_uri->getHost());
     }
-    
+
     public function testGetRequestURI()
     {
         $this->assertEquals('/en/first/opensource/43/', $this->m_uri->getRequestURI());
