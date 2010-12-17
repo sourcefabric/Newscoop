@@ -271,6 +271,7 @@ class Topic extends DatabaseObject {
 				$sql = "UPDATE Topics SET node_right = node_right - $myWidth WHERE node_right > " . $this->m_data['node_right'];
 				$g_ado_db->Execute($sql);
 			}
+			$topicId = $this->getTopicId();
 
 			$this->m_data = array();
 			$this->m_exists = false;
@@ -287,7 +288,7 @@ class Topic extends DatabaseObject {
 			} else {
 				$name = $this->m_names[$p_languageId];
 			}
-			$logtext = getGS('Topic "$1" ($2) deleted', $name, $this->m_data['Id']);
+			$logtext = getGS('Topic "$1" ($2) deleted', $name, $topicId);
 			Log::Message($logtext, null, 142);
 		}
 		CampCache::singleton()->clear('user');

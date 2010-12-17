@@ -49,9 +49,13 @@ final class MetaMap extends MetaDbObject
      *
      * @return array of IGeoMapLocation
      */
-    public function getLocations()
+    protected function getLocations()
     {
-        return $this->m_dbObject->getLocations();
+    	$locations = array();
+        foreach ($this->m_dbObject->getLocations() as $location) {
+        	$locations[] = new MetaMapLocation($location);
+        }
+        return $locations;
     }
 
     /**
@@ -59,7 +63,7 @@ final class MetaMap extends MetaDbObject
      *
      * @return bool
      */
-    public function isEnabled()
+    protected function isEnabled()
     {
         return $this->m_dbObject->isEnabled();
     }
