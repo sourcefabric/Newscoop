@@ -1,7 +1,7 @@
 // times for icon redrawing at some situations
 var redraw_times = {
     time_drag_delay: 500,
-    map_dragging_last: 0,
+    map_dragging_last: 0
 };
 
 // the POI markers are not re-drawn after some actions happen; this is a part of the fix;
@@ -100,18 +100,31 @@ var geo_hook_trigger_on_map_click = function(geo_obj, e)
         geo_obj.ignore_click = false;
     }
 
-    if ("object" != (typeof e.originalTarget))
-    {
-        return true;
-    }
+    if (e['cancelBubble']) {return true;}
 
-    if (e.originalTarget instanceof HTMLSpanElement)
+    if (undefined !== e.originalTarget)
     {
-        return true;
+        if ("object" != (typeof e.originalTarget))
+        {
+            return true;
+        }
+
+        if (e.originalTarget instanceof HTMLSpanElement)
+        {
+            return true;
+        }
+        if (e.originalTarget instanceof HTMLDivElement)
+        {
+            return true;
+        }
     }
-    if (e.originalTarget instanceof HTMLDivElement)
+    else
     {
-        return true;
+        if (undefined !== e['srcElement'])
+        {
+            var src_el_rep = e['srcElement'].toString();
+            if ("http" == src_el_rep.substr(0, 4)) {return true;}
+        }
     }
 
 /*
@@ -346,7 +359,7 @@ this.set_bbox_divs = function (params)
         'tl_lon': tl_lon_obj,
         'tl_lat': tl_lat_obj,
         'br_lon': br_lon_obj,
-        'br_lat': br_lat_obj,
+        'br_lat': br_lat_obj
     };
 
 };
@@ -415,7 +428,7 @@ this.set_icons_info = function(params)
             "width": parseFloat(cur_icon["width"]),
             "height": parseFloat(cur_icon["height"]),
             "width_off": parseFloat(cur_icon["width_off"]),
-            "height_off": parseFloat(cur_icon["height_off"]),
+            "height_off": parseFloat(cur_icon["height_off"])
         };
     }
 
@@ -512,7 +525,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     OpenLayers.Control.Hover = OpenLayers.Class(OpenLayers.Control, {
         defaultHandlerOptions: {
             'delay': 200,
-            'pixelTolerance': 2,
+            'pixelTolerance': 2
         },
         initialize: function(options) {
             this.handlerOptions = OpenLayers.Util.extend(
@@ -545,7 +558,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             'stopSingle': false,
             'stopDouble': false,
             'projection': new OpenLayers.Projection("EPSG:900913"),
-            'displayProjection': new OpenLayers.Projection("EPSG:900913"),
+            'displayProjection': new OpenLayers.Projection("EPSG:900913")
         },
 
         initialize: function(options) {
@@ -560,7 +573,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
                     'click': function(e) {geo_hook_trigger_on_map_click(geo_obj, e);}
                 }, this.handlerOptions
             );
-        }, 
+        }
 
     });
 
@@ -575,7 +588,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         controls: [
             new OpenLayers.Control.Navigation(),
             pzb_ctrl,
-            new OpenLayers.Control.ScaleLine(),
+            new OpenLayers.Control.ScaleLine()
         ],
         numZoomLevels: 20
     });
@@ -668,8 +681,8 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     var zoom = geo_obj.map_view_layer_zoom;
 
     var style_map = new OpenLayers.StyleMap({
-                graphicZIndex: 10,
                 //cursor: "pointer",
+                graphicZIndex: 10
     });
 
     var lookup = {};
@@ -684,7 +697,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             graphicWidth: cur_icon["width"],
             graphicHeight: cur_icon["height"],
             graphicXOffset: cur_icon["width_off"],
-            graphicYOffset: cur_icon["height_off"],
+            graphicYOffset: cur_icon["height_off"]
         };
         lookup[(2*lind)+1] = {
             fillOpacity: 0.4,
@@ -692,7 +705,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             graphicWidth: cur_icon["width"],
             graphicHeight: cur_icon["height"],
             graphicXOffset: cur_icon["width_off"],
-            graphicYOffset: cur_icon["height_off"],
+            graphicYOffset: cur_icon["height_off"]
         };
     };
 

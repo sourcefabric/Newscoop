@@ -250,23 +250,30 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    set_local_strings();
+    $("#edit_tabs_all").tabs();
+    //setTimeout(function() {
     geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
+    init_search();
+    //}, 1000);
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
+/*
 (function($){
     $(document).ready(function()
     {
-        set_local_strings();
-        $("#edit_tabs_all").tabs();
-        on_load_proc();
-        init_search();
+        //set_local_strings();
+        //$("#edit_tabs_all").tabs();
+        //on_load_proc();
+        //init_search();
     });
 })(jQuery);
+*/
 	</script>
 </head>
 <?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/'; ?>
-<body onLoad="return false;">
+<body onLoad="on_load_proc(); return false;">
 <div class="map_editor">
 <div class="map_sidepan">
 <div id="map_save_part" class="map_save_part">

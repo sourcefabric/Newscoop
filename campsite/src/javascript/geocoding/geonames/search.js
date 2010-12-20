@@ -4,7 +4,7 @@ var geo_names = {};
 geo_names.display_strings = {
     cc: "cc",
     city: "city",
-    no_city_was_found: "sorry, no city was found",
+    no_city_was_found: "sorry, no city was found"
 };
 
 geo_names.set_display_strings = function(local_strings)
@@ -14,7 +14,7 @@ geo_names.set_display_strings = function(local_strings)
     var display_string_names = [
         "cc",
         "city",
-        "no_city_was_found",
+        "no_city_was_found"
     ];
 
     var str_count = display_string_names.length;
@@ -146,6 +146,7 @@ geo_names.gotSearchData = function (cities, results_div)
     //$('.geonames_result_table').flexigrid({height: flexi_height, resizable: false});
     //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">sorry, no city was found</div>"}});
     $('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
+    //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     geo_locations.map_update_side_desc_height();
     
     return false;

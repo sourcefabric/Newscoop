@@ -150,7 +150,7 @@ geo_locations.set_display_strings = function(local_strings)
         "center",
         "enable",
         "disable",
-        "remove",
+        "remove"
     ];
 
     var str_count = display_string_names.length;
@@ -310,7 +310,7 @@ geo_locations.set_icons_info = function(params)
             "width": parseFloat(cur_icon["width"]),
             "height": parseFloat(cur_icon["height"]),
             "width_off": parseFloat(cur_icon["width_off"]),
-            "height_off": parseFloat(cur_icon["height_off"]),
+            "height_off": parseFloat(cur_icon["height_off"])
         };
     }
 
@@ -335,7 +335,7 @@ geo_locations.set_popups_info = function(params)
             "source": cur_video["source"],
             "width": cur_video["width"],
             "height": cur_video["height"],
-            "path": cur_video["path"],
+            "path": cur_video["path"]
         };
     }
 
@@ -952,18 +952,31 @@ var geo_hook_trigger_on_map_click = function(e)
         return true;
     }
 
-    if ("object" != (typeof e.originalTarget))
-    {
-        return true;
-    }
+    if (e['cancelBubble']) {return true;}
 
-    if (e.originalTarget instanceof HTMLSpanElement)
+    if (undefined !== e.originalTarget)
     {
-        return true;
+        if ("object" != (typeof e.originalTarget))
+        {
+            return true;
+        }
+
+        if (e.originalTarget instanceof HTMLSpanElement)
+        {
+            return true;
+        }
+        if (e.originalTarget instanceof HTMLDivElement)
+        {
+            return true;
+        }
     }
-    if (e.originalTarget instanceof HTMLDivElement)
+    else
     {
-        return true;
+        if (undefined !== e['srcElement'])
+        {
+            var src_el_rep = e['srcElement'].toString();
+            if ('http' == src_el_rep.substr(0, 4)) {return true;}
+        }
     }
 
 /*
@@ -1083,11 +1096,10 @@ geo_locations.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, 
 // map related initialization
 var geo_main_openlayers_init = function(map_div_name)
 {
-
     OpenLayers.Control.Hover = OpenLayers.Class(OpenLayers.Control, {
         defaultHandlerOptions: {
             'delay': 200,
-            'pixelTolerance': 2,
+            'pixelTolerance': 2
         },
         initialize: function(options) {
             this.handlerOptions = OpenLayers.Util.extend(
@@ -1122,8 +1134,8 @@ var geo_main_openlayers_init = function(map_div_name)
             'stopSingle': false,
             'stopDouble': false,
             'projection': new OpenLayers.Projection("EPSG:900913"),
-            'displayProjection': new OpenLayers.Projection("EPSG:900913"),
-            //'displayProjection': new OpenLayers.Projection("EPSG:4326"),
+            //'displayProjection': new OpenLayers.Projection("EPSG:4326")
+            'displayProjection': new OpenLayers.Projection("EPSG:900913")
         },
 
         initialize: function(options) {
@@ -1138,7 +1150,7 @@ var geo_main_openlayers_init = function(map_div_name)
                     'click': geo_hook_trigger_on_map_click
                 }, this.handlerOptions
             );
-        }, 
+        }
 
     });
 
@@ -1150,12 +1162,12 @@ var geo_main_openlayers_init = function(map_div_name)
             new OpenLayers.Control.Navigation(),
             //new OpenLayers.Control.PanZoomBar(),
             geo_locations.pzb_ctrl,
-            new OpenLayers.Control.ScaleLine(),
             //new OpenLayers.Control.LayerSwitcher({'ascending':false}),
             //new OpenLayers.Control.Permalink('permalink'),
             //new OpenLayers.Control.MousePosition(),
             //new OpenLayers.Control.OverviewMap(),
-            //new OpenLayers.Control.KeyboardDefaults()
+            //new OpenLayers.Control.KeyboardDefaults(),
+            new OpenLayers.Control.ScaleLine()
         ],
         numZoomLevels: 20
     });
@@ -1256,7 +1268,8 @@ var geo_main_openlayers_init = function(map_div_name)
     var style_map = new OpenLayers.StyleMap({
                 //fillOpacity: 1.0,
                 //pointRadius: 10,
-                graphicZIndex: 10,
+                //cursor: "pointer",
+                graphicZIndex: 10
     });
 
     var lookup = {};
@@ -1271,7 +1284,7 @@ var geo_main_openlayers_init = function(map_div_name)
             graphicWidth: cur_icon["width"],
             graphicHeight: cur_icon["height"],
             graphicXOffset: cur_icon["width_off"],
-            graphicYOffset: cur_icon["height_off"],
+            graphicYOffset: cur_icon["height_off"]
         };
         lookup[(2*lind)+1] = {
             fillOpacity: 0.4,
@@ -1279,7 +1292,7 @@ var geo_main_openlayers_init = function(map_div_name)
             graphicWidth: cur_icon["width"],
             graphicHeight: cur_icon["height"],
             graphicXOffset: cur_icon["width_off"],
-            graphicYOffset: cur_icon["height_off"],
+            graphicYOffset: cur_icon["height_off"]
         };
     };
 
@@ -2199,7 +2212,7 @@ geo_locations.map_pois_load = function(script_dir)
     callServer(['Geo_Map', 'LoadMapData'], [
         this.map_id,
         this.language_id,
-        this.article_number,
+        this.article_number
         ], function(json) {
             geo_locations.got_load_data(json);
         });
@@ -2485,7 +2498,7 @@ geo_locations.put_poi_into_insertions = function(storage, index)
     var cur_obj = {
         'index': cur_marker['tmp_index'],
         'longitude': cur_marker['lon'],
-        'latitude': cur_marker['lat'],
+        'latitude': cur_marker['lat']
     };
 
     this.set_save_content_on_poi(cur_obj, cur_attrs, cur_marker);
@@ -2500,7 +2513,7 @@ geo_locations.put_into_poi_locations = function(storage, index)
     var cur_obj = {
         'id': cur_marker['loc_index'],
         'longitude': cur_marker['lon'],
-        'latitude': cur_marker['lat'],
+        'latitude': cur_marker['lat']
     };
 
     storage.push(cur_obj);
@@ -2514,7 +2527,7 @@ geo_locations.put_into_poi_contents = function(storage, index)
 
     var cur_obj = {
         'id': cur_marker['con_index'],
-        'location_id': cur_marker['loc_index'],
+        'location_id': cur_marker['loc_index']
     };
 
     this.set_save_content_on_poi(cur_obj, cur_attrs, cur_marker);
@@ -2537,7 +2550,7 @@ geo_locations.map_save_all = function(script_dir)
         'f_order': '',
         'f_insert_new': '',
         'f_update_loc': '',
-        'f_update_con': '',
+        'f_update_con': ''
     };
 
     if ((0 == this.map_id) || (this.map_spec_changed))
@@ -2646,7 +2659,7 @@ geo_locations.map_save_all = function(script_dir)
         args['f_insert_new'],
         args['f_update_loc'],
         args['f_update_con'],
-        args['f_order'],
+        args['f_order']
         ], function(json) {
             geo_locations.got_load_data(json);
         });
