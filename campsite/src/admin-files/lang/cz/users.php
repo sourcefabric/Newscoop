@@ -12,7 +12,6 @@ regGS("Are you sure you want to delete this author?", "Jste si jist, že chcete 
 regGS("Are you sure you want to delete this author alias?", "Jste si jist, že chcete vymazat pseudonym autora?");
 regGS("All Author Types", "Všechny Typy Autorů");
 regGS("Add author type", "Přidán typ autora");
-regGS("", "");
 regGS("You do not have the permission to change authors.", "Nemáte oprávnění měnit autory.");
 regGS("Please fill at least first name and last name.", "Prosíme vyplňte alespoň jméno a příjmení.");
 regGS("Cannot add author type, this type already exists.", "Není možné přidat typ autora, tento typ již existuje.");

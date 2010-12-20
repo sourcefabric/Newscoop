@@ -114,9 +114,7 @@ class Topic extends DatabaseObject {
 
 		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicNames WRITE");
 
-		$this->m_names = $p_values['names'];
-
-		if (!empty($p_values['parent_id'])) {
+		if (isset($p_values['parent_id']) && !empty($p_values['parent_id'])) {
 			$parent = new Topic($p_values['parent_id']);
 			if (!$parent->exists()) {
 				$g_ado_db->Execute("UNLOCK TABLES");
@@ -136,9 +134,10 @@ class Topic extends DatabaseObject {
 		// create node
 		if ($success = parent::create($p_values)) {
 			// create topic names
-			foreach ($this->m_names as $languageId=>$name) {
+			foreach ($p_values['names'] as $languageId=>$name) {
 				$topicName = new TopicName($this->getTopicId(), $languageId);
 				$topicName->create(array('name'=>$name));
+				$this->m_names[$languageId] = $topicName;
 			}
 		}
 
@@ -240,20 +239,25 @@ class Topic extends DatabaseObject {
 
 		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicNames WRITE, TopicFields READ, ArticleTypeMetadata WRITE");
 
+		$topicId = $this->getTopicId();
 		if ($p_languageId > 0 && $this->getNumTranslations() > 1) {
+			$deletedName = $this->m_names[$p_languageId];
 			$topicName = new TopicName($this->getTopicId(), $p_languageId);
 			$deleted = $topicName->delete();
-		} else {
-			// Delete the article type field metadata
 			if ($deleted) {
-				$sql = "SELECT * FROM TopicFields WHERE RootTopicId IN "
-				."(SELECT DISTINCT Id FROM Topics WHERE node_left >= ". $this->m_data['node_left']
-				." AND node_right < " . $this->m_data['node_right'] . ")";
-				$row = $g_ado_db->GetAll($sql);
-				foreach ($rows as $row) {
-					$delATF = new ArticleTypeField($row['ArticleType'], $row['FieldName']);
-					$delATF->delete();
-				}
+				unset($this->m_names[$p_languageId]);
+			}
+		} else {
+			$deletedName = implode(",", $this->m_names);
+
+			// Delete the article type field metadata
+			$sql = "SELECT * FROM TopicFields WHERE RootTopicId IN "
+			."(SELECT DISTINCT Id FROM Topics WHERE node_left >= ". $this->m_data['node_left']
+			." AND node_right < " . $this->m_data['node_right'] . ")";
+			$rows = $g_ado_db->GetAll($sql);
+			foreach ($rows as $row) {
+				$delATF = new ArticleTypeField($row['ArticleType'], $row['FieldName']);
+				$delATF->delete();
 			}
 
 			// Delete topic names
@@ -271,7 +275,6 @@ class Topic extends DatabaseObject {
 				$sql = "UPDATE Topics SET node_right = node_right - $myWidth WHERE node_right > " . $this->m_data['node_right'];
 				$g_ado_db->Execute($sql);
 			}
-			$topicId = $this->getTopicId();
 
 			$this->m_data = array();
 			$this->m_exists = false;
@@ -283,12 +286,7 @@ class Topic extends DatabaseObject {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-			if (is_null($p_languageId)) {
-				$name = implode(",", $this->m_names);
-			} else {
-				$name = $this->m_names[$p_languageId];
-			}
-			$logtext = getGS('Topic "$1" ($2) deleted', $name, $topicId);
+			$logtext = getGS('Topic "$1" ($2) deleted', $deletedName, $topicId);
 			Log::Message($logtext, null, 142);
 		}
 		CampCache::singleton()->clear('user');
@@ -516,11 +514,30 @@ class Topic extends DatabaseObject {
             }
         }
 
+		if (!is_array($p_order) || count($p_order) == 0) {
+			$p_order = array(array('field'=>'default', 'dir'=>'asc'));
+		}
+		foreach ($p_order as $orderCond) {
+			switch (strtolower($orderCond['field'])) {
+				case 'default':
+					$order['t.node_left'] = $orderCond['dir'];
+					break;
+				case 'byname':
+					$order['tn.name'] = $orderCond['dir'];
+					break;
+				case 'bynumber':
+					$order['t.id'] = $orderCond['dir'];
+					break;
+			}
+		}
+		$p_sqlOptions['ORDER BY'] = $order;
+
 		$query = new SQLSelectClause();
 		$query->addColumn('t.id');
 		$topicObj = new Topic();
 		$topicNameObj = new TopicName();
-		if ((!is_null($p_languageId) && is_numeric($p_languageId)) || !is_null($p_name)) {
+		if ((!is_null($p_languageId) && is_numeric($p_languageId))
+		|| !is_null($p_name) || isset($order['tn.name'])) {
 			$query->setTable($topicObj->m_dbTableName . ' AS t LEFT JOIN '
 			. $topicNameObj->m_dbTableName . ' AS tn ON t.id = tn.fk_topic_id');
 		} else {
@@ -542,24 +559,6 @@ class Topic extends DatabaseObject {
 			$query->addTableFrom('(' . $subtopicsQuery->buildQuery() . ') AS in_query');
 			$query->addWhere("t.id = in_query.id");
 		}
-
-		if (!is_array($p_order) || count($p_order) == 0) {
-			$p_order = array(array('field'=>'default', 'dir'=>'asc'));
-		}
-		foreach ($p_order as $orderCond) {
-			switch (strtolower($orderCond['field'])) {
-				case 'default':
-					$order['t.node_left'] = $orderCond['dir'];
-					break;
-				case 'byname':
-					$order['tn.name'] = $orderCond['dir'];
-					break;
-				case 'bynumber':
-					$order['t.id'] = $orderCond['dir'];
-					break;
-			}
-		}
-		$p_sqlOptions['ORDER BY'] = $order;
 
 		$queryStr = $query->buildQuery();
         $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
@@ -758,7 +757,7 @@ class Topic extends DatabaseObject {
      *      );
      *  @return bool
      */
-    public static function UpdateOrder(array $p_order)
+    public static function UpdateOrder(array $p_order, $p_lock = true)
     {
 		global $g_ado_db;
 
@@ -769,10 +768,12 @@ class Topic extends DatabaseObject {
 		$languageObj = new Language();
 		$languageTable = $languageObj->getDbTableName();
 
-        $result = $g_ado_db->Execute("LOCK TABLE `$topicTable` WRITE, `$topicTable` AS node WRITE, "
-        . "`$topicTable` AS parent WRITE, `$topicTable` AS sub_parent WRITE, "
-        . "`$topicTable` AS sub_tree WRITE, `$topicTable` AS t WRITE, `$topicNameTable` READ, "
-        . "`$topicNameTable` AS tn READ, `$languageTable` READ");
+		if ($p_lock) {
+			$result = $g_ado_db->Execute("LOCK TABLE `$topicTable` WRITE, `$topicTable` AS node WRITE, "
+			. "`$topicTable` AS parent WRITE, `$topicTable` AS sub_parent WRITE, "
+			. "`$topicTable` AS sub_tree WRITE, `$topicTable` AS t WRITE, `$topicNameTable` READ, "
+			. "`$topicNameTable` AS tn READ, `$languageTable` READ");
+		}
 
         $orderChanged = false;
         foreach ($p_order as $parentId => $order) {
@@ -799,7 +800,9 @@ class Topic extends DatabaseObject {
             }
         }
 
-        $g_ado_db->Execute("UNLOCK TABLES");
+        if ($p_lock) {
+        	$g_ado_db->Execute("UNLOCK TABLES");
+        }
 
         if ($orderChanged) {
         	CampCache::singleton()->clear('user');

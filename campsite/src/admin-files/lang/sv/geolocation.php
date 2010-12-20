@@ -9,7 +9,6 @@ regGS("selected marker", "");
 regGS("remove", "");
 regGS("problem at point processing, please send error report", "");
 regGS("plain text", "");
-regGS("map", "");
 regGS("html content", "");
 regGS("height", "");
 regGS("fill in the point description", "");

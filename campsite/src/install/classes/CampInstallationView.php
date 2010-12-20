@@ -152,9 +152,8 @@ final class CampInstallationView
                                 );
 
         $hasCLI = CampInstallationViewHelper::CheckCLI();
-        $success = ($hasCLI == 'Yes') ? $success : false;
         $phpFunctions[] = array(
-                                'tag' => 'PHP CLI (Command Line)',
+                                'tag' => '<span class="optional">PHP CLI (Command Line)</span>',
                                 'exists' => $hasCLI
                                 );
 
@@ -267,8 +266,8 @@ final class CampInstallationViewHelper
 
     public static function CheckCLI()
     {
-    	$response = exec('php -v', $o, $r);
-        return (!empty($o)) ? 'Yes' : 'No';
+    	$response = exec('which php', $o, $r);
+        return ($r == 0) ? 'Yes' : 'No';
     }
 
 

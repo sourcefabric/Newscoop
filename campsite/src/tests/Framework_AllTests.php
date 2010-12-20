@@ -43,8 +43,8 @@ class Framework_AllTests
 
         // Database access classes
 //        $suite->addTestSuite('ArticleTypeTest');
-        $suite->addTestSuite('AliasTest');
-//        $suite->addTestSuite('TopicTest');
+//        $suite->addTestSuite('AliasTest');
+        $suite->addTestSuite('TopicTest');
         // $suite->addTestSuite('IssueTest');
         // $suite->addTestSuite('SectionTest');
         // $suite->addTestSuite('ArticleAttachmentTest');

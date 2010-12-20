@@ -12,7 +12,6 @@ regGS("Are you sure you want to delete this author?", "");
 regGS("Are you sure you want to delete this author alias?", "");
 regGS("All Author Types", "");
 regGS("Add author type", "");
-regGS("", "");
 regGS("You do not have the permission to change authors.", "Δεν έχετε την άδεια  να αλλάξετε συγγραφείς.");
 regGS("Please fill at least first name and last name.", "Παρακαλούμε συμπληρώστε τουλάχιστον όνομα και επώνυμο.");
 regGS("Cannot add author type, this type already exists.", "Είναι αδύνατον να προστεθεί τύπος συγγραφέα, ο τύπος αυτός ήδη υπάρχει.");

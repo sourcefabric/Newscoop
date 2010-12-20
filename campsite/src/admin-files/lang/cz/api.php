@@ -1,4 +1,9 @@
 <?php 
+regGS("Version", "");
+regGS("License", "");
+regGS("Homepage", "");
+regGS("Map", "");
+regGS("Center", "");
 regGS("Title", "");
 regGS("No news.", "");
 regGS("Invalid security token.", "Neplatný bezpečnostní symbol.");

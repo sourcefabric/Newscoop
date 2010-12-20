@@ -43,14 +43,17 @@ var domTT_styleClass = 'domTTOverlib';
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p><em>Campsite</em> demands some requirements in order to
-              be installed and run on top of your system.</p>
+              <p><em>Campsite</em> needs the following requirements to be
+              fulfilled in order to install and run on your system.</p>
 
               <p>If any of these requirements is not fulfilled (marked red),
               please correct them, otherwise you wont be able to continue
               with the installation.</p>
 
-              <p>Exception is APC. We highly recommend to enable PHP APC
+              <p>Exception are PHP CLI and APC.
+              PHP CLI (Command Line Interface) enables running utility
+              tools such as site backup and restore.
+              We highly recommend to enable PHP APC
               caching system so that your site will perform much better.
               However, this is not mandatory and you still will be able
               to continue with the installation process.</p>

@@ -1,7 +1,7 @@
 <?php 
+regGS("Libraries", "");
 regGS("Media Archive", "");
 regGS("Extensions", "");
-regGS("Content Search", "");
 regGS("Geo-location", "");
 regGS("Translation status:", "Статус перевода:");
 regGS("Editor Media Plugin", "Плагин Медиа-редактора");

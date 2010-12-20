@@ -12,7 +12,6 @@ regGS("Are you sure you want to delete this author?", "Are you sure you want to 
 regGS("Are you sure you want to delete this author alias?", "Are you sure you want to delete this author alias?");
 regGS("All Author Types", "All Author Types");
 regGS("Add author type", "Add author type");
-regGS("", "");
 regGS("You do not have the permission to change authors.", "You do not have the permission to change authors.");
 regGS("Please fill at least first name and last name.", "Please fill at least first name and last name.");
 regGS("Cannot add author type, this type already exists.", "Cannot add author type, this type already exists.");
