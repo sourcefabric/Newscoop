@@ -119,19 +119,19 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'bVisible': false,
             'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 16, 18,
                 <?php echo implode(', ', $this->hidden); ?>
-            ],
+            ]
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18],
+            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18]
         },
         { // id
             'sClass': 'id',
-            'aTargets': [0],
+            'aTargets': [0]
         },
         { // name
             'sClass': 'name',
-            'aTargets': [3],
+            'aTargets': [3]
         },
         { // short
             'sClass': 'flag',
@@ -140,7 +140,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         { // dates
             'sClass': 'date',
             'aTargets': [16, 17, 18]
-        },
+        }
     ],
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
