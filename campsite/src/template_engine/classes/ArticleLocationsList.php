@@ -23,7 +23,7 @@ class ArticleLocationsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $articleLocationsList = Geo_MapLocation::GetList($this->m_constraints, $p_order, $p_start, $p_limit, $p_count);
+	    $articleLocationsList = Geo_MapLocation::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaLocationsList = array();
 	    foreach ($articleLocationsList as $location) {
 	        $metaLocationsList[] = new MetaMapLocation($location);
@@ -63,27 +63,27 @@ class ArticleLocationsList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-		$parameters = array();
-    	foreach ($p_parameters as $parameter=>$value) {
-    		$parameter = strtolower($parameter);
-    		switch ($parameter) {
-    			case 'length':
-    			case 'columns':
-    			case 'name':
-    				if ($parameter == 'length' || $parameter == 'columns') {
-    					$intValue = (int)$value;
-    					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_locations");
-    					}
-	    				$parameters[$parameter] = (int)$value;
-    				} else {
-	    				$parameters[$parameter] = $value;
-    				}
-    				break;
-    			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_locations", $p_smarty);
-    		}
-    	}
+	    $parameters = array();
+	    foreach ($p_parameters as $parameter => $value) {
+	        $parameter = strtolower($parameter);
+	        switch ($parameter) {
+	            case 'length':
+	            case 'columns':
+	            case 'name':
+	                if ($parameter == 'length' || $parameter == 'columns') {
+	                    $intValue = (int)$value;
+	                    if ("$intValue" != $value || $intValue < 0) {
+	                        CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_locations");
+	                    }
+	                    $parameters[$parameter] = (int)$value;
+	                } else {
+	                    $parameters[$parameter] = $value;
+	                }
+	                break;
+	            default:
+	                CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_locations", $p_smarty);
+	        }
+	    }
 
         $operator = new Operator('is', 'integer');
         $context = CampTemplate::singleton()->context();
