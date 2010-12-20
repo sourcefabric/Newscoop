@@ -1,4 +1,7 @@
 <?php 
+regGS("Version", "");
+regGS("License", "");
+regGS("Homepage", "");
 regGS("Map", "");
 regGS("Center", "");
 regGS("Title", "");
