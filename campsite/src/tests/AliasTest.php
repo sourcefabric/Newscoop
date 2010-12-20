@@ -85,12 +85,9 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     	$query = "SELECT COUNT(*) FROM Aliases WHERE Name = '" . $this->testName
     			. "' AND IdPublication = " . $this->testPublicationId;
     	$count = $g_ado_db->GetOne($query);
-    	echo "query: $query\n";
-    	echo "count: $count\n";
 
     	$this->alias = new Alias($g_ado_db->Insert_ID());
     	$this->testAliasId = $g_ado_db->Insert_ID();
-    	echo "new " . $this->testAliasId . "\n";
     }
 
     /**
@@ -102,7 +99,6 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     protected function tearDown()
     {
     	$this->clear();
-    	echo "clear\n";
     }
 
     /**
@@ -133,9 +129,6 @@ class AliasTest extends PHPUnit_Framework_TestCase {
     {
     	global $g_ado_db;
 
-    	echo "alias: ";
-    	print_r($this->testAliasId);
-    	exit(0);
     	$this->assertEquals($this->testAliasId, $this->alias->getId());
 		$this->assertEquals($this->testName, $this->alias->getName());
     }
