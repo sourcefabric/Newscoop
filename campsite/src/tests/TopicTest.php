@@ -49,6 +49,7 @@ class TopicTest extends PHPUnit_Framework_TestCase
 	{
 		global $g_ado_db;
 
+		$g_ado_db->Execute('DROP TABLE IF EXISTS TmpTopics');
 		$tmpTopicTable = "CREATE TABLE TmpTopics (
     id int(10) unsigned NOT NULL AUTO_INCREMENT,
     node_left int(10) unsigned NOT NULL,
@@ -60,6 +61,7 @@ class TopicTest extends PHPUnit_Framework_TestCase
 		$g_ado_db->Execute($tmpTopicTable);
 		$g_ado_db->Execute('INSERT INTO TmpTopics SELECT * FROM Topics');
 
+		$g_ado_db->Execute('DROP TABLE IF EXISTS TmpTopicNames');
 		$tmpTopicNamesTable = "CREATE TABLE TmpTopicNames (
     fk_topic_id int(10) unsigned NOT NULL,
     fk_language_id int(10) unsigned NOT NULL,
@@ -85,121 +87,181 @@ class TopicTest extends PHPUnit_Framework_TestCase
     {
 		global $g_ado_db;
 
-		$g_ado_db->Execute('DELETE FROM Topics');
-		$g_ado_db->Execute('DELETE FROM TopicNames');
-		$g_ado_db->Execute('INSERT INTO Topics SELECT * FROM TmpTopics');
-		$g_ado_db->Execute('INSERT INTO TopicNames SELECT * FROM TmpTopicNames');
+//		$g_ado_db->Execute('DELETE FROM Topics');
+//		$g_ado_db->Execute('DELETE FROM TopicNames');
+//		$g_ado_db->Execute('INSERT INTO Topics SELECT * FROM TmpTopics');
+//		$g_ado_db->Execute('INSERT INTO TopicNames SELECT * FROM TmpTopicNames');
     } // fn tearDown
 
 
 	public function testCreate()
 	{
-		$topic1 = new Topic(27);
-		$topic1->create(array('names'=>array(1=>'Health', 2=>'Sănătate')));
-		unset($topic1);
-		$topic1 = new Topic(27);
-		$this->assertTrue($topic1->exists());
-		$this->assertEquals($topic1->getName(1), 'Health');
+		// test create(), fetch(), getLeft(), getRight(), getName()
+		$this->createAndTest(1, array('names'=>array(1=>'Sports', 2=>'Sport')), 1, 2);
+		$this->createAndTest(3, array('names'=>array(1=>'Electronics', 2=>'Electronice')), 1, 2);
+		$this->createAndTest(2, array('names'=>array(1=>'Education', 2=>'Educație')), 1, 2);
+		$this->createAndTest(27, array('names'=>array(1=>'Health', 2=>'Sănătate')), 1, 2);
+
+		$this->createAndTest(4, array('parent_id'=>3, 'names'=>array(1=>'Televisions', 2=>'Televizoare')), 6, 7);
+		$this->createAndTest(9, array('parent_id'=>3, 'names'=>array(1=>'Portable Electronics', 2=>'Electronice portabile')), 6, 7);
+
+		$this->createAndTest(14, array('parent_id'=>2, 'names'=>array(1=>'Culture', 2=>'Cultură')), 4, 5);
+		$this->createAndTest(15, array('parent_id'=>2, 'names'=>array(1=>'Science', 2=>'Știință')), 4, 5);
+		$this->createAndTest(26, array('parent_id'=>2, 'names'=>array(1=>'Religion', 2=>'Religie')), 4, 5);
+
+		$this->createAndTest(16, array('parent_id'=>14, 'names'=>array(1=>'Music', 2=>'Muzică')), 9, 10);
+		$this->createAndTest(19, array('parent_id'=>14, 'names'=>array(1=>'Film', 2=>'Film')), 9, 10);
+		$this->createAndTest(22, array('parent_id'=>14, 'names'=>array(1=>'Books', 2=>'Cărți')), 9, 10);
+
+		$this->createAndTest(17, array('parent_id'=>16, 'names'=>array(1=>'Classical', 2=>'Clasică')), 14, 15);
+		$this->createAndTest(18, array('parent_id'=>16, 'names'=>array(1=>'Jazz', 2=>'Jazz')), 14, 15);
+
+		$this->createAndTest(24, array('parent_id'=>15, 'names'=>array(1=>'Physics', 2=>'Fizică')), 7, 8);
+		$this->createAndTest(25, array('parent_id'=>15, 'names'=>array(1=>'Mathematics', 2=>'Matematică')), 7, 8);
+
+		// test constructor and GetByFullName()
+		$topic = new Topic('Physics:en');
+
+		// test other get methods
+		$this->assertEquals(24, $topic->getTopicId());
+
+		$this->assertEquals(15, $topic->getParentId());
+
+		$this->assertEquals(2, $topic->getNumTranslations());
+
+		$translations = array(1=>new TopicName(24, 1), 2=>new TopicName(24, 2));
+		$this->assertEquals($translations, $topic->getTranslations());
+
+		$path = array(2=>new Topic(2), 15=>new Topic(15), 24=>new Topic(24));
+		$pathIds = array(2=>2, 15=>15, 24=>24);
+		$this->assertEquals($path, $topic->getPath());
+		$this->assertEquals($pathIds, $topic->getPath(true));
+
+		$this->assertFalse($topic->hasSubtopics());
+
+		$this->assertFalse($topic->isRoot());
+
+		$this->assertEquals(1, $topic->getWidth());
+
+		$this->assertEquals(array(), $topic->getSubtopics());
+
+		$topic = new Topic('Educație:ro');
+
+		$this->assertTrue($topic->isRoot());
+
+		$this->assertTrue($topic->hasSubtopics());
+
+		$this->assertEquals(21, $topic->getWidth());
+
+		$this->assertEquals(null, $topic->getParentId());
+
+		$this->assertEquals(array(2=>new Topic(2)), $topic->getPath());
+
+		$subtopicsDepth1 = array(new Topic(26), new Topic(15), new Topic(14));
+		$subtopicsDepth1Ids = array(26, 15, 14);
+		$this->assertEquals($subtopicsDepth1, $topic->getSubtopics());
+		$this->assertEquals($subtopicsDepth1Ids, $topic->getSubtopics(true));
+		$subtopicsDepth2 = array(new Topic(26), new Topic(15), new Topic(25), new Topic(24),
+		new Topic(14), new Topic(22), new Topic(19), new Topic(16));
+		$this->assertEquals($subtopicsDepth2, $topic->getSubtopics(false, 2));
+		$subtopicsAll = array(new Topic(26), new Topic(15), new Topic(25), new Topic(24),
+		new Topic(14), new Topic(22), new Topic(19), new Topic(16), new Topic(18), new Topic(17));
+		$this->assertEquals($subtopicsAll, $topic->getSubtopics(false, 0));
+
+		$topics = array(new Topic(2));
+		$this->assertEquals($topics, Topic::GetTopics(2));
+		$this->assertEquals($topics, Topic::GetTopics(null, 1, 'Education'));
+		$this->assertEquals($subtopicsDepth1, Topic::GetTopics(null, null, null, 2));
+		$this->assertEquals($subtopicsAll, Topic::GetTopics(null, null, null, 2, 0));
+		$subtopicsDepth1Name = array(new Topic(14), new Topic(26), new Topic(15));
+		$this->assertEquals($subtopicsDepth1Name, Topic::GetTopics(null, 1, null, 2, 1,
+		null, array(array('field'=>'byname', 'dir'=>'asc'))));
+
+		$tree = array(
+		array(27=>new Topic(27)),
+		array(2=>new Topic(2)),
+		array(2=>new Topic(2), 26=>new Topic(26)),
+		array(2=>new Topic(2), 15=>new Topic(15)),
+		array(2=>new Topic(2), 15=>new Topic(15), 25=>new Topic(25)),
+		array(2=>new Topic(2), 15=>new Topic(15), 24=>new Topic(24)),
+		array(2=>new Topic(2), 14=>new Topic(14)),
+		array(2=>new Topic(2), 14=>new Topic(14), 22=>new Topic(22)),
+		array(2=>new Topic(2), 14=>new Topic(14), 19=>new Topic(19)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 18=>new Topic(18)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 17=>new Topic(17)),
+		array(3=>new Topic(3)),
+		array(3=>new Topic(3), 9=>new Topic(9)),
+		array(3=>new Topic(3), 4=>new Topic(4)),
+		array(1=>new Topic(1))
+		);
+		$this->assertEquals($tree, Topic::GetTree());
+		$subtree = array(
+		array(2=>new Topic(2), 14=>new Topic(14)),
+		array(2=>new Topic(2), 14=>new Topic(14), 22=>new Topic(22)),
+		array(2=>new Topic(2), 14=>new Topic(14), 19=>new Topic(19)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 18=>new Topic(18)),
+		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 17=>new Topic(17))
+		);
+		$this->assertEquals($subtree, Topic::GetTree(14));
+
+		Topic::UpdateOrder(array('topic_2'=>array('topic_26', 'topic_14', 'topic_15')), false);
+		$topic = new Topic(14);
+		$this->assertEquals(6, $topic->getLeft());
+		$this->assertEquals(17, $topic->getRight());
+		$topic = new Topic(15);
+		$this->assertEquals(18, $topic->getLeft());
+		$this->assertEquals(23, $topic->getRight());
+		$topic = new Topic(16);
+		$this->assertEquals(11, $topic->getLeft());
+		$this->assertEquals(16, $topic->getRight());
+		Topic::UpdateOrder(array('topic_0'=>array('topic_27', 'topic_3', 'topic_2', 'topic_1')), false);
+		$topic = new Topic(3);
+		$this->assertEquals(3, $topic->getLeft());
+		$this->assertEquals(8, $topic->getRight());
+		$topic = new Topic(2);
+		$this->assertEquals(9, $topic->getLeft());
+		$this->assertEquals(30, $topic->getRight());
+		$topic = new Topic(16);
+		$this->assertEquals(17, $topic->getLeft());
+		$this->assertEquals(22, $topic->getRight());
+
+		// test setName()
+		$topic->setName(1, 'My Music');
+		$topic = new Topic(16);
+		$this->assertEquals('My Music', $topic->getName(1));
+
+		// test delete()
+		$topic->delete(2);
+		$this->assertEquals('My Music', $topic->getName(1));
+		$this->assertEquals(1, $topic->getNumTranslations());
+		$topic->delete();
+		$topic = new Topic(15);
+		$this->assertEquals(18, $topic->getLeft());
+		$this->assertEquals(23, $topic->getRight());
+		$topic = new Topic(1);
+		$this->assertEquals(25, $topic->getLeft());
+		$this->assertEquals(26, $topic->getRight());
+		$topic = new Topic(14);
+		$subtopics = array(22, 19);
+		$this->assertEquals($subtopics, $topic->getSubtopics(true));
 	} // fn testCreate
 
 
-	public function testExist()
+	private function createAndTest($p_topicId, $p_data, $p_left, $p_right)
 	{
-		$this->assertTrue($this->articleType->exists(), 'The test article type does not exist after creation.');
-	} // fn testExists
-
-
-	public function testGetTypeName()
-	{
-		$this->assertEquals($this->testTypeName, $this->articleType->getTypeName());
+		$topic = new Topic($p_topicId);
+		$topic->create($p_data);
+		unset($topic);
+		$topic = new Topic($p_topicId);
+		$this->assertTrue($topic->exists());
+		foreach ($p_data['names'] as $languageId=>$name) {
+			$this->assertEquals($name, $topic->getName($languageId));
+		}
+		$this->assertEquals($p_left, $topic->getLeft());
+		$this->assertEquals($p_right, $topic->getRight());
 	}
-
-
-	public function testSetName()
-	{
-		global $g_ado_db;
-
-		$this->articleType->setName($this->testLanguageId, 'test_name_language');
-		$query = "SELECT t.translation_text "
-				. "FROM ArticleTypeMetadata atm, Translations t "
-				. "WHERE atm.type_name= '" . $this->articleType->getTypeName() . "' "
-				. "AND atm.field_name = 'NULL' AND atm.fk_phrase_id = t.phrase_id "
-				. "AND t.fk_language_id = '" . $this->testLanguageId . "'";
-		$this->assertEquals('test_name_language', $g_ado_db->GetOne($query));
-		$this->assertNotEquals(-1, $this->articleType->getPhraseId());
-		$this->assertType('ADORecordSet_empty', $this->articleType->create(), 'The test article type can not be created.');
-	}
-
-
-	public function testGetDisplayName()
-	{
-		$this->articleType->setName($this->testLanguageId, 'test_name_language');
-		$this->assertEquals('test_name_language', $this->articleType->getDisplayName($this->testLanguageId));
-	}
-
-
-	public function testGetNames()
-	{
-		$this->articleType->setName($this->testLanguageId, 'test_name_language');
-		$this->assertEquals(array($this->testLanguageId =>'test_name_language'), $this->articleType->getTranslations());
-	}
-
-
-	public function testGetMetadata()
-	{
-		global $g_ado_db;
-
-		$query = "SELECT * FROM ArticleTypeMetadata WHERE type_name = '"
-				. $this->articleType->getTypeName() . "' AND field_name = 'NULL'";
-		$row = $g_ado_db->GetRow($query);
-		$this->assertEquals($row, $this->articleType->getMetadata());
-	}
-
-
-	public function testUnsetName()
-	{
-		$this->articleType->setName($this->testLanguageId, NULL);
-		$this->assertEquals(0, $this->articleType->translationExists($this->testLanguageId));
-	}
-
-
-	public function testGetArticlesArray()
-	{
-		$this->markTestIncomplete('This test has not been implemented yet.');
-	}
-
-
-	public function testMerge()
-	{
-		$this->markTestIncomplete('This test has not been implemented yet.');
-	}
-
-
-	public function testRename()
-	{
-		global $g_ado_db;
-
-		$this->articleType->rename($this->testTypeName.'_second');
-		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."_second'");
-		$this->assertNotEquals(0, $count);
-		$tableName = $g_ado_db->GetOne("SHOW TABLES LIKE '%X".$this->testTypeName."_second%'");
-		$this->assertEquals('X'.$this->testTypeName.'_second', $tableName);
-
-		$this->articleType->rename($this->testTypeName);
-	}
-
-
-	public function testDelete()
-	{
-		global $g_ado_db;
-
-		$this->articleType->delete();
-		$this->assertFalse($this->articleType->exists());
-		$tableName = $g_ado_db->GetOne("SHOW TABLES LIKE '%X".$this->testTypeName."'");
-		$this->assertEquals('', $tableName);
-		$count = $g_ado_db->GetOne("SELECT COUNT(*) FROM ArticleTypeMetadata WHERE type_name = '".$this->testTypeName."'");
-		$this->assertEquals(0, $count);
-	} // fn testDelete
 }
 
 // Call TopicTest::main() if this source file is executed directly.

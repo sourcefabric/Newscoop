@@ -78,12 +78,12 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, <?php echo implode(', ', $this->notSortable); ?>],
+            'aTargets': [0, <?php echo implode(', ', $this->notSortable); ?>]
         },
         { // id
             'sClass': 'id',
-            'aTargets': [0],
-        },
+            'aTargets': [0]
+        }
     ],
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function() {

@@ -211,7 +211,7 @@ $(document).ready(function() {
             'aoColumnDefs': [
                 { // not sortable
                     'bSortable': false,
-                    'aTargets': [1, 2],
+                    'aTargets': [1, 2]
                 }
             ]
         });

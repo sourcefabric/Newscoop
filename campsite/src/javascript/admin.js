@@ -27,7 +27,7 @@ $(document).ready(function() {
             },
             close: function(event, ui) {
                 input.change(); // trigger search
-            },
+            }
         });
     }).change(function() {
         // reset
@@ -90,7 +90,7 @@ $(document).ready(function() {
             showSeconds: true,
             showOn: 'both',
             buttonImage: g_admin_img + '/calendar.gif',
-            buttonImageOnly: true,
+            buttonImageOnly: true
         };
 
         // update settings by classes
@@ -161,7 +161,7 @@ function callServer(p_callback, p_args, p_handle)
         'data': {
             'security_token': g_security_token,
             'callback': p_callback,
-            'args': p_args,
+            'args': p_args
         },
         'dataType': 'json',
         'success': function(json) {
@@ -186,9 +186,9 @@ function callServer(p_callback, p_args, p_handle)
             queue.push({
                 callback: p_callback,
                 args: p_args,
-                handle: p_handle,
+                handle: p_handle
             });
-        },
+        }
     });
 }
 
