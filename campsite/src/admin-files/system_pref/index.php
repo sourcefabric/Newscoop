@@ -490,6 +490,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
 </tr>
 <tr>
+    <td align="left" width="400px">
+        <?php putGS("Bing Map Provider API Key:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_bing_api_key" value="<?php p(SystemPref::Get('MapBingApiKey')); ?>" maxlength="100" size="40"  class="input_text" />
+    </td>
+</tr>
+<tr>
     <td colspan="2"><hr /></td>
 </tr>
 <tr>

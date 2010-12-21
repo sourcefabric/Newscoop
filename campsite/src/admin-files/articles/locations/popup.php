@@ -45,6 +45,13 @@ $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_ur
 $geo_popups_json = "";
 $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
+$geo_bing_key = null;
+$geo_api_keys = Geo_Preferences::GetAPIKeys();
+if (array_key_exists('bing', $geo_api_keys))
+{
+    $geo_bing_key = $geo_api_keys['bing'];
+}
+
 //header("Content-Type: text/html; charset=utf-8");
 ?>
 <?php
@@ -77,6 +84,10 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
     <?php echo $geo_map_incl; ?>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
+<!--
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/cloudmade.js"></script>
+-->
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/mapquest.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
@@ -127,6 +138,16 @@ var useSystemParameters = function()
     geo_locations.set_map_usage(<?php echo $geo_map_usage_json; ?>);
     geo_locations.set_icons_info(<?php echo $geo_icons_json; ?>);
     geo_locations.set_popups_info(<?php echo $geo_popups_json; ?>);
+
+<?php
+    if ($geo_bing_key)
+    {
+?>
+    geo_locations.set_api_keys({'bing': '<?php echo $geo_bing_key; ?>'});
+<?php
+    }
+?>
+
 };
 
 // city search start; if longitude/latitude provided, immediate results done

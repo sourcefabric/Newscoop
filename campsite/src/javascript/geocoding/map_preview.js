@@ -902,6 +902,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     var google_label = geo_obj.map_view_layer_google;
     var osm_label = geo_obj.map_view_layer_osm;
+    var mqm_label = "MapQuest";
 
     if (geo_obj.map_view_layer_providers[google_label])
     {
@@ -958,6 +959,18 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         }
     }
 
+    var map_mqm = null;
+
+try {
+    {
+        map_mqm = new OpenLayers.Layer.MapQuest();
+        //if (mqm_label == geo_obj.map_view_layer_default)
+        {
+            map_provs.push(map_mqm);
+        }
+    }
+} catch (e) {alert(e);}
+
     if (map_gsm && (google_label != geo_obj.map_view_layer_default))
     {
         map_provs.push(map_gsm);
@@ -967,7 +980,10 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         map_provs.push(map_osm);
     }
 
+    map_provs.push(map_mqm);
+
     geo_obj.map.addLayers(map_provs);
+    geo_obj.map.addControl(new OpenLayers.Control.Attribution());
 
     // an initial center point, set via parameters
     var cen_ini_longitude = geo_obj.map_view_layer_center_ini["longitude"];

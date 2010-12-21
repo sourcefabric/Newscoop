@@ -81,6 +81,7 @@ $f_geo = array(
     'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
     'flash_server' => Input::Get('f_flash_server', 'string'),
     'flash_directory' => Input::Get('f_flash_directory', 'string'),
+    'map_bing_api_key' => Input::Get('f_map_bing_api_key', 'string'),
 );
 
 if (!Input::IsValid()) {

@@ -21,6 +21,11 @@ geo_locations.display_strings = {
     remove: "remove"
 };
 
+// api access keys
+geo_locations.api_keys = {
+    'bing': null
+};
+
 // flag saved state
 geo_locations.something_to_save = false;
 
@@ -243,6 +248,17 @@ geo_locations.set_map_info = function(params)
 
     this.set_map_width(this.map_art_view_width_default);
     this.set_map_height(this.map_art_view_height_default);
+
+};
+
+// setting access keys
+geo_locations.set_api_keys = function(params)
+{
+
+    if (params['bing'])
+    {
+        this.api_keys['bing'] = params['bing'];
+    }
 
 };
 
@@ -1234,12 +1250,60 @@ var geo_main_openlayers_init = function(map_div_name)
             //"OpenStreet Map",
             geo_locations.display_strings.openstreet_map
         );
+
+/*
+var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
+    key: 'BC9A493B41014CAABB98F0471D759707',
+    styleId: 1
+});
+*/
+/*
+var map_osm = new OpenLayers.Layer.CloudMade("CloudMade", {
+    key: 'BC9A493B41014CAABB98F0471D759707',
+    styleId: 1
+});
+*/
+/*
+var mapquest = new OpenLayers.Layer.OSM("MapQuest", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"); 
+var map_osm = new OpenLayers.Layer.OSM("MapQuest", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"); 
+*/
+
+
         geo_locations.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_locations.map_view_layer_default)
         {
             map_provs.push(map_osm);
         }
     }
+
+try {
+    var map_mqm = new OpenLayers.Layer.MapQuest();
+} catch (e) {alert(e);}
+
+    var map_brm = null;
+    var map_bam = null;
+    var map_bhm = null;
+
+    var bing_key = geo_locations.api_keys['bing'];
+    if (bing_key)
+    {
+        map_brm = new OpenLayers.Layer.Bing({
+            key: bing_key,
+            type: "Road",
+            name: "Bing Road Map"
+        });
+        map_bam = new OpenLayers.Layer.Bing({
+            key: bing_key,
+            type: "Aerial",
+            name: "Bing Aerial Map"
+        });
+        map_bhm = new OpenLayers.Layer.Bing({
+            key: bing_key,
+            type: "AerialWithLabels",
+            name: "Bing Aerial With Labels"
+        });
+    }
+
 
     if (map_gsm && (google_label != geo_locations.map_view_layer_default))
     {
@@ -1250,10 +1314,68 @@ var geo_main_openlayers_init = function(map_div_name)
         map_provs.push(map_osm);
     }
 
+    map_provs.push(map_mqm);
+    if (bing_key)
+    {
+        map_provs.push(map_brm, map_bam, map_bhm);
+    }
+
     //geo_locations.map.addLayers([map_gsm, map_osm]);
     geo_locations.map.addLayers(map_provs);
+    geo_locations.map.addControl(new OpenLayers.Control.Attribution());
     // for switching between maps
-    geo_locations.map.addControl(new OpenLayers.Control.LayerSwitcher());
+
+    var lswitch = new OpenLayers.Control.LayerSwitcher();
+    lswitch.checkRedraw = function() {
+        var google_shown = false;
+
+        var redraw = false;
+        if ( !this.layerStates.length ||
+             (this.map.layers.length != this.layerStates.length) ) {
+            redraw = true;
+        } else {
+            for (var i=0, len=this.layerStates.length; i<len; i++) {
+                var layerState = this.layerStates[i];
+                var layer = this.map.layers[i];
+/*
+                if (layer.name == geo_locations.display_strings.google_map)
+                {
+                    if (layer.visibility) {google_shown = true;}
+                }
+*/
+                if ( (layerState.name != layer.name) ||
+                     (layerState.inRange != layer.inRange) ||
+                     (layerState.id != layer.id) ||
+                     (layerState.visibility != layer.visibility) ) {
+                    redraw = true;
+                    break;
+                }
+            }
+        }
+
+        if (redraw)
+        {
+            //alert(geo_locations.map_view_layer_name);
+            //if (google_shown)
+            if (geo_locations.map.baseLayer.name == geo_locations.display_strings.google_map)
+            {
+                $('.olLayerGoogleCopyright').removeClass('hidden');
+                $('.olLayerGooglePoweredBy').removeClass('hidden');
+                //alert('showing on ' + geo_locations.map.layers[0].name);
+            }
+            else
+            {
+                $('.olLayerGoogleCopyright').addClass('hidden');
+                $('.olLayerGooglePoweredBy').addClass('hidden');
+                //alert('hiding on ' + geo_locations.map.layers[0].name);
+            }
+        }
+
+        return redraw;
+    };
+    geo_locations.map.addControl(lswitch);
+
+    //geo_locations.map.addControl(new OpenLayers.Control.LayerSwitcher());
 
     // an initial center point, set via parameters
     var cen_ini_longitude = geo_locations.map_view_layer_center_ini["longitude"];

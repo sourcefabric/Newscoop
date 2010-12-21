@@ -121,7 +121,10 @@ a.map-no-link {
     right: 90;
     color: #804000;
     font-size: 16px;
+/*
     z-index: 1200300500;
+*/
+    z-index: 2000;
 
     vertical-align: middle;
     text-align: center;
@@ -247,7 +250,10 @@ position: relative;
     border: 1px solid #8080ff;
 
     position: absolute;
+/*
     z-index: 1200300400;
+*/
+    z-index: 1000;
 }
 
 .part_top {

@@ -568,6 +568,27 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
 
 } // fn GetIconsFiles
 
+	/**
+	 * Gets files available as marker icons
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return array
+	 */
+public static function GetAPIKeys()
+{
+    $ret_array = array();
+
+    $bing_key = SystemPref::Get("MapBingApiKey");
+    if ($bing_key && ("" != $bing_key))
+    {
+        $ret_array['bing'] = $bing_key;
+    }
+
+    return $ret_array;
+
+} // fn GetAPIKeys
 
 } // class Geo_Preferences
 
