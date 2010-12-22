@@ -207,9 +207,8 @@ if (($extension == '.php') || ($extension == '')) {
     $_top_menu = '';
     if ($needs_menu) {
         ob_start();
-        echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n";
-//        echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"rtl\" lang=\"ar\" xml:lang=\"ar\">\n";
-        echo "<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"en\" xml:lang=\"en\">\n";
+        echo '<!DOCTYPE html>';
+        echo '<html dir="ltr" lang="en">';
         require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
         $_top_menu = ob_get_clean();
     }

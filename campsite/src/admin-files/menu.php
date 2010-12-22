@@ -323,6 +323,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 
 // locale setting for datepicker
 $locale = trim(getGS('en'), ' (*)');
+$localeFile = dirname(__FILE__) . "/../javascript/jquery/i18n/jquery.ui.datepicker-{$locale}.js";
 ?>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -341,7 +342,9 @@ $locale = trim(getGS('en'), ' (*)');
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+  <?php if (file_exists($localeFile)) { ?>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/i18n/jquery.ui.datepicker-<?php echo $locale; ?>.js" type="text/javascript"></script>
+  <?php } ?>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>

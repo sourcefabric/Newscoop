@@ -22,16 +22,19 @@ class MediaPlayer
     /** @var string */
     private $alt;
 
+    /** @var bool */
+    private static $playerLoaded = FALSE;
+
     /**
      * @param string $src
      * @param string $type
      * @param string $alt
      */
-    public function __construct($src, $type = '', $alt = '')
+    public function __construct($src, $type, $alt = '')
     {
         $this->src = (string) $src;
         $this->type = (string) $type;
-        $this->alt = (string) $alt;
+        $this->alt = empty($alt) ? array_shift(explode('?', basename($this->src))) : (string) $alt; // remove ?x=.. part from basename
     }
 
     /**
@@ -43,8 +46,9 @@ class MediaPlayer
         global $Campsite;
 
         ob_start();
-        echo '<div class="mediaplayer">';
+        echo '<div class="mediaplayer ', str_replace('/', ' ', $this->type), '">';
 
+        // present by content type
         switch ($this->type) {
             case 'image/jpeg':
             case 'image/png':
@@ -52,37 +56,36 @@ class MediaPlayer
                 echo '<img src="', $this->src, '" height="240" alt="', $this->alt, '" />';
                 break;
 
-            case 'audio/mpeg':  
-            case 'audio/ogg':  
-                echo '<audio src="', $this->src, '" controls></audio>';
+            case 'audio/mpeg': 
+            case 'audio/ogg': 
+                echo '<audio src="', $this->src, '" controls="controls">';
+                echo '</audio>';
                 break;
 
             case 'video/mp4':
             case 'video/ogg':
             case 'video/webm':
-            case 'application/octetstream':
-                echo '<video src="', $this->src, '" width="320" height="240" controls></video>';
+                // html5 + flow player fallback
+                include dirname(__FILE__) . '/video.phtml';
                 break;
 
             case 'video/flv':
                 $player = $Campsite['WEBSITE_URL'] . '/videos/player.swf';
-                echo '<object width="320" height="240">';
-                echo '<param name="movie" value="', $player, '"></param>';
-                echo '<param name="flashvars" value="src=', urlencode($this->src), '"></param>';
-                echo '<param name="allowFullScreen" value="true"></param>';
-                echo '<param name="allowscriptaccess" value="always"></param>';
-                echo '<embed src="', $player, '" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="240" flashvars="src=', urlencode($this->src), '"></embed></object>';
-                break;
-
-            default:
-                if (empty($alt)) {
-                    $alt = basename($this->src);
-                }
-                echo '<p><a href="', $this->src, '">', $alt, '</a></p>';
+                include dirname(__FILE__) . '/flash.phtml';
                 break;
         }
 
+        // download link
+        echo '<p><strong>', getGS('Download file'), ':</strong> ';
+        echo '<a href="', $this->src, '">', $this->alt, '</a></p>';
+
         echo '</div>';
+
+        if (!self::$playerLoaded) {
+            //include_once dirname(__FILE__) . '/player.phtml';
+            self::$playerLoaded = TRUE;
+        }
+
         return ob_get_clean();
     }
 }

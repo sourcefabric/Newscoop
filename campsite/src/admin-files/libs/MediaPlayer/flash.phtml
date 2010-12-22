@@ -1,0 +1,7 @@
+<object width="320" height="240">
+    <param name="movie" value="<?php echo $player; ?>"></param>
+    <param name="flashvars" value="src=<?php echo urlencode($this->src); ?>"></param>
+    <param name="allowFullScreen" value="true"></param>
+    <param name="allowscriptaccess" value="always"></param>
+    <embed src="<?php echo $player; ?>" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="240" flashvars="src=<?php echo urlencode($this->src); ?>"></embed>
+</object>
