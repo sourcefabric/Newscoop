@@ -10,6 +10,7 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . '/../../classes/Browser.php';
 
 /**
  * Class CampContext
@@ -220,6 +221,9 @@ final class CampContext
         // Initialize the default comment attribute at the end, after the
         // submit comment action had run.
         $this->m_readonlyProperties['default_comment'] = $this->comment;
+
+        // add browser info
+        $this->m_readonlyProperties['browser'] = new Browser;
 
         // initialize plugins
         foreach (CampPlugin::GetPluginsInfo(true) as $info) {
