@@ -50,6 +50,8 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapViewHeightDefault', '
 -- map providers available to be set for articles
 -- Google map provider available to be set for articles
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderAvailableGoogleV3', '1');
+-- MapQuest map provider available to be set for articles
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderAvailableMapQuest', '1');
 -- OpenStreetMap map provider available to be set for articles
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderAvailableOSM', '1');
 -- the default map provider is Google maps api v3
