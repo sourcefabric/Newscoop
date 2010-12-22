@@ -129,7 +129,6 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             $id = strtolower($id);
 
             // value getter
-            $property->setAccessible(TRUE);
             $method = 'get' . ucfirst($property->getName());
 
             echo '<dl><dt>';
