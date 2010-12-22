@@ -32,6 +32,7 @@ a.map_name_display:hover {
     top: 4;
     left: 6;
     font-size: 90%;
+    z-index: 900;
 }
 .map_savemapinit {
     float: left;
@@ -49,13 +50,20 @@ a.map_name_display:hover {
 
 .map_sidepan {
     float: left;
+/*
     width: 20%;
+*/
+    width: 200px;
+
     height: 90%;
     font-size: 90%;
 }
 
 .side_info {
     height: 200px;
+/*
+    width: 160px;
+*/
 }
 
 .map_sidedescs {
@@ -79,7 +87,10 @@ a.map_name_display:hover {
 .search_results {
     overflow: false;
     font-size: 90%;
+    width: 150px;
+/*
     width: 200px;
+*/
 }
 .search_results_limit {
     overflow: false;
@@ -250,9 +261,6 @@ position: relative;
     border: 1px solid #8080ff;
 
     position: absolute;
-/*
-    z-index: 1200300400;
-*/
     z-index: 1000;
 }
 
@@ -285,12 +293,13 @@ position: relative;
     right: 705px;
 }
 
+.poi_actions_all {
+}
 .poi_actions {
     margin-left: auto;
     margin-right: auto;
 }
 .poi_removal {
-    float: left;
     margin-left: 0px;
 }
 .list_change_poi_void {
@@ -301,7 +310,6 @@ position: relative;
 }
 .poi_coors {
     float: right;
-    margin-right: 30px;
 }
 .poi_coors_input {
     margin-top: 0px;

@@ -322,12 +322,12 @@ V
 <a href="#" onClick="geo_locations.map_height_change(10); return false;">&gt;&gt;</a>
 </div><!-- end of map resizing -->
 <div id="map_view_size" class="map_resizing">600x400</div>
-
+<!--
 <div id="map_part_left" class="map_realsize part_left"></div>
 <div id="map_part_right" class="map_realsize part_right"></div>
 <div id="map_part_top" class="map_realsize part_top"></div>
 <div id="map_part_bottom" class="map_realsize part_bottom"></div>
-
+-->
 <div id="map_mapedit" class="map_mapedit hidden">
 <div class="map_editinner">
 <div class="map_editpart1">

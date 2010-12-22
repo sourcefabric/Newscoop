@@ -241,13 +241,13 @@ geo_locations.set_map_info = function(params)
     this.map_art_view_width_default = parseInt(params.width);
     this.map_art_view_height_default = parseInt(params.height);
 
-    this.set_map_width(this.map_art_view_width_default);
-    this.set_map_height(this.map_art_view_height_default);
+    //this.set_map_width(this.map_art_view_width_default);
+    //this.set_map_height(this.map_art_view_height_default);
 
 };
 
 // setting the basic map info for the current map
-geo_locations.set_map_usage = function(params)
+geo_locations.set_map_usage = function(params, set_view)
 {
     this.map_id = params["id"];
     if (0 == this.map_id) {return;}
@@ -265,8 +265,11 @@ geo_locations.set_map_usage = function(params)
     this.map_art_view_width_default = parseInt(params.width);
     this.map_art_view_height_default = parseInt(params.height);
 
-    this.set_map_width(this.map_art_view_width_default);
-    this.set_map_height(this.map_art_view_height_default);
+    if (set_view)
+    {
+        this.set_map_width(this.map_art_view_width_default);
+        this.set_map_height(this.map_art_view_height_default);
+    }
 
     this.map_view_layer_default = params.prov;
 
@@ -694,7 +697,7 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
         descs_inner += "<a class='poi_name' href=\"#\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
-        descs_inner += "<div class='poi_actions'>";
+        descs_inner += "<div class='poi_actions_all'>";
         descs_inner += "<div class='poi_actions'>";
         descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>)&nbsp;";
         descs_inner += "(<a href='#' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>)";
@@ -735,10 +738,10 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lat: <input id='" + lat_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "lat:&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lon: <input id='" + lon_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "lon:&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_actions poi_removal'>";
@@ -765,7 +768,7 @@ geo_locations.update_poi_descs = function(active, index_type)
             }
         });
 
-        $("#map_poi_side_list").accordion({active: view_index, header: "> div > h3"}).sortable({axis: "y", handle: "h3", stop: function() {stop = true;} });
+        $("#map_poi_side_list").accordion({animated: false, autoHeight: false, active: view_index, header: "> div > h3"}).sortable({axis: "y", handle: "h3", stop: function() {stop = true;} });
 
         $("#map_poi_side_list").bind( "sortupdate", function(event, ui) {
             var poi_order = $(this).sortable('toArray');
@@ -787,6 +790,7 @@ geo_locations.map_update_side_desc_height = function()
 
     //var old_height = sidedesc_obj.offsetHeight;
     var new_height = 450 - height_taken;
+    if ((!new_height) || (250 > new_height)) {new_height = 250;}
 
     //if (old_height > new_height)
     {
@@ -1318,7 +1322,7 @@ var geo_main_openlayers_init = function(map_div_name)
     var style_map = new OpenLayers.StyleMap({
                 //fillOpacity: 1.0,
                 //pointRadius: 10,
-                //cursor: "pointer",
+                cursor: "pointer",
                 graphicZIndex: 10
     });
 
@@ -1400,6 +1404,62 @@ var geo_main_openlayers_init = function(map_div_name)
         'featureselected': geo_hook_on_feature_select,
         'featureunselected': geo_hook_on_feature_unselect
     });
+
+    var view_top_pos = new OpenLayers.Pixel(100, 50);
+    var view_top = OpenLayers.Util.createDiv("view_top", view_top_pos, null, null, "absolute", "1px solid #8080ff");
+    view_top.style.fontSize = "1px";
+    view_top.style.width = "600px";
+    view_top.style.height = "1px";
+    view_top.style.background = "#8080ff";
+    view_top.style.backgroundColor = "#8080ff";
+    view_top.style.zIndex = "900";
+    view_top.style.opacity = "0.50";
+    view_top.style.filter = "alpha(opacity=50)"; // IE
+    geo_locations.map.viewPortDiv.appendChild(view_top);
+
+    var view_bot_pos = new OpenLayers.Pixel(100, 450);
+    var view_bot = OpenLayers.Util.createDiv("view_bot", view_bot_pos, null, null, "absolute", "1px solid #8080ff");
+    view_bot.style.fontSize = "1px";
+    view_bot.style.width = "600px";
+    view_bot.style.height = "1px";
+    view_bot.style.background = "#8080ff";
+    view_bot.style.backgroundColor = "#8080ff";
+    view_bot.style.zIndex = "900";
+    view_bot.style.opacity = "0.50";
+    view_bot.style.filter = "alpha(opacity=50)"; // IE
+    geo_locations.map.viewPortDiv.appendChild(view_bot);
+
+    var view_left_pos = new OpenLayers.Pixel(100, 50);
+    var view_left = OpenLayers.Util.createDiv("view_left", view_left_pos, null, null, "absolute", "1px solid #8080ff");
+    view_left.style.fontSize = "1px";
+    view_left.style.width = "1px";
+    view_left.style.height = "400px";
+    view_left.style.background = "#8080ff";
+    view_left.style.backgroundColor = "#8080ff";
+    view_left.style.zIndex = "900";
+    view_left.style.opacity = "0.50";
+    view_left.style.filter = "alpha(opacity=50)"; // IE
+    geo_locations.map.viewPortDiv.appendChild(view_left);
+
+    var view_right_pos = new OpenLayers.Pixel(700, 50);
+    var view_right = OpenLayers.Util.createDiv("view_right", view_right_pos, null, null, "absolute", "1px solid #8080ff");
+    view_right.style.fontSize = "1px";
+    view_right.style.width = "1px";
+    view_right.style.height = "400px";
+    view_right.style.background = "#8080ff";
+    view_right.style.backgroundColor = "#8080ff";
+    view_right.style.zIndex = "900";
+    view_right.style.opacity = "0.50";
+    view_right.style.filter = "alpha(opacity=50)"; // IE
+    geo_locations.map.viewPortDiv.appendChild(view_right);
+
+    geo_locations.border_left = view_left;
+    geo_locations.border_right = view_right;
+    geo_locations.border_top = view_top;
+    geo_locations.border_bottom = view_bot;
+
+    geo_locations.set_map_width(geo_locations.map_art_view_width_default);
+    geo_locations.set_map_height(geo_locations.map_art_view_height_default);
 
 };
 
@@ -1658,10 +1718,10 @@ geo_locations.map_width_change = function(size)
     this.set_save_state(true);
     this.map_spec_changed = true;
 
-    var map_left_border = document.getElementById ? document.getElementById("map_part_left") : null;
-    var map_right_border = document.getElementById ? document.getElementById("map_part_right") : null;
-    var map_top_border = document.getElementById ? document.getElementById("map_part_top") : null;
-    var map_bottom_border = document.getElementById ? document.getElementById("map_part_bottom") : null;
+    var map_left_border = this.border_left;
+    var map_right_border = this.border_right;
+    var map_top_border = this.border_top;
+    var map_bottom_border = this.border_bottom;
 
     var map_view_size = document.getElementById ? document.getElementById("map_view_size") : null;
 
@@ -1681,12 +1741,12 @@ geo_locations.map_width_change = function(size)
     this.map_art_view_width_display += size;
     this.map_art_view_right_display -= size / 2;
 
-    map_left_border.style.right = (this.map_art_view_right_display + this.map_art_view_width_display) + "px";
-    map_right_border.style.right = this.map_art_view_right_display + "px";
+    map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
+    map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 6) + "px";
     map_top_border.style.width = this.map_art_view_width_display + "px";
-    map_top_border.style.right = this.map_art_view_right_display + "px";
+    map_top_border.style.left = (this.map_art_view_right_display - 6) + "px";
     map_bottom_border.style.width = this.map_art_view_width_display + "px";
-    map_bottom_border.style.right = this.map_art_view_right_display + "px";
+    map_bottom_border.style.left = (this.map_art_view_right_display - 6) + "px";
 
 };
 
@@ -1699,10 +1759,10 @@ geo_locations.map_height_change = function(size)
     this.set_save_state(true);
     this.map_spec_changed = true;
 
-    var map_left_border = document.getElementById ? document.getElementById("map_part_left") : null;
-    var map_right_border = document.getElementById ? document.getElementById("map_part_right") : null;
-    var map_top_border = document.getElementById ? document.getElementById("map_part_top") : null;
-    var map_bottom_border = document.getElementById ? document.getElementById("map_part_bottom") : null;
+    var map_left_border = this.border_left;
+    var map_right_border = this.border_right;
+    var map_top_border = this.border_top;
+    var map_bottom_border = this.border_bottom;
 
     var map_view_size = document.getElementById ? document.getElementById("map_view_size") : null;
 
@@ -1722,12 +1782,12 @@ geo_locations.map_height_change = function(size)
     this.map_art_view_height_display += size;
     this.map_art_view_top_display -= size / 2;
 
-    map_bottom_border.style.top = (this.map_art_view_top_display + this.map_art_view_height_display) + "px";
-    map_top_border.style.top = this.map_art_view_top_display + "px";
+    map_bottom_border.style.top = (this.map_art_view_top_display + this.map_art_view_height_display - 22) + "px";
+    map_top_border.style.top = (this.map_art_view_top_display - 22) + "px";
     map_right_border.style.height = this.map_art_view_height_display + "px";
-    map_right_border.style.top = this.map_art_view_top_display + "px";
+    map_right_border.style.top = (this.map_art_view_top_display - 22) + "px";
     map_left_border.style.height = this.map_art_view_height_display + "px";
-    map_left_border.style.top = this.map_art_view_top_display + "px";
+    map_left_border.style.top = (this.map_art_view_top_display - 22) + "px";
 
 };
 
@@ -2360,7 +2420,7 @@ geo_locations.got_load_data = function (received_obj)
 
     var lonlat = null;
 
-    this.set_map_usage(received_obj.map);
+    this.set_map_usage(received_obj.map, true);
 
     var poi_count = received_obj.pois.length;
     for (var pind = 0; pind < poi_count; pind++)

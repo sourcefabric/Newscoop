@@ -59,7 +59,7 @@ geo_names.askForCityLocation = function(city_name, country_code, script_dir, res
 // the main action on ajax data retrieval for cities search
 geo_names.gotSearchData = function (cities, results_div)
 {
-    found_locs = '<table class="geonames_result_table">';
+    found_locs = '<table class="geonames_result_table" id="geonames_result_table">';
     found_locs += '<thead><tr>';
     found_locs += '<th width="40">' + this.display_strings.cc + '</th>'
     found_locs += '<th width="120">' + this.display_strings.city + '</th>';
@@ -145,9 +145,13 @@ geo_names.gotSearchData = function (cities, results_div)
     
     //$('.geonames_result_table').flexigrid({height: flexi_height, resizable: false});
     //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">sorry, no city was found</div>"}});
-    $('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
+    $('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     geo_locations.map_update_side_desc_height();
+
+    //display_obj.style.display = 'none';
+    //display_obj.style.display = 'block';
+
     
     return false;
 };
