@@ -21,7 +21,7 @@ public static function GetMapProviderDefault()
     if (!$map_prov_default) {$map_prov_default = "googlev3";}
     else {$map_prov_default = strtolower($map_prov_default);}
 
-    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
+    $sys_pref_names = array("googlev3" => "GoogleV3", "osm" => "OSM", "mapquest" => "MapQuest");
 
     $provider_available = true;
 
@@ -100,8 +100,8 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         else {$map_prov_default = strtolower($map_prov_default);}
     }
 
-    // we only have support for googlev3 and osm for now
-    $map_prov_names_arr = array("googlev3", "osm");
+    // we only have support for googlev3 and osm/mapquest for now
+    $map_prov_names_arr = array("googlev3", "osm", "mapquest");
     if ($use_single_provider)
     {
         $map_prov_names_arr = array($p_mapProvider);
@@ -111,7 +111,7 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
     $map_prov_info_arr = array();
 
     $known_providers = array("googlev3" => false, "osm" => false);
-    $sys_pref_names = array("googlev3" => "GoogleV3", false, "osm" => "OSM");
+    $sys_pref_names = array("googlev3" => "GoogleV3", "osm" => "OSM", "mapquest" => "MapQuest");
     $usage_providers_count = 0;
 
     $map_prov_first = "";
@@ -134,6 +134,12 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         {
             $one_prov_include = "http://maps.google.com/maps/api/js?v=3.2&sensor=false";
         }
+/*
+        if ("mapquest" == $one_prov_name)
+        {
+            $one_prov_include = $p_websiteUrl . "/javascript/geocoding/openlayers/OLlocals.js";
+        }
+*/
 
         // up to now, we know how to deal with just a few map providers
         $one_prov_label = strtolower($one_prov_name);
@@ -567,28 +573,6 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
     return $use_icons;
 
 } // fn GetIconsFiles
-
-	/**
-	 * Gets files available as marker icons
-	 *
-	 * @param string $p_htmlDir
-	 * @param string $p_websiteUrl
-	 *
-	 * @return array
-	 */
-public static function GetAPIKeys()
-{
-    $ret_array = array();
-
-    $bing_key = SystemPref::Get("MapBingApiKey");
-    if ($bing_key && ("" != $bing_key))
-    {
-        $ret_array['bing'] = $bing_key;
-    }
-
-    return $ret_array;
-
-} // fn GetAPIKeys
 
 } // class Geo_Preferences
 

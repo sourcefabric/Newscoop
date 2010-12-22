@@ -4,6 +4,7 @@ var geo_locations = {};
 // localization strings
 geo_locations.display_strings = {
     google_map: "Google Map",
+    mapquest_map: "MapQuest Map",
     openstreet_map: "OpenStreet Map",
     fill_in_map_name: "fill in map name",
     point_markers: "Point markers",
@@ -12,18 +13,11 @@ geo_locations.display_strings = {
     the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
     point_number: "Point no.",
     fill_in_the_point_description: "fill in the point description",
-    //problem_with_map_processing: "problem with map processing",
-    //probably_logged_out: "probably logged out",
     edit: "edit",
     center: "center",
     enable: "enable",
     disable: "disable",
     remove: "remove"
-};
-
-// api access keys
-geo_locations.api_keys = {
-    'bing': null
 };
 
 // flag saved state
@@ -47,9 +41,11 @@ geo_locations.marker_src_icons = {};
 // what map provider should be used, and map position
 geo_locations.map_view_layer_google = "googlev3";
 geo_locations.map_view_layer_osm = "osm";
+geo_locations.map_view_layer_mapquest = "mapquest";
 geo_locations.map_view_layer_providers = {};
 geo_locations.map_view_layer_providers[geo_locations.map_view_layer_google] = false;
 geo_locations.map_view_layer_providers[geo_locations.map_view_layer_osm] = false;
+geo_locations.map_view_layer_providers[geo_locations.map_view_layer_mapquest] = false;
 // basic map display info
 geo_locations.map_view_layer_names_all = {};
 geo_locations.map_view_layer_default = "";
@@ -141,6 +137,7 @@ geo_locations.set_display_strings = function(local_strings)
 
     var display_string_names = [
         "google_map",
+        "mapquest_map",
         "openstreet_map",
         "fill_in_map_name",
         "point_markers",
@@ -149,8 +146,6 @@ geo_locations.set_display_strings = function(local_strings)
         "the_removal_is_from_all_languages",
         "point_number",
         "fill_in_the_point_description",
-        //"problem_with_map_processing",
-        //"probably_logged_out",
         "edit",
         "center",
         "enable",
@@ -248,17 +243,6 @@ geo_locations.set_map_info = function(params)
 
     this.set_map_width(this.map_art_view_width_default);
     this.set_map_height(this.map_art_view_height_default);
-
-};
-
-// setting access keys
-geo_locations.set_api_keys = function(params)
-{
-
-    if (params['bing'])
-    {
-        this.api_keys['bing'] = params['bing'];
-    }
 
 };
 
@@ -459,9 +443,7 @@ geo_locations.display_index = function(index)
         if (this.poi_markers[rind]['usage']) {real_index += 1;}
         else
         {
-            alert(this.display_strings.this_should_not_happen_now);
-            alert(rind + " / " + index);
-            alert(this.poi_markers[rind]);
+            alert(this.display_strings.this_should_not_happen_now + ": " + rind + " / " + index);
         }
     }
     return real_index;
@@ -995,13 +977,6 @@ var geo_hook_trigger_on_map_click = function(e)
         }
     }
 
-/*
-    if (!(e.originalTarget instanceof SVGSVGElement))
-    {
-        return true;
-    }
-*/
-
     var lonlat = geo_locations.map.getLonLatFromViewPortPx(e.xy);
 
     geo_locations.insert_poi('map', lonlat);
@@ -1176,13 +1151,10 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
-            //new OpenLayers.Control.PanZoomBar(),
             geo_locations.pzb_ctrl,
-            //new OpenLayers.Control.LayerSwitcher({'ascending':false}),
             //new OpenLayers.Control.Permalink('permalink'),
             //new OpenLayers.Control.MousePosition(),
             //new OpenLayers.Control.OverviewMap(),
-            //new OpenLayers.Control.KeyboardDefaults(),
             new OpenLayers.Control.ScaleLine()
         ],
         numZoomLevels: 20
@@ -1191,11 +1163,13 @@ var geo_main_openlayers_init = function(map_div_name)
     var map_provs = [];
     var map_gsm = null;
     var map_osm = null;
+    var map_mqm = null;
 
     geo_locations.map_view_layer_names_all = {};
 
     var google_label = geo_locations.map_view_layer_google;
     var osm_label = geo_locations.map_view_layer_osm;
+    var mqm_label = geo_locations.map_view_layer_mapquest;
 
     if (geo_locations.map_view_layer_providers[google_label])
     {
@@ -1243,31 +1217,29 @@ var geo_main_openlayers_init = function(map_div_name)
         }
     }
 
+    if (geo_locations.map_view_layer_providers[mqm_label])
+    {
+        // openstreetmap by mapquest
+        map_mqm = new OpenLayers.Layer.MapQuest(
+            //"MapQuest Map"
+            geo_locations.display_strings.mapquest_map
+        );
+
+        geo_locations.map_view_layer_names_all[mqm_label] = map_mqm.name;
+        if (mqm_label == geo_locations.map_view_layer_default)
+        {
+            map_provs.push(map_mqm);
+        }
+    }
+
     if (geo_locations.map_view_layer_providers[osm_label])
     {
         // openstreetmap
-        var map_osm = new OpenLayers.Layer.OSM(
-            //"OpenStreet Map",
+        map_osm = new OpenLayers.Layer.OSM(
+            //"OpenStreet Map"
             geo_locations.display_strings.openstreet_map
         );
-
-/*
-var cloudmade = new OpenLayers.Layer.CloudMade("CloudMade", {
-    key: 'BC9A493B41014CAABB98F0471D759707',
-    styleId: 1
-});
-*/
-/*
-var map_osm = new OpenLayers.Layer.CloudMade("CloudMade", {
-    key: 'BC9A493B41014CAABB98F0471D759707',
-    styleId: 1
-});
-*/
-/*
-var mapquest = new OpenLayers.Layer.OSM("MapQuest", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"); 
-var map_osm = new OpenLayers.Layer.OSM("MapQuest", "http://otile1.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png"); 
-*/
-
+        map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
 
         geo_locations.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_locations.map_view_layer_default)
@@ -1276,51 +1248,19 @@ var map_osm = new OpenLayers.Layer.OSM("MapQuest", "http://otile1.mqcdn.com/tile
         }
     }
 
-try {
-    var map_mqm = new OpenLayers.Layer.MapQuest();
-} catch (e) {alert(e);}
-
-    var map_brm = null;
-    var map_bam = null;
-    var map_bhm = null;
-
-    var bing_key = geo_locations.api_keys['bing'];
-    if (bing_key)
-    {
-        map_brm = new OpenLayers.Layer.Bing({
-            key: bing_key,
-            type: "Road",
-            name: "Bing Road Map"
-        });
-        map_bam = new OpenLayers.Layer.Bing({
-            key: bing_key,
-            type: "Aerial",
-            name: "Bing Aerial Map"
-        });
-        map_bhm = new OpenLayers.Layer.Bing({
-            key: bing_key,
-            type: "AerialWithLabels",
-            name: "Bing Aerial With Labels"
-        });
-    }
-
-
     if (map_gsm && (google_label != geo_locations.map_view_layer_default))
     {
         map_provs.push(map_gsm);
+    }
+    if (map_mqm && (mqm_label != geo_locations.map_view_layer_default))
+    {
+        map_provs.push(map_mqm);
     }
     if (map_osm && (osm_label != geo_locations.map_view_layer_default))
     {
         map_provs.push(map_osm);
     }
 
-    map_provs.push(map_mqm);
-    if (bing_key)
-    {
-        map_provs.push(map_brm, map_bam, map_bhm);
-    }
-
-    //geo_locations.map.addLayers([map_gsm, map_osm]);
     geo_locations.map.addLayers(map_provs);
     geo_locations.map.addControl(new OpenLayers.Control.Attribution());
     // for switching between maps
@@ -1337,12 +1277,6 @@ try {
             for (var i=0, len=this.layerStates.length; i<len; i++) {
                 var layerState = this.layerStates[i];
                 var layer = this.map.layers[i];
-/*
-                if (layer.name == geo_locations.display_strings.google_map)
-                {
-                    if (layer.visibility) {google_shown = true;}
-                }
-*/
                 if ( (layerState.name != layer.name) ||
                      (layerState.inRange != layer.inRange) ||
                      (layerState.id != layer.id) ||
@@ -1355,27 +1289,21 @@ try {
 
         if (redraw)
         {
-            //alert(geo_locations.map_view_layer_name);
-            //if (google_shown)
             if (geo_locations.map.baseLayer.name == geo_locations.display_strings.google_map)
             {
                 $('.olLayerGoogleCopyright').removeClass('hidden');
                 $('.olLayerGooglePoweredBy').removeClass('hidden');
-                //alert('showing on ' + geo_locations.map.layers[0].name);
             }
             else
             {
                 $('.olLayerGoogleCopyright').addClass('hidden');
                 $('.olLayerGooglePoweredBy').addClass('hidden');
-                //alert('hiding on ' + geo_locations.map.layers[0].name);
             }
         }
 
         return redraw;
     };
     geo_locations.map.addControl(lswitch);
-
-    //geo_locations.map.addControl(new OpenLayers.Control.LayerSwitcher());
 
     // an initial center point, set via parameters
     var cen_ini_longitude = geo_locations.map_view_layer_center_ini["longitude"];
@@ -1458,7 +1386,7 @@ try {
     geo_locations.map.addControl(drag_feature);
     drag_feature.activate();
 
-    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_osm]);
+    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
     drag_map.panMapDone = geo_hook_map_dragged;
     drag_map.panMap = geo_hook_map_dragging;
     geo_locations.map.addControl(drag_map);
@@ -1478,8 +1406,8 @@ try {
 // needed just for click on pop-up close button
 var geo_hook_on_popup_close = function(evt)
 {
-    geo_locations.ignore_click = true;
     geo_locations.select_control.unselect(this.feature);
+    OpenLayers.Event.stop(evt, true);
 };
 
 // when a feature pop-up should be removed on map event
@@ -1494,7 +1422,6 @@ var geo_hook_on_feature_unselect = function(evt)
         feature.popup = null;
         geo_locations.popup = null;
     }
-
 };
 
 // prepares html content for a popup, plus size info

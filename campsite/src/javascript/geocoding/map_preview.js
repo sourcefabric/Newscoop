@@ -131,6 +131,7 @@ var geo_hook_on_popup_close = function(evt, geo_obj)
         }
         catch (e) {}
     }
+    OpenLayers.Event.stop(evt, true);
 };
 
 // when a feature pop-up should be removed on map event
@@ -251,9 +252,11 @@ this.marker_src_icons = {};
 
 // what map provider should be used, and map position
 this.map_view_layer_google = "googlev3";
+this.map_view_layer_mapquest = "mapquest";
 this.map_view_layer_osm = "osm";
 this.map_view_layer_providers = {};
 this.map_view_layer_providers[this.map_view_layer_google] = false;
+this.map_view_layer_providers[this.map_view_layer_mapquest] = false;
 this.map_view_layer_providers[this.map_view_layer_osm] = false;
 
 this.map_view_layer_names_all = {};
@@ -887,6 +890,9 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         controls: [
             new OpenLayers.Control.Navigation(),
             pzb_ctrl,
+            //new OpenLayers.Control.Permalink('permalink'),
+            //new OpenLayers.Control.MousePosition(),
+            //new OpenLayers.Control.OverviewMap(),
             new OpenLayers.Control.ScaleLine()
         ],
         numZoomLevels: 20
@@ -896,13 +902,14 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     var map_provs = [];
     var map_gsm = null;
+    var map_mqm = null;
     var map_osm = null;
 
     geo_obj.map_view_layer_names_all = {};
 
     var google_label = geo_obj.map_view_layer_google;
+    var mqm_label = geo_obj.map_view_layer_mapquest;
     var osm_label = geo_obj.map_view_layer_osm;
-    var mqm_label = "MapQuest";
 
     if (geo_obj.map_view_layer_providers[google_label])
     {
@@ -948,10 +955,25 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         }
     }
 
+    if (geo_obj.map_view_layer_providers[mqm_label])
+    {
+        // openstreetmap by mapquest
+        map_mqm = new OpenLayers.Layer.MapQuest(
+            "MapQuest Map"
+        );
+
+        geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
+        if (mqm_label == geo_obj.map_view_layer_default)
+        {
+            map_provs.push(map_mqm);
+        }
+    }
+
     if (geo_obj.map_view_layer_providers[osm_label])
     {
         // openstreetmap
-        var map_osm = new OpenLayers.Layer.OSM();
+        map_osm = new OpenLayers.Layer.OSM();
+        map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
         geo_obj.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_obj.map_view_layer_default)
         {
@@ -959,28 +981,18 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         }
     }
 
-    var map_mqm = null;
-
-try {
-    {
-        map_mqm = new OpenLayers.Layer.MapQuest();
-        //if (mqm_label == geo_obj.map_view_layer_default)
-        {
-            map_provs.push(map_mqm);
-        }
-    }
-} catch (e) {alert(e);}
-
     if (map_gsm && (google_label != geo_obj.map_view_layer_default))
     {
         map_provs.push(map_gsm);
+    }
+    if (map_mqm && (mqm_label != geo_obj.map_view_layer_default))
+    {
+        map_provs.push(map_mqm);
     }
     if (map_osm && (osm_label != geo_obj.map_view_layer_default))
     {
         map_provs.push(map_osm);
     }
-
-    map_provs.push(map_mqm);
 
     geo_obj.map.addLayers(map_provs);
     geo_obj.map.addControl(new OpenLayers.Control.Attribution());
@@ -1057,7 +1069,7 @@ try {
     var cur_date = new Date();
     redraw_times.map_dragging_last = cur_date.getTime();
 
-    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_osm]);
+    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
     drag_map.panMapDone = function(pixel) {geo_hook_map_dragged(geo_obj, pixel)};
     drag_map.panMap = function(xy) {geo_hook_map_dragging(drag_map, geo_obj, xy)};
     geo_obj.map.addControl(drag_map);

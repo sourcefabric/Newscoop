@@ -67,6 +67,7 @@ $f_geo = array(
     'map_view_width_default' => Input::Get('f_map_view_width_default', 'int', 600, true),
     'map_view_height_default' => Input::Get('f_map_view_height_default', 'int', 400, true),
     'map_provider_available_google_v3' => Input::Get('f_map_provider_available_google_v3', 'int', 0, true),
+    'map_provider_available_map_quest' => Input::Get('f_map_provider_available_map_quest', 'int', 0, true),
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int', 0, true),
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
     'map_marker_directory' => Input::Get('f_map_marker_directory', 'string'),
@@ -81,7 +82,6 @@ $f_geo = array(
     'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
     'flash_server' => Input::Get('f_flash_server', 'string'),
     'flash_directory' => Input::Get('f_flash_directory', 'string'),
-    'map_bing_api_key' => Input::Get('f_map_bing_api_key', 'string'),
 );
 
 if (!Input::IsValid()) {

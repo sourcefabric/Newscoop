@@ -470,6 +470,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Allow MapQuest Map Provider:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_map_provider_available_map_quest" value="1" <?php echo SystemPref::Get('MapProviderAvailableMapQuest') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("Allow OpenStreet Map Provider:"); ?>
     </td>
     <td align="left" valign="top">
@@ -484,17 +492,10 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <select name="f_map_provider_default" class="input_select">
             <?php
             camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Map');
+            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), 'MapQuest Map');
             camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreet Map');
             ?>
         </select>
-    </td>
-</tr>
-<tr>
-    <td align="left" width="400px">
-        <?php putGS("Bing Map Provider API Key:"); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="text" name="f_map_bing_api_key" value="<?php p(SystemPref::Get('MapBingApiKey')); ?>" maxlength="100" size="40"  class="input_text" />
     </td>
 </tr>
 <tr>

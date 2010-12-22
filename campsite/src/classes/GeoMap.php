@@ -1749,7 +1749,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $tag_string .= '
 
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/mapquest.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
 
 <script type="text/javascript">
@@ -1972,6 +1972,7 @@ var on_load_proc = function()
         $tag_string .= '
 
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_search.js"></script>
 
 <script type="text/javascript">
