@@ -2182,11 +2182,11 @@ geo_locations.set_edit_direct = function()
 
     if (direct_usage)
     {
+        $("#edit_part_text").addClass("hidden");
         if ('edit' == this.edit_view_mode)
         {
             $("#edit_part_content").removeClass("hidden");
         }
-        $("#edit_part_text").addClass("hidden");
     }
     else
     {

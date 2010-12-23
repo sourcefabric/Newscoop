@@ -277,7 +277,7 @@ var on_load_proc = function()
 <?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/'; ?>
 <body onLoad="on_load_proc(); return false;">
 <div class="map_editor">
-<div class="map_sidepan">
+<div class="map_sidepan" id="map_sidepan">
 <div id="map_save_part" class="map_save_part">
 <a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;"><?php putGS("save"); ?></a> 
 <div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search"><?php putGS("fill in map name"); ?></a><input id="map_name_input" class="map_name_input hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">&nbsp;</div>
@@ -369,18 +369,20 @@ V
 <input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" /><?php putGS("View"); ?>
 </li>
 
-<li id="edit_part_text" class="">
+<li>
+<div id="edit_part_text" class="">
 <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
 <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
-</li>
-<li id="edit_part_content" class="hidden">
+</div>
+<div id="edit_part_content" class="hidden">
 <label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
 <textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
-</li>
-<li id="edit_part_preview_outer" class="hidden">
+</div>
+<div id="edit_part_preview_outer" class="hidden">
 <div class="popup_preview hidden" id="edit_part_preview"> </div>
+</div>
 </li>
 </ol>
 	</div>

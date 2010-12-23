@@ -32,7 +32,7 @@ a.map_name_display:hover {
     top: 4;
     left: 6;
     font-size: 90%;
-    z-index: 900;
+    z-index: 5000;
 }
 .map_savemapinit {
     float: left;
@@ -76,6 +76,7 @@ a.map_name_display:hover {
     overflow-x: hidden;
 }
 .map_mappart {
+    top: 0px;
     margin-top: 0px;
     float: right;
     width: 800;
@@ -99,6 +100,17 @@ a.map_name_display:hover {
     width: 200;
     height: 200;
 }
+.search_res_cc_header {
+    width: 20px;
+}
+.search_res_city_header {
+    width: 100px;
+}
+.search_res_city_column {
+    word-wrap: break-word;
+    width: 100px;
+}
+
 .hidden {
     display: none;
 }
@@ -133,10 +145,7 @@ a.map-no-link {
     right: 90;
     color: #804000;
     font-size: 16px;
-/*
-    z-index: 1200300500;
-*/
-    z-index: 2000;
+    z-index: 10000;
 
     vertical-align: middle;
     text-align: center;
@@ -210,7 +219,7 @@ legend {
 .edit_tabs li {
     float: left;
     clear: left;
-    width: 100%;
+    width: 500px;
     padding-bottom: 1em;
 }
 .edit_marker_selected {
@@ -221,7 +230,7 @@ legend {
     float: none;
     width: auto;
     border: 0 none #FFF;
-    padding-left: 12em;
+    padding-left: 20px;
     border-style: none;
     background-color: transparent;
     background-image: none;

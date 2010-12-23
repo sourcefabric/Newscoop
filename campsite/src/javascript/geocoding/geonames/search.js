@@ -61,8 +61,8 @@ geo_names.gotSearchData = function (cities, results_div)
 {
     found_locs = '<table class="geonames_result_table" id="geonames_result_table">';
     found_locs += '<thead><tr>';
-    found_locs += '<th width="40">' + this.display_strings.cc + '</th>'
-    found_locs += '<th width="120">' + this.display_strings.city + '</th>';
+    found_locs += '<th class="search_res_cc_header">' + this.display_strings.cc + '</th>'
+    found_locs += '<th class="search_res_city_header">' + this.display_strings.city + '</th>';
     found_locs += '</tr></thead>';
     
     found_locs += '<tbody>';
@@ -108,13 +108,14 @@ geo_names.gotSearchData = function (cities, results_div)
             country_name = "";
         }
         var city_name = one_city.name.replace(/'/gi,"\\'");
+        var city_name = city_name.replace(/\"/gi,"\\'");
         var country_link = "<a href=\"#\" class=\"map-no-link\" title=\"" + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\">" + one_city.country.toLowerCase() + "</a>";
         var city_link = "<a href=\"#\" title=\"" + pop_show + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + city_name + "'); return false;\">" + one_city.name + "</a>";
         
         found_locs += "<tr>";
         found_locs += "<td>" + country_link + "</td>";
         
-        found_locs += "<td>" + city_link + "</td>";
+        found_locs += "<td class='search_res_city_column'>" + city_link + "</td>";
         found_locs += "</tr>";
     
     }
@@ -145,6 +146,7 @@ geo_names.gotSearchData = function (cities, results_div)
     
     //$('.geonames_result_table').flexigrid({height: flexi_height, resizable: false});
     //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ '_all' ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">sorry, no city was found</div>"}});
+    //$('.geonames_result_table').dataTable({'bAutoWidth': false, 'aoColumns': [{'sWidth': '20px'}, {'sWidth': '100px'}], 'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     $('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     //$('.geonames_result_table').dataTable({'sScrollY': flexi_height, 'bScrollCollapse': true, 'sDom': 't', "iDisplayLength": 100, "bJQueryUI": true, "aoColumnDefs": [{ "bSortable": false, "aTargets": [ 0, 1 ] }], "aaSorting": [], "oLanguage": {'sEmptyTable': "<div class=\"no_city_found\">" + this.display_strings.no_city_was_found + "</div>"}});
     geo_locations.map_update_side_desc_height();
