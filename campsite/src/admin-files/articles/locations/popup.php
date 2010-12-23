@@ -81,6 +81,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_cens.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 
@@ -132,7 +133,7 @@ var useSystemParameters = function()
 };
 
 // city search start; if longitude/latitude provided, immediate results done
-var findLocation = function()
+var findLocation = function(forced)
 {
     var city_obj = document.getElementById ? document.getElementById("search-city") : null;
     var cc_obj = document.getElementById ? document.getElementById("search-country") : null;
@@ -143,6 +144,16 @@ var findLocation = function()
     cities_term = cities_term.replace(/^\s+|\s+$/g, '');
     if (0 == cities_term.length)
     {
+        if (forced)
+        {
+            if (cc_code in country_centers)
+            {
+                var cclon = country_centers[cc_code]['lon'];
+                var cclat = country_centers[cc_code]['lat'];
+                geo_locations.center_lonlat (cclon, cclat);
+            }
+        }
+
         return;
     }
     
@@ -291,7 +302,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 }
 ?>
 </select>
-<label class="map_geo_search"><a href="#" onClick="findLocation(); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
+<label class="map_geo_search"><a href="#" onClick="findLocation(true); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
 <label id="map_geo_showhide" class="hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
 </div><!-- end of map_menubar -->
 
