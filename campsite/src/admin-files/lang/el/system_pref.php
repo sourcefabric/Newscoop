@@ -1,4 +1,5 @@
 <?php 
+regGS("Allow MapQuest Map Provider:", "");
 regGS("Local Flash Server:", "");
 regGS("Local Flash Directory:", "");
 regGS("Youtube Default Width:", "");

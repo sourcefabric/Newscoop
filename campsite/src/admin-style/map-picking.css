@@ -76,6 +76,7 @@ a.map_name_display:hover {
     overflow-x: hidden;
 }
 .map_mappart {
+    margin-top: 0px;
     float: right;
     width: 800;
     height: 500;
@@ -308,10 +309,14 @@ position: relative;
     color: #808080;
     font-style: italic;
 }
+.poi_coors_all {
+    height: 35px;
+}
 .poi_coors {
     float: right;
 }
 .poi_coors_input {
+    border: 1px solid #a0a0a0;
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 0px;

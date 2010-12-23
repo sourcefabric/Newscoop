@@ -1,4 +1,5 @@
 <?php 
+regGS("MapQuest Map", "");
 regGS("OpenStreet Map", "");
 regGS("Google Map", "");
 regGS("width", "");

@@ -72,6 +72,9 @@ geo_locations.map_art_view_width_display = 600;
 geo_locations.map_art_view_height_display = 400;
 geo_locations.map_art_view_top_display = 70;
 geo_locations.map_art_view_right_display = 105;
+geo_locations.map_border_zindex_on = 900;
+geo_locations.map_border_zindex_off = -1000;
+geo_locations.map_border_background = "#8080ff";
 // basic map info
 geo_locations.map_label_name = "";
 geo_locations.map_id = 0;
@@ -737,11 +740,13 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
         descs_inner += "</div>";
 
+        descs_inner += "<div class='poi_coors_all'>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lat:&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "lat:&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lon:&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='8' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "lon:&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "</div>";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_actions poi_removal'>";
@@ -1406,49 +1411,49 @@ var geo_main_openlayers_init = function(map_div_name)
     });
 
     var view_top_pos = new OpenLayers.Pixel(100, 50);
-    var view_top = OpenLayers.Util.createDiv("view_top", view_top_pos, null, null, "absolute", "1px solid #8080ff");
+    var view_top = OpenLayers.Util.createDiv("view_top", view_top_pos, null, null, "absolute", "1px solid " + geo_locations.map_border_background);
     view_top.style.fontSize = "1px";
     view_top.style.width = "600px";
     view_top.style.height = "1px";
-    view_top.style.background = "#8080ff";
-    view_top.style.backgroundColor = "#8080ff";
-    view_top.style.zIndex = "900";
+    view_top.style.background = geo_locations.map_border_background;
+    view_top.style.backgroundColor = geo_locations.map_border_background;
+    view_top.style.zIndex = geo_locations.map_border_zindex_on;
     view_top.style.opacity = "0.50";
     view_top.style.filter = "alpha(opacity=50)"; // IE
     geo_locations.map.viewPortDiv.appendChild(view_top);
 
     var view_bot_pos = new OpenLayers.Pixel(100, 450);
-    var view_bot = OpenLayers.Util.createDiv("view_bot", view_bot_pos, null, null, "absolute", "1px solid #8080ff");
+    var view_bot = OpenLayers.Util.createDiv("view_bot", view_bot_pos, null, null, "absolute", "1px solid " + geo_locations.map_border_background);
     view_bot.style.fontSize = "1px";
     view_bot.style.width = "600px";
     view_bot.style.height = "1px";
-    view_bot.style.background = "#8080ff";
-    view_bot.style.backgroundColor = "#8080ff";
-    view_bot.style.zIndex = "900";
+    view_bot.style.background = geo_locations.map_border_background;
+    view_bot.style.backgroundColor = geo_locations.map_border_background;
+    view_bot.style.zIndex = geo_locations.map_border_zindex_on;
     view_bot.style.opacity = "0.50";
     view_bot.style.filter = "alpha(opacity=50)"; // IE
     geo_locations.map.viewPortDiv.appendChild(view_bot);
 
     var view_left_pos = new OpenLayers.Pixel(100, 50);
-    var view_left = OpenLayers.Util.createDiv("view_left", view_left_pos, null, null, "absolute", "1px solid #8080ff");
+    var view_left = OpenLayers.Util.createDiv("view_left", view_left_pos, null, null, "absolute", "1px solid " + geo_locations.map_border_background);
     view_left.style.fontSize = "1px";
     view_left.style.width = "1px";
     view_left.style.height = "400px";
-    view_left.style.background = "#8080ff";
-    view_left.style.backgroundColor = "#8080ff";
-    view_left.style.zIndex = "900";
+    view_left.style.background = geo_locations.map_border_background;
+    view_left.style.backgroundColor = geo_locations.map_border_background;
+    view_left.style.zIndex = geo_locations.map_border_zindex_on;
     view_left.style.opacity = "0.50";
     view_left.style.filter = "alpha(opacity=50)"; // IE
     geo_locations.map.viewPortDiv.appendChild(view_left);
 
     var view_right_pos = new OpenLayers.Pixel(700, 50);
-    var view_right = OpenLayers.Util.createDiv("view_right", view_right_pos, null, null, "absolute", "1px solid #8080ff");
+    var view_right = OpenLayers.Util.createDiv("view_right", view_right_pos, null, null, "absolute", "1px solid " + geo_locations.map_border_background);
     view_right.style.fontSize = "1px";
     view_right.style.width = "1px";
     view_right.style.height = "400px";
-    view_right.style.background = "#8080ff";
-    view_right.style.backgroundColor = "#8080ff";
-    view_right.style.zIndex = "900";
+    view_right.style.background = geo_locations.map_border_background;
+    view_right.style.backgroundColor = geo_locations.map_border_background;
+    view_right.style.zIndex = geo_locations.map_border_zindex_on;
     view_right.style.opacity = "0.50";
     view_right.style.filter = "alpha(opacity=50)"; // IE
     geo_locations.map.viewPortDiv.appendChild(view_right);
@@ -1735,6 +1740,11 @@ geo_locations.map_width_change = function(size)
     map_left_border.style.borderWidth = border_width;
     map_right_border.style.borderWidth = border_width;
 
+    var border_zindex = geo_locations.map_border_zindex_on;
+    if (this.map_limit_width_display < this.map_art_view_width) {border_zindex = geo_locations.map_border_zindex_off;}
+    map_left_border.style.zIndex = border_zindex;
+    map_right_border.style.zIndex = border_zindex;
+
     if ((0 > size) && (this.map_limit_width_display == this.map_art_view_width)) {return;}
     if (this.map_limit_width_display < this.map_art_view_width) {return;}
 
@@ -1742,7 +1752,7 @@ geo_locations.map_width_change = function(size)
     this.map_art_view_right_display -= size / 2;
 
     map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
-    map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 6) + "px";
+    map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 7) + "px";
     map_top_border.style.width = this.map_art_view_width_display + "px";
     map_top_border.style.left = (this.map_art_view_right_display - 6) + "px";
     map_bottom_border.style.width = this.map_art_view_width_display + "px";
@@ -1776,6 +1786,11 @@ geo_locations.map_height_change = function(size)
     map_top_border.style.borderWidth = border_width;
     map_bottom_border.style.borderWidth = border_width;
 
+    var border_zindex = geo_locations.map_border_zindex_on;
+    if (this.map_limit_height_display < this.map_art_view_height) {border_zindex = geo_locations.map_border_zindex_off;}
+    map_top_border.style.zIndex = border_zindex;
+    map_bottom_border.style.zIndex = border_zindex;
+
     if ((0 > size) && (this.map_limit_height_display == this.map_art_view_height)) {return;}
     if (this.map_limit_height_display < this.map_art_view_height) {return;}
 
@@ -1783,11 +1798,11 @@ geo_locations.map_height_change = function(size)
     this.map_art_view_top_display -= size / 2;
 
     map_bottom_border.style.top = (this.map_art_view_top_display + this.map_art_view_height_display - 22) + "px";
-    map_top_border.style.top = (this.map_art_view_top_display - 22) + "px";
-    map_right_border.style.height = this.map_art_view_height_display + "px";
-    map_right_border.style.top = (this.map_art_view_top_display - 22) + "px";
-    map_left_border.style.height = this.map_art_view_height_display + "px";
-    map_left_border.style.top = (this.map_art_view_top_display - 22) + "px";
+    map_top_border.style.top = (this.map_art_view_top_display - 21) + "px";
+    map_right_border.style.height = (this.map_art_view_height_display - 1) + "px";
+    map_right_border.style.top = (this.map_art_view_top_display - 21) + "px";
+    map_left_border.style.height = (this.map_art_view_height_display - 1) + "px";
+    map_left_border.style.top = (this.map_art_view_top_display - 21) + "px";
 
 };
 
