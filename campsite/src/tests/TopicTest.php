@@ -206,7 +206,7 @@ class TopicTest extends PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($subtree, Topic::GetTree(14));
 
-		Topic::UpdateOrder(array('topic_2'=>array('topic_26', 'topic_14', 'topic_15')), false);
+		Topic::UpdateOrder(array('topic_2'=>array('topic_26', 'topic_14', 'topic_15')));
 		$topic = new Topic(14);
 		$this->assertEquals(6, $topic->getLeft());
 		$this->assertEquals(17, $topic->getRight());
@@ -216,7 +216,7 @@ class TopicTest extends PHPUnit_Framework_TestCase
 		$topic = new Topic(16);
 		$this->assertEquals(11, $topic->getLeft());
 		$this->assertEquals(16, $topic->getRight());
-		Topic::UpdateOrder(array('topic_0'=>array('topic_27', 'topic_3', 'topic_2', 'topic_1')), false);
+		Topic::UpdateOrder(array('topic_0'=>array('topic_27', 'topic_3', 'topic_2', 'topic_1')));
 		$topic = new Topic(3);
 		$this->assertEquals(3, $topic->getLeft());
 		$this->assertEquals(8, $topic->getRight());

@@ -757,23 +757,9 @@ class Topic extends DatabaseObject {
      *      );
      *  @return bool
      */
-    public static function UpdateOrder(array $p_order, $p_lock = true)
+    public static function UpdateOrder(array $p_order)
     {
 		global $g_ado_db;
-
-		$topicObj = new Topic();
-		$topicTable = $topicObj->getDbTableName();
-		$topicNameObj = new TopicName();
-		$topicNameTable = $topicNameObj->getDbTableName();
-		$languageObj = new Language();
-		$languageTable = $languageObj->getDbTableName();
-
-		if ($p_lock) {
-			$result = $g_ado_db->Execute("LOCK TABLE `$topicTable` WRITE, `$topicTable` AS node WRITE, "
-			. "`$topicTable` AS parent WRITE, `$topicTable` AS sub_parent WRITE, "
-			. "`$topicTable` AS sub_tree WRITE, `$topicTable` AS t WRITE, `$topicNameTable` READ, "
-			. "`$topicNameTable` AS tn READ, `$languageTable` READ");
-		}
 
         $orderChanged = false;
         foreach ($p_order as $parentId => $order) {
@@ -800,10 +786,6 @@ class Topic extends DatabaseObject {
             }
         }
 
-        if ($p_lock) {
-        	$g_ado_db->Execute("UNLOCK TABLES");
-        }
-
         if ($orderChanged) {
         	CampCache::singleton()->clear('user');
         }
@@ -823,6 +805,8 @@ class Topic extends DatabaseObject {
     	global $g_ado_db;
 
     	$topicTable = $p_parentTopic->m_dbTableName;
+
+    	$g_ado_db->Execute("LOCK TABLE `$topicTable`");
 
 		$maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
 
@@ -894,6 +878,8 @@ class Topic extends DatabaseObject {
 		. "WHERE node_left >= " . $rightTopicTmpLeft
 		. "  AND node_right <= " . $rightTopicTmpRight;
 		$g_ado_db->Execute($sql);
+
+		$g_ado_db->Execute("UNLOCK TABLE");
     } // fn MoveTopic
 
 } // class Topics
