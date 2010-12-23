@@ -87,10 +87,10 @@ class TopicTest extends PHPUnit_Framework_TestCase
     {
 		global $g_ado_db;
 
-//		$g_ado_db->Execute('DELETE FROM Topics');
-//		$g_ado_db->Execute('DELETE FROM TopicNames');
-//		$g_ado_db->Execute('INSERT INTO Topics SELECT * FROM TmpTopics');
-//		$g_ado_db->Execute('INSERT INTO TopicNames SELECT * FROM TmpTopicNames');
+		$g_ado_db->Execute('DELETE FROM Topics');
+		$g_ado_db->Execute('DELETE FROM TopicNames');
+		$g_ado_db->Execute('INSERT INTO Topics SELECT * FROM TmpTopics');
+		$g_ado_db->Execute('INSERT INTO TopicNames SELECT * FROM TmpTopicNames');
     } // fn tearDown
 
 
