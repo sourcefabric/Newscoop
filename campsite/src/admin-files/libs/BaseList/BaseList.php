@@ -27,19 +27,19 @@ class BaseList
 
     /** @var array */
     protected $searchCols = array();
-    
+
     /** @var array */
     protected $cols = array();
-    
+
     /** @var bool */
     protected $colVis = FALSE;
-    
+
     /** @var mixed */
     protected $model = NULL;
 
     /** @var bool */
     protected $order = FALSE;
-    
+
     /** @var array */
     protected $hidden = array();
 
@@ -72,7 +72,7 @@ class BaseList
         $this->path = $this->web . '/admin/libs/ArticleList';
 
         camp_load_translation_strings('articles');
-        camp_load_translation_strings('universal_list');
+        camp_load_translation_strings('library');
 
         $this->id = substr(sha1(get_class($this)), -6);
     }
@@ -219,8 +219,8 @@ class BaseList
         }
         return NULL;
     }
-    
-    
+
+
     /**
      * Data provider
      * @return array
@@ -310,7 +310,7 @@ class BaseList
     {
         return array_values($row);
     }
-    
+
     /**
      * Renders list id
      * @return void

@@ -1,6 +1,7 @@
 <?php
 camp_load_translation_strings('media_archive');
 camp_load_translation_strings('api');
+camp_load_translation_strings('library');
 
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
