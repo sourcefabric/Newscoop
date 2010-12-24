@@ -20,7 +20,7 @@
 <a name="commentform">
     <h4>{{ if $campsite->language->name == "English" }}Your comment{{ else }}Su comentario{{ /if }}</h4>
 </a>
-{{ if $campsite->submit_comment_action->rejected }}
+{{ if $campsite->submit_comment_action->defined && $campsite->submit_comment_action->rejected }}
     <div class="posterror">{{ if $campsite->language->name == "English" }}Your comment has not been accepted.{{ else }}Su comentario no ha sido aceptada.{{ /if }}</div>
 {{ /if }}
 

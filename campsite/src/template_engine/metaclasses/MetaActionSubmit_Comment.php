@@ -28,6 +28,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $this->m_defined = true;
         $this->m_name = 'submit_comment';
         $this->m_error = null;
+        $this->m_properties['rejected'] = null;
 
         if (!isset($p_input['f_comment_subject']) || empty($p_input['f_comment_subject'])) {
             $this->m_error = new PEAR_Error('The comment subject was not filled in.',
@@ -203,7 +204,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $p_context->url->reset_parameter('f_comment_content');
         $p_context->url->reset_parameter('f_submit_comment');
         $p_context->url->reset_parameter('f_captcha_code');
-        
+
         $this->m_properties['rejected'] = false;
 
         $this->m_error = ACTION_OK;
