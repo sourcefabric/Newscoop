@@ -190,6 +190,9 @@ class WidgetManagerDecorator extends DatabaseObject
                 FROM ' . self::TABLE . '
                 WHERE fk_user_id = ' . ((int) $uid);
             $rows = $g_ado_db->GetAll($queryStr);
+            if (!is_array($rows)) {
+                $rows = array();
+            }
 
             $used = array();
             foreach ($rows as $row) {
