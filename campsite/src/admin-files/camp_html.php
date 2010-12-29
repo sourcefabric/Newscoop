@@ -283,20 +283,20 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 function camp_html_breadcrumbs($p_crumbs)
 {
     $lastCrumb = array_pop($p_crumbs);
-    $str = '<table border="0" cellspacing="0" cellpadding="0" width="100%" class="breadcrumbHolder">';
+    $str = '<div class="breadcrumb-bar clearfix">' . "\n";
     if (count($p_crumbs) > 0) {
-	   	$str .= '<tr><td class="breadcrumbTD">';
-	    $tmpCrumbs = array();
+	   	$str .= '<ul class="breadcrumbs clearfix">' . "\n";
 		foreach ($p_crumbs as $crumb) {
 		    if (count($crumb) == 2) {
-	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1]);
-		    }
-		    else {
-	    	    $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
+		        $str .= camp_html_breadcrumb($crumb[0], $crumb[1]);
+		    } else {
+		        $str .= camp_html_breadcrumb($crumb[0], $crumb[1], $crumb[2]);
 		    }
 		}
-	    $str .= '</td></tr>';
+		$str .= '</ul>' . "\n";
     }
+
+    /*
     $str .= '<tr>';
     $str .= '<td class="activeSection" ';
     if (count($p_crumbs) <= 0) {
@@ -306,6 +306,8 @@ function camp_html_breadcrumbs($p_crumbs)
     $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
     $str .= '</td></tr>';
     $str .= '</table>';
+    */
+
     return $str;
 } // fn camp_html_breadcrumbs
 
@@ -320,33 +322,24 @@ function camp_html_breadcrumbs($p_crumbs)
  * @return string
  */
 function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active = false) {
-    $tmpStr = '';
-    if ($p_active) {
-        $class = "breadcrumb_active";
-    }
-    else {
-        $class = "breadcrumb";
-    }
-    if ($p_separator) {
-        $tmpStr .= "<span>";
-    }
-    else {
-        $tmpStr .= '<span class="breadcrumb_intra_separator">';
-    }
-	if ($p_link != "") {
-        $tmpStr .= '<a href="' . htmlspecialchars($p_link) . "\" class=\"$class\">"
-        . htmlspecialchars($p_text) . "</a>";
-	}
-	else {
-	    $tmpStr .= "<span class=\"$class\">" . htmlspecialchars($p_text) . '</span>';
-	}
-	$tmpStr .="</span>";
+    $tmpStr = '<li';
+    $classStr = '';
 	if ($p_separator) {
-        $tmpStr .= '<span class="breadcrumb_separator">&nbsp;</span>';
-	}
-	else {
-        $tmpStr .= '<span>&nbsp;</span>';
-	}
+	    $tmpStr .= ' class="separator">';
+	} else {
+	    $tmpStr .= '>';
+        $classStr = ' class="category"';
+    }
+    if ($p_link != '') {
+        $tmpStr .= '<a href="' . htmlspecialchars($p_link) . '"';
+        $tmpStr .= (!empty($classStr)) ? $classStr : '';
+        $tmpStr .= '>';
+        $tmpStr .= htmlspecialchars($p_text) . '</a>';
+    } else {
+        $tmpStr .= '<a href="#">' . htmlspecialchars($p_text) . '</a>';
+    }
+	$tmpStr .= '</li>' . "\n";
+
     return $tmpStr;
 } // fn camp_html_breadcrumb
 

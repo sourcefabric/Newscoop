@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /**
  * PHP class to dynamically create a javascript menu.
  * Funded by MDLF/Campware (http://www.sourcefabric.org)
@@ -142,7 +142,6 @@ class DynMenuItem {
      */
     public function addItem(&$p_item)
     {
-        $p_item->m_parent =& $this;
         if (isset($p_item->m_attrs['id'])) {
             $this->m_subItems[$p_item->m_attrs['id']] = $p_item;
         } else {
@@ -236,6 +235,40 @@ class DynMenuItem {
     public function createMenu($p_name = null, $p_extraArgs = null) {  }
 
 } // class DynMenuItem
+
+
+class DynMenuItem_JQueryFG extends DynMenuItem
+{
+    /**
+     * Create the javascript for the menu.
+     * @param string $p_name
+     * @return string
+     */
+    public function createMenu($p_name, $p_extraArgs = null)
+    {
+        return $this->__recurseBuild(1);
+    } // fn createMenu
+
+
+    public function __recurseBuild($p_level)
+    {
+        $str = "<ul>\n";
+        foreach ($this->m_subItems as $subItem) {
+            if (count($subItem->m_subItems) > 0) {
+                $str .= str_repeat("\t", $p_level);
+                $str .= '<li><a href="' . $subItem->m_url . '">' . $subItem->m_title . '</a>';
+                $str .= "\n". $subItem->__recurseBuild($p_level + 1, $p_newLevel);
+                $str .= "</li>\n";
+            } else {
+                $str .= str_repeat("\t", $p_level);
+                $str .= '<li><a href="' . $subItem->m_url . '">' . $subItem->m_title . '</a>';
+                $str .= "</li>\n";
+            }
+        }
+        $str .= "</ul>\n";
+        return $str;
+    } // fn __recurseBuild
+}
 
 
 class DynMenuItem_JsCook extends DynMenuItem {

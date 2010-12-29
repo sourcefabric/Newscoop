@@ -1,354 +1,377 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/DynMenuItem.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir'] . '/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/DynMenuItem.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/SystemPref.php');
 
-camp_load_translation_strings("home");
+camp_load_translation_strings('home');
 global $ADMIN;
 global $g_user;
 
-$showPublishingEnvironmentMenu = ($g_user->hasPermission("ManageTempl")
-    || $g_user->hasPermission("DeleteTempl")
-    || $g_user->hasPermission("ManageArticleTypes")
-    || $g_user->hasPermission("DeleteArticleTypes")
-    || $g_user->hasPermission("ManageTopics")
-    || $g_user->hasPermission("ManageLanguages")
-    || $g_user->hasPermission("DeleteLanguages")
-    || $g_user->hasPermission("ManageCountries")
-    || $g_user->hasPermission("DeleteCountries"));
+$showPublishingEnvironmentMenu = ($g_user->hasPermission('ManageTempl')
+    || $g_user->hasPermission('DeleteTempl')
+    || $g_user->hasPermission('ManageArticleTypes')
+    || $g_user->hasPermission('DeleteArticleTypes')
+    || $g_user->hasPermission('ManageTopics')
+    || $g_user->hasPermission('ManageLanguages')
+    || $g_user->hasPermission('DeleteLanguages')
+    || $g_user->hasPermission('ManageCountries')
+    || $g_user->hasPermission('DeleteCountries'));
 
 $showConfigureMenu = ($showPublishingEnvironmentMenu
-    || $g_user->hasPermission("ManageLocalizer")
-    || $g_user->hasPermission("ViewLogs"));
+    || $g_user->hasPermission('ManageLocalizer')
+    || $g_user->hasPermission('ViewLogs'));
 
-$showUserMenu = ($g_user->hasPermission("ManageUsers")
-    || $g_user->hasPermission("DeleteUsers")
-    || $g_user->hasPermission("ManageSubscriptions")
-    || $g_user->hasPermission("ManageUserTypes")
-    || $g_user->hasPermission("ManageReaders")
-    || $g_user->hasPermission("SyncPhorumUsers"));
+$showUserMenu = ($g_user->hasPermission('ManageUsers')
+    || $g_user->hasPermission('DeleteUsers')
+    || $g_user->hasPermission('ManageSubscriptions')
+    || $g_user->hasPermission('ManageUserTypes')
+    || $g_user->hasPermission('ManageReaders')
+    || $g_user->hasPermission('SyncPhorumUsers'));
 
-$showAdminActions = (($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle"))
-             || (CampCache::IsEnabled() && $g_user->hasPermission("ClearCache")));
+$showAdminActions = (($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle'))
+    || (CampCache::IsEnabled() && $g_user->hasPermission('ClearCache')));
 
-$iconTemplateStr = '<img src="'.$Campsite['ADMIN_IMAGE_BASE_URL'].'/%s" align="middle" style="padding-bottom: 3px;" width="22" height="22" />';
+// Creates the Content menu
+DynMenuItem::SetMenuType('DynMenuItem_JQueryFG');
+$menu_content =& DynMenuItem::Create('', '');
 
-DynMenuItem::SetMenuType("DynMenuItem_JsCook");
-$menu_root =& DynMenuItem::Create('', '');
-$menu_item =& DynMenuItem::Create(getGS('Home'), "/$ADMIN/home.php",
-                array('icon' => sprintf($iconTemplateStr, 'home.png'), 'id' => 'home'));
-$menu_root->addItem($menu_item);
-$menu_root->addSplit();
-$menu_content =& DynMenuItem::Create(getGS('Content'), '',
-                array('icon' => sprintf($iconTemplateStr, 'content.png'), 'id' => 'content'));
-$menu_root->addItem($menu_content);
 $menu_item =& DynMenuItem::Create(getGS('Publications'), "/$ADMIN/pub/index.php",
-                array('icon' => sprintf($iconTemplateStr, 'publications.png'), 'id' => 'publication'));
+    array('icon' => '', 'id' => 'publication'));
 $menu_content->addItem($menu_item);
 
 if ($g_user->hasPermission('CommentModerate')) {
     $menu_item =& DynMenuItem::Create(getGS('Comments'), "/$ADMIN/comments/index.php",
-                    array('icon' => sprintf($iconTemplateStr, 'comments.png'), 'id' => 'comments'));
+        array('icon' => '', 'id' => 'comments'));
     $menu_content->addItem($menu_item);
 }
 
 $menu_item =& DynMenuItem::Create(getGS('Media Archive'), "/$ADMIN/media-archive/index.php",
-                array('icon' => sprintf($iconTemplateStr, 'image_archive.png'), 'id' => 'image_archive'));
+    array('icon' => '', 'id' => 'image_archive'));
 $menu_content->addItem($menu_item);
 
 $menu_item =& DynMenuItem::Create(getGS('Search'), "/$ADMIN/universal-list/index.php",
-                array('icon' => sprintf($iconTemplateStr, 'logs.png'), 'id' => 'universal_list'));
+    array('icon' => '', 'id' => 'universal_list'));
 $menu_content->addItem($menu_item);
 
-$menu_content->addSplit();
-
-$icon_bullet = '<img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/tol.gif" style="padding:3px;" width="8" height="8" border="0" />';
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create($publication->getName(),
-                                          "/$ADMIN/issues/index.php?Pub=$pubId",
-                                          array("icon" => $icon_bullet));
+        "/$ADMIN/issues/index.php?Pub=$pubId",
+        array('icon' => ''));
     $menu_content->addItem($menu_item_pub);
-    if (isset($Campsite["issues"][$pubId])) {
-        foreach ($Campsite["issues"][$pubId] as $issue) {
+    if (isset($Campsite['issues'][$pubId])) {
+        foreach ($Campsite['issues'][$pubId] as $issue) {
             $issueId = $issue->getIssueNumber();
             $languageId = $issue->getLanguageId();
             $issueIndexLink = "/$ADMIN/sections/index.php?Pub=$pubId&Issue=$issueId&Language=$languageId";
-            $menu_item_issue =& DynMenuItem::Create($issue->getIssueNumber().". ".$issue->getName()." (".$issue->getLanguageName().")",
+            $menu_item_issue =& DynMenuItem::Create($issue->getIssueNumber().'. '.$issue->getName().' ('.$issue->getLanguageName().')',
                  $issueIndexLink,
-                 array("icon" => $icon_bullet));
+                 array('icon' => ''));
             $menu_item_pub->addItem($menu_item_issue);
-            if (isset($Campsite["sections"][$pubId][$issueId][$languageId])) {
-                foreach ($Campsite["sections"][$pubId][$issueId][$languageId] as $section) {
+            if (isset($Campsite['sections'][$pubId][$issueId][$languageId])) {
+                foreach ($Campsite['sections'][$pubId][$issueId][$languageId] as $section) {
                     $sectionId = $section->getSectionNumber();
                     $menu_item_section =& DynMenuItem::Create(
-                        $section->getSectionNumber().". "
+                        $section->getSectionNumber().'. '
                         .$section->getName(),
                         "/$ADMIN/articles/index.php"
                         ."?f_publication_id=$pubId"
                         ."&f_issue_number=$issueId"
                         ."&f_language_id=$languageId"
                         ."&f_section_number=$sectionId",
-                        array("icon" => $icon_bullet));
+                        array('icon' => ''));
                     $menu_item_issue->addItem($menu_item_section);
                 }
-                if (count($Campsite["sections"][$pubId][$issueId][$languageId]) > 0) {
-                    $menu_item_issue->addSplit();
-                    $menu_item =& DynMenuItem::Create(getGS("More..."), $issueIndexLink,
-                        array("icon" => $icon_bullet));
+                if (count($Campsite['sections'][$pubId][$issueId][$languageId]) > 0) {
+                    $menu_item =& DynMenuItem::Create(getGS('More...'), $issueIndexLink,
+                        array('icon' => ''));
                     $menu_item_issue->addItem($menu_item);
                 }
             }
         }
-        if (count($Campsite["issues"][$pubId]) > 0) {
-            $menu_item_pub->addSplit();
-            $menu_item =& DynMenuItem::Create(getGS("More..."),
+        if (count($Campsite['issues'][$pubId]) > 0) {
+            $menu_item =& DynMenuItem::Create(getGS('More...'),
                 "/$ADMIN/issues/index.php?Pub=$pubId",
-                array("icon" => $icon_bullet));
+                array('icon' => ''));
             $menu_item_pub->addItem($menu_item);
         }
     }
 }
-$menu_root->addSplit();
-$menu_actions =& DynMenuItem::Create(getGS("Actions"), '',
-    array("icon" => sprintf($iconTemplateStr, "actions.png"), "id" => "actions"));
-$menu_root->addItem($menu_actions);
 
-if ($g_user->hasPermission("AddArticle")) {
+// Creates the Actions menu
+$menu_actions =& DynMenuItem::Create(getGS('Actions'), '',
+    array('icon' => '', 'id' => 'actions'));
+
+if ($g_user->hasPermission('AddArticle')) {
     $menu_item =& DynMenuItem::Create(getGS('Add new article'), "/$ADMIN/articles/add_move.php",
-        array("icon" => sprintf($iconTemplateStr, "add_article.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageTempl")) {
+if ($g_user->hasPermission('ManageTempl')) {
     $menu_item =& DynMenuItem::Create(getGS('Upload new template'),
         "/$ADMIN/templates/upload_templ.php?Path=/look/&Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "upload_template.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManagePub")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new publication"),
+if ($g_user->hasPermission('ManagePub')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new publication'),
         "/$ADMIN/pub/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_publication.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageUsers")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new staff member"),
+if ($g_user->hasPermission('ManageUsers')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new staff member'),
         "/$ADMIN/users/edit.php?uType=Staff&Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_user.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageUsers")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new subscriber"),
+if ($g_user->hasPermission('ManageUsers')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new subscriber'),
         "/$ADMIN/users/edit.php?uType=Subscribers&Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_user.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageUserTypes")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new user type"),
+if ($g_user->hasPermission('ManageUserTypes')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new user type'),
         "/$ADMIN/user_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageArticleTypes")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new article type"),
+if ($g_user->hasPermission('ManageArticleTypes')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new article type'),
         "/$ADMIN/article_types/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_article_type.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageCountries")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new country"),
+if ($g_user->hasPermission('ManageCountries')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new country'),
         "/$ADMIN/country/add.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_country.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-if ($g_user->hasPermission("ManageLanguages")) {
-    $menu_item =& DynMenuItem::Create(getGS("Add new language"),
+if ($g_user->hasPermission('ManageLanguages')) {
+    $menu_item =& DynMenuItem::Create(getGS('Add new language'),
         "/$ADMIN/languages/add_modify.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_language.png")));
+        array('icon' => ''));
     $menu_actions->addItem($menu_item);
 }
 
-$menu_item =& DynMenuItem::Create(getGS("Change your password"),
+$menu_item =& DynMenuItem::Create(getGS('Change your password'),
     "/$ADMIN/users/edit.php?uType=Staff&User=".$g_user->getUserId(),
-    array("icon" => sprintf($iconTemplateStr, "change_password.png")));
+    array('icon' => ''));
 $menu_actions->addItem($menu_item);
 
 if ($showAdminActions) {
-    $menu_actions->addSplit();
-
-    if ($g_user->hasPermission("ManageIssue") && $g_user->hasPermission("AddArticle")) {
-        $menu_item =& DynMenuItem::Create(getGS('Import XML'), "/$ADMIN/articles/la_import.php",
-                      array("icon" => sprintf($iconTemplateStr, "import_archive.png")));
-    $menu_actions->addItem($menu_item);
+    if ($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle')) {
+        $menu_item =& DynMenuItem::Create(getGS('Import XML'),
+            "/$ADMIN/articles/la_import.php",
+            array("icon" => ''));
+        $menu_actions->addItem($menu_item);
     }
 
-    if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && $g_user->hasPermission("ClearCache")) {
-        $menu_item =& DynMenuItem::Create(getGS("Clear system cache"),
-                      "/$ADMIN/home.php?clear_cache=yes",
-                      array("icon" => sprintf($iconTemplateStr, "actions.png")));
-    $menu_actions->addItem($menu_item);
+    if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && $g_user->hasPermission('ClearCache')) {
+        $menu_item =& DynMenuItem::Create(getGS('Clear system cache'),
+            "/$ADMIN/home.php?clear_cache=yes",
+            array('icon' => ''));
+        $menu_actions->addItem($menu_item);
     }
 
-    if ($g_user->hasPermission("ManageBackup")) {
-        $menu_item =& DynMenuItem::Create(getGS("Backup/Restore"),
-                      "/$ADMIN/backup.php",
-                      array("icon" => sprintf($iconTemplateStr, "actions.png")));
-    $menu_actions->addItem($menu_item);
+    if ($g_user->hasPermission('ManageBackup')) {
+        $menu_item =& DynMenuItem::Create(getGS('Backup/Restore'),
+            "/$ADMIN/backup.php",
+            array('icon' => ''));
+        $menu_actions->addItem($menu_item);
     }
 }
 
+// Creates the Configure menu
 if ($showConfigureMenu) {
-    $menu_root->addSplit();
-    $menu_config =& DynMenuItem::Create(getGS("Configure"), "",
-        array("icon" => sprintf($iconTemplateStr, "configure.png"), "id"=>"configure"));
-    $menu_root->addItem($menu_config);
+    $menu_config =& DynMenuItem::Create(getGS('Configure'), '',
+        array('icon' => '', 'id' => 'configure'));
 
-    if ($g_user->hasPermission("ChangeSystemPreferences")) {
-        $menu_item =& DynMenuItem::Create(getGS("System Preferences"),
+    if ($g_user->hasPermission('ChangeSystemPreferences')) {
+        $menu_item =& DynMenuItem::Create(getGS('System Preferences'),
             "/$ADMIN/system_pref/",
-            array("icon" => sprintf($iconTemplateStr, "preferences.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
-        $menu_item =& DynMenuItem::Create(getGS("Templates"),
+    if ($g_user->hasPermission('ManageTempl') || $g_user->hasPermission('DeleteTempl')) {
+        $menu_item =& DynMenuItem::Create(getGS('Templates'),
             "/$ADMIN/templates/",
-            array("icon" => sprintf($iconTemplateStr, "templates.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageArticleTypes") || $g_user->hasPermission("DeleteArticleTypes")) {
-        $menu_item =& DynMenuItem::Create(getGS("Article Types"),
+    if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
+        $menu_item =& DynMenuItem::Create(getGS('Article Types'),
             "/$ADMIN/article_types/",
-            array("icon" => sprintf($iconTemplateStr, "article_types.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageTopics")) {
-        $menu_item =& DynMenuItem::Create(getGS("Topics"),
+    if ($g_user->hasPermission('ManageTopics')) {
+        $menu_item =& DynMenuItem::Create(getGS('Topics'),
             "/$ADMIN/topics/",
-            array("icon" => sprintf($iconTemplateStr, "topics.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageLanguages") || $g_user->hasPermission("DeleteLanguages")) {
-        $menu_item =& DynMenuItem::Create(getGS("Languages"),
+    if ($g_user->hasPermission('ManageLanguages') || $g_user->hasPermission('DeleteLanguages')) {
+        $menu_item =& DynMenuItem::Create(getGS('Languages'),
             "/$ADMIN/languages/",
-            array("icon" => sprintf($iconTemplateStr, "languages.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageCountries") || $g_user->hasPermission("DeleteCountries")) {
-        $menu_item =& DynMenuItem::Create(getGS("Countries"),
+    if ($g_user->hasPermission('ManageCountries') || $g_user->hasPermission('DeleteCountries')) {
+        $menu_item =& DynMenuItem::Create(getGS('Countries'),
             "/$ADMIN/country/",
-            array("icon" => sprintf($iconTemplateStr, "countries.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($showPublishingEnvironmentMenu) {
-        $menu_config->addSplit();
-    }
-    if ($g_user->hasPermission("ManageLocalizer")) {
-        $menu_item =& DynMenuItem::Create(getGS("Localizer"),
+    if ($g_user->hasPermission('ManageLocalizer')) {
+        $menu_item =& DynMenuItem::Create(getGS('Localizer'),
             "/$ADMIN/localizer/",
-            array("icon" => sprintf($iconTemplateStr, "localizer.png")));
+            array("icon" => ''));
         $menu_config->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ViewLogs")) {
-        $menu_item =& DynMenuItem::Create(getGS("Logs"),
+    if ($g_user->hasPermission('ViewLogs')) {
+        $menu_item =& DynMenuItem::Create(getGS('Logs'),
             "/$ADMIN/logs/",
-            array("icon" => sprintf($iconTemplateStr, "logs.png")));
+            array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
-} // if ($showConfigureMenu)
+}
 
 if ($showUserMenu) {
-    $menu_root->addSplit();
-    $menu_users =& DynMenuItem::Create(getGS("Users"), "",
-        array("icon" => sprintf($iconTemplateStr, "users.png"), "id" => "users"));
-    $menu_root->addItem($menu_users);
-    if ($g_user->hasPermission("ManageUsers") || $g_user->hasPermission("DeleteUsers")) {
-        $menu_item =& DynMenuItem::Create(getGS("Staff"),
+    $menu_users =& DynMenuItem::Create(getGS('Users'), '',
+        array('icon' => '', 'id' => 'users'));
+    if ($g_user->hasPermission('ManageUsers') || $g_user->hasPermission('DeleteUsers')) {
+        $menu_item =& DynMenuItem::Create(getGS('Staff'),
             "/$ADMIN/users/?uType=Staff&reset_search=true",
-            array("icon" => sprintf($iconTemplateStr, "users.png")));
+            array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
-    if (($g_user->hasPermission("ManageReaders") || $g_user->hasPermission("ManageSubscriptions"))
-            && SystemPref::Get("ExternalSubscriptionManagement") != 'Y') {
-        $menu_item =& DynMenuItem::Create(getGS("Subscribers"),
+    if (($g_user->hasPermission('ManageReaders') || $g_user->hasPermission('ManageSubscriptions'))
+            && SystemPref::Get('ExternalSubscriptionManagement') != 'Y') {
+        $menu_item =& DynMenuItem::Create(getGS('Subscribers'),
             "/$ADMIN/users/?uType=Subscribers&reset_search=true",
-            array("icon" => sprintf($iconTemplateStr, "users.png")));
+            array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
-    if ($g_user->hasPermission("ManageUserTypes")) {
-        $menu_item =& DynMenuItem::Create(getGS("Staff User Types"),
+    if ($g_user->hasPermission('ManageUserTypes')) {
+        $menu_item =& DynMenuItem::Create(getGS('Staff User Types'),
             "/$ADMIN/user_types/",
-            array("icon" => sprintf($iconTemplateStr, "user_types.png")));
+            array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
-    if ($g_user->hasPermission("SyncPhorumUsers")) {
+    if ($g_user->hasPermission('SyncPhorumUsers')) {
         $menu_item =& DynMenuItem::Create(getGS('Synchronize Campsite and Phorum users'), "/$ADMIN/home.php?sync_users=yes",
-        array("icon" => sprintf($iconTemplateStr, "sync_users.png")));
+        array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
 
-    if ($g_user->hasPermission("EditAuthors")) {
-        $menu_item =& DynMenuItem::Create("Manage Authors",
+    if ($g_user->hasPermission('EditAuthors')) {
+        $menu_item =& DynMenuItem::Create('Manage Authors',
         "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array("icon" => sprintf($iconTemplateStr, "add_user_type.png")));
+        array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
-} // if ($showUserMenu)
+}
 
-// plugins: extend menu
-CampPlugin::createPluginMenu($menu_root, $iconTemplateStr);
+// Creates the Plugins menu
+$menu_plugins = CampPlugin::CreatePluginMenu();
 
-$menu_root->addSplit();
-$menu_help =& DynMenuItem::Create(getGS("Help"), "",
-    array("icon" => sprintf($iconTemplateStr, "help.png"), "id" => "help"));
-$menu_root->addItem($menu_help);
-$menu_item =& DynMenuItem::Create(getGS("Help"), $Campsite['HELP_URL'],
-    array("icon" => sprintf($iconTemplateStr, "help.png"), "target" => "_blank"));
-$menu_help->addItem($menu_item);
-$menu_item =& DynMenuItem::Create(getGS("About"), $Campsite['ABOUT_URL'],
-    array("icon" => sprintf($iconTemplateStr, "about.png"), "target" => "_blank"));
-$menu_help->addItem($menu_item);
-$menu_item =& DynMenuItem::Create(getGS("Feedback"), 'mailto:campsite-support@lists.sourcefabric.org',
-    array('icon' => sprintf($iconTemplateStr, "mail_generic.png")));
-$menu_help->addItem($menu_item);
-
+// Page title
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 
 // locale setting for datepicker
 $locale = trim(getGS('en'), ' (*)');
-$localeFile = dirname(__FILE__) . "/../javascript/jquery/i18n/jquery.ui.datepicker-{$locale}.js";
 ?>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
   <title><?php p($siteTitle); ?></title>
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
+
   <script type="text/javascript"><!--
     var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
   //--></script>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/JSCookMenu.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
-  <?php if (file_exists($localeFile)) { ?>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fg.menu.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/i18n/jquery.ui.datepicker-<?php echo $locale; ?>.js" type="text/javascript"></script>
-  <?php } ?>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/JSCookMenu/ThemeOffice/theme.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
+
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg.menu.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
+  <style type="text/css">
+	#menuLog {
+	    font-size:1.4em;
+	    margin:20px;
+	}
+	.hidden {
+	    position:absolute;
+	    top:0;
+	    left:-9999px;
+	    width:1px;
+	    height:1px;
+	    overflow:hidden;
+	}
+	.fg-button {
+	    margin:0 2px 0 0;
+	    padding: .4em 1em;
+	    text-decoration:none !important;
+	    cursor:pointer;
+	    position: relative;
+	    text-align: center;
+	    zoom: 1;
+	}
+	a.fg-button {
+	    font-size:11px !important;
+	    font-weight:bold !important;
+	    text-transform: uppercase;
+	}
+	.fg-button .fg-button-ui-icon {
+	    position: absolute;
+	    top: 50%;
+	    margin-top: -8px;
+	    left: 50%;
+	    margin-left: -8px;
+	}
+	a.fg-button { float:left;  }
+	button.fg-button {
+	    width:auto;
+	    overflow:visible;
+	} /* removes extra button width in IE */
+	
+	.fg-button-icon-left { padding-left: 2.1em; }
+	.fg-button-icon-right { padding-right: 2.1em; }
+	.fg-button-icon-left .fg-button-ui-icon { right: auto; left: .2em; margin-left: 0; }
+	.fg-button-icon-right .fg-button-ui-icon { left: auto; right: .2em; margin-left: 0; }
+	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */	
+	
+	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
+	</style>
+	
+	<!-- style exceptions for IE 6 -->
+	<!--[if IE 6]>
+	<style type="text/css">
+		.fg-menu-ipod .fg-menu li { width: 95%; }
+		.fg-menu-ipod .ui-widget-content { border:0; }
+	</style>
+	<![endif]-->	
+
   <script type="text/javascript">
   <!--
     var g_admin_url = '/<?php echo $ADMIN; ?>';
@@ -367,54 +390,116 @@ $localeFile = dirname(__FILE__) . "/../javascript/jquery/i18n/jquery.ui.datepick
     });
     //-->
   </script>
-  <?php echo $menu_root->createMenu("myMenu"); ?>
+  <script type="text/javascript">
+  <!--
+  $(function(){
+      // BUTTONS
+      $('.fg-button').hover(
+          function(){ $(this).removeClass('fg-button-ui-state-default').addClass('fg-button-ui-state-focus'); },
+          function(){ $(this).removeClass('fg-button-ui-state-focus').addClass('fg-button-ui-state-default'); }
+      );
+
+      // MENUS
+      $('#newscoop_menu_content').menu({
+          content: $('#newscoop_menu_content').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php if ($showAdminActions) { ?>
+      $('#newscoop_menu_action').menu({
+          content: $('#newscoop_menu_action').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php
+      }
+      if ($showConfigureMenu) {
+      ?>
+      $('#newscoop_menu_configure').menu({
+          content: $('#newscoop_menu_configure').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php
+      }
+      if ($showUserMenu) {
+      ?>
+      $('#newscoop_menu_users').menu({
+          content: $('#newscoop_menu_users').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php } ?>
+      $('#newscoop_menu_plugins').menu({
+          content: $('#newscoop_menu_plugins').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+  });
+  //-->
+  </script>
+  <script type="text/javascript"> 
+  $(document).ready(function() {
+      $(window).scroll(function() {
+          if ($(window).scrollTop() > $(".smartLegendIdentifier").offset({ scroll: false }).top) {
+              $(".sticky").css("position", "fixed");
+              $(".sticky").css("top", "0");
+          }
+          if ($(window).scrollTop() <= $(".smartLegendIdentifier").offset({ scroll: false }).top) {
+              $(".sticky").css("position", "relative");
+              $(".sticky").css("top", $(".smartLegendIdentifier").offset);
+          }
+      });
+  });
+  </script>
 </head>
 <body>
-<table cellpadding="0" cellspacing="0" class="logoTable">
-<tbody>
-<tr>
-  <td>
-    <a href="/<?php p($ADMIN) ?>/home.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo.png" alt="<?php putGS('Logo'); ?>" /></a>
-  </td>
-</tr>
-</tbody>
-</table>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" class="naviHolder">
-<tbody>
-<tr>
-  <td valign="top" align="left" width="70%">
-    <table border="0" cellpadding="0" cellspacing="0">
-    <tbody>
-    <tr>
-      <td style="padding-left: 13px; padding-top: 0px; padding-bottom: 0px;" valign="top">
-        <div id="myMenuID"></div>
-        <script type="text/javascript"><!--
-          cmDraw ('myMenuID', myMenu, 'hbr', cmThemeOffice, 'ThemeOffice');
-        --></script>
-      </td>
-    </tr>
-    </tbody>
-    </table>
-  </td>
-  <td align="right" valign="bottom" width="30%" style="padding-bottom: 3px;">
-    <table cellpadding="0" cellspacing="0" width="100%" border="0">
-    <tbody>
-    <tr>
-      <td align="right">
-        <table cellpadding="0" cellspacing="0" border="0" class="personal">
-        <tbody>
-        <tr>
-          <td><?php putGS("Signed in: $1", "<b>".$g_user->getRealName()."</b>"); ?></td>
-          <td><a href="/<?php p($ADMIN); ?>/logout.php"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/logout.png" width="22" height="22" border="0" alt="<?php putGS('Logout'); ?>" /></a></td>
-          <td><a href="/<?php p($ADMIN); ?>/logout.php" style="color: black; text-decoration: none;"><?php putGS('Logout'); ?></a></td>
-        </tr>
-        </tbody>
-        </table>
-      </td>
-    </tr>
-    </tbody>
-    </table>
-  </td>
-</tr>
-</tbody>
-</table>
+<div class="meta-bar">
+<ul>
+  <li><a href="/<?php p($ADMIN); ?>/logout.php"><?php putGS('Logout'); ?></a></li>
+  <li><a href="#"><?php putGS('Help'); ?></a></li>
+  <li><?php putGS("Signed in: $1", '<strong>' . $g_user->getRealName() . '</strong>'); ?></li>
+</ul>
+</div>
+
+<!--MAIN MENU-->
+<div class="main-menu-bar">
+  <a tabindex="0" href="#" class="fg-button ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="dashboard">Dashboard</a>
+  <a tabindex="1" href="#my-menu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_content"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>CONTENT</strong></a>
+  <div id="my-menu" class="hidden">
+    <?php echo $menu_content->createMenu('menuContent'); ?>
+  </div>
+<?php
+if ($showAdminActions) {
+?>        
+  <a tabindex="2" href="#actions-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_action"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Actions</strong></a>
+  <div id="actions-submenu" class="hidden">
+    <?php echo $menu_actions->createMenu('menuActions'); ?>
+  </div>
+<?php
+}
+if ($showConfigureMenu) {
+?>
+  <a tabindex="2" href="#configure-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_configure"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Configure</strong></a>
+  <div id="configure-submenu" class="hidden">
+    <?php echo $menu_config->createMenu('menuConfigure'); ?>
+  </div>
+<?php
+}
+if ($showUserMenu) {
+?>
+  <a tabindex="2" href="#users-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_users"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Users</strong></a>
+  <div id="users-submenu" class="hidden">
+    <?php echo $menu_users->createMenu('menuUsers'); ?>
+  </div>
+<?php
+}
+if (is_object($menu_plugins)) {
+?>
+  <a tabindex="2" href="#plugins-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_plugins"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Plugins</strong></a>
+  <div id="plugins-submenu" class="hidden">
+    <?php echo $menu_plugins->createMenu('menuPlugins');  ?>
+  </div>
+<?php } ?>
+</div>
+<!--END MAIN MENU-->

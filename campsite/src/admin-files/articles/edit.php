@@ -152,23 +152,6 @@ if ($lockedByCurrentUser) {
 //
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-if ($f_edit_mode == "edit") {
-    $title = getGS("Edit article");
-} else {
-    $title = getGS("View article");
-}
-
-if ($f_publication_id > 0) {
-    $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
-		      'Section' => $sectionObj, 'Article'=>$articleObj);
-    camp_html_content_top($title, $topArray);
-} else {
-    $crumbs = array();
-    $crumbs[] = array(getGS("Actions"), "");
-    $crumbs[] = array($title, "");
-    echo camp_html_breadcrumbs($crumbs);
-}
-
 $hasArticleBodyField = false;
 foreach ($dbColumns as $dbColumn) {
     if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
@@ -186,6 +169,23 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
     $spellcheck = 'spellcheck="true"';
 } else {
     $spellcheck = 'spellcheck="false"';
+}
+
+// Generate the breadcrumb
+$title = '';
+if ($f_publication_id > 0) {
+    $topArray = array(
+        'Pub' => $publicationObj,
+        'Issue' => $issueObj,
+        'Section' => $sectionObj,
+        'Article' => $articleObj
+    );
+    camp_html_content_top($title, $topArray);
+} else {
+    $crumbs = array();
+    $crumbs[] = array(getGS('Actions'), '');
+    $crumbs[] = array($title, '');
+    echo camp_html_breadcrumbs($crumbs);
 }
 
 include ("edit_html.php");
