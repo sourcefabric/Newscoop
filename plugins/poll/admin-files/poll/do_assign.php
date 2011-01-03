@@ -40,8 +40,10 @@ switch ($f_target) {
         }
         ?>
         <script>
+        try {
         window.opener.document.forms[0].onsubmit();
         window.opener.document.forms[0].submit();
+        } catch (e) {}
         window.close();
         </script>
         <?php
@@ -61,8 +63,10 @@ switch ($f_target) {
         }
         ?>
         <script>
+        try {
         window.opener.document.forms['issue_edit'].onsubmit();
         window.opener.document.forms['issue_edit'].submit();
+        } catch (e) {}
         window.close();
         </script>
         <?php
@@ -82,8 +86,10 @@ switch ($f_target) {
         }
         ?>
         <script>
+        try {
         window.opener.document.forms['section_edit'].onsubmit();
         window.opener.document.forms['section_edit'].submit();
+        } catch (e) {}
         window.close();
         </script>
         <?php
@@ -103,9 +109,11 @@ switch ($f_target) {
         }
         ?>
         <script>
+        try {
         //window.opener.document.forms['article_edit'].f_message.value = "<?php putGS("$1/$2 polls assigned/unassigned.", $p_a, $p_u); ?>";
         window.opener.document.forms['article_edit'].onsubmit();
         window.opener.document.forms['article_edit'].submit();
+        } catch (e) {}
         window.close();
         </script>
         <?php
