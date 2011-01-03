@@ -15,6 +15,8 @@ if (0 == $f_language_id) {
 }
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
+$map_article_spec = "" . $f_article_number . "_" . $f_language_id;
+
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
 	exit;
@@ -106,6 +108,7 @@ var set_local_strings = function()
     local_strings["enable"] = "<?php putGS("enable"); ?>";
     local_strings["disable"] = "<?php putGS("disable"); ?>";
     local_strings["remove"] = "<?php putGS("remove"); ?>";
+    local_strings["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
 
     geo_locations.set_display_strings(local_strings);
 
@@ -263,12 +266,29 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    window.onbeforeunload = function ()
+    {
+        if (geo_locations.something_to_save)
+        {
+            return "<?php p(getGS("If you want to save your current changes, press Cancel here first. Otherwise your unsaved changes will be lost.")); ?>";
+        }
+    }
+
     set_local_strings();
     $("#edit_tabs_all").tabs();
     //setTimeout(function() {
     geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
     init_search();
     //}, 1000);
+    window.focus();
+    window.geomap_art_spec_popup = "" + '<?php echo $map_article_spec; ?>';
+    try {
+        if (undefined !== window.opener.geomap_art_spec_popup)
+        {
+            window.opener.geomap_art_spec_popup = window.geomap_art_spec_popup;
+        }
+    }
+    catch(e) {}
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here

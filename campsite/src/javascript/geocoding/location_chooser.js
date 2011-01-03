@@ -17,11 +17,13 @@ geo_locations.display_strings = {
     center: "center",
     enable: "enable",
     disable: "disable",
-    remove: "remove"
+    remove: "remove",
+    locations_updated: "Locations updated"
 };
 
 // flag saved state
 geo_locations.something_to_save = false;
+geo_locations.main_page_upload = false;
 
 // specifying the article that the map is for
 geo_locations.article_number = 0;
@@ -153,7 +155,8 @@ geo_locations.set_display_strings = function(local_strings)
         "center",
         "enable",
         "disable",
-        "remove"
+        "remove",
+        "locations_updated"
     ];
 
     var str_count = display_string_names.length;
@@ -474,6 +477,7 @@ geo_locations.set_usage_poi = function(index, usage, div_ids)
         {
             cur_poi_info.content_changed = true;
             cur_poi_info.state_changed = true;
+            geo_locations.main_page_upload = true;
         }
     }
     attrs.m_disabled = to_disable;
@@ -1688,6 +1692,7 @@ var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name,
     {
         geo_locations.set_save_state(true);
         geo_locations.map_spec_changed = true;
+        geo_locations.main_page_upload = true;
     }
 
 };
@@ -1836,6 +1841,7 @@ geo_locations.store_point_label = function()
             cur_poi_info.content_changed = true;
             cur_poi_info.text_changed = true;
             update_preview = true;
+            geo_locations.main_page_upload = true;
         }
     }
     cur_marker.attributes.m_title = label_obj.value;
@@ -2774,6 +2780,19 @@ geo_locations.map_save_all = function(script_dir)
         args['f_update_con'] = update_poi_con_str;
     }
 
+    if (this.poi_order_changed)
+    {
+        geo_locations.main_page_upload = true;
+    }
+    if (0 < this.poi_deletion.length)
+    {
+        geo_locations.main_page_upload = true;
+    }
+    if (0 < insert_poi_new_array.length)
+    {
+        geo_locations.main_page_upload = true;
+    }
+
     callServer(['Geo_Map', 'StoreMapData'], [
         this.map_id,
         this.language_id,
@@ -2787,4 +2806,19 @@ geo_locations.map_save_all = function(script_dir)
         ], function(json) {
             geo_locations.got_load_data(json);
         });
+
+    if (geo_locations.main_page_upload)
+    {
+        geo_locations.main_page_upload = false;
+        try {
+            if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
+            {
+                window.opener.document.forms.article_edit.f_message.value = geo_locations.display_strings["locations_updated"];
+                window.opener.document.forms.article_edit.submit();
+            }
+        }
+        catch (e)
+        {
+        }
+    }
 };
