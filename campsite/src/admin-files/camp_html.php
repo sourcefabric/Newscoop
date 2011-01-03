@@ -295,6 +295,7 @@ function camp_html_breadcrumbs($p_crumbs)
 		}
 		$str .= '</ul>' . "\n";
     }
+    $str .= "</div>\n";
 
     /*
     $str .= '<tr>';

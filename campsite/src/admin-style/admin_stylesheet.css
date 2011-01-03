@@ -104,7 +104,9 @@ body {
 	padding: 0 12px 4px 12px;
 	float: left;
 	font-size:1.1em;
-    background:url(images/breadcrumb_arrow.png) no-repeat 0px 4px;
+    background-image:url(images/breadcrumb_arrow.png);
+    background-repeat:no-repeat;
+    background-position:100% 35%;
 }
 
 .link {

@@ -464,7 +464,7 @@ $locale = trim(getGS('en'), ' (*)');
 
 <!--MAIN MENU-->
 <div class="main-menu-bar">
-  <a tabindex="0" href="#"
+  <a tabindex="0" href="<?php echo "/$ADMIN/home.php"; ?>"
       class="fg-button ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_dashboard"><?php putGS('Dashboard'); ?></a>
   <a tabindex="1" href="#my-menu"
       class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_content"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Content'); ?></a>
