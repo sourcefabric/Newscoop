@@ -256,6 +256,7 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
+		ArticleIndex::RunIndexer(3, 10, true);
 		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
 		camp_html_goto_page($url);
 
@@ -282,6 +283,7 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
+		ArticleIndex::RunIndexer(3, 10, true);
 		camp_html_add_msg(getGS("Article moved."), "ok");
 		camp_html_goto_page($url);
 
@@ -330,6 +332,7 @@ if (isset($_REQUEST["action_button"])) {
 		} else {
 			$url = $destArticleIndexUrl;
 		}
+		ArticleIndex::RunIndexer(3, 10, true);
 		camp_html_goto_page($url);
 	}
 } // END perform the action
