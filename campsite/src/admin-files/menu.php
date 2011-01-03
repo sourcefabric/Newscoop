@@ -464,15 +464,18 @@ $locale = trim(getGS('en'), ' (*)');
 
 <!--MAIN MENU-->
 <div class="main-menu-bar">
-  <a tabindex="0" href="#" class="fg-button ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="dashboard">Dashboard</a>
-  <a tabindex="1" href="#my-menu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_content"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>CONTENT</strong></a>
+  <a tabindex="0" href="#"
+      class="fg-button ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_dashboard"><?php putGS('Dashboard'); ?></a>
+  <a tabindex="1" href="#my-menu"
+      class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_content"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Content'); ?></a>
   <div id="my-menu" class="hidden">
     <?php echo $menu_content->createMenu('menuContent'); ?>
   </div>
 <?php
 if ($showAdminActions) {
 ?>        
-  <a tabindex="2" href="#actions-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_action"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Actions</strong></a>
+  <a tabindex="2" href="#actions-submenu"
+      class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_action"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Actions'); ?></a>
   <div id="actions-submenu" class="hidden">
     <?php echo $menu_actions->createMenu('menuActions'); ?>
   </div>
@@ -480,7 +483,7 @@ if ($showAdminActions) {
 }
 if ($showConfigureMenu) {
 ?>
-  <a tabindex="2" href="#configure-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_configure"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Configure</strong></a>
+  <a tabindex="2" href="#configure-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_configure"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Configure'); ?></a>
   <div id="configure-submenu" class="hidden">
     <?php echo $menu_config->createMenu('menuConfigure'); ?>
   </div>
@@ -488,7 +491,8 @@ if ($showConfigureMenu) {
 }
 if ($showUserMenu) {
 ?>
-  <a tabindex="2" href="#users-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_users"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Users</strong></a>
+  <a tabindex="2" href="#users-submenu"
+      class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_users"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Users'); ?></a>
   <div id="users-submenu" class="hidden">
     <?php echo $menu_users->createMenu('menuUsers'); ?>
   </div>
@@ -496,7 +500,7 @@ if ($showUserMenu) {
 }
 if (is_object($menu_plugins)) {
 ?>
-  <a tabindex="2" href="#plugins-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_plugins"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><strong>Plugins</strong></a>
+  <a tabindex="2" href="#plugins-submenu" class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_plugins"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Plugins'); ?></a>
   <div id="plugins-submenu" class="hidden">
     <?php echo $menu_plugins->createMenu('menuPlugins');  ?>
   </div>
