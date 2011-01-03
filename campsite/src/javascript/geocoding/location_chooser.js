@@ -514,22 +514,22 @@ geo_locations.set_usage_poi = function(index, usage, div_ids)
         lon_obj.disabled = false;
         lat_obj.disabled = false;
 
-        $(dis_obj).removeClass('hidden');
-        $(voi_obj).removeClass('hidden');
+        $(dis_obj).removeClass('map_hidden');
+        $(voi_obj).removeClass('map_hidden');
 
-        $(ena_obj).addClass('hidden');
-        $(rem_obj).addClass('hidden');
+        $(ena_obj).addClass('map_hidden');
+        $(rem_obj).addClass('map_hidden');
     }
     else
     {
         lon_obj.disabled = true;
         lat_obj.disabled = true;
 
-        $(ena_obj).removeClass('hidden');
-        $(rem_obj).removeClass('hidden');
+        $(ena_obj).removeClass('map_hidden');
+        $(rem_obj).removeClass('map_hidden');
 
-        $(dis_obj).addClass('hidden');
-        $(voi_obj).addClass('hidden');
+        $(dis_obj).addClass('map_hidden');
+        $(voi_obj).addClass('map_hidden');
     }
 };
 
@@ -728,13 +728,13 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         if (cur_marker && cur_marker.attributes.m_disabled)
         {
-            dis_class += " hidden";
-            voi_class += " hidden";
+            dis_class += " map_hidden";
+            voi_class += " map_hidden";
         }
         else
         {
-            ena_class += " hidden";
-            rem_class += " hidden";
+            ena_class += " map_hidden";
+            rem_class += " map_hidden";
         }
 
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
@@ -1304,13 +1304,13 @@ var geo_main_openlayers_init = function(map_div_name)
         {
             if (geo_locations.map.baseLayer.name == geo_locations.display_strings.google_map)
             {
-                $('.olLayerGoogleCopyright').removeClass('hidden');
-                $('.olLayerGooglePoweredBy').removeClass('hidden');
+                $('.olLayerGoogleCopyright').removeClass('map_hidden');
+                $('.olLayerGooglePoweredBy').removeClass('map_hidden');
             }
             else
             {
-                $('.olLayerGoogleCopyright').addClass('hidden');
-                $('.olLayerGooglePoweredBy').addClass('hidden');
+                $('.olLayerGoogleCopyright').addClass('map_hidden');
+                $('.olLayerGooglePoweredBy').addClass('map_hidden');
             }
         }
 
@@ -1596,13 +1596,13 @@ var geo_hook_on_feature_select = function(evt)
 // for closing the edit window
 geo_locations.close_edit_window = function ()
 {
-    $("#map_mapedit").addClass('hidden');
+    $("#map_mapedit").addClass('map_hidden');
 };
 
 // for displaying the edit window
 geo_locations.open_edit_window = function ()
 {
-    $("#map_mapedit").removeClass('hidden');
+    $("#map_mapedit").removeClass('map_hidden');
 };
 
 // the entry initialization point
@@ -1642,12 +1642,12 @@ var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name,
         }
     }
 
-    var use_show_class = "map-shown";
-    var use_hide_class = "map-hidden";
+    var use_show_class = "map_shown";
+    var use_hide_class = "map_hidden";
     if (geo_locations.map_shown)
     {
-        use_show_class = "map-hidden";
-        use_hide_class = "map-shown";
+        use_show_class = "map_hidden";
+        use_hide_class = "map_shown";
     }
 
     {
@@ -2054,13 +2054,13 @@ geo_locations.update_video_label = function()
     var video_index = video_type_obj.selectedIndex;
     if (3 <= video_index)
     {
-        $("#video_file_label_id").addClass("hidden");
-        $("#video_file_label_file").removeClass("hidden");
+        $("#video_file_label_id").addClass("map_hidden");
+        $("#video_file_label_file").removeClass("map_hidden");
     }
     else
     {
-        $("#video_file_label_id").removeClass("hidden");
-        $("#video_file_label_file").addClass("hidden");
+        $("#video_file_label_id").removeClass("map_hidden");
+        $("#video_file_label_file").addClass("map_hidden");
     }
 };
 
@@ -2188,18 +2188,18 @@ geo_locations.set_edit_direct = function()
 
     if (direct_usage)
     {
-        $("#edit_part_text").addClass("hidden");
+        $("#edit_part_text").addClass("map_hidden");
         if ('edit' == this.edit_view_mode)
         {
-            $("#edit_part_content").removeClass("hidden");
+            $("#edit_part_content").removeClass("map_hidden");
         }
     }
     else
     {
-        $("#edit_part_content").addClass("hidden");
+        $("#edit_part_content").addClass("map_hidden");
         if ('edit' == this.edit_view_mode)
         {
-            $("#edit_part_text").removeClass("hidden");
+            $("#edit_part_text").removeClass("map_hidden");
         }
     }
 
@@ -2214,12 +2214,12 @@ geo_locations.edit_set_mode = function(mode)
     if ('view' == mode)
     {
         this.edit_view_mode = 'view';
-        $("#edit_part_content").addClass("hidden");
+        $("#edit_part_content").addClass("map_hidden");
 
-        $("#edit_part_text").addClass("hidden");
+        $("#edit_part_text").addClass("map_hidden");
 
-        $("#edit_part_preview").removeClass("hidden");
-        $("#edit_part_preview_outer").removeClass("hidden");
+        $("#edit_part_preview").removeClass("map_hidden");
+        $("#edit_part_preview_outer").removeClass("map_hidden");
 
         edit_obj.checked = false;
         view_obj.checked = true;
@@ -2232,14 +2232,14 @@ geo_locations.edit_set_mode = function(mode)
         this.edit_view_mode = 'edit';
         if ('html' == this.edit_text_mode)
         {
-            $("#edit_part_content").removeClass("hidden");
+            $("#edit_part_content").removeClass("map_hidden");
         }
         else
         {
-            $("#edit_part_text").removeClass("hidden");
+            $("#edit_part_text").removeClass("map_hidden");
         }
-        $("#edit_part_preview").addClass("hidden");
-        $("#edit_part_preview_outer").addClass("hidden");
+        $("#edit_part_preview").addClass("map_hidden");
+        $("#edit_part_preview_outer").addClass("map_hidden");
 
         view_obj.checked = false;
         edit_obj.checked = true;
@@ -2351,8 +2351,8 @@ geo_locations.map_pois_load = function(script_dir)
 // setting the map for editing its name
 geo_locations.map_edit_name = function()
 {
-    $("#map_name_display").addClass("hidden");
-    $("#map_name_input").removeClass("hidden");
+    $("#map_name_display").addClass("map_hidden");
+    $("#map_name_input").removeClass("map_hidden");
 
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
     input_obj.focus();
@@ -2363,8 +2363,8 @@ geo_locations.map_display_name = function()
 {
     this.map_save_name();
 
-    $("#map_name_display").removeClass("hidden");
-    $("#map_name_input").addClass("hidden");
+    $("#map_name_display").removeClass("map_hidden");
+    $("#map_name_input").addClass("map_hidden");
 
 };
 
