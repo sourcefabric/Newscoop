@@ -110,8 +110,10 @@ if (!$inArchive) {
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 ?>
 <script>
+try {
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";
 window.opener.document.forms.article_edit.submit();
+} catch (e) {}
 window.close();
 </script>
 

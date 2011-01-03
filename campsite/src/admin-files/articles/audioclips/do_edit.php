@@ -51,7 +51,9 @@ if (PEAR::isError($res)) {
 
 ?>
 <script>
+try {
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Audioclip '$1' updated.", $audioclipObj->getMetatagValue('title')); ?>";
 window.opener.document.forms.article_edit.submit();
+} catch (e) {}
 window.close();
 </script>

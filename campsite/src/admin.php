@@ -115,9 +115,11 @@ if (($extension == '.php') || ($extension == '')) {
         if (!$access) {
             if ($call_script == '/articles/audioclips/popup.php') {
                 print("<script>\n");
-                print("window.opener.document.forms.article_edit.submit();");
-                print("window.close();");
-                print("</script>");
+                print("try {\n");
+                print("window.opener.document.forms.article_edit.submit();\n");
+                print("} catch (e) {}\n");
+                print("window.close();\n");
+                print("</script>\n");
             }
 
             // If not logged in:
