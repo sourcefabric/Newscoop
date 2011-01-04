@@ -82,6 +82,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                     return '<span><?php putGS('No'); ?></span>';
                 }
             },
+            'bSortable': false,
             'aTargets': [<?php echo $this->inUseColumn; ?>]
         },
         <?php } ?>
