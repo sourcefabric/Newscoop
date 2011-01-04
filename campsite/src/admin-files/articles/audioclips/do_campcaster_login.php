@@ -41,6 +41,8 @@ if (PEAR::isError($ccLogin)) {
 }
 ?>
 <script>
+try {
 window.opener.document.forms.article_edit.submit();
+} catch (e) {}
 window.close();
 </script>

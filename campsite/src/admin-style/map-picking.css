@@ -110,10 +110,11 @@ a.map_name_display:hover {
     word-wrap: break-word;
     width: 100px;
 }
-
+/*
 .hidden {
     display: none;
 }
+*/
 .map_geo_search {
     margin-left: 2px;
 }
@@ -389,10 +390,10 @@ a.edit_marker_one_choice_link {
     font-size: 12px;
 }
 
-.map-hidden {
+.map_hidden {
   display: none;
 }
-.map-shown {
+.map_shown {
   display: default;
 }
 

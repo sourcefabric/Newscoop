@@ -1117,12 +1117,12 @@ var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, de
         }
     }
 
-    var use_show_class = "map-shown";
-    var use_hide_class = "map-hidden";
+    var use_show_class = "map_shown";
+    var use_hide_class = "map_hidden";
     if (geo_obj.map_shown)
     {
-        use_show_class = "map-hidden";
-        use_hide_class = "map-shown";
+        use_show_class = "map_hidden";
+        use_hide_class = "map_shown";
     }
 
     {
