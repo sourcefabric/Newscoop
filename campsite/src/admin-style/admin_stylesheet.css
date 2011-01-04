@@ -1928,6 +1928,7 @@ ul.rss {
 ul.rss li {
     margin: 0;
     padding: 5px;
+    display: block;
 }
 
 ul.rss li.even {
