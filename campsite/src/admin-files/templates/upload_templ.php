@@ -91,7 +91,9 @@ $(function() {
         filters : [
             {title : "Templates", extensions : "tpl"},
             {title : "Image files", extensions : "jpg,gif,png"},
-            {title : "CSS files", extensions : "css"}
+            {title : "CSS files", extensions : "css"},
+            {title : "PHP files", extensions : "php"},
+            {title : "Javascript files", extensions : "js"}
         ],
     });
 
