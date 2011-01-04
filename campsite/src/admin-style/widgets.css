@@ -2,6 +2,7 @@
 .context > .widget, .widget-placeholder {
     position: relative;
     margin-top: 13px;
+    display: block;
 }
 
 .widget-placeholder {
