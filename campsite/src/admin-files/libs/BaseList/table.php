@@ -72,9 +72,23 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             },
             'aTargets': [0]
         },
+        <?php if (is_int($this->inUseColumn)) { ?>
+        { // inputs for id
+            'fnRender': function(obj) {
+                var inUse = obj.aData[0];
+                if (obj.aData[<?php echo $this->inUseColumn; ?>]) {
+                    return '<span class="used"><?php putGS('Yes'); ?></span>';
+                } else {
+                    return '<span><?php putGS('No'); ?></span>';
+                }
+            },
+            'bSortable': false,
+            'aTargets': [<?php echo $this->inUseColumn; ?>]
+        },
+        <?php } ?>
         { // hide columns
             'bVisible': false,
-            'aTargets': [<?php echo implode(', ', $this->hidden); ?>],
+            'aTargets': [<?php echo implode(', ', $this->hidden); ?>]
         },
         { // not sortable
             'bSortable': false,

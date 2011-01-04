@@ -10,7 +10,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/FileTextSearch.php");
 function camp_get_text_extensions()
 {
 	return array('tpl','php','htm','html','php3','php4','txt','css',
-				 'xml','asp','py','java');
+				 'xml','asp','py','java', 'js');
 }
 
 

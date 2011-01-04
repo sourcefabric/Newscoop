@@ -32,6 +32,7 @@ class ImageList extends BaseList
             'Date' => getGS('Date'),
             'TimeCreated' => getGS('Added'),
             'LastModified' => getGS('Last modified'),
+            'InUse' => getGS('In use'),
         );
 
         $this->searchCols = array(
@@ -39,6 +40,9 @@ class ImageList extends BaseList
             'Photographer',
             'Place',
         );
+
+        $this->ignoredCols = array('InUse');
+        $this->inUseColumn = sizeof($this->cols) - 1;
 
         // set sorting
         $this->defaultSorting = 6;
@@ -65,6 +69,10 @@ class ImageList extends BaseList
             $ADMIN,
             $row['Id'],
             $row['Description']);
+
+        // get in use info
+        $image = new Image($row['Id']);
+        $row['InUse'] = (int) $image->inUse();
 
         return array_values($row);
     }
