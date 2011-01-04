@@ -31,6 +31,9 @@ class BaseList
     /** @var array */
     protected $cols = array();
 
+    /** @var array */
+    protected $ignoredCols = array();
+
     /** @var bool */
     protected $colVis = FALSE;
 
@@ -60,6 +63,9 @@ class BaseList
 
     /** @var bool */
     protected static $renderTable = FALSE;
+
+    /** @var int */
+    protected $inUseColumn = NULL;
 
     /**
      */
@@ -246,7 +252,8 @@ class BaseList
         }
 
         // select columns
-        $queryStr = 'SELECT ' . implode(', ', array_keys($this->cols)) . '
+        $cols = array_diff(array_keys($this->cols), $this->ignoredCols);
+        $queryStr = 'SELECT ' . implode(', ', $cols) . '
             FROM ' . $this->model->m_dbTableName;
 
         // set search
