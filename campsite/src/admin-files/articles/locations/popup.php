@@ -266,11 +266,12 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    // does not work for opera (window.opera), no known workaround
     window.onbeforeunload = function ()
     {
         if (geo_locations.something_to_save)
         {
-            return "<?php p(getGS("If you want to save your current changes, press Cancel here first. Otherwise your unsaved changes will be lost.")); ?>";
+            return "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
         }
     }
 

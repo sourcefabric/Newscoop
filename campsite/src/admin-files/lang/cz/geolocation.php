@@ -1,4 +1,6 @@
 <?php 
+regGS("List of locations updated", "");
+regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
 regGS("MapQuest Map", "");
 regGS("OpenStreet Map", "");
 regGS("Google Map", "");
