@@ -38,11 +38,11 @@
             <div class="help">
               <p>To connect to your MySQL database you need to provide the
               hostname of the server, the MySQL user name to connect with
-              and its corresponding password, and the <em>Campsite</em>
+              and its corresponding password, and the <em>Newscoop</em>
               database name.</p>
 
               <p><em>Server Port</em> is optional, if you leave it blank
-              <em>Campsite</em> will assume the default MySQL port (3306)
+              <em>Newscoop</em> will assume the default MySQL port (3306)
               will be used.</p>
 
               <p>We STRONGLY recommend to create a dedicated MySQL username

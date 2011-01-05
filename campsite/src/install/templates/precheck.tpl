@@ -43,7 +43,7 @@ var domTT_styleClass = 'domTTOverlib';
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p><em>Campsite</em> needs the following requirements to be
+              <p><em>Newscoop</em> needs the following requirements to be
               fulfilled in order to install and run on your system.</p>
 
               <p>If any of these requirements is not fulfilled (marked red),
@@ -122,8 +122,8 @@ var domTT_styleClass = 'domTTOverlib';
           <td width="35%" valign="top">
             <div class="help">
               <p>These settings are recommended for PHP in order to ensure
-              <em>Campsite</em> will work quite well. However,
-              <em>Campsite</em> will still operate if your settings do not
+              <em>Newscoop</em> will work quite well. However,
+              <em>Newscoop</em> will still operate if your settings do not
               quite match the recommended.</p>
 
 	      <p><span class="error">WARNING</span>: Always make sure that

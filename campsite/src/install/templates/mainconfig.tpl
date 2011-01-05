@@ -61,7 +61,7 @@
           <td width="35%" valign="top">
             <div class="help">
               <p><em>admin</em> is the system administrator user created
-              automatically by <em>Campsite</em>. Please, set a strong and
+              automatically by <em>Newscoop</em>. Please, set a strong and
               secure password for it at this step, confirm that password
               and input a valid e-mail address.</p>
 

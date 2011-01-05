@@ -18,8 +18,8 @@
   <td colspan="2">
     <table cellspacing="0" cellpadding="0">
     <tr>
-      <td>
-        <img src="img/campsite_logo.gif" />
+      <td style="padding-left: 8px">
+        <img src="img/logo.png" width="200" height="68" alt="Newscoop" />
       </td>
     </tr>
     </table>

@@ -154,7 +154,7 @@ final class CampInstallation extends CampInstallationBase
             $tpl->assign('db',
                          array('hostname'=>'localhost',
                                'username'=>'root',
-                               'database'=>'campsite')
+                               'database'=>'newscoop')
                         );
         }
 
