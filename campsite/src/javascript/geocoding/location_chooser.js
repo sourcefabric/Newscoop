@@ -963,6 +963,8 @@ var geo_hook_trigger_on_map_click = function(e)
         return true;
     }
 
+	if (e.onControlDiv) {return true;}
+
     if (e['cancelBubble']) {return true;}
 
     if (undefined !== e.originalTarget)
@@ -1160,6 +1162,34 @@ var geo_main_openlayers_init = function(map_div_name)
 
     geo_locations.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
     geo_locations.pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
+
+    // msie does not stops the event, and does not preserves its properties either
+    geo_locations.pzb_ctrl.divClick = function (evt)
+    {
+		//if (undefined === evt.stopPropagation) {evt.stopPropagation = null;}
+
+		if (!OpenLayers.Event.isLeftClick(evt)) {
+			return;
+		}
+		var levels = evt.xy.y / this.zoomStopHeight;
+		if (this.forceFixedZoomLevel || !this.map.fractionalZoom) {
+			levels = Math.floor(levels);
+		}
+		var zoom = this.map.getNumZoomLevels() - 1 - levels;
+		zoom = Math.min(Math.max(zoom, 0), this.map.getNumZoomLevels() - 1);
+		this.map.zoomTo(zoom);
+
+        // this change works for firefox under winxp too, but not for linux/firefox
+        if ('msie' == OpenLayers.Util.getBrowserName())
+        {
+            geo_locations.ignore_click = true;
+        }
+        else
+        {
+            OpenLayers.Event.stop(evt);
+        }
+
+	}
 
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
