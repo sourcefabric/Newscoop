@@ -43,7 +43,7 @@ $.fn.widgets = function (options) {
             var meta = $('dl.meta', widget);
 
             // add min/max button
-            $('<a class="minmax" href="#">full</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-arrow-4-diag">' + settings.localizer.maximize + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
@@ -76,7 +76,12 @@ $.fn.widgets = function (options) {
                                 $('> .content > .scroll', widget).html(json);
                             });
                         return false;
-                    }).html('Close');
+                    });
+
+                    // change icon
+                    $('a.close span', full)
+                        .removeClass('ui-icon-arrow-4-diag')
+                        .addClass('ui-icon-closethick');
 
                     // hide other buttons
                     $('a.info, a.minmax, a.settings', full).detach();
@@ -101,7 +106,7 @@ $.fn.widgets = function (options) {
             $('form.settings', widget).each(function() {
 
             // add settings button
-            $('<a href="#" class="settings">settings</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-wrench">' + settings.localizer.settings + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     $('.settings fieldset', widget).toggle();
@@ -149,7 +154,7 @@ $.fn.widgets = function (options) {
             }); // /form.settings
 
             // add info button
-            $('<a class="info" href="#" title="' + settings.localizer.info + '">i</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-info">' + settings.localizer.info + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     meta.toggle();
@@ -162,7 +167,7 @@ $.fn.widgets = function (options) {
             });
 
             // add close button
-            $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
+            $('<a class="close ui-corner-all" href="#"><span class="ui-icon ui-icon-closethick">' + settings.localizer.remove + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     callServer(['WidgetManagerDecorator', 'delete'], [
@@ -177,6 +182,13 @@ $.fn.widgets = function (options) {
 
             // add move cursor
             controls.css('cursor', 'move');
+
+            // add ui hover class
+            $('span.ui-icon').hover(function() {
+                $(this).closest('a').addClass('ui-state-hover');
+            }, function() {
+                $(this).closest('a').removeClass('ui-state-hover');
+            });
         });
 
         // make sortable

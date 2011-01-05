@@ -2,49 +2,35 @@
 .context > .widget, .widget-placeholder {
     position: relative;
     margin-top: 13px;
+    display: block;
+}
+
+.ui-dialog.widget {
+    width: auto;
+    position: relative;
 }
 
 .widget-placeholder {
     border: 3px dashed #ccc;
 }
 
-.widget > .header {
-    padding: 3px 8px;
-    position: relative;
-}
-
-.widget > .content {
-    padding: 5px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
 .widget > .content > .scroll {
-    padding-bottom: 10px;
+    margin-top: 3px;
+    padding: 0 3px 3px 0;
     max-height: 400px;
     overflow: auto;
 }
 
 .widget .header h3 {
-    margin: 0;
+    margin: 0 0;
     padding: 0;
     font-size: 0.8em;
 }
 
 .widget .header a {
     float: right;
-    margin-left: 1px; 
-    padding: 0 5px;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-decoration: none;
-    border-right: 1px solid #ccc;
-}
-
-.widget .header a:first-child {
-    border-right: none;
+    margin: -2px 0 0 5px;
+    border: none;
 }
 
 #dashboard {
