@@ -571,7 +571,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     });
 
-    geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
 
     var pzb_ctrl = new OpenLayers.Control.PanZoomBar();
     pzb_ctrl.geo_obj = geo_obj;

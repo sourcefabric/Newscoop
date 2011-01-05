@@ -879,9 +879,18 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     });
 
-    geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
 
-    var pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    var pzb_ctrl = null;
+
+    if (360 <= geo_obj.map_art_view_height_default)
+    {
+        pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    }
+    else
+    {
+        pzb_ctrl = new OpenLayers.Control.PanZoom();
+    }
     pzb_ctrl.geo_obj = geo_obj;
 
     pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
