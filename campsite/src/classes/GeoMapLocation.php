@@ -185,7 +185,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $tmpMapLoc = new self(NULL);
         $tmpLoc = new Geo_Location(NULL);
         $columnNames = array_merge($tmpMapLoc->getColumnNames(true),
-            $tmpLoc->getColumnNames(true));
+            array_diff($tmpLoc->getColumnNames(true), array('Locations.id')));
         foreach ($columnNames as $columnName) {
             $selectClauseObj->addColumn($columnName);
         }
