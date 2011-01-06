@@ -1,9 +1,9 @@
 <?php 
+regGS("Google Streets Map", "");
 regGS("List of locations updated", "");
 regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
 regGS("MapQuest Map", "");
 regGS("OpenStreet Map", "");
-regGS("Google Map", "");
 regGS("width", "");
 regGS("source", "");
 regGS("sorry, no city was found", "");

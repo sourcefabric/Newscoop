@@ -1,4 +1,8 @@
 <?php 
+regGS("OpenStreet Map", "");
+regGS("MapQuest Map", "");
+regGS("Google Streets Map", "");
+regGS("Allow Google Streets Map Provider:", "");
 regGS("Allow MapQuest Map Provider:", "");
 regGS("Local Flash Server:", "");
 regGS("Local Flash Directory:", "");
@@ -20,7 +24,6 @@ regGS("Flash Default Width:", "");
 regGS("Flash Default Height:", "");
 regGS("Default Map Provider:", "");
 regGS("Allow OpenStreet Map Provider:", "");
-regGS("Allow Google Map Provider:", "");
 regGS("Allow password recovery:", "Дазволіць аднаўленне пароля:");
 regGS("Template Cache Handler:", "Шаблон кіравання кэшаваннем:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Памылка: PHP $ 1павінны быць даступным для сістэмы кэшавання шаблону.");

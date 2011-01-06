@@ -1,4 +1,8 @@
 <?php 
+regGS("OpenStreet Map", "OpenStreet Map");
+regGS("MapQuest Map", "MapQuest Map");
+regGS("Google Streets Map", "Google Streets Map");
+regGS("Allow Google Streets Map Provider:", "Allow Google Streets Map Provider:");
 regGS("Allow MapQuest Map Provider:", "Allow MapQuest Map Provider:");
 regGS("Local Flash Server:", "Local Flash Server:");
 regGS("Local Flash Directory:", "Local Flash Directory:");
@@ -20,7 +24,6 @@ regGS("Flash Default Width:", "Flash Default Width:");
 regGS("Flash Default Height:", "Flash Default Height:");
 regGS("Default Map Provider:", "Default Map Provider:");
 regGS("Allow OpenStreet Map Provider:", "Allow OpenStreet Map Provider:");
-regGS("Allow Google Map Provider:", "Allow Google Map Provider:");
 regGS("Allow password recovery:", "Allow password recovery:");
 regGS("Template Cache Handler:", "Template Cache Handler:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Invalid: You need PHP $1 enabled in order to use the template caching system.");
