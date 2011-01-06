@@ -8,7 +8,7 @@ $.fn.widgets = function (options) {
     var settings = {
         widgets: '> .widget',
         controls: '> .header',
-        localizer: {},
+        localizer: {}
     };
 
     /**
@@ -21,7 +21,7 @@ $.fn.widgets = function (options) {
             var context = $(this).attr('id');
             callServer(['WidgetContext', 'setWidgets'], [
                 context,
-                $(this).sortable('toArray'),
+                $(this).sortable('toArray')
             ]);
         });
 
@@ -71,7 +71,7 @@ $.fn.widgets = function (options) {
                         callServer(['WidgetRendererDecorator', 'render'], [
                             widget.attr('id'),
                             '',
-                            true,
+                            true
                             ], function(json) {
                                 $('> .content > .scroll', widget).html(json);
                             });
@@ -95,7 +95,7 @@ $.fn.widgets = function (options) {
                     callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         'fullscreen',
-                        true,
+                        true
                         ], function(json) {
                             $('> .content > .scroll', full).html(json);
                         });
@@ -126,13 +126,13 @@ $.fn.widgets = function (options) {
                 });
                 callServer(['WidgetManagerDecorator', 'update'], [
                     widget.attr('id'),
-                    {'settings': settings},
+                    {'settings': settings}
                     ], function(json) {
                     // reload content
                     callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         widget.closest('.context').attr('id'),
-                        true,
+                        true
                         ], function(json) {
                             $('> .content > .scroll', widget).html(json);
                             fieldset.fadeOut();
@@ -142,7 +142,7 @@ $.fn.widgets = function (options) {
                     if (settings['title']) {
                         callServer(['WidgetManagerDecorator', 'getSetting'], [
                             widget.attr('id'),
-                            'title',
+                            'title'
                             ], function(json) {
                                 $('> .header h3', widget).text(json);
                         });
@@ -171,7 +171,7 @@ $.fn.widgets = function (options) {
                 .prependTo(controls)
                 .click(function() {
                     callServer(['WidgetManagerDecorator', 'delete'], [
-                        widget.attr('id'),
+                        widget.attr('id')
                         ], function(json) {
                             widget.hide(500, function() {
                                 $(this).detach();
@@ -203,14 +203,14 @@ $.fn.widgets = function (options) {
                 callServer(['WidgetRendererDecorator', 'render'], [
                     ui.item.attr('id'),
                     'default',
-                    true,
+                    true
                     ], function(json) {
                         $('> .content > .scroll', ui.item).html(json);
                     });
                 updateOrder();
-            },
+            }
         }).css({
-            minHeight: '40px',
+            minHeight: '40px'
         });
     });
 };
