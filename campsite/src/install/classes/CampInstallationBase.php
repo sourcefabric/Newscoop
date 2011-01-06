@@ -229,6 +229,7 @@ class CampInstallationBase
             $g_db->Execute("TRUNCATE `$table`");
             $g_db->Execute("ALTER TABLE `$table` DISABLE KEYS");
             $csvFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP."$table.csv";
+            $csvFile = str_replace("\\", "\\\\", $csvFile);
             $g_db->Execute("LOAD DATA LOCAL INFILE '$csvFile' INTO TABLE $table FIELDS TERMINATED BY ';' ENCLOSED BY '\"'");
             $g_db->Execute("ALTER TABLE `$table` ENABLE KEYS");
         }
