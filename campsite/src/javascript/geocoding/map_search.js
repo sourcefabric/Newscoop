@@ -1,3 +1,6 @@
+// better for some providers to try more than once
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+
 // times for icon redrawing at some situations
 var redraw_times = {
     time_drag_delay: 500,

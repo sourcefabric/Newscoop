@@ -1,3 +1,6 @@
+// better for some providers to try more than once
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+
 // the main object to hold geo-things
 var geo_locations = {};
 
