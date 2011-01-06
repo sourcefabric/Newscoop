@@ -93,7 +93,7 @@ var set_local_strings = function()
 {
     var local_strings = {};
 
-    local_strings["google_map"] = "<?php putGS("Google Streets Map"); ?>";
+    local_strings["google_map"] = "<?php putGS("Google Streets"); ?>";
     local_strings["mapquest_map"] = "<?php putGS("MapQuest Map"); ?>";
     local_strings["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
     local_strings["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";

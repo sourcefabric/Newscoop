@@ -1,5 +1,5 @@
 <?php 
-regGS("Google Streets Map", "");
+regGS("Google Streets", "");
 regGS("List of locations updated", "");
 regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
 regGS("MapQuest Map", "");
