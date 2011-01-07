@@ -775,7 +775,7 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         descs_inner += "<div class='poi_coors_all'>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "" + this.display_strings.latitude + ":&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "" + this.display_strings.latitude + "&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_coors'>";
         descs_inner += "" + this.display_strings.longitude + "&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
