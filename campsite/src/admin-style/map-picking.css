@@ -1,25 +1,25 @@
 .map_editor {
-    margin-left: auto ;
-    margin-right: auto ;
-    margin-top: 2px ;
-    margin-bottom: auto ;
-    width: 1010;
-    height: 200;
+    margin: 0 auto ;
+    width: 1050px;
 }
 a.map_name_display:link {
     text-decoration: none;
+	color:#007fb3;
 }
 a.map_name_display:visited {
     text-decoration: none;
+	color:#007fb3;
 }
 a.map_name_display:hover {
     text-decoration: none;
-    background: #ffffe8;
-    color: #404020;
+	background:#edf6f9;
+	color:#007fb3;
 }
 .map_name_input {
-    font-size: 10px;
-    width: 100px;
+    font-size: 14px;
+    width: 160px;
+	font-family:Arial, Helvetica, sans-serif;
+	margin:0;
 }
 .map_menubar {
     font-size: 90%;
@@ -27,10 +27,7 @@ a.map_name_display:hover {
     width: 200px;
 }
 .map_mapmenu {
-    height: 25;
-    position: relative;
-    top: 4;
-    left: 6;
+    height: 33px;
     font-size: 90%;
     z-index: 5000;
 }
@@ -45,58 +42,49 @@ a.map_name_display:hover {
 }
 .map_resizing {
     float: right;
-    margin-right: 10;
+	color:#727272;
+	font-size:12px;
 }
 
 .map_sidepan {
     float: left;
-/*
-    width: 20%;
-*/
     width: 200px;
-
-    height: 90%;
-    font-size: 90%;
+	margin-left:15px;
 }
 
 .side_info {
-    height: 200px;
-/*
-    width: 160px;
-*/
+
 }
 
 .map_sidedescs {
-    background: #ffffff;
-    font-size: 90%;
     width: 200px;
-    margin-top: 1px;
+    margin-top: -1px;
     overflow: auto;
     overflow-y: auto;
     overflow-x: hidden;
 }
 .map_mappart {
-    top: 0px;
     margin-top: 0px;
     float: right;
-    width: 800;
-    height: 500;
+    width: 802px;
+    height: 535px;
+	position:relative;
+	margin-right:15px;
 }
 .map_mapcanvas {
     width: 100%;
-    height: 100%;
+    height: 500px;
+	border: 1px solid #4f5253;	
+	overflow:hidden;
 }
 .search_results {
     overflow: false;
-    font-size: 90%;
-    width: 150px;
 /*
     width: 200px;
 */
 }
 .search_results_limit {
     overflow: false;
-    font-size: 90%;
     width: 200;
     height: 200;
 }
@@ -119,8 +107,7 @@ a.map_name_display:hover {
     margin-left: 2px;
 }
 .map_geo_ccselect {
-    width: 145;
-    border: 2px solid #e0e0d0;
+
 }
 .map_geo_cityname {
     width: 200;
@@ -139,15 +126,14 @@ a.map-no-link {
 }
 .map_mapedit {
     background: #f0f0f0;
-    width: 630;
-    height: 405;
+    width: 630px;
+    height: 405px;
     position: absolute;
-    top: 70;
-    right: 90;
+    top: 81px;
+    right: 85px;
     color: #804000;
-    font-size: 16px;
+    font-size: 12px;
     z-index: 10000;
-
     vertical-align: middle;
     text-align: center;
 }
@@ -191,13 +177,7 @@ a.map-no-link {
 /* point edit forms */
 
 fieldset {
-    float: left;
-    clear: both;
-    width: 100%;
-    margin: 0 0 1.5em 0;
-    padding: 0;
-    border: 1px solid #BFBAB0;
-    background-color: #F2EFE9;
+
 }
 
 
@@ -307,8 +287,7 @@ position: relative;
 .poi_actions_all {
 }
 .poi_actions {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 0 4px 0;
 }
 .poi_removal {
     margin-left: 0px;
@@ -320,17 +299,30 @@ position: relative;
     font-style: italic;
 }
 .poi_coors_all {
-    height: 35px;
+	border:1px solid #ccc;
+	padding:7px 10px 5px 10px;
+	margin-bottom:8px; 
 }
 .poi_coors {
-    float: right;
+	padding:0 0 5px;
+	color:#666666;
+	font-size:12px;
+	font-weight:bold;
+}
+.poi_coors label{
+	padding:0 0 10px;
+	display:block;
+	color:#666666;
+	font-size:12px;
+	font-weight:bold;
 }
 .poi_coors_input {
-    border: 1px solid #a0a0a0;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
+    border: 1px solid #9d9d9d;
+    background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    margin: 3px 0 0 0;
+	font-size:12px;
+	width:98%;
+	padding:2px 0 2px 2px;
 }
 .map_save_part {
     margin-left: 2px;
@@ -340,7 +332,7 @@ position: relative;
     font-size: 18px;
 }
 .map_save_off {
-    background-color: #ffffff;
+    background-color: #a0a0a0;
 }
 a.map_save_off {
     float: left;
@@ -354,9 +346,8 @@ a.map_save_on {
     color: #6000f0;
 }
 .map_save_info {
-    float: right;
-    margin-right: 10px;
-    color: #a0a0a0;
+    float: left;
+    color: #444;
     font-size: 16px;
     margin-top: 2px;
 

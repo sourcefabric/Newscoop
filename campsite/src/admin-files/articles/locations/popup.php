@@ -50,9 +50,10 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 //header("Content-Type: text/html; charset=utf-8");
 ?>
 <?php
-#echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 ?>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="Expires" content="now" />
@@ -61,7 +62,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 	<title><?php putGS("Setting Map Locations"); ?></title>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/custom-theme/jquery-ui-1.8.6.custom.css">
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
 
@@ -103,11 +104,13 @@ var set_local_strings = function()
     local_strings["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
     local_strings["point_number"] = "<?php putGS("Point no."); ?>";
     local_strings["fill_in_the_point_description"] = "<?php putGS("fill in the point description"); ?>";
-    local_strings["edit"] = "<?php putGS("edit"); ?>";
-    local_strings["center"] = "<?php putGS("center"); ?>";
-    local_strings["enable"] = "<?php putGS("enable"); ?>";
-    local_strings["disable"] = "<?php putGS("disable"); ?>";
-    local_strings["remove"] = "<?php putGS("remove"); ?>";
+    local_strings["edit"] = "<?php putGS("Edit"); ?>";
+    local_strings["center"] = "<?php putGS("Center"); ?>";
+    local_strings["enable"] = "<?php putGS("Enable"); ?>";
+    local_strings["disable"] = "<?php putGS("Disable"); ?>";
+    local_strings["remove"] = "<?php putGS("Remove"); ?>";
+    local_strings["longitude"] = "<?php putGS("Longitude"); ?>";
+    local_strings["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
 
     geo_locations.set_display_strings(local_strings);
@@ -233,6 +236,8 @@ var hideLocation = function()
 
     geo_locations.map_update_side_desc_height();
 
+    $("#map_geo_showhide .round-delete").removeClass("map_hidden");
+    $("#map_geo_showhide .round-delete").addClass("round-plus");
 };
 
 // shows the city search results box
@@ -252,6 +257,8 @@ var showLocation = function()
     geo_locations.map_update_side_desc_height();
     $("#map_sidedescs").removeClass("map_hidden");
 
+    $("#map_geo_showhide .round-delete").removeClass("map_hidden");
+    $("#map_geo_showhide .round-delete").removeClass("round-plus");
 };
 
 // if some search term initially provided, do the search
@@ -305,17 +312,78 @@ var on_load_proc = function()
 })(jQuery);
 */
 	</script>
+
+<script type="text/javascript">
+    $(function(){
+		
+		// Tabs
+		//$('.tabs').tabs();
+    	// Buttons
+
+		$('.icon-button').hover(
+			function() { $(this).addClass('ui-state-hover'); }, 
+			function() { $(this).removeClass('ui-state-hover'); }
+		);
+		$('.text-button').hover(
+			function() { $(this).addClass('ui-state-hover'); }, 
+			function() { $(this).removeClass('ui-state-hover'); }
+		);
+/*
+    	$('.ui-accordion-header').hover(
+    		function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
+    		function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
+    	);
+		
+*/
+    });
+	
+/*
+	$(document).ready(function(){
+		$("#map_geo_showhide .round-delete").click(function () {
+		  $(this).toggleClass("round-plus");
+		});
+	});
+*/
+</script>
+
 </head>
 <?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/'; ?>
-<body onLoad="on_load_proc(); return false;">
-<div class="map_editor">
+<body onLoad="on_load_proc(); return false;" id="geolocation">
+<div class="map_editor clearfix">
+<!--Toolbar-->
+<div id="map_save_part" class="toolbar clearfix">
+
+    <div class="save-button-bar">
+<!--        <input id="map_button_cancel" type="button" name="cancel" value="Cancel" onclick="" class="default-button disabled" />-->
+        <input id="map_button_save" type="button" onclick="geo_locations.map_save_all(); return false;" class="save-button-small disabled map_save_off" value="<?php putGS("Save"); ?>" name="save" />
+<!--        <input id="map_button_save_and_close" type="submit" class="save-button-small disabled" value="Save &amp; Close" name="save_and_close" />-->
+        <input id="map_button_close" type="button" onClick="window.close(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
+    </div>
+	<div id="map_save_info" class="map_save_info">
+      <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
+        <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
+     </div>
+     
+<!--    <div id="map_save_part" class="map_save_part">
+    	<a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;">save</a>
+    </div>-->
+    
+    <!-- end of map_save_part -->
+     
+  </div>
+<!--END Toolbar-->
+<div class="clear" style="height:10px;"></div>
 <div class="map_sidepan" id="map_sidepan">
+<!--
 <div id="map_save_part" class="map_save_part">
 <a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;"><?php putGS("save"); ?></a> 
 <div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search"><?php putGS("fill in map name"); ?></a><input id="map_name_input" class="map_name_input map_hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">&nbsp;</div>
-</div><!-- end of map_save_part -->
+</div>--><!-- end of map_save_part -->
 <div class="map_menubar">
-<select class="map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
+    <fieldset class="plain">
+    <ul>
+    	<li>
+<select class="input_select map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
 <option value="" selected="true"><?php putGS("any country"); ?></option>
 <?php
 foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
@@ -323,13 +391,24 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 }
 ?>
 </select>
+        </li>
+    	<li>
+        <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
+          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
+        </form>
+        </li>
+    </ul>
+    </fieldset>
+<!--
 <label class="map_geo_search"><a href="#" onClick="findLocation(true); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
 <label id="map_geo_showhide" class="map_hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
+-->
 </div><!-- end of map_menubar -->
-
+<!--
 <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
 <input class="map_geo_cityname" id="search-city" type="text">
 </form>
+-->
 <div id="side_info" class="side_info">
 <div id="search_results" class="search_results map_hidden">&nbsp;</div>
 <div id="map_sidedescs" class="map_sidedescs">&nbsp;</div>
@@ -339,11 +418,21 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
+      <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a> <a href="#" onClick="geo_locations.map_setview(); return false;" class="ui-state-default text-button"><?php putGS("set as the article view"); ?></a> </div>
+<!--
 <a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a>
 &nbsp;|&nbsp;
 <a href="#" onClick="geo_locations.map_setview(); return false;"><?php putGS("set as the article view"); ?></a>
-</div><!-- end of map initview -->
+</div>--><!-- end of map initview -->
 <div class="map_resizing">
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
+          <div class="resize-label">V</div>
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
+          <div id="map_view_size" class="map-resizing-text">600 x 400</div>
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
+          <div class="resize-label">H</div>
+          <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
+<!--
 &nbsp;<?php putGS("resize article view"); ?>:&nbsp;
 <a href="#" onClick="geo_locations.map_width_change(-10); return false;">&lt;&lt;</a>
 H
@@ -352,8 +441,9 @@ H
 <a href="#" onClick="geo_locations.map_height_change(-10); return false;">&lt;&lt;</a>
 V
 <a href="#" onClick="geo_locations.map_height_change(10); return false;">&gt;&gt;</a>
+-->
 </div><!-- end of map resizing -->
-<div id="map_view_size" class="map_resizing">600x400</div>
+<!--<div id="map_view_size" class="map_resizing">600x400</div>-->
 <div id="map_mapedit" class="map_mapedit map_hidden">
 <div class="map_editinner">
 <div class="map_editpart1">

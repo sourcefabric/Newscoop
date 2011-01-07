@@ -21,6 +21,8 @@ geo_locations.display_strings = {
     enable: "enable",
     disable: "disable",
     remove: "remove",
+    longitude: "longitude",
+    latitude: "latitude",
     locations_updated: "Locations updated"
 };
 
@@ -83,6 +85,7 @@ geo_locations.map_border_background = "#8080ff";
 // basic map info
 geo_locations.map_label_name = "";
 geo_locations.map_id = 0;
+geo_locations.map_name_max_length = 50;
 
 // currently edited (via the edit link) point
 geo_locations.edited_point = 0;
@@ -159,6 +162,8 @@ geo_locations.set_display_strings = function(local_strings)
         "enable",
         "disable",
         "remove",
+        "longitude",
+        "latitude",
         "locations_updated"
     ];
 
@@ -708,12 +713,13 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
         descs_inner += "<a class='poi_name' href=\"#\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions_all'>";
+/*
         descs_inner += "<div class='poi_actions'>";
         descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>)&nbsp;";
         descs_inner += "(<a href='#' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>)";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_actions'>";
-
+*/
         var disable_value = "";
         if (cur_marker && cur_marker.attributes.m_disabled) {disable_value = " disabled=disabled";}
 
@@ -742,24 +748,32 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
 
-        descs_inner += "&nbsp;";
-        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a>)</span>";
-        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
+        descs_inner += "<div class='poi_actions'>";
+        //descs_inner += "<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>&nbsp;";
+        descs_inner += "<a href='#' class='link icon-link' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>";
+        //descs_inner += "&nbsp;";
+        //descs_inner += "<span id='" + ena_id + "' class='" + ena_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a>)</span>";
+        //descs_inner += "<span id='" + dis_id + "' class='" + dis_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
+        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'><a href='#' class='link icon-link' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a></span>";
+        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'><a href='#' class='link icon-link' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a></span>";
+        descs_inner += "<a class='link icon-link' href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span>" + this.display_strings.edit + "</a>";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_coors_all'>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lat:&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "" + this.display_strings.latitude + ":&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "lon:&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "" + this.display_strings.longitude + "&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_actions poi_removal'>";
 
-        descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
-        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
+        //descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
+        //descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
+        descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
+        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
 
         descs_inner += "</div>";
         descs_inner += "</div>";
@@ -787,6 +801,20 @@ geo_locations.update_poi_descs = function(active, index_type)
             geo_locations.poi_order_update(poi_order);
         });
 
+        $('#map_poi_side_list .icon-button').hover(
+            function() { $(this).addClass('ui-state-hover'); }, 
+            function() { $(this).removeClass('ui-state-hover'); }
+        );
+        $('#map_poi_side_list .text-button').hover(
+            function() { $(this).addClass('ui-state-hover'); }, 
+            function() { $(this).removeClass('ui-state-hover'); }
+        );
+
+        $('#map_poi_side_list .ui-accordion-header').hover(
+            function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
+            function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
+        );
+
     });
 
     this.map_update_side_desc_height();
@@ -801,7 +829,8 @@ geo_locations.map_update_side_desc_height = function()
     var sidedesc_obj = document.getElementById ? document.getElementById("map_sidedescs") : null;
 
     //var old_height = sidedesc_obj.offsetHeight;
-    var new_height = 450 - height_taken;
+    //var new_height = 450 - height_taken;
+    var new_height = 480 - height_taken;
     if ((!new_height) || (250 > new_height)) {new_height = 250;}
 
     //if (old_height > new_height)
@@ -1773,10 +1802,13 @@ geo_locations.map_width_change = function(size)
 
     map_view_size.innerHTML = this.map_art_view_width + "x" + this.map_art_view_height;
 
+/*
     var border_width = 1;
     if (this.map_limit_width_display < this.map_art_view_width) {border_width = 0;}
+    alert("limit w: " + this.map_limit_width_display + ", view w: " + this.map_art_view_width + ", b w: " + border_width);
     map_left_border.style.borderWidth = border_width;
     map_right_border.style.borderWidth = border_width;
+*/
 
     var border_zindex = geo_locations.map_border_zindex_on;
     if (this.map_limit_width_display < this.map_art_view_width) {border_zindex = geo_locations.map_border_zindex_off;}
@@ -1789,11 +1821,20 @@ geo_locations.map_width_change = function(size)
     this.map_art_view_width_display += size;
     this.map_art_view_right_display -= size / 2;
 
+/*
     map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
     map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 7) + "px";
-    map_top_border.style.width = this.map_art_view_width_display + "px";
+    map_top_border.style.width = (this.map_art_view_width_display + 1) + "px";
     map_top_border.style.left = (this.map_art_view_right_display - 6) + "px";
-    map_bottom_border.style.width = this.map_art_view_width_display + "px";
+    map_bottom_border.style.width = (this.map_art_view_width_display + 1) + "px";
+    map_bottom_border.style.left = (this.map_art_view_right_display - 6) + "px";
+*/
+
+    map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
+    map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 5) + "px";
+    map_top_border.style.width = (this.map_art_view_width_display + 2) + "px";
+    map_top_border.style.left = (this.map_art_view_right_display - 6) + "px";
+    map_bottom_border.style.width = (this.map_art_view_width_display + 2) + "px";
     map_bottom_border.style.left = (this.map_art_view_right_display - 6) + "px";
 
 };
@@ -1819,10 +1860,12 @@ geo_locations.map_height_change = function(size)
 
     map_view_size.innerHTML = this.map_art_view_width + "x" + this.map_art_view_height;
 
+/*
     var border_width = 1;
     if (this.map_limit_height_display < this.map_art_view_height) {border_width = 0;}
     map_top_border.style.borderWidth = border_width;
     map_bottom_border.style.borderWidth = border_width;
+*/
 
     var border_zindex = geo_locations.map_border_zindex_on;
     if (this.map_limit_height_display < this.map_art_view_height) {border_zindex = geo_locations.map_border_zindex_off;}
@@ -2350,21 +2393,42 @@ geo_locations.map_edit_prepare_markers = function()
 // setting the saved state flag
 geo_locations.set_save_state = function(state)
 {
-    var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
+    //var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
+    var save_obj = document.getElementById ? document.getElementById("map_button_save") : null;
+    var close_obj = document.getElementById ? document.getElementById("map_button_close") : null;
+
+/*
+    var state_buttons = [save_obj, close_obj];
+    var state_buttons_count = state_buttons.length;
+    for (var bind = 0; bind < state_buttons_count; bind++)
+    {
+        var sbutton = state_buttons[bind];
+        if (state)
+        {
+            $(sbutton).removeClass("disabled");
+        }
+        else
+        {
+            $(sbutton).addClass("disabled");
+        }
+    }
+*/
 
     if (state)
     {
         this.something_to_save = true;
 
         $(save_obj).removeClass("map_save_off");
-        $(save_obj).addClass("map_save_on");
+        $(save_obj).removeClass("disabled");
+        //$(save_obj).addClass("map_save_on");
     }
     else
     {
         this.something_to_save = false;
 
-        $(save_obj).removeClass("map_save_on");
+        //$(save_obj).removeClass("map_save_on");
         $(save_obj).addClass("map_save_off");
+        $(save_obj).addClass("disabled");
     }
 
 };
@@ -2410,11 +2474,21 @@ geo_locations.map_save_name = function()
     var name_value = input_obj.value;
     if ("" != name_value)
     {
-        display_obj.innerHTML = name_value;
-        this.map_label_name = name_value;
+        var map_name_disp_str = name_value;
 
-        this.map_spec_changed = true;
-        this.set_save_state(true);
+        var max_len = this.map_name_max_length;
+        if (max_len < map_name_disp_str.length)
+        {
+            map_name_disp_str = map_name_disp_str.substr(0, max_len) + "...";
+        }
+        display_obj.innerHTML = map_name_disp_str;
+
+        if (name_value != this.map_label_name)
+        {
+            this.map_label_name = name_value;
+            this.map_spec_changed = true;
+            this.set_save_state(true);
+        }
     }
 
 };
@@ -2431,7 +2505,15 @@ geo_locations.map_load_name = function()
 
     if ("" != name_value)
     {
-        display_obj.innerHTML = name_value;
+        var map_name_disp_str = name_value;
+
+        var max_len = this.map_name_max_length;
+        if (max_len < map_name_disp_str.length)
+        {
+            map_name_disp_str = map_name_disp_str.substr(0, max_len) + "...";
+        }
+        display_obj.innerHTML = map_name_disp_str;
+        //display_obj.innerHTML = name_value;
     }
     else
     {
@@ -2703,6 +2785,8 @@ geo_locations.put_into_poi_contents = function(storage, index)
 geo_locations.map_save_all = function(script_dir)
 {
     if (!this.something_to_save) {return;}
+    //this.something_to_save = false;
+    this.set_save_state(false);
 
     var cur_marker = null;
 
