@@ -551,10 +551,24 @@ geo_locations.remove_poi = function(index)
     var really = confirm(confirm_string);
     if (!really) {return;}
 
+    var layer_index = this.display_index(index);
+
+    var feature_rem = this.layer.features[layer_index];
+    if (this.popup && (feature_rem == this.popup.feature))
+    {
+        // this pop-up removal seems to be sometimes strange
+        try {
+            this.map.removePopup(this.popup);
+            this.popup.destroy();
+        }
+        catch (e) {}
+        this.popup = null;
+    }
+
+    this.close_edit_window();
+
     this.set_save_state(true);
     this.poi_order_changed = true;
-
-    var layer_index = this.display_index(index);
 
     var to_remove = [];
     to_remove.push(this.layer.features[layer_index])
