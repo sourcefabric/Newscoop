@@ -1,4 +1,55 @@
 3.5.0 (December 17, 2010)
+  Major Features
+  --------------
+  * You can now have multiple authors per article
+  * Geolocations for each article - each article can be tagged with one or 
+    more locations which you can display on an interactive map
+  * New topics user interface (tree display with Ajax) with ability to search
+    topics.  Drag and drop topics to reorder them,
+  * Widget dashboard; the base set of widgets include: 
+    o Pending articles
+    o Most popular articles
+    o Recently modified articles
+    o Recently published articles
+    o Submitted articles
+    o Your articles
+    o RSS feed reader
+    o Any Google gadget
+    o Images archive view
+    o Media archive view
+  * Page caching engine, speeds up your pages by between 8-50 times uncached 
+    speed on production environments. Especially useful for VPS hosts where 
+    APC or memcached is not available.
+  * All article lists can now be filtered, sorted, and provide a custom 
+    display of the columns.
+  * If the user's session times out for security reasons, the user can log in 
+    again and not lose their work.
+  * During install, you now have the ability to choose the template set you 
+    want to use.
+  * You can now restore your entire site through admin interface by uploading 
+    one of your backup files.
+  * Password restore option (at last!)
+  * Mass upload of files for attachments and photos.
+  * New look and feel; article edit screen redesigned
+  * Mobile templates
+  * Improved default templates
+  * The archive of files attached to articles can be managed in a new
+    interface; audio and video files can be previewed
+  * The install procedure was simplified
+  * The template engine supports browser detection
+
+  Minor Features
+  --------------
+  * The permission "User will be notified on several events"(which sends out 
+    emails when something happens in the admin interface) is disabled by 
+    default for all User types (a lot of you will really appreciate that one!)
+  * More useful information in notification emails
+  * Automatic calendar popup for date fields article type
+  * Template Engine improvements:
+    o List Articles in topic including subtopics
+    o Ability to list articles ordered by last_update article property
+    o Ability to display the image archive on the frontend
+    o Sorting order for {{list_article_images}}
 
 
 3.4.3 (October 04, 2010)
