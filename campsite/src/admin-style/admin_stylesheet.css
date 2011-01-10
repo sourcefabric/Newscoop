@@ -18,10 +18,10 @@ h3 {
 }
 
 /* Clearfix */
-.clearfix:after, li:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
-.clearfix, li {	display: inline-block; }
-* html .clearfix, * html li { height: 1%;}
-.clearfix, li {	display: block;	}
+.clearfix:after, li:after, .poi_coors:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
+.clearfix, li, .poi_coors {	display: inline-block; }
+* html .clearfix, * html li, * html .poi_coors { height: 1%;}
+.clearfix, li, .poi_coors {	display: block;	}
 
 
 /* Meta bar */
@@ -898,5 +898,25 @@ a.calendar-button {
 	color:#007fb3;
 	text-decoration:underline;
 }
+.ui-widget-content .poi_actions a.icon-button {
+	color:#444444;
+	text-decoration:none;
+}
+.ui-widget-content .poi_actions a.icon-button:hover {
+	color:#fff;
+	text-decoration:none;
+}
+
+.ui-widget-content .poi_actions a.icon-link .icon  {
+	margin:-2px 0 0 0;
+}
+.ui-widget-content .poi_actions a.icon-button {
+	margin:0;
+}
+.ui-widget-content .poi_actions a.link {
+	padding-right: 10px;
 	
+}.ui-widget-content .poi_actions a.icon-link {
+	padding-right: 0;
+}
 /*---- END Geolocation ----*/	

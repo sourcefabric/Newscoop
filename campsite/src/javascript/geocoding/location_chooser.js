@@ -743,9 +743,9 @@ geo_locations.update_poi_descs = function(active, index_type)
         }
 
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
-        descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
-        descs_inner += "<a class='poi_name' href=\"#\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
-        descs_inner += "<div class='poi_actions_all'>";
+        descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one  ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-default\" role=\"tab\" aria-expanded=\"true\" tabindex=\"0\">";
+        descs_inner += "<span class=\"ui-icon ui-icon-triangle-1-s\"></span><a href=\"#\" class='poi_name' tabindex=\"-1\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
+        descs_inner += "<div class='poi_actions_all ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active' role=\"tabpanel\">";
 /*
         descs_inner += "<div class='poi_actions'>";
         descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>)&nbsp;";
@@ -781,15 +781,15 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
 
-        descs_inner += "<div class='poi_actions'>";
+        descs_inner += "<div class='poi_actions clearfix'>";
         //descs_inner += "<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>&nbsp;";
-        descs_inner += "<a href='#' class='link icon-link' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>";
+        descs_inner += "<a href='#' class='link left-floated' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>";
         //descs_inner += "&nbsp;";
         //descs_inner += "<span id='" + ena_id + "' class='" + ena_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a>)</span>";
         //descs_inner += "<span id='" + dis_id + "' class='" + dis_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
-        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'><a href='#' class='link icon-link' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a></span>";
-        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'><a href='#' class='link icon-link' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a></span>";
-        descs_inner += "<a class='link icon-link' href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span>" + this.display_strings.edit + "</a>";
+        descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'><a href='#' class='link left-floated' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a></span>";
+        descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'><a href='#' class='link left-floated' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a></span>";
+        descs_inner += "<a href='#' class='link icon-link right-floated' onclick='geo_locations.edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span><strong>" + this.display_strings.edit + "</strong></a>";
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_coors_all'>";
@@ -814,7 +814,7 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         disp_index += 1;
     }
-    this.descs_elm.innerHTML = "<div class='map_poi_side_list' id='map_poi_side_list'>" + descs_inner + "</div>";
+    this.descs_elm.innerHTML = "<div id='map_poi_side_list' class='map_poi_side_list ui-accordion ui-widget ui-helper-reset ui-accordion-icons ui-sortable' role='tablist'>" + descs_inner + "</div>";
 
     // putting the list into UI accordion
     $(function() {

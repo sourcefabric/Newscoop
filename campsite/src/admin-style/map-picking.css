@@ -17,7 +17,7 @@ a.map_name_display:hover {
 }
 .map_name_input {
     font-size: 14px;
-    width: 160px;
+    width: 300px;
 	font-family:Arial, Helvetica, sans-serif;
 	margin:0;
 }
@@ -259,6 +259,7 @@ position: relative;
     height: 0;
     width: 600;
 
+
     top: 70px;
     right: 105px;
 }
@@ -287,12 +288,13 @@ position: relative;
 .poi_actions_all {
 }
 .poi_actions {
-    margin: 0 0 4px 0;
+    margin: 0 0 2px 0;
 }
 .poi_removal {
     margin-left: 0px;
 }
 .list_change_poi_void {
+
 }
 .action_disabled {
     color: #808080;
@@ -304,14 +306,15 @@ position: relative;
 	margin-bottom:8px; 
 }
 .poi_coors {
-	padding:0 0 5px;
+	padding:4px 0 5px;
 	color:#666666;
 	font-size:12px;
 	font-weight:bold;
 }
 .poi_coors label{
-	padding:0 0 10px;
-	display:block;
+	padding:2px 0 0px;
+	float:left;
+	width:70px;
 	color:#666666;
 	font-size:12px;
 	font-weight:bold;
@@ -319,10 +322,12 @@ position: relative;
 .poi_coors_input {
     border: 1px solid #9d9d9d;
     background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
-    margin: 3px 0 0 0;
+    margin: 0 0 0 0;
 	font-size:12px;
 	width:98%;
 	padding:2px 0 2px 2px;
+	float:left;
+	width:80px;
 }
 .map_save_part {
     margin-left: 2px;
@@ -387,4 +392,3 @@ a.edit_marker_one_choice_link {
 .map_shown {
   display: default;
 }
-
