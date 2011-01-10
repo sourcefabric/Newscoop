@@ -2,6 +2,12 @@
 DirectoryIndex index.php index.html
 Options -Indexes FollowSymLinks -MultiViews
 
+AddType video/ogg .ogm
+AddType video/ogg .ogv
+AddType audio/ogg .ogg
+AddType video/mp4 .mp4
+AddType video/webm .webm
+
 # Options might not allowed here, use Rewrite rules instead
 <IfModule mod_rewrite.c>
     RewriteEngine On
