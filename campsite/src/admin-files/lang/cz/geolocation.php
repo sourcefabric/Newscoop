@@ -1,4 +1,5 @@
 <?php 
+regGS("You have unsaved changes. Should the changes be saved?", "");
 regGS("Setting the map name helps with map search", "");
 regGS("Longitude", "");
 regGS("Latitude", "");
@@ -43,12 +44,9 @@ regGS("Label", "");
 regGS("Image URL", "");
 regGS("video", "video");
 regGS("text", "text");
-regGS("save", "uložit");
-regGS("resize article view", "změnit velikost zobrazení článku");
 regGS("image", "obrázek");
 regGS("icon", "ikona");
 regGS("basic", "základní");
 regGS("any country", "jakákoliv země");
 regGS("Setting Map Locations", "Nastavení Lokací Map");
-regGS("Find", "Najít");
 ?>

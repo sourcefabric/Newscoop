@@ -1,4 +1,5 @@
 <?php 
+regGS("You have unsaved changes. Should the changes be saved?", "You have unsaved changes. Should the changes be saved?");
 regGS("Setting the map name helps with map search", "Setting the map name helps with map search");
 regGS("Longitude", "Longitude");
 regGS("Latitude", "Latitude");
@@ -43,12 +44,9 @@ regGS("Label", "Label");
 regGS("Image URL", "Image URL");
 regGS("video", "video");
 regGS("text", "text");
-regGS("save", "save");
-regGS("resize article view", "resize article view");
 regGS("image", "image");
 regGS("icon", "icon");
 regGS("basic", "basic");
 regGS("any country", "any country");
 regGS("Setting Map Locations", "Setting Map Locations");
-regGS("Find", "Find");
 ?>
