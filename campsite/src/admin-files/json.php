@@ -20,6 +20,7 @@ require_once LIBS_DIR . '/MediaList/MediaList.php';
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
 require_once WWW_DIR . '/classes/GeoMap.php';
+require_once WWW_DIR . '/classes/Article.php';
 
 try {
     // init request
@@ -46,6 +47,10 @@ try {
     $serverRequest->allow('ImageList::doData');
     $serverRequest->allow('MediaList::doDelete');
     $serverRequest->allow('ImageList::doDelete');
+    $serverRequest->allow('Article::setOnFrontPage');
+    $serverRequest->allow('Article::setOnSectionPage');
+    $serverRequest->allow('Article::setIsPublic');
+    $serverRequest->allow('Article::setKeywords');
 
     // execute
     echo json_encode($serverRequest->execute());

@@ -8,8 +8,21 @@
     <fieldset class="frame">
       <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
       <input type="text" name="Keywords" id="Keywords" size="45"
-        class="input_text" value="" onkeyup="" autocomplete="off" style="width:340px;" /><input
-        type="button" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
+        class="input_text" value="<?php echo $articleObj->getKeywords(); ?>" onkeyup="" autocomplete="off" style="width:340px;" /><input
+        type="button" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" onclick="saveKeywords(this); return false;" />
+        <script type="text/javascript">
+        function saveKeywords(input)
+        {
+            var keywords = $('input#Keywords').val();
+            callServer(['Article', 'setKeywords'], [
+                <?php echo $f_language_selected; ?>,
+                <?php echo $articleObj->getArticleNumber(); ?>,
+                keywords], function(json) {
+                    flashMessage('<?php putGS('Saved'); ?>');
+                });
+        }
+        </script>
+    
     </fieldset>
     <div class="frame">
     <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>

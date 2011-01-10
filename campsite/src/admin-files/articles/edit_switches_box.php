@@ -1,10 +1,9 @@
-<div class="ui-widget-content small-block block-shadow">
-  <div class="collapsible">
-    <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
-    <span class="ui-icon"></span>
-    <a href="#" tabindex="-1"><?php putGS('Switches'); ?></a></h3>
-  </div>
-  <div class="padded">
+<div class="articlebox" title="<?php putGS('Switches'); ?>">
+    <form id="article-switches" action="post.php" method="POST">
+        <input type="hidden" name="f_language_selected" value="<?php echo $f_language_selected; ?>" />
+        <input type="hidden" name="f_article_number" value="<?php echo $articleObj->getArticleNumber(); ?>" />
+        <input type="hidden" name="f_save" value="switch" />
+
     <ul class="check-list padded">
       <li><input type="checkbox" name="f_on_front_page" id="f_on_front_page"
         class="input_checkbox" <?php if ($articleObj->onFrontPage()) { ?> checked<?php } ?> <?php if ($inViewMode) { ?>disabled<?php } ?> />
@@ -34,8 +33,36 @@
     }
     ?>
       <li>
-        <input type="button" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
+        <input type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" onclick="saveSwitches(this); return false;" />
       </li>
     </ul>
-  </div>
+    <script type="text/javascript">
+    function saveSwitches(button)
+    {
+        var form = $(button).closest('form');
+        var vals = {
+            'setOnFrontPage': $('input[name=f_on_front_page]:checked', form).val(),
+            'setOnSectionPage': $('input[name=f_on_section_page]:checked', form).val(),
+            'setIsPublic': $('input[name=f_is_public]:checked', form).val()
+        };
+
+        for (method in vals) {
+            if (vals[method] == 'on') {
+                vals[method] = 1;
+            } else {
+                vals[method] = 0;
+            }
+
+            callServer(['Article', method], [
+                <?php echo $f_language_selected; ?>,
+                <?php echo $articleObj->getArticleNumber(); ?>,
+                vals[method]], function(json) {
+                    flashMessage('<?php putGS('Saved'); ?>');
+                });
+        }
+
+        return false;
+    }
+    </script>
+    </form>
 </div>

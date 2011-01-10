@@ -1,4 +1,5 @@
 <!-- BEGIN the article control bar -->
+<div class="ui-widget-content small-block block-shadow highlight-block padded">
 <form name="article_actions" action="do_article_action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php p($f_publication_id); ?>" />
@@ -32,7 +33,6 @@ function action_selected(dropdownElement) {
     }
 }
 </script>
-<div class="ui-widget-content small-block block-shadow highlight-block padded">
   <fieldset class="plain">
     <!-- BEGIN Language -->
   <?php
@@ -126,4 +126,5 @@ function action_selected(dropdownElement) {
     <!-- END Workflow -->
   </fieldset>
   <?php require_once('edit_schedule_box.php'); ?>
+</form>
 </div>
