@@ -55,9 +55,12 @@ geo_locations.map_view_layer_providers[geo_locations.map_view_layer_mapquest] = 
 geo_locations.map_view_layer_names_all = {};
 geo_locations.map_view_layer_default = "";
 geo_locations.map_view_layer_name = "";
+geo_locations.map_view_layer_name_saved = "";
 geo_locations.map_view_layer_center_ini = {};
 geo_locations.map_view_layer_center = null;
+geo_locations.map_view_layer_center_saved = null;
 geo_locations.map_view_layer_zoom = 0;
+geo_locations.map_view_layer_zoom_saved = 0;
 geo_locations.map_art_view_width_default = 0;
 geo_locations.map_art_view_height_default = 0;
 
@@ -189,8 +192,11 @@ geo_locations.map_limit_width_view = 1200;
 geo_locations.map_limit_height_view = 1200;
 
 // setting the map width
-geo_locations.set_map_width = function(width)
+geo_locations.set_map_width = function(width, set_view)
 {
+    //var width_changed = false;
+    //if (set_view) {width_changed = true;}
+
     var partial_change = false;
     if (this.map_limit_width_display > this.map_art_view_width)
     {
@@ -202,18 +208,21 @@ geo_locations.set_map_width = function(width)
     }
     if (partial_change)
     {
-        this.map_width_change(this.map_limit_width_display - this.map_art_view_width);
+        this.map_width_change(this.map_limit_width_display - this.map_art_view_width, false);
     }
 
     var width_diff = this.map_art_view_width_default - this.map_art_view_width;
 
-    this.map_width_change(width_diff);
+    this.map_width_change(width_diff, false);
 
 };
 
 // setting the map height
-geo_locations.set_map_height = function(height)
+geo_locations.set_map_height = function(height, set_view)
 {
+    //var height_changed = false;
+    //if (set_view) {height_changed = true;}
+
     var partial_change = false;
     if (this.map_limit_height_display > this.map_art_height_width)
     {
@@ -225,12 +234,12 @@ geo_locations.set_map_height = function(height)
     }
     if (partial_change)
     {
-        this.map_width_change(this.map_limit_height_display - this.map_art_view_height);
+        this.map_height_change(this.map_limit_height_display - this.map_art_view_height, false);
     }
 
     var height_diff = this.map_art_view_height_default - this.map_art_view_height;
 
-    this.map_height_change(height_diff);
+    this.map_height_change(height_diff, false);
 
 };
 
@@ -246,6 +255,7 @@ geo_locations.set_map_info = function(params)
 
     this.map_view_layer_center_ini = {"longitude": params.longitude, "latitude": params.latitude};
     this.map_view_layer_zoom = parseInt(params.resolution);
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 
     this.map_art_view_width_default = parseInt(params.width);
     this.map_art_view_height_default = parseInt(params.height);
@@ -266,6 +276,7 @@ geo_locations.set_map_usage = function(params, set_view)
 
     this.map_view_layer_center_ini = {"longitude": longitude, "latitude": latitude};
     this.map_view_layer_zoom = parseInt(params.res);
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 
     this.map_label_name = params.name;
     // set the map name to divs
@@ -276,8 +287,8 @@ geo_locations.set_map_usage = function(params, set_view)
 
     if (set_view)
     {
-        this.set_map_width(this.map_art_view_width_default);
-        this.set_map_height(this.map_art_view_height_default);
+        this.set_map_width(this.map_art_view_width_default, set_view);
+        this.set_map_height(this.map_art_view_height_default, set_view);
     }
 
     this.map_view_layer_default = params.prov;
@@ -288,12 +299,20 @@ geo_locations.set_map_usage = function(params, set_view)
         if (layer_name && ("" != layer_name))
         {
             this.map_view_layer_name = layer_name;
+            this.map_view_layer_name_saved = layer_name;
         }
         this.map_view_layer_center = new OpenLayers.LonLat(longitude, latitude).transform(
             new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject()
         );
+        this.map_view_layer_center_saved = new OpenLayers.LonLat(longitude, latitude).transform(
+            new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject()
+        );
     }
 
+    if (set_view)
+    {
+        this.map_showview();
+    }
 };
 
 // setting info on available marker icons
@@ -1361,8 +1380,10 @@ var geo_main_openlayers_init = function(map_div_name)
             }
         }
 
+        geo_locations.set_map_provider();
         return redraw;
     };
+
     geo_locations.map.addControl(lswitch);
 
     // an initial center point, set via parameters
@@ -1425,8 +1446,11 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map.setCenter (lonLat_cen, zoom);
 
     geo_locations.map_view_layer_name = geo_locations.map.layers[0].name;
+    geo_locations.map_view_layer_name_saved = geo_locations.map.layers[0].name;
     geo_locations.map_view_layer_center = geo_locations.map.getCenter();
+    geo_locations.map_view_layer_center_saved = geo_locations.map.getCenter();
     geo_locations.map_view_layer_zoom = geo_locations.map.getZoom();
+    geo_locations.map_view_layer_zoom_saved = geo_locations.map_view_layer_zoom;
 
     // registering for click events
     var click = new OpenLayers.Control.Click();
@@ -1516,6 +1540,13 @@ var geo_main_openlayers_init = function(map_div_name)
 
     geo_locations.set_map_width(geo_locations.map_art_view_width_default);
     geo_locations.set_map_height(geo_locations.map_art_view_height_default);
+
+    geo_locations.map.events.register("moveend", null, function() {
+        geo_locations.map_position_changed();
+    });
+    geo_locations.map.events.register("zoomend", null, function() {
+        geo_locations.map_zoom_changed();
+    });
 
 };
 
@@ -1744,15 +1775,15 @@ var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name,
 
 };
 
-// showing the current initial reader view
+// showing the last saved reader view
 geo_locations.map_showview = function()
 {
-    var map_names = this.map.getLayersByName(this.map_view_layer_name);
+    var map_names = this.map.getLayersByName(this.map_view_layer_name_saved);
     if (0 < map_names.length)
     {
         this.map.setBaseLayer(map_names[0]);
     }
-    this.map.setCenter(this.map_view_layer_center, this.map_view_layer_zoom);
+    this.map.setCenter(this.map_view_layer_center_saved, this.map_view_layer_zoom_saved);
 };
 
 // setting the current view as the reader initial view
@@ -1762,18 +1793,69 @@ geo_locations.map_setview = function()
     this.map_spec_changed = true;
 
     this.map_view_layer_name = this.map.baseLayer.name;
+    this.map_view_layer_name_saved = this.map.baseLayer.name;
     this.map_view_layer_center = this.map.getCenter();
+    this.map_view_layer_center_saved = this.map.getCenter();
     this.map_view_layer_zoom = this.map.getZoom();
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 };
 
+// map provider is set automatically on map layer change
+geo_locations.set_map_provider = function ()
+{
+    if (("" != this.map_view_layer_name) && (this.map_view_layer_name != this.map.baseLayer.name))
+    {
+        this.map_view_layer_name = this.map.baseLayer.name;
+
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
+}
+
+// map position is set automatically on map layer change
+geo_locations.map_position_changed = function ()
+{
+    if (this.map_view_layer_center)
+    {
+        var current_map_center = this.map.getCenter();
+        if ((current_map_center.lon != this.map_view_layer_center.lon) || (current_map_center.lat != this.map_view_layer_center.lat))
+        {
+            this.map_view_layer_center = current_map_center;
+            this.set_save_state(true);
+            this.map_spec_changed = true;
+        }
+    }
+
+}
+
+// map zoom is set automatically on map layer change
+geo_locations.map_zoom_changed = function ()
+{
+    //if (this.map_view_layer_zoom)
+    {
+        var current_map_zoom = this.map.getZoom();
+        if (current_map_zoom != this.map_view_layer_zoom)
+        {
+            this.map_view_layer_zoom = current_map_zoom;
+            this.set_save_state(true);
+            this.map_spec_changed = true;
+        }
+    }
+
+}
+
 // changing the size for the map div for the reader view
-geo_locations.map_width_change = function(size)
+geo_locations.map_width_change = function(size, unsaved)
 {
     if ((0 > size) && (10 >= this.map_art_view_width)) {return;}
     if ((0 < size) && (this.map_limit_width_view <= this.map_art_view_width)) {return;}
 
-    this.set_save_state(true);
-    this.map_spec_changed = true;
+    if (undefined === unsaved) {unsaved = true;}
+    if (unsaved)
+    {
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
 
     var map_left_border = this.border_left;
     var map_right_border = this.border_right;
@@ -1813,13 +1895,17 @@ geo_locations.map_width_change = function(size)
 };
 
 // changing the size for the map div for the reader view
-geo_locations.map_height_change = function(size)
+geo_locations.map_height_change = function(size, unsaved)
 {
     if ((0 > size) && (10 >= this.map_art_view_height)) {return;}
     if ((0 < size) && (this.map_limit_height_view <= this.map_art_view_height)) {return;}
 
-    this.set_save_state(true);
-    this.map_spec_changed = true;
+    if (undefined === unsaved) {unsaved = true;}
+    if (unsaved)
+    {
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
 
     var map_left_border = this.border_left;
     var map_right_border = this.border_right;
@@ -2348,7 +2434,7 @@ geo_locations.map_edit_prepare_markers = function()
     var choice_one = "";
     var choices_count = this.marker_src_labels.length;
 
-    for (var cind = 0; cind < choices_count; cind++)
+    for (var cind = 1; cind < choices_count; cind++)
     {
         var cur_img_label = this.marker_src_labels[cind];
         var cur_img_icon = this.marker_src_icons[cur_img_label];
@@ -2386,6 +2472,8 @@ geo_locations.set_save_state = function(state)
 // loading the POI data, for the initial phase
 geo_locations.map_pois_load = function(script_dir)
 {
+    this.set_save_state(false);
+
     callServer(['Geo_Map', 'LoadMapData'], [
         this.map_id,
         this.language_id,
@@ -2604,7 +2692,8 @@ geo_locations.got_load_data = function (received_obj)
 
     this.update_poi_descs();
 
-    this.set_save_state(false);
+    // setting to tha saved state at the button pressing now
+    //this.set_save_state(false);
 
     if ("0" == "" + this.map_id)
     {
@@ -2717,6 +2806,8 @@ geo_locations.put_into_poi_contents = function(storage, index)
 geo_locations.map_save_all = function(script_dir)
 {
     if (!this.something_to_save) {return;}
+    //this.something_to_save = false;
+    this.set_save_state(false);
 
     var cur_marker = null;
 
@@ -2853,6 +2944,10 @@ geo_locations.map_save_all = function(script_dir)
         ], function(json) {
             geo_locations.got_load_data(json);
         });
+
+    this.map_view_layer_name_saved = this.map_view_layer_name;
+    this.map_view_layer_center_saved = this.map_view_layer_center;
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 
     if (geo_locations.main_page_upload)
     {

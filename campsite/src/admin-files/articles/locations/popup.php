@@ -290,6 +290,27 @@ var on_load_proc = function()
         }
     }
     catch(e) {}
+
+    set_to_opener = function()
+    {
+        try {
+            if (undefined !== window.opener.geomap_art_spec_main)
+            {
+                if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
+                {
+                    if (null === window.opener.geomap_popup_editing)
+                    {
+                        window.opener.geomap_art_spec_popup = window.geomap_art_spec_popup;
+                        window.opener.geomap_popup_editing = window;
+                    }
+                }
+            }
+        }
+        catch(e) {}
+        return;
+    };
+
+    var opener_sets = self.setInterval("set_to_opener()", 1000);
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -339,9 +360,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
-<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a>
-&nbsp;|&nbsp;
-<a href="#" onClick="geo_locations.map_setview(); return false;"><?php putGS("set as the article view"); ?></a>
+<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("Last Saved Map View"); ?></a>
 </div><!-- end of map initview -->
 <div class="map_resizing">
 &nbsp;<?php putGS("resize article view"); ?>:&nbsp;
