@@ -314,7 +314,7 @@ position: relative;
 .poi_coors label{
 	padding:2px 0 0px;
 	float:left;
-	width:70px;
+	width:44%;
 	color:#666666;
 	font-size:12px;
 	font-weight:bold;
@@ -327,7 +327,7 @@ position: relative;
 	width:98%;
 	padding:2px 0 2px 2px;
 	float:left;
-	width:80px;
+	width:52%;
 }
 .map_save_part {
     margin-left: 2px;
