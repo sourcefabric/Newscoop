@@ -91,6 +91,29 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <?php // CampPlugin::PluginAdminHooks(__FILE__); ?>
 
   </div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('.sidebar .articlebox').each(function() {
+        var box = $(this);
+        var title = box.attr('title');
+
+        // main classes
+        box.addClass('ui-widget-content small-block block-shadow');
+
+        // wrap content
+        $('> *', box).wrapAll('<div class="padded clearfix" />');
+
+        // wrap header
+        var header = $('<div class="collapsible" />').prependTo(box);
+        $('<h3><span class="ui-icon"></span><a href="#" tabindex="-1">'+title+'</a></h3>')
+            .addClass('head ui-accordion-header ui-helper-reset ui-state-default ui-widget')
+            .appendTo(header);
+    });
+
+    // init tabs
+    $('.tabs .padded').tabs();
+  });
+  </script>
   <!-- END Side bar //-->
 
   <!-- START Main form //-->
