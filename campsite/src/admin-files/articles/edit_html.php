@@ -121,7 +121,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <!-- BEGIN Dates //-->
       <ul>
         <li>
-          <label>Date</label>
+          <label><?php putGS('Date'); ?></label>
           <?php if ($articleObj->isPublished()) { ?>
           <div class="text-container left-floated date-published"><strong><?php putGS('Published'); ?>:</strong> <?php print htmlspecialchars($articleObj->getCreationDate()); ?>
             <?php if ($inEditMode) { ?><a id="f_trigger_c" class="calendar-button" href="#">&nbsp;</a><?php } ?></div>

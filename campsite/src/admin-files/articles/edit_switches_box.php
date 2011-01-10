@@ -31,10 +31,12 @@
     <?php
         }
     }
+    if ($inEditMode) {
     ?>
       <li>
         <input type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" onclick="saveSwitches(this); return false;" />
       </li>
+    <?php } ?>
     </ul>
     <script type="text/javascript">
     function saveSwitches(button)
