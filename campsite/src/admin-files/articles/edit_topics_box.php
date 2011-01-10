@@ -5,6 +5,7 @@
     <a href="#" tabindex="-1"><?php putGS('Keywords &amp; Topics'); ?></a></h3>
   </div>
   <div class="padded">
+  <?php if ($inEditMode && $g_user->hasPermission('ChangeArticle')) { ?>
     <fieldset class="frame">
       <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
       <input type="text" name="Keywords" id="Keywords" size="45"
@@ -22,8 +23,8 @@
                 });
         }
         </script>
-    
     </fieldset>
+  <?php } ?>
     <div class="frame">
     <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="ui-state-default icon-button right-floated"

@@ -6,7 +6,6 @@ Date:		September 2008
 /* Component containers */
 .ui-widget {
 	font-family: segoe ui, Arial, sans-serif;
-	font-size: 1.1em;
 }
 .fg-menu .ui-widget input, .fg-menu .ui-widget select, .fg-menu .ui-widget textarea, .fg-menu .ui-widget button {
 	font-family: segoe ui, Arial, sans-serif;

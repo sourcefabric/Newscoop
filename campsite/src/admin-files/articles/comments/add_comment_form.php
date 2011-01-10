@@ -1,6 +1,6 @@
 <?php
 // Show the "Add comment" form
-if (!$articleObj->commentsLocked() && $inEditMode) {
+if (!$articleObj->commentsLocked()) {
 ?>
   <a name="add_comment"></a>
   <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">

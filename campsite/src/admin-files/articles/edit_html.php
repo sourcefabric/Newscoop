@@ -60,12 +60,6 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <?php require('edit_locations_box.php'); ?>
       <!-- END Geo-locations table -->
 
-      <?php if ($showComments) { ?>
-      <!-- BEGIN Comments table -->
-      <?php //require('edit_comments_box.php'); ?>
-      <!-- END Comments table //-->
-      <?php } ?>
-
       <!-- BEGIN Topics table -->
       <?php require('edit_topics_box.php'); ?>
       <!-- END Topics table -->
@@ -78,8 +72,8 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <?php require('edit_info_box.php'); ?>
       <!-- END Info table -->
 
-      <!-- BEGIN Images table -->
-      <?php require('edit_images_box.php'); ?>
+      <!-- BEGIN Media table -->
+      <?php require('edit_media_box.php'); ?>
       <!-- END Images table -->
 
       <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') { ?>
@@ -280,7 +274,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <a href="#" tabindex="-1"><?php putGS('Comments'); ?></a></h3>
       </div>
       <div class="padded-strong">
-      <?php if ($showCommentControls) { ?>
+      <?php if ($inEditMode && $showCommentControls) { ?>
         <fieldset class="frame">
 	       <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status" checked onchange=""><label for="comments_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
            <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status" onchange=""><label for="comments_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
@@ -294,7 +288,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       ?>
       </div>
     </div>
-    <?php if ($showComments && $f_show_comments) { ?>
+    <?php if ($inEditMode && $showComments && $f_show_comments) { ?>
     <div class="ui-widget-content big-block block-shadow padded-strong">
       <?php include('comments/add_comment_form.php'); ?>
     </div>

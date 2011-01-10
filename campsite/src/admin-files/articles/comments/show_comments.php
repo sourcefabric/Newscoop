@@ -69,7 +69,7 @@ function onCommentAction(p_type, p_commentId)
         <dd><?php p(htmlspecialchars($comment->getBody())); ?></dd>
 
         <dt>&nbsp;</dt>
-        <?php if ($comment->getStatus() == PHORUM_STATUS_APPROVED) { ?>
+        <?php if ($inEditMode && $comment->getStatus() == PHORUM_STATUS_APPROVED) { ?>
         <dd class="buttons"><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id='.$comment->getMessageId()); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a></dd>
         <?php } ?>
       </dl>
