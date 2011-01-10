@@ -188,6 +188,77 @@ if ($f_publication_id > 0) {
     echo camp_html_breadcrumbs($crumbs);
 }
 
+
+
+
+
+function parseTextBody($text, $articleNumber)
+{
+    // Subheads
+    $text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
+    $text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
+
+    // Internal Links with targets
+    $text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*target[\s\"]*([\w_]*)[\s\"]*>/i", '<a href="/campsite/campsite_internal_link?$1" target="$2">', $text);
+
+    // Internal Links without targets
+    $text = preg_replace("/<!\*\*\s*Link\s*Internal\s*([\w=&]*)\s*>/i", '<a href="/campsite/campsite_internal_link?$1">', $text);
+
+    // External Links (old style 2.1) with targets
+    $text = preg_replace("/<!\*\*\s*Link\s*External[\s\"]*([^\s\"]*)[\s\"]*target[\s\"]*([\w_]*)[\s\"]*>/i", '<a href="$1" target="$2">', $text);
+
+    // External Links (old style 2.1) without targets
+    $text = preg_replace("/<!\*\*\s*Link\s*External[\s\"]*([^\s\"]*)[\s\"]*>/i", '<a href="$1">', $text);
+
+    // End link
+    $text = preg_replace("/<!\*\*\s*EndLink\s*>/i", "</a>", $text);
+    // Images
+    preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*/i",$text, $imageMatches);
+
+    preg_match_all("/\s*sub=\"(.*?)\"/", $text, $titles);
+
+    preg_match_all("/<!\*\*\s*Image\s*([\d]*)\s*(.*?)\s*ratio=\"(.*?)\"/", $text, $ratios);
+
+    if (isset($imageMatches[1][0])) {
+        if (isset($titles) && sizeof($titles) > 0) {
+            for($x = 0; $x < sizeof($titles[0]); $x++) {
+                $text = preg_replace("/\s*".preg_replace('~\/~', '\/',
+                $titles[0][$x])."/", ' title="'.$titles[1][$x].'"', $text);
+            }
+        }
+        $formattingErrors = false;
+        foreach ($imageMatches[1] as $templateId) {
+            // Get the image URL
+            $articleImage = new ArticleImage($articleNumber, null, $templateId);
+            if (!$articleImage->exists()) {
+                ArticleImage::RemoveImageTagsFromArticleText($articleNumber, $templateId);
+                $formattingErrors = true;
+                continue;
+            }
+            $image = new Image($articleImage->getImageId());
+            $imageUrl = $image->getImageUrl();
+            unset($fakeTemplateId);
+            if (isset($ratios) && sizeof($ratios) > 0) {
+                $n = 0;
+                foreach ($ratios[3] as $ratio) {
+                    if ($ratios[1][$n++] == $templateId) {
+                        $fakeTemplateId = $templateId.'_'.$ratio;
+                    }
+                }
+            }
+            if (!isset($fakeTemplateId)) {
+                $fakeTemplateId = $templateId;
+            }
+            $text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$fakeTemplateId.'" ', $text);
+        }
+        if ($formattingErrors) {
+            print ('<script type="text/javascript">window.location.reload();</script>');
+        }
+    }
+    return $text;
+}
+
+
 include ("edit_html.php");
 
 if ($locked) {
@@ -219,11 +290,6 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
 }
 
 include ("edit_javascript.php");
-
-
-if ($showComments && $f_show_comments) {
-    include("comments/show_comments.php");
-}
 
 camp_html_copyright_notice();
 ?>

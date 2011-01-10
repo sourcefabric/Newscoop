@@ -1,3 +1,19 @@
+<div class="ui-widget-content small-block block-shadow">
+  <div class="collapsible">
+    <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
+    <span class="ui-icon"></span>
+    <a href="#" tabindex="-1"><?php putGS('Media'); ?></a></h3>
+  </div>
+  <div class="padded">
+  <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
+    <a class="ui-state-default icon-button right-floated"
+      href="#" onclick="return false;"><span
+      class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+  <?php } ?>
+  </div>
+</div>
+
+<!--
 			<TABLE width="100%" style="border: 1px solid #EEEEEE;">
 			<TR>
 				<TD>
@@ -49,3 +65,4 @@
 			</TR>
 			<?php } ?>
 			</TABLE>
+//-->

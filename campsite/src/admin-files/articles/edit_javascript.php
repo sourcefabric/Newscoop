@@ -1,14 +1,57 @@
 <script type="text/javascript">
+// Print last modified date
+var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
+var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
+document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
+document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
+</script>
+
+<script type="text/javascript">
+// datepicker for date
+$('.datepicker').datepicker({
+    dateFormat: 'yy-mm-dd'
+});
+</script>
+<script type="text/javascript">    
+$(function(){
+    $('.ui-accordion-header').hover(
+        function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
+        function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
+    );
+
+    //hover states on the static widgets
+    $('.icon-button').hover(
+        function() { $(this).addClass('ui-state-hover'); },
+        function() { $(this).removeClass('ui-state-hover'); }
+    );
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.collapsible').click(function() {
+        $(this).next().toggle('fast');
+        return false;
+    }).next().hide();
+});
+
+$(document).ready(function(){
+    $(".collapsible .head").click(function () {
+        $(this).toggleClass("ui-state-active");
+    });
+});
+</script>
+
+<script type="text/javascript">
 var newQS = "";
 
 function onButtonClick(buttonId) {
     makeRequest(buttonId);
 }
 
-<?php foreach ($saveButtonNames as $name) { ?>
-    $("#<?php echo $name;?>").button({disabled:true}).click(function() { onButtonClick(this.id) });
-<?php echo"\n";
-    }
+<?php //foreach ($saveButtonNames as $name) { ?>
+    //$("#<?php echo $name;?>").button({disabled:true}).click(function() { onButtonClick(this.id) });
+<?php //echo"\n";
+    //}
 ?>
 
 function buttonEnable(buttonId) {
@@ -103,13 +146,13 @@ function makeRequest(a) {
             }
         });
 
-        if (a == "all") {
-        <?php foreach ($saveButtonNames as $saveButtonName) { ?>
-            buttonDisable("<?php print($saveButtonName); ?>");
-        <?php } ?>
-        } else {
-            buttonDisable(a);
-        }
+        //if (a == "all") {
+        <?php //foreach ($saveButtonNames as $saveButtonName) { ?>
+            //buttonDisable("<?php print($saveButtonName); ?>");
+        <?php //} ?>
+        //} else {
+            //buttonDisable(a);
+        //}
     }); // /ping
 }
 

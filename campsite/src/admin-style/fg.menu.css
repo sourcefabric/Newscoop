@@ -12,12 +12,12 @@ Date:		September 2008
 	font-family: segoe ui, Arial, sans-serif;
 	font-size: 1em;
 }
-.ui-widget-content {
+.fg-menu .ui-widget-content {
 	border: 1px solid #161616;
 	background: #202020;
 	color: #fff;
 }
-.ui-widget-content a {
+.fg-menu .ui-widget-content a {
 	color: #fff;
 }
 .fg-menu .ui-widget-header {
