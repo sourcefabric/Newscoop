@@ -291,5 +291,4 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
 
 include ("edit_javascript.php");
 
-camp_html_copyright_notice();
 ?>
