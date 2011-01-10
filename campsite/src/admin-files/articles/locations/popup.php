@@ -273,12 +273,14 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    var close_question = "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
+
     // does not work for opera (window.opera), no known workaround
     window.onbeforeunload = function ()
     {
         if (geo_locations.something_to_save)
         {
-            return "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
+            return close_question;
         }
     }
 
@@ -319,6 +321,26 @@ var on_load_proc = function()
 
     var opener_sets = self.setInterval("set_to_opener()", 1000);
 };
+
+on_close_request = function()
+{
+    if (!geo_locations.something_to_save)
+    {
+        window.close()
+        return;
+    }
+
+    var unsaved_question = "<?php p(getGS("You have unsaved changes. Should the changes be saved?")); ?>";
+    var to_save = confirm(unsaved_question);
+
+    if (to_save)
+    {
+        geo_locations.map_save_all();
+    }
+
+    window.onbeforeunload = null;
+    window.close();
+}
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
 /*
@@ -375,31 +397,20 @@ var on_load_proc = function()
 <div id="map_save_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
-<!--        <input id="map_button_cancel" type="button" name="cancel" value="Cancel" onclick="" class="default-button disabled" />-->
-        <input id="map_button_save" type="button" onclick="geo_locations.map_save_all(); return false;" class="save-button-small disabled map_save_off" value="<?php putGS("Save"); ?>" name="save" />
-<!--        <input id="map_button_save_and_close" type="submit" class="save-button-small disabled" value="Save &amp; Close" name="save_and_close" />-->
-        <input id="map_button_close" type="button" onClick="window.close(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
+        <input id="map_button_save" type="button" onclick="geo_locations.map_save_all(); return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
+        <input id="map_button_close" type="button" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
 	<div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
         <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
      </div>
-     
-<!--    <div id="map_save_part" class="map_save_part">
-    	<a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;">save</a>
-    </div>-->
-    
     <!-- end of map_save_part -->
      
   </div>
 <!--END Toolbar-->
 <div class="clear" style="height:10px;"></div>
 <div class="map_sidepan" id="map_sidepan">
-<!--
-<div id="map_save_part" class="map_save_part">
-<a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;"><?php putGS("save"); ?></a> 
-<div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search"><?php putGS("fill in map name"); ?></a><input id="map_name_input" class="map_name_input map_hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">&nbsp;</div>
-</div>--><!-- end of map_save_part -->
+<!-- end of map_save_part -->
 <div class="map_menubar">
     <fieldset class="plain">
     <ul>
@@ -420,16 +431,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
         </li>
     </ul>
     </fieldset>
-<!--
-<label class="map_geo_search"><a href="#" onClick="findLocation(true); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
-<label id="map_geo_showhide" class="map_hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
--->
 </div><!-- end of map_menubar -->
-<!--
-<form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-<input class="map_geo_cityname" id="search-city" type="text">
-</form>
--->
 <div id="side_info" class="side_info">
 <div id="search_results" class="search_results map_hidden">&nbsp;</div>
 <div id="map_sidedescs" class="map_sidedescs">&nbsp;</div>
@@ -439,12 +441,8 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
-      <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a> <a href="#" onClick="geo_locations.map_setview(); return false;" class="ui-state-default text-button"><?php putGS("set as the article view"); ?></a> </div>
-<!--
-<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("Last Saved Map View"); ?></a>
-&nbsp;|&nbsp;
-<a href="#" onClick="geo_locations.map_setview(); return false;"><?php putGS("set as the article view"); ?></a>
-</div>--><!-- end of map initview -->
+      <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("Last Saved Map View"); ?></a> </div>
+<!-- end of map initview -->
 <div class="map_resizing">
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
           <div class="resize-label">V</div>
@@ -453,25 +451,13 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
           <div class="resize-label">H</div>
           <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
-<!--
-&nbsp;<?php putGS("resize article view"); ?>:&nbsp;
-<a href="#" onClick="geo_locations.map_width_change(-10); return false;">&lt;&lt;</a>
-H
-<a href="#" onClick="geo_locations.map_width_change(10); return false;">&gt;&gt;</a>
-&nbsp;&nbsp;
-<a href="#" onClick="geo_locations.map_height_change(-10); return false;">&lt;&lt;</a>
-V
-<a href="#" onClick="geo_locations.map_height_change(10); return false;">&gt;&gt;</a>
--->
 </div><!-- end of map resizing -->
-<!--<div id="map_view_size" class="map_resizing">600x400</div>-->
 <div id="map_mapedit" class="map_mapedit map_hidden">
 <div class="map_editinner">
 <div class="map_editpart1">
 
 <form action="#" onSubmit="return false";>  
 <fieldset>
-<!--<legend class="map_editactions0"><a href="#" onClick="geo_locations.close_edit_window(); return false;">close</a></legend>-->
 
 <div id="edit_tabs_all">
 	<ul>

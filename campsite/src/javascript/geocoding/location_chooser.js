@@ -794,10 +794,10 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         descs_inner += "<div class='poi_coors_all'>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "" + this.display_strings.latitude + "&nbsp;<input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "<label>" + this.display_strings.latitude + "</label><input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "<div class='poi_coors'>";
-        descs_inner += "" + this.display_strings.longitude + "&nbsp;<input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
+        descs_inner += "<label>" + this.display_strings.longitude + "</label><input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='geo_locations.update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "</div>";
 
@@ -1896,7 +1896,7 @@ geo_locations.map_width_change = function(size, unsaved)
     this.map_art_view_width += size;
     this.map_art_view_right -= size / 2;
 
-    map_view_size.innerHTML = this.map_art_view_width + "x" + this.map_art_view_height;
+    map_view_size.innerHTML = this.map_art_view_width + " x " + this.map_art_view_height;
 
 /*
     var border_width = 1;
@@ -1958,7 +1958,7 @@ geo_locations.map_height_change = function(size, unsaved)
     this.map_art_view_height += size;
     this.map_art_view_top -= size / 2;
 
-    map_view_size.innerHTML = this.map_art_view_width + "x" + this.map_art_view_height;
+    map_view_size.innerHTML = this.map_art_view_width + " x " + this.map_art_view_height;
 
 /*
     var border_width = 1;
@@ -2495,7 +2495,7 @@ geo_locations.set_save_state = function(state)
 {
     //var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
     var save_obj = document.getElementById ? document.getElementById("map_button_save") : null;
-    var close_obj = document.getElementById ? document.getElementById("map_button_close") : null;
+    //var close_obj = document.getElementById ? document.getElementById("map_button_close") : null;
 
 /*
     var state_buttons = [save_obj, close_obj];
@@ -2518,17 +2518,21 @@ geo_locations.set_save_state = function(state)
     {
         this.something_to_save = true;
 
-        $(save_obj).removeClass("map_save_off");
-        $(save_obj).removeClass("disabled");
+        save_obj.disabled = false;
+
+        //$(save_obj).removeClass("map_save_off");
+        //$(save_obj).removeClass("disabled");
         //$(save_obj).addClass("map_save_on");
     }
     else
     {
         this.something_to_save = false;
 
+        save_obj.disabled = true;
+
         //$(save_obj).removeClass("map_save_on");
-        $(save_obj).addClass("map_save_off");
-        $(save_obj).addClass("disabled");
+        //$(save_obj).addClass("map_save_off");
+        //$(save_obj).addClass("disabled");
     }
 
 };
