@@ -5,6 +5,7 @@ regGS("Latitude", "");
 regGS("Enable", "");
 regGS("Disable", "");
 regGS("Center", "");
+regGS("Last Saved Map View", "");
 regGS("Google Streets", "");
 regGS("List of locations updated", "");
 regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
