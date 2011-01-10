@@ -72,11 +72,12 @@ $(document).ready(function() {
 var table = $('#table-<?php echo $this->id; ?>');
 filters['<?php echo $this->id; ?>'] = [];
 tables['<?php echo $this->id; ?>'] = table.dataTable({
-    'bAutoWidth': false,
+    'bAutoWidth': true,
+    'sScrollX': '100%',
+    'bScrollCollapse': true,
     'bDestroy': true,
     'bJQueryUI': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
-    'sScrollX': '100%',
     'aaSorting': [[2, 'asc']],
     'oLanguage': {
         'oPaginate': {
@@ -127,18 +128,26 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // id
             'sClass': 'id',
+            'sWidth': '3em',
             'aTargets': [0]
         },
         { // name
             'sClass': 'name',
+            'sWidth': '13em',
             'aTargets': [3]
+        },
+        { // type & author
+            'sWidth': '8em',
+            'aTargets': [4, 6]
         },
         { // short
             'sClass': 'flag',
-            'aTargets': [7, 8, 9, 10, 11, 12, 13]
+            'sWidth': '5em',
+            'aTargets': [7, 8, 9, 10, 11, 12, 13, 14, 15]
         },
         { // dates
             'sClass': 'date',
+            'sWidth': '5em',
             'aTargets': [16, 17, 18]
         }
     ],
