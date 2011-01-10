@@ -257,7 +257,10 @@ public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
     $icons_first_name = "";
     $icons_default_name_exists = false;
 
-    $icons_arr = scandir($icons_subdir);
+    $icons_arr_unknown = array();
+    $icons_arr_unknown[] = "special/unknown.png";
+
+    $icons_arr = array_merge($icons_arr_unknown, scandir($icons_subdir));
 
     foreach ($icons_arr as $one_name)
     {
