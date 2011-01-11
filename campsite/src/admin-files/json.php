@@ -21,6 +21,7 @@ require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
 require_once WWW_DIR . '/classes/GeoMap.php';
 require_once WWW_DIR . '/classes/Article.php';
+require_once WWW_DIR . '/classes/ArticleData.php';
 
 try {
     // init request
@@ -51,6 +52,7 @@ try {
     $serverRequest->allow('Article::setOnSectionPage');
     $serverRequest->allow('Article::setIsPublic');
     $serverRequest->allow('Article::setKeywords');
+    $serverRequest->allow('ArticleData::setProperty');
 
     // execute
     echo json_encode($serverRequest->execute());
