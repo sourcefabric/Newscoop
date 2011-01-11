@@ -1,5 +1,5 @@
 <?php 
-regGS("Libraries", "");
+regGS("Libraries", "Βιβλιοθήκες");
 regGS("Media Archive", "");
 regGS("Extensions", "");
 regGS("Geo-location", "");
