@@ -23,7 +23,6 @@ regGS("html content", "");
 regGS("height", "");
 regGS("fill in the point description", "");
 regGS("fill in map name", "");
-regGS("close window", "");
 regGS("city", "");
 regGS("cc", "");
 regGS("You do not have the right to remove maps from articles.", "");

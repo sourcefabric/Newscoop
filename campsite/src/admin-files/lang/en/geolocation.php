@@ -23,7 +23,6 @@ regGS("html content", "html content");
 regGS("height", "height");
 regGS("fill in the point description", "fill in the point description");
 regGS("fill in map name", "fill in map name");
-regGS("close window", "close window");
 regGS("city", "city");
 regGS("cc", "cc");
 regGS("You do not have the right to remove maps from articles.", "You do not have the right to remove maps from articles.");

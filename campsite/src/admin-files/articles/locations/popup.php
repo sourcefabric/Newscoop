@@ -453,146 +453,139 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
           <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">
-<div class="map_editinner">
-<div class="map_editpart1">
+    <div class="map_editinner">
+        <a onclick="geo_locations.close_edit_window(); return false;" href="#" class="ui-state-default icon-button no-text" style="position:absolute; top:16px; right:16px; z-index:3000;" ><span class="ui-icon ui-icon-closethick"></span></a>
+        <div class="map_editpart1">
+            <form action="#" onSubmit="return false";>
+              <fieldset>
 
-<form action="#" onSubmit="return false";>  
-<fieldset>
-
-<div id="edit_tabs_all">
-	<ul>
-		<li><a href="#edit_basic"><?php putGS("basic"); ?></a></li>
-		<li><a href="#edit_html"><?php putGS("text"); ?></a></li>
-		<li><a href="#edit_image" id="image_edit_part"><?php putGS("image"); ?></a></li>
-		<li><a href="#edit_video" id="video_edit_part"><?php putGS("video"); ?></a></li>
-		<li><a href="#edit_marker"><?php putGS("icon"); ?></a></li>
-	</ul>
-	<div id="edit_basic" class="edit_tabs">
-<ol>
-<li class="edit_label_top">
-<label class="edit_label" for="point_label"><?php putGS("Label"); ?>:</label>
-<input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
-</li>
-<li id="edit_part_link" class="">
-<label class="edit_label" for="point_link"><?php putGS("Label link"); ?>:</label>
-<input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
-</li>
-<li>
-<label class="edit_label" for="point_perex"><?php putGS("Short description for points listing"); ?>:</label>
-<textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
+                <div id="edit_tabs_all">
+                    <ul>
+                    <li><a href="#edit_basic"><?php putGS("basic"); ?></a></li>
+                    <li><a href="#edit_html"><?php putGS("text"); ?></a></li>
+                    <li><a href="#edit_image" id="image_edit_part"><?php putGS("image"); ?></a></li>
+                    <li><a href="#edit_video" id="video_edit_part"><?php putGS("video"); ?></a></li>
+                    <li><a href="#edit_marker"><?php putGS("icon"); ?></a></li>
+                </ul>
+                <div id="edit_basic" class="edit_tabs">
+                    <ol>
+                    <li class="edit_label_top">
+                    <label class="edit_label" for="point_label"><?php putGS("Label"); ?>:</label>
+                    <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
+                    </li>
+                    <li id="edit_part_link" class="">
+                    <label class="edit_label" for="point_link"><?php putGS("Label link"); ?>:</label>
+                    <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
+                    </li>
+                    <li>
+                    <label class="edit_label" for="point_perex"><?php putGS("Short description for points listing"); ?>:</label>
+                    <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;">
 </textarea>
-</li>
-</ol>
-	</div>
-	<div id="edit_html" class="edit_tabs">
-<ol>
-<li class="edit_label_top">
-<label class="edit_label" for="point_predefined"><?php putGS("Pop-up content"); ?>:</label>
-
-<select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
-<option value="0" selected="true"><?php putGS("plain text"); ?></option>
-<option value="1"><?php putGS("html content"); ?></option>
-</select>
-
-<input id="point_edit_mode_edit" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('edit'); return false;" checked /><?php putGS("Edit"); ?>
-<input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" /><?php putGS("View"); ?>
-</li>
-
-<li>
-<div id="edit_part_text" class="">
-<label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
-<textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
+                    </li>
+                    </ol>
+                        </div>
+                        <div id="edit_html" class="edit_tabs">
+                    <ol>
+                    <li class="edit_label_top">
+                    <label class="edit_label" for="point_predefined"><?php putGS("Pop-up content"); ?>:</label>
+                    
+                    <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
+                    <option value="0" selected="true"><?php putGS("plain text"); ?></option>
+                    <option value="1"><?php putGS("html content"); ?></option>
+                    </select>
+                    
+                    <input id="point_edit_mode_edit" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('edit'); return false;" checked /><?php putGS("Edit"); ?>
+                    <input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" /><?php putGS("View"); ?>
+                    </li>
+                    
+                    <li>
+                    <div id="edit_part_text" class="">
+                    <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
-</div>
-<div id="edit_part_content" class="map_hidden">
-<label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
-<textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
+                    </div>
+                    <div id="edit_part_content" class="map_hidden">
+                    <label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
+                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
-</div>
-<div id="edit_part_preview_outer" class="map_hidden">
-<div class="popup_preview map_hidden" id="edit_part_preview"> </div>
-</div>
-</li>
-</ol>
-	</div>
-	<div id="edit_image" class="edit_tabs">
-<ol>
-<li class="edit_label_top">
-<label class="edit_label" for="point_image"><?php putGS("Image URL"); ?>:</label>
-<input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
-</li>
-<li class="poi_image_type_placehold">
-&nbsp;
-</li>
-<li>
+                    </div>
+                    <div id="edit_part_preview_outer" class="map_hidden">
+                    <div class="popup_preview map_hidden" id="edit_part_preview"> </div>
+                    </div>
+                    </li>
+                    </ol>
+                        </div>
+                        <div id="edit_image" class="edit_tabs">
+                    <ol>
+                    <li class="edit_label_top">
+                    <label class="edit_label" for="point_image"><?php putGS("Image URL"); ?>:</label>
+                    <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
+                    </li>
+                    <li class="poi_image_type_placehold">
+                    &nbsp;
+                    </li>
+                    <li>
+                    
+                    </li>
+                    <li>
+                    <label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
+                    <input id="point_image_width" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_width', this.value); return false;" />
+                    </li>
+                    <li>
+                    <label class="edit_label" for="point_image_height"><?php putGS("height"); ?>:</label>
+                    <input id="point_image_height" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_height', this.value); return false;" />
+                    </li>
+                    </ol>
+                        </div>
+                        <div id="edit_video" class="edit_tabs">
+                    <ol>
+                    <li class="edit_label_top">
+                    <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
+                    <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
+                    </li>
+                    
+                    <li>
+                    <label class="edit_label" for="point_video_type"><?php putGS("source"); ?>:</label>
+                    <select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
+                    <option value="none" selected="true"><?php putGS("None"); ?></option>
+                    <option value="youtube">Youtube</option>
+                    <option value="vimeo">Vimeo</option>
+                    <option value="flash">Flash (sfw)</option>
+                    <option value="flv">Flash (flv)</option>
+                    </select>
+                    
+                    </li>
+                    <li>
 
-</li>
-<li>
-<label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
-<input id="point_image_width" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_width', this.value); return false;" />
-</li>
-<li>
-<label class="edit_label" for="point_image_height"><?php putGS("height"); ?>:</label>
-<input id="point_image_height" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_height', this.value); return false;" />
-</li>
-</ol>
-	</div>
-	<div id="edit_video" class="edit_tabs">
-<ol>
-<li class="edit_label_top">
-<label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
-<input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
-</li>
+                    </li>
+                    <li>
+                    <label class="edit_label" for="point_video_width"><?php putGS("width"); ?>:</label>
+                    <input id="point_video_width" name="point_video_width" class="text" type="text" onChange="geo_locations.store_point_property('video_width', this.value); return false;" />
+                    </li>
+                    <li>
+                    <label class="edit_label" for="point_video_height"><?php putGS("height"); ?>:</label>
+                    <input id="point_video_height" name="point_video_height" class="text" type="text" onChange="geo_locations.store_point_property('video_height', this.value); return false;" />
+                    </li>
+                    </ol>
+                        </div>
+                        <div id="edit_marker" class="edit_tabs">
+                            <div id="edit_marker_selected" class="edit_marker_selected">
+                            <?php putGS("selected marker"); ?>:&nbsp;</div>
+                            <div><img id="edit_marker_selected_src" src="">
+                            </div>
+                            <div class="edit_marker_choices"><div id="edit_marker_choices">&nbsp;</div></div>
+                        </div>
+                </div>
+              </fieldset>  
+            </form>
 
-<li>
-<label class="edit_label" for="point_video_type"><?php putGS("source"); ?>:</label>
-<select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
-<option value="none" selected="true"><?php putGS("None"); ?></option>
-<option value="youtube">Youtube</option>
-<option value="vimeo">Vimeo</option>
-<option value="flash">Flash (sfw)</option>
-<option value="flv">Flash (flv)</option>
-</select>
+          </div><!-- end of map_editpart1 -->
+        </div><!-- end of map_editinner -->
+      </div><!-- end of map_mapedit -->
 
-</li>
-<li>
-
-</li>
-<li>
-<label class="edit_label" for="point_video_width"><?php putGS("width"); ?>:</label>
-<input id="point_video_width" name="point_video_width" class="text" type="text" onChange="geo_locations.store_point_property('video_width', this.value); return false;" />
-</li>
-<li>
-<label class="edit_label" for="point_video_height"><?php putGS("height"); ?>:</label>
-<input id="point_video_height" name="point_video_height" class="text" type="text" onChange="geo_locations.store_point_property('video_height', this.value); return false;" />
-</li>
-</ol>
-	</div>
-	<div id="edit_marker" class="edit_tabs">
-		<div id="edit_marker_selected" class="edit_marker_selected">
-		<?php putGS("selected marker"); ?>:&nbsp;</div>
-		<div><img id="edit_marker_selected_src" src="">
-		</div>
-		<div class="edit_marker_choices"><div id="edit_marker_choices">&nbsp;</div></div>
-	</div>
-</div>
-</fieldset>  
-</form>
-
-</div><!-- end of map_editpart1 -->
-</div><!-- end of map_editinner -->
-
-<div class="map_editactions">
-
-<a href="#" onClick="geo_locations.close_edit_window(); return false;"><?php putGS("close window"); ?></a>
-</div><!-- end of map_editactions -->
-
-</div><!-- end of map_mapedit -->
-
-</div><!-- end of map_mapmenu -->
+    </div><!-- end of map_mapmenu -->
 <div id="map_mapcanvas" class="map_mapcanvas"></div>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_editor -->
-<div id="error_messages" class="map_hidden" style="margin-top:200px">debug purposes</div>
 </body>
 </html>

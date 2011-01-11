@@ -125,22 +125,21 @@ a.map-no-link {
 .map_poi_side_one {
 }
 .map_mapedit {
-    background: #f0f0f0;
-    width: 630px;
+    width: 615px;
     height: 405px;
     position: absolute;
-    top: 81px;
-    right: 85px;
+    top: 93px;
+    right: 90px;
     color: #804000;
-    font-size: 12px;
+    font-size: 11px;
     z-index: 10000;
     vertical-align: middle;
     text-align: center;
 }
 .map_editinner {
-    background: #fefefe;
-    width: 610;
-    height: 375;
+    background-color: #9d9d9d;
+    width: 610px;
+
     position: relative;
     top: 10;
     left: 10;
@@ -191,9 +190,13 @@ legend {
     float: right;
     text-align: right;
 }
-
+.edit_tabs {
+	padding:25px 10px 10px 10px;
+	height:290px;
+}
 .edit_tabs ol {
-    padding: 1px 1px 0 1px;
+    padding:0;
+	margin:0;
     list-style: none;
 }
 
@@ -201,12 +204,30 @@ legend {
     float: left;
     clear: left;
     width: 500px;
+	font-size:12px;
     padding-bottom: 1em;
 }
 .edit_marker_selected {
-    padding-bottom: 1em;
+    padding: 2px 10px 5px 0;
+	color: #696969;
+	display: block;
+	font-size: 12px;
+	font-weight: bold;
+	line-height: 20px;
 }
 
+label.block-label {
+    clear: left;
+    color: #696969;
+    display: block;
+    float: none;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0;
+    padding: 0 0 2px;
+    text-indent: 1px;
+}
 .edit_tabs.submit {
     float: none;
     width: auto;
@@ -221,6 +242,11 @@ legend {
     float: left;
     width: 10em;
     margin-right: 1em;
+	color: #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 0 0;
 }
 
 /*
@@ -324,7 +350,6 @@ position: relative;
     background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
     margin: 0 0 0 0;
 	font-size:12px;
-	width:98%;
 	padding:2px 0 2px 2px;
 	float:left;
 	width:52%;
@@ -363,19 +388,19 @@ a.map_save_on {
 
 }
 .edit_marker_choices {
-    float: right;
-    margin-right: 20px;
-    margin-top: 2em;
+    margin-top: 20px;
     overflow: auto;
-    height: 150px;
-    width: 500px;
+	height:200px;
+	padding:10px;
+	border:1px solid #CCC;
 }
 .edit_marker_one_choice {
-    border-width: 1px;
-    margin-top: 20px;
-    margin-bottom: 1px;
-    margin-left: 1px;
-    margin-right: 1px;
+    border: 1px solid #9d9d9d;
+    margin: 4px 4px 1px 1px;
+	padding:3px;
+}
+.edit_marker_one_choice:hover {
+    border: 1px solid #4f5253;
 }
 a.edit_marker_one_choice_link {
     border-width: 0px;
@@ -391,4 +416,31 @@ a.edit_marker_one_choice_link {
 }
 .map_shown {
   display: default;
+}
+.edit_tabs input.input_text {
+    background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    border: 1px solid #9D9D9D;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+    vertical-align: middle;
+    width: 200px;
+}
+.edit_tabs .input_select {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    margin: 0;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
+}
+.map_mapedit fieldset li {
+    font-size: 1em;
+    line-height: 140%;
 }

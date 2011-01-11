@@ -18,10 +18,10 @@ h3 {
 }
 
 /* Clearfix */
-.clearfix:after, li:after, .poi_coors:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
-.clearfix, li, .poi_coors {	display: inline-block; }
-* html .clearfix, * html li, * html .poi_coors { height: 1%;}
-.clearfix, li, .poi_coors {	display: block;	}
+.clearfix:after, li:after, .poi_coors:after, .map_mapedit .ui-widget-content:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
+.clearfix, li, .poi_coors, .map_mapedit .ui-widget-content {	display: inline-block; }
+* html .clearfix, * html li, * html .poi_coors, * html .map_mapedit .ui-widget-content { height: 1%;}
+.clearfix, li, .poi_coors, .map_mapedit .ui-widget-content {	display: block;	}
 
 
 /* Meta bar */
@@ -297,12 +297,12 @@ fieldset .input_text {
 }
 fieldset.plain label, label.block-label {
     display:block;
-    font-size: 12px;
+    font-size: 13px;
 	font-weight:bold;
 	color:#696969;
     line-height: 20px;
     margin: 0;
-    padding: 0 0 2px 0;
+    padding: 0 0 4px 0;
     text-indent: 1px;
 
 	float:none;
@@ -336,7 +336,6 @@ fieldset.plain label, label.block-label {
 }
 .text-container {
 	height:18px;
-	font-size:1.2em;
 	padding: 7px 0 0 0;
 	position:relative;
 }
@@ -887,6 +886,8 @@ a.calendar-button {
 
 .map_mapedit fieldset {
 	border:1px solid #ccc;
+	margin:0;
+	padding:4px;
 }
 .ui-widget-content .poi_actions a {
     margin: 0 0 4px 0;
@@ -919,4 +920,28 @@ a.calendar-button {
 }.ui-widget-content .poi_actions a.icon-link {
 	padding-right: 0;
 }
-/*---- END Geolocation ----*/	
+.map_mapedit .ui-state-default .ui-icon {
+	background-image: url(custom-theme/images/ui-icons_007fb3_256x240.png);
+}
+.map_mapedit .ui-state-hover .ui-icon {
+	background-image: url(custom-theme/images/ui-icons_ffffff_256x240.png);
+}
+/*---- END Geolocation ----*/
+
+.article-title	{
+    color: #3B3B3B;
+    float: left;
+    font-size: 17px;
+    height: 23px;
+    line-height:120%;
+    margin: 0;
+    padding: 3px 40px 0 0;
+    text-indent: 6px;
+}
+fieldset li p {
+	line-height:140%;
+}
+fieldset li {
+	font-size:1.2em;
+	line-height:140%;
+}

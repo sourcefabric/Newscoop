@@ -842,12 +842,12 @@ geo_locations.update_poi_descs = function(active, index_type)
             function() { $(this).addClass('ui-state-hover'); }, 
             function() { $(this).removeClass('ui-state-hover'); }
         );
-
+/*
         $('#map_poi_side_list .ui-accordion-header').hover(
             function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
             function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
         );
-
+*/
     });
 
     this.map_update_side_desc_height();
