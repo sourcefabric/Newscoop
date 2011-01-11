@@ -21,7 +21,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
   <div class="toolbar clearfix">
   <?php if ($inEditMode) { ?>
     <input class="top-input" name="f_article_title" id="f_article_title" type="text"
-      value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" onchange="$('input:hidden[name=f_article_title]').val(this.value);" <?php print $spellcheck ?> />
+      value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" <?php print $spellcheck ?> />
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } ?>
@@ -311,23 +311,6 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       </div>
     </div>
   </form><!-- /form#article -->
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('form#article-main').submit(function() {
-            makeRequest('all');
-            return false;
-        });
-
-        $('.save-button-bar input').click(function() {
-            $('form#article-main').submit();
-            return false;
-        });
-
-        // copy title to hidden
-        $('input:hidden[name=f_article_title]').val($('input:text[name=f_article_title]').val());
-    });
-    </script>
 
     <?php if ($inEditMode && $showComments && $f_show_comments) { ?>
     <div class="ui-widget-content big-block block-shadow padded-strong">

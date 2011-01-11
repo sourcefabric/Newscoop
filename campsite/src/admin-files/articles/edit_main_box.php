@@ -88,7 +88,7 @@ function action_selected(dropdownElement) {
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated" onchange="this.form.submit();">
+    <select name="f_action_workflow" class="input_select left-floated" onchange="return checkChanged() && this.form.submit();">
     <?php
     if (isset($issueObj) && $issueObj->isPublished()) {
         camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Published'));

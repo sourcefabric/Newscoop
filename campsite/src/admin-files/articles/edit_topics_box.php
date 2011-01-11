@@ -17,6 +17,10 @@
     <script type="text/javascript">
     $(document).ready(function() {
         $('form#article-keywords').submit(function() {
+            if (!$(this).hasClass('changed')) {
+                return false;
+            }
+
             var keywords = $('input#Keywords', $(this)).val();
             callServer(['Article', 'setKeywords'], [
                 <?php echo $f_language_selected; ?>,
@@ -24,7 +28,11 @@
                 keywords], function(json) {
                     flashMessage('<?php putGS('Saved'); ?>');
                 });
+
+            $(this).removeClass('changed');
             return false;
+        }).change(function() {
+            $(this).addClass('changed');
         });
     });
     </script>
@@ -32,7 +40,7 @@
     <div class="frame">
     <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="ui-state-default icon-button right-floated"
-        href="#" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=400, top=200, left=200');"><span
+        href="#" onclick="return checkChanged() && window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=400, top=200, left=200');"><span
         class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php putGS('Topics'); ?></label>
@@ -68,7 +76,7 @@
         <li><?php p(wordwrap($pathStr, 45, '<br />&nbsp;&nbsp;')); ?>
         <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
           <a class="corner-button" href="<?php p($detachUrl); ?>"
-            onclick="return confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpTopicName)); ?>');"><span class="ui-icon ui-icon-closethick"></span></a></li>
+            onclick="return checkChanged() && confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpTopicName)); ?>');"><span class="ui-icon ui-icon-closethick"></span></a></li>
         <?php } ?>
     <?php } ?>
       </ul>

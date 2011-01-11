@@ -46,10 +46,10 @@
             };
 
             // check if saved
-            if (form.hasClass('saved')) {
+            if (!form.hasClass('changed')) {
                 return false;
             }
-
+            
             // set dynamic
             $('input.db', form).each(function() {
                 var val = 'off';
@@ -80,10 +80,10 @@
                     });
             }
 
-            form.addClass('saved');
+            form.removeClass('changed');
             return false;
         }).change(function() {
-            $(this).removeClass('saved');
+            $(this).addClass('changed');
         });
     });
     </script>
