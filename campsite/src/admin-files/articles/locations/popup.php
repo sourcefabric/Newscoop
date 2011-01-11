@@ -15,6 +15,8 @@ if (0 == $f_language_id) {
 }
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
+$map_article_spec = "" . $f_article_number . "_" . $f_language_id;
+
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
 	exit;
@@ -91,7 +93,7 @@ var set_local_strings = function()
 {
     var local_strings = {};
 
-    local_strings["google_map"] = "<?php putGS("Google Map"); ?>";
+    local_strings["google_map"] = "<?php putGS("Google Streets"); ?>";
     local_strings["mapquest_map"] = "<?php putGS("MapQuest Map"); ?>";
     local_strings["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
     local_strings["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
@@ -106,6 +108,7 @@ var set_local_strings = function()
     local_strings["enable"] = "<?php putGS("enable"); ?>";
     local_strings["disable"] = "<?php putGS("disable"); ?>";
     local_strings["remove"] = "<?php putGS("remove"); ?>";
+    local_strings["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
 
     geo_locations.set_display_strings(local_strings);
 
@@ -221,12 +224,12 @@ var hideLocation = function()
 {
     showhideState = false;
 
-    $("#search_results").addClass("hidden");
+    $("#search_results").addClass("map_hidden");
 
     var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
     showhide_link.innerHTML = "+";
 
-    $("#map_geo_showhide").removeClass("hidden");
+    $("#map_geo_showhide").removeClass("map_hidden");
 
     geo_locations.map_update_side_desc_height();
 
@@ -237,17 +240,17 @@ var showLocation = function()
 {
     showhideState = true;
 
-    $("#map_sidedescs").addClass("hidden");
+    $("#map_sidedescs").addClass("map_hidden");
 
-    $("#search_results").removeClass("hidden");
+    $("#search_results").removeClass("map_hidden");
 
     var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
     showhide_link.innerHTML = "x";
 
-    $("#map_geo_showhide").removeClass("hidden");
+    $("#map_geo_showhide").removeClass("map_hidden");
 
     geo_locations.map_update_side_desc_height();
-    $("#map_sidedescs").removeClass("hidden");
+    $("#map_sidedescs").removeClass("map_hidden");
 
 };
 
@@ -263,12 +266,51 @@ var init_search = function ()
 
 var on_load_proc = function()
 {
+    // does not work for opera (window.opera), no known workaround
+    window.onbeforeunload = function ()
+    {
+        if (geo_locations.something_to_save)
+        {
+            return "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
+        }
+    }
+
     set_local_strings();
     $("#edit_tabs_all").tabs();
     //setTimeout(function() {
     geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
     init_search();
     //}, 1000);
+    window.focus();
+    window.geomap_art_spec_popup = "" + '<?php echo $map_article_spec; ?>';
+    try {
+        if (undefined !== window.opener.geomap_art_spec_popup)
+        {
+            window.opener.geomap_art_spec_popup = window.geomap_art_spec_popup;
+        }
+    }
+    catch(e) {}
+
+    set_to_opener = function()
+    {
+        try {
+            if (undefined !== window.opener.geomap_art_spec_main)
+            {
+                if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
+                {
+                    if (null === window.opener.geomap_popup_editing)
+                    {
+                        window.opener.geomap_art_spec_popup = window.geomap_art_spec_popup;
+                        window.opener.geomap_popup_editing = window;
+                    }
+                }
+            }
+        }
+        catch(e) {}
+        return;
+    };
+
+    var opener_sets = self.setInterval("set_to_opener()", 1000);
 };
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -291,7 +333,7 @@ var on_load_proc = function()
 <div class="map_sidepan" id="map_sidepan">
 <div id="map_save_part" class="map_save_part">
 <a id="map_save_label" class="map_save_label map_save_off" href="#" onClick="geo_locations.map_save_all(); return false;"><?php putGS("save"); ?></a> 
-<div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search"><?php putGS("fill in map name"); ?></a><input id="map_name_input" class="map_name_input hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">&nbsp;</div>
+<div id="map_save_info" class="map_save_info">&nbsp;<a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="setting map name helps with map search"><?php putGS("fill in map name"); ?></a><input id="map_name_input" class="map_name_input map_hidden" type="text" size="10" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">&nbsp;</div>
 </div><!-- end of map_save_part -->
 <div class="map_menubar">
 <select class="map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
@@ -303,14 +345,14 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 ?>
 </select>
 <label class="map_geo_search"><a href="#" onClick="findLocation(true); return false;"><?php putGS("Find"); ?></a>&nbsp;</label>
-<label id="map_geo_showhide" class="hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
+<label id="map_geo_showhide" class="map_hidden">[<a href="#" id="showhide_link" onClick="showhideLocation(); return false;">+</a>]</label>
 </div><!-- end of map_menubar -->
 
 <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
 <input class="map_geo_cityname" id="search-city" type="text">
 </form>
 <div id="side_info" class="side_info">
-<div id="search_results" class="search_results hidden">&nbsp;</div>
+<div id="search_results" class="search_results map_hidden">&nbsp;</div>
 <div id="map_sidedescs" class="map_sidedescs">&nbsp;</div>
 </div><!--end of side_info -->
 </div><!-- end of map_sidepan -->
@@ -318,9 +360,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
-<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("show article view"); ?></a>
-&nbsp;|&nbsp;
-<a href="#" onClick="geo_locations.map_setview(); return false;"><?php putGS("set as the article view"); ?></a>
+<a href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("Last Saved Map View"); ?></a>
 </div><!-- end of map initview -->
 <div class="map_resizing">
 &nbsp;<?php putGS("resize article view"); ?>:&nbsp;
@@ -333,7 +373,7 @@ V
 <a href="#" onClick="geo_locations.map_height_change(10); return false;">&gt;&gt;</a>
 </div><!-- end of map resizing -->
 <div id="map_view_size" class="map_resizing">600x400</div>
-<div id="map_mapedit" class="map_mapedit hidden">
+<div id="map_mapedit" class="map_mapedit map_hidden">
 <div class="map_editinner">
 <div class="map_editpart1">
 
@@ -386,13 +426,13 @@ V
 <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
 </textarea>
 </div>
-<div id="edit_part_content" class="hidden">
+<div id="edit_part_content" class="map_hidden">
 <label class="edit_label" for="point_content"><!--HTML pop-up content:-->&nbsp;</label>
 <textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
 </div>
-<div id="edit_part_preview_outer" class="hidden">
-<div class="popup_preview hidden" id="edit_part_preview"> </div>
+<div id="edit_part_preview_outer" class="map_hidden">
+<div class="popup_preview map_hidden" id="edit_part_preview"> </div>
 </div>
 </li>
 </ol>
@@ -422,7 +462,7 @@ V
 	<div id="edit_video" class="edit_tabs">
 <ol>
 <li class="edit_label_top">
-<label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="hidden"><?php putGS("Video file"); ?>:</span></label>
+<label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
 <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
 </li>
 
@@ -475,6 +515,6 @@ V
 <div id="map_mapcanvas" class="map_mapcanvas"></div>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_editor -->
-<div id="error_messages" class="hidden" style="margin-top:200px">debug purposes</div>
+<div id="error_messages" class="map_hidden" style="margin-top:200px">debug purposes</div>
 </body>
 </html>

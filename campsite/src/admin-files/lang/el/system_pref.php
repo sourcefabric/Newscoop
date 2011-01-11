@@ -1,4 +1,8 @@
 <?php 
+regGS("OpenStreet Map", "");
+regGS("MapQuest Map", "");
+regGS("Google Streets Map", "");
+regGS("Allow Google Streets Map Provider:", "");
 regGS("Allow MapQuest Map Provider:", "");
 regGS("Local Flash Server:", "");
 regGS("Local Flash Directory:", "");
@@ -20,7 +24,6 @@ regGS("Flash Default Width:", "");
 regGS("Flash Default Height:", "");
 regGS("Default Map Provider:", "");
 regGS("Allow OpenStreet Map Provider:", "");
-regGS("Allow Google Map Provider:", "");
 regGS("Allow password recovery:", "Επιτρέψτε την ανάκτηση κωδικού πρόσβασης:");
 regGS("Template Cache Handler:", "Χειριστής Προσωρινής Μνήμης Προτύπου:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Μη έγκυρο: Χρειάζεται να εργεργοποιήσετε τη PHP $1 για να χρησιμοποιήσετε το σύστημα προσωρινής μνήμης του προτύπου.");

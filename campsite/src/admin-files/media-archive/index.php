@@ -92,16 +92,28 @@ $(document).ready(function() {
             return false;
         }
 
-        // confirm
-        if (!confirm('<?php putGS('Are you sure you want to delete selected items?'); ?>')) {
-            return false;
-        }
-
         // get ids
         var ids = [];
+        var used = false;
         items.each(function() {
-            ids.push($(this).attr('name'));
+            if ($('.used', $(this).closest('tr')).size()) {
+                used = true;
+            } else {
+                ids.push($(this).attr('name'));
+            }
         });
+
+        if (!ids.length) { // only used selected, nothing to delete
+            flashMessage("<?php putGS("You can't delete used files."); ?>", 'error');
+            return true;
+        }
+
+        // confirm
+        if (!used && !confirm('<?php putGS('Are you sure you want to delete selected items?'); ?>')) {
+            return false;
+        } else if (used && !confirm("<?php echo getGS("You can't delete used files."), ' ', getGS("Do you wan't to delete unused only?"); ?>")) {
+            return false; // delete canceled
+        }
 
         // delete
         var callback = [];

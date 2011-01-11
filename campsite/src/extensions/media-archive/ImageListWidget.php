@@ -24,6 +24,7 @@ class ImageListWidget extends Widget
         if (!$this->isFullscreen()) {
             $list->setHidden('TimeCreated');
             $list->setHidden('LastModified');
+            $list->setHidden('InUse');
         }
 
         $list->render();

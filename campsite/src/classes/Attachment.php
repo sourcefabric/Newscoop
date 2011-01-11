@@ -308,6 +308,22 @@ class Attachment extends DatabaseObject {
 	    }
 	} // fn makeDirectories
 
+	/**
+	 * Return true if the attachment is being used by an article.
+	 *
+	 * @return boolean
+	 */
+	public function inUse()
+	{
+		global $g_ado_db;
+
+        $queryStr = 'SELECT fk_article_number
+            FROM ArticleAttachments
+            INNER JOIN Articles ON fk_article_number = Number
+            WHERE fk_attachment_id = ' . (int) $this->getAttachmentId();
+
+        return (bool) $g_ado_db->GetOne($queryStr);
+	}
 
 	/**
 	 * This function should be called when an attachment is uploaded.  It will

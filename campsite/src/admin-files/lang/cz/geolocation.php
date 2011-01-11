@@ -1,7 +1,10 @@
 <?php 
+regGS("Last Saved Map View", "");
+regGS("Google Streets", "");
+regGS("List of locations updated", "");
+regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
 regGS("MapQuest Map", "");
 regGS("OpenStreet Map", "");
-regGS("Google Map", "");
 regGS("width", "");
 regGS("source", "");
 regGS("sorry, no city was found", "");
@@ -39,8 +42,6 @@ regGS("Label", "");
 regGS("Image URL", "");
 regGS("video", "video");
 regGS("text", "text");
-regGS("show article view", "ukázat zobrazení článku");
-regGS("set as the article view", "nastavit jako zobrazení článku");
 regGS("save", "uložit");
 regGS("resize article view", "změnit velikost zobrazení článku");
 regGS("image", "obrázek");

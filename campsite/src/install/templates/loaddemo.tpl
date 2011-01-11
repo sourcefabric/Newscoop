@@ -48,9 +48,9 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p>Is this the first time you install <em>Campsite</em>?
-              are not you familiar with the template engine system?
-              do you want to see <em>Campsite</em> in action before start
+              <p>Is this the first time you install <em>Newscoop</em>?
+              Are not you familiar with the template engine system?
+              Do you want to see <em>Newscoop</em> in action before start
               writing template files for your own Web site? Then, choose
               "Yes" to install the sample site and you will can see a
               simple and functional Web site to get familiar with the

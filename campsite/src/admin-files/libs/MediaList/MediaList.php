@@ -32,11 +32,15 @@ class MediaList extends BaseList
             'content_disposition' => getGS('Open in browser'),
             'time_created' => getGS('Added'),
             'last_modified' => getGS('Last modified'),
+            'InUse' => getGS('In use'),
         );
         
         $this->searchCols = array(
             'file_name', 'extension', 'mime_type',
         );
+
+        $this->ignoredCols = array('InUse');
+        $this->inUseColumn = sizeof($this->cols) - 1;
 
         $this->defaultSorting = 5;
         $this->defaultSortingDir = 'desc';
@@ -61,6 +65,10 @@ class MediaList extends BaseList
 
         // yes/no disposition
         $row['content_disposition'] = empty($row['content_disposition']) ? getGS('Yes') : getGS('No');
+
+        // get in use info
+        $object = new Attachment($row['id']);
+        $row['InUse'] = (int) $object->inUse();
 
         return array_values($row);
     }

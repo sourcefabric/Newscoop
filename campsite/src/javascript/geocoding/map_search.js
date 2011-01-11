@@ -1,3 +1,6 @@
+// better for some providers to try more than once
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+
 // times for icon redrawing at some situations
 var redraw_times = {
     time_drag_delay: 500,
@@ -571,7 +574,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     });
 
-    geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
 
     var pzb_ctrl = new OpenLayers.Control.PanZoomBar();
     pzb_ctrl.geo_obj = geo_obj;
@@ -838,12 +841,12 @@ var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, de
         }
     }
 
-    var use_show_class = "map-shown";
-    var use_hide_class = "map-hidden";
+    var use_show_class = "map_shown";
+    var use_hide_class = "map_hidden";
     if (geo_obj.map_shown)
     {
-        use_show_class = "map-hidden";
-        use_hide_class = "map-shown";
+        use_show_class = "map_hidden";
+        use_hide_class = "map_shown";
     }
 
     {

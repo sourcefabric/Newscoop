@@ -1,3 +1,6 @@
+// better for some providers to try more than once
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+
 // the main object to hold geo-things
 var geo_locations = {};
 
@@ -17,11 +20,13 @@ geo_locations.display_strings = {
     center: "center",
     enable: "enable",
     disable: "disable",
-    remove: "remove"
+    remove: "remove",
+    locations_updated: "Locations updated"
 };
 
 // flag saved state
 geo_locations.something_to_save = false;
+geo_locations.main_page_upload = false;
 
 // specifying the article that the map is for
 geo_locations.article_number = 0;
@@ -50,9 +55,12 @@ geo_locations.map_view_layer_providers[geo_locations.map_view_layer_mapquest] = 
 geo_locations.map_view_layer_names_all = {};
 geo_locations.map_view_layer_default = "";
 geo_locations.map_view_layer_name = "";
+geo_locations.map_view_layer_name_saved = "";
 geo_locations.map_view_layer_center_ini = {};
 geo_locations.map_view_layer_center = null;
+geo_locations.map_view_layer_center_saved = null;
 geo_locations.map_view_layer_zoom = 0;
+geo_locations.map_view_layer_zoom_saved = 0;
 geo_locations.map_art_view_width_default = 0;
 geo_locations.map_art_view_height_default = 0;
 
@@ -153,7 +161,8 @@ geo_locations.set_display_strings = function(local_strings)
         "center",
         "enable",
         "disable",
-        "remove"
+        "remove",
+        "locations_updated"
     ];
 
     var str_count = display_string_names.length;
@@ -183,8 +192,11 @@ geo_locations.map_limit_width_view = 1200;
 geo_locations.map_limit_height_view = 1200;
 
 // setting the map width
-geo_locations.set_map_width = function(width)
+geo_locations.set_map_width = function(width, set_view)
 {
+    //var width_changed = false;
+    //if (set_view) {width_changed = true;}
+
     var partial_change = false;
     if (this.map_limit_width_display > this.map_art_view_width)
     {
@@ -196,18 +208,21 @@ geo_locations.set_map_width = function(width)
     }
     if (partial_change)
     {
-        this.map_width_change(this.map_limit_width_display - this.map_art_view_width);
+        this.map_width_change(this.map_limit_width_display - this.map_art_view_width, false);
     }
 
     var width_diff = this.map_art_view_width_default - this.map_art_view_width;
 
-    this.map_width_change(width_diff);
+    this.map_width_change(width_diff, false);
 
 };
 
 // setting the map height
-geo_locations.set_map_height = function(height)
+geo_locations.set_map_height = function(height, set_view)
 {
+    //var height_changed = false;
+    //if (set_view) {height_changed = true;}
+
     var partial_change = false;
     if (this.map_limit_height_display > this.map_art_height_width)
     {
@@ -219,12 +234,12 @@ geo_locations.set_map_height = function(height)
     }
     if (partial_change)
     {
-        this.map_width_change(this.map_limit_height_display - this.map_art_view_height);
+        this.map_height_change(this.map_limit_height_display - this.map_art_view_height, false);
     }
 
     var height_diff = this.map_art_view_height_default - this.map_art_view_height;
 
-    this.map_height_change(height_diff);
+    this.map_height_change(height_diff, false);
 
 };
 
@@ -240,6 +255,7 @@ geo_locations.set_map_info = function(params)
 
     this.map_view_layer_center_ini = {"longitude": params.longitude, "latitude": params.latitude};
     this.map_view_layer_zoom = parseInt(params.resolution);
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 
     this.map_art_view_width_default = parseInt(params.width);
     this.map_art_view_height_default = parseInt(params.height);
@@ -260,6 +276,7 @@ geo_locations.set_map_usage = function(params, set_view)
 
     this.map_view_layer_center_ini = {"longitude": longitude, "latitude": latitude};
     this.map_view_layer_zoom = parseInt(params.res);
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 
     this.map_label_name = params.name;
     // set the map name to divs
@@ -270,8 +287,8 @@ geo_locations.set_map_usage = function(params, set_view)
 
     if (set_view)
     {
-        this.set_map_width(this.map_art_view_width_default);
-        this.set_map_height(this.map_art_view_height_default);
+        this.set_map_width(this.map_art_view_width_default, set_view);
+        this.set_map_height(this.map_art_view_height_default, set_view);
     }
 
     this.map_view_layer_default = params.prov;
@@ -282,12 +299,20 @@ geo_locations.set_map_usage = function(params, set_view)
         if (layer_name && ("" != layer_name))
         {
             this.map_view_layer_name = layer_name;
+            this.map_view_layer_name_saved = layer_name;
         }
         this.map_view_layer_center = new OpenLayers.LonLat(longitude, latitude).transform(
             new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject()
         );
+        this.map_view_layer_center_saved = new OpenLayers.LonLat(longitude, latitude).transform(
+            new OpenLayers.Projection("EPSG:4326"), this.map.getProjectionObject()
+        );
     }
 
+    if (set_view)
+    {
+        this.map_showview();
+    }
 };
 
 // setting info on available marker icons
@@ -474,6 +499,7 @@ geo_locations.set_usage_poi = function(index, usage, div_ids)
         {
             cur_poi_info.content_changed = true;
             cur_poi_info.state_changed = true;
+            geo_locations.main_page_upload = true;
         }
     }
     attrs.m_disabled = to_disable;
@@ -510,22 +536,22 @@ geo_locations.set_usage_poi = function(index, usage, div_ids)
         lon_obj.disabled = false;
         lat_obj.disabled = false;
 
-        $(dis_obj).removeClass('hidden');
-        $(voi_obj).removeClass('hidden');
+        $(dis_obj).removeClass('map_hidden');
+        $(voi_obj).removeClass('map_hidden');
 
-        $(ena_obj).addClass('hidden');
-        $(rem_obj).addClass('hidden');
+        $(ena_obj).addClass('map_hidden');
+        $(rem_obj).addClass('map_hidden');
     }
     else
     {
         lon_obj.disabled = true;
         lat_obj.disabled = true;
 
-        $(ena_obj).removeClass('hidden');
-        $(rem_obj).removeClass('hidden');
+        $(ena_obj).removeClass('map_hidden');
+        $(rem_obj).removeClass('map_hidden');
 
-        $(dis_obj).addClass('hidden');
-        $(voi_obj).addClass('hidden');
+        $(dis_obj).addClass('map_hidden');
+        $(voi_obj).addClass('map_hidden');
     }
 };
 
@@ -539,10 +565,24 @@ geo_locations.remove_poi = function(index)
     var really = confirm(confirm_string);
     if (!really) {return;}
 
+    var layer_index = this.display_index(index);
+
+    var feature_rem = this.layer.features[layer_index];
+    if (this.popup && (feature_rem == this.popup.feature))
+    {
+        // this pop-up removal seems to be sometimes strange
+        try {
+            this.map.removePopup(this.popup);
+            this.popup.destroy();
+        }
+        catch (e) {}
+        this.popup = null;
+    }
+
+    this.close_edit_window();
+
     this.set_save_state(true);
     this.poi_order_changed = true;
-
-    var layer_index = this.display_index(index);
 
     var to_remove = [];
     to_remove.push(this.layer.features[layer_index])
@@ -724,13 +764,13 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         if (cur_marker && cur_marker.attributes.m_disabled)
         {
-            dis_class += " hidden";
-            voi_class += " hidden";
+            dis_class += " map_hidden";
+            voi_class += " map_hidden";
         }
         else
         {
-            ena_class += " hidden";
-            rem_class += " hidden";
+            ena_class += " map_hidden";
+            rem_class += " map_hidden";
         }
 
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
@@ -959,6 +999,8 @@ var geo_hook_trigger_on_map_click = function(e)
         return true;
     }
 
+	if (e.onControlDiv) {return true;}
+
     if (e['cancelBubble']) {return true;}
 
     if (undefined !== e.originalTarget)
@@ -1157,6 +1199,34 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
     geo_locations.pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
 
+    // msie does not stops the event, and does not preserves its properties either
+    geo_locations.pzb_ctrl.divClick = function (evt)
+    {
+		//if (undefined === evt.stopPropagation) {evt.stopPropagation = null;}
+
+		if (!OpenLayers.Event.isLeftClick(evt)) {
+			return;
+		}
+		var levels = evt.xy.y / this.zoomStopHeight;
+		if (this.forceFixedZoomLevel || !this.map.fractionalZoom) {
+			levels = Math.floor(levels);
+		}
+		var zoom = this.map.getNumZoomLevels() - 1 - levels;
+		zoom = Math.min(Math.max(zoom, 0), this.map.getNumZoomLevels() - 1);
+		this.map.zoomTo(zoom);
+
+        // this change works for firefox under winxp too, but not for linux/firefox
+        if ('msie' == OpenLayers.Util.getBrowserName())
+        {
+            geo_locations.ignore_click = true;
+        }
+        else
+        {
+            OpenLayers.Event.stop(evt);
+        }
+
+	}
+
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
@@ -1300,18 +1370,20 @@ var geo_main_openlayers_init = function(map_div_name)
         {
             if (geo_locations.map.baseLayer.name == geo_locations.display_strings.google_map)
             {
-                $('.olLayerGoogleCopyright').removeClass('hidden');
-                $('.olLayerGooglePoweredBy').removeClass('hidden');
+                $('.olLayerGoogleCopyright').removeClass('map_hidden');
+                $('.olLayerGooglePoweredBy').removeClass('map_hidden');
             }
             else
             {
-                $('.olLayerGoogleCopyright').addClass('hidden');
-                $('.olLayerGooglePoweredBy').addClass('hidden');
+                $('.olLayerGoogleCopyright').addClass('map_hidden');
+                $('.olLayerGooglePoweredBy').addClass('map_hidden');
             }
         }
 
+        geo_locations.set_map_provider();
         return redraw;
     };
+
     geo_locations.map.addControl(lswitch);
 
     // an initial center point, set via parameters
@@ -1374,8 +1446,11 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map.setCenter (lonLat_cen, zoom);
 
     geo_locations.map_view_layer_name = geo_locations.map.layers[0].name;
+    geo_locations.map_view_layer_name_saved = geo_locations.map.layers[0].name;
     geo_locations.map_view_layer_center = geo_locations.map.getCenter();
+    geo_locations.map_view_layer_center_saved = geo_locations.map.getCenter();
     geo_locations.map_view_layer_zoom = geo_locations.map.getZoom();
+    geo_locations.map_view_layer_zoom_saved = geo_locations.map_view_layer_zoom;
 
     // registering for click events
     var click = new OpenLayers.Control.Click();
@@ -1466,6 +1541,13 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.set_map_width(geo_locations.map_art_view_width_default);
     geo_locations.set_map_height(geo_locations.map_art_view_height_default);
 
+    geo_locations.map.events.register("moveend", null, function() {
+        geo_locations.map_position_changed();
+    });
+    geo_locations.map.events.register("zoomend", null, function() {
+        geo_locations.map_zoom_changed();
+    });
+
 };
 
 // needed just for click on pop-up close button
@@ -1537,12 +1619,12 @@ geo_locations.create_popup_content = function(feature)
     else
     {
         var plain_text = feature.attributes.m_text;
-        plain_text.replace(/&/gi, "&amp;");
-        plain_text.replace(/>/gi, "&gt;");
-        plain_text.replace(/</gi, "&lt;");
-        plain_text.replace(/\r\n/gi, "</p><p>");
-        plain_text.replace(/\n/gi, "</p><p>");
-        plain_text.replace(/\r/gi, "</p><p>");
+        plain_text = plain_text.replace(/&/gi, "&amp;");
+        plain_text = plain_text.replace(/>/gi, "&gt;");
+        plain_text = plain_text.replace(/</gi, "&lt;");
+        plain_text = plain_text.replace(/\r\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\r/gi, "</p><p>");
 
         pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
     }
@@ -1592,13 +1674,13 @@ var geo_hook_on_feature_select = function(evt)
 // for closing the edit window
 geo_locations.close_edit_window = function ()
 {
-    $("#map_mapedit").addClass('hidden');
+    $("#map_mapedit").addClass('map_hidden');
 };
 
 // for displaying the edit window
 geo_locations.open_edit_window = function ()
 {
-    $("#map_mapedit").removeClass('hidden');
+    $("#map_mapedit").removeClass('map_hidden');
 };
 
 // the entry initialization point
@@ -1638,12 +1720,12 @@ var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name,
         }
     }
 
-    var use_show_class = "map-shown";
-    var use_hide_class = "map-hidden";
+    var use_show_class = "map_shown";
+    var use_hide_class = "map_hidden";
     if (geo_locations.map_shown)
     {
-        use_show_class = "map-hidden";
-        use_hide_class = "map-shown";
+        use_show_class = "map_hidden";
+        use_hide_class = "map_shown";
     }
 
     {
@@ -1688,19 +1770,20 @@ var geo_main_selecting_locations = function (geocodingdir, div_name, descs_name,
     {
         geo_locations.set_save_state(true);
         geo_locations.map_spec_changed = true;
+        geo_locations.main_page_upload = true;
     }
 
 };
 
-// showing the current initial reader view
+// showing the last saved reader view
 geo_locations.map_showview = function()
 {
-    var map_names = this.map.getLayersByName(this.map_view_layer_name);
+    var map_names = this.map.getLayersByName(this.map_view_layer_name_saved);
     if (0 < map_names.length)
     {
         this.map.setBaseLayer(map_names[0]);
     }
-    this.map.setCenter(this.map_view_layer_center, this.map_view_layer_zoom);
+    this.map.setCenter(this.map_view_layer_center_saved, this.map_view_layer_zoom_saved);
 };
 
 // setting the current view as the reader initial view
@@ -1710,18 +1793,69 @@ geo_locations.map_setview = function()
     this.map_spec_changed = true;
 
     this.map_view_layer_name = this.map.baseLayer.name;
+    this.map_view_layer_name_saved = this.map.baseLayer.name;
     this.map_view_layer_center = this.map.getCenter();
+    this.map_view_layer_center_saved = this.map.getCenter();
     this.map_view_layer_zoom = this.map.getZoom();
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
 };
 
+// map provider is set automatically on map layer change
+geo_locations.set_map_provider = function ()
+{
+    if (("" != this.map_view_layer_name) && (this.map_view_layer_name != this.map.baseLayer.name))
+    {
+        this.map_view_layer_name = this.map.baseLayer.name;
+
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
+}
+
+// map position is set automatically on map layer change
+geo_locations.map_position_changed = function ()
+{
+    if (this.map_view_layer_center)
+    {
+        var current_map_center = this.map.getCenter();
+        if ((current_map_center.lon != this.map_view_layer_center.lon) || (current_map_center.lat != this.map_view_layer_center.lat))
+        {
+            this.map_view_layer_center = current_map_center;
+            this.set_save_state(true);
+            this.map_spec_changed = true;
+        }
+    }
+
+}
+
+// map zoom is set automatically on map layer change
+geo_locations.map_zoom_changed = function ()
+{
+    //if (this.map_view_layer_zoom)
+    {
+        var current_map_zoom = this.map.getZoom();
+        if (current_map_zoom != this.map_view_layer_zoom)
+        {
+            this.map_view_layer_zoom = current_map_zoom;
+            this.set_save_state(true);
+            this.map_spec_changed = true;
+        }
+    }
+
+}
+
 // changing the size for the map div for the reader view
-geo_locations.map_width_change = function(size)
+geo_locations.map_width_change = function(size, unsaved)
 {
     if ((0 > size) && (10 >= this.map_art_view_width)) {return;}
     if ((0 < size) && (this.map_limit_width_view <= this.map_art_view_width)) {return;}
 
-    this.set_save_state(true);
-    this.map_spec_changed = true;
+    if (undefined === unsaved) {unsaved = true;}
+    if (unsaved)
+    {
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
 
     var map_left_border = this.border_left;
     var map_right_border = this.border_right;
@@ -1761,13 +1895,17 @@ geo_locations.map_width_change = function(size)
 };
 
 // changing the size for the map div for the reader view
-geo_locations.map_height_change = function(size)
+geo_locations.map_height_change = function(size, unsaved)
 {
     if ((0 > size) && (10 >= this.map_art_view_height)) {return;}
     if ((0 < size) && (this.map_limit_height_view <= this.map_art_view_height)) {return;}
 
-    this.set_save_state(true);
-    this.map_spec_changed = true;
+    if (undefined === unsaved) {unsaved = true;}
+    if (unsaved)
+    {
+        this.set_save_state(true);
+        this.map_spec_changed = true;
+    }
 
     var map_left_border = this.border_left;
     var map_right_border = this.border_right;
@@ -1836,6 +1974,7 @@ geo_locations.store_point_label = function()
             cur_poi_info.content_changed = true;
             cur_poi_info.text_changed = true;
             update_preview = true;
+            geo_locations.main_page_upload = true;
         }
     }
     cur_marker.attributes.m_title = label_obj.value;
@@ -2048,13 +2187,13 @@ geo_locations.update_video_label = function()
     var video_index = video_type_obj.selectedIndex;
     if (3 <= video_index)
     {
-        $("#video_file_label_id").addClass("hidden");
-        $("#video_file_label_file").removeClass("hidden");
+        $("#video_file_label_id").addClass("map_hidden");
+        $("#video_file_label_file").removeClass("map_hidden");
     }
     else
     {
-        $("#video_file_label_id").removeClass("hidden");
-        $("#video_file_label_file").addClass("hidden");
+        $("#video_file_label_id").removeClass("map_hidden");
+        $("#video_file_label_file").addClass("map_hidden");
     }
 };
 
@@ -2182,18 +2321,18 @@ geo_locations.set_edit_direct = function()
 
     if (direct_usage)
     {
-        $("#edit_part_text").addClass("hidden");
+        $("#edit_part_text").addClass("map_hidden");
         if ('edit' == this.edit_view_mode)
         {
-            $("#edit_part_content").removeClass("hidden");
+            $("#edit_part_content").removeClass("map_hidden");
         }
     }
     else
     {
-        $("#edit_part_content").addClass("hidden");
+        $("#edit_part_content").addClass("map_hidden");
         if ('edit' == this.edit_view_mode)
         {
-            $("#edit_part_text").removeClass("hidden");
+            $("#edit_part_text").removeClass("map_hidden");
         }
     }
 
@@ -2208,12 +2347,12 @@ geo_locations.edit_set_mode = function(mode)
     if ('view' == mode)
     {
         this.edit_view_mode = 'view';
-        $("#edit_part_content").addClass("hidden");
+        $("#edit_part_content").addClass("map_hidden");
 
-        $("#edit_part_text").addClass("hidden");
+        $("#edit_part_text").addClass("map_hidden");
 
-        $("#edit_part_preview").removeClass("hidden");
-        $("#edit_part_preview_outer").removeClass("hidden");
+        $("#edit_part_preview").removeClass("map_hidden");
+        $("#edit_part_preview_outer").removeClass("map_hidden");
 
         edit_obj.checked = false;
         view_obj.checked = true;
@@ -2226,14 +2365,14 @@ geo_locations.edit_set_mode = function(mode)
         this.edit_view_mode = 'edit';
         if ('html' == this.edit_text_mode)
         {
-            $("#edit_part_content").removeClass("hidden");
+            $("#edit_part_content").removeClass("map_hidden");
         }
         else
         {
-            $("#edit_part_text").removeClass("hidden");
+            $("#edit_part_text").removeClass("map_hidden");
         }
-        $("#edit_part_preview").addClass("hidden");
-        $("#edit_part_preview_outer").addClass("hidden");
+        $("#edit_part_preview").addClass("map_hidden");
+        $("#edit_part_preview_outer").addClass("map_hidden");
 
         view_obj.checked = false;
         edit_obj.checked = true;
@@ -2295,7 +2434,7 @@ geo_locations.map_edit_prepare_markers = function()
     var choice_one = "";
     var choices_count = this.marker_src_labels.length;
 
-    for (var cind = 0; cind < choices_count; cind++)
+    for (var cind = 1; cind < choices_count; cind++)
     {
         var cur_img_label = this.marker_src_labels[cind];
         var cur_img_icon = this.marker_src_icons[cur_img_label];
@@ -2333,6 +2472,8 @@ geo_locations.set_save_state = function(state)
 // loading the POI data, for the initial phase
 geo_locations.map_pois_load = function(script_dir)
 {
+    this.set_save_state(false);
+
     callServer(['Geo_Map', 'LoadMapData'], [
         this.map_id,
         this.language_id,
@@ -2345,8 +2486,8 @@ geo_locations.map_pois_load = function(script_dir)
 // setting the map for editing its name
 geo_locations.map_edit_name = function()
 {
-    $("#map_name_display").addClass("hidden");
-    $("#map_name_input").removeClass("hidden");
+    $("#map_name_display").addClass("map_hidden");
+    $("#map_name_input").removeClass("map_hidden");
 
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
     input_obj.focus();
@@ -2357,8 +2498,8 @@ geo_locations.map_display_name = function()
 {
     this.map_save_name();
 
-    $("#map_name_display").removeClass("hidden");
-    $("#map_name_input").addClass("hidden");
+    $("#map_name_display").removeClass("map_hidden");
+    $("#map_name_input").addClass("map_hidden");
 
 };
 
@@ -2551,7 +2692,8 @@ geo_locations.got_load_data = function (received_obj)
 
     this.update_poi_descs();
 
-    this.set_save_state(false);
+    // setting to tha saved state at the button pressing now
+    //this.set_save_state(false);
 
     if ("0" == "" + this.map_id)
     {
@@ -2664,6 +2806,8 @@ geo_locations.put_into_poi_contents = function(storage, index)
 geo_locations.map_save_all = function(script_dir)
 {
     if (!this.something_to_save) {return;}
+    //this.something_to_save = false;
+    this.set_save_state(false);
 
     var cur_marker = null;
 
@@ -2700,16 +2844,16 @@ geo_locations.map_save_all = function(script_dir)
             'name': this.map_label_name
         };
         var store_map_str = Base64.encode(JSON.stringify(store_map_obj));
-        store_map_str.replace(/\+/gi, "%2B");
-        store_map_str.replace(/\//gi, "%2F");
+        store_map_str = store_map_str.replace(/\+/gi, "%2B");
+        store_map_str = store_map_str.replace(/\//gi, "%2F");
         args['f_map'] = store_map_str;
     }
 
     if (0 < this.poi_deletion.length)
     {
         var remove_poi_str = Base64.encode(JSON.stringify(this.poi_deletion));
-        remove_poi_str.replace(/\+/gi, "%2B");
-        remove_poi_str.replace(/\//gi, "%2F");
+        remove_poi_str = remove_poi_str.replace(/\+/gi, "%2B");
+        remove_poi_str = remove_poi_str.replace(/\//gi, "%2F");
         args['f_remove'] = remove_poi_str;
     }
 
@@ -2725,8 +2869,8 @@ geo_locations.map_save_all = function(script_dir)
             else {order_ids.push({'state': 'new', 'index': cur_marker.tmp_index});}
         }
         var order_poi_str = Base64.encode(JSON.stringify(order_ids));
-        order_poi_str.replace(/\+/gi, "%2B");
-        order_poi_str.replace(/\//gi, "%2F");
+        order_poi_str = order_poi_str.replace(/\+/gi, "%2B");
+        order_poi_str = order_poi_str.replace(/\//gi, "%2F");
         args['f_order'] = order_poi_str;
     }
 
@@ -2755,23 +2899,36 @@ geo_locations.map_save_all = function(script_dir)
     if (0 < insert_poi_new_array.length)
     {
         var insert_poi_new_str = Base64.encode(JSON.stringify(insert_poi_new_array));
-        insert_poi_new_str.replace(/\+/gi, "%2B");
-        insert_poi_new_str.replace(/\//gi, "%2F");
+        insert_poi_new_str = insert_poi_new_str.replace(/\+/gi, "%2B");
+        insert_poi_new_str = insert_poi_new_str.replace(/\//gi, "%2F");
         args['f_insert_new'] = insert_poi_new_str;
     }
     if (0 < update_poi_loc_array.length)
     {
         var update_poi_loc_str = Base64.encode(JSON.stringify(update_poi_loc_array));
-        update_poi_loc_str.replace(/\+/gi, "%2B");
-        update_poi_loc_str.replace(/\//gi, "%2F");
+        update_poi_loc_str = update_poi_loc_str.replace(/\+/gi, "%2B");
+        update_poi_loc_str = update_poi_loc_str.replace(/\//gi, "%2F");
         args['f_update_loc']= update_poi_loc_str;
     }
     if (0 < update_poi_con_array.length)
     {
         var update_poi_con_str = Base64.encode(JSON.stringify(update_poi_con_array));
-        update_poi_con_str.replace(/\+/gi, "%2B");
-        update_poi_con_str.replace(/\//gi, "%2F");
+        update_poi_con_str = update_poi_con_str.replace(/\+/gi, "%2B");
+        update_poi_con_str = update_poi_con_str.replace(/\//gi, "%2F");
         args['f_update_con'] = update_poi_con_str;
+    }
+
+    if (this.poi_order_changed)
+    {
+        geo_locations.main_page_upload = true;
+    }
+    if (0 < this.poi_deletion.length)
+    {
+        geo_locations.main_page_upload = true;
+    }
+    if (0 < insert_poi_new_array.length)
+    {
+        geo_locations.main_page_upload = true;
     }
 
     callServer(['Geo_Map', 'StoreMapData'], [
@@ -2787,4 +2944,23 @@ geo_locations.map_save_all = function(script_dir)
         ], function(json) {
             geo_locations.got_load_data(json);
         });
+
+    this.map_view_layer_name_saved = this.map_view_layer_name;
+    this.map_view_layer_center_saved = this.map_view_layer_center;
+    this.map_view_layer_zoom_saved = this.map_view_layer_zoom;
+
+    if (geo_locations.main_page_upload)
+    {
+        geo_locations.main_page_upload = false;
+        try {
+            if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
+            {
+                window.opener.document.forms.article_edit.f_message.value = geo_locations.display_strings["locations_updated"];
+                window.opener.document.forms.article_edit.submit();
+            }
+        }
+        catch (e)
+        {
+        }
+    }
 };

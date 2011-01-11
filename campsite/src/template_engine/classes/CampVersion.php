@@ -22,7 +22,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_package = 'Campsite';
+    private $m_package = 'Newscoop';
 
     /**
      * @var string

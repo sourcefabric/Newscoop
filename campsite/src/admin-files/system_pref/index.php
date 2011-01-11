@@ -462,7 +462,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Allow Google Map Provider:"); ?>
+        <?php putGS("Allow Google Streets Map Provider:"); ?>
     </td>
     <td align="left" valign="top">
         <input type="checkbox" name="f_map_provider_available_google_v3" value="1" <?php echo SystemPref::Get('MapProviderAvailableGoogleV3') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
@@ -491,9 +491,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <select name="f_map_provider_default" class="input_select">
             <?php
-            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Map');
-            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), 'MapQuest Map');
-            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreet Map');
+            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), getGS('Google Streets Map'));
+            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), getGS('MapQuest Map'));
+            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), getGS('OpenStreet Map'));
             ?>
         </select>
     </td>

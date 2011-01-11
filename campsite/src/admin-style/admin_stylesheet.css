@@ -1669,13 +1669,13 @@ fieldset dt {
 }
 
 .smartlist .DataTables_sort_wrapper {
-    position: relative;
+    height: 1%;
+    overflow: hidden;
 }
 
 .smartlist .DataTables_sort_wrapper .ui-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: block;
+    float: left;
 }
 
 .flash {
@@ -1797,16 +1797,6 @@ fieldset dt {
 .smartlist .ui-button {
     float: left;
     cursor: pointer;
-}
-
-.smartlist .DataTables_sort_wrapper {
-    position: relative;
-}
-
-.smartlist .DataTables_sort_wrapper .ui-icon {
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .flash {
@@ -1938,6 +1928,7 @@ ul.rss {
 ul.rss li {
     margin: 0;
     padding: 5px;
+    display: block;
 }
 
 ul.rss li.even {

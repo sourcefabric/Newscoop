@@ -54,7 +54,9 @@ foreach ($f_audioclip_codes as $audioclip) {
 
 ?>
 <script>
+try {
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Audioclip(s) attached successfully."); ?>";
 window.opener.document.forms.article_edit.submit();
+} catch (e) {}
 window.close();
 </script>

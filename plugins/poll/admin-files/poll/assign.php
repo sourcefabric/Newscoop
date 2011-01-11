@@ -52,23 +52,23 @@ function poll_popup_close()
     switch (target) {
         case 'publication':
             window.onunload = new Function('fx',
-                "window.opener.document.forms[0].onsubmit(); window.opener.document.forms[0].submit()");
+                "try {window.opener.document.forms[0].onsubmit(); window.opener.document.forms[0].submit();} catch (e) {}");
         break;
 
         case 'issue':
             window.onunload = new Function('fx',
-                "window.opener.document.forms['issue_edit'].onsubmit(); window.opener.document.forms['issue_edit'].submit()");
+                "try {window.opener.document.forms['issue_edit'].onsubmit(); window.opener.document.forms['issue_edit'].submit();} catch (e) {}");
         break;
             window.onunload = new Function('fx',
-                "window.opener.document.forms['issue_edit'].onsubmit(); window.opener.document.forms['issue_edit'].submit()");
+                "try {window.opener.document.forms['issue_edit'].onsubmit(); window.opener.document.forms['issue_edit'].submit();} catch (e) {}");
         case 'section':
             window.onunload = new Function('fx',
-                "window.opener.document.forms['section_edit'].onsubmit(); window.opener.document.forms['section_edit'].submit()");
+                "try {window.opener.document.forms['section_edit'].onsubmit(); window.opener.document.forms['section_edit'].submit();} catch (e) {}");
         break;
 
         case 'article':
             window.onunload = new Function('fx',
-                "window.opener.document.forms['article_edit'].onsubmit(); window.opener.document.forms['article_edit'].submit()");
+                "try {window.opener.document.forms['article_edit'].onsubmit(); window.opener.document.forms['article_edit'].submit();} catch (e) {}");
         break;
     }
 

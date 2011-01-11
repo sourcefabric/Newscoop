@@ -50,11 +50,13 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
         $title = rtrim(getGS($this->widget->getTitle()), ' (*)');
 
         // render whole widget
-        echo '<li id="', $this->getId(), '" class="widget">';
+        echo '<li id="', $this->getId(), '" class="widget ui-dialog ui-widget-content ui-corner-all">';
         if ($this->widget->getTitle() !== NULL) {
-            echo '<div class="header"><h3>', $title, '</h3></div>';
+            echo '<div class="header ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">';
+            echo '<h3 class="ui-dialog-title">', $title, '</h3>';
+            echo '</div>';
         }
-        echo '<div class="content"><div class="scroll">', "\n";
+        echo '<div class="content"><div class="scroll ui-dialog-content ui-widget-content">', "\n";
         echo $content;
         echo '</div></div>', "\n";
         echo '<div class="extra">';

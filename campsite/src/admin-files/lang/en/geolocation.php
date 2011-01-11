@@ -1,7 +1,10 @@
 <?php 
+regGS("Last Saved Map View", "Last Saved Map View");
+regGS("Google Streets", "Google Streets");
+regGS("List of locations updated", "List of locations updated");
+regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.");
 regGS("MapQuest Map", "MapQuest Map");
 regGS("OpenStreet Map", "OpenStreet Map");
-regGS("Google Map", "Google Map");
 regGS("width", "width");
 regGS("source", "source");
 regGS("sorry, no city was found", "sorry, no city was found");
@@ -39,8 +42,6 @@ regGS("Label", "Label");
 regGS("Image URL", "Image URL");
 regGS("video", "video");
 regGS("text", "text");
-regGS("show article view", "show article view");
-regGS("set as the article view", "set as the article view");
 regGS("save", "save");
 regGS("resize article view", "resize article view");
 regGS("image", "image");

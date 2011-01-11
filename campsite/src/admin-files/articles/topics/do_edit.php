@@ -55,8 +55,10 @@ foreach ($f_topic_ids as $topicIdString) {
 ?>
 <script>
 <?php if (!is_null($f_topic_ids)) { ?>
+try {
 window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Topics updated."); ?>";
 window.opener.document.forms.article_edit.submit();
+} catch (e) {}
 <?php } ?>
 window.close();
 </script>

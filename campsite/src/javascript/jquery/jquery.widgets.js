@@ -8,7 +8,7 @@ $.fn.widgets = function (options) {
     var settings = {
         widgets: '> .widget',
         controls: '> .header',
-        localizer: {},
+        localizer: {}
     };
 
     /**
@@ -21,7 +21,7 @@ $.fn.widgets = function (options) {
             var context = $(this).attr('id');
             callServer(['WidgetContext', 'setWidgets'], [
                 context,
-                $(this).sortable('toArray'),
+                $(this).sortable('toArray')
             ]);
         });
 
@@ -43,7 +43,7 @@ $.fn.widgets = function (options) {
             var meta = $('dl.meta', widget);
 
             // add min/max button
-            $('<a class="minmax" href="#">full</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-arrow-4-diag">' + settings.localizer.maximize + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     var dashboard = widget.closest('#dashboard');
@@ -71,12 +71,17 @@ $.fn.widgets = function (options) {
                         callServer(['WidgetRendererDecorator', 'render'], [
                             widget.attr('id'),
                             '',
-                            true,
+                            true
                             ], function(json) {
                                 $('> .content > .scroll', widget).html(json);
                             });
                         return false;
-                    }).html('Close');
+                    });
+
+                    // change icon
+                    $('a.close span', full)
+                        .removeClass('ui-icon-arrow-4-diag')
+                        .addClass('ui-icon-closethick');
 
                     // hide other buttons
                     $('a.info, a.minmax, a.settings', full).detach();
@@ -90,7 +95,7 @@ $.fn.widgets = function (options) {
                     callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         'fullscreen',
-                        true,
+                        true
                         ], function(json) {
                             $('> .content > .scroll', full).html(json);
                         });
@@ -101,7 +106,7 @@ $.fn.widgets = function (options) {
             $('form.settings', widget).each(function() {
 
             // add settings button
-            $('<a href="#" class="settings">settings</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-wrench">' + settings.localizer.settings + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     $('.settings fieldset', widget).toggle();
@@ -121,13 +126,13 @@ $.fn.widgets = function (options) {
                 });
                 callServer(['WidgetManagerDecorator', 'update'], [
                     widget.attr('id'),
-                    {'settings': settings},
+                    {'settings': settings}
                     ], function(json) {
                     // reload content
                     callServer(['WidgetRendererDecorator', 'render'], [
                         widget.attr('id'),
                         widget.closest('.context').attr('id'),
-                        true,
+                        true
                         ], function(json) {
                             $('> .content > .scroll', widget).html(json);
                             fieldset.fadeOut();
@@ -137,7 +142,7 @@ $.fn.widgets = function (options) {
                     if (settings['title']) {
                         callServer(['WidgetManagerDecorator', 'getSetting'], [
                             widget.attr('id'),
-                            'title',
+                            'title'
                             ], function(json) {
                                 $('> .header h3', widget).text(json);
                         });
@@ -149,7 +154,7 @@ $.fn.widgets = function (options) {
             }); // /form.settings
 
             // add info button
-            $('<a class="info" href="#" title="' + settings.localizer.info + '">i</a>')
+            $('<a class="info ui-corner-all" href="#"><span class="ui-icon ui-icon-info">' + settings.localizer.info + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     meta.toggle();
@@ -162,11 +167,11 @@ $.fn.widgets = function (options) {
             });
 
             // add close button
-            $('<a class="close" href="#" title="' + settings.localizer.remove + '">x</a>')
+            $('<a class="close ui-corner-all" href="#"><span class="ui-icon ui-icon-closethick">' + settings.localizer.remove + '</span></a>')
                 .prependTo(controls)
                 .click(function() {
                     callServer(['WidgetManagerDecorator', 'delete'], [
-                        widget.attr('id'),
+                        widget.attr('id')
                         ], function(json) {
                             widget.hide(500, function() {
                                 $(this).detach();
@@ -177,6 +182,13 @@ $.fn.widgets = function (options) {
 
             // add move cursor
             controls.css('cursor', 'move');
+
+            // add ui hover class
+            $('span.ui-icon').hover(function() {
+                $(this).closest('a').addClass('ui-state-hover');
+            }, function() {
+                $(this).closest('a').removeClass('ui-state-hover');
+            });
         });
 
         // make sortable
@@ -191,14 +203,14 @@ $.fn.widgets = function (options) {
                 callServer(['WidgetRendererDecorator', 'render'], [
                     ui.item.attr('id'),
                     'default',
-                    true,
+                    true
                     ], function(json) {
                         $('> .content > .scroll', ui.item).html(json);
                     });
                 updateOrder();
-            },
+            }
         }).css({
-            minHeight: '40px',
+            minHeight: '40px'
         });
     });
 };

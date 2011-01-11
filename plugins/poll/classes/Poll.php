@@ -565,6 +565,7 @@ class Poll extends DatabaseObject {
         $nr_of_votes_overall = 0;
 
         foreach ($poll->getTranslations() as $translation) {
+        	$nr_of_votes[$translation->getLanguageId()] = 0;
             foreach ($translation->getAnswers() as $answer) {
                 $votes[$translation->getLanguageId()][$answer->getProperty('nr_answer')] = $answer->getProperty('nr_of_votes');
                 $nr_of_votes[$translation->getLanguageId()] += $answer->getProperty('nr_of_votes');

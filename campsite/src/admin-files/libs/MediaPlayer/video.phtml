@@ -4,7 +4,7 @@
         <param name="movie" value="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/flowplayer/flowplayer-3.2.5.swf" />
 		<param name="allowFullScreen" value="true" />
 		<param name="wmode" value="transparent" />
-		<param name="flashVars" value="config={'playlist':[{'url':'','autoPlay':false}]}" />
+        <param name="flashVars" value="config={'playlist':[{'url':'<?php echo $this->src; ?>','autoPlay':false}]}" />
         <span title="<?php putGS('No video playback capabilities, please download the video below'); ?>"><?php echo $this->alt; ?></span>
 	</object>
 </video>

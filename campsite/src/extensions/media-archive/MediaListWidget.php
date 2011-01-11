@@ -20,6 +20,8 @@ class MediaListWidget extends Widget
     {
         $list = new MediaList;
         $list->setHidden('id');
+        $list->setHidden('content_disposition');
+        $list->setHidden('InUse');
         $list->render();
     }
 }
