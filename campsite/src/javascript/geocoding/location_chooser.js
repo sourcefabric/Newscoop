@@ -743,9 +743,6 @@ geo_locations.update_poi_descs = function(active, index_type)
         }
 
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
-        //descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one  ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-default\" role=\"tab\" aria-expanded=\"true\" tabindex=\"0\">";
-        //descs_inner += "<span class=\"ui-icon ui-icon-triangle-1-s\"></span><a href=\"#\" class='poi_name' tabindex=\"-1\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
-        //descs_inner += "<div class='poi_actions_all ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active' role=\"tabpanel\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
         descs_inner += "<a href=\"#\" class='poi_name'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions_all'>";
@@ -804,7 +801,6 @@ geo_locations.update_poi_descs = function(active, index_type)
 
         disp_index += 1;
     }
-    //this.descs_elm.innerHTML = "<div id='map_poi_side_list' class='map_poi_side_list ui-accordion ui-widget ui-helper-reset ui-accordion-icons ui-sortable' role='tablist'>" + descs_inner + "</div>";
     this.descs_elm.innerHTML = "<div id='map_poi_side_list' class='map_poi_side_list'>" + descs_inner + "</div>";
 
     // putting the list into UI accordion
