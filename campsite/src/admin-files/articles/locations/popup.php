@@ -357,6 +357,7 @@ on_close_request = function()
 	</script>
 
 <script type="text/javascript">
+
     $(function(){
 		
 
@@ -369,6 +370,7 @@ on_close_request = function()
 			function() { $(this).removeClass('ui-state-hover'); }
 		);
     });
+
 	
 </script>
 

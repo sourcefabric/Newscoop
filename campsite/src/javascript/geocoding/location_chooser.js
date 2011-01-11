@@ -747,7 +747,7 @@ geo_locations.update_poi_descs = function(active, index_type)
         //descs_inner += "<span class=\"ui-icon ui-icon-triangle-1-s\"></span><a href=\"#\" class='poi_name' tabindex=\"-1\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         //descs_inner += "<div class='poi_actions_all ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active' role=\"tabpanel\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
-        descs_inner += "<span class=\"ui-icon\"></span><a href=\"#\" class='poi_name'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
+        descs_inner += "<a href=\"#\" class='poi_name'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions_all'>";
 
         var disable_value = "";
@@ -824,7 +824,7 @@ geo_locations.update_poi_descs = function(active, index_type)
             var poi_order = $(this).sortable('toArray');
             geo_locations.poi_order_update(poi_order);
         });
-/*
+
         $('#map_poi_side_list .icon-button').hover(
             function() { $(this).addClass('ui-state-hover'); }, 
             function() { $(this).removeClass('ui-state-hover'); }
@@ -833,9 +833,8 @@ geo_locations.update_poi_descs = function(active, index_type)
             function() { $(this).addClass('ui-state-hover'); }, 
             function() { $(this).removeClass('ui-state-hover'); }
         );
-*/
-    });
 
+    });
     this.map_update_side_desc_height();
 };
 
