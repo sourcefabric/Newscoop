@@ -1619,12 +1619,12 @@ geo_locations.create_popup_content = function(feature)
     else
     {
         var plain_text = feature.attributes.m_text;
-        plain_text.replace(/&/gi, "&amp;");
-        plain_text.replace(/>/gi, "&gt;");
-        plain_text.replace(/</gi, "&lt;");
-        plain_text.replace(/\r\n/gi, "</p><p>");
-        plain_text.replace(/\n/gi, "</p><p>");
-        plain_text.replace(/\r/gi, "</p><p>");
+        plain_text = plain_text.replace(/&/gi, "&amp;");
+        plain_text = plain_text.replace(/>/gi, "&gt;");
+        plain_text = plain_text.replace(/</gi, "&lt;");
+        plain_text = plain_text.replace(/\r\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\r/gi, "</p><p>");
 
         pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
     }
@@ -2844,16 +2844,16 @@ geo_locations.map_save_all = function(script_dir)
             'name': this.map_label_name
         };
         var store_map_str = Base64.encode(JSON.stringify(store_map_obj));
-        store_map_str.replace(/\+/gi, "%2B");
-        store_map_str.replace(/\//gi, "%2F");
+        store_map_str = store_map_str.replace(/\+/gi, "%2B");
+        store_map_str = store_map_str.replace(/\//gi, "%2F");
         args['f_map'] = store_map_str;
     }
 
     if (0 < this.poi_deletion.length)
     {
         var remove_poi_str = Base64.encode(JSON.stringify(this.poi_deletion));
-        remove_poi_str.replace(/\+/gi, "%2B");
-        remove_poi_str.replace(/\//gi, "%2F");
+        remove_poi_str = remove_poi_str.replace(/\+/gi, "%2B");
+        remove_poi_str = remove_poi_str.replace(/\//gi, "%2F");
         args['f_remove'] = remove_poi_str;
     }
 
@@ -2869,8 +2869,8 @@ geo_locations.map_save_all = function(script_dir)
             else {order_ids.push({'state': 'new', 'index': cur_marker.tmp_index});}
         }
         var order_poi_str = Base64.encode(JSON.stringify(order_ids));
-        order_poi_str.replace(/\+/gi, "%2B");
-        order_poi_str.replace(/\//gi, "%2F");
+        order_poi_str = order_poi_str.replace(/\+/gi, "%2B");
+        order_poi_str = order_poi_str.replace(/\//gi, "%2F");
         args['f_order'] = order_poi_str;
     }
 
@@ -2899,22 +2899,22 @@ geo_locations.map_save_all = function(script_dir)
     if (0 < insert_poi_new_array.length)
     {
         var insert_poi_new_str = Base64.encode(JSON.stringify(insert_poi_new_array));
-        insert_poi_new_str.replace(/\+/gi, "%2B");
-        insert_poi_new_str.replace(/\//gi, "%2F");
+        insert_poi_new_str = insert_poi_new_str.replace(/\+/gi, "%2B");
+        insert_poi_new_str = insert_poi_new_str.replace(/\//gi, "%2F");
         args['f_insert_new'] = insert_poi_new_str;
     }
     if (0 < update_poi_loc_array.length)
     {
         var update_poi_loc_str = Base64.encode(JSON.stringify(update_poi_loc_array));
-        update_poi_loc_str.replace(/\+/gi, "%2B");
-        update_poi_loc_str.replace(/\//gi, "%2F");
+        update_poi_loc_str = update_poi_loc_str.replace(/\+/gi, "%2B");
+        update_poi_loc_str = update_poi_loc_str.replace(/\//gi, "%2F");
         args['f_update_loc']= update_poi_loc_str;
     }
     if (0 < update_poi_con_array.length)
     {
         var update_poi_con_str = Base64.encode(JSON.stringify(update_poi_con_array));
-        update_poi_con_str.replace(/\+/gi, "%2B");
-        update_poi_con_str.replace(/\//gi, "%2F");
+        update_poi_con_str = update_poi_con_str.replace(/\+/gi, "%2B");
+        update_poi_con_str = update_poi_con_str.replace(/\//gi, "%2F");
         args['f_update_con'] = update_poi_con_str;
     }
 
