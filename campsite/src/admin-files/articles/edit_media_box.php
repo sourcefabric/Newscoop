@@ -1,4 +1,4 @@
-<div class="articlebox tabs" title="<?php putGS('Media'); ?>">
+<div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
         <li><a href="#media-attachments"><?php putGS('Attachments'); ?></a></li>
@@ -6,7 +6,7 @@
     <div id="media-images">
         <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
         <a class="ui-state-default icon-button right-floated" href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
-        <br class="clear" />
+        <div class="clear"></div>
         <?php } ?>
 
         <ul class="block-list">
@@ -39,7 +39,7 @@
         <a class="ui-state-default icon-button right-floated"
             href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><span
             class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
-        <br class="clear" />
+        <div class="clear"></div>
         <?php } ?>
         
         <ul class="block-list">
@@ -69,4 +69,4 @@
             </li>
 			<?php } ?>
     </div>
-</div>
+</div></div>

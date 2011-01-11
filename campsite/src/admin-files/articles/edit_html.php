@@ -105,7 +105,10 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     });
 
     // init tabs
-    $('.tabs .padded').tabs();
+    $('.sidebar .tabs').each(function() {
+        $(this).tabs();
+        $(this).closest('.padded').addClass('inner-tabs');
+    });
   });
   </script>
   <!-- END Side bar //-->
