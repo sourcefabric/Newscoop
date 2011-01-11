@@ -284,7 +284,6 @@ $().ready(function() {
             ed.onKeyUp.add(function(ed, l) {
                 var idx = ed.id.lastIndexOf('_');
                 var buttonId = ed.id.substr(0, idx);
-                buttonEnable('save_' + buttonId);
             });
 
             ed.addButton('campsite-subhead', {

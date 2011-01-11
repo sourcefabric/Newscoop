@@ -21,13 +21,13 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
   <div class="toolbar clearfix">
   <?php if ($inEditMode) { ?>
     <input class="top-input" name="f_article_title" id="f_article_title" type="text"
-      value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" onkeyup="buttonEnable('save_f_article_title');" <?php print $spellcheck ?> />
+      value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" onchange="$('input:hidden[name=f_article_title]').val(this.value);" <?php print $spellcheck ?> />
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } ?>
     <span class="comments"><?php p(count($comments)); ?></span>
     <div class="save-button-bar">
-      <input type="button" onclick="makeRequest('all');" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" />
+      <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" />
       <input type="submit" class="save-button" value="<?php putGS('Save and Close'); ?>" id="save_and_close" name="save_and_close" />
     </div>
     <div class="top-button-bar">
@@ -115,6 +115,22 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
 
   <!-- START Main form //-->
   <div class="main-content-wrapper">
+    <form id="article-main" action="post.php" method="POST">
+        <?php echo SecurityToken::formParameter(); ?>
+        <?php
+            $hiddens = array(
+                'f_language_selected',
+                'f_article_number',
+                'f_article_title',
+                'f_creation_date',
+                'f_publish_date',
+                );
+            foreach ($hiddens as $name) {
+                echo '<input type="hidden" name="', $name;
+                echo '" value="', $$name, '" />', "\n";
+            }
+        ?>
+
     <div class="ui-widget-content big-block block-shadow padded-strong">
       <fieldset class="plain">
       <!-- BEGIN Authors //-->
@@ -226,7 +242,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
                 <?php if (count($subtopics) == 0) { ?>
                 <?php putGS('No subtopics available'); ?>
                 <?php } else { ?>
-                    <select class="input_select" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?> onchange="buttonEnable('save_<?php p($dbColumn->getName()); ?>');">
+                    <select class="input_select" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>" <?php if ($f_edit_mode != "edit") { ?>disabled<?php } ?>>
                     <option value="0"></option>
                     <?php
                     $TOL_Language = camp_session_get('TOL_Language', 'en');
@@ -279,9 +295,12 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <div class="padded-strong">
       <?php if ($inEditMode && $showCommentControls) { ?>
         <fieldset class="frame">
-	       <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status" checked onchange=""><label for="comments_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
-           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status" onchange=""><label for="comments_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
-           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status" onchange=""><label for="comments_disabled" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
+           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_enabled" checked />
+             <label for="f_comment_status_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
+           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_disabled" />
+             <label for="f_comment_status_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
+           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_locked" />
+             <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
         </fieldset>
       <?php } ?>
       <?php
@@ -291,6 +310,25 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       ?>
       </div>
     </div>
+  </form><!-- /form#article -->
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('form#article-main').submit(function() {
+            makeRequest('all');
+            return false;
+        });
+
+        $('.save-button-bar input').click(function() {
+            $('form#article-main').submit();
+            return false;
+        });
+
+        // copy title to hidden
+        $('input:hidden[name=f_article_title]').val($('input:text[name=f_article_title]').val());
+    });
+    </script>
+
     <?php if ($inEditMode && $showComments && $f_show_comments) { ?>
     <div class="ui-widget-content big-block block-shadow padded-strong">
       <?php include('comments/add_comment_form.php'); ?>
