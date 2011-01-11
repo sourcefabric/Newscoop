@@ -746,13 +746,7 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one  ui-accordion-header ui-helper-reset ui-state-active ui-corner-top ui-state-default\" role=\"tab\" aria-expanded=\"true\" tabindex=\"0\">";
         descs_inner += "<span class=\"ui-icon ui-icon-triangle-1-s\"></span><a href=\"#\" class='poi_name' tabindex=\"-1\">" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions_all ui-accordion-content ui-helper-reset ui-widget-content ui-corner-bottom ui-accordion-content-active' role=\"tabpanel\">";
-/*
-        descs_inner += "<div class='poi_actions'>";
-        descs_inner += "(<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>)&nbsp;";
-        descs_inner += "(<a href='#' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>)";
-        descs_inner += "</div>";
-        descs_inner += "<div class='poi_actions'>";
-*/
+
         var disable_value = "";
         if (cur_marker && cur_marker.attributes.m_disabled) {disable_value = " disabled=disabled";}
 
@@ -782,11 +776,7 @@ geo_locations.update_poi_descs = function(active, index_type)
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
 
         descs_inner += "<div class='poi_actions clearfix'>";
-        //descs_inner += "<a href='#' onclick='geo_locations.edit_poi(" + pind + ");return false;'>" + this.display_strings.edit + "</a>&nbsp;";
         descs_inner += "<a href='#' class='link left-floated' onclick='geo_locations.center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>";
-        //descs_inner += "&nbsp;";
-        //descs_inner += "<span id='" + ena_id + "' class='" + ena_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a>)</span>";
-        //descs_inner += "<span id='" + dis_id + "' class='" + dis_class + " link icon-link'>(<a href='#' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a>)</span>";
         descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'><a href='#' class='link left-floated' onclick='geo_locations.set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a></span>";
         descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'><a href='#' class='link left-floated' onclick='geo_locations.set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a></span>";
         descs_inner += "<a href='#' class='link icon-link right-floated' onclick='geo_locations.edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span><strong>" + this.display_strings.edit + "</strong></a>";
@@ -802,9 +792,6 @@ geo_locations.update_poi_descs = function(active, index_type)
         descs_inner += "</div>";
 
         descs_inner += "<div class='poi_actions poi_removal'>";
-
-        //descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
-        //descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;(<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;'>" + this.display_strings.remove + "</a>)</div>";
         descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
         descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;<a href='#' onclick='geo_locations.remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
 
@@ -842,12 +829,6 @@ geo_locations.update_poi_descs = function(active, index_type)
             function() { $(this).addClass('ui-state-hover'); }, 
             function() { $(this).removeClass('ui-state-hover'); }
         );
-/*
-        $('#map_poi_side_list .ui-accordion-header').hover(
-            function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
-            function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
-        );
-*/
     });
 
     this.map_update_side_desc_height();
@@ -862,7 +843,6 @@ geo_locations.map_update_side_desc_height = function()
     var sidedesc_obj = document.getElementById ? document.getElementById("map_sidedescs") : null;
 
     //var old_height = sidedesc_obj.offsetHeight;
-    //var new_height = 450 - height_taken;
     var new_height = 480 - height_taken;
     if ((!new_height) || (250 > new_height)) {new_height = 250;}
 
@@ -1898,14 +1878,6 @@ geo_locations.map_width_change = function(size, unsaved)
 
     map_view_size.innerHTML = this.map_art_view_width + " x " + this.map_art_view_height;
 
-/*
-    var border_width = 1;
-    if (this.map_limit_width_display < this.map_art_view_width) {border_width = 0;}
-    alert("limit w: " + this.map_limit_width_display + ", view w: " + this.map_art_view_width + ", b w: " + border_width);
-    map_left_border.style.borderWidth = border_width;
-    map_right_border.style.borderWidth = border_width;
-*/
-
     var border_zindex = geo_locations.map_border_zindex_on;
     if (this.map_limit_width_display < this.map_art_view_width) {border_zindex = geo_locations.map_border_zindex_off;}
     map_left_border.style.zIndex = border_zindex;
@@ -1916,15 +1888,6 @@ geo_locations.map_width_change = function(size, unsaved)
 
     this.map_art_view_width_display += size;
     this.map_art_view_right_display -= size / 2;
-
-/*
-    map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
-    map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 7) + "px";
-    map_top_border.style.width = (this.map_art_view_width_display + 1) + "px";
-    map_top_border.style.left = (this.map_art_view_right_display - 6) + "px";
-    map_bottom_border.style.width = (this.map_art_view_width_display + 1) + "px";
-    map_bottom_border.style.left = (this.map_art_view_right_display - 6) + "px";
-*/
 
     map_left_border.style.left = (this.map_art_view_right_display - 6) + "px";
     map_right_border.style.left = (this.map_art_view_right_display + this.map_art_view_width_display - 5) + "px";
@@ -1959,13 +1922,6 @@ geo_locations.map_height_change = function(size, unsaved)
     this.map_art_view_top -= size / 2;
 
     map_view_size.innerHTML = this.map_art_view_width + " x " + this.map_art_view_height;
-
-/*
-    var border_width = 1;
-    if (this.map_limit_height_display < this.map_art_view_height) {border_width = 0;}
-    map_top_border.style.borderWidth = border_width;
-    map_bottom_border.style.borderWidth = border_width;
-*/
 
     var border_zindex = geo_locations.map_border_zindex_on;
     if (this.map_limit_height_display < this.map_art_view_height) {border_zindex = geo_locations.map_border_zindex_off;}
@@ -2493,46 +2449,19 @@ geo_locations.map_edit_prepare_markers = function()
 // setting the saved state flag
 geo_locations.set_save_state = function(state)
 {
-    //var save_obj = document.getElementById ? document.getElementById("map_save_label") : null;
     var save_obj = document.getElementById ? document.getElementById("map_button_save") : null;
-    //var close_obj = document.getElementById ? document.getElementById("map_button_close") : null;
-
-/*
-    var state_buttons = [save_obj, close_obj];
-    var state_buttons_count = state_buttons.length;
-    for (var bind = 0; bind < state_buttons_count; bind++)
-    {
-        var sbutton = state_buttons[bind];
-        if (state)
-        {
-            $(sbutton).removeClass("disabled");
-        }
-        else
-        {
-            $(sbutton).addClass("disabled");
-        }
-    }
-*/
 
     if (state)
     {
         this.something_to_save = true;
 
         save_obj.disabled = false;
-
-        //$(save_obj).removeClass("map_save_off");
-        //$(save_obj).removeClass("disabled");
-        //$(save_obj).addClass("map_save_on");
     }
     else
     {
         this.something_to_save = false;
 
         save_obj.disabled = true;
-
-        //$(save_obj).removeClass("map_save_on");
-        //$(save_obj).addClass("map_save_off");
-        //$(save_obj).addClass("disabled");
     }
 
 };

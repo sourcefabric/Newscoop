@@ -359,9 +359,6 @@ on_close_request = function()
 <script type="text/javascript">
     $(function(){
 		
-		// Tabs
-		//$('.tabs').tabs();
-    	// Buttons
 
 		$('.icon-button').hover(
 			function() { $(this).addClass('ui-state-hover'); }, 
@@ -371,22 +368,8 @@ on_close_request = function()
 			function() { $(this).addClass('ui-state-hover'); }, 
 			function() { $(this).removeClass('ui-state-hover'); }
 		);
-/*
-    	$('.ui-accordion-header').hover(
-    		function(){ $(this).removeClass('ui-state-default').addClass('ui-state-hover'); },
-    		function(){ $(this).removeClass('ui-state-hover').addClass('ui-state-default'); }
-    	);
-		
-*/
     });
 	
-/*
-	$(document).ready(function(){
-		$("#map_geo_showhide .round-delete").click(function () {
-		  $(this).toggleClass("round-plus");
-		});
-	});
-*/
 </script>
 
 </head>
