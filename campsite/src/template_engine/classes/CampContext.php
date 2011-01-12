@@ -40,7 +40,8 @@ final class CampContext
                                                    'handler'=>'setTopicHandler'),
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template'),
-    								'location'=>array('class'=>'MapLocation')
+    								'location'=>array('class'=>'MapLocation'),
+    								'author'=>array('class'=>'ArticleAuthor')
     );
 
     // Defines the list objects
@@ -53,6 +54,9 @@ final class CampContext
 	                         				   'url_id'=>'sec'),
 	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
 	                         				   'url_id'=>'art'),
+	                         'articleauthors'=>array('class'=>'ArticleAuthors',
+	                                                 'list'=>'article_authors',
+	                                                 'url_id'=>'aas'),
 	                         'articlelocations'=>array('class'=>'ArticleLocations',
 	                                                'list'=>'article_locations',
 	                                                'url_id'=>'alc'),

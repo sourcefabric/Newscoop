@@ -18,6 +18,9 @@ DELETE FROM `Authors` WHERE `id` IN (SELECT `id` FROM `EmptyAuthorsTmp` GROUP BY
 DELETE FROM `ArticleAuthors` WHERE `fk_author_id` IN (SELECT `id` FROM `EmptyAuthorsTmp` GROUP BY `id`);
 DROP TEMPORARY TABLE `EmptyAuthorsTmp`;
 
+-- add creator as author for articles where author is not defined
+UPDATE Articles SET fk_default_author_id = IdUser WHERE fk_default_author_id = 0;
+
 -- add authors from Articles table to ArticleAuthors
 INSERT IGNORE INTO `ArticleAuthors` (`fk_article_number`,`fk_language_id`,`fk_author_id`)
     SELECT `Number`, `IdLanguage`, `fk_default_author_id` FROM Articles;
@@ -27,6 +30,9 @@ SET @rid := (SELECT `id` FROM `AuthorTypes` WHERE type = 'Author');
 UPDATE `ArticleAuthors` SET `fk_type_id` = @rid;
 INSERT IGNORE INTO `AuthorAssignedTypes` (`fk_author_id`) SELECT `id` FROM `Authors`;
 UPDATE `AuthorAssignedTypes` SET `fk_type_id` = @rid;
+
+-- remove author column from Articles table
+ALTER TABLE Articles DROP COLUMN fk_default_author_id;
 
 -- add system setting for password recovery
 INSERT INTO `SystemPreferences` (`varname`,`value`) VALUES ('PasswordRecovery','Y');

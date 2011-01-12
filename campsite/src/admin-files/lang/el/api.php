@@ -1,10 +1,10 @@
 <?php 
-regGS("Version", "");
+regGS("Version", "Εκδοχή");
 regGS("License", "");
-regGS("Homepage", "");
-regGS("Map", "");
+regGS("Homepage", "Αρχική σελίδα");
+regGS("Map", "Χάρτης");
 regGS("Center", "");
-regGS("Title", "");
+regGS("Title", "Τίτλος");
 regGS("No news.", "");
 regGS("Invalid security token.", "");
 regGS("Callback '$1' is not callable.", "");
@@ -18,7 +18,7 @@ regGS("Article deleted.", "");
 regGS("Article created.", "");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "");
 regGS("Article URL", "");
-regGS("Article Number", "");
+regGS("Article Number", "Αριθμός Άρθρου");
 regGS("Access denied.", "");
 regGS("Publish with issue", "Δημοσίευση με τεύχος");
 regGS("unknown", "άγνωστο");

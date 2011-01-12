@@ -223,7 +223,9 @@ final class MetaSubtitle {
      * @return string
      */
     public static function ProcessImageLink(array $p_matches) {
-        $uri = CampTemplate::singleton()->context()->url;
+    	$context = CampTemplate::singleton()->context();
+    	$oldImage = $context->image;
+        $uri = $context->url;
         if ($uri->article->number == 0) {
             return '';
         }
@@ -253,28 +255,29 @@ final class MetaSubtitle {
         $articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
         $imageObj = $articleImage->getImage();
         $image = new MetaImage($articleImage->getImageId());
+        $context->image = $image;
         $imageSize = @getimagesize($imageObj->getImageStorageLocation());
         unset($imageObj);
-        $imgParams = '';
 
-        $urlParams = array('ratio'=>'ImageRatio', 'width'=>'ImageWidth', 'height'=>'ImageHeight');
+        $imageOptions = '';
         $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
         'height'=>'EditorImageResizeHeight');
         foreach (array('ratio', 'width', 'height') as $imageOption) {
-        	$customValue = (int)$detailsArray[$imageOption];
-        	$defaultValue = (int)SystemPref::Get($defaultOptions[$imageOption]);
-
-        	if ($customValue > 0) {
-        		$imgParams .= '&amp;' . $urlParams[$imageOption] . '=' . $customValue;
-        	} elseif ($defaultValue > 0) {
-        		$imgParams .= '&amp;' . $urlParams[$imageOption] . '=' . $defaultValue;
+        	$defaultOption = (int)SystemPref::Get($defaultOptions[$imageOption]);
+        	if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
+        		$imageOptions .= " $imageOption " . (int)$detailsArray[$imageOption];
+        	} elseif ($imageOption != 'ratio' && $defaultOption > 0) {
+        		$imageOptions .= " $imageOption $defaultOption";
+        	} elseif ($imageOption == 'ratio' && $defaultOption != 100) {
+        		$imageOptions .= " $imageOption $defaultOption";
         	}
         }
+        $imageOptions = trim($imageOptions);
 
         $imgZoomLink = '';
-        if (SystemPref::Get("EditorImageZoom") == 'Y' && strlen($imgParams) > 0) {
-            $imgZoomLink = '<a href="/get_img?NrArticle=' . $uri->article->number
-                . '&amp;NrImage=' . $imageNumber . '" class="photoViewer" ';
+        if (SystemPref::Get("EditorImageZoom") == 'Y' && strlen($imageOptions) > 0) {
+        	$uri->uri_parameter = "image";
+            $imgZoomLink = '<a href="' . $uri->uri . '" class="photoViewer" ';
             if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
                 $imgZoomLink .= 'title="' . $detailsArray['sub'] . '">';
             } else {
@@ -294,27 +297,13 @@ final class MetaSubtitle {
         }
         $imgString .= '>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '<p>'.$imgZoomLink : '<p>';
-        $imgString .= '<img src="/get_img?NrArticle=' . $uri->article->number
-            . '&amp;NrImage=' . $imageNumber;
-        if (strlen($imgParams) > 0) {
-            $imgString .= $imgParams;
-        }
-        $imgString .= '"';
+        $uri->uri_parameter = "image $imageOptions";
+        $imgString .= '<img src="' . $uri->uri . '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
         }
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
             $imgString .= ' title="' . $detailsArray['sub'] . '"';
-        }
-        if (strpos($imgParams, 'ImageRatio') === false) {
-            if (isset($detailsArray['width']) && !empty($detailsArray['width'])
-                    && $detailsArray['width'] < $imageSize[0]) {
-                $imgString .= ' width="' . $detailsArray['width'] . '"';
-            }
-            if (isset($detailsArray['height']) && !empty($detailsArray['height'])
-                    && $detailsArray['height'] < $imageSize[1]) {
-                $imgString .= ' height="' . $detailsArray['height'] . '"';
-            }
         }
         $imgString .= ' border="0"/>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
@@ -327,6 +316,7 @@ final class MetaSubtitle {
         } else {
             $imgString .= '</div><p>';
         }
+        $context->image = $oldImage;
 
         return $imgString;
     }

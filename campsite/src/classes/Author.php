@@ -28,15 +28,16 @@ class Author extends DatabaseObject
         'jabber',
         'aim',
         'image');
-    public $m_keyIsAutoIncrement = true;
-    public $m_aliases = null;
+    public $m_keyIsAutoIncrement = TRUE;
+    public $m_aliases = NULL;
+    private $m_type = NULL;
 
 	/**
 	 * Constructor.
 	 *
 	 * @param int|string $p_idOrName
 	 */
-    public function __construct($p_idOrName = null)
+    public function __construct($p_idOrName = null, $p_type = null)
     {
         parent::__construct($this->m_columnNames);
         if (is_numeric($p_idOrName)) {
@@ -51,6 +52,9 @@ class Author extends DatabaseObject
             $this->m_keyColumnNames = array('id');
         }
         if ($this->exists()) {
+            if (!is_null($p_type)) {
+                $this->m_type = new AuthorType((int) $p_type);
+            }
             $this->loadAliases();
         }
     }
@@ -187,6 +191,11 @@ class Author extends DatabaseObject
     public function getImage()
     {
         return (int) $this->m_data['image'];
+    }
+
+    public function getAuthorType()
+    {
+        return $this->m_type;
     }
 
     /**

@@ -13,22 +13,32 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
 /**
  * @package Campsite
  */
-final class MetaAuthor extends MetaDbObject {
+final class MetaAuthor extends MetaDbObject
+{
+    /** @var array */
+    private static $m_baseProperties = array(
+        'identifier' => 'id',
+        'first_name' => 'first_name',
+        'last_name' => 'last_name',
+        'email' => 'email'
+    );
 
-    public function __construct($p_idOrName = null)
+    /** @var array */
+    private static $m_defaultCustomProperties = array(
+        'name' => 'getName',
+        'type' => 'getType',
+        'defined' => 'defined'
+    );
+
+    public function __construct($p_idOrName = NULL, $p_type = NULL)
     {
-        $this->m_dbObject = new Author($p_idOrName);
+        $this->m_properties = self::$m_baseProperties;
+        $this->m_customProperties = self::$m_defaultCustomProperties;
+
+        $this->m_dbObject = new Author($p_idOrName, $p_type);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Author();
         }
-
-        $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['first_name'] = 'first_name';
-        $this->m_properties['last_name'] = 'last_name';
-        $this->m_properties['email'] = 'email';
-
-        $this->m_customProperties['name'] = 'getName';
-        $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
 
@@ -38,10 +48,10 @@ final class MetaAuthor extends MetaDbObject {
     }
 
 
-    public static function GetTypeName()
+    public static function getType()
     {
-        return 'author';
+        return $this->m_dbObject->getAuthorType();
     }
-} // class MetaAuthor
+}
 
 ?>
