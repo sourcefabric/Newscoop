@@ -657,7 +657,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             "MapQuest Map"
         );
         map_mqm.wrapDateLine = true;
-        map_mqm.displayOutsideMaxExtent = true;
+        //map_mqm.displayOutsideMaxExtent = true;
 
         geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
         if (mqm_label == geo_obj.map_view_layer_default)
@@ -671,7 +671,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         // openstreetmap
         map_osm = new OpenLayers.Layer.OSM();
         map_osm.wrapDateLine = true;
-        map_osm.displayOutsideMaxExtent = true;
+        //map_osm.displayOutsideMaxExtent = true;
         map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
         geo_obj.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_obj.map_view_layer_default)
