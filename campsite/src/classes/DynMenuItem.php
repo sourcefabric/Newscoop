@@ -1,73 +1,13 @@
-<?PHP
+<?php
 /**
- * PHP class to dynamically create a javascript menu.
- * Funded by MDLF/Campware (http://www.sourcefabric.org)
+ * Class to dynamically create a javascript menu.
  *
- * Copyright (C) 2005  Paul Baranowski (paul@paulbaranowski.org)
+ * Copyright (C) 2005 MDLF/Campware
+ * Copyright (C) 2010 Sourcefabric
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * Authors: Paul Baranowski (paul@paulbaranowski.org)
+ *          Holman Romero (holman.romero@sourcefabric.org)
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * To see the full license, go here:
- * http://www.gnu.org/copyleft/gpl.html
- *
- *
- * Dynamic programmable web menu class.
- *
- * The design goals are:
- * 1) Make it easy to swap to a new menu type without having to
- *    reprogram anything.
- * 2) Dynamically insert items in the list.  This is to support
- *    application plugins that want to put themselves in the menu
- *    after it has been created.
- *
- * The first design goal is accomplished with a function that sets
- * which menu implementation you want to use:
- * DynMenuItem::SetMenuType('class_name');
- *
- * The second design goal is accomplished by setting an identifier
- * for each menu item.  Note that we cannot use the title or any other
- * existing peice of data for the identifier, because 1) any of
- * the data can be repeated, and even if that wasnt the case,
- * 2) multi-ligual interfaces make the data dynamic.
- *
- * However, use of IDs is optional.
- *
- * Example:
- * // This allows you to swap out different menu systems.
- * DynMenuItem::SetMenuType('DynMenuItem_JsCook');
- *
- * // You always must create a root node to contain all the others.
- * $root = DynMenuItem::Create('', '');
- *
- * // Create a "home" menu item.
- * $home = DynMenuItem::Create('Home', 'http://mysite.com/index.php',
- *                           array('id' => 'home',
- * 								   'icon' => "<img src='http://mysite.com/img/home.png' align='middle' style='padding-bottom: 3px;' width='16' height='16' />"));
- * $root->addItem($home);
- *
- * $root->addSplit();
- *
- * $content = DynMenuItem::Create('Content', 'http://mysite.com/content.php',
- *                              array('id' => 'content'));
- * $root->addItem($content);
- * $articles = DynMenuItem::Create('Articles', 'http://mysite.com/articles.php',
- *                               array('id' => 'articles'));
- *
- * $content->addItem($articles);
- *
- * // Generate the menu
- * echo $root->createMenu('myMenu');
- *
- * Note: the JSCook menu requires camp_javascriptspecialchars() which
- * escapes javascript strings.
  */
 class DynMenuItem {
     var $m_title = '';
@@ -142,7 +82,6 @@ class DynMenuItem {
      */
     public function addItem(&$p_item)
     {
-        $p_item->m_parent =& $this;
         if (isset($p_item->m_attrs['id'])) {
             $this->m_subItems[$p_item->m_attrs['id']] = $p_item;
         } else {
@@ -238,8 +177,8 @@ class DynMenuItem {
 } // class DynMenuItem
 
 
-class DynMenuItem_JsCook extends DynMenuItem {
-
+class DynMenuItem_JQueryFG extends DynMenuItem
+{
     /**
      * Create the javascript for the menu.
      * @param string $p_name
@@ -247,48 +186,28 @@ class DynMenuItem_JsCook extends DynMenuItem {
      */
     public function createMenu($p_name, $p_extraArgs = null)
     {
-    	$str = '<script type="text/javascript"><!--' . "\n";
-        $str .= "var $p_name =\n";
-        $str .= "[\n";
-        $str .= $this->__recurseBuild(1);
-        $str .= "];\n";
-        $str .= '--></script>';
-        return $str;
+        return $this->__recurseBuild(1);
     } // fn createMenu
 
 
     public function __recurseBuild($p_level)
     {
-        $str = '';
+        $str = "<ul>\n";
         foreach ($this->m_subItems as $subItem) {
-            $attrs =& $subItem->m_attrs;
-            if (!isset($attrs['target'])) {
-                $attrs['target'] = '';
-            }
-            if (!isset($attrs['description'])) {
-                $attrs['description'] = '';
-            }
-            if (!isset($attrs['icon'])) {
-                $attrs['icon'] = '';
-            }
-            if ($subItem->m_title != "[[split]]") {
+            if (count($subItem->m_subItems) > 0) {
                 $str .= str_repeat("\t", $p_level);
-                $str .= "['" . $attrs['icon'] . "', '" . camp_javascriptspecialchars($subItem->m_title) . "', '"
-                             . $subItem->m_url . "', '" . $attrs['target'] . "', '"
-                             . $attrs['description']. "'";
-                if (count($subItem->m_subItems) > 0) {
-                    $str .= ",\n". $subItem->__recurseBuild($p_level+1);
-                    $str .= str_repeat("\t", $p_level)."],\n";
-                } else {
-                    $str .= "],\n";
-                }
+                $str .= '<li><a href="' . $subItem->m_url . '">' . $subItem->m_title . '</a>';
+                $str .= "\n". $subItem->__recurseBuild($p_level + 1, $p_newLevel);
+                $str .= "</li>\n";
             } else {
-                $str .= str_repeat("\t", $p_level)."_cmSplit,\n";
+                $str .= str_repeat("\t", $p_level);
+                $str .= '<li><a href="' . $subItem->m_url . '">' . $subItem->m_title . '</a>';
+                $str .= "</li>\n";
             }
         }
+        $str .= "</ul>\n";
         return $str;
     } // fn __recurseBuild
-
-} // class DynMenuItem_JsCook
+}
 
 ?>

@@ -246,7 +246,7 @@ $().ready(function() {
         file_browser_callback : "campsitemedia",
         forced_root_block : "",
         relative_urls : false,
-        onchange_callback : "editorChanged",
+        onchange_callback : function() { $('form#article-main').change(); },
         extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
         // Theme options
@@ -284,7 +284,6 @@ $().ready(function() {
             ed.onKeyUp.add(function(ed, l) {
                 var idx = ed.id.lastIndexOf('_');
                 var buttonId = ed.id.substr(0, idx);
-                buttonEnable('save_' + buttonId);
             });
 
             ed.addButton('campsite-subhead', {

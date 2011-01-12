@@ -1,3 +1,20 @@
+<div class="ui-widget-content small-block block-shadow">
+  <div class="collapsible">
+    <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
+    <span class="ui-icon"></span>
+    <a href="#" tabindex="-1"><?php putGS('Audioclips'); ?></a></h3>
+  </div>
+  <div class="padded">
+  <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
+    <a class="ui-state-default icon-button right-floated"
+      href="#" onclick="return false;"><span
+      class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+  <?php } ?>
+  </div>
+</div>
+
+
+<!--
             <FORM action="do_sortlist.php" method="POST" name="audioclip_sortlist_form" id="audioclip_sortlist_form" onsubmit="populateHiddenVars('audioclip_sortlist');">
 			<?php echo SecurityToken::FormParameter(); ?>
             <INPUT type="hidden" name="f_sortlist_order" id="f_sortlist_order" size="60" />
@@ -85,3 +102,4 @@
                 Sortable.create('audioclip_sortlist', {tag:'div'});
             // ]]>
             </SCRIPT>
+//-->
