@@ -9,6 +9,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Author.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/AuthorType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
 
@@ -39,6 +40,12 @@ class ArticleAuthor extends DatabaseObject
                                   'fk_language_id',
                                   'fk_author_id',
                                   'fk_type_id');
+
+    /**
+     * @var AuthorType
+     */
+    private $m_type = NULL;
+
 
     /**
      * The ArticleAuthors table links together articles with authors.
@@ -102,6 +109,17 @@ class ArticleAuthor extends DatabaseObject
     }
 
     /**
+     * @return AuthorType
+     */
+    public function getType()
+    {
+        if (is_null($this->m_type)) {
+            $this->m_type = new AuthorType((int) $this->m_data['fk_type_id']);
+        }
+        return $this->m_type;
+    }
+
+    /**
      * @param int $p_authorId
      * @return array
      */
@@ -138,18 +156,21 @@ class ArticleAuthor extends DatabaseObject
         if (is_null($p_languageId)) {
             $langConstraint = "FALSE";
         } else {
-            $langConstraint = "fk_language_id = $p_languageId";
+            $langConstraint = "aa.fk_language_id = $p_languageId";
         }
-        $queryStr = 'SELECT fk_author_id
-                     FROM ' . self::TABLE . '
-                     WHERE fk_article_number = '. (int) $p_articleNumber . '
-                     AND (fk_language_id IS NULL OR ' . $langConstraint .')
-                     ORDER BY order_no';
+
+        $queryStr = 'SELECT aa.fk_author_id, aa.fk_type_id
+                     FROM ' . self::TABLE . ' AS aa
+                     JOIN ' . AuthorType::TABLE . ' AS at
+                     WHERE aa.fk_article_number = '. (int) $p_articleNumber . '
+                     AND (aa.fk_language_id IS NULL OR ' . $langConstraint .')
+                     AND aa.fk_type_id = at.id';
+                     // ORDER BY order_no';
         $rows = $g_ado_db->GetAll($queryStr);
         $returnArray = array();
         if (is_array($rows)) {
             foreach ($rows as $row) {
-                $author = new Author($row['fk_author_id']);
+                $author = new Author($row['fk_author_id'], $row['fk_type_id']);
                 if ($author->exists()) {
                 	$returnArray[] = $author;
                 }
@@ -286,8 +307,7 @@ class ArticleAuthor extends DatabaseObject
         	$paramsArray['limit'] = $p_limit;
         	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
         	$articleAuthorsList = $cacheListObj->fetchFromCache();
-        	if ($articleAuthorsList !== false
-        	&& is_array($articleAuthorsList)) {
+        	if ($articleAuthorsList !== false && is_array($articleAuthorsList)) {
         		return $articleAuthorsList;
         	}
         }
@@ -327,7 +347,10 @@ class ArticleAuthor extends DatabaseObject
         // sets the base table ArticleAuthors and the column to be fetched
         $tmpArticleAuthor = new ArticleAuthor();
         $selectClauseObj->setTable($tmpArticleAuthor->getDbTableName());
+        $selectClauseObj->addColumn('fk_article_number');
+        $selectClauseObj->addColumn('fk_language_id');
         $selectClauseObj->addColumn('fk_author_id');
+        $selectClauseObj->addColumn('fk_type_id');
         $countClauseObj->setTable($tmpArticleAuthor->getDbTableName());
         $countClauseObj->addColumn('COUNT(*)');
         unset($tmpArticleAuthor);
@@ -354,7 +377,10 @@ class ArticleAuthor extends DatabaseObject
         	// builds the array of attachment objects
         	$articleAuthorsList = array();
         	foreach ($authors as $author) {
-        		$authorObj = new Author($author['fk_author_id']);
+        		$authorObj = new self($author['fk_article_number'],
+        		                      $author['fk_language_id'],
+        		                      $author['fk_author_id'],
+        		                      $author['fk_type_id']);
         		if ($authorObj->exists()) {
         			$articleAuthorsList[] = $authorObj;
         		}
@@ -383,10 +409,10 @@ class ArticleAuthor extends DatabaseObject
         $parameter = array();
 
         switch (strtolower($p_param->getLeftOperand())) {
-        case 'article_number':
+        case 'article':
             $parameter['fk_article_number'] = (int) $p_param->getRightOperand();
             break;
-        case 'language_id':
+        case 'language':
             $parameter['fk_language_id'] = (int) $p_param->getRightOperand();
             break;
         }
