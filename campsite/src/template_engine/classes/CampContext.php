@@ -41,7 +41,7 @@ final class CampContext
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template'),
     								'location'=>array('class'=>'MapLocation'),
-    								'author'=>array('class'=>'ArticleAuthor')
+    								'author'=>array('class'=>'Author')
     );
 
     // Defines the list objects

@@ -195,7 +195,7 @@ class Author extends DatabaseObject
 
     public function getAuthorType()
     {
-        return $this->m_type;
+        return ($this->m_type->exists()) ? $this->m_type : NULL;
     }
 
     /**

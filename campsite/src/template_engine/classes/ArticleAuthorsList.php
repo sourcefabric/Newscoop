@@ -31,7 +31,11 @@ class ArticleAuthorsList extends ListObject
 	    $articleAuthorsList = ArticleAuthor::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaAuthorsList = array();
 	    foreach ($articleAuthorsList as $author) {
-	        $metaAuthorsList[] = new MetaArticleAuthor($author);
+                $authorTypeId = NULL;
+                if (!is_null($author->getAuthorType()) && $author->getAuthorType()->exists()) {
+                    $authorTypeId = $author->getAuthorType()->getId();
+                }
+	        $metaAuthorsList[] = new MetaAuthor($author->getId(), $authorTypeId);
 	    }
 	    return $metaAuthorsList;
 	}
