@@ -1,4 +1,5 @@
 <?php 
+regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Version", "Εκδοχή");
 regGS("License", "Άδεια");
 regGS("Homepage", "Αρχική σελίδα");
@@ -64,7 +65,6 @@ regGS("Article type field \"$1\" changed", "Ο τύπος πεδίου άρθρ�
 regGS("Article type \"$1\" translation updated", "Η μετάφραση τύπου άρθρου \"$1\" ανανεώθηκε");
 regGS("Article topic $1 deleted from article $2", "Το θέμα άρθρου $1 διαγράφτηκε από το άρθρο $2");
 regGS("The uploaded file format is unsupported.", "Η μορφή του αρχείου που ανέβηκε δεν υποστηρίζεται.");
-regGS("The uploaded archive does not contain an valid campsite plugin.", "Το ανεβασμένο αρχείο περιέχει ένα μη έγκυρο πρόσθετο campsite.");
 regGS("The following fields are mandatory:", "Τα παρακάτω πεδία είναι υποχρεωτικά:");
 regGS("Missing value for $1", "Λείπει τιμή για $1");
 regGS("Manage Plugins", "Διαχείριση Προσθέτων");

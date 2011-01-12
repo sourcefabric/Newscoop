@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "Obnovení hesla emailem");
 regGS("Password recovery", "Obnovení hesla");
 regGS("Password Recovery", "Obnovení Hesla");
 regGS("No user is registered with this email.", "Žadný uživatel s tímto emailem není registrován");
-regGS("Logo", "Logo");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Ahoj, \nfor obnova hesla, prosím následuj tento odkaz: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Ahoj, <br>pro ovnovu hesla, prosím následuj tento odkaz: <a href=\"%s\">Recover Password</a>");
 regGS("Forgot your password?", "Zapoměli jste heslo?");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Chyba v nastavení autora \"$1\" pro článek ($2) $3 typu $4.");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Je nemožné se spojit s Campcaster serverem, prosím ověřte servrové nastavení Campcaster.");
 regGS("Clear system cache", "Vymazat system cache");
-regGS("Campsite cache was cleaned up", "Campsite cache byl vyčištěn");
 regGS("The system was unable to upload the file '$1'. ", "Systém byl neschopen nahrát soubor '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Prosím, zkontrolujte soubor, který se snažíte nahrát zda není poškozený. ");
-regGS("Synchronize Campsite and Phorum users", "Synchronizovat Campsite a Fórum uživatele");
-regGS("Campsite and Phorum users were synchronized", "Campsite a Fórum uživatelé byli synchronizováni");
 regGS("Your user is not a valid Campcaster user", "Vaše uživatelské jméno není platné pro Campcaster");
 regGS("Connection refused", "Spojení odmítnuto");
 regGS("An error occured in session management. Please reload the login page.", "Objevila se chyba v session managementu. Prosime znovu si nahrajte přihlašovací stránku.");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "Systém nebyl schopen v
 regGS("The system was unable to create the directory '$1'.", "Systém nebyl schopnen vytvořit adresář '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "Zkontrolujte zda uživatel '$1' má povolení psát do tohoto souboru.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Zkontrolujte zda uživatel '$1' má povolení psát do adresáře '$2'.");
-regGS("Feedback", "Zpětná vazba");
 regGS("Type the code shown above:", "Napište kód zobrazený nahoře:");
 regGS("Please enter your user name.", "Vložte vaše uživatelské jméno.");
 regGS("Please enter your password.", "Vložte vaše heslo.");
 regGS("Please enter the code shown in the image.", "Vložte zobrazený kód.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Campsite zlepšila své bezpečnostní opatření. Pro úspěšnou aktualizaci bezpečnostního opatření pro váš účet, musíte znovu zadat vaše heslo.  ");
 regGS("CAPTCHA code is not valid.  Please try again.", "CAPTCHA kód je neplatný. Zkuste to znovu.");
 regGS("Signed in: $1", "Přihlášený v: $1");
 regGS("Help", "Nápověda");
-regGS("About", "O");
 regGS("Please enter your user name and password", "Zadejte uživatelské jméno a heslo");
 regGS("You do not have the right to access this page.", "Nemáte přístupová práva k této stránce");
 regGS("Login failed", "Přihlášení neproběhlo");

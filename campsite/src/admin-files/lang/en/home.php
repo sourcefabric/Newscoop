@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.");
+regGS("Synchronize Newscoop and Phorum users", "Synchronize Newscoop and Phorum users");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
+regGS("Newscoop cache was cleaned up", "Newscoop cache was cleaned up");
+regGS("Newscoop and Phorum users were synchronized", "Newscoop and Phorum users were synchronized");
+regGS("Dashboard", "Dashboard");
 regGS("Your changes will be saved after login.", "Your changes will be saved after login.");
 regGS("You have tried to upload wrong backup file.", "You have tried to upload wrong backup file.");
 regGS("Upload backup file", "Upload backup file");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "Password recovery email");
 regGS("Password recovery", "Password recovery");
 regGS("Password Recovery", "Password Recovery");
 regGS("No user is registered with this email.", "No user is registered with this email.");
-regGS("Logo", "Logo");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Hi, \nfor password recovery, please follow this link: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>");
 regGS("Forgot your password?", "Forgot your password?");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Unable to connect to the Campcaster server, please verify the Campcaster server settings.");
 regGS("Clear system cache", "Clear system cache");
-regGS("Campsite cache was cleaned up", "Campsite cache was cleaned up");
 regGS("The system was unable to upload the file '$1'. ", "The system was unable to upload the file '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Please check the file you are trying to upload, it might be corrupted.");
-regGS("Synchronize Campsite and Phorum users", "Synchronize Campsite and Phorum users");
-regGS("Campsite and Phorum users were synchronized", "Campsite and Phorum users were synchronized");
 regGS("Your user is not a valid Campcaster user", "Your user is not a valid Campcaster user");
 regGS("Connection refused", "Connection refused");
 regGS("An error occured in session management. Please reload the login page.", "An error occured in session management. Please reload the login page.");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "The system was unable t
 regGS("The system was unable to create the directory '$1'.", "The system was unable to create the directory '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "Please check if the user '$1' has permission to write to this file.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Please check if the user '$1' has permission to write to the directory '$2'.");
-regGS("Feedback", "Feedback");
 regGS("Type the code shown above:", "Type the code shown above:");
 regGS("Please enter your user name.", "Please enter your user name.");
 regGS("Please enter your password.", "Please enter your password.");
 regGS("Please enter the code shown in the image.", "Please enter the code shown in the image.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
 regGS("CAPTCHA code is not valid.  Please try again.", "CAPTCHA code is not valid.  Please try again.");
 regGS("Signed in: $1", "Signed in: $1");
 regGS("Help", "Help");
-regGS("About", "About");
 regGS("Please enter your user name and password", "Please enter your user name and password");
 regGS("You do not have the right to access this page.", "You do not have the right to access this page.");
 regGS("Login failed", "Login failed");

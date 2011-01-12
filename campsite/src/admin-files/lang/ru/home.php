@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "Email для восстановление па
 regGS("Password recovery", "Восстановление пароля");
 regGS("Password Recovery", "Восстановление Пароля");
 regGS("No user is registered with this email.", "Нет пользователей, зарегистрированных под этим паролем.");
-regGS("Logo", "Логотип");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Привет,  \n Для восстановления пароля пройдите по этой ссылке: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Привет, <br>для восстановления пароля пройдите по этой ссылке: <a href=\"%s\">Восстановление Пароля</a>");
 regGS("Forgot your password?", "Забыл пароль?");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Ошибка в процессе установки автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Невозможно соединиться с сервером Campsite, пожалуйста, проверьте настройки сервера.");
 regGS("Clear system cache", "Очистить систему кеширования");
-regGS("Campsite cache was cleaned up", "Система кеширования Campsite очищена");
 regGS("The system was unable to upload the file '$1'. ", "Система не может загрузить файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.");
-regGS("Synchronize Campsite and Phorum users", "Синхронизировать работу Campsite и посетителей форума");
-regGS("Campsite and Phorum users were synchronized", "Работа Campsite и посетителей форума синхронизированы");
 regGS("Your user is not a valid Campcaster user", "Данный пользователь не является зарегистрированным пользователем Campsite");
 regGS("Connection refused", "Соединение сброшено");
 regGS("An error occured in session management. Please reload the login page.", "Произошла ошибка в управлении БД. Пожалуйста, перезагрузите страницу.");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "Система не м�
 regGS("The system was unable to create the directory '$1'.", "Система не может создать папку '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "Пожалуйста проверьте, имеет ли пользователь '$1' права доступа для записи в этот файл.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Пожалуйста проверьте, имеет ли пользователь '$1' права доступа для записи в папку '$2'.");
-regGS("Feedback", "Обратная связь");
 regGS("Type the code shown above:", "Введите код, показанный ниже:");
 regGS("Please enter your user name.", "Введите имя пользователя.");
 regGS("Please enter your password.", "Введите ваш пароль.");
 regGS("Please enter the code shown in the image.", "Пожалуйста, введите код, показанный на картинке.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Меры безопасности Campsite обновились. Для обновления своей учетной записи в целях использования повышенной безопасности, вы должны ввести свой пароль снова.");
 regGS("CAPTCHA code is not valid.  Please try again.", "Код CAPTCHA недействителен. Пожалуйста, попробуйте снова.");
 regGS("Signed in: $1", "Пользователь: $1");
 regGS("Help", "Помощь");
-regGS("About", "О программе");
 regGS("Please enter your user name and password", "Пожалуйста, введите ваше имя и пароль");
 regGS("You do not have the right to access this page.", "Вы не имеете права доступа к этой странице.");
 regGS("Login failed", "Ошибка входа");

@@ -1,4 +1,5 @@
 <?php 
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
 regGS("Stop current upload", "Zastavit současné nahrávání");
 regGS("Start uploading queue", "Začít nahrávat frontu");
 regGS("Start upload", "Začít nahrávat");
@@ -10,7 +11,6 @@ regGS("Cache lifetime, sec", "Doba životnosti Cache, sec");
 regGS("Add files to the upload queue and click the start button.", "Přidejte soubory do fronty a klikněte na tlačítko start.");
 regGS("Add files", "Přidat soubory");
 regGS("\"$1\" files uploaded.", "\"$1\" soubory nahrány.");
-regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Některé soubory se nezdařilo přečíst a Campsite nezjistil, jestli se '$1' používá. Prosím napravte to a poté zkuste odstranit šablonu znova.");
 regGS("Replace current with:", "Nahradit stávající s:");
 regGS("Edit template:", "Upravit šablonu:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "Změny nebyly uloženy. Načíst novou šablonu bez uložení té stávající?");

@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "");
 regGS("Password recovery", "");
 regGS("Password Recovery", "");
 regGS("No user is registered with this email.", "");
-regGS("Logo", "");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");
 regGS("Forgot your password?", "");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "هه ڵه له کاتی دانانی نوسه ر  \"$1\" بۆ بابه تی ژماره .  $2 (\"$3\") له جۆری $4.خ  ");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "نه توانرا په یوه ند ی بکا ت به سێر ڤه ری که مکاسته ره وه ، تکا یه بزانه سێر ڤه ری که مکاسته ر باش دامه زراوه");
 regGS("Clear system cache", "سڕینه وه ی هه ڵگره کانی سیسته م");
-regGS("Campsite cache was cleaned up", "هه ڵگره کانی که مپسایت سڕایه وه");
 regGS("The system was unable to upload the file '$1'. ", "سیسته مه که نیتوانی فایلی  '$1' به رز کاته وه ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "تکایه د ڵنیا به له و فایله ی که ئه ته وێ به رزی بکه یته وه ، له وا نه یه شکا بێت");
-regGS("Synchronize Campsite and Phorum users", "ها وکات کرد نی به کار هێنه ره کانی که مپسایت و مه کۆ");
-regGS("Campsite and Phorum users were synchronized", "به کار هێنه ره کانی که مپسایت و مه کۆ ها و کات کران");
 regGS("Your user is not a valid Campcaster user", "به کار هێنه ره که ت به کارهێنه رێکی به بایه خ نی یه");
 regGS("Connection refused", "په یوه ند ی  ڕه د کرایه وه");
 regGS("An error occured in session management. Please reload the login page.", "هه ڵه یه ك د ه ر که وت له ماوه ی به ڕێوه برد ن ، تکایه دوباره په ڕه ی چۆنه ژووره وه بکه وه");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "سیسته مه که ن
 regGS("The system was unable to create the directory '$1'.", "سیسته مه که نه یتوانی بخوڵ قێنێ دایرێکتۆری '$1'.خ");
 regGS("Please check if the user '$1' has permission to write to this file.", "تکا یه دڵنیا به له  مافی به کار هێنه ری '$1' له نوسین له سه ر ئه م   فایله");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "تکا یه دڵنیا به له  مافی به کار هێنه ری '$1' له نوسین له سه ردایرێکتۆری  '$2'.خ ");
-regGS("Feedback", "بۆچون نارد ن بۆ ئێمه");
 regGS("Type the code shown above:", "ئه و کۆد ه ی سه ره وه تایپ بکه");
 regGS("Please enter your user name.", "تکا یه ناوی به کار هێنه ری خۆت بنوسه");
 regGS("Please enter your password.", "تکا یه وشه ی نهێنی خۆت بنوسه");
 regGS("Please enter the code shown in the image.", "تکا یه ئه و کۆد ه ی که له وێنه که دایه وه ك خۆ ی بینو سه ");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "که مپسایت ڕێ و شوێنی ئه منی خۆی پێش خست . به مه به ستی برد نه سه ری ڕێ و شوێنی ئه منی حه سابه که بۆ که ڵك وه ر گرتن له م ئا سایشه ، تۆ ئه بێ دوو باره وشه ی نهێنی خۆ ت بنوسی");
 regGS("CAPTCHA code is not valid.  Please try again.", "کۆ د  ی که پچا با یه خدا ر نی یه. تکا یه دوو باره  هه وڵ بد ه");
 regGS("Signed in: $1", "ها ته ژووره وه: $1");
 regGS("Help", "یار مه تی");
-regGS("About", "له باره ی");
 regGS("Please enter your user name and password", "تکا یه ناوی به کار هێنه ری خۆ ت و وشه ی نهێنی بنوسه");
 regGS("You do not have the right to access this page.", "تۆ ما فی د ه ست گه یشتن به م په ڕه ت نی یه");
 regGS("Login failed", "چوونه ژووره وه ڕ ێگه ی پێ نه د را");

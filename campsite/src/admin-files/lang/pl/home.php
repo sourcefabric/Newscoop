@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "");
 regGS("Password recovery", "");
 regGS("Password Recovery", "");
 regGS("No user is registered with this email.", "");
-regGS("Logo", "");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Witaj, \aby odzyskać hasło, kliknij ten link: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");
 regGS("Forgot your password?", "");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
 regGS("Clear system cache", "Oczyść cache systemowy");
-regGS("Campsite cache was cleaned up", "Cache Campsite został opróżniony");
 regGS("The system was unable to upload the file '$1'. ", "System nie mógł dodać pliku '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Sprawdź plik, który próbujesz dodać, możliwe że jest uszkodzony.");
-regGS("Synchronize Campsite and Phorum users", "Synchronizuj użytkowników Campsite i Phorum");
-regGS("Campsite and Phorum users were synchronized", "Użytkownicy Campsite i Phorum zostali zsynchronizowani");
 regGS("Your user is not a valid Campcaster user", "Twój użytkownik nie jest poprawnym użytkownikiem Campcaster");
 regGS("Connection refused", "Odmowa połączenia.");
 regGS("An error occured in session management. Please reload the login page.", "Wystąpił błąd przy zarządzaniu sesją. Załaduj stronę logowania ponownie.");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "System nie mógł utwor
 regGS("The system was unable to create the directory '$1'.", "System nie mógł utworzyć folderu '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "Sprawdź czy użytkownik '$1' ma prawa aby zapisywać do tego pliku.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Sprawdź czy użytkownik '$1' ma prawa aby zapisywać do folderu '$2'.");
-regGS("Feedback", "Feedback");
 regGS("Type the code shown above:", "Wprowadź kod podany powyżej:");
 regGS("Please enter your user name.", "Podaj nazwę użytkownika.");
 regGS("Please enter your password.", "Podaj swoje hasło.");
 regGS("Please enter the code shown in the image.", "Podaj kod podany na obrazku.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Camspite uaktualnił swoje reguły bezpieczeństwa. Aby uaktualnić swoje konto do nowych standardów, wprowadź swoje hasło ponownie.");
 regGS("CAPTCHA code is not valid.  Please try again.", "Kod CAPTCHA jest nie poprawny. Spróbuj ponownie.");
 regGS("Signed in: $1", "Zalogowano: $1");
 regGS("Help", "Pomoc");
-regGS("About", "O nas");
 regGS("Please enter your user name and password", "Wprowadź nazwę użytkownika i hasło");
 regGS("You do not have the right to access this page.", "Nie masz praw do przeglądania tej strony");
 regGS("Login failed", "Logowanie nie powiodło się");

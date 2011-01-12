@@ -1,4 +1,5 @@
 <?php 
+regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -64,7 +65,6 @@ regGS("Article type field \"$1\" changed", "Поље типа текста \"$1\
 regGS("Article type \"$1\" translation updated", "Превод поља типа текста \"$1\" је измењен");
 regGS("Article topic $1 deleted from article $2", "Тема текста $1 обрисана из текста $2");
 regGS("The uploaded file format is unsupported.", "Формат аплоудованог фајла није подржан.");
-regGS("The uploaded archive does not contain an valid campsite plugin.", "Аплоудована архива не садржи исправан Кемпсајт плагин.");
 regGS("The following fields are mandatory:", "Следећа поља су обавезна:");
 regGS("Missing value for $1", "Недостаје вредност за $1");
 regGS("Manage Plugins", "Управљање плагиновима");

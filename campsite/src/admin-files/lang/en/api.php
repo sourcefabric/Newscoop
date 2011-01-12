@@ -1,4 +1,5 @@
 <?php 
+regGS("The uploaded archive does not contain an valid newscoop plugin.", "The uploaded archive does not contain an valid newscoop plugin.");
 regGS("Version", "Version");
 regGS("License", "License");
 regGS("Homepage", "Homepage");
@@ -64,7 +65,6 @@ regGS("Article type field \"$1\" changed", "Article type field \"$1\" changed");
 regGS("Article type \"$1\" translation updated", "Article type \"$1\" translation updated");
 regGS("Article topic $1 deleted from article $2", "Article topic $1 deleted from article $2");
 regGS("The uploaded file format is unsupported.", "The uploaded file format is unsupported.");
-regGS("The uploaded archive does not contain an valid campsite plugin.", "The uploaded archive does not contain an valid campsite plugin.");
 regGS("The following fields are mandatory:", "The following fields are mandatory:");
 regGS("Missing value for $1", "Missing value for $1");
 regGS("Manage Plugins", "Manage Plugins");

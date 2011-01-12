@@ -1,4 +1,6 @@
 <?php 
+regGS("You do not have the right to sync Newscoop and Phorum users.", "");
+regGS("User may synchronize Newscoop and Phorum users", "");
 regGS("Unsubscribe email notifications", "");
 regGS("New author \"$1\" ($2) created.", "Ο νέος συγγραφέας \"$1\" ($2) δημιουργήθηκε.");
 regGS("Manage Authors", "Διαχείριση Συγγραφέων");
@@ -32,8 +34,6 @@ regGS("Clean", "Εκκαθάριση");
 regGS("User may use the editor status bar", "Ο χρήστης μπορεί να χρησιμοποιήσει τη γραμμή επεξεργασίας κατάστασης");
 regGS("User may clear up the system cache", "Ο χρήστης μπορεί να καθαρίσει τη προσωρινή μνήμη του συστήματος");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Ένας άλλος χρήστης είναι εγγεγραμμένος με αυτή τη διεύθυνση e-mail, παρακαλούμε επιλέξτε κάποια άλλη.");
-regGS("You do not have the right to sync Campsite and Phorum users.", "Δεν έχετε το δικαίωμα να συγχρονίσετε  Campsite και Phorum χρήστες.");
-regGS("User may synchronize Campsite and Phorum users", "Ο χρήστης μπορεί να συγχρονίσει Campsite και Phorum χρήστες");
 regGS("There was an error when trying to update the user info.", "Υπήρξε κάποιο σφάλμα κατά την προσπάθεια ανανέωσης των πληροφοριών χρήστη.");
 regGS("User may attach audioclips to articles", "Ο χρήστης μπορεί να επισυνάψει αρχεία ήχου σε άρθρα");
 regGS("User may add audioclips", "Ο χρήστης μπορεί να προσθέσει αρχεία ήχου");

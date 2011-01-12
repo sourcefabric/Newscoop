@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "Οι αλλαγές σας θα αποθηκευτούν μετά την είσοδο.");
 regGS("You have tried to upload wrong backup file.", "Προσπαθήσατε να ανεβάσετε λάθος αρχείο αντιγράφου ασφαλείας.");
 regGS("Upload backup file", "Ανέβασμα αρχείο αντιγράφου ασφαλείας");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "Email ανάκτησης κωδικού πρό
 regGS("Password recovery", "Ανάκτηση κωδικού πρόσβασης");
 regGS("Password Recovery", "Ανάκτηση κωδικού πρόσβασης");
 regGS("No user is registered with this email.", "Κανένας χρήστης δεν είναι εγγεγραμμένος με αυτό το email.");
-regGS("Logo", "Λογότυπο");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Καλησπέρα, \nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Καλησπέρα, <br>για ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: <a href=\"%s\">Recover Password</a>");
 regGS("Forgot your password?", "Ξεχάσατε τον κωδικό πρόσβασής σας?");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Σφάλμα κατά τη ρύθμιση του συγγραφέα \"$1\" για το άρθρο αρ. $2 (\"$3\") τύπου $4.");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Η σύνδεση με τον διακομιστή Campcaster είναι αδύνατη, παρακαλούμε ελέγξτε τις ρυθμίσεις του διακομιστή Campcaster. ");
 regGS("Clear system cache", "Εκκαθάριση προσωρινής μνήμης");
-regGS("Campsite cache was cleaned up", "");
 regGS("The system was unable to upload the file '$1'. ", "Το σύστημα δεν μπόρεσε να ανεβάσει το αρχείο '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Παρακαλούμε ελέγξτε το αρχείο που προσπαθείτε να ανεβάσετε, γιατί μπορεί να είναι κατεστραμένο.");
-regGS("Synchronize Campsite and Phorum users", "Συγχρονισμός χρηστών Campsite και Phorum");
-regGS("Campsite and Phorum users were synchronized", "Οι Χρήστες Campsite και Phorum συγχρονίστηκαν");
 regGS("Your user is not a valid Campcaster user", "Ο χρήστης σας δεν είναι έγκυρος χρήστης Campcaster");
 regGS("Connection refused", "Άρνηση σύνδεσης");
 regGS("An error occured in session management. Please reload the login page.", "");
@@ -81,21 +83,17 @@ regGS("The system was unable to create the file '$1'.", "Το σύστημα δ�
 regGS("The system was unable to create the directory '$1'.", "");
 regGS("Please check if the user '$1' has permission to write to this file.", "Παρακαλούμε ελένξτε εάν ο χρήστης '$1' έχει άδεια συγγραφής αυτού του αρχείου.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "");
-regGS("Feedback", "Feedback");
 regGS("Type the code shown above:", "Πληκτρολογήστε τον κωδικό που εμφανίζεται παραπάνω:");
 regGS("Please enter your user name.", "Παρακαλούμε εισάγετε το όνομα χρήστη.");
 regGS("Please enter your password.", "Παρακαλώ εισάγετε τον κωδικό πρόσβασης.");
 regGS("Please enter the code shown in the image.", "Παρακαλώ εισάγετε τον κωδικό που εμφανίζεται στην εικόνα.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
 regGS("CAPTCHA code is not valid.  Please try again.", "");
 regGS("Signed in: $1", "");
 regGS("Help", "Βοήθεια");
-regGS("About", "Σχετικά");
 regGS("Please enter your user name and password", "Παρακαλώ εισάγετε το όνομα χρήστη και τον κωδικό πρόσβασης");
 regGS("You do not have the right to access this page.", "Δεν έχετε το δικαίωμα να εισέλθετε σε αυτή τη σελίδα.");
 regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Αποκατάσταση");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Καλησπέρα, \\nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
 ?>

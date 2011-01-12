@@ -1,4 +1,5 @@
 <?php 
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
 regGS("Stop current upload", "Prekini aktivni aploud");
 regGS("Start uploading queue", "Počni sa aploudom reda");
 regGS("Start upload", "Pokreni aploud");
@@ -10,7 +11,6 @@ regGS("Cache lifetime, sec", "Trajanje keša, u sekundama");
 regGS("Add files to the upload queue and click the start button.", "dodaj fajlove u red za aploud i klikni dugme za početak.");
 regGS("Add files", "Dodaj fajlove");
 regGS("\"$1\" files uploaded.", "\"$1\" fajlova aploudovano.");
-regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Ima nekih fajlova koji ne mogu da se otvore tako da Kempsajt nije u mogućnosti da odredi da li je '$1' u upotrebi ili ne. Sredite to, pa pokušajte ponovo da obrišete šablon.");
 regGS("Replace current with:", "Zameni postojeće sa:");
 regGS("Edit template:", "Uredi šablon:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "Izmene nisu snimljene. Učitsaj novi šablon bez snimanja trenutno otvorenog?");

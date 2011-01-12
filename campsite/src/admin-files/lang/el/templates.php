@@ -1,4 +1,5 @@
 <?php 
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
 regGS("Stop current upload", "Διακοπή τρέχοντος ανεβάσματος");
 regGS("Start uploading queue", "Έναρξη ανεβάσματος ουράς");
 regGS("Start upload", "Έναρξη ανεβάσματος");
@@ -10,7 +11,6 @@ regGS("Cache lifetime, sec", "Διάρκεια ζωής προσωρινής μ�
 regGS("Add files to the upload queue and click the start button.", "Προσθέστε αρχεία στην ουρά ανεβάσματος και πατήστε το πλήκτρο έναρξης.");
 regGS("Add files", "Προσθήκη αρχείων");
 regGS("\"$1\" files uploaded.", "Ανέβηκαν \"$1\" αρχεία.");
-regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Υπάρχουν ορισμένα αρχεία, τα οποία δεν μπορούν να διαβαστούν και το Campsite δεν μπόρεσε να καθορίσει εάν το '$1' βρίσκεται σε χρήση ή όχι. Παρακαλούμε διορθώστε το και προσπαθήστε πάλι να διαγράψετε το πρότυπο.");
 regGS("Replace current with:", "Αντικατάσταση τρέχοντος με:");
 regGS("Edit template:", "Επεξεργασία προτύπου:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "Οι αλλαγές δεν αποθηκεύτηκαν. Φόρτωση νέων προτύπων, χωρίς την αποθήκευση του τρέχοντος;");

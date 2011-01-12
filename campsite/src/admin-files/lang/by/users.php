@@ -1,4 +1,6 @@
 <?php 
+regGS("You do not have the right to sync Newscoop and Phorum users.", "");
+regGS("User may synchronize Newscoop and Phorum users", "");
 regGS("Unsubscribe email notifications", "");
 regGS("New author \"$1\" ($2) created.", "");
 regGS("Manage Authors", "");
@@ -32,8 +34,6 @@ regGS("Clean", "Ачысціць");
 regGS("User may use the editor status bar", "Карыстач можа карыстацца радком стану рэдактара");
 regGS("User may clear up the system cache", "Карыстач можа чысціць сістэму кэшавання");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Іншы карыстач зарэгістраваўся пад гэтым электронным адрасам, калі ласка, увядзіце іншы.");
-regGS("You do not have the right to sync Campsite and Phorum users.", "Вы ня маеце права доступу для сынхранізацыі работы Campsite і наведнікаў форуму.");
-regGS("User may synchronize Campsite and Phorum users", "Карыстальнiк можа сынхранізаваць Campsite і наведнікаў форуму.");
 regGS("There was an error when trying to update the user info.", "Адбылася памылка пры спробе абнаўлення інфармацыі аб карыстачу.");
 regGS("User may attach audioclips to articles", "Карыстач можа далучаць аўдыёкліпы да артыкула");
 regGS("User may add audioclips", "Карыстач можа дадаваць аўдыёкліпы");

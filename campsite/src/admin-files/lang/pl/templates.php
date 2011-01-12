@@ -1,4 +1,5 @@
 <?php 
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
 regGS("Stop current upload", "Zatrzymaj aktualne dodawanie");
 regGS("Start uploading queue", "Rozpocznij kolejkę dodawania");
 regGS("Start upload", "Rozpocznij dodawanie");
@@ -10,7 +11,6 @@ regGS("Cache lifetime, sec", "Ważność cache, sek");
 regGS("Add files to the upload queue and click the start button.", "Dodaj pliki do kolejki dodawania i kliknij start");
 regGS("Add files", "Dodaj pliki");
 regGS("\"$1\" files uploaded.", "Dodano plików: \"$1\"");
-regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Niektóre pliki nie mogą być odczytane i Campsite nie mógł stwierdzić czy '$1\" jest w użyciu czy nie. Napraw to i spróbuj usunąc szablon ponownie.");
 regGS("Replace current with:", "Zamień obecne z:");
 regGS("Edit template:", "Edytuj szablon:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "Zmiany nie zostały zapisane. Dodać nowy szablon bez zapisywania obecnego?");

@@ -1,4 +1,5 @@
 <?php 
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
 regGS("Stop current upload", "Прекини активни аплоуд");
 regGS("Start uploading queue", "Почни са аплоудом реда");
 regGS("Start upload", "Покрени аплоуд");
@@ -10,7 +11,6 @@ regGS("Cache lifetime, sec", "Трајање кеша, у секундама");
 regGS("Add files to the upload queue and click the start button.", "додај фајлове у ред за аплоуд и кликни дугме за почетак.");
 regGS("Add files", "Додај фајлове");
 regGS("\"$1\" files uploaded.", "\"$1\" фајлова аплоудовано.");
-regGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Има неких фајлова који не могу да се отворе тако да Кемпсајт није у могућности да одреди да ли је '$1' у употреби или не. Средите то, па покушајте поново да обришете шаблон.");
 regGS("Replace current with:", "Замени постојеће са:");
 regGS("Edit template:", "Уреди шаблон:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "Измене нису снимљене. Учитај нови шаблон без снимања тренутно отвореног?");
