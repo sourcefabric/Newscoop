@@ -347,6 +347,7 @@ class ArticleAuthor extends DatabaseObject
         // sets the base table ArticleAuthors and the column to be fetched
         $tmpArticleAuthor = new ArticleAuthor();
         $selectClauseObj->setTable($tmpArticleAuthor->getDbTableName());
+        $selectClauseObj->addJoin('JOIN ' . Author::TABLE . ' ON fk_author_id = id');
         $selectClauseObj->addColumn('fk_article_number');
         $selectClauseObj->addColumn('fk_language_id');
         $selectClauseObj->addColumn('fk_author_id');
@@ -359,9 +360,12 @@ class ArticleAuthor extends DatabaseObject
             $p_order = array();
         }
 
+        $order = self::ProcessListOrder($p_order);
         // sets the order condition if any
-        foreach ($p_order as $orderColumn => $orderDirection) {
-            $selectClauseObj->addOrderBy($orderColumn . ' ' . $orderDirection);
+        foreach ($order as $orderDesc) {
+            $orderField = $orderDesc['field'];
+            $orderDirection = $orderDesc['dir'];
+            $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
         }
 
         // sets the limit
@@ -419,4 +423,40 @@ class ArticleAuthor extends DatabaseObject
 
         return $parameter;
     }
+    
+    /**
+     * Processes an order directive coming from template tags.
+     *
+     * @param array $p_order
+     *      The array of order directives
+     *
+     * @return array
+     *      The array containing processed values of the condition
+     */
+    private static function ProcessListOrder(array $p_order)
+    {
+        $order = array();
+        foreach ($p_order as $orderDesc) {
+            $dbField = null;
+            $field = $orderDesc['field'];
+            $direction = $orderDesc['dir'];
+            switch (strtolower($field)) {
+            case 'default':
+                $dbField = 'first_name';
+                break;
+            case 'byfirstname':
+                $dbField = 'first_name';
+                break;
+            case 'bylastname':
+                $dbField = 'last_name';
+                break;
+            }
+            if (!is_null($dbField)) {
+                $direction = !empty($direction) ? $direction : 'asc';
+                $order[] = array('field'=>$dbField, 'dir'=>$direction);
+            }
+        }
+        return $order;
+    }
+
 }

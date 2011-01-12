@@ -30,7 +30,6 @@ function smarty_block_list_article_authors($p_params, $p_content, &$p_smarty, &$
     if (!isset($p_content)) {
         $start = $context->next_list_start('ArticleAuthorsList');
         $articleAuthorsList = new ArticleAuthorsList($start, $p_params);
-        //var_dump($articleAuthorsList); exit;
         if ($articleAuthorsList->isEmpty()) {
             $context->setCurrentList($articleAuthorsList, array());
             $context->resetCurrentList();

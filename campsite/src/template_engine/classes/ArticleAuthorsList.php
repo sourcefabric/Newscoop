@@ -55,8 +55,34 @@ class ArticleAuthorsList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
-		return array();
-	}
+        $order = array();
+        $state = 1;
+        foreach ($p_order as $word) {
+            switch ($state) {
+            case 1: // reading the order field
+                if (array_search(strtolower($word), self::$s_orderFields) === false) {
+                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_article_authors, order parameter");
+                } else {
+                    $orderField = $word;
+                    $state = 2;
+                }
+                break;
+            case 2: // reading the order direction
+                if (MetaOrder::IsValid($word)) {
+                    $order[] = array('field'=>$orderField, 'dir'=>$word);
+                } else {
+                    CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_article_authors, order parameter");
+                }
+                $state = 1;
+                break;
+            }
+        }
+        if ($state != 1) {
+            CampTemplate::singleton()->trigger_error('unexpected end of order parameter in list_article_authors');
+        }
+
+        return $order;
+    }
 
 	/**
 	 * Processes the input parameters passed in an array; drops the invalid
