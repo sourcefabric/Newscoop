@@ -663,16 +663,23 @@ this.set_embed_tag = function(attrs)
 };
 
 // the main action on data retrieval
-this.got_load_data = function (load_data)
+this.got_load_data = function (load_data, is_obj)
 {
     load_response = load_data;
 
     var received_obj = null;
-    try {
-        received_obj = JSON.parse(load_response);
+    if (is_obj)
+    {
+        received_obj = load_data;
     }
-    catch (e) {
-        return;
+    else
+    {
+        try {
+            received_obj = JSON.parse(load_response);
+        }
+        catch (e) {
+            return;
+        }
     }
 
     if (this.select_control)
