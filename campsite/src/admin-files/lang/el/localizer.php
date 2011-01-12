@@ -1,7 +1,7 @@
 <?php 
 regGS("Libraries", "Βιβλιοθήκες");
-regGS("Media Archive", "");
-regGS("Extensions", "");
+regGS("Media Archive", "Αρχείο Media");
+regGS("Extensions", "Επεκτάσεις");
 regGS("Geo-location", "");
 regGS("Translation status:", "Κατάσταση μετάφρασης:");
 regGS("Editor Media Plugin", "Επεξεργαστής Προσθέτου Media ");

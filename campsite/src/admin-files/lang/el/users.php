@@ -1,17 +1,17 @@
 <?php 
 regGS("Unsubscribe email notifications", "");
-regGS("New author \"$1\" ($2) created.", "");
-regGS("Manage Authors", "");
-regGS("Loading Data", "");
-regGS("Delete author type", "");
+regGS("New author \"$1\" ($2) created.", "Ο νέος συγγραφέας \"$1\" ($2) δημιουργήθηκε.");
+regGS("Manage Authors", "Διαχείριση Συγγραφέων");
+regGS("Loading Data", "Φόρτωση Δεδομένων");
+regGS("Delete author type", "Διαγραφή τύπου συγγραφέα");
 regGS("Cannot remove author type.", "");
 regGS("Cannot remove author alias.", "");
-regGS("Author information has been changed for \"$1\" ($2)", "");
-regGS("Author alias removed.", "");
-regGS("Are you sure you want to delete this author?", "");
-regGS("Are you sure you want to delete this author alias?", "");
-regGS("All Author Types", "");
-regGS("Add author type", "");
+regGS("Author information has been changed for \"$1\" ($2)", "Οι πληροφορίες συγγραφέα άλλαξαν για \"$1\" ($2)");
+regGS("Author alias removed.", "Το ψευδώνυμο συγγραφέα μετακινήθηκε.");
+regGS("Are you sure you want to delete this author?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε αυτόν τον συγγραφέα;");
+regGS("Are you sure you want to delete this author alias?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε αυτό το ψευδώνυμο συγγραφέα;");
+regGS("All Author Types", "Όλοι οι Τύποι Συγγραφέων");
+regGS("Add author type", "Προσθήκη τύπου συγγραφέα");
 regGS("You do not have the permission to change authors.", "Δεν έχετε την άδεια  να αλλάξετε συγγραφείς.");
 regGS("Please fill at least first name and last name.", "Παρακαλούμε συμπληρώστε τουλάχιστον όνομα και επώνυμο.");
 regGS("Cannot add author type, this type already exists.", "Είναι αδύνατον να προστεθεί τύπος συγγραφέα, ο τύπος αυτός ήδη υπάρχει.");

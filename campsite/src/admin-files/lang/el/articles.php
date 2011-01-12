@@ -1,8 +1,8 @@
 <?php 
-regGS("Locations", "");
-regGS("Authors", "");
-regGS("Are you sure you want to remove the map from the article?", "");
-regGS("Scheduled action added", "");
+regGS("Locations", "Τοποθεσίες");
+regGS("Authors", "Συγγραφείς");
+regGS("Are you sure you want to remove the map from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε τον χάρτη από το άρθρο;");
+regGS("Scheduled action added", "Η προγραμματισμένη ενέργεια προστέθηκε");
 regGS("Content edited", "");
 regGS("Campsite Subhead", "Υποκεφαλίδα Campsite");
 regGS("Unable to reach Campsite. Please check your internet connection.", "Η πρόσβαση στο Campsite ήταν αδύνατη. Παρακαλούμε ελέγξτε τη σύνδεση διαδικτύου σας.");
@@ -134,4 +134,8 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι επιθυμείται να αφαιρέσετε το αρχείο ήχου \\'$1\\' από το άρθρο;");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>

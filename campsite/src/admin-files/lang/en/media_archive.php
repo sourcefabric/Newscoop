@@ -1,4 +1,6 @@
 <?php 
+regGS("You can't delete used files.", "You can't delete used files.");
+regGS("Do you wan't to delete unused only?", "Do you wan't to delete unused only?");
 regGS("View attachment", "View attachment");
 regGS("Select some items first.", "Select some items first.");
 regGS("Open in the browser", "Open in the browser");
