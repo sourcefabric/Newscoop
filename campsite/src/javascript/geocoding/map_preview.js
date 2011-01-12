@@ -1,5 +1,8 @@
 // better for some providers to try more than once
-OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
+{
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+}
 
 // times for icon redrawing at some situations
 var redraw_times = {
@@ -973,6 +976,8 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         map_mqm = new OpenLayers.Layer.MapQuest(
             "MapQuest Map"
         );
+        map_mqm.wrapDateLine = true;
+        map_mqm.displayOutsideMaxExtent = true;
 
         geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
         if (mqm_label == geo_obj.map_view_layer_default)
@@ -985,6 +990,8 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     {
         // openstreetmap
         map_osm = new OpenLayers.Layer.OSM();
+        map_osm.wrapDateLine = true;
+        map_osm.displayOutsideMaxExtent = true;
         map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
         geo_obj.map_view_layer_names_all[osm_label] = map_osm.name;
         if (osm_label == geo_obj.map_view_layer_default)

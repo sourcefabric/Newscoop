@@ -61,6 +61,7 @@ final class MetaArticle extends MetaDbObject {
     'language'=>'getLanguage',
     'owner'=>'getOwner',
     'author'=>'getAuthor',
+    'authors'=>'getAuthors',
     'defined'=>'defined',
     'has_attachments'=>'hasAttachments',
     'has_map'=>'hasMap',
@@ -380,9 +381,30 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getAuthor()
     {
-        return new MetaAuthor($this->m_dbObject->getProperty('fk_default_author_id'));
+        $authors = ArticleAuthor::GetAuthorsByArticle($this->m_dbObject->getProperty('Number'),
+            $this->m_dbObject->getProperty('IdLanguage'));
+        $author = array_shift($authors);
+        if (is_null($author)) {
+            return new MetaAuthor();
+        } else {
+            return new MetaAuthor($author->getId(), $author->getAuthorType());
+        }
     }
 
+    protected function getAuthors()
+    {
+        $authors = ArticleAuthor::GetAuthorsByArticle($this->m_dbObject->getProperty('Number'),
+            $this->m_dbObject->getProperty('IdLanguage'));
+        if (!is_array($authors)) {
+            $authors = array();
+        }
+
+        $metaAuthors = array();
+        foreach($authors as $author) {
+            $metaAuthors[] = new MetaAuthor($author->getId(), $author->getType());
+        }
+        return $metaAuthors;
+    }
 
     protected function getTemplate()
     {

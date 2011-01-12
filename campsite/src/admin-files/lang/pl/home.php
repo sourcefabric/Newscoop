@@ -9,6 +9,7 @@ regGS("Widgets", "");
 regGS("Widget info", "");
 regGS("Widget added to dashboard.", "");
 regGS("Remove widget", "");
+regGS("Please login to continue.", "");
 regGS("Go to home", "");
 regGS("Add to dashboard", "");
 regGS("Add more widgets", "");
@@ -34,7 +35,6 @@ regGS("An email with instructions on how to recover you password has been sent t
 regGS("You do not have the right to manage backup.", "");
 regGS("There was an error trying to delete the file $1.", "");
 regGS("The file $1 was deleted successfully.", "");
-regGS("Please login to continue.", "");
 regGS("Size", "Rozmiar");
 regGS("Restore file", "Przywróć plik");
 regGS("Restore", "Przywróć");
