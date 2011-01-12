@@ -122,12 +122,11 @@ if ($f_mode == "multi") {
 	camp_html_goto_page("/$ADMIN/articles/index.php?".$argsStr);
 } else {
 	?>
-	<script>
-	try {
-	window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Scheduled action added."); ?>";
-	window.opener.document.forms.article_edit.submit();
-	} catch (e) {}
-	window.close();
+	<script type="text/javascript">
+    try {
+        parent.$.fancybox.close();
+    } catch (e) {
+    }
 	</script>
 	<?php
 }

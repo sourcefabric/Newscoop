@@ -6,8 +6,7 @@
   </div>
   <div class="padded">
   <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('Publish')) { ?>
-    <a class="ui-state-default icon-button right-floated" href="#"
-      onclick="return checkChanged() && window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "autopublish.php"); ?>', 'autopublish_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=450, height=500, top=200, left=200');"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Add Event'); ?></a>
+  <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "autopublish.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Add Event'); ?></a>
   <?php } ?>
     <div class="clear"></div>
     <?php if (sizeof($articleEvents) > 0) { ?>

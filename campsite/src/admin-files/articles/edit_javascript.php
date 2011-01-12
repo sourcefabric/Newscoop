@@ -96,15 +96,19 @@ $(".aauthor").autocomplete({
     source: authorsList
 });
 
+// fancybox for popups
+$('a.iframe').fancybox({
+    hideOnContentClick: false,
+    onStart: function() { // check if there are any changes
+        if ($('form.changed').size() == 0) {
+            return true; // continue
+        }
+        return confirm('<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>');
+    },
+    onClosed: function() { // reload
+        window.location.reload();
+    }
 });
 
-function checkChanged()
-{
-    if ($('form.changed').size() == 0) {
-        return true; // continue
-    }
-
-    return confirm('<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>');
-};
-
+}); // /document.ready
 </script>
