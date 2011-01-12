@@ -1,5 +1,8 @@
 // better for some providers to try more than once
-OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
+{
+    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
+}
 
 // the main object to hold geo-things
 var geo_locations = {};
@@ -1303,6 +1306,8 @@ var geo_main_openlayers_init = function(map_div_name)
             //"MapQuest Map"
             geo_locations.display_strings.mapquest_map
         );
+        map_mqm.wrapDateLine = true;
+        map_mqm.displayOutsideMaxExtent = true;
 
         geo_locations.map_view_layer_names_all[mqm_label] = map_mqm.name;
         if (mqm_label == geo_locations.map_view_layer_default)
@@ -1318,6 +1323,8 @@ var geo_main_openlayers_init = function(map_div_name)
             //"OpenStreet Map"
             geo_locations.display_strings.openstreet_map
         );
+        map_osm.wrapDateLine = true;
+        map_osm.displayOutsideMaxExtent = true;
         map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
 
         geo_locations.map_view_layer_names_all[osm_label] = map_osm.name;
