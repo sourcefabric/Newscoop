@@ -51,14 +51,14 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
     // Clear template cache storage
     if (CampTemplateCache::factory()) CampTemplateCache::factory()->clean();
 
-    $actionMsg = getGS('Campsite cache was cleaned up');
+    $actionMsg = getGS('Newscoop cache was cleaned up');
     $res = 'OK';
 }
 
 $syncUsers = Input::Get('sync_users', 'string', 'no', true);
 if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
     require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/users/sync_phorum_users.php");
-    $actionMsg = getGS('Campsite and Phorum users were synchronized');
+    $actionMsg = getGS('Newscoop and Phorum users were synchronized');
     $res = 'OK';
 }
 ?>

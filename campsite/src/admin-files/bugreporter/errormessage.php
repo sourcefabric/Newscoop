@@ -34,11 +34,11 @@ global $ADMIN;
                 <tr>
                     <td colspan="2">
                         <p><?php
-                            putGS("Campsite has encountered a problem.");
+                            putGS("Newscoop has encountered a problem.");
                             putGS("We are sorry for the inconvenience.");
                             ?></p>
                         <p><?php
-                           putGS("In order to help the Campsite team investigate and pinpoint the issue please take a moment to describe what happened.");
+                           putGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.");
                            ?></p>
                     </td>
                 </tr>

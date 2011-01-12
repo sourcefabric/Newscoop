@@ -22,7 +22,7 @@ if (!$inArchive) {
 }
 
 if (camp_convert_bytes((SystemPref::Get('MaxUploadFileSize'))) == false) {
-	camp_html_add_msg(getGS("The maximum file upload size was not configured in Campsite."));
+	camp_html_add_msg(getGS("The maximum file upload size was not configured in Newscoop."));
 	camp_html_add_msg(getGS("Please make sure you upgraded the database correctly: run $1 in a shell.",
 			$Campsite['BIN_DIR'].'/campsite-create-instance --db_name '.$Campsite['DATABASE_NAME']));
 }

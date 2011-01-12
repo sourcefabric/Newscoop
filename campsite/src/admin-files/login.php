@@ -135,7 +135,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
         } elseif ($error_code == "captcha") {
             putGS('CAPTCHA code is not valid.  Please try again.');
         } elseif ($error_code == "upgrade") {
-            putGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
+            putGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
         } elseif ($error_code == 'xorkey') {
             putGS("An error occured in session management. Please reload the login page.");
         }
