@@ -1,4 +1,5 @@
 <?php 
+regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "Μετονομασία τύπου άρθρου '$1'");
 regGS("Invalid article type '$1'.", "Μη έγκυρος τύπος άρθρου'$1'.");
 regGS("You cannot merge the same type into itself.", "Δεν μπορείτε να συγχωνεύσετε τον ίδιο τύπο στον εαυτό του.");
@@ -37,7 +38,6 @@ regGS("You must choose a language for the article type.", "Πρέπει να ε�
 regGS("You do not have the right to rename article types.", "Δεν έχετε το δικαίωμα να μετονομάσετε τύπους άρθρων.");
 regGS("You do not have the right to merge article types.", "Δεν έχετε το δικαίωμα να συγχωνεύσετε τύπους άρθρων.");
 regGS("The translation could not be added.", "Η μετάφραση δεν μπόρεσε να προστεθεί.");
-regGS("The name field may only contain letters and the underscore (_) character.", "Το όνομα πεδίου μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).");
 regGS("The article type $1 does not exist.", "Ο τύπος άρθρου $1 δεν υπάρχει.");
 regGS("Template Type Name", "Όνομα Τύπου Προτύπου");
 regGS("Show/Hide", "Εμφάνιση/Απόκρυψη");
@@ -73,4 +73,5 @@ regGS("The $1 field may only contain letters and underscore (_) character.", "Τ
 regGS("The article type $1 already exists.", "Ο τύπος άρθρου $1 ήδη υπάρχει.");
 regGS("You do not have the right to delete article types.", "Δεν έχετε το δικαίωμα να διαγράψετε τύπους άρθρων.");
 regGS("The article type $1 could not be deleted.", "Ο τύπος άρθρου $1 δεν ήταν δυνατόν να διαγραφεί.");
+regGS("The name field may only contain letters and the underscore (_) character.", "Το όνομα πεδίου μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).");
 ?>

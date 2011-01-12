@@ -1,7 +1,7 @@
 <?php 
 regGS("You do not have the right to delete articles.", "");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "");
-regGS("Use Map", "");
+regGS("Use Map", "Χρήση Χάρτη");
 regGS("Toggle: 'On Section Page'", "");
 regGS("Toggle: 'On Front Page'", "");
 regGS("Toggle: 'Comments'", "");
@@ -10,7 +10,7 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Status: Submit", "");
 regGS("Status: Set New", "");
 regGS("Status: Publish", "");
-regGS("Size", "");
+regGS("Size", "Μέγεθος");
 regGS("Showing _START_ to _END_ of _TOTAL_ entries", "");
 regGS("Show / hide columns", "");
 regGS("Select some article first.", "");
@@ -29,7 +29,7 @@ regGS("No records found.", "");
 regGS("No publications found", "");
 regGS("No issues found", "");
 regGS("No entries to show", "");
-regGS("Locations", "");
+regGS("Locations", "Τοποθεσίες");
 regGS("Loading data", "");
 regGS("Last modified", "");
 regGS("Last Modified", "");

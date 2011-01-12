@@ -1,6 +1,6 @@
 <?php 
 regGS("Some plugins have to be updated. Please press the save button.", "Κάποια πρόσθετα πρέπει να ανανεωθούν. Παρακαλούμε πατήστε το πλήκτρο αποθήκευσης.");
-regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Παρακαλούμε επιβεβαιώστε το πρόσθετο $1 απεγκατάστασης. Όλα τα δεδομένα πρόσθετων θα διαγραφούν!");
+regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "");
 regGS("You do not have the right to manage plugins.", "Δεν έχετε το δικαίωμα να διαχειρίζεστε τα πρότυπα.");
 regGS("Version", "Εκδοχή");
 regGS("Upload Plugin", "Ανέβασμα Πρόσθετου");
@@ -12,4 +12,5 @@ regGS("Manage", "Διαχείριση");
 regGS("Enabled", "Ενεργοποιημένο");
 regGS("Delete plugin", "Διαγραφή πρόσθετου");
 regGS("Add new image", "Προσθήκη νέας εικόνας");
+regGS("Please confirm the plugin $1 uninstall? All plugin data will be deleted!", "Παρακαλούμε επιβεβαιώστε το πρόσθετο $1 απεγκατάστασης. Όλα τα δεδομένα πρόσθετων θα διαγραφούν!");
 ?>
