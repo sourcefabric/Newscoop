@@ -21,13 +21,13 @@ OpenLayers.Layer.MapQuest = OpenLayers.Class(OpenLayers.Layer.OSM, {
     CLASS_NAME: "OpenLayers.Layer.MapQuest"
 });
 
-OpenLayers.IMAGE_RELOAD_ATTEMPTS = 40;
+OpenLayers.IMAGE_RELOAD_ATTEMPTS = 20;
 OpenLayers.Util.originalOnImageLoadError = OpenLayers.Util.onImageLoadError;
 OpenLayers.Util.onImageLoadError = function() {
     if (this.src.match(/^http:\/\/otile[1-4]\.mqcdn\.com\//)) {
         if (!this._attempts) {this._attempts = 0;}
         var mq_start = "http://otile" + Math.floor(1 + (4 * Math.random())) + ".mqcdn.com/tiles/1.0.0/osm/";
-        if ((4 + this._attempts) > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
+        if ((2 + this._attempts) > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
         {
             var osm_start = "http://tile.openstreetmap.org/";
             this.src = osm_start + this.src.substr(mq_start.length);
