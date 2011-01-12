@@ -39,8 +39,8 @@
   <?php } ?>
     <div class="frame">
     <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
-      <a class="ui-state-default icon-button right-floated"
-        href="#" onclick="return checkChanged() && window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>', 'attach_topic', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=400, height=400, top=200, left=200');"><span
+      <a class="iframe ui-state-default icon-button right-floated"
+        href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php putGS('Topics'); ?></label>

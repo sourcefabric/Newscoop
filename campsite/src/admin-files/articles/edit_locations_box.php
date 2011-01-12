@@ -53,13 +53,14 @@ geomap_popup_show = function () {
     <a class="ui-state-default icon-button right-floated"
       href="<?php p($detachMapUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the map from the article?"); ?>'); return false;"><span
       class="ui-icon ui-icon-closethick"></span><?php putGS('Remove'); ?></a>
-    <a class="ui-state-default icon-button right-floated"
-      href="#" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/preview.php"); ?>', 'geomap_preview_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1050, height=600, top=200, left=200');">
+    <a class="iframe ui-state-default icon-button right-floated"
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>">
       <?php putGS('Preview'); ?></a>
-    <a class="ui-state-default icon-button right-floated"
-      href="#" onclick="geomap_popup_show(); return false;"><span
+    <a class="iframe ui-state-default icon-button right-floated"
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"><span
       class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
-    <a href="#" class="map-thumb" onclick="geomap_popup_show(); return false;"><img
+    <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"
+        class="iframe map-thumb"><img
       src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Preview'); ?>" title="<?php putGS('Preview'); ?>" /></a>
     <?php } else { ?>
     <a class="ui-state-default icon-button right-floated"
@@ -68,8 +69,8 @@ geomap_popup_show = function () {
     <img src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Preview'); ?>" title="<?php putGS('Preview'); ?>" />
   <?php }
   } elseif ($canEdit) { ?>
-    <a class="ui-state-default icon-button right-floated"
-      href="#" onclick="geomap_popup_show(); return false;"><span
+    <a class="iframe ui-state-default icon-button right-floated"
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"><span
       class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
   <?php } ?>
     <div class="clear"></div>

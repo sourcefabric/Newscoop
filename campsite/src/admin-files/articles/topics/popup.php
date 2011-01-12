@@ -105,7 +105,7 @@ echo str_repeat('</li></ul>', $level);
 <p></p>
 <DIV class="action_buttons" align="center">
 <INPUT type="submit" value="<?php putGS("Save and Close"); ?>" class="button">
-&nbsp;&nbsp;&nbsp;<INPUT type="submit" value="<?php putGS("Cancel"); ?>" class="button" onclick="window.close();">
+&nbsp;&nbsp;&nbsp;<input type="submit" value="<?php putGS("Cancel"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
 </div>
 </FORM>
 <p></p>
@@ -147,7 +147,7 @@ $(document).ready(function() {
 	<LI><?php  putGS('No topics.'); ?></LI>
 	</BLOCKQUOTE>
 	<DIV align="center" style="padding-top: 20px;">
-	<INPUT type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="window.close();">
+	<input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
 	</div>
 <?php } ?>
 </body>
