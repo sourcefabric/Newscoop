@@ -657,7 +657,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             "MapQuest Map"
         );
         map_mqm.wrapDateLine = true;
-        //map_mqm.displayOutsideMaxExtent = true;
+        map_mqm.displayOutsideMaxExtent = true;
 
         geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
         if (mqm_label == geo_obj.map_view_layer_default)

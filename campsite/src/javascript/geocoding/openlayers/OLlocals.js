@@ -9,7 +9,39 @@ OpenLayers.Layer.MapQuest = OpenLayers.Class(OpenLayers.Layer.OSM, {
         'http://otile3.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png',
         'http://otile4.mqcdn.com/tiles/1.0.0/osm/${z}/${x}/${y}.png'
     ],
+    getURL: function (bounds) {
+        var res = this.map.getResolution();
+        var x = Math.round((bounds.left - this.maxExtent.left) 
+            / (res * this.tileSize.w));
+        var y = Math.round((this.maxExtent.top - bounds.top) 
+            / (res * this.tileSize.h));
+        var z = this.map.getZoom() + this.zoomOffset;
 
+        var z_mod = Math.pow(2, z);
+        while (x < 0) {
+            x += z_mod;
+        }
+        while (y < 0) {
+            y += z_mod;
+        }
+        while (x >= z_mod) {
+            x -= z_mod;
+        }
+        while (y >= z_mod) {
+            y -= z_mod;
+        }
+
+        var url = this.url;
+        var s = '' + x + y + z;
+        if (url instanceof Array)
+        {
+            url = this.selectUrl(s, url);
+        }
+        
+        var path = OpenLayers.String.format(url, {'x': x, 'y': y, 'z': z});
+
+        return path;
+    },
     clone: function(obj) {
         if (obj == null) {
             obj = new OpenLayers.Layer.MapQuest(
@@ -39,5 +71,3 @@ OpenLayers.Util.onImageLoadError = function() {
     }
     OpenLayers.Util.originalOnImageLoadError();
 };
-
-
