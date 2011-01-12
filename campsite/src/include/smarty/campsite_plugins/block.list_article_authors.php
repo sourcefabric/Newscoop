@@ -1,12 +1,10 @@
 <?php
 /**
- * Campsite customized Smarty plugin
- * @package Campsite
+ * @package Newscoop
  */
 
-
 /**
- * Campsite list_article_authors block plugin
+ * Newscoop list_article_authors block plugin
  *
  * Type:     block
  * Name:     list_article_authors
@@ -52,5 +50,4 @@ function smarty_block_list_article_authors($p_params, $p_content, &$p_smarty, &$
 
     return $p_content;
 }
-
 ?>
