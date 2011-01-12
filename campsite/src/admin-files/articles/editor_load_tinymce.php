@@ -246,7 +246,7 @@ $().ready(function() {
         file_browser_callback : "campsitemedia",
         forced_root_block : "",
         relative_urls : false,
-        onchange_callback : "editorChanged",
+        onchange_callback : function() { $('form#article-main').change(); },
         extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
         // Theme options

@@ -39,7 +39,6 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     </div>
   </div>
   <!-- END Article Title and Saving buttons bar //-->
-</div>
 
 <div class="wrapper">
   <!-- BEGIN Info/Messaging bar //-->
