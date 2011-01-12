@@ -454,7 +454,7 @@ class CampPlugin extends DatabaseObject
         }
 
         if ($plugin_name === false) {
-            $p_log = getGS('The uploaded archive does not contain an valid campsite plugin.');
+            $p_log = getGS('The uploaded archive does not contain an valid newscoop plugin.');
             return false;
         }
 

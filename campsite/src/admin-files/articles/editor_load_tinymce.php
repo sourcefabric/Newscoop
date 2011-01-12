@@ -287,7 +287,7 @@ $().ready(function() {
             });
 
             ed.addButton('campsite-subhead', {
-                title : '<?php putGS("Campsite Subhead"); ?>',
+                title : '<?php putGS("Newscoop Subhead"); ?>',
                 image : website_url + '/javascript/tinymce/themes/advanced/img/campsite_subhead.gif',
                 onclick : function() {
                     CampsiteSubhead(ed);

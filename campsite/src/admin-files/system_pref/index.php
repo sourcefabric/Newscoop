@@ -287,7 +287,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td colspan="2" align="left">
-        <?php putGS("Setting up a Campsite Replication Server?"); ?>
+        <?php putGS("Setting up a Newscoop Replication Server?"); ?>
         <input type="radio" name="f_use_replication" onclick="ShowElement('replication_server');" value="Y" <?php if (SystemPref::Get("UseDBReplication") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_use_replication" onclick="HideElement('replication_server');" value="N" <?php if (SystemPref::Get("UseDBReplication") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
@@ -297,7 +297,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <table cellpadding="0" cellspacing="6">
         <tr>
             <td colspan="2" align="left">
-                <strong><?php putGS("Campsite Online Server Database"); ?></strong>
+                <strong><?php putGS("Newscoop Online Server Database"); ?></strong>
             </td>
         </tr>
         <tr>

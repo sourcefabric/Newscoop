@@ -7,10 +7,10 @@ regGS("Recently Modified Articles", "Προσφάτως Τροποποιημέν
 regGS("Pending Articles", "");
 regGS("Paste google generated code", "");
 regGS("Most Popular Articles", "Δημοφιλέστερα Άρθρα");
-regGS("Media files", "");
+regGS("Media files", "Αρχεία Media");
 regGS("Hello world!", "");
 regGS("Hello World!", "");
-regGS("Google gadget", "");
+regGS("Google gadget", "Google gadget");
 regGS("Feed url", "");
-regGS("Access Denied", "");
+regGS("Access Denied", "Άρνηση Πρόσβασης");
 ?>

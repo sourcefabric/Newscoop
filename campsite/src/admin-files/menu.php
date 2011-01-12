@@ -270,7 +270,7 @@ if ($showUserMenu) {
         $menu_users->addItem($menu_item);
     }
     if ($g_user->hasPermission('SyncPhorumUsers')) {
-        $menu_item =& DynMenuItem::Create(getGS('Synchronize Campsite and Phorum users'), "/$ADMIN/home.php?sync_users=yes",
+        $menu_item =& DynMenuItem::Create(getGS('Synchronize Newscoop and Phorum users'), "/$ADMIN/home.php?sync_users=yes",
         array('icon' => ''));
         $menu_users->addItem($menu_item);
     }

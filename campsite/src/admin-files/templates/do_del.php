@@ -39,7 +39,7 @@ if (!$isFile) {
 } else {
 	$inUse = Template::InUse($fileFullName);
 	if ($inUse === CAMP_ERROR_READ_FILE || $inUse === CAMP_ERROR_READ_DIR) {
-                camp_html_add_msg(getGS("There are some files which can not be readed so Campsite was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", basename($fileFullName)));
+                camp_html_add_msg(getGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", basename($fileFullName)));
 	} elseif ($inUse == false) {
 	        $template = new Template($fileFullName);
 		if ($template->exists() && $template->delete()) {

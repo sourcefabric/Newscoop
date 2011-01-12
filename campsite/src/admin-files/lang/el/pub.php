@@ -50,7 +50,7 @@ regGS("General attributes", "Γενικά χαρακτηριστικά");
 regGS("You do not have the right to change publication information.", "Δεν έχετε το δικαίωμα να αλλάξετε τις πληροφορίες δημοσίευσης.");
 regGS("The publication information could not be updated.", "Η πληροφορία δημοσίευσης δεν μπόρεσε να ανανεωθεί.");
 regGS("You do not have the right to delete publications.", "Δεν έχετε το δικαίωμα να διαγράψετε δημοσιεύσεις.");
-regGS("Are you sure you want to delete the publication $1?", "Είστε σίγουρος πως θέλετε να διαγράψετε τη δημοσίευση $1;");
+regGS("Are you sure you want to delete the publication $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε τη δημοσίευση $1;");
 regGS("Deleting publication", "Διαγραφή δημοσίευσης");
 regGS("There are $1 subscription(s) left.", "Απομένουν συνδρομές $1.");
 regGS("The publication $1 could not be deleted.", "Η δημοσίευση $1 δεν μπόρεσε να διαγραφεί.");

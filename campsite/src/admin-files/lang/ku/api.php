@@ -1,4 +1,5 @@
 <?php 
+regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -64,7 +65,6 @@ regGS("Article type field \"$1\" changed", "زه مینه ی با به تی جۆ
 regGS("Article type \"$1\" translation updated", "وه رگێرا نی با به تی جۆ ری  \"$1\" نوێ بو یه وه");
 regGS("Article topic $1 deleted from article $2", "ته وه ری با به تی  $1 سڕا یه وه له با به تی  $2");
 regGS("The uploaded file format is unsupported.", "پشتیو انی له به رز کردنه وه ئه و جۆره فا یلا نه نا که ین");
-regGS("The uploaded archive does not contain an valid campsite plugin.", "ئه و پڵا گینه له ئا رشیڤه به رزکرا وه که دا نی یه");
 regGS("The following fields are mandatory:", "ئه و زه مینا نه پێویستن");
 regGS("Missing value for $1", "ئه و با یه خه ونه $1");
 regGS("Manage Plugins", "به ڕێوه برد نی پڵا گینه کا ن");

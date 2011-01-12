@@ -1,4 +1,10 @@
 <?php 
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
+regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
+regGS("Newscoop cache was cleaned up", "");
+regGS("Newscoop and Phorum users were synchronized", "");
+regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -24,7 +30,6 @@ regGS("Password recovery email", "Имејл за повраћај лозинк�
 regGS("Password recovery", "Повраћај лозинке");
 regGS("Password Recovery", "Повраћај лозинке");
 regGS("No user is registered with this email.", "Не постоји корисник са овим имејлом");
-regGS("Logo", "Лого");
 regGS("Hi, \nfor password recovery, please follow this link: %s", "Здраво, \nза повраћај лозинке, молимо следите овај линк: %s");
 regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Здраво, <br>за повраћај лозинке молимо следите овај линк: <a href=\"%s\">Повраћај лозинке</a>");
 regGS("Forgot your password?", "Заборавили сте лозинку?");
@@ -61,11 +66,8 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Грешка при подешавању аутора \"$1\" за текст број $2 (\"$3\") типа $4.");
 regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Није могуће повезати се на Кемпкастер сервер, молимо Вас проверите поставке за Кемпкастер сервер.");
 regGS("Clear system cache", "Обриши системски кеш");
-regGS("Campsite cache was cleaned up", "Кемпсајт кеш је обрисан");
 regGS("The system was unable to upload the file '$1'. ", "Систем није био у могуности да аплоудује фајл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Проверите фајл који покушавате да аплоудујете, могуће је да је оштећен.");
-regGS("Synchronize Campsite and Phorum users", "Синхронизуј Кемпсајт и Пхорум кориснике");
-regGS("Campsite and Phorum users were synchronized", "Кемпсајт и Пхорум корисници су синхронизовани");
 regGS("Your user is not a valid Campcaster user", "Ваш корисник није важећи Кемпкастер корисник");
 regGS("Connection refused", "Конекција је одбијена");
 regGS("An error occured in session management. Please reload the login page.", "Дошло је до грешке у сесији. Молимо Вас учитајте поново страницу за пријављивање.");
@@ -81,16 +83,13 @@ regGS("The system was unable to create the file '$1'.", "Систем није �
 regGS("The system was unable to create the directory '$1'.", "Систем не може да креира директоријум  '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "Молимо Вас проверите да ли корисник  '$1' има право уписа у овај фајл.");
 regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "Молимо проверите да ли корисник  '$1' има право уписа у директоријум  '$2'.");
-regGS("Feedback", "Повратна информација");
 regGS("Type the code shown above:", "Унесите код приказан на слици:");
 regGS("Please enter your user name.", "Унесите своје корисничко име");
 regGS("Please enter your password.", "Унесите своју лозинку.");
 regGS("Please enter the code shown in the image.", "Унесите код приказан на слици.");
-regGS("Campsite has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Кемпсајт је унапредио своје сигурносне мере. Да би ваш налог користио ове нове поставке, молимо Вас да унесете своју лозинку поново.");
 regGS("CAPTCHA code is not valid.  Please try again.", "CAPTCHA код није исправан. Покушајте поново.");
 regGS("Signed in: $1", "Пријављено: $1");
 regGS("Help", "Помоћ");
-regGS("About", "О пројекту");
 regGS("Please enter your user name and password", "Унесите своје корисничко име и лозинку");
 regGS("You do not have the right to access this page.", "Немате право приступа овој страни");
 regGS("Login failed", "Неуспешна пријава");

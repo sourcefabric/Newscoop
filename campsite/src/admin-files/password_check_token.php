@@ -108,7 +108,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php
-        putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+        putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
     ?>
     </noscript>
     <?php
