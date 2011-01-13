@@ -1,4 +1,6 @@
 <?php 
+regGS("Setting up a Newscoop Replication Server?", "");
+regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
 regGS("MapQuest Map", "");
 regGS("Google Streets Map", "");
@@ -61,7 +63,6 @@ regGS("Enable Campcaster audioclip attachments?", "Omogući Kempkaster audioklip
 regGS("XML RPC Path:", "Putanja do XML RPC:");
 regGS("XML RPC File:", "XML RPC fajl:");
 regGS("System preferences updated", "Postavke sistema izmenjene");
-regGS("Setting up a Campsite Replication Server?", "Podešavanje Kempsajt replikacionog servera?");
 regGS("Reader subscriptions managed externally?", "Korisničke pretplate se uređuju eksterno?");
 regGS("Port:", "Port:");
 regGS("Maximum upload file size:", "Maksimalna veličina fajla za upload:");
@@ -74,7 +75,6 @@ regGS("Database Replication User:", "Korsničko ime za bazu replikacionog server
 regGS("Database Replication Port:", "Port na replikacionoj bazi:");
 regGS("Database Replication Password:", "Lozinka na replikacionoj bazi:");
 regGS("Database Replication Host:", "Host za replikacionu bazu:");
-regGS("Campsite Online Server Database", "Baza Kempsajt online servera");
 regGS("Campcaster Server", "Kempkaster server");
 regGS("System preferences updated.", "sistemske postavke izmenjene.");
 regGS("Please enter a positive number for the '$1' field.", "Unesite pozitivan broj u polje '$1'.");

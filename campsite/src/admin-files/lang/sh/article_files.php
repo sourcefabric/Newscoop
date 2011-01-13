@@ -1,10 +1,10 @@
 <?php 
+regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "Nije moguće dodati atačment.");
 regGS("There was a problem uploading the file.", "došlo je do problema pri uploadovanju fajla.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Fajl je delimično uploadovan. Ovo se obično dešava kad je maks. vreme za upload kratko u odnosu na veličinu fajla. Maksimalna veličina se podešava u 'php.ini'");
-regGS("The maximum file upload size was not configured in Campsite.", "Maksimalna veličina fajla za upload nije podešena u Kempsajtu.");
 regGS("The file exceeds the allowed max file size.", "fajl prelazi maksimalno dozvoljenu veličinu.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Proverite da li ste spravno upgradovali bazu: pokrenite $1 u shellu.");
 regGS("Maximum Upload Size", "Maksimalna veličina fajla za upload");

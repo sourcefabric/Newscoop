@@ -1,10 +1,10 @@
 <?php 
+regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "Soubor #$1 \"$2\" nepřipojen");
 regGS("File #$1 \"$2\" attached to article", "Soubor #$1 \"$2\" připojen ke článku");
 regGS("Unable to add attachment.", "Nezdařilo se přidat přílohu.");
 regGS("There was a problem uploading the file.", "Vyskytl se problém při nahrávání souboru.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
-regGS("The maximum file upload size was not configured in Campsite.", "Na Campsite nebyla nastavena maximální velikost nahrávaneho souboru.");
 regGS("The file exceeds the allowed max file size.", "Soubor překračuje maximální povolenou velikost.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Prosím ujistěte se, že jste databázi aktualizovali správně: spusťte $1 v příkazovém řádku.");
 regGS("Maximum Upload Size", "Maximální velikost nahávaného souboru");

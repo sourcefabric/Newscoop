@@ -1,5 +1,5 @@
 <?php 
-regGS("Last Saved Map View", "");
+regGS("Last Saved Map View", "Προβολή Τελευταίως Αποθηκευμένου Χάρτη");
 regGS("Google Streets", "Δρόμοι Google");
 regGS("List of locations updated", "Η λίστα τοποθεσιών ανανεώθηκε");
 regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");

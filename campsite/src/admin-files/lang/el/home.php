@@ -1,10 +1,10 @@
 <?php 
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
-regGS("Synchronize Newscoop and Phorum users", "");
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Το πρόγραμμα περιήγησής σας δεν υποστηρίζει την Javascript ή (πιθανότερα) την έχετε απενεργοποιημένη. Παρακαλούμε διορθώστε το για να μπορέσετε να χρησιμοποιήσετε το Newscoop. ");
+regGS("Synchronize Newscoop and Phorum users", "Συγχρονισμός χρηστών Newscoop και Phorum ");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
 regGS("Newscoop cache was cleaned up", "");
-regGS("Newscoop and Phorum users were synchronized", "");
-regGS("Dashboard", "");
+regGS("Newscoop and Phorum users were synchronized", "Οι χρήστες Newscoop και Phorum συγχρονίστηκαν ");
+regGS("Dashboard", "Ταμπλό");
 regGS("Your changes will be saved after login.", "Οι αλλαγές σας θα αποθηκευτούν μετά την είσοδο.");
 regGS("You have tried to upload wrong backup file.", "Προσπαθήσατε να ανεβάσετε λάθος αρχείο αντιγράφου ασφαλείας.");
 regGS("Upload backup file", "Ανέβασμα αρχείο αντιγράφου ασφαλείας");
@@ -87,7 +87,7 @@ regGS("Type the code shown above:", "Πληκτρολογήστε τον κωδ�
 regGS("Please enter your user name.", "Παρακαλούμε εισάγετε το όνομα χρήστη.");
 regGS("Please enter your password.", "Παρακαλώ εισάγετε τον κωδικό πρόσβασης.");
 regGS("Please enter the code shown in the image.", "Παρακαλώ εισάγετε τον κωδικό που εμφανίζεται στην εικόνα.");
-regGS("CAPTCHA code is not valid.  Please try again.", "");
+regGS("CAPTCHA code is not valid.  Please try again.", "Ο κωδικός CAPTCHA δεν είναι έγκυρος. Παρακαλούμε προσπαθήστε ξανά.");
 regGS("Signed in: $1", "");
 regGS("Help", "Βοήθεια");
 regGS("Please enter your user name and password", "Παρακαλώ εισάγετε το όνομα χρήστη και τον κωδικό πρόσβασης");
@@ -96,4 +96,5 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Αποκατάσταση");
+regGS("Hi, \\nfor password recovery, please follow this link: %s", "Καλησπέρα, \\nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
 ?>

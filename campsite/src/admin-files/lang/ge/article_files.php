@@ -1,10 +1,10 @@
 <?php 
+regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "შეუძლებელია ათთაჩმენთის დამატება ");
 regGS("There was a problem uploading the file.", "პრობლემა იყო ფაილის ატვირთვისას");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "ატვირთული ფაილი მხოლოდ ნაწილობრივ აიტვირთა. ეს მაშინ ხდება, როცა ფაილის ასატვირთი მაქსიმალური დრო არ შეესაბამება  ფაილის ზომას, რომლის ატვირთვასაც ცდილობთ. შეტანის მაქსიმალური დრო განსაზღვრულია'php.ini' –ში ");
-regGS("The maximum file upload size was not configured in Campsite.", "ასატვირთი ფაილის მაქსიმალური ზომა Campsite –ში კონფიგურირებული არაა");
 regGS("The file exceeds the allowed max file size.", "ამ ფაილის ზომა აღემატება დასაშვებს");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "გთხოვთ, დარწმუნდით რომ თქვენ გაზარდეთ ონაცემთა ბაზა სწორად: $1 გაშვება გარსში ");
 regGS("Maximum Upload Size", "ატვირთვის მაქსიმალური ზომა");
