@@ -355,12 +355,18 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
  */
 function camp_html_goto_page($p_link, $p_exit = true, array $p_params = array())
 {
+    global $Campsite;
+
     if (!empty($p_params)) {
         $p_link .= strpos($p_link, '?') === FALSE ? '?' : '&';
         foreach ($p_params as $key => $val) {
             $p_link .= "$key=$val&";
         }
         $p_link = rtrim($p_link, '&');
+    }
+
+    if (strpos($p_link, 'http://') === FALSE) { // location header must be absolute for ie
+        $p_link = 'http://' . $Campsite['HOSTNAME'] . $p_link;
     }
 
 	header("Location: $p_link");
