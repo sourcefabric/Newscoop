@@ -305,7 +305,9 @@ $locale = trim(getGS('en'), ' (*)');
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fg.menu.js" type="text/javascript"></script>
+  <?php if ($locale != 'en') { ?>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/i18n/jquery.ui.datepicker-<?php echo $locale; ?>.js" type="text/javascript"></script>
+  <?php } ?>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>

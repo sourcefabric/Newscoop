@@ -50,7 +50,7 @@ table.header, table.right_header {
 }
 
 table.header, table.right_header {
-    background:#c4e1ed url(table_head_bg.png) repeat-x 0 0;
+    background-color: #c4e1ed;
 }
 
 table.right_header, table.right {
