@@ -1,6 +1,6 @@
 <?php 
+regGS("Unable to reach Campsite. Please check your internet connection.", "");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "");
-regGS("Unable to reach Newscoop. Please check your internet connection.", "");
 regGS("Switches", "");
 regGS("No subtopics available", "");
 regGS("Newscoop Subhead", "");

@@ -1,6 +1,6 @@
 <?php 
+regGS("Unable to reach Campsite. Please check your internet connection.", "");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Η δουλειά σας δεν έχει αποθηκευτεί. Επιθυμείτε να συνεχίσετε και να χάσετε τις αλλαγές σας;");
-regGS("Unable to reach Newscoop. Please check your internet connection.", "Η πρόσβαση στο Newscoop ήταν αδύνατη. Παρακαλούμε ελέγξτε τη σύνδεση διαδικτύου σας.");
 regGS("Switches", "Εναλλαγές");
 regGS("No subtopics available", "Καμία διαθέσιμη κατηγορία");
 regGS("Newscoop Subhead", "Υποκεφαλίδα Newscoop");
@@ -133,8 +133,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι επιθυμείται να αφαιρέσετε το αρχείο ήχου \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>
