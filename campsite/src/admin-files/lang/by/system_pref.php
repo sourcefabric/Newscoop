@@ -1,4 +1,6 @@
 <?php 
+regGS("Setting up a Newscoop Replication Server?", "");
+regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
 regGS("MapQuest Map", "");
 regGS("Google Streets Map", "");
@@ -61,7 +63,6 @@ regGS("Enable Campcaster audioclip attachments?", "Улучыць далучэн
 regGS("XML RPC Path:", "Шлях XML RPC:");
 regGS("XML RPC File:", "Файл XML RPC:");
 regGS("System preferences updated", "Наладкі сыстэмы абноўленыя");
-regGS("Setting up a Campsite Replication Server?", "Усталяваць сервер рэплікацыі Campsite?");
 regGS("Reader subscriptions managed externally?", "Кiраваньне падпiскай чытачоў ажыцьцяўляецца звонку?");
 regGS("Port:", "Порт:");
 regGS("Maximum upload file size:", "Максімальна магчымы памер загружанага файла:");
@@ -74,7 +75,6 @@ regGS("Database Replication User:", "Карыстач рэплікацыі ба�
 regGS("Database Replication Port:", "Порт рэплікацыі базы дадзеных:");
 regGS("Database Replication Password:", "Пароль рэплікацыі базы даных:");
 regGS("Database Replication Host:", "Хост рэплікацыі базы дадзеных:");
-regGS("Campsite Online Server Database", "База дадзеных анлайн сервера Campsite");
 regGS("Campcaster Server", "Сервер Campcaster");
 regGS("System preferences updated.", "Cыстэмныя наладкі абноўленыя.");
 regGS("Please enter a positive number for the '$1' field.", "Калi ласка, увядзеце дадатную лічбу ў поле '$1'");

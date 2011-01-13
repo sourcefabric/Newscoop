@@ -1,13 +1,13 @@
 <?php 
-regGS("You do not have the right to sync Newscoop and Phorum users.", "");
-regGS("User may synchronize Newscoop and Phorum users", "");
+regGS("You do not have the right to sync Newscoop and Phorum users.", "Δεν έχετε το δικαίωμα να συγχρονίσετε Newscoop και Phorum χρήστες.");
+regGS("User may synchronize Newscoop and Phorum users", "Ο χρήστης μπορεί να συγχρονίσει Newscoop και Phorum χρήστες");
 regGS("Unsubscribe email notifications", "");
 regGS("New author \"$1\" ($2) created.", "Ο νέος συγγραφέας \"$1\" ($2) δημιουργήθηκε.");
 regGS("Manage Authors", "Διαχείριση Συγγραφέων");
 regGS("Loading Data", "Φόρτωση Δεδομένων");
 regGS("Delete author type", "Διαγραφή τύπου συγγραφέα");
-regGS("Cannot remove author type.", "");
-regGS("Cannot remove author alias.", "");
+regGS("Cannot remove author type.", "Αδύνατη η αφαίρεση τύπου συγγραφέα.");
+regGS("Cannot remove author alias.", "Αδύνατη η αφαίρεση ψευδωνύμου συγγραφέα.");
 regGS("Author information has been changed for \"$1\" ($2)", "Οι πληροφορίες συγγραφέα άλλαξαν για \"$1\" ($2)");
 regGS("Author alias removed.", "Το ψευδώνυμο συγγραφέα μετακινήθηκε.");
 regGS("Are you sure you want to delete this author?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε αυτόν τον συγγραφέα;");

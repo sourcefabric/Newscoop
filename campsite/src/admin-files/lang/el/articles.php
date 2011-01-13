@@ -1,16 +1,16 @@
 <?php 
-regGS("Your work has not been saved. Do you want to continue and lose your changes?", "");
-regGS("Unable to reach Newscoop. Please check your internet connection.", "");
-regGS("Switches", "");
-regGS("No subtopics available", "");
-regGS("Newscoop Subhead", "");
-regGS("Media", "");
-regGS("Last modified", "");
+regGS("Unable to reach Campsite. Please check your internet connection.", "");
+regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Η δουλειά σας δεν έχει αποθηκευτεί. Επιθυμείτε να συνεχίσετε και να χάσετε τις αλλαγές σας;");
+regGS("Switches", "Εναλλαγές");
+regGS("No subtopics available", "Καμία διαθέσιμη κατηγορία");
+regGS("Newscoop Subhead", "Υποκεφαλίδα Newscoop");
+regGS("Media", "Media");
+regGS("Last modified", "Τελευταίως τροποποιημένα");
 regGS("Keywords &amp; Topics", "");
-regGS("Info", "");
+regGS("Info", "Πληροφορίες");
 regGS("Go to live article", "");
-regGS("Created", "");
-regGS("Attachments", "");
+regGS("Created", "Δημιουργήθηκε");
+regGS("Attachments", "Συννημένα");
 regGS("Locations", "Τοποθεσίες");
 regGS("Are you sure you want to remove the map from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε τον χάρτη από το άρθρο;");
 regGS("Scheduled action added", "Η προγραμματισμένη ενέργεια προστέθηκε");

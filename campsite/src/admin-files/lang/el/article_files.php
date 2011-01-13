@@ -1,10 +1,10 @@
 <?php 
+regGS("The maximum file upload size was not configured in Newscoop.", "Το μέγιστο μέγεθος ανεβάσματος αρχείου δεν διαμορφώθηκε στο Newscoop.");
 regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("File #$1 \"$2\" attached to article", "Το αρχείο #$1 \"$2\" επισυνάφθηκε στο άρθρο");
 regGS("Unable to add attachment.", "Η προσθήκη συννημένου ήταν αδύνατη.");
 regGS("There was a problem uploading the file.", "Υπήρξε ένα πρόβλημα κατά το ανέβασμα του αρχείου.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος ενός αρχείου είναι χαμηλός σε αντίθεση με το μέγεθος αρχείου που προσπαθείτε να εισάγετε. Ο μέγιστος χρόνος εισαγωγής  καθορίστηκε στο 'php.ini'");
-regGS("The maximum file upload size was not configured in Campsite.", "Το μέγιστο μέγεθος ανεβάσματος αρχείου δεν διαμορφώθηκε στο Campsite.");
 regGS("The file exceeds the allowed max file size.", "Το αρχείο υπερβαίνει το επιτρεπόμενο μέγιστο μέγεθος αρχείου.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Παρακαλούμε βεβαιωθείτε ότι αναβαθμίσατε την βάση δεδομένων σωστά: τρέξτε $1 σε ενα κελί. ");
 regGS("Maximum Upload Size", "Μέγιστο Μέγεθος Ανεβάσματος");

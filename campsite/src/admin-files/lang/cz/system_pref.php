@@ -1,4 +1,6 @@
 <?php 
+regGS("Setting up a Newscoop Replication Server?", "");
+regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
 regGS("MapQuest Map", "");
 regGS("Google Streets Map", "");
@@ -61,7 +63,6 @@ regGS("Enable Campcaster audioclip attachments?", "Povolit audioklipové přílo
 regGS("XML RPC Path:", "XML RPC Cesta:");
 regGS("XML RPC File:", "XML RPC Soubor:");
 regGS("System preferences updated", "Systémové předvolby aktualizovány");
-regGS("Setting up a Campsite Replication Server?", "Nastavení Campsite Replication Serveru?");
 regGS("Reader subscriptions managed externally?", "Spravovat čtenářské předplatné externě?");
 regGS("Port:", "Port:");
 regGS("Maximum upload file size:", "Maximální velikost uploadovaného souboru:");
@@ -74,7 +75,6 @@ regGS("Database Replication User:", "Database Replication uživatel:");
 regGS("Database Replication Port:", "Database Replication Port:");
 regGS("Database Replication Password:", "Database Replication heslo:");
 regGS("Database Replication Host:", "Database Replication Host:");
-regGS("Campsite Online Server Database", "Databáze Campsite Online Serveru");
 regGS("Campcaster Server", "Campcaster Server");
 regGS("System preferences updated.", "Systémové předvolby aktualizovány.");
 regGS("Please enter a positive number for the '$1' field.", "Vložte kladné čislo pro '$1' pole.");

@@ -1,5 +1,5 @@
 <?php 
-regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Υπάρχουν κάποια αρχεία που δεν μπορούν να διαβαστούν, με αποτέλεσμα το Newscoop να μην μπορεί να καθορίσει εάν το '$1' είναι σε χρήση ή όχι. Παρακαλούμε διορθώστε το και ξαναπροσπαθήστε να διαγράψετε το πρότυπο.");
 regGS("Stop current upload", "Διακοπή τρέχοντος ανεβάσματος");
 regGS("Start uploading queue", "Έναρξη ανεβάσματος ουράς");
 regGS("Start upload", "Έναρξη ανεβάσματος");
