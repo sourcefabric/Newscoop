@@ -65,7 +65,23 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	$publishMinute = $publishTime[1];
 ?>
 
-<?php camp_html_display_msgs(); ?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <title><?php putGS("Attach Topic To Article"); ?></title>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
+  <script type="text/javascript">
+    var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
+  </script>
+</head>
+<body>
 
 <FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
@@ -166,9 +182,6 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	</TR>
 	</TABLE>
 	</BLOCKQUOTE>
-<?php
-}
-camp_html_copyright_notice();
-?>
+<?php } ?>
 </body>
 </html>

@@ -53,12 +53,12 @@ foreach ($f_topic_ids as $topicIdString) {
 }
 
 ?>
-<script>
+
+<script type="text/javascript">
 <?php if (!is_null($f_topic_ids)) { ?>
 try {
-window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Topics updated."); ?>";
-window.opener.document.forms.article_edit.submit();
+    parent.$.fancybox.reload = true;
 } catch (e) {}
 <?php } ?>
-window.close();
+parent.$.fancybox.close();
 </script>

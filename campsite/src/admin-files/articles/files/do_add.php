@@ -109,12 +109,11 @@ if (!$inArchive) {
         $file->getAttachmentId(), $file->getFileName());
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 ?>
-<script>
+<script type="text/javascript">
 try {
-window.opener.document.forms.article_edit.f_message.value = "<?php putGS("File '$1' added.", $file->getFileName()); ?>";
-window.opener.document.forms.article_edit.submit();
+    parent.$.fancybox.reload = true;
+    parent.$.fancybox.close();
 } catch (e) {}
-window.close();
 </script>
 
 <?php } else { ?>

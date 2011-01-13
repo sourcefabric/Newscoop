@@ -326,7 +326,7 @@ on_close_request = function()
 {
     if (!geo_locations.something_to_save)
     {
-        parent.$.fancybox.close();
+        window.close()
         return;
     }
 
@@ -336,11 +336,10 @@ on_close_request = function()
     if (to_save)
     {
         geo_locations.map_save_all();
-        parent.$.fancybox.reload = true;
     }
 
     window.onbeforeunload = null;
-    parent.$.fancybox.close();
+    window.close();
 }
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -383,8 +382,8 @@ on_close_request = function()
 <div id="map_save_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
-        <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); parent.$.fancybox.reload = true; return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
+        <input id="map_button_save" type="button" onclick="geo_locations.map_save_all(); return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
+        <input id="map_button_close" type="button" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
 	<div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
@@ -396,6 +395,7 @@ on_close_request = function()
 <!--END Toolbar-->
 <div class="clear" style="height:10px;"></div>
 <div class="map_sidepan" id="map_sidepan">
+<!-- end of map_save_part -->
 <div class="map_menubar">
     <fieldset class="plain">
     <ul>

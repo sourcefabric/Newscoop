@@ -75,6 +75,12 @@ if ($g_user->hasPermission('AttachImageToArticle')) {
 }
 
 camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok");
-camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 
 ?>
+
+<script type="text/javascript">
+try {
+    parent.$.fancybox.reload = true;
+} catch (e) {}
+parent.$.fancybox.close();
+</script>

@@ -39,11 +39,7 @@ foreach ($articleTopics as $topic) {
   <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
 </head>
 <body>
-<br>
-<div class="page_title" style="padding-left: 18px;">
-<?php putGS("Attach Topics"); ?>
-</div>
-<p></p>
+<h1><?php putGS("Attach Topics"); ?></h1>
 
 <fieldset class="buttons">
     <input type="text" name="search" class="autocomplete topics" />
@@ -103,12 +99,14 @@ echo str_repeat('</li></ul>', $level);
 ?>
 
 <p></p>
-<DIV class="action_buttons" align="center">
-<INPUT type="submit" value="<?php putGS("Save and Close"); ?>" class="button">
-&nbsp;&nbsp;&nbsp;<input type="submit" value="<?php putGS("Cancel"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
+<div class="action_buttons" style="text-align:center">
+    <input type="submit" value="<?php putGS("Save and Close"); ?>" class="button" />
+    &nbsp;&nbsp;&nbsp;
+    <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
 </div>
-</FORM>
 <p></p>
+
+</form>
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -143,12 +141,14 @@ $(document).ready(function() {
 </script>
 
 <?php } else { ?>
-	<BLOCKQUOTE>
-	<LI><?php  putGS('No topics.'); ?></LI>
-	</BLOCKQUOTE>
-	<DIV align="center" style="padding-top: 20px;">
-	<input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
-	</div>
+<blockquote>
+    <p><?php  putGS('No topics.'); ?></p>
+</blockquote>
+    
+<div style="text-align:center;padding-top: 20px;">
+    <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
+</div>
 <?php } ?>
+
 </body>
 </html>

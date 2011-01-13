@@ -124,6 +124,7 @@ if ($f_mode == "multi") {
 	?>
 	<script type="text/javascript">
     try {
+        parent.$.fancybox.reload = true;
         parent.$.fancybox.close();
     } catch (e) {
     }

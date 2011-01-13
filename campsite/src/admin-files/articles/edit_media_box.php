@@ -5,7 +5,7 @@
     </ul>
     <div id="media-images">
         <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
-        <a class="ui-state-default icon-button right-floated" href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>', 'attach_image', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=750, height=600, top=200, left=100');"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+        <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
         <div class="clear"></div>
         <?php } ?>
 
@@ -36,8 +36,8 @@
 
     <div id="media-attachments">
 		<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AddFile')) {  ?>
-        <a class="ui-state-default icon-button right-floated"
-            href="javascript: void(0);" onclick="window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=400, top=200, left=100');"><span
+        <a class="iframe ui-state-default icon-button right-floated"
+            href="<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>"><span
             class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
         <div class="clear"></div>
         <?php } ?>
