@@ -1,4 +1,6 @@
 <?php 
+regGS("Setting up a Newscoop Replication Server?", "");
+regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
 regGS("MapQuest Map", "");
 regGS("Google Streets Map", "");

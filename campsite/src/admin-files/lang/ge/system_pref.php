@@ -1,4 +1,6 @@
 <?php 
+regGS("Setting up a Newscoop Replication Server?", "");
+regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
 regGS("MapQuest Map", "");
 regGS("Google Streets Map", "");
@@ -61,7 +63,6 @@ regGS("Enable Campcaster audioclip attachments?", "");
 regGS("XML RPC Path:", "");
 regGS("XML RPC File:", "");
 regGS("System preferences updated", "");
-regGS("Setting up a Campsite Replication Server?", "");
 regGS("Reader subscriptions managed externally?", "");
 regGS("Port:", "");
 regGS("Maximum upload file size:", "");
@@ -74,7 +75,6 @@ regGS("Database Replication User:", "");
 regGS("Database Replication Port:", "");
 regGS("Database Replication Password:", "");
 regGS("Database Replication Host:", "");
-regGS("Campsite Online Server Database", "");
 regGS("Campcaster Server", "");
 regGS("System preferences updated.", "");
 regGS("Please enter a positive number for the '$1' field.", "");

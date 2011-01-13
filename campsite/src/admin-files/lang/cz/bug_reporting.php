@@ -1,9 +1,10 @@
 <?php 
+regGS("Newscoop has encountered a problem.", "");
+regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "");
 regGS("What were you trying to do when this happened?", "Co jste se pokoušel udělat, když k tomuto došlo?");
 regGS("Description:", "Popis:");
 regGS("We are sorry for the inconvenience.", "Omlouváme se za potíže.");
 regGS("Show error details", "Zobrazit podrobnosti chyby");
-regGS("In order to help the Campsite team investigate and pinpoint the issue please take a moment to describe what happened.", "Prosím popište co se stalo a pomožte tak Campsite týmu vyšetřit a opravit problém.");
 regGS("Hide error details", "Skrýt podrobnosti chyby");
 regGS("Error Report", "Chybové hlášení");
 regGS("Campsite has encountered a problem.", "Campsite narazil na problém.");

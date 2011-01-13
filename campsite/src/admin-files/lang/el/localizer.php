@@ -2,7 +2,7 @@
 regGS("Libraries", "Βιβλιοθήκες");
 regGS("Media Archive", "Αρχείο Media");
 regGS("Extensions", "Επεκτάσεις");
-regGS("Geo-location", "");
+regGS("Geo-location", "Geo-location");
 regGS("Translation status:", "Κατάσταση μετάφρασης:");
 regGS("Editor Media Plugin", "Επεξεργαστής Προσθέτου Media ");
 regGS("$1 of $2 strings translated", "$1 από $2 σειρές μεταφράστηκαν");

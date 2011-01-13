@@ -1,9 +1,10 @@
 <?php 
+regGS("Newscoop has encountered a problem.", "");
+regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "");
 regGS("What were you trying to do when this happened?", "Ce încercai să faci când a avut loc incidentul?");
 regGS("Description:", "Descriere:");
 regGS("We are sorry for the inconvenience.", "Ne pare rău pentru această neplăcere.");
 regGS("Show error details", "Arată detaliile erorii");
-regGS("In order to help the Campsite team investigate and pinpoint the issue please take a moment to describe what happened.", "Pentru a ajuta echipa Campsite să investigheze problema şi să găsească soluţia, descrie incidentul.");
 regGS("Hide error details", "Ascunde detaliile erorii");
 regGS("Error Report", "Raportarea erorii");
 regGS("Campsite has encountered a problem.", "Campsite a întâmpinat o problemă.");

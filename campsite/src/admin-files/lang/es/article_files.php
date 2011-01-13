@@ -1,10 +1,10 @@
 <?php 
+regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
 regGS("Unable to add attachment.", "No es posible agregar un adjunto.");
 regGS("There was a problem uploading the file.", "Hubo un problema al subir el archivo.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo solo subió parcialmente. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
-regGS("The maximum file upload size was not configured in Campsite.", "El tamaño máximo de un archivo para subir no ha sido configurado en Campsite.");
 regGS("The file exceeds the allowed max file size.", "El archivo sobrepasa el tamaño máximo permitido para un archivo.");
 regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Por favor asegúrese de haber actualizado la base de datos correctamente: ejecute $1 en la línea de comandos.");
 regGS("Maximum Upload Size", "Tamaño máximo para subir");

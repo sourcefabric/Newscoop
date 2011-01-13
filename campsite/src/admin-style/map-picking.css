@@ -128,8 +128,8 @@ a.map-no-link {
     width: 615px;
     height: 405px;
     position: absolute;
-    top: 93px;
-    right: 90px;
+    top: 90px;
+    right: 85px;
     color: #804000;
     font-size: 11px;
     z-index: 10000;
@@ -347,7 +347,7 @@ position: relative;
 }
 .poi_coors_input {
     border: 1px solid #9d9d9d;
-    background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    background: url(images/input_bg.png) repeat-x scroll 0 0 #FFFFFF;
     margin: 0 0 0 0;
 	font-size:12px;
 	padding:2px 0 2px 2px;
@@ -418,7 +418,7 @@ a.edit_marker_one_choice_link {
   display: default;
 }
 .edit_tabs input.input_text {
-    background: url("input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    background: url(images/input_bg.png) repeat-x scroll 0 0 #FFFFFF;
     border: 1px solid #9D9D9D;
     float: left;
     font-family: Arial,Helvetica,sans-serif;
