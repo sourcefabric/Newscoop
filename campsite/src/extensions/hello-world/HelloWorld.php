@@ -14,7 +14,7 @@
  * @description Widget sample.
  * @homepage http://www.sourcefabric.org
  * @version 1.0
- * @license GPLv2
+ * @license GPLv3
  */
 class HelloWorld extends Widget
 {
