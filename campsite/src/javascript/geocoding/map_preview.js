@@ -535,12 +535,12 @@ this.create_popup_content = function(feature)
     else
     {
         var plain_text = feature.attributes.m_text;
-        plain_text.replace(/&/gi, "&amp;");
-        plain_text.replace(/>/gi, "&gt;");
-        plain_text.replace(/</gi, "&lt;");
-        plain_text.replace(/\r\n/gi, "</p><p>");
-        plain_text.replace(/\n/gi, "</p><p>");
-        plain_text.replace(/\r/gi, "</p><p>");
+        plain_text = plain_text.replace(/&/gi, "&amp;");
+        plain_text = plain_text.replace(/>/gi, "&gt;");
+        plain_text = plain_text.replace(/</gi, "&lt;");
+        plain_text = plain_text.replace(/\r\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\n/gi, "</p><p>");
+        plain_text = plain_text.replace(/\r/gi, "</p><p>");
 
         pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
     }
