@@ -62,7 +62,7 @@ $('form#article-main').submit(function() {
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    $("#connection-error").show().html('<?php putGS("Unable to reach Newscoop. Please check your internet connection."); ?>');
+                    $("#connection-error").show().html('<?php putGS("Unable to reach Campsite. Please check your internet connection."); ?>');
                 }
             }
         });

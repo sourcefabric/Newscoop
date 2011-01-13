@@ -1738,7 +1738,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $preview = true;
         $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
         
-        $poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
+        //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
+        $poi_info_json = json_encode($poi_info);
         
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
@@ -1788,7 +1789,7 @@ var on_load_proc = function()
 
         geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
 
-        geo_object' . $map_suffix . '.got_load_data(\'' . $poi_info_json . '\');
+        geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
     }
 };

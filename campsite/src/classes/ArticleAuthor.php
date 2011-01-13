@@ -348,8 +348,6 @@ class ArticleAuthor extends DatabaseObject
         $tmpArticleAuthor = new ArticleAuthor();
         $selectClauseObj->setTable($tmpArticleAuthor->getDbTableName());
         $selectClauseObj->addJoin('JOIN ' . Author::TABLE . ' ON fk_author_id = id');
-        $selectClauseObj->addColumn('fk_article_number');
-        $selectClauseObj->addColumn('fk_language_id');
         $selectClauseObj->addColumn('fk_author_id');
         $selectClauseObj->addColumn('fk_type_id');
         $countClauseObj->setTable($tmpArticleAuthor->getDbTableName());
@@ -379,25 +377,22 @@ class ArticleAuthor extends DatabaseObject
         	$p_count = $g_ado_db->GetOne($countQuery);
 
         	// builds the array of attachment objects
-        	$articleAuthorsList = array();
+        	$authorsList = array();
         	foreach ($authors as $author) {
-        		$authorObj = new self($author['fk_article_number'],
-        		                      $author['fk_language_id'],
-        		                      $author['fk_author_id'],
-        		                      $author['fk_type_id']);
+        		$authorObj = new Author($author['fk_author_id'], $author['fk_type_id']);
         		if ($authorObj->exists()) {
-        			$articleAuthorsList[] = $authorObj;
+        			$authorsList[] = $authorObj;
         		}
         	}
         } else {
-        	$articleAuthorsList = array();
+        	$authorsList = array();
         	$p_count = 0;
         }
         if (!$p_skipCache && CampCache::IsEnabled()) {
-        	$cacheListObj->storeInCache($articleAuthorsList);
+        	$cacheListObj->storeInCache($authorsList);
         }
 
-        return $articleAuthorsList;
+        return $authorsList;
     }
 
     /**
