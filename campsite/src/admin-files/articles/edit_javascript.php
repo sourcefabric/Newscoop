@@ -27,14 +27,14 @@ $('.icon-button').hover(
 $('.collapsible').each(function(index) {
     var head = $('> .head', $(this));
     var cookie = 'articlebox-' + index;
-    var opened = $.cookie(cookie);
+    var closed = $.cookie(cookie);
     var expires = { expires: 14 } // 14 days cookie expiration
 
     // init by cookie
-    if (opened != 1) {
-        $(this).next().hide();
-    } else {
+    if (closed != 1) {
         head.addClass('ui-state-active');
+    } else {
+        $(this).next().hide();
     }
 
     // toggle
@@ -42,9 +42,9 @@ $('.collapsible').each(function(index) {
         $(this).next().toggle('fast');
         head.toggleClass('ui-state-active');
         if (head.hasClass('ui-state-active')) {
-            $.cookie(cookie, 1, expires);
-        } else {
             $.cookie(cookie, 0, expires);
+        } else {
+            $.cookie(cookie, 1, expires);
         }
         return false;
     });
