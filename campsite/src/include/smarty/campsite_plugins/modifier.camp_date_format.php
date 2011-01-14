@@ -42,7 +42,7 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_only
     }
 
     // gets the context variable
-    $campsite = CampTemplate::singleton()->get_template_vars('campsite');
+    $campsite = CampTemplate::singleton()->get_template_vars('gimme');
 
     // makes sure $p_unixtime is unixtime stamp
     $p_unixtime = smarty_make_timestamp($p_unixtime);

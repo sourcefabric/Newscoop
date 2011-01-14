@@ -29,13 +29,13 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
   <div id="headernav">
 {{ include file="classic/tpl/login-top.tpl" }}
     <div id="logospace">
-       <a href="http://{{ $campsite->publication->site }}/{{ $campsite->language->code }}/" style="border: none; dispaly: block; float: left; margin: 25px 0 0 10px;"><img alt="logo" style="border: none" src="http://{{ $campsite->publication->site }}/templates/classic/css/cleanblue/logo-blue.png" /></a>
+       <a href="http://{{ $gimme->publication->site }}/{{ $gimme->language->code }}/" style="border: none; dispaly: block; float: left; margin: 25px 0 0 10px;"><img alt="logo" style="border: none" src="http://{{ $gimme->publication->site }}/templates/classic/css/cleanblue/logo-blue.png" /></a>
        {{ include file="classic/tpl/banner/bannerlogo.tpl" }}
       </div>
       
     <div id="navmain">
-    {{ if $campsite->section->defined }}
-      {{ assign var='curr_section' value=$campsite->section->number }}
+    {{ if $gimme->section->defined }}
+      {{ assign var='curr_section' value=$gimme->section->number }}
       {{ set_current_issue }}
       {{ set_section number=$curr_section }}
     {{ /if }}
@@ -44,15 +44,15 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
       <li id="navlinksection-home">
         <div class="navlink">
           <a href="{{ uri options="publication" }}" id="navlinksection-home">
-            {{ if $campsite->language->name == "English" }}Home{{ else }}Portada{{ /if }}
+            {{ if $gimme->language->name == "English" }}Home{{ else }}Portada{{ /if }}
           </a>
         </div>
       </li>
       {{ list_sections name="sections" }}
-        {{ if $campsite->section->number == $campsite->default_section->number }}
-          <li class="active" id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
+        {{ if $gimme->section->number == $gimme->default_section->number }}
+          <li class="active" id="navlinksection-{{ $gimme->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $gimme->section->number }}">{{ $gimme->section->name }}</a></div></li>
         {{ else }}
-          <li id="navlinksection-{{ $campsite->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a></div></li>
+          <li id="navlinksection-{{ $gimme->section->number }}"><div class="navlink"><a href="{{ uri options="section" }}" id="navlinksection-{{ $gimme->section->number }}">{{ $gimme->section->name }}</a></div></li>
         {{ /if }}
       {{ /list_sections }}
       
@@ -85,36 +85,36 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 </div><!-- #header -->
 
 {{ if !$is_index }}
-{{ if $campsite->template->name == "classic/topic.tpl" }}
-    {{ if $campsite->topic->defined }}
+{{ if $gimme->template->name == "classic/topic.tpl" }}
+    {{ if $gimme->topic->defined }}
   <div class="sectionheader">
     <div class="sectionheaderinner">
-        {{ if $campsite->language->name == "English" }}Topic:{{ else }}Tema:{{ /if }} {{ $campsite->topic->name }}
+        {{ if $gimme->language->name == "English" }}Topic:{{ else }}Tema:{{ /if }} {{ $gimme->topic->name }}
     </div><!-- .sectionheaderinner -->
   </div><!-- .sectionheader -->
     {{ else }}
   <div class="sectionheader">
     <div class="sectionheaderinner">
-        {{ if $campsite->language->name == "English" }}Topics{{ else }}Temas{{ /if }}
+        {{ if $gimme->language->name == "English" }}Topics{{ else }}Temas{{ /if }}
     </div><!-- .sectionheaderinner -->
   </div><!-- .sectionheader -->
     {{ /if }}
-{{ elseif $campsite->template->name == "classic/archive.tpl" }}
+{{ elseif $gimme->template->name == "classic/archive.tpl" }}
   <div class="sectionheader">
     <div class="sectionheaderinner">
     Archive
     </div><!-- .sectionheaderinner -->
   </div><!-- .sectionheader -->
-{{ elseif $campsite->search_articles_action->ok }}
+{{ elseif $gimme->search_articles_action->ok }}
   <div class="sectionheader">
     <div class="sectionheaderinner">
-        {{ if $campsite->language->name == "English" }}Search results for:{{ else }}Resultados de la búsqueda{{ /if }} {{ $campsite->search_articles_action->search_phrase }}
+        {{ if $gimme->language->name == "English" }}Search results for:{{ else }}Resultados de la búsqueda{{ /if }} {{ $gimme->search_articles_action->search_phrase }}
     </div><!-- .sectionheaderinner -->
   </div><!-- .sectionheader -->
-{{ elseif $campsite->section->defined }}
-  <div class="sectionheader sectionheader-{{ $campsite->section->number }}">
+{{ elseif $gimme->section->defined }}
+  <div class="sectionheader sectionheader-{{ $gimme->section->number }}">
     <div class="sectionheaderinner">
-        {{ $campsite->section->name }}
+        {{ $gimme->section->name }}
     </div><!-- .sectionheaderinner -->
   </div><!-- .sectionheader -->
 {{ /if }}

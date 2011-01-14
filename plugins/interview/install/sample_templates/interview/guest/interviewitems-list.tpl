@@ -1,6 +1,6 @@
 <h6>{{ $smarty.template }}</h6>
 
-<p>Interview: <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}">{{ $campsite->interview->title }}</a></p>
+<p>Interview: <a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}">{{ $gimme->interview->title }}</a></p>
 
 {{ if strlen($smarty.request.f_interviewitem_status) }}
     {{ assign var='_constraints' value="status is `$smarty.request.f_interviewitem_status`" }}

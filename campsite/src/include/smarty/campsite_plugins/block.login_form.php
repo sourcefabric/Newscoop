@@ -31,7 +31,7 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
 
     $url = $campsite->url;
     $url->uri_parameter = "";

@@ -1,6 +1,6 @@
 {{ include file="classic/tpl/header.tpl" }}
 
-<body id="article" class="section-{{ $campsite->section->number }}">
+<body id="article" class="section-{{ $gimme->section->number }}">
 <div id="container">
 <div id="wrapbg">
 <div id="wrapper">
@@ -14,20 +14,20 @@
         <!-- Column 1 start -->
           <div class="articlecontent">
             <div class="date">
-              {{ $campsite->article->publish_date }}
+              {{ $gimme->article->publish_date }}
               {{ include file="classic/tpl/topic-list.tpl" }}
             </div><!-- .date -->
-            <h3 class="deck deck_med">{{ $campsite->article->Deck }}</h3>            
+            <h3 class="deck deck_med">{{ $gimme->article->Deck }}</h3>            
             
-            <h1>{{ $campsite->article->name }}</h1>
-            <div class="byline">{{ $campsite->article->author->name }}</div>
+            <h1>{{ $gimme->article->name }}</h1>
+            <div class="byline">{{ $gimme->article->author->name }}</div>
 
             {{ include file="classic/tpl/if-map.tpl" }}
             {{ include file="classic/tpl/if-video.tpl" }}
             {{ include file="classic/tpl/if-audio.tpl" }}
             
             <p class="text">
-              {{ $campsite->article->Body }}
+              {{ $gimme->article->Body }}
             </p>
           </div><!-- .articlecontent -->
           
@@ -51,22 +51,22 @@
     
         <!-- start: 3 articles having same topic -->
         {{ list_article_topics }}
-          {{ assign var="topic_cond" value="`$topic_cond` topic is `$campsite->topic->identifier` " }}
+          {{ assign var="topic_cond" value="`$topic_cond` topic is `$gimme->topic->identifier` " }}
         {{ /list_article_topics }}
     
         {{ if $topic_cond }}
           <!-- 3 Articles {{ $topic_cond }} -->
-          {{ list_articles name="topic_articles" constraints="number not `$campsite->article->number` `$topic_cond` matchAnyTopic"  ignore_issue=true length=3 }}
+          {{ list_articles name="topic_articles" constraints="number not `$gimme->article->number` `$topic_cond` matchAnyTopic"  ignore_issue=true length=3 }}
             {{ include file="classic/tpl/teaserframe_articlelistright.tpl" }}
             {{ include file="classic/tpl/pagination.tpl" }}
-            {{ assign var="number_cond" value="`$number_cond` number not `$campsite->article->number` " }}
+            {{ assign var="number_cond" value="`$number_cond` number not `$gimme->article->number` " }}
           {{ /list_articles }}
           {{ unset_topic }}
         {{ /if }}
         <!-- end: 3 articles having same topic end -->
     
-        <!-- 3 Articles from section number {{ $campsite->section->number }}, Article {{ $number_cond }} -->
-        {{ list_articles name="section_articles" constraints="number not `$campsite->article->number` $number_cond" ignore_issue=true length=3 }} 
+        <!-- 3 Articles from section number {{ $gimme->section->number }}, Article {{ $number_cond }} -->
+        {{ list_articles name="section_articles" constraints="number not `$gimme->article->number` $number_cond" ignore_issue=true length=3 }} 
           {{ include file="classic/tpl/teaserframe_articlelistright.tpl" }}
           {{ include file="classic/tpl/pagination.tpl" }}
         {{ /list_articles }}

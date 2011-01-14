@@ -25,7 +25,7 @@
 function smarty_block_blog_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
 
     if (!$campsite->user->identifier) {
         return getGS('Only registered users are allowed to blog.');

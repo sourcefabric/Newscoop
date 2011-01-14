@@ -29,7 +29,7 @@ function smarty_block_list_interviewitems($p_params, $p_content, &$p_smarty, &$p
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
     
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('campsite');
+    $campContext = $p_smarty->get_template_vars('gimme');
     $html = '';
     
     if (!$p_paqrams['oder']) {

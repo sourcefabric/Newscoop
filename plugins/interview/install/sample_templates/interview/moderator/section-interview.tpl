@@ -13,23 +13,23 @@
     <tr>
       <td>  
         
-        {{ if $campsite->user->has_permission('plugin_interview_moderator') }}               
+        {{ if $gimme->user->has_permission('plugin_interview_moderator') }}               
             
-            {{ if $smarty.request.interview_action || $campsite->interview_action->defined }}
+            {{ if $smarty.request.interview_action || $gimme->interview_action->defined }}
             
                 {{ include file='interview/moderator/interview-action.tpl }} 
     
-            {{ elseif $smarty.request.interviewitem_action || $campsite->interviewitem_action->defined }}
+            {{ elseif $smarty.request.interviewitem_action || $gimme->interviewitem_action->defined }}
             
                 {{ include file='interview/moderator/interviewitem-action.tpl }} 
            
-             {{ elseif $campsite->interviewitem->defined }}
+             {{ elseif $gimme->interviewitem->defined }}
             
                 {{ include file='interview/interviewitem-details.tpl' }}
                 {{ include file='interview/moderator/interviewitem-actions.tpl' }}
     
                 
-            {{ elseif $campsite->interview->defined }}
+            {{ elseif $gimme->interview->defined }}
             
                 {{ include file='interview/interview-details.tpl' }}
                 {{ include file='interview/moderator/interview-actions.tpl' }}

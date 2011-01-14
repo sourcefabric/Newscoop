@@ -20,7 +20,7 @@
  */
 function smarty_function_url($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('campsite');
+    $context = $p_smarty->get_template_vars('gimme');
     // gets the URL base
     $urlString = $context->url->base;
 

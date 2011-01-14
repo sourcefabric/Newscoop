@@ -27,7 +27,7 @@ function smarty_function_map($p_params, &$p_smarty)
     define('DEFAULT_RESET_TEXT', 'Show original map');
 
     // get the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
     // language and article must be set in context

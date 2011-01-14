@@ -13,19 +13,19 @@
     <tr>
       <td>  
         
-        {{ if $campsite->user->has_permission('plugin_interview_guest') }}               
+        {{ if $gimme->user->has_permission('plugin_interview_guest') }}               
             
-            {{ if $smarty.request.interviewitem_action || $campsite->interviewitem_action->defined }}
+            {{ if $smarty.request.interviewitem_action || $gimme->interviewitem_action->defined }}
             
                 {{ include file='interview/guest/interviewitem-action.tpl }} 
            
-             {{ elseif $campsite->interviewitem->defined }}
+             {{ elseif $gimme->interviewitem->defined }}
             
                 {{ include file='interview/interviewitem-details.tpl' }}
                 {{ include file='interview/guest/interviewitem-actions.tpl' }}
     
                 
-            {{ elseif $campsite->interview->defined }}
+            {{ elseif $gimme->interview->defined }}
             
                 {{ include file='interview/interview-details.tpl' }}
                 {{ include file='interview/guest/interview-actions.tpl' }}

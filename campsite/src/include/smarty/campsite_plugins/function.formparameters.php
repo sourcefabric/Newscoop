@@ -18,7 +18,7 @@
  */
 function smarty_function_formparameters($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('campsite');
+    $context = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_params['options'])) {
         $formParameters = $context->url->form_parameters;

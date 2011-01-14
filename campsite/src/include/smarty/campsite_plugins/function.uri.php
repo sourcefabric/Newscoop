@@ -18,7 +18,7 @@
  */
 function smarty_function_uri($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('campsite');
+    $context = $p_smarty->get_template_vars('gimme');
 
     $url = 'url';
     $params = preg_split("/[\s]+/", $p_params['options']);

@@ -5,7 +5,7 @@
     <ul>
     {{ list_sections name="sections" constraints="number smaller 200" }}
       <li><a
-	href="{{ uri options="section" }}">{{ $campsite->section->name }}</a></li>
+	href="{{ uri options="section" }}">{{ $gimme->section->name }}</a></li>
     {{ /list_sections }}
     
     {{ local }}

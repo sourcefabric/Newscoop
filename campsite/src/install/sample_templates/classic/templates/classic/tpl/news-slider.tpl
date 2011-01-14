@@ -24,7 +24,7 @@ $("#section-scrollable .scrollable").scrollable({mousewheel:true,circular: true}
 </style>
 
 {{ set_section number="40" }}
-<h3>{{ if $campsite->language->name == "English" }}Newest <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a> articles{{ else }}Lo nuevo <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a> artículos{{ /if }}</h3>
+<h3>{{ if $gimme->language->name == "English" }}Newest <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a> articles{{ else }}Lo nuevo <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a> artículos{{ /if }}</h3>
   <div id="section-scrollable" style="margin: 0 0 20px 0">
     <div class="section-scr">
       <a class="prev left-button" title="Previous"></a>
@@ -33,8 +33,8 @@ $("#section-scrollable .scrollable").scrollable({mousewheel:true,circular: true}
 {{list_articles order="bypublishdate desc"}}
           <div>
               <a href="{{ uri options="article" }}">
-                  <img src="{{uri options="image 1 width 350 height 270"}}" alt="{{ $campsite->article->name }}" title="{{ $campsite->article->name }}" />
-                  <p>{{ $campsite->article->name }}</p>
+                  <img src="{{uri options="image 1 width 350 height 270"}}" alt="{{ $gimme->article->name }}" title="{{ $gimme->article->name }}" />
+                  <p>{{ $gimme->article->name }}</p>
               </a>
           </div>
 {{/list_articles}}

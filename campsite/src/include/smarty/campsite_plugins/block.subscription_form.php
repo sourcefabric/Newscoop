@@ -31,7 +31,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     }
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
 
     if (strtolower($p_params['type']) == 'by_publication') {
         $campsite->subs_by_type = 'publication';

@@ -12,26 +12,26 @@
     <table class="content" cellspacing="0" cellpadding="0">
     <tr>
       <td>  
-        {{ if $campsite->user->has_permission('plugin_interview_admin') }} 
+        {{ if $gimme->user->has_permission('plugin_interview_admin') }} 
         
             <a href="{{ uripath }}?interview_action=form">New Interview</a><p>
                 
             
-            {{ if $smarty.request.interview_action || $campsite->interview_action->defined }}
+            {{ if $smarty.request.interview_action || $gimme->interview_action->defined }}
             
                 {{ include file='interview/admin/interview-action.tpl }} 
     
-            {{ elseif $smarty.request.interviewitem_action || $campsite->interviewitem_action->defined }}
+            {{ elseif $smarty.request.interviewitem_action || $gimme->interviewitem_action->defined }}
             
                 {{ include file='interview/admin/interviewitem-action.tpl }} 
            
-             {{ elseif $campsite->interviewitem->defined }}
+             {{ elseif $gimme->interviewitem->defined }}
             
                 {{ include file='interview/interviewitem-details.tpl' }}
                 {{ include file='interview/admin/interviewitem-actions.tpl' }}
     
                 
-            {{ elseif $campsite->interview->defined }}
+            {{ elseif $gimme->interview->defined }}
             
                 {{ include file='interview/interview-details.tpl' }}
                 {{ include file='interview/admin/interview-actions.tpl' }}

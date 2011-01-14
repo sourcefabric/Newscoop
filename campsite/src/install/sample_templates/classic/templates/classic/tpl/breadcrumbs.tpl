@@ -1,16 +1,16 @@
 <div class="breadcrumbs"><div class="breadcrumbsinner">
-<a href="{{ uri options="publication" }}">{{ if $campsite->language->name == "English" }}Home{{ else }}Portada{{ /if }}</a>
+<a href="{{ uri options="publication" }}">{{ if $gimme->language->name == "English" }}Home{{ else }}Portada{{ /if }}</a>
 &gt;
-{{ if $campsite->template->name == "classic/topic.tpl" }}
-    {{ if $campsite->topic->defined }}
-        {{ if $campsite->language->name == "English" }}Topic{{ else }}Tema{{ /if }}: {{ $campsite->topic->name }}
+{{ if $gimme->template->name == "classic/topic.tpl" }}
+    {{ if $gimme->topic->defined }}
+        {{ if $gimme->language->name == "English" }}Topic{{ else }}Tema{{ /if }}: {{ $gimme->topic->name }}
     {{ else }}
-        {{ if $campsite->language->name == "English" }}Topics{{ else }}Temas{{ /if }}
+        {{ if $gimme->language->name == "English" }}Topics{{ else }}Temas{{ /if }}
     {{ /if }}
-{{ elseif $campsite->template->name == "classic/archive.tpl" }}
-    {{ if $campsite->language->name == "English" }}Archive{{ else }}Archivo{{ /if }}
-{{ elseif $campsite->section->defined }}
-    <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>
+{{ elseif $gimme->template->name == "classic/archive.tpl" }}
+    {{ if $gimme->language->name == "English" }}Archive{{ else }}Archivo{{ /if }}
+{{ elseif $gimme->section->defined }}
+    <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a>
 {{ /if }}
 
 </div><!-- .breadcrumbsinner -->

@@ -20,7 +20,7 @@
 function smarty_block_list_article_locations($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('campsite');
+    $campContext = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticleLocationsList');

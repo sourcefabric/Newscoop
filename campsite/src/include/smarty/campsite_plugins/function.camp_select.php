@@ -35,7 +35,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
     $object = strtolower($p_params['object']);

@@ -1,7 +1,7 @@
 <!-- {{ $smarty.template }} -->
 
 {{ list_interviews length=10 constraints=$_constraints }}
-    {{ if $campsite->current_interviews_list->at_beginning }}
+    {{ if $gimme->current_interviews_list->at_beginning }}
     <table border="1" width="100%">
         <tr>
             <th>Title</th>
@@ -14,20 +14,20 @@
     {{ /if }}
     
     <tr>
-        <td><a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}">{{ $campsite->interview->title }}</a></td>
-        <td>{{ $campsite->interview->questions_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $campsite->interview->questions_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
-        <td>{{ $campsite->interview->interview_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $campsite->interview->interview_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
-        <td>{{ $campsite->interview->status }}</td>
-        <td>{{ $campsite->interview->moderator->name }}</td>
-        <td>{{ $campsite->interview->guest->name }}</td>
+        <td><a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}">{{ $gimme->interview->title }}</a></td>
+        <td>{{ $gimme->interview->questions_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $gimme->interview->questions_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
+        <td>{{ $gimme->interview->interview_begin|camp_date_format:'%Y-%m-%d %H:%i' }} - {{ $gimme->interview->interview_end|camp_date_format:'%Y-%m-%d %H:%i' }}</td>
+        <td>{{ $gimme->interview->status }}</td>
+        <td>{{ $gimme->interview->moderator->name }}</td>
+        <td>{{ $gimme->interview->guest->name }}</td>
     </tr>
     
-    {{ if $campsite->current_interviews_list->at_end }}
+    {{ if $gimme->current_interviews_list->at_end }}
         </table>
     {{ /if }}
 {{ /list_interviews }}
 
-{{ if $campsite->prev_list_empty }}
+{{ if $gimme->prev_list_empty }}
     No interview found
 {{ /if }}
 

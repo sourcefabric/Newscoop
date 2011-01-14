@@ -19,7 +19,7 @@
 function smarty_function_unset_section($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
     if (!is_object($campsite->section) || !$campsite->section->defined) {
         return;
     }

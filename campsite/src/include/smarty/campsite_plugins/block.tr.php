@@ -19,7 +19,7 @@
 function smarty_block_tr($p_params, $p_content, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
     if (!$campsite->language->defined) {
         return;
     }

@@ -14,9 +14,9 @@
         <div class="col1wrap">
             <div class="col1">
 
-{{ if !$campsite->url->is_valid }}
-  <h3>{{ if $campsite->language->name == "English" }}The requested page was not found.{{ else }}La página solicitada no fue encontrada.{{ /if }}</h3>
-  {{ set_language name=`$campsite->publication->default_language->english_name` }}
+{{ if !$gimme->url->is_valid }}
+  <h3>{{ if $gimme->language->name == "English" }}The requested page was not found.{{ else }}La página solicitada no fue encontrada.{{ /if }}</h3>
+  {{ set_language name=`$gimme->publication->default_language->english_name` }}
   {{ set_current_issue }}
 {{ else }}
 
@@ -30,7 +30,7 @@
 {{ include file="classic/tpl/teaserframe_articlelistleft.tpl" }}
 {{ /list_articles }}
 
-{{ if $campsite->current_sections_list->index == 1 }}
+{{ if $gimme->current_sections_list->index == 1 }}
 <!-- Banner -->
 {{ include file="classic/tpl/banner/bannerleftcol.tpl" }}
 {{ /if }}
@@ -55,7 +55,7 @@
 
 {{ include file="classic/tpl/news-slider.tpl" }}
 
-<h3>{{ if $campsite->language->name == "English" }}Other articles{{ else }}Otros artículos{{ /if }}</h3>
+<h3>{{ if $gimme->language->name == "English" }}Other articles{{ else }}Otros artículos{{ /if }}</h3>
 
 <!-- section 40 -->
 {{ local }}
