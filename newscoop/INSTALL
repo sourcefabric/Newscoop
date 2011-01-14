@@ -1,4 +1,4 @@
-INSTALLATION PROCEDURE FOR CAMPSITE V.3.5.x
+INSTALLATION PROCEDURE FOR NEWSCOOP V.3.5.x
 http://www.sourcefabric.org
 
 CONTENTS:
@@ -22,11 +22,11 @@ host (localhost).
 
 Example of virtual host configuration:
 <VirtualHost *>
-    DocumentRoot /var/www/campsite
+    DocumentRoot /var/www/newscoop
     ServerName [site_name]
     ServerAlias [site_alias]
     DirectoryIndex index.php index.html
-    <Directory /var/www/campsite>
+    <Directory /var/www/newscoop>
             Options -Indexes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
@@ -34,12 +34,12 @@ Example of virtual host configuration:
     </Directory>
 </VirtualHost>
 
-2. Unzip and Untar the campsite file. This will generate a folder
-named 'campsite'.
+2. Unzip and Untar the newscoop file. This will generate a folder
+named 'newscoop'.
 
-3. Open the 'campsite' directory.
+3. Open the 'newscoop' directory.
 
-4. Copy the content of "src" directory into the document
+4. Copy the content of newscoop directory into the document
 root directory of the apache virtual host.
 
 5. Start a browser, point it to the http://site_name URL and follow the
@@ -50,5 +50,4 @@ steps.
 
 INSTALLATION of multiple instances
 
-Since version 3.0 Campsite doesn't support multiple instances anymore.
-You will have to perform one install for each Campsite instance.
+You will have to perform one install for each Newscoop instance.
