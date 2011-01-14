@@ -140,6 +140,10 @@ function change_language(select)
     ?>
     <!-- END Workflow -->
   </fieldset>
-  <?php require_once('edit_schedule_box.php'); ?>
+  <?php
+  if ($articleObj->getWorkflowStatus() != 'N') {
+      require_once('edit_schedule_box.php');
+  }
+  ?>
 </form>
 </div>

@@ -49,11 +49,9 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
 
   <!-- START Side bar //-->
   <div class="sidebar">
-  <?php if ($articleObj->getWorkflowStatus() != 'N') { ?>
       <!-- BEGIN Scheduled Publishing table -->
       <?php require('edit_main_box.php'); ?>
       <!-- END Scheduled Publishing table -->
-      <?php } ?>
 
       <!-- BEGIN Geo-locations table -->
       <?php require('edit_locations_box.php'); ?>
