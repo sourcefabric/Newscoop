@@ -130,7 +130,7 @@ class ArticleIndex extends DatabaseObject {
 	        $rowsLimit = $rowsLimit > 0 ? min($rowsLimit, $p_articlesLimit) : $p_articlesLimit;
 	    }
 
-	    $lockFile = fopen($GLOBALS['g_campsiteDir'].'/campsite-indexer.lock', "w+");
+	    $lockFile = fopen($GLOBALS['g_campsiteDir'].'/newscoop-indexer.lock', "w+");
 	    if ($lockFile === false) {
 	        return new PEAR_Error("Unable to create single process lock control!");
 	    }

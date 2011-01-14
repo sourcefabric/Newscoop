@@ -18,7 +18,7 @@ if (!is_file("$ETC_DIR/database_conf.php")) {
 	exit(1);
 }
 
-// includes campsite initialisation
+// includes newscoop initialisation
 require_once("$CAMPSITE_DIR/include/campsite_init.php");
 
 // defines the notifier template file name

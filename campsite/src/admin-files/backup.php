@@ -27,7 +27,7 @@ switch ($action) {
         echo str_repeat(' ', 2048);
         echo '<pre>';
         $options = array('--default-dir');
-        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-backup';
+        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-backup';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);
@@ -59,7 +59,7 @@ switch ($action) {
             'e' => true,
             'b' => $file,
         );
-        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'campsite-restore';
+        include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-restore';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
         exit(0);
@@ -85,7 +85,8 @@ switch ($action) {
 
     case 'upload':
         foreach ($_FILES as $file) {
-            if ($file['type'] == 'application/x-tar' || $file['type'] == 'application/x-gzip') {
+            if ($file['type'] == 'application/x-tar' || $file['type'] == 'application/x-gzip'
+            || $file['type'] == 'application/gzip') {
                 move_uploaded_file($file["tmp_name"], CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name']);
                 camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
             } else {

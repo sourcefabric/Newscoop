@@ -427,11 +427,11 @@ class CampInstallationBase
     {
         global $g_db;
 
-        $cronJobs = array('campsite_autopublish',
-                          'campsite_indexer',
-                          'campsite_notifyendsubs',
-                          'campsite_notifyevents',
-                          'campsite_statistics');
+        $cronJobs = array('newscoop_autopublish',
+                          'newscoop_indexer',
+                          'newscoop_notifyendsubs',
+                          'newscoop_notifyevents',
+                          'newscoop_statistics');
 
         $template = CampTemplate::singleton();
         $campsiteBinDir = CS_PATH_SITE.DIR_SEP.'bin';
