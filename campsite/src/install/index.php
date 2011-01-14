@@ -19,6 +19,21 @@ if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
     header("Location: ".CS_PATH_BASE_URL.str_replace('/install', '', $Campsite['SUBDIR']));
 }
 
+// check if template cache dir is writable
+$templates_cache = dirname(dirname(__FILE__)) . DIR_SEP . 'templates_cache';
+if (!is_writable($templates_cache)) {
+    echo '<!DOCTYPE html>';
+    echo '<html><head><meta charset="utf-8" />';
+    echo '<title>Install requirement</title>';
+    echo '</head><body>';
+    echo '<h1>Install requirement</h1>';
+    echo "<p>Directory '$templates_cache' is not writable.</p>";
+    echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod o+w $templates_cache</code> on linux)</p>";
+    echo '</body></html>';
+    exit;
+}
+unset($templates_cache);
+
 $install = new CampInstallation();
 
 $install->initSession();
