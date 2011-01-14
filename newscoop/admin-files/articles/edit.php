@@ -255,11 +255,11 @@ function parseTextBody($text, $articleNumber)
 
 include ("edit_html.php");
 
-if ($locked) {
-	camp_html_copyright_notice();
-	return;
+if (($f_edit_mode == "edit") && $hasArticleBodyField) {
+    $languageSelectedObj = new Language($f_language_selected);
+    $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+    editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
-
 
 $jsArrayFieldsStr = '';
 for($i = 0; $i < sizeof($fCustomFields); $i++) {
@@ -281,12 +281,6 @@ for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
     if ($i + 1 < sizeof($fCustomTextareas)) {
         $jsArrayTextareasStr .= ',';
     }
-}
-
-if (($f_edit_mode == "edit") && $hasArticleBodyField) {
-    $languageSelectedObj = new Language($f_language_selected);
-    $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
-    editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 
 include ("edit_javascript.php");
