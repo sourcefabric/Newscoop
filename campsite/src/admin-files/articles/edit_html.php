@@ -121,8 +121,6 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
                 'f_language_selected',
                 'f_article_number',
                 'f_article_title',
-                'f_creation_date',
-                'f_publish_date',
                 );
             foreach ($hiddens as $name) {
                 echo '<input type="hidden" name="', $name;
@@ -141,14 +139,28 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <li>
           <label><?php putGS('Date'); ?></label>
           <?php if ($articleObj->isPublished()) { ?>
-          <div class="text-container left-floated date-published"><strong><?php putGS('Published'); ?>:</strong> <?php print htmlspecialchars($articleObj->getCreationDate()); ?>
-            <?php if ($inEditMode) { ?><a id="f_trigger_c" class="calendar-button" href="#">&nbsp;</a><?php } ?></div>
+          <div class="text-container left-floated date-published"><strong><?php putGS('Published'); ?>:</strong> <span class="f_publish_date"><?php print htmlspecialchars($articleObj->getPublishDate()); ?></span>
+            <?php if ($inEditMode) { ?><input type="hidden" name="f_publish_date" value="<?php echo $articleObj->getPublishDate(); ?>" class="datetime" /><?php } ?></div>
           <?php } ?>
-          <div class="text-container left-floated date-created"><?php putGS('Created'); ?>: <?php print htmlspecialchars($articleObj->getCreationDate()); ?>
-            <?php if ($inEditMode) { ?><a id="f_trigger_c" class="calendar-button" href="#">&nbsp;</a><?php } ?></div>
+          <div class="text-container left-floated date-created"><?php putGS('Created'); ?>: <span class="f_creation_date"><?php print htmlspecialchars($articleObj->getCreationDate()); ?></span>
+            <?php if ($inEditMode) { ?><input type="hidden" name="f_creation_date" value="<?php echo $articleObj->getCreationDate(); ?>" class="datetime" /><?php } ?></div>
           <div class="text-container left-floated date-changed"><span class="date-last-modified" id="date-last-modified"></span></div>
         </li>
       </ul>
+      <?php if ($inEditMode) { ?>
+      <script type="text/javascript">
+        $(function() {
+
+        // update displayed datetime
+        $('input:hidden.datetime').change(function() {
+            $('span.' + $(this).attr('name')).text($(this).val());
+        }).next().css('vertical-align', 'middle')
+            .css('margin-top', '-3px')
+            .css('cursor', 'pointer');
+
+        });
+      </script>
+      <?php } ?>
       <!-- BEGIN Dates //-->
       </fieldset>
       <fieldset class="plain">

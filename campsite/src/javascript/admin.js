@@ -89,7 +89,7 @@ $(document).ready(function() {
             timeFormat: 'hh:mm:ss',
             showSeconds: true,
             showOn: 'both',
-            buttonImage: g_admin_img + '/calendar.gif',
+            buttonImage: g_admin_img + '/calendar_big.png',
             buttonImageOnly: true
         };
 
