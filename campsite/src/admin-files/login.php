@@ -115,7 +115,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <input type="hidden" name="f_is_encrypted" value="1" />
 <?php } ?>
 <div class="login_box">
-<div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
+<div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/newscoop_logo_big.png" border="0" alt="" /></div>
 <h2><?php putGS("Login"); ?></h2>
     <noscript>
     <?php

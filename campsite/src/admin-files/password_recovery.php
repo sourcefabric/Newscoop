@@ -161,7 +161,7 @@ AKAM;
   <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
   <input type="hidden" name="f_post_sent" value="1" />
   <div class="login_box">
-    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
+    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/newscoop_logo_big.png" border="0" alt="" /></div>
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php

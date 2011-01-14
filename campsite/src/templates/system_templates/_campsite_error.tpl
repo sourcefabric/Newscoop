@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="offline">
-  <div><img src="/{{ $siteinfo.templates_path }}/system_templates/img/campsite_logo_gn.jpg" />
+  <div><img src="/{{ $siteinfo.templates_path }}/system_templates/img/newscoop_logo_big.png" />
   <div>Error: {{ $siteinfo.error_message }}</div>
 </div>
 </body>

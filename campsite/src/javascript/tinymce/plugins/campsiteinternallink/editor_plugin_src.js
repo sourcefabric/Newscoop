@@ -60,7 +60,7 @@
             ed.addButton('campsiteinternallink', {
                 title : 'campsiteinternallink.campsiteinternallink_desc',
                 cmd : 'mcecampsiteinternallink',
-                image : url + '/img/campsiteinternallink.gif'
+                image : url + '/img/newscoopinternallink.gif'
             });
 
             ed.addShortcut('ctrl+k', 'campsiteinternallink.campsiteinternallink_desc', 'mcecampsiteinternallink');

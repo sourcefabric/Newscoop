@@ -104,7 +104,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="token" value="<?php echo $token; ?>" />
   <div class="login_box">
-    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/campsite_logo_big.png" border="0" alt="" /></div>
+    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/newscoop_logo_big.png" border="0" alt="" /></div>
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php

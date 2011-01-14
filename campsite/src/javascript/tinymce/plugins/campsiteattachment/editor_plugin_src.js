@@ -50,7 +50,7 @@
             ed.addButton('campsiteattachment', {
                 title : 'campsiteattachment.campsiteattachment_desc',
                 cmd : 'mcecampsiteattachment',
-                image : url + '/img/campsiteattachment.gif'
+                image : url + '/img/newscoopattachment.gif'
             });
 
             ed.addShortcut('ctrl+h', 'campsiteattachment.campsiteattachment_desc', 'mcecampsiteattachment');
