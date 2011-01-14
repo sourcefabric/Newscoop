@@ -1,10 +1,10 @@
 <!DOCTYPE html
     PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
-{{ if $campsite->url->get_parameter('logout') == 'true' }}
+{{ if $gimme->url->get_parameter('logout') == 'true' }}
 <META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserId=; path=/">
 <META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserKey=; path=/">
-{{ $campsite->url->reset_parameter('logout') }}
+{{ $gimme->url->reset_parameter('logout') }}
 <META HTTP-EQUIV="Refresh" content="0;url={{ uri }}">
 {{ /if }}
 <html>
@@ -17,12 +17,12 @@
 
   <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/style.css" />
   
-    {{ if $campsite->interviewstatus_action->defined }}
+    {{ if $gimme->interviewstatus_action->defined }}
     <script language="javascript">
-    {{ if $campsite->interviewstatus_action->is_error }}
-        alert("{{ $campsite->interviewstatus_action->error_message }}");
+    {{ if $gimme->interviewstatus_action->is_error }}
+        alert("{{ $gimme->interviewstatus_action->error_message }}");
     {{ else }}
-        alert("Status of interview \"{{ $campsite->interview->title }}\" sucessfully switched to {{ $campsite->interview->status }}.")
+        alert("Status of interview \"{{ $gimme->interview->title }}\" sucessfully switched to {{ $gimme->interview->status }}.")
     {{ /if }}
     </script>
   {{ /if }}

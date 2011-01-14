@@ -13,7 +13,7 @@
     
     <tr><td>&nbsp</td></tr>
      
-    {{ if !$campsite->blog->identifier && !$campsite->blogentry->identifier && !$campsite->blogcomment->identifier }}  
+    {{ if !$gimme->blog->identifier && !$gimme->blogentry->identifier && !$gimme->blogcomment->identifier }}  
 
         <tr>
             <th align="left">id</th>
@@ -27,18 +27,18 @@
         {{ list_blogs name="blogs_list" length="20" order="byidentifier desc"}}
            <tr>
             <td>
-                {{ $campsite->blog->identifier }}
+                {{ $gimme->blog->identifier }}
                 {{ include file="blog/blog-actions.tpl" }}
             </td>
-            <td><a href="{{ url }}">{{ $campsite->blog->title|truncate:20 }}</a></td>
-            <td>{{ $campsite->blog->user_id }}</td>
-            <td>{{ $campsite->blog->info|truncate:30 }}</td>
+            <td><a href="{{ url }}">{{ $gimme->blog->title|truncate:20 }}</a></td>
+            <td>{{ $gimme->blog->user_id }}</td>
+            <td>{{ $gimme->blog->info|truncate:30 }}</td>
           </tr>
  
         {{ /list_blogs }}
 
     
-    {{ elseif !$campsite->blogentry->identifier && !$campsite->blogcomment->identifier }}  
+    {{ elseif !$gimme->blogentry->identifier && !$gimme->blogcomment->identifier }}  
         <p>
         
         <tr>
@@ -54,18 +54,18 @@
         {{ list_blogentries name="blogentries_list" length="20" order="byidentifier desc" order="byidentifier desc"}}
            <tr>
             <td>
-                {{ $campsite->blogentry->identifier }}
+                {{ $gimme->blogentry->identifier }}
                 {{ include file="blog/blogentry-actions.tpl" }}
             </td>
-            <td><a href="{{ url }}">{{ $campsite->blogentry->title|truncate:20 }}</a></td>
-            <td>{{ $campsite->blogentry->user_id }}</td>
-            <td>{{ $campsite->blogentry->content|truncate:30 }}</td>
-            <td>{{ $campsite->blogentry->mood }}</td>
+            <td><a href="{{ url }}">{{ $gimme->blogentry->title|truncate:20 }}</a></td>
+            <td>{{ $gimme->blogentry->user_id }}</td>
+            <td>{{ $gimme->blogentry->content|truncate:30 }}</td>
+            <td>{{ $gimme->blogentry->mood }}</td>
           </tr>
           
         {{ /list_blogentries }}
     
-    {{ elseif !$campsite->blogcomment->identifier }}  
+    {{ elseif !$gimme->blogcomment->identifier }}  
         <p>
         
         <tr>
@@ -81,13 +81,13 @@
         {{ list_blogcomments name="blogcomments_list" length="100" }}
            <tr>
             <td>
-                {{ $campsite->blogcomment->identifier }}
+                {{ $gimme->blogcomment->identifier }}
                 {{ include file="blog/blogcomment-actions.tpl" }}
             </td>
-            <td><a href="{{ url }}">{{ $campsite->blogcomment->title|truncate:20 }}</a></td>
-            <td>{{ $campsite->blogcomment->user_id }}</td>
-            <td>{{ $campsite->blogcomment->content|truncate:30 }}</td>
-            <td>{{ $campsite->blogcomment->mood }}</td>
+            <td><a href="{{ url }}">{{ $gimme->blogcomment->title|truncate:20 }}</a></td>
+            <td>{{ $gimme->blogcomment->user_id }}</td>
+            <td>{{ $gimme->blogcomment->content|truncate:30 }}</td>
+            <td>{{ $gimme->blogcomment->mood }}</td>
           </tr>
             
         {{ /list_blogcomments }}

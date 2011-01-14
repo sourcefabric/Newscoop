@@ -1,6 +1,6 @@
 <!-- {{ $smarty.template }} -->
 
-{{ if $campsite->user->defined }}
+{{ if $gimme->user->defined }}
 
     {{ interviewitem_form }}
         <input type="hidden" name="interviewitem_action" value="liss">

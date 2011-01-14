@@ -11,7 +11,7 @@
     <tr>
       <td>
 
-    {{ if $campsite->poll->defined }}
+    {{ if $gimme->poll->defined }}
     
         <h3>Poll Details</h3>
         
@@ -39,29 +39,29 @@
            <tr align="center">
             <td align="left">
                 <a href="{{ uri options="template section-polls.tpl" }}">
-                    {{ $campsite->poll->name }}
+                    {{ $gimme->poll->name }}
                 </a>
             </td>
-            <td>{{ $campsite->poll->date_begin|date_format }}</td>
-            <td>{{ $campsite->poll->date_end|date_format }}</td>
-            <td>{{ if $campsite->poll->is_current }} Y {{ else }} N {{ /if }}</td>
-            <td>{{ $campsite->poll->votes_per_user }}/{{ $campsite->poll->user_vote_count }}</td>
-            <td>{{ $campsite->poll->votes }}
+            <td>{{ $gimme->poll->date_begin|date_format }}</td>
+            <td>{{ $gimme->poll->date_end|date_format }}</td>
+            <td>{{ if $gimme->poll->is_current }} Y {{ else }} N {{ /if }}</td>
+            <td>{{ $gimme->poll->votes_per_user }}/{{ $gimme->poll->user_vote_count }}</td>
+            <td>{{ $gimme->poll->votes }}
           </tr>
            
-        {{ if  $campsite->current_list->at_end }}
+        {{ if  $gimme->current_list->at_end }}
         <tr><td colspan="6"><hr></td></tr>
         <tr>
-            <td>{{ $campsite->current_list->count }} Items</td>
+            <td>{{ $gimme->current_list->count }} Items</td>
             <td colspan="5">
-                {{ if $campsite->current_list->has_previous }}
-                    <a href="{{ uripath }}?p_polls_list_start={{ $campsite->current_list->previous }}">previous</a>
+                {{ if $gimme->current_list->has_previous }}
+                    <a href="{{ uripath }}?p_polls_list_start={{ $gimme->current_list->previous }}">previous</a>
                 {{ else }}
                     previous    
                 {{ /if }}
                 |
-                {{ if $campsite->current_list->has_next }}
-                    <a href="{{ uripath }}?p_polls_list_start={{ $campsite->current_list->next }}">next</a>
+                {{ if $gimme->current_list->has_next }}
+                    <a href="{{ uripath }}?p_polls_list_start={{ $gimme->current_list->next }}">next</a>
                 {{ else }}
                     next
                 {{ /if }}

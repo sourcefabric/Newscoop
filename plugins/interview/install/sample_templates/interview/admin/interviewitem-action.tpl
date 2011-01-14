@@ -4,7 +4,7 @@
 
     {{ include file='interview/admin/interviewitems-list.tpl' }}
      
-{{ elseif $smarty.request.interviewitem_action == 'form' || $campsite->interviewitem_action->defined}}
+{{ elseif $smarty.request.interviewitem_action == 'form' || $gimme->interviewitem_action->defined}}
 
     {{ include file='interview/admin/interviewitem-edit.tpl' }}
 

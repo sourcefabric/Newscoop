@@ -1,6 +1,6 @@
 <h6>{{ $smarty.template }}</h6>
 
-{{ if $smarty.request.interviewitem_action == 'form' || $campsite->interviewitem_action->defined }}
+{{ if $smarty.request.interviewitem_action == 'form' || $gimme->interviewitem_action->defined }}
 
     {{ include file='interview/moderator/interviewitem-edit.tpl' }}
     

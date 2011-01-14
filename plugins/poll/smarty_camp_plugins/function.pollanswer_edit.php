@@ -28,7 +28,7 @@ function smarty_function_pollanswer_edit($p_params, &$p_smarty)
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {

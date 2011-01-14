@@ -12,39 +12,39 @@
     <table class="content" cellspacing="0" cellpadding="0">
     <tr>
       <td>  
-        {{ if $smarty.request.interview_action || $campsite->interview_action->defined }}
+        {{ if $smarty.request.interview_action || $gimme->interview_action->defined }}
         
             {{ include file='interview-action.tpl }} 
 
-        {{ elseif $smarty.request.interviewitem_action || $campsite->interviewitem_action->defined }}
+        {{ elseif $smarty.request.interviewitem_action || $gimme->interviewitem_action->defined }}
             
                 {{ include file='interview/interviewitem-action.tpl }} 
                 
-        {{ elseif $campsite->interview->defined }}
+        {{ elseif $gimme->interview->defined }}
         
             {{ include file='interview/interview-details.tpl' }}
             <br>
             
-            {{ if $campsite->interview->in_questions_timeframe }}
-                <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=form">Add your question</a>
+            {{ if $gimme->interview->in_questions_timeframe }}
+                <a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}&amp;interviewitem_action=form">Add your question</a>
                 <br>
                 
                 {{ list_interviewitems length=1 constraints='status not rejected' }}
-                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
+                    <a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
                     <br>
                 {{ /list_interviewitems }}
                  
-             {{ elseif $campsite->interview->in_interview_timeframe }}
+             {{ elseif $gimme->interview->in_interview_timeframe }}
 
                 {{ list_interviewitems length=1 constraints='status not rejected' }}
-                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
+                    <a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}&amp;interviewitem_action=list">List existing questions</a>
                     <br>
                 {{ /list_interviewitems }}
 
-             {{ elseif $campsite->interview->status == 'published' }}
+             {{ elseif $gimme->interview->status == 'published' }}
 
                 {{ list_interviewitems length=1 constraints='status not rejected' }}
-                    <a href="{{ uripath }}?f_interview_id={{ $campsite->interview->identifier }}&amp;interviewitem_action=list">Show interview</a>
+                    <a href="{{ uripath }}?f_interview_id={{ $gimme->interview->identifier }}&amp;interviewitem_action=list">Show interview</a>
                     <br>
                 {{ /list_interviewitems }}
 
@@ -53,16 +53,16 @@
              
         {{ else }}
 
-            {{ if $campsite->user->defined }}
+            {{ if $gimme->user->defined }}
                 {{ if $smarty.request.f_interviewnotify == 'on' }}   
                     You will recive interview notifications<br>
                 {{ elseif $smarty.request.f_interviewnotify == 'off' }}        
                     You will not recive interview notifications<br>
                 {{ /if }}
                     
-                {{ if $campsite->user->has_permission('plugin_interview_notify') }}
+                {{ if $gimme->user->has_permission('plugin_interview_notify') }}
                     <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=off">Do not notify me about new interviews</a>
-                {{ elseif  !$campsite->user->has_permission('plugin_interview_notify') }}
+                {{ elseif  !$gimme->user->has_permission('plugin_interview_notify') }}
                     <a href="{{ uripath }}?{{ urlparameters }}&amp;f_interviewnotify=on">Notify me about new interviews</a>
                 {{ /if }}
                 
