@@ -3,7 +3,7 @@
 if (!$articleObj->commentsLocked()) {
 ?>
   <a name="add_comment"></a>
-  <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
+  <form id="article-comments" action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
   <?php echo SecurityToken::FormParameter(); ?>
   <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
   <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">

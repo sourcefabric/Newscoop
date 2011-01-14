@@ -94,6 +94,11 @@ $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
+    
+    if ($(this).attr('id') == 'save_and_close') {
+        window.location = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>';
+    }
+    
     return false;
 });
 
@@ -117,10 +122,7 @@ $('a.iframe').each(function() {
         width: 1080,
         height: 610,
         onStart: function() { // check if there are any changes
-            if ($('form.changed').size() == 0) {
-                return true; // continue
-            }
-            return confirm('<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>');
+            return checkChanged();
         },
         onClosed: function(url, params) {
             if ($.fancybox.reload) { // reload if set
@@ -130,5 +132,25 @@ $('a.iframe').each(function() {
     });
 });
 
+// comments form check for changes
+$('form#article-comments').submit(function() {
+    if (!checkChanged()) {
+        return false;
+    }
+});
+
 }); // /document.ready
+
+/**
+ * Check for unsaved changes in main/boxes forms
+ * @return bool
+ */
+function checkChanged()
+{
+    if ($('form.changed').size() == 0) {
+        return true; // continue
+    }
+
+    return confirm('<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>');
+}
 </script>
