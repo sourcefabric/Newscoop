@@ -304,7 +304,7 @@ final class CampHTMLDocument
         if (!empty($subdir)) {
             $siteinfo['templates_path'] = substr($subdir, 1) . '/' . $siteinfo['templates_path'];
         }
-        $tpl->assign('campsite', $context);
+        $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
 
         // on template caching add additional info

@@ -1,6 +1,6 @@
 {{ include file="classic/tpl/header.tpl" }}
 
-<body id="section" class="section-{{ $campsite->section->number }}">
+<body id="section" class="section-{{ $gimme->section->number }}">
 <div id="container">
 <div id="wrapbg">
 <div id="wrapper">

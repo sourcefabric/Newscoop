@@ -27,7 +27,7 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('campsite');
+    $campContext = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('SectionsList');

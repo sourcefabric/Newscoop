@@ -38,15 +38,15 @@ $(document).ready(function() {
 
 
           {{ list_article_images }}
-          {{ if $campsite->current_list->count gt 1 }}
-          {{ if $campsite->current_list->at_beginning }}
+          {{ if $gimme->current_list->count gt 1 }}
+          {{ if $gimme->current_list->at_beginning }}
           <div id="article-gallery">          
-          <h4>{{ if $campsite->language->name == "English" }}Article gallery{{ else }}Mini galería{{ /if }}:</h4>
+          <h4>{{ if $gimme->language->name == "English" }}Article gallery{{ else }}Mini galería{{ /if }}:</h4>
           {{ /if }}
               <div class="gallery-item">
-                  <a class="grouped_elements" href="{{ $campsite->article->image->imageurl }}" rel="group"><img alt="{{ $campsite->article->image->description }}" src="{{ $campsite->article->image->thumbnailurl }}" /></a>
+                  <a class="grouped_elements" href="{{ $gimme->article->image->imageurl }}" rel="group"><img alt="{{ $gimme->article->image->description }}" src="{{ $gimme->article->image->thumbnailurl }}" /></a>
               </div><!-- /.gallery-item -->
-          {{ if $campsite->current_list->at_end }}
+          {{ if $gimme->current_list->at_end }}
           </div><!-- /#article-gallery --> 
           {{ /if }}
           {{ /if }}

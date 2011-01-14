@@ -15,16 +15,16 @@
 
 <div class="list-nested" id="archive-tree">
 {{ set_default_issue }}
-    <h2>{{ $campsite->issue->name }} ({{ if $campsite->language->name == "English" }}issue #{{  $campsite->issue->number }} / published{{ else }}Edición #{{  $campsite->issue->number }} / publicado {{ /if }}{{ $campsite->issue->publish_date|camp_date_format:'%Y-%M-%D' }})</h2>
+    <h2>{{ $gimme->issue->name }} ({{ if $gimme->language->name == "English" }}issue #{{  $gimme->issue->number }} / published{{ else }}Edición #{{  $gimme->issue->number }} / publicado {{ /if }}{{ $gimme->issue->publish_date|camp_date_format:'%Y-%M-%D' }})</h2>
     
     {{ list_sections order="bynumber asc" }}
-        <h3><a href="{{ uri }}" class="linksection-{{ $campsite->section->number }}">{{ $campsite->section->name }}</a><!--{{ $campsite->section->number }}--></h3>
+        <h3><a href="{{ uri }}" class="linksection-{{ $gimme->section->number }}">{{ $gimme->section->name }}</a><!--{{ $gimme->section->number }}--></h3>
         
         <ul>
         {{ list_articles }}
-            <li id="list-article"><h4><a href="{{ uri }}" class="linksection-{{ $campsite->section->number }}">{{ $campsite->article->name }}</a></h4>
+            <li id="list-article"><h4><a href="{{ uri }}" class="linksection-{{ $gimme->section->number }}">{{ $gimme->article->name }}</a></h4>
   <div class="list-article-published">
-            {{ if $campsite->language->name == "English" }}posted{{ else }}publicado el{{ /if }} {{ $campsite->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }}
+            {{ if $gimme->language->name == "English" }}posted{{ else }}publicado el{{ /if }} {{ $gimme->article->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }}
   </div>
 {{ include file="classic/tpl/topic-list.tpl" }}
 </li>
@@ -42,9 +42,9 @@
 {{ include file="classic/tpl/search-box.tpl" }}
 
 {{ list_issues length="10" order="byNumber desc" }}
-  <h2><a href="{{ url options="template classic/archive.tpl" }}">{{ $campsite->issue->name }}</a></h2>
- {{ if $campsite->language->name == "English" }}Issue{{ else }}Edición{{ /if }} #{{ $campsite->issue->number }} / 
-      ({{ if $campsite->language->name == "English" }}published{{ else }}publicado{{ /if }} {{ $campsite->issue->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
+  <h2><a href="{{ url options="template classic/archive.tpl" }}">{{ $gimme->issue->name }}</a></h2>
+ {{ if $gimme->language->name == "English" }}Issue{{ else }}Edición{{ /if }} #{{ $gimme->issue->number }} / 
+      ({{ if $gimme->language->name == "English" }}published{{ else }}publicado{{ /if }} {{ $gimme->issue->publish_date|camp_date_format:'%M %D, %Y %h:%i:%s' }})
 
   {{ include file="skins/greenpiece/includes/pagination.tpl" }}
 {{ /list_issues }}

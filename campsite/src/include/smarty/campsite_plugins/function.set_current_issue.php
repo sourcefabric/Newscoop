@@ -20,7 +20,7 @@
 function smarty_function_set_current_issue($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('campsite');
+    $campsite = $p_smarty->get_template_vars('gimme');
 
     $currentIssue = Issue::GetCurrentIssue($campsite->publication->identifier,
     										$campsite->language->number);

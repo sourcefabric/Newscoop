@@ -25,7 +25,7 @@
 function smarty_block_local($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('campsite');
+    $campContext = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_content)) {
         $campContext->saveCurrentContext();

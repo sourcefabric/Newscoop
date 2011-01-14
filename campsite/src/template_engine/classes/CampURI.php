@@ -1054,6 +1054,9 @@ abstract class CampURI
                 $listId = $context->current_list->id;
                 $this->m_buildQueryArray[$listId] = ($parameter == 'previous_items' ?
                 $context->current_list->previous_start : $context->current_list->next_start);
+                if ($this->m_buildQueryArray[$listId] == 0) {
+                	unset($this->m_buildQueryArray[$listId]);
+                }
                 break;
             case 'reset_issue_list':
                 $context = CampTemplate::singleton()->context();

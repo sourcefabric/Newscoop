@@ -77,7 +77,7 @@ final class MetaUser extends MetaDbObject {
     {
         $countryCode = $this->m_dbObject->getProperty('CountryCode');
         $smartyObj = CampTemplate::singleton();
-        $contextObj = $smartyObj->get_template_vars('campsite');
+        $contextObj = $smartyObj->get_template_vars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
         if (!$country->exists()) {
             return null;

@@ -23,7 +23,7 @@
 function smarty_block_list_article_authors($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $context = $p_smarty->get_template_vars('campsite');
+    $context = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_content)) {
         $start = $context->next_list_start('ArticleAuthorsList');

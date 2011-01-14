@@ -27,7 +27,7 @@ function smarty_block_list_article_comments($p_params, $p_content, &$p_smarty, &
     require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
 
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('campsite');
+    $campContext = $p_smarty->get_template_vars('gimme');
     $html = '';
 
     if (!isset($p_content)) {

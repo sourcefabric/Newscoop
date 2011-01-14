@@ -1,6 +1,6 @@
 {{ include file="classic/tpl/header.tpl" }}
 
-<body id="article" class="section-{{ $campsite->section->number }}">
+<body id="article" class="section-{{ $gimme->section->number }}">
 <div id="container">
 <div id="wrapbg">
 <div id="wrapper">
@@ -13,27 +13,27 @@
         <div class="col1">
         <!-- Column 1 start -->
 
-{{ if $campsite->search_articles_action->defined }}
+{{ if $gimme->search_articles_action->defined }}
   
-    {{ if $campsite->search_articles_action->is_error }}
-      {{ $campsite->search_articles_action->error_message }}
+    {{ if $gimme->search_articles_action->is_error }}
+      {{ $gimme->search_articles_action->error_message }}
     {{ /if }}
 
-    {{ if $campsite->search_articles_action->ok }}
+    {{ if $gimme->search_articles_action->ok }}
 
         {{ list_search_results name="results" length=9 }}
-        {{ if $campsite->current_list->at_beginning }}
-            <p>{{ if $campsite->language->name == "English" }}Found {{ $campsite->current_list->count }} articles matching the condition.{{ else }}Se han encontrado {{ $campsite->current_list->count }} artículos que coinciden con la condición.{{ /if }}</p>
+        {{ if $gimme->current_list->at_beginning }}
+            <p>{{ if $gimme->language->name == "English" }}Found {{ $gimme->current_list->count }} articles matching the condition.{{ else }}Se han encontrado {{ $gimme->current_list->count }} artículos que coinciden con la condición.{{ /if }}</p>
         {{ /if }}
-<div class="teaserframe teaserframebig teaserframe-{{ $campsite->section->number }} teaserframebig-{{ $campsite->section->number }}">
+<div class="teaserframe teaserframebig teaserframe-{{ $gimme->section->number }} teaserframebig-{{ $gimme->section->number }}">
 <div class="teaserframebiginner">
   <div class="teaserhead">
   <div class="teaserheadinner">
   </div><!-- .teaserheadinner -->
   </div><!-- .teaserhead -->
           <div class="teasercontent content">
-          <h2 class="title title_big"><a href="{{ uri options="article" }}">{{ $campsite->article->name }}</a></h2>
-          <p class="text">{{ if $campsite->language->name == "English" }}Section{{ else }}Sección{{ /if }} <a href="{{ uri options="section" }}">{{ $campsite->section->name }}</a>, ({{ $campsite->article->publish_date|camp_date_format:"%d-%m-%Y" }}) {{ $campsite->article->Deck }}</p>
+          <h2 class="title title_big"><a href="{{ uri options="article" }}">{{ $gimme->article->name }}</a></h2>
+          <p class="text">{{ if $gimme->language->name == "English" }}Section{{ else }}Sección{{ /if }} <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a>, ({{ $gimme->article->publish_date|camp_date_format:"%d-%m-%Y" }}) {{ $gimme->article->Deck }}</p>
           </div><!-- .teasercontent content -->
         </div><!-- .teaserframebiginner -->
         </div><!-- .teaserframebig -->
@@ -41,9 +41,9 @@
             {{ include file="classic/tpl/pagination.tpl" }}
         {{ /list_search_results }}
 
-        {{ if $campsite->prev_list_empty }}
+        {{ if $gimme->prev_list_empty }}
           <div class="error"><div class="errorinner">
-          {{ if $campsite->language->name == "English" }}There were no articles found.{{ else }}No se encontraron artículos encontrados.{{ /if }}
+          {{ if $gimme->language->name == "English" }}There were no articles found.{{ else }}No se encontraron artículos encontrados.{{ /if }}
           </div></div>
         {{ /if }}
     {{ /if }}

@@ -1,4 +1,4 @@
-{{ if $campsite->article->has_attachments }}
+{{ if $gimme->article->has_attachments }}
 
 <style>
   .audio-entity {
@@ -20,18 +20,18 @@
 {{ assign var="counter" value=0 }}
 
 {{ list_article_attachments }}
-{{ if ($campsite->attachment->extension == mp3) || ($campsite->attachment->extension == ogg) }}
+{{ if ($gimme->attachment->extension == mp3) || ($gimme->attachment->extension == ogg) }}
 {{ assign var="counter" value=$counter+1 }}
 
 {{ if $counter == 1 }}
     <div class="audio-entity"> 
-     <h4>{{ if $campsite->language->name == "English" }}Listen to audio attachments{{ else }}Escucha a los accesorios de audio{{ /if }}</h4> 
+     <h4>{{ if $gimme->language->name == "English" }}Listen to audio attachments{{ else }}Escucha a los accesorios de audio{{ /if }}</h4> 
      <script type="text/javascript" src="/templates/classic/tpl/player/flowplayer-3.2.4.min.js"></script>
 {{ /if }}
 
 {{*
   <audio controls>
-    <source src="http://{{ $campsite->publication->site }}{{ uri options="articleattachment" }}" type="{{ $campsite->attachment->mime_type }}">
+    <source src="http://{{ $gimme->publication->site }}{{ uri options="articleattachment" }}" type="{{ $gimme->attachment->mime_type }}">
   </audio>
 *}}
 
@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
   var options = {};
-  options.mediaPath = "http://{{ $campsite->publication->site }}{{ uri options="articleattachment" }}";
+  options.mediaPath = "http://{{ $gimme->publication->site }}{{ uri options="articleattachment" }}";
   
   var params = {};
   params.allowScriptAccess = "always";
@@ -49,11 +49,11 @@
 </script>
 
 
-       <div class="audio-attachment-description">{{ $campsite->attachment->description }}</div> 
+       <div class="audio-attachment-description">{{ $gimme->attachment->description }}</div> 
     
 {{ /if }}    
 
-{{ if $campsite->current_article_attachments_list->at_end }}  
+{{ if $gimme->current_article_attachments_list->at_end }}  
 {{ if $counter gt 0 }}     
     </div><!-- /.audio-entity-->
 {{ /if }}
