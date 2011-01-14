@@ -4,9 +4,7 @@ var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else
 var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
 document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
 document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
-</script>
 
-<script type="text/javascript">
 $(function() {
 
 // datepicker for date
@@ -26,13 +24,29 @@ $('.icon-button').hover(
     function() { $(this).removeClass('ui-state-hover'); }
 );
 
-$('.collapsible').click(function() {
-    $(this).next().toggle('fast');
-    return false;
-}).next().hide();
+$('.collapsible').each(function(index) {
+    var head = $('> .head', $(this));
+    var cookie = 'articlebox-' + index;
+    var opened = $.cookie(cookie);
 
-$(".collapsible .head").click(function () {
-    $(this).toggleClass("ui-state-active");
+    // init by cookie
+    if (opened != 1) {
+        $(this).next().hide();
+    } else {
+        head.addClass('ui-state-active');
+    }
+
+    // toggle
+    $(this).click(function() {
+        $(this).next().toggle('fast');
+        head.toggleClass('ui-state-active');
+        if (head.hasClass('ui-state-active')) {
+            $.cookie(cookie, 1);
+        } else {
+            $.cookie(cookie, 0);
+        }
+        return false;
+    });
 });
 
 // copy title to hidden field
