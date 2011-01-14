@@ -9,7 +9,12 @@
 <input type="hidden" name="f_language_selected" id="f_language_selected" value="<?php p($f_language_selected); ?>" />
 <input type="hidden" name="f_article_number" id="f_article_number" value="<?php p($f_article_number); ?>" />
 <script type="text/javascript">
-function action_selected(dropdownElement) {
+function action_selected(dropdownElement)
+{
+    if (!checkChanged()) {
+        return false;
+    }
+
     // Get the index of the "delete" option.
     deleteOptionIndex = -1;
     for (var index = 0; index < dropdownElement.options.length; index++) {
@@ -32,6 +37,16 @@ function action_selected(dropdownElement) {
         dropdownElement.form.submit();
     }
 }
+
+function change_language(select)
+{
+    if (!checkChanged()) {
+        return false;
+    }
+
+    var dest = '<?php p($languageUrl); ?>'+select.options[select.selectedIndex].value;
+    window.location.href = dest;
+}
 </script>
   <fieldset class="plain">
     <!-- BEGIN Language -->
@@ -44,7 +59,7 @@ function action_selected(dropdownElement) {
           . "&f_language_id=$f_language_id"
           . '&f_language_selected=';
   ?>
-    <select name="f_language_selected" class="input_select right-floated" onchange="dest='<?php p($languageUrl); ?>'+this.options[this.selectedIndex].value; location.href=dest;">
+    <select name="f_language_selected" class="input_select right-floated" onchange="change_language(this);">
     <?php
     foreach ($articleLanguages as $articleLanguage) {
         camp_html_select_option($articleLanguage->getLanguageId(), $f_language_selected, htmlspecialchars($articleLanguage->getNativeName()));
@@ -100,7 +115,7 @@ function action_selected(dropdownElement) {
     ?>
     </select>
     <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated" onchange="this.form.submit();">
+    <select name="f_action_workflow" class="input_select left-floated" onchange="return checkChanged() && this.form.submit();">
     <?php
     camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));
     camp_html_select_option('N', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('New'));

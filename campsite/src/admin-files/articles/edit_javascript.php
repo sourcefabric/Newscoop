@@ -96,7 +96,7 @@ $('.save-button-bar input').click(function() {
     $('form#article-main').submit();
     
     if ($(this).attr('id') == 'save_and_close') {
-        window.location = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>';
+        window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>';
     }
     
     return false;
