@@ -306,11 +306,11 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <div class="padded-strong">
       <?php if ($inEditMode && $showCommentControls) { ?>
         <fieldset class="frame">
-           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_enabled" checked />
+        <input type="radio" name="f_comment_status" value="enabled" class="input_radio" id="f_comment_status_enabled" <?php if ($articleObj->commentsEnabled() && !$articleObj->commentsLocked()) { ?> checked<?php } ?> />
              <label for="f_comment_status_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
-           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_disabled" />
+           <input type="radio" name="f_comment_status" value="disabled" class="input_radio" id="f_comment_status_disabled" <?php if (!$articleObj->commentsEnabled()) { ?> checked<?php } ?> />
              <label for="f_comment_status_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
-           <input type="radio" name="f_comment_status" class="input_radio" id="f_comment_status_locked" />
+           <input type="radio" name="f_comment_status" value="locked" class="input_radio" id="f_comment_status_locked" <?php if ($articleObj->commentsEnabled() && $articleObj->commentsLocked()) { ?> checked<?php } ?>  />
              <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
         </fieldset>
       <?php } ?>
