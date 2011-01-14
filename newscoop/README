@@ -1,28 +1,28 @@
-Campsite
-version     : 3.5.0-rc1
-release date: December 17, 2010
+Newscoop
+version     : 3.5.0-rc2
+release date: January 17, 2010
 contact     : contact@sourcefabric.org
 url         : http://www.sourcefabric.org
-copyright   : (C) 2010 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
-support     : mailto: campsite-support@lists.sourcefabric.org
-manual      : http://en.flossmanuals.net/Campsite/Introduction
+copyright   : (C) 2010-2011 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
+support     : mailto: newscoop-support@lists.sourcefabric.org
+manual      : http://en.flossmanuals.net/Newscoop/Introduction
 
 INTRODUCTION
 
-Campsite is a robust, stable, and journalist-friendly solution for
+Newscoop is a robust, stable, and journalist-friendly solution for
 online magazines and newspapers that speaks your language.
 
-Campsite follows the print-newspaper publishing paradigm, so it
+Newscoop follows the print-newspaper publishing paradigm, so it
 structures sites by default as Publications > Issues > Sections >
 Articles.
 
-Campsite is available in: Arabic, Belarusian, Chinese, Croatian, Czech,
+Newscoop is available in: Arabic, Belarusian, Chinese, Croatian, Czech,
 Dutch, English, German, Korean, Portuguese, Romanian, Russian,
 Serbian (Cyrillic), Serbo-Croatian (Latin), Spanish, and Swedish.
 However, the interface can easily be localized to new languages using
 its built-in 'Localizer'.
 
-With Campsite you can:
+With Newscoop you can:
 
    1. Manage articles translated into different languages
    2. Edit articles using an advanced WYSIWYG interface
@@ -54,11 +54,11 @@ if you have or intend to developed this software further.
 
 
 DEMO
-You can try Campsite without installing it at our demo site.
+You can try Newscoop without installing it at our demo site.
 This is the URL for the backend admin:
-  http://campsite-demo.sourcefabric.org/admin/
+  http://newscoop-demo.sourcefabric.org/admin/
 and you can see the frontend of the site here:
-  http://campsite-demo.sourcefabric.org/
+  http://newscoop-demo.sourcefabric.org/
 Please note that the frontend can be made to look however
 you wish - you have full control over the look-and-feel.
 
