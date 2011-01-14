@@ -85,5 +85,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Número de in
 regGS("Keyword separator:", "Separador de palabra clave:");
 regGS("Time Zone:", "Huso horario:");
 regGS("disabled", "desactivar");
-regGS("Run cron tasks externaly?", "¿Desea correr las tareas cron externamente?");
+regGS("Run scheduled tasks externally?", "¿Desea correr las tareas cron externamente?");
 ?>

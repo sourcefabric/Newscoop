@@ -404,7 +404,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td colspan="2" align="left">
-        <?php putGS("Run cron tasks externaly?"); ?>
+        <?php putGS("Run scheduled tasks externally?"); ?>
         <input type="radio" name="f_external_cron_management" value="Y" <?php if (SystemPref::Get("ExternalCronManagement") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_external_cron_management" value="N" <?php if (SystemPref::Get("ExternalCronManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>

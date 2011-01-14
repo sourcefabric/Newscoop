@@ -85,5 +85,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Αριθμό�
 regGS("Keyword separator:", "Διαχωριστής λέξης-κλειδί:");
 regGS("Time Zone:", "Ζώνη Ώρας:");
 regGS("disabled", "απενεργοποιημένο");
-regGS("Run cron tasks externaly?", " Εκτέλεση των cron tasks εξωτερικά;");
+regGS("Run scheduled tasks externally?", " Εκτέλεση των cron tasks εξωτερικά;");
 ?>

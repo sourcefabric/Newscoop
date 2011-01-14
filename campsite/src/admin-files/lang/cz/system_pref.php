@@ -85,5 +85,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Počet neúsp
 regGS("Keyword separator:", "Klíčový oddělovač:");
 regGS("Time Zone:", "Časové pásmo:");
 regGS("disabled", "vypnuto");
-regGS("Run cron tasks externaly?", "Spustit cron úkoly externě?");
+regGS("Run scheduled tasks externally?", "Spustit cron úkoly externě?");
 ?>
