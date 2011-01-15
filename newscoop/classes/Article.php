@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
  */
 
 /**
@@ -2947,8 +2947,8 @@ class Article extends DatabaseObject {
                 'title'=>array('table_fields'=>array('Name'),
                                'table'=>'Articles'),
                 'author'=>array('table_fields'=>array('first_name', 'last_name'),
-                                'table'=>'Authors',
-                                'join_fields'=>array('fk_default_author_id'=>'id')));
+                                'table'=>'ArticleAuthors',
+                                'join_fields'=>array('Number'=>'fk_article_number')));
 
         $fieldName = strtolower($p_fieldName);
         if (!array_key_exists($fieldName, $searchFields)) {
@@ -2967,6 +2967,12 @@ class Article extends DatabaseObject {
                        $leftJoinField=>$rightJoinField) {
                 $selectClauseObj->addWhere("`Articles`.`$leftJoinField` = "
                                            . "`$joinTable`.`$rightJoinField`");
+            }
+            if ($fieldName == 'author') {
+                $joinTable = 'Authors';
+                $selectClauseObj->addTableFrom($joinTable);
+                $selectClauseObj->addWhere("`ArticleAuthors`.`fk_author_id` = "
+                                           . "`$joinTable`.`id`");
             }
         }
 

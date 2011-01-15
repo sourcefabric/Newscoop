@@ -146,12 +146,14 @@ class ArticleIndex extends DatabaseObject {
 	        }
 	        $limit = $rowsLimit > 0 ? "LIMIT 0, $rowsLimit" : null;
 	        // selects articles not yet indexed
-	        $sql_query = 'SELECT IdPublication, NrIssue, NrSection, Number, '
-	        . 'IdLanguage, a.Type, Keywords, Name, '
-	        . "TRIM(CONCAT(first_name, ' ', last_name)) AS AuthorName \n"
-	        . "FROM Articles as a LEFT JOIN Authors as auth \n"
-	        . "  ON a.fk_default_author_id = auth.Id \n"
-	        . "WHERE IsIndexed = 'N' ORDER BY $order $limit";
+	        $sql_query = 'SELECT art.IdPublication, art.NrIssue, art.NrSection, art.Number, '
+	        . 'art.IdLanguage, art.Type, art.Keywords, art.Name, '
+	        . "TRIM(CONCAT(aut.first_name, ' ', aut.last_name)) AS AuthorName \n"
+	        . "FROM Articles as art LEFT JOIN ArticleAuthors as ala \n"
+	        . "  ON art.Number = ala.fk_article_number \n"
+	        . " LEFT JOIN Authors as aut \n"
+	        . "  ON ala.fk_author_id = aut.id \n"
+	        . "WHERE art.IsIndexed = 'N' ORDER BY $order $limit";
 	        $sql_result = $g_ado_db->GetAll($sql_query);
 	        if ($sql_result === false) {
 	            throw new Exception('Error selecting articles not yet indexed');
