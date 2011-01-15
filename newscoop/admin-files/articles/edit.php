@@ -47,7 +47,6 @@ if (!$articleObj->exists()) {
     camp_html_display_error(getGS('No such article.'));
     exit;
 }
-$articleAuthorObj = new Author($articleObj->getAuthorId());
 
 $articleData = $articleObj->getArticleData();
 // Get article type fields.

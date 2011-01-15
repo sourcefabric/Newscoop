@@ -203,8 +203,19 @@ class ArticleList extends BaseList
     }
 
     $tmpUser = new User($article->getCreatorId());
-    $tmpAuthor = new Author($article->getAuthorId());
     $tmpArticleType = new ArticleType($article->getType());
+
+    $tmpAuthor = new Author();
+    $articleAuthors = ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
+    foreach((array) $articleAuthors as $author) {
+        if (strtolower($author->getAuthorType()->getName()) == 'author') {
+            $tmpAuthor = $author;
+            break;
+        }
+    }
+    if (!$tmpAuthor->exists() && isset($articleAuthors[0])) {
+        $tmpAuthor = $articleAuthors[0];
+    }
 
     $onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
     $onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
@@ -228,7 +239,7 @@ class ArticleList extends BaseList
             $article->getName()),
         $tmpArticleType->getDisplayName(),
         $tmpUser->getRealName(),
-        $tmpAuthor->getFirstName(),
+        $tmpAuthor->getName(),
         $article->getWorkflowStatus(),
         $onFrontPage,
         $onSectionPage,
