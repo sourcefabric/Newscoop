@@ -120,7 +120,10 @@ if ($articleObj->exists()) {
         $authorData['email'] = $g_user->getEmail();
         $authorObj->create($authorData);
 	}
-	$articleObj->setAuthorId($authorObj->getId());
+    if ($authorObj->exists()) {
+        $articleObj->setAuthor($authorObj);
+    }
+
 	$articleObj->setIsPublic(true);
 	if ($publication_id > 0) {
     	$commentDefault = $publicationObj->commentsArticleDefaultEnabled();

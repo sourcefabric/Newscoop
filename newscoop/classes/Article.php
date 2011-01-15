@@ -1239,25 +1239,22 @@ class Article extends DatabaseObject {
 
 
     /**
-     * Return the ID of the author who wrote this article.
-     * @return int
-     */
-    public function getAuthorId()
-    {
-        return (int)$this->m_data['fk_default_author_id'];
-    } // fn getAuthorId
-
-
-    /**
      * Set the ID of the author who wrote this article.
      *
      * @param int $p_value
      * @return boolean
      */
-    public function setAuthorId($p_value)
+    public function setAuthor(Author $p_author)
     {
-        return parent::setProperty('fk_default_author_id', (int)$p_value);
-    } // fn setAuthorId
+        $defaultAuthorType = $p_author->setType();
+        // Links the author to the article
+        $articleAuthorObj = new ArticleAuthor($this->getArticleNumber(),
+                                              $this->getLanguageId(),
+                                              $p_author->getId(), $defaultAuthorType);
+        if (!$articleAuthorObj->exists()) {
+            $articleAuthorObj->create();
+        }
+    } // fn setAuthor
 
 
     /**

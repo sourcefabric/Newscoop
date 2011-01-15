@@ -178,19 +178,29 @@ if ($isValidXMLFile) {
 	    $articleTypeObj->setProperty($dbColumn->getName(), (string) $article->$field);
 	}
 
-	// Updates the article author
+	// Updates the article creator and author
+    $articleObj->setCreatorId($g_user->getUserId());
+    $isAuthorFromCreator = FALSE;
 	if (isset($article->author) && !empty($article->author)) {
-	    $authorObj = new Author((string) $article->author);
-	    if (!$authorObj->exists()) {
-	        $authorData = Author::ReadName((string) $article->author);
-		$authorObj->create($authorData);
-	    }
-	    $articleObj->setAuthorId($authorObj->getId());
+	    $authorName = (string) $article->author;
+	} else {
+	    $authorName = (string) $g_user->getRealName();
+	    $isAuthorFromCreator = TRUE;
 	}
-	$articleFields['author'] = true;
+    $authorObj = new Author($authorName);
+    if (!$authorObj->exists()) {
+        $authorData = Author::ReadName($authorName);
+        if ($isAuthorFromCreator) {
+            $authorData['email'] = $g_user->getEmail();
+        }
+        $authorObj->create($authorData);
+    }
+    if ($authorObj->exists()) {
+        $articleObj->setAuthor($authorObj);
+        $articleFields['author'] = true;
+    }
 
 	// Updates the article
-	$articleObj->setCreatorId($g_user->getUserId());
 	if (isset($article->keywords) && !empty($article->keywords)) {
 	    $articleObj->setKeywords((string) $article->keywords);
 	}

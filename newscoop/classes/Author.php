@@ -15,6 +15,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  */
 class Author extends DatabaseObject
 {
+    const DEFAULT_TYPE = 'AUTHOR';
     const TABLE = 'Authors';
 
     public $m_dbTableName = self::TABLE;
@@ -272,12 +273,27 @@ class Author extends DatabaseObject
      * @param int $p_typeId
      * @return void
      */
-    public function setType($p_typeId)
+    public function setType($p_typeId = NULL)
     {
-        $authorType = new AuthorAssignedType($this->getId(), (int) $p_typeId);
-        if (!$authorType->exists()) {
-            $authorType->create();
+        if (is_null($p_typeId)) {
+            $p_typeId = $this->__getDefaultType();
         }
+        $assignedType = new AuthorAssignedType($this->getId(), (int) $p_typeId);
+        if (!$assignedType->exists()) {
+            $assignedType->create();
+        }
+        return (int) $assignedType->getAuthorTypeId();
+    }
+
+    private function __getDefaultType()
+    {
+        $types = AuthorType::GetAuthorTypes();
+        foreach((array) $types as $type) {
+            if (strtoupper($type->getName()) === self::DEFAULT_TYPE) {
+                return $type->getId();
+            } 
+        }
+        return (int) $types[0]->getId();
     }
 
     /**
