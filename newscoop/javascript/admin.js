@@ -3,8 +3,10 @@ $(document).ready(function() {
     // topics search autocomplete
     $('input[name=search].topics').each(function() {
         var input = $(this);
+        /* disabled - buggy javascript
         input.autocomplete({
             source: function(request, response) {
+            return response([request]);
                 if (terms.length == 0) { // populate terms
                     $('ul.tree.sortable strong').each(function() {
                         terms.push($(this).text());
@@ -29,6 +31,7 @@ $(document).ready(function() {
                 input.change(); // trigger search
             }
         });
+        */
     }).change(function() {
         // reset
         $('ul.tree *').removeClass('match');
