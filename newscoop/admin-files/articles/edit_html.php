@@ -6,45 +6,38 @@
 // If the article is locked say so to the user
 if ($articleObj->userCanModify($g_user) && $locked && ($inEditMode)) {
 ?>
-<table border="0" cellspacing="0" cellpadding="6" class="table_input">
-<tr>
-  <td colspan="2">
-    <b><?php  putGS("Article is locked"); ?> </b>
-    <hr noshade size="1" color="black">
-  </td>
-</tr>
-<tr>
-  <td colspan="2" align="center">
-    <blockquote>
-    <?php
+<div class="main-content-wrapper">
+  <div style="text-align:center;">
+    <h3><?php putGS("Article is locked"); ?></h3>
+    <fieldset>
+      <ul>
+        <li>
+        <?php
         $timeDiff = camp_time_diff_str($articleObj->getLockTime());
         if ($timeDiff['hours'] > 0) {
             putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
-                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-                  $timeDiff['hours'], $timeDiff['minutes']);
+                '<b>'.htmlspecialchars($lockUserObj->getRealName()),
+                htmlspecialchars($lockUserObj->getUserName()).'</b>',
+                $timeDiff['hours'], $timeDiff['minutes']);
         } else {
             putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
-                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
-                  $timeDiff['minutes']);
+                '<b>'.htmlspecialchars($lockUserObj->getRealName()),
+                htmlspecialchars($lockUserObj->getUserName()).'</b>',
+                $timeDiff['minutes']);
         }
-    ?>
-    <br/>
-    </blockquote>
-  </td>
-</tr>
-<tr>
-  <td colspan="2">
-    <div align="CENTER">
-      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
-      <input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
-      <input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
-    </div>
-  </td>
-</tr>
-</table>
+        ?>
+        </li>
+        <li>
+          <input type="button" name="Yes" value="<?php putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
+          <input type="button" name="Yes" value="<?php putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
+          <input type="button" name="No" value="<?php putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php p($f_section_number); ?>'" />
+        </li>
+      </ul>
+    </fieldset>
+  </div>
+</div>
 <?php
+    camp_html_copyright_notice();
     return;
 }
 
@@ -378,3 +371,5 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     <!-- END Comments //-->
   </div>
   <!-- END Main form //-->
+</div>
+<?php camp_html_copyright_notice(); ?>

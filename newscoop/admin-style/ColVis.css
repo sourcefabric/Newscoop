@@ -1,3 +1,5 @@
+@charset "utf-8";
+/* CSS Document */
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * TableTools styles
@@ -5,18 +7,27 @@
 .TableTools {
 	float: right;
 	margin-bottom: 1em;
+	padding: 0;
 }
 
 .TableTools_Button {
 	position: relative;
 	float: left;
 	margin-right: 3px;
-	padding: 3px 5px;
-	height: 30px;
+	padding: 2px 10px 5px 10px;
 	background-color: #fff;
 	border: 1px solid #d0d0d0;
 	cursor: pointer;
 	*cursor: hand;
+	font-size:12px;
+	line-height:120%;
+	font-weight:normal;
+}
+
+
+.ui-widget-header .ui-state-default.TableTools_Button {
+	font-weight:normal !important;
+	padding: 3px 10px 5px 10px;
 }
 
 button.TableTools_Button::-moz-focus-inner { 
