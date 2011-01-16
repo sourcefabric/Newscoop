@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
@@ -9,17 +9,17 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 // TODO: permissions
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
-    camp_html_add_msg(getGS("Unable to add new image, target directory is not writable."));
+    camp_html_add_msg(getGS('Unable to add new image, target directory is not writable.'));
     camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
     camp_html_goto_page("/$ADMIN/users/authors.php");
     exit;
 }
 if (!$g_user->hasPermission('EditAuthors')) {
-    camp_html_display_error(getGS("You do not have the permission to change authors."));
+    camp_html_display_error(getGS('You do not have the permission to change authors.'));
     exit;
 }
 
-$id = Input::Get("id", "int", -1);
+$id = Input::Get('id', 'int', -1);
 
 // Delete author
 $del_id = Input::Get('del_id', 'int', -1);
@@ -88,16 +88,16 @@ if ($can_save) {
     $author->commit();
 
     // Reset types
-    $types = Input::Get("type", "array");
+    $types = Input::Get('type', 'array');
     AuthorAssignedType::ResetAuthorAssignedTypes($author->getId());
     foreach ($types as $type) {
         $author->setType($type);
     }
 
-    $author->setSkype(Input::Get("skype"));
-    $author->setJabber(Input::Get("jabber"));
-    $author->setAim(Input::Get("aim"));
-    $author->setEmail(Input::Get("email"));
+    $author->setSkype(Input::Get('skype'));
+    $author->setJabber(Input::Get('jabber'));
+    $author->setAim(Input::Get('aim'));
+    $author->setEmail(Input::Get('email'));
 
     $authorBiography = array();
     $authorBiography['biography'] = Input::Get("txt_biography", "string");
@@ -110,8 +110,9 @@ if ($can_save) {
         $image = Image::OnImageUpload($_FILES['file'], $attributes);
         if (PEAR::isError($image)) {
             camp_html_add_msg($image->getMessage());
+        } else {
+            $author->setImage($image->getImageId());
         }
-        $author->setImage($image->getImageId());
     }
 
     $aliases = Input::Get("alias", "array");
@@ -148,22 +149,32 @@ echo $breadcrumbs;
 ?>
 
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.config.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.core.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.lang-enUS.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/fValidate/fValidate.validators.js"></script>
-
-<!--Content-->
-<div class="floatBox" style="margin-top:5px">
-<?php camp_html_display_msgs(); ?>
-  <div class="editBox">
-    <div class="formBlock formBlockSolo">
-      <input type="text" id="form_search" onchange="doSearch()" onkeyup="doSearch()" class="input_text" size="41" style="width:370px;" /><a href="#" class="arrowButton"></a>
-    </div>
-    <div class="formBlock formBlockSolo">
-      <div class="scrollHolder" style="height:100%">
-        <div id="pane2" class="scroll-pane">
-          <ul>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.filter-button').click(function() {
+        $('.container').toggle('fast');
+        $(this).toggleClass("close");
+        return false;
+    }).next().hide();
+});
+</script>
+<div class="wrapper">
+  <div class="info-bar"> <span class="info-text"></span> </div>
+  <!--left column-->
+  <div class="column-one">
+    <div class="author-list ui-widget-content big-block block-shadow padded-strong">
+      <fieldset class="plain">
+        <div class="search-box">
+          <input type="text" id="form_search" onchange="doSearch()" onkeyup="doSearch()" class="input-transparent" size="45" style="width:220px;" />
+          <a href="#" class="filter-button"><?php putGS('Filters'); ?></a>
+        </div>
+        <div class="container">
+          <ul class="check-list padded">
             <li>
               <input type="checkbox" name="all_authors" id="all_authors" class="input_checkbox"  checked="checked" onclick="typeFilter(0)" />
               <label for="all_authors"><?php putGS('All Author Types'); ?></label>
@@ -181,23 +192,24 @@ echo $breadcrumbs;
             ?>
             <li><?php putGS('Add author type'); ?>:</li>
             <li>
-              <form method="post" onsubmit="return addAuthorType()">
-                <input type="text" maxlength="35" class="input_text" id="add_author" name="add_author" style="width:70%;" />
-                <input type="submit" name="save" id="save" value="<?php putGS('Add'); ?>" class="buttonStrong" />
+              <form onsubmit="return addAuthorType()" method="post">
+                <input type="text" style="width: 60%; margin-right: 6px" name="add_author" id="add_author" class="input_text" maxlength="35" />
+                <input type="submit" class="default-button" value="<?php putGS('Add'); ?>" id="save" name="save" />
               </form>
             </li>
           </ul>
         </div>
-      </div>
-    </div>
-    <div class="formBlock formBlockSolo lastBlock">
-      <div id="gridtable" style="float:left" class="box_table"></div>
+      </fieldset>
+      <fieldset class="plain" style="margin-top:16px;">
+        <a onclick="getRow(0)" class="ui-state-default icon-button right-floated" href="#"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Add new Author'); ?></a>
+        <div class="clear"></div>
+        <div id="gridtable" style="margin-top:8px;"></div>
+      </fieldset>
     </div>
   </div>
-</div>
-
-<div id="leftcolumn" style="float:left">
-  <div id="detailtable" class=""><?php putGS('Loading Data'); ?>...</div>
+  <!--END left column-->
+  <!--right column-->
+  <div id="detailtable" class="column-two"><?php putGS('Loading Data'); ?>...</div>
 </div>
 <script type="text/javascript" charset="utf-8">
 var oTable;
@@ -213,7 +225,18 @@ $(document).ready(function() {
                     'bSortable': false,
                     'aTargets': [1, 2]
                 }
-            ]
+            ],
+            'fnDrawCallback': function() {
+                $('#gridx tbody tr').click(function(event) {
+                    //alert($(this).parents('tr'));
+                    //$(this).removeClass('selected');
+                    //$(this).raddClass('selected');
+                    //$("tr", oTable.fnGetNodes()).removeClass('selected');
+                    //$(event.target).parent().find("tr").addClass('selected');
+                    $(event.target).removeClass('selected');
+                    $(event.target).addClass('selected');
+                });
+            }
         });
         $("#gridx_filter").html('');
     });
@@ -298,7 +321,7 @@ function doSearch() {
 }
 
 function typeFilter(id) {
-    if (id==0 && $("#all_authors").attr('checked')) {
+    if (id == 0 && $("#all_authors").attr('checked')) {
         $(".checkbox_filter").removeAttr('checked');
         oTable.fnFilter( '',1 );
         return;

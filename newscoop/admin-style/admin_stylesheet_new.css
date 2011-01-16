@@ -7,17 +7,6 @@ a {
 	text-decoration:none;
 }
 
-a:hover {
-	color: #007fb3;
-	text-decoration:underline;
-}
-a:active {
-	color: #007fb3;
-}
-
-a:visited {
-	color: #007fb3;
-}
 
 form {
 	display:inline;
@@ -91,7 +80,7 @@ hr {
 }
 
 .list_row_even {
-    background-color: #e5f2f7;
+    background-color:#F9F9F9;
 }
 
 .indent {
@@ -122,40 +111,8 @@ hr {
 
 .box_table .input_text {
 	margin-right:7px;
+	float:none;
 }
-
-
-/*--- FOOTER ---*/
-.footer, .footer_plain {
-    display:block;
-    background:#f5f5f5;
-    background: -moz-linear-gradient(top, #e3e3e3 0, #f5f5f5 2px, #f5f5f5 2px, #f5f5f5 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e3e3e3), color-stop(2%, #f5f5f5), color-stop(2%, #f5f5f5), color-stop(100%, #f5f5f5));
-    height:40px;
-    border-top:1px solid #CCC;
-    clear:both; color:#666;
-    margin-top:20px;
-    font-size:11px;
-    line-height:140%;
-    text-align:center;
-    padding:10px 0 0 0;
-}
-
-.footer_plain {
-    border-top:none;
-    margin-top:20px;
-}
-
-.footer a, .footer_plain a {
-    color:#015476;
-    text-decoration:none;
-}
-
-.footer a:hover, .footer_plain a:hover {
-    color:#1a8cbb;
-    text-decoration:underline;
-}
-/*--- END FOOTER ---*/
 
 fieldset.controls, fieldset.buttons, fieldset.filters, fieldset.actions {
     margin: 15px 30px;
@@ -414,19 +371,16 @@ fieldset.controls.search .input_text {
 
 .dataTables_wrapper {
     margin: 16px 30px;
-	
 }
 
+.author-list .dataTables_wrapper {
+    margin: 0;
+}
 #tabs .dataTables_wrapper {
     margin: 13px 0 0;
 }
 
-.dataTables_scroll {
-    border: 1px solid #9d9d9d;
-}
-.ui-widget-header + .dataTables_scroll {
-    border-top: none;
-}
+
 .dataTables_scroll
 .dataTables_wrapper table.datatable {
     width: 90%;
@@ -449,13 +403,7 @@ fieldset.controls.search .input_text {
 	font-weight:normal;
 }
 
-.smartlist .datatable td, .smartlist .datatable th {
-    padding: 3px;
-    border: 1px solid #ebebeb;
-    border-width: 1px 1px 0 0;
-	font-size:12px;
-}
-
+	
 
 .smartlist td { width: 5em; }
 .smartlist td.id { width: 1em; padding: 3px 0; text-align: center; }
@@ -478,7 +426,7 @@ fieldset.controls.search .input_text {
     background-color: #E5F2F7;
 }
 
-.smartlist tbody tr:hover td {
+.smartlist tbody tr:hover td, .datatable tbody tr:hover td {
     background-color: #cce5f0 !important;
 }
 
@@ -487,22 +435,22 @@ fieldset.controls.search .input_text {
 	background:#fff;
 }
 
-.smartlist .DataTables_sort_wrapper .ui-icon {
+.DataTables_sort_wrapper .ui-icon {
     display: block;
     float: left;
 }
 
-.smartlist .dataTables_paginate {
+.dataTables_paginate {
     clear: both;
     margin: 3px 0;
 }
 
-.smartlist .ui-buttonset {
+.ui-buttonset {
     height: 1%;
     overflow: hidden;
 }
 
-.smartlist .ui-button {
+.ui-button {
     float: left;
     cursor: pointer;
     padding: 2px 7px;
@@ -510,7 +458,7 @@ fieldset.controls.search .input_text {
 	font-weight:normal;
 }
 
-.smartlist .ui-buttonset .ui-button {
+.ui-buttonset .ui-button {
     margin-right: 2px;
 }
 
@@ -553,7 +501,7 @@ fieldset.controls.search .input_text {
     font-weight: bold;
     cursor: pointer;
 }
-.smartlist .dataTables_info {
+.dataTables_info {
 	font-weight:normal;
 	font-size:11px;
 	color:#696969;
@@ -570,5 +518,71 @@ fieldset.controls.search .input_text {
 	border:1px solid #cecece;
 	color:#b2b3b2;
 }
-
 /*------ END  Smartlist ----------*/
+ 
+ 
+/*------ Author Management ----------*/
+.aliasContainer {
+	float:left;
+}
+
+.authorAliasItem {
+	height:25px;
+	margin-top:8px;
+}
+
+.aliasContainer .authorAliasItem:first-child {
+	margin-top:0px;
+}
+.authorThumb {
+	background:#f5f5f5 url(images/author_thumb_bg_110x130.png) no-repeat 50% 50%;
+    border: 1px solid #9d9d9d;
+    float: left;
+    height: 130px;
+    padding: 0;
+    width: 110px;
+	overflow:hidden;
+}
+
+fieldset ul.nameList {
+    float: left;
+    margin-left: 28px;
+    width: 400px;
+}
+
+.textHolder {
+    float: left;
+    margin: 0 16px 0 0;
+    padding: 7px 0 10px 0;
+    width: 260px;
+}
+.textHolder textarea{
+    width: 100%;
+	margin:0;
+}
+.omega {
+    margin-right: 0;
+    width: auto;
+}
+/*------ END Author Management ----------*/
+
+/*------ DataTables ----------*/
+.DataTables_sort_wrapper .ui-icon {
+    display: block;
+    float: left;
+}
+	
+.datatable tbody tr.even td {
+    background-color: #F9F9F9;
+}
+.datatable tbody tr.selected td {
+    background-color: #EDF6F9;
+}
+
+.datatable tbody tr.even.selected td {
+    background-color: #E5F2F7;
+}
+
+
+
+/*------ END DataTables ----------*/

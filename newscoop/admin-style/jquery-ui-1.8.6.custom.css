@@ -104,7 +104,7 @@
 }
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 1em;
+	font-size: 12px;
 }
 .ui-widget-content {
 	border: 1px solid #9d9d9d;

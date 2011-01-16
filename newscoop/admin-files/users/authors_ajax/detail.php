@@ -1,6 +1,6 @@
 <?php
 /**
- * Campsite
+ * @package Newscoop
  */
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Image.php');
@@ -53,11 +53,10 @@ if ($id > 0) {
     $aliases = $author->getAliases();
 }
 ?>
-
 <form method="post" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
-<div class="tabs authors">
+<div class="tabs authors ui-tabs ui-widget ui-widget-content ui-corner-all block-shadow author-details">
   <ul>
     <li><a href="#generalContainer"><?php putGS('General'); ?></a></li>
     <li><a href="#biographyContainer"><?php putGS('Biography'); ?></a></li>
@@ -66,35 +65,37 @@ if ($id > 0) {
     <?php } ?>
   </ul>
   <div id="generalContainer">
-    <div class="formBlock firstBlock firstBlock">
+    <div class="space-box"></div>
+    <fieldset class="frame">
       <ul>
         <li>
           <label><?php putGS('First name'); ?>:</label>
-          <input type="text" name="first_name" class="input_text" size="41" value="<?php echo $first_name; ?>" />
+          <input type="text" name="first_name" class="input_text" style="width: 360px;" size="41" value="<?php echo $first_name; ?>" />
         </li>
         <li>
           <label><?php putGS('Last name'); ?>:</label>
-          <input type="text" name="last_name"  class="input_text" size="41" spellcheck="false" value="<?php echo $last_name; ?>" />
+          <input type="text" name="last_name" class="input_text" style="width: 360px;" size="41" spellcheck="false" value="<?php echo $last_name; ?>" />
         </li>
         <li>
-          <label>Aliases:</label>
-          <div id="aliases" class="aliasContainer">
+          <label><?php putGS('Aliases'); ?>:</label>
+          <div id="aliases" class="aliasContainer clearfix">
           <?php
           $count = 0;
           if (isset($aliases) && is_array($aliases)) {
               foreach ($aliases as $alias) {
                   $count++;
-                  $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px;" value="%s" />';
+                  $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:325px;" value="%s" />';
                   echo '<div class="authorAliasItem">';
                   echo sprintf($input, $alias->getName());
-                  echo '<a href="?id=' . $author->getId() . '&del_id_alias=' . $alias->getId() . '" onclick="return deleteAuthorAlias(' . $alias->getId() . ',' . $author->getId() . ')" style="float:right"><img
-                      src="' . $Campsite['ADMIN_STYLE_URL'] . '/images/delete.png" border="0" alt="' . getGS('Delete author alias') . '" title="' . getGS('Delete author alias') . '" /></a>';
+                  echo '<a href="?id=' . $author->getId() . '&del_id_alias=' . $alias->getId() . '" onclick="return deleteAuthorAlias(' . $alias->getId() . ',' . $author->getId() . ')"><span
+                      class="ui-icon ui-icon-closethick"></span>';
                   echo '</div>';
               }
           }
           ?>
             <div class="authorAliasItem">
-              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:322px;margin-left:127px;" />
+              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:325;" />
+              <a class="ui-state-default icon-button no-text" href="#"><span lass="ui-icon ui-icon-closethick"></span></a>
             </div>
           </div>
           <span onclick="addAlias();"><a href="#" class="addButton"></a></span>
@@ -102,7 +103,7 @@ if ($id > 0) {
         <li>
           <span id="types">
             <label><?php putGS('Type'); ?>:</label>
-            <select name="type[]" class="input_select2" onchange="" style="width:324px;height:100%" multiple="multiple">
+            <select name="type[]" class="input_select2" onchange="" style="width:362px;height:100%" multiple="multiple">
             <?php
             $types = AuthorType::GetAuthorTypes();
             foreach ($types as $xtype) {
@@ -118,44 +119,40 @@ if ($id > 0) {
           </span>
         </li>
       </ul>
-    </div>
-    <h2><?php putGS('Contacts'); ?></h2>
-    <div class="formBlock">
+    </fieldset>
+    <fieldset class="frame">
+      <h3><?php putGS('Contacts'); ?></h3>
       <ul>
         <li>
           <label><?php putGS('Skype'); ?>:</label>
-          <input type="text" name="skype"  class="input_text" size="41" value="<?php echo $skype; ?>" />
+          <input type="text" name="skype" style="width: 360px;" class="input_text" size="41" value="<?php echo $skype; ?>" />
         </li>
         <li>
           <label><?php putGS('Jabber'); ?>:</label>
-          <input type="text" name="jabber"  class="input_text" size="41" spellcheck="false" value="<?php echo $jabber; ?>" />
+          <input type="text" name="jabber" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $jabber; ?>" />
         </li>
         <li>
           <label><?php putGS('AIM'); ?>:</label>
-          <input type="text" name="aim"  class="input_text" size="41" spellcheck="false" value="<?php echo $aim; ?>" />
+          <input type="text" name="aim" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $aim; ?>" />
         </li>
         <li>
           <label><?php putGS('Email'); ?>:</label>
-          <input type="text" name="email" class="input_text" size="41" spellcheck="false" value="<?php echo $email; ?>" />
+          <input type="text" name="email" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $email; ?>" />
         </li>
-      </ul>
-    </div>
-    <div class="formBlock lastBlock">
-      <ul>
         <li>
           <label>&nbsp;</label>
           <input type="reset" name="reset" id="reset" value="<?php putGS('Reset'); ?>" class="button" onclick="" />
         </li>
       </ul>
-    </div>
+    </fieldset>
   </div>
-
   <div id="biographyContainer">
-    <div class="formBlock firstBlock">
+    <div class="space-box"></div>
+    <fieldset class="frame">
       <ul>
         <li>
           <label class="smaller"><?php putGS('Languages'); ?>:</label>
-          <select name="lang"  class="input_select" style="width:120px;"  id="lang" onchange="changeBio(<?php echo $id ?>)">
+          <select name="lang" class="input_select" style="width:160px;" id="lang" onchange="changeBio(<?php echo $id ?>)">
           <?php
           $publications = Issue::GetIssues();
           $languages = array();
@@ -200,9 +197,8 @@ if ($id > 0) {
           </select>
         </li>
       </ul>
-    </div>
-    <div class="formBlock">
-      <br />
+    </fieldset>
+    <fieldset class="frame">
       <div class="authorThumb">
       <?php
       if (is_object($author) && is_numeric($author->getImage())) {
@@ -227,23 +223,25 @@ if ($id > 0) {
           <input type="file" name="file" size="32" class="input_file" />
         </li>
       </ul>
-    </div>
-    <div class="formBlock">
+    </fieldset>
+    <fieldset class="plain">
       <div class="textHolder">
-        <textarea name="langbio" id="transArea" rows="20" readonly="readonly"><?php echo $biography; ?></textarea>
+        <textarea name="langbio" id="transArea" rows="20" readonly="readonly" class="input_text_area"><?php echo $biography; ?></textarea>
       </div>
-      <div>
-        <textarea name="txt_biography" id="txt_biography" class="tinymce" rows="20"><?php echo $biography; ?></textarea>
+      <div class="textHolder omega">
+        <textarea name="txt_biography" id="txt_biography" rows="30" class="tinymce input_text_area"><?php echo $biography; ?></textarea>
       </div>
-    </div>
-    <br style="clear:both;" />
+    </fieldset>
+    <div class="clear"></div>
   </div>
 
   <?php
   if (is_object($author)) {
   ?>
   <div id="contentContainer">
-    <table>
+    <div class="space-box"></div>
+    <fieldset class="frame">
+      <ul>
     <?php
     $authoringList = ArticleAuthor::GetArticlesByAuthor($author->getId());
     $authoringCount = sizeof($authoringList);
@@ -255,22 +253,23 @@ if ($id > 0) {
             . '&f_article_number=' . $authoringItem['article']->getArticleNumber()
             . '&f_language_id=' . $authoringItem['article']->getLanguageId();
     ?>
-    <tr>
-      <td><?php echo $authoringItem['type']->getName(); ?></td>
-      <td><a href="<?php echo $articleUrl; ?>"><?php echo $authoringItem['article']->getName(); ?></a></td>
-    </tr>
+        <li>
+          <label><?php echo $authoringItem['type']->getName(); ?></label>
+          <a href="<?php echo $articleUrl; ?>" style="font-size:0.8em;"><?php echo $authoringItem['article']->getName(); ?></a>
+        </li>
+      </ul>
     <?php } ?>
-    </ul>
+    </fieldset>
   </div>
   <?php } ?>
   
-  <div class="formBlock lastBlock">
+  <fieldset class="frame" style="margin-bottom:0;">
     <ul>
       <li>
-        <input type="submit" name="save" id="save" value="<?php putGS('Save All'); ?>" class="buttonStrong" />
+        <input type="submit" name="save" id="save" value="<?php putGS('Save All'); ?>" class="save-button right-floated" />
       </li>
     </ul>
-  </div>
+  </fieldset>
 </div>
 
 <?php

@@ -12,14 +12,12 @@ function l_getType($types)
     return $t;
 }
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<a href="#" class="addButtonText" onclick="getRow(0)"><?php putGS('Add new Author'); ?></a>
-<table id="gridx" style="width:100%; margin:0;">
+<table style="width: 100%; margin: 0pt;" id="gridx" cellpadding="0" cellspacing="0" class="datatable">
 <thead>
 <tr>
-  <th valign="top"><?php putGS('Author'); ?></th>
-  <th valign="top"><?php putGS('Type'); ?></th>
-  <th valign="top"><?php putGS('Delete'); ?></th>
+  <th><?php putGS('Author'); ?></th>
+  <th><?php putGS('Type'); ?></th>
+  <th><?php putGS('Delete'); ?></th>
 </tr>
 </thead>
 <tbody>
@@ -27,12 +25,8 @@ function l_getType($types)
 $authors = Author::GetAuthors();
 $i = 0;
 foreach($authors as $author) {
-    $class="list_row_odd";
-    if ($i % 2) {
-        $class="list_row_even";
-    }
 ?>
-<tr class="<?php echo $class ?>" onclick="getRow(<?php echo $author->getId()?>)"
+<tr onclick="getRow(<?php echo $author->getId()?>)"
   onmouseover="setPointer(this, 0, 'over');" onmouseout="setPointer(this, 0, 'out');" style="cursor:pointer">
   <td><?php echo $author->getName(); ?></td>
   <td><?php echo l_getType($author->getTypeWithNames()); ?></td>

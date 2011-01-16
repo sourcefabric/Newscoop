@@ -19,6 +19,12 @@ h3 {
 label {
 	font-size:12px;
 }
+select {
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	border:1px solid #9d9d9d;
+}
+
 /* Clearfix */
 .clearfix:after, li:after, .poi_coors:after, .map_mapedit .ui-widget-content:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
 .clearfix, li, .poi_coors, .map_mapedit .ui-widget-content {	display: inline-block; }
@@ -471,7 +477,7 @@ input.next-to-field {
 .input_select {
 	height:25px;
     background-color: #FFFFFF;
-    border: 1px solid #777777;
+    border: 1px solid #9d9d9d;
     font-size: 12px;
 	font-family:Arial, Helvetica, sans-serif;
 	vertical-align:top;
@@ -603,13 +609,14 @@ fieldset.plain select.right-floated, fieldset.plain input.right-floated {
     float: left;
     margin-right: 7px;
 }
-.check-list label, .frame .check-list label, .inline {
+.check-list label, .frame .check-list label, .inline, fieldset.plain .check-list label  {
     float: left;
 	width:auto;
 	clear:none;
 	line-height:120%;
 	font-weight:normal;
 }
+
 
 dl.inline-list {
 	float: left;
@@ -838,7 +845,10 @@ a.calendar-button {
 	background-position: 0 -15px
 }
 .clear-margin, input.clear-margin, select.clear-margin {
-	margin:0;
+	margin:0 !important;
+}
+a.clear-margin:hover, .icon-button:hover  {
+	text-decoration:none !important;
 }
 /*---- Geolocation ----*/
 .date-published strong {
@@ -927,10 +937,10 @@ a.calendar-button {
 	padding-right: 0;
 }
 .map_mapedit .ui-state-default .ui-icon {
-	background-image: url(images/custom-theme/ui-icons_007fb3_256x240.png);
+	background-image: url(custom-theme/images/ui-icons_007fb3_256x240.png);
 }
 .map_mapedit .ui-state-hover .ui-icon {
-	background-image: url(images/custom-theme/ui-icons_ffffff_256x240.png);
+	background-image: url(custom-theme/images/ui-icons_ffffff_256x240.png);
 }
 /*---- END Geolocation ----*/
 
@@ -970,4 +980,145 @@ ul.tree.sortable .item fieldset .input_text {
 	width: 497px;
 
 }
-body > h1 { margin: 1em; }
+/*----Author Management ----*/
+.column-one {
+	float:left;
+	width:360px;
+	margin:0 15px 30px 0;
+}
+.column-two {
+	float:left;
+	width:auto;
+	margin-bottom:30px;
+}
+.search-box {
+	height:25px;
+	background:#FFFFFF url(images/search_box_bg.png) repeat-x 0 0;
+    border: 1px solid #9D9D9D;
+	border-width: 0 1px 0 1px;
+}
+.search-box input, .search-box .input-transparent {
+	height:23px;
+    background-color: transparent;
+	background-image: none;
+	padding:0;
+	border:none;
+	margin:1px 0 0 0;
+	outline:none;
+    float: left;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    text-indent: 3px;
+}
+.search-box .filter-button  {
+    background: transparent url(images/dropdown-arrow.png) no-repeat scroll right 9px;
+    color: #646664;
+    padding: 4px 14px 0 10px;
+    text-decoration: none;
+	float:right;
+	font-size:11px;
+	text-decoration:none;
+	border-left:1px dotted #CCC;
+	height: 19px;
+	margin:1px 6px 0 0;
+	outline:none;
+}
+.search-box .filter-button.close  {
+    background: transparent url(images/dropdown-arrow-close.png) no-repeat scroll right 8px;
+}
+.search-box .filter-button:hover {
+    color: #007fb3;
+	text-decoration:none;
+}
+.container {
+	border:1px solid #CCC;
+	border-width: 0 1px 1px 1px;
+	padding: 20px 10px 10px 10px;
+	background:#fafafa;
+	background: -moz-linear-gradient(top, #e3e3e3 0, #fafafa 3px, #fafafa 3px, #fafafa 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e3e3e3), color-stop(2%, #fafafa), color-stop(2%, #fafafa), color-stop(100%, #fafafa));
+	display:none;
+}
+
+.datatable tr th.ui-state-default {
+    border: 1px solid #CCC;
+	border-width: 0 0 0 1px !important;
+}
+
+#gridtable .ui-widget-header {
+    padding: 10px 10px 10px;
+}
+.datatable {
+    border-color: #9D9D9D;
+    border-style: solid;
+    border-width: 1px 1px 1px 1px;
+}
+.datatable tr td, .datatable tr th {
+    border-color: #EBEBEB;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    font-size: 12px;
+    padding: 3px 5px;
+}
+.datatable tr td:first-child, .datatable tr th:first-child, .datatable tr th.ui-state-default:first-child {
+	border-left-width:0 !important;
+}
+.ui-widget-header + .datatable {
+    border-width: 0px 1px 1px 1px;
+}
+.datatable + .ui-widget-header {
+    border-width: 0px 1px 1px 1px;
+}
+.dataTables_scrollHeadInner > .datatable {
+    border-width: 0px 1px 0 1px;
+}
+dataTables_scroll .datatable {
+    border-width: 0px 1px 0 1px;
+}
+.author-list {
+	overflow:hidden;
+}
+.author-details {
+}
+.author-details fieldset label {
+    clear: left;
+    color: #696969;
+    display: block;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 20px;
+    margin: 0;
+    padding: 0 0 4px;
+    text-indent: 0;
+	width:140px;
+}
+.author-details fieldset ul.nameList li label {
+    width: 100px;
+}
+.author-details fieldset.frame ul li:last-child {
+    padding-bottom: 0;
+}
+.author-details.ui-tabs {
+	padding:10px;
+}
+.space-box {
+	clear:both;
+	height:16px;
+}
+.author-details h3 {
+	font-size:17px;
+	padding:6px 0 16px 0;
+}
+.author-details .frame {
+    padding: 10px;
+}
+.author-details .frame:last-child {
+    margin-bottom: 10px;
+}
+input.input_file {
+	font-size: 12px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+
