@@ -1132,7 +1132,7 @@ padding: 0;
 	overflow: hidden;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: .5em 1em .3em;
+	padding: 6px 8px 6px 8px;
 	position: relative;
 }
 .ui-dialog .ui-dialog-title {

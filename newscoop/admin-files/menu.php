@@ -470,6 +470,7 @@ $locale = trim(getGS('en'), ' (*)');
 
 <!--MAIN MENU-->
 <div class="main-menu-bar">
+  <div class="logo"></div>
   <a tabindex="0" href="<?php echo "/$ADMIN/home.php"; ?>"
       class="fg-button ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_dashboard"><?php putGS('Dashboard'); ?></a>
   <a tabindex="1" href="#my-menu"
