@@ -117,8 +117,8 @@ if (in_array($extension, $imageExtensions)) {
                 <tr>
                     <td>
                         <b><?php putGS("Edit template:"); ?></b>
-                        <SELECT NAME="f_path_name" class="input_select" onChange="openFile()">
-                            <OPTION VALUE="">---</OPTION>
+                        <select name="f_path_name" class="input_select" onChange="openFile()">
+                            <option value="">---</option>
                             <?php
                             foreach ($templates as $template) {
                                 if (1 || camp_is_text_file($template->getName())) {
@@ -127,14 +127,14 @@ if (in_array($extension, $imageExtensions)) {
 
                             }
                             ?>
-                        </SELECT>
+                        </select>
                     </td>
                 </tr>
                 </table>
                 </form>
             </td>
-        </TR>
-        </TABLE>
+        </tr>
+        </table>
 
        </td>
        <td>
@@ -156,30 +156,29 @@ if (in_array($extension, $imageExtensions)) {
                         <b><?php putGS("Replace current with:"); ?></b> <input type="FILE" name="f_file" class="input_file" alt="file|<?php echo implode(",",camp_get_text_extensions()).",".implode(",", camp_get_image_extensions()); ?>" emsg="<?php putGS("You must select a file to upload."); ?>">
                     </td>
                     <td>
-                        <INPUT type="submit" name="replace" value="<?php putGS("Replace"); ?>" class="button">
+                        <input type="submit" name="replace" value="<?php putGS("Replace"); ?>" class="button">
                     </td>
                 </tr>
                 </table>
                 </form>
             </td>
-        </TR>
-        </TABLE>
+        </tr>
+        </table>
         <?php } ?>
         </td>
       </tr>
     </table>
 
-    <P>
-    <FORM NAME="template_edit" METHOD="POST" ACTION="do_edit.php"  >
+    <p>
+    <form name="template_edit" method="POST" action="do_edit.php"  >
     <?php echo SecurityToken::FormParameter(); ?>
-    <INPUT TYPE="HIDDEN" NAME="Path" VALUE="<?php  p($f_path); ?>">
-    <INPUT TYPE="HIDDEN" NAME="Name" VALUE="<?php  p($f_name); ?>">
-    <INPUT TYPE="HIDDEN" NAME="oldValue" VALUE="<?php p(htmlspecialchars($contents)); ?>">
-    <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-
-    <TR>
-        <TD colspan="2">
-          <TEXTAREA ROWS="40" COLS="120" NAME="cField" id="cField" WRAP="NO" class="input_text"><?php  p(htmlspecialchars($contents)); ?></TEXTAREA>
+    <input type="hidden" NAME="Path" VALUE="<?php  p($f_path); ?>">
+    <input type="hidden" NAME="Name" VALUE="<?php  p($f_name); ?>">
+    <input type="hidden" NAME="oldValue" VALUE="<?php p(htmlspecialchars($contents)); ?>">
+    <table border="0" cellspacing="0" cellpadding="0" class="box_table">
+    <tr>
+      <td colspan="2">
+        <textarea rows="40" cols="120" name="cField" id="cField" wrap="NO" class="input_textarea"><?php p(htmlspecialchars($contents)); ?></textarea>
         <script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/editarea/edit_area/edit_area_full.js"></script>
       <script language="javascript" type="text/javascript">
       editAreaLoader.init({
@@ -191,27 +190,27 @@ if (in_array($extension, $imageExtensions)) {
         ,replace_tab_by_spaces: 2
       });
       </script>
-        </TD>
+      </td>
     </tr>
     <tr>
         <td>
             <?php  putGS('Cache lifetime, sec'); ?>: <input type="text" size="10" name="Lifetime" value="<?php  p($f_lifetime); ?>">
         </td>
     </tr>
-    <TR>
+    <tr>
         <td align="center">
             <?php  if ($g_user->hasPermission("DeleteTempl") && is_writable($filename)) { ?>
-            <INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
+            <input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
             <?php  } else { ?>
-            <INPUT TYPE="button" class="button" NAME="Done" VALUE="<?php  putGS('Done'); ?>" ONCLICK="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
+            <input type="button" class="button" name="Done" value="<?php putGS('Done'); ?>" onclick="location.href='<?php echo "/$ADMIN/templates/?Path=".urlencode($f_path); ?>'">
             <?php  } ?>
-        </TD>
-    </TR>
+        </td>
+    </tr>
     </table>
-    </FORM>
+    </form>
 
 <?php } ?>
 <p>
-<P>
+<p>
 
 <?php camp_html_copyright_notice(); ?>
