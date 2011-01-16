@@ -1,7 +1,54 @@
 <?php
-$inEditMode = ($f_edit_mode == 'edit');
-$inViewMode = ($f_edit_mode == 'view');
+/**
+ * @package Newscoop
+ */
 
+// If the article is locked say so to the user
+if ($articleObj->userCanModify($g_user) && $locked && ($inEditMode)) {
+?>
+<table border="0" cellspacing="0" cellpadding="6" class="table_input">
+<tr>
+  <td colspan="2">
+    <b><?php  putGS("Article is locked"); ?> </b>
+    <hr noshade size="1" color="black">
+  </td>
+</tr>
+<tr>
+  <td colspan="2" align="center">
+    <blockquote>
+    <?php
+        $timeDiff = camp_time_diff_str($articleObj->getLockTime());
+        if ($timeDiff['hours'] > 0) {
+            putGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
+                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
+                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+                  $timeDiff['hours'], $timeDiff['minutes']);
+        } else {
+            putGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
+                  '<B>'.htmlspecialchars($lockUserObj->getRealName()),
+                  htmlspecialchars($lockUserObj->getUserName()).'</B>',
+                  $timeDiff['minutes']);
+        }
+    ?>
+    <br/>
+    </blockquote>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div align="CENTER">
+      <input type="button" name="Yes" value="<?php  putGS('Unlock'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "do_unlock.php", '', null, true); ?>'" />
+      <input type="button" name="Yes" value="<?php  putGS('View'); ?>" class="button" onclick="location.href='<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_edit_mode=view"); ?>'" />
+      <input type="button" name="No" value="<?php  putGS('Cancel'); ?>" class="button" onclick="location.href='/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php  p($f_publication_id); ?>&f_issue_number=<?php  p($f_issue_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_section_number=<?php  p($f_section_number); ?>'" />
+    </div>
+  </td>
+</tr>
+</table>
+<?php
+    return;
+}
+
+// Get proper URL to switch between modes
 if ($articleObj->userCanModify($g_user)) {
     $switchModeUrl = camp_html_article_url($articleObj, $f_language_id, 'edit.php')
         . '&f_edit_mode=' . ( ($inEditMode) ? 'view' : 'edit');
@@ -116,9 +163,13 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <?php echo SecurityToken::formParameter(); ?>
         <?php
             $hiddens = array(
+                'f_publication_id',
+                'f_issue_number',
+                'f_section_number',
+                'f_language_id',
                 'f_language_selected',
                 'f_article_number',
-                'f_article_title',
+                'f_article_title'
                 );
             foreach ($hiddens as $name) {
                 echo '<input type="hidden" name="', $name;
@@ -147,19 +198,17 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       </ul>
       <?php if ($inEditMode) { ?>
       <script type="text/javascript">
-        $(function() {
-
-        // update displayed datetime
-        $('input:hidden.datetime').change(function() {
-            $('span.' + $(this).attr('name')).text($(this).val());
-        }).next().css('vertical-align', 'middle')
-            .css('margin-top', '-3px')
-            .css('cursor', 'pointer');
-
-        });
+      $(function() {
+          // update displayed datetime
+          $('input:hidden.datetime').change(function() {
+              $('span.' + $(this).attr('name')).text($(this).val());
+          }).next().css('vertical-align', 'middle')
+          .css('margin-top', '-3px')
+          .css('cursor', 'pointer');
+      });
       </script>
       <?php } ?>
-      <!-- BEGIN Dates //-->
+      <!-- END Dates //-->
       </fieldset>
       <fieldset class="plain">
         <ul>

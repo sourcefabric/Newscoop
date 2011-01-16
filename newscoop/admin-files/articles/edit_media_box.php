@@ -4,7 +4,7 @@
         <li><a href="#media-attachments"><?php putGS('Attachments'); ?></a></li>
     </ul>
     <div id="media-images">
-        <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
+        <?php if ($inEditMode && $g_user->hasPermission('AttachImageToArticle')) { ?>
         <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
         <div class="clear"></div>
         <?php } ?>
@@ -17,7 +17,7 @@
 				$imageSize = getimagesize($image->getImageStorageLocation());
             ?>
             <li>
-                <?php if ($f_edit_mode == "edit") { ?>
+                <?php if ($inEditMode) { ?>
                 <a href="<?php echo $imageEditUrl; ?>"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
                 <?php } else { ?>
                 <img src="<?php p($image->getThumbnailUrl()); ?>" />
@@ -26,7 +26,7 @@
                 <strong><?php echo $articleImage->getTemplateId(); ?>.</strong><br />
 				<?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
-                <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachImageToArticle')) { ?>
+                <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>
                 <a class="corner-button" href="<?php p($detachUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the image \\'$1\\' from the article?", camp_javascriptspecialchars($image->getDescription())); ?>');"><span class="ui-icon ui-icon-closethick"></span></a>
 				<?php } ?>
             </li>
@@ -35,7 +35,7 @@
     </div>
 
     <div id="media-attachments">
-		<?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AddFile')) {  ?>
+		<?php if ($inEditMode && $g_user->hasPermission('AddFile')) {  ?>
         <a class="iframe ui-state-default icon-button right-floated"
             href="<?php echo camp_html_article_url($articleObj, $f_language_id, "files/popup.php"); ?>"><span
             class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
@@ -54,7 +54,7 @@
 				}
 			?>
 			<li>
-                <?php if ($f_edit_mode == "edit") { ?>
+                <?php if ($inEditMode) { ?>
                 <a class="text-link" href="<?php echo $fileEditUrl; ?>"><?php echo wordwrap($file->getFileName(), "25", "<br />", true); ?></a>
                 <?php } else { ?>
                 <?php echo wordwrap($file->getFileName(), "25", "<br />", true); ?>
@@ -63,7 +63,7 @@
                 <span class="info"><?php echo htmlspecialchars($file->getDescription($f_language_selected)), ', ', camp_format_bytes($file->getSizeInBytes()); ?></span>
                 <a class="link icon-link" href="<?php p($downloadUrl); ?>"><span class="icon ui-icon-arrowthickstop-1-s"></span><?php putGS('Download'); ?></a>
 
-                <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('DeleteFile')) { ?>
+                <?php if ($inEditMode && $g_user->hasPermission('DeleteFile')) { ?>
 				<a class="corner-button" href="<?php p($deleteUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the file \\'$1\\' from the article?", camp_javascriptspecialchars($file->getFileName())); ?>');"><span class="ui-icon ui-icon-closethick"></span></a>
                 <?php } ?>
             </li>

@@ -50,13 +50,13 @@ if (!$articleObj->exists()) {
 
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
-$dbColumns = $articleData->getUserDefinedColumns(false, true);
+$dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
 $lockUserObj = new User($articleObj->getLockedByUser());
 $articleCreator = new User($articleObj->getCreatorId());
-$articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, true);
+$articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, TRUE);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
 $articleAudioclips = ArticleAudioclip::GetAudioclipsByArticleNumber($f_article_number, $f_language_selected);
@@ -68,11 +68,11 @@ $today = getdate();
 $savedOn = getdate($lastModified);
 $savedToday = true;
 if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $today['mday'] != $savedOn['mday']) {
-    $savedToday = false;
+    $savedToday = FALSE;
 }
 
-$showComments = false;
-$showCommentControls = false;
+$showComments = FALSE;
+$showCommentControls = FALSE;
 if ($f_publication_id > 0) {
     $publicationObj = new Publication($f_publication_id);
     $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
@@ -100,25 +100,24 @@ if ($showComments) {
     }
 }
 
-// Automatically switch to "view" mode if user doesnt have permissions.
+// Automatically switch to "view" mode if user doesnt have permissions
 if (!$articleObj->userCanModify($g_user)) {
-    $f_edit_mode = "view";
+    $f_edit_mode = 'view';
 }
 
 //
 // Automatic unlocking
 //
-$locked = true;
-// If the article hasnt been touched in 24 hours
+$locked = TRUE;
+// If the article has not been touched in 24 hours
 $timeDiff = camp_time_diff_str($articleObj->getLockTime());
 if ($timeDiff['days'] > 0) {
-    $articleObj->setIsLocked(false);
-    $locked = false;
-}
-// If the user who locked the article doesnt exist anymore, unlock the article.
-elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
-    $articleObj->setIsLocked(false);
-    $locked = false;
+    $articleObj->setIsLocked(FALSE);
+    $locked = FALSE;
+} elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
+    // If the user who locked the article doesnt exist anymore, unlock the article
+    $articleObj->setIsLocked(FALSE);
+    $locked = FALSE;
 }
 
 //
@@ -126,24 +125,24 @@ elseif (($articleObj->getLockedByUser() != 0) && !$lockUserObj->exists()) {
 //
 
 // If the article has not been unlocked and is not locked by a user.
-if ($f_unlock === false) {
+if ($f_unlock === FALSE) {
     if (!$articleObj->isLocked()) {
         // Lock the article
-        $articleObj->setIsLocked(true, $g_user->getUserId());
+        $articleObj->setIsLocked(TRUE, $g_user->getUserId());
     }
 } else {
-    $f_edit_mode = "view";
+    $f_edit_mode = 'view';
 }
 
-// Automatically unlock the article is the user goes into VIEW mode
+// Automatically unlock the article if the user goes into VIEW mode
 $lockedByCurrentUser = ($articleObj->getLockedByUser() == $g_user->getUserId());
-if (($f_edit_mode == "view") && $lockedByCurrentUser) {
-    $articleObj->setIsLocked(false);
+if (($f_edit_mode == 'view') && $lockedByCurrentUser) {
+    $articleObj->setIsLocked(FALSE);
 }
 
 // If the article is locked by the current user, OK to edit.
 if ($lockedByCurrentUser) {
-    $locked = false;
+    $locked = FALSE;
 }
 
 //
@@ -151,12 +150,8 @@ if ($lockedByCurrentUser) {
 //
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-$hasArticleBodyField = false;
-foreach ($dbColumns as $dbColumn) {
-    if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
-        $hasArticleBodyField = true;
-    }
-}
+$inEditMode = ($f_edit_mode == 'edit');
+$inViewMode = ($f_edit_mode == 'view');
 
 if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
     $spellcheck = 'spellcheck="true"';
@@ -180,10 +175,6 @@ if ($f_publication_id > 0) {
     $crumbs[] = array($title, '');
     echo camp_html_breadcrumbs($crumbs);
 }
-
-
-
-
 
 function parseTextBody($text, $articleNumber)
 {
@@ -219,13 +210,13 @@ function parseTextBody($text, $articleNumber)
                 $titles[0][$x])."/", ' title="'.$titles[1][$x].'"', $text);
             }
         }
-        $formattingErrors = false;
+        $formattingErrors = FALSE;
         foreach ($imageMatches[1] as $templateId) {
             // Get the image URL
-            $articleImage = new ArticleImage($articleNumber, null, $templateId);
+            $articleImage = new ArticleImage($articleNumber, NULL, $templateId);
             if (!$articleImage->exists()) {
                 ArticleImage::RemoveImageTagsFromArticleText($articleNumber, $templateId);
-                $formattingErrors = true;
+                $formattingErrors = TRUE;
                 continue;
             }
             $image = new Image($articleImage->getImageId());
@@ -251,10 +242,16 @@ function parseTextBody($text, $articleNumber)
     return $text;
 }
 
+include_once('edit_html.php');
 
-include ("edit_html.php");
-
-if (($f_edit_mode == "edit") && $hasArticleBodyField) {
+// Display tinymce loading code if required
+$hasArticleBodyField = FALSE;
+foreach ($dbColumns as $dbColumn) {
+    if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
+        $hasArticleBodyField = TRUE;
+    }
+}
+if ($inEditMode && $hasArticleBodyField) {
     $languageSelectedObj = new Language($f_language_selected);
     $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);

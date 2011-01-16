@@ -80,23 +80,23 @@ function change_language(select)
       <option value=""><?php putGS("Actions"); ?>...</option>
       <option value=""></option>
       <?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
-      <option value="unlock">Unlock</option>
+      <option value="unlock"><?php putGS('Unlock'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('DeleteArticle')) { ?>
-      <option value="delete">Delete</option>
+      <option value="delete"><?php putGS('Delete'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('AddArticle')) { ?>
-      <option value="copy">Duplicate</option>
+      <option value="copy"><?php putGS('Duplicate'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('TranslateArticle')) { ?>
-      <option value="translate">Translate</option>
+      <option value="translate"><?php putGS('Translate'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('MoveArticle')) { ?>
-      <option value="move">Move</option>
+      <option value="move"><?php putGS('Move'); ?></option>
       <?php } ?>
     </select>
     <!-- END Actions -->

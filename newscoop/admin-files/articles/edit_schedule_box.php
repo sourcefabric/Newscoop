@@ -5,7 +5,7 @@
       <a href="#" tabindex="-1"><?php putGS('Publish Schedule'); ?></a></h3>
   </div>
   <div class="padded">
-  <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('Publish')) { ?>
+  <?php if ($inEditMode && $g_user->hasPermission('Publish')) { ?>
   <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "autopublish.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Add Event'); ?></a>
   <?php } ?>
     <div class="clear"></div>
@@ -50,7 +50,7 @@
         }
         ?>
         </ul>
-        <?php if (($f_edit_mode == 'edit') && $g_user->hasPermission('Publish')) { ?>
+        <?php if ($inEditMode && $g_user->hasPermission('Publish')) { ?>
         <a href="<?php p(camp_html_article_url($articleObj, $f_language_id, 'autopublish_del.php', '', '&f_event_id='.$event->getArticlePublishId(), true)); ?>"
           onclick="return confirm('<?php putGS("Are you sure you want to remove the event scheduled on $1?", camp_javascriptspecialchars($event->getActionTime())); ?>');"
           class="corner-button"><span class="ui-icon ui-icon-closethick"></span></a>
