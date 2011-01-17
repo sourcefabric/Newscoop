@@ -58,6 +58,16 @@ CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
 
+// replace $campsite by $gimme
+require_once($g_documentRoot.'/classes/TemplateConverterNewscoop.php');
+$template_files = camp_read_files($g_documentRoot.'/templates');
+$converter = new TemplateConverterNewscoop();
+foreach($template_files as $template_file) {
+    $converter->read($template_file);
+    $converter->parse();
+    $converter->write();
+}
+
 // sync phorum users
 User::SyncPhorumUsers();
 
