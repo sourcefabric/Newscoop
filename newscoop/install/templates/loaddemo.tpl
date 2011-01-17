@@ -69,7 +69,7 @@
             </div>
           {{ foreach from=$sample_templates key="step" item="t" }}
             <div class="template-header">
-              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label>{{ $t }}</label>
+              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label for="install_demo">{{ $t }}</label>
             </div>
             <div class="demo_img">
               <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg"  rel="lightbox" title="{{ $t }}" /></a>
