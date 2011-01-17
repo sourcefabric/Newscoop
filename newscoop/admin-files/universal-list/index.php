@@ -19,10 +19,7 @@ if (isset($_SESSION['f_language_selected'])) {
 }
 $f_language_selected = (int)camp_session_get('f_language_selected', 0); 
 
-$crumbs = array();
-$crumbs[] = array(getGS('Content'), '');
-$crumbs[] = array(getGS('Search'), '');
-echo camp_html_breadcrumbs($crumbs);
+camp_html_content_top(getGS('Search'), NULL);
 
 // set up
 $articlelist = new ArticleList();

@@ -16,6 +16,7 @@ $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
 $crumbs[] = array(getGS("Templates"), "/$ADMIN/templates/");
 $crumbs = array_merge($crumbs, camp_template_path_crumbs($path));
+$crumbs[] = array(getGS('Templates'), '');
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");

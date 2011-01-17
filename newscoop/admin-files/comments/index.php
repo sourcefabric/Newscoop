@@ -79,7 +79,7 @@ if (!isset($connectedToOnlineServer)
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
 $crumbs[] = array(getGS("Comments"), "");
-echo camp_html_breadcrumbs($crumbs);
+echo camp_html_content_top(getGS('Comments'), null);
 
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
