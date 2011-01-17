@@ -1,7 +1,7 @@
       <?php
       function drawCombo($id, $pos) {
           $combo = '<select name="f_article_author_type[]" id="article_author_type' . $pos . '"
-              class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none">';
+              class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none">';
           $combo .= drawComboContent($id);
           $combo .= '    </select>   ';
           return $combo;
@@ -22,7 +22,7 @@
       <script type="text/javascript">
       function  addAuthor(){
           var rnumber=Math.floor(Math.random()*9876)
-          $('#authorContainer ul').append('<li><label><div style="margin-top:1px"><select name="f_article_author_type[]" id="article_author_type' + rnumber +  '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;float:none"><?php echo drawComboContent(); ?></select></div></label><div class="position-helper"><input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" /><a class="ui-state-default icon-button no-text" href="#" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" /><span class="ui-icon ui-icon-closethick"></span></a></div></li>');
+          $('#authorContainer ul').append('<li><label><div style="margin-top:1px"><select name="f_article_author_type[]" id="article_author_type' + rnumber +  '" class="input_select2 aauthor aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none"><?php echo drawComboContent(); ?></select></div></label><div class="position-helper"><input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" /><a class="ui-state-default icon-button no-text" href="#" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');" /><span class="ui-icon ui-icon-closethick"></span></a></div></li>');
       }
 
       function deleteAuthor(id, empty){
@@ -74,7 +74,7 @@
             <li>
               <label>
                 <div style="margin-top:1px">
-                  <select name="f_article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" style="width:130px;height:100%;float:none">
+                  <select name="f_article_author_type[]" id="article_author_typexx" class="input_select2 aauthor aaselect" style="width:130px;height:100%;margin-bottom:2px;float:none">
                     <?php echo drawComboContent(); ?>
                   </select>
                 </div>
