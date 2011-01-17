@@ -5,6 +5,7 @@
  */
 
 require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
+require_once($GLOBALS['g_campsiteDir'] . '/admin-files/lib_campsite.php');
 
 /**
  * Campsite Map function plugin
@@ -23,8 +24,10 @@ require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php')
  */
 function smarty_function_map($p_params, &$p_smarty)
 {
+    camp_load_translation_strings('geolocation');
+
     // Default text for the reset link
-    define('DEFAULT_RESET_TEXT', 'Show original map');
+    define('DEFAULT_RESET_TEXT', getGS('Show original map'));
 
     // get the context variable
     $campsite = $p_smarty->get_template_vars('gimme');
