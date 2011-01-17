@@ -128,9 +128,15 @@ function flashMessage(message, type, fixed)
         messageClass = 'highlight';
     }
 
-    var flash = $('<div class="flash ui-state-' + messageClass + '"><p>' + message + '</p></div>')
+    var flash = $('<div class="flash ui-state-' + messageClass + '">' + message + '</div>')
         .appendTo('body')
         .css('z-index', '10000')
+        .css('position', 'fixed')
+        .css('top', '13px')
+        .css('left', '33%')
+        .css('width', '33%')
+        .css('padding', '8px')
+        .css('font-size', '1.3em')
         .click(function() {
             $(this).hide();
         });

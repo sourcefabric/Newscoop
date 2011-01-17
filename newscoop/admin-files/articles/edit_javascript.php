@@ -5,6 +5,8 @@ var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
 document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
 document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
 
+var ajax_forms = 0; // forms saving by ajax
+
 $(function() {
 
 // datepicker for date
@@ -61,23 +63,24 @@ $('form#article-main').submit(function() {
     var form = $(this);
 
     if (!form.hasClass('changed')) {
+        flashMessage('<?php putGS('Article saved.'); ?>');
         return false;
     }
 
     // ping for connection
     callServer('ping', [], function(json) {
+        ajax_forms++;
         $.ajax({
             type: 'POST',
             url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
             data: form.serialize(),
             success: function(data, status, p) {
-                if (p.responseText !== undefined) {
-                    $("#connection-message").show().html('<?php putGS("Article Saved"); ?>');
-                }
+                flashMessage('<?php putGS('Article saved.'); ?>');
+                ajax_forms--;
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    $("#connection-error").show().html('<?php putGS("Unable to reach Campsite. Please check your internet connection."); ?>');
+                    flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
                 }
             }
         });
@@ -89,17 +92,29 @@ $('form#article-main').submit(function() {
 }).change(function() {
     $(this).addClass('changed');
 });
-    
+ 
 // save all buttons
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
-    
+
+    var close = function(timeout) {
+        setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
+    };
+
     if ($(this).attr('id') == 'save_and_close') {
-        setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", 1500);
+        if (ajax_forms == 0) { // nothing to save
+            close(1500);
+            return false;
+        }
+
+        $('body').ajaxSuccess(function(event, xhr, options) {
+            if (ajax_forms == 0) { // all saved, wait for messages to be displayed
+                close(1500);
+            }
+        });
     }
-    
     return false;
 });
 

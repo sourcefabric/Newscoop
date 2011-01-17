@@ -21,12 +21,14 @@
                 return false;
             }
 
+            ajax_forms++;
             var keywords = $('input#Keywords', $(this)).val();
             callServer(['Article', 'setKeywords'], [
                 <?php echo $f_language_selected; ?>,
                 <?php echo $articleObj->getArticleNumber(); ?>,
                 keywords], function(json) {
-                    flashMessage('<?php putGS('Saved'); ?>');
+                    flashMessage('<?php putGS('Keywords saved.'); ?>');
+                    ajax_forms--;
                 });
 
             $(this).removeClass('changed');

@@ -57,11 +57,14 @@
                     val = 'on';
                 }
 
+                ajax_forms++;
                 callServer(['ArticleData', 'setProperty'], [
                     '<?php echo $articleObj->getType(); ?>',
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     <?php echo $f_language_selected; ?>,
-                    $(this).attr('name'), val]);
+                    $(this).attr('name'), val], function(json) {
+                        ajax_forms--;
+                    });
             });
 
             // set static
@@ -72,11 +75,13 @@
                     vals[method] = 0;
                 }
 
+                ajax_forms++;
                 callServer(['Article', method], [
                     <?php echo $f_language_selected; ?>,
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     vals[method]], function(json) {
-                        flashMessage('<?php putGS('Saved'); ?>');
+                        flashMessage('<?php putGS('Switches saved.'); ?>');
+                        ajax_forms--;
                     });
             }
 
