@@ -125,6 +125,7 @@ if ($f_mode == "multi") {
 	<script type="text/javascript">
     try {
         parent.$.fancybox.reload = true;
+        parent.$.fancybox.message = '<?php putGS('Actions updated.'); ?>';
         parent.$.fancybox.close();
     } catch (e) {
     }

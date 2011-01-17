@@ -58,6 +58,7 @@ foreach ($f_topic_ids as $topicIdString) {
 <?php if (!is_null($f_topic_ids)) { ?>
 try {
     parent.$.fancybox.reload = true;
+    parent.$.fancybox.message = '<?php putGS('Topics updated.'); ?>';
 } catch (e) {}
 <?php } ?>
 parent.$.fancybox.close();

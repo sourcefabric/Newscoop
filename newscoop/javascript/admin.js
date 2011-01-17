@@ -111,6 +111,13 @@ $(document).ready(function() {
             $(this).datetimepicker(settings);
         }
     });
+
+    // display flash messages
+    try {
+        if (user_msgs != '') {
+            flashMessage(user_msgs);
+        }
+    } catch (e) {};
 });
 
 /**
@@ -127,6 +134,9 @@ function flashMessage(message, type, fixed)
     } else { // default is info
         messageClass = 'highlight';
     }
+
+    // replace + to spaces
+    message = message.replace(/\+/g, " ");
 
     var flash = $('<div class="flash ui-state-' + messageClass + '">' + message + '</div>')
         .appendTo('body')

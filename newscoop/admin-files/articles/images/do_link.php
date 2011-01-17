@@ -44,8 +44,8 @@ ArticleImage::AddImageToArticle($f_image_id, $f_article_number);
 ?>
 <script>
 try {
-window.opener.document.forms.article_edit.f_message.value = "<?php putGS("Image '$1' added.", $imageObj->getDescription()); ?>";
-window.opener.document.forms.article_edit.submit();
+    parent.$.fancybox.reload = true;
+    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", $imageObj->getDescription()); ?>";
+    parent.$.fancybox.close();
 } catch (e) {}
-window.close();
 </script>

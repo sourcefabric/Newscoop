@@ -42,7 +42,7 @@
     <div class="frame">
     <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
-      href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>" title="<?php putGS('Edit topics'); ?>"><span
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
     <?php } ?>
       <label class="left-floated block-label"><?php putGS('Topics'); ?></label>

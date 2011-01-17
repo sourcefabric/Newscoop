@@ -424,6 +424,7 @@ function camp_html_add_msg($p_errorMsg, $p_type = "error")
 	if (is_string($p_errorMsg)) {
 		$p_errorMsg = array($p_errorMsg);
 	}
+
 	foreach ($p_errorMsg as $errorMsg) {
 		if (is_string($errorMsg) && (trim($errorMsg) != "")) {
 			$g_camp_msg_added = true;

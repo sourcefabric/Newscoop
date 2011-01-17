@@ -142,6 +142,9 @@ $('a.iframe').each(function() {
         },
         onClosed: function(url, params) {
             if ($.fancybox.reload) { // reload if set
+                if ($.fancybox.message) { // set message after reload
+                    $.cookie('flashMessage', $.fancybox.message);
+                }
                 window.location.reload();
             }
         }
@@ -154,6 +157,12 @@ $('form#article-comments').submit(function() {
         return false;
     }
 });
+
+var message = $.cookie('flashMessage');
+if (message) {
+    flashMessage(message);
+    $.cookie('flashMessage', null);
+}
 
 }); // /document.ready
 
