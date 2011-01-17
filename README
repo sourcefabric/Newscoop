@@ -1,6 +1,6 @@
-Campsite is a multilingual content management system (CMS) for news websites.
+Newscoop is a multilingual content management system (CMS) for news websites.
 
-Campsite's user interface was built with the end user (journalist/editor/publisher) in mind and it can be scaled to suit different requirements and complexities. Campsite works best for medium-to-large-size online news publications, but it is capable of handling lighter sites too.  Campsite is developed by sourcefabric (http://www.sourcefabric.org)
+Newscoops's user interface was built with the end user (journalist/editor/publisher) in mind and it can be scaled to suit different requirements and complexities. Newscoop works best for medium-to-large-size online news publications, but it is capable of handling lighter sites too. Newscoop is developed by sourcefabric (http://www.sourcefabric.org)
 
 Benefits:
 
@@ -15,11 +15,11 @@ Sourcefabric has a dedicated platform for Developers. Firstly, you'll need to cr
 
 Quick links to our resources are:
 
-Manuals for Campsite (http://en.flossmanuals.net/CampSite/Introduction) and Campcaster (http://en.flossmanuals.net/CampCaster/Introduction)
+Manuals for Newscoop http://manuals.sourcefabric.org
 Forums and mailing lists: http://forum.sourcefabric.org
 Bug Tracking: http://dev.sourcefabric.org
 Code view/review: http://code.sourcefabric.org
 Public source code hosting: http://github.com/sourcefabric
-Download link: http://sourceforge.net/users/campware
+Download link: https://sourceforge.net/projects/newscoop/
 Developer's wiki: http://wiki.sourcefabric.org
 
