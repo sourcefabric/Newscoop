@@ -2,7 +2,7 @@
 
 DATABASE_USER=root
 DATABASE_PASSWORD=
-DATABASE_NAME=campsite
+DATABASE_NAME=newscoop35
 
 if [ "$1" != "" ]; then
     DATABASE_NAME=$1

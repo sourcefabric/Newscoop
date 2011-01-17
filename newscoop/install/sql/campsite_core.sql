@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: campsite35
+-- Host: localhost    Database: newscoop35
 -- ------------------------------------------------------
 -- Server version	5.1.49-1ubuntu8.1
 
@@ -300,7 +300,6 @@ CREATE TABLE `Articles` (
   `Name` varchar(140) NOT NULL DEFAULT '',
   `Type` varchar(70) NOT NULL DEFAULT '',
   `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_default_author_id` int(10) unsigned DEFAULT NULL,
   `OnFrontPage` enum('N','Y') NOT NULL DEFAULT 'N',
   `OnSection` enum('N','Y') NOT NULL DEFAULT 'N',
   `Published` enum('N','S','M','Y') NOT NULL DEFAULT 'N',
@@ -1638,7 +1637,7 @@ CREATE TABLE `SystemPreferences` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `varname` (`varname`)
-) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1647,7 +1646,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Campsite, MDLF, Campware, CMS, OpenSource, Media','2007-10-05 01:31:36'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Campsite','2008-06-27 14:06:50'),(23,'SiteMetaDescription','Campsite, try it out!','2008-06-27 14:06:50'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2010-12-17 18:02:35'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2010-12-17 18:02:35'),(36,'PasswordRecovery','Y','2010-12-17 18:02:35'),(37,'MapCenterLongitudeDefault','14.424133','2010-12-17 18:02:35'),(38,'MapCenterLatitudeDefault','50.089926','2010-12-17 18:02:35'),(39,'MapDisplayResolutionDefault','4','2010-12-17 18:02:35'),(40,'MapViewWidthDefault','600','2010-12-17 18:02:35'),(41,'MapViewHeightDefault','400','2010-12-17 18:02:35'),(42,'MapProviderAvailableGoogleV3','1','2010-12-17 18:02:35'),(43,'MapProviderAvailableMapQuest','1','2010-12-22 16:30:05'),(44,'MapProviderAvailableOSM','1','2010-12-17 18:02:35'),(45,'MapProviderDefault','GoogleV3','2010-12-17 18:02:35'),(46,'MapMarkerDirectory','/javascript/geocoding/markers/','2010-12-17 18:02:35'),(47,'MapMarkerSourceDefault','marker-gold.png','2010-12-17 18:02:35'),(48,'MapPopupWidthMin','300','2010-12-17 18:02:35'),(49,'MapPopupHeightMin','200','2010-12-17 18:02:35'),(50,'MapVideoWidthYouTube','425','2010-12-17 18:02:35'),(51,'MapVideoHeightYouTube','350','2010-12-17 18:02:35'),(52,'MapVideoWidthVimeo','400','2010-12-17 18:02:35'),(53,'MapVideoHeightVimeo','225','2010-12-17 18:02:35'),(54,'MapVideoWidthFlash','425','2010-12-17 18:02:35'),(55,'MapVideoHeightFlash','350','2010-12-17 18:02:35'),(56,'MapVideoWidthFlv','300','2010-12-17 18:02:35'),(57,'MapVideoHeightFlv','280','2010-12-17 18:02:35'),(58,'FlashServer','','2010-12-17 18:02:35'),(59,'FlashDirectory','videos/','2010-12-17 18:02:35');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(10,'UseCampcasterAudioclips','N','2007-03-07 07:15:36'),(11,'CampcasterHostName','localhost','2007-03-07 07:15:36'),(12,'CampcasterHostPort','80','2007-03-07 07:15:36'),(13,'CampcasterXRPCPath','/campcaster/storageServer/var/xmlrpc/','2007-03-07 07:15:36'),(14,'CampcasterXRPCFile','xrLocStor.php','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, CMS, OpenSource, Media','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop, try it out!','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/javascript/geocoding/markers/','2011-01-17 12:28:20'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','300','2011-01-17 12:28:20'),(49,'MapPopupHeightMin','200','2011-01-17 12:28:20'),(50,'MapVideoWidthYouTube','425','2011-01-17 12:28:20'),(51,'MapVideoHeightYouTube','350','2011-01-17 12:28:20'),(52,'MapVideoWidthVimeo','400','2011-01-17 12:28:20'),(53,'MapVideoHeightVimeo','225','2011-01-17 12:28:20'),(54,'MapVideoWidthFlash','425','2011-01-17 12:28:20'),(55,'MapVideoHeightFlash','350','2011-01-17 12:28:20'),(56,'MapVideoWidthFlv','300','2011-01-17 12:28:20'),(57,'MapVideoHeightFlv','280','2011-01-17 12:28:20'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(60,'AdminWidgetsInstalled','1295267356','2011-01-17 12:29:16');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1870,7 +1869,7 @@ CREATE TABLE `Widget` (
   `class` varchar(78) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `path` (`path`,`class`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1879,6 +1878,7 @@ CREATE TABLE `Widget` (
 
 LOCK TABLES `Widget` WRITE;
 /*!40000 ALTER TABLE `Widget` DISABLE KEYS */;
+INSERT INTO `Widget` VALUES (1,'/var/www/newscoop35/extensions/article-lists/MostPopularArticlesWidget.php','MostPopularArticlesWidget'),(2,'/var/www/newscoop35/extensions/article-lists/PendingArticlesWidget.php','PendingArticlesWidget'),(3,'/var/www/newscoop35/extensions/article-lists/RecentlyModifiedArticlesWidget.php','RecentlyModifiedArticlesWidget'),(4,'/var/www/newscoop35/extensions/article-lists/RecentlyPublishedArticlesWidget.php','RecentlyPublishedArticlesWidget'),(5,'/var/www/newscoop35/extensions/article-lists/SubmittedArticlesWidget.php','SubmittedArticlesWidget'),(6,'/var/www/newscoop35/extensions/article-lists/YourArticlesWidget.php','YourArticlesWidget'),(7,'/var/www/newscoop35/extensions/feed-reader/FeedReader.php','FeedReader'),(8,'/var/www/newscoop35/extensions/google-gadgets/GoogleGadget.php','GoogleGadget'),(9,'/var/www/newscoop35/extensions/hello-world/HelloWorld.php','HelloWorld'),(10,'/var/www/newscoop35/extensions/media-archive/ImageListWidget.php','ImageListWidget'),(11,'/var/www/newscoop35/extensions/media-archive/MediaListWidget.php','MediaListWidget'),(12,'/var/www/newscoop35/extensions/sourcefabric-feed/SourcefabricDevFeed.php','SourcefabricDevFeed'),(13,'/var/www/newscoop35/extensions/sourcefabric-feed/SourcefabricFeed.php','SourcefabricFeed');
 /*!40000 ALTER TABLE `Widget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1894,7 +1894,7 @@ CREATE TABLE `WidgetContext` (
   `name` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1903,6 +1903,7 @@ CREATE TABLE `WidgetContext` (
 
 LOCK TABLES `WidgetContext` WRITE;
 /*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
+INSERT INTO `WidgetContext` VALUES (1,'dashboard1'),(2,'dashboard2');
 /*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1931,6 +1932,7 @@ CREATE TABLE `WidgetContext_Widget` (
 
 LOCK TABLES `WidgetContext_Widget` WRITE;
 /*!40000 ALTER TABLE `WidgetContext_Widget` DISABLE KEYS */;
+INSERT INTO `WidgetContext_Widget` VALUES ('w84770a5bfc62',1,1,1,0,''),('w3f15a8547cf3',2,2,1,0,''),('wf58cc444a2ef',1,3,1,0,''),('w91418259ae42',2,4,1,0,''),('w4af62be139a0',1,5,1,0,''),('w07453f30d558',2,6,1,0,'');
 /*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2522,7 +2524,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2010-07-28 16:18:16','0000-00-00 00:00:00','2010-07-28 19:17:07',1,NULL);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-01-17 12:31:17','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3542,4 +3544,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-17 20:07:27
+-- Dump completed on 2011-01-17 14:49:45

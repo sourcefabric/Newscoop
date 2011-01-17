@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: campsite35
+-- Host: localhost    Database: newscoop35
 -- ------------------------------------------------------
 -- Server version	5.1.49-1ubuntu8.1
 
@@ -567,7 +567,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_rights_right_id_seq` VALUES (124);
+INSERT  IGNORE INTO `liveuser_rights_right_id_seq` VALUES (138);
 /*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -577,7 +577,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2010-12-17 20:27:14','0000-00-00 00:00:00','2010-12-17 22:25:32',1,NULL);
+INSERT  IGNORE INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-01-17 12:56:05','0000-00-00 00:00:00','2011-01-17 14:55:34',1,NULL);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -898,4 +898,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-12-17 22:31:51
+-- Dump completed on 2011-01-17 14:56:13
