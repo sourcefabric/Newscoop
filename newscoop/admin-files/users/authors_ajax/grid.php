@@ -41,3 +41,11 @@ foreach($authors as $author) {
 }?>
 </tbody>
 </table>
+<script type="text/javascript">
+$(function() {
+    $('#gridx tr').click(function() {
+        $('#gridx tr').removeClass('selected');
+        $(this).addClass('selected');
+    });
+});
+</script>

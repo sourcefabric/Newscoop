@@ -457,6 +457,13 @@ $locale = trim(getGS('en'), ' (*)');
           }
       });
   });
+
+  var user_msgs = '';
+  <?php if (!empty($_SESSION['camp_user_msgs'])) { ?>
+  user_msgs = "<?php echo str_replace('"', "'", $_SESSION['camp_user_msgs'][0]['msg']); ?>";
+  <?php 
+    $_SESSION['camp_user_msgs'] = array();
+  } ?>
   </script>
 </head>
 <body>

@@ -112,6 +112,7 @@ if (!$inArchive) {
 <script type="text/javascript">
 try {
     parent.$.fancybox.reload = true;
+    parent.$.fancybox.message = '<? putGS('File attached.'); ?>';
     parent.$.fancybox.close();
 } catch (e) {}
 </script>

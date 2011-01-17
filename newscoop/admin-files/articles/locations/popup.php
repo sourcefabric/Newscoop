@@ -326,6 +326,9 @@ on_close_request = function()
 {
     if (!geo_locations.something_to_save)
     {
+        if (parent.$.fancybox.reload) {
+            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+        }
         parent.$.fancybox.close();
         return;
     }
@@ -337,6 +340,7 @@ on_close_request = function()
     {
         geo_locations.map_save_all();
         parent.$.fancybox.reload = true;
+        parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
     }
 
     window.onbeforeunload = null;
