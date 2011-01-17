@@ -175,7 +175,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     <div class="ui-widget-content big-block block-shadow padded-strong">
       <fieldset class="plain">
       <!-- BEGIN Authors //-->
-      
+      <?php include_once('edit_html_authors.php'); ?>
       <!-- END Authors //-->
 
       <!-- BEGIN Dates //-->

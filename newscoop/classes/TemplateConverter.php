@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
  *
  * @author Holman Romero <holman.romero@gmail.com>
  * @copyright 2008 MDLF, Inc.
@@ -40,12 +40,12 @@ class TemplateConverter
     /**
      * @var string
      */
-    private $m_templateOriginalContent = null;
+    protected $m_templateOriginalContent = null;
 
     /**
      * @var string
      */
-    private $m_templateContent = null;
+    protected $m_templateContent = null;
 
     /**
      * @var array
@@ -61,7 +61,7 @@ class TemplateConverter
 
     /**
      * Reads the original template file content.
-     * 
+     *
      * @param string $p_filePath
      *      Full path to the template file
      *
@@ -74,7 +74,10 @@ class TemplateConverter
             return false;
         }
 
-        if (substr($p_filePath, -4) != '.tpl') {
+        if (strtolower(substr($p_filePath, -4)) != '.tpl'
+        && strtolower(substr($p_filePath, -4)) != '.htm'
+        && strtolower(substr($p_filePath, -5)) != '.html'
+        ) {
             return false;
         }
 
@@ -101,8 +104,8 @@ class TemplateConverter
 
     /**
      * Parses the original template file and replaces old syntax with new one.
-     * 
-     * @return array $replaceArray
+     *
+     * @return bool
      */
     public function parse()
     {
@@ -113,7 +116,7 @@ class TemplateConverter
             return false;
         }
 
-        // sets the tags content (without delimeters) 
+        // sets the tags content (without delimeters)
         $oldTagsContent = $this->m_oldTags[1];
         // inits patterns and replacements arrays
         $patternsArray = array();
@@ -178,7 +181,7 @@ class TemplateConverter
     /**
      * Writes the new template syntax to the output file.
      * Output file might be either the given as parameter or the original file.
-     * 
+     *
      * @param string $p_templateFileName
      *      File name for the template after conversion,
      *      default is the original template file name
