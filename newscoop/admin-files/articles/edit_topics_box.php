@@ -6,14 +6,14 @@
   </div>
   <div class="padded">
   <?php if ($inEditMode && $g_user->hasPermission('ChangeArticle')) { ?>
-  <form id="article-keywords" action="post.php" method="POST">
-    <fieldset class="frame">
-      <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
-      <input type="text" name="Keywords" id="Keywords" size="45"
-        class="input_text" value="<?php echo $articleObj->getKeywords(); ?>" onkeyup="" autocomplete="off" style="width:340px;" /><input
-        type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
-    </fieldset>
-  </form>
+    <form id="article-keywords" action="post.php" method="POST">
+      <fieldset class="frame">
+        <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
+        <input type="text" name="Keywords" id="Keywords" size="45"
+          class="input_text" value="<?php echo $articleObj->getKeywords(); ?>" onkeyup="" autocomplete="off" style="width:340px;" /><input
+          type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
+      </fieldset>
+    </form>
     <script type="text/javascript">
     $(document).ready(function() {
         $('form#article-keywords').submit(function() {
@@ -38,7 +38,7 @@
     </script>
   <?php } ?>
     <div class="frame">
-    <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
+    <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
       href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>" title="<?php putGS('Edit topics'); ?>"><span
         class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
@@ -74,7 +74,7 @@
         }
     ?>
         <li><?php p(wordwrap($pathStr, 45, '<br />&nbsp;&nbsp;')); ?>
-        <?php if (($f_edit_mode == "edit") && $g_user->hasPermission('AttachTopicToArticle')) { ?>
+        <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
           <a class="corner-button" href="<?php p($detachUrl); ?>"
             onclick="return checkChanged() && confirm('<?php putGS("Are you sure you want to remove the topic \\'$1\\' from the article?", camp_javascriptspecialchars($tmpTopicName)); ?>');"><span class="ui-icon ui-icon-closethick"></span></a></li>
         <?php } ?>

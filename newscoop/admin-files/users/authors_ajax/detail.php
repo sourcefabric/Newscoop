@@ -84,18 +84,17 @@ if ($id > 0) {
           if (isset($aliases) && is_array($aliases)) {
               foreach ($aliases as $alias) {
                   $count++;
-                  $input = '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:325px;" value="%s" />';
                   echo '<div class="authorAliasItem">';
-                  echo sprintf($input, $alias->getName());
-                  echo '<a href="?id=' . $author->getId() . '&del_id_alias=' . $alias->getId() . '" onclick="return deleteAuthorAlias(' . $alias->getId() . ',' . $author->getId() . ')"><span
-                      class="ui-icon ui-icon-closethick"></span>';
+                  echo '<input type="text" name="alias[]" class="input_text" size="41" spellcheck="false" style="width:325px;" value="' . $alias->getName() . '" />';
+                  echo '<a class="ui-state-default icon-button no-text" href="?id=' . $author->getId() . '&del_id_alias=' . $alias->getId() . '" onclick="return deleteAuthorAlias(' . $alias->getId() . ',' . $author->getId() . ')"><span
+                      class="ui-icon ui-icon-closethick"></span></a>';
                   echo '</div>';
               }
           }
           ?>
             <div class="authorAliasItem">
-              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:325;" />
-              <a class="ui-state-default icon-button no-text" href="#"><span lass="ui-icon ui-icon-closethick"></span></a>
+              <input type="text" name="alias[]" value="" class="input_text" size="41" spellcheck="false" style="width:325px;" />
+              <a class="ui-state-default icon-button no-text" href="#"><span class="ui-icon ui-icon-closethick"></span></a>
             </div>
           </div>
           <span onclick="addAlias();"><a href="#" class="addButton"></a></span>
@@ -245,20 +244,31 @@ if ($id > 0) {
     <?php
     $authoringList = ArticleAuthor::GetArticlesByAuthor($author->getId());
     $authoringCount = sizeof($authoringList);
-    foreach ($authoringList as $authoringItem) {
-        $articleUrl = $Campsite['WEBSITE_URL'] . '/' . $ADMIN . '/articles/edit.php';
-        $articleUrl .= '?f_publication_id=' . $authoringItem['article']->getPublicationId()
-            . '&f_issue_number=' . $authoringItem['article']->getIssueNumber()
-            . '&f_section_number=' . $authoringItem['article']->getSectionNumber()
-            . '&f_article_number=' . $authoringItem['article']->getArticleNumber()
-            . '&f_language_id=' . $authoringItem['article']->getLanguageId();
+    if ($authoringCount > 0) {
+    ?>
+        <li>
+          <label><?php putGS('Total articles'); ?>:</label> <span><?php echo $authoringCount; ?></span></li>
+    <?php
+        foreach ($authoringList as $authoringItem) {
+            $articleUrl = $Campsite['WEBSITE_URL'] . '/' . $ADMIN . '/articles/edit.php';
+            $articleUrl .= '?f_publication_id=' . $authoringItem['article']->getPublicationId()
+                . '&f_issue_number=' . $authoringItem['article']->getIssueNumber()
+                . '&f_section_number=' . $authoringItem['article']->getSectionNumber()
+                . '&f_article_number=' . $authoringItem['article']->getArticleNumber()
+                . '&f_language_id=' . $authoringItem['article']->getLanguageId();
     ?>
         <li>
           <label><?php echo $authoringItem['type']->getName(); ?></label>
           <a href="<?php echo $articleUrl; ?>" style="font-size:0.8em;"><?php echo $authoringItem['article']->getName(); ?></a>
         </li>
-      </ul>
+    <?php
+        }
+    } else { ?>
+        <li>
+          <label><?php putGS('No records found'); ?></label>
+        </li>
     <?php } ?>
+      </ul>
     </fieldset>
   </div>
   <?php } ?>

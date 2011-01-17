@@ -133,12 +133,12 @@ class ArticleAuthor extends DatabaseObject
         $rows = $g_ado_db->GetAll($queryStr);
 
         $returnArray = array();
-        foreach ($rows as $row) {
+        foreach ((array) $rows as $row) {
             $article = new Article((int) $row['fk_language_id'], (int) $row['fk_article_number']);
             $type = new AuthorType((int) $row['fk_type_id']);
             $returnArray[] = array('article' => $article, 'type' => $type);
         }
-		return $returnArray;
+        return $returnArray;
     }
 
     /**

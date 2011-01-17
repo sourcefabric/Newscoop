@@ -211,7 +211,16 @@ $(document).ready(function(){
   <!--right column-->
   <div id="detailtable" class="column-two"><?php putGS('Loading Data'); ?>...</div>
 </div>
-<script type="text/javascript" charset="utf-8">
+<script type="text/javascript">
+$('.icon-button').hover(
+   function() { $(this).addClass('ui-state-hover'); }, 
+   function() { $(this).removeClass('ui-state-hover'); }
+);
+$('.text-button').hover(
+   function() { $(this).addClass('ui-state-hover'); }, 
+   function() { $(this).removeClass('ui-state-hover'); }
+);
+
 var oTable;
 $(document).ready(function() {
     $.get('authors_ajax/grid.php',function (data) {
