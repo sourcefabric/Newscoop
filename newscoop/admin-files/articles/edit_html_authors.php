@@ -29,6 +29,7 @@
           $('#f_article_author' + id).remove();
           $('#article_author_type' + id).remove();
           $('#removeauthor' + id).remove();
+          $('#article-main').addClass('changed');
       }
       </script>
       <?php

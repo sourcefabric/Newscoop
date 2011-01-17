@@ -127,9 +127,11 @@ array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>
 ];
+/** autocomplete is broken
 $(".aauthor").autocomplete({
     source: authorsList
 });
+ */
 
 // fancybox for popups
 $('a.iframe').each(function() {
