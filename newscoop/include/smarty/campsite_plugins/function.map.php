@@ -24,6 +24,7 @@ require_once($GLOBALS['g_campsiteDir'] . '/admin-files/lib_campsite.php');
  */
 function smarty_function_map($p_params, &$p_smarty)
 {
+    camp_load_translation_strings('api');
     camp_load_translation_strings('geolocation');
 
     // Default text for the reset link
