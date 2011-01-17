@@ -11,7 +11,7 @@ function poll_assign(poll_nr, action)
     $('f_action').value = action;
 
     var myAjax = new Ajax.Request(
-            "/admin/poll/ajax_do_assign.php",
+            '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/poll/ajax_do_assign.php',
             {
                 method: 'get',
                 parameters: Form.serialize($('assignments')),
@@ -43,6 +43,11 @@ function poll_switch(response)
     }
 
     $('poll_'+poll_nr).innerHTML = '<a href="javascript: '+funct+'; ">'+img+'</a>';
+
+    // set fancybox to reload
+    try {
+        parent.$.fancybox.reload = true;
+    } catch (e) {}
 }
 
 function poll_popup_close()
@@ -67,8 +72,7 @@ function poll_popup_close()
         break;
 
         case 'article':
-            window.onunload = new Function('fx',
-                "try {window.opener.document.forms['article_edit'].onsubmit(); window.opener.document.forms['article_edit'].submit();} catch (e) {}");
+            parent.$.fancybox.close();
         break;
     }
 
