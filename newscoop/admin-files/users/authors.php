@@ -11,7 +11,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
     camp_html_add_msg(getGS('Unable to add new image, target directory is not writable.'));
     camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
-    camp_html_goto_page("/$ADMIN/users/authors.php");
+    camp_html_goto_page("/$ADMIN/");
     exit;
 }
 if (!$g_user->hasPermission('EditAuthors')) {

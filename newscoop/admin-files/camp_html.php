@@ -272,15 +272,43 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 
 
 /**
+ * Renders page title.
+ * @param string $title
+ * @param bool $toString
+ * @return string|void
+ */
+function camp_html_title($title, $toString = FALSE)
+{
+    if (strpos($_SERVER['REQUEST_URI'], 'admin/articles/edit.php') !== false) {
+        return ''; // no title on article edit screen
+    }
+
+    ob_start();
+    echo '<div class="toolbar clearfix"><span class="article-title">';
+    echo $title;
+    echo '</span></div>';
+    $content = ob_get_clean();
+
+    if ($toString) {
+        return $content;
+    }
+
+    echo $content;
+}
+
+
+/**
  * Create a set of breadcrumbs.
  *
  * @param array $p_crumbs
  *		An array in the form 'text' => 'link' for breadcrumbs.
  *      Farthest-away link comes first, increasing in specificity.
+ * 
+ * @param bool $showTitle
  *
  * @return string
  */
-function camp_html_breadcrumbs($p_crumbs)
+function camp_html_breadcrumbs($p_crumbs, $showTitle = TRUE)
 {
     $lastCrumb = array_pop($p_crumbs);
     $str = '<div class="breadcrumb-bar clearfix">' . "\n";
@@ -297,17 +325,9 @@ function camp_html_breadcrumbs($p_crumbs)
     }
     $str .= "</div>\n";
 
-    /*
-    $str .= '<tr>';
-    $str .= '<td class="activeSection" ';
-    if (count($p_crumbs) <= 0) {
-    	$str .= "style=\"border-top: 1px solid #8BAED1;\"";
+    if ($showTitle) {
+        $str .= camp_html_title($lastCrumb[0], TRUE);
     }
-    $str .= '>';
-    $str .= camp_html_breadcrumb($lastCrumb[0], $lastCrumb[1], false, true);
-    $str .= '</td></tr>';
-    $str .= '</table>';
-    */
 
     return $str;
 } // fn camp_html_breadcrumbs

@@ -121,7 +121,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
       <!-- END Audioclips table -->
       <?php } ?>
 
-      <?php // CampPlugin::PluginAdminHooks(__FILE__); ?>
+      <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 
   </div>
   <script type="text/javascript">

@@ -6,11 +6,7 @@ camp_load_translation_strings('library');
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 
-$crumbs = array();
-$crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Media Archive'), "");
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
-echo $breadcrumbs;
+camp_html_content_top(getGS('Media Archive'), NULL);
 ?>
 
 <?php camp_html_display_msgs(); ?>

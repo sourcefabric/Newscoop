@@ -29,9 +29,8 @@ if ($g_user->getUserId() == 1
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Home"), "");
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
-echo $breadcrumbs;
+$crumbs[] = array(getGS('Dashboard'), '');
+echo camp_html_breadcrumbs($crumbs);
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
 
@@ -79,8 +78,7 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<h2>Dashboard</h2>
-<p><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php putGS('Add more widgets'); ?>"><?php putGS('Add more widgets'); ?></a></p>
+<p class="add-widgets" style="margin: 13px 21px 0"><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php putGS('Add more widgets'); ?>"><?php putGS('Add more widgets'); ?></a></p>
 
 <div id="dashboard">
 
