@@ -467,6 +467,20 @@ if ($backupVersion < 3) {
     echo "done.\n";
 }
 
+// replace $campsite by $gimme
+echo " * Upgrading templates...";
+flush_output($flush);
+require_once($CAMPSITE_DIR.'/classes/TemplateConverterNewscoop.php');
+$template_files = camp_read_files($CAMPSITE_DIR.'/templates');
+$converter = new TemplateConverterNewscoop();
+foreach($template_files as $template_file) {
+    $converter->read($template_file);
+    $converter->parse();
+    $converter->write();
+}
+echo "done.\n";
+
+
 //
 // Restore the database...
 //
