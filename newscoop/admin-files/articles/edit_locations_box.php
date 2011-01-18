@@ -19,7 +19,7 @@ $map_article_spec = '' . $f_article_number . '_' . $map_language_used;
 geomap_popup_editing = null;
 geomap_art_spec_popup = "";
 geomap_art_spec_main = "" + '<?php echo $map_article_spec; ?>';
-geomap_popup_show = function () {
+geomap_popup_show = function (edit) {
     var geomap_force_new = true;
     try {
         if ((!geomap_popup_editing) || geomap_popup_editing.closed) {geomap_art_spec_popup = "";}
@@ -31,7 +31,14 @@ geomap_popup_show = function () {
         }
     } catch (e) { geomap_force_new = true; }
     if (geomap_force_new) {
-        geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
+        if (edit)
+        {
+            geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
+        }
+        else
+        {
+            geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/preview.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
+        }
         try {
             geomap_popup_editing.focus();
         } catch (e) {}
@@ -63,10 +70,12 @@ geomap_popup_show = function () {
         class="iframe map-thumb"><img
       src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Edit'); ?>" title="<?php putGS('Edit'); ?>" /></a>
     <?php } else { ?>
-    <a class="ui-state-default icon-button right-floated"
-      href="#" onclick="geomap_popup_preview = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/preview.php"); ?>', 'geomap_preview_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1050, height=600, top=200, left=200'); geomap_popup_preview.focus(); return false;">
-      <?php putGS('Preview'); ?></a>
-    <img src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Preview'); ?>" title="<?php putGS('Preview'); ?>" />
+    <a class="iframe ui-state-default icon-button right-floated"
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"><span
+      class="ui-icon ui-icon-zoomin"></span><?php putGS('Preview'); ?></a>
+    <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"
+        class="iframe map-thumb"><img
+      src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Preview'); ?>" title="<?php putGS('Preview'); ?>" /></a>
   <?php }
   } elseif ($canEdit) { ?>
     <a class="iframe ui-state-default icon-button right-floated"
