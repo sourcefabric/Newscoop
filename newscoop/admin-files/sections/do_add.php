@@ -79,12 +79,12 @@ if ($correct) {
 	            $errors[] = getGS('Error updating subscriptions.');
 			}
 	    }
-	    camp_html_goto_page("edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
+	    camp_html_goto_page("/$ADMIN/sections/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
     }
 }
 
-$tmpArray = array("Pub" => $publicationObj, "Issue" => $issueObj);
-camp_html_content_top(getGS("Adding new section"), $tmpArray);
+$tmpArray = array('Pub' => $publicationObj, 'Issue' => $issueObj);
+camp_html_content_top(getGS('Adding new section'), $tmpArray);
 ?>
 
 <P>

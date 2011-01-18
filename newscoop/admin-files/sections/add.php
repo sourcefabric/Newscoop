@@ -3,8 +3,8 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 
 if (!$g_user->hasPermission('ManageSection')) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));
-	exit;
+    camp_html_display_error(getGS('You do not have the right to add sections.'));
+    exit;
 }
 
 $f_publication_id = Input::Get('Pub', 'int', 0);
@@ -12,8 +12,8 @@ $f_issue_number = Input::Get('Issue', 'int', 0);
 $f_language_id = Input::Get('Language', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
-	exit;
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    exit;
 }
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
@@ -24,70 +24,66 @@ camp_html_content_top(getGS('Add new section'), $topArray, true, true, array(get
 
 $languageObj = new Language($f_language_id);
 if (!is_object($languageObj)) {
-  $languageObj = new Language(1);
+    $languageObj = new Language(1);
 }
 $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
 ?>
-<P>
-<FORM NAME="section_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<p>
+<form name="section_add" method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
-
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Add new section"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', "'".getGS('Name')."'"); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" VALIGN="TOP"><?php putGS("Description"); ?>:</TD>
-	<TD>
-	  <TEXTAREA NAME="f_description"
-		ID="f_description"
-		rows="20" cols="80"></TEXTAREA>
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_number" VALUE="<?php  p($newSectionNumber); ?>" SIZE="5"  alt="number|0" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Number')."'"); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL Name"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_url_name" SIZE="32" VALUE="<?php  p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('URL Name')."'"); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Subscriptions"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="checkbox" NAME="f_add_subscriptions" class="input_checkbox"> <?php  putGS("Add section to all subscriptions."); ?>
-	</TD>
-</TR>
-
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-	<INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-        <INPUT TYPE="HIDDEN" NAME="f_language_selected" ID="f_language_selected" VALUE="<?php p($editorLanguage); ?>">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-</FORM>
-<P>
-<script>
+<table border="0" cellspacing="0" cellpadding="0" class="box_table">
+<tr>
+  <td colspan="2">
+    <b><?php putGS('Add new section'); ?></b>
+    <hr noshade size="1" color="black" />
+  </td>
+</tr>
+<tr>
+  <td align="right" ><?php putGS('Name'); ?>:</td>
+  <td>
+    <input type="text" class="input_text" name="f_name" size="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', "'".getGS('Name')."'"); ?>">
+  </td>
+</tr>
+<tr>
+  <td align="right" valign="top"><?php putGS('Description'); ?>:</td>
+	<td>
+	  <textarea name="f_description" ID="f_description" class="tinymce" rows="20" cols="80"></textarea>
+	</td>
+</tr>
+<tr>
+  <td align="right" ><?php putGS('Number'); ?>:</td>
+  <td><input
+    type="text" class="input_text" name="f_number" value="<?php p($newSectionNumber); ?>" size="5" alt="number|0" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Number')."'"); ?>">
+  </td>
+</tr>
+<tr>
+  <td align="right" ><?php putGS('URL Name'); ?>:</td>
+  <td>
+    <input type="text" class="input_text" name="f_url_name" SIZE="32" value="<?php p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('URL Name')."'"); ?>">
+  </td>
+</tr>
+<tr>
+  <td align="right"><?php putGS("Subscriptions"); ?>:</td>
+  <td>
+    <input type="checkbox" name="f_add_subscriptions" class="input_checkbox"> <?php  putGS("Add section to all subscriptions."); ?>
+  </td>
+</tr>
+<tr>
+  <td colspan="2">
+    <div align="center">
+      <input type="hidden" name="f_publication_id" value="<?php  p($f_publication_id); ?>">
+      <input type="hidden" name="f_issue_number" value="<?php  p($f_issue_number); ?>">
+      <input type="hidden" name="f_language_id" value="<?php  p($f_language_id); ?>">
+      <input type="hidden" name="f_language_selected" ID="f_language_selected" value="<?php p($editorLanguage); ?>">
+      <input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
+    </div>
+  </td>
+</tr>
+</table>
+</form>
+<p>
+<script type="text/javascript">
 document.section_add.f_name.focus();
 </script>
 <?php camp_html_copyright_notice(); ?>
