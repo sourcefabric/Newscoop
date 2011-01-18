@@ -1247,3 +1247,8 @@ body > .links {
 .ColVis_collection.ui-buttonset {
     height: auto;
 }
+
+fieldset.plain strong {
+    line-height: 22px;
+    font-size: 1.2em;
+}

@@ -1,3 +1,17 @@
+<?php
+
+// set language url
+$languageUrl = implode('&', array(
+    "edit.php?f_publication_id=$f_publication_id",
+    "f_issue_number=$f_issue_number",
+    "f_section_number=$f_section_number",
+    "f_article_number=$f_article_number",
+    "f_language_id=$f_language_id",
+    'f_language_selected=',
+));
+
+?>
+
 <!-- BEGIN the article control bar -->
 <div class="ui-widget-content small-block block-shadow highlight-block padded">
 <form name="article_actions" action="do_article_action.php" method="POST">
@@ -48,17 +62,10 @@ function change_language(select)
     window.location.href = dest;
 }
 </script>
+
   <fieldset class="plain">
     <!-- BEGIN Language -->
-  <?php
-  if (count($articleLanguages) > 1) {
-      $languageUrl = "edit.php?f_publication_id=$f_publication_id"
-          . "&f_issue_number=$f_issue_number"
-          . "&f_section_number=$f_section_number"
-          . "&f_article_number=$f_article_number"
-          . "&f_language_id=$f_language_id"
-          . '&f_language_selected=';
-  ?>
+    <?php if (sizeof($articleLanguages) > 1) { ?>
     <select name="f_language_selected" class="input_select right-floated" onchange="change_language(this);">
     <?php
     foreach ($articleLanguages as $articleLanguage) {
@@ -69,7 +76,7 @@ function change_language(select)
   <?php
   } else {
       $articleLanguage = camp_array_peek($articleLanguages);
-      echo '<strong>'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
+      echo '<strong class="right-floated">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
   }
   ?>
     <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php putGS('Language'); ?></label>
