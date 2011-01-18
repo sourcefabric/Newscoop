@@ -1243,3 +1243,7 @@ body > .links {
     margin: 13px 35px 0;
     font-size: 1.3em;
 }
+
+.ColVis_collection.ui-buttonset {
+    height: auto;
+}
