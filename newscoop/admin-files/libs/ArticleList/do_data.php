@@ -63,8 +63,8 @@ $sortOptions = array(
     3 => 'byname',
     12 => 'bycomments',
     13 => 'bypopularity',
-    14 => 'bycreationdate',
-    15 => 'bypublishdate',
+    16 => 'bycreationdate',
+    17 => 'bypublishdate',
 );
 
 $sortBy = 'bysectionorder';
