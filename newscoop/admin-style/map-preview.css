@@ -1,3 +1,11 @@
+.map_preview_info {
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    height: 24px;
+    font-size: 18px;
+}
+
 .geomap_locations {
     float: left;
     width: 150px;

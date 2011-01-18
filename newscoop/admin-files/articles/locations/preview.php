@@ -32,6 +32,26 @@ if (!Input::IsValid()) {
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
+
+	<script type="text/javascript">
+
+var map_preview_close = function()
+{
+    parent.$.fancybox.close();
+}
+
+var map_show_edit = function()
+{
+    var cur_location = window.location.href;
+    var new_location = cur_location.replace("preview.php", "popup.php");
+    try {
+        window.location.replace(new_location);
+    } catch (e) {}
+}
+
+	</script>
+
+
 <?php
 $map_width = 0;
 $map_height = 0;
@@ -39,6 +59,21 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
 ?>
 </head>
 <body onLoad="return false;">
+<div class="map_preview clearfix">
+<!--Toolbar-->
+<div id="map_toolbar_part" class="toolbar clearfix">
+
+    <div class="save-button-bar">
+        <input id="map_button_edit" type="submit" onClick="map_show_edit(); return false;" class="default-button" value="<?php putGS("Edit"); ?>" name="edit" />
+        <input id="map_button_close" type="submit" onClick="map_preview_close(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
+    </div>
+    <div id="map_preview_info" class="map_preview_info">
+      <?php putGS("Map preview"); ?>
+    </div>
+    <!-- end of map_save_part -->
+  </div>
+<!--END Toolbar-->
+</div>
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">

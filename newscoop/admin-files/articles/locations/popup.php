@@ -90,38 +90,39 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
 	<script type="text/javascript">
 // prepare localized strings
+var local_strings_map = {};
+
 var set_local_strings = function()
 {
-    var local_strings = {};
 
-    local_strings["google_map"] = "<?php putGS("Google Streets"); ?>";
-    local_strings["mapquest_map"] = "<?php putGS("MapQuest Map"); ?>";
-    local_strings["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
-    local_strings["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
-    local_strings["point_markers"] = "<?php putGS("Point markers"); ?>";
-    local_strings["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
-    local_strings["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
-    local_strings["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
-    local_strings["point_number"] = "<?php putGS("Point no."); ?>";
-    local_strings["fill_in_the_point_description"] = "<?php putGS("fill in the point description"); ?>";
-    local_strings["edit"] = "<?php putGS("Edit"); ?>";
-    local_strings["center"] = "<?php putGS("Center"); ?>";
-    local_strings["enable"] = "<?php putGS("Enable"); ?>";
-    local_strings["disable"] = "<?php putGS("Disable"); ?>";
-    local_strings["remove"] = "<?php putGS("Remove"); ?>";
-    local_strings["longitude"] = "<?php putGS("Longitude"); ?>";
-    local_strings["latitude"] = "<?php putGS("Latitude"); ?>";
-    local_strings["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
+    local_strings_map["google_map"] = "<?php putGS("Google Streets"); ?>";
+    local_strings_map["mapquest_map"] = "<?php putGS("MapQuest Map"); ?>";
+    local_strings_map["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
+    local_strings_map["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
+    local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
+    local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
+    local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
+    local_strings_map["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
+    local_strings_map["point_number"] = "<?php putGS("Point no."); ?>";
+    local_strings_map["fill_in_the_point_description"] = "<?php putGS("fill in the point description"); ?>";
+    local_strings_map["edit"] = "<?php putGS("Edit"); ?>";
+    local_strings_map["center"] = "<?php putGS("Center"); ?>";
+    local_strings_map["enable"] = "<?php putGS("Enable"); ?>";
+    local_strings_map["disable"] = "<?php putGS("Disable"); ?>";
+    local_strings_map["remove"] = "<?php putGS("Remove"); ?>";
+    local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
+    local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
+    local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
 
-    geo_locations.set_display_strings(local_strings);
+    geo_locations.set_display_strings(local_strings_map);
 
-    local_strings = {};
+    local_strings_nam = {};
 
-    local_strings["cc"] = "<?php putGS("cc"); ?>";
-    local_strings["city"] = "<?php putGS("city"); ?>";
-    local_strings["no_city_was_found"] = "<?php putGS("sorry, no city was found"); ?>";
+    local_strings_nam["cc"] = "<?php putGS("cc"); ?>";
+    local_strings_nam["city"] = "<?php putGS("city"); ?>";
+    local_strings_nam["no_city_was_found"] = "<?php putGS("sorry, no city was found"); ?>";
 
-    geo_names.set_display_strings(local_strings);
+    geo_names.set_display_strings(local_strings_nam);
 
 };
 // prepare map settings
@@ -271,16 +272,17 @@ var init_search = function ()
     }
 };
 
+var map_close_question = "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
+
 var on_load_proc = function()
 {
-    var close_question = "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
 
     // does not work for opera (window.opera), no known workaround
     window.onbeforeunload = function ()
     {
         if (geo_locations.something_to_save)
         {
-            return close_question;
+            return map_close_question;
         }
     }
 
@@ -333,18 +335,44 @@ on_close_request = function()
         return;
     }
 
-    var unsaved_question = "<?php p(getGS("You have unsaved changes. Should the changes be saved?")); ?>";
-    var to_save = confirm(unsaved_question);
+    //var unsaved_question = "<?php p(getGS("You have unsaved changes. Should the changes be saved?")); ?>";
+    //var to_save = confirm(unsaved_question);
+    var to_close = confirm(map_close_question);
+    if (!to_close)
+    {
+        return;
+    }
 
+/*
     if (to_save)
     {
         geo_locations.map_save_all();
         parent.$.fancybox.reload = true;
         parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
     }
+*/
 
     window.onbeforeunload = null;
     parent.$.fancybox.close();
+}
+
+var map_show_preview = function()
+{
+    if (geo_locations.something_to_save)
+    {
+        var to_redirect = confirm(map_close_question);
+        if (!to_redirect)
+        {
+            return;
+        }
+        window.onbeforeunload = null;
+    }
+
+    var cur_location = window.location.href;
+    var new_location = cur_location.replace("popup.php", "preview.php");
+    try {
+    window.location.replace(new_location);
+    } catch (e) {}
 }
 
 // tthe map initialization itself does not work correctly via this; the other tasks put here
@@ -388,6 +416,7 @@ on_close_request = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); parent.$.fancybox.reload = true; return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
+        <input id="map_button_preview" type="submit" onClick="map_show_preview(); return false;" class="default-button" value="<?php putGS("Preview"); ?>" name="preview" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
 	<div id="map_save_info" class="map_save_info">
@@ -490,7 +519,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <li>
                     <div id="edit_part_text" class="">
                     <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
-                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;">
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}">
 </textarea>
                     </div>
                     <div id="edit_part_content" class="map_hidden">
