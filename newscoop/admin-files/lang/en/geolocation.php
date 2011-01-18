@@ -1,5 +1,6 @@
 <?php 
-regGS("You have unsaved changes. Should the changes be saved?", "You have unsaved changes. Should the changes be saved?");
+regGS("Map preview", "Map preview");
+regGS("Locations updated.", "Locations updated.");
 regGS("Setting the map name helps with map search", "Setting the map name helps with map search");
 regGS("Longitude", "Longitude");
 regGS("Latitude", "Latitude");

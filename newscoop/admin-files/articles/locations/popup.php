@@ -326,34 +326,22 @@ var on_load_proc = function()
 
 on_close_request = function()
 {
-    if (!geo_locations.something_to_save)
+    if (geo_locations.something_to_save)
     {
-        if (parent.$.fancybox.reload) {
-            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+        var to_close = confirm(map_close_question);
+        if (!to_close)
+        {
+            return;
         }
-        parent.$.fancybox.close();
-        return;
+        window.onbeforeunload = null;
     }
 
-    //var unsaved_question = "<?php p(getGS("You have unsaved changes. Should the changes be saved?")); ?>";
-    //var to_save = confirm(unsaved_question);
-    var to_close = confirm(map_close_question);
-    if (!to_close)
-    {
-        return;
-    }
-
-/*
-    if (to_save)
-    {
-        geo_locations.map_save_all();
-        parent.$.fancybox.reload = true;
+    if (parent.$.fancybox.reload) {
         parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
     }
-*/
-
-    window.onbeforeunload = null;
     parent.$.fancybox.close();
+    return;
+
 }
 
 var map_show_preview = function()

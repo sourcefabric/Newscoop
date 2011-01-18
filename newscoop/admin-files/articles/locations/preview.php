@@ -37,6 +37,9 @@ if (!Input::IsValid()) {
 
 var map_preview_close = function()
 {
+    if (parent.$.fancybox.reload) {
+        parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+    }
     parent.$.fancybox.close();
 }
 
@@ -64,7 +67,15 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
 <div id="map_toolbar_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
+<?php
+  $canEdit = $g_user->hasPermission('ChangeArticle');
+  if ($canEdit)
+  {
+?>
         <input id="map_button_edit" type="submit" onClick="map_show_edit(); return false;" class="default-button" value="<?php putGS("Edit"); ?>" name="edit" />
+<?php
+  }
+?>
         <input id="map_button_close" type="submit" onClick="map_preview_close(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_preview_info" class="map_preview_info">
