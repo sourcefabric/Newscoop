@@ -64,6 +64,11 @@ foreach ($_REQUEST as $name => $value) {
         }
     }
 }
+
+if (!empty($_REQUEST['isAjax'])) {
+    echo json_encode(true);
+    exit;
+}
+
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
 
-?>

@@ -334,11 +334,35 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
             }
         }
         ?>
+
+    <?php if ($inEditMode && $showCommentControls) { ?>
+    <li>
+        <label><?php putGS('Comment settings'); ?></label>
+        <input type="radio" name="f_comment_status" value="enabled" class="input_radio" id="f_comment_status_enabled" <?php if ($articleObj->commentsEnabled() && !$articleObj->commentsLocked()) { ?> checked<?php } ?> />
+        <label for="f_comment_status_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
+        <input type="radio" name="f_comment_status" value="disabled" class="input_radio" id="f_comment_status_disabled" <?php if (!$articleObj->commentsEnabled()) { ?> checked<?php } ?> />
+        <label for="f_comment_status_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
+        <input type="radio" name="f_comment_status" value="locked" class="input_radio" id="f_comment_status_locked" <?php if ($articleObj->commentsEnabled() && $articleObj->commentsLocked()) { ?> checked<?php } ?>  />
+        <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
+        <script type="text/javascript">
+        $(function() {
+            $('input:radio[name^="f_comment"]').change(function() {
+                $(this).closest('form').submit(function() {
+                    $(this).ajaxSuccess(function(event, xhr, options) {
+                        setTimeout('window.location.reload()', 2500);
+                    });
+                });
+            });
+        });
+        </script>
+    </li>
+    <?php } ?>
       </ul>
       </fieldset>
     </div>
+  </form><!-- /form#article -->
 
-    <!-- BEGIN Comments //-->
+    <?php if ($showComments) { ?>
     <div class="ui-widget-content big-block block-shadow">
       <div class="collapsible">
         <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
@@ -346,26 +370,12 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <a href="#" tabindex="-1"><?php putGS('Comments'); ?></a></h3>
       </div>
       <div class="padded-strong">
-      <?php if ($inEditMode && $showCommentControls) { ?>
-        <fieldset class="frame">
-        <input type="radio" name="f_comment_status" value="enabled" class="input_radio" id="f_comment_status_enabled" <?php if ($articleObj->commentsEnabled() && !$articleObj->commentsLocked()) { ?> checked<?php } ?> />
-             <label for="f_comment_status_enabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Enabled'); ?></label>
-           <input type="radio" name="f_comment_status" value="disabled" class="input_radio" id="f_comment_status_disabled" <?php if (!$articleObj->commentsEnabled()) { ?> checked<?php } ?> />
-             <label for="f_comment_status_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
-           <input type="radio" name="f_comment_status" value="locked" class="input_radio" id="f_comment_status_locked" <?php if ($articleObj->commentsEnabled() && $articleObj->commentsLocked()) { ?> checked<?php } ?>  />
-             <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
-        </fieldset>
-      <?php } ?>
-      <?php
-      if ($showComments && $f_show_comments) {
-          include('comments/show_comments.php');
-      }
-      ?>
+        <?php include('comments/show_comments.php'); ?>
       </div>
     </div>
-  </form><!-- /form#article -->
+    <?php } ?>
 
-    <?php if ($inEditMode && $showComments && $f_show_comments) { ?>
+    <?php if ($inEditMode && $showComments && !$articleObj->commentsLocked()) { ?>
     <div class="ui-widget-content big-block block-shadow padded-strong">
       <?php include('comments/add_comment_form.php'); ?>
     </div>

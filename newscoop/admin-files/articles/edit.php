@@ -32,7 +32,6 @@ $f_unlock = Input::Get('f_unlock', 'string', false, true);
 $f_edit_mode = camp_session_get('f_edit_mode', 'edit');
 // Whether to show comments at the bottom of the article
 // (you may not want to show them to speed up your loading time)
-$f_show_comments = camp_session_get('f_show_comments', 1);
 // Selected language of the article
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 

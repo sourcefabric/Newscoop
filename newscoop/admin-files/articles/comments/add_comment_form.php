@@ -1,7 +1,3 @@
-<?php
-// Show the "Add comment" form
-if (!$articleObj->commentsLocked()) {
-?>
   <a name="add_comment"></a>
   <form id="article-comments" action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
   <?php echo SecurityToken::FormParameter(); ?>
@@ -27,4 +23,3 @@ if (!$articleObj->commentsLocked()) {
     </ul>
   </fieldset>
   </form>
-<?php } ?>
