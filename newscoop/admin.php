@@ -10,6 +10,11 @@ define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
 
 $GLOBALS['g_campsiteDir'] = WWW_DIR;
 
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Content-Type: text/html; charset=UTF-8");
+
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 .DIRECTORY_SEPARATOR.'campsite_constants.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
@@ -104,13 +109,10 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 }
 
 if (($extension == '.php') || ($extension == '')) {
-    header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
-    header("Cache-Control: no-store, no-cache, must-revalidate");
-    header("Content-Type: text/html; charset=UTF-8");
 
     // If they arent trying to login in...
     if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php') && $call_script != $prefix . 'password_recovery.php' && $call_script != $prefix . 'password_check_token.php') {
+
         // Check if the user is logged in already
         list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
         if (!$access) {
