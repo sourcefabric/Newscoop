@@ -1238,3 +1238,8 @@ input.input_file {
 	color:#C00;
 }
 /*--- END New Login ---*/
+
+body > .links {
+    margin: 13px 35px 0;
+    font-size: 1.3em;
+}
