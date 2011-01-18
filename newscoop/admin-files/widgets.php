@@ -1,19 +1,20 @@
 <?php
 
-require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
-require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
+require_once dirname(dirname(__FILE__)) . '/db_connect.php';
+require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php';
 
-camp_load_translation_strings("home");
-camp_load_translation_strings("api");
+camp_load_translation_strings('home');
+camp_load_translation_strings('api');
 
-$crumbs = array();
-$crumbs[] = array(getGS("Widgets"), "");
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
-echo $breadcrumbs;
+echo camp_html_breadcrumbs(array(
+    array(getGS('Dashboard'), $Campsite['WEBSITE_URL'] . '/admin/home.php'),
+    array(getGS('Widgets'), ''),
+));
 ?>
 
-<h2><?php putGS('Widgets'); ?></h2>
-<p><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/" title="<?php putGS('Go to home'); ?>"><?php putGS('Go to home'); ?></a></p>
+<div class="links">
+    <a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/" title="<?php putGS('Go to dashboard'); ?>"><?php putGS('Go to dashboard'); ?></a>
+</div>
 
 <ul id="widgets">
     <?php foreach (WidgetManager::GetAvailable() as $widget) { ?>
