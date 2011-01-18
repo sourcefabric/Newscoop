@@ -4,6 +4,9 @@ if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 }
 
+// object for popup preview button
+var popup_prev_button = null;
+
 // the main object to hold geo-things
 var geo_locations = {};
 
@@ -2718,10 +2721,19 @@ geo_locations.got_load_data = function (received_obj)
     // setting to tha saved state at the button pressing now
     //this.set_save_state(false);
 
+    if (!popup_prev_button)
+    {
+        popup_prev_button = document.getElementById ? document.getElementById("map_button_preview") : null;
+    }
+
     if ("0" == "" + this.map_id)
     {
         this.map_spec_changed = true;
         this.set_save_state(true);
+    }
+    else
+    {
+        if (popup_prev_button) {popup_prev_button.disabled = false;}
     }
 
 };
