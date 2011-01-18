@@ -665,6 +665,7 @@ this.set_embed_tag = function(attrs)
 // the main action on data retrieval
 this.got_load_data = function (load_data, is_obj)
 {
+    //return;
     load_response = load_data;
 
     var received_obj = null;
@@ -837,6 +838,13 @@ this.got_load_data = function (load_data, is_obj)
 // map related initialization
 var geo_main_openlayers_init = function(geo_obj, map_div_name)
 {
+    var aux_layer = null;
+    try {
+        aux_layer = new OpenLayers.Layer.Vector("auxiliary");
+    } catch (e) {
+        return "not_yet";
+    }
+
     OpenLayers.Control.Hover = OpenLayers.Class(OpenLayers.Control, {
         defaultHandlerOptions: {
             'delay': 200,
@@ -1107,10 +1115,12 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         'featureunselected': geo_hook_on_feature_unselect
     });
 
+
+    return "ok";
 };
 
 // the entry initialization point
-var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, descs_name, names_show, names_hide, editing)
+var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, descs_name, names_show, names_hide, editing, second)
 {
     var map_canvas = document.getElementById ? document.getElementById(div_name) : null;
     geo_obj.descs_elm = document.getElementById ? document.getElementById(descs_name) : null;
@@ -1174,10 +1184,5 @@ var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, de
     }
 
     geo_obj.map_shown = true;
-
-    useSystemParameters();
-
-    geo_main_openlayers_init(geo_obj, div_name);
-
 };
 

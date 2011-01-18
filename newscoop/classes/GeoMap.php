@@ -1756,7 +1756,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
 
-var useSystemParameters = function()
+var geo_use_system_parameters_map' . $map_suffix . ' = function()
 {
 ';
 
@@ -1778,7 +1778,7 @@ var useSystemParameters = function()
 
         $tag_string .= '
 };
-var on_load_proc = function()
+var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
 
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
@@ -1786,16 +1786,34 @@ var on_load_proc = function()
     {
         map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
         map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
-
         geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
+        geo_use_system_parameters_map' . $map_suffix . '();
+
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+};
+
+var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
+{
+        var res_state = null;
+        try {
+            res_state = geo_main_openlayers_init(geo_object' . $map_suffix . ', "geo_map_mapcanvas' . $map_suffix. '");
+        } catch (e) {res_state = "not_yet";}
+
+        if ("ok" != res_state)
+        {
+            setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+            return;
+        }
 
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
-    }
 };
+
     $(document).ready(function()
     {
-        on_load_proc();
+        setTimeout("geo_on_load_proc_map' . $map_suffix . '();", 0);
     });
 </script>
 ';
