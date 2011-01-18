@@ -28,6 +28,7 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <title><?php putGS("Attach Image To Article"); ?></title>
 </head>

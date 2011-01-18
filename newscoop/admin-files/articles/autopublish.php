@@ -71,6 +71,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
   <title><?php putGS("Attach Topic To Article"); ?></title>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
   <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
@@ -158,7 +159,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
 	&nbsp;&nbsp;
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();">
+        <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
 	</TD>
 </TR>
 </TABLE>

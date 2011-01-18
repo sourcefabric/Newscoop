@@ -58,6 +58,7 @@ $no_menu_scripts = array(
     '/issues/empty.php',
     '/ad_popup.php',
     '/articles/preview.php',
+    '/articles/autopublish.php',
     '/articles/autopublish_do_add.php',
     '/articles/images/popup.php',
     '/articles/images/view.php',
