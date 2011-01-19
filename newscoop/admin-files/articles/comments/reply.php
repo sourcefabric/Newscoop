@@ -50,50 +50,44 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
-	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
-	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+  <td><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0" /></td>
+  <td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS('Back to Edit Article'); ?></b></a></td>
 </tr>
 </table>
 <p>
 <table cellspacing="0" cellpadding="0" border="0" class="box_table">
 <tr>
-    <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
-        &nbsp;<b><?php putGS("Comment"); ?></b>
-   	</td>
+  <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
+    &nbsp;<b><?php putGS('Comment'); ?></b>
+  </td>
 <tr>
 <?php
 if (isset($connectedToOnlineServer)
-        && $connectedToOnlineServer == false) {
+    && $connectedToOnlineServer == false) {
 ?>
 <tr>
-    <td><?php camp_html_display_msgs("0.25em", "0.25em"); ?></td>
+  <td><?php camp_html_display_msgs('0.25em', '0.25em'); ?></td>
 </tr>
 </table>
 <?php
 } else {
 ?>
 <tr>
-    <td align="right" valign="top" nowrap>
-			<?php putGS("From:"); ?>
-    </td>
-    <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
+  <td align="right" valign="top" nowrap><?php putGS('From'); ?>:</td>
+  <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
 </tr>
-
 <tr>
-    <td align="right" valign="top" nowrap><?php putGS("Date:"); ?></td>
-    <td><?php p(date("Y-m-d H:i:s", $comment->getCreationDate())); ?></td>
+  <td align="right" valign="top" nowrap><?php putGS('Date'); ?>:</td>
+  <td><?php p(date('Y-m-d H:i:s', $comment->getCreationDate())); ?></td>
 </tr>
-
 <tr>
-    <td align="right" valign="top" nowrap><?php putGS("Subject"); ?>:</td>
-    <td><?php p(htmlspecialchars($comment->getSubject())); ?></td>
+  <td align="right" valign="top" nowrap><?php putGS('Subject'); ?>:</td>
+  <td><?php p(htmlspecialchars($comment->getSubject())); ?></td>
 </tr>
-
 <tr>
-    <td align="right" valign="top" nowrap><?php putGS("Comment"); ?>:</td>
-    <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
+  <td align="right" valign="top" nowrap><?php putGS('Comment'); ?>:</td>
+  <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
 </tr>
-
 </table>
 <p>
 <form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
@@ -104,37 +98,34 @@ if (isset($connectedToOnlineServer)
 <input type="hidden" name="f_comment_id" value="<?php p($f_comment_id); ?>">
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
-    <td colspan="2" style="padding-left: 5px;">
-        <b><?php putGS("Reply to comment"); ?></b>
-   		<HR NOSHADE SIZE="1" COLOR="BLACK">
-    </td>
+  <td colspan="2" style="padding-left: 5px;">
+    <b><?php putGS('Reply to comment'); ?></b>
+    <hr noshade size="1" color="black" />
+  </td>
 </tr>
-
 <tr>
-    <td valign="middle" align="right">
-        <?php putGS("Subject"); ?>:
-    </td>
-
-    <td>
-        <input type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?> >
-    </td>
+  <td valign="middle" align="right">
+    <?php putGS('Subject'); ?>:
+  </td>
+  <td>
+    <input type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?> >
+  </td>
 </tr>
-
 <tr>
-    <td valign="top" align="right" style="padding-top: 5px;">
-        <?php putGS("Comment"); ?>:
-    </td>
-
-    <td>
-        <textarea name="f_comment_body" class="input_text" rows="7" cols="60" <?php print $spellcheck ?>></textarea>
-    </td>
+  <td valign="top" align="right" style="padding-top: 5px;">
+    <?php putGS('Comment'); ?>:
+  </td>
+  <td>
+    <textarea name="f_comment_body" class="input_text_area" rows="10" cols="60" <?php print $spellcheck ?>></textarea>
+  </td>
 </tr>
-
 <tr>
-    <td colspan="2" align="center">
-        <input type="submit" value="<?php putGS("Submit"); ?>" class="button">
-    </td>
+  <td colspan="2" align="center">
+    <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
+  </td>
 </tr>
 </table>
 </form>
 <?php } // if comment enabled ?>
+
+<?php camp_html_copyright_notice(); ?>
