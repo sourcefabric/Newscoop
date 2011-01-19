@@ -577,6 +577,23 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
 
 } // fn GetIconsFiles
 
+	/**
+	 * Gets translated strings for the geo-map templates
+	 * This is used for having translated those strings, even when they are not used via this function
+	 * Look at include/smarty/plugins/function.math.php for the usage
+	 *
+	 * @return array
+	 */
+public static function TemplateGeoStrings()
+{
+    $show_original_map = getGS('Show original map');
+    $map = getGS('Map');
+    $center = getGS('Center');
+
+    return array('show_original_map' => $show_original_map, 'map' => $map, 'center' => $center);
+
+} // fn TemplateGeoStrings
+
 } // class Geo_Preferences
 
 ?>
