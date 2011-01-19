@@ -1,4 +1,5 @@
 <?php 
+regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
@@ -13,7 +14,6 @@ regGS("File Name", "Назив фајла");
 regGS("Download", "Преузми");
 regGS("File '$1' updated.", "Фајл '$1' је измењен.");
 regGS("File '$1' deleted.", "Фајл '$1' је обрисан.");
-regGS("File '$1' added.", "Фајл '$1' додат.");
 regGS("Edit article", "Уреди текст");
 regGS("You do not have the right to delete file attachments.", "Немате право да бришете прикачене фајлове.");
 regGS("You must select a file to upload.", "Морате изабрати фајл за аплоуд.");

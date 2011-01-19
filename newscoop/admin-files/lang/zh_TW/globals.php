@@ -5,7 +5,7 @@ regGS("Account", "賬戶");
 regGS("Items per page", "");
 regGS("Add new", "添加");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "首頁");
+regGS("Dashboard", "首頁");
 regGS("Logout", "登出");
 regGS("More...", "更多…");
 regGS("Content", "內容");
@@ -275,5 +275,5 @@ regGS("There are $1 issue(s) left.", "还有$1个问题");
 regGS("There are $1 keyword(s) left.", "还有$1个关键字");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "名称（点击编辑）");
 regGS("New field", "新字段");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "");
+regGS("Authors", "");
 ?>

@@ -1,4 +1,5 @@
 <?php 
+regGS("Go to dashboard", "Go to dashboard");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.");
 regGS("Synchronize Newscoop and Phorum users", "Synchronize Newscoop and Phorum users");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.");
@@ -16,7 +17,6 @@ regGS("Widget info", "Widget info");
 regGS("Widget added to dashboard.", "Widget added to dashboard.");
 regGS("Remove widget", "Remove widget");
 regGS("Please login to continue.", "Please login to continue.");
-regGS("Go to home", "Go to home");
 regGS("Add to dashboard", "Add to dashboard");
 regGS("Add more widgets", "Add more widgets");
 regGS("login", "login");

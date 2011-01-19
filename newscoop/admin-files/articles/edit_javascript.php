@@ -137,8 +137,8 @@ $(".aauthor").autocomplete({
 $('a.iframe').each(function() {
     $(this).fancybox({
         hideOnContentClick: false,
-        width: 1080,
-        height: 610,
+        width: 600,
+        height: 600,
         onStart: function() { // check if there are any changes
             return checkChanged();
         },
@@ -151,6 +151,14 @@ $('a.iframe').each(function() {
             }
         }
     });
+
+});
+$('#locations_box a.iframe').each(function() {
+    //$(this).data('fancybox').onCleanup = function() {alert('Returning false here does prevent closing the fancybox.'); return false;};
+    $(this).data('fancybox').showCloseButton = false;
+    $(this).data('fancybox').width = 1100;
+    $(this).data('fancybox').height = 660;
+
 });
 
 // comments form check for changes

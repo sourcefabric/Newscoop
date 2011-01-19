@@ -3,7 +3,7 @@ regGS("Account", "아이디 ");
 regGS("Items per page", "페이지당 아이템");
 regGS("Add new", "신규로 추가");
 regGS("Campsite", "캠프사이트");
-regGS("Home", "홈");
+regGS("Dashboard", "홈");
 regGS("Logout", "로그아웃");
 regGS("More...", "더보기");
 regGS("Content", "콘텐트");
@@ -260,4 +260,5 @@ regGS("Plugins", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
+regGS("Authors", "");
 ?>

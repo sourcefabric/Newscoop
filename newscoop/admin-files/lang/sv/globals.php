@@ -5,7 +5,7 @@ regGS("Account", "Konto");
 regGS("Items per page", "Föremål per sida");
 regGS("Add new", "Lägg till ny");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "Hem");
+regGS("Dashboard", "Hem");
 regGS("Logout", "Logga ut");
 regGS("More...", "Mer...");
 regGS("Content", "Innehåll");
@@ -261,4 +261,5 @@ regGS("Reads", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
+regGS("Authors", "");
 ?>

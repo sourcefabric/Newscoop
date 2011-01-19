@@ -1,4 +1,5 @@
 <?php 
+regGS("Go to dashboard", "");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Το πρόγραμμα περιήγησής σας δεν υποστηρίζει την Javascript ή (πιθανότερα) την έχετε απενεργοποιημένη. Παρακαλούμε διορθώστε το για να μπορέσετε να χρησιμοποιήσετε το Newscoop. ");
 regGS("Synchronize Newscoop and Phorum users", "Συγχρονισμός χρηστών Newscoop και Phorum ");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
@@ -16,7 +17,6 @@ regGS("Widget info", "Πληροφορίες Widget");
 regGS("Widget added to dashboard.", "Το Widget προστέθηκε στο ταμπλό.");
 regGS("Remove widget", "Αφαίρεση Widget");
 regGS("Please login to continue.", "Παρακαλούμε πραγματοποιήστε είσοδο για να συνεχίσετε.");
-regGS("Go to home", "Πήγαινε στην αρχική σελίδα");
 regGS("Add to dashboard", "Προσθήκη στο ταμπλό");
 regGS("Add more widgets", "Προσθήκη περισσότερων widgets");
 regGS("login", "Σύνδεση");
@@ -96,5 +96,4 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Αποκατάσταση");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Καλησπέρα, \\nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
 ?>

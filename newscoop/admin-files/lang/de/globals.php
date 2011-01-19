@@ -5,7 +5,7 @@ regGS("Account", "Konto");
 regGS("Items per page", "Anzahl pro Seite");
 regGS("Add new", "Hinzufügen");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "Startseite");
+regGS("Dashboard", "Startseite");
 regGS("Logout", "Ausloggen");
 regGS("More...", "Mehr...");
 regGS("Content", "Inhalt");
@@ -275,5 +275,5 @@ regGS("There are $1 issue(s) left.", "Es sind noch $1 Ausgaben vorhanden");
 regGS("There are $1 keyword(s) left.", "Es sind noch $1 Stichworte vorhanden");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Name (bearbeiten, bitte anklicken)");
 regGS("New field", "Neues Feld");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Soll Bild '$1' gelöscht werden?");
+regGS("Authors", "");
 ?>

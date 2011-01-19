@@ -1,4 +1,13 @@
 <?php 
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
+regGS("Switches saved.", "");
+regGS("Keywords saved.", "");
+regGS("Comment settings", "");
+regGS("Attach Topic To Article", "");
+regGS("Article saved.", "");
+regGS("Article is locked", "");
+regGS("Actions updated.", "");
 regGS("Unable to reach Campsite. Please check your internet connection.", "");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "");
 regGS("Switches", "");
@@ -38,7 +47,6 @@ regGS("---Select article type---", "");
 regGS("$1 articles successfully imported.", "");
 regGS("Saved", "");
 regGS("Save All", "");
-regGS("Article Saved", "");
 regGS("Online Server: On", "");
 regGS("Online Server: Off", "");
 regGS("Title", "");

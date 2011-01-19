@@ -5,7 +5,7 @@ regGS("Account", "Учетная запись");
 regGS("Items per page", "Объектов на странице");
 regGS("Add new", "Добавить");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "Главная");
+regGS("Dashboard", "Главная");
 regGS("Logout", "Выход");
 regGS("More...", "Далее...");
 regGS("Content", "Содержимое");
@@ -277,5 +277,5 @@ regGS("There are $1 issue(s) left.", "Осталось $1 выпуск(ов):ru"
 regGS("There are $1 keyword(s) left.", "Осталось $1 ключевое(-ых) слов(о):ru");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru");
 regGS("New field", "Новое поле");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Вы уверены, что хотите удалить картинку \\'$1\\'?");
+regGS("Authors", "");
 ?>

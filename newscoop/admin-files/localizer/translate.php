@@ -98,7 +98,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay = array();
     $mapPrefixToDisplay[] = "";
     $mapPrefixToDisplay["globals"] = getGS("Globals");
-    $mapPrefixToDisplay["home"] = getGS("Home");
+    $mapPrefixToDisplay["home"] = getGS("Dashboard");
     $mapPrefixToDisplay["api"] = getGS("API");
     $mapPrefixToDisplay["library"] = getGS("Libraries");
     $mapPrefixToDisplay["pub"] = getGS("Publications");
@@ -132,6 +132,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["tiny_media_plugin"] = getGS("Editor Media Plugin");
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
     $mapPrefixToDisplay["extensions"] = getGS("Extensions");
+    $mapPrefixToDisplay["authors"] = getGS("Authors");
 
     foreach (CampPlugin::GetPluginsInfo(true) as $info) {
     	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
