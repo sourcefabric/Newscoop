@@ -95,9 +95,6 @@ var local_strings_map = {};
 var set_local_strings = function()
 {
 
-    local_strings_map["google_map"] = "<?php putGS("Google Streets"); ?>";
-    local_strings_map["mapquest_map"] = "<?php putGS("MapQuest Map"); ?>";
-    local_strings_map["openstreet_map"] = "<?php putGS("OpenStreet Map"); ?>";
     local_strings_map["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
     local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";

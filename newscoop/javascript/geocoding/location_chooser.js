@@ -12,9 +12,9 @@ var geo_locations = {};
 
 // localization strings
 geo_locations.display_strings = {
-    google_map: "Google Map",
-    mapquest_map: "MapQuest Map",
-    openstreet_map: "OpenStreet Map",
+    google_map: "Google&nbsp;Maps",
+    mapquest_map: "MapQuest&nbsp;Open",
+    openstreet_map: "OpenStreetMap",
     fill_in_map_name: "fill in map name",
     point_markers: "Point markers",
     this_should_not_happen_now: "problem at point processing, please send error report",
@@ -156,9 +156,6 @@ geo_locations.set_display_strings = function(local_strings)
     if (!local_strings) {return;}
 
     var display_string_names = [
-        "google_map",
-        "mapquest_map",
-        "openstreet_map",
         "fill_in_map_name",
         "point_markers",
         "this_should_not_happen_now",
