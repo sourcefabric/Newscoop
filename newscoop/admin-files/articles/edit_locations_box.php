@@ -3,9 +3,16 @@
  * @package Newscoop
  */
 $locations = array();
+$map_name = "";
 $map = $articleObj->getMap();
 if (is_object($map) && $map->exists()) {
     $locations = $map->getLocations();
+    $map_name = $map->getName();
+    $map_name_max_len = 20;
+    if ($map_name_max_len < strlen($map_name))
+    {
+        $map_name = substr($map_name, 0, $map_name_max_len) . "...";
+    }
 }
 $detachMapUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
 
@@ -81,6 +88,11 @@ geomap_popup_show = function (edit) {
     <a class="iframe ui-state-default icon-button right-floated"
       href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"><span
       class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
+  <?php } ?>
+  <?php if ($map->exists()) { ?>
+    <span class="geo_map_name">
+    <?php echo $map_name; ?>
+    </span>
   <?php } ?>
     <div class="clear"></div>
   <?php if ($map->exists() && !empty($locations)) { ?>

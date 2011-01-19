@@ -1,6 +1,7 @@
 <?php
 
 require_once dirname(dirname(__FILE__)) . '/db_connect.php';
+require_once dirname(dirname(__FILE__)) . '/classes/Input.php';
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetContext.php';
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php';
 
@@ -54,9 +55,9 @@ if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
 <script type="text/javascript">
 $(function() {
     <?php if ($res == 'OK') { ?>
-    flashMessage('<?php echo $actionMsg; ?>');
-`   <?php } else { ?>
-    flashMessage('<?php echo $actionMsg; ?>', 'error');
+    flashMessage('<?php echo $actionMsg; ?>', null, true);
+    <?php } else { ?>
+    flashMessage('<?php echo $actionMsg; ?>', 'error', true);
     <?php } ?>
 });
 </script>
