@@ -3,7 +3,7 @@ regGS("Account", "Konto");
 regGS("Items per page", "Anzahl pro Seite");
 regGS("Add new", "Hinzufügen");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "Startseite");
+regGS("Dashboard", "Startseite");
 regGS("Logout", "Ausloggen");
 regGS("More...", "Mehr...");
 regGS("Content", "Inhalt");

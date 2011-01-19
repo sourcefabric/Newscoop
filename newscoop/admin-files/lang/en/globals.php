@@ -5,7 +5,7 @@ regGS("Account", "Account");
 regGS("Items per page", "Items per page");
 regGS("Add new", "Add new");
 regGS("Campsite", "Campsite");
-regGS("Home", "Home");
+regGS("Dashboard", "Home");
 regGS("Logout", "Logout");
 regGS("More...", "More...");
 regGS("Content", "Content");

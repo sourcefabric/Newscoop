@@ -5,7 +5,7 @@ regGS("Account", "Налог");
 regGS("Items per page", "Ставки по страни");
 regGS("Add new", "Додај нови");
 regGS("Campsite", "КЕМПСАЈТ");
-regGS("Home", "Почетак");
+regGS("Dashboard", "Почетак");
 regGS("Logout", "Одјава");
 regGS("More...", "Даље...");
 regGS("Content", "Садржаји");

@@ -5,7 +5,7 @@ regGS("Account", "賬戶");
 regGS("Items per page", "");
 regGS("Add new", "添加");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "首頁");
+regGS("Dashboard", "首頁");
 regGS("Logout", "登出");
 regGS("More...", "更多…");
 regGS("Content", "內容");
