@@ -269,4 +269,5 @@ regGS("Add new user account", "أضف حساب مستخدم جديد");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
+regGS("Authors", "");
 ?>

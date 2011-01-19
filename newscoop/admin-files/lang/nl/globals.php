@@ -403,4 +403,5 @@ regGS("No such section.", "Sectie bestaat niet.");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
+regGS("Authors", "");
 ?>

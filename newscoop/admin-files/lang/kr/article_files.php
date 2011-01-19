@@ -1,4 +1,5 @@
 <?php 
+regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
@@ -13,7 +14,6 @@ regGS("File Name", "");
 regGS("Download", "");
 regGS("File '$1' updated.", "");
 regGS("File '$1' deleted.", "");
-regGS("File '$1' added.", "");
 regGS("Edit article", "기사 편집");
 regGS("You do not have the right to delete file attachments.", "파일 첨부를 삭제할 권한이 없습니다. ");
 regGS("You must select a file to upload.", "업로드할 파일을 선택하시오.");

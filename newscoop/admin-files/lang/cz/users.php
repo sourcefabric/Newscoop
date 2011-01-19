@@ -1,4 +1,6 @@
 <?php 
+regGS("Filters", "");
+regGS("Add new Author", "");
 regGS("You do not have the right to sync Newscoop and Phorum users.", "");
 regGS("User may synchronize Newscoop and Phorum users", "");
 regGS("Unsubscribe email notifications", "Nezasílat upozornění emailem");

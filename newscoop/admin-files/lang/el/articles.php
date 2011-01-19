@@ -1,4 +1,13 @@
 <?php 
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
+regGS("Switches saved.", "");
+regGS("Keywords saved.", "");
+regGS("Comment settings", "");
+regGS("Attach Topic To Article", "");
+regGS("Article saved.", "");
+regGS("Article is locked", "");
+regGS("Actions updated.", "");
 regGS("Unable to reach Campsite. Please check your internet connection.", "");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Η δουλειά σας δεν έχει αποθηκευτεί. Επιθυμείτε να συνεχίσετε και να χάσετε τις αλλαγές σας;");
 regGS("Switches", "Εναλλαγές");
@@ -38,7 +47,6 @@ regGS("---Select article type---", "---Επιλογή τύπου άρθρου---
 regGS("$1 articles successfully imported.", "$ άρθρα εισήχθησαν επιτυχώς.");
 regGS("Saved", "Αποθηκεύτηκε");
 regGS("Save All", "Αποθήκευση Όλων");
-regGS("Article Saved", "Το Άρθρο Αποθηκεύτηκε");
 regGS("Online Server: On", "Online Διακομιστής: On");
 regGS("Online Server: Off", "Online Διακομιστής: Off");
 regGS("Title", "Τίτλος");

@@ -274,4 +274,5 @@ regGS("New field", "新字段");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
+regGS("Authors", "");
 ?>

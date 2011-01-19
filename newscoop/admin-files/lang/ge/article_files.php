@@ -1,4 +1,5 @@
 <?php 
+regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
 regGS("File #$1 \"$2\" attached to article", "");
@@ -13,7 +14,6 @@ regGS("File Name", "ფაილის სახელი");
 regGS("Download", "ჩამოქაჩვა");
 regGS("File '$1' updated.", "ფაილი '$1' განახლებულია");
 regGS("File '$1' deleted.", "ფაილი '$1' წაშლილია");
-regGS("File '$1' added.", "ფაილი \"$1\" დამატებულია");
 regGS("Edit article", "სტატიის რედაქტირება");
 regGS("You do not have the right to delete file attachments.", "თქვენ არა გაქვთ მიმაგრებული ფაილის წაშლის უფლება");
 regGS("You must select a file to upload.", "თქვენ უნდა მონიშნოთ ფაილი ასატვითად");
