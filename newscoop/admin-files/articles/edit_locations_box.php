@@ -45,7 +45,7 @@ geomap_popup_show = function (edit) {
     };
 }
 </script>
-<div class="ui-widget-content small-block block-shadow">
+<div id="locations_box" class="ui-widget-content small-block block-shadow">
   <div class="collapsible">
     <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
     <span class="ui-icon"></span>

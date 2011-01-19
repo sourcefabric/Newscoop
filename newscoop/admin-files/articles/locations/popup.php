@@ -336,12 +336,14 @@ on_close_request = function()
         window.onbeforeunload = null;
     }
 
-    if (parent.$.fancybox.reload) {
-        parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+    try {
+        if (parent.$.fancybox.reload) {
+            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+        }
+        parent.$.fancybox.close();
     }
-    parent.$.fancybox.close();
+    catch (e) {window.close();}
     return;
-
 }
 
 var map_show_preview = function()
