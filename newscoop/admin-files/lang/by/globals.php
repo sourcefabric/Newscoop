@@ -5,7 +5,7 @@ regGS("Account", "Улiковы запiс");
 regGS("Items per page", "Аб'ектаў на старонцы");
 regGS("Add new", "Дадаць");
 regGS("Campsite", "CAMPSITE");
-regGS("Home", "Галоўная");
+regGS("Dashboard", "Галоўная");
 regGS("Logout", "Выхад");
 regGS("More...", "Далей...");
 regGS("Content", "Зьмест");
