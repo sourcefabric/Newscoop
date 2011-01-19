@@ -346,13 +346,30 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
         <script type="text/javascript">
         $(function() {
+            // enable/disable comments form and comments list
             $('input:radio[name^="f_comment"]').change(function() {
-                $(this).closest('form').submit(function() {
-                    $(this).ajaxSuccess(function(event, xhr, options) {
-                        setTimeout('window.location.reload()', 2500);
-                    });
-                });
+                var form = $('#comments-form');
+                var list = $('#comments-list');
+                switch ($(this).val()) {
+                    case 'enabled':
+                        form.show();
+                        list.show();
+                        break;
+
+                    case 'disabled':
+                        form.hide();
+                        list.hide();
+                        break;
+
+                    case 'locked':
+                        form.hide();
+                        list.show();
+                        break;
+                }
             });
+
+            // init
+            $('input:radio[checked][name^="f_comment"]').change();
         });
         </script>
     </li>
@@ -362,8 +379,8 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     </div>
   </form><!-- /form#article -->
 
-    <?php if ($showComments) { ?>
-    <div class="ui-widget-content big-block block-shadow">
+    <?php if ($showCommentControls) { ?>
+    <div id="comments-list" class="ui-widget-content big-block block-shadow">
       <div class="collapsible">
         <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
         <span class="ui-icon"></span>
@@ -375,8 +392,8 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     </div>
     <?php } ?>
 
-    <?php if ($inEditMode && $showComments && !$articleObj->commentsLocked()) { ?>
-    <div class="ui-widget-content big-block block-shadow padded-strong">
+    <?php if ($inEditMode && $showCommentControls) { ?>
+    <div id="comments-form" class="ui-widget-content big-block block-shadow padded-strong">
       <?php include('comments/add_comment_form.php'); ?>
     </div>
     <?php } ?>
