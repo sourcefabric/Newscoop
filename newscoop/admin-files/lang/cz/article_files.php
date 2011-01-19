@@ -1,4 +1,5 @@
 <?php 
+regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "Soubor #$1 \"$2\" nepřipojen");
 regGS("File #$1 \"$2\" attached to article", "Soubor #$1 \"$2\" připojen ke článku");
@@ -13,7 +14,6 @@ regGS("File Name", "Název Souboru");
 regGS("Download", "Stáhnout");
 regGS("File '$1' updated.", "Soubor '$1' aktualizován.");
 regGS("File '$1' deleted.", "Soubor '$1' odstraněn.");
-regGS("File '$1' added.", "Soubor '$1' přidán.");
 regGS("Edit article", "Upravit článek");
 regGS("You do not have the right to delete file attachments.", "Nemáte oprávnění mazat přílohy.");
 regGS("You must select a file to upload.", "Zvolte soubor k nahrání.");

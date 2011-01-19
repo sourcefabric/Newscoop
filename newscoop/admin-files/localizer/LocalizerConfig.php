@@ -95,6 +95,7 @@ $mapPrefixToDir["preview"] = "/template_engine/classes";
 $mapPrefixToDir["tiny_media_plugin"] = "/javascript/tinymce/plugins/campsitemedia";
 $mapPrefixToDir["plugins"] = "/admin-files/plugins";
 $mapPrefixToDir["extensions"] = "/extensions/*";
+$mapPrefixToDir["authors"] = "/admin-files/users/authors_ajax";
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {
 	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
