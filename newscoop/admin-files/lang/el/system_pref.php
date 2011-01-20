@@ -1,11 +1,12 @@
 <?php 
-regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση ενός Newscoop Διακομιστή Αντιγράφου;");
-regGS("Newscoop Online Server Database", "Βάση Δεδομένων Newscoop Online Διακομιστή");
+regGS("Run scheduled tasks externally?", "");
+regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση Αντιγράφου του Διακομιστή Newscoop;");
+regGS("Newscoop Online Server Database", "Βάση Δεδομένων του Online Διακομιστή Newscoop ");
 regGS("OpenStreet Map", "Χάρτης OpenStreet");
 regGS("MapQuest Map", "Χάρτης MapQuest");
 regGS("Google Streets Map", "Χάρτης Google Streets");
-regGS("Allow Google Streets Map Provider:", "");
-regGS("Allow MapQuest Map Provider:", "");
+regGS("Allow Google Streets Map Provider:", "Επιτρέψτε τον Παροχέα Χάρτη Google Streets:");
+regGS("Allow MapQuest Map Provider:", "Επιτρέψτε τον Παροχέα Χάρτη MapQuest:");
 regGS("Local Flash Server:", "Τοπικός Διακομιστής Flash:");
 regGS("Local Flash Directory:", "Τοπικός Κατάλογος Flash:");
 regGS("Youtube Default Width:", "Προεπιλεγμένο Πλάτος Youtube:");
@@ -13,19 +14,19 @@ regGS("Youtube Default Height:", "Προεπιλεγμένο Ύψος Youtube:")
 regGS("Vimeo Default Width:", "Προεπιλεγμένο Πλάτος Vimeo:");
 regGS("Vimeo Default Height:", "Προεπιλεγμένο Ύψος Vimeo:");
 regGS("Map Zoom Level:", "Επίπεδο Μεγέθυνσης Χάρτη:");
-regGS("Map Popup Minimal Width:", "");
-regGS("Map Popup Minimal Height:", "");
+regGS("Map Popup Minimal Width:", "Ελάχιστο Πλάτος Popup Χάρτη:");
+regGS("Map Popup Minimal Height:", "Ελάχιστο Ύψος Popup Χάρτη:");
 regGS("Map Marker Directory:", "Κατάλογος Δεικτών Χάρτη:");
 regGS("Map Marker Default:", "Προεπιλεγμένος Δείκτης Χάρτη:");
 regGS("Map Default Width:", "Προεπιλεγμένο Πλάτος Χάρτη:");
 regGS("Map Default Height:", "Προεπιλεγμένο Ύψος Χάρτη:");
-regGS("Map Center Longitude:", "");
-regGS("Map Center Latitude:", "");
+regGS("Map Center Longitude:", "Γεωγραφικό μήκος Κέντρου Χάρτη:");
+regGS("Map Center Latitude:", "Γεωγραφικό πλάτος Κέντρου Χάρτη:");
 regGS("Geolocation Settings", "Ρυθμίσεις Geolocation");
 regGS("Flash Default Width:", "Προεπιλεγμένο Πλάτος Flash: ");
 regGS("Flash Default Height:", "Προεπιλεγμένο Ύψος Flash:");
-regGS("Default Map Provider:", "");
-regGS("Allow OpenStreet Map Provider:", "");
+regGS("Default Map Provider:", "Προεπιλεγμένος Παροχέας Χάρτη");
+regGS("Allow OpenStreet Map Provider:", "Επιτρέψτε τον Παροχέα Χάρτη OpenStreet:");
 regGS("Allow password recovery:", "Επιτρέψτε την ανάκτηση κωδικού πρόσβασης:");
 regGS("Template Cache Handler:", "Χειριστής Προσωρινής Μνήμης Προτύπου:");
 regGS("Invalid: You need PHP $1 enabled in order to use the template caching system.", "Μη έγκυρο: Χρειάζεται να εργεργοποιήσετε τη PHP $1 για να χρησιμοποιήσετε το σύστημα προσωρινής μνήμης του προτύπου.");
@@ -61,7 +62,7 @@ regGS("SMTP Host must be at least four character.", "Ο SMTP Κόμβος πρέ
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Εισάγετε μια τιμή μεταξύ 0 και $1 (το μέγιστο μέγεθος έχει οριστεί σε 'php.ini'). Παρακαλούμε χρησιμοποιήστε 'Κ' για kilobytes, 'Μ' για megabytes και 'G' για gigabytes, χωρίς κενά διαστήματα μεταξύ τιμής και αντίστοιχου γράμματος, π.χ. '3Μ'.  ");
 regGS("Enable Campcaster audioclip attachments?", "Ενεργοποίηση συννημένων αρχείων ήχου Campcaster;");
 regGS("XML RPC Path:", "Διαδρομή XML RPC:");
-regGS("XML RPC File:", "Αρχείο XML RPC");
+regGS("XML RPC File:", "Αρχείο XML RPC:");
 regGS("System preferences updated", "Οι προτιμήσεις συστήματος ανανεώθηκαν");
 regGS("Reader subscriptions managed externally?", "Οι αναγνώστες (συνδρομητές) να διαχειρίζονται εξωτερικά;");
 regGS("Port:", "Θύρα");
@@ -75,7 +76,7 @@ regGS("Database Replication User:", "Χρήστης Αντιγράφου Βάσ�
 regGS("Database Replication Port:", "Θύρα Αντιγράφου Βάσης Δεδομένων: ");
 regGS("Database Replication Password:", "Κωδικός Πρόσβασης Αντιγράφου Βάσης Δεδομένων: ");
 regGS("Database Replication Host:", "Κόμβος Αντιγράφου Βάσης Δεδομένων: ");
-regGS("Campcaster Server", "Camcaster Διακομιστής");
+regGS("Campcaster Server", "Διακομιστής Camcaster");
 regGS("System preferences updated.", "Το σύστημα προτιμήσεων ανανεώθηκε.");
 regGS("Please enter a positive number for the '$1' field.", "Παρακαλούμε εισάγετε έναν θετικό αριθμό για το πεδίο '$1'.");
 regGS("Login Attempts", "Προσπάθειες Σύνδεσης");
@@ -85,5 +86,4 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Αριθμό�
 regGS("Keyword separator:", "Διαχωριστής λέξης-κλειδί:");
 regGS("Time Zone:", "Ζώνη Ώρας:");
 regGS("disabled", "απενεργοποιημένο");
-regGS("Run scheduled tasks externally?", " Εκτέλεση των cron tasks εξωτερικά;");
 ?>

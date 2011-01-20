@@ -25,9 +25,7 @@
 {{ /if }}
 
 {{ if $gimme->submit_comment_action->is_error }}
-    <div class="posterror">{{ $gimme->submit_comment_action->error_message }}
-        <span class="posterrorcode">{{ $gimme->submit_comment_action->error_code }}</span>
-   </div>
+    <div class="posterror">{{ $gimme->submit_comment_action->error_message }}</div>
 {{ else }}
     {{ if $gimme->submit_comment_action->defined }}
         {{ if $gimme->publication->moderated_comments }}

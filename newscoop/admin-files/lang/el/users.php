@@ -3,7 +3,7 @@ regGS("Filters", "");
 regGS("Add new Author", "");
 regGS("You do not have the right to sync Newscoop and Phorum users.", "Δεν έχετε το δικαίωμα να συγχρονίσετε Newscoop και Phorum χρήστες.");
 regGS("User may synchronize Newscoop and Phorum users", "Ο χρήστης μπορεί να συγχρονίσει Newscoop και Phorum χρήστες");
-regGS("Unsubscribe email notifications", "");
+regGS("Unsubscribe email notifications", "Διακοπή ειδοποιήσεων email ");
 regGS("New author \"$1\" ($2) created.", "Ο νέος συγγραφέας \"$1\" ($2) δημιουργήθηκε.");
 regGS("Manage Authors", "Διαχείριση Συγγραφέων");
 regGS("Loading Data", "Φόρτωση Δεδομένων");

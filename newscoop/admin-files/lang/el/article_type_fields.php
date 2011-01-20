@@ -1,11 +1,11 @@
 <?php 
 regGS("The template name may only contain letters and the underscore (_) character.", "Το όνομα προτύπου μπορεί να περιλαμβάνει μόνο γράμματα και τον χαρακτήρα υπογραμμισης (_).");
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
-regGS("The property '$1' is already in use.", "");
-regGS("Precision", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Το όνομα πεδίου βρισκόταν ήδη σε χρήση ως βασική ιδιοκτησία του άρθρου. Το περιεχόμενο του πεδίου δεν θα εμφανίζεται στα πρότυπα.");
+regGS("The property '$1' is already in use.", "Η ιδιοκτησία '$1' βρίσκεται ήδη σε χρήση.");
+regGS("Precision", "Ακρίβεια");
 regGS("Can not convert the field $1 from $2 to type $3.", "Αδύνατη η μετατροπή του πεδίου $1 από $2 σε τύπο $3.");
 regGS("Are you sure you want to make $1 a $2 field?", "Είστε σίγουρος/η ότι θέλετε να μετατρέψετε το  πεδίο $1 σε $2;");
-regGS("Is Content", "");
+regGS("Is Content", "Είναι Περιεχόμενο");
 regGS("Back to Article Types List", "Πίσω στην Λίστα Τύπων Άρθρου");
 regGS("show", "εμφάνιση");
 regGS("hide", "απόκρυψη");
@@ -14,7 +14,7 @@ regGS("You must choose a language for the field.", "Πρέπει να επιλέ
 regGS("You do not have the right to rename article type fields.", "Δεν έχετε το δικαίωμα να μετονομάσετε πεδία τύπου άρθρου.");
 regGS("You do not have the right to reassign a field type.", "Δεν έχετε το δικαίωμα να επανεκχωρίσετε έναν τύπο πεδίου.");
 regGS("You do not have the right to add article types.", "Δεν έχετε το δικαίωμα να προσθέσετε τύπους άρθρου.");
-regGS("Translating field", "");
+regGS("Translating field", "Μεταφραστικό πεδίο");
 regGS("The translation could not be added.", "Η μετάφραση δεν μπόρεσε να προστεθεί.");
 regGS("The field $1 does not exist.", "Το πεδίο $1 δεν υπάρχει.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Το πεδίο $1 μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).");

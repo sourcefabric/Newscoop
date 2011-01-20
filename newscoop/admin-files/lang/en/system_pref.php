@@ -1,4 +1,5 @@
 <?php 
+regGS("Run scheduled tasks externally?", "Run scheduled tasks externally?");
 regGS("Setting up a Newscoop Replication Server?", "Setting up a Newscoop Replication Server?");
 regGS("Newscoop Online Server Database", "Newscoop Online Server Database");
 regGS("OpenStreet Map", "OpenStreet Map");
@@ -85,5 +86,4 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Number of fai
 regGS("Keyword separator:", "Keyword separator:");
 regGS("Time Zone:", "Time Zone:");
 regGS("disabled", "disabled");
-regGS("Run scheduled tasks externally?", "Run scheduled tasks externally?");
 ?>

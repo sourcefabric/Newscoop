@@ -1,4 +1,5 @@
 <?php 
+regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");
@@ -85,5 +86,4 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Počet neúsp
 regGS("Keyword separator:", "Klíčový oddělovač:");
 regGS("Time Zone:", "Časové pásmo:");
 regGS("disabled", "vypnuto");
-regGS("Run scheduled tasks externally?", "Spustit cron úkoly externě?");
 ?>
