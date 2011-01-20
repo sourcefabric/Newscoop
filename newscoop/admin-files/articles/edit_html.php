@@ -344,34 +344,6 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <label for="f_comment_status_disabled" class="inline-style left-floated" style="padding-right:15px;"><?php putGS('Disabled'); ?></label>
         <input type="radio" name="f_comment_status" value="locked" class="input_radio" id="f_comment_status_locked" <?php if ($articleObj->commentsEnabled() && $articleObj->commentsLocked()) { ?> checked<?php } ?>  />
         <label for="f_comment_status_locked" class="inline-style left-floated"><?php putGS('Locked'); ?></label>
-        <script type="text/javascript">
-        $(function() {
-            // enable/disable comments form and comments list
-            $('input:radio[name^="f_comment"]').change(function() {
-                var form = $('#comments-form');
-                var list = $('#comments-list');
-                switch ($(this).val()) {
-                    case 'enabled':
-                        form.show();
-                        list.show();
-                        break;
-
-                    case 'disabled':
-                        form.hide();
-                        list.hide();
-                        break;
-
-                    case 'locked':
-                        form.hide();
-                        list.show();
-                        break;
-                }
-            });
-
-            // init
-            $('input:radio[checked][name^="f_comment"]').change();
-        });
-        </script>
     </li>
     <?php } ?>
       </ul>
