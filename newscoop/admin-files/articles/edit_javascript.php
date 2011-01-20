@@ -160,11 +160,16 @@ array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>
 ];
-/** autocomplete is broken
+
+// authors autocomplete
 $(".aauthor").autocomplete({
     source: authorsList
 });
- */
+$(".aauthor").live('focus', function() {
+    $(".aauthor").autocomplete({
+        source: authorsList
+    });
+});
 
 // fancybox for popups
 $('a.iframe').each(function() {
