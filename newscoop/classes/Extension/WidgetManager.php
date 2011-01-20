@@ -21,6 +21,8 @@ require_once dirname(__FILE__) . '/FeedWidget.php';
  */
 class WidgetManager
 {
+    const SETTING = 'WidgetsInstalled';
+
     /** @var array */
     private static $defaults = array(
         'MostPopularArticlesWidget',
@@ -137,6 +139,28 @@ class WidgetManager
                 self::AddWidget($extension->getId(), $contexts[$context]->getName(), (int) $p_uid);
                 $context = ($context + 1) % 2;
             }
+        }
+    }
+
+    /**
+     * Set default widgets for all existing users (called after install/upgrade)
+     * @return void
+     */
+    public static function SetDefaultWidgetsAll()
+    {
+        require_once dirname(__FILE__) . '/../User.php';
+
+        // do only once
+        if (SystemPref::Get(self::SETTING) != NULL) {
+            return;
+        }
+
+        SystemPref::Set(self::SETTING, time());
+
+        // set widgets per user
+        $users = (array) User::GetUsers();
+        foreach ($users as $user) {
+            WidgetManager::SetDefaultWidgets($user->getUserId());
         }
     }
 }
