@@ -57,6 +57,35 @@ $('input:text[name=f_article_title]').change(function() {
     $('input:hidden[name=f_article_title]').val($(this).val())
         .closest('form').change();
 }).change();
+
+/**
+ * Enable/disable comments list/form according to selected state.
+ */
+var toggleComments = function() {
+    $('input:radio[name^="f_comment"]:checked').each(function() {
+        var form = $('#comments-form');
+        var list = $('#comments-list');
+        switch ($(this).val()) {
+            case 'enabled':
+                form.show();
+                list.show();
+                break;
+
+            case 'disabled':
+                form.hide();
+                list.hide();
+                break;
+
+            case 'locked':
+                form.hide();
+                list.show();
+                break;
+        }
+    });
+};
+
+// init
+toggleComments();
  
 // main form submit
 $('form#article-main').submit(function() {
@@ -77,6 +106,7 @@ $('form#article-main').submit(function() {
             success: function(data, status, p) {
                 flashMessage('<?php putGS('Article saved.'); ?>');
                 ajax_forms--;
+                toggleComments();
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
