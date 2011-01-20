@@ -418,7 +418,16 @@ fieldset.controls.search .input_text {
 .smartlist tbody tr.odd td {
     background-color: #fff;
 }
-.smartlist tbody tr.selected td {
+
+.smartlist tbody tr.odd.locked td {
+    background-color: #fce7f2;
+}
+
+.smartlist tbody tr.even.locked td {
+    background-color: #fcdaec;
+}
+
+.smartlist tbody tr.odd.selected td {
     background-color: #EDF6F9;
 }
 
@@ -586,3 +595,24 @@ fieldset ul.nameList {
 
 
 /*------ END DataTables ----------*/
+
+/** fixes */
+body > .links {
+    margin: 13px 35px 0;
+    font-size: 1.3em;
+}
+
+.ColVis_collection.ui-buttonset {
+    height: auto;
+}
+
+fieldset.plain strong {
+    line-height: 22px;
+    font-size: 1.2em;
+}
+
+td.name .ui-icon {
+    float: left;
+    margin: -2px 0 0 -2px;
+    cursor: help;
+}

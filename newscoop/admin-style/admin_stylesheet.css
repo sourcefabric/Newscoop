@@ -1235,17 +1235,3 @@ input.input_file {
 	color:#C00;
 }
 /*--- END New Login ---*/
-
-body > .links {
-    margin: 13px 35px 0;
-    font-size: 1.3em;
-}
-
-.ColVis_collection.ui-buttonset {
-    height: auto;
-}
-
-fieldset.plain strong {
-    line-height: 22px;
-    font-size: 1.2em;
-}
