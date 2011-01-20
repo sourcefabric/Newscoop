@@ -1235,3 +1235,12 @@ input.input_file {
 	color:#C00;
 }
 /*--- END New Login ---*/
+
+/*---  Main menu and sticky Toolbox fix ---*/
+.sticky {
+	z-index:100;
+}
+/*---  IMPORTANT: z-index of .fg-menu-container must be bigger then z-index of .sticky !! ---*/
+.fg-menu-container {
+	z-index:101;
+}

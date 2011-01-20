@@ -448,14 +448,17 @@ $locale = trim(getGS('en'), ' (*)');
   </script>
   <script type="text/javascript"> 
   $(document).ready(function() {
+      var sticky_limit = 0;
       $(window).scroll(function() {
-          if ($(window).scrollTop() > $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "fixed");
-              $(".sticky").css("top", "0");
+          var windowTop = $(window).scrollTop();
+          var stickyTop = $('.sticky').offset().top;
+          if (windowTop > stickyTop && sticky_limit == 0) {
+              $('.sticky').css('width', $('.sticky').width()+'px').css('position', 'fixed').css('top', '0');
+              sticky_limit = stickyTop;
           }
-          if ($(window).scrollTop() <= $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "relative");
-              $(".sticky").css("top", $(".smartLegendIdentifier").offset);
+          if (sticky_limit > 0 && windowTop < sticky_limit) {
+              $('.sticky').css('position', 'relative');
+              sticky_limit = 0;
           }
       });
   });

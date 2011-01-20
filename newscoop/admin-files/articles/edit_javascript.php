@@ -9,6 +9,9 @@ var ajax_forms = 0; // forms saving by ajax
 
 $(function() {
 
+// make breadcrumbs + save buttons sticky
+$('.breadcrumb-bar, .toolbar').wrapAll('<div class="sticky" />');
+
 // datepicker for date
 $('.datepicker').datepicker({
     dateFormat: 'yy-mm-dd'
