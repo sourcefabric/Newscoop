@@ -32,8 +32,8 @@ $Campsite['site']['title'] = SystemPref::Get('SiteTitle');
 $Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
 $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
-$Campsite['site']['help_url'] = 'http://en.flossmanuals.net/Campsite/Introduction';
-$Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/home/web/6/campsite.htm?tpl=18';
+$Campsite['site']['help_url'] = 'http://www.sourcefabric.org/en/products/newscoop_support/';
+$Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/about/page/';
 $Campsite['site']['email'] = 'newscoop-bug@sourcefabric.org';
 
 $Campsite['campware']['url'] = 'http://www.sourcefabric.org';
