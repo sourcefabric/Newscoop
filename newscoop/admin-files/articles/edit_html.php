@@ -183,7 +183,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <li>
           <label><?php putGS('Date'); ?></label>
           <?php if ($articleObj->isPublished()) { ?>
-          <div class="text-container left-floated date-published"><strong><?php putGS('Published'); ?>:</strong> <span class="f_publish_date"><?php print htmlspecialchars($articleObj->getPublishDate()); ?></span>
+          <div class="text-container left-floated date-published"><b><?php putGS('Published'); ?>:</b> <span class="f_publish_date"><?php print htmlspecialchars($articleObj->getPublishDate()); ?></span>
             <?php if ($inEditMode) { ?><input type="hidden" name="f_publish_date" value="<?php echo $articleObj->getPublishDate(); ?>" class="datetime" /><?php } ?></div>
           <?php } ?>
           <div class="text-container left-floated date-created"><?php putGS('Created'); ?>: <span class="f_creation_date"><?php print htmlspecialchars($articleObj->getCreationDate()); ?></span>
