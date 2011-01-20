@@ -450,6 +450,10 @@ $locale = trim(getGS('en'), ' (*)');
   $(document).ready(function() {
       var sticky_limit = 0;
       $(window).scroll(function() {
+          if ($('.sticky').size() == 0) {
+              return false; // no sticky
+          }
+
           var windowTop = $(window).scrollTop();
           var stickyTop = $('.sticky').offset().top;
           if (windowTop > stickyTop && sticky_limit == 0) {
