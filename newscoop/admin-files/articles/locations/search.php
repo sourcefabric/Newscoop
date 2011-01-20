@@ -43,7 +43,7 @@ camp_load_translation_strings("geolocation");
 <div class="map_mappart_outer_serach">
 <div class="map_mappart_serach">
 <div class="map_mapmenu_serach">
-<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><? putGS("show initial map view"); ?></a>
+<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><?php putGS("show initial map view"); ?></a>
 </div><!-- end of map_mapmenu -->
 <?php echo Geo_Map::GetMapSearchBody(); ?>
 </div><!-- end of map_mappart -->

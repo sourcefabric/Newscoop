@@ -94,7 +94,7 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
     <?php echo Geo_Map::GetMapTagList($f_article_number, $f_language_id); ?>
   </div>
   <div class="geomap_menu">
-    <a href="#" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><? putGS("show initial map view"); ?></a>
+    <a href="#" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><?php putGS("show initial map view"); ?></a>
   </div>
   <div class="geomap_map">
     <?php echo Geo_Map::GetMapTagBody($f_article_number, $f_language_id); ?>
