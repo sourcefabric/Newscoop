@@ -3,7 +3,7 @@ regGS("You can't delete used files.", "Δεν μπορείτε να διαγρά
 regGS("Do you wan't to delete unused only?", "Επιθυμείτε να διαγράψετε μόνο όσα δεν χρησιμοποιούνται;");
 regGS("View attachment", "Προβολή συννημένου");
 regGS("Select some items first.", "Επιλέξτε πρώτα κάποια στοιχεία.");
-regGS("Open in the browser", "Άνοιγμα στο πρόγραμμα περιήγησης");
+regGS("Open in the browser", "Άνοιγμα στο πρόγραμμα πλοήγησης");
 regGS("Media Archive", "Αρχείο Media");
 regGS("Last modified", "Τελευταίως τροποποιημένα");
 regGS("Items deleted.", "Τα στοιχεία διαγράφτηκαν.");

@@ -1,4 +1,6 @@
 <?php 
+regGS("Dashboard", "");
+regGS("Authors", "");
 regGS("Libraries", "Βιβλιοθήκες");
 regGS("Media Archive", "Αρχείο Media");
 regGS("Extensions", "Επεκτάσεις");

@@ -1,6 +1,6 @@
 <?php 
-regGS("Reset order", "");
-regGS("Order changes will be lost. Are you sure you want to continue?", "");
+regGS("Reset order", "Επαναρρύθμιση εντολής");
+regGS("Order changes will be lost. Are you sure you want to continue?", "Οι αλλαγές εντολής θα χαθούν. Είστε σίγουρος/η ότι θέλετε να συνεχίσετε;");
 regGS("Topics order saved.", "Η εντολή θεμάτων αποθηκεύτηκε.");
 regGS("Show languages", "Εμφάνιση γλωσσών");
 regGS("Save order", "Αποθήκευση εντολής");

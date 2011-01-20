@@ -4,6 +4,7 @@ regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.",
 regGS("Switches saved.", "Switches saved.");
 regGS("Keywords saved.", "Keywords saved.");
 regGS("Comment settings", "Comment settings");
+regGS("Authors", "Authors");
 regGS("Attach Topic To Article", "Attach Topic To Article");
 regGS("Article saved.", "Article saved.");
 regGS("Article is locked", "Article is locked");
