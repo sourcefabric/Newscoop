@@ -9,7 +9,7 @@
  */
 
 require_once dirname(__FILE__) . '/IWidget.php';
-require_once WWW_DIR . '/admin-files/localizer/Localizer.php';
+require_once dirname(__FILE__) . '/../../admin-files/localizer/Localizer.php';
  
 /**
  * Widget interace
