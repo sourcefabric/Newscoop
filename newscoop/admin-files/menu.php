@@ -408,13 +408,13 @@ $locale = trim(getGS('en'), ' (*)');
       );
 
       // MENUS
-      $('#newscoop_menu_content').menu({
+      $('#newscoop_menu_content').topmenu({
           content: $('#newscoop_menu_content').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php if ($showAdminActions) { ?>
-      $('#newscoop_menu_action').menu({
+      $('#newscoop_menu_action').topmenu({
           content: $('#newscoop_menu_action').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -423,7 +423,7 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showConfigureMenu) {
       ?>
-      $('#newscoop_menu_configure').menu({
+      $('#newscoop_menu_configure').topmenu({
           content: $('#newscoop_menu_configure').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -432,13 +432,13 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showUserMenu) {
       ?>
-      $('#newscoop_menu_users').menu({
+      $('#newscoop_menu_users').topmenu({
           content: $('#newscoop_menu_users').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php } ?>
-      $('#newscoop_menu_plugins').menu({
+      $('#newscoop_menu_plugins').topmenu({
           content: $('#newscoop_menu_plugins').next().html(),
           flyOut: true,
           showSpeed: 150
