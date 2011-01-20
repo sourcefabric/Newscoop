@@ -781,17 +781,14 @@ dl.inline-list dd {
 	width:auto;
 }
 /*---Comments color*/
-.comment_approved {
+.comment_approve {
     background: transparent;
 }
-.comment_pending_approved {
+.comment_pending_approve {
     background-color: #transparent;
 }
-.comment_hidden {
+.comment_hide {
     background-color: #d0d0d0;
-}
-.comment_hidden li {
-	color:#727272;
 }
 
 .comment_pending_hidden {
@@ -1238,17 +1235,3 @@ input.input_file {
 	color:#C00;
 }
 /*--- END New Login ---*/
-
-body > .links {
-    margin: 13px 35px 0;
-    font-size: 1.3em;
-}
-
-.ColVis_collection.ui-buttonset {
-    height: auto;
-}
-
-fieldset.plain strong {
-    line-height: 22px;
-    font-size: 1.2em;
-}
