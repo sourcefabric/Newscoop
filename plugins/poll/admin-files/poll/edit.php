@@ -38,6 +38,13 @@ if ($poll->exists()) {
     $fk_language_id = Input::Get('f_language_id', 'int');
 }
 
+$title = $poll->exists() ? getGS('Edit Poll') : getGS('Add new Poll');
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
+    array($title, ''),
+));
+
 if (!$f_include) { ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
         <TR>
@@ -76,12 +83,6 @@ camp_html_display_msgs();
 <INPUT TYPE="HIDDEN" NAME="f_from" VALUE="<?php p(htmlspecialchars($f_from)); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
-<TR>
-    <TD COLSPAN="2">
-        <B><?php  if ($poll->exists()) putGS("Edit Poll"); else putGS('Add new Poll'); ?></B>
-        <HR NOSHADE SIZE="1" COLOR="BLACK">
-    </TD>
-</TR>
 <TR>
     <td valign="top">
         <table>
