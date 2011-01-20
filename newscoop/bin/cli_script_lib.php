@@ -436,10 +436,12 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
             if (!$p_silent) {
                 echo "\n\t* Upgrading the database from version $db_version...";
             }
-            $res = camp_utf8_convert(null, $skipped);
-            if ($res !== true) {
-                flock($lockFile, LOCK_UN); // release the lock
-                return $res;
+            if ($old_version < '3.4.x') {
+            	$res = camp_utf8_convert(null, $skipped);
+            	if ($res !== true) {
+            		flock($lockFile, LOCK_UN); // release the lock
+            		return $res;
+            	}
             }
             $first = false;
         }
