@@ -20,11 +20,11 @@ $subscriptions = Subscription::GetSubscriptions(null, $f_user_id,
 		  "LIMIT" => array("START" => $f_subscription_offset, "MAX_ROWS" => $ItemsPerPage)));
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
-$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'",
+$crumbs[] = array(getGS('Users'), '');
+$crumbs[] = array(getGS('Subscribers'), "/$ADMIN/users/?uType=Subscribers");
+$crumbs[] = array(getGS('Account') . " '".$manageUser->getUserName()."'",
 			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
-$crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
+$crumbs[] = array(getGS('Subscriptions'), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
 echo camp_html_breadcrumbs($crumbs);
 
 if (sizeof($publications) > $numSubscriptions) {
