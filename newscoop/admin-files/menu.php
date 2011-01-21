@@ -321,6 +321,9 @@ $locale = trim(getGS('en'), ' (*)');
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+
+  <!-- include favicon //-->
+  <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <style type="text/css">
 	#menuLog {
 	    font-size:1.4em;
