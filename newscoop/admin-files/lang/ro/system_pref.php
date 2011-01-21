@@ -1,4 +1,5 @@
 <?php 
+regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
 regGS("OpenStreet Map", "");

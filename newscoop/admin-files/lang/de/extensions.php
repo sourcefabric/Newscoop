@@ -1,16 +1,16 @@
 <?php 
-regGS("Title", "");
-regGS("Sourcefabric.org feed reader", "");
-regGS("Sourcefabric.org dev feed reader", "");
-regGS("Recently Published Articles", "");
-regGS("Recently Modified Articles", "");
-regGS("Pending Articles", "");
-regGS("Paste google generated code", "");
-regGS("Most Popular Articles", "");
-regGS("Media files", "");
-regGS("Hello world!", "");
-regGS("Hello World!", "");
-regGS("Google gadget", "");
-regGS("Feed url", "");
-regGS("Access Denied", "");
+regGS("Title", "Titel");
+regGS("Sourcefabric.org feed reader", "Sourcefabric.org Feeds");
+regGS("Sourcefabric.org dev feed reader", "Sourcefabric.org dev Feeds");
+regGS("Recently Published Articles", "Kürzlich veröffentlichte Artikel");
+regGS("Recently Modified Articles", "Kürzlich veränderte Artikel");
+regGS("Pending Articles", "Wartende Artikel");
+regGS("Paste google generated code", "Google Code einfügen");
+regGS("Most Popular Articles", "Beliebteste Artkel");
+regGS("Media files", "Mediendateien");
+regGS("Hello world!", "Hallo Welt!");
+regGS("Hello World!", "Hallo Welt!");
+regGS("Google gadget", "Google Gadget");
+regGS("Feed url", "URL eingeben");
+regGS("Access Denied", "Zugang verweigert");
 ?>

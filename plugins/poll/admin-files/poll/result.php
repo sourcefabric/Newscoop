@@ -14,9 +14,6 @@ $f_nr_answer = Input::Get('f_nr_answer', 'int');
 
 $poll = new Poll($f_fk_language_id, $f_poll_nr);
 
-#$answer = $poll->getAnswer($f_nr_answer);
-#$answer->vote();
-
 $format = '%.2f';
 
 $display[] = $poll;
@@ -27,6 +24,11 @@ foreach($poll->getTranslations() as $translation) {
     }    
 }
 
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
+    array(getGS('Result'), ''),
+));
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>

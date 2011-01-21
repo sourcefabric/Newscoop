@@ -5,7 +5,7 @@ regGS("Account", "Улiковы запiс");
 regGS("Items per page", "Аб'ектаў на старонцы");
 regGS("Add new", "Дадаць");
 regGS("Campsite", "CAMPSITE");
-regGS("Dashboard", "Галоўная");
+regGS("Home", "Галоўная");
 regGS("Logout", "Выхад");
 regGS("More...", "Далей...");
 regGS("Content", "Зьмест");
@@ -277,5 +277,5 @@ regGS("There are $1 keyword(s) left.", "Засталося $1 ключавога
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Назва<BR><SMALL>(нацiснуць для праўкi)</SMALL>:by");
 regGS("New field", "Новае поле");
 regGS("Author:", "Аўтар");
-regGS("Authors", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Цi Вы ўпэўнены, што жадаеце выдалiць графiчны файл \\'$1\\'? ");
 ?>

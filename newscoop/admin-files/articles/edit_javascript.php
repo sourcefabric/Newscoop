@@ -9,6 +9,9 @@ var ajax_forms = 0; // forms saving by ajax
 
 $(function() {
 
+// make breadcrumbs + save buttons sticky
+$('.breadcrumb-bar, .toolbar').wrapAll('<div class="sticky" />');
+
 // datepicker for date
 $('.datepicker').datepicker({
     dateFormat: 'yy-mm-dd'
@@ -157,11 +160,16 @@ array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>
 ];
-/** autocomplete is broken
+
+// authors autocomplete
 $(".aauthor").autocomplete({
     source: authorsList
 });
- */
+$(".aauthor").live('focus', function() {
+    $(".aauthor").autocomplete({
+        source: authorsList
+    });
+});
 
 // fancybox for popups
 $('a.iframe').each(function() {

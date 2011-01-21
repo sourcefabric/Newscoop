@@ -1,7 +1,7 @@
 <?php 
 regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "Το μέγιστο μέγεθος ανεβάσματος αρχείου δεν διαμορφώθηκε στο Newscoop.");
-regGS("File #$1 \"$2\" unattached", "");
+regGS("File #$1 \"$2\" unattached", "Αποσύναψη αρχείου #$1 \"$2\" ");
 regGS("File #$1 \"$2\" attached to article", "Το αρχείο #$1 \"$2\" επισυνάφθηκε στο άρθρο");
 regGS("Unable to add attachment.", "Η προσθήκη συννημένου ήταν αδύνατη.");
 regGS("There was a problem uploading the file.", "Υπήρξε ένα πρόβλημα κατά το ανέβασμα του αρχείου.");

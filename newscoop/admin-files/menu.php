@@ -408,13 +408,13 @@ $locale = trim(getGS('en'), ' (*)');
       );
 
       // MENUS
-      $('#newscoop_menu_content').menu({
+      $('#newscoop_menu_content').topmenu({
           content: $('#newscoop_menu_content').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php if ($showAdminActions) { ?>
-      $('#newscoop_menu_action').menu({
+      $('#newscoop_menu_action').topmenu({
           content: $('#newscoop_menu_action').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -423,7 +423,7 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showConfigureMenu) {
       ?>
-      $('#newscoop_menu_configure').menu({
+      $('#newscoop_menu_configure').topmenu({
           content: $('#newscoop_menu_configure').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -432,13 +432,13 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showUserMenu) {
       ?>
-      $('#newscoop_menu_users').menu({
+      $('#newscoop_menu_users').topmenu({
           content: $('#newscoop_menu_users').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php } ?>
-      $('#newscoop_menu_plugins').menu({
+      $('#newscoop_menu_plugins').topmenu({
           content: $('#newscoop_menu_plugins').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -448,14 +448,21 @@ $locale = trim(getGS('en'), ' (*)');
   </script>
   <script type="text/javascript"> 
   $(document).ready(function() {
+      var sticky_limit = 0;
       $(window).scroll(function() {
-          if ($(window).scrollTop() > $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "fixed");
-              $(".sticky").css("top", "0");
+          if ($('.sticky').size() == 0) {
+              return false; // no sticky
           }
-          if ($(window).scrollTop() <= $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "relative");
-              $(".sticky").css("top", $(".smartLegendIdentifier").offset);
+
+          var windowTop = $(window).scrollTop();
+          var stickyTop = $('.sticky').offset().top;
+          if (windowTop > stickyTop && sticky_limit == 0) {
+              $('.sticky').css('width', $('.sticky').width()+'px').css('position', 'fixed').css('top', '0');
+              sticky_limit = stickyTop;
+          }
+          if (sticky_limit > 0 && windowTop < sticky_limit) {
+              $('.sticky').css('position', 'relative');
+              sticky_limit = 0;
           }
       });
   });

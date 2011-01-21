@@ -1,4 +1,6 @@
 <?php 
+regGS("Dashboard", "");
+regGS("Authors", "");
 regGS("Libraries", "");
 regGS("Media Archive", "");
 regGS("Extensions", "");

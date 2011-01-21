@@ -5,7 +5,7 @@ regGS("Account", "Cont");
 regGS("Items per page", "Elemente pe pagină");
 regGS("Add new", "Adaugă element nou");
 regGS("Campsite", "Campsite");
-regGS("Dashboard", "Pagina principală");
+regGS("Home", "Pagina principală");
 regGS("Logout", "Închide sesiunea");
 regGS("More...", "Mai mult...");
 regGS("Content", "Conţinut");
@@ -278,5 +278,4 @@ regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nume");
 regGS("New field", "Câmp nou");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
-regGS("Authors", "");
 ?>
