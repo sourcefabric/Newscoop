@@ -1073,7 +1073,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=139 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1850,4 +1850,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-17 14:56:13
+-- Dump completed on 2011-01-21 10:36:42
