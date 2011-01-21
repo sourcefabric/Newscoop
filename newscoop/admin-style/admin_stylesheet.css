@@ -1244,3 +1244,12 @@ input.input_file {
 .fg-menu-container {
 	z-index:101;
 }
+
+/** plugins */
+.table_actions {
+    margin: 0 34px 8px;
+}
+
+form > .table_input {
+    font-size: 1.1em;
+}

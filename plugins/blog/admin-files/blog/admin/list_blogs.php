@@ -11,6 +11,11 @@ camp_load_translation_strings("plugin_blog");
 // getGS("offline");
 // getGS("moderated");
 // getGS("readonly");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Blogs'), ''),
+));
 ?>
 <script type="text/javascript">
 function ajax_action(action)
