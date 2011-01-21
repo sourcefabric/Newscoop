@@ -2404,7 +2404,7 @@ class Article extends DatabaseObject {
 
                 $firstName = $g_ado_db->escape($author['first_name']);
                 $lastName = $g_ado_db->escape($author['last_name']);
-                $whereCondition = "ArticleAuthors.fk_author_id =
+                $whereCondition = "ArticleAuthors.fk_author_id IN
                     (SELECT Authors.id
                      FROM Authors
                      WHERE CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol
