@@ -111,7 +111,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <tr id="select_languages" <?php if ($f_language_set == 'all') { ?>style="display: none;"<?php } ?>>
 	<td></td>
 	<td>
-		<select name="f_language_id[]" multiple size="3" class="input_select" alt="selectm|1|*" emsg="<?php putGS("Please select one or more languages."); ?>">
+		<select name="f_language_id[]" multiple size="5" class="input_select2" alt="selectm|1|*" emsg="<?php putGS("Please select one or more languages."); ?>">
 		<?php
 		foreach ($languages as $language) {
 			camp_html_select_option($language->getLanguageId(), '', $language->getName() . ' (' . $language->getNativeName() . ')');
