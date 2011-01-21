@@ -701,7 +701,8 @@ Date:		September 2008
 	-moz-border-radius-bottomleft: 4px;
 	-webkit-border-bottom-left-radius: 4px;
 }
-.ui-corner-all,
+
+.fg-menu-container.ui-corner-all,
 .fg-menu .ui-corner-all,
 .fg-button-ui-corner-all {
 	-moz-border-radius: 3px;
