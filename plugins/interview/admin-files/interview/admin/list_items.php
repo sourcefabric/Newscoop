@@ -1,5 +1,11 @@
 <?php
 camp_load_translation_strings("plugin_interview");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Interviews'), $Campsite['WEBSITE_URL'] . '/admin/interview/admin/index.php'),
+    array(getGS('List Items'), ''),
+));
 ?>
 
 <script type="text/javascript">
