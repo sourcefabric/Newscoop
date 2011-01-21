@@ -725,7 +725,7 @@ Date:		September 2008
 }
 
 /* SubMenu */
-.fg-menu .ui-state-default, .fg-menu .ui-widget-content .ui-state-default {
+.fg-menu .ui-state-default, .fg-menu .ui-widget-content .ui-state-default, .fg-menu-container.ui-widget {
 	border: 1px solid #3d3d3d;
 	background: #282828;
 	font-weight: normal;
@@ -733,7 +733,8 @@ Date:		September 2008
 	outline: none;
 }
 .fg-menu .ui-state-default a,
-.fg-button-ui-state-default a {
+.fg-button-ui-state-default a,
+.fg-menu-container.ui-widget a {
 	color: #ffffff;
 	text-decoration: none;
 	outline: none;
@@ -779,6 +780,9 @@ Date:		September 2008
 }
 .fg-menu .ui-state-active .ui-icon {
 	background-image: url(images/ui-icons_ffffff_256x240.png);
+}
+.fg-menu-container.ui-widget .ui-icon {
+    background-image: url(images/ui-icons_ffffff_256x240.png);
 }
 
 
