@@ -137,6 +137,13 @@ $('.save-button-bar input').click(function() {
     };
 
     if ($(this).attr('id') == 'save_and_close') {
+        // unlock article
+        callServer(['Article', 'setIsLocked'], [
+            <?php echo $f_language_selected; ?>,
+            <?php echo $articleObj->getArticleNumber(); ?>,
+            0,
+            <?php echo $g_user->getUserId(); ?>]);
+
         if (ajax_forms == 0) { // nothing to save
             close(1500);
             return false;
