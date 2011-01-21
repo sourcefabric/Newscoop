@@ -65,12 +65,12 @@ if ($default_publication != null) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Subscribers"), "/$ADMIN/users/?uType=Subscribers");
-$crumbs[] = array(getGS("Account") . " '".$manageUser->getUserName()."'",
+$crumbs[] = array(getGS('Users'), '');
+$crumbs[] = array(getGS('Subscribers'), "/$ADMIN/users/?uType=Subscribers");
+$crumbs[] = array(getGS('Account') . " '".$manageUser->getUserName()."'",
 			"/$ADMIN/users/edit.php?User=$f_user_id&uType=Subscribers");
-$crumbs[] = array(getGS("Subscriptions"), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
-$crumbs[] = array(getGS("Add new subscription"), "");
+$crumbs[] = array(getGS('Subscriptions'), "/$ADMIN/users/subscriptions/?f_user_id=$f_user_id");
+$crumbs[] = array(getGS('Add new subscription'), '');
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
