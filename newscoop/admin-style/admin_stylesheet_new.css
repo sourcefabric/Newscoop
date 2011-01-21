@@ -302,7 +302,7 @@ ul.tree.sortable .icon {
     width: 11px;
     height: 11px;
     margin: 3px 5px 0 3px;
-    background: transparent url('topics_open_close.png') no-repeat 0 0;
+    background: transparent none;
     cursor: pointer;
     text-decoration: none;
     font-size: 0.9em;
