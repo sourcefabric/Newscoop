@@ -110,7 +110,7 @@ if (!is_null($f_action_workflow)) {
 		}
 
 		// If the article is not yet categorized, force it to be before publication.
-		if (($f_action_workflow == "Y") && (($articleObj->getPublicationId() == 0) || ($articleObj->getIssueNumber() == 0) || ($articleObj->getSectionNumber() == 0))) {
+		if (($f_action_workflow == "Y" || $f_action_workflow == 'M') && (($articleObj->getPublicationId() == 0) || ($articleObj->getIssueNumber() == 0) || ($articleObj->getSectionNumber() == 0))) {
 			$args = $_REQUEST;
 			$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
 			$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;

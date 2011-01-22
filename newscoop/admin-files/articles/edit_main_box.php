@@ -113,7 +113,9 @@ function change_language(select)
     <select name="f_action_workflow" class="input_select left-floated"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
-    if (isset($issueObj) && $issueObj->isPublished()) {
+    if (!isset($issueObj)) {
+        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Publish'));
+    } elseif ($issueObj->isPublished()) {
         camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Published'));
     } else {
         camp_html_select_option('M', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Publish with issue'));
