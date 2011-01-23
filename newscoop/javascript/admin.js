@@ -115,6 +115,11 @@ $(document).ready(function() {
             flashMessage(user_msgs);
         }
     } catch (e) {};
+
+    // rise limit for google gadget setting
+    $('input#googlegadget-code').each(function() {
+            $(this).attr('maxlength', '500');
+        });
 });
 
 /**

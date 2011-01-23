@@ -22,7 +22,7 @@
       <script type="text/javascript">
       function  addAuthor(){
           var rnumber=Math.floor(Math.random()*9876)
-          $('#authorContainer ul').append('<li id="author_li' + rnumber + '"><div class="left-floated"><div style="margin-top:1px"><select name="f_article_author_type[]" id="article_author_type' + rnumber + '" class="input_select aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none"><?php echo drawComboContent(); ?></select></div></div><div class="position-helper"><input type="text" style="width:280px" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" autocomplete="off" /><a class="ui-state-default icon-button no-text" href="#" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');"><span class="ui-icon ui-icon-closethick"></span></a></div></li>');
+          $('#authorContainer ul').append('<li id="author_li' + rnumber + '"><div class="left-floated"><div style="margin-top:1px"><select name="f_article_author_type[]" id="article_author_type' + rnumber + '" class="input_select aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none"><?php echo drawComboContent(); ?></select></div></div><div class="position-helper"><input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" autocomplete="off" /><a class="ui-state-default icon-button no-text" href="#" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');"><span class="ui-icon ui-icon-closethick"></span></a></div></li>');
       }
 
       function deleteAuthor(id, empty){
@@ -54,7 +54,7 @@
                 <div id="<?php p('author_type'.$i); ?>" style="margin-top:1px"><?php echo drawCombo($author->getAuthorType()->getId(), $i); ?></div>
               </div>
               <div class="position-helper">
-                 <input type="text" name="f_article_author[]" style="width:280px"
+                 <input type="text" name="f_article_author[]"
                    id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor" value="<?php print htmlspecialchars($author->getName()); ?>" autocomplete="off" />
                  <a class="ui-state-default icon-button no-text" href="#"
                    id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i; ?>');"><span
@@ -75,7 +75,7 @@
                 </div>
               </div>
               <div class="position-helper">
-                 <input type="text" name="f_article_author[]" style="width:280px"
+                 <input type="text" name="f_article_author[]"
                    id="f_article_authorxx" size="45" class="input_text aauthor" value="" autocomplete="off" />
                  <a class="ui-state-default icon-button no-text" href="#"
                    id="removeauthorxx" onclick="deleteAuthor('xx');"><span
@@ -88,8 +88,9 @@
         <li>
           <ul>
             <li>
-              <input type="button" class="default-button left-floated clear-margin next-to-field"
-                onclick="addAuthor();" value="<?php putGS('Add another author'); ?>" />
+              <a class="ui-state-default icon-button left-floated"
+                href="#" onclick="addAuthor();"><span
+                class="ui-icon ui-icon-plusthick"></span><?php putGS('Add another author'); ?></a>
             </li>
           </ul>
         </li>
