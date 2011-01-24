@@ -340,7 +340,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td colspan="2" align="left">
-        <?php putGS("Enable Campcaster audioclip attachments?"); ?>
+        <?php putGS("Enable Airtime audio attachments?"); ?>
         <input type="radio" name="f_use_campcaster" onclick="ShowElement('campcaster_server');" value="Y" <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_use_campcaster" onclick="HideElement('campcaster_server');" value="N" <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
@@ -350,7 +350,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <table cellpadding="0" cellspacing="6">
         <tr>
             <td>
-                <strong><?php putGS("Campcaster Server"); ?></strong>
+                <strong><?php putGS("Airtime Server"); ?></strong>
             </td>
         </tr>
         <tr>
