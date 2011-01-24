@@ -115,7 +115,7 @@ var set_local_strings = function()
 
     local_strings_nam = {};
 
-    local_strings_nam["cc"] = "<?php putGS("+"); ?>";
+    local_strings_nam["cc"] = "+";
     local_strings_nam["city"] = "<?php putGS("center city"); ?>";
     local_strings_nam["no_city_was_found"] = "<?php putGS("sorry, no city was found"); ?>";
 
