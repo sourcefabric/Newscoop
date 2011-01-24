@@ -1,6 +1,5 @@
 <?php 
 regGS("center city", "center city");
-regGS("+", "+");
 regGS("Map preview", "Map preview");
 regGS("Locations updated.", "Locations updated.");
 regGS("Setting the map name helps with map search", "Setting the map name helps with map search");

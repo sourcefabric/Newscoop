@@ -1,6 +1,5 @@
 <?php 
 regGS("center city", "");
-regGS("+", "");
 regGS("Map preview", "");
 regGS("Locations updated.", "");
 regGS("Setting the map name helps with map search", "Ρυθμίζοντας το όνομα του χάρτη, βοηθάει στην εύρεση χαρτών");
