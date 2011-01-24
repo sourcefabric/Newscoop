@@ -197,12 +197,24 @@ class TopicTest extends PHPUnit_Framework_TestCase
 		);
 		$this->assertEquals($tree, Topic::GetTree());
 		$subtree = array(
-		array(2=>new Topic(2), 14=>new Topic(14)),
-		array(2=>new Topic(2), 14=>new Topic(14), 22=>new Topic(22)),
-		array(2=>new Topic(2), 14=>new Topic(14), 19=>new Topic(19)),
-		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16)),
-		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 18=>new Topic(18)),
-		array(2=>new Topic(2), 14=>new Topic(14), 16=>new Topic(16), 17=>new Topic(17))
+		array(26=>new Topic(26)),
+		array(15=>new Topic(15)),
+		array(15=>new Topic(15), 25=>new Topic(25)),
+		array(15=>new Topic(15), 24=>new Topic(24)),
+		array(14=>new Topic(14)),
+		array(14=>new Topic(14), 22=>new Topic(22)),
+		array(14=>new Topic(14), 19=>new Topic(19)),
+		array(14=>new Topic(14), 16=>new Topic(16)),
+		array(14=>new Topic(14), 16=>new Topic(16), 18=>new Topic(18)),
+		array(14=>new Topic(14), 16=>new Topic(16), 17=>new Topic(17))
+		);
+		$this->assertEquals($subtree, Topic::GetTree(2));
+		$subtree = array(
+		array(22=>new Topic(22)),
+		array(19=>new Topic(19)),
+		array(16=>new Topic(16)),
+		array(16=>new Topic(16), 18=>new Topic(18)),
+		array(16=>new Topic(16), 17=>new Topic(17))
 		);
 		$this->assertEquals($subtree, Topic::GetTree(14));
 
