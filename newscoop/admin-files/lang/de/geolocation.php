@@ -1,4 +1,5 @@
 <?php 
+regGS("center city", "");
 regGS("Map preview", "");
 regGS("Locations updated.", "");
 regGS("Setting the map name helps with map search", "Einen Kartennamen festlegen um die Kartensuche zu vereinfachen.");
@@ -21,8 +22,6 @@ regGS("html content", "HTML Inhalt");
 regGS("height", "Höhe");
 regGS("fill in the point description", "Standpunktbeschreibung eintragen");
 regGS("fill in map name", "Kartenname eintragen");
-regGS("city", "Stadt");
-regGS("cc", "cc");
 regGS("You do not have the right to remove maps from articles.", "Keine Berechtigung um Karten aus Artikeln zu entfernen");
 regGS("Video file", "Videodatei");
 regGS("Video ID", "Video ID");

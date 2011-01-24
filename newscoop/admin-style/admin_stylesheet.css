@@ -961,7 +961,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 /*---- END Geolocation ----*/
 
-.article-title, .breadcrumb_active	{
+.article-title, .article-title-locked, .breadcrumb_active	{
     color: #3B3B3B;
     float: left;
     font-size: 17px;
@@ -970,6 +970,12 @@ a.clear-margin:hover, .icon-button:hover  {
     margin: 0;
     padding: 3px 40px 0 0;
     text-indent: 6px;
+}
+.article-title, .breadcrumb_active	{
+    color: #3B3B3B;
+}
+.article-title-locked {
+    color: #ec8b8b;
 }
 .breadcrumb_active	{
     padding: 0 40px 0 0;

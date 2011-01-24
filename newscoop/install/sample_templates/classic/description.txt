@@ -1,1 +1,1 @@
-some information
+Classic demo template

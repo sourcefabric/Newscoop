@@ -1909,6 +1909,11 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $map = $geo['map'];
         $pois = $geo['pois'];
 
+        $map_name = $map['name'];
+        $map_name = str_replace("&", "&amp;", $map_name);
+        $map_name = str_replace("<", "&lt;", $map_name);
+        $map_name = str_replace(">", "&gt;", $map_name);
+
         $html = '
             <div class="geomap_info">
               <dl class="geomap_map_name">
@@ -1916,17 +1921,26 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                   getGS('Map') . ':
                 </dt>
                 <dd class="geomap_map_name_value">' .
-                  $map['name'] . '
+                  $map_name . '
                 </dd>
               </dl>
             </div>
             <div id="side_info" class="geo_side_info">';
         $poiIdx = 0;
         foreach ($pois as $poi) {
+            $poi_title = $poi['title'];
+            $poi_title = str_replace("&", "&amp;", $poi_title);
+            $poi_title = str_replace("<", "&lt;", $poi_title);
+            $poi_title = str_replace(">", "&gt;", $poi_title);
+            $poi_perex = $poi['perex'];
+            $poi_perex = str_replace("&", "&amp;", $poi_perex);
+            $poi_perex = str_replace("<", "&lt;", $poi_perex);
+            $poi_perex = str_replace(">", "&gt;", $poi_perex);
+
             $html .= '<div id="poi_seq_' . $poiIdx . '">
                 <a class="geomap_poi_name" href="#" onClick="'
-                . $poi['open'] . ' return false;">' . $poi['title'] . '</a>
-                <div class="geomap_poi_perex">' . $poi['perex'] . '</div>
+                . $poi['open'] . ' return false;">' . $poi_title . '</a>
+                <div class="geomap_poi_perex">' . $poi_perex . '</div>
                 <div class="geomap_poi_center">
                     <a href="#" onClick="' . $poi['center'] . ' return false;">'
                         . getGS('Center') . '

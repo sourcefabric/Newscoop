@@ -1,3 +1,15 @@
+**** v 0.8.2 ****
+- Change back to remove the speed optimization for highlight process introduced in 0.8.1 that has too much bugs
+- Syntax name are no more stored in language files but in syntax files. Thoses display names will be used only if the compressor tools is used, otherwise syntax code is displayed
+- Activate word-wrap feature for opera > 9.6 
+- Bug fix: Selection wasn't corretcly remembered between file tabs
+- Bug fix: [2886499] Page up and page Down action are no more executed if Alt touch is pressed
+- Bug fix: [2887118] UTF-8 encoded URLs return wrong base URL
+- Bug fix: [2851936] Unresolved reference to isIE in elements_functions.js 
+- Bug fix: [2886836] get_IE_selection bug when closed...
+- bug fix: JavaScript error when switching to fullscreen (https://sourceforge.net/projects/editarea/forums/forum/556921/topic/3388824)
+- Bug fix (but not applicable due to change back) : [2854519, 2854642, 2792217, 2834579 ] Desynchronisation occcured with <, > and & characters
+
 **** v 0.8.1.1 ****
 - Fix bug of frequent syntax desynchronisation when the first character of the textarea was highlighted
 - In unload now check that parent.editareaLoader still exists before calling it

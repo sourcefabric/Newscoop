@@ -15,7 +15,9 @@
     {{ /if }}
     <ul>
     {{ list_article_locations }}
-        <li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+	{{ if $gimme->location->enabled}}
+        	<li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+	{{ /if }}
     {{ /list_article_locations }}
     </ul>
 {{ /if }}
