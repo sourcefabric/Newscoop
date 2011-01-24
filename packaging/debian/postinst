@@ -55,7 +55,7 @@ case "$1" in
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir
 		dpkg-statoverride --list $datadir/conf || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
-		dpkg-statoverride --list $datadir/cron_jobs || \
+		dpkg-statoverride --list $datadir/install/cron_jobs || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
 		dpkg-statoverride --list $datadir/templates || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
