@@ -4,15 +4,29 @@
  */
 $locations = array();
 $map_name = "";
+$map_name_title = "";
 $map = $articleObj->getMap();
 if (is_object($map) && $map->exists()) {
     $locations = $map->getLocations();
     $map_name = $map->getName();
+    if (0 < strlen($map_name))
+    {
+        $map_name_title = $map_name;
+        $map_name_title = str_replace("&", "&amp;", $map_name_title);
+        $map_name_title = str_replace("<", "&lt;", $map_name_title);
+        $map_name_title = str_replace(">", "&gt;", $map_name_title);
+        $map_name_title = str_replace("\\", "&#92;", $map_name_title);
+        $map_name_title = str_replace("'", "&#39;", $map_name_title);
+        $map_name_title = " title='$map_name_title'";
+    }
     $map_name_max_len = 20;
     if ($map_name_max_len < strlen($map_name))
     {
         $map_name = substr($map_name, 0, $map_name_max_len) . "...";
     }
+    $map_name = str_replace("&", "&amp;", $map_name);
+    $map_name = str_replace("<", "&lt;", $map_name);
+    $map_name = str_replace(">", "&gt;", $map_name);
 }
 $detachMapUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
 
@@ -90,9 +104,9 @@ geomap_popup_show = function (edit) {
       class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
   <?php } ?>
   <?php if ($map->exists()) { ?>
-    <span class="geo_map_name">
+    <h4 class="geo_map_name"<?php echo $map_name_title; ?>>
     <?php echo $map_name; ?>
-    </span>
+    </h4>
   <?php } ?>
     <div class="clear"></div>
   <?php if ($map->exists() && !empty($locations)) { ?>
@@ -102,10 +116,20 @@ geomap_popup_show = function (edit) {
     if (!$language_usage) { $language_usage = $f_language_id; }
     foreach ($locations as $location) {
         $content = $location->getContent($language_usage);
+
+        $poi_name = $content->getName();
+        $poi_name_max_len = 40;
+        if ($poi_name_max_len < strlen($poi_name))
+        {
+            $poi_name = substr($poi_name, 0, $poi_name_max_len) . "...";
+        }
+        $poi_name = str_replace("&", "&amp;", $poi_name);
+        $poi_name = str_replace("<", "&lt;", $poi_name);
+        $poi_name = str_replace(">", "&gt;", $poi_name);
         if ($location->isEnabled($language_usage)) {
-            echo '<li class="geomap_list_location_enabled">' . $content->getName() . '</li>';
+            echo '<li class="geomap_list_location_enabled">' . $poi_name . '</li>';
         } else {
-            echo '<li class="geomap_list_location_disabled">' . $content->getName() . '</li>';
+            echo '<li class="geomap_list_location_disabled">' . $poi_name . '</li>';
         }
     }
     ?>

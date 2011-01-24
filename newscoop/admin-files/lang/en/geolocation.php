@@ -1,4 +1,5 @@
 <?php 
+regGS("center city", "center city");
 regGS("Map preview", "Map preview");
 regGS("Locations updated.", "Locations updated.");
 regGS("Setting the map name helps with map search", "Setting the map name helps with map search");
@@ -21,8 +22,6 @@ regGS("html content", "html content");
 regGS("height", "height");
 regGS("fill in the point description", "fill in the point description");
 regGS("fill in map name", "fill in map name");
-regGS("city", "city");
-regGS("cc", "cc");
 regGS("You do not have the right to remove maps from articles.", "You do not have the right to remove maps from articles.");
 regGS("Video file", "Video file");
 regGS("Video ID", "Video ID");

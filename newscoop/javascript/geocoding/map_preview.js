@@ -501,12 +501,16 @@ this.create_popup_content = function(feature)
     var pop_text = "";
     {
         var pop_link = attrs.m_link;
+        var pop_title = "" + feature.attributes.m_title;
+        pop_title = pop_title.replace(/&/gi, "&amp;");
+        pop_title = pop_title.replace(/>/gi, "&gt;");
+        pop_title = pop_title.replace(/</gi, "&lt;");
 
         pop_text += "<div class='popup_title'>";
         if (0 < pop_link.length) {
             pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\">";
         }
-        pop_text += feature.attributes.m_title;
+        pop_text += pop_title;
         if (0 < pop_link.length) {
             pop_text += "</a>";
         }

@@ -27,9 +27,9 @@ $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_unlock = Input::Get('f_unlock', 'string', false, true);
 
-// Saved session values
 // $f_edit_mode can be "view" or "edit"
-$f_edit_mode = camp_session_get('f_edit_mode', 'edit');
+$f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
+
 // Whether to show comments at the bottom of the article
 // (you may not want to show them to speed up your loading time)
 // Selected language of the article

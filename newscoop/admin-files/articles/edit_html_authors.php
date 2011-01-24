@@ -104,8 +104,8 @@
           if (!empty($authors)) {
               foreach ((array) $authors as $author) {
           ?>
-            <div class="text-container left-floated date-published">
-              <strong><?php echo (!is_null($author->getAuthorType())) ? ($author->getAuthorType()->getName()) : ''; ?>: </strong>
+            <div class="text-container authorlist">
+              <span class="author-type-label"><?php echo (!is_null($author->getAuthorType())) ? ($author->getAuthorType()->getName()) : ''; ?>:</span>
               <span class="publish_date"><?php p($author->getName()); ?></span>
             </div>
           <?php

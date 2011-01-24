@@ -1,4 +1,5 @@
 <?php 
+regGS("center city", "");
 regGS("Map preview", "");
 regGS("Locations updated.", "");
 regGS("Setting the map name helps with map search", "Ρυθμίζοντας το όνομα του χάρτη, βοηθάει στην εύρεση χαρτών");
@@ -21,8 +22,6 @@ regGS("html content", "περιεχόμενο html");
 regGS("height", "ύψος");
 regGS("fill in the point description", "συμπληρώστε την περιγραφή του σημείου");
 regGS("fill in map name", "συμπληρώστε το όνομα χάρτη");
-regGS("city", "πόλη");
-regGS("cc", "cc");
 regGS("You do not have the right to remove maps from articles.", "Δεν έχετε το δικαίωμα να αφαιρέσετε χάρτες από τα άρθρα.");
 regGS("Video file", "αρχείο Video");
 regGS("Video ID", "ID Video");
