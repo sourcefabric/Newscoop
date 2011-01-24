@@ -1,18 +1,80 @@
-#!/bin/sh -e
+#!/bin/bash
+#postinst script for newscoop
 
-chmod 755 /var/www/campsite >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/conf >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/templates >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/templates_cache >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/plugins >/dev/null 2>&1 || true
-chmod 770 /var/www/campsite/backup >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/conf >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/install/cron_jobs >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/templates >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/templates_cache >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/plugins >/dev/null 2>&1 || true
-chown www-data.www-data /var/www/campsite/backup >/dev/null 2>&1 || true
+set -e
+
+. /usr/share/debconf/confmodule
+
+#dbc_generate_include='php:/etc/newscoop/dbconfig.php'
+#dbc_generate_include_owner='root:www-data'
+#dbc_generate_include_perms='640'
+#dbc_pgsql_createdb_encoding='UTF8'
+#. /usr/share/dbconfig-common/dpkg/postinst
+#dbc_go newscoop
+
+if [ "$DPKG_DEBUG" = "developer" ]; then
+    set -x
+fi
+
+WEB_USER=www-data
+WEB_GROUP=www-data
+
+package_name="newscoop"
+datadir="/var/lib/${package_name}"
+configdir="/etc/newscoop/3.5"
+includefile="${configdir}/apache.conf"
+phpinifile="${configdir}/newscoop.ini"
+OLDVERSION="$2"
+
+case "$1" in
+  configure)
+
+    #webserver=`echo $webserver|sed -e 's/,  */ /g'`
+    webserver="apache2"
+    php="php5"
+
+    if [ ! -d /etc/$webserver/conf.d/ ]; then
+        install -d -m755 /etc/$webserver/conf.d/
+    fi
+    if [ ! -e /etc/$webserver/conf.d/newscoop.conf ]; then
+      ln -s ${includefile} /etc/$webserver/conf.d/newscoop.conf
+      a2enmod rewrite &>/dev/null || true
+      restart="$webserver $restart"
+    fi
+
+    if [ ! -d /etc/$php/conf.d/ ]; then
+      install -d -m755 /etc/$php/conf.d/
+    fi
+    if [ ! -e /etc/$php/conf.d/newscoop.ini ]; then
+      ln -s ${phpinifile} /etc/$php/conf.d/newscoop.init
+      restart="$webserver $restart"
+    fi
+
+    # Permissions
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/backup
+
+    servers="apache2"
+    . /usr/share/wwwconfig-common/restart.sh
+		echo $error
+
+  ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+
+  ;;
+
+  *)
+       echo "postinst called with unknown argument \`$1'" >&2
+       exit 1
+  ;;
+esac
+
+#DEBHELPER#
 
 exit 0

@@ -1,27 +1,5 @@
-campsite (3.4.1ubuntu1) stable; urgency=low
+newscoop (3.5.0~rc2-1) unstable; urgency=low
 
-  Improvements
-  ------------
-  - CS-2197: CSRF (Cross-site request forgery) protection implemented
-  - CS-2214: Multiple general UI changes and fixes
-  - CS-2179: Number of parameters in the articles search list reduced
-  - CS-2206: Improved session handling to avoid logged user session grabbing via CSRF attack
+  * Initial release (Closes: #604113).
 
-  Bugs Fixed
-  ----------
-  - CS-2171: On backup data restore the file system_preferences.php is now - deleted
-  - CS-2176: The restore script no longer crashes if the files/images directory didn't exist in the package
-  - CS-2177: Layout errors in the universal list solved
-  - CS-2180: Campsite installer no longer crashes on Windows
-  - CS-2183: Missing default admin permission sorted
-  - CS-2184: Feedback function working correctly
-  - CS-2186: Universal list now working if topic has " in title
-  - CS-2201: Plugin installation difficulties solved
-  - CS-2203: UTF strings show up properly in email notifications
-  - CS-2205: User input is correctly filtered out
-  - CS-2208: Field values now change correctly in the universal list
-  - CS-2209: Pagination and sorting now working properly in staff-user-admin of campsite
-  - CS-2219: Localizer now supports languages with different country code (e.g. zh_CN - simplified, zh_TW - traditional)
-
- -- Sourcefabric <campsite-support@lists.sourcefabric.org>  Mon, 02 Aug 2010 19:25:32 +0300
-
+ -- Robin Gareus <robin@gareus.org>  Mon, 24 Jan 2011 15:08:59 +0100
