@@ -51,12 +51,19 @@ case "$1" in
     fi
 
     # Permissions
+		dpkg-statoverride --list $datadir || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir
+		dpkg-statoverride --list $datadir/conf || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
+		dpkg-statoverride --list $datadir/cron_jobs || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
+		dpkg-statoverride --list $datadir/templates || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
+		dpkg-statoverride --list $datadir/templates_cache || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
+		dpkg-statoverride --list $datadir/plugins || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
+		dpkg-statoverride --list $datadir/backup || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/backup
 
     servers="apache2"

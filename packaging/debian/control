@@ -7,7 +7,7 @@ Standards-Version: 3.9.1
 Homepage: http://www.sourcefabric.org/en/products/newscoop_overview/
 
 Package: newscoop
-Architecture: any
+Architecture: all
 Depends: apache2 | httpd,
  libapache2-mod-php5 | php5,
  php5-mysql,

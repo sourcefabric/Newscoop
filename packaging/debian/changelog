@@ -1,3 +1,10 @@
+newscoop (3.5.0~rc2-2) unstable; urgency=low
+
+  * fixed arch - package is architecture independent
+  * check for existing dpkg-statoverride
+
+ -- Robin Gareus <robin@gareus.org>  Mon, 24 Jan 2011 21:00:57 +0100
+
 newscoop (3.5.0~rc2-1) unstable; urgency=low
 
   * Initial release (Closes: #604113).
