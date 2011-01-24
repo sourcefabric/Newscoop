@@ -507,6 +507,7 @@ class Article extends DatabaseObject {
         if (count($columns) > 0) {
             $success = $this->update($columns);
             if ($success) {
+            	$this->setWorkflowStatus($this->getWorkflowStatus());
                 $g_ado_db->Execute('LOCK TABLES Articles WRITE');
                 $articleOrder = $g_ado_db->GetOne('SELECT MAX(ArticleOrder) + 1 FROM Articles');
                 $this->setProperty('ArticleOrder', $articleOrder);
