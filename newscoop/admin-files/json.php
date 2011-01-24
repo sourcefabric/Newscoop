@@ -52,6 +52,7 @@ try {
     $serverRequest->allow('Article::setOnSectionPage');
     $serverRequest->allow('Article::setIsPublic');
     $serverRequest->allow('Article::setKeywords');
+    $serverRequest->allow('Article::setIsLocked');
     $serverRequest->allow('ArticleData::setProperty');
 
     // execute

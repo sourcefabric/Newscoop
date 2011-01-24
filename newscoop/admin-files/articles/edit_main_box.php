@@ -90,7 +90,7 @@ function change_language(select)
       <option value="unlock"><?php putGS('Unlock'); ?></option>
       <?php } ?>
 
-      <?php if ($g_user->hasPermission('DeleteArticle')) { ?>
+      <?php if (!$locked && $g_user->hasPermission('DeleteArticle')) { ?>
       <option value="delete"><?php putGS('Delete'); ?></option>
       <?php } ?>
 
@@ -102,7 +102,7 @@ function change_language(select)
       <option value="translate"><?php putGS('Translate'); ?></option>
       <?php } ?>
 
-      <?php if ($g_user->hasPermission('MoveArticle')) { ?>
+      <?php if (!$locked && $g_user->hasPermission('MoveArticle')) { ?>
       <option value="move"><?php putGS('Move'); ?></option>
       <?php } ?>
     </select>
@@ -110,9 +110,12 @@ function change_language(select)
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated" onchange="return checkChanged() && this.form.submit();">
+    <select name="f_action_workflow" class="input_select left-floated"
+      onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
-    if (isset($issueObj) && $issueObj->isPublished()) {
+    if (!isset($issueObj)) {
+        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Publish'));
+    } elseif ($issueObj->isPublished()) {
         camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Published'));
     } else {
         camp_html_select_option('M', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Publish with issue'));
@@ -122,7 +125,8 @@ function change_language(select)
     ?>
     </select>
     <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated" onchange="return checkChanged() && this.form.submit();">
+    <select name="f_action_workflow" class="input_select left-floated"
+      onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));
     camp_html_select_option('N', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('New'));

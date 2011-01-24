@@ -3,7 +3,7 @@ regGS("Account", "حساب");
 regGS("Items per page", "عدد العناصر للصفحة");
 regGS("Add new", "أضف جديد");
 regGS("Campsite", "كامبسايت");
-regGS("Dashboard", "البداية");
+regGS("Home", "البداية");
 regGS("Logout", "خروج");
 regGS("More...", "المزيد...");
 regGS("Content", "المحتوى");
@@ -269,5 +269,4 @@ regGS("Add new user account", "أضف حساب مستخدم جديد");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
-regGS("Authors", "");
 ?>

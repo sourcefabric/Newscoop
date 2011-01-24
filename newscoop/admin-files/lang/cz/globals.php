@@ -5,7 +5,7 @@ regGS("Account", "Účet");
 regGS("Items per page", "Položek na stránku");
 regGS("Add new", "Přidat nový");
 regGS("Campsite", "CAMPSITE");
-regGS("Dashboard", "Domů");
+regGS("Home", "Domů");
 regGS("Logout", "Odhlásit");
 regGS("More...", "Více...");
 regGS("Content", "Obsah");
@@ -269,5 +269,5 @@ regGS("User may add/change user accounts and passwords", "Uživatel může přid
 regGS("User may delete user accounts", "Uživatel může mazat uživatelské účty");
 regGS("Add new user account", "Přidat uživatelský účet");
 regGS("Subscription Default Time", "Předplatné období");
-regGS("Authors", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Doopravdy chcete odstranit obrázek \\'$1\\'?");
 ?>

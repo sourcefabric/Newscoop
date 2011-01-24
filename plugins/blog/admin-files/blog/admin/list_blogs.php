@@ -11,31 +11,24 @@ camp_load_translation_strings("plugin_blog");
 // getGS("offline");
 // getGS("moderated");
 // getGS("readonly");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Blogs'), ''),
+));
 ?>
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
-<SCRIPT language="javascript">
+<script type="text/javascript">
 function ajax_action(action)
 {
-    $('f_action').value = action;
+    $('#f_action').val(action);
 
-    var myAjax = new Ajax.Request(
-            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
-            {
-                method: 'get',
-                parameters: Form.serialize($('blogs_list')),
-                onComplete: do_reload
-            }
-        );
-
-
-}
-
-function do_reload(response)
-{
-    if (response.responseText) {
-        alert(response.responseText);
-    }
-    document.location.reload();
+    // save & reload
+    var myAjax = $.get(
+        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
+        $('#blogs_list').serialize(),
+        function() {
+            window.location.reload();
+        });
 }
 </script>
 <?php

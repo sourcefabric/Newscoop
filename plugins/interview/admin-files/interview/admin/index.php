@@ -16,35 +16,28 @@ camp_load_translation_strings("plugin_interview");
 // getGS("Delete Image");
 // getGS("Short Description");
 // getGS("Questions Limit");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Interviews'), ''),
+));
 ?>
 
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
-<SCRIPT language="javascript">
+<script type="text/javascript">
 function ajax_action(action)
 {
-    $('f_action').value = action;
+    $('#f_action').val(action);
 
-    var myAjax = new Ajax.Request(
-            "ajax_action.php",
-            {
-                method: 'get',
-                parameters: Form.serialize($('interviews_list')),
-                onComplete: do_reload
-            }
-        );
-
-
-
-}
-
-function do_reload(response)
-{
-    if (response.responseText) {
-        alert(response.responseText);
-    }
-    document.location.reload();
+    // save & reload
+    var myAjax = $.get(
+        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
+        $('#interviews_list').serialize(),
+        function() {
+            window.location.reload();
+        });
 }
 </script>
+
 <?php
 
 // User role depend on path to this file. Tricky: moderator and guest folders are just symlink to admin files!

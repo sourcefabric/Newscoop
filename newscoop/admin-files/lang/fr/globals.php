@@ -3,7 +3,7 @@ regGS("Account", "Compte");
 regGS("Items per page", "Articles par page");
 regGS("Add new", "Nouveau");
 regGS("Campsite", "CAMPSITE");
-regGS("Dashboard", "Accueil");
+regGS("Home", "Accueil");
 regGS("Logout", "Deconnecter");
 regGS("More...", "Plus...");
 regGS("Content", "Contenu");
@@ -260,5 +260,4 @@ regGS("Plugins", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
-regGS("Authors", "");
 ?>

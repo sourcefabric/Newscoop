@@ -11,11 +11,7 @@ camp_load_translation_strings('api');
 camp_load_translation_strings('extensions');
 
 // install default widgets for admin
-if ($g_user->getUserId() == 1
-    && SystemPref::Get('AdminWidgetsInstalled') == NULL) {
-    WidgetManager::SetDefaultWidgets(1);
-    SystemPref::Set('AdminWidgetsInstalled', time());
-}
+WidgetManager::SetDefaultWidgetsAll();
 
 // add title
 echo camp_html_breadcrumbs(array(

@@ -177,6 +177,7 @@ regGS("User may insert horizontal rules", "");
 regGS("User may change the font color", "");
 regGS("User may use superscripts", "");
 regGS("User may use subscripts", "");
+regGS("User may backup and restore the site data", "");
 regGS("Miscellaneous", "");
 regGS("Staff/Subscribers Management", "");
 regGS("Editor Basic Settings", "");

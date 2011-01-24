@@ -23,11 +23,11 @@ if ($poll->exists()) {
     $is_used_as_default = false;
 }
 
-/*
-$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
-                  'Section' => $sectionObj);
-camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
-*/
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
+    array(getGS('Translate Poll'), ''),
+));
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -49,12 +49,6 @@ camp_html_display_msgs();
 <INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($poll->getLanguageId()); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
-<TR>
-    <TD COLSPAN="2">
-        <B><?php  putGS("Translate Poll"); ?></B>
-        <HR NOSHADE SIZE="1" COLOR="BLACK">
-    </TD>
-</TR>
 <TR>
     <td valign="top">
         <table>

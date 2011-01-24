@@ -2397,19 +2397,21 @@ class Article extends DatabaseObject {
                     }
                 }
             } elseif ($leftOperand == 'author') {
-                $otherTables['ArticleAuthors'] = array('Number' => 'fk_article_number');
+                $otherTables['ArticleAuthors'] = array('__JOIN' => ',');
                 $author = Author::ReadName($comparisonOperation['right']);
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
                 $firstName = $g_ado_db->escape($author['first_name']);
                 $lastName = $g_ado_db->escape($author['last_name']);
-                $whereCondition = "ArticleAuthors.fk_author_id =
+                $whereCondition = "ArticleAuthors.fk_author_id IN
                     (SELECT Authors.id
                      FROM Authors
                      WHERE CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol
                          '$valModifier$firstName $lastName$valModifier')";
                 $selectClauseObj->addWhere($whereCondition);
+                $selectClauseObj->addWhere('Articles.Number = ArticleAuthors.fk_article_number');
+                $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
                 $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right']);
                 $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
@@ -2480,19 +2482,23 @@ class Article extends DatabaseObject {
         }
         if (count($otherTables) > 0) {
             foreach ($otherTables as $table=>$fields) {
+            	$joinType = 'LEFT JOIN';
+            	if (isset($fields['__JOIN'])) {
+            		$joinType = $fields['__JOIN'];
+            	}
                 if (isset($fields['__TABLE_ALIAS'])) {
                     $tableAlias = $fields['__TABLE_ALIAS'];
-                    $tableJoin = "\n    LEFT JOIN $table AS $tableAlias ON \n";
+                    $tableJoin = "\n    $joinType $table AS $tableAlias \n";
                 } else {
                     $tableAlias = $table;
-                    $tableJoin = "\n    LEFT JOIN $tableAlias ON \n";
+                    $tableJoin = "\n    $joinType $tableAlias \n";
                 }
                 $firstCondition = true;
                 foreach ($fields as $parent=>$child) {
-                    if ($parent == '__TABLE_ALIAS') {
+                    if ($parent == '__TABLE_ALIAS' || $parent == '__JOIN') {
                         continue;
                     }
-                    $condOperator = $firstCondition ? '' : 'AND ';
+                    $condOperator = $firstCondition ? ' ON ' : 'AND ';
                     if ($parent == '__CONST') {
                         $constTable = $child['table'];
                         $constField = $child['field'];

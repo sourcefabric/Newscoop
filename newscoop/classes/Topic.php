@@ -711,7 +711,8 @@ class Topic extends DatabaseObject {
 		$query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
 		if ($p_startingTopicId > 0) {
 			$query->addTableFrom($topicObj->m_dbTableName . ' AS sub_parent');
-			$query->addWhere('node.node_left BETWEEN sub_parent.node_left AND sub_parent.node_right');
+			$query->addWhere('node.node_left > sub_parent.node_left');
+			$query->addWhere('node.node_left < sub_parent.node_right');
 			$query->addWhere('sub_parent.id = ' . (int)$p_startingTopicId);
 		}
 		$query->addGroupField('node.id');
@@ -723,19 +724,16 @@ class Topic extends DatabaseObject {
 		$currentPath = array();
 		foreach ($rows as $row) {
 			$topicId = $row['id'];
-			$depth = $row['depth'];
+			$depth = $row['depth'] - (int)$startDepth;
 			$topic = new Topic($topicId);
 			if (is_null($startDepth)) {
 				$startDepth = $depth;
-				if ($depth > 0) {
-					$currentPath = $topic->getPath();
-				} else {
-					$currentPath[$topicId] = $topic;
-				}
+				$depth = 0;
+				$currentPath[$topicId] = $topic;
 			} elseif ($depth > count($currentPath)) {
 				$currentPath[$topicId] = $topic;
-			} elseif ($depth == $startDepth) {
-				$currentPath = $topic->getPath();
+			} elseif ($depth == 0) {
+				$currentPath = array($topicId=>$topic);
 			} else {
 				while ($depth < count($currentPath)) {
 					array_pop($currentPath);

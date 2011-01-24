@@ -1,6 +1,6 @@
 <?php 
-regGS("Newscoop has encountered a problem.", "");
-regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "");
+regGS("Newscoop has encountered a problem.", "Το Newscoop αντιμετώπισε κάποιο πρόβλημα.");
+regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Για να βοηθήσετε την ομάδα Newscoop να εξετάσει και να εντοπίσει το ζήτημα, παρακαλούμε αφιερώστε λίγο χρόνο για να περιγράψετε τι συνέβη:");
 regGS("What were you trying to do when this happened?", "Τί προσπαθούσατε να κάνετε όταν αυτό συνέβη;");
 regGS("Description:", "Περιγραφή:");
 regGS("We are sorry for the inconvenience.", "Σας ζητάμε συγνώμη για την ταλαιπωρία.");

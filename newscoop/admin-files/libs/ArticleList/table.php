@@ -164,6 +164,12 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 input.attr('checked', 'checked');
             }
             input.change();
+        }).each(function() {
+            var tr = $(this);
+            // detect locks
+            if ($('.name .ui-icon-locked', tr).not('.current-user').size()) {
+                tr.addClass('locked');
+            }
         });
 
 

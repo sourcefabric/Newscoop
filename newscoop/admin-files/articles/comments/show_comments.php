@@ -5,6 +5,11 @@ if (empty($comments)) {
     echo '<p>', putGS('No comments posted.'), '</p>';
     return;
 }
+
+// check permissions
+if (!$g_user->hasPermission('CommentModerate')) {
+    return;
+}
 ?>
 
 <form id="comments-moderate" action="comments/do_moderate.php" method="POST">
@@ -24,35 +29,15 @@ foreach ($hiddens as $name) {
 }
 ?>
 
-<?php 
-// list comments
-foreach ($comments as $comment) {
-    switch ($comment->getStatus()) {
-        case PHORUM_STATUS_APPROVED:
-            $css = 'comment_approved';
-            break;
-
-        case PHORUM_STATUS_HIDDEN:
-            $css = 'comment_inbox';
-            break;
-
-        case PHORUM_STATUS_HOLD:
-            $css = 'comment_hidden';
-            break;
-
-        default:
-            $css = '';
-            break;
-        }
-
-    if ($g_user->hasPermission('CommentModerate') && $inEditMode) { ?>
+<?php foreach ($comments as $comment) { ?>
 <fieldset class="plain comments-block">
+    <?php if ($inEditMode) { ?>
     <ul class="action-list clearfix">
       <li>
         <a class="ui-state-default icon-button right-floated" href="#"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
       </li>
       <li>
-        <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { echo 'checked'; } ?> />
+        <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { echo 'checked'; } ?> />
         <label class="inline-style left-floated" for="hidden_<?php echo $comment->getMessageId(); ?>"><?php putGS('Hidden'); ?></label>
       </li>
       <?php if ($comment->getMessageId() != $comment->getThreadId()) { ?>
@@ -67,12 +52,14 @@ foreach ($comments as $comment) {
       </li>
       <?php if ($publicationObj->commentsPublicModerated() || $publicationObj->commentsSubscribersModerated()) {?>
       <li>
-      <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { echo 'checked'; } ?> />
+      <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { echo 'checked'; } ?> />
         <label class="inline-style left-floated" for="inbox_<?php echo $comment->getMessageId(); ?>"><?php putGS('New'); ?></label>
       </li>
       <?php } ?>
     </ul>
-    <div class="frame clearfix <?php echo $css; ?>">
+    <?php } ?>
+
+    <div class="frame clearfix">
       <dl class="inline-list">
         <dt><?php putGS('From'); ?></dt>
         <dd><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</dd>
@@ -84,20 +71,44 @@ foreach ($comments as $comment) {
         <dt><?php putGS('Comment'); ?></dt>
         <dd><?php p(htmlspecialchars($comment->getBody())); ?></dd>
 
+        <?php if ($inEditMode) { ?>
         <dt>&nbsp;</dt>
-        <?php if ($inEditMode && $comment->getStatus() == PHORUM_STATUS_APPROVED) { ?>
         <dd class="buttons"><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id='.$comment->getMessageId()); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a></dd>
         <?php } ?>
       </dl>
     </div>
 </fieldset>
-<?php   } // /if
-    } // /foreach ?>
+<?php } ?>
 
 </form>
 
 <script type="text/javascript">
 $(function() {
+    /**
+     * Toggles comment status
+     */
+    var toggleCommentStatus = function() {
+        $('#comments-moderate .comments-block').each(function() {
+            var block = $(this);
+            var status = $('input:radio:checked', block).val();
+            var class = 'comment_'+status;
+            var button = $('dd.buttons', block);
+
+            // set class
+            $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
+                .addClass(class);
+
+            // show/hide button
+            button.hide();
+            if (status == 'approve') {
+                button.show();
+            }
+        });
+    };
+
+    // init
+    toggleCommentStatus();
+
     // save via ajax
     $('form#comments-moderate').submit(function() {
         var form = $(this);
@@ -109,8 +120,10 @@ $(function() {
                 success: function(data, status, p) {
                     flashMessage('<?php putGS('Comments updated.'); ?>');
 
+                    toggleCommentStatus();
+
                     // detach deleted
-                    $('input[value=delete]:checked').each(function() {
+                    $('input[value=delete]:checked', form).each(function() {
                         $(this).closest('fieldset').slideUp(function() {
                             $(this).detach();
                         });

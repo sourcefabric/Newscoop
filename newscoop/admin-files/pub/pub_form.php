@@ -78,7 +78,7 @@ function onCommentsActivated(p_checkbox)
         	}
         	?>
         	</SELECT>&nbsp;
-        <a href="/admin/languages/"><?php putGS("Edit languages"); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/languages/"><?php putGS("Edit languages"); ?></a>
         	</TD>
         </TR>
         <TR>

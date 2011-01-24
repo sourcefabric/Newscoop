@@ -33,19 +33,18 @@ if (Input::Get('save')) {
     camp_html_add_msg(getGS("Blog preferences updated."), "ok");
 }
 
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Blogs'), $Campsite['WEBSITE_URL'] . '/admin/blog/admin/list_blogs.php'),
+    array(getGS('Blog Settings'), ''),
+));
+
 camp_html_display_msgs();
 ?>
-
-<br />
 
 <FORM name="selector" method="post">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="6" align="left" class="table_input" width="600px">
-    <tr>
-        <td colspan="2" align="left">
-            <strong><?php putGS("Blog Settings"); ?></strong><br>
-        </td>
-    </tr>
     <tr>
         <td align="left"><?php putGS("Use captcha for blog comments form"); ?></td>
         <td><input type="checkbox" name="f_blogcomment_use_captcha" value="Y" <?php if (SystemPref::Get("PLUGIN_BLOGCOMMENT_USE_CAPTCHA") == 'Y') p("checked"); ?> /></td>

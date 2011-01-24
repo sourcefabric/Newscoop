@@ -3,7 +3,7 @@ regGS("Account", "");
 regGS("Items per page", "");
 regGS("Add new", "");
 regGS("Campsite", "CAMPSITE");
-regGS("Dashboard", "首页");
+regGS("Home", "首页");
 regGS("Logout", "注销");
 regGS("More...", "");
 regGS("Content", "");
@@ -274,5 +274,4 @@ regGS("New field", "新字段");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");
-regGS("Authors", "");
 ?>

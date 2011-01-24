@@ -321,6 +321,9 @@ $locale = trim(getGS('en'), ' (*)');
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+
+  <!-- include favicon //-->
+  <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <style type="text/css">
 	#menuLog {
 	    font-size:1.4em;
@@ -406,13 +409,13 @@ $locale = trim(getGS('en'), ' (*)');
       );
 
       // MENUS
-      $('#newscoop_menu_content').menu({
+      $('#newscoop_menu_content').topmenu({
           content: $('#newscoop_menu_content').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php if ($showAdminActions) { ?>
-      $('#newscoop_menu_action').menu({
+      $('#newscoop_menu_action').topmenu({
           content: $('#newscoop_menu_action').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -421,7 +424,7 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showConfigureMenu) {
       ?>
-      $('#newscoop_menu_configure').menu({
+      $('#newscoop_menu_configure').topmenu({
           content: $('#newscoop_menu_configure').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -430,13 +433,13 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showUserMenu) {
       ?>
-      $('#newscoop_menu_users').menu({
+      $('#newscoop_menu_users').topmenu({
           content: $('#newscoop_menu_users').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php } ?>
-      $('#newscoop_menu_plugins').menu({
+      $('#newscoop_menu_plugins').topmenu({
           content: $('#newscoop_menu_plugins').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -446,14 +449,21 @@ $locale = trim(getGS('en'), ' (*)');
   </script>
   <script type="text/javascript"> 
   $(document).ready(function() {
+      var sticky_limit = 0;
       $(window).scroll(function() {
-          if ($(window).scrollTop() > $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "fixed");
-              $(".sticky").css("top", "0");
+          if ($('.sticky').size() == 0) {
+              return false; // no sticky
           }
-          if ($(window).scrollTop() <= $(".smartLegendIdentifier").offset({ scroll: false }).top) {
-              $(".sticky").css("position", "relative");
-              $(".sticky").css("top", $(".smartLegendIdentifier").offset);
+
+          var windowTop = $(window).scrollTop();
+          var stickyTop = $('.sticky').offset().top;
+          if (windowTop > stickyTop && sticky_limit == 0) {
+              $('.sticky').css('width', $('.sticky').width()+'px').css('position', 'fixed').css('top', '0');
+              sticky_limit = stickyTop;
+          }
+          if (sticky_limit > 0 && windowTop < sticky_limit) {
+              $('.sticky').css('position', 'relative');
+              sticky_limit = 0;
           }
       });
   });
@@ -470,7 +480,7 @@ $locale = trim(getGS('en'), ' (*)');
 <div class="meta-bar">
 <ul>
   <li><a href="/<?php p($ADMIN); ?>/logout.php"><?php putGS('Logout'); ?></a></li>
-  <li><a href="#"><?php putGS('Help'); ?></a></li>
+  <li><a href="<?php p($Campsite['site']['help_url']); ?>" target="_blank"><?php putGS('Help'); ?></a></li>
   <li><?php putGS("Signed in: $1", '<strong>' . $g_user->getRealName() . '</strong>'); ?></li>
 </ul>
 </div>

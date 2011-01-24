@@ -1,29 +1,25 @@
 <?php
 camp_load_translation_strings("plugin_interview");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Interviews'), $Campsite['WEBSITE_URL'] . '/admin/interview/admin/index.php'),
+    array(getGS('List Items'), ''),
+));
 ?>
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
-<SCRIPT language="javascript">
+
+<script type="text/javascript">
 function ajax_action(action)
 {
-    $('f_action').value = action;
-    var myAjax = new Ajax.Request(
+    $('#f_action').val(action);
 
-            "ajax_action.php",
-            { 
-                method: 'get',
-                parameters: Form.serialize($('items_list')),
-                onComplete: do_reload
-            }
-        );    
-    
-}
-
-function do_reload(response)
-{
-    if (response.responseText) {
-        alert(response.responseText);   
-    }
-    document.location.reload();   
+    // save & reload
+    var myAjax = $.get(
+        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
+        $('#items_list').serialize(),
+        function() {
+            window.location.reload();
+        });
 }
 </script>
 <?php

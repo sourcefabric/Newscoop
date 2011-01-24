@@ -57,6 +57,8 @@ class Author extends DatabaseObject
                 $this->m_type = new AuthorType((int) $p_type);
             }
             $this->loadAliases();
+        } else {
+        	$this->m_type = new AuthorType();
         }
     }
 
@@ -196,7 +198,7 @@ class Author extends DatabaseObject
 
     public function getAuthorType()
     {
-        return ($this->m_type->exists()) ? $this->m_type : NULL;
+        return $this->m_type;
     }
 
     /**
@@ -291,7 +293,7 @@ class Author extends DatabaseObject
         foreach((array) $types as $type) {
             if (strtoupper($type->getName()) === self::DEFAULT_TYPE) {
                 return $type->getId();
-            } 
+            }
         }
         return (int) $types[0]->getId();
     }

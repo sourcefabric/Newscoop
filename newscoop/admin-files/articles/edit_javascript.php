@@ -9,6 +9,9 @@ var ajax_forms = 0; // forms saving by ajax
 
 $(function() {
 
+// make breadcrumbs + save buttons sticky
+$('.breadcrumb-bar, .toolbar').wrapAll('<div class="sticky" />');
+
 // datepicker for date
 $('.datepicker').datepicker({
     dateFormat: 'yy-mm-dd'
@@ -57,6 +60,35 @@ $('input:text[name=f_article_title]').change(function() {
     $('input:hidden[name=f_article_title]').val($(this).val())
         .closest('form').change();
 }).change();
+
+/**
+ * Enable/disable comments list/form according to selected state.
+ */
+var toggleComments = function() {
+    $('input:radio[name^="f_comment"]:checked').each(function() {
+        var form = $('#comments-form');
+        var list = $('#comments-list');
+        switch ($(this).val()) {
+            case 'enabled':
+                form.show();
+                list.show();
+                break;
+
+            case 'disabled':
+                form.hide();
+                list.hide();
+                break;
+
+            case 'locked':
+                form.hide();
+                list.show();
+                break;
+        }
+    });
+};
+
+// init
+toggleComments();
  
 // main form submit
 $('form#article-main').submit(function() {
@@ -77,6 +109,7 @@ $('form#article-main').submit(function() {
             success: function(data, status, p) {
                 flashMessage('<?php putGS('Article saved.'); ?>');
                 ajax_forms--;
+                toggleComments();
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
@@ -92,18 +125,38 @@ $('form#article-main').submit(function() {
 }).change(function() {
     $(this).addClass('changed');
 });
+
+/**
+ * Close window after timeout
+ * @param int timeout
+ * @return void
+ */
+var close = function(timeout) {
+    setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
+};
+
+/**
+ * Unlock article
+ * @return void
+ */
+var unlockArticle = function() {
+    callServer(['Article', 'setIsLocked'], [
+        <?php echo $f_language_selected; ?>,
+        <?php echo $articleObj->getArticleNumber(); ?>,
+        0,
+        <?php echo $g_user->getUserId(); ?>]);
+};
  
+<?php if ($inEditMode) { ?>
 // save all buttons
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
 
-    var close = function(timeout) {
-        setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
-    };
-
     if ($(this).attr('id') == 'save_and_close') {
+        unlockArticle();
+
         if (ajax_forms == 0) { // nothing to save
             close(1500);
             return false;
@@ -118,6 +171,15 @@ $('.save-button-bar input').click(function() {
     return false;
 });
 
+<?php } else { // view mode ?>
+$('.save-button-bar input#save_and_close').click(function() {
+<?php if ($articleObj->isLocked() && $articleObj->getLockedByUser() == $g_user->getUserId()) { ?>
+    unlockArticle();
+<?php } ?>
+    close(1);
+});
+<?php } ?>
+
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
@@ -127,18 +189,23 @@ array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>
 ];
-/** autocomplete is broken
+
+// authors autocomplete
 $(".aauthor").autocomplete({
     source: authorsList
 });
- */
+$(".aauthor").live('focus', function() {
+    $(".aauthor").autocomplete({
+        source: authorsList
+    });
+});
 
 // fancybox for popups
 $('a.iframe').each(function() {
     $(this).fancybox({
         hideOnContentClick: false,
-        width: 600,
-        height: 600,
+        width: 660,
+        height: 500,
         onStart: function() { // check if there are any changes
             return checkChanged();
         },
@@ -151,7 +218,6 @@ $('a.iframe').each(function() {
             }
         }
     });
-
 });
 $('#locations_box a.iframe').each(function() {
     //$(this).data('fancybox').onCleanup = function() {alert('Returning false here does prevent closing the fancybox.'); return false;};

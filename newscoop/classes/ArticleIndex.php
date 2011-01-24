@@ -147,12 +147,8 @@ class ArticleIndex extends DatabaseObject {
 	        $limit = $rowsLimit > 0 ? "LIMIT 0, $rowsLimit" : null;
 	        // selects articles not yet indexed
 	        $sql_query = 'SELECT art.IdPublication, art.NrIssue, art.NrSection, art.Number, '
-	        . 'art.IdLanguage, art.Type, art.Keywords, art.Name, '
-	        . "TRIM(CONCAT(aut.first_name, ' ', aut.last_name)) AS AuthorName \n"
-	        . "FROM Articles as art LEFT JOIN ArticleAuthors as ala \n"
-	        . "  ON art.Number = ala.fk_article_number \n"
-	        . " LEFT JOIN Authors as aut \n"
-	        . "  ON ala.fk_author_id = aut.id \n"
+	        . "art.IdLanguage, art.Type, art.Keywords, art.Name \n"
+	        . "FROM Articles as art \n"
 	        . "WHERE art.IsIndexed = 'N' ORDER BY $order $limit";
 	        $sql_result = $g_ado_db->GetAll($sql_query);
 	        if ($sql_result === false) {
@@ -171,6 +167,12 @@ class ArticleIndex extends DatabaseObject {
 
 	        $existing_words = array();
 	        foreach ($sql_result as $row) {
+	        	$sql = "SELECT GROUP_CONCAT(CONCAT_WS(' ', first_name, last_name) SEPARATOR ', ')"
+	        	. "FROM Authors AS au, ArticleAuthors AS aa "
+	        	. "WHERE au.id = aa.fk_author_id AND aa.fk_article_number = " . (int)$row['Number']
+	        	. " AND aa.fk_language_id = " . (int)$row['IdLanguage'];
+	        	$article['AuthorName'] = $g_ado_db->GetOne($sql);
+
 	            $article['IdPublication'] = ($row['IdPublication']) ? (int)$row['IdPublication'] : 0;
 	            $article['NrIssue'] = ($row['NrIssue']) ? (int)$row['NrIssue'] : 0;
 	            $article['NrSection'] = ($row['NrSection']) ? (int)$row['NrSection'] : 0;
@@ -179,7 +181,6 @@ class ArticleIndex extends DatabaseObject {
 	            $article['Type'] = ($row['Type']) ? $row['Type'] : '';
 	            $article['Keywords'] = ($row['Keywords']) ? $row['Keywords'] : '';
 	            $article['Name'] = ($row['Name']) ? $row['Name'] : '';
-	            $article['AuthorName'] = $row['AuthorName'];
 
 	            // deletes from index
 	            $sql_query = 'DELETE FROM ArticleIndex '

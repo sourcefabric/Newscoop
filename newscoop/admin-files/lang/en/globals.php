@@ -5,7 +5,7 @@ regGS("Account", "Account");
 regGS("Items per page", "Items per page");
 regGS("Add new", "Add new");
 regGS("Campsite", "Campsite");
-regGS("Dashboard", "Home");
+regGS("Home", "Home");
 regGS("Logout", "Logout");
 regGS("More...", "More...");
 regGS("Content", "Content");
@@ -261,5 +261,4 @@ regGS("Reads", "Reads");
 regGS("Publish with issue", "Publish with issue");
 regGS("Universal List", "Universal List");
 regGS("Invalid security token!", "Invalid security token!");
-regGS("Authors", "Authors");
 ?>

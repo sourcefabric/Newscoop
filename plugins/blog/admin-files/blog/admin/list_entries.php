@@ -1,35 +1,6 @@
 <?php
+
 camp_load_translation_strings("plugin_blog");
-?>
-
-
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
-<SCRIPT language="javascript">
-function ajax_action(action)
-{
-    $('f_action').value = action;
-
-    var myAjax = new Ajax.Request(
-            "/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php",
-            {
-                method: 'get',
-                parameters: Form.serialize($('entries_list')),
-                onComplete: do_reload
-            }
-        );
-
-
-}
-
-function do_reload(response)
-{
-    if (response.responseText) {
-        alert(response.responseText);
-    }
-    document.location.reload();
-}
-</script>
-<?php
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
@@ -85,23 +56,39 @@ $pager = new SimplePager($total, $f_length, "f_start", "$self?f_order=$f_order&a
 $TotalList = new BlogEntriesList();
 $total = $TotalList->count;
 
+if ($f_blog_id) {
+    $Blog = new Blog($f_blog_id);
+    $title = $Blog->getSubject();
+} else {
+    $title = getGS('All posts');
+}
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Blogs'), $Campsite['WEBSITE_URL'] . '/admin/blog/admin/list_blogs.php'),
+    array($title, ''),
+));
+
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript">
+function ajax_action(action)
+{
+    $('#f_action').val(action);
+
+    // save & reload
+    var myAjax = $.get(
+        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
+        $('#entries_list').serialize(),
+        function() {
+            window.location.reload();
+        });
+}
+</script>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
   <TR>
-    <TD><A HREF="list_blogs.php" ><B><?php  putGS("Blogs"); ?></B></A></TD>
-
-
-    <?php if ($f_blog_id) {
-        $Blog = new Blog($f_blog_id);
-        ?>
-       <TD> >> <B><?php p($Blog->getSubject()) ?></B></TD>
-    <?php } else { ?>
-        <TD> >> <B><?php putGS("All posts"); ?></B></TD>
-    <?php } ?>
-
     <?php if ($f_blog_id && $is_admin) { ?>
         <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
         <TD><A HREF="javascript: void(0);" onclick="window.open('entry_form.php?f_blog_id=<?php echo $f_blog_id ?>', 'edit_entry', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=550, top=100, left=100');" ><B><?php  putGS("Add new post"); ?></B></A></TD>

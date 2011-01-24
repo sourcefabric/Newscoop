@@ -13,7 +13,7 @@ Dual licensed under the MIT (filamentgroup.com/examples/mit-license.txt) and GPL
 
 var allUIMenus = [];
 
-$.fn.menu = function(options){
+$.fn.topmenu = function(options){
 	var caller = this;
 	var options = options;
 	var m = new Menu(caller, options);	
