@@ -647,138 +647,54 @@ class Interview extends DatabaseObject {
             array(
                 'element'   => 'f_interview_begin',
                 'type'      => 'text',
+                'label'     => getGS('Interview Begin'),
                 'default'   => substr($data['interview_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_begin', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true
-            ),
-            array(
-                'element'   => 'f_calendar_interview_begin',
-                'type'      => 'static',
-                'text'      => '
-                     <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_interview_begin"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background=\'red\'"
-                          onmouseout="this.style.background=\'\'" />
-                     <script type="text/javascript">
-                        Calendar.setup({
-                            inputField:"f_interview_begin",
-                            ifFormat:"%Y-%m-%d %H:%M",
-                            showsTime:true,
-                            showOthers:true,
-                            weekNumbers:false,
-                            range:new Array(2008, 2020),
-                            button:"f_trigger_interview_begin"
-                        });
-                    </script>',
-                'groupit'   => true
-            ),
-            array(
-                'group'     => array('f_interview_begin' , 'f_calendar_interview_begin'),
-                'label'     => getGS('Interview Begin'),
+                'attributes' => array(
+                    'id' => 'f_interview_begin',
+                    'size' => 17,
+                    'maxlength' => 20,
+                    'class' => 'datetime',
+                ),
             ),
             array(
                 'element'   => 'f_interview_end',
                 'type'      => 'text',
+                'label'     => getGS('Interview End'),
                 'default'   => substr($data['interview_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_interview_end', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true
-            ),
-            array(
-                'element'   => 'f_calendar_interview_end',
-                'type'      => 'static',
-                'text'      => '
-                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_interview_end"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background=\'red\'"
-                          onmouseout="this.style.background=\'\'" />
-                    <script type="text/javascript">
-                        Calendar.setup({
-                            inputField:"f_interview_end",
-                            ifFormat:"%Y-%m-%d %H:%M",
-                            showsTime:true,
-                            showOthers:true,
-                            weekNumbers:false,
-                            range:new Array(2008, 2020),
-                            button:"f_trigger_interview_end"
-                        });
-                    </script>',
-                'groupit'   => true
-            ),
-            array(
-                'group'     => array('f_interview_end' , 'f_calendar_interview_end'),
-                'label'     => getGS('Interview End'),
+                'attributes' => array(
+                    'id' => 'f_interview_end',
+                    'size' => 17,
+                    'maxlength' => 20,
+                    'class' => 'datetime',
+                ),
             ),
             array(
                 'element'   => 'f_questions_begin',
                 'type'      => 'text',
+                'label'     => getGS('Questions Begin'),
                 'default'   => substr($data['questions_begin'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_begin', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true
-            ),
-            array(
-                'element'   => 'f_calendar_questions_begin',
-                'type'      => 'static',
-                'text'      => '
-                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_questions_begin"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background=\'red\'"
-                          onmouseout="this.style.background=\'\'" />
-                    <script type="text/javascript">
-                        Calendar.setup({
-                            inputField:"f_questions_begin",
-                            ifFormat:"%Y-%m-%d %H:%M",
-                            showsTime:true,
-                            showOthers:true,
-                            weekNumbers:false,
-                            range:new Array(2008, 2020),
-                            button:"f_trigger_questions_begin"
-                        });
-                    </script>',
-                'groupit'   => true
-            ),
-            array(
-                'group'     => array('f_questions_begin' , 'f_calendar_questions_begin'),
-                'label'     => getGS('Questions Begin'),
+                'attributes' => array(
+                    'id' => 'f_questions_begin',
+                    'size' => 17,
+                    'maxlength' => 20,
+                    'class' => 'datetime',
+                ),
             ),
             array(
                 'element'   => 'f_questions_end',
                 'type'      => 'text',
+                'label'     => getGS('Questions End'),
                 'default'   => substr($data['questions_end'], 0, 16),
                 'required'  => true,
-                'attributes'    => array('id' => 'f_questions_end', 'size' => 17, 'maxlength' => 16),
-                'groupit'   => true
-            ),
-            array(
-                'element'   => 'f_calendar_questions_end',
-                'type'      => 'static',
-                'text'      => '
-                    <img src="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/calendar.gif" id="f_trigger_questions_end"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background=\'red\'"
-                          onmouseout="this.style.background=\'\'" />
-                    <script type="text/javascript">
-                        Calendar.setup({
-                            inputField:"f_questions_end",
-                            ifFormat:"%Y-%m-%d %H:%M",
-                            showsTime:true,
-                            showOthers:true,
-                            weekNumbers:false,
-                            range:new Array(2008, 2020),
-                            button:"f_trigger_questions_end"
-                        });
-                    </script>',
-                'groupit'   => true
-            ),
-            array(
-                'group'     => array('f_questions_end' , 'f_calendar_questions_end'),
-                'label'     => getGS('Questions End'),
+                'attributes' => array(
+                    'id' => 'f_questions_end',
+                    'size' => 17,
+                    'maxlength' => 20,
+                    'class' => 'datetime',
+                ),
             ),
             array(
                 'element'   => 'f_questions_limit',
