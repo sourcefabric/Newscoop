@@ -156,7 +156,7 @@ if (sizeof($allArticleTypes) == 0) {
 	<td style="border-left: 1px solid black;">
 		<TABLE>
 		<TR>
-			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 10pt; font-weight: bold;"><?php  putGS("Select location:"); ?> <?php putGS("(optional)"); ?></TD>
+			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 10pt; font-weight: bold;"><?php  putGS("Select section:"); ?> <?php putGS("(optional)"); ?></TD>
 		</TR>
 		<TR>
 			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>

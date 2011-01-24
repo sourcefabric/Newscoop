@@ -18,7 +18,7 @@ $pager = new SimplePager($numCountries, $ItemsPerPage, "f_country_offset", "inde
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Country"), "");
+$crumbs[] = array(getGS("Countries"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
