@@ -64,7 +64,7 @@ you wish - you have full control over the look-and-feel.
 
 
 INSTALLATION
-See the INSTALL file
+See the INSTALL.txt file
 
 
 COPYRIGHT

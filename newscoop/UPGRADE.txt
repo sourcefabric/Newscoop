@@ -12,7 +12,7 @@ Repeat the following steps for each instance:
 3. Run the restore backup script from the admin interface
 
 
-Read INSTALL file and follow the steps; read on Compatibility issues.
+Read INSTALL.txt file and follow the steps; read on Compatibility issues.
 
 Upgrading from Newscoop 3.0.x, 3.1.x, 3.2.x, 3.3.x and 3.4.x:
 
