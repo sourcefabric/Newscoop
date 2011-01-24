@@ -31,6 +31,7 @@ CREATE TABLE `plugin_poll` (
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
   `percentage_of_votes_overall` float unsigned NOT NULL,
   `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `reset_token` varchar(40) NOT NULL default '',
   PRIMARY KEY  (`poll_nr`,`fk_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
