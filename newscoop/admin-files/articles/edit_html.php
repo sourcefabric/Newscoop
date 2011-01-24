@@ -4,12 +4,12 @@
  */
 
 // If the article is locked say so to the user
-if ($articleObj->userCanModify($g_user) && $locked && ($inEditMode)) {
+if ($articleObj->userCanModify($g_user) && $locked && !$inViewMode) {
 ?>
 <div class="wrapper">
   <div class="main-content-wrapper">
     <div class="ui-widget-content big-block block-shadow padded-strong" style="text-align:center;">
-      <h3 class="alert"><?php putGS("Article is locked"); ?></h3>
+      <h3 class="alert"><?php putGS('Article is locked'); ?></h3>
       <fieldset class="plain">
         <ul>
           <li>
@@ -64,6 +64,10 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
   <?php if ($inEditMode) { ?>
     <input class="top-input" name="f_article_title" id="f_article_title" type="text"
       value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" <?php print $spellcheck ?> />
+  <?php } elseif ($locked) {
+  ?>
+    <span class="left-floated ui-icon ui-icon-locked"></span>
+    <span class="article-title-locked"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } ?>

@@ -573,6 +573,11 @@ fieldset ul.nameList {
     margin-right: 0;
     width: auto;
 }
+.authorlist span.author-type-label {
+    color: #8a8a8a;
+    font-weight: bold;
+}
+.
 /*------ END Author Management ----------*/
 
 /*------ DataTables ----------*/
