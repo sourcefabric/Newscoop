@@ -586,3 +586,33 @@ fieldset ul.nameList {
 
 
 /*------ END DataTables ----------*/
+
+
+/*------ Locations box ----------*/
+.geomap_list_location_enabled {}
+.geomap_list_location_disabled {
+    text-decoration: line-through;
+}
+
+.map-control-wrapper {
+        margin-left: 182px;
+}
+.map-control-wrapper h4 {
+        float:left;
+        font-size:13px;
+        font-weight:bold;
+        line-height:140%;
+        padding:0;
+        margin:10px 0 1px 15px;
+}   
+.geo_map_name {
+        margin:0px 10px 0px 27px;
+        float: left;
+        padding-top: 20px;
+        font-size: 13px;
+        width: 217px;
+}
+
+/*------ END Locations box ----------*/
+
+

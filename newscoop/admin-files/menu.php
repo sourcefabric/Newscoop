@@ -368,8 +368,6 @@ $locale = trim(getGS('en'), ' (*)');
 	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */	
 	
 	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
-
-    .geo_map_name {margin:0px 10px 0px 27px; float: left; padding-top:20px; font-size: 12px; }
 	</style>
 	
 	<!-- style exceptions for IE 6 -->
