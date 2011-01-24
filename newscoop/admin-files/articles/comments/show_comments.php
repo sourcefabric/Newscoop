@@ -91,12 +91,12 @@ $(function() {
         $('#comments-moderate .comments-block').each(function() {
             var block = $(this);
             var status = $('input:radio:checked', block).val();
-            var class = 'comment_'+status;
+            var cclass = 'comment_'+status;
             var button = $('dd.buttons', block);
 
             // set class
             $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
-                .addClass(class);
+                .addClass(cclass);
 
             // show/hide button
             button.hide();
