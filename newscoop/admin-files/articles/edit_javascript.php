@@ -125,24 +125,37 @@ $('form#article-main').submit(function() {
 }).change(function() {
     $(this).addClass('changed');
 });
+
+/**
+ * Close window after timeout
+ * @param int timeout
+ * @return void
+ */
+var close = function(timeout) {
+    setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
+};
+
+/**
+ * Unlock article
+ * @return void
+ */
+var unlockArticle = function() {
+    callServer(['Article', 'setIsLocked'], [
+        <?php echo $f_language_selected; ?>,
+        <?php echo $articleObj->getArticleNumber(); ?>,
+        0,
+        <?php echo $g_user->getUserId(); ?>]);
+};
  
+<?php if ($inEditMode) { ?>
 // save all buttons
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
 
-    var close = function(timeout) {
-        setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
-    };
-
     if ($(this).attr('id') == 'save_and_close') {
-        // unlock article
-        callServer(['Article', 'setIsLocked'], [
-            <?php echo $f_language_selected; ?>,
-            <?php echo $articleObj->getArticleNumber(); ?>,
-            0,
-            <?php echo $g_user->getUserId(); ?>]);
+        unlockArticle();
 
         if (ajax_forms == 0) { // nothing to save
             close(1500);
@@ -157,6 +170,15 @@ $('.save-button-bar input').click(function() {
     }
     return false;
 });
+
+<?php } else { // view mode ?>
+$('.save-button-bar input#save_and_close').click(function() {
+<?php if ($articleObj->isLocked() && $articleObj->getLockedByUser() == $g_user->getUserId()) { ?>
+    unlockArticle();
+<?php } ?>
+    close(1);
+});
+<?php } ?>
 
 var authorsList = [
 <?php

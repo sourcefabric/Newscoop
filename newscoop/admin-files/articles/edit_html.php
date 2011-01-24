@@ -69,8 +69,8 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
   <?php } ?>
     <span class="comments"><?php p(count($comments)); ?></span>
     <div class="save-button-bar">
-      <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" />
-      <input type="submit" class="save-button" value="<?php putGS('Save and Close'); ?>" id="save_and_close" name="save_and_close" />
+      <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" <?php if (!$inEditMode) { ?> disabled style="opacity: 0.3"<?php } ?> />
+      <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
     </div>
     <div class="top-button-bar">
       <input type="button" name="edit" value="<?php putGS('Edit'); ?>" <?php if ($inEditMode) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
