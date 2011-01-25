@@ -64,6 +64,7 @@ if (!$forumId) {
 
 // Create/get first post.
 $firstPost = camp_comment_first_post($articleObj, $forumId);
+$firstPost->fetch(); // fix 1st comment
 // Exit if the forum hasnt been created (this should never happen).
 if (!$firstPost->exists()) {
     camp_html_goto_page(camp_html_article_url($articleObj, $f_language_selected, "edit.php")."#add_comment");
