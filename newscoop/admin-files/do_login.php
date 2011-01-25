@@ -102,6 +102,13 @@ if (!$LiveUser->isLoggedIn() ||
     }
 }
 
+if ($LiveUser->getProperty('reader') == 'Y') {
+	camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
+    	'error_code' => 'userpass',
+    	'request' => $requestId,
+	));
+}
+
 $user = User::FetchUserByName($f_user_name, true);
 $validateCaptcha = LoginAttempts::MaxLoginAttemptsExceeded();
 

@@ -1,5 +1,7 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
+
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 if (!is_array($GLOBALS['argv']) && empty($options)) {
 	echo "\n";
@@ -8,8 +10,6 @@ if (!is_array($GLOBALS['argv']) && empty($options)) {
 	exit(1);
 }
 
-$CAMPSITE_DIR = dirname(dirname(__FILE__));
-$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
@@ -196,4 +196,3 @@ if (!$silent) {
 	echo "\nBackup saved to file:\n  $backupDirFullPath.tar.gz\n\n";
 }
 
-?>

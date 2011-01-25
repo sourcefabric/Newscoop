@@ -1,8 +1,8 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
-$CAMPSITE_DIR = dirname(dirname(__FILE__));
-$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
+
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
@@ -311,4 +311,3 @@ function msg_error($p_msg)
     print('ERROR: ' . $p_msg);
 } // fn msg_error
 
-?>

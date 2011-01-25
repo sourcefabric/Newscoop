@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * @package Newscoop
@@ -11,6 +11,7 @@
  * @link http://www.campware.org
  */
 
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 function out_msg($p_msg, $p_ifVerboseSet = false, $p_newLine = true)
 {
@@ -32,7 +33,6 @@ function usage()
 {
     out_msg("Usage: newscoop-indexer [options]\n"
             ."Options:\n"
-            ."\t--conf_dir=[configuration_dir]: Host name of the MySQL Server.\n"
             ."\t--silent: The script will not display any message\n"
             ."\t\t(has precedence over --verbose).\n"
             ."\t--verbose: The script will display detailed information.\n"
@@ -45,20 +45,12 @@ function usage()
 $g_silent = false;
 $g_verbose = false;
 $g_time_limit = null;
-$conf_dir = '';
+$conf_dir = WWW_DIR;
 
 // gets the arguments from command line, if any
 for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
     $option = explode('=', $GLOBALS['argv'][$i]);
     switch ($option[0]) {
-    	case '--conf_dir':
-    		$conf_dir = !empty($option[1]) ? rtrim($option[1], '/') : '';
-    		if (empty($conf_dir)) {
-    			out_msg("Configuration directory not specified!");
-    			usage();
-    			exit(1);
-    		}
-    		break;
     	case '--silent':
     		$g_silent = true;
     		break;
@@ -91,8 +83,6 @@ if (!is_dir($conf_dir)) {
     exit_error('Invalid configuration directory ' . $conf_dir);
 }
 
-$GLOBALS['g_campsiteDir'] = dirname($conf_dir);
-
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
@@ -114,4 +104,3 @@ if (!$g_silent) {
     );
 }
 
-?>

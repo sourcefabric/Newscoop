@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 
 if (!is_array($GLOBALS['argv'])) {
@@ -8,8 +8,8 @@ if (!is_array($GLOBALS['argv'])) {
     exit(1);
 }
 
-$CAMPSITE_DIR = dirname(dirname(__FILE__));
-$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
+
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
@@ -212,4 +212,3 @@ if (!$silent) {
 
 exit(0);
 
-?>

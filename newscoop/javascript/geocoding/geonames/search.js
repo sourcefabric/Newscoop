@@ -109,8 +109,8 @@ geo_names.gotSearchData = function (cities, results_div)
         }
         var city_name = one_city.name.replace(/'/gi,"\\'");
         var city_name = city_name.replace(/\"/gi,"\\'");
-        var country_link = "<a href=\"#\" class=\"map-no-link\" title=\"" + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + city_name + "'); return false;\">" + one_city.country.toLowerCase() + "</a>";
-        var city_link = "<a href=\"#\" title=\"" + pop_show + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\">" + one_city.name + "</a>";
+        var country_link = "<a href=\"#\" title=\"" + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + city_name + "'); return false;\"><span class=\"geores_cc_icon ui-icon ui-icon-plus\"></span><span class=\"geores_cc_text\">" + one_city.country.toLowerCase() + "</span></a>";
+        var city_link = "<a href=\"#\" title=\"" + pop_show + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\"><span class=\"geores_city_text\">" + one_city.name + "</span></a>";
         
         found_locs += "<tr>";
         found_locs += "<td>" + country_link + "</td>";
