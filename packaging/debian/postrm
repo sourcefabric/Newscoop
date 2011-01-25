@@ -1,16 +1,81 @@
-#!/bin/sh
+#!/bin/bash
+#postrm script for newscoop
 
-NAME="campsite"
+set -e
+
+if [ -f /usr/share/debconf/confmodule ]; then
+  . /usr/share/debconf/confmodule
+fi
+
+# source dbconfig-common
+#if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
+#  . /usr/share/dbconfig-common/dpkg/postrm
+#  dbc_go newscoop $@
+#fi
+
+if [ "$DPKG_DEBUG" = "developer" ]; then
+    set -x
+fi
+
+package_name="newscoop"
+datadir="/var/lib/${package_name}"
+configdir="/etc/newscoop/3.5"
+
+webserver="apache2"
+php="php5"
 
 case "$1" in
+  purge|remove)
 
-  purge)
-    rm -rf /etc/campsite
-    rm -rf /usr/share/campsite
-    ;;
+    # Un-configure webservers
+    if [ -L /etc/$webserver/conf.d/newscoop.conf ]; then
+      rm -f /etc/$webserver/conf.d/newscoop.conf || true
+      restart="$webserver $restart"
+    fi
+        
+    if [ -L /etc/$php/conf.d/newscoop.ini ]; then
+      rm -f /etc/$php/conf.f/newscoop.ini || true
+      restart="$webserver $restart"
+    fi
+        
+    servers="apache2"
+    # may not exist if package was manually installed
+    if [ -r /usr/share/wwwconfig-common/restart.sh ]; then
+      . /usr/share/wwwconfig-common/restart.sh
+		  echo $error
+    fi
 
+    # Permissions
+    dpkg-statoverride --remove $datadir/conf || true
+    dpkg-statoverride --remove $datadir/install/cron_jobs || true
+    dpkg-statoverride --remove $datadir/templates || true
+    dpkg-statoverride --remove $datadir/templates_cache || true
+    dpkg-statoverride --remove $datadir/plugins || true
+    dpkg-statoverride --remove $datadir/backup || true
+    dpkg-statoverride --remove $datadir || true
+
+    if [ "$1" = "purge" ]; then
+      rm -rf $datadir
+      #rm -f ${dbconfigfile}
+      #if which ucf >/dev/null 2>&1; then
+      #  ucf --purge ${dbconfigfile}
+      #fi
+      #    
+      #db_purge || true
+    fi
+                                                                                                                                             
+  ;;
+
+  upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+
+  ;;
+
+  *)
+      echo "postrm called with unknown argument \`$1'" >&2
+      exit 1
+  ;;
 esac
 
-
+#DEBHELPER#
 
 exit 0

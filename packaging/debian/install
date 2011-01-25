@@ -1,1 +1,3 @@
-src/* var/www/campsite
+newscoop/* var/lib/newscoop/
+debian/etc/apache.conf /etc/newscoop/3.5
+debian/etc/newscoop.ini /etc/newscoop/3.5

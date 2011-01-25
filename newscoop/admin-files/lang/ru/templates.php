@@ -1,5 +1,5 @@
 <?php 
-regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Есть некоторые файлы, которые не могут быть прочтены,т.к. Newscoop был не в состоянии  определить, используется ли \"$ 1\" или нет. Пожалуйста, исправьте ошибку,потом попробуйте удалить шаблон еще раз.");
 regGS("Stop current upload", "Остановить текущую загрузку");
 regGS("Start uploading queue", "Начать загрузку из очереди");
 regGS("Start upload", "Начать загрузку");

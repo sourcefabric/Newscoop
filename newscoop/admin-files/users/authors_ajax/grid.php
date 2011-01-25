@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package Newscoop
+ */
+require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/localizer/Localizer.php");
+camp_load_translation_strings('authors');
+
 ini_set("display_errors","2");
 error_reporting(E_ALL);
 function l_getType($types)
