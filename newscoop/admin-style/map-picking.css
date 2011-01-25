@@ -46,6 +46,15 @@ a.map_name_display:hover {
 	font-size:12px;
 }
 
+.geo_resize_hor {
+    float: left;
+    margin-left: 4px;
+}
+.geo_resize_ver {
+    float: left;
+    margin-left: 4px;
+}
+
 .map_sidepan {
     float: left;
     width: 200px;
@@ -89,14 +98,30 @@ a.map_name_display:hover {
     height: 200;
 }
 .search_res_cc_header {
-    width: 20px;
+    width: 25px;
 }
 .search_res_city_header {
-    width: 100px;
+    width: 95px;
 }
 .search_res_city_column {
     word-wrap: break-word;
-    width: 100px;
+    width: 95px;
+}
+.geores_cc_icon {
+    float: left;
+}
+.geores_cc_text {
+    float: left;
+    margin-top: 1px;
+    font-weight: bold;
+    font-size: 13px;
+}
+.geores_city_text {
+    float: left;
+    margin-left: 6px;
+    margin-top: 2px;
+    font-weight: bold;
+    font-size: 12px;
 }
 /*
 .hidden {
