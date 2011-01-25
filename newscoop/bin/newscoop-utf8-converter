@@ -8,7 +8,7 @@ if (!is_array($GLOBALS['argv'])) {
     exit(1);
 }
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 

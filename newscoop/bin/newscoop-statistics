@@ -10,7 +10,7 @@
  * @link http://www.campware.org
  */
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 function update_statistics($p_confDir)
 {

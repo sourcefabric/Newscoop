@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once dirname(__FILE__) . '/bootstrap.php';
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 require_once WWW_DIR . '/include/campsite_init.php';
 require_once WWW_DIR . '/classes/ArticlePublish.php';
