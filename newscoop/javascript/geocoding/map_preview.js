@@ -1110,9 +1110,11 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     var cur_date = new Date();
     redraw_times.map_dragging_last = cur_date.getTime();
 
-    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
-    drag_map.panMapDone = function(pixel) {geo_hook_map_dragged(geo_obj, pixel)};
-    drag_map.panMap = function(xy) {geo_hook_map_dragging(drag_map, geo_obj, xy)};
+    var drag_map = new OpenLayers.Control.DragPanMod([map_gsm, map_mqm, map_osm]);
+    //drag_map.geo_obj = geo_obj;
+    //var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
+    //drag_map.panMapDone = function(pixel) {geo_hook_map_dragged(geo_obj, pixel)};
+    //drag_map.panMap = function(xy) {geo_hook_map_dragging(drag_map, geo_obj, xy)};
     geo_obj.map.addControl(drag_map);
     drag_map.activate();
 

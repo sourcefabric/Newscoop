@@ -859,6 +859,7 @@ geo_locations.map_update_side_desc_height = function()
     }
 };
 
+/*
 // the POI markers are not re-drawn after some actions happen; this is a part of the fix;
 geo_locations.map_feature_redraw = function(xy, delay)
 {
@@ -879,7 +880,9 @@ geo_locations.map_feature_redraw = function(xy, delay)
     }
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on map panning
 var geo_hook_map_bar_panning = function(evt)
 {
@@ -916,7 +919,9 @@ var geo_hook_map_bar_panning = function(evt)
     OpenLayers.Event.stop(evt);
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on map panning
 var geo_hook_map_dragging = function(xy)
 {
@@ -928,7 +933,9 @@ var geo_hook_map_dragging = function(xy)
     geo_locations.map_feature_redraw(xy);
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on bar panning
 var geo_hook_map_dragged = function(pixel)
 {
@@ -940,6 +947,7 @@ var geo_hook_map_dragged = function(pixel)
     geo_locations.map.addControl(geo_locations.select_control);
     geo_locations.select_control.activate();
 };
+*/
 
 // taking POI-mouse offset on the start of a POI dragging
 var geo_hook_poi_dragg_start = function(feature, pixel)
@@ -1213,8 +1221,9 @@ var geo_main_openlayers_init = function(map_div_name)
     });
 
     geo_locations.pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
-    geo_locations.pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
+    //geo_locations.pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
 
+/*
     // msie does not stops the event, and does not preserves its properties either
     geo_locations.pzb_ctrl.divClick = function (evt)
     {
@@ -1242,6 +1251,7 @@ var geo_main_openlayers_init = function(map_div_name)
         }
 
 	};
+*/
 
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
@@ -1254,6 +1264,8 @@ var geo_main_openlayers_init = function(map_div_name)
         ],
         numZoomLevels: 20
     });
+
+    geo_locations.map.geo_obj = geo_locations;
 
     var map_provs = [];
     var map_gsm = null;
@@ -1491,9 +1503,11 @@ var geo_main_openlayers_init = function(map_div_name)
     geo_locations.map.addControl(drag_feature);
     drag_feature.activate();
 
-    var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
-    drag_map.panMapDone = geo_hook_map_dragged;
-    drag_map.panMap = geo_hook_map_dragging;
+    var drag_map = new OpenLayers.Control.DragPanMod([map_gsm, map_mqm, map_osm]);
+    //drag_map.geo_obj = geo_locations;
+    //var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
+    //drag_map.panMapDone = geo_hook_map_dragged;
+    //drag_map.panMap = geo_hook_map_dragging;
     geo_locations.map.addControl(drag_map);
     drag_map.activate();
 
