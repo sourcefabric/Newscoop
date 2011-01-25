@@ -49,14 +49,23 @@ if ($articleObj->userCanModify($g_user)) {
         . '&f_edit_mode=' . ( ($inEditMode) ? 'view' : 'edit');
 }
 
-// Get URL to the frontend version of the article
-if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleObj->isPublished()) {
-    $liveLinkURL = ShortURL::GetURL($publicationObj->getPublicationId(),
-        $articleObj->getLanguageId(), null, null, $articleObj->getArticleNumber());
-    $doLiveLink = TRUE;
-    if (PEAR::isError($liveLinkURL)) {
-        $doLiveLink = FALSE;
+// Display either the "Go to live article" or "Preview" button
+// depending on article status
+$doPreviewLink = '';
+if (isset($publicationObj) && $articleObj->isPublished()) {
+    if ($publicationObj->getUrlTypeId() == 2) {
+        $previewLinkURL = ShortURL::GetURL($publicationObj->getPublicationId(),
+            $articleObj->getLanguageId(), null, null, $articleObj->getArticleNumber());
+        $doPreviewLink = 'live';
+        if (PEAR::isError($previewLinkURL)) {
+            $doLiveLink = '';
+        }
     }
+} else {
+    $doPreviewLink = 'preview';
+    $previewLinkURL = "/$ADMIN/articles/preview.php?f_publication_id=$f_publication_id"
+        . "&f_issue_number=$f_issue_number&f_section_number=$f_section_number"
+        . "&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
 }
 ?>
   <!-- BEGIN Article Title and Saving buttons bar //-->                            
@@ -79,8 +88,10 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
     <div class="top-button-bar">
       <input type="button" name="edit" value="<?php putGS('Edit'); ?>" <?php if ($inEditMode) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
       <input type="button" name="edit" value="<?php putGS('View'); ?>" <?php if ($inViewMode) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
-      <?php if ($doLiveLink) { ?>
-	  <a class="ui-state-default icon-button" target="_blank" href="<?php echo $liveLinkURL; ?>"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Go to live article'); ?></a>
+      <?php if ($doPreviewLink == 'live') { ?>
+	  <a class="ui-state-default icon-button" target="_blank" href="<?php echo $previewLinkURL; ?>"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Go to live article'); ?></a>
+	  <?php } elseif ($doPreviewLink == 'preview') { ?>
+	  <a class="ui-state-default icon-button" href="#" onclick="window.open('<?php echo $previewLinkURL; ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=780, height=660'); return false;"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Preview'); ?></a>
 	  <?php } ?>
     </div>
   </div>
