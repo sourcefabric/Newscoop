@@ -1,10 +1,10 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
-regGS("Geo-location", "");
+regGS("Dashboard", "Мой Newscoop");
+regGS("Authors", "Авторы");
+regGS("Libraries", "Библиотеки");
+regGS("Media Archive", "Архив Медиа");
+regGS("Extensions", "Расширения");
+regGS("Geo-location", "Геолокация");
 regGS("Translation status:", "Статус перевода:");
 regGS("Editor Media Plugin", "Плагин Медиа-редактора");
 regGS("$1 of $2 strings translated", "$1 из $2 строк переведены");

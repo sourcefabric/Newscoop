@@ -1,8 +1,8 @@
 <?php 
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("File attached.", "Файл присоединен.");
+regGS("The maximum file upload size was not configured in Newscoop.", "Максимальный размер загруженного файла был не конфигурирован в настройках Newscoop.");
+regGS("File #$1 \"$2\" unattached", "Файл #$1 \"$2\" не прикреплен");
+regGS("File #$1 \"$2\" attached to article", "Файл #$1 \"$2\" прикреплен к статье");
 regGS("Unable to add attachment.", "Невозможно добавить файл.");
 regGS("There was a problem uploading the file.", "Проблема загрузки файла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Загруженный файл сохранен на сервер частично. Это в связано с тем, что максимально допустимое время загрузки файла превосходит время, необходимое для загрузки этого файла. Максимальное время загрузки определено в файле  'php.ini'");
