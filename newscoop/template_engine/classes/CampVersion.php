@@ -116,8 +116,7 @@ final class CampVersion
 
     public function getCopyright()
     {
-        return 'Copyright &copy; ' . $this->m_organization . ' '
-        . $this->m_copyrightYear . '. All rights reserved.';
+        return '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;' . $this->m_organization;
     } // fn getCopyright
 
 
