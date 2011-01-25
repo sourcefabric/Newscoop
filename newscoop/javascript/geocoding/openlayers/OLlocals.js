@@ -71,3 +71,66 @@ OpenLayers.Util.onImageLoadError = function() {
     }
     OpenLayers.Util.originalOnImageLoadError();
 };
+
+OpenLayers.Control.PanZoomBarMod = OpenLayers.Class(OpenLayers.Control.PanZoomBar, {
+    zoomBarUp:function(evt) {
+        if (!OpenLayers.Event.isLeftClick(evt)) {
+            return;
+        }
+        if (this.mouseDragStart) {
+            this.div.style.cursor="";
+            this.map.events.un({
+                "mouseup": this.passEventToSlider,
+                "mousemove": this.passEventToSlider,
+                scope: this
+            });
+            var deltaY = this.zoomStart.y - evt.xy.y;
+            var zoomLevel = this.map.zoom;
+            if (!this.forceFixedZoomLevel && this.map.fractionalZoom) {
+                zoomLevel += deltaY/this.zoomStopHeight;
+                zoomLevel = Math.min(Math.max(zoomLevel, 0), 
+                                     this.map.getNumZoomLevels() - 1);
+            } else {
+                zoomLevel += Math.round(deltaY/this.zoomStopHeight);
+            }
+
+            var max_layer_zoom = 18;
+            try {
+                var google_layer_name = "";
+
+                if (this.geo_obj)
+                {
+                    google_layer_name = this.geo_obj.map_view_layer_names_all[this.geo_obj.map_view_layer_google];
+                    if (this.map.baseLayer.name == google_layer_name) {max_layer_zoom = 19;}
+                }
+                else
+                {
+                    google_layer_name = geo_locations.map_view_layer_names_all[geo_locations.map_view_layer_google];
+                    if (geo_locations.map.baseLayer.name == google_layer_name) {max_layer_zoom = 19;}
+                }
+            } catch (e) {}
+            if (max_layer_zoom < zoomLevel) {zoomLevel = max_layer_zoom;}
+            if (0 > zoomLevel) {zoomLevel = 0;}
+
+            this.map.zoomTo(zoomLevel);
+            this.mouseDragStart = null;
+            this.zoomStart = null;
+
+            // this change works for firefox under winxp too, but not for linux/firefox
+            if ('msie' == OpenLayers.Util.getBrowserName())
+            {
+                try {
+	            geo_locations.ignore_click = true;
+	        } catch (e) {}
+                setTimeout("try {geo_locations.ignore_click = false;} catch (e) {}", 500);
+            }
+            else
+            {
+                OpenLayers.Event.stop(evt);
+            }
+        }
+    },
+
+    CLASS_NAME: "OpenLayers.Control.PanZoomBarMod"
+});
+

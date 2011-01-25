@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
 function onCommentsActivated(p_checkbox)
 {
     if (p_checkbox.checked) {
@@ -15,6 +15,14 @@ function onCommentsActivated(p_checkbox)
         document.getElementById('subscriber_moderated').disabled = true;
         document.getElementById('captcha_enabled').disabled = true;
         document.getElementById('spam_blocking_enabled').disabled = true;
+    }
+}
+
+function onCommentsModerated(p_checkbox)
+{
+    moderator = document.getElementById('moderator_to').value;
+    if (p_checkbox.checked && moderator == '') {
+        alert('<?php putGS('Make sure to enter the "Moderator Address" below'); ?>');
     }
 }
 </script>
@@ -165,7 +173,7 @@ function onCommentsActivated(p_checkbox)
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Subscriber comments moderated?"); ?>:</td>
                 	<td>
-                        <input type="checkbox" NAME="f_comments_subscribers_moderated" id="subscriber_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsSubscribersModerated()) { ?>checked<?php } ?>>
+                        <input type="checkbox" NAME="f_comments_subscribers_moderated" id="subscriber_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsSubscribersModerated()) { ?>checked<?php } ?> onchange="onCommentsModerated(this);">
                 	</TD>
                 </TR>
                 <TR>
@@ -177,7 +185,7 @@ function onCommentsActivated(p_checkbox)
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 40px;"><?php  putGS("Public comments moderated?"); ?>:</td>
                 	<td>
-                    <input type="checkbox" NAME="f_comments_public_moderated" id="public_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsPublicModerated()) { ?>checked<?php } ?>>
+                    <input type="checkbox" NAME="f_comments_public_moderated" id="public_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsPublicModerated()) { ?>checked<?php } ?> onchange="onCommentsModerated(this);">
                 	</TD>
                 </TR>
                 <TR>
