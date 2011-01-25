@@ -22,7 +22,7 @@ regGS("height", "высота");
 regGS("fill in the point description", "заполните описание пункта расположения");
 regGS("fill in map name", "заполните имя карты");
 regGS("city", "город");
-regGS("cc", "центр города");
+regGS("center city", "центр города");
 regGS("You do not have the right to remove maps from articles.", "У Вас нет прав доступа для удаления карт из статей.");
 regGS("Video file", "Видеофайл");
 regGS("Video ID", "ID видео");
