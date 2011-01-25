@@ -112,8 +112,8 @@ geo_locations.select_control = null
 geo_locations.pzb_ctrl = null;
 geo_locations.not_to_pan_update = true;
 // need to update drawing, but not to do it too frequently
-geo_locations.map_dragging_last = null;
-geo_locations.time_drag_delay = 500;
+//geo_locations.map_dragging_last = null;
+//geo_locations.time_drag_delay = 500;
 
 // for ids of pop-ups
 geo_locations.cur_pop_rank = 0;
@@ -1495,7 +1495,8 @@ var geo_main_openlayers_init = function(map_div_name)
     hover.activate();
 
     var cur_date = new Date();
-    geo_locations.map_dragging_last = cur_date.getTime();
+    //geo_locations.map_dragging_last = cur_date.getTime();
+    OpenLayers.Util.redraw_times.map_dragging_last = cur_date.getTime();
 
     var drag_feature = new OpenLayers.Control.DragFeature(geo_locations.layer);
     drag_feature.onStart = geo_hook_poi_dragg_start;

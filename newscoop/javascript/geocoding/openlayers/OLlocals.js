@@ -105,6 +105,45 @@ OpenLayers.Util.map_feature_redraw = function(geo_obj) {
 
 };
 
+OpenLayers.Control.PanZoomMod = OpenLayers.Class(OpenLayers.Control.PanZoom, {
+    buttonDown: function(evt) {
+        try {
+            OpenLayers.Util.map_feature_redraw(this.map.geo_obj);
+        } catch (e) {}
+
+        if (!OpenLayers.Event.isLeftClick(evt)) {
+            return;
+        }
+        switch (this.action) {
+          case "panup":
+            this.map.pan(0, - this.getSlideFactor("h"));
+            break;
+          case "pandown":
+            this.map.pan(0, this.getSlideFactor("h"));
+            break;
+          case "panleft":
+            this.map.pan(- this.getSlideFactor("w"), 0);
+            break;
+          case "panright":
+            this.map.pan(this.getSlideFactor("w"), 0);
+            break;
+          case "zoomin":
+            this.map.zoomIn();
+            break;
+          case "zoomout":
+            this.map.zoomOut();
+            break;
+          case "zoomworld":
+            this.map.zoomToMaxExtent();
+            break;
+          default:;
+        }
+    
+        OpenLayers.Event.stop(evt);
+    },
+    CLASS_NAME: "OpenLayers.Control.PanZoomMod"
+});
+
 OpenLayers.Control.PanZoomBarMod = OpenLayers.Class(OpenLayers.Control.PanZoomBar, {
     // msie does not stops the event, and does not preserves its properties either
     divClick: function (evt) {
@@ -241,7 +280,7 @@ OpenLayers.Control.DragPanMod = OpenLayers.Class(OpenLayers.Control.DragPan, {
     //drag_map.panMap = geo_hook_map_dragging;
 
     panMapDone: function(pixel) {
-        OpenLayers.Util.map_center_update(this.geo_obj);
+        OpenLayers.Util.map_center_update(this.map.geo_obj);
         //geo_hook_map_dragged(geo_obj, pixel)};
     },
 
@@ -252,7 +291,7 @@ OpenLayers.Control.DragPanMod = OpenLayers.Class(OpenLayers.Control.DragPan, {
 
         this.map.pan(this.handler.last.x - xy.x, this.handler.last.y - xy.y, {dragging: this.handler.dragging, animate: false});
 
-        OpenLayers.Util.map_feature_redraw(this.geo_obj);
+        OpenLayers.Util.map_feature_redraw(this.map.geo_obj);
     },
 
     CLASS_NAME: "OpenLayers.Control.DragPanMod"

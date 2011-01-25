@@ -4,12 +4,15 @@ if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 }
 
+/*
 // times for icon redrawing at some situations
 var redraw_times = {
     time_drag_delay: 500,
     map_dragging_last: 0
 };
+*/
 
+/*
 // the POI markers are not re-drawn after some actions happen; this is a part of the fix;
 var geo_hook_map_feature_redraw = function(geo_obj, xy, delay)
 {
@@ -29,7 +32,9 @@ var geo_hook_map_feature_redraw = function(geo_obj, xy, delay)
     }
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on map panning
 //var geo_hook_map_bar_panning = function(geo_obj, ctrl, evt)
 var geo_hook_map_bar_panning = function(evt, geo_param)
@@ -75,7 +80,9 @@ var geo_hook_map_bar_panning = function(evt, geo_param)
     OpenLayers.Event.stop(evt);
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on map panning
 var geo_hook_map_dragging = function(drag_map, geo_obj, xy)
 {
@@ -86,20 +93,23 @@ var geo_hook_map_dragging = function(drag_map, geo_obj, xy)
     geo_hook_map_feature_redraw(geo_obj, xy);
 
 };
+*/
 
+/*
 // adding redrawing of the POI icons on bar panning
 var geo_hook_map_dragged = function(geo_obj, pixel)
 {
     var new_center = geo_obj.map.center.clone();
     geo_obj.map.setCenter(new_center);
 
-/**/
+//
     geo_obj.select_control.destroy();
     geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
     geo_obj.map.addControl(geo_obj.select_control);
     geo_obj.select_control.activate();
-/**/
+//
 };
+*/
 
 // to insert new POI on map click, but not on a click that closes a pop-up
 var geo_hook_trigger_on_map_click = function(geo_obj, e)
@@ -916,11 +926,11 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     }
     else
     {
-        pzb_ctrl = new OpenLayers.Control.PanZoom();
+        pzb_ctrl = new OpenLayers.Control.PanZoomMod();
     }
     pzb_ctrl.geo_obj = geo_obj;
 
-    pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
+    //pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
 
     geo_obj.map = new OpenLayers.Map(map_div_name, {
         controls: [
@@ -1108,7 +1118,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     hover.activate();
 
     var cur_date = new Date();
-    redraw_times.map_dragging_last = cur_date.getTime();
+    OpenLayers.Util.redraw_times.map_dragging_last = cur_date.getTime();
 
     var drag_map = new OpenLayers.Control.DragPanMod([map_gsm, map_mqm, map_osm]);
     //drag_map.geo_obj = geo_obj;
