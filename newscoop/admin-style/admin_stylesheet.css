@@ -961,7 +961,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 /*---- END Geolocation ----*/
 
-.article-title, .breadcrumb_active	{
+.article-title, .article-title-locked, .breadcrumb_active	{
     color: #3B3B3B;
     float: left;
     font-size: 17px;
@@ -970,6 +970,12 @@ a.clear-margin:hover, .icon-button:hover  {
     margin: 0;
     padding: 3px 40px 0 0;
     text-indent: 6px;
+}
+.article-title, .breadcrumb_active	{
+    color: #3B3B3B;
+}
+.article-title-locked {
+    color: #ec8b8b;
 }
 .breadcrumb_active	{
     padding: 0 40px 0 0;
@@ -1070,6 +1076,7 @@ ul.tree.sortable .item fieldset .input_text {
     border-color: #9D9D9D;
     border-style: solid;
     border-width: 1px 1px 1px 1px;
+    width: 100%;
 }
 .datatable tr td, .datatable tr th {
     border-color: #EBEBEB;
@@ -1244,3 +1251,41 @@ input.input_file {
 .fg-menu-container {
 	z-index:101;
 }
+
+/** plugins */
+.table_actions {
+    margin: 0 34px 8px;
+}
+
+form > .table_input {
+    font-size: 1.1em;
+}
+
+/** media archive */
+body > h2 {
+    margin-left: 35px;
+}
+
+p.dates {
+    margin: 0 0 8px;
+    font-size: 1.3em;
+}
+
+.mediaplayer {
+    margin: 8px 0;
+    font-size: 1.1em;
+}
+
+dl.attachment {
+    font-size: 1.3em;
+    margin: 0 0 8px;
+}
+
+dl.attachment > * {
+    margin-bottom: 3px;
+}
+
+dl.attachment dt {
+    float: left;
+}
+

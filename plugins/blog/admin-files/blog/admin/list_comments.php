@@ -1,23 +1,6 @@
 <?php
+
 camp_load_translation_strings("plugin_blog");
-?>
-
-<script type="text/javascript">
-function ajax_action(action)
-{
-    $('#f_action').val(action);
-
-    // save & reload
-    var myAjax = $.get(
-        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
-        $('#comments_list').serialize(),
-        function() {
-            window.location.reload();
-        });
-}
-</script>
-
-<?php
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
@@ -73,25 +56,43 @@ $pager = new SimplePager($total, $f_length, "f_start", "index.php?f_order=$f_ord
 $TotalList = new BlogCommentsList();
 $total = $TotalList->count;
 
+if ($f_entry_id) {
+    $BlogEntry = new BlogEntry($f_entry_id);
+    $Blog = $BlogEntry->getBlog();
+    echo camp_html_breadcrumbs(array(
+        array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+        array(getGS('Blogs'), $Campsite['WEBSITE_URL'] . '/admin/blog/admin/list_blogs.php'),
+        array($Blog->getSubject(), 'list_entries.php?f_blog_id=' . $BlogEntry->getProperty('fk_blog_id')),
+        array(getGS('List comments') . ': ' . $BlogEntry->getSubject(), ''),
+    ));
+} else {
+    echo camp_html_breadcrumbs(array(
+        array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+        array(getGS('Blogs'), $Campsite['WEBSITE_URL'] . '/admin/blog/admin/list_blogs.php'),
+        array(getGS('List all comments'), ''),
+    ));
+}
+
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript">
+function ajax_action(action)
+{
+    $('#f_action').val(action);
+
+    // save & reload
+    var myAjax = $.get(
+        '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/<?php p(dirname($GLOBALS['call_script'])) ?>/ajax_action.php',
+        $('#comments_list').serialize(),
+        function() {
+            window.location.reload();
+        });
+}
+</script>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
   <TR>
-    <TD><A HREF="list_blogs.php" ><B><?php  putGS("Blogs"); ?></B></A></TD>
-
-    <?php if ($f_entry_id) {
-        $BlogEntry = new BlogEntry($f_entry_id);
-        $Blog = $BlogEntry->getBlog();
-        ?>
-       <TD> >> <B><A HREF="list_entries.php?f_blog_id=<?php p($BlogEntry->getProperty('fk_blog_id')) ?>"><?php p($Blog->getSubject()) ?></A></B></TD>
-       <TD> >> <B><?php p($BlogEntry->getSubject()) ?></B></TD>
-       <TD> >> <B><?php p('List comments') ?></B></TD>
-    <?php } else { ?>
-        <TD> >> <B><?php putGS("List all comments"); ?></B></TD>
-    <?php } ?>
-
     <?php if ($f_entry_id && $is_admin) { ?>
         <TD style="padding-left: 20px;"><A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $f_entry_id ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
         <TD><A HREF="javascript: void(0);" onclick="window.open('comment_form.php?f_entry_id=<?php echo $f_entry_id ?>', 'edit_comment', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=600, height=420, top=100, left=100');" ><B><?php  putGS("Add new comment"); ?></B></A></TD>

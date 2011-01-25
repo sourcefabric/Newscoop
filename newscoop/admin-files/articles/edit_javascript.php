@@ -125,18 +125,38 @@ $('form#article-main').submit(function() {
 }).change(function() {
     $(this).addClass('changed');
 });
+
+/**
+ * Close window after timeout
+ * @param int timeout
+ * @return void
+ */
+var close = function(timeout) {
+    setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
+};
+
+/**
+ * Unlock article
+ * @return void
+ */
+var unlockArticle = function() {
+    callServer(['Article', 'setIsLocked'], [
+        <?php echo $f_language_selected; ?>,
+        <?php echo $articleObj->getArticleNumber(); ?>,
+        0,
+        <?php echo $g_user->getUserId(); ?>]);
+};
  
+<?php if ($inEditMode) { ?>
 // save all buttons
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
 
-    var close = function(timeout) {
-        setTimeout("window.location.href = '<?php echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number"; ?>'", timeout);
-    };
-
     if ($(this).attr('id') == 'save_and_close') {
+        unlockArticle();
+
         if (ajax_forms == 0) { // nothing to save
             close(1500);
             return false;
@@ -151,6 +171,15 @@ $('.save-button-bar input').click(function() {
     return false;
 });
 
+<?php } else { // view mode ?>
+$('.save-button-bar input#save_and_close').click(function() {
+<?php if ($articleObj->isLocked() && $articleObj->getLockedByUser() == $g_user->getUserId()) { ?>
+    unlockArticle();
+<?php } ?>
+    close(1);
+});
+<?php } ?>
+
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
@@ -160,18 +189,23 @@ array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>
 ];
-/** autocomplete is broken
+
+// authors autocomplete
 $(".aauthor").autocomplete({
     source: authorsList
 });
- */
+$(".aauthor").live('focus', function() {
+    $(".aauthor").autocomplete({
+        source: authorsList
+    });
+});
 
 // fancybox for popups
 $('a.iframe').each(function() {
     $(this).fancybox({
         hideOnContentClick: false,
-        width: 600,
-        height: 600,
+        width: 660,
+        height: 500,
         onStart: function() { // check if there are any changes
             return checkChanged();
         },
@@ -184,7 +218,6 @@ $('a.iframe').each(function() {
             }
         }
     });
-
 });
 $('#locations_box a.iframe').each(function() {
     //$(this).data('fancybox').onCleanup = function() {alert('Returning false here does prevent closing the fancybox.'); return false;};

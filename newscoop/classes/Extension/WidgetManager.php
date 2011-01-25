@@ -48,7 +48,7 @@ class WidgetManager
 
         // get all widget extensions
         $index = new Extension_Index();
-        $extensions = $index->addDirectory(WWW_DIR . '/extensions')
+        $extensions = $index->addDirectory(dirname(__FILE__) . '/../../extensions')
             ->find('IWidget');
 
         // filter not-available (used)

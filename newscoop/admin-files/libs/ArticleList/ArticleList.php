@@ -234,7 +234,7 @@ class ArticleList extends BaseList
         $article->getLanguageId(),
         $article->getOrder(),
         sprintf('%s <a href="%s" title="%s %s">%s</a>',
-            $article->isLocked() ? '<span class="ui-icon ui-icon-locked" title="' . $lockInfo . '"></span>' : '',
+            $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
             $articleLink,
             getGS('Edit'), $article->getName(),
             $article->getName()),

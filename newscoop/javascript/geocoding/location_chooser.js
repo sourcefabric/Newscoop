@@ -745,6 +745,10 @@ geo_locations.update_poi_descs = function(active, index_type)
             cur_label = cur_label.substr(0, max_len) + "...";
         }
 
+        cur_label = cur_label.replace(/&/gi, "&amp;");
+        cur_label = cur_label.replace(/</gi, "&lt;");
+        cur_label = cur_label.replace(/>/gi, "&gt;");
+
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
         descs_inner += "<a href=\"#\" class='poi_name'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
@@ -1602,12 +1606,16 @@ geo_locations.create_popup_content = function(feature)
     var pop_text = "";
     {
         var pop_link = attrs.m_link;
+        var pop_title = "" + feature.attributes.m_title;
+        pop_title = pop_title.replace(/&/gi, "&amp;");
+        pop_title = pop_title.replace(/>/gi, "&gt;");
+        pop_title = pop_title.replace(/</gi, "&lt;");
 
         pop_text += "<div class='popup_title'>";
         if (0 < pop_link.length) {
             pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\">";
         }
-        pop_text += feature.attributes.m_title;
+        pop_text += pop_title;
         if (0 < pop_link.length) {
             pop_text += "</a>";
         }
@@ -2518,6 +2526,9 @@ geo_locations.map_save_name = function()
     if ("" != name_value)
     {
         var map_name_disp_str = name_value;
+        map_name_disp_str = map_name_disp_str.replace(/&/gi, "&amp;");
+        map_name_disp_str = map_name_disp_str.replace(/</gi, "&lt;");
+        map_name_disp_str = map_name_disp_str.replace(/>/gi, "&gt;");
 
         var max_len = this.map_name_max_length;
         if (max_len < map_name_disp_str.length)
@@ -2549,6 +2560,9 @@ geo_locations.map_load_name = function()
     if ("" != name_value)
     {
         var map_name_disp_str = name_value;
+        map_name_disp_str = map_name_disp_str.replace(/&/gi, "&amp;");
+        map_name_disp_str = map_name_disp_str.replace(/</gi, "&lt;");
+        map_name_disp_str = map_name_disp_str.replace(/>/gi, "&gt;");
 
         var max_len = this.map_name_max_length;
         if (max_len < map_name_disp_str.length)

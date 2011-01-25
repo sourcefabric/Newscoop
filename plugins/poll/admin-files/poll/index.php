@@ -29,6 +29,11 @@ $allLanguages = Language::GetLanguages();
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Polls'), ''),
+));
+
 // DO NOT DELETE!!! Needed for localizer
 // getGS("Polls");
 ?>

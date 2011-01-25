@@ -54,7 +54,10 @@ class Poll extends DatabaseObject {
         'percentage_of_votes_overall',
 
         // timestamp - last_modified
-        'last_modified'
+        'last_modified',
+
+        // poll reset token - for allowing clients to vote again after reset
+        'reset_token',
         );
 
     /**
@@ -904,6 +907,15 @@ class Poll extends DatabaseObject {
             return false;
         }
         if ($this->m_data['votes_per_user'] <= $this->getUserVoteCount()) {
+            // check if poll was reseted
+            $token = $this->getResetToken();
+            $token_key = 'poll_reset_' . $token;
+            if (!empty($token) && empty($_COOKIE[$token_key])) { // reset client count
+                $this->increaseUserVoteCount(0);
+                setcookie($token_key, time(), time() + 60 * 60 * 24 * 365);
+                return true;
+            }
+
             return false;
         }
 
@@ -912,12 +924,16 @@ class Poll extends DatabaseObject {
 
     /**
      * Increate counter poll has been voted by single client
-     *
+     * @param int $force_value
+     * @return void
      */
-    public function increaseUserVoteCount()
+    public function increaseUserVoteCount($force_value = NULL)
     {
         $key = 'poll_'.$this->m_data['fk_language_id'].'_'.$this->m_data['poll_nr'];
         $value = $this->getUserVoteCount() + 1;
+        if ($force_value !== NULL) {
+            $value = (int) $force_value;
+        }
 
         $_SESSION[$key] = $value;
 
@@ -945,8 +961,17 @@ class Poll extends DatabaseObject {
     }
 
     /**
+     * Get reset token
+     * @return string
+     */
+    public function getResetToken()
+    {
+        return (string) $this->m_data['reset_token'];
+    }
+
+    /**
      * Reset all counters
-     *
+     * @return void
      */
     public function reset()
     {
@@ -956,10 +981,9 @@ class Poll extends DatabaseObject {
             $PollAnswer->setProperty('percentage_overall', 0);
             $PollAnswer->setProperty('value', 0);
             $PollAnswer->setProperty('average_value', 0);
+
+            $this->setProperty('reset_token', sha1(uniqid()));
         }
         $this->triggerStatistics();
     }
-
-} // class Poll
-
-?>
+}

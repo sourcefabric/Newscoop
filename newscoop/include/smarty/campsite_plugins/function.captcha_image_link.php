@@ -21,7 +21,7 @@
  */
 function smarty_function_captcha_image_link($p_params)
 {
-    $html = '/include/captcha/image.php';
+    $html = $GLOBALS['Campsite']['SUBDIR'].'/include/captcha/image.php';
     return $html;
 } // fn smarty_function_captcha_image_link
 

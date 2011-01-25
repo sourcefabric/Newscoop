@@ -16,6 +16,11 @@ camp_load_translation_strings("plugin_interview");
 // getGS("Delete Image");
 // getGS("Short Description");
 // getGS("Questions Limit");
+
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Interviews'), ''),
+));
 ?>
 
 <script type="text/javascript">

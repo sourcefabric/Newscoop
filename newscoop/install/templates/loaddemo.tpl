@@ -66,16 +66,16 @@
             <div class="form_field">
               <label for="install_demo">Please choose a demo template:</label> &nbsp;
               <input id="install_demo_no" name="install_demo" value="0" type="radio" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
+              {{ foreach from=$sample_templates key="step" item="t" }}
+              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label for="install_demo">{{ $t }}</label>
+              {{ /foreach }}
             </div>
-          {{ foreach from=$sample_templates key="step" item="t" }}
-            <div class="template-header">
-              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label for="install_demo">{{ $t }}</label>
-            </div>
+            {{ foreach from=$sample_templates key="step" item="t" }}
             <div class="demo_img">
-              <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg"  rel="lightbox" title="{{ $t }}" /></a>
+              <a href="sample_templates/{{ $t }}/screenshot_large.jpg" rel="lightbox"><img src="sample_templates/{{ $t }}/screenshot.jpg" rel="lightbox" title="{{ $t }}" /></a>
               <p>{{include file="./../sample_templates/$t/description.txt"}}</p>
             </div>
-          {{ /foreach }}
+            {{ /foreach }}
           </td>
         </tr>
         </table>

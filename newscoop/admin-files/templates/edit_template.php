@@ -182,12 +182,13 @@ if (in_array($extension, $imageExtensions)) {
         <script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/editarea/edit_area/edit_area_full.js"></script>
       <script language="javascript" type="text/javascript">
       editAreaLoader.init({
-          id : "cField"		          // textarea id
-          ,syntax: "smarty"		  // syntax to be used for highgliting
-          ,start_highlight: true		  // to display with highlight mode on start-up
-          ,toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, word_wrap, |, change_smooth_selection, fullscreen, |, help"
-        ,syntax_selection_allow: "css,html,js,php,smarty,xml"
-        ,replace_tab_by_spaces: 2
+          id : "cField",
+          start_highlight: true,
+          allow_toggle: true,
+          toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, word_wrap, |, change_smooth_selection, fullscreen, |, help",
+          syntax: "smarty",
+          syntax_selection_allow: "css,html,js,php,smarty,xml",
+          replace_tab_by_spaces: 2
       });
       </script>
       </td>

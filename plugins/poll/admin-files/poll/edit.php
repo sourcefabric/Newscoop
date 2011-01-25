@@ -38,6 +38,13 @@ if ($poll->exists()) {
     $fk_language_id = Input::Get('f_language_id', 'int');
 }
 
+$title = $poll->exists() ? getGS('Edit Poll') : getGS('Add new Poll');
+echo camp_html_breadcrumbs(array(
+    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
+    array($title, ''),
+));
+
 if (!$f_include) { ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
         <TR>
@@ -61,10 +68,6 @@ if (!$f_include) { ?>
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 camp_html_display_msgs();
 ?>
-<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
 
 <P>
 <FORM NAME="edit_poll" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
@@ -76,12 +79,6 @@ camp_html_display_msgs();
 <INPUT TYPE="HIDDEN" NAME="f_from" VALUE="<?php p(htmlspecialchars($f_from)); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
-<TR>
-    <TD COLSPAN="2">
-        <B><?php  if ($poll->exists()) putGS("Edit Poll"); else putGS('Add new Poll'); ?></B>
-        <HR NOSHADE SIZE="1" COLOR="BLACK">
-    </TD>
-</TR>
 <TR>
     <td valign="top">
         <table>
@@ -127,54 +124,14 @@ camp_html_display_msgs();
             <TD ALIGN="RIGHT" ><?php  putGS("Date begin voting"); ?>:</TD>
             <TD>
                 <?php $now = getdate(); ?>
-                <table cellpadding="0" cellspacing="2"><tr>
-                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11" VALUE="<?php p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>"></td>
-                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_begin"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background='red';"
-                          onmouseout="this.style.background=''" /></td>
-                      <td><?php putGS('YYYY-MM-DD'); ?></td>
-                </tr></table>
-                <script type="text/javascript">
-                    Calendar.setup({
-                        inputField:"f_date_begin",
-                        ifFormat:"%Y-%m-%d",
-                        showsTime:false,
-                        showOthers:true,
-                        weekNumbers:false,
-                        range:new Array(<?php p($now["year"]); ?>, 2020),
-                        button:"f_trigger_date_begin"
-                    });
-                </script>
-
+                <INPUT TYPE="TEXT" class="input_text date" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11" VALUE="<?php p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>" />
             </TD>
         </TR>
         <TR>
             <TD ALIGN="RIGHT" ><?php  putGS("Date end voting"); ?>:</TD>
             <TD>
                 <?php $now = getdate(); ?>
-                <table cellpadding="0" cellspacing="2"><tr>
-                    <td><INPUT TYPE="TEXT" class="input_text" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11" VALUE="<?php p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>"></td>
-                    <td valign="top" align="left"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/calendar.gif" id="f_trigger_date_end"
-                         style="cursor: pointer; border: 1px solid red;"
-                          title="Date selector"
-                          onmouseover="this.style.background='red';"
-                          onmouseout="this.style.background=''" /></td>
-                      <td><?php putGS('YYYY-MM-DD'); ?></td>
-                </tr></table>
-                <script type="text/javascript">
-                    Calendar.setup({
-                        inputField:"f_date_end",
-                        ifFormat:"%Y-%m-%d",
-                        showsTime:false,
-                        showOthers:true,
-                        weekNumbers:false,
-                        range:new Array(<?php p($now["year"]); ?>, 2020),
-                        button:"f_trigger_date_end"
-                    });
-                </script>
-
+                <INPUT TYPE="TEXT" class="input_text date" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11" VALUE="<?php p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>" />
             </TD>
         </TR>
         <tr>

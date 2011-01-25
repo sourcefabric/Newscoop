@@ -36,6 +36,9 @@ if ($f_action == 'Step2') {
 
 foreach ($dest->getUserDefinedColumns(null, true, true) as $destColumn) {
     $tmp = trim(Input::get('f_src_'. $destColumn->getPrintName()));
+    if (empty($tmp)) {
+    	$tmp = 'NULL';
+    }
 	$f_src_c[$destColumn->getPrintName()] = $tmp;
 }
 
@@ -74,7 +77,7 @@ if ($ok && $f_action == 'Merge') {
         $ok = false;
     }
     if ($ok) {
-    	$f_delete = Input::get('f_delete', 'int', 0);
+    	$f_delete = Input::get('f_delete', 'checkbox', 0);
         if ($f_delete) {
             // delete the source article type
             $at = new ArticleType($f_src);
@@ -294,6 +297,13 @@ if ($ok) {
         			$i = 0;
         			if ($f_prev_action == 'Orig') $dbColumns = $srcDbColumns;
         			foreach ($dbColumns as $dbColumn) {
+                        if ($f_prev_action == 'Orig') {
+                            $text = $srcArticleData->getProperty($dbColumn->getName());
+                        } elseif ($f_src_c[$dbColumn->getPrintName()] != 'NULL') {
+            				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
+                        } else {
+                            $text = '';
+                        }
 
         				if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
         					// Single line text fields
@@ -305,14 +315,7 @@ if ($ok) {
         					<?php echo htmlspecialchars($dbColumn->getDisplayName()); ?>:
         				</td>
         				<TD>
-        				<?php
-        				if ($f_prev_action == 'Orig')
-        				    print htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));
-        				else if ($f_src_c[$dbColumn->getPrintName()] != 'NULL')
-        	       			print htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));
-        	       		else
-        	       		    print '';
-        				?>
+        				<?php print htmlspecialchars($text); ?>
         				</TD>
         			</TR>
         			<?php
@@ -328,14 +331,7 @@ if ($ok) {
         				</td>
         				<TD>
         					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
-        					<?php
-        					if ($f_prev_action == 'Orig')
-        					    echo htmlspecialchars($srcArticleData->getProperty($dbColumn->getName()));
-        					elseif ($srcArticleData->getProperty('F'.$f_src_c[$dbColumn->getPrintName()]) != 'NULL')
-            					echo htmlspecialchars($srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]));
-                            else
-                                echo '';
-            				?>
+        					<?php echo htmlspecialchars($text); ?>
         					</span>
         				<?php putGS('YYYY-MM-DD'); ?>
         				</TD>
@@ -344,13 +340,6 @@ if ($ok) {
         			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
         				// Multiline text fields
         				// Transform Campsite-specific tags into editor-friendly tags.
-                        if ($f_prev_action == 'Orig') {
-                            $text = $srcArticleData->getProperty($dbColumn->getName());
-                        } elseif ($f_src_c[$dbColumn->getPrintName()] != 'NULL') {
-            				$text = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
-                        } else {
-                            $text = '';
-                        }
         				// Subheads
         				$text = preg_replace("/<!\*\*\s*Title\s*>/i", "<span class=\"campsite_subhead\">", $text);
         				$text = preg_replace("/<!\*\*\s*EndTitle\s*>/i", "</span>", $text);
@@ -398,8 +387,7 @@ if ($ok) {
         			</td>
         			<td>
                         <?php
-                        $topicId = $srcArticleData->getProperty('F'. $f_src_c[$dbColumn->getPrintName()]);
-                        $topic = new Topic($topicId);
+                        $topic = new Topic((int)$text);
                         echo $topic->getName(camp_session_get('LoginLanguageId', 1));
                         ?>
         			</td>

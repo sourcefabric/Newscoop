@@ -321,6 +321,9 @@ $locale = trim(getGS('en'), ' (*)');
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+
+  <!-- include favicon //-->
+  <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <style type="text/css">
 	#menuLog {
 	    font-size:1.4em;
@@ -368,8 +371,6 @@ $locale = trim(getGS('en'), ' (*)');
 	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */	
 	
 	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
-
-    .geo_map_name {margin:0px 10px 0px 27px; float: left; padding-top:20px; font-size: 12px; }
 	</style>
 	
 	<!-- style exceptions for IE 6 -->
@@ -408,13 +409,13 @@ $locale = trim(getGS('en'), ' (*)');
       );
 
       // MENUS
-      $('#newscoop_menu_content').menu({
+      $('#newscoop_menu_content').topmenu({
           content: $('#newscoop_menu_content').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php if ($showAdminActions) { ?>
-      $('#newscoop_menu_action').menu({
+      $('#newscoop_menu_action').topmenu({
           content: $('#newscoop_menu_action').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -423,7 +424,7 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showConfigureMenu) {
       ?>
-      $('#newscoop_menu_configure').menu({
+      $('#newscoop_menu_configure').topmenu({
           content: $('#newscoop_menu_configure').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -432,13 +433,13 @@ $locale = trim(getGS('en'), ' (*)');
       }
       if ($showUserMenu) {
       ?>
-      $('#newscoop_menu_users').menu({
+      $('#newscoop_menu_users').topmenu({
           content: $('#newscoop_menu_users').next().html(),
           flyOut: true,
           showSpeed: 150
       });
       <?php } ?>
-      $('#newscoop_menu_plugins').menu({
+      $('#newscoop_menu_plugins').topmenu({
           content: $('#newscoop_menu_plugins').next().html(),
           flyOut: true,
           showSpeed: 150
@@ -450,6 +451,10 @@ $locale = trim(getGS('en'), ' (*)');
   $(document).ready(function() {
       var sticky_limit = 0;
       $(window).scroll(function() {
+          if ($('.sticky').size() == 0) {
+              return false; // no sticky
+          }
+
           var windowTop = $(window).scrollTop();
           var stickyTop = $('.sticky').offset().top;
           if (windowTop > stickyTop && sticky_limit == 0) {

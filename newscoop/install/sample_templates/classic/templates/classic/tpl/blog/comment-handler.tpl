@@ -2,7 +2,7 @@
     <p>
     {{ if $gimme->preview_blogcomment_action->ok }} 
         <b>{{ if $gimme->language->name == "English" }}Blogcomment preview:{{ else }}Vista previa de blog comentario:{{ /if }}</b>
-        <p>{{ if $gimme->language->name == "English" }}Your Name{{ else }}Su nombre{{ /if }}: {{ $gimme->preview{{ if $gimme->language->name == "English" }}Your Name{{ else }}Su nombre{{ /if }}nt_action->user_name }}<br>
+        <p>{{ if $gimme->language->name == "English" }}Your Name{{ else }}Su nombre{{ /if }}: {{ $gimme->preview_blogcomment_action->user_name }}<br>
         {{ if $gimme->language->name == "English" }}Your e-mail{{ else }}Su e-mail{{ /if }}: {{ $gimme->preview_blogcomment_action->user_email }}<br>
         {{ if $gimme->language->name == "English" }}Title{{ else }}Título{{ /if }}: {{ $gimme->preview_blogcomment_action->title }}<br>
         {{ if $gimme->language->name == "English" }}Comment{{ else }}Comentar{{ /if }}: {{ $gimme->preview_blogcomment_action->content }}<br>

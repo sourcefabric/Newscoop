@@ -4,12 +4,12 @@
  */
 
 // If the article is locked say so to the user
-if ($articleObj->userCanModify($g_user) && $locked && ($inEditMode)) {
+if ($articleObj->userCanModify($g_user) && $locked && !$inViewMode) {
 ?>
 <div class="wrapper">
   <div class="main-content-wrapper">
     <div class="ui-widget-content big-block block-shadow padded-strong" style="text-align:center;">
-      <h3 class="alert"><?php putGS("Article is locked"); ?></h3>
+      <h3 class="alert"><?php putGS('Article is locked'); ?></h3>
       <fieldset class="plain">
         <ul>
           <li>
@@ -64,13 +64,17 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
   <?php if ($inEditMode) { ?>
     <input class="top-input" name="f_article_title" id="f_article_title" type="text"
       value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" <?php print $spellcheck ?> />
+  <?php } elseif ($locked) {
+  ?>
+    <span class="left-floated ui-icon ui-icon-locked"></span>
+    <span class="article-title-locked"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } ?>
     <span class="comments"><?php p(count($comments)); ?></span>
     <div class="save-button-bar">
-      <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" />
-      <input type="submit" class="save-button" value="<?php putGS('Save and Close'); ?>" id="save_and_close" name="save_and_close" />
+      <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" <?php if (!$inEditMode) { ?> disabled style="opacity: 0.3"<?php } ?> />
+      <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
     </div>
     <div class="top-button-bar">
       <input type="button" name="edit" value="<?php putGS('Edit'); ?>" <?php if ($inEditMode) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
@@ -183,7 +187,7 @@ if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2 && $articleOb
         <li>
           <label><?php putGS('Date'); ?></label>
           <?php if ($articleObj->isPublished()) { ?>
-          <div class="text-container left-floated date-published"><strong><?php putGS('Published'); ?>:</strong> <span class="f_publish_date"><?php print htmlspecialchars($articleObj->getPublishDate()); ?></span>
+          <div class="text-container left-floated date-published"><b><?php putGS('Published'); ?>:</b> <span class="f_publish_date"><?php print htmlspecialchars($articleObj->getPublishDate()); ?></span>
             <?php if ($inEditMode) { ?><input type="hidden" name="f_publish_date" value="<?php echo $articleObj->getPublishDate(); ?>" class="datetime" /><?php } ?></div>
           <?php } ?>
           <div class="text-container left-floated date-created"><?php putGS('Created'); ?>: <span class="f_creation_date"><?php print htmlspecialchars($articleObj->getCreationDate()); ?></span>

@@ -1,7 +1,7 @@
 <?php
 $info = array(
     'name' => 'poll',
-    'version' => '0.3.0',
+    'version' => '0.3.1',
     'label' => 'Polls',
     'description' => 'This plugin provides functionality to perform polls (standard and advanced).',
     'menu' => array(
@@ -48,7 +48,7 @@ $info = array(
     ),
     'install' => 'plugin_poll_install',
     'enable' => 'plugin_poll_install',
-    'update' => '',
+    'update' => 'plugin_poll_update',
     'disable' => '',
     'uninstall' => 'plugin_poll_uninstall'
 );
@@ -124,6 +124,16 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $Admin->setPermission('plugin_poll', true);
         $ChiefEditor->setPermission('plugin_poll', true);
         $Editor->setPermission('plugin_poll', true);
+    }
+
+    function plugin_poll_update()
+    {
+        require_once $GLOBALS['g_campsiteDir'] . '/install/classes/CampInstallationBase.php';
+        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+
+        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
+
+        unset($GLOBALS['g_db']);
     }
 }
 ?>
