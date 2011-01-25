@@ -14,9 +14,10 @@ Depends: apache2 | httpd,
  php5-cli,
  php5-gd,
  mysql-client | virtual-mysql-client,
- imagemagick | graphicsmagick,
+ graphicsmagick | imagemagick,
  ${misc:Depends}
-Suggests: mysql-server | virtual-mysql-server, php-apc
+Recommends: php-apc | php5-xcache
+Suggests: mysql-server | virtual-mysql-server
 Description: Newspaper/Magazine Software for Web Publishing
  Newscoop is a web publishing system that can bring your newspaper or
  magazine content to the online world. It is often used by media

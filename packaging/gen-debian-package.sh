@@ -2,7 +2,8 @@
 # usage from git-repo: 
 #  ./gen-debian-package.sh -rfakeroot -sa
 
-DEBVERSION=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g' | sed 's/-.*$//g')
+DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
+DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 DEBPATH=`pwd`/debian # TODO check dirname $0
@@ -12,11 +13,11 @@ if test ! -d ${DEBPATH}; then
   exit;
 fi
 
-echo "Debian Version: ${DEBVERSION}"
-echo "Release:        ${UPSTREAMVERSION}"
-echo "Major:          ${UPSTREAMDIST}"
-echo "debuild opts:   $@"
-echo "build folder:   /tmp/newscoop-$DEBVERSION"
+echo "Debian Release:   ${DEBRELEASE}"
+echo "Upstream Version: ${UPSTREAMVERSION}"
+echo "Major:            ${UPSTREAMDIST}"
+echo "debuild opts:     $@"
+echo "build folder:     /tmp/newscoop-$DEBVERSION"
 
 echo -n "OK? [enter|CTRL-C]" ; read
 
