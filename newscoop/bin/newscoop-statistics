@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 /**
  * @package Newscoop
@@ -10,6 +10,7 @@
  * @link http://www.campware.org
  */
 
+require_once dirname(__FILE__) . '/bootstrap.php';
 
 function update_statistics($p_confDir)
 {
@@ -83,35 +84,6 @@ function is_valid_conf_dir($p_conf_dir)
 } // fn isValidConfDir
 
 
-function usage()
-{
-    printf("Usage: newscoop-statistics [options]\n"
-           ."Options:\n"
-           ."\t--conf_dir=[configuration_dir]: Host name of the MySQL Server.\n"
-           ."\t--help: Display this information.\n");
-} // fn usage
-
-
-// gets the arguments from command line, if any
-if (is_array($GLOBALS['argv']) && !empty($GLOBALS['argv'][1])) {
-    $option = explode('=', $GLOBALS['argv'][1]);
-    if ($option[0] != '--conf_dir') {
-        usage();
-        exit(0);
-    }
-
-    $conf_dir = (!empty($option[1])) ? rtrim($option[1], '/') : '';
-    if (empty($conf_dir)) {
-        usage();
-        exit(0);
-    }
-} else {
-    $bin_dir = dirname(__FILE__);
-    $conf_dir = preg_replace('/bin$/', 'conf', $bin_dir);
-}
-
-
 // runs the script
-//update_statistics($conf_dir);
+update_statistics(WWW_DIR . '/conf');
 
-?>
