@@ -1,8 +1,8 @@
 <?php 
-regGS("Filters", "");
-regGS("Add new Author", "");
-regGS("You do not have the right to sync Newscoop and Phorum users.", "");
-regGS("User may synchronize Newscoop and Phorum users", "");
+regGS("Filters", "Фильтры");
+regGS("Add new Author", "Добавить нового автора");
+regGS("You do not have the right to sync Newscoop and Phorum users.", "У Вас нет прав доступа для синхронизации работы Newscoop и пользователей форума.");
+regGS("User may synchronize Newscoop and Phorum users", "Пользователь может синхронизировать работу Newscoop и пользователей форума.");
 regGS("Unsubscribe email notifications", "");
 regGS("New author \"$1\" ($2) created.", "");
 regGS("Manage Authors", "");
