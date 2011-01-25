@@ -115,6 +115,7 @@ a.map_name_display:hover {
     margin-top: 1px;
     font-weight: bold;
     font-size: 13px;
+    color:#007fb3;
 }
 .geores_city_text {
     float: left;
@@ -122,6 +123,13 @@ a.map_name_display:hover {
     margin-top: 2px;
     font-weight: bold;
     font-size: 12px;
+    color:#007fb3;
+}
+.search_res_city_column a {
+    color:#007fb3;
+}
+.search_res_cc_column a {
+    color:#007fb3;
 }
 /*
 .hidden {
