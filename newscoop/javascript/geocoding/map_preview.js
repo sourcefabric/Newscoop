@@ -907,10 +907,12 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
 
     var pzb_ctrl = null;
+    var pzb_with_bar = false;
 
     if (360 <= geo_obj.map_art_view_height_default)
     {
-        pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+        pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
+        pzb_with_bar = true;
     }
     else
     {
