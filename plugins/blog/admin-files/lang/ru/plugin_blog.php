@@ -1,6 +1,6 @@
 <?php 
-regGS("User may moderate Blogs", "");
-regGS("User may manage Blogs", "");
+regGS("User may moderate Blogs", "Пользователь может модерировать блоги");
+regGS("User may manage Blogs", "Пользователь может управлять блогами");
 regGS("read only", "только для чтения");
 regGS("You are not allowed to edit this blog.", "Вы не имеет прав для редактирования.");
 regGS("Title", "Заголовок");
@@ -34,7 +34,6 @@ regGS("You do not have the right to manage blogs.", "Вы не имеете пр
 regGS("You do not have the right to manage blog entries.", "Вы не имеете прав доступа для управления блогами.");
 regGS("User", "Пользователь");
 regGS("Use captcha for blog comments form", "Использовать captcha-код для формы комментариев для блога");
-regGS("Title", "Заголовок");
 regGS("Registered or indicated by Name and Email", "Зарегистрированный или определенный по имени или Email");
 regGS("Registered or indicated by Name", "Зарегистрированный или определенный по имени");
 regGS("Posts", "Сообщения");

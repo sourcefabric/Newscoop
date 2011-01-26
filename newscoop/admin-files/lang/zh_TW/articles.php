@@ -1,4 +1,6 @@
 <?php 
+regGS("Select section:", "");
+regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Switches saved.", "");

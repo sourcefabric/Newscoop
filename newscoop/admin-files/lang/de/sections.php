@@ -15,7 +15,7 @@ regGS("Go To Articles", "Gehe zu Artikeln");
 regGS("Add section to all subscriptions.", "Rubrik zu allen Abonnements hinzufügen.");
 regGS("Delete section from all subscriptions.", "Rubrik aus allen Abonnements entfernen.");
 regGS("A total of $1 subscriptions were updated.", "Es wurden $1 Abonnements aktualisiert.");
-regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Name<BR><SMALL>(klicken um Artikel anzuzeigen)</SMALL> ");
+regGS("Name<BR><SMALL>(click to see articles)</SMALL>", "Name<BR><SMALL>(click to see articles)</SMALL> ");
 regGS("Delete section $1", "Rubrik $1 löschen");
 regGS("Adding new section", "Rubrik wird hinzugefügt");
 regGS("You do not have the right to add sections.", "Keine Berechtigung Rubriken hinzuzufügen.");

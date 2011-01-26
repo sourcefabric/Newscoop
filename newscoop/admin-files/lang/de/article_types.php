@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "Der Templatename darf nur Buchstaben und den Unterstrich (_) enthalten.");
+regGS("The template name may only contain letters and the underscore (_) character.", "Der Templatename darf nur Buchstaben und Unterstriche (_) enthalten.");
 regGS("Rename article type '$1'", "Artikeltyp '$1' umbenennen");
 regGS("Invalid article type '$1'.", "Ungültiger Artikeltyp '$1'.");
 regGS("You cannot merge the same type into itself.", "Gleiche Typen können nicht verbunden werden.");
