@@ -123,8 +123,7 @@ var set_local_strings = function()
 
 };
 // prepare map settings
-var useSystemParameters = function()
-{
+var useSystemParameters = function() {
 <?php
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
     $article_spec = json_encode($article_spec_arr);
@@ -273,6 +272,8 @@ var map_close_question = "<?php p(getGS("If you want to save your current change
 
 var on_load_proc = function()
 {
+    geo_locations = new geo_locations_edit();
+    geo_locations.set_obj_name("geo_locations");
 
     // does not work for opera (window.opera), no known workaround
     window.onbeforeunload = function ()
@@ -286,7 +287,8 @@ var on_load_proc = function()
     set_local_strings();
     $("#edit_tabs_all").tabs();
     //setTimeout(function() {
-    geo_main_selecting_locations('<?php echo $geocodingdir; ?>', 'map_mapcanvas', 'map_sidedescs', '', '', true);
+    useSystemParameters();
+    geo_locations.main_openlayers_init('map_mapcanvas', 'map_sidedescs');
     init_search();
     //}, 1000);
     window.focus();
@@ -318,7 +320,7 @@ var on_load_proc = function()
         return;
     };
 
-    var opener_sets = self.setInterval("set_to_opener()", 1000);
+    //var opener_sets = self.setInterval("set_to_opener()", 1000);
 };
 
 on_close_request = function()

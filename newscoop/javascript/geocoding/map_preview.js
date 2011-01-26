@@ -1,250 +1,3 @@
-// better for some providers to try more than once
-if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
-{
-    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
-}
-
-/*
-// times for icon redrawing at some situations
-var redraw_times = {
-    time_drag_delay: 500,
-    map_dragging_last: 0
-};
-*/
-
-/*
-// the POI markers are not re-drawn after some actions happen; this is a part of the fix;
-var geo_hook_map_feature_redraw = function(geo_obj, xy, delay)
-{
-    var cur_date = new Date();
-    var cur_time = cur_date.getTime();
-
-    var time_delay = redraw_times.time_drag_delay;
-    if (undefined !== delay)
-    {
-        time_delay = delay;
-    }
-
-    if (time_delay <= (cur_time - redraw_times.map_dragging_last))
-    {
-        geo_hook_map_dragged(geo_obj, xy);
-        redraw_times.map_dragging_last = cur_time;
-    }
-
-};
-*/
-
-/*
-// adding redrawing of the POI icons on map panning
-//var geo_hook_map_bar_panning = function(geo_obj, ctrl, evt)
-var geo_hook_map_bar_panning = function(evt, geo_param)
-{
-    ctrl = this;
-    var geo_obj = this.map.geo_obj;
-
-    if (undefined !== geo_param) {geo_obj = geo_param;}
-
-    if (geo_obj)
-    {
-        geo_hook_map_feature_redraw(geo_obj, 0);
-    }
-
-    if (!OpenLayers.Event.isLeftClick(evt)) {
-        return;
-    }
-    switch (ctrl.action) {
-      case "panup":
-        ctrl.map.pan(0, - ctrl.getSlideFactor("h"));
-        break;
-      case "pandown":
-        ctrl.map.pan(0, ctrl.getSlideFactor("h"));
-        break;
-      case "panleft":
-        ctrl.map.pan(- ctrl.getSlideFactor("w"), 0);
-        break;
-      case "panright":
-        ctrl.map.pan(ctrl.getSlideFactor("w"), 0);
-        break;
-      case "zoomin":
-        ctrl.map.zoomIn();
-        break;
-      case "zoomout":
-        ctrl.map.zoomOut();
-        break;
-      case "zoomworld":
-        ctrl.map.zoomToMaxExtent();
-        break;
-      default:;
-    }
-
-    OpenLayers.Event.stop(evt);
-
-};
-*/
-
-/*
-// adding redrawing of the POI icons on map panning
-var geo_hook_map_dragging = function(drag_map, geo_obj, xy)
-{
-    drag_map.panned = true;
-
-    drag_map.map.pan(drag_map.handler.last.x - xy.x, drag_map.handler.last.y - xy.y, {dragging: drag_map.handler.dragging, animate: false});
-
-    geo_hook_map_feature_redraw(geo_obj, xy);
-
-};
-*/
-
-/*
-// adding redrawing of the POI icons on bar panning
-var geo_hook_map_dragged = function(geo_obj, pixel)
-{
-    var new_center = geo_obj.map.center.clone();
-    geo_obj.map.setCenter(new_center);
-
-//
-    geo_obj.select_control.destroy();
-    geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
-    geo_obj.map.addControl(geo_obj.select_control);
-    geo_obj.select_control.activate();
-//
-};
-*/
-
-// to insert new POI on map click, but not on a click that closes a pop-up
-var geo_hook_trigger_on_map_click = function(geo_obj, e)
-{
-    if (geo_obj.ignore_click) {
-        geo_obj.ignore_click = false;
-    }
-
-    var lonlat = geo_obj.map.getLonLatFromViewPortPx(e.xy);
-
-/**/
-    geo_obj.select_control.destroy();
-    geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
-    geo_obj.map.addControl(geo_obj.select_control);
-    geo_obj.select_control.activate();
-/**/
-
-};
-
-
-
-
-// needed just for click on pop-up close button
-var geo_hook_on_popup_close = function(evt, geo_obj)
-{
-
-    try {
-        geo_obj.select_control.unselect(geo_obj.feature);
-    }
-    catch (e) {}
-
-    if (geo_obj.popup) {
-        try {
-            geo_obj.select_control.unselect(geo_obj.popup.feature);
-        }
-        catch (e) {}
-    }
-    OpenLayers.Event.stop(evt, true);
-};
-
-// when a feature pop-up should be removed on map event
-var geo_hook_on_feature_unselect = function(evt)
-{
-    var feature = evt.feature;
-    var geo_obj = feature.attributes.m_obj;
-
-    if (feature.popup) {
-        geo_obj.popup.feature = null;
-        geo_obj.map.removePopup(feature.popup);
-        feature.popup.destroy();
-        feature.popup = null;
-        geo_obj.popup = null;
-    }
-
-    try {
-        geo_obj.select_control.unselect(geo_obj.feature);
-    }
-    catch (e) {}
-
-    if (geo_obj.popup) {
-        try {
-            geo_obj.select_control.unselect(geo_obj.popup.feature);
-        }
-        catch (e) {}
-    }
-};
-
-// selecting a point for popup display, directly at map
-var geo_hook_on_feature_select = function(evt, feature_param)
-{
-    var feature = null;
-
-    if (evt)
-    {
-        feature = evt.feature;
-    }
-    else
-    {
-        if ((undefined !== feature_param) && (null !== feature_param))
-        {
-            feature = feature_param;
-        }
-    }
-
-    if (!feature) {return;}
-
-    var attrs = feature.attributes;
-    if (!attrs) {return;}
-
-    var geo_obj = attrs.m_obj;
-
-    if (geo_obj.popup) {
-        geo_obj.select_control.unselect(geo_obj.popup.feature);
-    }
-
-    var pop_info = geo_obj.create_popup_content(feature);
-    var pop_text = pop_info['inner_html'];
-
-    geo_obj.cur_pop_rank += 1;
-    geo_obj.popup = new OpenLayers.Popup.FramedCloud("featurePopup_" + geo_obj.cur_pop_rank,
-        feature.geometry.getBounds().getCenterLonLat(),
-        new OpenLayers.Size(geo_obj.popup_width,geo_obj.popup_height),
-        pop_text,
-        null, true, function(evt) {geo_hook_on_popup_close(evt, geo_obj);});
-
-    var min_width = pop_info['min_width'];
-    var min_height = pop_info['min_height'];
-
-    geo_obj.popup.minSize = new OpenLayers.Size(min_width, min_height);
-
-    feature.popup = geo_obj.popup;
-    geo_obj.popup.feature = feature;
-    geo_obj.map.addPopup(geo_obj.popup);
-
-};
-
-// selecting a point for popup display, from outer js calls
-var geo_hook_on_map_feature_select = function(geo_object, poi_index)
-{
-    var feature = null;
-
-    if (geo_object)
-    {
-        if ((undefined !== poi_index) && (null !== poi_index))
-        {
-            feature = geo_object.layer.features[poi_index];
-        }
-    }
-    if (!feature) {return;}
-
-    geo_hook_on_feature_select(null, feature);
-
-};
-
-// when a feature pop-up should be diplayed on map event
 
 // the main object to hold geo-things
 function geo_locations () {
@@ -677,9 +430,7 @@ this.set_embed_tag = function(attrs)
 };
 
 // the main action on data retrieval
-this.got_load_data = function (load_data, is_obj)
-{
-    //return;
+this.got_load_data = function (load_data, is_obj) {
     load_response = load_data;
 
     var received_obj = null;
@@ -846,80 +597,12 @@ this.got_load_data = function (load_data, is_obj)
 
 };
 
-
-};
-
-// map related initialization
-var geo_main_openlayers_init = function(geo_obj, map_div_name)
-{
-    var aux_layer = null;
-    try {
-        aux_layer = new OpenLayers.Layer.Vector("auxiliary");
-    } catch (e) {
-        return "not_yet";
-    }
-
-    OpenLayers.Control.Hover = OpenLayers.Class(OpenLayers.Control, {
-        defaultHandlerOptions: {
-            'delay': 200,
-            'pixelTolerance': 2
-        },
-        initialize: function(options) {
-            this.handlerOptions = OpenLayers.Util.extend(
-                {}, this.defaultHandlerOptions
-            );
-            OpenLayers.Control.prototype.initialize.apply(
-                this, arguments
-            );
-            this.handler = new OpenLayers.Handler.Hover(
-                this, {
-                    'pause': this.trigger
-                }, this.handlerOptions
-            );
-        },
-        trigger: function(evt) {
-            var poi_hover = geo_obj.layer.getFeatureFromEvent(evt);
-            if (poi_hover) {
-                if (null !== poi_hover.attributes.m_rank) {
-                    geo_obj.poi_rank_out = poi_hover.attributes.m_rank;
-                }
-            }
-        }
-    });
-
-    OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
-        defaultHandlerOptions: {
-            'single': true,
-            'double': false,
-            'pixelTolerance': 0,
-            'stopSingle': false,
-            'stopDouble': false,
-            'projection': new OpenLayers.Projection("EPSG:900913"),
-            'displayProjection': new OpenLayers.Projection("EPSG:900913")
-        },
-
-        initialize: function(options) {
-            this.handlerOptions = OpenLayers.Util.extend(
-                {}, this.defaultHandlerOptions
-            );
-            OpenLayers.Control.prototype.initialize.apply(
-                this, arguments
-            );
-            this.handler = new OpenLayers.Handler.Click(
-                this, {
-                    'click': function(e) {geo_hook_trigger_on_map_click(geo_obj, e);}
-                }, this.handlerOptions
-            );
-        }
-
-    });
-
-    //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+this.main_openlayers_init = function(map_div_name) {
 
     var pzb_ctrl = null;
     var pzb_with_bar = false;
 
-    if (360 <= geo_obj.map_art_view_height_default)
+    if (360 <= this.map_art_view_height_default)
     {
         pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
         pzb_with_bar = true;
@@ -928,11 +611,9 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     {
         pzb_ctrl = new OpenLayers.Control.PanZoomMod();
     }
-    pzb_ctrl.geo_obj = geo_obj;
+    pzb_ctrl.geo_obj = this;
 
-    //pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
-
-    geo_obj.map = new OpenLayers.Map(map_div_name, {
+    this.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
             pzb_ctrl,
@@ -944,65 +625,35 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         numZoomLevels: 20
     });
 
-    geo_obj.map.geo_obj = geo_obj;
-    geo_obj.map.geo_obj.obj_name = null;
+    this.map.geo_obj = this;
+    this.map.geo_obj.obj_name = null;
 
     var map_provs = [];
     var map_gsm = null;
     var map_mqm = null;
     var map_osm = null;
 
-    geo_obj.map_view_layer_names_all = {};
+    this.map_view_layer_names_all = {};
 
-    var google_label = geo_obj.map_view_layer_google;
-    var mqm_label = geo_obj.map_view_layer_mapquest;
-    var osm_label = geo_obj.map_view_layer_osm;
+    var google_label = this.map_view_layer_google;
+    var mqm_label = this.map_view_layer_mapquest;
+    var osm_label = this.map_view_layer_osm;
 
-    if (geo_obj.map_view_layer_providers[google_label])
+    if (this.map_view_layer_providers[google_label])
     {
         // google map v3
-        map_gsm = new OpenLayers.Layer.Google(
+        map_gsm = new OpenLayers.Layer.GoogleMod(
             "Google Streets",
-            {
-                numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {
-                    google.maps.event.trigger(this.mapObject, "resize");
-                    var div = this.mapObject.getDiv().firstChild;
-                    if (!div || div.childNodes.length < 3) {
-                        this.repositionTimer = window.setTimeout(OpenLayers.Function.bind(this.repositionMapElements, this), 250);
-                        return false;
-                    }
-
-                    var cache = OpenLayers.Layer.Google.cache[this.map.id];
-                    var container = this.map.viewPortDiv;
-
-                    var termsOfUse = div.lastChild;
-                    container.appendChild(termsOfUse);
-                    termsOfUse.style.zIndex = "1100";
-                    termsOfUse.style.bottom = "";
-                    termsOfUse.className = "olLayerGoogleCopyright olLayerGoogleV3";
-                    //termsOfUse.style.display = "";
-                    //cache.termsOfUse = termsOfUse;
-
-                    var poweredBy = div.lastChild;
-                    container.appendChild(poweredBy);
-                    poweredBy.style.zIndex = "1100";
-                    poweredBy.style.bottom = "";
-                    poweredBy.className = "olLayerGooglePoweredBy olLayerGoogleV3 gmnoprint";
-                    poweredBy.style.display = "";
-                    cache.poweredBy = poweredBy;
-
-                    this.setGMapVisibility(this.visibility);
-                }
-            }
+            {}
         );
-        geo_obj.map_view_layer_names_all[google_label] = map_gsm.name;
-        if (google_label == geo_obj.map_view_layer_default)
+        this.map_view_layer_names_all[google_label] = map_gsm.name;
+        if (google_label == this.map_view_layer_default)
         {
             map_provs.push(map_gsm);
         }
     }
 
-    if (geo_obj.map_view_layer_providers[mqm_label])
+    if (this.map_view_layer_providers[mqm_label])
     {
         // openstreetmap by mapquest
         map_mqm = new OpenLayers.Layer.MapQuest(
@@ -1012,54 +663,53 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         map_mqm.displayOutsideMaxExtent = true;
         map_mqm.transitionEffect = 'resize';
 
-        geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
-        if (mqm_label == geo_obj.map_view_layer_default)
+        this.map_view_layer_names_all[mqm_label] = map_mqm.name;
+        if (mqm_label == this.map_view_layer_default)
         {
             map_provs.push(map_mqm);
         }
     }
 
-    if (geo_obj.map_view_layer_providers[osm_label])
+    if (this.map_view_layer_providers[osm_label])
     {
         // openstreetmap
-        map_osm = new OpenLayers.Layer.OSM();
+        map_osm = new OpenLayers.Layer.OSMMod();
         map_osm.wrapDateLine = true;
         map_osm.displayOutsideMaxExtent = true;
         map_osm.transitionEffect = 'resize';
-        //map_osm.displayOutsideMaxExtent = true;
-        map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
-        geo_obj.map_view_layer_names_all[osm_label] = map_osm.name;
-        if (osm_label == geo_obj.map_view_layer_default)
+
+        this.map_view_layer_names_all[osm_label] = map_osm.name;
+        if (osm_label == this.map_view_layer_default)
         {
             map_provs.push(map_osm);
         }
     }
 
-    if (map_gsm && (google_label != geo_obj.map_view_layer_default))
+    if (map_gsm && (google_label != this.map_view_layer_default))
     {
         map_provs.push(map_gsm);
     }
-    if (map_mqm && (mqm_label != geo_obj.map_view_layer_default))
+    if (map_mqm && (mqm_label != this.map_view_layer_default))
     {
         map_provs.push(map_mqm);
     }
-    if (map_osm && (osm_label != geo_obj.map_view_layer_default))
+    if (map_osm && (osm_label != this.map_view_layer_default))
     {
         map_provs.push(map_osm);
     }
 
-    geo_obj.map.addLayers(map_provs);
-    geo_obj.map.addControl(new OpenLayers.Control.Attribution());
+    this.map.addLayers(map_provs);
+    this.map.addControl(new OpenLayers.Control.Attribution());
 
     // an initial center point, set via parameters
-    var cen_ini_longitude = geo_obj.map_view_layer_center_ini["longitude"];
-    var cen_ini_latitude = geo_obj.map_view_layer_center_ini["latitude"];
+    var cen_ini_longitude = this.map_view_layer_center_ini["longitude"];
+    var cen_ini_latitude = this.map_view_layer_center_ini["latitude"];
     var lonLat_cen = new OpenLayers.LonLat(cen_ini_longitude, cen_ini_latitude)
           .transform(
             new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            geo_obj.map.getProjectionObject() // to Spherical Mercator Projection
+            this.map.getProjectionObject() // to Spherical Mercator Projection
           );
-    var zoom = geo_obj.map_view_layer_zoom;
+    var zoom = this.map_view_layer_zoom;
 
     var style_map = new OpenLayers.StyleMap({
                 graphicZIndex: 10,
@@ -1067,11 +717,11 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     });
 
     var lookup = {};
-    var labels_len = geo_obj.marker_src_labels.length;
+    var labels_len = this.marker_src_labels.length;
     for (var lind = 0; lind < labels_len; lind++)
     {
-        var cur_label = geo_obj.marker_src_labels[lind];
-        var cur_icon = geo_obj.marker_src_icons[cur_label];
+        var cur_label = this.marker_src_labels[lind];
+        var cur_icon = this.marker_src_icons[cur_label];
         lookup[2*lind] = {
             fillOpacity: 1.0,
             externalGraphic: cur_icon["path"],
@@ -1094,7 +744,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     style_map.addUniqueValueRules("default", "type", lookup);
 
     // layer for features
-    geo_obj.layer = new OpenLayers.Layer.Vector(
+    this.layer = new OpenLayers.Layer.Vector(
         "POI markers",
         {
             styleMap: style_map,
@@ -1102,108 +752,49 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
             rendererOptions: {yOrdering: true}
         }
     );
-    geo_obj.map.addLayer(geo_obj.layer);
+    this.map.addLayer(this.layer);
 
     // setting map center
-    geo_obj.map.setCenter (lonLat_cen, zoom);
+    this.map.setCenter (lonLat_cen, zoom);
 
-    geo_obj.map_view_layer_name = geo_obj.map.layers[0].name;
-    geo_obj.map_view_layer_center = geo_obj.map.getCenter();
-    geo_obj.map_view_layer_zoom = geo_obj.map.getZoom();
+    this.map_view_layer_name = this.map.layers[0].name;
+    this.map_view_layer_center = this.map.getCenter();
+    this.map_view_layer_zoom = this.map.getZoom();
 
     // registering for click events
     var click = new OpenLayers.Control.Click();
-    geo_obj.map.addControl(click);
+    this.map.addControl(click);
+    click.setTriggerAction(function(evt, map) {
+        OpenLayers.HooksLocal.nothing_on_map_click(evt, map);
+    });
     click.activate();
 
     var hover = new OpenLayers.Control.Hover();
-    geo_obj.map.addControl(hover);
+    hover.setTriggerAction(function(evt, map) {
+        var poi_hover = map.geo_obj.layer.getFeatureFromEvent(evt);
+        if (poi_hover) {
+            if (null !== poi_hover.attributes.m_rank) {
+                map.geo_obj.poi_rank_out = poi_hover.attributes.m_rank;
+            }
+        }
+    });
+    this.map.addControl(hover);
     hover.activate();
 
     var cur_date = new Date();
     OpenLayers.HooksLocal.redraw_times.map_dragging_last = cur_date.getTime();
 
     var drag_map = new OpenLayers.Control.DragPanMod([map_gsm, map_mqm, map_osm]);
-    //drag_map.geo_obj = geo_obj;
-    //var drag_map = new OpenLayers.Control.DragPan([map_gsm, map_mqm, map_osm]);
-    //drag_map.panMapDone = function(pixel) {geo_hook_map_dragged(geo_obj, pixel)};
-    //drag_map.panMap = function(xy) {geo_hook_map_dragging(drag_map, geo_obj, xy)};
-    geo_obj.map.addControl(drag_map);
+    this.map.addControl(drag_map);
     drag_map.activate();
 
-    geo_obj.layer.events.on({
-        'featureselected': geo_hook_on_feature_select,
-        'featureunselected': geo_hook_on_feature_unselect
+    var geo_obj = this;
+    this.layer.events.on({
+        'featureselected': function(evt) {OpenLayers.HooksPopups.on_feature_select(evt, geo_obj);},
+        'featureunselected': function(evt) {OpenLayers.HooksPopups.on_feature_unselect(evt, geo_obj);}
     });
 
-
-    return "ok";
 };
 
-// the entry initialization point
-var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, descs_name, names_show, names_hide, editing, second)
-{
-    var map_canvas = document.getElementById ? document.getElementById(div_name) : null;
-    geo_obj.descs_elm = document.getElementById ? document.getElementById(descs_name) : null;
-    geo_obj.descs_elm_name = descs_name;
-
-    var divs_show = [];
-    var divs_hide = [];
-
-    var show_obj = null;
-    var hide_obj = null;
-
-    if (names_show) {
-        var divs_show_names = names_show.split(",");
-        var len_show_names = divs_show_names.length;
-        for (var nsind = len_show_names - 1; nsind >= 0; nsind--)
-        {
-            show_obj = null;
-            show_obj = document.getElementById ? document.getElementById(divs_show_names[nsind]) : null;
-            if (show_obj) {divs_show.push(show_obj);}
-        }
-    }
-
-    if (names_hide) {
-        var divs_hide_names = names_hide.split(",");
-        var len_hide_names = divs_hide_names.length;
-        for (var nhind = len_hide_names - 1; nhind >= 0; nhind--)
-        {
-            hide_obj = null;
-            hide_obj = document.getElementById ? document.getElementById(divs_hide_names[nhind]) : null;
-            if (hide_obj) {divs_hide.push(hide_obj);}
-        }
-    }
-
-    var use_show_class = "map_shown";
-    var use_hide_class = "map_hidden";
-    if (geo_obj.map_shown)
-    {
-        use_show_class = "map_hidden";
-        use_hide_class = "map_shown";
-    }
-
-    {
-        var len_show = divs_show.length;
-        for (var dsind = len_show - 1; dsind >= 0; dsind--)
-        {
-            show_obj = divs_show[dsind];
-            show_obj.className = use_show_class;
-        }
-
-        var len_hide = divs_hide.length;
-        for (var dhind = len_hide - 1; dhind >= 0; dhind--)
-        {
-            hide_obj = divs_hide[dhind];
-            hide_obj.className = use_hide_class;
-        }
-    }
-
-    if (geo_obj.map_shown) {
-        geo_obj.map_shown = false;
-        return;
-    }
-
-    geo_obj.map_shown = true;
 };
 

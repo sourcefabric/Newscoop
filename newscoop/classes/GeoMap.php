@@ -1755,9 +1755,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
-
-var geo_use_system_parameters_map' . $map_suffix . ' = function()
+var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
+
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+        map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
 ';
 
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
@@ -1775,19 +1780,7 @@ var geo_use_system_parameters_map' . $map_suffix . ' = function()
     $tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
     $tag_string .= "\n";
 
-
         $tag_string .= '
-};
-var geo_on_load_proc_map' . $map_suffix . ' = function()
-{
-
-    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
-    if (map_obj)
-    {
-        map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
-        map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
-        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
-        geo_use_system_parameters_map' . $map_suffix . '();
 
         setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
         return;
@@ -1796,17 +1789,18 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
 
 var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 {
-        var res_state = null;
+        var res_state = false;
         try {
-            res_state = geo_main_openlayers_init(geo_object' . $map_suffix . ', "geo_map_mapcanvas' . $map_suffix. '");
-        } catch (e) {res_state = "not_yet";}
+            res_state = OpenLayers.Util.test_ready();
+        } catch (e) {res_state = false;}
 
-        if ("ok" != res_state)
+        if (!res_state)
         {
             setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
             return;
         }
 
+        geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
 };
@@ -1892,7 +1886,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $cur_lat = $poi["latitude"];
             $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
             $poi_info["pois"][$rank]["center"] = $center;
-            $poi_info["pois"][$rank]["open"] = "geo_hook_on_map_feature_select(geo_object$map_suffix, $pind);";
+            $poi_info["pois"][$rank]["open"] = "OpenLayers.HooksPopups.on_map_feature_select(geo_object$map_suffix, $pind);";
             $pind += 1;
         }
         return (array) $poi_info;
