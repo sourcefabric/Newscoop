@@ -1,11 +1,11 @@
 <?php 
-regGS("Show original map", "");
+regGS("Show original map", "Ursprüngliche Karte anzeigen");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Das hochgeladene Archiv enthält kein gültiges Newscoop Plugin.");
 regGS("Version", "Version");
 regGS("License", "Lizenz");
 regGS("Homepage", "Dashboard");
 regGS("Map", "Karte");
-regGS("Center", "Center");
+regGS("Center", "Zentrieren");
 regGS("Title", "Titel");
 regGS("No news.", "Keine Neuigkeiten");
 regGS("Invalid security token.", "Ungültiges Sicherheitskürzel.");
@@ -99,7 +99,7 @@ regGS("Multi-line Text with WYSIWYG", "Fließtext mit WYSIWYG ");
 regGS("Image $1 linked to article $2", "Bild $1 mit Artikel $2 verknüpft.");
 regGS("The image $1 has been added.", "Bild $1 erfolgreich hinzugefügt.");
 regGS("Country $1 added", "Land $1 hinzugefügt.");
-regGS("Country name $1 changed", "Landname $1 geändert.");
+regGS("Country name $1 changed", "Ländername $1 geändert.");
 regGS("Template $1 uploaded", "Template $1 hochgeladen.");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" ist ungültig oder es ist kein Bild.");
 regGS("URL \"$1\" is not an image.", "Unter URL \"$1\" ist kein Bild verfügbar.");

@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Жао нам је због неп
 regGS("Show error details", "Прикажи детаље грешке");
 regGS("Hide error details", "Сакриј детаље о грешци");
 regGS("Error Report", "Пријава грешке");
-regGS("Campsite has encountered a problem.", "Кемпсајт је наишао на проблем.");
+regGS("Newscoop has encountered a problem.", "Кемпсајт је наишао на проблем.");
 regGS("Backtrace:", "Претходне радње:");
 regGS("Error ID:", " ID грешке:");
 regGS("Error Message:", "Порука о грешци:");

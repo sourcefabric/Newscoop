@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Przepraszamy za problem:");
 regGS("Show error details", "Pokaż szczegóły błedu");
 regGS("Hide error details", "Schowaj szczegóły błędu");
 regGS("Error Report", "Raport błędu");
-regGS("Campsite has encountered a problem.", "Campsite napotkał błąd.");
+regGS("Newscoop has encountered a problem.", "Campsite napotkał błąd.");
 regGS("Backtrace:", "Backtrace:");
 regGS("Error ID:", "ID błędu:");
 regGS("Error Message:", "Wiadomość błędu:");

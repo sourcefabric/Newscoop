@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
 --
--- Host: localhost    Database: newscoop35
+-- Host: localhost    Database: newscoop_ga
 -- ------------------------------------------------------
--- Server version	5.1.49-1ubuntu8.1
+-- Server version	5.1.41-3ubuntu12.6
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `Aliases` (
   `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,7 +292,7 @@ CREATE TABLE `AuthorAliases` (
   `fk_author_id` int(11) unsigned NOT NULL,
   `alias` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -361,7 +361,7 @@ CREATE TABLE `Authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `authors_name_ukey` (`first_name`,`last_name`),
   FULLTEXT KEY `authors_name_skey` (`first_name`,`last_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -436,7 +436,7 @@ CREATE TABLE `Images` (
   FULLTEXT KEY `Photographer` (`Photographer`),
   FULLTEXT KEY `Place` (`Place`),
   FULLTEXT KEY `Caption` (`Caption`)
-) ENGINE=MyISAM AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -517,7 +517,7 @@ CREATE TABLE `LocationContents` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `location_contents_poi_name` (`poi_name`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -538,7 +538,7 @@ CREATE TABLE `Locations` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   SPATIAL KEY `locations_poi_location` (`poi_location`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,7 +574,7 @@ CREATE TABLE `MapLocationLanguages` (
   PRIMARY KEY (`id`),
   KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
   KEY `map_location_languages_content_id` (`fk_content_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -610,7 +610,7 @@ CREATE TABLE `MapLocations` (
   PRIMARY KEY (`id`),
   KEY `map_locations_point_id` (`fk_location_id`),
   KEY `map_locations_map_id` (`fk_map_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -637,7 +637,7 @@ CREATE TABLE `Maps` (
   PRIMARY KEY (`id`),
   KEY `maps_article_number` (`fk_article_number`),
   KEY `maps_map_name` (`MapName`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -724,7 +724,7 @@ CREATE TABLE `Publications` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -740,7 +740,7 @@ CREATE TABLE `RequestObjects` (
   `request_count` int(11) NOT NULL DEFAULT '0',
   `last_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`object_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -854,7 +854,7 @@ CREATE TABLE `Subscriptions` (
   `Type` enum('T','P') NOT NULL DEFAULT 'T',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -872,7 +872,7 @@ CREATE TABLE `Templates` (
   `CacheLifetime` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=997 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1218 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -942,18 +942,48 @@ CREATE TABLE `Translations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Xnews_article`
+-- Table structure for table `Xlink`
 --
 
-DROP TABLE IF EXISTS `Xnews_article`;
+DROP TABLE IF EXISTS `Xlink`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Xnews_article` (
+CREATE TABLE `Xlink` (
   `NrArticle` int(10) unsigned NOT NULL,
   `IdLanguage` int(10) unsigned NOT NULL,
-  `FDeck` varchar(255) NOT NULL,
-  `FLead_and_SMS` mediumblob,
-  `Fbody` mediumblob NOT NULL,
+  `Furl` varchar(255) NOT NULL,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Xnews`
+--
+
+DROP TABLE IF EXISTS `Xnews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xnews` (
+  `NrArticle` int(10) unsigned NOT NULL,
+  `IdLanguage` int(10) unsigned NOT NULL,
+  `Fdeck` mediumblob NOT NULL,
+  `Ffull_text` mediumblob NOT NULL,
+  `Fhighlight` tinyint(1) NOT NULL,
+  PRIMARY KEY (`NrArticle`,`IdLanguage`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Xpage`
+--
+
+DROP TABLE IF EXISTS `Xpage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Xpage` (
+  `NrArticle` int(10) unsigned NOT NULL,
+  `IdLanguage` int(10) unsigned NOT NULL,
+  `Ffull_text` mediumblob NOT NULL,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1043,7 +1073,7 @@ DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
 CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1073,7 +1103,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=153 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=212 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1130,7 +1160,7 @@ CREATE TABLE `liveuser_users` (
   `password_reset_token` varchar(85) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1143,7 +1173,7 @@ DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
 CREATE TABLE `liveuser_users_auth_user_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1250,7 +1280,7 @@ CREATE TABLE `phorum_forums` (
   KEY `name` (`name`),
   KEY `active` (`active`,`parent_id`),
   KEY `group_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1311,7 +1341,7 @@ CREATE TABLE `phorum_messages` (
   KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
   KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1545,7 +1575,7 @@ CREATE TABLE `phorum_users` (
   KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
   KEY `date_added` (`date_added`),
   KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1737,6 +1767,7 @@ CREATE TABLE `plugin_poll` (
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
   `percentage_of_votes_overall` float unsigned NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reset_token` varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`poll_nr`,`fk_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1850,4 +1881,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-21 10:36:42
+-- Dump completed on 2011-01-26 12:35:25

@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Σας ζητάμε συγνώμη
 regGS("Show error details", "Εμφάνιση λεπτομερειών σφάλματος");
 regGS("Hide error details", "Απόκρυψη λεπτομερειών σφάλματος");
 regGS("Error Report", "Αναφορά σφάλματος");
-regGS("Campsite has encountered a problem.", "Το Campsite αντιμετώπισε κάποιο πρόβλημα.");
+regGS("Newscoop has encountered a problem.", "Το Campsite αντιμετώπισε κάποιο πρόβλημα.");
 regGS("Backtrace:", "Backtrace:");
 regGS("Error ID:", "ID Σφάλματος:");
 regGS("Error Message:", "Μήνυμα Σφάλματος:");

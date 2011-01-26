@@ -127,9 +127,12 @@ class User extends DatabaseObject {
             $logtext = getGS('User account "$1" ($2) created', $this->m_data['Name'], $this->m_data['UName']);
             Log::Message($logtext, null, 51);
 
-            // add default widgets
-            require_once dirname(__FILE__) . '/Extension/WidgetManager.php';
-            WidgetManager::SetDefaultWidgets($p_values['Id']);
+            if ($user['0']['reader'] == 'N') {
+                // add default widgets
+                require_once dirname(__FILE__) . '/Extension/WidgetManager.php';
+                WidgetManager::SetDefaultWidgets($p_values['Id']);
+            }
+
             return true;
         }
 

@@ -126,6 +126,7 @@ final class CampInstallation extends CampInstallationBase
         $tpl->assign('release_date', $this->m_version->getReleaseDate());
         $tpl->assign('organization', $this->m_version->getOrganization());
         $tpl->assign('copyright', $this->m_version->getCopyright());
+        $tpl->assign('license', $this->m_version->getLicense());
 
         $tpl->assign('host_os', $this->m_os);
 

@@ -67,6 +67,9 @@ class BaseList
     /** @var int */
     protected $inUseColumn = NULL;
 
+    /** @var bool */
+    protected $clickable = TRUE;
+
     /**
      */
     public function __construct()
@@ -81,6 +84,15 @@ class BaseList
         camp_load_translation_strings('library');
 
         $this->id = substr(sha1(get_class($this)), -6);
+    }
+
+    /**
+     * Get list id
+     * @return string
+     */
+    public function getId()
+    {
+        return (string) $this->id;
     }
 
     /**
@@ -121,6 +133,17 @@ class BaseList
     public function setSearch($search = FALSE)
     {
         $this->search = (bool) $search;
+        return $this;
+    }
+
+    /**
+     * Set links clickable
+     * @param bool $clickable
+     * @return BaseList
+     */
+    public function setClickable($clickable = TRUE)
+    {
+        $this->clickable = $clickable;
         return $this;
     }
 
@@ -354,7 +377,6 @@ class BaseList
         $class = get_class($this->model);
 
         foreach ((array) $ids as $id) {
-            list(, $id) = explode('_', $id);
             $object = new $class($id);
             $object->delete();
         }

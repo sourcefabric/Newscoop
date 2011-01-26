@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Ne pare rău pentru această nepl�
 regGS("Show error details", "Arată detaliile erorii");
 regGS("Hide error details", "Ascunde detaliile erorii");
 regGS("Error Report", "Raportarea erorii");
-regGS("Campsite has encountered a problem.", "Campsite a întâmpinat o problemă.");
+regGS("Newscoop has encountered a problem.", "Campsite a întâmpinat o problemă.");
 regGS("Backtrace:", "Traseul:");
 regGS("Error ID:", "ID-ul erorii:");
 regGS("Error Message:", "Mesajul de eroare:");

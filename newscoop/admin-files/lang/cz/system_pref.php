@@ -1,4 +1,6 @@
 <?php 
+regGS("Enable Airtime audio attachments?", "");
+regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
@@ -60,7 +62,6 @@ regGS("SMTP Port", "SMTP Port");
 regGS("SMTP Host:", "SMTP Host:");
 regGS("SMTP Host must be at least four character.", "SMTP Host: musí mít alespoň čtyři znaky.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Vložte hodnotu mezi 0 a $1 (maximální hodnota lze nastavit v 'php.ini' ). Prosím použíjte 'K' pro kilobyty, 'M' pro megabyty a 'G' pro gigabyty(bez mezer). Např. '3M'.");
-regGS("Enable Campcaster audioclip attachments?", "Povolit audioklipové přílohy?");
 regGS("XML RPC Path:", "XML RPC Cesta:");
 regGS("XML RPC File:", "XML RPC Soubor:");
 regGS("System preferences updated", "Systémové předvolby aktualizovány");
@@ -76,7 +77,6 @@ regGS("Database Replication User:", "Database Replication uživatel:");
 regGS("Database Replication Port:", "Database Replication Port:");
 regGS("Database Replication Password:", "Database Replication heslo:");
 regGS("Database Replication Host:", "Database Replication Host:");
-regGS("Campcaster Server", "Campcaster Server");
 regGS("System preferences updated.", "Systémové předvolby aktualizovány.");
 regGS("Please enter a positive number for the '$1' field.", "Vložte kladné čislo pro '$1' pole.");
 regGS("Login Attempts", "Pokusy o Přihlášení");

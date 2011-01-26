@@ -2,6 +2,7 @@
 camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
+require_once LIBS_DIR . '/MediaList/MediaList.php';
 
 $inArchive = !empty($_REQUEST['archive']);
 
@@ -34,16 +35,50 @@ if (!is_writable($Campsite['FILE_DIRECTORY'])) {
 
 camp_html_display_msgs();
 ?>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta http-equiv="Expires" content="now" />
-  <title><?php putGS("Attach File to Article"); ?></title>
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
-  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
-  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+    <meta charset="utf-8" />
+    <meta http-equiv="expires" content="now" />
+    <title><?php putGS("Attach File to Article"); ?></title>
+
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
+    <style>
+        body, #tabs { background-color: #f5f5f5; }
+        #tabs { border: none; }
+    </style>
+
+    <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var g_admin_url = '/<?php echo $ADMIN; ?>';
+        var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+        var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
+        var popupFlash = false;
+
+        $(function() {
+            $('#tabs').tabs();
+        });
+    </script>
 </head>
 <body>
+
+<?php if (!$inArchive) { ?>
+<div id="tabs">
+    <ul>
+        <li><a href="#new-file"><?php putGS('Attach new file'); ?></a></li>
+        <li><a href="#existing-file"><?php putGS('Attach existing file'); ?></a></li>
+    </ul>
+
+    <div id="new-file">
+<?php } ?>
 
 <p></p>
 <form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/articles/files/do_add.php?archive=<?php echo (int) $inArchive; ?>" enctype="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
@@ -104,6 +139,40 @@ camp_html_display_msgs();
 </tr>
 </table>
 </form>
-<p>
+
+<?php if (!$inArchive) { ?>
+</div>
+<div id="existing-file">
+    <form action="do_add_existing.php" method="POST">
+
+<?php
+
+// add hiddens
+echo SecurityToken::formParameter();
+foreach (array('f_language_selected', 'f_article_number') as $name) {
+    echo '<input type="hidden" name="', $name;
+    echo '" value="', $$name, '" />', "\n";
+}
+
+// render list
+$list = new MediaList;
+$list->setColVis(FALSE)
+    ->setHidden('content_disposition')
+    ->setHidden('inUse')
+    ->setClickable(FALSE)
+    ->render();
+
+?>
+
+    <div style="margin: 8px 0; text-align:center">
+        <input type="submit" class="button" value="<?php putGS('Attach'); ?>" />
+    </div>
+    
+    </form>
+</div>
+
+</div><!-- /#tabs -->
+<?php } ?>
+
 </body>
 </html>
