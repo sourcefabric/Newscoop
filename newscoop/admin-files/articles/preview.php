@@ -3,6 +3,11 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Content-Type: text/html; charset=UTF-8");
+
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -57,7 +62,14 @@ if ($publicationObj->getUrlTypeId() == 1) {
 
 $selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
 $url .= "&previewLang=$selectedLanguage";
-
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
+<head>
+  <title><?php p($siteTitle); ?></title>
+</head>
+<?php
 if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
 }
@@ -65,17 +77,18 @@ if ($errorStr != "") {
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
-	<FRAMESET ROWS="60%,*" BORDER="2">
-		<FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
-		<FRAME NAME="e" SRC="empty.php" FRAMEBORDER="1">
-	</FRAMESET>
+  <frameset rows="60%,*" border="2">
+    <frame src="<?php print "$url&preview=on"; ?>" name="body" frameborder="1">
+    <frame name="e" src="empty.php" frameborder="1">
+  </frameset>
 <?php
 } else {
 	// Show single pane for everyone else.
 ?>
-	<FRAMESET ROWS="100%">
-		<FRAME SRC="<?php print "$url&preview=on"; ?>" NAME="body" FRAMEBORDER="1">
-	</FRAMESET>
+  <frameset rows="100%">
+    <frame src="<?php print "$url&preview=on"; ?>" name="body" frameborder="1">
+  </frameset>
 <?php
 }
 ?>
+</html>
