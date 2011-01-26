@@ -9,12 +9,11 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once dirname(__FILE__) . '/DatabaseObject.php';
 
 /**
  * Class CampPlugin
  */
-
-
 class CampPlugin extends DatabaseObject
 {
 	const CACHE_KEY_PLUGINS_LIST = 'campsite_plugins_list';
@@ -495,6 +494,30 @@ class CampPlugin extends DatabaseObject
             }
         }
         return $upgradable;
+    }
+
+    /**
+     * Updates plugins if needed
+     * @return void
+     */
+    public static function OnUpgrade()
+    {
+        $plugins = self::GetNeedsUpdate();
+        if (!is_array($plugins) || empty($plugins)) {
+            return; // no plugin to update
+        }
+
+        // update
+        foreach ($plugins as $name => $info) {
+            $CampPlugin = new CampPlugin($name);
+            $currentVersion = $CampPlugin->getFsVersion();
+            if ($CampPlugin->getDbVersion() != $currentVersion) {
+                $CampPlugin->delete();
+                $CampPlugin->create($name, $currentVersion);
+                $CampPlugin->update();
+                $CampPlugin->enable();
+            }
+        }
     }
 }
 
