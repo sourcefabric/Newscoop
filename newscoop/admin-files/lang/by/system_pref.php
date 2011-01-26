@@ -1,4 +1,6 @@
 <?php 
+regGS("Enable Airtime audio attachments?", "");
+regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
@@ -60,7 +62,6 @@ regGS("SMTP Port", "SMTP порт");
 regGS("SMTP Host:", "SMTP хост:");
 regGS("SMTP Host must be at least four character.", "SMTP хост павінен мець прынамсі 4 знака.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Увядзіце значэнне паміж 0 і $1 (максімальны памер вызначаны ў 'php.ini'). Выкарыстайце \"К\" для кілабайта, \"М\" для мегабайта і \"Г\" для гігабайта без знакаў прабелу паміж значэннямі і вышэйапісанымі літарамі, напрыклад 3М.");
-regGS("Enable Campcaster audioclip attachments?", "Улучыць далучэнне аўдыёкліпаў Campcaster?");
 regGS("XML RPC Path:", "Шлях XML RPC:");
 regGS("XML RPC File:", "Файл XML RPC:");
 regGS("System preferences updated", "Наладкі сыстэмы абноўленыя");
@@ -76,7 +77,6 @@ regGS("Database Replication User:", "Карыстач рэплікацыі ба�
 regGS("Database Replication Port:", "Порт рэплікацыі базы дадзеных:");
 regGS("Database Replication Password:", "Пароль рэплікацыі базы даных:");
 regGS("Database Replication Host:", "Хост рэплікацыі базы дадзеных:");
-regGS("Campcaster Server", "Сервер Campcaster");
 regGS("System preferences updated.", "Cыстэмныя наладкі абноўленыя.");
 regGS("Please enter a positive number for the '$1' field.", "Калi ласка, увядзеце дадатную лічбу ў поле '$1'");
 regGS("Login Attempts", "Спробаў уваходу");

@@ -1,4 +1,6 @@
 <?php 
+regGS("Enable Airtime audio attachments?", "");
+regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση Αντιγράφου του Διακομιστή Newscoop;");
 regGS("Newscoop Online Server Database", "Βάση Δεδομένων του Online Διακομιστή Newscoop ");
@@ -60,7 +62,6 @@ regGS("SMTP Port", "Θύρα SMTP");
 regGS("SMTP Host:", "SMTP Κόμβος");
 regGS("SMTP Host must be at least four character.", "Ο SMTP Κόμβος πρέπει να αποτελείται τουλάχιστον από τέσσερεις χαρακτήρες.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Εισάγετε μια τιμή μεταξύ 0 και $1 (το μέγιστο μέγεθος έχει οριστεί σε 'php.ini'). Παρακαλούμε χρησιμοποιήστε 'Κ' για kilobytes, 'Μ' για megabytes και 'G' για gigabytes, χωρίς κενά διαστήματα μεταξύ τιμής και αντίστοιχου γράμματος, π.χ. '3Μ'.  ");
-regGS("Enable Campcaster audioclip attachments?", "Ενεργοποίηση συννημένων αρχείων ήχου Campcaster;");
 regGS("XML RPC Path:", "Διαδρομή XML RPC:");
 regGS("XML RPC File:", "Αρχείο XML RPC:");
 regGS("System preferences updated", "Οι προτιμήσεις συστήματος ανανεώθηκαν");
@@ -76,7 +77,6 @@ regGS("Database Replication User:", "Χρήστης Αντιγράφου Βάσ�
 regGS("Database Replication Port:", "Θύρα Αντιγράφου Βάσης Δεδομένων: ");
 regGS("Database Replication Password:", "Κωδικός Πρόσβασης Αντιγράφου Βάσης Δεδομένων: ");
 regGS("Database Replication Host:", "Κόμβος Αντιγράφου Βάσης Δεδομένων: ");
-regGS("Campcaster Server", "Διακομιστής Camcaster");
 regGS("System preferences updated.", "Το σύστημα προτιμήσεων ανανεώθηκε.");
 regGS("Please enter a positive number for the '$1' field.", "Παρακαλούμε εισάγετε έναν θετικό αριθμό για το πεδίο '$1'.");
 regGS("Login Attempts", "Προσπάθειες Σύνδεσης");

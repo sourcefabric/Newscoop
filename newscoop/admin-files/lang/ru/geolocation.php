@@ -1,4 +1,5 @@
 <?php 
+regGS("center city", "центр города");
 regGS("Map preview", "Предварительный просмотр карты");
 regGS("Locations updated.", "Места событий обновлены");
 regGS("Setting the map name helps with map search", "Настройка названия карты помогает поиску по карте");
@@ -21,8 +22,6 @@ regGS("html content", "html код");
 regGS("height", "высота");
 regGS("fill in the point description", "заполните описание пункта расположения");
 regGS("fill in map name", "заполните имя карты");
-regGS("city", "город");
-regGS("center city", "центр города");
 regGS("You do not have the right to remove maps from articles.", "У Вас нет прав доступа для удаления карт из статей.");
 regGS("Video file", "Видеофайл");
 regGS("Video ID", "ID видео");
@@ -46,4 +45,6 @@ regGS("icon", "пиктограмма");
 regGS("basic", "основной");
 regGS("any country", "другая страна");
 regGS("Setting Map Locations", "Настройки карты мест событий ");
+regGS("city", "город");
+regGS("cc", "центр города");
 ?>
