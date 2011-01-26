@@ -53,6 +53,7 @@ if test "${UPSTREAMVERSION}" == "3.5.0-rc2"; then
   chmod -x newscoop/admin-style/images/newscoop_logo_big.png
   chmod -x newscoop/include/pear/Event/Dispatcher.php
   chmod -x newscoop/javascript/geocoding/openlayers/img/cloud-popup-relative.png
+  rm "newscoop/install/sample_templates/classic/templates/classic/tpl/banner/bannerleftcol.tpl .tpl"
 fi
 
 
