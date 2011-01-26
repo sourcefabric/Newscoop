@@ -95,7 +95,7 @@ $(document).ready(function() {
             if ($('.used', $(this).closest('tr')).size()) {
                 used = true;
             } else {
-                ids.push($(this).attr('name'));
+                ids.push($(this).attr('value'));
             }
         });
 
