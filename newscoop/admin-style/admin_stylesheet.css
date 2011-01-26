@@ -729,6 +729,8 @@ dl.inline-list dd {
 	color:#007fb3;
 	text-decoration:underline;
 }
+
+
 .info {
 	font-style:italic;
 	color:#7c7c7c;
@@ -1297,3 +1299,101 @@ dl.attachment dt {
 .dataTables_length {
     clear: both;
 }
+
+ul.rss {
+    margin: 3px 0;
+    padding: 0;
+}
+
+ul.rss > li {
+    margin: 0;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+ul.rss li.even {
+    background-color: #f5f5f5;
+}
+
+ul.rss p {
+    width: 60em;
+    margin: 3px 0 0;
+}
+
+ul.rss li a { color: #007fb3; }
+ul.rss li a:hover { text-decoration: underline; }
+
+ul#edit-images {
+    height: 1%;
+    overflow: hidden;
+}
+
+ul#edit-images li {
+    float: left;
+    width: 300px;
+    margin: 5px 0 0 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+ul#edit-images li > div {
+    height: 50px;
+    overflow: hidden;
+    padding-left: 10px;
+}
+
+#edit-images fieldset {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#edit-images a.copy-to-all {
+    clear: left;
+    display: block;
+    width: 100%;
+}
+
+fieldset.controls, fieldset.buttons, fieldset.filters, fieldset.actions {
+    margin: 13px 21px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+fieldset.buttons.active {
+    position: fixed;
+    top: 0;
+    left: -5px;
+    background-color: #fff56e;
+    opacity: 0.9;
+}
+
+fieldset.controls div {
+    margin-bottom: 5px;
+}
+
+fieldset.filters select {
+    margin-right: 13px;
+}
+
+fieldset dl {
+    margin: 0 0 5px;
+}
+
+fieldset dl dd {
+    margin-left: 0;
+}
+
+fieldset.closed {
+    margin-bottom: -21px;
+    border-width: 1px 0 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+fieldset.filters a.reset {
+    display: inline-block;
+    margin: 8px 2px 0;
+    font-size: 0.9em;
+}
+

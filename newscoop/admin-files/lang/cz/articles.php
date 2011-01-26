@@ -1,4 +1,6 @@
 <?php 
+regGS("Select section:", "");
+regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Switches saved.", "");
@@ -57,7 +59,6 @@ regGS("Creator", "Tvůrce");
 regGS("Audioclips order saved.", "Pořadí audioklipů uloženo.");
 regGS("Audioclips", "Audioklipy");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Jste si jistí, že chcete odstranit audio soubor \'$1\' z článku?");
-regGS("Select location:", "Zvolte lokaci:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Nelze mít dva články pod stejným názvem v jedné rubrice. Název článku se již používá článkem '$1'.");
 regGS("Visible to non-subscribers", "Viditelné ne-předplatitelům");
 regGS("The article could not be published.", "Nezdařilo se publikovat článek.");

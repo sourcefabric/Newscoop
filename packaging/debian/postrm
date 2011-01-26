@@ -34,7 +34,7 @@ case "$1" in
     fi
         
     if [ -L /etc/$php/conf.d/newscoop.ini ]; then
-      rm -f /etc/$php/conf.f/newscoop.ini || true
+      rm -f /etc/$php/conf.d/newscoop.ini || true
       restart="$webserver $restart"
     fi
         
