@@ -8,6 +8,14 @@
  * @link http://www.sourcefabric.org
  */
 
+if (!empty($GLOBALS['g_campsiteDir'])) { // included
+    $CAMPSITE_DIR = $GLOBALS['g_campsiteDir'];
+    if (!defined('WWW_DIR')) {
+        define('WWW_DIR', $GLOBALS['g_campsiteDir']);
+    }
+    return;
+}
+
 // get document root via -d, --document_root
 $document_root = dirname(dirname(__FILE__));
 $options = getopt('d:', array('document_root:'));
@@ -26,6 +34,8 @@ if (!is_dir($document_root)) {
 }
 
 // set global variables, constants
-define('WWW_DIR', realpath($document_root));
-$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR = WWW_DIR;
+$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR = realpath($document_root);
+if (!defined('WWW_DIR')) {
+    define('WWW_DIR', $GLOBALS['g_campsiteDir']);
+}
 

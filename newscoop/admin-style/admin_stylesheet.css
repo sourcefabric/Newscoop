@@ -1289,3 +1289,11 @@ dl.attachment dt {
     float: left;
 }
 
+.dataTables_paginate.ui-buttonset {
+    height: auto;
+    overflow: visible;
+}
+
+.dataTables_length {
+    clear: both;
+}

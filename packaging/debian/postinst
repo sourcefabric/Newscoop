@@ -46,7 +46,7 @@ case "$1" in
       install -d -m755 /etc/$php/conf.d/
     fi
     if [ ! -e /etc/$php/conf.d/newscoop.ini ]; then
-      ln -s ${phpinifile} /etc/$php/conf.d/newscoop.init
+      ln -s ${phpinifile} /etc/$php/conf.d/newscoop.ini
       restart="$webserver $restart"
     fi
 
