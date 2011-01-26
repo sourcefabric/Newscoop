@@ -1266,6 +1266,7 @@ var geo_main_openlayers_init = function(map_div_name)
     });
 
     geo_locations.map.geo_obj = geo_locations;
+    geo_locations.map.geo_obj.obj_name = "geo_locations";
 
     var map_provs = [];
     var map_gsm = null;
@@ -1350,6 +1351,9 @@ var geo_main_openlayers_init = function(map_div_name)
             geo_locations.display_strings.openstreet_map
         );
         map_osm.wrapDateLine = true;
+        map_osm.displayOutsideMaxExtent = true;
+        map_osm.transitionEffect = 'resize';
+
         //map_osm.displayOutsideMaxExtent = true;
         map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
 
@@ -1496,7 +1500,7 @@ var geo_main_openlayers_init = function(map_div_name)
 
     var cur_date = new Date();
     //geo_locations.map_dragging_last = cur_date.getTime();
-    OpenLayers.Util.redraw_times.map_dragging_last = cur_date.getTime();
+    OpenLayers.HooksLocal.redraw_times.map_dragging_last = cur_date.getTime();
 
     var drag_feature = new OpenLayers.Control.DragFeature(geo_locations.layer);
     drag_feature.onStart = geo_hook_poi_dragg_start;
