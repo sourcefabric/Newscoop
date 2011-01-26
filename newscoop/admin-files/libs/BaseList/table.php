@@ -169,7 +169,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         'buttonText': '<?php putGS('Show / hide columns'); ?>',
     },
     <?php } ?>
-});
+}).css('position', 'relative').css('width', '100%');
 
 });
 --></script>
