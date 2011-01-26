@@ -1,3 +1,11 @@
+newscoop (3.5.0~rc2-4) 64studio; urgency=low
+
+  * updated package description
+  * package dependencies updated
+  * fixed typo php newscoop.ini[t]
+
+ -- Robin Gareus <robin@gareus.org>  Tue, 25 Jan 2011 18:51:40 +0100
+
 newscoop (3.5.0~rc2-3) 64studio; urgency=low
 
   * changed target distribution to "64studio"
