@@ -1,3 +1,20 @@
+newscoop (3.5.0~rc2-4) 64studio; urgency=low
+
+  * updated package description
+  * package dependencies updated
+  * fixed typo php newscoop.ini[t]
+
+ -- Robin Gareus <robin@gareus.org>  Tue, 25 Jan 2011 18:51:40 +0100
+
+newscoop (3.5.0~rc2-3) 64studio; urgency=low
+
+  * changed target distribution to "64studio"
+  * added php5-xcache to Recommends
+  * prefer grapicksmagic over imagemagick
+  * don't override session.gc_probability PHP setting
+
+ -- Robin Gareus <robin@gareus.org>  Tue, 25 Jan 2011 16:37:32 +0100
+
 newscoop (3.5.0~rc2-2) unstable; urgency=low
 
   * fixed arch - package is architecture independent
