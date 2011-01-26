@@ -22,11 +22,6 @@ regGS("html content", "html код");
 regGS("height", "высота");
 regGS("fill in the point description", "заполните описание пункта расположения");
 regGS("fill in map name", "заполните имя карты");
-<<<<<<< HEAD:newscoop/admin-files/lang/ru/geolocation.php
-=======
-regGS("city", "город");
-regGS("center city", "центр города");
->>>>>>> 62da07ab6de6d26eb450b4755a04c1f2caefbcb8:newscoop/admin-files/lang/ru/geolocation.php
 regGS("You do not have the right to remove maps from articles.", "У Вас нет прав доступа для удаления карт из статей.");
 regGS("Video file", "Видеофайл");
 regGS("Video ID", "ID видео");
