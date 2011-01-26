@@ -70,6 +70,7 @@ camp_html_display_msgs();
 </head>
 <body>
 
+<?php if (!$inArchive) { ?>
 <div id="tabs">
     <ul>
         <li><a href="#new-file"><?php putGS('Attach new file'); ?></a></li>
@@ -77,6 +78,7 @@ camp_html_display_msgs();
     </ul>
 
     <div id="new-file">
+<?php } ?>
 
 <p></p>
 <form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/articles/files/do_add.php?archive=<?php echo (int) $inArchive; ?>" enctype="multipart/form-data" onsubmit="return <?php camp_html_fvalidate(); ?>;">
@@ -138,6 +140,7 @@ camp_html_display_msgs();
 </table>
 </form>
 
+<?php if (!$inArchive) { ?>
 </div>
 <div id="existing-file">
     <form action="do_add_existing.php" method="POST">
@@ -169,6 +172,7 @@ $list->setColVis(FALSE)
 </div>
 
 </div><!-- /#tabs -->
+<?php } ?>
 
 </body>
 </html>
