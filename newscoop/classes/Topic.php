@@ -718,6 +718,9 @@ class Topic extends DatabaseObject {
 		$query->addGroupField('node.id');
 		$query->addOrderBy('node.node_left');
 		$rows = $g_ado_db->GetAll($query->buildQuery());
+        if (empty($rows)) { // empty tree
+            return array();
+        }
 
 		$p_tree = array();
 		$startDepth = null;
