@@ -27,20 +27,17 @@ Requires: httpd
 Requires: php 
 Requires: php-cli
 Requires: php-gd
+Requires: php-mysql
 Requires: curl
 Requires: mysql
 Requires: GraphicsMagick
+# TODO: find MTA package
 #Requires: mail-server
-Requires: sendmail
+#Requires: sendmail
 
-# TODO: - look up package names for F14 and RHEL
-# apache2 | httpd,
-# libapache2-mod-php5 | php5,
-# php5-mysql, php5-cli, php5-gd,
-# mysql-client | virtual-mysql-client,
-# graphicsmagick | imagemagick,
-# default-mta | mail-transport-agent,
-# curl
+# These are actually recommends only:
+#Requires: mysql-server
+#Requires:: php-apc | php5-xcache
 
 %description
 Newscoop is the open content management system for professional journalists.
@@ -67,11 +64,11 @@ cp debian/etc/apache.conf %{buildroot}/etc/newscoop/3.5/
 cd $RPM_BUILD_ROOT
 rm -f %{manifest}
 find ./var/ -type d \
-        | sed '1,2d;s,^\.,\%attr(-\,www-data\,www-data) \%dir ,' >> %{manifest}
+        | sed '1,2d;s,^\.,\%attr(-\,apache\,apache) \%dir ,' >> %{manifest}
 find ./var/ -type f \
-        | sed 's,^\.,\%attr(-\,www-data\,www-data) ,' >> %{manifest}
+        | sed 's,^\.,\%attr(-\,apache\,apache) ,' >> %{manifest}
 find ./var/ -type l \
-        | sed 's,^\.,\%attr(-\,www-data\,www-data) ,' >> %{manifest}
+        | sed 's,^\.,\%attr(-\,apache\,apache) ,' >> %{manifest}
 
 %clean
 rm -f %{manifest}
@@ -96,14 +93,13 @@ if [ ! -d /etc/$webserver/conf.d/ ]; then
 fi
 if [ ! -e /etc/$webserver/conf.d/newscoop.conf ]; then
 	ln -s ${includefile} /etc/$webserver/conf.d/newscoop.conf
-	a2enmod rewrite &>/dev/null || true
 fi
 
 if [ ! -d /etc/$php/conf.d/ ]; then
-	install -d -m755 /etc/$php/conf.d/
+	install -d -m755 /etc/php.d/
 fi
-if [ ! -e /etc/$php/conf.d/newscoop.ini ]; then
-	ln -s ${phpinifile} /etc/$php/conf.d/newscoop.ini
+if [ ! -e /etc/php.d/newscoop.ini ]; then
+	ln -s ${phpinifile} /etc/php.d/newscoop.ini
 fi
 
 # XXX: restart apache - check if this is the recommended way
@@ -112,14 +108,17 @@ fi
 
 %postun
 webserver="httpd"
-php="php5"
 if [ -L /etc/$webserver/conf.d/newscoop.conf ]; then
 	rm -f /etc/$webserver/conf.d/newscoop.conf || true
 fi
 		
-if [ -L /etc/$php/conf.d/newscoop.ini ]; then
-	rm -f /etc/$php/conf.f/newscoop.ini || true
+if [ -L /etc/php.d/newscoop.ini ]; then
+	rm -f /etc/php.d/newscoop.ini || true
 fi
+# delete generated templates and user-installed plugins
+rm -rf /var/lib/newscoop
+rmdir /etc/newscoop/3.5 || true
+rmdir /etc/newscoop/ || true
 		
 # XXX: restart apache - check if this is the recommended way
 /etc/init.d/httpd restart
