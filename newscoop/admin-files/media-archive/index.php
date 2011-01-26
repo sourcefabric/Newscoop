@@ -13,8 +13,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 
 <div id="archive">
 <ul>
-    <li><a href="#images"><?php putGS('Images archive'); ?></a></li>
-    <li><a href="#files"><?php putGS('Files archive'); ?></a></li>
+    <li><a href="#images"><?php putGS('Images'); ?></a></li>
+    <li><a href="#files"><?php putGS('Files'); ?></a></li>
 </ul>
 
 <div id="images">
