@@ -1,0 +1,145 @@
+/* Style: Default */
+
+#top-meta, #top-meta .date, #top-meta .search, #top-meta .rss, #top-meta .contact-link, #header, #top-nav, #featured_photo img, .category-image-block img, #featured_photo, #featured_photo div, #featured_post, #tabs, p.post-details, .inside ul, .category-box, #also-header, #sidebar .widget, #bottom, #bottom .widget h3, .featured_article,#bottom #col_two li, #footer #page-nav li, #comments #comments_wrap h2, #comments .commentlist, #comments .comment, #comments ul.children {
+  border-color: #cccccc;
+}
+
+.hr {
+  background-color:#cccccc;
+}
+
+#top {
+  border-color: #2e3738;
+}
+
+#highlights {
+  border-color: #cccccc;
+  background-color:#f9f9dc;
+  color:#111111;
+}
+
+#highlights h3 {
+  color: #111111;
+}
+
+#highlights .more a {
+  color:#111111;
+}
+
+#highlights .post .content {
+  border-color:#dddddd;
+}
+
+#highlights .post .content a {
+  color:#111111;
+}
+
+#highlights .post .content .read_more a {
+  color:#111111;
+  background-color:#ffffff;
+}
+
+#highlights .post .image img {
+  border-color:#dddddd;
+}
+ #header .recent-entries ul, #header .recent-entries li {
+    border-color: #cccccc;
+    background-repeat: no-repeat;
+}
+
+#header .recent-entries .archives a {
+    color:#cc0000;
+}
+
+#header .recent-entries h4 a {
+    color:#cc0000;
+}
+
+#header .recent-entries a:hover {
+    color:#ab8787;
+}
+
+
+#recent-entries .recent-entries .archives a {
+  color:#cc0000;
+}
+
+#recent-entries .recent-entries h4 a {
+  color:#cc0000;
+}
+
+#recent-entries .recent-entries a:hover {
+  color:#ab8787;
+}
+
+#top-nav .current_page_item, #top-nav a:hover, #top-nav .current-cat {
+  background-color:#cc0000;
+  color:#ffffff !important;
+}
+
+#top-nav .current_page_item a, #top-nav a:hover, #top-nav .current-cat a {
+  color:#ffffff;
+}
+
+ul.idTabs li a.selected, ul.idTabs li a:hover {
+  background: #2e3738;
+  color:#ffffff !important;
+}
+
+.inside ul {
+  background-color:#2e3738;
+}
+
+.inside li {
+  border-bottom-color:#999999;
+}
+
+#categories-module p a {
+  color:#cccccc;
+}
+
+#categories-slider .panel h3 a {
+  color:#cccccc;
+}
+
+#bottom .featured_article .more_featured a {
+  color:#cccccc;
+}
+
+#main p.tags {
+  background-color:#eeeeee;
+}
+
+#sidebar .widget {
+  background-color:#f9f9dc;
+}
+
+#sidebar .widget h3 {
+  background-color:#cc0000;
+  color:#ffffff;
+}
+
+#wp-calendar caption {
+  background-color:#111111;
+  color:#FFFFFF;
+}
+
+#commentform #submit {
+  background-color:#111111;
+  color:#FFFFFF;
+  border-color:#111111;
+}
+
+#comments .reply a {
+  background-color:#111111;
+  color:#FFFFFF;
+}
+
+#footer .credits p {
+  color:#cccccc;
+}
+
+
+#footer {
+  background: #111111;
+}
