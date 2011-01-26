@@ -269,7 +269,7 @@ var init_search = function ()
     }
 };
 
-var map_close_question = "<?php p(getGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.")); ?>";
+var map_close_question = "<?php p(getGS("Are you sure you want to quit without saving your changes?")); ?>";
 
 var on_load_proc = function()
 {
