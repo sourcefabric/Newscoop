@@ -359,7 +359,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Publications` WRITE;
 /*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
-INSERT  IGNORE INTO `Publications` VALUES (2,'The Journal',1,'D',0.00,0.00,'',0,0,4,2,2,1,1,0,1,1,0,894,'a:0:{}');
+INSERT  IGNORE INTO `Publications` VALUES (2,'The Journal',1,'D',0.00,0.00,'',0,0,2,2,2,1,1,0,1,1,0,894,'a:0:{}');
 /*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 UNLOCK TABLES;
 
