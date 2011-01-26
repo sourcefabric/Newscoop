@@ -579,7 +579,7 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
 
     //geo_obj.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
 
-    var pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    var pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
     pzb_ctrl.geo_obj = geo_obj;
 
     pzb_ctrl.buttonDown = geo_hook_map_bar_panning;

@@ -452,11 +452,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <!-- end of map initview -->
 <div class="map_resizing">
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
-          <div class="resize-label">V</div>
+          <div class="resize-label"><span class="geo_resize_hor ui-icon ui-icon-arrowthick-2-n-s">V</span></div>
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
           <div id="map_view_size" class="map-resizing-text">600 x 400</div>
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
-          <div class="resize-label">H</div>
+          <div class="resize-label"><span class="geo_resize_ver ui-icon ui-icon-arrowthick-2-e-w">H</span></div>
           <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">

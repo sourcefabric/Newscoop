@@ -1,7 +1,7 @@
 <div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
-        <li><a href="#media-attachments"><?php putGS('Attachments'); ?></a></li>
+        <li><a href="#media-attachments"><?php putGS('Files'); ?></a></li>
     </ul>
     <div id="media-images">
         <?php if ($inEditMode && $g_user->hasPermission('AttachImageToArticle')) { ?>

@@ -58,15 +58,16 @@ function camp_html_copyright_notice($p_displayBorder = true)
     <?php
     }
       echo $campVersion->getPackage() . '&nbsp;';
-      echo $campVersion->getVersion() . '&nbsp;';
-      echo $campVersion->getCopyright();
-    ?>
+      echo $campVersion->getVersion() . ',';
+      ?>
+    the open content management system for professional journalists.
       <br />
-      Maintained and distributed under
-    <?php echo $campVersion->getLicense(); ?> by
-      <a style="font-size:8pt; color: black;" href="http://www.sourcefabric.org">
-    <?php echo $campVersion->getOrganization(); ?>
-      </a>
+      <?php
+      echo $campVersion->getCopyright() . '.&nbsp;';
+      echo $campVersion->getPackage();
+    ?>
+       is distributed under
+    <?php echo $campVersion->getLicense(); ?>
     </div>
 	<?php
 } // fn camp_html_copyright_notice
@@ -303,7 +304,7 @@ function camp_html_title($title, $toString = FALSE)
  * @param array $p_crumbs
  *		An array in the form 'text' => 'link' for breadcrumbs.
  *      Farthest-away link comes first, increasing in specificity.
- * 
+ *
  * @param bool $showTitle
  *
  * @return string

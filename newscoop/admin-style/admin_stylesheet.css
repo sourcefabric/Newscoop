@@ -729,6 +729,7 @@ dl.inline-list dd {
 	color:#007fb3;
 	text-decoration:underline;
 }
+
 .info {
 	font-style:italic;
 	color:#7c7c7c;
@@ -1289,3 +1290,34 @@ dl.attachment dt {
     float: left;
 }
 
+.dataTables_paginate.ui-buttonset {
+    height: auto;
+    overflow: visible;
+}
+
+.dataTables_length {
+    clear: both;
+}
+
+ul.rss {
+    margin: 3px 0;
+    padding: 0;
+}
+
+ul.rss > li {
+    margin: 0;
+    padding: 5px;
+    font-size: 1.2em;
+}
+
+ul.rss li.even {
+    background-color: #f5f5f5;
+}
+
+ul.rss p {
+    width: 60em;
+    margin: 3px 0 0;
+}
+
+ul.rss li a { color: #007fb3; }
+ul.rss li a:hover { text-decoration: underline; }

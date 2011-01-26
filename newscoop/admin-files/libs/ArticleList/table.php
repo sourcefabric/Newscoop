@@ -73,7 +73,6 @@ var table = $('#table-<?php echo $this->id; ?>');
 filters['<?php echo $this->id; ?>'] = [];
 tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bAutoWidth': true,
-    'sScrollX': '100%',
     'bScrollCollapse': true,
     'bDestroy': true,
     'bJQueryUI': true,
@@ -222,7 +221,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         return nRow;
     },
     <?php } ?>
-});
+}).css('position', 'relative').css('width', '100%');
 
 });
 --></script>

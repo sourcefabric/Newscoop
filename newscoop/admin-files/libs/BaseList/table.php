@@ -68,7 +68,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         { // inputs for id
             'fnRender': function(obj) {
                 var id = obj.aData[0];
-                return '<input type="checkbox" name="item_' + id + '" />';
+                return '<input type="checkbox" name="item[]" value="' + id + '" />';
             },
             'aTargets': [0]
         },
@@ -100,10 +100,26 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         }
     ],
     'fnDrawCallback': function() {
-        $('#table-<?php echo $this->id; ?> tbody tr').click(function() {
-            $(this).toggleClass('selected');
-            input = $('input:checkbox', $(this)).attr('checked', $(this).hasClass('selected'));
+        $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
+            if (event.target.type == 'checkbox') {
+                return; // checkbox click, handled by it's change
+            }
+
+            var input = $('input:checkbox', $(this));
+            if (input.attr('checked')) {
+                input.removeAttr('checked');
+            } else {
+                input.attr('checked', 'checked');
+            }
+            input.change();
+        }).each(function() {
+            var tr = $(this);
+            // detect locks
+            if ($('.name .ui-icon-locked', tr).not('.current-user').size()) {
+                tr.addClass('locked');
+            }
         });
+
         $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
@@ -111,6 +127,25 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 $(this).parents('tr').removeClass('selected');
             }
         });
+
+        $('#table-<?php echo $this->id; ?> thead input:checkbox').change(function() {
+            var main = $(this);
+            $('#table-<?php echo $this->id; ?> tbody input:checkbox').each(function() {
+                if (main.attr('checked')) {
+                    $(this).attr('checked', 'checked');
+                } else {
+                    $(this).removeAttr('checked');
+                }
+                $(this).change();
+            });
+        });
+
+        <?php if (!$this->clickable) { ?>
+        $('#table-<?php echo $this->id; ?> tbody a').click(function() {
+            $(this).closest('tr').click();
+            return false;
+        }).css('cursor', 'default');
+        <?php } ?>
     },
 	'fnCookieCallback': function (sName, oData, sExpires, sPath) {
         oData['abVisCols'] = []; // don't save visibility
@@ -134,7 +169,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         'buttonText': '<?php putGS('Show / hide columns'); ?>',
     },
     <?php } ?>
-});
+}).css('position', 'relative').css('width', '100%');
 
 });
 --></script>

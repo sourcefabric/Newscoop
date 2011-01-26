@@ -1,5 +1,7 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
+
+require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 if (!is_array($GLOBALS['argv']) && empty($options)) {
     echo "Can't read command line arguments\n";
@@ -8,8 +10,6 @@ if (!is_array($GLOBALS['argv']) && empty($options)) {
 
 require_once("cli_script_lib.php");
 
-$CAMPSITE_DIR = dirname(dirname(__FILE__));
-$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR;
 $ETC_DIR = $CAMPSITE_DIR . '/conf';
 // fill in HTTP_HOST to avoid notices in campsite_constants.php
 $_SERVER['HTTP_HOST'] = '';
@@ -567,4 +567,3 @@ administration interface and go to the publication configure screen.\n\n";
 echo "IMPORTANT!\n";
 echo "You must restart the apache server for the changes to take effect!\n";
 
-?>

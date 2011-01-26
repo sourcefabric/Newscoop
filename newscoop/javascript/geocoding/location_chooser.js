@@ -1212,7 +1212,7 @@ var geo_main_openlayers_init = function(map_div_name)
 
     });
 
-    geo_locations.pzb_ctrl = new OpenLayers.Control.PanZoomBar();
+    geo_locations.pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
     geo_locations.pzb_ctrl.buttonDown = geo_hook_map_bar_panning;
 
     // msie does not stops the event, and does not preserves its properties either
@@ -1241,7 +1241,7 @@ var geo_main_openlayers_init = function(map_div_name)
             OpenLayers.Event.stop(evt);
         }
 
-	}
+	};
 
     geo_locations.map = new OpenLayers.Map(map_div_name, {
         controls: [
