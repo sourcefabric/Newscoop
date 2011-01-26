@@ -16,7 +16,7 @@ if (isset($sendWasAttempted) && $sendWasAttempted){
     echo "</b>";
 } else {
     echo '<font size="+2"><b>';
-    putGS("Campsite has encountered a problem.");
+    putGS("Newscoop has encountered a problem.");
     echo "</b></font>";
     echo '<hr noshade size="1" color="black">';
 }

@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Приносим свои изви
 regGS("Show error details", "Показать подробности ошибки");
 regGS("Hide error details", "Скрыть подробности ошибки");
 regGS("Error Report", "Отчет об ошибках");
-regGS("Campsite has encountered a problem.", "Campsite столкнулся с проблемой.");
+regGS("Newscoop has encountered a problem.", "Campsite столкнулся с проблемой.");
 regGS("Backtrace:", "Обратная трассировка:");
 regGS("Error ID:", "ID ошибки:");
 regGS("Error Message:", "Сообщение об ошибке:");

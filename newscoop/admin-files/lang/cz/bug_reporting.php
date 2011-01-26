@@ -7,7 +7,7 @@ regGS("We are sorry for the inconvenience.", "Omlouváme se za potíže.");
 regGS("Show error details", "Zobrazit podrobnosti chyby");
 regGS("Hide error details", "Skrýt podrobnosti chyby");
 regGS("Error Report", "Chybové hlášení");
-regGS("Campsite has encountered a problem.", "Campsite narazil na problém.");
+regGS("Newscoop has encountered a problem.", "Campsite narazil na problém.");
 regGS("Backtrace:", "Původ:");
 regGS("Error ID:", "ID Chyby:");
 regGS("Error Message:", "Chybová zpráva");
