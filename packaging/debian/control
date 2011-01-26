@@ -15,26 +15,16 @@ Depends: apache2 | httpd,
  php5-gd,
  mysql-client | virtual-mysql-client,
  graphicsmagick | imagemagick,
+ default-mta | mail-transport-agent,
+ wwwconfig-common,
+ curl,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
 Suggests: mysql-server | virtual-mysql-server
-Description: Newspaper/Magazine Software for Web Publishing
- Newscoop is a web publishing system that can bring your newspaper or
- magazine content to the online world. It is often used by media
- organizations who also have a printed version of their publication,
- and enables them to increase their revenues with online subscriptions
- and ads. There are many systems that might seem similar to Newscoop,
- but it is the only open-source system designed to work in the same
- style of newspapers and magazines - for example, with multiple
- journalists, editor review, issue publishing, and subscription management.
- .
- Here are a few of its main features:
-   * User-friendly interface to allow journalists and editors to work
-     efficiently.
-   * Possibility for multi-lingual content comes as standard.
-   * Management features designed specifically for newspapers: automation
-     of issue publishing, editor review, multimedia support.
-   * Subscription management with control over what content your
-     subscribers have access to.
-   * Total design freedom - make your site look however you like,
-     utilising the templating engine.
+Description: The open content management system for professional journalists
+ Newscoop is the open content management system for professional journalists.
+ Features for the modern newsroom include multiple author management,
+ issue-and-section based publishing, geolocation and multilingual content 
+ management. The enterprise-standard journalist’s dashboard and a templating
+ engine supporting anything from HTML5 to mobile complete this fast production
+ and publishing system. 
