@@ -2,6 +2,7 @@
 <?php
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
+require_once $CAMPSITE_DIR . '/classes/CampPlugin.php';
 
 if (!is_array($GLOBALS['argv']) && empty($options)) {
     echo "Can't read command line arguments\n";
@@ -15,7 +16,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 $_SERVER['HTTP_HOST'] = '';
 
 if (empty($options)) {
-    $options = getopt("b:t:efc:slh");
+    $options = getopt("d:b:t:efc:slh");
     $flush = false;
 } else {
     $flush = true;
@@ -542,6 +543,11 @@ if ($convertToUTF) {
 
     echo "   done.\n";
 }
+
+// upgrade plugins
+echo " * Updating plugins (if necessary)...";
+CampPlugin::OnUpgrade();
+echo "   done.\n";
 
 //
 // Remove the temp dir.

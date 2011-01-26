@@ -73,21 +73,7 @@ foreach($template_files as $template_file) {
 User::SyncPhorumUsers();
 
 // update plugins
-foreach ((array) CampPlugin::GetNeedsUpdate() as $name => $info) {
-    if (empty($name)) { // empty array
-        continue;
-    }
-
-    // update
-    $CampPlugin = new CampPlugin($name);
-    $currentVersion = $CampPlugin->getFsVersion();
-    if ($CampPlugin->getDbVersion() != $currentVersion) {
-        $CampPlugin->delete();
-        $CampPlugin->create($name, $currentVersion);
-        $CampPlugin->update();
-        $CampPlugin->enable();
-    }
-}
+CampPlugin::OnUpgrade();
 
 CampRequest::SetVar('step', 'finish');
 $install = new CampInstallation();
