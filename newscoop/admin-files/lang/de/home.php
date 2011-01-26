@@ -1,5 +1,5 @@
 <?php 
-regGS("Go to dashboard", "");
+regGS("Go to dashboard", "Zum Dashboard");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Ihr Browser unterstützt kein Javascript oder Sie haben Javascript nicht aktiviert (das ist wahrscheinlicher). Bitte überpüfen Sie Ihre Einstellungen, um Newscoop nutzen zu können. ");
 regGS("Synchronize Newscoop and Phorum users", "Newscoop und Forum User synchronisieren");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Newscoop hat die Sicherheitseinstellungen aktualisiert. Bitte geben Sie Ihr Passwort erneut ein, um die neuen Einstellungen für Ihren Account zu übernehmen.");
@@ -96,4 +96,5 @@ regGS("Login failed", "Login fehlgeschlagen");
 regGS("Please make sure that you typed the correct user name and password.", "Bitte prüfen, ob Benutzername und Passwort korrekt eingegeben wurden.");
 regGS("If your problem persists please contact the site administrator $1", "Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.");
 regGS("Backup/Restore", "Backup/Wiederherstellung");
+regGS("Hi, \\nfor password recovery, please follow this link: %s", "Hi, \\nUm das Passwort wiederherzustellen, bitte diesem Link folgen: %s");
 ?>

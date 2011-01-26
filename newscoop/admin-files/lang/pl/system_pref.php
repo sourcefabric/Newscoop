@@ -1,4 +1,6 @@
 <?php 
+regGS("Enable Airtime audio attachments?", "");
+regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
@@ -60,7 +62,6 @@ regGS("SMTP Port", "Port SMTP");
 regGS("SMTP Host:", "Host SMTP:");
 regGS("SMTP Host must be at least four character.", "Host SMTP musi mieć co najmniej 4 znaki.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Podaj wartość pomiędzy 0 a $1 (maksymalny rozmiar znajduje się w pliku 'php.ini'). Użyj 'K' dla kilobajtów, 'M' dla megabajtów i 'G' dla gigabajtów, bez spacji pomiędzy wartością a liter, np '3M'");
-regGS("Enable Campcaster audioclip attachments?", "Włączyć załączniki audio Campcaster?");
 regGS("XML RPC Path:", "Ścieżka XML RPC:");
 regGS("XML RPC File:", "Plik XML RPC:");
 regGS("System preferences updated", "Preferencje systemu zaktualizowane");
@@ -76,7 +77,6 @@ regGS("Database Replication User:", "Użytkownik do replikacji bazy danych:");
 regGS("Database Replication Port:", "Port do replikacji bazy danych:");
 regGS("Database Replication Password:", "Hasło do replikacji bazy danych:");
 regGS("Database Replication Host:", "Host do replikacji bazy danych");
-regGS("Campcaster Server", "Serwer Campcaster");
 regGS("System preferences updated.", "Preferencje systemowe zaktualizowane.");
 regGS("Please enter a positive number for the '$1' field.", "Podaj dodatni numer do pola '$1'");
 regGS("Login Attempts", "Prób logowania");

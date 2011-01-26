@@ -1,4 +1,6 @@
 <?php 
+regGS("Enable Airtime audio attachments?", "");
+regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");
@@ -60,7 +62,6 @@ regGS("SMTP Port", "СМТП порт");
 regGS("SMTP Host:", "СМТП хост:");
 regGS("SMTP Host must be at least four character.", "СМТП хост мора имати најмање четири карактера");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Унесите вредност измњђу 0 и $1 (максимална вредност је дефинисана у 'php.ini'). Користите 'К' за килобајте, 'М' за мегабајте и Ѓ'за гигабајте, без размака између вредности и одговарајућег слова (нпр '3М')");
-regGS("Enable Campcaster audioclip attachments?", "Омогући КЕмпкастер аудиоклип атачменте?");
 regGS("XML RPC Path:", "Путања до XML RPC:");
 regGS("XML RPC File:", "XML RPC фајл:");
 regGS("System preferences updated", "Поставке система измењене");
@@ -76,7 +77,6 @@ regGS("Database Replication User:", "Корисничко име за базу �
 regGS("Database Replication Port:", "Порт на репликационој бази:");
 regGS("Database Replication Password:", "Лозинка на репликационој бази:");
 regGS("Database Replication Host:", "Хост за репликациону базу:");
-regGS("Campcaster Server", "Кемпкастер сервер");
 regGS("System preferences updated.", "системске поставке измењене.");
 regGS("Please enter a positive number for the '$1' field.", "Унесите позитиван број у поље '$1'.");
 regGS("Login Attempts", "Покушаја пријављивања");

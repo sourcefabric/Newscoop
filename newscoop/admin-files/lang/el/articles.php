@@ -1,4 +1,6 @@
 <?php 
+regGS("Select section:", "");
+regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Switches saved.", "");
@@ -57,7 +59,6 @@ regGS("Creator", "Δημιουργός");
 regGS("Audioclips order saved.", "Η εντολή αρχείου ήχου αποθηκεύτηκε.");
 regGS("Audioclips", "Αρχεία Ήχου");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Είστε σίγουρος/η ότι επιθυμείται να αφαιρέσετε το αρχείο ήχου \'$1\' από το άρθρο;");
-regGS("Select location:", "Επιλέξτε τοποθεσία:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Δεν μπορείτε να έχετε δυο άρθρα με το ίδιο όνομα στην ίδια ενότητα. Το όνομα άρθρου που ορίσατε χρησιμοποιήται ήδη από το άρθρο '$1'.");
 regGS("Visible to non-subscribers", "Ορατό σε μη-συνδρομητές");
 regGS("The article could not be published.", "Το άρθρο δεν μπόρεσε να δημοσιευθεί.");

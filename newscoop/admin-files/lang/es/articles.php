@@ -1,4 +1,6 @@
 <?php 
+regGS("Select section:", "");
+regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Switches saved.", "");
@@ -57,7 +59,6 @@ regGS("Creator", "Creador");
 regGS("Audioclips order saved.", "Orden de Audioclips guardado.");
 regGS("Audioclips", "Audioclips.");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Está seguro que quiere remover el archivo de audio \'$1\' del artículo?");
-regGS("Select location:", "Elija ubicación:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "No puede tener dos artículos con el mismo nombre en la misma sección.  El nombre de artículo que especificó ya se está utilizando en el artículo '$1'. ");
 regGS("Visible to non-subscribers", "Visible a no suscriptores");
 regGS("The article could not be published.", "No se pudo publicar el artículo.");

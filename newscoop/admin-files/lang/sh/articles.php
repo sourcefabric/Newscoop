@@ -1,4 +1,6 @@
 <?php 
+regGS("Select section:", "");
+regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Switches saved.", "");
@@ -57,7 +59,6 @@ regGS("Creator", "Autor");
 regGS("Audioclips order saved.", "Redosled audio zapisa zapamćen.");
 regGS("Audioclips", "Audio zapisi");
 regGS("Are you sure you want to remove the audio file \'$1\' from the article?", "Da li ste sigurni da želite da uklonite audio fajl \'$1\' iz članka?");
-regGS("Select location:", "Izaberite lokaciju:");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Ne možete imati dva članka u istoj rubrici sa istim imenom. Naslov članka koji ste uneli se već koristi u članku '$1'.");
 regGS("Visible to non-subscribers", "Vidljivo ne-pretplatnicima");
 regGS("The article could not be published.", "Članak ne može biti objavljen.");
