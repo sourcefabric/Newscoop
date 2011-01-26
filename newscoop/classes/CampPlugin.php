@@ -516,7 +516,6 @@ class CampPlugin extends DatabaseObject
                 $CampPlugin->delete();
                 $CampPlugin->create($name, $currentVersion);
                 $CampPlugin->update();
-                $CampPlugin->enable();
             }
         }
     }
