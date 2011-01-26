@@ -73,7 +73,7 @@ camp_html_display_msgs("0.5em", 0);
 if (count($topics) == 0) { ?>
 <blockquote>
 	<p><?php putGS('No topics'); ?></p>
-</blockquote>>
+</blockquote>
 
 <?php } else { ?>
 
