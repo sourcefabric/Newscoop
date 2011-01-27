@@ -1,6 +1,6 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
+regGS("Dashboard", "Dashboard");
+regGS("Authors", "Autoren/innen");
 regGS("Libraries", "Bibliotheken");
 regGS("Media Archive", "Medienarchive");
 regGS("Extensions", "Erweiterungen");

@@ -1,7 +1,7 @@
 <?php 
-regGS("center city", "");
-regGS("Map preview", "");
-regGS("Locations updated.", "");
+regGS("center city", "Stadtmitte");
+regGS("Map preview", "Vorschau Karte");
+regGS("Locations updated.", "Standorte aktualisiert.");
 regGS("Setting the map name helps with map search", "Einen Kartennamen festlegen um die Kartensuche zu vereinfachen.");
 regGS("Longitude", "Längengrad");
 regGS("Latitude", "Breitengrad");

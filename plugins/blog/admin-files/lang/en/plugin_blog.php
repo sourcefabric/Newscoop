@@ -1,4 +1,5 @@
 <?php 
+regGS("List comments", "List comments");
 regGS("User may moderate Blogs", "User may moderate Blogs");
 regGS("User may manage Blogs", "User may manage Blogs");
 regGS("read only", "read only");
@@ -34,7 +35,6 @@ regGS("You do not have the right to manage blogs.", "You do not have the right t
 regGS("You do not have the right to manage blog entries.", "You do not have the right to manage blog entries.");
 regGS("User", "User");
 regGS("Use captcha for blog comments form", "Use captcha for blog comments form");
-regGS("Title", "Title");
 regGS("Registered or indicated by Name and Email", "Registered or indicated by Name and Email");
 regGS("Registered or indicated by Name", "Registered or indicated by Name");
 regGS("Posts", "Posts");
