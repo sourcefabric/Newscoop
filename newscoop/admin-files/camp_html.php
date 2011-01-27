@@ -67,7 +67,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
     the open content management system for professional journalists.
       <br />
       <?php
-      echo $campVersion->getCopyright() . '.&nbsp;';
+      echo $campVersion->getCopyright() . '&nbsp;';
       echo $campVersion->getPackage();
     ?>
        is distributed under

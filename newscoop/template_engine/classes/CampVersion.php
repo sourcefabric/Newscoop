@@ -17,7 +17,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_organization = 'Sourcefabric o.p.s';
+    private $m_organization = 'Sourcefabric o.p.s.';
 
     /**
      * @var string
