@@ -65,9 +65,10 @@
             <div class="message">{{ $message }}</div>
             <div class="form_field">
               <label for="install_demo">Please choose a demo template:</label> &nbsp;
-              <input id="install_demo_no" name="install_demo" value="0" type="radio" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
+              <br /><input id="install_demo_no" name="install_demo" value="0" type="radio" style="margin: 0 5px 0 13px" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
               {{ foreach from=$sample_templates key="step" item="t" }}
-              <input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/><label for="install_demo">{{ $t }}</label>
+              <br /><input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
+              <label for="install_demo">{{include file="./../sample_templates/$t/name.txt"}}</label>
               {{ /foreach }}
             </div>
             {{ foreach from=$sample_templates key="step" item="t" }}
