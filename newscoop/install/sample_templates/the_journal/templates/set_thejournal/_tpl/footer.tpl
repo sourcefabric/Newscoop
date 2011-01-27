@@ -33,6 +33,6 @@
         <div class="fix"></div>        
                 
     <div class="credits">
-      <p>© 2011 The Journal. All Rights Reserved. Powered by <a href="http://newscoop.sourcefabric.org/">Newscoop</a>. Designed by <a href="http://www.woothemes.com/"><img src="/templates/set_thejournal/_img/woothemes.png" alt="Woo Themes" width="87" height="21"></a></p>
+      <p>© 2011 The Journal. All Rights Reserved. Powered by <a href="http://newscoop.sourcefabric.org/" title="Newscoop">Newscoop</a>. Designed by <a href="http://www.woothemes.com/"><img src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/woothemes.png" alt="Woo Themes" width="87" height="21"></a></p>
     </div>
   </div>
