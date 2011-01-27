@@ -977,7 +977,9 @@ a.clear-margin:hover, .icon-button:hover  {
     color: #3B3B3B;
 }
 .article-title-locked {
-    color: #ec8b8b;
+    color: #de3d3d;
+    background: transparent url("images/locked_big.png") no-repeat 0 50%;
+    padding-left: 16px;
 }
 .breadcrumb_active	{
     padding: 0 40px 0 0;
