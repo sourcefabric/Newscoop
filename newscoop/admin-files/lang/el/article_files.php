@@ -18,7 +18,6 @@ regGS("File Size", "Μέγεθος Αρχείου");
 regGS("File Name", "Όνομα Αρχείου");
 regGS("Download", "Download");
 regGS("File '$1' updated.", "Το αρχείο '$1' ανανεώθηκε.");
-regGS("File '$1' deleted.", "Το αρχείο '$1' διαγράφτηκε.");
 regGS("Edit article", "Επεξεργασία άρθρου");
 regGS("You do not have the right to delete file attachments.", "Δεν έχετε το δικαίωμα να διαγράψετε συννημένα αρχεία.");
 regGS("You must select a file to upload.", "Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.");

@@ -23,7 +23,6 @@ regGS("Keywords &amp; Topics", "Ключевые слова & Темы");
 regGS("Info", "Информация");
 regGS("Go to live article", "Перейти к активной статье");
 regGS("Created", "Создана");
-regGS("Attachments", "Прикрепленные файлы");
 regGS("Locations", "Места событий");
 regGS("Are you sure you want to remove the map from the article?", "Вы уверены, что хотите удалить эту карту из статьи?");
 regGS("Scheduled action added", "Запланированное действие добавлено");

@@ -18,7 +18,6 @@ regGS("File Size", "Velikost Souboru");
 regGS("File Name", "Název Souboru");
 regGS("Download", "Stáhnout");
 regGS("File '$1' updated.", "Soubor '$1' aktualizován.");
-regGS("File '$1' deleted.", "Soubor '$1' odstraněn.");
 regGS("Edit article", "Upravit článek");
 regGS("You do not have the right to delete file attachments.", "Nemáte oprávnění mazat přílohy.");
 regGS("You must select a file to upload.", "Zvolte soubor k nahrání.");

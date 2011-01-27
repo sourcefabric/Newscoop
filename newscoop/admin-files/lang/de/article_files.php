@@ -18,7 +18,6 @@ regGS("File Size", "Dateigröße");
 regGS("File Name", "Dateiname");
 regGS("Download", "Herunterladen");
 regGS("File '$1' updated.", "Datei '$1' aktualisiert.");
-regGS("File '$1' deleted.", "Datei '$1' gelöscht.");
 regGS("Edit article", "Artikel bearbeiten");
 regGS("You do not have the right to delete file attachments.", "Keine Berechtigung Anlagen zu löschen.");
 regGS("You must select a file to upload.", "Datei zum Hochladen auswählen.");

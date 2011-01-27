@@ -18,7 +18,6 @@ regGS("File Size", "");
 regGS("File Name", "");
 regGS("Download", "");
 regGS("File '$1' updated.", "");
-regGS("File '$1' deleted.", "");
 regGS("Edit article", "Editar Artigo");
 regGS("You do not have the right to delete file attachments.", "Não tem permissão para eliminar anexos de artigos.");
 regGS("You must select a file to upload.", "Tem de selecionar um ficheiro para transferir");

@@ -23,7 +23,6 @@ regGS("Keywords &amp; Topics", "Keywords &amp; Topics");
 regGS("Info", "Info");
 regGS("Go to live article", "Go to live article");
 regGS("Created", "Created");
-regGS("Attachments", "Attachments");
 regGS("Locations", "Locations");
 regGS("Are you sure you want to remove the map from the article?", "Are you sure you want to remove the map from the article?");
 regGS("Scheduled action added", "Scheduled action added");

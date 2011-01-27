@@ -18,7 +18,6 @@ regGS("File Size", "ფაილის ზომა");
 regGS("File Name", "ფაილის სახელი");
 regGS("Download", "ჩამოქაჩვა");
 regGS("File '$1' updated.", "ფაილი '$1' განახლებულია");
-regGS("File '$1' deleted.", "ფაილი '$1' წაშლილია");
 regGS("Edit article", "სტატიის რედაქტირება");
 regGS("You do not have the right to delete file attachments.", "თქვენ არა გაქვთ მიმაგრებული ფაილის წაშლის უფლება");
 regGS("You must select a file to upload.", "თქვენ უნდა მონიშნოთ ფაილი ასატვითად");

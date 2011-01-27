@@ -18,7 +18,6 @@ regGS("File Size", "Veličina fajla");
 regGS("File Name", "Ime fajla");
 regGS("Download", "Preuzmi");
 regGS("File '$1' updated.", "fajl '$1' izmenjen.");
-regGS("File '$1' deleted.", "Fajl '$1' obrisan.");
 regGS("Edit article", "Uredi tekst");
 regGS("You do not have the right to delete file attachments.", "Nemate pravo da brišete prikačene fajlove.");
 regGS("You must select a file to upload.", "Morate izabrati fajl za aploud.");

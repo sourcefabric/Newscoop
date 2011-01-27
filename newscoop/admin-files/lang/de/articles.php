@@ -23,7 +23,6 @@ regGS("Keywords &amp; Topics", "Schlagwörter & Themen");
 regGS("Info", "Info");
 regGS("Go to live article", "Gehe zu live Artikel");
 regGS("Created", "Erstellt");
-regGS("Attachments", "Anhänge");
 regGS("Locations", "Standorte");
 regGS("Are you sure you want to remove the map from the article?", "Wirklich die Karte aus Artikel entfernen?");
 regGS("Scheduled action added", "Automatisierte Aktion hinzufügen");
@@ -147,8 +146,4 @@ regGS("No such section.", "Rubrik nicht vorhanden");
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Wirklich Audiodatei \\'$1\\' aus dem Artikel entfernen?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>

@@ -18,7 +18,6 @@ regGS("File Size", "Памер файла");
 regGS("File Name", "Імя файла");
 regGS("Download", "Загрузіць");
 regGS("File '$1' updated.", "Файл '$1' абноўлены. ");
-regGS("File '$1' deleted.", "Файл '$1'  выдалены. ");
 regGS("Edit article", "Рэдагаваць артыкул");
 regGS("You do not have the right to delete file attachments.", "Вы ня маеце права  выдаляць прыкладзены файл.");
 regGS("You must select a file to upload.", "Вы павiнны выбраць файл для загрузкi.");

@@ -23,7 +23,6 @@ regGS("Keywords &amp; Topics", "Λέξεις κλειδιά &  Θέματα");
 regGS("Info", "Πληροφορίες");
 regGS("Go to live article", "Πήγαινε στο ζωντανό άρθρο");
 regGS("Created", "Δημιουργήθηκε");
-regGS("Attachments", "Συννημένα");
 regGS("Locations", "Τοποθεσίες");
 regGS("Are you sure you want to remove the map from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε τον χάρτη από το άρθρο;");
 regGS("Scheduled action added", "Η προγραμματισμένη ενέργεια προστέθηκε");

@@ -8,8 +8,6 @@ regGS("Open in the browser", "");
 regGS("Media Archive", "");
 regGS("Last modified", "");
 regGS("Items deleted.", "");
-regGS("Images archive", "");
-regGS("Files archive", "");
 regGS("File uploaded.", "");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "");
 regGS("Delete selected", "");

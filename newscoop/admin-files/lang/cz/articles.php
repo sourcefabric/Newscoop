@@ -23,7 +23,6 @@ regGS("Keywords &amp; Topics", "");
 regGS("Info", "");
 regGS("Go to live article", "");
 regGS("Created", "");
-regGS("Attachments", "");
 regGS("Locations", "");
 regGS("Are you sure you want to remove the map from the article?", "");
 regGS("Scheduled action added", "Plánovaná akce přidána");

@@ -8,8 +8,6 @@ regGS("Open in the browser", "Άνοιγμα στο πρόγραμμα πλοή�
 regGS("Media Archive", "Αρχείο Media");
 regGS("Last modified", "Τελευταίως τροποποιημένα");
 regGS("Items deleted.", "Τα στοιχεία διαγράφτηκαν.");
-regGS("Images archive", "Αρχείο εικόνων");
-regGS("Files archive", "Αρχείο");
 regGS("File uploaded.", "Το αρχείο ανέβηκε.");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "Επιθυμείτε αυτό το αρχείο να ανόιξει στον browser του χρήστη, ή να κατέβει αυτόματα;");
 regGS("Delete selected", "Διαγραφή επιλεγμένων");
