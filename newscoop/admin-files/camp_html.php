@@ -512,13 +512,13 @@ function camp_html_display_msgs($p_spacingTop = "1em", $p_spacingBottom = "1em")
 			<tr>
 				<?php if ($message['type'] == 'ok') { ?>
 				<td class="info_message" id="camp_message_<?php p($count); ?>">
+				<?php } elseif ($message['type'] == 'error') { ?>
+				<td class="error_message" id="camp_message_<?php p($count); ?>">
+				<?php } ?>
+					<?php echo $message['msg']; ?>
 					<script>
 					fade('camp_message_<?php p($count); ?>', 50, 8, false, 1100);
 					</script>
-				<?php } elseif ($message['type'] == 'error') { ?>
-				<td class="error_message">
-				<?php } ?>
-					<?php echo $message['msg']; ?>
 				</td>
 			</tr>
 			<?php
