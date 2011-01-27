@@ -36,7 +36,7 @@ $Campsite['site']['help_url'] = 'http://www.sourcefabric.org/en/products/newscoo
 $Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/about/page/';
 $Campsite['site']['email'] = 'newscoop-bug@sourcefabric.org';
 
-$Campsite['campware']['url'] = 'http://www.sourcefabric.org';
+$Campsite['sourcefabric']['url'] = 'http://www.sourcefabric.org';
 
 /** Locale settings **/
 $Campsite['locale']['lang_id'] = 1;

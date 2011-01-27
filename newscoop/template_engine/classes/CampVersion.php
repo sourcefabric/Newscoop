@@ -116,7 +116,9 @@ final class CampVersion
 
     public function getCopyright()
     {
-        return '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;' . $this->m_organization;
+        $c = '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;<a href="' . $this->m_website
+            . '" target="_blank">' . $this->m_organization . '</a>';
+        return $c;
     } // fn getCopyright
 
 
@@ -128,7 +130,7 @@ final class CampVersion
 
     public function getWebURL()
     {
-        return $this->m_webURL;
+        return $this->m_website;
     } // fn getWebURL
 
 
