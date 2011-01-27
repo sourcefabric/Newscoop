@@ -6,20 +6,49 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+/**
+ * Set message
+ * @param string $message
+ * @return void
+ */
+function setMessage($message, $isError = FALSE)
+{
+    if (empty($_REQUEST['archive'])) { // fancybox
+        echo '<script type="text/javascript">';
+        echo 'try {';
+
+        if (!$isError) {
+            echo 'parent.$.fancybox.reload = true;';
+            echo 'parent.$.fancybox.message = "', $message, '";';
+        } else {
+            echo 'parent.$.fancybox.error = "', $message, '";';
+        }
+
+        echo 'parent.$.fancybox.close();';
+        echo '} catch (e) {}';
+        echo '</script>';
+        exit;
+    }
+
+    if ($isError) {
+	    camp_html_display_error($message, null, true);
+        exit;
+    }
+
+    camp_html_add_msg($message);
+}
+
+if (empty($_POST)) {
+    setMessage(getGS('The file exceeds the allowed max file size.'), TRUE);
+}
+
 if (!SecurityToken::isValid()) {
-    camp_html_add_msg(getGS('Invalid security token!'));
-?>
-<script type="text/javascript">
-window.close();
-window.opener.location.reload();
-</script>
-<?php
-	exit;
+    setMessage(SecurityToken::GetToken(), TRUE);
+    setMessage(getGS('Invalid security token!'), TRUE);
 }
 
 if (!$g_user->hasPermission('AddFile')) {
-	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);
-	exit;
+    setMessage(getGS('You do not have the right to add files.'), TRUE);
 }
 
 // We set to unlimit the maximum time to execution whether
@@ -38,8 +67,7 @@ if (!$inArchive) {
 
     $articleObj = new Article($f_language_selected, $f_article_number);
     if (!$articleObj->exists()) {
-	    camp_html_display_error(getGS("Article does not exist."), null, true);
-	    exit;
+        setMessage(getGS("Article does not exist."), TRUE);
     }
 }
 
@@ -53,28 +81,31 @@ if (isset($_FILES["f_file"])) {
 	switch($_FILES["f_file"]['error']) {
 		case 0: // UPLOAD_ERR_OK
 			break;
+
 		case 1: // UPLOAD_ERR_INI_SIZE
 		case 2: // UPLOAD_ERR_FORM_SIZE
-			camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+            setMessage(getGS("The file exceeds the allowed max file size."), TRUE);
 			break;
+
 		case 3: // UPLOAD_ERR_PARTIAL
-			camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
+			setMessage(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), TRUE);
 			break;
+
 		case 4: // UPLOAD_ERR_NO_FILE
-			camp_html_display_error(getGS("You must select a file to upload."), null, true);
+			setMessage(getGS("You must select a file to upload."), TRUE);
 			break;
+
 		case 6: // UPLOAD_ERR_NO_TMP_DIR
 		case 7: // UPLOAD_ERR_CANT_WRITE
-			camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
+			setMessage(getGS("There was a problem uploading the file."), TRUE);
 			break;
-	}
+    }
 } else {
-	camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+	setMessage(getGS("The file exceeds the allowed max file size."), TRUE);
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
-	exit;
+	setMessage(getGS('Invalid input: $1', Input::GetErrorString()), TRUE);
 }
 
 $description = new Translation($f_language_selected);
@@ -98,7 +129,7 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (PEAR::isError($file)) {
-	camp_html_add_msg($file->getMessage());
+    setMessage($file->getMessage());
 	camp_html_goto_page($BackLink);
 }
 
@@ -108,16 +139,9 @@ if (!$inArchive) {
     $logtext = getGS('File #$1 "$2" attached to article',
         $file->getAttachmentId(), $file->getFileName());
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
-?>
-<script type="text/javascript">
-try {
-    parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = '<?php putGS('File attached.'); ?>';
-    parent.$.fancybox.close();
-} catch (e) {}
-</script>
 
-<?php } else { ?>
+    setMessage(getGS('File attached.'));
+} else { ?>
 <script type="text/javascript"><!--
     if (opener && !opener.closed && opener.onUpload) {
         opener.onUpload();

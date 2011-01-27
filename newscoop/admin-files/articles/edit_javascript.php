@@ -215,12 +215,13 @@ $('a.iframe').each(function() {
                     $.cookie('flashMessage', $.fancybox.message);
                 }
                 window.location.reload();
+            } else if ($.fancybox.error) {
+                flashMessage($.fancybox.error, 'error');
             }
         }
     });
 });
 $('#locations_box a.iframe').each(function() {
-    //$(this).data('fancybox').onCleanup = function() {alert('Returning false here does prevent closing the fancybox.'); return false;};
     $(this).data('fancybox').showCloseButton = false;
     $(this).data('fancybox').width = 1100;
     $(this).data('fancybox').height = 660;
