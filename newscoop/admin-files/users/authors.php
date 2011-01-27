@@ -134,7 +134,7 @@ if ($can_save) {
         Log::Message($logtext, $g_user->getUserId(), 173);
     }
     camp_html_add_msg(getGS("Author saved."),"ok");
-} elseif (!$del_id_alias && $id > -1 && !$can_save) {
+} elseif ($del_id_alias < 1 && $id > -1 && !$can_save) {
     camp_html_add_msg(getGS("Please fill at least first name and last name."));
 }
 
@@ -167,6 +167,7 @@ $(document).ready(function(){
     }).next().hide();
 });
 </script>
+<?php camp_html_display_msgs('1em', '0'); ?>
 <div class="wrapper">
   <div class="info-bar"> <span class="info-text"></span> </div>
   <!--left column-->
