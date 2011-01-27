@@ -1,5 +1,10 @@
 <?php 
-regGS("File attached.", "");
+regGS("Files attached.", "Dateien angehängt");
+regGS("File '$1' unattached.", "Datei \"$1\" ist nicht angehängt.");
+regGS("Attach new file", "Neue Datei anhängen");
+regGS("Attach existing file", "Existierende Datei anhängen");
+regGS("$1 file/s attached to article", "$1 Datei/en an Artikel angehängt.");
+regGS("File attached.", "Datei angehängt.");
 regGS("The maximum file upload size was not configured in Newscoop.", "Die maximale Dateigröße zum Hochladen wurde nicht in Newscoop konfiguriert.");
 regGS("File #$1 \"$2\" unattached", "Datei #$1 \"$2\" nicht angehängt.");
 regGS("File #$1 \"$2\" attached to article", "Datei #$1 \"$2\" an den Artikel angehängt.");

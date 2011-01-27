@@ -1,4 +1,9 @@
 <?php 
+regGS("Files attached.", "Files attached.");
+regGS("File '$1' unattached.", "File '$1' unattached.");
+regGS("Attach new file", "Attach new file");
+regGS("Attach existing file", "Attach existing file");
+regGS("$1 file/s attached to article", "$1 file/s attached to article");
 regGS("File attached.", "File attached.");
 regGS("The maximum file upload size was not configured in Newscoop.", "The maximum file upload size was not configured in Newscoop.");
 regGS("File #$1 \"$2\" unattached", "File #$1 \"$2\" unattached");

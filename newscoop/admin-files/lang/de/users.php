@@ -1,6 +1,6 @@
 <?php 
-regGS("Filters", "");
-regGS("Add new Author", "");
+regGS("Filters", "Filter");
+regGS("Add new Author", "Neue(n) Autor/in hinzufügen");
 regGS("You do not have the right to sync Newscoop and Phorum users.", "Keine Berechtigung Newscoop und Forum User zu synchronisieren.");
 regGS("User may synchronize Newscoop and Phorum users", "User darf Newscoop und Forum User synchronisieren.");
 regGS("Unsubscribe email notifications", "E-Mail Benachrichtigungen abmelden");

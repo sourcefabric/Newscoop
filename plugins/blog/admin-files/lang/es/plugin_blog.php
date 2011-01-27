@@ -1,4 +1,5 @@
 <?php 
+regGS("List comments", "");
 regGS("User may moderate Blogs", "El usuario puede moderar blogs");
 regGS("User may manage Blogs", "El usuario puede administrar blogs");
 regGS("read only", "solo lectura");

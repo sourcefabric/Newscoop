@@ -1,4 +1,5 @@
 <?php 
+regGS("Files", "");
 regGS("You can't delete used files.", "Вы не можете удалить используемые файлы.");
 regGS("Do you wan't to delete unused only?", "Вы хотите удалить только неиспользуемые файлы?");
 regGS("View attachment", "Показать прикрепленный файл");

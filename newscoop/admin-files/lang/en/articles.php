@@ -1,4 +1,5 @@
 <?php 
+regGS("Files", "Files");
 regGS("Select section:", "Select section:");
 regGS("Add another author", "Add another author");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "The article has been locked by $1 ($2) $3 minute(s) ago.");
