@@ -1,0 +1,172 @@
+div.teaserframe {
+  clear: both;
+  margin-bottom: 1.5em;
+}
+
+body#index div.teaserframe,
+body#system div.teaserframe {
+  border: 1px solid #ccc;
+  padding-bottom: 1em;
+}
+body#index div.teaserframe .teaserhead,
+body#system div.teaserframe .teaserhead {
+  color: #fff;
+}
+body#section div.teaserframe .teaserhead,
+body#article div.teaserframe .teaserhead,
+body#search div.teaserframe .teaserhead,
+body#topics div.teaserframe .teaserhead,
+div.articlecontent div.date {
+  text-align: right;
+  border-bottom: 1px solid #ccc;
+  color: #aaa;
+}
+/* display of section link in block */
+div.teaserheadsection {
+  display: inline;
+}
+/* hide section link on article and section page */
+body#section div.teaserheadsection,
+body#article div.teaserheadsection {
+  display: none;
+}
+body#section div.teaserframe,
+body#article div.teaserframe {
+  margin-bottom: 1.5em;
+}
+body#index div.teaserframe .teaserheadinner,
+body#system div.teaserframe .teaserheadinner {
+  padding: 1px;
+  padding-left: 5px;
+  font-size: .8em;
+  font-weight: bold;
+}
+body#index div.teaserframe .teaserheadinner a,
+body#system div.teaserframe .teaserheadinner a
+{
+  color: #fff;
+  text-decoration: none;
+}
+body#index div.teaserframe .teaserheadinner a:hover,
+body#system div.teaserframe .teaserheadinner a:hover {
+  text-decoration: underline;
+}
+div.searchframe {
+  border: 1px solid #ccc;
+  border-bottom: 0px;
+  margin-bottom: 1.5em;
+}
+div.searchframe .teaserheadinner {
+  padding: 1px;
+  padding-left: 5px;
+  font-size: .8em;
+  font-weight: bold;
+  color: #fff;
+}
+/* TEXT */
+body#index div.teaserframe .teasercontent,
+body#system div.teaserframe .teasercontent {
+  padding-left: 10px;
+  padding-right: 3px;
+}
+div.teaserframe .teasercontent p.text {
+  margin:0;
+  padding: 0;
+  margin-bottom: 0.5em;
+}
+/* IMAGES */
+div.col1 div.teaserimg_big img {
+  width: 569px;
+  border: 0px;
+}
+div.col1 div.teaserimg_med img {
+  width: 188px;
+  margin-right: 1em;
+  margin-bottom: .5em;
+  border: 0px;
+  float: left;
+}
+div.col2 div.teaserimg_big img {
+  width: 350px;
+  border: 0px;
+}
+div.col2 div.teaserimg_med img {
+  width: 115px;
+  margin-right: 1em;
+  margin-bottom: .5em;
+  border: 0px;
+  float: left;
+}
+/* HEADLINES  */
+div.teaserframe .teasercontent h2 {
+  font-weight: normal;
+  font-size: 1.6em;
+  line-height: 1em;
+}
+div.teaserframe .teasercontent h2 a {
+  text-decoration: none;
+}
+div.teaserframe .teasercontent h2 a:hover {
+  text-decoration: underline;
+}
+body#index div.col1 div.teaserframe .teasercontent h2 {
+  font-size: 2.3em;
+}
+body#section div.teaserframe .teasercontent h2,
+body#article div.teaserframe .teasercontent h2 {
+  margin-top: 5px;
+}
+/* LINKS */
+div.teaserframe ul.links {
+  display:inline;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+div.teaserframe ul.links li {
+  display:inline;
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+div.teaserframe ul.links li a {
+  margin:0px;
+  padding-right: 1.5em;
+  font-family: sans-serif, sans;
+  text-decoration:underline;
+}
+/* links beneath not next to each other */
+body#section div.teaserframe ul.links li a,
+div.col2 ul.links li a {
+  display:block;
+}
+
+/* blog box */
+body#index div.col2 div.teaserframe-blog {
+  border: 1px solid #5479ef;
+  background: url(bg-stripes-bright.png);
+}
+body#index div.col2 div.teaserframe-blog a {
+  color: #5479ef;
+}
+body#index div.blogtitle {
+  padding: 10px;
+  padding-bottom: 0px;
+}
+body#index div.blogtitleinner {
+  padding: 2px;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+body#index div.blogtitleinner a {
+  color: #5479ef;
+  text-decoration: none;
+}
+body#index div.blogteaserimg {
+  float: left;
+  margin-right: 5px;
+}
+/* blog teaserframes in blog section left col */
+body#blog div.col1 a { 
+  color: #5479ef;
+}

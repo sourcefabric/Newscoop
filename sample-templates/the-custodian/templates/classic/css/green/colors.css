@@ -1,0 +1,155 @@
+/* this overwrites the color information already set with custom colors according to section numbers */
+
+/* colors and sections 
+
+Logo:
+green       | Hex: #649C13
+
+Sections:
+10 News      green       | Hex: #649C13
+20 Business  dodger blue | Hex: #004C80
+30 Sports    red         | Hex: #D1162B
+40 Lifestyle apricot     | Hex: #F7C081
+50 Cars      orange      | Hex: #F28800
+60 Homes     teal blue   | Hex: #0073B2
+*/
+
+/* underlined navigation header */
+a#navlinksection-home {
+	border-bottom: 4px solid #ddd;
+}
+a#navlinksection-10 {
+	border-bottom: 4px solid #649C13;
+}
+a#navlinksection-20 {
+	border-bottom: 4px solid #004C80;
+}
+a#navlinksection-30 {
+	border-bottom: 4px solid #D1162B;
+}
+a#navlinksection-40 {
+	border-bottom: 4px solid #F7C081;
+}
+a#navlinksection-50 {
+	border-bottom: 4px solid #9f6568;
+}
+a#navlinksection-60 {
+	border-bottom: 4px solid #0073B2;
+}
+
+/* login frame right column */
+div.searchframe .teaserheadinner {
+ 	background: #999;
+}
+
+/* SECTION NUMBER 10 #649C13 */
+body#index div.teaserframe-10 .teaserhead,
+body#system div.teaserframe-10 .teaserhead,
+div.block-mostpopular-section-10 {
+ 	background: #649C13;
+}
+div.teaserframe-10 .teasercontent h2 a,
+body.section-10 div.articlecontent h1,
+div.teaserframe-10 ul.links li a,
+div.sectionheader-10,
+div.block-mostpopular-section-10,
+body#archive a.linksection-10 {
+ 	color: #649C13; 
+}
+div.sectionheader-10 {
+	border-bottom: 1px solid #649C13;
+}
+/* *************************************** */
+/* SECTION NUMBER 20 #004C80 */
+body#index div.teaserframe-20 .teaserhead,
+body#system div.teaserframe-20 .teaserhead,
+div.block-mostpopular-section-20 {
+ 	background: #004C80;
+}
+div.teaserframe-20 .teasercontent h2 a,
+body.section-20 div.articlecontent h1,
+div.teaserframe-20 ul.links li a,
+div.sectionheader-20,
+body#archive a.linksection-20 {
+ 	color: #004C80; 
+}
+div.sectionheader-20 {
+	border-bottom: 1px solid #004C80;
+}
+/* *************************************** */
+
+/* *************************************** */
+/* SECTION NUMBER 30 #D1162B */
+body#index div.teaserframe-30 .teaserhead,
+body#system div.teaserframe-30 .teaserhead,
+div.block-mostpopular-section-30 {
+ 	background: #D1162B;
+}
+div.teaserframe-30 .teasercontent h2 a,
+body.section-30 div.articlecontent h1,
+div.teaserframe-30 ul.links li a,
+div.sectionheader-30,
+body#archive a.linksection-30 {
+ 	color: #D1162B; 
+}
+div.sectionheader-30 {
+	border-bottom: 1px solid #D1162B;
+}
+/* *************************************** */
+
+/* *************************************** */
+/* SECTION NUMBER 40 #F7C081 */
+body#index div.teaserframe-40 .teaserhead,
+body#system div.teaserframe-40 .teaserhead,
+div.block-mostpopular-section-40 {
+ 	background: #F7C081;
+}
+div.teaserframe-40 .teasercontent h2 a,
+body.section-40 div.articlecontent h1,
+div.teaserframe-40 ul.links li a,
+div.sectionheader-40,
+body#archive a.linksection-40 {
+ 	color: #F7C081; 
+}
+div.sectionheader-40 {
+	border-bottom: 1px solid #F7C081;
+}
+/* *************************************** */
+
+/* *************************************** */
+/* SECTION NUMBER 50 #F28800 */
+body#index div.teaserframe-50 .teaserhead,
+body#system div.teaserframe-50 .teaserhead,
+div.block-mostpopular-section-50 {
+ 	background: #F28800;
+}
+div.teaserframe-50 .teasercontent h2 a,
+body.section-50 div.articlecontent h1,
+div.teaserframe-50 ul.links li a,
+div.sectionheader-50,
+body#archive a.linksection-50 {
+ 	color: #F28800; 
+}
+div.sectionheader-50 {
+	border-bottom: 1px solid #F28800;
+}
+/* *************************************** */
+
+/* *************************************** */
+/* SECTION NUMBER 60 #0073B2 */
+body#index div.teaserframe-60 .teaserhead,
+body#system div.teaserframe-60 .teaserhead,
+div.block-mostpopular-section-60 {
+ 	background: #0073B2;
+}
+div.teaserframe-60 .teasercontent h2 a,
+body.section-60 div.articlecontent h1,
+div.teaserframe-60 ul.links li a,
+div.sectionheader-60,
+body#archive a.linksection-60 {
+ 	color: #0073B2; 
+}
+div.sectionheader-60 {
+	border-bottom: 1px solid #0073B2;
+}
+/* *************************************** */
