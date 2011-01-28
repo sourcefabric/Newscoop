@@ -2,7 +2,7 @@
    Plupload
 ------------------------------------------------------------------- */
 .plupload {
-	border:1px solid #5d99b1;
+	border:1px solid #9d9d9d;
 }
 .plupload_button {
 	display: -moz-inline-box; /* FF < 3*/
@@ -45,9 +45,9 @@
 }
 
 .plupload_container {
-	padding: 8px;
-	background: url('../img/transp50.png');
-	/*-moz-border-radius: 5px;*/
+	padding: 20px 30px 0 30px;
+	/*background: url('../img/transp50.png');
+	-moz-border-radius: 5px;*/
 }
 
 .plupload_container input {
@@ -79,25 +79,25 @@
 
 .plupload_scroll .plupload_filelist {
 	height: 185px;
-	background: #f8fcfe;
+	background: #fff;
 	overflow-y: scroll;
-	border-bottom:1px solid #d2e4eb;
+	border-bottom:1px solid #c4c4c4;
 }
 
 .plupload_filelist li {
 	padding: 10px 8px;
-	background: #e4f1f9 url('../img/backgrounds.gif') repeat-x 0 -156px;
-	border-bottom: 1px solid #d2e4eb;
+	background: #f5f5f5 url('../img/backgrounds.gif') repeat-x 0 -156px;
+	border-bottom: 1px solid #ebebeb;
 }
 
 .plupload_filelist_header, .plupload_filelist_footer {
-	background: #edf7fc;
+	background: #f0f0f0;
 	padding: 8px 8px;
 	color: #42454A;
 }
 .plupload_filelist_header {	
 	border-top: 1px solid #fff;
-	border-bottom: 1px solid #b5d5e2;
+	border-bottom: 1px solid #c4c4c4;
 }
 
 .plupload_filelist_footer {border-top: 1px solid #FFF; height: 22px; line-height: 20px; vertical-align: middle;}
@@ -178,3 +178,4 @@ li.plupload_droptext {
 	border: 0;
 	line-height: 165px;
 }
+
