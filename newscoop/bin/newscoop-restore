@@ -546,7 +546,7 @@ if ($convertToUTF) {
 
 // upgrade plugins
 echo " * Updating plugins (if necessary)...";
-CampPlugin::OnUpgrade();
+@CampPlugin::OnUpgrade();
 echo "   done.\n";
 
 //
