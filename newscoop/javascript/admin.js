@@ -175,7 +175,7 @@ function callServer(p_callback, p_args, p_handle)
         p_args = [];
     }
 
-    var flash = flashMessage('Processing...', null, true);
+    var flash = flashMessage(localizer.processing, null, true);
     $.ajax({
         'url': g_admin_url + '/json.php',
         'type': 'POST',
@@ -201,7 +201,7 @@ function callServer(p_callback, p_args, p_handle)
             flash.hide();
             var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
             login.focus();
-            popupFlash = flashMessage('Session expired. Please <a href="'+g_admin_url + '/login.php" target="_blank">re-login</a>.', 'error', true);
+            popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
 
             // store request
             queue.push({
