@@ -1399,3 +1399,6 @@ fieldset.filters a.reset {
     font-size: 0.9em;
 }
 
+#mc_embed_signup {
+    background: transparent url('images/bg-product-nav-swarm.png') no-repeat 90% 90%;
+}

@@ -1919,7 +1919,7 @@ CREATE TABLE `WidgetContext_Widget` (
   `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
   `fk_widget_id` mediumint(8) unsigned NOT NULL,
   `fk_user_id` int(10) unsigned NOT NULL,
-  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `order` tinyint(2) NOT NULL DEFAULT '0',
   `settings` text NOT NULL,
   PRIMARY KEY (`id`,`fk_user_id`),
   KEY `fk_user_id` (`fk_user_id`,`fk_widgetcontext_id`,`order`)

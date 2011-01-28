@@ -25,12 +25,17 @@ class WidgetManager
 
     /** @var array */
     private static $defaults = array(
-        'MostPopularArticlesWidget',
-        'PendingArticlesWidget',
-        'RecentlyModifiedArticlesWidget',
-        'RecentlyPublishedArticlesWidget',
-        'SubmittedArticlesWidget',
+        'SourcefabricNewsletter',
+        'SourcefabricFeed',
+        'WikipediaGoogleGadget',
+        'SourcefabricDevFeed',
         'YourArticlesWidget',
+        'MapsGoogleGadget',
+        'PendingArticlesWidget',
+        'SubmittedArticlesWidget',
+        'RecentlyPublishedArticlesWidget',
+        'RecentlyModifiedArticlesWidget',
+        'MostPopularArticlesWidget',
     );
 
     /**
@@ -93,29 +98,44 @@ class WidgetManager
     /**
      * Add widget to user dashboard
      * @param int $widgetId
-     * @param string $contextName
+     * @param string|IWidgetContext $contextName
      * @param int $uid
+     * @param int $order
      * @return bool
      */
-    public static function AddWidget($widgetId, $contextName, $uid = NULL)
+    public static function AddWidget($widgetId, $context, $uid = NULL, $order = NULL)
     {
         global $g_ado_db, $g_user;
 
         // get context object
-        $context = new WidgetContext($contextName);
+        if (is_string($context)) {
+            $context = new WidgetContext($context);
+        }
 
         // set uid
         if (empty($uid)) {
             $uid = $g_user->getUserId();
         }
 
+        if ($order === NULL) {
+            // set order to be on top
+            $sql = 'SELECT MIN(`order`)
+                FROM ' . WidgetManagerDecorator::TABLE . '
+                WHERE fk_user_id = ' . (int) $uid . '
+                    AND fk_widgetcontext_id = ' . $context->getId();
+            $order = $g_ado_db->getOne($sql) - 1;
+        }
+
+        // generate uniq id
         $id = 'w' . substr(sha1(uniqid() . $g_user->getUserId()), -12);
+
+        // add widget
         $widget = new WidgetManagerDecorator(array(
             'id' => $id,
             'fk_widget_id' => (int) $widgetId,
             'fk_widgetcontext_id' => $context->getId(),
             'fk_user_id' => (int) $uid,
-            'order' => 'MIN(`order`) - 1',
+            'order' => (int) $order,
         ));
         $widget->create();
         return $id;
@@ -128,16 +148,18 @@ class WidgetManager
      */
     public static function SetDefaultWidgets($p_uid)
     {
+        // contexts used on homepage
         $contexts = array(
             new WidgetContext('dashboard1'),
             new WidgetContext('dashboard2'),
         );
-        $context = 0;
+
         foreach (WidgetManager::GetAvailable($p_uid) as $widget) {
             $extension = $widget->getExtension();
             if (in_array($extension->getClass(), self::$defaults)) {
-                self::AddWidget($extension->getId(), $contexts[$context]->getName(), (int) $p_uid);
-                $context = ($context + 1) % 2;
+                $order = (int) array_search($extension->getClass(), self::$defaults); // get order
+                $context = $contexts[$order % sizeof($contexts)]; // pick context
+                self::AddWidget($extension->getId(), $context, (int) $p_uid, $order);
             }
         }
     }
