@@ -21,7 +21,7 @@
 
 LOCK TABLES `Aliases` WRITE;
 /*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
-INSERT  IGNORE INTO `Aliases` VALUES (2,'yoursubdomain.yourdomain.com',2);
+INSERT  IGNORE INTO `Aliases` VALUES (2,'localhost',2);
 /*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
 UNLOCK TABLES;
 
