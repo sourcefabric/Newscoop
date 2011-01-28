@@ -3,7 +3,7 @@ regGS("Download file", "Κατέβασμα αρχείου");
 regGS("You do not have the right to delete articles.", "Δεν έχετε το δικαίωμα να διαγράψετε άρθρα.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Από την στιγμή υποβολλής ενός άρθρου, μόνο εξουσιοδοτημένοι χρήστες μπορούν να πραγματοποιήσουν αλλαγές.");
 regGS("Use Map", "Χρήση Χάρτη");
-regGS("Toggle: 'On Section Page'", "Εναλλαγή: 'Στην Σελίδα Ενότητας");
+regGS("Toggle: 'On Section Page'", "Εναλλαγή: 'Στην Σελίδα Ενότητας'");
 regGS("Toggle: 'On Front Page'", "Εναλλαγή: 'Στην Πρώτη Σελίδα'");
 regGS("Toggle: 'Comments'", "Εναλλαγή: 'Σχόλια'");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 λεπτό/ά.");
