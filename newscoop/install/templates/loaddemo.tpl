@@ -48,23 +48,19 @@
         <tr>
           <td width="35%" valign="top">
             <div class="help">
-              <p>Is this the first time you install <em>Newscoop</em>?
-              Are not you familiar with the template engine system?
-              Do you want to see <em>Newscoop</em> in action before start
-              writing template files for your own Web site? Then, choose
-              "Yes" to install the sample site and you will can see a
-              simple and functional Web site to get familiar with the
-              system.</p>
-
-              <p>Otherwise, simply check "No" and click on "Next" button to
-              finish the installation.</p>
+              <p>Is this the first time you install <em>Newscoop</em>
+              and you have no idea what the powerful <em>$gimme</em> is?
+              
+              Here you have the option to install a sample site and see
+              <em>Newscoop</em> in action before start writing template
+              files for your own Web site.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
           <td valign="top" width="60%" class="template-container">
             <div class="message">{{ $message }}</div>
             <div class="form_field">
-              <label for="install_demo">Please choose a demo template:</label> &nbsp;
+              <label for="install_demo">Please choose a sample site:</label> &nbsp;
               <br /><input id="install_demo_no" name="install_demo" value="0" type="radio" style="margin: 0 5px 0 13px" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
               {{ foreach from=$sample_templates key="step" item="t" }}
               <br /><input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
