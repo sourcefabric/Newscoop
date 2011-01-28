@@ -1,5 +1,5 @@
 <?php 
-regGS("Are you sure you want to quit without saving your changes?", "");
+regGS("Are you sure you want to quit without saving your changes?", "Вы увурены что желаете закрыть без сохранения изменений?");
 regGS("center city", "центр города");
 regGS("Map preview", "Предварительный просмотр карты");
 regGS("Locations updated.", "Места событий обновлены");

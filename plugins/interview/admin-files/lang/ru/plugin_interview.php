@@ -1,5 +1,4 @@
 <?php 
-regGS("en", "");
 regGS("User recives notification about new interviews", "Пользователь получает уведомления о новых интервью");
 regGS("User is interview moderator", "Пользователь является модератором интервью");
 regGS("User is interview guest", "Пользователь является гостем интервью");

@@ -1,4 +1,8 @@
 <?php 
+regGS("Wikipedia search", "");
+regGS("Sourcefabric.org newsletter subscription", "");
+regGS("Maps search", "");
+regGS("Default location", "");
 regGS("Title", "Titel");
 regGS("Sourcefabric.org feed reader", "Sourcefabric.org Feeds");
 regGS("Sourcefabric.org dev feed reader", "Sourcefabric.org dev Feeds");

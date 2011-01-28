@@ -1,4 +1,8 @@
 <?php 
+regGS("Wikipedia search", "Поиск в Википедии");
+regGS("Sourcefabric.org newsletter subscription", "Подписка на новости из Sourcfabric");
+regGS("Maps search", "Поиск по карте");
+regGS("Default location", "Позиция по умолчанию");
 regGS("Title", "Заголовок");
 regGS("Sourcefabric.org feed reader", "Считыватель каналов Sourcefabric.org");
 regGS("Sourcefabric.org dev feed reader", "Считыватель dev каналов Sourcefabric.org");
