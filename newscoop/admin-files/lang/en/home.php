@@ -1,4 +1,7 @@
 <?php 
+regGS("Session expired.", "Session expired.");
+regGS("Processing...", "Processing...");
+regGS("Please", "Please");
 regGS("Go to dashboard", "Go to dashboard");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.");
 regGS("Synchronize Newscoop and Phorum users", "Synchronize Newscoop and Phorum users");
@@ -11,7 +14,6 @@ regGS("You have tried to upload wrong backup file.", "You have tried to upload w
 regGS("Upload backup file", "Upload backup file");
 regGS("The file $1 has been uploaded successfully.", "The file $1 has been uploaded successfully.");
 regGS("Media Archive", "Media Archive");
-regGS("en", "en");
 regGS("Widgets", "Widgets");
 regGS("Widget info", "Widget info");
 regGS("Widget added to dashboard.", "Widget added to dashboard.");

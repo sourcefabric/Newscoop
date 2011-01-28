@@ -1,4 +1,7 @@
 <?php 
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
 regGS("Go to dashboard", "");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
 regGS("Synchronize Newscoop and Phorum users", "");
@@ -11,7 +14,6 @@ regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
 regGS("The file $1 has been uploaded successfully.", "");
 regGS("Media Archive", "");
-regGS("en", "");
 regGS("Widgets", "");
 regGS("Widget info", "");
 regGS("Widget added to dashboard.", "");

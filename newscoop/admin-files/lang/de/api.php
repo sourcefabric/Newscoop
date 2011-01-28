@@ -1,9 +1,6 @@
 <?php 
 regGS("Show original map", "Ursprüngliche Karte anzeigen");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Das hochgeladene Archiv enthält kein gültiges Newscoop Plugin.");
-regGS("Version", "Version");
-regGS("License", "Lizenz");
-regGS("Homepage", "Dashboard");
 regGS("Map", "Karte");
 regGS("Center", "Zentrieren");
 regGS("Title", "Titel");
