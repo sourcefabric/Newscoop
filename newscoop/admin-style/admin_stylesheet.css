@@ -1399,3 +1399,15 @@ fieldset.filters a.reset {
     font-size: 0.9em;
 }
 
+/*---  Comments tabs ---*/
+.tab_active {
+    border-left: 1px solid #777;
+    border-top: 1px solid #777;
+    border-right: 1px solid #777;
+    -moz-border-radius: 2px 2px 0 0;
+}
+.tab_inactive {
+    border: 1px solid #777;
+    background-color: #CFCFCF;
+    -moz-border-radius: 2px 2px 0 0;
+}
