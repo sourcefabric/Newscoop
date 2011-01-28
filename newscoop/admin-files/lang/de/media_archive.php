@@ -1,5 +1,5 @@
 <?php 
-regGS("Save All", "");
+regGS("Save All", "Alles speichern");
 regGS("Files", "Dateien");
 regGS("You can't delete used files.", "Dateien in Gebrauch können nicht gelöscht werden.");
 regGS("Do you wan't to delete unused only?", "Nur ungenutzte löschen?");
