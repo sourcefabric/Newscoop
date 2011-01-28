@@ -18,7 +18,7 @@ regGS("Change subscription", "Αλλαγή συνδρομής");
 regGS("You do not have the right to change subscriptions.", "Δεν έχετε το δικαίωμα να πραγματοποιήσετε αλλαγές στις συνδρομές.");
 regGS("Paid Days", "Πληρωμένες Ημέρες");
 regGS("-- ALL SECTIONS --", "--ΌΛΕΣ ΟΙ ΕΝΟΤΗΤΕΣ--");
-regGS("Updating subscription", "Ανανέωση συνδρομής");
-regGS("The subscription could not be updated.", "Η συνδρομή δεν μπόρεσε να ανανεωθεί.");
+regGS("Updating subscription", "Ενημέρωση συνδρομής");
+regGS("The subscription could not be updated.", "Η συνδρομή δεν μπόρεσε να ενημερωθεί.");
 regGS("Changing subscription", "Αλλαγή συνδρομής");
 ?>

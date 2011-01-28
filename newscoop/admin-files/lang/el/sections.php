@@ -8,7 +8,7 @@ regGS("Delete only this section ($1)", "Διαγραφή μόνο αυτής τ�
 regGS("Delete all translations of this section", "Διαγραφή όλων των μεταφράσεων αυτής της ενότητας");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Αρ. Άρθρων<BR><SMALL>(Δημοσιεύτηκαν/Συνολικά)</SMALL>");
 regGS("The URL name must be unique for all sections in this issue.<br>The URL name you specified (\"$1\") conflicts with section \"$2$3. $4$5\"", "Το όνομα URL πρέπει να είναι μοναδικό για όλες τις ενότητες αυτού του τέυχους.<br>Το όνομα  URL που ορίσατε (\"$1\") έρχεται σε σύγκρουση με την ενότητα \"$2$3. $4$5\" ");
-regGS("Section updated", "Η ενότητα ανανεώθηκε");
+regGS("Section updated", "Η ενότητα ενημερώθηκε");
 regGS("There are $1 subscriptions which will be affected.", "Υπάρχουν $1 συνδρομές, που θα επηρρεαστούν.");
 regGS("There are $1 articles in this section.", "Υπάρχουν $1 άρθρα σε αυτή την ενότητα. ");
 regGS("Go To Articles", "Πήγαινε Στα Άρθρα");

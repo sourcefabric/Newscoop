@@ -1,20 +1,20 @@
 <?php 
-regGS("Translate from", "");
-regGS("Total articles", "");
-regGS("Skype", "");
-regGS("Save All", "");
-regGS("Reset", "");
-regGS("Please enter the last name", "");
-regGS("Please enter the first name", "");
-regGS("No records found", "");
-regGS("Last name", "");
-regGS("Jabber", "");
-regGS("General", "");
-regGS("First name", "");
-regGS("Email", "");
-regGS("Delete author", "");
-regGS("Contacts", "");
-regGS("Biography", "");
-regGS("Aliases", "");
-regGS("AIM", "");
+regGS("Translate from", "Μετάφραση από");
+regGS("Total articles", "Συνολικά άρθρα");
+regGS("Skype", "Skype");
+regGS("Save All", "Αποθήκευση Όλων");
+regGS("Reset", "Επαναφορά");
+regGS("Please enter the last name", "Παρακαλούμε εισάγετε το επώνυμο");
+regGS("Please enter the first name", "Παρακαλούμε εισάγετε το μικρό όνομα");
+regGS("No records found", "Δεν βρέθηκαν δεδομένα");
+regGS("Last name", "Επώνυμο");
+regGS("Jabber", "Jabber");
+regGS("General", "Γενικά");
+regGS("First name", "Όνομα");
+regGS("Email", "Email");
+regGS("Delete author", "Διαγραφή συγγραφέα");
+regGS("Contacts", "Επαφές");
+regGS("Biography", "Βιογραφία");
+regGS("Aliases", "Ψευδώνυμα");
+regGS("AIM", "AIM");
 ?>

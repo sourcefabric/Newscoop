@@ -1,5 +1,5 @@
 <?php 
-regGS("Show original map", "");
+regGS("Show original map", "Εμφάνιση αρχικού χάρτη");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Το ανεβασμένο αρχείο δεν περιέχει έγκυρο πρόσθετο του newscoop.");
 regGS("Version", "Εκδοχή");
 regGS("License", "Άδεια");

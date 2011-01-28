@@ -38,8 +38,8 @@ class MetaActionSearch_Articles extends MetaAction
             ACTION_SEARCH_ARTICLES_ERR_NO_KEYWORD);
             return;
         }
-        $this->m_properties['search_phrase'] = $p_input['f_search_keywords'];
-        $this->m_properties['search_keywords'] = preg_split('/[\s,.-]/', $p_input['f_search_keywords']);
+        $this->m_properties['search_phrase'] = htmlspecialchars($p_input['f_search_keywords']);
+        $this->m_properties['search_keywords'] = preg_split('/[\s,.-]/', htmlspecialchars($p_input['f_search_keywords']));
         $this->m_properties['search_results'] = 'getSearchResults';
 
         $this->m_properties['match_all'] = isset($p_input['f_match_all'])

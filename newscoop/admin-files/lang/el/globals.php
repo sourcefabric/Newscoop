@@ -178,7 +178,7 @@ regGS("Yes", "Ναι");
 regGS("No", "Όχι");
 regGS("Close", "Κλείσιμο");
 regGS("No issues.", "Κανένα τεύχος.");
-regGS("Back to Edit Article", "Πίσω στην επεξεργασία κειμένου");
+regGS("Back to Edit Article", "Πίσω στην Επεξεργασία Κειμένου");
 regGS("No topics", "Κανένα θέμα");
 regGS("You do not have the right to add articles.", "Δεν έχετε το δικαίωμα προσθήκης άρθρων.");
 regGS("Start", "Έναρξη");

@@ -1,5 +1,5 @@
 <?php 
-regGS("Make sure to enter the \"Moderator Address\" below", "");
+regGS("Make sure to enter the \"Moderator Address\" below", "Φροντίστε να εισάγετε παρακάτω την \"Διεύθυνση Συντονιστή\" ");
 regGS("click to see issues", "Κάντε κλίκ για να δείτε να τεύχη");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Το ψευδώνυμο ιστότοπου για τη δημοσίευση \"$1\" έχει τροποποιηθεί σε \"$2\". ");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "Το ψευδώνυμο ιστότοπου \"$1\" έχει προστεθεί στη δημοσίευση \"$2\".");
@@ -19,11 +19,11 @@ regGS("Subscription Settings by Country", "Ρυθμίσεις Συνδρομής
 regGS("Set subscription settings for a country", "Ορισμός ρυθμίσεων συνδρομών για μια χώρα");
 regGS("Set subscription settings by country", "Ορισμός ρυθμίσεων συνδρομών ανά χώρα");
 regGS("Default time periods:", "Περίοδοι προεπιλεγμένου χρόνου:");
-regGS("Country subscription settings updated.", "Οι ρυθμίσεις συνδρομής  χώρας ανανεώθηκαν.");
+regGS("Country subscription settings updated.", "Οι ρυθμίσεις συνδρομής  χώρας ενημερώθηκαν.");
 regGS("Country subscription settings deleted.", "Οι ρυθμίσεις συνδρομής χώρας διαγράφτηκαν.");
 regGS("Change country subscription settings", "Αλλαγή ρυθμίσεων συνδρομής χώρας ");
 regGS("Are you sure you want to delete the subscription settings for $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε τις ρυθμίσεις συνδρομής για $1;");
-regGS("Publication updated", "Η δημοσίευση ανανεώθηκε");
+regGS("Publication updated", "Η δημοσίευση ενημερώθηκε");
 regGS("Subscriber comments moderated?", "Ρυθμίστηκαν τα σχόλια του συνδρομητή;");
 regGS("Public comments moderated?", "Ρυθμίστηκαν τα σχόλια του κοινού;");
 regGS("Comments enabled?", "Ενεργοποιήθηκαν τα σχόλια;");
@@ -49,7 +49,7 @@ regGS("Configure publication", "Διαμόρφωση δημοσίευσης");
 regGS("You do not have the right to edit publication information.", "Δεν έχετε το δικαίωμα να επεξεργαστείτε τις πληροφορίες δημοσίευσης.");
 regGS("General attributes", "Γενικά χαρακτηριστικά");
 regGS("You do not have the right to change publication information.", "Δεν έχετε το δικαίωμα να αλλάξετε τις πληροφορίες δημοσίευσης.");
-regGS("The publication information could not be updated.", "Η πληροφορία δημοσίευσης δεν μπόρεσε να ανανεωθεί.");
+regGS("The publication information could not be updated.", "Η πληροφορία δημοσίευσης δεν μπόρεσε να ενημερωθεί.");
 regGS("You do not have the right to delete publications.", "Δεν έχετε το δικαίωμα να διαγράψετε δημοσιεύσεις.");
 regGS("Are you sure you want to delete the publication $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε τη δημοσίευση $1;");
 regGS("Deleting publication", "Διαγραφή δημοσίευσης");

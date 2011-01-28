@@ -1,5 +1,5 @@
 <?php 
-regGS("Files", "");
+regGS("Files", "Αρχεία");
 regGS("You can't delete used files.", "Δεν μπορείτε να διαγράψετε χρησιμοποιημένα αρχεία.");
 regGS("Do you wan't to delete unused only?", "Επιθυμείτε να διαγράψετε μόνο όσα δεν χρησιμοποιούνται;");
 regGS("View attachment", "Προβολή συννημένου");

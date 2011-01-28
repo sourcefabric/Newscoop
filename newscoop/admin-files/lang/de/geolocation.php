@@ -1,4 +1,5 @@
 <?php 
+regGS("Are you sure you want to quit without saving your changes?", "");
 regGS("center city", "Stadtmitte");
 regGS("Map preview", "Vorschau Karte");
 regGS("Locations updated.", "Standorte aktualisiert.");
@@ -10,7 +11,6 @@ regGS("Disable", "Deaktivieren");
 regGS("Center", "Zentrum");
 regGS("Last Saved Map View", "Zuletzt gespeicherte Kartenansicht");
 regGS("List of locations updated", "Liste der Standorte aktualisiert");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "Um aktuelle Änderungen zu speichern, zuerst das Hochladen abbrechen. Sonst verlieren Sie ungespeicherte Änderungen.");
 regGS("width", "Breite");
 regGS("source", "Quelle");
 regGS("sorry, no city was found", "Entschuldigung, keine Stadt gefunden");

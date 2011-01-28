@@ -19,6 +19,6 @@ regGS("Please check if there isn't another subscription to the same publication.
 regGS("Change subscription status", "Αλλαγή κατάστασης συνδρομής");
 regGS("You do not have the right to change subscriptions status.", "Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση συνδρομής.");
 regGS("Subscription status could not be changed.", "Η κατάσταση συνδρομής δεν μπόρεσε να αλλάξει.");
-regGS("Update payment", "Ανανέωση πληρωμής");
+regGS("Update payment", "Ενημέρωση πληρωμής");
 regGS("Subscription payment could not be changed.", "Η πληρωμή συνδρομής δεν μπόρεσε να αλλάξει.");
 ?>
