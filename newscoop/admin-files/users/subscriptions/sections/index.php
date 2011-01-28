@@ -121,5 +121,6 @@ if ($language_name != '') {
 <?php
 }
 ?>
+</table>
 
 <?php camp_html_copyright_notice(); ?>
