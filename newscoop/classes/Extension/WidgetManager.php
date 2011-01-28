@@ -25,16 +25,17 @@ class WidgetManager
 
     /** @var array */
     private static $defaults = array(
-        'SourcefabricNewsletter',
         'SourcefabricFeed',
-        'WikipediaGoogleGadget',
         'SourcefabricDevFeed',
-        'YourArticlesWidget',
+        'SourcefabricNewsletter',
+        'WikipediaGoogleGadget',
         'MapsGoogleGadget',
+        'YourArticlesWidget',
         'PendingArticlesWidget',
         'SubmittedArticlesWidget',
         'RecentlyPublishedArticlesWidget',
         'RecentlyModifiedArticlesWidget',
+        '', // empty slot
         'MostPopularArticlesWidget',
     );
 
