@@ -290,7 +290,8 @@ $menu_plugins = CampPlugin::CreatePluginMenu();
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 
 // locale setting for datepicker
-$locale = trim(getGS('en'), ' (*)');
+$locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
+
 ?>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
