@@ -38,4 +38,11 @@ regGS("Map Preview", "");
 regGS("Label link", "");
 regGS("Label", "");
 regGS("Image URL", "");
+regGS("video", "");
+regGS("text", "");
+regGS("image", "");
+regGS("icon", "");
+regGS("basic", "");
+regGS("any country", "");
+regGS("Setting Map Locations", "");
 ?>
