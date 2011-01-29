@@ -92,7 +92,7 @@ if ($can_save) {
     $author->commit();
 
     // Reset types
-    $types = Input::Get('type', 'array');
+    $types = Input::Get('type', 'array', array());
     AuthorAssignedType::ResetAuthorAssignedTypes($author->getId());
     foreach ($types as $type) {
         $author->setType($type);
