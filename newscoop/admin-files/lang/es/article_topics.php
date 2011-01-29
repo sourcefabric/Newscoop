@@ -1,5 +1,5 @@
 <?php 
-regGS("Topics updated.", "");
+regGS("Topics updated.", "Se actualizaron los tópicos.");
 regGS("Topic does not exist.", "Este tópico no existe.");
 regGS("The topic '$1' has been removed from article.", "Se eliminó el tópico '$1' del artículo.");
 regGS("You do not have the right to detach topics from articles.", "No puede desvincular tópicos de los artículos");

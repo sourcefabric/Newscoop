@@ -1,20 +1,20 @@
 <?php 
-regGS("Wikipedia search", "");
-regGS("Sourcefabric.org newsletter subscription", "");
-regGS("Maps search", "");
-regGS("Default location", "");
-regGS("Title", "");
-regGS("Sourcefabric.org feed reader", "");
-regGS("Sourcefabric.org dev feed reader", "");
-regGS("Recently Published Articles", "");
-regGS("Recently Modified Articles", "");
-regGS("Pending Articles", "");
-regGS("Paste google generated code", "");
-regGS("Most Popular Articles", "");
-regGS("Media files", "");
-regGS("Hello world!", "");
-regGS("Hello World!", "");
-regGS("Google gadget", "");
-regGS("Feed url", "");
-regGS("Access Denied", "");
+regGS("Wikipedia search", "Búsqueda en Wikipedia");
+regGS("Sourcefabric.org newsletter subscription", "Suscripción al boletín de Sourcefabric.org");
+regGS("Maps search", "Búsqueda de mapas");
+regGS("Default location", "Ubicación por defecto");
+regGS("Title", "Título");
+regGS("Sourcefabric.org feed reader", "Lector RSS de Sourcefabric.org");
+regGS("Sourcefabric.org dev feed reader", "Lector RSS sobre temas técnicos de Sourcefabric.org");
+regGS("Recently Published Articles", "Artículos recién publicados");
+regGS("Recently Modified Articles", "Artículos recién modificados");
+regGS("Pending Articles", "Artículos pendientes");
+regGS("Paste google generated code", "Pegar código generado por Google");
+regGS("Most Popular Articles", "Artículos más populares");
+regGS("Media files", "Biblioteca multimedia");
+regGS("Hello world!", "¡Hola mundo!");
+regGS("Hello World!", "¡Hola mundo!");
+regGS("Google gadget", "Gadget de Google");
+regGS("Feed url", "URL del RSS");
+regGS("Access Denied", "Acceso denegado");
 ?>

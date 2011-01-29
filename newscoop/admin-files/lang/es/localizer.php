@@ -1,10 +1,10 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
-regGS("Geo-location", "");
+regGS("Dashboard", "Tablero");
+regGS("Authors", "Autores");
+regGS("Libraries", "Bibliotecas");
+regGS("Media Archive", "Archivo multimedia");
+regGS("Extensions", "Extensiones");
+regGS("Geo-location", "Geolocalización");
 regGS("Translation status:", "Estado de la traducción:");
 regGS("Editor Media Plugin", "Plugin de media para el editor");
 regGS("$1 of $2 strings translated", "$1 de $2 cadenas traducidas");

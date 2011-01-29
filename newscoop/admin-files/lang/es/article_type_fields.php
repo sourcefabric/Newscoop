@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "El nombre de la plantilla solo puede contener letras y el caracter de guión bajo (_).");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "El campo ya estaba en uso como una propriedad del articulo. El contenido no se mostrará en las plantillas.");
 regGS("The property '$1' is already in use.", "La propiedad '$1' ya estaba en uso.");
 regGS("Precision", "Precisión.");

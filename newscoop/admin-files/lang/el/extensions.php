@@ -1,8 +1,8 @@
 <?php 
-regGS("Wikipedia search", "");
-regGS("Sourcefabric.org newsletter subscription", "");
-regGS("Maps search", "");
-regGS("Default location", "");
+regGS("Wikipedia search", "Αναζήτηση Wikipedia");
+regGS("Sourcefabric.org newsletter subscription", "συνδρομή newsletter Sourcefabric.org ");
+regGS("Maps search", "Αναζήτηση χαρτών");
+regGS("Default location", "Προεπιλεγμένη τοποθεσία");
 regGS("Title", "Τίτλος");
 regGS("Sourcefabric.org feed reader", "Sourcefabric.org feed reader");
 regGS("Sourcefabric.org dev feed reader", "Sourcefabric.org dev feed reader");
