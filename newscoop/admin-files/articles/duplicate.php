@@ -591,7 +591,7 @@ foreach ($articles as $languageArray) {
 
 		<tr>
 			<td align="center" colspan="2">
-				<INPUT TYPE="submit" Name="action_button" Value="<?php p($title); ?>" <?php if ( ($f_destination_publication_id <= 0) || ($f_destination_issue_number <= 0) || ($f_destination_section_number <= 0)) { echo 'class="button_disabled"'; } else { echo "class=\"button\""; }?> >
+				<input type="submit" name="action_button" value="<?php p($title); ?>" <?php if (($f_destination_publication_id <= 0) || ($f_destination_issue_number <= 0) || ($f_destination_section_number <= 0)) { echo 'disabled="disabled" class="default-button disabled"'; } else { echo 'class="default-button"'; }?> >
 			</td>
 		</tr>
 		</TABLE>
