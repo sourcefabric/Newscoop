@@ -517,7 +517,7 @@ function camp_html_display_msgs($p_spacingTop = "1em", $p_spacingBottom = "1em")
 				<?php } ?>
 					<?php echo $message['msg']; ?>
 					<script type="text/javascript">
-					$('#camp_message_<?php p($count); ?>').delay(2000).fadeOut();
+					$('#camp_message_<?php p($count); ?>').delay(3000).fadeOut();
 					</script>
 				</td>
 			</tr>

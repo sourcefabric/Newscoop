@@ -242,11 +242,6 @@ $(document).ready(function() {
             ],
             'fnDrawCallback': function() {
                 $('#gridx tbody tr').click(function(event) {
-                    //alert($(this).parents('tr'));
-                    //$(this).removeClass('selected');
-                    //$(this).raddClass('selected');
-                    //$("tr", oTable.fnGetNodes()).removeClass('selected');
-                    //$(event.target).parent().find("tr").addClass('selected');
                     $(event.target).removeClass('selected');
                     $(event.target).addClass('selected');
                 });

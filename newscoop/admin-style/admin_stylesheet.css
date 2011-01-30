@@ -1464,3 +1464,15 @@ fieldset.filters a.reset {
 	font-size: 12px;
 	line-height:20px;
 }
+
+/*---  System messages ---*/
+.info_message {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #239f34;
+}
+.error_message {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #de3d3d;
+}
