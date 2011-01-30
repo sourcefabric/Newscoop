@@ -1,13 +1,13 @@
 <?php 
-regGS("Files attached.", "");
-regGS("File '$1' unattached.", "");
-regGS("Attach new file", "");
-regGS("Attach existing file", "");
-regGS("$1 file/s attached to article", "");
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "Fajl je zakačen");
+regGS("File '$1' unattached.", "fajl '$1' je uklonjen");
+regGS("Attach new file", "Zakači novi fajl");
+regGS("Attach existing file", "Zakači postojeći fajl");
+regGS("$1 file/s attached to article", "41 fajl(ova) dodat(o) u tekst");
+regGS("File attached.", "Fajl zakačen.");
+regGS("The maximum file upload size was not configured in Newscoop.", "Maksimalna veličina fajla nije podešena u Newscoopu.");
+regGS("File #$1 \"$2\" unattached", "Fajl #$1 \"$2\" uklonjen");
+regGS("File #$1 \"$2\" attached to article", "Fajl #$1 \"$2\" zakačen uz tekst");
 regGS("Unable to add attachment.", "Nije moguće dodati atačment.");
 regGS("There was a problem uploading the file.", "došlo je do problema pri uploadovanju fajla.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Fajl je delimično uploadovan. Ovo se obično dešava kad je maks. vreme za upload kratko u odnosu na veličinu fajla. Maksimalna veličina se podešava u 'php.ini'");

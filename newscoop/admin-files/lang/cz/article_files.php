@@ -1,11 +1,11 @@
 <?php 
-regGS("Files attached.", "");
-regGS("File '$1' unattached.", "");
-regGS("Attach new file", "");
-regGS("Attach existing file", "");
-regGS("$1 file/s attached to article", "");
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
+regGS("Files attached.", "Soubory jsou přiloženy.");
+regGS("File '$1' unattached.", "Soubor '$1' není přiložen.");
+regGS("Attach new file", "Přiložit nový soubor");
+regGS("Attach existing file", "Přiložit existující soubor");
+regGS("$1 file/s attached to article", "$1 soubor(y) přiložen(y) ke článku");
+regGS("File attached.", "Soubor je přiložen.");
+regGS("The maximum file upload size was not configured in Newscoop.", "Maximální velikost nahrávaného souboru nebyla v Newscoopu nastavena.");
 regGS("File #$1 \"$2\" unattached", "Soubor #$1 \"$2\" nepřipojen");
 regGS("File #$1 \"$2\" attached to article", "Soubor #$1 \"$2\" připojen ke článku");
 regGS("Unable to add attachment.", "Nezdařilo se přidat přílohu.");

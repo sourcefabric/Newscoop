@@ -1,9 +1,9 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
+regGS("Dashboard", "Hlavní panel");
+regGS("Authors", "Autoři");
+regGS("Libraries", "Knihovny");
+regGS("Media Archive", "Archiv médií");
+regGS("Extensions", "Rozšíření");
 regGS("Geo-location", "Geo-lokace");
 regGS("Translation status:", "Stav překladu:");
 regGS("Editor Media Plugin", "Editor Media Plugin");
