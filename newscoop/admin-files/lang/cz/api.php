@@ -62,7 +62,7 @@ regGS("Article type field \"$1\" created", "Pole typu článku \"$1\" vytvořeno
 regGS("Article type field \"$1\" changed", "Pole typu článku \"$1\" změněno");
 regGS("Article type \"$1\" translation updated", "Typ článku \"$1\" překlad aktualizován");
 regGS("Article topic $1 deleted from article $2", "Téma článku $1 odstraněno z článku $2");
-regGS("The uploaded file format is unsupported.", "Formát nahrávaného souboru není podporován.");
+regGS("The uploaded file format is unsupported.", "Formát nahraného souboru není podporován.");
 regGS("The following fields are mandatory:", "Následující pole jsou povinné:");
 regGS("Missing value for $1", "Chybí hodnota pro $1");
 regGS("Manage Plugins", "Spravovat Pluginy");

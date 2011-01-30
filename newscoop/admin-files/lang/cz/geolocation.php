@@ -20,7 +20,7 @@ regGS("problem at point processing, please send error report", "problém se zpra
 regGS("plain text", "pouze text");
 regGS("html content", "obsah html");
 regGS("height", "výška");
-regGS("fill in the point description", "Vyplňte popis bodu");
+regGS("fill in the point description", "vyplňte popis bodu");
 regGS("fill in map name", "vyplňte název mapy");
 regGS("You do not have the right to remove maps from articles.", "Nemáte oprávnění odstraňovat mapy z článků.");
 regGS("Video file", "Videosoubor");
@@ -44,5 +44,5 @@ regGS("image", "obrázek");
 regGS("icon", "ikona");
 regGS("basic", "základní");
 regGS("any country", "jakákoliv země");
-regGS("Setting Map Locations", "Nastavení Lokací Map");
+regGS("Setting Map Locations", "Nastavení lokací map");
 ?>

@@ -16,5 +16,5 @@ regGS("Delete author", "Odstranit autora");
 regGS("Contacts", "Kontakty");
 regGS("Biography", "Biografie");
 regGS("Aliases", "Přezdívky");
-regGS("AIM", "");
+regGS("AIM", "AIM");
 ?>

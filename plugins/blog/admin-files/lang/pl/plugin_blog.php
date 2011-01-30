@@ -1,6 +1,6 @@
 <?php 
-regGS("List comments", "");
-regGS("User may moderate Blogs", "");
+regGS("List comments", "Lista komentarzy");
+regGS("User may moderate Blogs", "Użytkownik może moderować Blogi");
 regGS("User may manage Blogs", "");
 regGS("read only", "");
 regGS("You are not allowed to edit this blog.", "");
