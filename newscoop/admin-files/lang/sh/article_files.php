@@ -3,7 +3,7 @@ regGS("Files attached.", "Fajl je zakačen");
 regGS("File '$1' unattached.", "fajl '$1' je uklonjen");
 regGS("Attach new file", "Zakači novi fajl");
 regGS("Attach existing file", "Zakači postojeći fajl");
-regGS("$1 file/s attached to article", "41 fajl(ova) dodat(o) u tekst");
+regGS("$1 file/s attached to article", "$1 fajl(ova) dodat(o) u tekst");
 regGS("File attached.", "Fajl zakačen.");
 regGS("The maximum file upload size was not configured in Newscoop.", "Maksimalna veličina fajla nije podešena u Newscoopu.");
 regGS("File #$1 \"$2\" unattached", "Fajl #$1 \"$2\" uklonjen");

@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Име шаблона може садржати искључиво слова и доњу црту (_)");
 regGS("Rename article type '$1'", "Преименуј тип текста '$1'");
 regGS("Invalid article type '$1'.", "Погрешан тип текста '$1'");
 regGS("You cannot merge the same type into itself.", "Не можете спојити тип текста са самим собом");

@@ -1,13 +1,12 @@
 <?php 
-regGS("Newscoop has encountered a problem.", "");
-regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "");
+regGS("Newscoop has encountered a problem.", "Кемпсајт је наишао на проблем.");
+regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Да бисте помогли Newscoop тиму да истражи и поправи ову грешку, молимо одвојите који тренутак да опишете шта се десило");
 regGS("What were you trying to do when this happened?", "Шта сте покушавали да урадите када се ово десило?");
 regGS("Description:", "Опис:");
 regGS("We are sorry for the inconvenience.", "Жао нам је због непријатности.");
 regGS("Show error details", "Прикажи детаље грешке");
 regGS("Hide error details", "Сакриј детаље о грешци");
 regGS("Error Report", "Пријава грешке");
-regGS("Newscoop has encountered a problem.", "Кемпсајт је наишао на проблем.");
 regGS("Backtrace:", "Претходне радње:");
 regGS("Error ID:", " ID грешке:");
 regGS("Error Message:", "Порука о грешци:");

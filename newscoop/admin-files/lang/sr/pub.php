@@ -1,5 +1,5 @@
 <?php 
-regGS("Make sure to enter the \"Moderator Address\" below", "");
+regGS("Make sure to enter the \"Moderator Address\" below", "Обавезно унесите адресу модератора ниже доле");
 regGS("click to see issues", "кликните да видите издања");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Сајт алиас за публикацију \"$1\" је промењен у \"$2\".");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "Сајт алиас \"$1\" је додат публикацији \"$2\".");

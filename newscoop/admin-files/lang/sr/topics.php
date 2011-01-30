@@ -1,6 +1,6 @@
 <?php 
-regGS("Reset order", "");
-regGS("Order changes will be lost. Are you sure you want to continue?", "");
+regGS("Reset order", "Поништи редослед");
+regGS("Order changes will be lost. Are you sure you want to continue?", "Измене редоследа ће бити поништене. Да ли сте сигурни да желите да наставите?");
 regGS("Topics order saved.", "Редослед тема је сниљен.");
 regGS("Show languages", "Прикажи језике");
 regGS("Save order", "Сними редослед");
