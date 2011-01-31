@@ -19,7 +19,7 @@ class MapsGoogleGadget extends GoogleGadget
      * @setting
      * @label Default location
      */
-    protected $location = '';
+    protected $location = 'Praha, Salvatorska 10';
 
     /**
      * gadget code
