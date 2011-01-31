@@ -63,6 +63,12 @@ camp_html_display_msgs();
         var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
         var popupFlash = false;
 
+        var localizer = localizer || {};
+        localizer.processing = '<?php putGS('Processing...'); ?>';
+        localizer.session_expired = '<?php putGS('Session expired.'); ?>';
+        localizer.please = '<?php putGS('Please'); ?>';
+        localizer.login = '<?php putGS('login'); ?>';
+
         $(function() {
             $('#tabs').tabs();
         });
