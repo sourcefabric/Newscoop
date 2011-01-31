@@ -290,7 +290,8 @@ $menu_plugins = CampPlugin::CreatePluginMenu();
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
 
 // locale setting for datepicker
-$locale = trim(getGS('en'), ' (*)');
+$locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
+
 ?>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -299,6 +300,12 @@ $locale = trim(getGS('en'), ' (*)');
 
   <script type="text/javascript"><!--
     var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
+
+    var localizer = localizer || {};
+    localizer.processing = '<?php putGS('Processing...'); ?>';
+    localizer.session_expired = '<?php putGS('Session expired.'); ?>';
+    localizer.please = '<?php putGS('Please'); ?>';
+    localizer.login = '<?php putGS('login'); ?>';
   //--></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -458,7 +465,7 @@ $locale = trim(getGS('en'), ' (*)');
           var windowTop = $(window).scrollTop();
           var stickyTop = $('.sticky').offset().top;
           if (windowTop > stickyTop && sticky_limit == 0) {
-              $('.sticky').css('width', $('.sticky').width()+'px').css('position', 'fixed').css('top', '0');
+              $('.sticky').css('width', '100%').css('position', 'fixed').css('top', '0');
               sticky_limit = stickyTop;
           }
           if (sticky_limit > 0 && windowTop < sticky_limit) {

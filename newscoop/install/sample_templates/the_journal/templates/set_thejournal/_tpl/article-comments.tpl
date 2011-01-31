@@ -88,7 +88,7 @@
 </p>
 
 <p>
-<img src="http://{{ $gimme->publication->site }}/{{ captcha_image_link }}"><br />
+<img src="{{ captcha_image_link }}"><br />
 <label for="f_captcha_code"><small>Enter the code:</small></label>{{ camp_edit object="captcha" attribute="code" html_code="id=\"comment-code\" tabindex=\"5\"" }}
 </p>
 

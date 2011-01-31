@@ -204,7 +204,7 @@ abstract class CampSystem
                 $article = new Article($p_lngId, $p_artNr);
                 if (!$article->exists()
                 || ($p_isPublished && !$article->isPublished())) {
-                    return self::GetInvalidURLTemplate();
+                    return self::GetInvalidURLTemplate($p_pubId);
                 }
                 $p_issNr = $article->getIssueNumber();
                 $p_sctNr = $article->getSectionNumber();
@@ -267,7 +267,7 @@ abstract class CampSystem
             . ' AND i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            $data = self::GetInvalidURLTemplate();
+            $data = self::GetInvalidURLTemplate($p_pubId);
         }
         if (CampCache::IsEnabled()) {
             CampCache::singleton()->store($cacheKey, $data);
@@ -310,7 +310,7 @@ abstract class CampSystem
             . ' AND i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            $data = self::GetInvalidURLTemplate();
+            $data = self::GetInvalidURLTemplate($p_pubId);
         }
         if (CampCache::IsEnabled()) {
             CampCache::singleton()->store($cacheKey, $data);
@@ -353,7 +353,7 @@ abstract class CampSystem
             . ' and i.Number = ' . $p_issNr;
         $data = $g_ado_db->GetOne($sql);
         if (empty($data)) {
-            $data = self::GetInvalidURLTemplate();
+            $data = self::GetInvalidURLTemplate($p_pubId);
         }
         if (CampCache::IsEnabled()) {
             CampCache::singleton()->store($cacheKey, $data);

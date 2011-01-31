@@ -189,7 +189,7 @@ regGS("Cancel", "Отменить");
 regGS("Done", "Выполнено");
 regGS("OK", "OK");
 regGS("Save", "Сохранить");
-regGS("Search", "Поиск статей");
+regGS("Search", "Поиск");
 regGS("Make a selection", "Выделить");
 regGS("You must input a number greater than 0 into the $1 field.", "Вы должны ввести положительное ненулевое число в поле $1");
 regGS("You must input a valid date.", "Вы должны ввести правильную дату.");

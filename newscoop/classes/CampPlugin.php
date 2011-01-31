@@ -127,7 +127,10 @@ class CampPlugin extends DatabaseObject
     public function getFsVersion()
     {
         $info = self::GetPluginsInfo();
-        return $info[$this->getName()]['version'];
+        if (isset($info[$this->getName()]['version'])) {
+            return $info[$this->getName()]['version'];
+        }
+        return NULL;
     }
 
     public function isEnabled()
@@ -511,12 +514,14 @@ class CampPlugin extends DatabaseObject
         // update
         foreach ($plugins as $name => $info) {
             $CampPlugin = new CampPlugin($name);
+            if (empty($info['current'])) {
+                continue;
+            }
             $currentVersion = $CampPlugin->getFsVersion();
             if ($CampPlugin->getDbVersion() != $currentVersion) {
                 $CampPlugin->delete();
                 $CampPlugin->create($name, $currentVersion);
                 $CampPlugin->update();
-                $CampPlugin->enable();
             }
         }
     }

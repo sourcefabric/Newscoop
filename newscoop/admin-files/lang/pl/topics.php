@@ -1,6 +1,6 @@
 <?php 
-regGS("Reset order", "");
-regGS("Order changes will be lost. Are you sure you want to continue?", "");
+regGS("Reset order", "Resetuj ustawienie");
+regGS("Order changes will be lost. Are you sure you want to continue?", "Zmiany w ustawieniu zostaną utracone. Na pewno chcesz kontynuować?");
 regGS("Topics order saved.", "Porządek tematów zachowany.");
 regGS("Show languages", "Pokaż języki");
 regGS("Save order", "Zapisz porządek");

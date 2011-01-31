@@ -1,6 +1,7 @@
 <?php 
-regGS("Select section:", "");
-regGS("Add another author", "");
+regGS("Files", "Файлы");
+regGS("Select section:", "Выберите раздел");
+regGS("Add another author", "Добавить автора");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 минут назад.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.");
 regGS("Switches saved.", "Статус переключателей сохранен.");
@@ -22,7 +23,6 @@ regGS("Keywords &amp; Topics", "Ключевые слова & Темы");
 regGS("Info", "Информация");
 regGS("Go to live article", "Перейти к активной статье");
 regGS("Created", "Создана");
-regGS("Attachments", "Прикрепленные файлы");
 regGS("Locations", "Места событий");
 regGS("Are you sure you want to remove the map from the article?", "Вы уверены, что хотите удалить эту карту из статьи?");
 regGS("Scheduled action added", "Запланированное действие добавлено");
@@ -150,4 +150,8 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы уверены, что хотите удалить этот аудио файл из этой статьи");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>

@@ -18,6 +18,11 @@ class RecentlyModifiedArticlesWidget extends ArticlesWidget
     /** @setting */
     protected $count = 20;
 
+    public function __construct()
+    {
+        $this->title = getGS('Recently Modified Articles');
+    }
+
     public function beforeRender()
     {
         $this->items = Article::GetRecentlyModifiedArticles($this->getCount());

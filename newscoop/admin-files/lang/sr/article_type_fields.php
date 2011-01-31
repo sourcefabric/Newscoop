@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Назив поља може садржати искључиво слова и доњу црту (_)");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Име поља је већ у употреби као основно својство текста. Садржај поља неће бити приказан у шаблонима.");
 regGS("The property '$1' is already in use.", "Својство '$1' је већ у употреби");
 regGS("Precision", "Прецизност");

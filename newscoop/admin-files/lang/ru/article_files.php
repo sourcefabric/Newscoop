@@ -1,7 +1,12 @@
 <?php 
+regGS("Files attached.", "Файлы присоединены.");
+regGS("File '$1' unattached.", "Файл '$1' присоеденен.");
+regGS("Attach new file", "Присоединить новый файл");
+regGS("Attach existing file", "Присоединить существующий файл");
+regGS("$1 file/s attached to article", "$1 файл присоединено");
 regGS("File attached.", "Файл присоединен.");
 regGS("The maximum file upload size was not configured in Newscoop.", "Максимальный размер загруженного файла был не конфигурирован в настройках Newscoop.");
-regGS("File #$1 \"$2\" unattached", "Файл #$1 \"$2\" не прикреплен");
+regGS("File #$1 \"$2\" unattached", "Файл #$1 \"$2\" откреплен");
 regGS("File #$1 \"$2\" attached to article", "Файл #$1 \"$2\" прикреплен к статье");
 regGS("Unable to add attachment.", "Невозможно добавить файл.");
 regGS("There was a problem uploading the file.", "Проблема загрузки файла.");
@@ -13,7 +18,6 @@ regGS("File Size", "Размер файла");
 regGS("File Name", "Имя файла");
 regGS("Download", "Загрузить");
 regGS("File '$1' updated.", "Файл '$1' обновлен.");
-regGS("File '$1' deleted.", "Файл '$1' удален.");
 regGS("Edit article", "Редактировать статью");
 regGS("You do not have the right to delete file attachments.", "Вы не имеете прав доступа для удаления приложенного файла.");
 regGS("You must select a file to upload.", "Вы должны выбрать файл для загрузки.");

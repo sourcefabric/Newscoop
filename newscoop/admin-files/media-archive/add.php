@@ -51,24 +51,18 @@ camp_html_display_msgs();
 <div id="uploader"></div>
 <div id="uploader_error"></div>
 
-<table border="0" cellspacing="0" cellpadding="0" class="box_table">
-<tr>
-  <td colspan="2" align="center" style="padding-top: 15px;">
-    <?php p(wordwrap(getGS("Specify image url if you want to load it."), 60, "<br />")); ?>
-  </td>
-</td>
-<tr>
-    <td align="right" ><?php putGS('URL'); ?>:</td>
-    <td align="left">
-        <input id="form-url" type="text" name="f_image_url" size="32" class="input_text" />
-    </td>
-</tr>
-<tr>
-  <td colspan="2" align="center">
-    <input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />
-  </td>
-</tr>
-</table>
+<div class="plupload-addon-bottom clearfix">
+  <div class="info">
+    <?php putGS('Specify image url if you want to load it.'); ?>
+  </div>
+  <div class="inputs">
+    <label for="form-url"><?php putGS('URL'); ?>:</label><input type="text" class="input_text" size="32" name="f_image_url" id="form-url">
+  </div>
+  <div class="buttons">
+    <input type="submit" value="<?php putGS('Save All'); ?>" name="save" class="save-button">
+  </div>
+</div>
+
 </form>
 <p>&nbsp;</p>
 

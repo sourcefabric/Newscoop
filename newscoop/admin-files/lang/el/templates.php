@@ -23,7 +23,7 @@ regGS("You do not have the right to move templates.", "Δεν έχετε το δ
 regGS("You do not have the right to move articles.", "Δεν έχετε το δικαίωμα να μετακινήσετε άρθρα.");
 regGS("Unable to create folder.", "Ήταν αδύνατον να δημιουργηθεί φάκελος.");
 regGS("Unable to $1 template.", "Ήταν αδύνατον να $1 το πρότυπο.");
-regGS("To New Name", "στο Νέο Όνομα");
+regGS("To New Name", "Στο Νέο Όνομα");
 regGS("These templates", "Αυτά τα πρότυπα");
 regGS("The template object $1 is in use and can not be deleted.", "Το αντικείμενο προτύπου $1 χρησιμοποιείται και δεν μπορεί να διαγραφτεί.");
 regGS("The template object $1 could not be renamed.", "Το αντικείμενο προτύπου $1 δεν μπόρεσε να μετονομαστεί.");

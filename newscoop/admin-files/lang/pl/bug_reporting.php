@@ -1,13 +1,12 @@
 <?php 
-regGS("Newscoop has encountered a problem.", "");
-regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "");
+regGS("Newscoop has encountered a problem.", "Campsite napotkał błąd.");
+regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Aby pomóc nam namierzyć błąd w Newscoop, poświęć chwilę i opisz dokładnie co się stało.");
 regGS("What were you trying to do when this happened?", "Co próbowałeś zrobić gdy wystąpił błąd?");
 regGS("Description:", "Opis:");
 regGS("We are sorry for the inconvenience.", "Przepraszamy za problem:");
 regGS("Show error details", "Pokaż szczegóły błedu");
 regGS("Hide error details", "Schowaj szczegóły błędu");
 regGS("Error Report", "Raport błędu");
-regGS("Newscoop has encountered a problem.", "Campsite napotkał błąd.");
 regGS("Backtrace:", "Backtrace:");
 regGS("Error ID:", "ID błędu:");
 regGS("Error Message:", "Wiadomość błędu:");

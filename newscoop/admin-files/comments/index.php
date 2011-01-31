@@ -357,7 +357,7 @@ function onSummaryClick(p_messageId)
 
             <tr>
                 <td><b><?php putGS("Author"); ?>:</b></td>
-                <td><?php p($comment->getAuthor()); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
+                <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
             </tr>
 
             <tr>
@@ -370,7 +370,7 @@ function onSummaryClick(p_messageId)
             </tr>
 
             <tr>
-                <td colspan="2"><textarea name="f_comment_<?php p($comment->getMessageId()); ?>" class="input_text" rows="15" cols="60"><?php echo $comment->getBody(); ?></textarea></td>
+                <td colspan="2"><textarea name="f_comment_<?php p($comment->getMessageId()); ?>" class="input_textarea" rows="15" cols="70"><?php echo $comment->getBody(); ?></textarea></td>
             </tr>
             </table>
         </td>
@@ -387,4 +387,6 @@ function onSummaryClick(p_messageId)
     <!-- END table contain left & right pane for editing comments -->
 <?php
 } // if there are comments
+
+camp_html_copyright_notice();
 ?>

@@ -12,7 +12,7 @@ regGS("Status: Submit", "Статус: Отправить");
 regGS("Status: Set New", "Статус: Новая");
 regGS("Status: Publish", "Статус: Утвердить");
 regGS("Size", "Размер");
-regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Показано _START_ до _END_TOTAL_ записей");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Показано _START_ до _END_ / _TOTAL_ записей");
 regGS("Show / hide columns", "Показать / скрыть колонки");
 regGS("Select some article first.", "Выберите сначала несколько статей.");
 regGS("Select action", "Выбрать действие");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Files", "Files");
 regGS("Select section:", "Select section:");
 regGS("Add another author", "Add another author");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "The article has been locked by $1 ($2) $3 minute(s) ago.");
@@ -22,7 +23,6 @@ regGS("Keywords &amp; Topics", "Keywords &amp; Topics");
 regGS("Info", "Info");
 regGS("Go to live article", "Go to live article");
 regGS("Created", "Created");
-regGS("Attachments", "Attachments");
 regGS("Locations", "Locations");
 regGS("Are you sure you want to remove the map from the article?", "Are you sure you want to remove the map from the article?");
 regGS("Scheduled action added", "Scheduled action added");

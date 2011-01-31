@@ -17,7 +17,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_organization = 'Sourcefabric o.p.s';
+    private $m_organization = 'Sourcefabric o.p.s.';
 
     /**
      * @var string
@@ -27,12 +27,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.5.0';
+    private $m_release = '3.5';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'rc2';
+    private $m_devStatus = 'GA';
 
     /**
      * @var string
@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2010-01-17';
+    private $m_releaseDate = '2011-01-31';
 
     /**
      * @var string
@@ -116,7 +116,9 @@ final class CampVersion
 
     public function getCopyright()
     {
-        return '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;' . $this->m_organization;
+        $c = '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;<a href="' . $this->m_website
+            . '" target="_blank">' . $this->m_organization . '</a>';
+        return $c;
     } // fn getCopyright
 
 
@@ -128,7 +130,7 @@ final class CampVersion
 
     public function getWebURL()
     {
-        return $this->m_webURL;
+        return $this->m_website;
     } // fn getWebURL
 
 

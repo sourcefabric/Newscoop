@@ -15,6 +15,7 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
  * @package Campsite
  */
 final class MetaUser extends MetaDbObject {
+	private $m_userName = false;
 
     public function __construct($p_userId = null)
     {
@@ -24,7 +25,6 @@ final class MetaUser extends MetaDbObject {
         }
 
         $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['name'] = 'Name';
         $this->m_properties['uname'] = 'UName';
         $this->m_properties['email'] = 'EMail';
         $this->m_properties['city'] = 'City';
@@ -59,6 +59,7 @@ final class MetaUser extends MetaDbObject {
         $this->m_properties['pref4'] = 'Pref4';
         $this->m_properties['password_encrypted'] = 'Password';
 
+        $this->m_customProperties['name'] = 'getUserName';
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['logged_in'] =  'isLoggedIn';
@@ -67,6 +68,28 @@ final class MetaUser extends MetaDbObject {
         $this->m_customProperties['is_admin'] = 'isAdmin';
     } // fn __construct
 
+
+    /**
+     * Returns (escaped) user name of the registered user.
+     *
+     * @return string
+     */
+    protected function getUserName()
+    {
+        if ($this->m_userName === false)
+        {
+            $prop_username = $this->m_dbObject->getProperty('Name');
+            if (!$prop_username) {$prop_username = "";}
+    
+            $prop_username = str_replace("&", "&amp;", $prop_username);
+            $prop_username = str_replace("<", "&lt;", $prop_username);
+            $prop_username = str_replace(">", "&gt;", $prop_username);
+
+            $this->m_userName = $prop_username;
+        }
+
+    	return $this->m_userName;
+    }
 
     /**
      * Returns the name of the country of the registered user.

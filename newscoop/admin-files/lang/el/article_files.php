@@ -1,5 +1,10 @@
 <?php 
-regGS("File attached.", "");
+regGS("Files attached.", "Τα αρχεία επισυνάφθηκαν.");
+regGS("File '$1' unattached.", "Το αρχείο '$1' αποσυνδέθηκε.");
+regGS("Attach new file", "Επισύναψη νέου αρχείου");
+regGS("Attach existing file", "Επισύναψη υπάρχοντος αρχείου");
+regGS("$1 file/s attached to article", "$1 αρχείο/α επισυνάφθηκαν στο άρθρο");
+regGS("File attached.", "Το αρχείο επισυνάφθηκε.");
 regGS("The maximum file upload size was not configured in Newscoop.", "Το μέγιστο μέγεθος ανεβάσματος αρχείου δεν διαμορφώθηκε στο Newscoop.");
 regGS("File #$1 \"$2\" unattached", "Αποσύναψη αρχείου #$1 \"$2\" ");
 regGS("File #$1 \"$2\" attached to article", "Το αρχείο #$1 \"$2\" επισυνάφθηκε στο άρθρο");
@@ -13,7 +18,6 @@ regGS("File Size", "Μέγεθος Αρχείου");
 regGS("File Name", "Όνομα Αρχείου");
 regGS("Download", "Download");
 regGS("File '$1' updated.", "Το αρχείο '$1' ανανεώθηκε.");
-regGS("File '$1' deleted.", "Το αρχείο '$1' διαγράφτηκε.");
 regGS("Edit article", "Επεξεργασία άρθρου");
 regGS("You do not have the right to delete file attachments.", "Δεν έχετε το δικαίωμα να διαγράψετε συννημένα αρχεία.");
 regGS("You must select a file to upload.", "Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.");
@@ -26,9 +30,9 @@ regGS("Please enter a description for the file.", "Παρακαλώ εισάγε
 regGS("Open in the browser", "Άνοιγμα στο πρόγραμμα περιήγησης");
 regGS("Only this translation", "Μόνο αυτή η μετάφραση");
 regGS("File information", "Πληροφορίες αρχείου");
-regGS("Do you want this file to open in the user's browser, or to automatically download?", "Θέλετε αυτό το αρχείο να ανοίξει στο πρόγραμμα περιήγησης του χρήστη ή να πραγματοποιήσει αυτόματα download;");
+regGS("Do you want this file to open in the user's browser, or to automatically download?", "Θέλετε αυτό το αρχείο να ανοίξει στο πρόγραμμα περιήγησης του χρήστη ή να πραγματοποιήσει αυτόματο κατέβασμα;");
 regGS("Change file information", "Αλλαγή πληροφοριών αρχείου");
-regGS("Automatically download", "Αυτόματο download");
+regGS("Automatically download", "Αυτόματο κατέβασμα");
 regGS("Attachments", "Συννημένα");
 regGS("Attachment does not exist.", "Το συννημένο δεν υπάρχει.");
 regGS("Attach File to Article", "Επισύναψη Αρχείου στο Άρθρο");

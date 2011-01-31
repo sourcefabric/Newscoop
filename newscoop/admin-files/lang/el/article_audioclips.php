@@ -1,5 +1,5 @@
 <?php 
-regGS("There was an error while saving the audioclip: $1", "Υπήρξε βλάβη κατά την αποθήκευση του αρχείου ήχου: $1");
+regGS("There was an error while saving the audioclip: $1", "Υπήρξε κάποιο σφάλμα κατά την αποθήκευση του αρχείου ήχου: $1");
 regGS("Incorrect password or your user is not a valid Campcaster user", "Λάθος κωδικός πρόσβασης ή ο χρήστης σας δεν είναι έγκυρος χρήστης Campcaster");
 regGS("Campcaster session started successfully", "Η συνεδρία Campcaster ξεκίνησε επιτυχώς");
 regGS("Campcaster integration is disabled", "H ενσωμάτωση Campcaster είναι απενεργοποιημένη");
@@ -57,7 +57,7 @@ regGS("Genre", "Είδος");
 regGS("Format", "Μορφή");
 regGS("File format", "Μορφή αρχείου");
 regGS("Failed to update audioclip information.", "Αποτυχία ανανέωσης πληροφοριών αρχείου ήχου.");
-regGS("Encoder software used", "Χρησιμοποιήθηκε λογισμοκό κωδικοποίησης");
+regGS("Encoder software used", "Χρησιμοποιήθηκε λογισμκό κωδικοποίησης");
 regGS("Encoded by", "Κωδικοποιήθηκε από");
 regGS("Edit Audioclip Metadata", "Επεξεργασία Μεταδεδομένων Αρχείου Ήχου");
 regGS("Duration", "Διάρκεια");

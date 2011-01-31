@@ -16,6 +16,11 @@ require_once LIBS_DIR . '/ImageList/ImageList.php';
  */
 class ImageListWidget extends Widget
 {
+    public function __construct()
+    {
+        $this->title = getGS('Images');
+    }
+
     public function render()
     {
         $list = new ImageList;

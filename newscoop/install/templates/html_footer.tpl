@@ -3,7 +3,8 @@
 <tr>
   <td>
     <p class="footer_text">
-      {{ $package }} {{ $version }}, the open content management system for professional journalists.<br />
+      <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ $package }}</a> {{ $version }},
+      the open content management system for professional journalists.<br />
       {{ $copyright }} {{ $package }} is distributed under {{ $license }}
     </p>
   </td>

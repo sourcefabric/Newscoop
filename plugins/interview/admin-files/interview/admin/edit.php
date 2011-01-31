@@ -2,7 +2,8 @@
 camp_load_translation_strings("plugin_interview");
 camp_load_translation_strings('home');
 
-$locale = trim(getGS('en'), ' (*)');
+// locale setting for datepicker
+$locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 ?>
 <html>
 <head>

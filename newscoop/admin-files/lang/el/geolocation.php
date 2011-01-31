@@ -1,7 +1,12 @@
 <?php 
-regGS("center city", "");
-regGS("Map preview", "");
-regGS("Locations updated.", "");
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
+regGS("Are you sure you want to quit without saving your changes?", "Είστε σίγουρος/η ότι θέλετε να παραιτηθείτε χωρίς να αποθηκεύσετε τις αλλαγές σας;");
+regGS("center city", "κέντρο πόλης");
+regGS("Map preview", "Προεπισκόπηση χάρτη");
+regGS("Locations updated.", "Οι τοποθεσίες ενημερώθηκαν.");
 regGS("Setting the map name helps with map search", "Ρυθμίζοντας το όνομα του χάρτη, βοηθάει στην εύρεση χαρτών");
 regGS("Longitude", "Γεωγραφικό μήκος");
 regGS("Latitude", "Γεωγραφικό πλάτος");
@@ -10,7 +15,6 @@ regGS("Disable", "Απενεργοποίηση");
 regGS("Center", "Κέντρο");
 regGS("Last Saved Map View", "Προβολή Τελευταίως Αποθηκευμένου Χάρτη");
 regGS("List of locations updated", "Η λίστα τοποθεσιών ανανεώθηκε");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "Εάν επιθυμείτε να αποθηκεύσετε τις τρέχουσες αλλαγές, κλείστε πρώτα αυτή την εκφόρτωση. Διαφορετικά οι μη αποθηκευμένες αλλαγές σας θα χαθούν.");
 regGS("width", "πλάτος");
 regGS("source", "πηγή");
 regGS("sorry, no city was found", "Λυπούμαστε, δεν βρέθηκε καμία πόλη");

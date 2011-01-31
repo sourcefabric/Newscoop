@@ -1,10 +1,10 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
-regGS("Geo-location", "");
+regGS("Dashboard", "Kontrolna tabla");
+regGS("Authors", "Autori");
+regGS("Libraries", "Biblioteke");
+regGS("Media Archive", "Media arhiv");
+regGS("Extensions", "Proširenja");
+regGS("Geo-location", "Geo-lokacije");
 regGS("Translation status:", "Status prevoda:");
 regGS("Editor Media Plugin", "Editor Media Plagin");
 regGS("$1 of $2 strings translated", "$1 od $2 string(ov)a prevedeno");

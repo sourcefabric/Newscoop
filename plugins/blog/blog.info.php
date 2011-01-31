@@ -87,10 +87,6 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
     {
         global $LiveUserAdmin;
 
-        if (!isset($LiveUserAdmin)) {
-            return;
-        }
-
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_admin', 'has_implied' => 1));
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_blog_moderator', 'has_implied' => 1));
 

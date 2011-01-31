@@ -1,7 +1,12 @@
 <?php 
-regGS("center city", "");
-regGS("Map preview", "");
-regGS("Locations updated.", "");
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
+regGS("Are you sure you want to quit without saving your changes?", "Wirklich verlassen ohne Änderungen zu speichern?");
+regGS("center city", "Stadtmitte");
+regGS("Map preview", "Vorschau Karte");
+regGS("Locations updated.", "Standorte aktualisiert.");
 regGS("Setting the map name helps with map search", "Einen Kartennamen festlegen um die Kartensuche zu vereinfachen.");
 regGS("Longitude", "Längengrad");
 regGS("Latitude", "Breitengrad");
@@ -10,7 +15,6 @@ regGS("Disable", "Deaktivieren");
 regGS("Center", "Zentrum");
 regGS("Last Saved Map View", "Zuletzt gespeicherte Kartenansicht");
 regGS("List of locations updated", "Liste der Standorte aktualisiert");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "Um aktuelle Änderungen zu speichern, zuerst das Hochladen abbrechen. Sonst verlieren Sie ungespeicherte Änderungen.");
 regGS("width", "Breite");
 regGS("source", "Quelle");
 regGS("sorry, no city was found", "Entschuldigung, keine Stadt gefunden");

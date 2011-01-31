@@ -92,7 +92,7 @@ if ($can_save) {
     $author->commit();
 
     // Reset types
-    $types = Input::Get('type', 'array');
+    $types = Input::Get('type', 'array', array());
     AuthorAssignedType::ResetAuthorAssignedTypes($author->getId());
     foreach ($types as $type) {
         $author->setType($type);
@@ -134,7 +134,7 @@ if ($can_save) {
         Log::Message($logtext, $g_user->getUserId(), 173);
     }
     camp_html_add_msg(getGS("Author saved."),"ok");
-} elseif (!$del_id_alias && $id > -1 && !$can_save) {
+} elseif ($del_id_alias < 1 && $id > -1 && !$can_save) {
     camp_html_add_msg(getGS("Please fill at least first name and last name."));
 }
 
@@ -167,6 +167,7 @@ $(document).ready(function(){
     }).next().hide();
 });
 </script>
+<?php camp_html_display_msgs('1em', '0'); ?>
 <div class="wrapper">
   <div class="info-bar"> <span class="info-text"></span> </div>
   <!--left column-->
@@ -241,11 +242,6 @@ $(document).ready(function() {
             ],
             'fnDrawCallback': function() {
                 $('#gridx tbody tr').click(function(event) {
-                    //alert($(this).parents('tr'));
-                    //$(this).removeClass('selected');
-                    //$(this).raddClass('selected');
-                    //$("tr", oTable.fnGetNodes()).removeClass('selected');
-                    //$(event.target).parent().find("tr").addClass('selected');
                     $(event.target).removeClass('selected');
                     $(event.target).addClass('selected');
                 });

@@ -1,4 +1,6 @@
 <?php 
+regGS("Save All", "Alles speichern");
+regGS("Files", "Dateien");
 regGS("You can't delete used files.", "Dateien in Gebrauch können nicht gelöscht werden.");
 regGS("Do you wan't to delete unused only?", "Nur ungenutzte löschen?");
 regGS("View attachment", "Anhang betrachten");
@@ -7,8 +9,6 @@ regGS("Open in the browser", "Im Browser öffnen");
 regGS("Media Archive", "Medienarchiv");
 regGS("Last modified", "Zuletzt geändert");
 regGS("Items deleted.", "Einträge gelöscht");
-regGS("Images archive", "Bildarchiv");
-regGS("Files archive", "Dateiarchiv");
 regGS("File uploaded.", "Datei hochgeladen");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "Möchten Sie die Datei im Browser öffnen oder automatisch herunterladen?");
 regGS("Delete selected", "Ausgewählte löschen");

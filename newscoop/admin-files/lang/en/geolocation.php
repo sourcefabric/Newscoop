@@ -1,4 +1,9 @@
 <?php 
+regGS("login", "login");
+regGS("Session expired.", "Session expired.");
+regGS("Processing...", "Processing...");
+regGS("Please", "Please");
+regGS("Are you sure you want to quit without saving your changes?", "Are you sure you want to quit without saving your changes?");
 regGS("center city", "center city");
 regGS("Map preview", "Map preview");
 regGS("Locations updated.", "Locations updated.");
@@ -10,7 +15,6 @@ regGS("Disable", "Disable");
 regGS("Center", "Center");
 regGS("Last Saved Map View", "Last Saved Map View");
 regGS("List of locations updated", "List of locations updated");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.");
 regGS("width", "width");
 regGS("source", "source");
 regGS("sorry, no city was found", "sorry, no city was found");

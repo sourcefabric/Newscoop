@@ -1,9 +1,9 @@
 <?php 
-regGS("Show original map", "");
-regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
+regGS("Show original map", "");
+regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Map", "");
 regGS("Center", "");
 regGS("Title", "");

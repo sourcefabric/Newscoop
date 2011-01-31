@@ -1,4 +1,9 @@
 <?php 
+regGS("Files attached.", "");
+regGS("File '$1' unattached.", "");
+regGS("Attach new file", "");
+regGS("Attach existing file", "");
+regGS("$1 file/s attached to article", "");
 regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
@@ -13,7 +18,6 @@ regGS("File Size", "");
 regGS("File Name", "");
 regGS("Download", "");
 regGS("File '$1' updated.", "");
-regGS("File '$1' deleted.", "");
 regGS("Edit article", "Redigera artikel");
 regGS("You do not have the right to delete file attachments.", "Du har inte rättighet att radera bifogade filer.");
 regGS("You must select a file to upload.", "Du måste välja en fil att ladda upp.");

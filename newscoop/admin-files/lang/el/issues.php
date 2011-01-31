@@ -6,7 +6,7 @@ regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".
 regGS("The number must be unique for each issue in this publication of the same language.", "Ο αριθμός πρέπει να είναι μοναδικός για κάθε τεύχος σε αυτή τη δημοσίευση της ίδιας γλώσσας.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Η γλώσσα και το όνομα URL πρέπει να είναι μοναδικά για κάθε τεύχος σε αυτή τη δημοσίευση.");
 regGS("Issue created.", "Το τεύχος δημιουργήθηκε.");
-regGS("Issue updated", "Το τεύχος ανανεώθηκε");
+regGS("Issue updated", "Το τεύχος ενημερώθηκε");
 regGS("Could not save the changes to the issue.", "Οι αλλαγές ήταν αδύνατον να αποθηκευτούν στο τεύχος.");
 regGS("Unpublish on: $1", "Απομάκρυνση Δημοσίευσης: $1");
 regGS("There are $1 articles in this issue.", "Υπάρχουν $1 άρθρα σε αυτό το τεύχος.");

@@ -46,14 +46,11 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             return $content;
         }
 
-        // title
-        $title = rtrim(getGS($this->widget->getTitle()), ' (*)');
-
         // render whole widget
         echo '<li id="', $this->getId(), '" class="widget ui-dialog ui-widget-content ui-corner-all">';
         if ($this->widget->getTitle() !== NULL) {
             echo '<div class="header ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">';
-            echo '<h3 class="ui-dialog-title">', $title, '</h3>';
+            echo '<h3 class="ui-dialog-title">', $this->widget->getTitle(), '</h3>';
             echo '</div>';
         }
         echo '<div class="content"><div class="scroll ui-dialog-content ui-widget-content">', "\n";
@@ -72,8 +69,14 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
      */
     public function renderMeta()
     {
+    	/*
+    	 * getGS('Author')
+    	 * getGS('Version')
+    	 * getGS('Homepage')
+    	 * getGS('License')
+    	 */
         $meta = array(
-            getGS('Author'), getGS('Version'), getGS('Homepage'), getGS('License'),
+            'Author', 'Version', 'Homepage', 'License',
         );
 
         ob_start();
@@ -84,7 +87,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
                 continue;
             }
 
-            echo '<dt>', $key, ':</dt>', "\n";
+            echo '<dt>' . getGS($key) . ':</dt>' . "\n";
             echo '<dd>';
             if (preg_match('#^http://#', $value)) { // generate link
                 $title = str_replace('http://', '', $value);

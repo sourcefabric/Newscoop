@@ -1,4 +1,9 @@
 <?php 
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
+regGS("Are you sure you want to quit without saving your changes?", "");
 regGS("center city", "");
 regGS("Map preview", "");
 regGS("Locations updated.", "");
@@ -10,7 +15,6 @@ regGS("Disable", "");
 regGS("Center", "");
 regGS("Last Saved Map View", "");
 regGS("List of locations updated", "");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "");
 regGS("width", "");
 regGS("source", "");
 regGS("sorry, no city was found", "");

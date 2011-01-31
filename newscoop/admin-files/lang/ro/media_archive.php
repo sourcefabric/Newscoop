@@ -1,15 +1,15 @@
 <?php 
-regGS("You can't delete used files.", "");
+regGS("Save All", "Salvează totul");
+regGS("Files", "Fișiere");
+regGS("You can't delete used files.", "Nu se pot șterge fișiere în uz.");
 regGS("Do you wan't to delete unused only?", "");
-regGS("View attachment", "");
-regGS("Select some items first.", "");
-regGS("Open in the browser", "");
-regGS("Media Archive", "");
-regGS("Last modified", "");
-regGS("Items deleted.", "");
-regGS("Images archive", "");
-regGS("Files archive", "");
-regGS("File uploaded.", "");
+regGS("View attachment", "Vizualizează fișierul atașat.");
+regGS("Select some items first.", "Selectează căteva elemente.");
+regGS("Open in the browser", "Deschide în navigator.");
+regGS("Media Archive", "Arhivă media");
+regGS("Last modified", "Ultima modificare");
+regGS("Items deleted.", "Elemente șterse.");
+regGS("File uploaded.", "Fișier încărcat");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "");
 regGS("Delete selected", "");
 regGS("Created", "");

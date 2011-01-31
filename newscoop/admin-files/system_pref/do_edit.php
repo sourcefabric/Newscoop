@@ -156,7 +156,7 @@ if ($f_login_num >= 0) {
 // Max Upload File Size
 $max_upload_filesize_bytes = camp_convert_bytes($f_max_upload_filesize);
 if ($max_upload_filesize_bytes > 0 &&
-        $max_upload_filesize_bytes <= camp_convert_bytes(ini_get('upload_max_filesize'))) {
+        $max_upload_filesize_bytes <= min(camp_convert_bytes(ini_get('post_max_size')), camp_convert_bytes(ini_get('upload_max_filesize')))) {
     SystemPref::Set("MaxUploadFileSize", $f_max_upload_filesize);
 } else {
     $msg_ok = 0;

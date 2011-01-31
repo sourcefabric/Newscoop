@@ -5,6 +5,8 @@ require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php'
 
 camp_load_translation_strings('home');
 camp_load_translation_strings('api');
+camp_load_translation_strings('extensions');
+camp_load_translation_strings('articles');
 
 echo camp_html_breadcrumbs(array(
     array(getGS('Dashboard'), $Campsite['WEBSITE_URL'] . '/admin/home.php'),

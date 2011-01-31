@@ -217,6 +217,11 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
 	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
+
+    $localeFile = $Campsite['CAMPSITE_DIR'] . '/javascript/tinymce/langs/' . $p_editorLanguage . '.js';
+	if (!file_exists($localeFile)) {
+	    $p_editorLanguage = 'en';
+	}
 ?>
 
 <!-- Load TinyMCE -->

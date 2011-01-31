@@ -1,8 +1,13 @@
 <?php 
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "Фајл је закачен");
+regGS("File '$1' unattached.", "фајл '$1' је уклоњен");
+regGS("Attach new file", "Закачи нови фајл");
+regGS("Attach existing file", "Закачи постојећи фајл");
+regGS("$1 file/s attached to article", "$1 фајл(ова) додат(о) у текст");
+regGS("File attached.", "Фајл је закачен");
+regGS("The maximum file upload size was not configured in Newscoop.", "Максимална величина фајла није подешена у Newscoopu");
+regGS("File #$1 \"$2\" unattached", "Фајл #$1 \"$2\" уклоњен");
+regGS("File #$1 \"$2\" attached to article", "Фајл #$1 \"$2\" закачен уз текст");
 regGS("Unable to add attachment.", "Није могуће закачити фајл.");
 regGS("There was a problem uploading the file.", "Дошло је до проблема при аплоуду фајла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Фајл је делимично аплоудован. Ово се обично дешава када је макс. време за аплоуд кратко у односу на величину фајла. Максимална величина се подешава у 'php.ini'");
@@ -13,7 +18,6 @@ regGS("File Size", "Величина фајла");
 regGS("File Name", "Назив фајла");
 regGS("Download", "Преузми");
 regGS("File '$1' updated.", "Фајл '$1' је измењен.");
-regGS("File '$1' deleted.", "Фајл '$1' је обрисан.");
 regGS("Edit article", "Уреди текст");
 regGS("You do not have the right to delete file attachments.", "Немате право да бришете прикачене фајлове.");
 regGS("You must select a file to upload.", "Морате изабрати фајл за аплоуд.");

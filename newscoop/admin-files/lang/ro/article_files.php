@@ -1,4 +1,9 @@
 <?php 
+regGS("Files attached.", "");
+regGS("File '$1' unattached.", "");
+regGS("Attach new file", "");
+regGS("Attach existing file", "");
+regGS("$1 file/s attached to article", "");
 regGS("File attached.", "");
 regGS("The maximum file upload size was not configured in Newscoop.", "");
 regGS("File #$1 \"$2\" unattached", "");
@@ -13,7 +18,6 @@ regGS("File Size", "");
 regGS("File Name", "");
 regGS("Download", "");
 regGS("File '$1' updated.", "Fişierul '$1' a fost actualizat.");
-regGS("File '$1' deleted.", "Fişierul '$1' a fost şters.");
 regGS("Edit article", "Modifică articolul");
 regGS("You do not have the right to delete file attachments.", "Nu ai dreptul să ştergi fişiere ataşate.");
 regGS("You must select a file to upload.", "Trebuie să selectezi un fişier pentru a-l încărca în sistem.");

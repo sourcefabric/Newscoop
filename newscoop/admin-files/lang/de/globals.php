@@ -249,7 +249,7 @@ regGS("Other", "Andere");
 regGS("Time:", "Uhrzeit:");
 regGS("No events.", "Keine Ereignisse.");
 regGS("Default templates", "Standard Template");
-regGS("System Preferences", "System Voreinstellungen");
+regGS("System Preferences", "Systemeinstellungen");
 regGS("The date must be in the future.", "Das Datum muss in der Zukunft liegen.");
 regGS("Send", "Senden");
 regGS("Thank you.", "Vielen Dank.");
@@ -275,5 +275,4 @@ regGS("There are $1 issue(s) left.", "Es sind noch $1 Ausgaben vorhanden");
 regGS("There are $1 keyword(s) left.", "Es sind noch $1 Stichworte vorhanden");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Name (bearbeiten, bitte anklicken)");
 regGS("New field", "Neues Feld");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Soll Bild \\'$1\\' gelöscht werden?");
 ?>
