@@ -84,4 +84,6 @@ regGS("Keyword separator must be at least one character.", "Separatorul de cuvin
 regGS("You do not have the right to change system preferences.", "Nu ai dreptul să schimbi preferinţele de sistem.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Numărul de încercări nereuşite de intrare în sistem înainte de a afişa CAPTCHA:");
 regGS("Keyword separator:", "Separator de cuvinte-cheie:");
+regGS("Time Zone:", "");
+regGS("disabled", "");
 ?>

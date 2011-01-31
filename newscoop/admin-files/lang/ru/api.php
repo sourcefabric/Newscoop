@@ -1,7 +1,7 @@
 <?php 
-regGS("Version", "");
-regGS("License", "");
-regGS("Homepage", "");
+regGS("Version", "Версия");
+regGS("License", "Лицензия");
+regGS("Homepage", "Главная");
 regGS("Show original map", "Показать исходную карту");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Загруженный архив не содержит верный плагин Newscoop.");
 regGS("Map", "Карта");

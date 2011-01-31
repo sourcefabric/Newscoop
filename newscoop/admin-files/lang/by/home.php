@@ -1,12 +1,12 @@
 <?php 
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
-regGS("Go to dashboard", "");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
-regGS("Synchronize Newscoop and Phorum users", "");
-regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
-regGS("Newscoop cache was cleaned up", "");
+regGS("Session expired.", "Сесія скончана.");
+regGS("Processing...", "Апрацоўка...");
+regGS("Please", "Калі ласка");
+regGS("Go to dashboard", "Вярнуцца на \"Мой Newscoop\"");
+regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Ваш браўзэр не падтрымлівае Javascript або (больш верагодна) опцыя Javascript адключаная. Выпраўце сітуацыю, каб карыстацца Newscoop.");
+regGS("Synchronize Newscoop and Phorum users", "Сінхранізаваць працу карыстальнікаў Newscoop і форума");
+regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "Newscoop мадэрнізаваў механізмы бяспекі. Для таго, каб аднавіць уліковы запіс і выкарыстоўваць новыя наладкі бяспекі, Вы павінны зноў ўвесці пароль.");
+regGS("Newscoop cache was cleaned up", "Кэш Newscoop быў ачышчаны.");
 regGS("Newscoop and Phorum users were synchronized", "");
 regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
@@ -98,4 +98,5 @@ regGS("Login failed", "Памылка ўваходу");
 regGS("Please make sure that you typed the correct user name and password.", "Калi ласка, праверце, цi правiльна Вы ўвялі лагiн і пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Калi праблема iснуе, зьвярнецеся да адмiнiстратара сайта $1");
 regGS("Backup/Restore", "Рэзервнае капіраванне");
+regGS("Hi, \\nfor password recovery, please follow this link: %s", "Прывітаньне, \\ \\ n Для аднаўлення пароля прайдзіце па гэтай спасылцы:% s");
 ?>
