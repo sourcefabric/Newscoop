@@ -46,6 +46,7 @@ class WidgetContext extends DatabaseObject implements IWidgetContext
             $this->create(array(
                 'name' => $this->getName(),
             ));
+            $this->fetch();
         }
     }
 
