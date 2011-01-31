@@ -24,7 +24,7 @@ body {
 /* Top */
 
 #top {
-  width: 942px;
+  width: 952px;
   margin: 0 auto;
   border-top-width: 5px;
   border-top-style:solid;
@@ -33,7 +33,7 @@ body {
 /* Top Meta */
 
 #top-meta {
-  width: 942px;
+  width: 952px;
   height:21px;
   padding:15px 0 5px 0;
   border-bottom-width: 1px;
@@ -94,7 +94,7 @@ form#topSearch {
 #top-meta .rss {
   padding: 4px 0px 0 10px;
   float:right;
-  width:146px;
+  width:156px;
   border-left-width: 1px;
   border-left-style:solid;
     margin-left: 10px; 
@@ -369,7 +369,7 @@ form#topSearch {
 /* Content */
 
 #content {
-  width: 942px;
+  width: 952px;
   margin:0 auto;
   min-height: 550px;
   padding: 0;
@@ -381,7 +381,7 @@ form#topSearch {
 }
 
 #main.fullwidth {
-  width:942px;
+  width:952px;
 }
 
 
@@ -523,7 +523,7 @@ hr {
 }
 
 #categories-crop {
-    width: 942px;
+    width: 952px;
     overflow: hidden;
 }
 
@@ -693,7 +693,7 @@ ul.idTabs li a.selected, ul.idTabs li a:hover {
 }
 
 #bottom {
-  width:942px;
+  width:952px;
   border-top-style:solid;
   border-top-width:1px;
   float:left;

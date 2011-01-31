@@ -14,7 +14,7 @@
         <div id="header">
             
             <div class="logo">
-              <a href="http://{{ $gimme->publication->site }}" title="The Journal"><img src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/logo.png" alt=""></a>
+              <a href="http://{{ $gimme->publication->site }}" title="The Journal"><img src="/templates/set_thejournal/_img/logo.png" alt=""></a>
             </div>
                        
 {{ include file="set_thejournal/_tpl/top-recent-entries.tpl" }}
