@@ -8,6 +8,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
+camp_load_translation_strings("home"); 
 
 $f_language_id = Input::Get('f_language_selected', 'int', 0);
 if (0 == $f_language_id) {
@@ -66,6 +67,15 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
 
+    <script type="text/javascript">
+    <!--
+        var localizer = localizer || {};
+        localizer.processing = '<?php putGS('Processing...'); ?>';
+        localizer.session_expired = '<?php putGS('Session expired.'); ?>';
+        localizer.please = '<?php putGS('Please'); ?>';
+        localizer.login = '<?php putGS('login'); ?>';
+    //-->
+    </script>
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
     <script type="text/javascript">
     <!--
