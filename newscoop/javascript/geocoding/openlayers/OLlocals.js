@@ -444,7 +444,7 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj)
         geo_obj.select_control.unselect(geo_obj.popup.feature);
     }
 
-    var pop_info = OpenLayers.HooksPopups.create_popup_content(feature, geo_obj);
+    var pop_info = GeoPopups.create_popup_content(feature, geo_obj);
     var pop_text = pop_info['inner_html'];
 
     geo_obj.cur_pop_rank += 1;
@@ -482,79 +482,6 @@ OpenLayers.HooksPopups.on_map_feature_select = function(geo_object, poi_index)
 
     OpenLayers.HooksPopups.on_feature_select({'feature':feature}, geo_object);
 
-};
-
-
-// preparing html content for a popup
-OpenLayers.HooksPopups.create_popup_content = function(feature, geo_obj) {
-    var none_info = {'inner_html': "", 'min_width': 0, 'min_height': 0};
-
-    if (!feature) {return none_info;}
-
-    var attrs = feature.attributes;
-    if (!attrs) {return none_info;}
-
-    var pop_text = "";
-    {
-        var pop_link = attrs.m_link;
-        var pop_title = "" + feature.attributes.m_title;
-        pop_title = pop_title.replace(/&/gi, "&amp;");
-        pop_title = pop_title.replace(/>/gi, "&gt;");
-        pop_title = pop_title.replace(/</gi, "&lt;");
-
-        pop_text += "<div class='popup_title'>";
-        if (0 < pop_link.length) {
-            pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\">";
-        }
-        pop_text += pop_title;
-        if (0 < pop_link.length) {
-            pop_text += "</a>";
-        }
-        pop_text += "</div>";
-    }
-
-    var with_embed = false;
-    {
-        if (feature.attributes.m_image)
-        {
-            pop_text += "<div class='popup_image'>" + feature.attributes.m_image + "</div>";
-        }
-        if (feature.attributes.m_embed)
-        {
-            pop_text += "<div class='popup_video'>" + feature.attributes.m_embed + "</div>";
-            with_embed = true;
-        }
-    }
-
-    if (attrs.m_direct)
-    {
-        var content = attrs.m_content;
-        if (!content) {content = "";}
-        pop_text += "<div class='popup_content'>" + content + "</div>";
-    }
-    else
-    {
-        var plain_text = feature.attributes.m_text;
-        plain_text = plain_text.replace(/&/gi, "&amp;");
-        plain_text = plain_text.replace(/>/gi, "&gt;");
-        plain_text = plain_text.replace(/</gi, "&lt;");
-        plain_text = plain_text.replace(/\r\n/gi, "</p><p>");
-        plain_text = plain_text.replace(/\n/gi, "</p><p>");
-        plain_text = plain_text.replace(/\r/gi, "</p><p>");
-
-        pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
-    }
-
-    var min_width = geo_obj.popup_width;
-    var min_height = geo_obj.popup_height;
-    if (with_embed) {
-        var min_width_embed = feature.attributes.m_embed_width + 100;
-        var min_height_embed = feature.attributes.m_embed_height + 100;
-        if (min_width_embed > min_width) {min_width = min_width_embed;}
-        if (min_height_embed > min_height) {min_height = min_height_embed;}
-    }
-
-    return {'inner_html': pop_text, 'min_width': min_width, 'min_height': min_height};
 };
 
 // our auxiliary functions to be used inside the hook functions

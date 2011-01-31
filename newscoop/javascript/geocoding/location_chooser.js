@@ -1546,100 +1546,6 @@ this.load_point_label = function()
 
 };
 
-// preparing image html tag for a point popup
-this.set_image_tag = function(attrs)
-{
-    attrs.m_image = "";
-
-    var img_src = attrs.m_image_source;
-    if (!img_src) {img_src = "";}
-    if (0 < img_src.length)
-    {
-        var img_value = "<img src='" + img_src + "'";
-        var img_height = attrs.m_image_height;
-        if (undefined !== img_height) {img_value += " height='" + img_height + "'";}
-        var img_width = attrs.m_image_width;
-        if (undefined !== img_width) {img_value += " width='" + img_width + "'";}
-        img_value += " />";
-
-        attrs.m_image = img_value;
-    }
-};
-
-// preparing video html tag for a point popup
-this.set_embed_tag = function(attrs)
-{
-    attrs.m_embed = "";
-    attrs.m_embed_width = 0;
-    attrs.m_embed_height = 0;
-
-    var vid_id = attrs.m_video_id;
-    var vid_type = attrs.m_video_type;
-    if (!vid_id) {vid_id = "";}
-    if (!vid_type) {vid_type = "none";}
-
-    var vid_define = null;
-    if ("none" != vid_type)
-    {
-        vid_define = this.popup_video_props[vid_type];
-    }
-
-    if ((0 < vid_id.length) && vid_define)
-    {
-        var vid_src = vid_define["source"];
-        if (!vid_src) {vid_src = "";}
-
-        var vid_poster = "";
-        if ("flv" == vid_type)
-        {
-            if (vid_id.match(/\.flv$/))
-            {
-                vid_poster = vid_id.replace(/\.flv$/, ".png");
-            }
-            else
-            {
-                vid_poster = vid_id + ".png";
-                vid_id = vid_id + ".flv";
-            }
-        }
-
-        var vid_value = vid_src.replace(/%%id%%/g, vid_id);
-        var vid_value = vid_value.replace(/%%ps%%/g, vid_poster);
-
-        var vid_height = attrs.m_video_height;
-        if ((!vid_height) || ("" == vid_height)) {vid_height = vid_define["height"];}
-        var vid_width = attrs.m_video_width;
-        if ((!vid_width) || ("" == vid_width)) {vid_width = vid_define["width"];}
-
-        var vid_path = vid_define["path"];
-        if (!vid_path) {vid_path = "";}
-
-        vid_value = vid_value.replace(/%%h%%/g, vid_height);
-        vid_value = vid_value.replace(/%%w%%/g, vid_width);
-
-        var emptify_server_part = false;
-        var full_url_starts = ["http://", "https://", "ftp://", "ftps://"];
-        var full_url_starts_count = full_url_starts.length;
-        for (var uind = 0; uind < full_url_starts_count; uind++)
-        {
-            var one_url_start = full_url_starts[uind];
-            if (one_url_start == vid_id.substring(0, one_url_start.length)) {emptify_server_part = true; break;}
-        }
-        if (emptify_server_part)
-        {
-            vid_path = "";
-        }
-
-        vid_value = vid_value.replace(/%%path%%/g, vid_path);
-
-        attrs.m_embed = vid_value;
-        attrs.m_embed_height = parseInt(vid_height);
-        attrs.m_embed_width = parseInt(vid_width);
-
-    }
-
-};
-
 // storing POI's specified property
 this.store_point_property = function(property, value)
 {
@@ -1678,12 +1584,12 @@ this.store_point_property = function(property, value)
 
     if ("image" == property.substr(0, 5))
     {
-        this.set_image_tag(attrs);
+        GeoPopups.set_image_tag(attrs);
     }
 
     if ("video" == property.substr(0, 5))
     {
-        this.set_embed_tag(attrs);
+        GeoPopups.set_embed_tag(attrs);
         this.update_video_label();
     }
     if (update_preview) {this.update_edit_preview();}
@@ -2249,8 +2155,8 @@ this.got_load_data = function (received_obj)
 
         vector.attributes.m_image = "";
         vector.attributes.m_embed = "";
-        this.set_image_tag(vector.attributes);
-        this.set_embed_tag(vector.attributes);
+        GeoPopups.set_image_tag(vector.attributes);
+        GeoPopups.set_embed_tag(vector.attributes);
 
         features_to_add.push(vector);
 
@@ -2537,11 +2443,13 @@ this.map_save_all = function(script_dir)
     {
         this.main_page_upload = false;
         try {
+/* the article editing page has changed
             if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
             {
                 window.opener.document.forms.article_edit.f_message.value = this.display_strings["locations_updated"];
                 window.opener.document.forms.article_edit.submit();
             }
+*/
         }
         catch (e)
         {

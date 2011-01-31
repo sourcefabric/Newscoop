@@ -79,6 +79,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
     <?php echo $geo_map_incl; ?>
 
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
@@ -293,6 +294,7 @@ var on_load_proc = function()
     //}, 1000);
     window.focus();
     window.geomap_art_spec_popup = "" + '<?php echo $map_article_spec; ?>';
+/* the article editing page has changed
     try {
         if (undefined !== window.opener.geomap_art_spec_popup)
         {
@@ -320,7 +322,8 @@ var on_load_proc = function()
         return;
     };
 
-    //var opener_sets = self.setInterval("set_to_opener()", 1000);
+    var opener_sets = self.setInterval("set_to_opener()", 1000);
+*/
 };
 
 on_close_request = function()
