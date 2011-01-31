@@ -27,12 +27,12 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.5';
+    private $m_release = '3.5.0';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'GA';
+    private $m_devStatus = '';
 
     /**
      * @var string
