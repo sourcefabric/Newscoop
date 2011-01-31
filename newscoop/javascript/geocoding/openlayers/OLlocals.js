@@ -426,7 +426,7 @@ OpenLayers.HooksPopups.on_feature_unselect = function(evt, geo_obj)
     }
 };
 
-OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj)
+OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 {
     var feature = null;
 
@@ -439,16 +439,6 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj)
 
     var attrs = feature.attributes;
     if (!attrs) {return;}
-
-    if (attrs.m_duplicate)
-    {
-        //m_shift
-
-        feature = geo_obj.layer.features[attrs.m_original];
-        if (!feature) {return;}
-        attrs = feature.attributes;
-        if (!attrs) {return;}
-    }
 
     if (geo_obj.popup) {
         geo_obj.select_control.unselect(geo_obj.popup.feature);
@@ -473,6 +463,10 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj)
     geo_obj.popup.feature = feature;
     geo_obj.map.addPopup(geo_obj.popup);
 
+    if (!avoid_rec)
+    {
+        OpenLayers.HooksLocal.map_check_popup(geo_obj);
+    }
 };
 
 
@@ -608,6 +602,51 @@ OpenLayers.HooksLocal.new_poi_on_map_click = function(evt, map) {
     geo_obj.insert_poi('map', lonlat);
 };
 
+OpenLayers.HooksLocal.map_check_popup = function(geo_obj) {
+
+    if (geo_obj.popup)
+    {
+        var feature = geo_obj.popup.feature;
+        if (!feature) {return;}
+        var attrs = feature.attributes;
+        if (!attrs) {return;}
+
+        var test_lonlat = null;
+        var aux_center = null;
+        if (undefined !== attrs.m_original)
+        {
+            var view_box = geo_obj.map.calculateBounds();
+            test_lonlat = new OpenLayers.LonLat(attrs.m_maplon, attrs.m_maplat);
+            if (!view_box.containsLonLat(test_lonlat, true))
+            {
+                var aux_inds = [attrs.m_original, attrs.m_original + attrs.m_count, attrs.m_original + (2 * attrs.m_count)];
+                var poi_features = geo_obj.layer.features;
+                var test_features = [poi_features[aux_inds[0]], poi_features[aux_inds[1]], poi_features[aux_inds[2]]];
+                var test_count = test_features.length;
+
+                for (var tind = 0; tind < test_count; tind++)
+                {
+                    feature = test_features[tind];
+                    if (!feature) {return;}
+                    attrs = feature.attributes;
+                    if (!attrs) {return;}
+
+                    test_lonlat = new OpenLayers.LonLat(attrs.m_maplon, attrs.m_maplat);
+                    if (view_box.containsLonLat(test_lonlat, true))
+                    {
+                        aux_center = geo_obj.map.getCenter();
+                        OpenLayers.HooksPopups.on_feature_select({"feature":feature}, geo_obj, true);
+                        geo_obj.map.setCenter(aux_center);
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+};
+
 // our implementation of the proposed hook functions
 
 OpenLayers.Hooks.LayerSwitcher.layerSwitched = function(ctrl) {
@@ -673,5 +712,6 @@ OpenLayers.Hooks.DragPan.panMap = function(ctrl) {
 
 OpenLayers.Hooks.DragPan.panMapDone = function(ctrl) {
     OpenLayers.HooksLocal.map_center_update(ctrl.map.geo_obj);
+    OpenLayers.HooksLocal.map_check_popup(ctrl.map.geo_obj);
 }
 

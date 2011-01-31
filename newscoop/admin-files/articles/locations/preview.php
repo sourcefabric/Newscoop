@@ -61,7 +61,8 @@ var map_show_edit = function()
 <?php
 $map_width = 0;
 $map_height = 0;
-echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $map_height);
+$auto_focus = true;
+echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $map_height, $auto_focus);
 ?>
 </head>
 <body onLoad="return false;">

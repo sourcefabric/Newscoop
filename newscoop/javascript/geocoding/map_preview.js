@@ -3,6 +3,7 @@
 function geo_locations () {
 
 this.something_to_save = false;
+this.auto_focus = true;
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -114,6 +115,21 @@ this.set_article_spec = function(params)
 {
     this.article_number = parseInt(params.article_number);
     this.language_id = parseInt(params.language_id);
+};
+
+this.set_auto_focus = function(params)
+{
+    var param_names = ["auto_focus"];
+    var param_count = param_names.length;
+
+    for (var pind = 0; pind < param_count; pind++)
+    {
+        var one_name = param_names[pind];
+        if (undefined !== params[one_name])
+        {
+            this[one_name] = params[one_name];
+        }
+    }
 };
 
 this.map_limit_width_display = 800;
@@ -545,9 +561,12 @@ this.got_load_data = function (load_data, is_obj) {
         GeoPopups.set_embed_tag(vector.attributes);
 
         vector.attributes.m_obj = this;
+        vector.attributes.m_count = poi_count;
         vector.attributes.m_duplicate = one_marker["duplicate"];
         vector.attributes.m_original = one_marker["original"];
         vector.attributes.m_shift = one_marker["lon_shift"];
+        vector.attributes.m_maplon = one_marker['map_lon'];
+        vector.attributes.m_maplat = one_marker['map_lat'];
 
         features_to_add.push(vector);
 
@@ -559,7 +578,7 @@ this.got_load_data = function (load_data, is_obj) {
     this.descs_count = poi_count;
     this.descs_count_inc = poi_count;
 
-    if (0 < poi_count)
+    if (this.auto_focus && (0 < poi_count))
     {
         if ((poi_lon_max - poi_lon_min) > (toi_lon_max - toi_lon_min))
         {
@@ -585,7 +604,6 @@ this.got_load_data = function (load_data, is_obj) {
 
         var zoom_min = 0;
         var zoom_ini = 18;
-        //var zoom_max = 6; // 18;
         var zoom_use = 0;
 
         var view_box = null;
@@ -607,11 +625,6 @@ this.got_load_data = function (load_data, is_obj) {
         {
             if (0 < zoom_use) {zoom_use -= 1;}
         }
-
-        //this.map.setCenter(poi_cen_lonlat, zoom_use);
-        //received_obj.map.lon = (parseFloat(pos_lon_min) + parseFloat(pos_lon_max)) / 2.0;
-        //received_obj.map.lat = (parseFloat(pos_lat_min) + parseFloat(pos_lat_max)) / 2.0;
-        ;
 
         received_obj.map.lon = (pos_lon_min + pos_lon_max) / 2.0;
         if (180 < received_obj.map.lon) {received_obj.map.lon -= 360;}
