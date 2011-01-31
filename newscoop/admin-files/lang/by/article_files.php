@@ -1,13 +1,13 @@
 <?php 
-regGS("Files attached.", "");
-regGS("File '$1' unattached.", "");
-regGS("Attach new file", "");
-regGS("Attach existing file", "");
-regGS("$1 file/s attached to article", "");
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "Файлы далучаныя.");
+regGS("File '$1' unattached.", "Файл '$ 1' далучаны.");
+regGS("Attach new file", "Далучыць новы файл");
+regGS("Attach existing file", "Далучыць існуючы файл");
+regGS("$1 file/s attached to article", "$1 файлаў далучана");
+regGS("File attached.", "Файл далучаны.");
+regGS("The maximum file upload size was not configured in Newscoop.", "Максімальны памер загружанага файла быў не канфігураваны ў наладах Newscoop.");
+regGS("File #$1 \"$2\" unattached", "Файл #$1 \"$2\" адлучаны");
+regGS("File #$1 \"$2\" attached to article", "Файл # $1 \"$2\" прымацаваны да артыкулу");
 regGS("Unable to add attachment.", "Немагчыма дадаць файл.");
 regGS("There was a problem uploading the file.", "Праблема загрузкі файла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Загружаны файл захаваны на сервер часткова. Гэта звязана з тым, што максімальна дапушчальны час загрузкі файла пераўзыходзіць час, неабходны для загрузкі гэтага файла. Максімальны час загрузкі вызначаны ў файле 'php.ini'");

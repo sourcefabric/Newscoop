@@ -9,7 +9,7 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Кеш Newscoop был очищен.");
 regGS("Newscoop and Phorum users were synchronized", "Работа пользователей Newscoop и форума была синхронизирована");
 regGS("Dashboard", "Мой Newscoop");
-regGS("Your changes will be saved after login.", "Изменения буду сохранены после входа в систему.");
+regGS("Your changes will be saved after login.", "Изменения будут сохранены после входа в систему.");
 regGS("You have tried to upload wrong backup file.", "Вы пытались загрузить неверный файл резервной копии сайта.");
 regGS("Upload backup file", "Загрузить файл резервной копии");
 regGS("The file $1 has been uploaded successfully.", "Файл $1 был успешно загружен.");
