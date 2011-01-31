@@ -59,10 +59,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         'sZeroRecords': '<?php putGS('No records found.'); ?>',
         'sSearch': '<?php putGS('Search'); ?>:',
-        'sInfo': '<?php putGS('Showing $1 to $2 of $3 entries', '_START_', '_END_', '_TOTAL_'); ?>',
+        'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
         'sEmpty': '<?php putGS('No entries to show'); ?>',
-        'sInfoFiltered': '<?php putGS(' - filtering from $1 records', '_MAX_'); ?>',
-        'sLengthMenu': '<?php putGS('Display $1  records', '_MENU_'); ?>'
+        'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
+        'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
     },
     'aoColumnDefs': [
         { // inputs for id
