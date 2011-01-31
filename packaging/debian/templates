@@ -17,7 +17,7 @@ Description: Create apache2 config:
 Description-de: Erzeugen einer apache2 konfiuration:
  create a system-wide (all vhosts) apache-config
  .
- bla
+ more info soon..
 
 Template: newscoop/apache-servername
 Type: string
@@ -25,7 +25,7 @@ Default: localhost
 Description: FQDN - apache-vhost ServerName:
  dedicated vhost-setup
  .
- hotseflots
+ more info soon..
 
 Template: newscoop/apache-serveradmin
 Type: string
@@ -33,4 +33,4 @@ Default: root@localhost
 Description: Emai of the vhost-admin - ServerAdmin:
  dedicated vhost-setup
  .
- blabla
+ more info soon..
