@@ -1,9 +1,9 @@
 <?php 
-regGS("login", "");
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
-regGS("Are you sure you want to quit without saving your changes?", "");
+regGS("login", "лагін");
+regGS("Session expired.", "Сесія скончылася.");
+regGS("Processing...", "Апрацоўка...");
+regGS("Please", "Калі ласка");
+regGS("Are you sure you want to quit without saving your changes?", "Вы ўпэўненыя, што жадаеце выйсці без захавання змяненняў?");
 regGS("center city", "");
 regGS("Map preview", "");
 regGS("Locations updated.", "");
@@ -49,4 +49,6 @@ regGS("icon", "");
 regGS("basic", "");
 regGS("any country", "");
 regGS("Setting Map Locations", "");
+regGS("city", "");
+regGS("cc", "");
 ?>
