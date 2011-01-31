@@ -465,7 +465,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
           var windowTop = $(window).scrollTop();
           var stickyTop = $('.sticky').offset().top;
           if (windowTop > stickyTop && sticky_limit == 0) {
-              $('.sticky').css('width', $('.sticky').width()+'px').css('position', 'fixed').css('top', '0');
+              $('.sticky').css('width', '100%').css('position', 'fixed').css('top', '0');
               sticky_limit = stickyTop;
           }
           if (sticky_limit > 0 && windowTop < sticky_limit) {
