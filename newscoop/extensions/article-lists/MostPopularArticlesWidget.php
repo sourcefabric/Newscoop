@@ -15,6 +15,11 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
  */
 class MostPopularArticlesWidget extends ArticlesWidget
 {
+    public function __construct()
+    {
+       $this->title = getGS('Most Popular Articles');
+    }
+
     public function beforeRender()
     {
         $count = 0;

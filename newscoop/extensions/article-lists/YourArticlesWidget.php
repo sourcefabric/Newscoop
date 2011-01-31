@@ -15,6 +15,11 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
  */
 class YourArticlesWidget extends ArticlesWidget
 {
+    public function __construct()
+    {
+        $this->title = getGS('Your Articles');
+    }
+
     public function beforeRender()
     {
         $this->items = Article::GetArticlesByUser($this->getUser()->getUserId());
