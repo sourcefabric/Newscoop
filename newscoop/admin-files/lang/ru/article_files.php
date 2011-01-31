@@ -1,9 +1,9 @@
 <?php 
 regGS("Files attached.", "Файлы присоединены.");
-regGS("File '$1' unattached.", "Файл '$1' присоеденен.");
+regGS("File '$1' unattached.", "Файл '$1' присоединен.");
 regGS("Attach new file", "Присоединить новый файл");
 regGS("Attach existing file", "Присоединить существующий файл");
-regGS("$1 file/s attached to article", "$1 файл присоединено");
+regGS("$1 file/s attached to article", "$1 файлов присоединено");
 regGS("File attached.", "Файл присоединен.");
 regGS("The maximum file upload size was not configured in Newscoop.", "Максимальный размер загруженного файла был не конфигурирован в настройках Newscoop.");
 regGS("File #$1 \"$2\" unattached", "Файл #$1 \"$2\" откреплен");

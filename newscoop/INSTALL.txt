@@ -10,7 +10,7 @@ CONTENTS:
 
 TECHNICAL REQUIREMENTS - applications you need to have installed
   see the manual page at:
-  http://en.flossmanuals.net/Campsite/RequirementsDependencies
+  http://sourcefabric.org/en/products/newscoop_manuals/
 
 ####################################################################
 
@@ -50,4 +50,4 @@ steps.
 
 INSTALLATION of multiple instances
 
-You will have to perform one install for each Newscoop instance.
+You will have to perform one installation for each Newscoop instance.

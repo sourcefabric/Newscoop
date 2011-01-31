@@ -32,17 +32,17 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_devStatus = 'rc2';
+    private $m_devStatus = '';
 
     /**
      * @var string
      */
-    private $m_codeName = '';
+    private $m_codeName = 'Bea';
 
     /**
      * @var string
      */
-    private $m_releaseDate = '2010-01-17';
+    private $m_releaseDate = '2011-01-31';
 
     /**
      * @var string

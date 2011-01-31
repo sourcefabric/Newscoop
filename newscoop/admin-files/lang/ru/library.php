@@ -1,18 +1,18 @@
 <?php 
 regGS("Download file", "Загрузить файл");
 regGS("You do not have the right to delete articles.", "У Вас нет прав доступа для удаления статей.");
-regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "У Вас нет прав доступа для смены статуса статьи. Созданная и утвержденная статья может изменена только авторизованным пользователем.");
+regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "У Вас нет прав доступа для смены статуса статьи. Созданная и утвержденная статья может быть изменена только авторизованным пользователем.");
 regGS("Use Map", "Использовать карту");
-regGS("Toggle: 'On Section Page'", "Переключатель \"На странице рубрики\"");
-regGS("Toggle: 'On Front Page'", "Переключатель \"На главной странице\"");
-regGS("Toggle: 'Comments'", "Переключатель \"Комментарии\"");
+regGS("Toggle: 'On Section Page'", "Маркер \"На странице рубрики\"");
+regGS("Toggle: 'On Front Page'", "Маркер \"На главной странице\"");
+regGS("Toggle: 'Comments'", "Маркер \"Комментарии\"");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 минут назад.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.");
 regGS("Status: Submit", "Статус: Отправить");
 regGS("Status: Set New", "Статус: Новая");
 regGS("Status: Publish", "Статус: Утвердить");
 regGS("Size", "Размер");
-regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Показано _START_ до _END_TOTAL_ записей");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Показано _START_ до _END_ / _TOTAL_ записей");
 regGS("Show / hide columns", "Показать / скрыть колонки");
 regGS("Select some article first.", "Выберите сначала несколько статей.");
 regGS("Select action", "Выбрать действие");

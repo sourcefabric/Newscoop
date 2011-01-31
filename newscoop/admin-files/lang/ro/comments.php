@@ -1,5 +1,5 @@
 <?php 
-regGS("You are connected to the Online server", "");
+regGS("You are connected to the Online server", "Nu ești conectat la server-ul de pe Internet.");
 regGS("Unable to connect to the Online Server", "");
 regGS("No connected to Online server", "");
 regGS("Comments Disabled: you are either offline or not able to reach the Online server", "");

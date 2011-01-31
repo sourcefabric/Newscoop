@@ -1,13 +1,13 @@
 <?php 
-regGS("Save All", "");
-regGS("Files", "");
-regGS("You can't delete used files.", "");
-regGS("Do you wan't to delete unused only?", "");
-regGS("View attachment", "");
-regGS("Select some items first.", "");
-regGS("Open in the browser", "");
-regGS("Media Archive", "");
-regGS("Last modified", "");
+regGS("Save All", "Захаваць усе");
+regGS("Files", "Файлы");
+regGS("You can't delete used files.", "Вы не можаце выдаліць  файлы, якія выкарыстоўваюцца.");
+regGS("Do you wan't to delete unused only?", "Вы жадаеце выдаліць толькі нявыкарыстаныя файлы?");
+regGS("View attachment", "Паказаць прымацаваны файл");
+regGS("Select some items first.", "Выберыце спачатку некалькі элементаў");
+regGS("Open in the browser", "Адкрыць у браўзэры");
+regGS("Media Archive", "Медыя архіў");
+regGS("Last modified", "Апошнія змяненні");
 regGS("Items deleted.", "");
 regGS("File uploaded.", "");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "");

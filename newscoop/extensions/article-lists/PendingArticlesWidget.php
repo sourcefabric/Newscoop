@@ -15,6 +15,11 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
  */
 class PendingArticlesWidget extends ArticlesWidget
 {
+    public function __construct()
+    {
+        $this->title = getGS('Pending Articles');
+    }
+
     public function beforeRender()
     {
         $this->items = Article::GetUnplacedArticles();

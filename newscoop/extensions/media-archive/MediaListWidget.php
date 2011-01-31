@@ -16,6 +16,11 @@ require_once LIBS_DIR . '/MediaList/MediaList.php';
  */
 class MediaListWidget extends Widget
 {
+    public function __construct()
+    {
+        $this->title = getGS('Files');
+    }
+
     public function render()
     {
         $list = new MediaList;

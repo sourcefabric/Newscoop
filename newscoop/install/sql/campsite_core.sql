@@ -1908,16 +1908,6 @@ CREATE TABLE `WidgetContext` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `WidgetContext`
---
-
-LOCK TABLES `WidgetContext` WRITE;
-/*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
-INSERT INTO `WidgetContext` VALUES (1,'dashboard1'),(2,'dashboard2');
-/*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `WidgetContext_Widget`
 --
 

@@ -37,12 +37,18 @@ case "$1" in
       rm -f /etc/$php/conf.d/newscoop.ini || true
       restart="$webserver $restart"
     fi
+
+    if [ -f /etc/$webserver/sites-available/newscoop-vhost ]; then
+      a2dissite newscoop-vhost &>/dev/null || true
+      # TODO: if newscoop-vhost is not modified -> delete it
+      restart="$webserver $restart"
+    fi
         
     servers="apache2"
     # may not exist if package was manually installed
     if [ -r /usr/share/wwwconfig-common/restart.sh ]; then
       . /usr/share/wwwconfig-common/restart.sh
-		  echo $error
+      echo $error
     fi
 
     # Permissions
@@ -56,6 +62,7 @@ case "$1" in
 
     if [ "$1" = "purge" ]; then
       rm -rf $datadir
+      # newscoop-3.5 does not yet support that
       #rm -f ${dbconfigfile}
       #if which ucf >/dev/null 2>&1; then
       #  ucf --purge ${dbconfigfile}

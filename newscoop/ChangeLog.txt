@@ -1,4 +1,46 @@
-3.5.0 (December 17, 2010)
+3.5.0 (January 31, 2011)
+  New Features
+  ------------
+  * [CS-959]  - List Articles in topic including subtopics
+  * [CS-1498] - Maps interface plugin
+  * [CS-2341] - Templates for 3.5 - take advantage of new functionality
+  * [CS-2366] - Mobile browser detection for templating
+
+  Improvements
+  ------------
+  * [CS-2388] - Change "Home" to "Dashboard"
+  * [CS-2459] - Default widgets in Newscoop
+  * [CS-2522] - Possibility to go between map editing and preview without pop-up closing.
+  * [CS-2528] - Top menu bar & controls should be sticky so you dont have to scroll down to edit, and scroll back up to do an action
+  * [CS-2547] - The sticky bar is not implemented in the article edit screen
+  * [CS-2558] - Newscoop footer in admin interface should be linked to sourcefabric.org
+  * [CS-2577] - Set default widgets for all users at upgrade
+  * [CS-2632] - sample templates replaced with latest designs
+  * [CS-2643] - different paths for sample templates!
+  * [CS-2647] - Rename tabs in Media Archive
+  * [CS-2700] - Default alias 'localhost'
+
+  Tasks
+  -----
+  * [CS-398]  - Update feature matrix
+  * [CS-1993] - Howto for making Jquery-powered front pages
+  * [CS-1999] - Improve wiki on Classic templates
+  * [CS-2335] - Wiki page on how to get started with Newscoop for developers
+  * [CS-2384] - Fix RC & GA release instructions on the wiki
+  * [CS-2420] - Create Newscoop .deb packages for Ubuntu 10.04
+  * [CS-2493] - Integrating the new UI to the author management screen
+  * [CS-2507] - Update Newscoop Demo sites with Newscoop 3.5-RC2
+  * [CS-2589] - Newscoop Feature Matrix
+  * [CS-2591] - Create Newscoop .deb packages for Debian Squeeze
+  * [CS-2625] - EditArea upgrade
+
+  Bugs Fixed
+  ----------
+  More than 100 bugs fixed, for details please check:
+  http://dev.sourcefabric.org/browse/CS/fixforversion/10330
+
+
+3.5 RC1 (December 17, 2010)
   Major Features
   --------------
   * You can now have multiple authors per article

@@ -1,6 +1,6 @@
 <?php 
-regGS("Plugins", "");
-regGS("Manage Plugins", "");
+regGS("Plugins", "Plug-in");
+regGS("Manage Plugins", "Gestionează plug-in");
 regGS("Account", "Cont");
 regGS("Items per page", "Elemente pe pagină");
 regGS("Add new", "Adaugă element nou");
@@ -257,8 +257,10 @@ regGS("Please take a minute to send us an email.", "Vă rugăm să vă rezervaţ
 regGS("(optional)", "(opţional)");
 regGS("The URL you entered is invalid: '$1'", "Adresa de Internet introdusă nu este validă: '$1'");
 regGS("There was an error logging in to the Campcaster server", "Eroare la autentificarea cu server-ul aplicaţiei Campcaster");
-regGS("Reads", "");
-regGS("Publish with issue", "");
+regGS("Reads", "Citiri");
+regGS("Publish with issue", "Publică cu ediția");
+regGS("Universal List", "Listă universală");
+regGS("Invalid security token!", "Jetonul de securitate e invalid!");
 regGS("Article Audioclips", "");
 regGS("Campsite is unable to write to the file/directory '$1'. Please set the permissions to allow the user '$2' to write to it.", "");
 regGS("Unable to add new image.", "");
@@ -276,6 +278,5 @@ regGS("There are $1 issue(s) left.", "Mai sunt $1 ediţii");
 regGS("There are $1 keyword(s) left.", "Mai sunt $1 cuvinte cheie");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nume");
 regGS("New field", "Câmp nou");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Eşti sigur că vrei să ştergi imaginea \\'$1\\'?");
 ?>

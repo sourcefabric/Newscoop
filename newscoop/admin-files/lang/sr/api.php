@@ -1,4 +1,7 @@
 <?php 
+regGS("Version", "");
+regGS("License", "");
+regGS("Homepage", "");
 regGS("Show original map", "Прикажи оригиналну мапу");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Архива аплоуда не садржи исправан Newscoop плагин");
 regGS("Map", "Мапа");

@@ -35,7 +35,7 @@ regGS("Last Modified", "Naposledi Modifikováno");
 regGS("Filter by...", "Filtrováno ...");
 regGS("Filter", "Filter");
 regGS("Duplicate to another section", "Duplikovat do jiné sekce");
-regGS("Display _MENU_ records", "Zobrazit_MENU_záznamy");
+regGS("Display _MENU_ records", "Zobrazit _MENU_ záznamy");
 regGS("Creator", "Tvůrce");
 regGS("Create Date", "Vytvořit Datum");
 regGS("Articles updated.", "Články aktualizovány.");
@@ -49,5 +49,5 @@ regGS("All Issues", "Všechna Vydání");
 regGS("Access denied.", "Přístup odmítnut.");
 regGS("$1 toggled.", "$1 upraven");
 regGS("$1 articles have been removed", "$1 články byly odstraněny");
-regGS(" - filtering from _MAX_ records", "- filtrování z_MAX_záznamů");
+regGS(" - filtering from _MAX_ records", "- filtrování z _MAX_ záznamů");
 ?>

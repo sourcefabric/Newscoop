@@ -1,4 +1,7 @@
 <?php 
+regGS("Version", "");
+regGS("License", "");
+regGS("Homepage", "");
 regGS("Show original map", "Ukázat původní rozdělení");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Nahraný archiv neobsahuje platný plugin Newscoopu.");
 regGS("Map", "Rozdělení");

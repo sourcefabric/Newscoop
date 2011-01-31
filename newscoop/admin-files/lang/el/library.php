@@ -12,7 +12,7 @@ regGS("Status: Submit", "Κατάσταση: Υποβολλή");
 regGS("Status: Set New", "Κατάσταση: Ορισμός Νέου");
 regGS("Status: Publish", "Κατάσταση: Δημοσίευση");
 regGS("Size", "Μέγεθος");
-regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Εμφάνιση _START_προς_END_από_TOTAL_εισόδους");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους");
 regGS("Show / hide columns", "Εμφάνιση/απόκρυψη στηλών ");
 regGS("Select some article first.", "Επιλέξτε πρώτα κάποια άρθρα.");
 regGS("Select action", "Επιλογή ενέργειας");
