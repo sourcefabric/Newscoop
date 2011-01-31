@@ -1,10 +1,10 @@
 <?php 
-regGS("Files", "");
-regGS("Select section:", "");
-regGS("Add another author", "");
-regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
-regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
-regGS("Switches saved.", "");
+regGS("Files", "Файлы");
+regGS("Select section:", "Выберыце раздзел");
+regGS("Add another author", "Дадаць аўтара");
+regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Гэты артыкул быў заблакаваны $1 ($2) $3 хвілін таму.");
+regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Гэты артыкул быў заблакаваны $1 ($2) $3 гадзін і $4 хвілін таму.");
+regGS("Switches saved.", "Статут маркераў захаваны.");
 regGS("Keywords saved.", "");
 regGS("Comment settings", "");
 regGS("Authors", "");
@@ -150,4 +150,8 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
+regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \\'$1\\' з гэтага артыкула?");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>

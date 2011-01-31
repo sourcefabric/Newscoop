@@ -5,7 +5,7 @@ regGS("Add another author", "Добавить автора");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 минут назад.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.");
 regGS("Switches saved.", "Статус переключателей сохранен.");
-regGS("Keywords saved.", "Ключевый слова сохранены");
+regGS("Keywords saved.", "Ключевые слова сохранены");
 regGS("Comment settings", "Настройки комментирования");
 regGS("Authors", "Авторы");
 regGS("Attach Topic To Article", "Добавить тему к статье");
