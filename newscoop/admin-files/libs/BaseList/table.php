@@ -63,6 +63,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         'sEmpty': '<?php putGS('No entries to show'); ?>',
         'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
         'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+        'sInfoEmpty': '<?php putGS('No entries to show'); ?>'
     },
     'aoColumnDefs': [
         { // inputs for id
