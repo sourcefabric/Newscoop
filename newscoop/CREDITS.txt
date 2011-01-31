@@ -7,7 +7,7 @@ Campsite Credits (by Version Number)
 
 
 ------------------------------------
-Newscoop 3.5 Credits
+Newscoop 3.5.0 Credits
 ------------------------------------
 - Petr Jašek <petr.jasek@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>

@@ -1,4 +1,4 @@
-3.5 GA (January 31, 2011)
+3.5.0 (January 31, 2011)
   New Features
   ------------
   * [CS-959]  - List Articles in topic including subtopics
