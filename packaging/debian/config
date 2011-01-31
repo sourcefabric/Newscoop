@@ -4,39 +4,24 @@
 set -e
 
 ### dbcondig is not yet enabled. ###
-exit 0
 
-# Source debconf library
 . /usr/share/debconf/confmodule
 
-if [ -f /usr/share/dbconfig-common/dpkg/config ]; then
-  # we support mysql and pgsql
-  dbc_dbtypes="mysql"
-  dbc_dbname=newscoop
-  dbc_dbuser=newscoop
+# newscoop-3.5 does not yet support that
+#db_input normal newscoop/dbsetup || true
+#db_go ||true
 
-  # source dbconfig-common stuff
-  . /usr/share/dbconfig-common/dpkg/config --debconf-ok
-  dbc_go newscoop $@
+db_input high newscoop/apache-setup || true
+db_go ||true
+
+db_get newscoop/apache-setup
+if [ "$RET" = "dedicated v-host" ]; then
+	db_input high newscoop/apache-servername || true
+	db_go ||true
+	db_input high newscoop/apache-serveradmin || true
+	db_go ||true
 fi
 
-if [ "$DPKG_DEBUG" = "developer" ]; then
-	set -x
-fi
- 
-package_name="newscoop"
-datadir="/var/lib/${package_name}"
-backupdir="${datadir}/backup/"
-docdir="/usr/share/doc/${package_name}"
-configdir="/etc/newscoop/3.5"
-configfile="${configdir}/conf.php"
-includefile="${configdir}/apache.conf"
-
-########################################################################
-# The actual configuration
-
-OLDVERSION="$2"
-
-db_stop
+#DEBHELPER#
 
 exit 0

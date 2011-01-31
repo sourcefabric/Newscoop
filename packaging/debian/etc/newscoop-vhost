@@ -1,0 +1,15 @@
+<VirtualHost *:80>
+      ServerName __SERVER_NAME__
+      #ServerAlias www.example.com
+
+      ServerAdmin __SERVER_ADMIN___
+
+      DocumentRoot /var/lib/newscoop
+      DirectoryIndex index.php index.html
+      <Directory /var/lib/newscoop>
+              Options -Indexes FollowSymLinks MultiViews
+              AllowOverride All
+              Order allow,deny
+              Allow from all
+      </Directory>
+</VirtualHost> 

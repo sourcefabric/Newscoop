@@ -1,0 +1,36 @@
+Template: newscoop/dbsetup
+Type: boolean
+Default: false
+Description: Create mysql database-account?
+ Automatically generate a local mysql-account for newscoop.
+ .
+ If skipped, you will need database-admin access to create
+ the account, and will be asked by the newscoop www site
+ installer.
+
+Template: newscoop/apache-setup
+Type: select
+Choices: no thanks, system-wide (all vhosts), dedicated v-host
+Choices-de.UTF-8: nein danke, system-weit (alle v-hosts), v-host einrichten
+Default: no thanks
+Description: Create apache2 config:
+Description-de: Erzeugen einer apache2 konfiuration:
+ create a system-wide (all vhosts) apache-config
+ .
+ bla
+
+Template: newscoop/apache-servername
+Type: string
+Default: localhost
+Description: FQDN - apache-vhost ServerName:
+ dedicated vhost-setup
+ .
+ hotseflots
+
+Template: newscoop/apache-serveradmin
+Type: string
+Default: root@localhost
+Description: Emai of the vhost-admin - ServerAdmin:
+ dedicated vhost-setup
+ .
+ blabla
