@@ -1,13 +1,13 @@
 <?php 
-regGS("Files attached.", "");
-regGS("File '$1' unattached.", "");
-regGS("Attach new file", "");
-regGS("Attach existing file", "");
-regGS("$1 file/s attached to article", "");
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "Plik załaczony.");
+regGS("File '$1' unattached.", "Plik '$1' odłączony.");
+regGS("Attach new file", "Załącz nowy plik");
+regGS("Attach existing file", "Załącz istniejący plik");
+regGS("$1 file/s attached to article", "Plików dołączonych do artykułu: $1");
+regGS("File attached.", "Plik załączony.");
+regGS("The maximum file upload size was not configured in Newscoop.", "Maksymalny rozmiar pliku nie zostal skonfigurowany w Newscoop.");
+regGS("File #$1 \"$2\" unattached", "Plik #$1 \"$2\" odłączony");
+regGS("File #$1 \"$2\" attached to article", "Plik #$1 \"$2\" załączony do artykułu");
 regGS("Unable to add attachment.", "Załącznik nie został dodany.");
 regGS("There was a problem uploading the file.", "Wystąpił błąd podczas dodawania pliku.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Wgyrwany plik został dodany tylko w części. To częsty błąd gdy czas wgrywania pliku nie jest zgodny z jego rozmiarem. Maksymalny czas wgrywania ustalany jest w pliku 'php.ini'");
