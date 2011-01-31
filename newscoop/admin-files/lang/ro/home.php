@@ -1,5 +1,5 @@
 <?php 
-regGS("Session expired.", "");
+regGS("Session expired.", "Sesiunea a expirat.");
 regGS("Processing...", "");
 regGS("Please", "");
 regGS("Go to dashboard", "");
@@ -8,7 +8,7 @@ regGS("Synchronize Newscoop and Phorum users", "");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
 regGS("Newscoop cache was cleaned up", "");
 regGS("Newscoop and Phorum users were synchronized", "");
-regGS("Dashboard", "");
+regGS("Dashboard", "Panou");
 regGS("Your changes will be saved after login.", "");
 regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
@@ -97,4 +97,6 @@ regGS("You do not have the right to access this page.", "Nu ai dreptul să acces
 regGS("Login failed", "Eroare la deschiderea sesiunii");
 regGS("Please make sure that you typed the correct user name and password.", "Asigură-te ca ai scris corect numele de utilizator şi parola.");
 regGS("If your problem persists please contact the site administrator $1", "Dacă problema nu dispare, contactează-l administratorul site-ului $1");
+regGS("Backup/Restore", "");
+regGS("Hi, \\nfor password recovery, please follow this link: %s", "");
 ?>

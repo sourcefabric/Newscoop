@@ -1,4 +1,8 @@
 <?php 
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
 regGS("Are you sure you want to quit without saving your changes?", "");
 regGS("center city", "");
 regGS("Map preview", "");

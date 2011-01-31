@@ -1,4 +1,8 @@
 <?php 
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
 regGS("Are you sure you want to quit without saving your changes?", "Да ли сте сигурни да желите да изађете без чувања измена?");
 regGS("center city", "град у центру");
 regGS("Map preview", "Преглед мапе");

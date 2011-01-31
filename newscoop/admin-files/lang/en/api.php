@@ -1,4 +1,7 @@
 <?php 
+regGS("Version", "Version");
+regGS("License", "License");
+regGS("Homepage", "Homepage");
 regGS("Show original map", "Show original map");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "The uploaded archive does not contain an valid newscoop plugin.");
 regGS("Map", "Map");
