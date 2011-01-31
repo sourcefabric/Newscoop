@@ -440,6 +440,16 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj)
     var attrs = feature.attributes;
     if (!attrs) {return;}
 
+    if (attrs.m_duplicate)
+    {
+        //m_shift
+
+        feature = geo_obj.layer.features[attrs.m_original];
+        if (!feature) {return;}
+        attrs = feature.attributes;
+        if (!attrs) {return;}
+    }
+
     if (geo_obj.popup) {
         geo_obj.select_control.unselect(geo_obj.popup.feature);
     }

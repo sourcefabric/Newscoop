@@ -333,6 +333,8 @@ this.map_showview = function()
         this.map.setBaseLayer(map_names[0]);
     }
     this.map.setCenter(this.map_view_layer_center, this.map_view_layer_zoom);
+    //alert(this.map_view_layer_zoom);
+    //alert(this.map_view_layer_center);
 };
 
 // the main action on data retrieval
@@ -385,7 +387,31 @@ this.got_load_data = function (load_data, is_obj) {
 
     var lonlat = null;
 
-    this.set_map_usage(received_obj.map);
+    //this.set_map_usage(received_obj.map);
+
+    var poi_lon_min = 10e100;
+    var poi_lon_max = -10e100;
+    var poi_lat_min = 10e100;
+    var poi_lat_max = -10e100;
+    var pos_lon_min = 10e100;
+    var pos_lon_max = -10e100;
+    var pos_lat_min = 10e100;
+    var pos_lat_max = -10e100;
+
+    var toi_lon_min = 10e100;
+    var toi_lon_max = -10e100;
+    var toi_lat_min = 10e100;
+    var toi_lat_max = -10e100;
+    var tos_lon_min = 10e100;
+    var tos_lon_max = -10e100;
+    var tos_lat_min = 10e100;
+    var tos_lat_max = -10e100;
+    var use_zone_shift = false;
+
+    var shifts = [0, -360, 360];
+    //var shifts = [0];
+    var shift_count = shifts.length;
+    for (var sind = 0; sind < shift_count; sind++) {
 
     var poi_count = received_obj.pois.length;
     for (var pind = 0; pind < poi_count; pind++)
@@ -393,13 +419,27 @@ this.got_load_data = function (load_data, is_obj) {
         var one_marker = {};
         var one_poi = received_obj.pois[pind];
 
-        lonlat = new OpenLayers.LonLat(one_poi.longitude, one_poi.latitude).transform(
+        var longitude_use = parseFloat(one_poi.longitude) + shifts[sind];
+        var latitude_use = parseFloat(one_poi.latitude);
+
+        var longitude_shift = (0 <= longitude_use) ? longitude_use : (longitude_use + 360);
+
+
+        //lonlat = new OpenLayers.LonLat(one_poi.longitude, one_poi.latitude).transform(
+        lonlat = new OpenLayers.LonLat(longitude_use, latitude_use).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            this.map.getProjectionObject()
+        );
+
+        lonlat_shift = new OpenLayers.LonLat(longitude_shift, latitude_use).transform(
             new OpenLayers.Projection("EPSG:4326"),
             this.map.getProjectionObject()
         );
 
         one_marker['lon'] = parseFloat(one_poi.longitude);
         one_marker['lat'] = parseFloat(one_poi.latitude);
+        //one_marker['lon'] = parseFloat(longitude_use);
+        //one_marker['lat'] = parseFloat(latitude_use);
         one_marker['map_lon'] = lonlat.lon;
         one_marker['map_lat'] = lonlat.lat;
 
@@ -423,6 +463,24 @@ this.got_load_data = function (load_data, is_obj) {
 
         var disabled = false;
         if (0 == one_poi.display) {disabled = true;}
+
+        one_marker['duplicate'] = true;
+        one_marker['original'] = pind;
+        one_marker["lon_shift"] = shifts[sind];
+        if ((0 == sind) && (!disabled))
+        {
+            one_marker['duplicate'] = false;
+
+            if (lonlat.lon < poi_lon_min) {poi_lon_min = lonlat.lon; pos_lon_min = longitude_use;}
+            if (lonlat.lon > poi_lon_max) {poi_lon_max = lonlat.lon; pos_lon_max = longitude_use;}
+            if (lonlat.lat < poi_lat_min) {poi_lat_min = lonlat.lat; pos_lat_min = latitude_use;}
+            if (lonlat.lat > poi_lat_max) {poi_lat_max = lonlat.lat; pos_lat_max = latitude_use;}
+
+            if (lonlat_shift.lon < toi_lon_min) {toi_lon_min = lonlat_shift.lon; tos_lon_min = longitude_shift;}
+            if (lonlat_shift.lon > toi_lon_max) {toi_lon_max = lonlat_shift.lon; tos_lon_max = longitude_shift;}
+            if (lonlat_shift.lat < toi_lat_min) {toi_lat_min = lonlat_shift.lat; tos_lat_min = latitude_use;}
+            if (lonlat_shift.lat > toi_lat_max) {toi_lat_max = lonlat_shift.lat; tos_lat_max = latitude_use;}
+        }
 
         var img_name = one_poi.style;
         var icon_type = 0;
@@ -487,15 +545,84 @@ this.got_load_data = function (load_data, is_obj) {
         GeoPopups.set_embed_tag(vector.attributes);
 
         vector.attributes.m_obj = this;
+        vector.attributes.m_duplicate = one_marker["duplicate"];
+        vector.attributes.m_original = one_marker["original"];
+        vector.attributes.m_shift = one_marker["lon_shift"];
 
         features_to_add.push(vector);
 
+    }
     }
 
     this.layer.addFeatures(features_to_add);
 
     this.descs_count = poi_count;
     this.descs_count_inc = poi_count;
+
+    if (0 < poi_count)
+    {
+        if ((poi_lon_max - poi_lon_min) > (toi_lon_max - toi_lon_min))
+        {
+            poi_lon_min = toi_lon_min;
+            poi_lon_max = toi_lon_max;
+            poi_lat_min = toi_lat_min;
+            poi_lat_max = toi_lat_max;
+            pos_lon_min = tos_lon_min;
+            pos_lon_max = tos_lon_max;
+            pos_lat_min = tos_lat_min;
+            pos_lat_max = pos_lat_max;
+        }
+
+        var poi_cen_lon = (poi_lon_min + poi_lon_max) / 2.0;
+        var poi_cen_lat = (poi_lat_min + poi_lat_max) / 2.0;
+        var poi_cen_lonlat = new OpenLayers.LonLat(poi_cen_lon, poi_cen_lat);
+        var poi_corner_tl = new OpenLayers.LonLat(poi_lon_min, poi_lat_max);
+        var poi_corner_bl = new OpenLayers.LonLat(poi_lon_min, poi_lat_min);
+        var poi_corner_tr = new OpenLayers.LonLat(poi_lon_max, poi_lat_max);
+        var poi_corner_br = new OpenLayers.LonLat(poi_lon_max, poi_lat_min);
+        var poi_corners = [poi_corner_tl, poi_corner_bl, poi_corner_tr, poi_corner_br];
+        var poi_corner_count = poi_corners.length;
+
+        var zoom_min = 0;
+        var zoom_ini = 18;
+        //var zoom_max = 6; // 18;
+        var zoom_use = 0;
+
+        var view_box = null;
+        var pois_included = true;
+        var cind = 0;
+
+        for (var zind = zoom_ini; zind > zoom_min; zind--)
+        {
+            view_box = this.map.calculateBounds(poi_cen_lonlat, this.map.getResolutionForZoom(zind));
+            pois_included = true;
+            for (cind = 0; cind < poi_corner_count; cind++)
+            {
+                if (!view_box.containsLonLat(poi_corners[cind], false)) {pois_included = false; break;}
+            }
+            if (pois_included) {zoom_use = zind; break;}
+        }
+
+        if (1 < poi_count)
+        {
+            if (0 < zoom_use) {zoom_use -= 1;}
+        }
+
+        //this.map.setCenter(poi_cen_lonlat, zoom_use);
+        //received_obj.map.lon = (parseFloat(pos_lon_min) + parseFloat(pos_lon_max)) / 2.0;
+        //received_obj.map.lat = (parseFloat(pos_lat_min) + parseFloat(pos_lat_max)) / 2.0;
+        ;
+
+        received_obj.map.lon = (pos_lon_min + pos_lon_max) / 2.0;
+        if (180 < received_obj.map.lon) {received_obj.map.lon -= 360;}
+        if (-180 > received_obj.map.lon) {received_obj.map.lon += 360;}
+        received_obj.map.lat = (pos_lat_min + pos_lat_max) / 2.0;
+        received_obj.map.res = "" + zoom_use;
+
+    }
+
+    this.set_map_usage(received_obj.map);
+    this.map_showview();
 
     this.select_control = new OpenLayers.Control.SelectFeature(this.layer);
     this.map.addControl(this.select_control);

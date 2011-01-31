@@ -1743,7 +1743,7 @@ this.update_edit_preview = function()
     if (this.layer && this.layer.features && this.layer.features[use_index])
     {
         var cur_marker = this.layer.features[use_index];
-        var popup_info = OpenLayers.HooksPopups.create_popup_content(cur_marker, this);
+        var popup_info = GeoPopups.create_popup_content(cur_marker, this);
         var popup_content = popup_info['inner_html'];
 
         var min_width = popup_info['min_width'];

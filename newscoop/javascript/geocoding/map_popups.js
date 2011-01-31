@@ -103,6 +103,8 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
     var attrs = feature.attributes;
     if (!attrs) {return none_info;}
 
+    if (attrs.m_duplicate) {alert("duplicate");}
+
     var pop_text = "";
     {
         var pop_link = attrs.m_link;
