@@ -1,6 +1,6 @@
 <?php 
 regGS("Plugins", "Plug-iny");
-regGS("Manage Plugins", "Řídit plug-iny");
+regGS("Manage Plugins", "Správa plug-inů");
 regGS("Account", "Účet");
 regGS("Items per page", "Položek na stránku");
 regGS("Add new", "Přidat nový");

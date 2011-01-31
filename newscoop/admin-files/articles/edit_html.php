@@ -68,14 +68,13 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
         . "&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
 }
 ?>
-  <!-- BEGIN Article Title and Saving buttons bar //-->                            
+  <!-- BEGIN Article Title and Saving buttons bar //-->
   <div class="toolbar clearfix">
   <?php if ($inEditMode) { ?>
     <input class="top-input" name="f_article_title" id="f_article_title" type="text"
       value="<?php print htmlspecialchars($articleObj->getTitle()); ?>" <?php print $spellcheck ?> />
   <?php } elseif ($locked) {
   ?>
-    <span class="left-floated ui-icon ui-icon-locked"></span>
     <span class="article-title-locked"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>

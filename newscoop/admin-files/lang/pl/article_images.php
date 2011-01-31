@@ -1,5 +1,5 @@
 <?php 
-regGS("The image has been removed from the article.", "");
+regGS("The image has been removed from the article.", "Zdjęcie zostało usunięte z artykułu.");
 regGS("Unable to add new image.", "Nie można dodać nowego zdjęcia.");
 regGS("Image number '$1' already exists", "Zdjęcie numer '$'1 już istnieje");
 regGS("You do not have the right to change image information.", "Nie masz praw aby zmieniać informacje o zdjęciu.");

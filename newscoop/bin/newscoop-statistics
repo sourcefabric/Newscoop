@@ -24,6 +24,10 @@ function update_statistics($p_confDir)
          . " FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id"
          . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
     $sessRes = mysql_query($sql);
+    if (empty($sessRes)) {
+        return;
+    }
+
     while ($sessRow = mysql_fetch_array($sessRes, MYSQL_ASSOC)) {
         if ($sessRow['last_update_diff'] < $requestTimeDiff) {
             // if there was a request for this session less than one hour ago

@@ -1,8 +1,13 @@
 <?php 
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "Archivos adjuntos");
+regGS("File '$1' unattached.", "Se desvinculó el archivo '$1' ");
+regGS("Attach new file", "Adjuntar un nuevo archivo");
+regGS("Attach existing file", "Adjuntar un archivo existente");
+regGS("$1 file/s attached to article", "Se adjuntaron $1 al artículo");
+regGS("File attached.", "Archivo adjunto.");
+regGS("The maximum file upload size was not configured in Newscoop.", "No se configuró en Newscoop el tamaño máximo de un archivo a cargar. ");
+regGS("File #$1 \"$2\" unattached", "Se desvinculó el archivo #$1 \"$2\"");
+regGS("File #$1 \"$2\" attached to article", "Se adjuntó el archivo #$1 \"$2\" al artículo");
 regGS("Unable to add attachment.", "No es posible agregar un adjunto.");
 regGS("There was a problem uploading the file.", "Hubo un problema al subir el archivo.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo solo subió parcialmente. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en 'php.ini'");
@@ -13,7 +18,6 @@ regGS("File Size", "Tamaño de archivo");
 regGS("File Name", "Nombre de archivo");
 regGS("Download", "Descargar");
 regGS("File '$1' updated.", "Se actualizó el archivo '$1' ");
-regGS("File '$1' deleted.", "Se eliminó el artículo '$1' ");
 regGS("Edit article", "Editar artículo");
 regGS("You do not have the right to delete file attachments.", "No tiene privilegios para eliminar archivos adjuntos");
 regGS("You must select a file to upload.", "Debe seleccionar un archivo para cargar.");

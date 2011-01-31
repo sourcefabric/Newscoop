@@ -73,7 +73,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
     public function renderMeta()
     {
         $meta = array(
-            getGS('Author'), getGS('Version'), getGS('Homepage'), getGS('License'),
+            'Author', 'Version', 'Homepage', 'License',
         );
 
         ob_start();
@@ -84,7 +84,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
                 continue;
             }
 
-            echo '<dt>', $key, ':</dt>', "\n";
+            echo '<dt>', getGS($key), ':</dt>', "\n";
             echo '<dd>';
             if (preg_match('#^http://#', $value)) { // generate link
                 $title = str_replace('http://', '', $value);

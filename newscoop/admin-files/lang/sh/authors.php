@@ -1,20 +1,20 @@
 <?php 
-regGS("Translate from", "");
-regGS("Total articles", "");
-regGS("Skype", "");
-regGS("Save All", "");
-regGS("Reset", "");
-regGS("Please enter the last name", "");
-regGS("Please enter the first name", "");
-regGS("No records found", "");
-regGS("Last name", "");
-regGS("Jabber", "");
-regGS("General", "");
-regGS("First name", "");
-regGS("Email", "");
-regGS("Delete author", "");
-regGS("Contacts", "");
-regGS("Biography", "");
-regGS("Aliases", "");
-regGS("AIM", "");
+regGS("Translate from", "Prevedi formu");
+regGS("Total articles", "Ukupno tekstova");
+regGS("Skype", "Skype");
+regGS("Save All", "Snimi sve");
+regGS("Reset", "Poništi");
+regGS("Please enter the last name", "Unesite prezime");
+regGS("Please enter the first name", "Unesite ime");
+regGS("No records found", "Nema pronađenih rezulata");
+regGS("Last name", "Prezime");
+regGS("Jabber", "Jabber");
+regGS("General", "Opšte");
+regGS("First name", "Ime");
+regGS("Email", "email");
+regGS("Delete author", "Obriši autora");
+regGS("Contacts", "Kontakti");
+regGS("Biography", "Biografija");
+regGS("Aliases", "Alijasi");
+regGS("AIM", "AIM");
 ?>

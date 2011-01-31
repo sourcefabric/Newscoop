@@ -39,7 +39,12 @@ camp_html_display_msgs();
 
 ?>
 
+<div class="ui-widget-content padded-strong block-shadow">
+
 <form name="image_multiedit" method="POST" action="do_multiedit.php" enctype="multipart/form-data">
+
+<fieldset class="plain">
+
 <?php echo SecurityToken::FormParameter(); ?>
 <ul id="edit-images">
     <?php foreach ($imageData as $image): ?>
@@ -76,10 +81,15 @@ camp_html_display_msgs();
     <?php endforeach; ?>
 </ul>
 
-<fieldset class="buttons">
-    <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button">
 </fieldset>
+
+<fieldset class="plain" style="margin-top: 13px">
+    <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="save-button" />
+</fieldset>
+
 </form>
+
+</div>
 
 <script type="text/javascript">
 /**

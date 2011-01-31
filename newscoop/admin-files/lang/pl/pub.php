@@ -1,4 +1,5 @@
 <?php 
+regGS("Make sure to enter the \"Moderator Address\" below", "Koniecznie podaj \"Adres Moderatora\" poniżej");
 regGS("click to see issues", "kliknij by zobaczyć wydania");
 regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Alias strony dla publikacji \"$1\" został zmieniony na \"$2\".");
 regGS("The site alias \"$1\" has been added to publication \"$2\".", "Alias strony \"$1\" został dodany do publikacji \"$2\".");

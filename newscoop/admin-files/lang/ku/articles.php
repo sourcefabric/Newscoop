@@ -1,4 +1,5 @@
 <?php 
+regGS("Files", "");
 regGS("Select section:", "");
 regGS("Add another author", "");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
@@ -22,7 +23,6 @@ regGS("Keywords &amp; Topics", "");
 regGS("Info", "");
 regGS("Go to live article", "");
 regGS("Created", "");
-regGS("Attachments", "");
 regGS("Locations", "");
 regGS("Are you sure you want to remove the map from the article?", "");
 regGS("Scheduled action added", "");

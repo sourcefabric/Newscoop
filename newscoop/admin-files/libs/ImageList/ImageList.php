@@ -60,7 +60,9 @@ class ImageList extends BaseList
         global $Campsite, $ADMIN;
 
         // set thumbnail
-        $row['ThumbnailFileName'] = sprintf('<img src="%s" alt="%s" />',
+        $row['ThumbnailFileName'] = sprintf('<a href="/%s/media-archive/edit.php?f_image_id=%d"><img src="%s" alt="%s" /></a>',
+            $ADMIN,
+            $row['Id'],
             $Campsite['THUMBNAIL_BASE_URL'] . $row['ThumbnailFileName'],
             $row['Description']);
 

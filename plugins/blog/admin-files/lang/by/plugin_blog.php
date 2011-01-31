@@ -1,4 +1,5 @@
 <?php 
+regGS("List comments", "");
 regGS("User may moderate Blogs", "");
 regGS("User may manage Blogs", "");
 regGS("read only", "толькі для чытання");
@@ -34,7 +35,6 @@ regGS("You do not have the right to manage blogs.", "У Вас няма прав
 regGS("You do not have the right to manage blog entries.", "У Вас няма права доступу каб кіраваць блогамі.");
 regGS("User", "Карыстальнік");
 regGS("Use captcha for blog comments form", "Выкарыстаць captcha-код для каментароў блога");
-regGS("Title", "Загаловак");
 regGS("Registered or indicated by Name and Email", "Зарэгістраваны ці вызначаны па імені ці Email");
 regGS("Registered or indicated by Name", "Зарэгістраваны ці вызначаны па імені");
 regGS("Posts", "Паведамленні");

@@ -67,7 +67,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
     the open content management system for professional journalists.
       <br />
       <?php
-      echo $campVersion->getCopyright() . '.&nbsp;';
+      echo $campVersion->getCopyright() . '&nbsp;';
       echo $campVersion->getPackage();
     ?>
        is distributed under
@@ -512,13 +512,13 @@ function camp_html_display_msgs($p_spacingTop = "1em", $p_spacingBottom = "1em")
 			<tr>
 				<?php if ($message['type'] == 'ok') { ?>
 				<td class="info_message" id="camp_message_<?php p($count); ?>">
-					<script>
-					fade('camp_message_<?php p($count); ?>', 50, 8, false, 1100);
-					</script>
 				<?php } elseif ($message['type'] == 'error') { ?>
-				<td class="error_message">
+				<td class="error_message" id="camp_message_<?php p($count); ?>">
 				<?php } ?>
 					<?php echo $message['msg']; ?>
+					<script type="text/javascript">
+					$('#camp_message_<?php p($count); ?>').delay(3000).fadeOut();
+					</script>
 				</td>
 			</tr>
 			<?php

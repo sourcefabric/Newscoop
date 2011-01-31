@@ -1,20 +1,20 @@
 <?php 
-regGS("Translate from", "");
-regGS("Total articles", "");
-regGS("Skype", "");
-regGS("Save All", "");
-regGS("Reset", "");
-regGS("Please enter the last name", "");
-regGS("Please enter the first name", "");
-regGS("No records found", "");
-regGS("Last name", "");
-regGS("Jabber", "");
-regGS("General", "");
-regGS("First name", "");
-regGS("Email", "");
-regGS("Delete author", "");
-regGS("Contacts", "");
-regGS("Biography", "");
-regGS("Aliases", "");
-regGS("AIM", "");
+regGS("Translate from", "Traducir de");
+regGS("Total articles", "Artículos totales");
+regGS("Skype", "Skype");
+regGS("Save All", "Guardar todo");
+regGS("Reset", "Reiniciar");
+regGS("Please enter the last name", "Ingrese su apellido");
+regGS("Please enter the first name", "Ingrese su nombre");
+regGS("No records found", "No se encontraron registros");
+regGS("Last name", "Apellido");
+regGS("Jabber", "Jabber");
+regGS("General", "General");
+regGS("First name", "Primer nombre");
+regGS("Email", "Correo electrónico");
+regGS("Delete author", "Eliminar autor");
+regGS("Contacts", "Contactos");
+regGS("Biography", "Biografía");
+regGS("Aliases", "Alias");
+regGS("AIM", "AIM");
 ?>

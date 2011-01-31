@@ -1,5 +1,5 @@
 <?php 
-regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "Postoje neki fajlovi koji su nečitljivi tako da Newscoop nije u stanju da odredi da li je '$1' u upotrebi ili ne. Sredite to, pa potom pokušajte ponovo sa brisanjem.");
 regGS("Stop current upload", "Prekini aktivni aploud");
 regGS("Start uploading queue", "Počni sa aploudom reda");
 regGS("Start upload", "Pokreni aploud");

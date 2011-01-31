@@ -1,11 +1,11 @@
 <?php 
-regGS("Reset order", "");
-regGS("Order changes will be lost. Are you sure you want to continue?", "");
-regGS("Topics order saved.", "");
-regGS("Show languages", "");
-regGS("Save order", "");
-regGS("Click to edit", "");
-regGS("Add root topic", "");
+regGS("Reset order", "Restablecer el orden");
+regGS("Order changes will be lost. Are you sure you want to continue?", "Se perderan los cambios de orden.  ¿Está seguro de continuar?");
+regGS("Topics order saved.", "Se guardó el órden de los tópicos");
+regGS("Show languages", "Mostrar idiomas");
+regGS("Save order", "Guardar orden");
+regGS("Click to edit", "Clic para editar");
+regGS("Add root topic", "Añadit tópico raíz");
 regGS("Topic was deleted.", "Se eliminó el tópico.");
 regGS("The topic name is already in use by another topic.", "Este nombre de tópico ya es usado por otro tópico.");
 regGS("You must enter a name for the topic.", "Debe ingresar un nombre para el tópico");

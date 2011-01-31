@@ -1,10 +1,10 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
-regGS("Geo-location", "");
+regGS("Dashboard", "Контролна табла");
+regGS("Authors", "Аутори");
+regGS("Libraries", "Библиотеке");
+regGS("Media Archive", "Архив медијских записа");
+regGS("Extensions", "Проширења");
+regGS("Geo-location", "Гео локације");
 regGS("Translation status:", "Статус превода:");
 regGS("Editor Media Plugin", "Едитор Медиа плагин");
 regGS("$1 of $2 strings translated", "$1 од $2 стринг(ов)а преведено");

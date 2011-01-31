@@ -1,16 +1,16 @@
 <?php 
-regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "");
-regGS("Stop current upload", "");
-regGS("Start uploading queue", "");
-regGS("Start upload", "");
-regGS("Size", "");
-regGS("Select files", "");
-regGS("Filename", "");
-regGS("Drag files here.", "");
-regGS("Cache lifetime, sec", "");
-regGS("Add files to the upload queue and click the start button.", "");
-regGS("Add files", "");
-regGS("\"$1\" files uploaded.", "");
+regGS("There are some files which can not be readed so Newscoop was not able to determine whether '$1' is in use or not. Please fix this, then try to delete the template again.", "No fue posible leer algunos archivos por lo que Newscoop no pudo determinar si '$1'  está o no en uso.  Por favor arregle esto y luego reintente borrar la plantilla. ");
+regGS("Stop current upload", "Detener la carga actual");
+regGS("Start uploading queue", "Detener la cola de carga");
+regGS("Start upload", "Iniciar la carga");
+regGS("Size", "Tamaño");
+regGS("Select files", "Seleccionar archivos");
+regGS("Filename", "Nombre del archivo");
+regGS("Drag files here.", "Arrastrar archivos aquí");
+regGS("Cache lifetime, sec", "Tiempo de vida del cache, sec");
+regGS("Add files to the upload queue and click the start button.", "Añada archivos a la cola de carga y haga clic en el botón de inicio");
+regGS("Add files", "Añadir archivos");
+regGS("\"$1\" files uploaded.", "Se cargaron \"$1\" archivos");
 regGS("Replace current with:", "Reemplazar la actual con:");
 regGS("Edit template:", "Editar plantilla:");
 regGS("Changes have not been saved. Load new template without saving the current one?", "No se guardaron los cambios. Desea cargar la nueva plantilla sin guardar la actual?");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Session expired.", "Сессия окончена.");
+regGS("Processing...", "Обработка...");
+regGS("Please", "Пожалуйста");
 regGS("Go to dashboard", "Вернуться на \"Мой Newscoop\"");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "Ваш браузер не поддерживает Javascript или (более вероятно) опция Javascript отключена. Исправьте ситуацию, что пользоваться Newscoop.");
 regGS("Synchronize Newscoop and Phorum users", "Синхронизировать работу пользователей Newscoop и форума");
@@ -11,7 +14,6 @@ regGS("You have tried to upload wrong backup file.", "Вы пытались за
 regGS("Upload backup file", "Загрузить файл резервной копии");
 regGS("The file $1 has been uploaded successfully.", "Файл $1 был успешно загружен.");
 regGS("Media Archive", "Медиа-архив");
-regGS("en", "анг");
 regGS("Widgets", "Виджеты");
 regGS("Widget info", "Информация о виджетах");
 regGS("Widget added to dashboard.", "Виджет добавлен в \"Мой Newscoop\".");

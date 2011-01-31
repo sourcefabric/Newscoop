@@ -4,7 +4,7 @@ regGS("Subscription #$1 deleted for user #$2 (Publication: $3)", "Subscripción 
 regGS("Please select one or more languages.", "Por favor elija uno o más idiomas.");
 regGS("Regardless of the language", "Sin importar el idioma");
 regGS("Individual languages", "Idiomas individuales");
-regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicación");
+regGS("Publication<BR><SMALL>(click to see sections)</SMALL>", "Publicación<BR><SMALL>(haga clic para ver las secciones)</SMALL> ");
 regGS("Delete subscriptions to $1", "Borrar suscripción a $1");
 regGS("Paid subscription", "Suscripción pagada");
 regGS("Trial subscription", "Suscripción de prueba");

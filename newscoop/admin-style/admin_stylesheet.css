@@ -977,7 +977,9 @@ a.clear-margin:hover, .icon-button:hover  {
     color: #3B3B3B;
 }
 .article-title-locked {
-    color: #ec8b8b;
+    color: #de3d3d;
+    background: transparent url("images/locked_big.png") no-repeat 0 50%;
+    padding-left: 16px;
 }
 .breadcrumb_active	{
     padding: 0 40px 0 0;
@@ -1397,3 +1399,80 @@ fieldset.filters a.reset {
     font-size: 0.9em;
 }
 
+#mc_embed_signup {
+    background: transparent url('images/bg-product-nav-swarm.png') no-repeat 90% 90%;
+}
+
+/*---  Comments tabs ---*/
+.tab_active {
+    border-left: 1px solid #777;
+    border-top: 1px solid #777;
+    border-right: 1px solid #777;
+    -moz-border-radius: 2px 2px 0 0;
+}
+.tab_inactive {
+    border: 1px solid #777;
+    background-color: #CFCFCF;
+    -moz-border-radius: 2px 2px 0 0;
+}
+
+/*---  plupload addon ---*/
+.plupload-addon-bottom {
+	margin:0 30px 20px 30px;
+	border: 1px solid #9d9d9d;
+	border-width: 0 1px 1px 1px;
+	background:#f9f9f9;
+	font-size:12px;
+	padding:20px 0 20px 0;
+}
+.plupload-addon-bottom .info {
+	float:left;
+	padding:5px 30px 0 10px;
+	font-style:normal;
+}
+.plupload-addon-bottom .inputs {
+	float:left;
+	padding:0 0px 0 0px;
+	font-style:normal;
+	width:40%;
+}
+.plupload-addon-bottom .inputs .input_text {
+	width:70%;
+}
+.plupload-addon-bottom .inputs label {
+	float:left;
+	margin-right:10px;
+	font-weight:bold;
+	color:#606060;
+	padding-top:5px;
+}
+.plupload-addon-bottom .buttons {
+	float:right;
+	padding-right:16px;
+}
+.plupload-addon-bottom .buttons .save-button{
+	margin:-2px 0 0 0;
+}
+#uploader_error {
+	background:#fce5e5;
+	margin:0 30px;
+	border: 1px solid #9d9d9d;
+	border-width: 0 1px 1px 1px;
+	border-bottom-color:#e4e4e4;
+	padding: 0 0 0 10px;
+	color:#dd0000;
+	font-size: 12px;
+	line-height:20px;
+}
+
+/*---  System messages ---*/
+.info_message {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #239f34;
+}
+.error_message {
+    font-weight: bold;
+    font-size: 10pt;
+    color: #de3d3d;
+}

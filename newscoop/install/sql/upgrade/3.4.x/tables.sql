@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `WidgetContext_Widget` (
   `fk_widgetcontext_id` smallint(3) unsigned NOT NULL,
   `fk_widget_id` mediumint(8) unsigned NOT NULL,
   `fk_user_id` int(10) unsigned NOT NULL,
-  `order` tinyint(2) unsigned NOT NULL DEFAULT '0',
+  `order` tinyint(2) NOT NULL DEFAULT '0',
   `settings` TEXT(500) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`, `fk_user_id`),
   INDEX (`fk_user_id`, `fk_widgetcontext_id`, `order`)

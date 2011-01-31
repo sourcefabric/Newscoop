@@ -1,20 +1,20 @@
 <?php 
-regGS("Translate from", "");
-regGS("Total articles", "");
-regGS("Skype", "");
-regGS("Save All", "");
-regGS("Reset", "");
-regGS("Please enter the last name", "");
-regGS("Please enter the first name", "");
-regGS("No records found", "");
-regGS("Last name", "");
+regGS("Translate from", "Přeložit z");
+regGS("Total articles", "Článků celkem");
+regGS("Skype", "Skype");
+regGS("Save All", "Uložit vše");
+regGS("Reset", "Resetovat");
+regGS("Please enter the last name", "Prosíme zadejte své příjmení");
+regGS("Please enter the first name", "Prosíme zadejte své jméno");
+regGS("No records found", "Nebyly nalezeny žádné záznamy");
+regGS("Last name", "Příjmení");
 regGS("Jabber", "");
-regGS("General", "");
-regGS("First name", "");
-regGS("Email", "");
-regGS("Delete author", "");
-regGS("Contacts", "");
-regGS("Biography", "");
-regGS("Aliases", "");
-regGS("AIM", "");
+regGS("General", "Obecné");
+regGS("First name", "Jméno");
+regGS("Email", "Email");
+regGS("Delete author", "Odstranit autora");
+regGS("Contacts", "Kontakty");
+regGS("Biography", "Biografie");
+regGS("Aliases", "Přezdívky");
+regGS("AIM", "AIM");
 ?>

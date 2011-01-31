@@ -1,4 +1,5 @@
 <?php 
+regGS("Are you sure you want to quit without saving your changes?", "Вы увурены что желаете закрыть без сохранения изменений?");
 regGS("center city", "центр города");
 regGS("Map preview", "Предварительный просмотр карты");
 regGS("Locations updated.", "Места событий обновлены");
@@ -10,7 +11,6 @@ regGS("Disable", "Запрещено");
 regGS("Center", "Центр");
 regGS("Last Saved Map View", "Предварительный просмотр последних обновлений карты");
 regGS("List of locations updated", "Список мест событий обновлен");
-regGS("If you want to save your current changes, cancel this unloading first. Otherwise your unsaved changes will be lost.", "Если вы хотите сохранить текущие изменения, сначала отмените загрузку. В противном случае ваши несохраненные изменения будут утеряны.");
 regGS("width", "ширина");
 regGS("source", "источник");
 regGS("sorry, no city was found", "извините, такой город на карте не найден ");

@@ -1,4 +1,9 @@
 <?php 
+regGS("Files attached.", "Files attached.");
+regGS("File '$1' unattached.", "File '$1' unattached.");
+regGS("Attach new file", "Attach new file");
+regGS("Attach existing file", "Attach existing file");
+regGS("$1 file/s attached to article", "$1 file/s attached to article");
 regGS("File attached.", "File attached.");
 regGS("The maximum file upload size was not configured in Newscoop.", "The maximum file upload size was not configured in Newscoop.");
 regGS("File #$1 \"$2\" unattached", "File #$1 \"$2\" unattached");
@@ -13,7 +18,6 @@ regGS("File Size", "File Size");
 regGS("File Name", "File Name");
 regGS("Download", "Download");
 regGS("File '$1' updated.", "File '$1' updated.");
-regGS("File '$1' deleted.", "File '$1' deleted.");
 regGS("Edit article", "Edit article");
 regGS("You do not have the right to delete file attachments.", "You do not have the right to delete file attachments.");
 regGS("You must select a file to upload.", "You must select a file to upload.");

@@ -2,7 +2,7 @@
 
 DATABASE_USER=root
 DATABASE_PASSWORD=
-DATABASE_NAME=newscoop35
+DATABASE_NAME=newscoop
 
 if [ "$1" != "" ]; then
     DATABASE_NAME=$1
@@ -60,7 +60,9 @@ TABLES="
  TopicNames\
  Topics\
  Translations\
- Xnews_article\
+ Xlink\
+ Xnews\
+ Xpage\
  liveuser_grouprights\
  liveuser_groups\
  liveuser_groups_group_id_seq\
