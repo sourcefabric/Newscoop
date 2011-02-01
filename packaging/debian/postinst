@@ -27,6 +27,11 @@ a2tplfile="${configdir}/apache.vhost"
 phpinifile="${configdir}/newscoop.ini"
 OLDVERSION="$2"
 
+if [ "$1" == "reconfigure" ]; then
+	true
+	# TODO: run postrm ? clean up previous vhosts and /etc/$webserver/conf.d/
+fi
+
 case "$1" in
   configure|reconfigure)
 
@@ -63,7 +68,7 @@ case "$1" in
         fi
         sed -e "s/__SERVER_ADMIN__/${SA}/;s/__SERVER_NAME__/${SN}/" \
           ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost
-        a2ensite newscoop-vhost
+        a2ensite newscoop-vhost &>/dev/null
         restart="$webserver $restart"
     fi
 

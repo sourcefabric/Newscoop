@@ -13,6 +13,10 @@ UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 
+if test "${UPSTREAMDIST}" == "3.5"; then
+	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
+fi
+
 if test ! -d ${DEBPATH}; then
   echo "can not find debian/ folder. Please 'cd <newscoop-git>/packaging/'"
   exit;
@@ -38,7 +42,16 @@ echo " +++ downloading upstream release.."
 if [ -f ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz ]; then
 	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz"
   tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz
+elif [ -f ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz ]; then
+	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz"
+  tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz
+elif [ -n "$CUSTOMURL" ]; then
+	echo "download ${CUSTOMURL}"
+	curl -L ${CUSTOMURL} \
+		| tee ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz \
+		| tar xzf - || exit
 else
+	echo "download from sourceforge."
   curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
 fi
 
@@ -74,3 +87,9 @@ debuild $@ || exit
 
 ls -l /tmp/newscoop*deb
 ls -l /tmp/newscoop*changes
+
+lintian -i --pedantic /tmp/newscoop_${DEBRELEASE}_*.changes | tee /tmp/newscoop-${DEBRELEASE}.issues
+
+echo -n "UPLOAD? [enter|CTRL-C]" ; read
+
+dput rg42 /tmp/newscoop_${DEBRELEASE}_*.changes 

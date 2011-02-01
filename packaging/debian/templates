@@ -4,33 +4,55 @@ Default: false
 Description: Create mysql database-account?
  Automatically generate a local mysql-account for newscoop.
  .
+ This option allows to create a database-user and password
+ for use by newscoop on localhost.
+ .
  If skipped, you will need database-admin access to create
- the account, and will be asked by the newscoop www site
- installer.
+ and account for newscoop.
 
 Template: newscoop/apache-setup
 Type: select
 Choices: no thanks, system-wide (all vhosts), dedicated v-host
+Choices: dedicated v-host, system-wide (all vhosts), thanks
 Choices-de.UTF-8: nein danke, system-weit (alle v-hosts), v-host einrichten
-Default: no thanks
+Default: system-wide (all vhosts_
 Description: Create apache2 config:
-Description-de: Erzeugen einer apache2 konfiuration:
- create a system-wide (all vhosts) apache-config
+ This setup script can perform apache web-server configuration
+ so that you can connect to newscoop directly after this installation.
  .
- more info soon..
+ Production systems should choose "dedicated v-host". This option
+ will ask for a Server host-name (FQDN) and will create a minimal apache
+ vhost configuration that you can adapt.
+ .
+ "system-wide (all vhosts)" apache-config configures
+ http://all-apache-virtual-hosts/newscoop/ using /etc/apache/conf.d/
+ This is the recommended if newscoop is the sole 
+ web-service on this server and also for test-installations.
+ .
+ "no, thanks": no problem. You're welcome to set it up however you like.
+ Note that the files in /etc/newscoop/ may come in handy doing so.
+Description-de.UTF-8: Erzeugen einer apache2 konfiuration:
+ .
 
 Template: newscoop/apache-servername
 Type: string
 Default: localhost
 Description: FQDN - apache-vhost ServerName:
- dedicated vhost-setup
+ Enter the main hostname of the web server. 
+ The DNS of this name must resolve to the apache server running on this
+ machine.
+ .
+ e.g. "example.com" or "www.example.com" (without the quotes)
+ .
+ You can customize /etc/apache2/sites-enabled/newscoop.vhost afterwards
+ and add ServerAliases and further custom configuration.
  .
  more info soon..
 
 Template: newscoop/apache-serveradmin
 Type: string
 Default: root@localhost
-Description: Emai of the vhost-admin - ServerAdmin:
- dedicated vhost-setup
+Description: Email of the vhost-admin - ServerAdmin:
+ required for dedicated vhost-setup.
  .
  more info soon..

@@ -2,7 +2,7 @@
       ServerName __SERVER_NAME__
       #ServerAlias www.example.com
 
-      ServerAdmin __SERVER_ADMIN___
+      ServerAdmin __SERVER_ADMIN__
 
       DocumentRoot /var/lib/newscoop
       DirectoryIndex index.php index.html
