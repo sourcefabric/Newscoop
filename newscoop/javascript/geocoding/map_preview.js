@@ -255,6 +255,8 @@ this.center_lonlat = function(longitude, latitude)
     );
 
     this.map.setCenter (lonLat);
+
+    OpenLayers.HooksLocal.map_check_popup(this);
 };
 
 // sets map center onto the requested POI (bound on the 'center' link)
