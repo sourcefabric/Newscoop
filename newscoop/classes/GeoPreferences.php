@@ -601,6 +601,41 @@ public static function GetFocusInfo($p_htmlDir = "", $p_websiteUrl = "")
     return array("json_obj" => $res_focus_info);
 } // fn GetFocusInfo
 
+
+	/**
+	 * Gets CSS file(s) to be included for map (pre)view
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return array
+	 */
+public static function GetIncludeCSS($p_htmlDir = "", $p_websiteUrl = "")
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+    $css_files = array();
+
+    $css_map_file = SystemPref::Get("MapAutoCSSFile");
+    if ($css_map_file)
+    {
+        $css_map_file = "" . $css_map_file;
+        if (0 < strlen($css_map_file))
+        {
+            if (0 != strpos($css_map_file, "/")) {$css_map_file = "/" . $css_map_file;}
+            $css_files[] = $p_websiteUrl . $css_map_file;
+        }
+    }
+
+    return array("css_files" => $css_files);
+} // fn GetIncludeCSS
+
+
 	/**
 	 * Gets translated strings for the geo-map templates
 	 * This is used for having translated those strings, even when they are not used via this function

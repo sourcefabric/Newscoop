@@ -1751,9 +1751,18 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
+        $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+        $include_files_css = $include_files["css_files"];
+        $include_files_tags = "";
+        foreach ($include_files_css as $css_file)
+        {
+            $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+        }
 
         $tag_string .= $geo_map_incl;
         $tag_string .= "\n";
+
+        $tag_string .= $include_files_tags;
 
         $tag_string .= '
 

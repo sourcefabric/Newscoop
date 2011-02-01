@@ -461,6 +461,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td colspan="2"><hr /></td>
 </tr>
 <tr>
+    <td align="left">
+        <?php putGS("Include CSS file for map view"); ?>
+    </td>
+    <td>
+        <input type="text" name="f_map_auto_cSS_file" value="<?php p(SystemPref::Get("MapAutoCSSFile")) ?>" maxlength="80" size="40" class="input_text"/>
+    </td>
+</tr>
+<tr>
     <td align="left" width="400px">
         <?php putGS("Map auto-focusing as the default behavior:"); ?>
     </td>

@@ -60,7 +60,19 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<meta http-equiv="Expires" content="now" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/styles/map-popups.css" />
+
+<?php
+    $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+    $include_files_css = $include_files["css_files"];
+    $include_files_tags = "";
+    foreach ($include_files_css as $css_file)
+    {
+        $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+    }
+    echo $include_files_tags;
+?>
+
 	<title><?php putGS("Setting Map Locations"); ?></title>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
