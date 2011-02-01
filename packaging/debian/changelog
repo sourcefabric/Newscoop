@@ -1,3 +1,10 @@
+newscoop (3.5.0~test2) 64studio; urgency=low
+  * update to upstream 3.5.0
+  * added debconf template & config files for apache-setup
+  * fixed postrm - remove php newscoop.ini 
+
+ -- Robin Gareus <robin@gareus.org>  Mon, 31 Jan 2011 23:31:32 +0100
+
 newscoop (3.5.0~rc2-4) 64studio; urgency=low
 
   * updated package description

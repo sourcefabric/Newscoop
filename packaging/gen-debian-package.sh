@@ -2,11 +2,20 @@
 # usage from git-repo: 
 #  ./gen-debian-package.sh -rfakeroot -sa
 
+#
+# Note to self:
+# git archive --format tar release-3.5.0-GA newscoop/ | gzip -9 > /tmp/newscoop-3.5.0.tar.gz
+
 DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
 DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 DEBPATH=`pwd`/debian # TODO check dirname $0
+MIRRORPATH=/tmp
+
+if test "${UPSTREAMDIST}" == "3.5"; then
+	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
+fi
 
 if test ! -d ${DEBPATH}; then
   echo "can not find debian/ folder. Please 'cd <newscoop-git>/packaging/'"
@@ -30,13 +39,27 @@ echo -n " +++ building newscoop-${DEBVERSION}.deb in: "
 pwd
 echo " +++ downloading upstream release.."
 
-curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
+if [ -f ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz ]; then
+	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz"
+  tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz
+elif [ -f ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz ]; then
+	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz"
+  tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz
+elif [ -n "$CUSTOMURL" ]; then
+	echo "download ${CUSTOMURL}"
+	curl -L ${CUSTOMURL} \
+		| tee ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz \
+		| tar xzf - || exit
+else
+	echo "download from sourceforge."
+  curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
+fi
 
 # done in README.debian
-rm newscoop/INSTALL
+rm newscoop/INSTALL.txt
 # documentation for /usr/share/doc/newscoop
 for file in ChangeLog CREDITS COPYING README UPGRADE; do
-  mv -vi newscoop/$file ./
+  mv -vi newscoop/${file}.txt ./${file}
 done
 mv -vi newscoop/htaccess newscoop/.htaccess
 
@@ -64,3 +87,9 @@ debuild $@ || exit
 
 ls -l /tmp/newscoop*deb
 ls -l /tmp/newscoop*changes
+
+lintian -i --pedantic /tmp/newscoop_${DEBRELEASE}_*.changes | tee /tmp/newscoop-${DEBRELEASE}.issues
+
+echo -n "UPLOAD? [enter|CTRL-C]" ; read
+
+dput rg42 /tmp/newscoop_${DEBRELEASE}_*.changes 
