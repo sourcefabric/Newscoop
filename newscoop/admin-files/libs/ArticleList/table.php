@@ -43,7 +43,7 @@
     <input type="hidden" name="order" value="" />
 
 <fieldset class="buttons">
-    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
+    <input id="button-set-order" type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
 </fieldset>
 </form>
 <div style="clear: both"></div>
@@ -60,6 +60,7 @@ function sendOrder(form, hash)
         order,
         $('input[name=language]', $(form)).val(),
         ], function(data) {
+            tables[hash].fnSort([[2, 'asc']]);
             tables[hash].fnDraw(true);
             flashMessage('<?php putGS('Order updated.'); ?>');
         });
@@ -75,7 +76,6 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bAutoWidth': true,
     'bScrollCollapse': true,
     'bDestroy': true,
-    'bJQueryUI': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
     'aaSorting': [[2, 'asc']],
     'oLanguage': {
@@ -110,8 +110,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                         return '<?php putGS('New'); ?>';
                     case 'S':
                         return '<?php putGS('Submitted'); ?>';
-                    case 'M':
-                        return '<?php putGS('Publish with issue'); ?>';
+                    case 'M': return '<?php putGS('Publish with issue'); ?>';
                 }
             },
             'aTargets': [7]
@@ -208,6 +207,14 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         <?php }} ?>
             callServer(['ArticleList', 'doData'], aoData, fnCallback);
     },
+    'bStateSave': true,
+    'fnStateLoadCallback': function(oSettings, oData) {
+        oData.sFilter = ''; // reset filter
+        <?php if ($this->order) { ?>
+        oData.aaSorting = [[2, 'asc']]; // show correct order on reload
+        <?php } ?>
+        return true;
+    },
     <?php } ?>
     <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column
@@ -222,6 +229,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         return nRow;
     },
     <?php } ?>
+    'bJQueryUI': true
 }).css('position', 'relative').css('width', '100%');
 
 });
