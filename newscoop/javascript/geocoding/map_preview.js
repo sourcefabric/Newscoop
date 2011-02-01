@@ -349,6 +349,9 @@ this.map_showview = function()
         this.map.setBaseLayer(map_names[0]);
     }
     this.map.setCenter(this.map_view_layer_center, this.map_view_layer_zoom);
+
+    OpenLayers.HooksLocal.map_check_popup(this);
+
 };
 
 // the main action on data retrieval
