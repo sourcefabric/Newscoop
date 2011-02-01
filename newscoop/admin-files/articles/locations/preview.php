@@ -14,6 +14,10 @@ if (0 == $f_language_id) {
 }
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
+$f_focus = Input::Get('focus', 'string', 'default', true);
+$focus_default = true;
+if ('revert' == $f_focus) {$focus_default = false;}
+
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
 	exit;
@@ -34,6 +38,28 @@ if (!Input::IsValid()) {
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
 
 	<script type="text/javascript">
+var map_preview_focus_default = function()
+{
+    var cur_location = window.location.href;
+    var new_location = cur_location.replace("focus=revert", "focus=default");
+    try {
+        window.location.replace(new_location);
+    } catch (e) {}
+};
+
+var map_preview_focus_revert = function()
+{
+    var cur_location = window.location.href;
+    var new_location = cur_location.replace("focus=default", "focus=revert");
+    if (-1 == new_location.indexOf("focus=revert"))
+    {
+        new_location += "&focus=revert";
+    }
+
+    try {
+        window.location.replace(new_location);
+    } catch (e) {}
+};
 
 var map_preview_close = function()
 {
@@ -44,16 +70,18 @@ var map_preview_close = function()
         parent.$.fancybox.close();
     }
     catch (e) {window.close();}
-}
+};
 
 var map_show_edit = function()
 {
     var cur_location = window.location.href;
     var new_location = cur_location.replace("preview.php", "popup.php");
+    new_location = new_location.replace("&focus=default", "");
+    new_location = new_location.replace("&focus=revert", "");
     try {
         window.location.replace(new_location);
     } catch (e) {}
-}
+};
 
 	</script>
 
@@ -61,7 +89,23 @@ var map_show_edit = function()
 <?php
 $map_width = 0;
 $map_height = 0;
-$auto_focus = true;
+
+$focus_info = Geo_Preferences::GetFocusInfo();
+$auto_focus = (bool) $focus_info["json_obj"]["auto_focus"];
+
+$map_fixed_info = getGS("Fixed map");
+$map_focused_info = getGS("Focused map");
+
+$map_fixed_label = getGS("Fixed map");
+$map_focused_label = getGS("Focused map");
+
+$focus_other_label = $map_fixed_label;
+$focus_current_label = $map_focused_info;
+if ($focus_default && (!$auto_focus)) {$focus_other_label = $map_focused_label; $focus_current_label = $map_fixed_info;}
+if ((!$focus_default) && $auto_focus) {$focus_other_label = $map_focused_label; $focus_current_label = $map_fixed_info;}
+
+if (!$focus_default) {$auto_focus = !$auto_focus;}
+
 echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $map_height, $auto_focus);
 ?>
 </head>
@@ -71,6 +115,11 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
 <div id="map_toolbar_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
+<?php if ($focus_default) { ?>
+        <input id="map_button_focus" type="submit" onClick="map_preview_focus_revert(); return false;" class="default-button" value="<?php echo $focus_other_label; ?>" name="focus" />
+<?php } else { ?>
+        <input id="map_button_focus" type="submit" onClick="map_preview_focus_default(); return false;" class="default-button" value="<?php echo $focus_other_label; ?>" name="focus" />
+<?php } ?>
 <?php
   $canEdit = $g_user->hasPermission('ChangeArticle');
   if ($canEdit)
@@ -83,7 +132,7 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
         <input id="map_button_close" type="submit" onClick="map_preview_close(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_preview_info" class="map_preview_info">
-      <?php putGS("Map preview"); ?>
+      <?php putGS("Map preview"); echo " - " . $focus_current_label; ?>
     </div>
     <!-- end of map_save_part -->
   </div>

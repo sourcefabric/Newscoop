@@ -1694,7 +1694,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @return string
      */
-    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0, $p_autoFocus = false)
+    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0, $p_autoFocus = null)
     {
         global $Campsite;
         $tag_string = "";
@@ -1732,6 +1732,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
         $geo_popups_json = "";
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
+
+        $geo_focus_info = Geo_Preferences::GetFocusInfo($cnf_html_dir, $cnf_website_url);
+        if (null !== $p_autoFocus)
+        {
+            $geo_focus_info["json_obj"]["auto_focus"] = $p_autoFocus;
+        }
+        $geo_focus_json = "";
+        $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
         
         $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
 
@@ -1769,13 +1777,10 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
     $article_spec = json_encode($article_spec_arr);
 
-    $poi_auto_focus = "false";
-    if ($p_autoFocus) {$poi_auto_focus = "true";}
-
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
     $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_auto_focus({auto_focus:$poi_auto_focus});";
+    $tag_string .= "geo_object$map_suffix.set_auto_focus($geo_focus_json);";
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
     $tag_string .= "\n";

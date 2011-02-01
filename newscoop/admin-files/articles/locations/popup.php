@@ -374,6 +374,7 @@ var map_show_preview = function()
 
     var cur_location = window.location.href;
     var new_location = cur_location.replace("popup.php", "preview.php");
+    new_location += "&focus=default";
     try {
     window.location.replace(new_location);
     } catch (e) {}

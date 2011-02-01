@@ -4,6 +4,7 @@ function geo_locations () {
 
 this.something_to_save = false;
 this.auto_focus = true;
+this.auto_focus_max_zoom = true;
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -119,15 +120,14 @@ this.set_article_spec = function(params)
 
 this.set_auto_focus = function(params)
 {
-    var param_names = ["auto_focus"];
-    var param_count = param_names.length;
+    var param_names = {"auto_focus":"auto_focus", "max_zoom":"auto_focus_max_zoom"};
 
-    for (var pind = 0; pind < param_count; pind++)
+    for (var param_key in param_names)
     {
-        var one_name = param_names[pind];
-        if (undefined !== params[one_name])
+        if (undefined !== params[param_key])
         {
-            this[one_name] = params[one_name];
+            var one_name = param_names[param_key];
+            this[one_name] = params[param_key];
         }
     }
 };
@@ -349,8 +349,6 @@ this.map_showview = function()
         this.map.setBaseLayer(map_names[0]);
     }
     this.map.setCenter(this.map_view_layer_center, this.map_view_layer_zoom);
-    //alert(this.map_view_layer_zoom);
-    //alert(this.map_view_layer_center);
 };
 
 // the main action on data retrieval
@@ -403,8 +401,6 @@ this.got_load_data = function (load_data, is_obj) {
 
     var lonlat = null;
 
-    //this.set_map_usage(received_obj.map);
-
     var poi_lon_min = 10e100;
     var poi_lon_max = -10e100;
     var poi_lat_min = 10e100;
@@ -441,7 +437,6 @@ this.got_load_data = function (load_data, is_obj) {
         var longitude_shift = (0 <= longitude_use) ? longitude_use : (longitude_use + 360);
 
 
-        //lonlat = new OpenLayers.LonLat(one_poi.longitude, one_poi.latitude).transform(
         lonlat = new OpenLayers.LonLat(longitude_use, latitude_use).transform(
             new OpenLayers.Projection("EPSG:4326"),
             this.map.getProjectionObject()
@@ -454,8 +449,6 @@ this.got_load_data = function (load_data, is_obj) {
 
         one_marker['lon'] = parseFloat(one_poi.longitude);
         one_marker['lat'] = parseFloat(one_poi.latitude);
-        //one_marker['lon'] = parseFloat(longitude_use);
-        //one_marker['lat'] = parseFloat(latitude_use);
         one_marker['map_lon'] = lonlat.lon;
         one_marker['map_lat'] = lonlat.lat;
 
@@ -603,7 +596,7 @@ this.got_load_data = function (load_data, is_obj) {
         var poi_corner_count = poi_corners.length;
 
         var zoom_min = 0;
-        var zoom_ini = 18;
+        var zoom_ini = this.auto_focus_max_zoom;
         var zoom_use = 0;
 
         var view_box = null;

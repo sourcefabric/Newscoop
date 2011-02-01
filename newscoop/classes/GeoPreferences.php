@@ -578,6 +578,27 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
 } // fn GetIconsFiles
 
 	/**
+	 * Gets info on map auto-focusing
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return array
+	 */
+public static function GetFocusInfo($p_htmlDir = "", $p_websiteUrl = "")
+{
+    $focus_default = SystemPref::Get("MapAutoFocusDefault");
+    if (!$focus_default) {$focus_default = false;}
+    else {$focus_default = true;}
+
+    $focus_maxzoom = SystemPref::Get("MapAutoFocusMaxZoom");
+    if (!$focus_maxzoom) {$focus_maxzoom = 18;}
+
+    $res_focus_info = array("auto_focus" => $focus_default, "max_zoom" => $focus_maxzoom);
+    return array("json_obj" => $res_focus_info);
+} // fn GetFocusInfo
+
+	/**
 	 * Gets translated strings for the geo-map templates
 	 * This is used for having translated those strings, even when they are not used via this function
 	 * Look at include/smarty/plugins/function.math.php for the usage

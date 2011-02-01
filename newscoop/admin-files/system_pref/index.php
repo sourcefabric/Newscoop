@@ -462,6 +462,25 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Set map auto-focusing as the default behavior:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_map_auto_focus_default" value="1" <?php echo SystemPref::Get('MapAutoFocusDefault') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Maximal zoom for auto-focusing:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_auto_focus_max_zoom" value="<?php p(SystemPref::Get('MapAutoFocusMaxZoom')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("Allow Google Streets Map Provider:"); ?>
     </td>
     <td align="left" valign="top">
