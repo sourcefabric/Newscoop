@@ -4,16 +4,18 @@
 .poilist_perex {
 
 }
-.popup_content {
 
+.geo_map_mapcanvas {
+    font-size: 12px;
 }
+
 .popup_title {
-    font-size: 30;
+    font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #fffffa;
     color: #202000;
-    width: 250px;
+    width: 180px;
 }
 .popup_video {
 
@@ -22,7 +24,13 @@
 
 }
 .popup_text {
-    font-size: 14;
+    font-size: 14px;
     margin-top: 10px;
-    width: 250px;
+    width: 180px;
+}
+.popup_content {
+    font-size: 14px;
+    margin-top: 10px;
+    width: 180px;
+
 }

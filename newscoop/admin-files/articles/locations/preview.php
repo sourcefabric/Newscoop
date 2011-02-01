@@ -112,7 +112,7 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
 <body onLoad="return false;">
 <div class="map_preview clearfix">
 <!--Toolbar-->
-<div id="map_toolbar_part" class="toolbar clearfix">
+<div id="map_toolbar_part" class="toolbar clearfix map_preview_toolbar">
 
     <div class="save-button-bar">
 <?php if ($focus_default) { ?>

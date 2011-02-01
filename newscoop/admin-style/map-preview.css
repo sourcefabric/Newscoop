@@ -1,3 +1,11 @@
+.map_preview_toolbar {
+    background: #ffffff;
+    width: 1020px;
+    margin: 0px auto;
+    height: 0px;
+    padding: 9px 8px 0px 14px;
+}
+
 .map_preview_info {
     margin-left: 2px;
     margin-top: 2px;
@@ -5,17 +13,19 @@
     height: 24px;
     font-size: 18px;
 }
-
 .geomap_locations {
     float: left;
     width: 150px;
     margin-left: 20px;
     font-size: 90%;
 }
+
 .geomap_mappart {}
+
 .geomap_container {
     width: 800px;
     height: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 

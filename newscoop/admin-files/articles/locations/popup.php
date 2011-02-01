@@ -607,7 +607,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
       </div><!-- end of map_mapedit -->
 
     </div><!-- end of map_mapmenu -->
-<div id="map_mapcanvas" class="map_mapcanvas"></div>
+<div id="map_mapcanvas" class="map_mapcanvas geo_map_mapcanvas"></div>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_editor -->
 </body>

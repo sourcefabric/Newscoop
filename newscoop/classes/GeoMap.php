@@ -1845,7 +1845,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
 
         return $tag_string;
     } // fn GetMapTagBody
