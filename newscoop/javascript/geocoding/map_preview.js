@@ -425,7 +425,7 @@ this.got_load_data = function (load_data, is_obj) {
     var use_zone_shift = false;
 
     var shifts = [0, -360, 360];
-    //var shifts = [0];
+
     var shift_count = shifts.length;
     for (var sind = 0; sind < shift_count; sind++) {
 
