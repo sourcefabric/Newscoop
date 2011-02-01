@@ -30,9 +30,11 @@ function set_document_root()
 
     // get document root via -d switch
     $document_root = dirname(dirname(__FILE__));
-    $options = getopt('d:');
-    if (!empty($options['d'])) {
-        $document_root = $options['d'];
+    for ($i = 1; $i < $_SERVER['argc'] - 1; $i++) {
+        if ($_SERVER['argv'][$i] == '-d') {
+            $document_root = $_SERVER['argv'][$i + 1];
+            break;
+        }
     }
 
     // check if document_root exists
