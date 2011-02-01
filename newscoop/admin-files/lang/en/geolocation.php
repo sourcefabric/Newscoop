@@ -1,4 +1,6 @@
 <?php 
+regGS("Focused map", "Focused map");
+regGS("Fixed map", "Fixed map");
 regGS("login", "login");
 regGS("Session expired.", "Session expired.");
 regGS("Processing...", "Processing...");
