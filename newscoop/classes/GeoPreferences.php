@@ -594,7 +594,10 @@ public static function GetFocusInfo($p_htmlDir = "", $p_websiteUrl = "")
     $focus_maxzoom = SystemPref::Get("MapAutoFocusMaxZoom");
     if (!$focus_maxzoom) {$focus_maxzoom = 18;}
 
-    $res_focus_info = array("auto_focus" => $focus_default, "max_zoom" => $focus_maxzoom);
+    $focus_border = SystemPref::Get("MapAutoFocusBorder");
+    if (!$focus_border) {$focus_border = 100;}
+
+    $res_focus_info = array("auto_focus" => $focus_default, "max_zoom" => $focus_maxzoom, "border" => $focus_border);
     return array("json_obj" => $res_focus_info);
 } // fn GetFocusInfo
 

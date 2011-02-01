@@ -5,6 +5,7 @@ function geo_locations () {
 this.something_to_save = false;
 this.auto_focus = true;
 this.auto_focus_max_zoom = true;
+this.auto_focus_border = 100;
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -120,7 +121,7 @@ this.set_article_spec = function(params)
 
 this.set_auto_focus = function(params)
 {
-    var param_names = {"auto_focus":"auto_focus", "max_zoom":"auto_focus_max_zoom"};
+    var param_names = {"auto_focus":"auto_focus", "max_zoom":"auto_focus_max_zoom", "border":"auto_focus_border"};
 
     for (var param_key in param_names)
     {
@@ -598,6 +599,9 @@ this.got_load_data = function (load_data, is_obj) {
         var poi_corners = [poi_corner_tl, poi_corner_bl, poi_corner_tr, poi_corner_br];
         var poi_corner_count = poi_corners.length;
 
+        var poi_lon_span = poi_lon_max - poi_lon_min;
+        var poi_lat_span = poi_lat_max - poi_lat_min;
+
         var zoom_min = 0;
         var zoom_ini = this.auto_focus_max_zoom;
         var zoom_use = 0;
@@ -605,6 +609,8 @@ this.got_load_data = function (load_data, is_obj) {
         var view_box = null;
         var pois_included = true;
         var cind = 0;
+
+        var zoom_out = false;
 
         for (var zind = zoom_ini; zind > zoom_min; zind--)
         {
@@ -614,10 +620,26 @@ this.got_load_data = function (load_data, is_obj) {
             {
                 if (!view_box.containsLonLat(poi_corners[cind], false)) {pois_included = false; break;}
             }
-            if (pois_included) {zoom_use = zind; break;}
+            if (pois_included)
+            {
+                zoom_use = zind;
+
+                var box_width = view_box.right - view_box.left;
+                var box_height = view_box.top - view_box.bottom;
+                var outside_lon = (1.0 - (poi_lon_span / box_width)) / 2.0;
+                var outside_lat = (1.0 - (poi_lat_span / box_height)) / 2.0;
+                var div_size = this.map.getCurrentSize();
+                outside_lon *= div_size.w;
+                outside_lat *= div_size.h;
+
+                if (outside_lon < this.auto_focus_border) {zoom_out = true;}
+                if (outside_lat < this.auto_focus_border) {zoom_out = true;}
+
+                break;
+            }
         }
 
-        if (1 < poi_count)
+        if (zoom_out && (1 < poi_count))
         {
             if (0 < zoom_use) {zoom_use -= 1;}
         }

@@ -1,4 +1,7 @@
 <?php 
+regGS("Maximal zoom for auto-focusing:", "");
+regGS("Map border for auto-focusing:", "");
+regGS("Map auto-focusing as the default behavior:", "");
 regGS("Enable Airtime audio attachments?", "Разрешить присоединение аудиофайлов из Airtime?");
 regGS("Airtime Server", "Сервер Airtime");
 regGS("Run scheduled tasks externally?", "Запускать обслуживающие задачи через Cron?");

@@ -68,6 +68,7 @@ $f_geo = array(
     'map_view_height_default' => Input::Get('f_map_view_height_default', 'int', 400, true),
     'map_auto_focus_default' => Input::Get('f_map_auto_focus_default', 'int', 0, true),
     'map_auto_focus_max_zoom' => Input::Get('f_map_auto_focus_max_zoom', 'int', 18, true),
+    'map_auto_focus_border' => Input::Get('f_map_auto_focus_border', 'int', 100, true),
     'map_provider_available_google_v3' => Input::Get('f_map_provider_available_google_v3', 'int', 0, true),
     'map_provider_available_map_quest' => Input::Get('f_map_provider_available_map_quest', 'int', 0, true),
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int', 0, true),

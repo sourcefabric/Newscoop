@@ -462,7 +462,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Set map auto-focusing as the default behavior:"); ?>
+        <?php putGS("Map auto-focusing as the default behavior:"); ?>
     </td>
     <td align="left" valign="top">
         <input type="checkbox" name="f_map_auto_focus_default" value="1" <?php echo SystemPref::Get('MapAutoFocusDefault') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
@@ -474,6 +474,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
     <td align="left" valign="top">
         <input type="text" name="f_map_auto_focus_max_zoom" value="<?php p(SystemPref::Get('MapAutoFocusMaxZoom')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map border for auto-focusing:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_auto_focus_border" value="<?php p(SystemPref::Get('MapAutoFocusBorder')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
 <tr>
