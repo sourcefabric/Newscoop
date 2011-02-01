@@ -72,9 +72,9 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault',
 
 -- Pop-up setting
 -- min. pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '300');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '200');
 -- min. pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '200');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '150');
 
 -- Pop-up multimedia content
 -- youtube wideo setting
