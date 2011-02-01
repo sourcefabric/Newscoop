@@ -5,8 +5,8 @@
 
 Summary:        The open content management system for professional journalists
 Name:           newscoop
-Version:        3.5.0.rc2
-Release:        1
+Version:        3.5.0
+Release:        test1
 License:        GPL
 Packager:       Robin Gareus <robin@gareus.org>
 
