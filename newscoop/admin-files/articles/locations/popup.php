@@ -60,7 +60,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<meta http-equiv="Expires" content="now" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/styles/map-popups.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/styles/map-info.css" />
 
 <?php
     $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
