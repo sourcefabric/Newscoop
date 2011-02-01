@@ -72,7 +72,7 @@ function smarty_function_map($p_params, &$p_smarty)
     // get map width and height
     $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
-    $auto_focus = isset($p_params['auto_focus']) ? (bool) $p_params['auto_focus'] : false;
+    $auto_focus = isset($p_params['auto_focus']) ? (bool) $p_params['auto_focus'] : null;
 
     // get core pieces to display the map
     $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height, $auto_focus);
