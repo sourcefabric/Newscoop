@@ -1,15 +1,10 @@
-Newscoop is a multilingual content management system (CMS) for news websites.
+Newscoop is the open content management system for professional journalists.
 
-Newscoops's user interface was built with the end user (journalist/editor/publisher) in mind and it can be scaled to suit different requirements and complexities. Newscoop works best for medium-to-large-size online news publications, but it is capable of handling lighter sites too. Newscoop is developed by sourcefabric (http://www.sourcefabric.org)
-
-Benefits:
-
-    * Professional grade software that is free to download and easy to install.
-    * User-friendly interface to allow journalists and editors to work efficiently.
-    * Possibility for multi-lingual content comes as standard.
-    * Management features designed specifically for newspapers: automation of issue publishing, editor review, multimedia support.
-    * Subscription management with control over what content your subscribers have access to.
-    * Total design freedom - make your site look however you like, utilising the templating engine.
+Features for the modern newsroom include multiple author management,
+issue-and-section based publishing, geolocation and multilingual content 
+management. The enterprise-standard journalist’s dashboard and a templating 
+engine supporting anything from HTML5 to mobile complete this fast 
+production and publishing system.
 
 Quick links to our resources are:
 

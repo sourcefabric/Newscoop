@@ -62,7 +62,7 @@ $Campsite['FILE_NUM_DIRS_LEVEL_2'] = "1000";
 $Campsite['TMP_DIRECTORY'] = '/tmp/';
 $Campsite['HELP_URL'] = 'http://www.sourcefabric.org/en/products/newscoop_support/';
 $Campsite['ABOUT_URL'] = 'http://www.sourcefabric.org/en/about/page/';
-$Campsite['SUPPORT_EMAIL'] = 'newscoop-support@lists.sourcefabric.org';
+$Campsite['SUPPORT_EMAIL'] = 'newscoop-bug@sourcefabric.org';
 $Campsite['DEBUG'] = true;
 
 require_once($Campsite['CAMPSITE_DIR'].'/template_engine/classes/CampVersion.php');

@@ -37,15 +37,23 @@ class ArticleList extends BaseList
     /** @var bool */
     protected static $renderActions = FALSE;
 
+    /** @var string */
+    protected static $lastId = NULL;
+
     /**
      */
     public function __construct()
     {
         parent::__construct();
 
-        // generate random ids - more tables per page
-        $this->id = substr(sha1((string) mt_rand()), -6);
+        // generate id - unique per page instance
+        if (empty(self::$lastId)) {
+            self::$lastId = __FILE__;
+        }
+        $this->id = substr(sha1(self::$lastId), -6);
+        self::$lastId = $this->id;
 
+        // column titles
         $this->cols = array(
             'Number' => NULL,
             'Language' => getGS('Language'),
