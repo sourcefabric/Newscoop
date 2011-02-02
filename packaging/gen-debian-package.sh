@@ -61,7 +61,7 @@ rm newscoop/INSTALL.txt
 for file in ChangeLog CREDITS COPYING README UPGRADE; do
   mv -vi newscoop/${file}.txt ./${file}
 done
-mv -vi newscoop/htaccess newscoop/.htaccess
+cp -vi newscoop/htaccess newscoop/.htaccess
 
 ### fixes for 3.5.0-rc2 ###
 if test "${UPSTREAMVERSION}" == "3.5.0-rc2"; then

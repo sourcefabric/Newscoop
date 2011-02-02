@@ -23,14 +23,11 @@ package_name="newscoop"
 datadir="/var/lib/${package_name}"
 configdir="/etc/newscoop/3.5"
 includefile="${configdir}/apache.conf"
-a2tplfile="${configdir}/apache.vhost"
+a2tplfile="${configdir}/apache.vhost.tpl"
+crontplfile="${configdir}/newscoop.cron.tpl"
+cronincfile="${configdir}/newscoop.cron"
 phpinifile="${configdir}/newscoop.ini"
 OLDVERSION="$2"
-
-if [ "$1" == "reconfigure" ]; then
-	true
-	# TODO: run postrm ? clean up previous vhosts and /etc/$webserver/conf.d/
-fi
 
 case "$1" in
   configure|reconfigure)
@@ -38,54 +35,96 @@ case "$1" in
     #webserver=`echo $webserver|sed -e 's/,  */ /g'`
     webserver="apache2"
     php="php5"
+    dohtaccess=""
 
+    #  clean up previous configurations
+    if [ -L /etc/$webserver/conf.d/newscoop.conf ]; then
+      rm -f /etc/$webserver/conf.d/newscoop.conf || true
+      restart="$webserver $restart"
+    fi
+    if [ -f /etc/$webserver/sites-available/newscoop-vhost ]; then
+      a2dissite newscoop-vhost &>/dev/null || true
+      restart="$webserver $restart"
+    fi
+    if [ -L /etc/cron.d/newscoop ]; then
+      rm -f /etc/cron.d/newscoop || true
+    fi
+
+    # APACHE config
     db_get newscoop/apache-setup
     if [ "$RET" == "system-wide (all vhosts)" ]; then
-        if [ ! -d /etc/$webserver/conf.d/ ]; then
-            install -d -m755 /etc/$webserver/conf.d/
-        fi
-        if [ ! -e /etc/$webserver/conf.d/newscoop.conf ]; then
-          ln -s ${includefile} /etc/$webserver/conf.d/newscoop.conf
-          a2enmod rewrite &>/dev/null || true
-          restart="$webserver $restart"
-        fi
-
-        if [ ! -d /etc/$php/conf.d/ ]; then
-          install -d -m755 /etc/$php/conf.d/
-        fi
-        if [ ! -e /etc/$php/conf.d/newscoop.ini ]; then
-          ln -s ${phpinifile} /etc/$php/conf.d/newscoop.ini
-          restart="$webserver $restart"
-        fi
-    elif [ "$RET" == "dedicated v-host" ]; then
-        db_get newscoop/apache-servername
-        SN=$RET
-        db_get newscoop/apache-serveradmin
-        SA=$RET
-        
-        if [ ! -d /etc/$webserver/sites-available/ ]; then
-            install -d -m755 /etc/$webserver/sites-available/
-        fi
-        sed -e "s/__SERVER_ADMIN__/${SA}/;s/__SERVER_NAME__/${SN}/" \
-          ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost
-        a2ensite newscoop-vhost &>/dev/null
+      if [ ! -d /etc/$webserver/conf.d/ ]; then
+        install -d -m755 /etc/$webserver/conf.d/
+      fi
+      if [ ! -e /etc/$webserver/conf.d/newscoop.conf ]; then
+        ln -s ${includefile} /etc/$webserver/conf.d/newscoop.conf
+        a2enmod rewrite &>/dev/null || true
         restart="$webserver $restart"
+      fi
+      dohtaccess="/newscoop"
+    elif [ "$RET" == "dedicated v-host" ]; then
+      db_get newscoop/apache-servername
+      SN=$RET
+      db_get newscoop/apache-serveradmin
+      SA=$RET
+      
+      if [ ! -d /etc/$webserver/sites-available/ ]; then
+        install -d -m755 /etc/$webserver/sites-available/
+      fi
+      sed -e "s/__SERVER_ADMIN__/${SA}/;s/__SERVER_NAME__/${SN}/" \
+        ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost
+      a2ensite newscoop-vhost &>/dev/null
+      restart="$webserver $restart"
+      dohtaccess="/"
+    fi
+
+    # PHP config
+    if [ ! -d /etc/$php/conf.d/ ]; then
+      install -d -m755 /etc/$php/conf.d/
+    fi
+    if [ ! -e /etc/$php/conf.d/newscoop.ini ]; then
+      ln -s ${phpinifile} /etc/$php/conf.d/newscoop.ini
+      restart="$webserver $restart"
+    fi
+
+    echo -ne "/RewriteBase/d\nwq\n\n" \
+    | ed /var/lib/newscoop/.htaccess &>/dev/null || true
+
+    # .htaccess file
+    if [ -n "${dohtaccess}" ]; then
+      echo -ne "/RewriteEngine/\n+1i\n    RewriteBase ${dohtaccess}\n.\nwq\n" \
+      | ed /var/lib/newscoop/.htaccess &>/dev/null || true
+    fi
+
+    # CRON JOB
+    db_get newscoop/cronjob
+    if [ "$RET" == "true" ]; then
+      CU=www-data
+      CE=root@localhost
+      sed -e "s/__CRON_EMAIL__/${CE}/;s/__WWW_USER__/${CU}/" \
+        ${crontplfile} > ${cronincfile}
+      if [ ! -d /etc/cron.d/ ]; then
+        install -d -m755 /etc/cron.d/
+      fi
+      if [ ! -e /etc/cron.d/newscoop ]; then
+        ln -s ${cronincfile} /etc/cron.d/newscoop
+      fi
     fi
 
     # Permissions
-    dpkg-statoverride --list $datadir || \
+    dpkg-statoverride --list $datadir &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir
-    dpkg-statoverride --list $datadir/conf || \
+    dpkg-statoverride --list $datadir/conf &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
-    dpkg-statoverride --list $datadir/install/cron_jobs || \
+    dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
-    dpkg-statoverride --list $datadir/templates || \
+    dpkg-statoverride --list $datadir/templates &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
-    dpkg-statoverride --list $datadir/templates_cache || \
+    dpkg-statoverride --list $datadir/templates_cache &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
-    dpkg-statoverride --list $datadir/plugins || \
+    dpkg-statoverride --list $datadir/plugins &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
-    dpkg-statoverride --list $datadir/backup || \
+    dpkg-statoverride --list $datadir/backup &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/backup
 
 # newscoop-3.5 does not yet support that
