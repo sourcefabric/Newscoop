@@ -3,6 +3,7 @@
 function geo_locations_edit () {
 
 this.obj_name = null;
+this.editing = true;
 
 // object for popup preview button
 this.popup_prev_button = null;
@@ -440,8 +441,11 @@ this.update_poi_position = function(index, coordinate, value, input)
     var pixel = this.map.getViewPortPxFromLonLat(lonlat);
     feature.move(pixel);
     if (this.popup && (feature == this.popup.feature)) {
+        pixel = this.map.getLayerPxFromLonLat(lonlat);
         this.popup.moveTo(pixel);
     }
+
+    OpenLayers.HooksLocal.map_check_pois(this);
 };
 
 // setting the edit window for the requested POI (bound on the 'edit' link)
@@ -907,6 +911,7 @@ this.poi_dragged = function(feature, pixel)
     cur_poi_info['map_lon'] = lonlat.lon;
     cur_poi_info['map_lat'] = lonlat.lat;
 
+    lonlat_map = lonlat.clone();
     lonlat.transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
 
     if (cur_poi_info.in_db)
@@ -923,6 +928,7 @@ this.poi_dragged = function(feature, pixel)
 
     // to move the POI's pop-up too, if it is displayed
     if (this.popup && (feature == this.popup.feature)) {
+        pixel = this.map.getLayerPxFromLonLat(lonlat_map);
         this.popup.moveTo(pixel);
     }
 };
@@ -1025,6 +1031,8 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
 
     this.descs_count += 1;
     this.descs_count_inc += 1;
+
+    OpenLayers.HooksLocal.map_check_pois(this);
 
     return true;
 };
@@ -1372,7 +1380,7 @@ this.set_map_provider = function ()
         this.set_save_state(true);
         this.map_spec_changed = true;
     }
-}
+};
 
 // map position is set automatically on map layer change
 this.map_position_changed = function ()
@@ -1388,7 +1396,8 @@ this.map_position_changed = function ()
         }
     }
 
-}
+    OpenLayers.HooksLocal.map_check_pois(this);
+};
 
 // map zoom is set automatically on map layer change
 this.map_zoom_changed = function ()
@@ -1404,7 +1413,8 @@ this.map_zoom_changed = function ()
         }
     }
 
-}
+    OpenLayers.HooksLocal.map_check_pois(this);
+};
 
 // changing the size for the map div for the reader view
 this.map_width_change = function(size, unsaved)
@@ -2190,6 +2200,8 @@ this.got_load_data = function (received_obj)
     {
         if (this.popup_prev_button) {this.popup_prev_button.disabled = false;}
     }
+
+    OpenLayers.HooksLocal.map_check_pois(this);
 
 };
 

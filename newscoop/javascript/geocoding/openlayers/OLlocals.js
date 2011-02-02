@@ -647,6 +647,58 @@ OpenLayers.HooksLocal.map_check_popup = function(geo_obj) {
 
 };
 
+OpenLayers.HooksLocal.map_check_pois = function(geo_obj) {
+    if (geo_obj.editing)
+    {
+        var shifts = [0, -360, 360];
+        if (2 > geo_obj.map.getZoom())
+        {
+            shifts = [0];
+        }
+        var shifts_count = shifts.length;
+
+        var features = geo_obj.layer.features;
+        var features_count = features.length;
+
+        var view_box = geo_obj.map.calculateBounds();
+
+        for (var find = 0; find < features_count; find++)
+        {
+            var feature = features[find];
+            var cur_poi_info = geo_obj.poi_markers[find];
+
+            var inf_lon = cur_poi_info['lon'];
+            var inf_lat = cur_poi_info['lat'];
+            var map_lon = cur_poi_info['map_lon'];
+            var map_lat = cur_poi_info['map_lat'];
+            var lonlat = new OpenLayers.LonLat(map_lon, map_lat);
+            var inf_lon_move = null;
+            var pixel = null;
+
+            for (var sind = 0; sind < shifts_count; sind++)
+            {
+                var one_shift = shifts[sind];
+
+                inf_lon_move = inf_lon + one_shift;
+                lonlat = new OpenLayers.LonLat(inf_lon_move, inf_lat);
+                lonlat.transform(new OpenLayers.Projection("EPSG:4326"), geo_obj.map.getProjectionObject());
+                if (view_box.containsLonLat(lonlat))
+                {
+                    pixel = geo_obj.map.getViewPortPxFromLonLat(lonlat);
+                    feature.move(pixel);
+                    if (geo_obj.popup && (feature == geo_obj.popup.feature)) {
+                        pixel = geo_obj.map.getLayerPxFromLonLat(lonlat);
+                        geo_obj.popup.moveTo(pixel);
+                    }
+                    break;
+                }
+
+            }
+
+        }
+    }
+};
+
 // our implementation of the proposed hook functions
 
 OpenLayers.Hooks.LayerSwitcher.layerSwitched = function(ctrl) {
@@ -708,10 +760,10 @@ OpenLayers.Hooks.PanZoomBar.zoomBarUp = function(ctrl) {
 
 OpenLayers.Hooks.DragPan.panMap = function(ctrl) {
     OpenLayers.HooksLocal.map_feature_redraw(ctrl.map.geo_obj);
-}
+};
 
 OpenLayers.Hooks.DragPan.panMapDone = function(ctrl) {
     OpenLayers.HooksLocal.map_center_update(ctrl.map.geo_obj);
     OpenLayers.HooksLocal.map_check_popup(ctrl.map.geo_obj);
-}
+};
 
