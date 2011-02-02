@@ -87,6 +87,7 @@ $no_menu_scripts = array(
     '/articles/locations/popup.php',
     '/articles/locations/preview.php',
     '/articles/locations/search.php',
+    '/articles/locations/multimap.php',
     );
 
 CampPlugin::ExtendNoMenuScripts($no_menu_scripts);

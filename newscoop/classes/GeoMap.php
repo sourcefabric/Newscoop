@@ -963,6 +963,25 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     } // fn ReadMapInfo
 
 
+	public static function ReadMultiMapInfo()
+	{
+        $geo_map_info = Geo_Preferences::GetMapInfo();
+        $map_data = $geo_map_info["json_obj"];
+
+        $map_info = array();
+        $map_info["id"] = 0;
+        $map_info["lon"] = $map_data["longitude"];
+        $map_info["lat"] = $map_data["latitude"];
+        $map_info["res"] = $map_data["resolution"];
+        $map_info["prov"] = $map_data["default"];
+        $map_info["width"] = $map_data["width"];
+        $map_info["height"] = $map_data["height"];
+        $map_info["name"] = "Multimap";
+
+        return $map_info;
+    }
+
+
     /**
      * Provides information on map's points
      *
@@ -973,13 +992,21 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @return array
      */
-	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false)
+	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false, $p_mapSet = null)
 	{
-        if (0 == $p_mapId) {return array();}
+        if (0 == $p_mapId && (!$p_mapSet)) {return array();}
+        if ($p_mapSet)
+        {
+            if ($p_mapSet["error"]) {return array();}
+            if ($p_mapSet["cons"]) {
+                if (0 == count($p_mapSet["maps"])) {return array();}
+            }
+        }
+
 
 		global $g_ado_db;
 
-		$sql_params = array($p_mapId, $p_languageId);
+		$sql_params = array();
 
         $list_fill = "%%id_list%%";
 
@@ -995,7 +1022,27 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $queryStr .= "INNER JOIN Locations AS l ON l.id = ml.fk_location_id ";
         $queryStr .= "INNER JOIN LocationContents AS c ON c.id = mll.fk_content_id ";
 
-        $queryStr .= "WHERE ml.fk_map_id = ? AND mll.fk_language_id = ? ";
+        if ($p_mapSet)
+        {
+            $queryStr .= "INNER JOIN Maps AS m ON ml.fk_map_id = m.id ";
+            if ($p_mapSet["cons"]) {
+                $queryStr .= "WHERE m.id IN (" . implode(", ", $p_mapSet["maps"]) . ") ";
+            }
+            else
+            {
+                $queryStr .= "INNER JOIN Articles AS a ON m.fk_article_number = a.Number ";
+                $queryStr .= "WHERE a.Published = 'Y' AND a.IdLanguage = ? ";
+                $sql_params[] = $p_languageId;
+            }
+        }
+        else
+        {
+            $queryStr .= "WHERE ml.fk_map_id = ? ";
+            $sql_params[] = $p_mapId;
+        }
+
+        $queryStr .= "AND mll.fk_language_id = ? ";
+        $sql_params[] = $p_languageId;
 
         if ($p_preview)
         {
@@ -1967,6 +2014,383 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $html .= '</div>';
         return $html;
     } // fn GetMapTagList
+
+    // multi-map functions
+
+    /**
+     * Gives map ids for the multi-map front end presentation
+     *
+     * @param int $p_languageId
+     * @param array $p_issues
+     * @param array $p_sections
+     * @param array $p_dates
+     * @param array $p_topics
+     *
+     * @return string
+     */
+    public static function GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics)
+    {
+		global $g_ado_db;
+
+        $is_correct = true;
+        $article_cons = false;
+        $map_ids = array();
+
+        $sql_params = array();
+
+        $query_cons = "";
+        if (0 < count($p_issues)) {
+            foreach ($p_issues as $val) {
+                if (!is_numeric($val)) {$is_correct = false;}
+            }
+            $query_cons .= "NrIssue IN (" . implode(", ", $p_issues) . ") AND ";
+            $article_cons = true;
+        }
+        if (0 < count($p_sections)) {
+            foreach ($p_sections as $val) {
+                if (!is_numeric($val)) {$is_correct = false;}
+            }
+            $query_cons .= "NrSection IN (" . implode(", ", $p_sections) . ") AND ";
+            $article_cons = true;
+        }
+        if (2 == count($p_dates)) {
+            $query_cons .= "PublishDate >= ? AND PublishDate <= ? AND ";
+            $sql_params[] = $p_dates[0];
+            $sql_params[] = $p_dates[1];
+            $article_cons = true;
+        }
+
+        $queryStr = "";
+        $queryStr .= "SELECT m.id AS id FROM Maps AS m ";
+        $queryStr .= "INNER JOIN Articles AS a ON m.fk_article_number = a.Number ";
+
+        if (0 < count($p_topics))
+        {
+            $article_cons = true;
+            $queryStr .= "INNER JOIN ArticleTopics AS at ON a.Number = at.NrArticle ";
+        }
+
+        $queryStr .= "WHERE $query_cons ";
+
+        if (0 < count($p_topics)) {
+            foreach ($p_topics as $val) {
+                if (!is_numeric($val)) {$is_correct = false;}
+            }
+            $queryStr .= "TopicId IN (" . implode(", ", $p_topics) . ") AND ";
+        }
+
+        $queryStr .= "IdLanguage = ? AND Published = 'Y'";
+        $sql_params[] = $p_languageId;
+
+        if (!$article_cons) {
+            return array('error' => false, 'cons' => false, 'maps' => array());
+        }
+
+        try {
+            $rows = $g_ado_db->GetAll($queryStr, $sql_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $map_ids[] = $row['id'];
+                }
+            }
+        }
+        catch (Exception $exc)
+        {
+            return array('error' => true, 'cons' => $article_cons, 'maps' => array());
+        }
+
+        return array('error' => false, 'cons' => true, 'maps' => $map_ids);
+    }
+
+    /**
+     * Gives the header part for the multi-map front end presentation
+     *
+     * @param int $p_languageId
+     * @param array $p_issues
+     * @param array $p_sections
+     * @param array $p_dates
+     * @param array $p_topics
+     * @param array $p_areas
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagHeader($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics, $p_areas, $p_mapWidth, $p_mapHeight)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_set = Geo_Map::GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics);
+        $points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $map_set);
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+
+        $cnf_html_dir = $Campsite['HTML_DIR'];
+        $cnf_website_url = $Campsite['WEBSITE_URL'];
+        
+        $geo_map_usage = Geo_Map::ReadMultiMapInfo();
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_usage['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_usage['height'] = $p_mapHeight;
+        }
+
+        $geo_map_usage_json = "";
+        $geo_map_usage_json .= json_encode($geo_map_usage);
+
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
+        $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_json = "";
+        $geo_map_json .= json_encode($geo_map_info["json_obj"]);
+
+        $geo_icons_info = Geo_Preferences::GetIconsInfo($cnf_html_dir, $cnf_website_url);
+        $geo_icons_json = "";
+        $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+        
+        $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
+        $geo_popups_json = "";
+        $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
+
+        $geo_focus_info = Geo_Preferences::GetFocusInfo($cnf_html_dir, $cnf_website_url);
+
+        {
+            $geo_focus_info["json_obj"]["auto_focus"] = true;
+        }
+        $geo_focus_json = "";
+        $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
+        
+        $preview = true;
+        $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
+        
+        //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
+        $poi_info_json = json_encode($poi_info);
+        
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+
+        $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+        $include_files_css = $include_files["css_files"];
+        $include_files_tags = "";
+        foreach ($include_files_css as $css_file)
+        {
+            $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+        }
+
+        $tag_string .= $geo_map_incl;
+        $tag_string .= "\n";
+
+        $tag_string .= $include_files_tags;
+
+        $tag_string .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
+
+<script type="text/javascript">
+    geo_object'. $map_suffix .' = new geo_locations();
+var geo_on_load_proc_map' . $map_suffix . ' = function()
+{
+
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+        map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
+';
+
+    $article_spec_arr = array("language_id" => $f_language_id, "article_number" => 0);
+    $article_spec = json_encode($article_spec_arr);
+
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_auto_focus($geo_focus_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
+    $tag_string .= "\n";
+
+        $tag_string .= '
+
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+};
+
+var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
+{
+        var res_state = false;
+        try {
+            res_state = OpenLayers.Util.test_ready();
+        } catch (e) {res_state = false;}
+
+        if (!res_state)
+        {
+            setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+            return;
+        }
+
+        geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
+        geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
+
+};
+
+    $(document).ready(function()
+    {
+        setTimeout("geo_on_load_proc_map' . $map_suffix . '();", 0);
+    });
+</script>
+';
+
+        return $tag_string;
+
+    } // fn GetMultiMapTagHeader
+
+    /**
+     * Gives the body map-placement part for the map front end presentation
+     *
+     * @param int $p_languageId
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagBody($p_languageId)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
+
+        return $tag_string;
+    } // fn GetMultiMapTagBody
+
+    /**
+     * Gives the body map-centering (js call) part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagCenter($p_languageId)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+
+        return $tag_string;
+    } // fn GetMultiMapTagCenter
+
+    /**
+     * Gives the body map-info and point-list part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return array
+     */
+    public static function GetMultiMapTagListData($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics, $p_areas)
+    {
+        $f_language_id = (int) $p_languageId;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+        $preview = true;
+        $text_only = true;
+
+        $geo_map_usage = Geo_Map::ReadMultiMapInfo();
+
+        $map_set = Geo_Map::GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics);
+        $points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $map_set);
+        $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
+
+        $pind = 0;
+        foreach ($poi_info["pois"] as $rank => $poi) {
+            $cur_lon = $poi["longitude"];
+            $cur_lat = $poi["latitude"];
+            $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
+            $poi_info["pois"][$rank]["center"] = $center;
+            $poi_info["pois"][$rank]["open"] = "OpenLayers.HooksPopups.on_map_feature_select(geo_object$map_suffix, $pind);";
+            $pind += 1;
+        }
+        return (array) $poi_info;
+    } // fn GetMultiMapTagListData
+
+    /**
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     * @return string
+     */
+    public static function GetMultiMapTagList($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics, $p_areas)
+    {
+
+        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_issues, $p_sections, $p_dates, $p_topics, $p_areas);
+        $map = $geo['map'];
+        $pois = $geo['pois'];
+
+        $map_name = $map['name'];
+        $map_name = str_replace("&", "&amp;", $map_name);
+        $map_name = str_replace("<", "&lt;", $map_name);
+        $map_name = str_replace(">", "&gt;", $map_name);
+
+        $html = '
+            <div class="geomap_info">
+              <dl class="geomap_map_name">
+                <dt class="geomap_map_name_label">' .
+                  getGS('Map') . ':
+                </dt>
+                <dd class="geomap_map_name_value">' .
+                  $map_name . '
+                </dd>
+              </dl>
+            </div>
+            <div id="side_info" class="geo_side_info">';
+        $poiIdx = 0;
+        foreach ($pois as $poi) {
+            $poi_title = $poi['title'];
+            $poi_title = str_replace("&", "&amp;", $poi_title);
+            $poi_title = str_replace("<", "&lt;", $poi_title);
+            $poi_title = str_replace(">", "&gt;", $poi_title);
+            $poi_perex = $poi['perex'];
+            $poi_perex = str_replace("&", "&amp;", $poi_perex);
+            $poi_perex = str_replace("<", "&lt;", $poi_perex);
+            $poi_perex = str_replace(">", "&gt;", $poi_perex);
+
+            $html .= '<div id="poi_seq_' . $poiIdx . '">
+                <a class="geomap_poi_name" href="#" onClick="'
+                . $poi['open'] . ' return false;">' . $poi_title . '</a>
+                <div class="geomap_poi_perex">' . $poi_perex . '</div>
+                <div class="geomap_poi_center">
+                    <a href="#" onClick="' . $poi['center'] . ' return false;">'
+                        . getGS('Center') . '
+                    </a>
+                </div>
+                <div class="geomap_poi_spacer">&nbsp;</div>
+            </div>';
+            $poiIdx += 1;
+        }
+        $html .= '</div>';
+        return $html;
+    } // fn GetMultiMapTagList
+
 
     // search functions
 

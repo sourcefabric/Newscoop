@@ -160,7 +160,7 @@ this.set_map_info = function(params)
 this.set_map_usage = function(params)
 {
     this.map_id = params["id"];
-    if (0 == this.map_id) {return;}
+    //if (0 == this.map_id) {return;}
 
     var longitude = params.lon;
     var latitude = params.lat;
