@@ -64,13 +64,15 @@ final class CampInstallationView
         $sysCheck = $this->sysCheck();
         $requirementsOk = $phpFunctionsCheck && $sysCheck;
         $this->phpRecommendedOptions();
+        $this->phpIniSettings();
 
         $template = CampTemplate::singleton();
 
         $template->assign('php_req_ok', $requirementsOk);
         $template->assign('php_functions', $this->m_lists['phpFunctions']);
         $template->assign('sys_requirements', $this->m_lists['sysRequirements']);
-        $template->assign('php_options', $this->m_lists['phpOptions']);
+        $template->assign('php_recommended', $this->m_lists['phpRecommendedOptions']);
+        $template->assign('php_settings', $this->m_lists['phpIniSettings']);
     } // fn preInstallationCheck
 
 
@@ -151,18 +153,6 @@ final class CampInstallationView
                                 'exists' => $systemEnabled
                                 );
 
-        $hasCLI = CampInstallationViewHelper::CheckCLI();
-        $phpFunctions[] = array(
-                                'tag' => '<span class="optional">PHP CLI (Command Line)</span>',
-                                'exists' => $hasCLI
-                                );
-
-        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
-        $phpFunctions[] = array(
-                                'tag' => '<span class="optional">APC (PHP Cache) Support</span>',
-                                'exists' => $hasAPC
-                                );
-
         $hasGD = CampInstallationViewHelper::CheckPHPGD();
         $success = ($hasGD == 'Yes') ? $success : false;
         $phpFunctions[] = array(
@@ -189,38 +179,56 @@ final class CampInstallationView
     } // fn phpFunctionsCheck
 
 
+    private function phpRecommendedOptions()
+    {
+        $hasCLI = CampInstallationViewHelper::CheckCLI();
+        $phpOptions[] = array(
+                                'tag' => '<span class="optional">PHP CLI (Command Line)</span>',
+                                'exists' => $hasCLI
+                                );
+
+        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
+        $phpOptions[] = array(
+                                'tag' => '<span class="optional">APC (PHP Cache) Support</span>',
+                                'exists' => $hasAPC
+                                );
+
+        $this->m_lists['phpRecommendedOptions'] = $phpOptions;
+    }
+
+
     /**
      *
      */
-    private function phpRecommendedOptions()
+    private function phpIniSettings()
     {
         $safeModeState = (ini_get('safe_mode') == '1') ? 'On' : 'Off';
-        $phpOptions[] = array(
+        $phpSettings[] = array(
                               'tag' => 'Safe Mode',
                               'rec_state' => 'Off',
                               'cur_state' => $safeModeState
                               );
 		$regGlobalsState = (ini_get('register_globals') == '1') ? 'On' : 'Off';
-		$phpOptions[] = array(
+		$phpSettings[] = array(
 			      'tag' => 'Register Globals',
 			      'rec_state' => 'Off',
 			      'cur_state' => $regGlobalsState
 			      );
         $fileUploadsState = (ini_get('file_uploads') == '1') ? 'On' : 'Off';
-        $phpOptions[] = array(
+        $phpSettings[] = array(
                               'tag' => 'File Uploads',
                               'rec_state' => 'On',
                               'cur_state' => $fileUploadsState
                               );
         $sessionAutoState = (ini_get('session.auto_start_') == '1') ? 'On' : 'Off';
-        $phpOptions[] = array(
+        $phpSettings[] = array(
                               'tag' => 'Session Auto Start',
                               'rec_state' => 'Off',
                               'cur_state' => $sessionAutoState
                               );
 
-        $this->m_lists['phpOptions'] = $phpOptions;
-    } // fn phpRecommendedOptions
+        $this->m_lists['phpIniSettings'] = $phpSettings;
+    } // fn phpIniSettings
 
 } // class CampInstallationView
 
