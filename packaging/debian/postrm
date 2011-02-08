@@ -61,6 +61,8 @@ case "$1" in
     dpkg-statoverride --remove $datadir/conf || true
     dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null && \
     dpkg-statoverride --remove $datadir/install/cron_jobs || true
+    dpkg-statoverride --list $datadir/images &>/dev/null && \
+    dpkg-statoverride --remove $datadir/images || true
     dpkg-statoverride --list $datadir/templates &>/dev/null && \
     dpkg-statoverride --remove $datadir/templates || true
     dpkg-statoverride --list $datadir/templates_cache &>/dev/null && \
