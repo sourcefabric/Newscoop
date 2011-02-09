@@ -13,6 +13,7 @@ if (preg_match('!attachment.*/(.+)$!U', $_SERVER['REQUEST_URI'], $match)) {
     $attachment = $match[1];
 } else {
     header('HTTP/1.0 404 Not Found');
+    echo 'Error 404: File not found';
     exit;
 }
 
@@ -23,6 +24,7 @@ if (($questionMark = strpos($attachment, '?')) !== false) {
 
 // Remove all attempts to get at other parts of the file system
 $attachment = str_replace('/../', '/', $attachment);
+$filename = basename($attachment);
 
 $extension = '';
 if (($extensionStart = strrpos($attachment, '.')) !== false) {
@@ -31,10 +33,11 @@ if (($extensionStart = strrpos($attachment, '.')) !== false) {
 }
 $attachmentId = (int)ltrim($attachment, " 0\t\n\r\0");
 
-$queryStr = "SELECT * FROM Attachments WHERE id = $attachmentId";
+//$queryStr = "SELECT * FROM Attachments WHERE id = $attachmentId";
 $attachmentObj = new Attachment($attachmentId);
-if (!$attachmentObj->exists()) {
+if (!$attachmentObj->exists() || $filename != $attachmentObj->getFileName()) {
     header('HTTP/1.0 404 Not Found');
+    echo 'Error 404: File not found';
     exit;
 }
 
@@ -62,6 +65,7 @@ if (file_exists($filePath)) {
     readfile($filePath);
 } else {
     header('HTTP/1.0 404 Not Found');
+    echo 'Error 404: File not found';
     exit;
 }
 
