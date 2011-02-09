@@ -1,9 +1,9 @@
 <?php
 
 // This file will deliver the attachment. It is supposed to work like this:
-// http://site/attachment/xxxxxxxxx.ext
+// http://site/attachment/id/file_name
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
@@ -33,7 +33,6 @@ if (($extensionStart = strrpos($attachment, '.')) !== false) {
 }
 $attachmentId = (int)ltrim($attachment, " 0\t\n\r\0");
 
-//$queryStr = "SELECT * FROM Attachments WHERE id = $attachmentId";
 $attachmentObj = new Attachment($attachmentId);
 if (!$attachmentObj->exists() || $filename != $attachmentObj->getFileName()) {
     header('HTTP/1.0 404 Not Found');
