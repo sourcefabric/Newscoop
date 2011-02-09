@@ -36,16 +36,38 @@ var map_preview_close = function()
 <?php
 
 $f_languageId = 1;
+
+$f_articles = array();
+$f_articles = array(34, 35, 61);
+//$f_articles = array(34);
 $f_issues = array(2);
 //$f_sections = array(10, 60);
 $f_sections = array(10);
-$f_dates = array();
+$f_dates = array("2000-10-20", "2020-10-10");
 $f_topics = array();
+//$f_topics = array(23);
+
 $f_areas = array();
+//$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
+
+//$f_multimedia = array();
+//$f_multimedia = array("image" => false, "video" => false, "any" => false);
+$f_multimedia = array("image" => false, "video" => false, "any" => true);
+
 $f_mapWidth = 800;
 $f_mapHeight = 600;
 
-echo Geo_Map::GetMultiMapTagHeader($f_languageId, $f_issues, $f_sections, $f_dates, $f_topics, $f_areas, $f_mapWidth, $f_mapHeight);
+$constraints = array(
+    "articles" => $f_articles,
+    "issues" => $f_issues,
+    "sections" => $f_sections,
+    "dates" => $f_dates,
+    "topics" => $f_topics,
+    "areas" => $f_areas,
+    "multimedia" => $f_multimedia,
+);
+
+echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $f_mapWidth, $f_mapHeight);
 ?>
 </head>
 <body onLoad="return false;">
@@ -66,7 +88,7 @@ echo Geo_Map::GetMultiMapTagHeader($f_languageId, $f_issues, $f_sections, $f_dat
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">
-    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $f_issues, $f_sections, $f_dates, $f_topics, $f_areas); ?>
+    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints); ?>
   </div>
   <div class="geomap_menu">
     <a href="#" onClick="<?php echo Geo_Map::GetMultiMapTagCenter($f_languageId); ?> return false;"><?php putGS("show initial map view"); ?></a>

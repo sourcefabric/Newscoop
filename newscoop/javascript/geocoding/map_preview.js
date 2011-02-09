@@ -360,6 +360,7 @@ this.map_showview = function()
 // the main action on data retrieval
 this.got_load_data = function (load_data, is_obj) {
     load_response = load_data;
+    //alert(JSON.stringify(load_response));
 
     var received_obj = null;
     if (is_obj)
@@ -556,8 +557,8 @@ this.got_load_data = function (load_data, is_obj) {
 
         vector.attributes.m_image = "";
         vector.attributes.m_embed = "";
-        GeoPopups.set_image_tag(vector.attributes);
-        GeoPopups.set_embed_tag(vector.attributes);
+        GeoPopups.set_image_tag(vector.attributes, this);
+        GeoPopups.set_embed_tag(vector.attributes, this);
 
         vector.attributes.m_obj = this;
         vector.attributes.m_count = poi_count;

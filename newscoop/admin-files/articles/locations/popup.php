@@ -432,7 +432,7 @@ var map_show_preview = function()
 <div id="map_save_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
-        <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); parent.$.fancybox.reload = true; return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
+        <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
         <input id="map_button_preview" type="submit" onClick="map_show_preview(); return false;" class="default-button" value="<?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
