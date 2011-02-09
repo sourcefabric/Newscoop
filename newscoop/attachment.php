@@ -9,7 +9,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
 $g_download = Input::Get('g_download', 'int', 0, true);
 $g_show_in_browser = Input::Get('g_show_in_browser', 'int', 0, true);
-if (preg_match('!attachment.*/(.+)$!', $_SERVER['REQUEST_URI'], $match)) {
+if (preg_match('!attachment.*/(.+)$!U', $_SERVER['REQUEST_URI'], $match)) {
     $attachment = $match[1];
 } else {
     header('HTTP/1.0 404 Not Found');
