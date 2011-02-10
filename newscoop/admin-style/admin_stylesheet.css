@@ -1476,3 +1476,9 @@ fieldset.filters a.reset {
     font-size: 10pt;
     color: #de3d3d;
 }
+
+.widget div.loading p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0.5em;
+}

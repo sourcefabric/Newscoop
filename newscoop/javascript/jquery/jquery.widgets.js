@@ -189,6 +189,18 @@ $.fn.widgets = function (options) {
             }, function() {
                 $(this).closest('a').removeClass('ui-state-hover');
             });
+
+            // load content
+            callServer(['WidgetRendererDecorator', 'render'], [
+                widget.attr('id'),
+                'default',
+                true], function(json) {
+                    // set new content
+                    var wrapper = $('> .content > .scroll', widget).html(json);
+
+                    // store height
+                    $.cookie(widget.attr('id')+'_height', wrapper.height(), { expires: 7 });
+                });
         });
 
         // make sortable
