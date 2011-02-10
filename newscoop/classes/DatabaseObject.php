@@ -258,7 +258,7 @@ class DatabaseObject {
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-	public function fetch($p_recordSet = null)
+	public function fetch($p_recordSet = null, $p_forceExists = false)
 	{
 		global $g_ado_db;
 
@@ -295,14 +295,18 @@ class DatabaseObject {
 			foreach ($this->getColumnNames() as $dbColumnName) {
 				if (!isset($p_recordSet[$dbColumnName])) {
 					$this->m_data[$dbColumnName] = null;
-				}
+                }
 			}
-			$this->m_exists = false;
-			if ($this->keyValuesExist()) {
-				$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
-							. ' WHERE ' . $this->getKeyWhereClause();
-				if ($g_ado_db->GetRow($queryStr)) {
-					$this->m_exists = true;
+            if ($p_forceExists) {
+                $this->m_exists = true;
+            } else {
+				$this->m_exists = false;
+				if ($this->keyValuesExist()) {
+					$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
+								. ' WHERE ' . $this->getKeyWhereClause();
+					if ($g_ado_db->GetRow($queryStr)) {
+						$this->m_exists = true;
+					}
 				}
 			}
 		}

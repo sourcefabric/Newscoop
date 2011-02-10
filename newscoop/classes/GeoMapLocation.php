@@ -11,6 +11,8 @@ require_once dirname(__FILE__) . '/GeoMapLocationLanguage.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 require_once dirname(__FILE__) . '/IGeoMapLocation.php';
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
+
 /**
  */
 class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
@@ -41,19 +43,25 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     /** @var array of IGeoMultimedia */
     private $multimedia = NULL;
 
+    /** @var IGeoMapLocationLanguage */
+    private $languages = array();
+
 	/**
      * @param mixed $arg
 	 */
-	public function __construct($arg = NULL)
+	public function __construct($arg = NULL, $p_forceExists = false)
 	{
+
         parent::__construct($this->m_columnNames);
 
         if (is_array($arg)) {
-        	$this->fetch($arg);
+            //echo "has array";
+        	$this->fetch($arg, $p_forceExists);
         } else if (is_numeric($arg)) {
             $this->m_data['id'] = (int) $arg;
             $this->fetch();
         }
+
 	}
 
     /**
@@ -86,16 +94,50 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     /**
      * Get content
      * @param int $language
+     * @return IGeoMapLocationLanguage
+     */
+    public function getLanguage($language)
+    {
+        $language = (int) $language;
+        if (!isset($this->languages[$language])) {
+            $this->languages[$language] = new Geo_MapLocationLanguage($this, $language);
+        }
+        return $this->languages[$language];
+    }
+
+    public function setLanguage($p_languageId, IGeoMapLocationLanguage $p_languageObj)
+    {
+        if ((!$p_languageId) || (!$p_languageObj)) {return;}
+
+        $language = (int) $p_languageId;
+
+        $this->languages[$language] = $p_languageObj;
+    }
+
+
+    /**
+     * Get content
+     * @param int $language
      * @return IGeoMapLocationContent
      */
     public function getContent($language)
     {
         $language = (int) $language;
         if (!isset($this->contents[$language])) {
-            $this->contents[$language] = new Geo_MapLocationContent($this, $language);
+            $this->contents[$language] = new Geo_MapLocationContent($this, $this->getLanguage($language));
         }
         return $this->contents[$language];
     }
+
+    public function setContent($p_languageId, IGeoMapLocationContent $p_contentObj)
+    {
+        if ((!$p_languageId) || (!$p_contentObj)) {return;}
+
+        $language = (int) $p_languageId;
+
+        $this->contents[$language] = $p_contentObj;
+    }
+
 
     /**
      * Get location
@@ -104,6 +146,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     private function getLocation()
     {
         if ($this->location === NULL) {
+            echo "--- f*ck ---";
             $this->location = new Geo_Location($this->m_data['fk_location_id']);
         }
         return $this->location;
@@ -128,8 +171,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     public function isEnabled($language)
     {
         $language = (int) $language;
-        $contentLanguage = new Geo_MapLocationLanguage($this, $language);
-        return $contentLanguage->isEnabled();
+
+        return $this->getLanguage($language)->isEnabled();
     }
 
     /**
@@ -232,12 +275,735 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         	$countQuery = $countClauseObj->buildQuery();
         	$p_count = $g_ado_db->GetOne($countQuery);
 
-        	// builds the array of image objects
         	foreach ($rows as $row) {
-                $list[] = new self((array) $row);
+                $map_loc = new self((array) $row, true);
+
+                $row['id'] = $row['fk_location_id'];
+                $map_loc->location = new Geo_Location($row, true);
+
+                $list[] = $map_loc;
+
         	}
         }
 
         return $list;
     }
+
+    /**
+     * Provides information on map's points
+     *
+     * @param int $p_mapId
+     * @param int $p_languageId
+     * @param bool $p_preview
+     * @param bool $p_textOnly
+     *
+     * @return array
+     */
+	//public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false, $p_mapCons = null)
+	//public static function GetListExt($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false, $p_mapCons = null)
+    public static function GetListExt(array $p_parameters, array $p_order = array(),
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+	{
+
+        $p_asArray = $p_parameters["asArray"];
+        $p_mapId = $p_parameters["mapId"];
+        $p_languageId = $p_parameters["languageId"];
+        $p_preview = $p_parameters["preview"];
+        $p_textOnly = $p_parameters["textOnly"];
+        $p_mapCons = $p_parameters["mapCons"];
+        if (!$p_mapCons) {$p_mapCons = array();}
+
+        if (!$p_order) {$p_order = array();}
+
+        if (((0 == $p_mapId) || (!$p_mapId)) && (!$p_mapCons)) {return array();}
+
+        $mc_limit = 0 + $p_limit;
+        if (0 > $mc_limit) {$mc_limit = 0;}
+
+        $mc_start = 0 + $p_start;
+        if (0 > $mc_start) {$mc_start = 0;}
+
+		$dataArray = array();
+		$objsArray = array();
+        $cachedData = null;
+        //$omit_text = false;
+
+        //$gotObjData = false;
+        //$gotArrData = false;
+
+        $paramsArray_arr = array();
+        $paramsArray_obj = array();
+
+        $cacheList_arr = null;
+        $cacheList_obj = null;
+
+        if (!$p_skipCache) {
+            $paramsArray_arr['mapId'] = $p_mapId;
+            $paramsArray_obj['mapId'] = $p_mapId;
+            //$paramsArray_arr['textData'] = true;
+            //$paramsArray_obj['textData'] = true;
+            $paramsArray_arr['asArray'] = true;
+            $paramsArray_obj['asArray'] = false;
+
+            $paramsArray_arr['languageId'] = $p_languageId;
+            $paramsArray_obj['languageId'] = $p_languageId;
+            $paramsArray_arr['preview'] = $p_preview;
+            $paramsArray_obj['preview'] = $p_preview;
+            $paramsArray_arr['mapCons'] = serialize($p_mapCons);
+            $paramsArray_obj['mapCons'] = serialize($p_mapCons);
+
+        	$paramsArray_arr['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray_obj['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray_arr['start'] = $p_start;
+        	$paramsArray_obj['start'] = $p_start;
+        	$paramsArray_arr['limit'] = $p_limit;
+        	$paramsArray_obj['limit'] = $p_limit;
+
+        	//$paramsArray_arr['form'] = "array";
+        	//$paramsArray_obj['form'] = "object";
+
+        	$cacheList_arr = new CampCacheList($paramsArray_arr, __METHOD__);
+        	$cacheList_obj = new CampCacheList($paramsArray_obj, __METHOD__);
+
+            if ($p_asArray) {
+                $cachedData = $cacheList_arr->fetchFromCache();
+                if ($cachedData !== false && is_array($cachedData)) {
+                    //$gotArrData = true;
+                    //$dataArray = $cachedData["points"];
+                    //if ($p_textOnly || $cachedData["multimedia"]) {
+                    //    return $dataArray;
+                    //} else {
+                    //    $omit_text = true;
+                    //}
+                    return $cachedData;
+                }
+            } else {
+                $cachedData = $cacheList_obj->fetchFromCache();
+                if ($cachedData !== false && is_array($cachedData)) {
+                    //$gotObjData = true;
+                    //return $cachedData["points"];
+                    return $cachedData;
+                }
+            }
+
+        }
+
+		global $g_ado_db;
+
+/*
+        $selectClauseObj = new SQLSelectClause();
+
+        $selectClauseObj->addColumn("ml.id AS ml_id");
+        $selectClauseObj->addColumn("mll.id as mll_id");
+        $selectClauseObj->addColumn("ml.fk_location_id AS loc_id");
+        $selectClauseObj->addColumn("mll.fk_content_id AS con_id");
+        $selectClauseObj->addColumn("ml.poi_style AS poi_style");
+        $selectClauseObj->addColumn("ml.rank AS rank");
+        $selectClauseObj->addColumn("mll.poi_display AS poi_display");
+
+        $selectClauseObj->addColumn("AsText(l.poi_location) AS loc");
+        $selectClauseObj->addColumn("l.poi_type AS poi_type");
+        $selectClauseObj->addColumn("l.poi_type_style AS poi_type_style");
+
+        $selectClauseObj->addColumn("c.poi_name AS poi_name");
+        $selectClauseObj->addColumn("c.poi_link AS poi_link");
+        $selectClauseObj->addColumn("c.poi_perex AS poi_perex");
+        $selectClauseObj->addColumn("c.poi_content_type AS poi_content_type");
+        $selectClauseObj->addColumn("c.poi_content AS poi_content");
+        $selectClauseObj->addColumn("c.poi_text AS poi_text");
+*/
+
+		$sql_params = array();
+
+        //$list_fill = "%%id_list%%";
+
+		$queryStr = "SELECT ml.id AS ml_id, mll.id as mll_id, ml.fk_location_id AS loc_id, mll.fk_content_id AS con_id, ";
+        $queryStr .= "ml.poi_style AS poi_style, ml.rank AS rank, mll.poi_display AS poi_display, ";
+
+        // these few lines below are just for data for list-of-objects array
+        $queryStr .= "l.poi_radius AS l_radius, l.IdUser AS l_user, l.time_updated AS l_updated, ";
+        if ($p_mapCons)
+        {
+            $queryStr .= "m.id AS m_id, ";
+        }
+        $queryStr .= "c.IdUser AS c_user, c.time_updated AS c_updated, ";
+
+        $queryStr .= "AsText(l.poi_location) AS loc, l.poi_type AS poi_type, l.poi_type_style AS poi_type_style, ";
+
+        $queryStr .= "c.poi_name AS poi_name, c.poi_link AS poi_link, c.poi_perex AS poi_perex, ";
+        $queryStr .= "c.poi_content_type AS poi_content_type, c.poi_content AS poi_content, c.poi_text AS poi_text ";
+
+        $queryStr .= "FROM MapLocations AS ml INNER JOIN MapLocationLanguages AS mll ON ml.id = mll.fk_maplocation_id ";
+        $queryStr .= "INNER JOIN Locations AS l ON l.id = ml.fk_location_id ";
+        $queryStr .= "INNER JOIN LocationContents AS c ON c.id = mll.fk_content_id ";
+
+        $query_mcons = "";
+        $article_mcons = false;
+        //$mc_limit = false;
+        $to_filter = false;
+        $mc_filter_mm = false;
+        $mc_filter_image = false;
+        $mc_filter_video = false;
+
+        // this is for making the caching easier
+        $p_textOnly = false;
+
+        if ($p_mapCons)
+        {
+            $queryStr .= "INNER JOIN Maps AS m ON m.id = ml.fk_map_id ";
+            $queryStr .= "INNER JOIN Articles AS a ON m.fk_article_number = a.Number ";
+            $query_mcons = "";
+            $article_mcons = false;
+
+            $mc_order_type = strtolower($p_mapCons["order"]);
+            $mc_order = "DESC";
+            if ("asc" == $mc_order_type) {
+                $mc_order = "ASC";
+            }
+            //$mc_limit = 0 + $p_mapCons["limit"];
+            //if (0 > $mc_limit) {$mc_limit = 0;}
+
+            $mc_multimedia = $p_mapCons["multimedia"];
+            $mc_articles = $p_mapCons["articles"];
+            $mc_issues = $p_mapCons["issues"];
+            $mc_sections = $p_mapCons["sections"];
+            $mc_dates = $p_mapCons["dates"];
+            $mc_topics = $p_mapCons["topics"];
+            $mc_areas = $p_mapCons["areas"];
+            $mc_correct = true;
+
+            if (0 < count($mc_multimedia)) {
+                $mc_filter_mm = $mc_multimedia["any"];
+                $mc_filter_image = $mc_multimedia["image"];
+                $mc_filter_video = $mc_multimedia["video"];
+                if ($mc_filter_mm || $mc_filter_image || $mc_filter_video) {$to_filter = true;}
+            }
+
+            if (0 < count($mc_articles)) {
+                $mc_correct = true;
+                foreach ($mc_articles as $val) {
+                    if (!is_numeric($val)) {$mc_articles = false;}
+                }
+                if ($mc_articles) {
+                    $query_mcons .= "a.Number IN (" . implode(", ", $mc_articles) . ") AND ";
+                    $article_mcons = true;
+                }
+            }
+            if (0 < count($mc_issues)) {
+                $mc_correct = true;
+                foreach ($mc_issues as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= "a.NrIssue IN (" . implode(", ", $mc_issues) . ") AND ";
+                    $article_mcons = true;
+                }
+            }
+            if (0 < count($mc_sections)) {
+                $mc_correct = true;
+                foreach ($mc_sections as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= "a.NrSection IN (" . implode(", ", $mc_sections) . ") AND ";
+                    $article_mcons = true;
+                }
+            }
+            if (2 == count($mc_dates)) {
+                $date_start = str_replace("'", "\"", $mc_dates[0]);
+                $date_stop = str_replace("'", "\"", $mc_dates[1]);
+    
+                $query_mcons .= "a.PublishDate >= '$date_start' AND a.PublishDate <= '$date_stop' AND ";
+                $article_mcons = true;
+            }
+            if (0 < count($mc_topics))
+            {
+                $mc_correct = true;
+                foreach ($mc_topics as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $queryStr .= "INNER JOIN ArticleTopics AS at ON a.Number = at.NrArticle ";
+                    $query_mcons .= "at.TopicId IN (" . implode(", ", $mc_topics) . ") AND ";
+                    $article_mcons = true;
+                }
+
+            }
+
+            if ($mc_areas) {
+                $mc_rectangle = $mc_areas["rectangle"];
+                $mc_clockwise = $mc_areas["clockwise"];
+                $mc_counterclockwise = $mc_areas["counterclockwise"];
+
+                if ($mc_rectangle && (2 == count($mc_rectangle))) {
+                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_rectangle, "rectangle", "l");
+                    if (!$area_cons_res["error"]) {
+                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $article_mcons = true;
+                    }    
+                }
+
+                if ($mc_clockwise && (3 <= count($mc_clockwise))) {
+                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_clockwise, "clockwise", "l");
+                    if (!$area_cons_res["error"]) {
+                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $article_mcons = true;
+                    }    
+                }
+
+                if ($mc_counterclockwise && (3 <= count($mc_counterclockwise))) {
+                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_counterclockwise, "counterclockwise", "l");
+                    if (!$area_cons_res["error"]) {
+                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $article_mcons = true;
+                    }    
+                }
+            }
+
+            $mmu_test_join = "%%mmu_test_join%%";
+            $mmu_test_spec = "%%mmu_test_spec%%";
+            $multimedia_test_common = "EXISTS (SELECT mlmu.id FROM MapLocationMultimedia AS mlmu $mmu_test_join WHERE mlmu.fk_maplocation_id = ml.id $mmu_test_spec) AND ";
+
+            $multimedia_test_basic = $multimedia_test_common;
+            $multimedia_test_basic = str_replace($mmu_test_join, "", $multimedia_test_basic);
+            $multimedia_test_basic = str_replace($mmu_test_spec, "", $multimedia_test_basic);
+
+            $multimedia_test_spec = $multimedia_test_common;
+            $multimedia_test_spec = str_replace($mmu_test_join, "INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id ", $multimedia_test_spec);
+
+            $multimedia_test_image = $multimedia_test_spec;
+            $multimedia_test_image = str_replace($mmu_test_spec, "AND mu.media_type = 'image'", $multimedia_test_image);
+            $multimedia_test_video = $multimedia_test_spec;
+            $multimedia_test_video = str_replace($mmu_test_spec, "AND mu.media_type = 'video'", $multimedia_test_video);
+
+
+            if ($mc_filter_image) {
+                $query_mcons .= $multimedia_test_image;
+            }
+            if ($mc_filter_video) {
+                $query_mcons .= $multimedia_test_video;
+            }
+            if ($mc_filter_mm) {
+                $query_mcons .= $multimedia_test_basic;
+            }
+
+
+            $queryStr .= "WHERE ";
+            if ($article_mcons) {
+                $queryStr .= $query_mcons;
+            }
+
+            $queryStr .= "a.Published = 'Y' AND a.IdLanguage = ? ";
+            $sql_params[] = $p_languageId;
+
+        }
+        else
+        {
+            $queryStr .= "WHERE ml.fk_map_id = ? ";
+            $sql_params[] = $p_mapId;
+        }
+
+        $queryStr .= "AND mll.fk_language_id = ? ";
+        $sql_params[] = $p_languageId;
+
+        if ($p_preview)
+        {
+            $queryStr .= "AND mll.poi_display = 1 ";
+        }
+
+        $queryStr .= "ORDER BY ";
+        if ($p_mapCons)
+        {
+            $queryStr .= "a.Number $mc_order, m.id $mc_order, ";
+        }
+        $queryStr .= "ml.rank, ml.id, mll.id";
+
+        //if ($p_mapCons && $mc_limit && (!$to_filter))
+        //if ($p_mapCons && $mc_limit)
+        if ($mc_limit)
+        {
+            $queryStr .= " LIMIT ?";
+            $sql_params[] = $mc_limit;
+            if ($mc_start)
+            {
+                $queryStr .= " OFFSET ?";
+                $sql_params[] = $mc_start;
+            }
+        }
+
+        $tmp_name = "tmp_poi_ids_" . mt_rand();
+
+        $queryStr_mm = "SELECT m.id AS m_id, mlm.id AS mlm_id, ml.id AS ml_id, ";
+        $queryStr_mm .= "m.media_type AS media_type, m.media_spec AS media_spec, ";
+        $queryStr_mm .= "m.media_src AS media_src, m.media_height AS media_height, m.media_width AS media_width ";
+        $queryStr_mm .= "FROM Multimedia AS m INNER JOIN MapLocationMultimedia AS mlm ON m.id = mlm.fk_multimedia_id ";
+        $queryStr_mm .= "INNER JOIN MapLocations AS ml ON ml.id = mlm.fk_maplocation_id ";
+        $queryStr_mm .= "INNER JOIN $tmp_name AS p ON p.id = ml.id ";
+
+        $queryStr_tt_cr = "CREATE TEMPORARY TABLE $tmp_name (id int(10) unsigned) ENGINE=MEMORY;";
+        $queryStr_tt_in = "INSERT INTO $tmp_name (id) VALUES (?);";
+        $queryStr_tt_rm = "DROP TABLE $tmp_name;";
+
+        //if ($to_filter || (!$p_textOnly)) {
+        if (!$p_textOnly) {
+            $success = $g_ado_db->Execute($queryStr_tt_cr);
+        }
+
+		//$dataArray = array();
+
+		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
+
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+                $tmp_loc = trim(strtolower($row['loc']));
+                $loc_matches = array();
+                if (!preg_match('/^point\((?P<latitude>[\d.-]+)\s(?P<longitude>[\d.-]+)\)$/', $tmp_loc, $loc_matches)) {continue;}
+                $tmp_latitude = $loc_matches['latitude'];
+                $tmp_longitude = $loc_matches['longitude'];
+
+                $tmpPoint = array();
+				$tmpPoint['latitude'] = $tmp_latitude;
+				$tmpPoint['longitude'] = $tmp_longitude;
+
+                $tmpPoint['loc_id'] = $row['ml_id'];
+                $tmpPoint['con_id'] = $row['mll_id'];
+
+                $tmpPoint['style'] = $row['poi_style'];
+                $tmpPoint['rank'] = $row['rank'];
+                $tmpPoint['display'] = $row['poi_display'];
+
+				$tmpPoint['title'] = $row['poi_name'];
+				$tmpPoint['link'] = $row['poi_link'];
+
+				$tmpPoint['perex'] = $row['poi_perex'];
+				$tmpPoint['content_type'] = $row['poi_content_type'];
+				$tmpPoint['content'] = $row['poi_content'];
+				$tmpPoint['text'] = $row['poi_text'];
+
+				$tmpPoint['image_mm'] = 0;
+				$tmpPoint['image_src'] = "";
+				$tmpPoint['image_width'] = "";
+				$tmpPoint['image_height'] = "";
+
+				$tmpPoint['video_mm'] = 0;
+				$tmpPoint['video_id'] = "";
+				$tmpPoint['video_type'] = "";
+				$tmpPoint['video_width'] = "";
+				$tmpPoint['video_height'] = "";
+
+                // for the list-of-objects array
+                $tmpPoint['map_id'] = $p_mapId;
+                if ($p_mapCons) {
+                    $tmpPoint['map_id'] = $row['m_id'];
+                }
+                $tmpPoint['geo_id'] = $row['loc_id'];
+                $tmpPoint['geo_type'] = $row['poi_type'];
+                $tmpPoint['geo_style'] = $row['poi_type_style'];
+                $tmpPoint['geo_radius'] = $row['l_radius'];
+                $tmpPoint['geo_user'] = $row['l_user'];
+                $tmpPoint['geo_updated'] = $row['l_updated'];
+                $tmpPoint['txt_id'] = $row['con_id'];
+                $tmpPoint['txt_user'] = $row['c_user'];
+                $tmpPoint['txt_updated'] = $row['c_updated'];
+
+                $dataArray[] = $tmpPoint;
+
+                //if ($to_filter || (!$p_textOnly)) {
+                if (!$p_textOnly) {
+                    $success = $g_ado_db->Execute($queryStr_tt_in, array($row['ml_id']));
+                }
+
+            }
+        }
+
+        if (0 == count($dataArray)) {return $dataArray;}
+        //if ((!$to_filter) && $p_textOnly) {return $dataArray;}
+        if ($p_textOnly) {return $dataArray;}
+
+        {
+            $imagesArray = array();
+            $videosArray = array();
+    
+            $rows = $g_ado_db->GetAll($queryStr_mm);
+    
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $tmpPoint = array();
+                    $tmpPoint["m_id"] = $row["m_id"];
+                    $tmpPoint["mlm_id"] = $row["mlm_id"];
+                    $tmpPoint["ml_id"] = $row["ml_id"];
+                    $tmpPoint["type"] = $row["media_type"];
+                    $tmpPoint["spec"] = $row["media_spec"];
+                    $tmpPoint["src"] = $row["media_src"];
+                    $tmpPoint["width"] = $row["media_width"];
+                    $tmpPoint["height"] = $row["media_height"];
+    
+                    $tmp_id = $row["ml_id"];
+                    $tmp_type = $row["media_type"];
+                    if ("image" == $tmp_type)
+                    {
+                        $imagesArray[$tmp_id] = $tmpPoint;
+                    }
+                    if ("video" == $tmp_type)
+                    {
+                        $videosArray[$tmp_id] = $tmpPoint;
+                    }
+                }
+            }
+
+        }
+
+        //$mm_filter = array();
+        //$required_mm = ($mc_filter_mm) ? true : false;
+        //$required_image = ($mc_filter_image) ? true : false;
+        //$required_video = ($mc_filter_video) ? true : false;
+
+        foreach ($dataArray AS $index => $poi)
+        {
+            //$with_image = false;
+            //$with_video = false;
+
+            $ml_id = $poi["loc_id"];
+            if (array_key_exists($ml_id, $imagesArray))
+            {
+                //$with_image = true;
+                //if (!$p_textOnly) {
+                    $dataArray[$index]["image_mm"] = $imagesArray[$ml_id]["mlm_id"];
+                    $dataArray[$index]["image_src"] = $imagesArray[$ml_id]["src"];
+                    $dataArray[$index]["image_width"] = $imagesArray[$ml_id]["width"];
+                    $dataArray[$index]["image_height"] = $imagesArray[$ml_id]["height"];
+                //}
+            }
+            if (array_key_exists($ml_id, $videosArray))
+            {
+                //$with_video = true;
+                //if (!$p_textOnly) {
+                    $dataArray[$index]["video_mm"] = $videosArray[$ml_id]["mlm_id"];
+                    $dataArray[$index]["video_id"] = $videosArray[$ml_id]["src"];
+                    $dataArray[$index]["video_type"] = $videosArray[$ml_id]["spec"];
+                    $dataArray[$index]["video_width"] = $videosArray[$ml_id]["width"];
+                    $dataArray[$index]["video_height"] = $videosArray[$ml_id]["height"];
+                //}
+            }
+
+/*
+            if ($to_filter)
+            {
+                $mm_satis = true;
+                if ($required_mm) {
+                    if ((!$with_image) && (!$with_video)) {$mm_satis = false;}
+                }
+                if ($required_image) {
+                    if (!$with_image) {$mm_satis = false;}
+                }
+                if ($required_video) {
+                    if (!$with_video) {$mm_satis = false;}
+                }
+                if ($mm_satis) {$mm_filter[$index] = true;}
+            }
+*/
+        }
+
+        //if ($to_filter) {
+        //    $dataArray = array_intersect_key($dataArray, $mm_filter);
+        //}
+
+        //if (!$p_textOnly) {
+            $success = $g_ado_db->Execute($queryStr_tt_rm);
+        //}
+
+        //if ($mc_limit) {
+        //    $dataArray = array_splice($dataArray, 0, $mc_limit);
+        //}
+
+        $dataArray_tmp = $dataArray;
+        $objsArray = array();
+        $dataArray = array();
+
+        //echo "\n<br>xxxxxxxxxxxx<br>\n";
+        //var_dump($dataArray_tmp[0]);
+        //echo "\n<br>yyyyyyyyyyyy<br>\n";
+
+
+        foreach ($dataArray_tmp as $one_poi)
+        {
+            $one_poi_source = array(
+                'id' => $one_poi['loc_id'],
+                'fk_map_id' => $one_poi['map_id'],
+                'fk_location_id' => $one_poi['geo_id'],
+                'poi_style' => $one_poi['style'],
+                'rank' => $one_poi['rank'],
+            );
+            $one_poi_obj = new self($one_poi_source, true);
+
+            $one_geo_source = array(
+                'poi_location' => null,
+                'poi_type' => $one_poi['geo_type'],
+                'poi_type_style' => $one_poi['geo_style'],
+                'poi_center' => null,
+                'poi_radius' => $one_poi['geo_radius'],
+                'IdUser' => $one_poi['geo_user'],
+                'time_updated' => $one_poi['geo_updated'],
+                'latitude' => $one_poi['latitude'],
+                'longitude' => $one_poi['longitude'],
+            );
+            $one_poi_obj->location = new Geo_Location($one_geo_source, true);
+
+            $one_lan_source = array(
+                'id' => $one_poi['con_id'],
+                'fk_maplocation_id' => $one_poi['loc_id'],
+                'fk_language_id' => $p_languageId,
+                'fk_content_id' => $one_poi['txt_id'],
+                'poi_display' => $one_poi['display'],
+            );
+            $one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
+
+            $one_txt_source = array(
+                'id' => $one_poi['txt_id'],
+                'poi_name' => $one_poi['title'],
+                'poi_link' => $one_poi['link'],
+                'poi_perex' => $one_poi['perex'],
+                'poi_content_type' => $one_poi['content_type'],
+                'poi_content' => $one_poi['content'],
+                'poi_text' => $one_poi['text'],
+                'IdUser' => $one_poi['txt_user'],
+                'time_updated' => $one_poi['txt_updated'],
+            );
+
+            $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, 0, $one_txt_source, true));
+
+            $objsArray[] = $one_poi_obj;
+            $dataArray[] = $one_poi;
+        }
+
+        if (!$p_skipCache && CampCache::IsEnabled()) {
+        	$cacheList_arr->storeInCache($dataArray);
+        	$cacheList_obj->storeInCache($objsArray);
+        }
+
+        if (!$p_asArray) {
+            return $objsArray;
+        }
+
+		return $dataArray;
+
+	} // fn ReadMapPoints
+
+
+
+    public static function GetGeoSearchSQLCons($p_coordinates, $p_polygonType = "rectangle", $p_tableAlias = "l")
+    {
+        $queryCons = "";
+        $paramError = false;
+
+        if (!ctype_alnum($p_tableAlias)) {
+            $paramError = true;
+            return array("error" => true, "cons" => "");
+        }
+
+        $p_polygonType = strtolower("" . $p_polygonType);
+        if (!array_key_exists($p_polygonType, array("rectangle" => 1, "clockwise" => 1, "counterclockwise" => 1))) {
+            $paramError = true;
+            return array("error" => true, "cons" => "");
+        }
+
+        if ("rectangle" == $p_polygonType)
+        {
+            $queryCons_1 = "";
+            $queryCons_2 = "";
+
+            $queryCons_1 .= "Intersects(GeomFromText('Polygon((%%x0%% %%y0%%,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% %%y0%%,%%x0%% %%y0%%))'),$p_tableAlias.poi_location) ";
+            $queryCons_2 .= "(Intersects(GeomFromText('Polygon((%%x0%% %%y0%%,%%x0%% 180,%%x1%% 180,%%x1%% %%y0%%,%%x0%% %%y0%%))'),$p_tableAlias.poi_location) OR Intersects(GeomFromText('Polygon((%%x0%% -180,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% -180,%%x0%% -180))'),$p_tableAlias.poi_location)) ";
+    
+            $loc_left = $p_coordinates[0];
+            $loc_right = $p_coordinates[1];
+
+            $left_lon = "" . $loc_left["longitude"];
+            $left_lat = "" . $loc_left["latitude"];
+            $right_lon = "" . $loc_right["longitude"];
+            $right_lat = "" . $loc_right["latitude"];
+    
+            if (!is_numeric($left_lon)) {$left_lon = "0";}
+            if (!is_numeric($left_lat)) {$left_lat = "0";}
+            if (!is_numeric($right_lon)) {$right_lon = "0";}
+            if (!is_numeric($right_lat)) {$right_lat = "0";}
+    
+            $south_lat = $right_lat;
+            $north_lat = $left_lat;
+            if ($south_lat > $north_lat)
+            {
+                $south_lat = $left_lat;
+                $north_lat = $right_lat;
+            }
+    
+            $east_lon = $left_lon;
+            $west_lon = $right_lon;
+    
+            if ($east_lon > $west_lon)
+            {
+                $queryCons .= $queryCons_2;
+            }
+            else
+            {
+                $queryCons .= $queryCons_1;
+            }
+    
+            $queryCons = str_replace("%%y0%%", $east_lon, $queryCons);
+            $queryCons = str_replace("%%y1%%", $west_lon, $queryCons);
+            $queryCons = str_replace("%%x0%%", $south_lat, $queryCons);
+            $queryCons = str_replace("%%x1%%", $north_lat, $queryCons);
+
+        }
+
+        if ((0 < count($p_polygonType)) && (("clockwise" == $p_polygonType) || ("counterclockwise" == $p_polygonType)))
+        {
+            $polygon_spec = "";
+
+            $ind_start = 0;
+            $ind_stop = count($p_coordinates) - 1;
+            $ind_step = 1;
+            if ("counterclockwise" == $p_polygonType) {
+                $ind_start = count($p_coordinates) - 1;
+                $ind_stop = 0;
+                $ind_step = -1;
+            }
+
+            $first_lon = $p_polygonType[$ind_start]["longitude"];
+            $first_lat = $p_polygonType[$ind_start]["latitude"];
+
+            for ($ind = $ind_start; ; $ind += $ind_step) {
+
+                $corner = $p_coordinates[$ind];
+                $one_lon = $corner["longitude"];
+                $one_lat = $corner["latitude"];
+                if ((!is_numeric($one_lon)) || (!is_numeric($one_lat))) {
+                    $paramError = true;
+                    break;
+                }
+
+                $polygon_spec .= "$one_lon $one_lat,";
+
+                if ($ind == $ind_stop) {break;}
+            }
+            $polygon_spec .= "$first_lon $first_lat";
+
+            $queryCons .= "Intersects(GeomFromText('Polygon(($polygon_spec))'),$p_tableAlias.poi_location) ";
+
+        }
+
+        if ($paramError) {
+            return array("error" => true, "cons" => "");
+        }
+
+        return array("error" => false, "cons" => $queryCons);
+    } // fn GetGeoSearchSQLCons
+
+
+
+
 } // class Geo_MapLocation
+
+
+
+
+

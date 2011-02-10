@@ -700,8 +700,11 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      */
 	public static function LoadMapData($p_mapId, $p_languageId, $p_articleNumber, $p_preview = false, $p_textOnly = false)
 	{
+        $poi_count = 0;
+
         return array(
-            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
+            //'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
+            'pois' => Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => $p_preview, "textOnly" => $p_textOnly, "mapCons" => array()), (array) null, 0, 0, $poi_count),
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
     } // fn LoadMapData
@@ -891,9 +894,11 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
     
         $geo_map_usage = Geo_Map::ReadMapInfo("map", $p_mapId);
-    
-    
-        $found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
+
+        //$found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
+        $poi_count = 0;
+        $found_list = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => false, "textOnly" => false, "mapCons" => array()), (array) null, 0, 0, $poi_count);
+
     
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
@@ -992,6 +997,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      *
      * @return array
      */
+/*
 	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false, $p_mapCons = null)
 	{
         if (0 == $p_mapId && (!$p_mapCons)) {return array();}
@@ -1134,6 +1140,34 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 }
             }
 
+            $mmu_test_join = "%%mmu_test_join%%";
+            $mmu_test_spec = "%%mmu_test_spec%%";
+            $multimedia_test_common = "EXISTS (SELECT mlmu.id FROM MapLocationMultimedia AS mlmu $mmu_test_join WHERE mlmu.fk_maplocation_id = ml.id $mmu_test_spec) AND ";
+
+            $multimedia_test_basic = $multimedia_test_common;
+            $multimedia_test_basic = str_replace($mmu_test_join, "", $multimedia_test_basic);
+            $multimedia_test_basic = str_replace($mmu_test_spec, "", $multimedia_test_basic);
+
+            $multimedia_test_spec = $multimedia_test_common;
+            $multimedia_test_spec = str_replace($mmu_test_join, "INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id ", $multimedia_test_spec);
+
+            $multimedia_test_image = $multimedia_test_spec;
+            $multimedia_test_image = str_replace($mmu_test_spec, "AND mu.media_type = 'image'", $multimedia_test_image);
+            $multimedia_test_video = $multimedia_test_spec;
+            $multimedia_test_video = str_replace($mmu_test_spec, "AND mu.media_type = 'video'", $multimedia_test_video);
+
+
+            if ($mc_filter_image) {
+                $query_mcons .= $multimedia_test_image;
+            }
+            if ($mc_filter_video) {
+                $query_mcons .= $multimedia_test_video;
+            }
+            if ($mc_filter_mm) {
+                $query_mcons .= $multimedia_test_basic;
+            }
+
+
             $queryStr .= "WHERE ";
             if ($article_mcons) {
                 $queryStr .= $query_mcons;
@@ -1164,7 +1198,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
         $queryStr .= "ml.rank, ml.id, mll.id";
 
-        if ($p_mapCons && $mc_limit && (!$to_filter))
+        //if ($p_mapCons && $mc_limit && (!$to_filter))
+        if ($p_mapCons && $mc_limit)
         {
             $queryStr .= " LIMIT ?";
             $sql_params[] = $mc_limit;
@@ -1183,7 +1218,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $queryStr_tt_in = "INSERT INTO $tmp_name (id) VALUES (?);";
         $queryStr_tt_rm = "DROP TABLE $tmp_name;";
 
-        if ($to_filter || (!$p_textOnly)) {
+        //if ($to_filter || (!$p_textOnly)) {
+        if (!$p_textOnly) {
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
 
@@ -1231,7 +1267,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
                 $dataArray[] = $tmpPoint;
 
-                if ($to_filter || (!$p_textOnly)) {
+                //if ($to_filter || (!$p_textOnly)) {
+                if (!$p_textOnly) {
                     $success = $g_ado_db->Execute($queryStr_tt_in, array($row['ml_id']));
                 }
 
@@ -1239,7 +1276,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         }
 
         if (0 == count($dataArray)) {return $dataArray;}
-        if ((!$to_filter) && $p_textOnly) {return $dataArray;}
+        //if ((!$to_filter) && $p_textOnly) {return $dataArray;}
+        if ($p_textOnly) {return $dataArray;}
 
         {
             $imagesArray = array();
@@ -1274,66 +1312,68 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         }
 
-        $mm_filter = array();
-        $required_mm = ($mc_filter_mm) ? true : false;
-        $required_image = ($mc_filter_image) ? true : false;
-        $required_video = ($mc_filter_video) ? true : false;
+        //$mm_filter = array();
+        //$required_mm = ($mc_filter_mm) ? true : false;
+        //$required_image = ($mc_filter_image) ? true : false;
+        //$required_video = ($mc_filter_video) ? true : false;
 
         foreach ($dataArray AS $index => $poi)
         {
-            $with_image = false;
-            $with_video = false;
+            //$with_image = false;
+            //$with_video = false;
 
             $ml_id = $poi["loc_id"];
             if (array_key_exists($ml_id, $imagesArray))
             {
-                $with_image = true;
-                if (!$p_textOnly) {
+                //$with_image = true;
+                //if (!$p_textOnly) {
                     $dataArray[$index]["image_mm"] = $imagesArray[$ml_id]["mlm_id"];
                     $dataArray[$index]["image_src"] = $imagesArray[$ml_id]["src"];
                     $dataArray[$index]["image_width"] = $imagesArray[$ml_id]["width"];
                     $dataArray[$index]["image_height"] = $imagesArray[$ml_id]["height"];
-                }
+                //}
             }
             if (array_key_exists($ml_id, $videosArray))
             {
-                $with_video = true;
-                if (!$p_textOnly) {
+                //$with_video = true;
+                //if (!$p_textOnly) {
                     $dataArray[$index]["video_mm"] = $videosArray[$ml_id]["mlm_id"];
                     $dataArray[$index]["video_id"] = $videosArray[$ml_id]["src"];
                     $dataArray[$index]["video_type"] = $videosArray[$ml_id]["spec"];
                     $dataArray[$index]["video_width"] = $videosArray[$ml_id]["width"];
                     $dataArray[$index]["video_height"] = $videosArray[$ml_id]["height"];
-                }
+                //}
             }
 
-            if ($to_filter)
-            {
-                $mm_satis = true;
-                if ($required_mm) {
-                    if ((!$with_image) && (!$with_video)) {$mm_satis = false;}
-                }
-                if ($required_image) {
-                    if (!$with_image) {$mm_satis = false;}
-                }
-                if ($required_video) {
-                    if (!$with_video) {$mm_satis = false;}
-                }
-                if ($mm_satis) {$mm_filter[$index] = true;}
-            }
+
+            //if ($to_filter)
+            //{
+            //    $mm_satis = true;
+            //    if ($required_mm) {
+            //        if ((!$with_image) && (!$with_video)) {$mm_satis = false;}
+            //    }
+            //    if ($required_image) {
+            //        if (!$with_image) {$mm_satis = false;}
+            //    }
+            //    if ($required_video) {
+            //        if (!$with_video) {$mm_satis = false;}
+            //    }
+            //    if ($mm_satis) {$mm_filter[$index] = true;}
+            //}
+
         }
 
-        if ($to_filter) {
-            $dataArray = array_intersect_key($dataArray, $mm_filter);
-        }
+        //if ($to_filter) {
+        //    $dataArray = array_intersect_key($dataArray, $mm_filter);
+        //}
 
-        if (!$p_textOnly) {
+        //if (!$p_textOnly) {
             $success = $g_ado_db->Execute($queryStr_tt_rm);
-        }
+        //}
 
-        if ($mc_limit) {
-            $dataArray = array_splice($dataArray, 0, $mc_limit);
-        }
+        //if ($mc_limit) {
+        //    $dataArray = array_splice($dataArray, 0, $mc_limit);
+        //}
 
         $dataArrayObj = array();
         $dataArray_tmp = $dataArray;
@@ -1347,6 +1387,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 		return $dataArray;
 
 	} // fn ReadMapPoints
+*/
 
     /**
      * Gives languages used at the map text contents
@@ -2208,6 +2249,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
+/*
     public static function GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics)
     {
 		global $g_ado_db;
@@ -2296,6 +2338,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         return array('error' => false, 'cons' => true, 'maps' => $map_ids);
     }
+*/
 
     /**
      * Gives the header part for the multi-map front end presentation
@@ -2311,7 +2354,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_mapWidth, $p_mapHeight)
+    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight)
     {
         global $Campsite;
         $tag_string = "";
@@ -2319,7 +2362,11 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         //$map_set = Geo_Map::GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics);
         //$map_cons = array("issues" => $p_issues, "sections" => $p_sections, "dates" => $p_dates, "topics" => $p_topics, "areas" => $p_areas);
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $map_set);
-        $points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $p_constraints);
+        //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $p_constraints);
+        $poi_count = 0;
+        $points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => false, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
+
+
 
         $f_language_id = $p_languageId;
 
@@ -2506,7 +2553,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return array
      */
-    public static function GetMultiMapTagListData($p_languageId, $p_constraints)
+    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_offset, $p_limit)
     {
         $f_language_id = (int) $p_languageId;
         $map_suffix = "_" . "multimap" . "_" . $f_language_id;
@@ -2518,7 +2565,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         //$map_set = Geo_Map::GetMultiMapArticles($p_languageId, $p_issues, $p_sections, $p_dates, $p_topics);
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $map_set);
         //$map_cons = array("issues" => $p_issues, "sections" => $p_sections, "dates" => $p_dates, "topics" => $p_topics, "areas" => $p_areas);
-        $points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $p_constraints);
+        //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $p_constraints);
+        $poi_count = 0;
+        $points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => true, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
+
 
         $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
 
@@ -2749,7 +2799,7 @@ var on_load_proc = function()
         $queryStr .= "SELECT DISTINCT m.fk_article_number AS Number FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
         $queryStr .= "Locations AS l ON ml.fk_location_id = l.id WHERE ";
 
-        $cons_res = Geo_Map::GetGeoSearchSQLCons($p_coordinates, "rectangle", "l");
+        $cons_res = Geo_MapLocation::GetGeoSearchSQLCons($p_coordinates, "rectangle", "l");
         if ($cons_res["error"]) {return "";}
 
         $queryStr .= $cons_res["cons"];

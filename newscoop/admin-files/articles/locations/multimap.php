@@ -67,7 +67,10 @@ $constraints = array(
     "multimedia" => $f_multimedia,
 );
 
-echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $f_mapWidth, $f_mapHeight);
+$limit = 100;
+$offset = 0;
+
+echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit, $f_mapWidth, $f_mapHeight);
 ?>
 </head>
 <body onLoad="return false;">
@@ -88,7 +91,7 @@ echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $f_mapWidth, $f_
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">
-    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints); ?>
+    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints, $offset, $limit); ?>
   </div>
   <div class="geomap_menu">
     <a href="#" onClick="<?php echo Geo_Map::GetMultiMapTagCenter($f_languageId); ?> return false;"><?php putGS("show initial map view"); ?></a>
