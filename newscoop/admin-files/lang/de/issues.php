@@ -29,7 +29,7 @@ regGS("The issue $1 has been successfuly added.", "Ausgabe $1 wurde hinzugefügt
 regGS("The issue could not be added.", "Die Ausgabe konnte nicht verändert werden");
 regGS("Change issue details", "Details der Ausgabe ändern");
 regGS("You do not have the right to change issue details.", "Keine Rechte Details der Ausgabe zu ändern");
-regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publikationsdatumg<br><small>(yyyy-mm-tt)</small>");
+regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publikationsdatum<br><small>(yyyy-mm-tt)</small>");
 regGS("Front Page Template", "Template der Startseite");
 regGS("You do not have the right to delete issues.", "Keine Berechtigung Ausgaben zu löschen");
 regGS("Are you sure you want to delete the issue $1?", "Ausgabe $1 wirklich löschen?");
