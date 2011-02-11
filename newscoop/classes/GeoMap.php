@@ -12,6 +12,8 @@ require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoPreferences.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/ComparisonOperation.php');
+
 /**
  * @package Campsite
  */
@@ -2363,6 +2365,26 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         //$map_cons = array("issues" => $p_issues, "sections" => $p_sections, "dates" => $p_dates, "topics" => $p_topics, "areas" => $p_areas);
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $map_set);
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, false, $p_constraints);
+
+/*
+        $parameters = array();
+
+        $leftOperand = 'article';
+        $rightOperand = array($p_constarints["articles"]);
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $leftOperand = 'issues';
+        $rightOperand = array($p_constraints["issues"]);
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+*/
+
+
+
+
         $poi_count = 0;
         $points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => false, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
 
@@ -2589,10 +2611,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      * @param int $p_languageId
      * @return string
      */
-    public static function GetMultiMapTagList($p_languageId, $p_constraints)
+    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_offset, $p_limit)
     {
 
-        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints);
+        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_offset, $p_limit);
         $map = $geo['map'];
         $pois = $geo['pois'];
 

@@ -5,6 +5,8 @@
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/ComparisonOperation.php');
+
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
 
@@ -44,11 +46,11 @@ $f_issues = array(2);
 //$f_sections = array(10, 60);
 $f_sections = array(10);
 $f_dates = array("2000-10-20", "2020-10-10");
-$f_topics = array();
-//$f_topics = array(23);
+//$f_topics = array();
+$f_topics = array(23, 24);
 
 $f_areas = array();
-//$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
+$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
 
 //$f_multimedia = array();
 //$f_multimedia = array("image" => false, "video" => false, "any" => false);
@@ -69,6 +71,93 @@ $constraints = array(
 
 $limit = 100;
 $offset = 0;
+
+{
+
+    //require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
+    //$q = Topic::BuildSubtopicsQuery(1, 0, 0);
+    //echo $q->buildQuery();
+    //$q = Topic::BuildAllSubtopicsQuery("1", false);
+    //echo $q;
+
+    //"SELECT id FROM Topics WHERE node_left >= (SELECT node_left FROM Topics WHERE id = ?) AND node_right <= (SELECT node_right FROM Topics WHERE id = ?)";
+    //"SELECT id FROM Topics WHERE node_left >= (SELECT node_left FROM Topics WHERE id = 1) AND node_right <= (SELECT node_right FROM Topics WHERE id = 1)";
+
+
+    $parameters = array();
+
+    $leftOperand = 'dates';
+    $rightOperand = $f_dates[0];
+    $operator = new Operator('greater_equal', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'dates';
+    $rightOperand = $f_dates[1];
+    $operator = new Operator('smaller_equal', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'articles';
+    $rightOperand = $f_articles;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'issues';
+    $rightOperand = $f_issues;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'sections';
+    $rightOperand = $f_sections;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'areas';
+    $rightOperand = $f_areas;
+    $operator = new Operator('is', 'php');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'multimedia';
+    $rightOperand = $f_multimedia;
+    $operator = new Operator('is', 'php');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+/*
+    foreach ($f_topics as $one_topic) {
+        $leftOperand = 'topics';
+        //$rightOperand = Topic::BuildAllSubtopicsQuery($one_topic, false);
+        $rightOperand = $one_topic;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
+*/
+
+    $leftOperand = 'topics';
+    $rightOperand = $f_topics;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'matchalltopics';
+    $rightOperand = true;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+    $leftOperand = 'matchanytopic';
+    $rightOperand = true;
+    $operator = new Operator('is', 'sql');
+    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    $parameters[] = $constraint;
+
+}
 
 echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit, $f_mapWidth, $f_mapHeight);
 ?>

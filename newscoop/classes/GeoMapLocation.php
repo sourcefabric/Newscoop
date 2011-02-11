@@ -870,7 +870,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 'time_updated' => $one_poi['txt_updated'],
             );
 
-            $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, 0, $one_txt_source, true));
+            $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
 
             $objsArray[] = $one_poi_obj;
             $dataArray[] = $one_poi;
