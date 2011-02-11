@@ -37,6 +37,12 @@ class MetaDbObject {
      */
     protected $m_getPropertyMethod = 'getProperty';
 
+    /**
+     * Array of fields for which the HTML filter is not applied.
+     * @var array
+     */
+    protected $m_skipFilter = array();
+
 
     /**
      * Returns true if the current object is the same type as the given
@@ -63,6 +69,12 @@ class MetaDbObject {
     }
 
 
+    static public function htmlFilter($p_text)
+    {
+    	return str_replace(array('&', '<', '>'), array('&amp;', '&lt;', '&gt;'), $p_text);
+    }
+
+
     public function __get($p_property)
     {
         if (!$this->defined()) {
@@ -73,13 +85,20 @@ class MetaDbObject {
         try {
             if (array_search($property, $this->m_properties)) {
                 $methodName = $this->m_getPropertyMethod;
-                return $this->m_dbObject->$methodName($property);
+                $propertyValue = $this->m_dbObject->$methodName($property);
             } elseif (array_key_exists($property, $this->m_customProperties)) {
-                return $this->getCustomProperty($property);
+                $propertyValue = $this->getCustomProperty($property);
             } else {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
             }
+            if (empty($propertyValue) || !is_string($propertyValue) || is_numeric($propertyValue)) {
+            	return $propertyValue;
+            }
+            if (count($this->m_skipFilter) == 0 || !in_array(strtolower($p_property), $this->m_skipFilter)) {
+            	$propertyValue = self::htmlFilter($propertyValue);
+            }
+            return $propertyValue;
         } catch (InvalidPropertyException $e) {
             $this->trigger_invalid_property_error($p_property);
         	return null;
