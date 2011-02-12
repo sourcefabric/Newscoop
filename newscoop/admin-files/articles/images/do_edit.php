@@ -79,8 +79,5 @@ camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok
 ?>
 
 <script type="text/javascript">
-try {
-    parent.$.fancybox.reload = true;
-} catch (e) {}
-parent.$.fancybox.close();
+	window.location.href='<?php echo "/$ADMIN/articles/edit.php?f_language_id=$f_language_id&f_article_number=$f_article_number"; ?>'
 </script>
