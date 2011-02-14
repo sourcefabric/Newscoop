@@ -22,9 +22,9 @@ if [ "$RET" = "dedicated v-host" ]; then
 	db_go ||true
 fi
 
-db_input high newscoop/cronjob || true
-db_go ||true
-
+#db_input high newscoop/cronjob || true
+#db_go ||true
+#
 #db_get newscoop/cronjob
 #if [ "$RET" = "true" ]; then
 #	db_input high newscoop/cron-email || true

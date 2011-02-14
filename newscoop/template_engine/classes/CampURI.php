@@ -220,7 +220,7 @@ abstract class CampURI
             // this works at least for apache, some research is needed
             // in order to support other web servers.
             if (!empty($_SERVER['PHP_SELF'])) {
-            	$uriString = $scheme . $_SERVER['HTTP_HOST'];
+                $uriString = $scheme . $_SERVER['HTTP_HOST'];
             }
             if (isset($_SERVER['REQUEST_URI'])) {
                 $uriString .= $_SERVER['REQUEST_URI'];
@@ -452,17 +452,17 @@ abstract class CampURI
     public function getQueryArray(array $p_keepParameters = array(),
     array $p_removeParameters = array())
     {
-    	$queryArray = $this->m_queryArray;
-    	if (count($p_removeParameters) > 0) {
-    		$removeKeys = array_combine($p_removeParameters,
-    		array_fill(0, count($p_removeParameters, null)));
-    		$queryArray = array_diff_key($queryArray, $removeKeys);
-    	}
-    	if (count($p_keepParameters)) {
-    		$keepKeys = array_combine($p_keepParameters,
-    		array_fill(0, count($p_keepParameters), null));
-    		$queryArray = array_intersect_key($queryArray, $keepKeys);
-    	}
+        $queryArray = $this->m_queryArray;
+        if (count($p_removeParameters) > 0) {
+            $removeKeys = array_combine($p_removeParameters,
+            array_fill(0, count($p_removeParameters, null)));
+            $queryArray = array_diff_key($queryArray, $removeKeys);
+        }
+        if (count($p_keepParameters)) {
+            $keepKeys = array_combine($p_keepParameters,
+            array_fill(0, count($p_keepParameters), null));
+            $queryArray = array_intersect_key($queryArray, $keepKeys);
+        }
         return $queryArray;
     } // fn getQueryArray
 
@@ -656,7 +656,7 @@ abstract class CampURI
             $this->publication->identifier, $this->issue->number,
             $this->section->number, $this->article->number);
         } else {
-        	return null;
+            return null;
         }
 
         return $template;
@@ -670,7 +670,7 @@ abstract class CampURI
      */
     public function getErrorCode()
     {
-    	return $this->m_errorCode;
+        return $this->m_errorCode;
     } // fn getErrorCode
 
 
@@ -866,12 +866,12 @@ abstract class CampURI
     {
         $p_property = strtolower($p_property);
         switch ($p_property) {
-        	case 'error_code':
-        		$p_property = 'errorCode';
-        		break;
-        	case 'is_valid':
-        		$p_property = 'validURI';
-        		break;
+            case 'error_code':
+                $p_property = 'errorCode';
+                break;
+            case 'is_valid':
+                $p_property = 'validURI';
+                break;
         }
         if (!property_exists($this, "m_$p_property")) {
             return null;
@@ -879,8 +879,8 @@ abstract class CampURI
         $memberName = "m_$p_property";
         if (array_key_exists($p_property, self::$m_objects)
         && !is_object($this->$memberName)) {
-        	$className = 'Meta'.self::$m_objects[$p_property];
-        	$this->$p_property = new $className;
+            $className = 'Meta'.self::$m_objects[$p_property];
+            $this->$p_property = new $className;
         }
         return $this->$memberName;
     } // fn __get
@@ -909,7 +909,7 @@ abstract class CampURI
         $this->$memberName = $p_value;
         if ($p_property == 'publication') {
            $subdir = $this->m_config->getSetting('SUBDIR');
-        	$this->m_host = str_replace($subdir, '', $this->m_publication->site);
+            $this->m_host = str_replace($subdir, '', $this->m_publication->site);
         }
         $this->validateCache(false);
         return true;
@@ -985,7 +985,7 @@ abstract class CampURI
             case 'articleattachment':
                 $context = CampTemplate::singleton()->context();
                 $attachment = new Attachment($context->attachment->identifier);
-                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/attachment/'.basename($attachment->getStorageLocation());
+                $this->m_buildPath = $attachment->getAttachmentUrl();
                 $this->m_buildQueryArray = array();
                 $p_params = array();
                 break;
@@ -1002,16 +1002,16 @@ abstract class CampURI
                 }
                 break;
             case 'image':
-            	$this->m_buildQueryArray = array();
-            	if (isset($p_params[0]) && is_numeric($p_params[0])) {
-            		$this->processOldImageOptions($imageNo, $p_params);
-            	} else {
-            		$this->processImageOptions($imageNo, $p_params);
-            	}
+                $this->m_buildQueryArray = array();
+                if (isset($p_params[0]) && is_numeric($p_params[0])) {
+                    $this->processOldImageOptions($imageNo, $p_params);
+                } else {
+                    $this->processImageOptions($imageNo, $p_params);
+                }
 
-            	$context = CampTemplate::singleton()->context();
-            	if (!is_null($imageNo)) {
-                	$oldImage = $context->image;
+                $context = CampTemplate::singleton()->context();
+                if (!is_null($imageNo)) {
+                    $oldImage = $context->image;
                     $articleImage = new ArticleImage($context->article->number, null, $imageNo);
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
@@ -1055,7 +1055,7 @@ abstract class CampURI
                 $this->m_buildQueryArray[$listId] = ($parameter == 'previous_items' ?
                 $context->current_list->previous_start : $context->current_list->next_start);
                 if ($this->m_buildQueryArray[$listId] == 0) {
-                	unset($this->m_buildQueryArray[$listId]);
+                    unset($this->m_buildQueryArray[$listId]);
                 }
                 break;
             case 'reset_issue_list':
@@ -1099,24 +1099,24 @@ abstract class CampURI
      */
     private function processImageOptions(&$p_imageNo, array $p_params)
     {
-    	$p_imageNo = null;
-    	for ($parIndex = 0; isset($p_params[$parIndex]); $parIndex++) {
-    		$parameter = strtolower($p_params[$parIndex]);
-    		$parIndex++;
-    		if (!in_array($parameter, array('number', 'ratio', 'width', 'height'))) {
-    			CampTemplate::trigger_error("Invalid image parameter '$parameter' in URL statement");
-    			break;
-    		}
-    		if (!isset($p_params[$parIndex]) || !is_numeric($p_params[$parIndex])) {
-    			CampTemplate::trigger_error("Invalid image $parameter in URL statement");
-    			break;
-    		}
-    		if ($parameter == 'number') {
-    			$p_imageNo = $p_params[$parIndex];
-    		} else {
-    			$this->m_buildQueryArray['Image' . ucfirst($parameter)] = $p_params[$parIndex];
-    		}
-    	}
+        $p_imageNo = null;
+        for ($parIndex = 0; isset($p_params[$parIndex]); $parIndex++) {
+            $parameter = strtolower($p_params[$parIndex]);
+            $parIndex++;
+            if (!in_array($parameter, array('number', 'ratio', 'width', 'height'))) {
+                CampTemplate::trigger_error("Invalid image parameter '$parameter' in URL statement");
+                break;
+            }
+            if (!isset($p_params[$parIndex]) || !is_numeric($p_params[$parIndex])) {
+                CampTemplate::trigger_error("Invalid image $parameter in URL statement");
+                break;
+            }
+            if ($parameter == 'number') {
+                $p_imageNo = $p_params[$parIndex];
+            } else {
+                $this->m_buildQueryArray['Image' . ucfirst($parameter)] = $p_params[$parIndex];
+            }
+        }
     }
 
 
@@ -1130,26 +1130,26 @@ abstract class CampURI
      */
     private function processOldImageOptions(&$p_imageNo, array $p_params)
     {
-    	$p_imageNo = isset($p_params[0]) ? array_shift($p_params) : null;
-    	if(isset($p_params[0]) && is_numeric($p_params[0])) {
-    		$this->m_buildQueryArray['ImageRatio'] = $p_params[0];
-    	} else {
-    		while (isset($p_params[0])) {
-    			$option = strtolower(array_shift($p_params));
-    			if ($option != 'width' && $option != 'height') {
-    				CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
-    				break;
-    			}
-    			if (isset($p_params[0]) && is_numeric($p_params[0])) {
-    				$option_value = array_shift($p_params);
-    			} else {
-    				CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
-    				break;
-    			}
-    			$param = 'Image' . ucfirst($option);
-    			$this->m_buildQueryArray[$param] = $option_value;
-    		}
-    	}
+        $p_imageNo = isset($p_params[0]) ? array_shift($p_params) : null;
+        if(isset($p_params[0]) && is_numeric($p_params[0])) {
+            $this->m_buildQueryArray['ImageRatio'] = $p_params[0];
+        } else {
+            while (isset($p_params[0])) {
+                $option = strtolower(array_shift($p_params));
+                if ($option != 'width' && $option != 'height') {
+                    CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
+                    break;
+                }
+                if (isset($p_params[0]) && is_numeric($p_params[0])) {
+                    $option_value = array_shift($p_params);
+                } else {
+                    CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
+                    break;
+                }
+                $param = 'Image' . ucfirst($option);
+                $this->m_buildQueryArray[$param] = $option_value;
+            }
+        }
     }
 
 
@@ -1182,18 +1182,18 @@ abstract class CampURI
                 && $this->m_user->is_admin;
             }
         } else {
-        	$ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
-        	if (count($ipUsers) > 0) {
-        		$this->m_user = new MetaUser($ipUsers[0]->getUserId());
+            $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
+            if (count($ipUsers) > 0) {
+                $this->m_user = new MetaUser($ipUsers[0]->getUserId());
                 $this->m_preview = CampRequest::GetVar('preview') == 'on'
                 && $this->m_user->is_admin;
-        	}
+            }
         }
     }
 
 
     public static function GetPreviewParameters() {
-    	return CampURI::$m_previewParameters;
+        return CampURI::$m_previewParameters;
     }
 
 
@@ -1216,13 +1216,13 @@ abstract class CampURI
         $queryString = '';
         $queryVars = array();
         foreach ($p_queryArray as $var => $value) {
-        	if (is_array($value)) {
-        		foreach ($value as $item) {
-        			$queryVars[] = $var.'[]='.urlencode($item);
-        		}
-        	} else {
-        		$queryVars[] = $var.'='.urlencode($value);
-        	}
+            if (is_array($value)) {
+                foreach ($value as $item) {
+                    $queryVars[] = $var.'[]='.urlencode($item);
+                }
+            } else {
+                $queryVars[] = $var.'='.urlencode($value);
+            }
         }
         $separator = $p_HTMLEscape ? '&amp;' : '&';
         $queryString = implode($separator, $queryVars);

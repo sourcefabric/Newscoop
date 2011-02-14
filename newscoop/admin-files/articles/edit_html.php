@@ -265,13 +265,13 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
               class="input_text datepicker"
               size="11"
-              maxlength="10"
+              maxlength="10" />
             <?php } else { ?>
             <span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
             <?php
             }
             ?>
-            <?php putGS('YYYY-MM-DD'); ?>
+            &nbsp;<?php putGS('YYYY-MM-DD'); ?>
           </li>
         <?php
             } elseif ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {

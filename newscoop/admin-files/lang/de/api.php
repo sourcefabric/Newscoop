@@ -1,14 +1,14 @@
 <?php 
-regGS("Version", "");
-regGS("License", "");
-regGS("Homepage", "");
+regGS("Version", "Version");
+regGS("License", "Lizenz");
+regGS("Homepage", "Dashboard");
 regGS("Show original map", "Ursprüngliche Karte anzeigen");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Das hochgeladene Archiv enthält kein gültiges Newscoop Plugin.");
 regGS("Map", "Karte");
 regGS("Center", "Zentrieren");
 regGS("Title", "Titel");
 regGS("No news.", "Keine Neuigkeiten");
-regGS("Invalid security token.", "Ungültiges Sicherheitskürzel.");
+regGS("Invalid security token.", "Ungültiges Security Token.");
 regGS("Callback '$1' is not callable.", "Rückfrage '$1' ist nicht abrufbar.");
 regGS("Author type $1 linked to author $2", "Autortyp $1 ist mit Autor/in $2 verknüpft.");
 regGS("Author type \"$1\" created.", "Autortyp $1 erstellt.");

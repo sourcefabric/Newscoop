@@ -6,7 +6,7 @@
 Summary:        The open content management system for professional journalists
 Name:           newscoop
 Version:        3.5.0
-Release:        test1
+Release:        test5
 License:        GPL
 Packager:       Robin Gareus <robin@gareus.org>
 
@@ -60,6 +60,8 @@ cp -a newscoop %{buildroot}/var/lib/
 mkdir -p %{buildroot}/etc/newscoop/3.5/
 cp debian/etc/newscoop.ini %{buildroot}/etc/newscoop/3.5/
 cp debian/etc/apache.conf %{buildroot}/etc/newscoop/3.5/
+cp debian/etc/apache.vhost.tpl %{buildroot}/etc/newscoop/3.5/
+cp debian/etc/newscoop.cron.tpl %{buildroot}/etc/newscoop/3.5/
 
 cd $RPM_BUILD_ROOT
 rm -f %{manifest}
@@ -79,6 +81,8 @@ rm -rf %{buildroot}
 %doc ChangeLog  COPYING  CREDITS README  UPGRADE
 %config /etc/newscoop/3.5/apache.conf
 %config /etc/newscoop/3.5/newscoop.ini
+%config /etc/newscoop/3.5/apache.vhost.tpl
+%config /etc/newscoop/3.5/newscoop.cron.tpl
 
 %post
 # symlink config files
@@ -87,6 +91,7 @@ includefile="${configdir}/apache.conf"
 phpinifile="${configdir}/newscoop.ini"
 webserver="httpd"
 php="php5"
+dohtaccess="/newscoop"
 
 if [ ! -d /etc/$webserver/conf.d/ ]; then
 		install -d -m755 /etc/$webserver/conf.d/
@@ -102,9 +107,29 @@ if [ ! -e /etc/php.d/newscoop.ini ]; then
 	ln -s ${phpinifile} /etc/php.d/newscoop.ini
 fi
 
+# .htaccess file
+echo -ne "/RewriteBase/d\nwq\n\n" \
+| ed /var/lib/newscoop/.htaccess &>/dev/null || true
+
+if [ -n "${dohtaccess}" ]; then
+	echo -ne "/RewriteEngine/\n+1i\n    RewriteBase ${dohtaccess}\n.\nwq\n" \
+	| ed /var/lib/newscoop/.htaccess &>/dev/null || true
+fi
+
 # XXX: restart apache - check if this is the recommended way
 /etc/init.d/httpd restart
 
+## CRON JOB
+#CU=www-data
+#CE=root@localhost
+#sed -e "s/__CRON_EMAIL__/${CE}/;s/__WWW_USER__/${CU}/" \
+#	${crontplfile} > ${cronincfile}
+#if [ ! -d /etc/cron.d/ ]; then
+#	install -d -m755 /etc/cron.d/
+#fi
+#if [ ! -e /etc/cron.d/newscoop ]; then
+#	ln -s ${cronincfile} /etc/cron.d/newscoop
+#fi
 
 %postun
 webserver="httpd"
@@ -115,8 +140,13 @@ fi
 if [ -L /etc/php.d/newscoop.ini ]; then
 	rm -f /etc/php.d/newscoop.ini || true
 fi
+
+if [ -L /etc/cron.d/newscoop ]; then
+	rm -f /etc/cron.d/newscoop || true
+fi
 # delete generated templates and user-installed plugins
-rm -rf /var/lib/newscoop
+rm -rf /var/lib/newscoop || true
+rm -f /etc/newscoop/3.5/newscoop.cron || true
 rmdir /etc/newscoop/3.5 || true
 rmdir /etc/newscoop/ || true
 		

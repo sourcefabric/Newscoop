@@ -1,4 +1,8 @@
 <?php 
+regGS("login", "");
+regGS("Session expired.", "");
+regGS("Processing...", "");
+regGS("Please", "");
 regGS("Files attached.", "Файлы далучаныя.");
 regGS("File '$1' unattached.", "Файл '$ 1' далучаны.");
 regGS("Attach new file", "Далучыць новы файл");
