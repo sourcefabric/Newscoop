@@ -8,7 +8,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/crypto/rc4Encrypt.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/pear/PEAR.php');
+require_once('PEAR.php');
 camp_load_translation_strings("api");
 
 $f_user_name = Input::Get('f_user_name');

@@ -8,7 +8,7 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/pear/Date.php');
+require_once('Date.php');
 
 /**
  * @package Campsite
