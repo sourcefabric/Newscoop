@@ -1,7 +1,7 @@
 <?php
 
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
-require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/database_conf.php');
 require_once('DB.php');
 

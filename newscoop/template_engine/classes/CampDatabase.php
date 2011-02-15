@@ -12,7 +12,7 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSite.php');
 
 
