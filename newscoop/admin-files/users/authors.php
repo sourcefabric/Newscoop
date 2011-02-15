@@ -147,7 +147,7 @@ if (!$id || $id == -1) {
 
 $crumbs = array();
 $crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Manage Authors"), "");
+$crumbs[] = array(getGS("Authors"), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
