@@ -103,11 +103,6 @@ echo str_repeat('</li></ul>', $level);
 ?>
 
 <p></p>
-<div class="action_buttons" style="text-align:center">
-    
-    &nbsp;&nbsp;&nbsp;
-    <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
-</div>
 <p></p>
 
 </form>
@@ -148,7 +143,7 @@ $(document).ready(function() {
 <div class="fixed-top">
 <h1><?php putGS("Attach Topics"); ?></h1>
 </div>
-<p><span style="margin-left:20px;"><?php putGS('No topics have been created yet.'); ?></span></p>
+<p><?php putGS('No topics have been created yet.'); ?></p>
     
 <?php } ?>
 
