@@ -1515,3 +1515,20 @@ body.pop-up {
 .pop-up > p {
 	margin-left:32px;
 }
+/*---  Backup/Restore ---*/
+
+.wrapper .table_list, .wrapper fieldset.buttons {
+	margin-left:0;
+	margin-right:0;
+}
+.wrapper .action_buttons {
+	padding-left:0;
+}
+.mid-sized {
+	width:60%;
+	min-width:600px;
+}
+.full-sized {
+	width:100%;
+	min-width:600px;
+}
