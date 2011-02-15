@@ -1508,3 +1508,10 @@ body.pop-up {
     width: 40%;
 	min-width:180px;
 }
+.pop-up p {
+	font-size:1.2em;
+	line-height:140%;
+}
+.pop-up > p {
+	margin-left:32px;
+}
