@@ -54,7 +54,7 @@ class CampTemplateCache
             $path = $p_path;
         }
 
-        require_once(dirname(dirname(__FILE__)).'/include/pear/File/Find.php');
+        require_once('File/Find.php');
         $includeFiles = File_Find::search('/^TemplateCacheHandler_[^.]*\.php$/', $path, 'perl', false);
         $handlers = array();
         foreach ($includeFiles as $includeFile) {

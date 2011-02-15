@@ -7,27 +7,9 @@ require_once('DB.php');
 // Global permissions array
 global $g_permissions;
 global $Campsite;
-global $LiveUser;
-global $LiveUserAdmin;
+global $LiveUser, $LiveUserAdmin;
+global $db, $dsn;
 
-
-// Data Source Name (DSN)
-$dsn = 'mysql_cs://'.$Campsite['db']['user']
-            .':'.$Campsite['db']['pass']
-            .'@'.$Campsite['db']['host']
-            .'/'.$Campsite['db']['name'];
-
-$db = DB::connect($dsn);
-if (PEAR::isError($db)) {
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-?>
-        <font color="red" size="3">
-        <p>ERROR connecting to the MySQL server!</p>
-        <p>Please start the MySQL database server and verify if the connection configuration is valid.</p>
-        </font>
-<?php
-    exit(0);
-}
 
 // Define the LiveUser configuration
 $liveuserConfig = array (
@@ -35,11 +17,14 @@ $liveuserConfig = array (
         'name' => 'PHPSESSID',
         'varname' => 'loginInfo'
         ),
-    'session_cookie_params' => array(
+    'cookie' => array(
         'lifetime' => 0,
         'path' => '/',
         'domain' => null,
         'secure' => false,
+        'httponly' => true
+        ),
+    'session_cookie_params' => array(
         'httponly' => true
         ),
     'login' => array('regenid' => true),
@@ -212,7 +197,7 @@ if (file_exists($filename)) {
     include($filename);
 }
 
-require_once(CS_PATH_PEAR_LOCAL.DIR_SEP.'LiveUser'.DIR_SEP.'Admin.php');
+require_once('LiveUser'.DIR_SEP.'Admin.php');
 
 $GLOBALS['LiveUser'] = LiveUser::singleton($liveuserConfig);
 if (!$GLOBALS['LiveUser']->init()) {

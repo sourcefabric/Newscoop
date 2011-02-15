@@ -1,5 +1,7 @@
 <?php
 
+require_once('localizer/Localizer.php');
+
 /**
  * Check if user has access to the admin.
  * @param array $p_request
@@ -269,7 +271,6 @@ function camp_mime_content_type($p_file)
  */
 function camp_load_translation_strings($p_prefix, $p_langCode = null)
 {
-    require_once('localizer/Localizer.php');
     $langCode = null;
     if (!is_null($p_langCode)) {
         $langCode = $p_langCode;
