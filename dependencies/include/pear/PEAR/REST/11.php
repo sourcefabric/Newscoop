@@ -27,7 +27,7 @@ require_once 'PEAR/REST.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.3
  */
@@ -40,7 +40,7 @@ class PEAR_REST_11
 
     function PEAR_REST_11($config, $options = array())
     {
-        $this->_rest = new PEAR_REST($config, $options);
+        $this->_rest = &new PEAR_REST($config, $options);
     }
 
     function listAll($base, $dostable, $basic = true, $searchpackage = false, $searchsummary = false, $channel = false)

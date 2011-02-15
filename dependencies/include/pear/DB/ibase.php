@@ -49,7 +49,7 @@ require_once 'DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14RC1
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  * @since      Class became stable in Release 1.7.0
  */

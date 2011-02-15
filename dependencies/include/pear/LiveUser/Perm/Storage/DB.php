@@ -40,7 +40,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: DB.php,v 1.33 2006/04/07 22:20:57 lsmith Exp $
+ * @version CVS: $Id: DB.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @link http://pear.php.net/LiveUser
  */
 
@@ -69,7 +69,7 @@ require_once 'DB.php';
  * @package LiveUser
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Bjoern Kraus <krausbn@php.net>
- * @version $Id: DB.php,v 1.33 2006/04/07 22:20:57 lsmith Exp $
+ * @version $Id: DB.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@

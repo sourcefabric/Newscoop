@@ -16,7 +16,7 @@
 // | Author: Sterling Hughes <sterling@php.net>                           |
 // +----------------------------------------------------------------------+
 //
-// $Id: Find.php,v 1.27 2006/06/30 14:06:16 techtonik Exp $
+// $Id: Find.php 304090 2010-10-05 14:07:34Z clockwerx $
 //
 
 require_once 'PEAR.php';
@@ -30,7 +30,7 @@ define('FILE_FIND_VERSION', '@package_version@');
 *  Commonly needed functions searching directory trees
 *
 * @access public
-* @version $Id: Find.php,v 1.27 2006/06/30 14:06:16 techtonik Exp $
+* @version $Id: Find.php 304090 2010-10-05 14:07:34Z clockwerx $
 * @package File
 * @author Sterling Hughes <sterling@php.net>
 */
@@ -108,6 +108,8 @@ class File_Find
             $matches = null;
         }
 
+        sort($matches);
+
         return $matches ;
     }
 
@@ -129,7 +131,7 @@ class File_Find
 
         /* if called statically */
         if (!isset($this)  || !is_a($this, "File_Find")) {
-            $obj = new File_Find();
+            $obj = &new File_Find();
             return $obj->maptree($directory);
         }
       
@@ -147,6 +149,9 @@ class File_Find
             File_Find::_build($dir, $this->dirsep);
             array_push($this->directories, $dir);
         }
+
+        sort($this->directories);
+        sort($this->files);
 
         $retval = array($this->directories, $this->files);
         return $retval;
@@ -196,7 +201,9 @@ class File_Find
             }
             closedir($dh);
         }
-     
+
+        sort($retval);
+
         while (list($key, $val) = each($retval)) {
             $path = $directory . "/" . $val;
       
@@ -266,6 +273,8 @@ class File_Find
                 } 
             }
         }
+
+        sort($matches);
 
         return $matches;
     }

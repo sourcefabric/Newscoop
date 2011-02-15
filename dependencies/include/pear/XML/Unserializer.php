@@ -42,7 +42,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Unserializer.php,v 1.42 2009/02/09 14:49:52 ashnazg Exp $
+ * @version   CVS: $Id: Unserializer.php 303099 2010-09-06 16:23:06Z clockwerx $
  * @link      http://pear.php.net/package/XML_Serializer
  * @see       XML_Unserializer
  */
@@ -257,19 +257,19 @@ define('XML_UNSERIALIZER_ERROR_NO_UNSERIALIZATION', 151);
  * require_once 'XML/Unserializer.php';
  *
  * //  be careful to always use the ampersand in front of the new operator
- * $unserializer = new XML_Unserializer();
+ * $unserializer = &new XML_Unserializer();
  *
  * $unserializer->unserialize($xml);
  *
  * $data = $unserializer->getUnserializedData();
- * <code>
+ * </code>
  *
  * @category  XML
  * @package   XML_Serializer
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   Release: 0.20.0
+ * @version   Release: @package_version@
  * @link      http://pear.php.net/package/XML_Serializer
  * @see       XML_Serializer
  */
@@ -450,7 +450,7 @@ class XML_Unserializer extends PEAR
      */
     function apiVersion()
     {
-        return '0.20.0';
+        return '@package_version@';
     }
 
     /**
@@ -800,7 +800,8 @@ class XML_Unserializer extends PEAR
             ) {
                 $value['value'] = new $classname;
             } else {
-                $value['value'] = new $this->options[XML_UNSERIALIZER_OPTION_DEFAULT_CLASS];
+                $value['value'] =
+                    new $this->options[XML_UNSERIALIZER_OPTION_DEFAULT_CLASS];
             }
             if (trim($data) !== '') {
                 if ($value['guessType'] === true) {

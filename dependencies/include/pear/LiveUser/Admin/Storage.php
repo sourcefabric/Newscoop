@@ -57,7 +57,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: Storage.php,v 1.17 2006/06/09 09:20:36 lsmith Exp $
+ * @version CVS: $Id: Storage.php 214493 2006-06-09 09:20:36Z lsmith $
  * @link http://pear.php.net/LiveUser_Admin
  */
 

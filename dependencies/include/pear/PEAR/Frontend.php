@@ -39,7 +39,7 @@ $GLOBALS['_PEAR_FRONTEND_SINGLETON'] = null;
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -88,7 +88,7 @@ class PEAR_Frontend extends PEAR
         }
 
         if (class_exists($uiclass)) {
-            $obj = new $uiclass;
+            $obj = &new $uiclass;
             // quick test to see if this class implements a few of the most
             // important frontend methods
             if (is_a($obj, 'PEAR_Frontend')) {

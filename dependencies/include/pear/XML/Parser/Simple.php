@@ -43,7 +43,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2004-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Simple.php,v 1.7 2008/08/24 21:48:21 ashnazg Exp $
+ * @version   CVS: $Id: Simple.php 265444 2008-08-24 21:48:21Z ashnazg $
  * @link      http://pear.php.net/package/XML_Parser
  */
 
@@ -79,7 +79,7 @@ require_once 'XML/Parser.php';
  *     }
  * }
  * 
- * $p = new myParser();
+ * $p = &new myParser();
  * 
  * $result = $p->setInputFile('myDoc.xml');
  * $result = $p->parse();

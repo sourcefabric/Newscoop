@@ -57,7 +57,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: PDO.php,v 1.10 2006/06/05 09:57:58 lsmith Exp $
+ * @version CVS: $Id: PDO.php 214268 2006-06-05 09:57:58Z lsmith $
  * @link http://pear.php.net/LiveUser_Admin
  */
 

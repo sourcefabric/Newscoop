@@ -57,7 +57,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: MDB.php,v 1.13 2006/03/01 12:10:29 lsmith Exp $
+ * @version CVS: $Id: MDB.php 208328 2006-03-01 12:10:30Z lsmith $
  * @link http://pear.php.net/LiveUser_Admin
  */
 

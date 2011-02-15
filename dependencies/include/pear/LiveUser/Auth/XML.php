@@ -33,14 +33,14 @@
  * @category authentication
  * @package LiveUser
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Pierre-Alain Joye <pajoye@php.net>
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: XML.php,v 1.44 2006/08/22 17:11:43 lsmith Exp $
+ * @version CVS: $Id: XML.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @link http://pear.php.net/LiveUser
  */
 
@@ -57,7 +57,7 @@ require_once 'XML/Tree.php';
  *
  * @category authentication
  * @package LiveUser
- * @author  Bjï¿½rn Kraus <krausbn@php.net>
+ * @author  Björn Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@

@@ -15,9 +15,9 @@
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Bertrand Mansion <bmansion@mamasam.com>
- * @copyright   2001-2009 The PHP Group
+ * @copyright   2001-2010 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: Rule.php,v 1.4 2009/04/04 21:34:02 avb Exp $
+ * @version     CVS: $Id: Rule.php 304451 2010-10-17 07:31:18Z avb $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -27,7 +27,7 @@
  * @category    HTML
  * @package     HTML_QuickForm
  * @author      Bertrand Mansion <bmansion@mamasam.com>
- * @version     Release: 3.2.11
+ * @version     Release: 3.2.12
  * @since       3.2
  * @abstract
  */

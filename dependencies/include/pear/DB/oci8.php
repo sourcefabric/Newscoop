@@ -20,7 +20,7 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: oci8.php,v 1.116 2007/11/28 02:22:39 aharvey Exp $
+ * @version    CVS: $Id: oci8.php,v 1.115 2007/09/21 13:40:41 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -47,7 +47,7 @@ require_once 'DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14RC1
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  */
 class DB_oci8 extends DB_common
@@ -670,7 +670,7 @@ class DB_oci8 extends DB_common
                 $tmp = $this->oci8RaiseError($stmt);
                 return $tmp;
             }
-            $this->last_query = preg_replace("/:bind$i/",$this->quoteSmart($data[$key]),$this->last_query,1);
+            $this->last_query = str_replace(':bind'.$i, $this->quoteSmart($data[$key]), $this->last_query);
             $i++;
         }
         if ($this->autocommit) {

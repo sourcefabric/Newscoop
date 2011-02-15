@@ -57,7 +57,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: Common.php,v 1.37 2006/08/15 10:38:55 lsmith Exp $
+ * @version CVS: $Id: Common.php 218209 2006-08-15 10:38:55Z lsmith $
  * @link http://pear.php.net/LiveUser_Admin
  */
 

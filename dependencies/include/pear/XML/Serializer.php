@@ -42,7 +42,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Serializer.php,v 1.61 2009/06/12 02:11:44 ashnazg Exp $
+ * @version   CVS: $Id: Serializer.php 294967 2010-02-12 03:10:19Z clockwerx $
  * @link      http://pear.php.net/package/XML_Serializer
  * @see       XML_Unserializer
  */
@@ -420,7 +420,7 @@ define('XML_SERIALIZER_ENTITIES_HTML', XML_UTIL_ENTITIES_HTML);
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2003-2008 Stephan Schmidt <schst@php.net>
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   Release: 0.20.0
+ * @version   Release: @package_version@
  * @link      http://pear.php.net/package/XML_Serializer
  * @see       XML_Unserializer
  * @todo      replace extending PEAR class with instead using a PEAR_Error object
@@ -617,7 +617,7 @@ class XML_Serializer extends PEAR
      */
     function apiVersion()
     {
-        return '0.20.0';
+        return '@package_version@';
     }
 
     /**

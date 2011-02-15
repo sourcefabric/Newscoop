@@ -33,7 +33,7 @@ require_once 'PEAR/PackageFile.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since PHP 4.0.2
  * @see        http://pear.php.net/manual/en/core.ppm.pear-builder.php
@@ -79,7 +79,7 @@ class PEAR_Builder extends PEAR_Common
             $pkg = $descfile;
             $descfile = $pkg->getPackageFile();
         } else {
-            $pf = new PEAR_PackageFile($this->config, $this->debug);
+            $pf = &new PEAR_PackageFile($this->config, $this->debug);
             $pkg = &$pf->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
             if (PEAR::isError($pkg)) {
                 return $pkg;
@@ -277,7 +277,7 @@ class PEAR_Builder extends PEAR_Common
                 $this->addTempFile($dir);
             }
         } else {
-            $pf = new PEAR_PackageFile($this->config);
+            $pf = &new PEAR_PackageFile($this->config);
             $pkg = &$pf->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
             if (PEAR::isError($pkg)) {
                 return $pkg;
@@ -360,7 +360,7 @@ class PEAR_Builder extends PEAR_Common
         if (!file_exists($build_dir) || !is_dir($build_dir) || !chdir($build_dir)) {
             return $this->raiseError("could not chdir to $build_dir");
         }
-        putenv('PHP_PEAR_VERSION=1.9.0');
+        putenv('PHP_PEAR_VERSION=1.9.1');
         foreach ($to_run as $cmd) {
             $err = $this->_runCommand($cmd, $callback);
             if (PEAR::isError($err)) {

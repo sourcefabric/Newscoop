@@ -45,7 +45,7 @@
  * @author    Stephan Schmidt <schst@php.net>
  * @copyright 2002-2008 The PHP Group
  * @license   http://opensource.org/licenses/bsd-license New BSD License
- * @version   CVS: $Id: Parser.php,v 1.30 2008/09/16 16:06:22 ashnazg Exp $
+ * @version   CVS: $Id: Parser.php 302733 2010-08-24 01:09:09Z clockwerx $
  * @link      http://pear.php.net/package/XML_Parser
  */
 
@@ -417,7 +417,7 @@ class XML_Parser extends PEAR
         /**
          * check, if file is a remote file
          */
-        if (eregi('^(http|ftp)://', substr($file, 0, 10))) {
+        if (preg_match('/^(http|ftp):\/\//i', substr($file, 0, 10))) {
             if (!ini_get('allow_url_fopen')) {
                 return $this->
                 raiseError('Remote files cannot be parsed, as safe mode is enabled.',
@@ -474,7 +474,7 @@ class XML_Parser extends PEAR
         if (is_resource($fp)) {
             $this->fp = $fp;
             return true;
-        } elseif (eregi('^[a-z]+://', substr($fp, 0, 10))) {
+        } elseif (preg_match('/^[a-z]+:\/\//i', substr($fp, 0, 10))) {
             // see if it's an absolute URL (has a scheme at the beginning)
             return $this->setInputFile($fp);
         } elseif (file_exists($fp)) {
@@ -613,7 +613,7 @@ class XML_Parser extends PEAR
     function &raiseError($msg = null, $ecode = 0)
     {
         $msg = !is_null($msg) ? $msg : $this->parser;
-        $err = new XML_Parser_Error($msg, $ecode);
+        $err = &new XML_Parser_Error($msg, $ecode);
         return parent::raiseError($err);
     }
 

@@ -17,9 +17,9 @@
  * @author      Herim Vasquez <vasquezh@iro.umontreal.ca>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @copyright   2001-2009 The PHP Group
+ * @copyright   2001-2010 The PHP Group
  * @license     http://www.php.net/license/3_01.txt PHP License 3.01
- * @version     CVS: $Id: hierselect.php,v 1.20 2009/04/04 21:34:03 avb Exp $
+ * @version     CVS: $Id: hierselect.php 304450 2010-10-17 07:25:15Z avb $
  * @link        http://pear.php.net/package/HTML_QuickForm
  */
 
@@ -45,7 +45,7 @@ require_once 'HTML/QuickForm/select.php';
  * @author      Herim Vasquez <vasquezh@iro.umontreal.ca>
  * @author      Bertrand Mansion <bmansion@mamasam.com>
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 3.2.11
+ * @version     Release: 3.2.12
  * @since       3.1
  */
 class HTML_QuickForm_hierselect extends HTML_QuickForm_group
@@ -164,7 +164,7 @@ class HTML_QuickForm_hierselect extends HTML_QuickForm_group
             // check if all elements have been created
             $totalNbElements = count($this->_options);
             for ($i = $this->_nbElements; $i < $totalNbElements; $i ++) {
-                $this->_elements[] = new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
+                $this->_elements[] =& new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
                 $this->_nbElements++;
             }
         }
@@ -219,7 +219,7 @@ class HTML_QuickForm_hierselect extends HTML_QuickForm_group
             // check if all elements have been created
             $totalNbElements = 2;
             for ($i = $this->_nbElements; $i < $totalNbElements; $i ++) {
-                $this->_elements[] = new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
+                $this->_elements[] =& new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
                 $this->_nbElements++;
             }
         }
@@ -286,7 +286,7 @@ class HTML_QuickForm_hierselect extends HTML_QuickForm_group
     function _createElements()
     {
         for ($i = 0; $i < $this->_nbElements; $i++) {
-            $this->_elements[] = new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
+            $this->_elements[] =& new HTML_QuickForm_select($i, null, array(), $this->getAttributes());
         }
     } // end func _createElements
 
@@ -342,13 +342,15 @@ function _hs_unescapeEntities(str)
     return div.childNodes[0] ? div.childNodes[0].nodeValue : '';
 }
 
-function _hs_replaceOptions(ctl, optionList)
+function _hs_replaceOptions(ctl, options)
 {
     var j = 0;
     ctl.options.length = 0;
-    for (i in optionList) {
-        var optionText = (-1 == String(optionList[i]).indexOf('&'))? optionList[i]: _hs_unescapeEntities(optionList[i]);
-        ctl.options[j++] = new Option(optionText, i, false, false);
+    for (var i = 0; i < options.values.length; i++) {
+        ctl.options[i] = new Option(
+            (-1 == String(options.texts[i]).indexOf('&'))? options.texts[i]: _hs_unescapeEntities(options.texts[i]),
+            options.values[i], false, false
+        );
     }
 }
 
@@ -440,7 +442,7 @@ JAVASCRIPT;
             // option lists
             $jsParts = array();
             for ($i = 1; $i < $this->_nbElements; $i++) {
-                $jsParts[] = $this->_convertArrayToJavascript($this->_options[$i]);
+                $jsParts[] = $this->_convertArrayToJavascript($this->_prepareOptions($this->_options[$i], $i));
             }
             $this->_js .= "\n_hs_options['" . $this->_escapeString($this->getName()) . "'] = [\n" .
                           implode(",\n", $jsParts) .
@@ -459,10 +461,10 @@ JAVASCRIPT;
                 }
             }
             $this->_js .= "_hs_defaults['" . $this->_escapeString($this->getName()) . "'] = " .
-                          $this->_convertArrayToJavascript($values, false) . ";\n";
+                          $this->_convertArrayToJavascript($values) . ";\n";
         }
         include_once('HTML/QuickForm/Renderer/Default.php');
-        $renderer = new HTML_QuickForm_Renderer_Default();
+        $renderer =& new HTML_QuickForm_Renderer_Default();
         $renderer->setElementTemplate('{element}');
         parent::accept($renderer);
 
@@ -513,6 +515,38 @@ JAVASCRIPT;
     } // end func onQuickFormEvent
 
     // }}}
+    // {{{ _prepareOptions()
+
+   /**
+    * Prepares options for JS encoding
+    *
+    * We need to preserve order of options when adding them via javascript, so
+    * cannot use object literal and for/in loop (see bug #16603). Therefore we
+    * convert an associative array of options to two arrays of their values
+    * and texts. Backport from HTML_QuickForm2.
+    *
+    * @param    array   Options array
+    * @param    int     Depth within options array
+    * @link     http://pear.php.net/bugs/bug.php?id=16603
+    * @return   array
+    * @access   private
+    */
+    function _prepareOptions($ary, $depth)
+    {
+        if (!is_array($ary)) {
+            $ret = $ary;
+        } elseif (0 == $depth) {
+            $ret = array('values' => array_keys($ary), 'texts' => array_values($ary));
+        } else {
+            $ret = array();
+            foreach ($ary as $k => $v) {
+                $ret[$k] = $this->_prepareOptions($v, $depth - 1);
+            }
+        }
+        return $ret;
+    }
+
+    // }}}
     // {{{ _convertArrayToJavascript()
 
    /**
@@ -520,29 +554,41 @@ JAVASCRIPT;
     *
     * @access private
     * @param  array     PHP array to convert
-    * @param  bool      Generate Javascript object literal (default, works like PHP's associative array) or array literal
     * @return string    Javascript representation of the value
     */
-    function _convertArrayToJavascript($array, $assoc = true)
+    function _convertArrayToJavascript($array)
     {
         if (!is_array($array)) {
             return $this->_convertScalarToJavascript($array);
+        } elseif (count($array) && array_keys($array) != range(0, count($array) - 1)) {
+            return '{' . implode(',', array_map(
+                array($this, '_encodeNameValue'),
+                array_keys($array), array_values($array)
+            )) . '}';
         } else {
-            $items = array();
-            foreach ($array as $key => $val) {
-                $item = $assoc? "'" . $this->_escapeString($key) . "': ": '';
-                if (is_array($val)) {
-                    $item .= $this->_convertArrayToJavascript($val, $assoc);
-                } else {
-                    $item .= $this->_convertScalarToJavascript($val);
-                }
-                $items[] = $item;
-            }
+            return '[' . implode(',', array_map(
+                array($this, '_convertArrayToJavascript'),
+                $array
+            )) . ']';
         }
-        $js = implode(', ', $items);
-        return $assoc? '{ ' . $js . ' }': '[' . $js . ']';
     }
     
+    // }}}
+    // {{{ _encodeNameValue()
+
+   /**
+    * Callback for array_map used to generate JS name-value pairs
+    *
+    * @param    mixed
+    * @param    mixed
+    * @return   string
+    */
+    function _encodeNameValue($name, $value)
+    {
+        return $this->_convertScalarToJavascript((string)$name) . ':'
+               . $this->_convertArrayToJavascript($value);
+    }
+
     // }}}
     // {{{ _convertScalarToJavascript()
 

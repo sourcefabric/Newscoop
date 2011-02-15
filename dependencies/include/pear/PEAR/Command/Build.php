@@ -31,7 +31,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -65,7 +65,7 @@ Builds one or more extensions contained in a package.'
             $params[0] = 'package.xml';
         }
 
-        $builder = new PEAR_Builder($this->ui);
+        $builder = &new PEAR_Builder($this->ui);
         $this->debug = $this->config->get('verbose');
         $err = $builder->build($params[0], array(&$this, 'buildCallback'));
         if (PEAR::isError($err)) {

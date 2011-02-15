@@ -12,7 +12,7 @@
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: Package.php 287559 2009-08-21 22:33:10Z dufuz $
+ * @version    CVS: $Id: Package.php 288113 2009-09-06 21:11:55Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -32,7 +32,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: @package_version@
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -310,7 +310,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Packager')) {
             require_once 'PEAR/Packager.php';
         }
-        $a = new PEAR_Packager;
+        $a = &new PEAR_Packager;
         return $a;
     }
 
@@ -322,7 +322,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $a = new PEAR_PackageFile($config, $debug, $tmpdir);
+        $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
         $common = new PEAR_Common;
         $common->ui = $this->ui;
         $a->setLogger($common);
@@ -372,7 +372,7 @@ used for automated conversion or learning the format.
             $info = $obj->fromPackageFile($params[0], PEAR_VALIDATE_NORMAL);
         } else {
             $archive = $info->getArchiveFile();
-            $tar = new Archive_Tar($archive);
+            $tar = &new Archive_Tar($archive);
             $tar->extract(dirname($info->getPackageFile()));
             $info->setPackageFile(dirname($info->getPackageFile()) . DIRECTORY_SEPARATOR .
                 $info->getPackage() . '-' . $info->getVersion() . DIRECTORY_SEPARATOR .
@@ -494,6 +494,10 @@ used for automated conversion or learning the format.
         if (in_array($svntag . '/', explode("\n", $out))) {
             $this->ui->outputData($this->output, $command);
             return $this->raiseError('SVN tag ' . $svntag . ' for ' . $package . ' already exists.');
+        } elseif (file_exists($path['local']['base'] . 'tags') === false) {
+            return $this->raiseError('Can not locate the tags directory at ' . $path['local']['base'] . 'tags');
+        } elseif (is_writeable($path['local']['base'] . 'tags') === false) {
+            return $this->raiseError('Can not write to the tag directory at ' . $path['local']['base'] . 'tags');
         } else {
             $makeCommand = 'svn mkdir ' . $releaseTag;
             $this->output .= "+ $makeCommand\n";
@@ -519,6 +523,13 @@ used for automated conversion or learning the format.
         $dir   = dirname($packageFile);
         $dir   = substr($dir, strrpos($dir, '/') + 1);
         $files = array_keys($info->getFilelist());
+
+        array_shift($params);
+        if (count($params)) {
+            // add in additional files to be tagged (package files and such)
+            $files = array_merge($files, $params);
+        }
+
         $commands = array();
         foreach ($files as $file) {
             if (!file_exists($file)) {
@@ -1015,7 +1026,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Installer')) {
             require_once 'PEAR/Installer.php';
         }
-        $a = new PEAR_Installer($ui);
+        $a = &new PEAR_Installer($ui);
         return $a;
     }
 
@@ -1032,7 +1043,7 @@ used for automated conversion or learning the format.
         }
 
         if (class_exists('PEAR_Command_Packaging')) {
-            $a = new PEAR_Command_Packaging($ui, $config);
+            $a = &new PEAR_Command_Packaging($ui, $config);
         } else {
             $a = null;
         }

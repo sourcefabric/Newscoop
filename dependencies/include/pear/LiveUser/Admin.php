@@ -49,7 +49,7 @@
  * @category authentication
  * @package LiveUser_Admin
  * @author  Markus Wolff <wolff@21st.de>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
  * @author  Christian Dickmann <dickmann@php.net>
@@ -57,7 +57,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: Admin.php,v 1.67 2006/08/07 20:38:24 lsmith Exp $
+ * @version CVS: $Id: Admin.php 237316 2007-06-09 23:36:34Z dufuz $
  * @link http://pear.php.net/LiveUser_Admin
  */
 
@@ -100,7 +100,7 @@ define('LIVEUSER_ADMIN_ERROR_NOT_SUPPORTED',    -6);
  * @package LiveUser_Admin
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Arnaud Limbourg <arnaud@php.net>
- * @author  Helgi ï¿½ormar ï¿½orbjï¿½rnsson <dufuz@php.net>
+ * @author  Helgi Þormar Þorbjörnsson <dufuz@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@
@@ -147,6 +147,14 @@ class LiveUser_Admin
      * @access private
      */
      var $_conf = null;
+
+    /**
+     * Error stack
+     *
+     * @var    PEAR_ErrorStack
+     * @access private
+     */
+     var $stack = null;
 
     /**
      * Error codes to message mapping array
@@ -210,7 +218,7 @@ class LiveUser_Admin
             $debug =& $conf['debug'];
         }
 
-        $obj = new LiveUser_Admin($debug);
+        $obj = &new LiveUser_Admin($debug);
 
         if (is_array($conf)) {
             $obj->_conf =& $conf;

@@ -38,7 +38,7 @@ require_once 'DB.php';
  * @author     Stig Bakken <stig@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14RC1
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  */
 class DB_storage extends PEAR

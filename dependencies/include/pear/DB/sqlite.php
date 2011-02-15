@@ -21,7 +21,7 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0 3.0
- * @version    CVS: $Id: sqlite.php,v 1.118 2007/11/26 22:57:18 aharvey Exp $
+ * @version    CVS: $Id: sqlite.php,v 1.117 2007/09/21 14:23:28 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -47,7 +47,7 @@ require_once 'DB/common.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0 3.0
- * @version    Release: 1.7.14RC1
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  */
 class DB_sqlite extends DB_common
@@ -755,7 +755,6 @@ class DB_sqlite extends DB_common
                 '/uniqueness constraint failed/' => DB_ERROR_CONSTRAINT,
                 '/may not be NULL/' => DB_ERROR_CONSTRAINT_NOT_NULL,
                 '/^no such column:/' => DB_ERROR_NOSUCHFIELD,
-                '/no column named/' => DB_ERROR_NOSUCHFIELD,
                 '/column not present in both tables/i' => DB_ERROR_NOSUCHFIELD,
                 '/^near ".*": syntax error$/' => DB_ERROR_SYNTAX,
                 '/[0-9]+ values for [0-9]+ columns/i' => DB_ERROR_VALUE_COUNT_ON_ROW,

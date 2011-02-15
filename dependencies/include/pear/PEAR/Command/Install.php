@@ -30,7 +30,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -328,7 +328,7 @@ Run post-installation scripts in package <package>, if any exist.
         if (!class_exists('PEAR_Downloader')) {
             require_once 'PEAR/Downloader.php';
         }
-        $a = new PEAR_Downloader($ui, $options, $config);
+        $a = &new PEAR_Downloader($ui, $options, $config);
         return $a;
     }
 
@@ -340,7 +340,7 @@ Run post-installation scripts in package <package>, if any exist.
         if (!class_exists('PEAR_Installer')) {
             require_once 'PEAR/Installer.php';
         }
-        $a = new PEAR_Installer($ui);
+        $a = &new PEAR_Installer($ui);
         return $a;
     }
 
@@ -1134,7 +1134,7 @@ Run post-installation scripts in package <package>, if any exist.
         $dest .= DIRECTORY_SEPARATOR . $pkgname;
         $orig = $pkgname . '-' . $pkgversion;
 
-        $tar = new Archive_Tar($pkgfile->getArchiveFile());
+        $tar = &new Archive_Tar($pkgfile->getArchiveFile());
         if (!$tar->extractModify($dest, $orig)) {
             return $this->raiseError('unable to unpack ' . $pkgfile->getArchiveFile());
         }

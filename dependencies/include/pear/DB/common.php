@@ -20,7 +20,7 @@
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: $Id: common.php,v 1.144 2007/11/26 22:54:03 aharvey Exp $
+ * @version    CVS: $Id: common.php,v 1.143 2007/09/21 13:40:41 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -42,7 +42,7 @@ require_once 'PEAR.php';
  * @author     Daniel Convissor <danielc@php.net>
  * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.14RC1
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  */
 class DB_common extends PEAR
@@ -1868,18 +1868,13 @@ class DB_common extends PEAR
      *                 query and native error code.
      * @param mixed   native error code, integer or string depending the
      *                 backend
-     * @param mixed   dummy parameter for E_STRICT compatibility with
-     *                 PEAR::raiseError
-     * @param mixed   dummy parameter for E_STRICT compatibility with
-     *                 PEAR::raiseError
      *
      * @return object  the PEAR_Error object
      *
      * @see PEAR_Error
      */
     function &raiseError($code = DB_ERROR, $mode = null, $options = null,
-                         $userinfo = null, $nativecode = null, $dummy1 = null,
-                         $dummy2 = null)
+                         $userinfo = null, $nativecode = null)
     {
         // The error is yet a DB error object
         if (is_object($code)) {

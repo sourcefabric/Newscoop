@@ -40,7 +40,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: Simple.php,v 1.41 2006/04/10 14:41:44 lsmith Exp $
+ * @version CVS: $Id: Simple.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @link http://pear.php.net/LiveUser
  */
 

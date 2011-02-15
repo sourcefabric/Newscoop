@@ -50,7 +50,7 @@ define('PEAR_DOWNLOADER_PACKAGE_PHPVERSION', -1004);
  * @author     Greg Beaver <cellog@php.net>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    Release: 1.9.0
+ * @version    Release: 1.9.1
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -1382,7 +1382,7 @@ class PEAR_Downloader_Package
                     $obj->setExplicitState($s);
                 }
 
-                $obj = new PEAR_Downloader_Package($params[$i]->getDownloader());
+                $obj = &new PEAR_Downloader_Package($params[$i]->getDownloader());
                 PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
                 if (PEAR::isError($dir = $dl->getDownloadDir())) {
                     PEAR::popErrorHandling();
@@ -1435,7 +1435,7 @@ class PEAR_Downloader_Package
             // convert the dependencies into PEAR_Downloader_Package objects for the next time around
             $params[$i]->_downloadDeps = array();
             foreach ($newdeps as $dep) {
-                $obj = new PEAR_Downloader_Package($params[$i]->getDownloader());
+                $obj = &new PEAR_Downloader_Package($params[$i]->getDownloader());
                 if ($s = $params[$i]->explicitState()) {
                     $obj->setExplicitState($s);
                 }
@@ -1499,7 +1499,7 @@ class PEAR_Downloader_Package
      */
     function &getPackagefileObject(&$c, $d, $t = false)
     {
-        $a = new PEAR_PackageFile($c, $d, $t);
+        $a = &new PEAR_PackageFile($c, $d, $t);
         return $a;
     }
 
@@ -1584,7 +1584,7 @@ class PEAR_Downloader_Package
 
             if ($this->_rawpackagefile) {
                 require_once 'Archive/Tar.php';
-                $tar = new Archive_Tar($file);
+                $tar = &new Archive_Tar($file);
                 $packagexml = $tar->extractInString('package2.xml');
                 if (!$packagexml) {
                     $packagexml = $tar->extractInString('package.xml');

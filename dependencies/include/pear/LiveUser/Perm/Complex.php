@@ -40,7 +40,7 @@
  * @author  Bjoern Kraus <krausbn@php.net>
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
- * @version CVS: $Id: Complex.php,v 1.27 2006/04/10 14:41:44 lsmith Exp $
+ * @version CVS: $Id: Complex.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @link http://pear.php.net/LiveUser
  */
 
@@ -58,7 +58,7 @@ require_once 'LiveUser/Perm/Medium.php';
  * @package LiveUser
  * @author  Lukas Smith <smith@pooteeweet.org>
  * @author  Bjoern Kraus <krausbn@php.net>
- * @version $Id: Complex.php,v 1.27 2006/04/10 14:41:44 lsmith Exp $
+ * @version $Id: Complex.php 304421 2010-10-15 13:30:56Z clockwerx $
  * @copyright 2002-2006 Markus Wolff
  * @license http://www.gnu.org/licenses/lgpl.txt
  * @version Release: @package_version@
