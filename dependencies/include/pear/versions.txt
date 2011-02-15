@@ -1,3 +1,4 @@
+adodb                    5.06     stable
 Archive_Tar              1.3.7    stable
 Console_Getopt           1.2.3    stable
 DB                       1.7.13   stable
