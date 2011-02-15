@@ -164,7 +164,7 @@ if ($files) {
             $color = 1;
             $tr_class = "class=\"list_row_odd\"";
         }
-        print "<tr $tr_class><td>{$file['name']}</td><td align=\"center\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
+        print "<tr $tr_class><td>{$file['name']}</td><td align=\"left\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
         print '<td align="center"><a href="#" onclick="if (confirm(\''.getGS('Are you sure you want to restore the file $1?',
