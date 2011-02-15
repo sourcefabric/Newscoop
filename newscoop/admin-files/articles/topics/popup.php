@@ -40,6 +40,11 @@ foreach ($articleTopics as $topic) {
   <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
 </head>
 <body class="pop-up">
+<?php if (count($topics) > 0) { ?>
+<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
+<?php echo SecurityToken::FormParameter(); ?>
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
 <div class="fixed-top">
 <h1><?php putGS("Attach Topics"); ?></h1>
 
@@ -50,11 +55,6 @@ foreach ($articleTopics as $topic) {
     <input type="submit" class="default-button" value="<?php putGS('Search'); ?>" />
 </fieldset>
 </div>
-<?php if (count($topics) > 0) { ?>
-<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
-<?php echo SecurityToken::FormParameter(); ?>
-<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
-<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
 
 <?php
 $color = FALSE;
@@ -145,9 +145,10 @@ $(document).ready(function() {
 </script>
 
 <?php } else { ?>
-<blockquote>
-    <p><?php  putGS('No topics.'); ?></p>
-</blockquote>
+<div class="fixed-top">
+<h1><?php putGS("Attach Topics"); ?></h1>
+</div>
+<p><span style="margin-left:20px;"><?php putGS('No topics have been created yet.'); ?></span></p>
     
 <?php } ?>
 
