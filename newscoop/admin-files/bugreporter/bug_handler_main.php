@@ -36,7 +36,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         }
     }
 
-    // -- Return on getid3 errors ---
+    // -- Return on generic errors ---
     if (preg_match ('/^Undefined index:/i', $p_string)){
     	return;
     }
