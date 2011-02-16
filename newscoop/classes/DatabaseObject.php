@@ -254,6 +254,9 @@ class DatabaseObject {
 	 * @param array $p_recordSet
 	 *		If the record has already been fetched and we just need to
 	 * 		assign the data to the object's internal member variable.
+	 * @param bool $p_forceExists
+	 *		prevents to check for the object existence in the database,
+	 * 		a performance thing for situations where we know it exists.
 	 *
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
