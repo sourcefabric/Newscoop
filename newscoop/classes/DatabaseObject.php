@@ -254,11 +254,14 @@ class DatabaseObject {
 	 * @param array $p_recordSet
 	 *		If the record has already been fetched and we just need to
 	 * 		assign the data to the object's internal member variable.
+	 * @param bool $p_forceExists
+	 *		prevents to check for the object existence in the database,
+	 * 		a performance thing for situations where we know it exists.
 	 *
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-	public function fetch($p_recordSet = null)
+	public function fetch($p_recordSet = null, $p_forceExists = false)
 	{
 		global $g_ado_db;
 
@@ -295,14 +298,18 @@ class DatabaseObject {
 			foreach ($this->getColumnNames() as $dbColumnName) {
 				if (!isset($p_recordSet[$dbColumnName])) {
 					$this->m_data[$dbColumnName] = null;
-				}
+                }
 			}
-			$this->m_exists = false;
-			if ($this->keyValuesExist()) {
-				$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
-							. ' WHERE ' . $this->getKeyWhereClause();
-				if ($g_ado_db->GetRow($queryStr)) {
-					$this->m_exists = true;
+            if ($p_forceExists) {
+                $this->m_exists = true;
+            } else {
+				$this->m_exists = false;
+				if ($this->keyValuesExist()) {
+					$queryStr = 'SELECT * FROM ' . $this->m_dbTableName
+								. ' WHERE ' . $this->getKeyWhereClause();
+					if ($g_ado_db->GetRow($queryStr)) {
+						$this->m_exists = true;
+					}
 				}
 			}
 		}
