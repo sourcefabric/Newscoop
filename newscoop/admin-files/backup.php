@@ -108,7 +108,9 @@ echo $breadcrumbs;
 // view template
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
-<br />
+
+<!--  CONTENT  -->
+<div class="wrapper mid-sized">
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
     <tr>
     <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
@@ -129,26 +131,27 @@ echo $breadcrumbs;
 </table>
 <p />
 <div id="uploader" style="display:none">
-<center>
+<fieldset class="buttons">
 <form method="POST" enctype="multipart/form-data">
+<input type="submit" class="button right-floated" name="save" value="<?php putGS('Save'); ?>" />
 <input type="hidden" name="action" value="upload" />
 <input type="file" name="archivefile" size="30">
-<input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />
+
 </form>
-</center>
+</fieldset>
 </div>
 <p />
 <?php
 camp_html_display_msgs();
 ?>
-<table border="0" cellspacing="1" cellpadding="3" class="table_list">
+<table border="0" cellspacing="1" cellpadding="3" class="table_list full-sized">
     <tr class="table_list_header">
         <td align="left" valign="middle"><b><?php putGS("File"); ?></b></td>
         <td align="left" valign="middle"><b><?php putGS("Creation date"); ?></b></td>
-        <td align="left" valign="middle"><b><?php echo getGS("Size") . ', ' . GetGS("Mb"); ?></b></td>
-        <td align="left" valign="middle"><b><?php putGS("Download"); ?></b></td>
-        <td align="left" valign="middle"><b><?php putGS("Restore"); ?></b></td>
-        <td align="left" valign="middle"><b><?php putGS("Delete"); ?></b></td>
+        <td align="center" valign="middle"><b><?php echo getGS("Size") . ', ' . GetGS("Mb"); ?></b></td>
+        <td align="center" valign="middle"><b><?php putGS("Download"); ?></b></td>
+        <td align="center" valign="middle"><b><?php putGS("Restore"); ?></b></td>
+        <td align="center" valign="middle"><b><?php putGS("Delete"); ?></b></td>
     </tr>
 <?php
 if ($files) {
@@ -161,7 +164,7 @@ if ($files) {
             $color = 1;
             $tr_class = "class=\"list_row_odd\"";
         }
-        print "<tr $tr_class><td>{$file['name']}</td><td align=\"center\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
+        print "<tr $tr_class><td>{$file['name']}</td><td align=\"left\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
         print '<td align="center"><a href="#" onclick="if (confirm(\''.getGS('Are you sure you want to restore the file $1?',
@@ -177,6 +180,9 @@ if ($files) {
 }
 ?>
 </table>
+
+<!--  END CONTENT  -->
+</div>
 <?php camp_html_copyright_notice();
 
 // internal filesize function returns maximum 4Gb size

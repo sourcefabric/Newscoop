@@ -26,8 +26,8 @@ foreach ($articleTopics as $topic) {
 }
 
 ?>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
@@ -39,19 +39,22 @@ foreach ($articleTopics as $topic) {
   <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
   <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
 </head>
-<body>
-<h1><?php putGS("Attach Topics"); ?></h1>
-
-<fieldset class="buttons">
-    <input type="text" name="search" class="autocomplete topics" />
-    <input type="submit" value="<?php putGS('Search'); ?>" />
-</fieldset>
-
+<body class="pop-up">
 <?php if (count($topics) > 0) { ?>
 <form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
-<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+<input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
+<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+<div class="fixed-top">
+<h1><?php putGS("Attach Topics"); ?></h1>
+
+<fieldset class="buttons">
+	<input type="submit" value="<?php putGS("Close"); ?>" class="button right-floated" onclick="parent.$.fancybox.close(); return false;" />
+	<input type="submit" value="<?php putGS("Save and Close"); ?>" class="button right-floated" />
+    <input type="text" name="search" class="autocomplete topics input_text" />
+    <input type="submit" class="default-button" value="<?php putGS('Search'); ?>" />
+</fieldset>
+</div>
 
 <?php
 $color = FALSE;
@@ -101,7 +104,7 @@ echo str_repeat('</li></ul>', $level);
 
 <p></p>
 <div class="action_buttons" style="text-align:center">
-    <input type="submit" value="<?php putGS("Save and Close"); ?>" class="button" />
+    
     &nbsp;&nbsp;&nbsp;
     <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
 </div>
@@ -142,13 +145,11 @@ $(document).ready(function() {
 </script>
 
 <?php } else { ?>
-<blockquote>
-    <p><?php  putGS('No topics.'); ?></p>
-</blockquote>
-    
-<div style="text-align:center;padding-top: 20px;">
-    <input type="submit" value="<?php putGS("Close"); ?>" class="button" onclick="parent.$.fancybox.close(); return false;" />
+<div class="fixed-top">
+<h1><?php putGS("Attach Topics"); ?></h1>
 </div>
+<p><span style="margin-left:20px;"><?php putGS('No topics have been created yet.'); ?></span></p>
+    
 <?php } ?>
 
 </body>

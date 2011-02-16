@@ -6,6 +6,8 @@
 
       DocumentRoot /var/lib/newscoop
       DirectoryIndex index.php index.html
+      Alias /javascript /var/lib/newscoop/javascript/
+
       <Directory /var/lib/newscoop>
               Options -Indexes FollowSymLinks MultiViews
               AllowOverride All

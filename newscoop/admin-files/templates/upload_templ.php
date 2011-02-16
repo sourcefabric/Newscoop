@@ -51,33 +51,28 @@ camp_html_display_msgs();
 <div id="uploader"></div>
 <div id="uploader_error"></div>
 
-<table border="0" cellspacing="0" cellpadding="0" class="box_table">
-<tr>
-  <td colspan="2" align="center" style="padding-top: 15px;">
-    <?php p(wordwrap(getGS("If the file you specified is a text file, you can convert its character set using the dropdown below."), 60, "<br />")); ?>
-  </td>
-</td>
-</tr>
-<tr>
-  <td align="right"><?php putGS("Template charset"); ?>:</td>
-  <td>
-    <input type="hidden" name="f_path" value="<?php p(htmlspecialchars($Path)); ?>" />
-    <select name="f_charset" class="input_select">
-    <option value="">-- <?php putGS("Select a language/character set") ?> --</option>
-    <option value="UTF-8"><?php putGS("All languages"); ?>/UTF-8</option>
-    <?php foreach ($languages as $language) { ?>
-    <option value="<?php p($language->getCodePage()); ?>"><?php p($language->getNativeName().'/'.$language->getCodePage()); ?></option>
-    <?php } ?>
-    </select>
-    <?php putGS("(optional)"); ?>
-  </td>
-</tr>
-<tr>
-  <td colspan="2" align="center">
-    <input type="submit" class="button" name="save" value="<?php putGS('Save'); ?>" />
-  </td>
-</tr>
-</table>
+<div class="plupload-addon-bottom clearfix">
+    <h3>
+        <?php p(getGS("If the file you specified is a text file, you can convert its character set using the dropdown below.")); ?>
+    </h3>
+    <div class="info"><?php putGS("Template charset"); ?>:</div>
+    <div class="inputs select-only">
+        <input type="hidden" name="f_path" value="<?php p(htmlspecialchars($Path)); ?>" />
+        <select name="f_charset" class="input_select">
+        <option value="">-- <?php putGS("Select a language/character set") ?> --</option>
+        <option value="UTF-8"><?php putGS("All languages"); ?>/UTF-8</option>
+        <?php foreach ($languages as $language) { ?>
+        <option value="<?php p($language->getCodePage()); ?>"><?php p($language->getNativeName().'/'.$language->getCodePage()); ?></option>
+        <?php } ?>
+        </select>
+    </div>
+    <div class="info last">
+    	<?php putGS("(optional)"); ?>
+    </div>   
+    <div class="buttons">
+        <input type="submit" class="save-button" name="save" value="<?php putGS('Save'); ?>" />
+	</div>
+</div>
 </form>
 <p>&nbsp;</p>
 

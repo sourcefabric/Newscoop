@@ -14,7 +14,7 @@ regGS("Attach New Image", "Neues Bild hinzufügen");
 regGS("Attach Image To Article", "Bild mit Artikel verknüpfen");
 regGS("Attach Existing Image", "Existierendes Bild verknüpfen");
 regGS("Add New Image", "Neues Bild hinzufügen");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum<BR><SMALL>(JJJJ-MM-TT)</SMALL> ");
+regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Datum<BR><SMALL>(yyyy-mm-dd)</SMALL> ");
 regGS("Please enter a number for the image.", "Bitte eine Nummer für das Bild angeben.");
 regGS("Please enter a description for the image.", "Bitte eine Beschreibung für das Bild angeben.");
 regGS("You must select an image file to upload.", "Eine Bilddatei zum Hochladen auswählen.");

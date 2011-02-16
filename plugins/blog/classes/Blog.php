@@ -656,7 +656,7 @@ class Blog extends DatabaseObject {
     	if ($p_user->hasPermission('EditorLink')) {
     	    $plugins[] = 'campsiteinternallink';
     	}
-        $plugins[] = 'drupalbreak';
+        // $plugins[] = 'drupalbreak';
     	$plugins_list = implode(",", $plugins);
 
     	$statusbar_location = "none";
@@ -725,7 +725,7 @@ class Blog extends DatabaseObject {
     	    $toolbar1[] = "image";
     	}
 
-    	$toolbar1[] = "drupalbreak";
+    	//$toolbar1[] = "drupalbreak";
 
     	if ($p_user->hasPermission('EditorSourceView')) {
     	    $toolbar1[] = "code";

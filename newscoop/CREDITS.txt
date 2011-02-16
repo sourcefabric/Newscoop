@@ -1,14 +1,14 @@
 Copyright (C) 2010-2011 Sourcefabric o.p.s
+Copyright (C) 2002-2009 Media Development Loan Fund
 
-Copyright (C) 2004-2009 Media Development Loan Fund
-
-
-Campsite Credits (by Version Number)
-
+Newscoop Credits (by Version Number)
 
 ------------------------------------
 Newscoop 3.5.0 Credits
 ------------------------------------
+Note: Project renamed in this version.
+
+Developers
 - Petr Jašek <petr.jasek@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>
 - Andrey Podshivalov (andrey.podshivalov@sourcefabric.org)
@@ -24,6 +24,10 @@ Documentation
 
 Templating 
 - Ljuba Rankovic <ljuba.rankovic@sourcefabric.org>
+
+Project Management
+- Paul Baranowski <paul.baranowski@sourcefabric.org>
+
 
 ------------------------------------
 Campsite 3.4.3 Credits
@@ -212,15 +216,15 @@ Campsite 2.6.3-2.6.9 Credits
 -----------------------------
 Campsite 2.6.1, 2.6.2 Credits
 -----------------------------
-- Mugurel Rus (mugur.rus@gmail.com)
-- Paul Baranowski (paul@paulbaranowski.org)
-- Holman Romero (holman.romero@gmail.com)
-- Sava Tatic (sava.tatic@mdlf.org)
+- Mugurel Rus
+- Paul Baranowski
+- Holman Romero 
+- Sava Tatic
 
 Translations:
- - Spanish: Claudia Cruz (ccruz@elperiodico.com.gt)
- - Romanian: George Hari Popescu (george.popescu@cyberculture.ro)
- - Swedish: Erik Dalén (dalen@jpl.se)
+ - Spanish: Claudia Cruz
+ - Romanian: George Hari Popescu
+ - Swedish: Erik Dalén 
 
 
 --------------------
@@ -228,24 +232,24 @@ Campsite 2.6 Credits
 --------------------
 Released July 10, 2006
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus
   Campsite parser, article comments, install scripts, documentation
 
-- Paul Baranowski (paul@paulbaranowski.org):
+- Paul Baranowski
   Article comments, integration of login security, documentation,
   backup/restore scripts, admin interface status feedback,
   tweaking admin interface for ease-of-use
 
-- Peter Hartman (peterjohnhartman@gmail.com):
+- Peter Hartman
   Redesigned article types admin
 
-- Eric Stuart (possum@n-space.org)
+- Eric Stuart
   Automatic bug reporting
 
-- Raed Neshiewat (raed@tamamtech.com) & Fadi Abu Essa (fadi@tamamtech.com)
+- Raed Neshiewat & Fadi Abu Essa
   Login security
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic 
   Management
 
 
@@ -254,15 +258,15 @@ Campsite 2.5 Credits
 --------------------
 Released March 6, 2006
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus:
   Subscribe by language, Campsite parser, database, admin interface,
   install scripts, documentation
 
-- Paul Baranowski (paul@paulbaranowski.org):
+- Paul Baranowski:
   New topic screen, ability to create an article without first categorizing it,
   testing, tons of bug fixes, documentation
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic:
   Management
 
 
@@ -271,26 +275,26 @@ Campsite 2.4 Credits
 --------------------
 Released January 10, 2006
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation
 
-- Paul Baranowski (paul@paulbaranowski.org):
+- Paul Baranowski:
   Admin interface, API, Xinha, install scripts, documentation
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic:
   Management, documentation
 
-- Ljuba Rankovic (sr-localizer@campware.org):
+- Ljuba Rankovic:
   Serbian and Serbo-Croatian Translation
 
-- Claudia Cruz (ccruz@elperiodico.com.gt):
+- Claudia Cruz:
   Spanish Localization
 
-- Andrei Blagorazumov (ru-localizer@campware.org):
+- Andrei Blagorazumov :
   Russian Translation
 
-- Guilherme Henrique Soares (pt-localizer@campware.org):
+- Guilherme Henrique Soares:
   Portuguese Translation
 
 
@@ -299,50 +303,50 @@ Campsite 2.3 Credits
 --------------------
 Released August 1, 2005
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation, Romanian localization
 
-- Paul Baranowski (paul@paulbaranowski.org):
+- Paul Baranowski:
   Admin interface, API, Xinha, documentation
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic:
   Management, documentation
 
-- Douglas Arellanes (douglas.arellanes@mdlf.org)
+- Douglas Arellanes
   Management, feedback, documentaion
 
-- Micz Flor (micz.flor@web.de):
+- Micz Flor:
   Contributed the Docmint tool for the online manual, German Translation
 
-- Aleksandar Brajanoski (braja@tol.org):
+- Aleksandar Brajanoski:
   Testing
 
-- Ondra Koutek (kouteko@tol.org):
+- Ondra Koutek:
   Testing, FreeBSD port
 
-- John Pye (john@curioussymbols.com):
+- John Pye:
   RPM build
 
-- Andrei Blagorazumov (ru-localizer@campware.org):
+- Andrei Blagorazumov:
   Russian Translation
 
-- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+- Ljuba Rankovic:
   Serbian and Serbo-Croatian Translations
 
-- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+- Marinko Filipovic and Tatjana Grujic:
   Croatian Translation
 
-- Pavla Zankova (cz-localizer@campware.org):
+- Pavla Zankova:
   Czech Translation
 
-- Guilherme Henrique Soares (pt-localizer@campware.org):
+- Guilherme Henrique Soares:
   Portuguese Translation
 
-- Engel Sanchez and William Maas (es-localizer@campware.org):
+- Engel Sanchez and William Maas:
   Spanish Translation
 
-- Lucian Muresan (ro-localizer@campware.org):
+- Lucian Muresan:
   Romanian Translation
 
 
@@ -351,44 +355,44 @@ Campsite 2.2 Credits
 --------------------
 Released April 14, 2005
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation
 
-- Paul Baranowski (paul@paulbaranowski.org):
+- Paul Baranowski:
   Admin interface, API, HTMLArea
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic:
   Management, documentation
 
-- Micz Flor (micz.flor@web.de):
+- Micz Flor:
   Documentation, German Translation
 
-- Aleksandar Brajanoski (braja@tol.org):
+- Aleksandar Brajanoski:
   Testing
 
-- Ondra Koutek (kouteko@tol.org):
+- Ondra Koutek:
   Testing, FreeBSD port
 
-- Andrei Blagorazumov (ru-localizer@campware.org):
+- Andrei Blagorazumov:
   Russian Translation
 
-- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+- Ljuba Rankovic:
   Serbian and Serbo-Croatian Translations
 
-- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+- Marinko Filipovic and Tatjana Grujic:
   Croatian Translation
 
-- Pavla Zankova (cz-localizer@campware.org):
+- Pavla Zankova:
   Czech Translation
 
-- Guilherme Henrique Soares (pt-localizer@campware.org):
+- Guilherme Henrique Soares:
   Portuguese Translation
 
-- Engel Sanchez and William Maas (es-localizer@campware.org):
+- Engel Sanchez and William Maas:
   Spanish Translation
 
-- Lucian Muresan (ro-localizer@campware.org):
+- Lucian Muresan:
   Romanian Translation
 
 
@@ -397,44 +401,44 @@ Campsite 2.1 Credits
 --------------------
 Released November 10, 2002
 
-- Mugurel Rus (mugur.rus@gmail.com):
+- Mugurel Rus:
   Campsite server, database, admin interface, install scripts,
   documentation
 
-- Sebastian Gobel (devel@yellowsunshine.de):
+- Sebastian Gobel:
   Admin interface
 
-- Micz Flor (micz.flor@web.de):
+- Micz Flor:
   Documentation, German Translation
 
-- Sava Tatic (sava.tatic@mdlf.org):
+- Sava Tatic:
   Management, documentation
 
-- Aleksandar Brajanoski (braja@tol.org):
+- Aleksandar Brajanoski:
   Testing
 
-- Ondra Koutek (kouteko@tol.org):
+- Ondra Koutek:
   Testing
 
-- Andrei Blagorazumov (ru-localizer@campware.org):
+- Andrei Blagorazumov:
   Russian Translation
 
-- Ljuba Rankovic (sr-localizer@campware.org, sh-localizer@campware.org):
+- Ljuba Rankovic:
   Serbian and Serbo-Croatian Translations
 
-- Marinko Filipovic and Tatjana Grujic (hr-localizer@campware.org):
+- Marinko Filipovic and Tatjana Grujic:
   Croatian Translation
 
-- Pavla Zankova (cz-localizer@campware.org):
+- Pavla Zankova:
   Czech Translation
 
-- Guilherme Henrique Soares (pt-localizer@campware.org):
+- Guilherme Henrique Soares:
   Portuguese Translation
 
-- Engel Sanchez and William Maas (es-localizer@campware.org):
+- Engel Sanchez and William Maas:
   Spanish Translation
 
-- Lucian Muresan (ro-localizer@campware.org):
+- Lucian Muresan:
   Romanian Translation
 
 
@@ -475,7 +479,3 @@ Thanks to
   * EditArea - the code editor in a textarea:
     http://www.cdolivet.com/index.php?page=editArea
 
-
-Copyright (C) 2010-2011 Sourcefabric o.p.s
-
-Copyright (C) 2004-2009 Media Development Loan Fund

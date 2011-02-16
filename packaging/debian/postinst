@@ -87,29 +87,31 @@ case "$1" in
       restart="$webserver $restart"
     fi
 
+    # .htaccess file
     echo -ne "/RewriteBase/d\nwq\n\n" \
     | ed /var/lib/newscoop/.htaccess &>/dev/null || true
 
-    # .htaccess file
     if [ -n "${dohtaccess}" ]; then
       echo -ne "/RewriteEngine/\n+1i\n    RewriteBase ${dohtaccess}\n.\nwq\n" \
       | ed /var/lib/newscoop/.htaccess &>/dev/null || true
     fi
 
-    # CRON JOB
-    db_get newscoop/cronjob
-    if [ "$RET" == "true" ]; then
-      CU=www-data
-      CE=root@localhost
-      sed -e "s/__CRON_EMAIL__/${CE}/;s/__WWW_USER__/${CU}/" \
-        ${crontplfile} > ${cronincfile}
-      if [ ! -d /etc/cron.d/ ]; then
-        install -d -m755 /etc/cron.d/
-      fi
-      if [ ! -e /etc/cron.d/newscoop ]; then
-        ln -s ${cronincfile} /etc/cron.d/newscoop
-      fi
-    fi
+# for now - use NS's installer to set up the cron-jobs
+# note: the NS installer won't purge these on uninstallation!
+#   # CRON JOB
+#   db_get newscoop/cronjob
+#   if [ "$RET" == "true" ]; then
+#     CU=www-data
+#     CE=root@localhost
+#     sed -e "s/__CRON_EMAIL__/${CE}/;s/__WWW_USER__/${CU}/" \
+#       ${crontplfile} > ${cronincfile}
+#     if [ ! -d /etc/cron.d/ ]; then
+#       install -d -m755 /etc/cron.d/
+#     fi
+#     if [ ! -e /etc/cron.d/newscoop ]; then
+#       ln -s ${cronincfile} /etc/cron.d/newscoop
+#     fi
+#   fi
 
     # Permissions
     dpkg-statoverride --list $datadir &>/dev/null || \
@@ -118,6 +120,8 @@ case "$1" in
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
     dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
+    dpkg-statoverride --list $datadir/images &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/images
     dpkg-statoverride --list $datadir/templates &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
     dpkg-statoverride --list $datadir/templates_cache &>/dev/null || \
