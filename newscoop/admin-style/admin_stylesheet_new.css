@@ -75,6 +75,13 @@ hr {
     font-weight: normal;
     padding: 5px 6px;
 }
+.table_list_header td table td {
+    background: transparent;
+    border-bottom: none;
+    color: #444444;
+    font-weight: normal;
+    padding: 0 3px;
+}
 .list_row_odd {
     background-color: #fff;
 }
@@ -109,6 +116,12 @@ hr {
     padding: 6px 8px;
 }
 
+.box_table td.pass table {
+    padding: 0;
+}
+.box_table td.pass table td, .box_table td table td  table td {
+    padding: 0;
+}
 .box_table .input_text {
 	margin-right:7px;
 	float:none;

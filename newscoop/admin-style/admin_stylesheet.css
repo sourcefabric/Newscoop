@@ -1536,7 +1536,7 @@ body.pop-up {
 }
 /*---  Backup/Restore ---*/
 
-.wrapper .table_list, .wrapper fieldset.buttons {
+.wrapper .table_list, .wrapper fieldset.buttons, .wrapper .box_table {
 	margin-left:0;
 	margin-right:0;
 }
@@ -1545,9 +1545,79 @@ body.pop-up {
 }
 .mid-sized {
 	width:60%;
-	min-width:600px;
+	min-width:800px;
 }
 .full-sized {
 	width:100%;
-	min-width:600px;
+}
+
+.box_table td label {
+	font-size:13px;
+	padding:0 7px 0 0;
+}
+
+fieldset {
+	padding:10px;
+	border:1px solid #cccccc;
+	margin:10px 0;
+}
+
+/*---  User Management ---*/
+
+.user-management {
+	margin-bottom:10px;
+}
+.user-management fieldset:last-child {
+	margin-bottom:0;
+}
+.user-management fieldset .input_text, .user-management fieldset .input_select {
+	float:none;
+	margin-right:4px;
+}
+.user-management fieldset  {
+	font-size:12px;
+}
+.user-management fieldset > legend  {
+	font-size:13px;
+}
+.user-management .info-text {
+    color: #808080;
+    float: none;
+    font-size: 12px;
+    padding: 0 20px 0 8px;
+}
+.user-management fieldset.plain label, .user-management fieldset.plain .input_text {
+	float:left;
+	clear:none;
+}
+.user-management fieldset.plain label {
+	margin: 0 10px 0 20px;
+	padding:2px 0 0 0;
+}
+.user-management fieldset.plain label:first-child {
+	margin-left: 0;
+}
+.float-list {
+	float:left;
+	margin:0;
+	padding:0;
+	width:auto;
+}
+.float-list li {
+	float:left;
+	margin:0 0 2px 0;
+	padding:0 20px 0 0;
+	min-height:25px;
+}
+.user-management  fieldset.plain .float-list .input_text {
+	margin-right:0px;
+}
+.float-list li:last-child {
+	padding:0;
+}
+.no-table-data {
+	padding:10px;
+	font-size:13px;
+	border:1px solid #9d9d9d;
+	background:#eeeeee;
 }
