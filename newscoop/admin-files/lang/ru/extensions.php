@@ -1,4 +1,5 @@
 <?php 
+regGS("Files", "");
 regGS("Wikipedia search", "Поиск в Википедии");
 regGS("Sourcefabric.org newsletter subscription", "Подписка на новости из Sourcfabric");
 regGS("Maps search", "Поиск по карте");

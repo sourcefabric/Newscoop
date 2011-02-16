@@ -22,7 +22,7 @@ regGS("Please login to continue.", "Bitte loggen Sie sich ein um fortzufahren");
 regGS("Add to dashboard", "Dem Dashboard hinzufügen");
 regGS("Add more widgets", "Weitere Widgets hinzufügen");
 regGS("login", "Login");
-regGS("Your password has been reset <br/> you may now proceed to", "Ihr Passwort wurde zurückgesetzt <br/> Besuchen Sie jetzt");
+regGS("Your password has been reset <br/> you may now proceed to", "Ihr Passwort wurde zurückgesetzt <br/> Weiter zu:");
 regGS("This link is not valid.", "Ungültiger Link");
 regGS("Recover password", "Passwort wiederherstellen");
 regGS("Please enter your email.", "Bitte geben Sie Ihre E-Mail Adresse ein.");

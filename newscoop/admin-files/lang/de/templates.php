@@ -7,7 +7,7 @@ regGS("Size", "Größe");
 regGS("Select files", "Dateien auswählen");
 regGS("Filename", "Dateiname");
 regGS("Drag files here.", "Dateien hierher ziehen.");
-regGS("Cache lifetime, sec", "Cache Lifetime, sec");
+regGS("Cache lifetime, sec", "Cache Lifetime in Sekunden");
 regGS("Add files to the upload queue and click the start button.", "Dateien zur Warteschlange hinzufügen und Hochladen per Klicken starten.");
 regGS("Add files", "Dateien hinzufügen");
 regGS("\"$1\" files uploaded.", "\"$1\" Dateien hochgeladen.");

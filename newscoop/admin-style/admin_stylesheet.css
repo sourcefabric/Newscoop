@@ -224,11 +224,12 @@ select {
 }
 .save-button-bar {
 	float:right;
+	margin-left:16px;
 }
 .top-button-bar {
 	margin-top:2px;
 	float:right;
-	margin-right:30px;
+	margin-right:6px;
 }
 .top-button-bar input.default-button {
 	float:left;
@@ -1430,14 +1431,32 @@ fieldset.filters a.reset {
 	padding:5px 30px 0 10px;
 	font-style:normal;
 }
+.plupload-addon-bottom .last {
+	padding-right: 6px;
+}
+.plupload-addon-bottom h3 {
+	font-size:12px;
+	margin:-20px 0 20px 0;
+	padding:10px;
+	font-weight:normal;
+	border-bottom:1px solid #CCC;
+	background:#f4f4f4;
+}
 .plupload-addon-bottom .inputs {
 	float:left;
 	padding:0 0px 0 0px;
 	font-style:normal;
 	width:40%;
 }
-.plupload-addon-bottom .inputs .input_text {
+.plupload-addon-bottom .select-only {
+	width:25%;
+	min-width:240px;
+}
+.plupload-addon-bottom .inputs .input_text  {
 	width:70%;
+}
+.plupload-addon-bottom .inputs .input_select {
+	width:100%;
 }
 .plupload-addon-bottom .inputs label {
 	float:left;
@@ -1475,4 +1494,60 @@ fieldset.filters a.reset {
     font-weight: bold;
     font-size: 10pt;
     color: #de3d3d;
+}
+
+/*---  Topics Popup ---*/
+.pop-up h1 {
+	padding:0 0 0 20px;
+}
+
+.pop-up h1 {
+	padding:0 0 0 20px;
+}
+body.pop-up {
+	margin-top:120px;
+}
+.fixed-top {
+	position:fixed;
+	background:#f5f5f5;
+	top:0;
+	left:0;
+	width:100%;
+}
+.pop-up ul.tree {
+    width: 70%;
+	padding:0 0 0 33px;
+}
+
+.fixed-top fieldset.buttons {
+	margin-bottom:0;
+}
+
+.fixed-top fieldset.buttons .input_text {
+    width: 40%;
+	min-width:180px;
+}
+.pop-up p {
+	font-size:1.2em;
+	line-height:140%;
+}
+.pop-up > p {
+	margin-left:32px;
+}
+/*---  Backup/Restore ---*/
+
+.wrapper .table_list, .wrapper fieldset.buttons {
+	margin-left:0;
+	margin-right:0;
+}
+.wrapper .action_buttons {
+	padding-left:0;
+}
+.mid-sized {
+	width:60%;
+	min-width:600px;
+}
+.full-sized {
+	width:100%;
+	min-width:600px;
 }

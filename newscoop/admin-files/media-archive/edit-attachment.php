@@ -10,7 +10,7 @@ require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
+    camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 }
 
 $object = new Attachment($f_attachment_id);
@@ -19,10 +19,10 @@ $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
 $crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#files");
 if ($g_user->hasPermission('ChangeImage')) {
-	$crumbs[] = array(getGS('Change attachment information'), "");
+    $crumbs[] = array(getGS('Change attachment information'), "");
 }
 else {
-	$crumbs[] = array(getGS('View attachment'), "");
+    $crumbs[] = array(getGS('View attachment'), "");
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
@@ -38,7 +38,7 @@ echo $breadcrumbs;
 <h2><?php echo $object->getFileName(); ?></h2>
 <p class="dates"><?php putGS('Created'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php putGS('Last modified'); ?>: <?php echo $object->getLastModified(); ?></p>
 
-<?php echo new MediaPlayer($Campsite['WEBSITE_URL'] . '/attachment/' . basename($object->getStorageLocation()) . '?g_show_in_browser=1', $object->getMimeType()); ?>
+<?php echo new MediaPlayer($object->getAttachmentUrl() . '?g_show_in_browser=1', $object->getMimeType()); ?>
 
 <dl class="attachment">
     <dt><?php putGS('Type'); ?>:</dt>

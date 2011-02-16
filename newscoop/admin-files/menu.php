@@ -28,7 +28,7 @@ $showUserMenu = ($g_user->hasPermission('ManageUsers')
     || $g_user->hasPermission('ManageReaders')
     || $g_user->hasPermission('SyncPhorumUsers'));
 
-$showAdminActions = (($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle'))
+$showAdminActions = ($g_user->hasPermission('AddArticle')
     || (CampCache::IsEnabled() && $g_user->hasPermission('ClearCache')));
 
 // Creates the Content menu
@@ -276,9 +276,9 @@ if ($showUserMenu) {
     }
 
     if ($g_user->hasPermission('EditAuthors')) {
-        $menu_item =& DynMenuItem::Create('Manage Authors',
-        "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array('icon' => ''));
+        $menu_item =& DynMenuItem::Create(getGS('Authors'),
+            "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+            array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
 }
@@ -370,23 +370,23 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 	    width:auto;
 	    overflow:visible;
 	} /* removes extra button width in IE */
-	
+
 	.fg-button-icon-left { padding-left: 2.1em; }
 	.fg-button-icon-right { padding-right: 2.1em; }
 	.fg-button-icon-left .fg-button-ui-icon { right: auto; left: .2em; margin-left: 0; }
 	.fg-button-icon-right .fg-button-ui-icon { left: auto; right: .2em; margin-left: 0; }
-	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */	
-	
+	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */
+
 	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
 	</style>
-	
+
 	<!-- style exceptions for IE 6 -->
 	<!--[if IE 6]>
 	<style type="text/css">
 		.fg-menu-ipod .fg-menu li { width: 95%; }
 		.fg-menu-ipod .ui-widget-content { border:0; }
 	</style>
-	<![endif]-->	
+	<![endif]-->
 
   <script type="text/javascript">
   <!--
@@ -454,7 +454,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
   });
   //-->
   </script>
-  <script type="text/javascript"> 
+  <script type="text/javascript">
   $(document).ready(function() {
       var sticky_limit = 0;
       $(window).scroll(function() {
@@ -478,7 +478,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
   var user_msgs = '';
   <?php if (!empty($_SESSION['camp_user_msgs'])) { ?>
   user_msgs = "<?php echo str_replace('"', "'", $_SESSION['camp_user_msgs'][0]['msg']); ?>";
-  <?php 
+  <?php
     $_SESSION['camp_user_msgs'] = array();
   } ?>
   </script>
@@ -504,7 +504,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
   </div>
 <?php
 if ($showAdminActions) {
-?>        
+?>
   <a tabindex="2" href="#actions-submenu"
       class="fg-button fg-button-icon-right ui-widget fg-button-ui-state-default fg-button-ui-corner-all" id="newscoop_menu_action"><span class="fg-button-ui-icon fg-button-ui-icon-triangle-1-s"></span><?php putGS('Actions'); ?></a>
   <div id="actions-submenu" class="hidden">
