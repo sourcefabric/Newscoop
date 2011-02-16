@@ -704,9 +704,42 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 	{
         $poi_count = 0;
 
+        $p_constraints = array();
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'preview';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'map';
+        $rightOperand = $p_mapId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
         return array(
             //'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
-            'pois' => Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => $p_preview, "textOnly" => $p_textOnly, "mapCons" => array()), (array) null, 0, 0, $poi_count),
+            //'pois' => Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => $p_preview, "textOnly" => $p_textOnly, "mapCons" => array()), (array) null, 0, 0, $poi_count),
+            'pois' => Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count),
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
     } // fn LoadMapData
@@ -899,7 +932,41 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         //$found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
         $poi_count = 0;
-        $found_list = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => false, "textOnly" => false, "mapCons" => array()), (array) null, 0, 0, $poi_count);
+
+        $p_constraints = array();
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'preview';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'map';
+        $rightOperand = $p_mapId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        //$found_list = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => $p_mapId, "languageId" => $p_languageId, "preview" => false, "textOnly" => false, "mapCons" => array()), (array) null, 0, 0, $poi_count);
+        $found_list = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count);
 
     
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
@@ -2382,13 +2449,34 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $parameters[] = $constraint;
 */
 
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
 
+        $leftOperand = 'preview';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
 
 
         $poi_count = 0;
-        $points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => false, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
-
-
+        //$points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => false, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
+        $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
 
         $f_language_id = $p_languageId;
 
@@ -2588,8 +2676,34 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $map_set);
         //$map_cons = array("issues" => $p_issues, "sections" => $p_sections, "dates" => $p_dates, "topics" => $p_topics, "areas" => $p_areas);
         //$points = Geo_Map::ReadMapPoints(0, $p_languageId, true, true, $p_constraints);
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'preview';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
         $poi_count = 0;
-        $points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => true, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
+        //$points = Geo_MapLocation::GetListExt(array("asArray" => true, "mapId" => 0, "languageId" => $p_languageId, "preview" => true, "textOnly" => true, "mapCons" => $p_constraints), (array) null, $p_offset, $p_limit, $poi_count);
+        $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
 
 
         $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
@@ -2833,6 +2947,7 @@ var on_load_proc = function()
 
     } // fn GetGeoSearchSQLQuery
 
+/*
     public static function GetGeoSearchSQLCons($p_coordinates, $p_polygonType = "rectangle", $p_tableAlias = "l")
     {
         $queryCons = "";
@@ -2939,7 +3054,7 @@ var on_load_proc = function()
 
         return array("error" => false, "cons" => $queryCons);
     } // fn GetGeoSearchSQLCons
-
+*/
 
 } // class Geo_Map
 

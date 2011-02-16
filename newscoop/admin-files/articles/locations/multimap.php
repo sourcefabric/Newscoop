@@ -86,47 +86,63 @@ $offset = 0;
 
     $parameters = array();
 
-    $leftOperand = 'dates';
+    //$leftOperand = 'language';
+    //$rightOperand = $f_languageId;
+    //$operator = new Operator('is', 'sql');
+    //$constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+    //$parameters[] = $constraint;
+
+    $leftOperand = 'date';
     $rightOperand = $f_dates[0];
     $operator = new Operator('greater_equal', 'sql');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
 
-    $leftOperand = 'dates';
+    $leftOperand = 'date';
     $rightOperand = $f_dates[1];
     $operator = new Operator('smaller_equal', 'sql');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
 
-    $leftOperand = 'articles';
-    $rightOperand = $f_articles;
-    $operator = new Operator('is', 'sql');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
+    foreach ($f_articles as $one_article) {
+        $leftOperand = 'article';
+        $rightOperand = $one_article;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
-    $leftOperand = 'issues';
-    $rightOperand = $f_issues;
-    $operator = new Operator('is', 'sql');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
+    foreach ($f_issues as $one_issue) {
+        $leftOperand = 'issue';
+        $rightOperand = $one_issue;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
-    $leftOperand = 'sections';
-    $rightOperand = $f_sections;
-    $operator = new Operator('is', 'sql');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
+    foreach ($f_sections as $one_section) {
+        $leftOperand = 'section';
+        $rightOperand = $one_section;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
+/*
     $leftOperand = 'areas';
     $rightOperand = $f_areas;
     $operator = new Operator('is', 'php');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
+*/
 
-    $leftOperand = 'multimedia';
-    $rightOperand = $f_multimedia;
-    $operator = new Operator('is', 'php');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
+    foreach ($f_multimedia as $one_media) {
+        $leftOperand = 'multimedia';
+        $rightOperand = $one_media;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
 /*
     foreach ($f_topics as $one_topic) {
@@ -139,17 +155,21 @@ $offset = 0;
     }
 */
 
-    $leftOperand = 'topics';
-    $rightOperand = $f_topics;
-    $operator = new Operator('is', 'sql');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
+    foreach ($f_topics as $one_topic) {
+        $leftOperand = 'topic';
+        $rightOperand = $one_topic;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
+/*
     $leftOperand = 'matchalltopics';
     $rightOperand = true;
     $operator = new Operator('is', 'sql');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
+*/
 
     $leftOperand = 'matchanytopic';
     $rightOperand = true;
@@ -159,7 +179,8 @@ $offset = 0;
 
 }
 
-echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit, $f_mapWidth, $f_mapHeight);
+//echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit, $f_mapWidth, $f_mapHeight);
+echo Geo_Map::GetMultiMapTagHeader($f_languageId, $parameters, $offset, $limit, $f_mapWidth, $f_mapHeight);
 ?>
 </head>
 <body onLoad="return false;">
@@ -180,7 +201,8 @@ echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit,
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">
-    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints, $offset, $limit); ?>
+    <?php //echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints, $offset, $limit); ?>
+    <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $parameters, $offset, $limit); ?>
   </div>
   <div class="geomap_menu">
     <a href="#" onClick="<?php echo Geo_Map::GetMultiMapTagCenter($f_languageId); ?> return false;"><?php putGS("show initial map view"); ?></a>

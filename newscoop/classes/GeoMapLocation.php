@@ -304,7 +304,102 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     public static function GetListExt(array $p_parameters, array $p_order = array(),
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
 	{
+        //echo "\n<br>\nxxxxx ---- \n<br>\n";
+        //var_dump($p_parameters);
 
+        $ps_asArray = true;
+        //$ps_articleNumber = 0;
+        $ps_mapId = 0;
+        $ps_languageId = 0;
+        $ps_preview = false;
+        $ps_textOnly = false;
+
+        $mc_mapCons = array();
+        $mc_articles = array();
+        $mc_issues = array();
+        $mc_sections = array();
+        $mc_dates = array();
+        $mc_topics = array();
+        $mc_matchalltopics = array();
+        $mc_multimedia = array();
+        $mc_areas = array();
+
+        if (null or true) {
+        // process params
+        foreach ($p_parameters as $param) {
+            switch ($param->getLeftOperand()) {
+                case 'as_array':
+                    $ps_asArray = $param->getRightOperand();
+                    break;
+/*
+                case 'article':
+                    $ps_articleNumber = $param->getRightOperand();
+                    //$searchQuery = sprintf('fk_map_id IN (SELECT id FROM %s WHERE fk_article_number = %d)',
+                    //    Geo_Map::TABLE,
+                    //    $param->getRightOperand());
+                    //$selectClauseObj->addWhere($searchQuery);
+                    //$countClauseObj->addWhere($searchQuery);
+                    break;
+*/
+                case 'map':
+                    $ps_mapId = $param->getRightOperand();
+                    break;
+                case 'language':
+                    $ps_languageId = $param->getRightOperand();
+                    break;
+                case 'preview':
+                    $ps_preview = $param->getRightOperand();
+                    break;
+                case 'text_only':
+                    $ps_textOnly = $param->getRightOperand();
+                    break;
+                case 'article':
+                    $mc_articles[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'issue':
+                    $mc_issues[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'section':
+                    $mc_sections[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'topic':
+                    $mc_topics[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'matchalltopics':
+                    $mc_matchalltopics = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'matchanytopic':
+                    $mc_matchalltopics = !$param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'multimedia':
+                    $mc_multimedia[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'area':
+                    $mc_areas[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        }
+
+/*
+        var_dump($mc_topics);
+        var_dump($mc_articles);
+        var_dump($mc_issues);
+        var_dump($mc_sections);
+*/
+
+/*
         $p_asArray = $p_parameters["asArray"];
         $p_mapId = $p_parameters["mapId"];
         $p_languageId = $p_parameters["languageId"];
@@ -312,10 +407,12 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $p_textOnly = $p_parameters["textOnly"];
         $p_mapCons = $p_parameters["mapCons"];
         if (!$p_mapCons) {$p_mapCons = array();}
+*/
 
         if (!$p_order) {$p_order = array();}
 
-        if (((0 == $p_mapId) || (!$p_mapId)) && (!$p_mapCons)) {return array();}
+        //if (((0 == $p_mapId) || (!$p_mapId)) && (!$p_mapCons)) {return array();}
+        if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
 
         $mc_limit = 0 + $p_limit;
         if (0 > $mc_limit) {$mc_limit = 0;}
@@ -337,7 +434,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $cacheList_arr = null;
         $cacheList_obj = null;
 
-        if (!$p_skipCache) {
+        //if (!$p_skipCache) {
+        if (false && (!$p_skipCache)) {
             $paramsArray_arr['mapId'] = $p_mapId;
             $paramsArray_obj['mapId'] = $p_mapId;
             //$paramsArray_arr['textData'] = true;
@@ -422,7 +520,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         // these few lines below are just for data for list-of-objects array
         $queryStr .= "l.poi_radius AS l_radius, l.IdUser AS l_user, l.time_updated AS l_updated, ";
-        if ($p_mapCons)
+        //if ($p_mapCons)
+        if ($mc_mapCons)
         {
             $queryStr .= "m.id AS m_id, ";
         }
@@ -448,14 +547,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         // this is for making the caching easier
         $p_textOnly = false;
 
-        if ($p_mapCons)
+        //if ($p_mapCons)
+        if ($mc_mapCons)
         {
             $queryStr .= "INNER JOIN Maps AS m ON m.id = ml.fk_map_id ";
             $queryStr .= "INNER JOIN Articles AS a ON m.fk_article_number = a.Number ";
             $query_mcons = "";
             $article_mcons = false;
 
-            $mc_order_type = strtolower($p_mapCons["order"]);
+            //$mc_order_type = strtolower($p_mapCons["order"]);
+            $mc_order_type = "";
             $mc_order = "DESC";
             if ("asc" == $mc_order_type) {
                 $mc_order = "ASC";
@@ -463,6 +564,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             //$mc_limit = 0 + $p_mapCons["limit"];
             //if (0 > $mc_limit) {$mc_limit = 0;}
 
+/*
             $mc_multimedia = $p_mapCons["multimedia"];
             $mc_articles = $p_mapCons["articles"];
             $mc_issues = $p_mapCons["issues"];
@@ -471,6 +573,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $mc_topics = $p_mapCons["topics"];
             $mc_areas = $p_mapCons["areas"];
             $mc_correct = true;
+*/
 
             if (0 < count($mc_multimedia)) {
                 $mc_filter_mm = $mc_multimedia["any"];
@@ -509,6 +612,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $article_mcons = true;
                 }
             }
+/*
             if (2 == count($mc_dates)) {
                 $date_start = str_replace("'", "\"", $mc_dates[0]);
                 $date_stop = str_replace("'", "\"", $mc_dates[1]);
@@ -516,6 +620,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $query_mcons .= "a.PublishDate >= '$date_start' AND a.PublishDate <= '$date_stop' AND ";
                 $article_mcons = true;
             }
+*/
             if (0 < count($mc_topics))
             {
                 $mc_correct = true;
@@ -594,25 +699,29 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
 
             $queryStr .= "a.Published = 'Y' AND a.IdLanguage = ? ";
-            $sql_params[] = $p_languageId;
+            //$sql_params[] = $p_languageId;
+            $sql_params[] = $ps_languageId;
 
         }
         else
         {
             $queryStr .= "WHERE ml.fk_map_id = ? ";
-            $sql_params[] = $p_mapId;
+            $sql_params[] = $ps_mapId;
         }
 
         $queryStr .= "AND mll.fk_language_id = ? ";
-        $sql_params[] = $p_languageId;
+        //$sql_params[] = $p_languageId;
+        $sql_params[] = $ps_languageId;
 
-        if ($p_preview)
+        //if ($p_preview)
+        if ($ps_preview)
         {
             $queryStr .= "AND mll.poi_display = 1 ";
         }
 
         $queryStr .= "ORDER BY ";
-        if ($p_mapCons)
+        //if ($p_mapCons)
+        if ($mc_mapCons)
         {
             $queryStr .= "a.Number $mc_order, m.id $mc_order, ";
         }
@@ -620,7 +729,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         //if ($p_mapCons && $mc_limit && (!$to_filter))
         //if ($p_mapCons && $mc_limit)
-        if ($mc_limit)
+        //if ($mc_limit)
+        if (false)
         {
             $queryStr .= " LIMIT ?";
             $sql_params[] = $mc_limit;
@@ -645,12 +755,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $queryStr_tt_rm = "DROP TABLE $tmp_name;";
 
         //if ($to_filter || (!$p_textOnly)) {
-        if (!$p_textOnly) {
+        //if (!$p_textOnly) {
+        if (!$ps_textOnly) {
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
 
 		//$dataArray = array();
 
+        //echo "\n<br>\n$queryStr\n<br>\n";
+        //var_dump($sql_params);
 		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
 
 		if (is_array($rows)) {
@@ -693,7 +806,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 // for the list-of-objects array
                 $tmpPoint['map_id'] = $p_mapId;
-                if ($p_mapCons) {
+                //if ($p_mapCons) {
+                if ($mc_mapCons) {
                     $tmpPoint['map_id'] = $row['m_id'];
                 }
                 $tmpPoint['geo_id'] = $row['loc_id'];
@@ -709,16 +823,20 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $dataArray[] = $tmpPoint;
 
                 //if ($to_filter || (!$p_textOnly)) {
-                if (!$p_textOnly) {
+                //if (!$p_textOnly) {
+                if (!$ps_textOnly) {
                     $success = $g_ado_db->Execute($queryStr_tt_in, array($row['ml_id']));
                 }
 
             }
         }
 
+        //var_dump($dataArray);
+
         if (0 == count($dataArray)) {return $dataArray;}
         //if ((!$to_filter) && $p_textOnly) {return $dataArray;}
-        if ($p_textOnly) {return $dataArray;}
+        //if ($p_textOnly) {return $dataArray;}
+        if ($ps_textOnly) {return $dataArray;}
 
         {
             $imagesArray = array();
@@ -826,6 +944,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
 
         foreach ($dataArray_tmp as $one_poi)
+        //foreach (array() as $one_poi)
         {
             $one_poi_source = array(
                 'id' => $one_poi['loc_id'],
@@ -834,7 +953,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 'poi_style' => $one_poi['style'],
                 'rank' => $one_poi['rank'],
             );
-            $one_poi_obj = new self($one_poi_source, true);
+            //$one_poi_obj = new self($one_poi_source, true);
 
             $one_geo_source = array(
                 'poi_location' => null,
@@ -847,7 +966,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 'latitude' => $one_poi['latitude'],
                 'longitude' => $one_poi['longitude'],
             );
-            $one_poi_obj->location = new Geo_Location($one_geo_source, true);
+            //$one_poi_obj->location = new Geo_Location($one_geo_source, true);
 
             $one_lan_source = array(
                 'id' => $one_poi['con_id'],
@@ -856,7 +975,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 'fk_content_id' => $one_poi['txt_id'],
                 'poi_display' => $one_poi['display'],
             );
-            $one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
+            //$one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
 
             $one_txt_source = array(
                 'id' => $one_poi['txt_id'],
@@ -870,18 +989,21 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 'time_updated' => $one_poi['txt_updated'],
             );
 
-            $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
+            //$one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
 
-            $objsArray[] = $one_poi_obj;
+            //$objsArray[] = $one_poi_obj;
             $dataArray[] = $one_poi;
         }
 
+/*
         if (!$p_skipCache && CampCache::IsEnabled()) {
         	$cacheList_arr->storeInCache($dataArray);
         	$cacheList_obj->storeInCache($objsArray);
         }
+*/
 
-        if (!$p_asArray) {
+        //if (!$p_asArray) {
+        if (!$ps_asArray) {
             return $objsArray;
         }
 
