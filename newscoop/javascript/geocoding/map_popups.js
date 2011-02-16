@@ -1,7 +1,7 @@
 GeoPopups = {};
 
 // preparing image html tag for a point popup
-GeoPopups.set_image_tag = function(attrs)
+GeoPopups.set_image_tag = function(attrs, geo_obj)
 {
     attrs.m_image = "";
 
@@ -21,7 +21,7 @@ GeoPopups.set_image_tag = function(attrs)
 };
 
 // preparing video html tag for a point popup
-GeoPopups.set_embed_tag = function(attrs)
+GeoPopups.set_embed_tag = function(attrs, geo_obj)
 {
     attrs.m_embed = "";
     attrs.m_embed_width = 0;
@@ -35,7 +35,7 @@ GeoPopups.set_embed_tag = function(attrs)
     var vid_define = null;
     if ("none" != vid_type)
     {
-        vid_define = this.popup_video_props[vid_type];
+        vid_define = geo_obj.popup_video_props[vid_type];
     }
 
     if ((0 < vid_id.length) && vid_define)

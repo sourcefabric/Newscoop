@@ -1594,12 +1594,12 @@ this.store_point_property = function(property, value)
 
     if ("image" == property.substr(0, 5))
     {
-        GeoPopups.set_image_tag(attrs);
+        GeoPopups.set_image_tag(attrs, this);
     }
 
     if ("video" == property.substr(0, 5))
     {
-        GeoPopups.set_embed_tag(attrs);
+        GeoPopups.set_embed_tag(attrs, this);
         this.update_video_label();
     }
     if (update_preview) {this.update_edit_preview();}
@@ -2165,8 +2165,8 @@ this.got_load_data = function (received_obj)
 
         vector.attributes.m_image = "";
         vector.attributes.m_embed = "";
-        GeoPopups.set_image_tag(vector.attributes);
-        GeoPopups.set_embed_tag(vector.attributes);
+        GeoPopups.set_image_tag(vector.attributes, this);
+        GeoPopups.set_embed_tag(vector.attributes, this);
 
         features_to_add.push(vector);
 

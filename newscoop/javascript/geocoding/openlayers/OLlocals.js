@@ -89,9 +89,43 @@ OpenLayers.Layer.MapQuest = OpenLayers.Class(OpenLayers.Layer.OSMMod, {
 
 // solving issues on Google v3 things
 OpenLayers.Layer.GoogleMod = OpenLayers.Class(OpenLayers.Layer.Google, {
+	// just added the modRepositionMapElements call at the end
+    initialize: function(name, options) {
+        options = options || {};
+        if(!options.version) {
+            options.version = typeof GMap2 === "function" ? "2" : "3";
+        }
+        var mixin = OpenLayers.Layer.Google["v" +
+            options.version.replace(/\./g, "_")];
+        if (mixin) {
+            OpenLayers.Util.applyDefaults(options, mixin);
+        } else {
+            throw "Unsupported Google Maps API version: " + options.version;
+        }
+
+        OpenLayers.Util.applyDefaults(options, mixin.DEFAULTS);
+        if (options.maxExtent) {
+            options.maxExtent = options.maxExtent.clone();
+        }
+
+        OpenLayers.Layer.EventPane.prototype.initialize.apply(this,
+            [name, options]);
+        OpenLayers.Layer.FixedZoomLevels.prototype.initialize.apply(this,
+            [name, options]);
+
+        if (this.sphericalMercator) {
+            OpenLayers.Util.extend(this, OpenLayers.Layer.SphericalMercator);
+            this.initMercatorParameters();
+        }
+		this.modRepositionMapElements();
+    },
     'numZoomLevels': 20,
     'sphericalMercator': true,
-    'repositionMapElements': function () {
+	'modRepositionMapElements': function () {
+	// we need to change it here, otherwise the old repositionMapElements function would be used
+		this.repositionMapElements = this.repositionMapElementsMod;
+    },
+	'repositionMapElementsMod' : function () {
         google.maps.event.trigger(this.mapObject, "resize");
         var div = this.mapObject.getDiv().firstChild;
         if (!div || div.childNodes.length < 3) {
