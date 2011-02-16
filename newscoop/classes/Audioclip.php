@@ -790,7 +790,7 @@ class Audioclip {
      */
     public static function AnalyzeFile($p_file)
     {
-        require_once($GLOBALS['g_campsiteDir'].'/include/getid3/getid3.php');
+        require_once('getid3/getid3.php');
 
         $getid3Obj = new getID3;
         return $getid3Obj->analyze($p_file);

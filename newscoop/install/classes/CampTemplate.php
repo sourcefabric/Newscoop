@@ -13,7 +13,7 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/include/smarty/Smarty.class.php');
+require_once('smarty/Smarty.class.php');
 
 
 /**
@@ -44,8 +44,8 @@ final class CampTemplate extends Smarty
 
         $this->cache_dir = CS_PATH_SITE.DIR_SEP.'cache';
         $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        $this->plugins_dir = array(CS_PATH_SMARTY.DIR_SEP.'campsite_plugins',
-                                   CS_PATH_SMARTY.DIR_SEP.'plugins');
+        $this->plugins_dir = array_merge($this->plugins_dir,
+                                   		 CS_PATH_SMARTY.DIR_SEP.'campsite_plugins');
         $this->template_dir = CS_INSTALL_DIR.DIR_SEP.'templates';
         $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates_cache';
     } // fn __constructor
