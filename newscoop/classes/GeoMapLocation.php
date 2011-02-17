@@ -324,7 +324,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $mc_multimedia = array();
         $mc_areas = array();
 
-        if (null or true) {
+//        if (null or true) {
         // process params
         foreach ($p_parameters as $param) {
             switch ($param->getLeftOperand()) {
@@ -382,7 +382,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $mc_mapCons = true;
                     break;
                 case 'area':
-                    $mc_areas[] = $param->getRightOperand();
+                    $mc_areas[] = json_decode($param->getRightOperand());
                     $mc_mapCons = true;
                     break;
                 default:
@@ -390,7 +390,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
+//        }
+
+        //$Context = CampTemplate::singleton()->context();
+        //$Context = CampTemplate::singleton();
+        //var_dump($Context);
+        //$ps_languageId = -1;
+        if ((!$ps_languageId) || (0 >= $ps_languageId)) {
+            $Context = CampTemplate::singleton()->context();
+            $ps_languageId = $Context->language->number;
+            //var_dump($Context->language);
         }
+        //var_dump($ps_languageId);
 
 /*
         var_dump($mc_topics);
@@ -575,10 +586,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $mc_correct = true;
 */
 
-            if (0 < count($mc_multimedia)) {
-                $mc_filter_mm = $mc_multimedia["any"];
-                $mc_filter_image = $mc_multimedia["image"];
-                $mc_filter_video = $mc_multimedia["video"];
+            //var_dump($mc_multimedia);
+            //if (0 < count($mc_multimedia)) {
+            foreach ($mc_multimedia as $one_multimedia) {
+                if ("any" == $one_multimedia) {$mc_filter_mm = true;}
+                if ("image" == $one_multimedia) {$mc_filter_image = true;}
+                if ("video" == $one_multimedia) {$mc_filter_video = true;}
+                //$mc_filter_mm = $mc_multimedia["any"];
+                //$mc_filter_image = $mc_multimedia["image"];
+                //$mc_filter_video = $mc_multimedia["video"];
                 if ($mc_filter_mm || $mc_filter_image || $mc_filter_video) {$to_filter = true;}
             }
 
@@ -635,10 +651,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
             }
 
-            if ($mc_areas) {
-                $mc_rectangle = $mc_areas["rectangle"];
-                $mc_clockwise = $mc_areas["clockwise"];
-                $mc_counterclockwise = $mc_areas["counterclockwise"];
+            //if ($mc_areas) {
+            foreach ($mc_areas as $one_area) {
+                if (is_object($one_area)) {
+                    $one_area = get_object_vars($one_area);
+                }
+
+                $mc_rectangle = $one_area["rectangle"];
+                $mc_clockwise = $one_area["clockwise"];
+                $mc_counterclockwise = $one_area["counterclockwise"];
 
                 if ($mc_rectangle && (2 == count($mc_rectangle))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_rectangle, "rectangle", "l");
@@ -1015,6 +1036,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
     public static function GetGeoSearchSQLCons($p_coordinates, $p_polygonType = "rectangle", $p_tableAlias = "l")
     {
+        if (is_object($p_coordinates)) {
+            $p_coordinates = get_object_vars($p_coordinates);
+        }
+
         $queryCons = "";
         $paramError = false;
 
@@ -1039,6 +1064,12 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     
             $loc_left = $p_coordinates[0];
             $loc_right = $p_coordinates[1];
+            if (is_object($loc_right)) {
+                $loc_right = get_object_vars($loc_right);
+            }
+            if (is_object($loc_left)) {
+                $loc_left = get_object_vars($loc_left);
+            }
 
             $left_lon = "" . $loc_left["longitude"];
             $left_lat = "" . $loc_left["latitude"];

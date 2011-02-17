@@ -43,22 +43,28 @@ $f_articles = array();
 $f_articles = array(34, 35, 61);
 //$f_articles = array(34);
 $f_issues = array(2);
-//$f_sections = array(10, 60);
-$f_sections = array(10);
+$f_sections = array(10, 60);
+//$f_sections = array(10);
 $f_dates = array("2000-10-20", "2020-10-10");
-//$f_topics = array();
+$f_topics = array();
 $f_topics = array(23, 24);
 
 $f_areas = array();
-$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
+//$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
+$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => 60)));
+//implode(array("longitude" => 150, "latitude" => -90));
+//echo implode("", $f_areas["rectangle"][0]);
 
-//$f_multimedia = array();
+
+$f_multimedia = array();
 //$f_multimedia = array("image" => false, "video" => false, "any" => false);
+//$f_multimedia = array("image" => true, "video" => false, "any" => false);
 $f_multimedia = array("image" => false, "video" => false, "any" => true);
 
 $f_mapWidth = 800;
 $f_mapHeight = 600;
 
+/*
 $constraints = array(
     "articles" => $f_articles,
     "issues" => $f_issues,
@@ -68,6 +74,7 @@ $constraints = array(
     "areas" => $f_areas,
     "multimedia" => $f_multimedia,
 );
+*/
 
 $limit = 100;
 $offset = 0;
@@ -128,17 +135,16 @@ $offset = 0;
         $parameters[] = $constraint;
     }
 
-/*
-    $leftOperand = 'areas';
-    $rightOperand = $f_areas;
+    $leftOperand = 'area';
+    $rightOperand = json_encode($f_areas);
     $operator = new Operator('is', 'php');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
-*/
 
-    foreach ($f_multimedia as $one_media) {
+    foreach ($f_multimedia as $one_media_type => $one_media_state) {
+        if (!$one_media_state) {continue;}
         $leftOperand = 'multimedia';
-        $rightOperand = $one_media;
+        $rightOperand = $one_media_type;
         $operator = new Operator('is', 'php');
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $parameters[] = $constraint;
