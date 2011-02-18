@@ -23,7 +23,8 @@
                 <img src="<?php p($image->getThumbnailUrl()); ?>" />
                 <?php } ?>
 
-                <strong><?php echo $articleImage->getTemplateId(); ?>.</strong><br />
+                <strong><?php echo $articleImage->getTemplateId(); ?></strong><br />
+                <?php echo htmlspecialchars($image->getDescription()); ?><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>
