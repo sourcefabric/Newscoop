@@ -43,8 +43,8 @@ $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<div class="wrapper mid-sized">
 
-<p>
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
 <tr>
 <?php
@@ -79,20 +79,20 @@ if ($canManage) {
 <form method="POST" action="index.php">
 <input type="hidden" name="uType" value="<?php p($uType); ?>">
 <input type="hidden" name="userOffs" value="0">
-<table border="0" cellspacing="0" cellpadding="0" class="box_table">
-<tr>
-	<td style="padding-left: 10px;"><?php putGS("Full Name"); ?></td>
-	<td><input type="text" name="full_name" value="<?php p(htmlspecialchars($userSearchParameters['full_name'])); ?>" class="input_text" style="width: 150px;"></td>
-	<td><?php putGS("Account Name"); ?></td>
-	<td><input type="text" name="user_name" value="<?php p(htmlspecialchars($userSearchParameters['user_name'])); ?>" class="input_text" style="width: 70px;"></td>
-	<td><?php putGS("E-Mail"); ?></td>
-	<td><input type="text" name="email" value="<?php p(htmlspecialchars($userSearchParameters['email'])); ?>" class="input_text" style="width: 150px;"></td>
-	<td><input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button"></td>
-</tr>
+
+<div class="ui-widget-content block-shadow padded-strong user-management">
+<fieldset class="plain inline-style clearfix">
+<ul class="float-list">
+    <li><label for="full_name"><?php putGS("Full Name"); ?></label><input type="text" name="full_name" value="<?php p(htmlspecialchars($userSearchParameters['full_name'])); ?>" class="input_text"></li>
+    <li><label for="user_name"><?php putGS("Account Name"); ?></label><input type="text" name="user_name" value="<?php p(htmlspecialchars($userSearchParameters['user_name'])); ?>" class="input_text"></li>
+    <li><label for="email"><?php putGS("E-Mail"); ?></label><input type="text" name="email" value="<?php p(htmlspecialchars($userSearchParameters['email'])); ?>" class="input_text"></li>
+</ul>
+<input type="submit" name="submit_button" value="<?php putGS("Search"); ?>" class="button right-floated">
+</fieldset>
 <?php if ($uType == "Subscribers") { ?>
-<tr>
-	<td colspan="11" align="center">
-		<?php putGS("Subscription"); ?>&nbsp;
+
+<fieldset>
+<legend><?php putGS("Subscription"); ?></legend>
 		<select name="subscription_how" class="input_select" style="width: 100px;">
 		<?php
 		camp_html_select_option("expires", $userSearchParameters['subscription_how'], getGS("expires"));
@@ -106,9 +106,7 @@ if ($canManage) {
 		camp_html_select_option("on", $userSearchParameters['subscription_when'], getGS("on"));
 		?>
 		</select>
-		<input type="text" name="subscription_date" value="<?php p(htmlspecialchars($userSearchParameters['subscription_date'])); ?>" class="input_text" style="width: 100px;">
-		&nbsp;(<?php putGS('YYYY-MM-DD'); ?>)&nbsp;&nbsp;
-		<?php putGS("status"); ?>:
+		<input type="text" name="subscription_date" value="<?php p(htmlspecialchars($userSearchParameters['subscription_date'])); ?>" class="input_text" style="width: 100px;"><span class="info-text">(<?php putGS('YYYY-MM-DD'); ?>)</span><?php putGS("status"); ?>:
 		<select name="subscription_status" class="input_select" style="width: 100px;">
 		<option value=""></option>
 		<?PHP
@@ -116,20 +114,19 @@ if ($canManage) {
 		camp_html_select_option("inactive", $userSearchParameters['subscription_status'], getGS("inactive"));
 		?>
 		</select>
-	</td>
-</tr>
-<tr>
-	<td colspan="11" align="center">
-		<?php putGS("IP address"); ?>:
+</fieldset>
+
+<fieldset>
+<legend><?php putGS("IP address"); ?></legend>
+		
 		<input type="text" class="input_text" name="startIP1" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP1'] != 0) echo $userSearchParameters['startIP1']; ?>">.
 		<input type="text" class="input_text" name="startIP2" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP2'] != 0) echo $userSearchParameters['startIP2']; ?>">.
 		<input type="text" class="input_text" name="startIP3" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP3'] != 0) echo $userSearchParameters['startIP3']; ?>">.
-		<input type="text" class="input_text" name="startIP4" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP4'] != 0) echo $userSearchParameters['startIP4']; ?>">
-		(<?php putGS("fill in from left to right at least one input box"); ?>)
-	</td>
-</tr>
+		<input type="text" class="input_text" name="startIP4" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP4'] != 0) echo $userSearchParameters['startIP4']; ?>"><span class="info-text">(<?php putGS("fill in from left to right at least one input box"); ?>)</span>
+</fieldset>
 <?php } // if ($uType == "Subscribers") ?>
-</table>
+
+</div>
 </form>
 
 <?php
@@ -143,14 +140,14 @@ if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
 	$nr = sizeof($usersSearchResult);
 	$last = $nr > $ItemsPerPage ? $ItemsPerPage : $nr;
 	?>
-	<table class="indent">
+<?php /*?>	<table class="indent">
 	<tr>
 		<td>
 			<?php echo $pager->render(); ?>
 		</td>
 	</tr>
-	</table>
-	<table border="0" cellspacing="1" cellpadding="3" class="table_list">
+	</table><?php */?>
+	<table border="0" cellspacing="1" cellpadding="3" class="table_list full-sized">
 	<tr class="table_list_header">
 		<td align="left" valign="middle">
 			<table><tr>
@@ -248,6 +245,7 @@ for($loop = 0; $loop < $last; $loop++) {
 }
 ?>
 </table>
+<?php /*?>
 <table class="indent">
 <tr>
 	<td>
@@ -255,9 +253,12 @@ for($loop = 0; $loop < $last; $loop++) {
 	</td>
 </tr>
 </table>
+
+<?php */?>
 <?php  } else { ?>
-	<blockquote>
-	<li><?php  putGS('User list is empty.'); ?></li>
-	</blockquote>
+	<div class="no-table-data">
+	<?php  putGS('User list is empty.'); ?>
+	</div>
 <?php  } ?>
+</div>
 <?php camp_html_copyright_notice(); ?>
