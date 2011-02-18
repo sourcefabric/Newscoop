@@ -72,40 +72,11 @@ $f_multimedia = array("image" => false, "video" => false, "any" => true);
 $f_mapWidth = 800;
 $f_mapHeight = 600;
 
-/*
-$constraints = array(
-    "articles" => $f_articles,
-    "issues" => $f_issues,
-    "sections" => $f_sections,
-    "dates" => $f_dates,
-    "topics" => $f_topics,
-    "areas" => $f_areas,
-    "multimedia" => $f_multimedia,
-);
-*/
-
 $limit = 100;
 $offset = 0;
 
 {
-
-    //require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
-    //$q = Topic::BuildSubtopicsQuery(1, 0, 0);
-    //echo $q->buildQuery();
-    //$q = Topic::BuildAllSubtopicsQuery("1", false);
-    //echo $q;
-
-    //"SELECT id FROM Topics WHERE node_left >= (SELECT node_left FROM Topics WHERE id = ?) AND node_right <= (SELECT node_right FROM Topics WHERE id = ?)";
-    //"SELECT id FROM Topics WHERE node_left >= (SELECT node_left FROM Topics WHERE id = 1) AND node_right <= (SELECT node_right FROM Topics WHERE id = 1)";
-
-
     $parameters = array();
-
-    //$leftOperand = 'language';
-    //$rightOperand = $f_languageId;
-    //$operator = new Operator('is', 'sql');
-    //$constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    //$parameters[] = $constraint;
 
 if (2 == count($f_dates)) {
     $leftOperand = 'date';
@@ -169,17 +140,6 @@ if (2 == count($f_dates)) {
         $parameters[] = $constraint;
     }
 
-/*
-    foreach ($f_topics as $one_topic) {
-        $leftOperand = 'topics';
-        //$rightOperand = Topic::BuildAllSubtopicsQuery($one_topic, false);
-        $rightOperand = $one_topic;
-        $operator = new Operator('is', 'sql');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $parameters[] = $constraint;
-    }
-*/
-
     foreach ($f_topics as $one_topic) {
         $leftOperand = 'topic';
         $rightOperand = $one_topic;
@@ -187,14 +147,6 @@ if (2 == count($f_dates)) {
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $parameters[] = $constraint;
     }
-
-/*
-    $leftOperand = 'matchalltopics';
-    $rightOperand = true;
-    $operator = new Operator('is', 'sql');
-    $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-    $parameters[] = $constraint;
-*/
 
     $leftOperand = 'matchanytopic';
     $rightOperand = true;
@@ -204,7 +156,6 @@ if (2 == count($f_dates)) {
 
 }
 
-//echo Geo_Map::GetMultiMapTagHeader($f_languageId, $constraints, $offset, $limit, $f_mapWidth, $f_mapHeight);
 echo Geo_Map::GetMultiMapTagHeader($f_languageId, $parameters, $offset, $limit, $f_mapWidth, $f_mapHeight);
 ?>
 </head>
@@ -226,7 +177,6 @@ echo Geo_Map::GetMultiMapTagHeader($f_languageId, $parameters, $offset, $limit, 
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">
-    <?php //echo Geo_Map::GetMultiMapTagList($f_languageId, $constraints, $offset, $limit); ?>
     <?php echo Geo_Map::GetMultiMapTagList($f_languageId, $parameters, $offset, $limit); ?>
   </div>
   <div class="geomap_menu">
