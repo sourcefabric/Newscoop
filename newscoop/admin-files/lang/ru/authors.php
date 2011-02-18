@@ -8,7 +8,7 @@ regGS("Please enter the last name", "Введите фамилию");
 regGS("Please enter the first name", "Введите имя");
 regGS("No records found", "Не найдено записей по этому запросу");
 regGS("Last name", "Фамилия");
-regGS("Jabber", "Слухи");
+regGS("Jabber", "Jabber");
 regGS("General", "Общая");
 regGS("First name", "Имя");
 regGS("Email", "Email");

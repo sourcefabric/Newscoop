@@ -1,6 +1,6 @@
 Newscoop
-version     : 3.5.0
-release date: January 31, 2011
+version     : 3.5.1
+release date: February 18, 2011
 contact     : contact@sourcefabric.org
 url         : http://www.sourcefabric.org
 copyright   : (C) 2010-2011 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund

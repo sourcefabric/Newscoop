@@ -1,3 +1,30 @@
+3.5.1 (February 18, 2011)
+  Bug Fixes
+  ---------
+  * [CS-2809] XSS vulnerability in the admin login page
+  * [CS-2780] Forms in the frontend are vulnerable to Cross-Site Scripting attacks
+  * [CS-2803] Login page logs out the user when logged in
+  * [CS-2735] Restore cli doesn't work on some VPS
+  * [CS-2740] Article attachment with proper file names
+  * [CS-2738] Link to manual from installer page is out of date
+  * [CS-2767] Save&Close on pending (unassigned) article generates an error
+  * [CS-2765] Actions menu doesn't show up for users that can't manage issues (e.g. journalist)
+  * [CS-2553] Relocate save button in Attach Topics pop-up window
+  * [CS-2755] Exclude ico file from newscoop handling
+  * [CS-2761] Empty page after changes submitting in image edit form which was called from article
+  * [CS-2770] Bad alignment of Password field on Add Staff user screen
+
+  Improvements
+  ------------
+  * [CS-2173] - lists and tables need better spacing
+  * [CS-2175] - adjusting font sizes in admin
+  * [CS-2286] - Check template upload UI
+  * [CS-2440] - Requirement to install APC is in the wrong section and should be in yellow if it in "No", not red as red indicates an error
+  * [CS-2669] - Upload backup file appears in the wrong place in the UI
+  * [CS-2674] - Article list show/hide columns setting is not being saved
+  * [CS-2796] - Forcing 'exists' property of database objects
+
+
 3.5.0 (January 31, 2011)
   New Features
   ------------
