@@ -315,6 +315,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $ps_textOnly = false;
 
         $mc_mapCons = array();
+        $mc_users_yes = array();
+        $mc_users_no = array();
         $mc_articles_yes = array();
         $mc_articles_no = array();
         $mc_issues = array();
@@ -355,9 +357,24 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'text_only':
                     $ps_textOnly = $param->getRightOperand();
                     break;
+                case 'user':
+                    //var_dump($param);
+                    $one_user_value = $param->getRightOperand();
+                    $one_user_type = $param->getOperator()->getName();
+                    //var_dump($one_user_type);
+                    if ("is" == $one_user_type) {
+                        $mc_users_yes[] = $one_user_value;
+                        //var_dump($mc_users_yes);
+                        $mc_mapCons = true;
+                    }
+                    if ("not" == $one_user_type) {
+                        $mc_users_no[] = $one_user_value;
+                        $mc_mapCons = true;
+                    }
+                    break;
                 case 'article':
                     $one_article_value = $param->getRightOperand();
-                    $one_article_type = $param->getOperator();
+                    $one_article_type = $param->getOperator()->getName();
                     if ("is" == $one_article_type) {
                         $mc_articles_yes[] = $one_article_value;
                         $mc_mapCons = true;
@@ -421,6 +438,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             return array();
         }
 
+        if (!CampCache::IsEnabled()) {$p_skipCache = true;}
+        // to make the caching easier
+        if (!$p_skipCache) {$ps_textOnly = false;}
+
 /*
         var_dump($mc_topics);
         var_dump($mc_articles);
@@ -438,13 +459,40 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         if (!$p_mapCons) {$p_mapCons = array();}
 */
 
-        if (!$p_order) {$p_order = array();}
+        $ps_orders = array();
+        if ((!$p_order) || (!is_array($p_order)) || (0 == count($p_order))) {
+            if ($mc_mapCons) {
+                $ps_orders = array(array("a.Number" => "DESC"), array("m.id" => "DESC"));
+            //} else {
+            //    $ps_orders = array();
+            }
+            //$queryStr .= "a.Number $mc_order, m.id $mc_order, ";
+        } else {
+            $allowed_order_dirs = array("DESC" => true, "ASC" => true);
+            foreach ($p_order as $one_order_column => $one_order_dir) {
+                $one_dir = strtoupper($one_order_dir);
+                if (!array_key_exists($one_dir, $allowed_order_dirs)) {continue;}
+                switch(strtolower($one_order_column)) {
+                    case 'article':
+                        if (!$mc_mapCons) {break;}
+                        $ps_orders[] = array("a.Number" => $one_dir);
+                        break;
+                    case 'map':
+                        $ps_orders[] = array("m.id" => $one_dir);
+                        break;
+                    case 'name':
+                        $ps_orders[] = array("c.poi_name" => $one_dir);
+                        break;
+                }
+            }
+        }
 
         //if (((0 == $p_mapId) || (!$p_mapId)) && (!$p_mapCons)) {return array();}
         if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
 
         $mc_limit = 0 + $p_limit;
         if (0 > $mc_limit) {$mc_limit = 0;}
+        if (!$mc_limit) {$mc_limit = 200;}
 
         $mc_start = 0 + $p_start;
         if (0 > $mc_start) {$mc_start = 0;}
@@ -463,8 +511,55 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $cacheList_arr = null;
         $cacheList_obj = null;
 
-        //if (!$p_skipCache) {
-        if (false && (!$p_skipCache)) {
+        //if (false && (!$p_skipCache)) {
+        if (!$p_skipCache) {
+            $paramsArray_arr["as_array"] = true;
+            $paramsArray_arr["map_id"] = $ps_mapId;
+            $paramsArray_arr["language_id"] = $ps_languageId;
+            $paramsArray_arr["preview"] = $ps_preview;
+            $paramsArray_arr["text_only"] = $ps_textOnly;
+    
+            $paramsArray_arr["map_cons"] = $mc_mapCons;
+            $paramsArray_arr["users_yes"] = $mc_users_yes;
+            $paramsArray_arr["users_no"] = $mc_users_no;
+            $paramsArray_arr["articles_yes"] = $mc_articles_yes;
+            $paramsArray_arr["articles_no"] = $mc_articles_no;
+            $paramsArray_arr["issues"] = $mc_issues;
+            $paramsArray_arr["sections"] = $mc_sections;
+            $paramsArray_arr["topics"] = $mc_topics;
+            $paramsArray_arr["topics_matchall"] = $mc_topics_matchall;
+            $paramsArray_arr["multimedia"] = $mc_multimedia;
+            $paramsArray_arr["areas"] = $mc_areas;
+            $paramsArray_arr["dates"] = $mc_dates;
+
+            $paramsArray_arr["orders"] = $ps_orders;
+            $paramsArray_arr["limit"] = $mc_limit;
+            $paramsArray_arr["start"] = $mc_start;
+
+            $paramsArray_obj["as_array"] = false;
+            $paramsArray_obj["map_id"] = $ps_mapId;
+            $paramsArray_obj["language_id"] = $ps_languageId;
+            $paramsArray_obj["preview"] = $ps_preview;
+            $paramsArray_obj["text_only"] = $ps_textOnly;
+    
+            $paramsArray_obj["map_cons"] = $mc_mapCons;
+            $paramsArray_obj["users_yes"] = $mc_users_yes;
+            $paramsArray_obj["users_no"] = $mc_users_no;
+            $paramsArray_obj["articles_yes"] = $mc_articles_yes;
+            $paramsArray_obj["articles_no"] = $mc_articles_no;
+            $paramsArray_obj["issues"] = $mc_issues;
+            $paramsArray_obj["sections"] = $mc_sections;
+            $paramsArray_obj["topics"] = $mc_topics;
+            $paramsArray_obj["topics_matchall"] = $mc_topics_matchall;
+            $paramsArray_obj["multimedia"] = $mc_multimedia;
+            $paramsArray_obj["areas"] = $mc_areas;
+            $paramsArray_obj["dates"] = $mc_dates;
+
+            $paramsArray_obj["orders"] = $ps_orders;
+            $paramsArray_obj["limit"] = $mc_limit;
+            $paramsArray_obj["start"] = $mc_start;
+
+/*
             $paramsArray_arr['mapId'] = $p_mapId;
             $paramsArray_obj['mapId'] = $p_mapId;
             //$paramsArray_arr['textData'] = true;
@@ -488,6 +583,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         	//$paramsArray_arr['form'] = "array";
         	//$paramsArray_obj['form'] = "object";
+*/
 
         	$cacheList_arr = new CampCacheList($paramsArray_arr, __METHOD__);
         	$cacheList_obj = new CampCacheList($paramsArray_obj, __METHOD__);
@@ -552,7 +648,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         //if ($p_mapCons)
         if ($mc_mapCons)
         {
-            $queryStr .= "m.id AS m_id, ";
+            $queryStr .= "m.id AS m_id, m.IdUser AS m_user, ";
         }
         $queryStr .= "c.IdUser AS c_user, c.time_updated AS c_updated, ";
 
@@ -568,7 +664,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $query_mcons = "";
         $article_mcons = false;
         //$mc_limit = false;
-        $to_filter = false;
+        //$to_filter = false;
         $mc_filter_mm = false;
         $mc_filter_image = false;
         $mc_filter_video = false;
@@ -584,12 +680,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $query_mcons = "";
             $article_mcons = false;
 
+/*
             //$mc_order_type = strtolower($p_mapCons["order"]);
             $mc_order_type = "";
             $mc_order = "DESC";
             if ("asc" == $mc_order_type) {
                 $mc_order = "ASC";
             }
+*/
             //$mc_limit = 0 + $p_mapCons["limit"];
             //if (0 > $mc_limit) {$mc_limit = 0;}
 
@@ -613,7 +711,28 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 //$mc_filter_mm = $mc_multimedia["any"];
                 //$mc_filter_image = $mc_multimedia["image"];
                 //$mc_filter_video = $mc_multimedia["video"];
-                if ($mc_filter_mm || $mc_filter_image || $mc_filter_video) {$to_filter = true;}
+                //if ($mc_filter_mm || $mc_filter_image || $mc_filter_video) {$to_filter = true;}
+            }
+
+            if (0 < count($mc_users_yes)) {
+                $mc_correct = true;
+                foreach ($mc_users_yes as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= "m.IdUser IN (" . implode(", ", $mc_users_yes) . ") AND ";
+                    $article_mcons = true;
+                }
+            }
+            if (0 < count($mc_users_no)) {
+                $mc_correct = true;
+                foreach ($mc_users_no as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= "m.IdUser NOT IN (" . implode(", ", $mc_users_no) . ") AND ";
+                    $article_mcons = true;
+                }
             }
 
             if (0 < count($mc_articles_yes)) {
@@ -636,6 +755,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $article_mcons = true;
                 }
             }
+
             if (0 < count($mc_issues)) {
                 $mc_correct = true;
                 foreach ($mc_issues as $val) {
@@ -805,17 +925,24 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
         $queryStr .= "ORDER BY ";
+/*
         //if ($p_mapCons)
         if ($mc_mapCons)
         {
             $queryStr .= "a.Number $mc_order, m.id $mc_order, ";
         }
+*/
+        foreach ($ps_orders as $one_order) {
+            foreach ($one_order as $cur_order_col => $cur_order_dir) {
+                $queryStr .= "$cur_order_col $cur_order_dir, ";
+            }
+        }
         $queryStr .= "ml.rank, ml.id, mll.id";
 
         //if ($p_mapCons && $mc_limit && (!$to_filter))
         //if ($p_mapCons && $mc_limit)
-        //if ($mc_limit)
-        if (false)
+        //if (true)
+        if ($mc_limit)
         {
             $queryStr .= " LIMIT ?";
             $sql_params[] = $mc_limit;
@@ -1031,61 +1158,64 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         foreach ($dataArray_tmp as $one_poi)
         //foreach (array() as $one_poi)
         {
-            $one_poi_source = array(
-                'id' => $one_poi['loc_id'],
-                'fk_map_id' => $one_poi['map_id'],
-                'fk_location_id' => $one_poi['geo_id'],
-                'poi_style' => $one_poi['style'],
-                'rank' => $one_poi['rank'],
-            );
-            //$one_poi_obj = new self($one_poi_source, true);
+            if ((!$p_skipCache) || (!$ps_asArray)) {
+                $one_poi_source = array(
+                    'id' => $one_poi['loc_id'],
+                    'fk_map_id' => $one_poi['map_id'],
+                    'fk_location_id' => $one_poi['geo_id'],
+                    'poi_style' => $one_poi['style'],
+                    'rank' => $one_poi['rank'],
+                );
+                $one_poi_obj = new self($one_poi_source, true);
+    
+                $one_geo_source = array(
+                    'poi_location' => null,
+                    'poi_type' => $one_poi['geo_type'],
+                    'poi_type_style' => $one_poi['geo_style'],
+                    'poi_center' => null,
+                    'poi_radius' => $one_poi['geo_radius'],
+                    'IdUser' => $one_poi['geo_user'],
+                    'time_updated' => $one_poi['geo_updated'],
+                    'latitude' => $one_poi['latitude'],
+                    'longitude' => $one_poi['longitude'],
+                );
+                $one_poi_obj->location = new Geo_Location($one_geo_source, true);
+    
+                $one_lan_source = array(
+                    'id' => $one_poi['con_id'],
+                    'fk_maplocation_id' => $one_poi['loc_id'],
+                    'fk_language_id' => $p_languageId,
+                    'fk_content_id' => $one_poi['txt_id'],
+                    'poi_display' => $one_poi['display'],
+                );
+                $one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
+    
+                $one_txt_source = array(
+                    'id' => $one_poi['txt_id'],
+                    'poi_name' => $one_poi['title'],
+                    'poi_link' => $one_poi['link'],
+                    'poi_perex' => $one_poi['perex'],
+                    'poi_content_type' => $one_poi['content_type'],
+                    'poi_content' => $one_poi['content'],
+                    'poi_text' => $one_poi['text'],
+                    'IdUser' => $one_poi['txt_user'],
+                    'time_updated' => $one_poi['txt_updated'],
+                );
+                $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
+                $objsArray[] = $one_poi_obj;
+            }
 
-            $one_geo_source = array(
-                'poi_location' => null,
-                'poi_type' => $one_poi['geo_type'],
-                'poi_type_style' => $one_poi['geo_style'],
-                'poi_center' => null,
-                'poi_radius' => $one_poi['geo_radius'],
-                'IdUser' => $one_poi['geo_user'],
-                'time_updated' => $one_poi['geo_updated'],
-                'latitude' => $one_poi['latitude'],
-                'longitude' => $one_poi['longitude'],
-            );
-            //$one_poi_obj->location = new Geo_Location($one_geo_source, true);
-
-            $one_lan_source = array(
-                'id' => $one_poi['con_id'],
-                'fk_maplocation_id' => $one_poi['loc_id'],
-                'fk_language_id' => $p_languageId,
-                'fk_content_id' => $one_poi['txt_id'],
-                'poi_display' => $one_poi['display'],
-            );
-            //$one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
-
-            $one_txt_source = array(
-                'id' => $one_poi['txt_id'],
-                'poi_name' => $one_poi['title'],
-                'poi_link' => $one_poi['link'],
-                'poi_perex' => $one_poi['perex'],
-                'poi_content_type' => $one_poi['content_type'],
-                'poi_content' => $one_poi['content'],
-                'poi_text' => $one_poi['text'],
-                'IdUser' => $one_poi['txt_user'],
-                'time_updated' => $one_poi['txt_updated'],
-            );
-
-            //$one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
-
-            //$objsArray[] = $one_poi_obj;
-            $dataArray[] = $one_poi;
+            if ((!$p_skipCache) || ($ps_asArray)) {
+                $dataArray[] = $one_poi;
+            }
         }
 
-/*
-        if (!$p_skipCache && CampCache::IsEnabled()) {
+/**/
+        if ((!$p_skipCache) && CampCache::IsEnabled()) {
         	$cacheList_arr->storeInCache($dataArray);
         	$cacheList_obj->storeInCache($objsArray);
         }
-*/
+/**/
 
         //if (!$p_asArray) {
         if (!$ps_asArray) {
@@ -1094,7 +1224,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
 		return $dataArray;
 
-	} // fn ReadMapPoints
+	} // fn GetListExt
 
 
 

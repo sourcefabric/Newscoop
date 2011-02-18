@@ -39,9 +39,14 @@ var map_preview_close = function()
 
 $f_languageId = 1;
 
+$f_users = array();
+$f_users = array(1);
+//$f_users = array(0, 1, 2);
+
 $f_articles = array();
 $f_articles = array(34, 35, 61);
 //$f_articles = array(34);
+
 $f_issues = array();
 //$f_issues = array(2);
 $f_sections = array();
@@ -115,6 +120,15 @@ if (2 == count($f_dates)) {
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
 }
+
+    foreach ($f_users as $one_user) {
+        $leftOperand = 'user';
+        $rightOperand = $one_user;
+        //$operator = new Operator('not', 'sql');
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
     foreach ($f_articles as $one_article) {
         $leftOperand = 'article';
