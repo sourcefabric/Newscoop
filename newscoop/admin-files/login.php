@@ -6,8 +6,17 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
+list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
+if ($access) { // logged in allready
+    header("Location: /{$ADMIN}{$prefix}");
+    exit;
+}
+
 // Get request.
 $requestId = Input::Get('request', 'string', '', TRUE);
+if ($requestId != 'ajax' && !preg_match('/^[a-f0-9]{40}$/', $requestId)) {
+    $requestId = ''; // ignore non sha1|ajax
+}
 $request = camp_session_get("request_$requestId", '');
 $requestIsPost = FALSE;
 if (!empty($request)) {
@@ -15,12 +24,6 @@ if (!empty($request)) {
     $requestIsPost = !empty($tmp['post']);
     unset($tmp);
 }
-
-// Fix for CS-2276
-$LiveUser->logout();
-// Delete the cookies
-setcookie("LoginUserId", "", time() - 86400);
-setcookie("LoginUserKey", "", time() - 86400);
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
@@ -110,7 +113,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
-<form name="login_form" method="post" action="do_login.php?request=<?php echo $requestId; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form name="login_form" method="post" action="do_login.php?request=<?php echo htmlentities($requestId); ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0" />
 <?php } else { ?>
