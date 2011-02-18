@@ -1060,13 +1060,13 @@ ul.tree.sortable .item fieldset .input_text {
 	text-decoration:none;
 }
 .container {
-	border:1px solid #CCC;
-	border-width: 0 1px 1px 1px;
-	padding: 20px 10px 10px 10px;
-	background:#fafafa;
-	background: -moz-linear-gradient(top, #e3e3e3 0, #fafafa 3px, #fafafa 3px, #fafafa 100%);
+    border:1px solid #CCC;
+    border-width: 0 1px 1px 1px;
+    padding: 20px 10px 10px 10px;
+    background:#fafafa;
+    background: -moz-linear-gradient(top, #e3e3e3 0, #fafafa 3px, #fafafa 3px, #fafafa 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #e3e3e3), color-stop(2%, #fafafa), color-stop(2%, #fafafa), color-stop(100%, #fafafa));
-	display:none;
+    display:block;
 }
 
 .datatable tr th.ui-state-default {
