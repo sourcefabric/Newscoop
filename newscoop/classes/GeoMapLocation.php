@@ -315,14 +315,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $ps_textOnly = false;
 
         $mc_mapCons = array();
-        $mc_articles = array();
+        $mc_articles_yes = array();
+        $mc_articles_no = array();
         $mc_issues = array();
         $mc_sections = array();
-        $mc_dates = array();
         $mc_topics = array();
-        $mc_matchalltopics = array();
+        $mc_topics_matchall = false;
         $mc_multimedia = array();
         $mc_areas = array();
+        $mc_dates = array();
+
 
 //        if (null or true) {
         // process params
@@ -354,8 +356,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $ps_textOnly = $param->getRightOperand();
                     break;
                 case 'article':
-                    $mc_articles[] = $param->getRightOperand();
-                    $mc_mapCons = true;
+                    $one_article_value = $param->getRightOperand();
+                    $one_article_type = $param->getOperator();
+                    if ("is" == $one_article_type) {
+                        $mc_articles_yes[] = $one_article_value;
+                        $mc_mapCons = true;
+                    }
+                    if ("not" == $one_article_type) {
+                        $mc_articles_no[] = $one_article_value;
+                        $mc_mapCons = true;
+                    }
                     break;
                 case 'issue':
                     $mc_issues[] = $param->getRightOperand();
@@ -370,11 +380,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $mc_mapCons = true;
                     break;
                 case 'matchalltopics':
-                    $mc_matchalltopics = $param->getRightOperand();
+                    $mc_topics_matchall = $param->getRightOperand();
                     $mc_mapCons = true;
                     break;
                 case 'matchanytopic':
-                    $mc_matchalltopics = !$param->getRightOperand();
+                    $mc_topics_matchall = !$param->getRightOperand();
                     $mc_mapCons = true;
                     break;
                 case 'multimedia':
@@ -383,6 +393,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'area':
                     $mc_areas[] = json_decode($param->getRightOperand());
+                    $mc_mapCons = true;
+                    break;
+                case 'date':
+                    $mc_dates[$param->getOperator()->getName()] = $param->getRightOperand();
                     $mc_mapCons = true;
                     break;
                 default:
@@ -402,6 +416,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             //var_dump($Context->language);
         }
         //var_dump($ps_languageId);
+
+        if ((!$ps_languageId) || (0 >= $ps_languageId)) {
+            return array();
+        }
 
 /*
         var_dump($mc_topics);
@@ -598,13 +616,23 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 if ($mc_filter_mm || $mc_filter_image || $mc_filter_video) {$to_filter = true;}
             }
 
-            if (0 < count($mc_articles)) {
+            if (0 < count($mc_articles_yes)) {
                 $mc_correct = true;
-                foreach ($mc_articles as $val) {
-                    if (!is_numeric($val)) {$mc_articles = false;}
+                foreach ($mc_articles_yes as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
                 }
-                if ($mc_articles) {
-                    $query_mcons .= "a.Number IN (" . implode(", ", $mc_articles) . ") AND ";
+                if ($mc_correct) {
+                    $query_mcons .= "a.Number IN (" . implode(", ", $mc_articles_yes) . ") AND ";
+                    $article_mcons = true;
+                }
+            }
+            if (0 < count($mc_articles_no)) {
+                $mc_correct = true;
+                foreach ($mc_articles_no as $val) {
+                    if (!is_numeric($val)) {$mc_correct = false;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= "a.Number NOT IN (" . implode(", ", $mc_articles_no) . ") AND ";
                     $article_mcons = true;
                 }
             }
@@ -628,17 +656,31 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $article_mcons = true;
                 }
             }
-/*
-            if (2 == count($mc_dates)) {
-                $date_start = str_replace("'", "\"", $mc_dates[0]);
-                $date_stop = str_replace("'", "\"", $mc_dates[1]);
+
+            //if (2 == count($mc_dates)) {
+            foreach ($mc_dates as $one_date_type => $one_date_value) {
+                //$date_start = str_replace("'", "\"", $mc_dates[0]);
+                //$date_stop = str_replace("'", "\"", $mc_dates[1]);
+                $one_date_value = str_replace("'", "\"", $one_date_value);
+                $one_date_usage = "a.PublishDate ";
+                $one_date_known = false;
+                if ("smaller_equal" == $one_date_type) {$one_date_usage .= "<= "; $one_date_known = true;}
+                if ("smaller" == $one_date_type) {$one_date_usage .= "< "; $one_date_known = true;}
+                if ("greater_equal" == $one_date_type) {$one_date_usage .= ">= "; $one_date_known = true;}
+                if ("greater" == $one_date_type) {$one_date_usage .= "> "; $one_date_known = true;}
+                if ("is" == $one_date_type) {$one_date_usage .= "= "; $one_date_known = true;}
+                if ("not" == $one_date_type) {$one_date_usage .= "<> "; $one_date_known = true;}
+                if (!$one_date_known) {continue;}
+                $one_date_usage .= "'$one_date_value' AND ";
     
-                $query_mcons .= "a.PublishDate >= '$date_start' AND a.PublishDate <= '$date_stop' AND ";
+                //$query_mcons .= "a.PublishDate >= '$date_start' AND a.PublishDate <= '$date_stop' AND ";
+                $query_mcons .= $one_date_usage;
                 $article_mcons = true;
             }
-*/
+
             if (0 < count($mc_topics))
             {
+/*
                 $mc_correct = true;
                 foreach ($mc_topics as $val) {
                     if (!is_numeric($val)) {$mc_correct = false;}
@@ -648,6 +690,28 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $query_mcons .= "at.TopicId IN (" . implode(", ", $mc_topics) . ") AND ";
                     $article_mcons = true;
                 }
+*/
+                //$mc_topics_str = "INNER JOIN ArticleTopics AS at ON a.Number = at.NrArticle ";
+                //$mc_topics_par = "";
+                $mc_topics_list = array();
+
+                $mc_topics_conn = "OR";
+                if ($mc_topics_matchall) {
+                    $mc_topics_conn = "AND";
+                }
+
+                //var_dump($mc_topics);
+                foreach ($mc_topics as $one_topic) {
+                    if (!is_numeric($one_topic)) {continue;}
+                    $mc_topics_list[] = "at.TopicId IN (" . Topic::BuildAllSubtopicsQuery($one_topic, false) . ")";
+                }
+
+                if (0 < count($mc_topics_list)) {
+                    $queryStr .= "INNER JOIN ArticleTopics AS at ON a.Number = at.NrArticle ";
+                    $query_mcons .= "(" . implode(" $mc_topics_conn ", $mc_topics_list) . ") AND ";
+                    $article_mcons = true;
+                }
+
 
             }
 

@@ -42,9 +42,12 @@ $f_languageId = 1;
 $f_articles = array();
 $f_articles = array(34, 35, 61);
 //$f_articles = array(34);
-$f_issues = array(2);
+$f_issues = array();
+//$f_issues = array(2);
+$f_sections = array();
 $f_sections = array(10, 60);
 //$f_sections = array(10);
+$f_dates = array();
 $f_dates = array("2000-10-20", "2020-10-10");
 $f_topics = array();
 $f_topics = array(23, 24);
@@ -99,6 +102,7 @@ $offset = 0;
     //$constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     //$parameters[] = $constraint;
 
+if (2 == count($f_dates)) {
     $leftOperand = 'date';
     $rightOperand = $f_dates[0];
     $operator = new Operator('greater_equal', 'sql');
@@ -110,6 +114,7 @@ $offset = 0;
     $operator = new Operator('smaller_equal', 'sql');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
+}
 
     foreach ($f_articles as $one_article) {
         $leftOperand = 'article';
