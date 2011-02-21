@@ -327,6 +327,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $mc_topics_matchall = false;
         $mc_multimedia = array();
         $mc_areas = array();
+        $mc_areas_matchall = false;
         $mc_dates = array();
 
 
@@ -386,11 +387,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'matchalltopics':
                     $mc_topics_matchall = $param->getRightOperand();
-                    $mc_mapCons = true;
+                    //$mc_mapCons = true;
                     break;
                 case 'matchanytopic':
                     $mc_topics_matchall = !$param->getRightOperand();
-                    $mc_mapCons = true;
+                    //$mc_mapCons = true;
                     break;
                 case 'multimedia':
                     $mc_multimedia[] = $param->getRightOperand();
@@ -399,6 +400,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'area':
                     $mc_areas[] = json_decode($param->getRightOperand());
                     $mc_mapCons = true;
+                    break;
+                case 'matchallareas':
+                    $mc_areas_matchall = $param->getRightOperand();
+                    //$mc_mapCons = true;
+                    break;
+                case 'matchanyarea':
+                    $mc_areas_matchall = !$param->getRightOperand();
+                    //$mc_mapCons = true;
                     break;
                 case 'date':
                     $mc_dates[$param->getOperator()->getName()] = $param->getRightOperand();
@@ -686,6 +695,13 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
             }
 
+            $mc_areas_list = array();
+
+            $mc_areas_conn = "OR";
+            if ($mc_areas_matchall) {
+                $mc_areas_conn = "AND";
+            }
+
             foreach ($mc_areas as $one_area) {
                 if (is_object($one_area)) {
                     $one_area = get_object_vars($one_area);
@@ -698,7 +714,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 if ($mc_rectangle && (2 == count($mc_rectangle))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_rectangle, "rectangle", "l");
                     if (!$area_cons_res["error"]) {
-                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $mc_areas_list[] = $area_cons_res["cons"];
                         $article_mcons = true;
                     }    
                 }
@@ -706,7 +722,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 if ($mc_clockwise && (3 <= count($mc_clockwise))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_clockwise, "clockwise", "l");
                     if (!$area_cons_res["error"]) {
-                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $mc_areas_list[] = $area_cons_res["cons"];
                         $article_mcons = true;
                     }    
                 }
@@ -714,11 +730,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 if ($mc_counterclockwise && (3 <= count($mc_counterclockwise))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_counterclockwise, "counterclockwise", "l");
                     if (!$area_cons_res["error"]) {
-                        $query_mcons .= $area_cons_res["cons"] . " AND ";
+                        $mc_areas_list[] = $area_cons_res["cons"];
                         $article_mcons = true;
                     }    
                 }
             }
+
+            if (0 < count($mc_areas_list)) {
+                $query_mcons .= "(" . implode(" $mc_areas_conn ", $mc_areas_list) . ") AND ";
+            }
+
 
             $mmu_test_join = "%%mmu_test_join%%";
             $mmu_test_spec = "%%mmu_test_spec%%";
