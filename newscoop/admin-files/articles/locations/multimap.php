@@ -48,18 +48,23 @@ $f_articles = array(34, 35, 61);
 //$f_articles = array(34);
 
 $f_issues = array();
-//$f_issues = array(2);
+$f_issues = array(2);
 $f_sections = array();
 $f_sections = array(10, 60);
 //$f_sections = array(10);
 $f_dates = array();
 $f_dates = array("2000-10-20", "2020-10-10");
 $f_topics = array();
-$f_topics = array(23, 24);
+//$f_topics = array(23, 24, 58);
+$f_topics = array(23, 49, 58);
 
 $f_areas = array();
 //$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
-$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => 60)));
+$f_areas = array(
+    array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => 60))),
+    array("counterclockwise" => array(array("longitude" => -179, "latitude" => -90), array("longitude" => -20, "latitude" => -90), array("longitude" => -20, "latitude" => 90), array("longitude" => -179, "latitude" => 90))),
+    //array("clockwise" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => -90), array("longitude" => -120, "latitude" => 60), array("longitude" => 150, "latitude" => 60))),
+);
 //implode(array("longitude" => 150, "latitude" => -90));
 //echo implode("", $f_areas["rectangle"][0]);
 
@@ -125,9 +130,17 @@ if (2 == count($f_dates)) {
         $parameters[] = $constraint;
     }
 
-    $leftOperand = 'area';
-    $rightOperand = json_encode($f_areas);
-    $operator = new Operator('is', 'php');
+    foreach ($f_areas as $one_area) {
+        $leftOperand = 'area';
+        $rightOperand = json_encode($one_area);
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
+
+    $leftOperand = 'matchanyarea';
+    $rightOperand = true;
+    $operator = new Operator('is', 'sql');
     $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
     $parameters[] = $constraint;
 

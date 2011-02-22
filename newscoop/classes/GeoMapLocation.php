@@ -551,9 +551,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $queryStr_count = "";
         $queryStr_count_start = "";
 
-        $queryStr_count_start .= "SELECT count(ml.id) ";
+        $queryStr_count_start .= "SELECT count(DISTINCT ml.id) ";
 
-		$queryStr_start .= "SELECT ml.id AS ml_id, mll.id as mll_id, ml.fk_location_id AS loc_id, mll.fk_content_id AS con_id, ";
+		$queryStr_start .= "SELECT DISTINCT ml.id AS ml_id, mll.id as mll_id, ml.fk_location_id AS loc_id, mll.fk_content_id AS con_id, ";
         $queryStr_start .= "ml.poi_style AS poi_style, ml.rank AS rank, mll.poi_display AS poi_display, ";
 
         // these few lines below are just for data for list-of-objects array
@@ -1122,18 +1122,27 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $ind_start = 0;
             $ind_stop = count($p_coordinates) - 1;
             $ind_step = 1;
-            if ("counterclockwise" == $p_polygonType) {
+            if ("clockwise" == $p_polygonType) {
                 $ind_start = count($p_coordinates) - 1;
                 $ind_stop = 0;
                 $ind_step = -1;
             }
 
-            $first_lon = $p_polygonType[$ind_start]["longitude"];
-            $first_lat = $p_polygonType[$ind_start]["latitude"];
+            $first_corner = $p_coordinates[$ind_start];
+            if (is_object($first_corner)) {
+                $first_corner = get_object_vars($first_corner);
+            }
+
+            $first_lon = $first_corner["longitude"];
+            $first_lat = $first_corner["latitude"];
 
             for ($ind = $ind_start; ; $ind += $ind_step) {
 
                 $corner = $p_coordinates[$ind];
+                if (is_object($corner)) {
+                    $corner = get_object_vars($corner);
+                }
+
                 $one_lon = $corner["longitude"];
                 $one_lat = $corner["latitude"];
                 if ((!is_numeric($one_lon)) || (!is_numeric($one_lat))) {
@@ -1141,11 +1150,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 }
 
-                $polygon_spec .= "$one_lon $one_lat,";
+                $polygon_spec .= "$one_lat $one_lon,";
 
                 if ($ind == $ind_stop) {break;}
             }
-            $polygon_spec .= "$first_lon $first_lat";
+            $polygon_spec .= "$first_lat $first_lon";
 
             $queryCons .= "Intersects(GeomFromText('Polygon(($polygon_spec))'),$p_tableAlias.poi_location) ";
 
