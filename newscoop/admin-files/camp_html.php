@@ -206,7 +206,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	$breadcrumbs[] = array("Content", "");
 	if (!is_null($publicationObj)) {
 	    $prompt =  getGS("Publication").":";
-	    $name = htmlspecialchars($publicationObj->getName());
+	    $name = htmlspecialchars($publicationObj->getName(), ENT_NOQUOTES);
     	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
     	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 	}
@@ -219,7 +219,8 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	       ."&Issue=".$issueObj->getIssueNumber()
     	       ."&Language=".$issueObj->getLanguageId(),
     	       false);
-	    $name = htmlspecialchars($issueObj->getName())." (".htmlspecialchars($issueObj->getLanguageName()).")";
+	    $name = htmlspecialchars($issueObj->getName(), ENT_NOQUOTES) .
+                ' (' . htmlspecialchars($issueObj->getLanguageName(), ENT_NOQUOTES) . ')';
         $breadcrumbs[] = array($name,
     	       "/$ADMIN/issues/edit.php"
     	       ."?Pub=".$issueObj->getPublicationId()
@@ -235,7 +236,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&Language=".$sectionObj->getLanguageId()
                 ."&Section=".$sectionObj->getSectionNumber(),
                 false);
-	    $name = htmlspecialchars($sectionObj->getName());
+	    $name = htmlspecialchars($sectionObj->getName(), ENT_NOQUOTES);
         $breadcrumbs[] = array($name,
                 "/$ADMIN/sections/edit.php"
                 ."?Pub=".$sectionObj->getPublicationId()
@@ -253,7 +254,8 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&f_section_number=".$articleObj->getSectionNumber()
                 ."&f_article_number=".$articleObj->getArticleNumber(),
                 false);
-	    $name = htmlspecialchars($articleObj->getName())." (".htmlspecialchars($articleObj->getLanguageName()).")";
+	    $name = htmlspecialchars($articleObj->getName(), ENT_NOQUOTES) .
+                ' (' . htmlspecialchars($articleObj->getLanguageName(), ENT_NOQUOTES) . ')';
         $breadcrumbs[] = array($name,
                 "/$ADMIN/articles/edit.php"
                 ."?f_publication_id=" . $articleObj->getPublicationId()
@@ -360,9 +362,9 @@ function camp_html_breadcrumb($p_text, $p_link, $p_separator = true, $p_active =
         $tmpStr .= '<a href="' . htmlspecialchars($p_link) . '"';
         $tmpStr .= (!empty($classStr)) ? $classStr : '';
         $tmpStr .= '>';
-        $tmpStr .= htmlspecialchars($p_text) . '</a>';
+        $tmpStr .= htmlspecialchars($p_text, ENT_NOQUOTES) . '</a>';
     } else {
-        $tmpStr .= '<a href="#">' . htmlspecialchars($p_text) . '</a>';
+        $tmpStr .= '<a href="#">' . htmlspecialchars($p_text, ENT_NOQUOTES) . '</a>';
     }
 	$tmpStr .= '</li>' . "\n";
 
