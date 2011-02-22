@@ -352,6 +352,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'user':
                     $one_user_value = $param->getRightOperand();
                     $one_user_type = $param->getOperator()->getName();
+                    if (!is_numeric($one_user_value)) {break;}
                     if ("is" == $one_user_type) {
                         $mc_users_yes[] = $one_user_value;
                         $mc_mapCons = true;
@@ -499,28 +500,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $paramsArray_arr["limit"] = $mc_limit;
             $paramsArray_arr["start"] = $mc_start;
 
+            $paramsArray_obj = $paramsArray_arr;
             $paramsArray_obj["as_array"] = false;
-            $paramsArray_obj["map_id"] = $ps_mapId;
-            $paramsArray_obj["language_id"] = $ps_languageId;
-            $paramsArray_obj["preview"] = $ps_preview;
-            $paramsArray_obj["text_only"] = $ps_textOnly;
-    
-            $paramsArray_obj["map_cons"] = $mc_mapCons;
-            $paramsArray_obj["users_yes"] = $mc_users_yes;
-            $paramsArray_obj["users_no"] = $mc_users_no;
-            $paramsArray_obj["articles_yes"] = $mc_articles_yes;
-            $paramsArray_obj["articles_no"] = $mc_articles_no;
-            $paramsArray_obj["issues"] = $mc_issues;
-            $paramsArray_obj["sections"] = $mc_sections;
-            $paramsArray_obj["topics"] = $mc_topics;
-            $paramsArray_obj["topics_matchall"] = $mc_topics_matchall;
-            $paramsArray_obj["multimedia"] = $mc_multimedia;
-            $paramsArray_obj["areas"] = $mc_areas;
-            $paramsArray_obj["dates"] = $mc_dates;
-
-            $paramsArray_obj["orders"] = $ps_orders;
-            $paramsArray_obj["limit"] = $mc_limit;
-            $paramsArray_obj["start"] = $mc_start;
 
         	$cacheList_arr = new CampCacheList($paramsArray_arr, __METHOD__);
         	$cacheList_obj = new CampCacheList($paramsArray_obj, __METHOD__);
@@ -583,6 +564,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         {
             $queryStr .= "INNER JOIN Maps AS m ON m.id = ml.fk_map_id ";
             $queryStr .= "INNER JOIN Articles AS a ON m.fk_article_number = a.Number ";
+            if ((0 < count($mc_users_yes)) || (0 < count($mc_users_no))) {
+                $queryStr .= "INNER JOIN ArticleAuthors AS aa ON aa.fk_article_number = a.Number ";
+            }
+
             $query_mcons = "";
             $article_mcons = false;
 
@@ -593,24 +578,12 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
 
             if (0 < count($mc_users_yes)) {
-                $mc_correct = true;
-                foreach ($mc_users_yes as $val) {
-                    if (!is_numeric($val)) {$mc_correct = false;}
-                }
-                if ($mc_correct) {
-                    $query_mcons .= "m.IdUser IN (" . implode(", ", $mc_users_yes) . ") AND ";
-                    $article_mcons = true;
-                }
+                $query_mcons .= "aa.fk_author_id IN (" . implode(", ", $mc_users_yes) . ") AND ";
+                $article_mcons = true;
             }
             if (0 < count($mc_users_no)) {
-                $mc_correct = true;
-                foreach ($mc_users_no as $val) {
-                    if (!is_numeric($val)) {$mc_correct = false;}
-                }
-                if ($mc_correct) {
-                    $query_mcons .= "m.IdUser NOT IN (" . implode(", ", $mc_users_no) . ") AND ";
-                    $article_mcons = true;
-                }
+                $query_mcons .= "aa.fk_author_id NOT IN (" . implode(", ", $mc_users_no) . ") AND ";
+                $article_mcons = true;
             }
 
             if (0 < count($mc_articles_yes)) {

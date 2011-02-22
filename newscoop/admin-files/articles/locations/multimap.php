@@ -40,7 +40,7 @@ var map_preview_close = function()
 $f_languageId = 1;
 
 $f_users = array();
-$f_users = array(1);
+$f_users = array(5, 6);
 //$f_users = array(0, 1, 2);
 
 $f_articles = array();
