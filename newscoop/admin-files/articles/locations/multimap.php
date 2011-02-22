@@ -50,7 +50,7 @@ $f_articles = array(34, 35, 61);
 $f_issues = array();
 $f_issues = array(2);
 $f_sections = array();
-$f_sections = array(10, 60);
+$f_sections = array(10, 10, 60);
 //$f_sections = array(10);
 $f_dates = array();
 $f_dates = array("2000-10-20", "2020-10-10");
@@ -62,8 +62,8 @@ $f_areas = array();
 //$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));
 $f_areas = array(
     array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => 60))),
-    array("counterclockwise" => array(array("longitude" => -179, "latitude" => -90), array("longitude" => -20, "latitude" => -90), array("longitude" => -20, "latitude" => 90), array("longitude" => -179, "latitude" => 90))),
-    //array("clockwise" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => -90), array("longitude" => -120, "latitude" => 60), array("longitude" => 150, "latitude" => 60))),
+    array("polygon" => array(array("longitude" => -179, "latitude" => -90), array("longitude" => -20, "latitude" => -90), array("longitude" => -20, "latitude" => 90), array("longitude" => -179, "latitude" => 90))),
+    //array("polygon" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -120, "latitude" => -90), array("longitude" => -120, "latitude" => 60), array("longitude" => 150, "latitude" => 60))),
 );
 //implode(array("longitude" => 150, "latitude" => -90));
 //echo implode("", $f_areas["rectangle"][0]);

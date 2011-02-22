@@ -708,8 +708,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 }
 
                 $mc_rectangle = $one_area["rectangle"];
-                $mc_clockwise = $one_area["clockwise"];
-                $mc_counterclockwise = $one_area["counterclockwise"];
+                $mc_polygon = $one_area["polygon"];
 
                 if ($mc_rectangle && (2 == count($mc_rectangle))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_rectangle, "rectangle", "l");
@@ -719,16 +718,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     }    
                 }
 
-                if ($mc_clockwise && (3 <= count($mc_clockwise))) {
-                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_clockwise, "clockwise", "l");
-                    if (!$area_cons_res["error"]) {
-                        $mc_areas_list[] = $area_cons_res["cons"];
-                        $article_mcons = true;
-                    }    
-                }
-
-                if ($mc_counterclockwise && (3 <= count($mc_counterclockwise))) {
-                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_counterclockwise, "counterclockwise", "l");
+                if ($mc_polygon && (3 <= count($mc_polygon))) {
+                    $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_polygon, "polygon", "l");
                     if (!$area_cons_res["error"]) {
                         $mc_areas_list[] = $area_cons_res["cons"];
                         $article_mcons = true;
@@ -1056,7 +1047,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
         $p_polygonType = strtolower("" . $p_polygonType);
-        if (!array_key_exists($p_polygonType, array("rectangle" => 1, "clockwise" => 1, "counterclockwise" => 1))) {
+        if (!array_key_exists($p_polygonType, array("rectangle" => 1, "polygon" => 1))) {
             $paramError = true;
             return array("error" => true, "cons" => "");
         }
@@ -1115,18 +1106,13 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         }
 
-        if ((0 < count($p_polygonType)) && (("clockwise" == $p_polygonType) || ("counterclockwise" == $p_polygonType)))
+        if ((0 < count($p_polygonType)) && ("polygon" == $p_polygonType))
         {
             $polygon_spec = "";
 
             $ind_start = 0;
             $ind_stop = count($p_coordinates) - 1;
             $ind_step = 1;
-            if ("clockwise" == $p_polygonType) {
-                $ind_start = count($p_coordinates) - 1;
-                $ind_stop = 0;
-                $ind_step = -1;
-            }
 
             $first_corner = $p_coordinates[$ind_start];
             if (is_object($first_corner)) {
