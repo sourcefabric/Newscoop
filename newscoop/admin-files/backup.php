@@ -187,16 +187,17 @@ if ($files) {
 
 // internal filesize function returns maximum 4Gb size
 function getRealSize($file) {
-    clearstatcache();
-    $INT = 4294967295;
-    $size = filesize($file);
-    $fp = fopen($file, 'r');
-    fseek($fp, 0, SEEK_END);
-    if (ftell($fp)==0) $size += $INT;
-    fclose($fp);
-    if ($size<0) $size += $INT;
-
-    return $size;
+  $fmod = filesize($file);
+  if ($fmod < 0) $fmod += 2.0 * (PHP_INT_MAX + 1);
+  $i = 0;
+  $myfile = fopen($file, "r");
+  while (strlen(fread($myfile, 1)) === 1) {
+    fseek($myfile, PHP_INT_MAX, SEEK_CUR);
+    $i++;
+  }
+  fclose($myfile);
+  if ($i % 2 == 1) $i--;
+  return ((float)($i) * (PHP_INT_MAX + 1)) + $fmod;
 }
 
 function getBackupList() {
@@ -209,7 +210,7 @@ function getBackupList() {
             continue;
         }
         $fileType = filetype($fullPath);
-        if ($fileType != "link" && $fileType != "dir" && $file != '.htaccess') {
+        if ($fileType != "dir" && $file != '.htaccess') {
             $tmp = array();
             $tmp['name'] = $file;
             $tmp['size'] = ceil(getRealSize($fullPath)/1024/1024);
