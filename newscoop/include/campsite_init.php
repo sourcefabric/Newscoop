@@ -31,6 +31,10 @@ if (!empty($timeZone)) {
     $g_ado_db->Execute("SET SESSION time_zone = '" . $timeZone . ":00'");
     $timeZone[0] = $timeZone[0] == '-' ? '+' : '-';
     date_default_timezone_set('Etc/GMT' . $timeZone);
+} else {
+    // Some people forget to set their timezone in their php.ini,
+    // this prevents that from generating warnings
+    @date_default_timezone_set(@date_default_timezone_get());
 }
 unset($timeZone);
 
