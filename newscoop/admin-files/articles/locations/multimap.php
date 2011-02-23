@@ -98,7 +98,7 @@ if (2 == count($f_dates)) {
 }
 
     foreach ($f_users as $one_user) {
-        $leftOperand = 'user';
+        $leftOperand = 'author';
         $rightOperand = $one_user;
         //$operator = new Operator('not', 'sql');
         $operator = new Operator('is', 'sql');

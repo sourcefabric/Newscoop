@@ -349,7 +349,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'text_only':
                     $ps_textOnly = $param->getRightOperand();
                     break;
-                case 'user':
+                case 'author':
                     $one_user_value = $param->getRightOperand();
                     $one_user_type = $param->getOperator()->getName();
                     if (!is_numeric($one_user_value)) {break;}
