@@ -291,7 +291,8 @@ $languageObj = new Language($Language);
 if (!is_object($languageObj)) {
     $languageObj = new Language(1);
 }
-$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+
+$editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('txt_biography', $g_user, 0, $editorLanguage, 'authorbiography');
 ?>
 </form>

@@ -29,7 +29,8 @@ $languageObj = new Language($Language);
 if (!is_object($languageObj)) {
     $languageObj = new Language(1);
 }
-$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+//$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+$editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
