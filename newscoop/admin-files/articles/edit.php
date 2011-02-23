@@ -252,7 +252,7 @@ foreach ($dbColumns as $dbColumn) {
 }
 if ($inEditMode && $hasArticleBodyField) {
     $languageSelectedObj = new Language($f_language_selected);
-    $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+    $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 
