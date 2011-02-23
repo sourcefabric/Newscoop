@@ -102,9 +102,11 @@ function change_language(select)
       <option value="translate"><?php putGS('Translate'); ?></option>
       <?php } ?>
 
-      <?php if (!$locked && $g_user->hasPermission('MoveArticle')) { ?>
+      <?php if (!$locked && $g_user->hasPermission('MoveArticle')) {
+          if ((0 < $f_publication_id) && (0 < $f_issue_number) && (0 < $f_section_number)) {
+      ?>
       <option value="move"><?php putGS('Move'); ?></option>
-      <?php } ?>
+      <?php }} ?>
     </select>
     <!-- END Actions -->
 
