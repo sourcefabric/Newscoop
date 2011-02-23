@@ -40,15 +40,16 @@ var map_preview_close = function()
 $f_languageId = 1;
 
 $f_users = array();
-$f_users = array(5, 6);
+//$f_users = array(5, 6);
+$f_users = array(3, 9);
 //$f_users = array(0, 1, 2);
 
 $f_articles = array();
-$f_articles = array(34, 35, 61);
+$f_articles = array(64, 83);
 //$f_articles = array(34);
 
 $f_issues = array();
-$f_issues = array(2);
+$f_issues = array(13);
 $f_sections = array();
 $f_sections = array(10, 10, 60);
 //$f_sections = array(10);
@@ -56,7 +57,8 @@ $f_dates = array();
 $f_dates = array("2000-10-20", "2020-10-10");
 $f_topics = array();
 //$f_topics = array(23, 24, 58);
-$f_topics = array(23, 49, 58);
+//$f_topics = array(23, 49, 58);
+$f_topics = array(23, 55, 58, 80);
 
 $f_areas = array();
 //$f_areas = array("rectangle" => array(array("longitude" => 150, "latitude" => -90), array("longitude" => -20, "latitude" => 60)));

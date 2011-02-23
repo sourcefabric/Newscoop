@@ -236,6 +236,11 @@ final class CampContext
                 $plugin_init($this);
             }
         }
+
+        // initialize geo-map holder
+        $this->m_properties['map_article'] = null;
+        $this->m_properties['map_dynamic'] = null;
+
     } // fn __construct
 
 

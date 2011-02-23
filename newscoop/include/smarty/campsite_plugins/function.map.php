@@ -35,6 +35,13 @@ function smarty_function_map($p_params, &$p_smarty)
     $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
+    //var_dump($campsite->map_dynamic);
+    if ($campsite->map_dynamic) {
+        return $campsite->map_dynamic;
+    }
+
+
+
     // language and article must be set in context
     if (!$campsite->language->defined || !$campsite->article->defined) {
         return;
