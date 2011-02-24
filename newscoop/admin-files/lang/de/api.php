@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Autortyp $1 erstellt.");
 regGS("Author #$1 \"$2\" deleted.", "Autor/in #$1 \"$2\" gelöscht.");
 regGS("Article type \"$1\" deleted.", "Artikeltyp \"$1\" gelöscht.");
 regGS("Article translated to \"$4\" ($5)", "Artikel übersetzt nach \"$4\" ($5).");
-regGS("Article status changed from $3 to $4.", "Artikelstatus von $3 nach $4 geändert.");
+regGS("Article status changed from $1 to $2.", "Artikelstatus von $1 nach $2 geändert.");
 regGS("Article deleted.", "Artikel gelöscht.");
 regGS("Article created.", "Artikel erstellt.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Artikel nach Artikel #$4 (Publikation $5, Ausgabe $6, Rubrik $7) kopiert.");

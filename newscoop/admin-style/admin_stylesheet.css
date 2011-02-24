@@ -1640,3 +1640,8 @@ fieldset {
     background-color: #fff;
     opacity: 0.8;
 }
+
+table.message_box td {
+    font-size: 1.2em;
+    line-height: 1.5em;
+}

@@ -38,7 +38,8 @@ if ($correct) {
 		camp_html_goto_page("/$ADMIN/country/");
 	}
 	else {
-		$errorMsgs[] = getGS('The country $1 could not be created','<B>'.$f_country_name.'</B>');
+		$errorMsgs[] = getGS('The country "$1" could not be created.','<strong>'.$f_country_name.'</strong>');
+		$errorMsgs[] = getGS('Country with code "$1" exists already.', $f_country_code);
 	}
 }
 

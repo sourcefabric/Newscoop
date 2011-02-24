@@ -1,6 +1,6 @@
 <?php
 regGS("You do not have the right to add countries.", "Não tem permissão para adicionar Paises");
-regGS("The country $1 could not be created", "O Pais $1 não pode ser criado");
+regGS("The country $1 could not be created.", "O Pais $1 não pode ser criado");
 regGS("Delete country", "Eliminar Pais");
 regGS("You do not have the right to delete countries.", "Não tem permissão para eliminar Paises");
 regGS("Are you sure you want to delete the country $1?", "Deseja eliminar o pais $1?");

@@ -1,6 +1,6 @@
 <?php 
 regGS("You do not have the right to add countries.", "Δεν έχετε το δικαίωμα να προσθέσετε χώρες.");
-regGS("The country $1 could not be created", "Η χώρα $1 δεν μπόρεσε να δημιουργηθεί");
+regGS("The country $1 could not be created.", "Η χώρα $1 δεν μπόρεσε να δημιουργηθεί");
 regGS("Delete country", "Διαγραφή χώρας");
 regGS("You do not have the right to delete countries.", "Δεν έχετε το δικαίωμα να διαγράψετε χώρες.");
 regGS("Are you sure you want to delete the country $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την χώρα $1;");

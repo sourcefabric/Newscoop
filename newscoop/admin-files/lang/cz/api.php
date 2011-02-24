@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Typ autora $1 vytořen.");
 regGS("Author #$1 \"$2\" deleted.", "Autor #$1 \"$2\" smazán.");
 regGS("Article type \"$1\" deleted.", "Typ článku \"$1\" smazán.");
 regGS("Article translated to \"$4\" ($5)", "Článek přeložen do \"$4\" ($5)");
-regGS("Article status changed from $3 to $4.", "Status článku změněn z $3 do $4.");
+regGS("Article status changed from $1 to $2.", "Status článku změněn z $1 na $2.");
 regGS("Article deleted.", "Článek smazán.");
 regGS("Article created.", "Článek vytvořen.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Článek kopírován do článku #$4 (publikace $5, vydání $6, sekce $7).");

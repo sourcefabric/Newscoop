@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Tip autora \"$1\" je napravljen.");
 regGS("Author #$1 \"$2\" deleted.", "Autor #$1 \"$2\" je obrisan");
 regGS("Article type \"$1\" deleted.", "Tip teksta \"$1\" je obrisan.");
 regGS("Article translated to \"$4\" ($5)", "Tekst je preveden u \"$4\" ($5)");
-regGS("Article status changed from $3 to $4.", "Status teksta je promenjen iz $3 u $4.");
+regGS("Article status changed from $1 to $2.", "Status teksta je promenjen iz $1 u $2.");
 regGS("Article deleted.", "Tekst je obrisan.");
 regGS("Article created.", "Tekst je napravljen.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Tekst je kopiran u tekst #$4 (publikacija $5, izdanje $6, rubrika $7).");
