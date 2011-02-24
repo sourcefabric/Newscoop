@@ -1621,3 +1621,22 @@ fieldset {
 	border:1px solid #9d9d9d;
 	background:#eeeeee;
 }
+
+.widget .wikipedia {
+    padding: 0 8px 65px;
+    background: transparent url('images/wikipedia-logo.png') no-repeat 5% 100%;
+    border: none;
+}
+
+.widget .wikipedia input {
+    line-height: 1em;
+    padding: 5px;
+    font-size: 1.1em;
+    border: 1px solid #ccc;
+}
+
+.widget .wikipedia .search {
+    width: 34em;
+    background-color: #fff;
+    opacity: 0.8;
+}
