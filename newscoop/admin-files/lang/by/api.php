@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Створаны тып аўтара \"$1\
 regGS("Author #$1 \"$2\" deleted.", "Аўтар #$1 \"$2\" выдалены.");
 regGS("Article type \"$1\" deleted.", "Тып аўтара \"$1\" выдалены.");
 regGS("Article translated to \"$4\" ($5)", "Артыкул перакладзены на \"$4\" ($5)");
-regGS("Article status changed from $3 to $4.", "Статут артыкула зменены з $3 на $4.");
+regGS("Article status changed from $1 to $2.", "Статут артыкула зменены з $1 на $2.");
 regGS("Article deleted.", "Артыкул выдалены.");
 regGS("Article created.", "Артыкул створаны.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Артыкул скапіраваны ў артыкул Article # $ 4 (выданне $5, выпуск $6, рубрыка $7)");
