@@ -174,17 +174,22 @@ class CampInstallationBase
         if (!$g_db->isConnected()) {
             $error = true;
         } else {
+            $isDbEmpty = TRUE;
             $selectDb = $g_db->SelectDB($db_database);
-            if ($selectDb && !$db_overwrite) {
+            if ($selectDb) {
+                $dbTables = $g_db->GetAll('SHOW TABLES');
+                $isDbEmpty = empty($dbTables) ? TRUE : FALSE;
+            }
+            if (!$isDbEmpty && !$db_overwrite) {
                 $this->m_step = 'database';
                 $this->m_overwriteDb = true;
                 $this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
                 $this->m_config['database'] = array(
-                                            'hostname' => $db_hostname,
-                                            'hostport' => $db_hostport,
-                                            'username' => $db_username,
-                                            'userpass' => $db_userpass,
-                                            'database' => $db_database
+                    'hostname' => $db_hostname,
+                    'hostport' => $db_hostport,
+                    'username' => $db_username,
+                    'userpass' => $db_userpass,
+                    'database' => $db_database
                 );
                 $session->unsetData('config.db', 'installation');
                 $session->setData('config.db', $this->m_config['database'], 'installation', true);
