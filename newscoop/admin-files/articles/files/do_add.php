@@ -108,7 +108,7 @@ if (!Input::IsValid()) {
 	setMessage(getGS('Invalid input: $1', Input::GetErrorString()), TRUE);
 }
 
-$description = new Translation($f_language_selected);
+$description = new Translation((int) $f_language_selected);
 $description->create($f_description);
 
 $attributes = array();
