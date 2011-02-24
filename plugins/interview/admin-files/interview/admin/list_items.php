@@ -28,8 +28,7 @@ function ajax_action(action)
 if (strpos($call_script, '/interview/admin/') !== false && $g_user->hasPermission('plugin_interview_admin')) {
     $is_admin = true;   
 }
-if (strpos($call_script, '/interview/moderator/') !== false && $g_user->hasPermission('plugin_interview_moderator')) {
-    $is_moderator = true;   
+if (strpos($call_script, '/interview/moderator/') !== false && $g_user->hasPermission('plugin_interview_moderator')) { $is_moderator = true;   
 }
 if (strpos($call_script, '/interview/guest/') !== false && $g_user->hasPermission('plugin_interview_guest')) {
     $is_guest = true;   
