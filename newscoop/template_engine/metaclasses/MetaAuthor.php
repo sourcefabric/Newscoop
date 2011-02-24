@@ -55,7 +55,7 @@ final class MetaAuthor extends MetaDbObject
     protected function getBiography()
     {
         if (is_null($this->m_biography)) {
-            $language = (int) CampTemplate::singleton()->context()->language;
+            $language = (int) CampTemplate::singleton()->context()->language->number;
             $this->m_biography = new MetaAuthorBiography($this->m_dbObject->getId(), $language);
         }
         return $this->m_biography;
