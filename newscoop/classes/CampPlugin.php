@@ -218,18 +218,16 @@ class CampPlugin extends DatabaseObject
         }
 
         if (is_array(self::$m_pluginsInfo) && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
-            $ret = self::$m_pluginsInfo[$p_selectEnabled];
-            return $ret;
+            return self::$m_pluginsInfo[$p_selectEnabled];
         } else {
             if (self::FetchCachePluginsInfo() && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
-                $ret = self::$m_pluginsInfo[$p_selectEnabled];
-                return $ret;
+                return self::$m_pluginsInfo[$p_selectEnabled];
             }
             if (self::FetchFilePluginsInfo() && is_array(self::$m_pluginsInfo[$p_selectEnabled])) {
-                $ret = self::$m_pluginsInfo[$p_selectEnabled];
-                return $ret;
+                return self::$m_pluginsInfo[$p_selectEnabled];
             }
         }
+
         self::$m_pluginsInfo = array('available' => array(), 'enabled' => array());
         return array();
     }
@@ -253,19 +251,14 @@ class CampPlugin extends DatabaseObject
             $enabledPluginsNames[] = $plugin->getName();
         }
 
-        $handle=opendir(CS_PATH_PLUGINS);
-        while ($entry = readdir($handle)) {
-            if ($entry != "." && $entry != ".." && $entry != '.svn' && is_dir(CS_PATH_PLUGINS.DIR_SEP.$entry)) {
-                if (file_exists(CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php')) {
-                    include (CS_PATH_PLUGINS.DIR_SEP.$entry.DIR_SEP.$entry.'.info.php');
-                    $pluginsInfo['available'][$entry] = $info;
-                    if (array_search($entry, $enabledPluginsNames) !== false) {
-                        $pluginsInfo['enabled'][$entry] = $info;
-                    }
-                }
+        foreach (glob(CS_PATH_PLUGINS . '/*/*.info.php') as $file) {
+            include $file;
+            $plugin = basename(dirname($file));
+            $pluginsInfo['available'][$plugin] = $info;
+            if (array_search($plugin, $enabledPluginsNames) !== false) {
+                $pluginsInfo['enabled'][$plugin] = $info;
             }
         }
-        closedir($handle);
 
 	    self::$m_pluginsInfo = $pluginsInfo;
         self::StoreCachePluginsInfo();

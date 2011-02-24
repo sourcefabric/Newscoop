@@ -118,8 +118,6 @@ if (!defined('PLUGIN_BLOG_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_blog_comment');
         $g_ado_db->execute('DROP TABLE plugin_blog_topic');
         $g_ado_db->execute('DROP TABLE plugin_blog_entry_topic');
-
-        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'blog');
     }
 
     function plugin_blog_update()

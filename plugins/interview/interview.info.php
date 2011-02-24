@@ -119,8 +119,6 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
 
         $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
         $g_ado_db->execute('DROP TABLE plugin_interview_items');
-
-        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
 
     function plugin_interview_update()
