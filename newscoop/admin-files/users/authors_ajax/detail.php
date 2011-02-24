@@ -206,7 +206,7 @@ if ($id > 0) {
           $image = new Image($author->getImage());
           echo '<img src="' . $image->getThumbnailUrl() . '"/>';
       } else {
-          echo '<img src="../../temp_img/author_1.jpg" width="100" height="120" alt="1" />';
+          echo '<img src="" width="100" height="120" alt="" />';
       }
       ?>
       </div>
