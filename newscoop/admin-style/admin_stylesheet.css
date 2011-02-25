@@ -99,7 +99,7 @@ select {
 	font-size:1.1em;
 }
 .breadcrumbs li.separator {
-    background: url("images/breadcrumb_arrow.png") no-repeat 100% 35%;
+    background: url(images/breadcrumb_arrow.png) no-repeat 100% 35%;
     float: left;
     font-size: 1.1em;
     margin: 0 8px 0 0;
@@ -198,7 +198,7 @@ select {
     box-shadow: 0 1px 4px rgba(0,0,0,.15);
 }
 .top-input {
-    background: url("images/input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    background: url(images/input_bg.png) repeat-x scroll 0 0 #FFFFFF;
     border: 1px solid #9d9d9d;
 	color:#007fb3;
     float: left;
@@ -208,7 +208,7 @@ select {
     margin: 0;
     padding: 0;
     text-indent: 6px;
-    width: 543px;
+    width: 43%;
 }
 .toolbar .top-input {
 	margin-right: 10px;
@@ -269,11 +269,15 @@ select {
 	padding:10px 0 0 0;
 }
 .main-content-wrapper {
-	margin-right: 465px;
+	margin-right: 1%;
+	float:left;
+	width:71%;
+	min-width:670px;
 }
 .sidebar {
-	float:right;
-	width:450px;
+	float:left;
+	width:28%;
+	min-width:280px;
 }
 .big-block {
 	margin-bottom:10px;
@@ -311,7 +315,7 @@ fieldset ul li {
 
 }
 fieldset .input_text, .input_text {
-    background: url("images/input_bg.png") repeat-x scroll 0 0 #FFFFFF;
+    background: url(images/input_bg.png) repeat-x scroll 0 0 #FFFFFF;
 	font-family:Arial, Helvetica, sans-serif;
 	border: 1px solid #9D9D9D;
     float: left;
@@ -757,7 +761,8 @@ dl.inline-list dd {
     margin-right: 5px;
 }
 .info-bar {
-	margin-right: 465px;
+	margin-right: 2%;
+	width:70%;
 	height:27px;
 	clear:both;
 	padding:3px 0 0 0;
@@ -979,7 +984,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 .article-title-locked {
     color: #de3d3d;
-    background: transparent url("images/locked_big.png") no-repeat 0 50%;
+    background: transparent url(images/locked_big.png) no-repeat 0 50%;
     padding-left: 16px;
 }
 .breadcrumb_active	{
@@ -1040,7 +1045,7 @@ ul.tree.sortable .item fieldset .input_text {
     text-indent: 3px;
 }
 .search-box .filter-button  {
-    background: transparent url("images/dropdown-arrow.png") no-repeat scroll right 9px;
+    background: transparent url(images/dropdown-arrow.png) no-repeat scroll right 9px;
     color: #646664;
     padding: 4px 14px 0 10px;
     text-decoration: none;
@@ -1053,7 +1058,7 @@ ul.tree.sortable .item fieldset .input_text {
 	outline:none;
 }
 .search-box .filter-button.close  {
-    background: transparent url("images/dropdown-arrow-close.png") no-repeat scroll right 8px;
+    background: transparent url(images/dropdown-arrow-close.png) no-repeat scroll right 8px;
 }
 .search-box .filter-button:hover {
     color: #007fb3;
