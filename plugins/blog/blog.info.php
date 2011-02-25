@@ -8,18 +8,14 @@ $info = array(
         'name' => 'blogs',
         'label' => 'Blogs',
         'icon' => '/css/kedit.png',
+        'permission' => 'plugin_blog_moderator',
+        'path' => 'blog/moderator/list_blogs.php',
         'sub' => array(
             array(
                 'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
                 'label' => 'Administer',
                 'icon' => 'css/gear.png',
-            ),
-            array(
-                'permission' => 'plugin_blog_moderator',
-                'path' => "blog/moderator/list_blogs.php",
-                'label' => 'Moderate',
-                'icon' => 'css/format_increaseindent.png',
             ),
             array(
                 'permission' => 'plugin_blog_admin',

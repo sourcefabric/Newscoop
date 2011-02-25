@@ -8,17 +8,13 @@ $info = array(
         'name' => 'interview',
         'label' => 'Interviews',
         'icon' => '/css/interview.png',
+        'permission' => 'plugin_interview_moderator',
+        'path' => 'interview/moderator/index.php',
         'sub' => array(
             array(
                 'permission' => 'plugin_interview_admin',
                 'path' => "interview/admin/index.php",
                 'label' => 'Administer',
-                'icon' => 'css/interview.png',
-            ),
-            array(
-                'permission' => 'plugin_interview_moderator',
-                'path' => "interview/moderator/index.php",
-                'label' => 'Moderate',
                 'icon' => 'css/interview.png',
             ),
             array(
