@@ -176,7 +176,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
               class="input_text"
               autocomplete="off"
-              style="width:532px;"
+              style="width:70%;"
               <?php print $spellcheck ?> />
             <?php } else {
                 print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
