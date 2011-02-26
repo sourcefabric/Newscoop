@@ -9,6 +9,7 @@ camp_load_translation_strings('home');
 camp_load_translation_strings('articles');
 camp_load_translation_strings('api');
 camp_load_translation_strings('extensions');
+camp_load_translation_strings('globals');
 
 // install default widgets for admin
 WidgetManager::SetDefaultWidgetsAll();
