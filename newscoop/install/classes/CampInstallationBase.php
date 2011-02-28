@@ -75,11 +75,11 @@ class CampInstallationBase
 
         switch($this->m_step) {
         case 'precheck':
+            break;
+        case 'license':
             $session->unsetData('config.db', 'installation');
             $session->unsetData('config.site', 'installation');
             $session->unsetData('config.demo', 'installation');
-            break;
-        case 'license':
             $this->preInstallationCheck();
             break;
         case 'database':
@@ -122,6 +122,9 @@ class CampInstallationBase
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
+
+                require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+                SystemPref::DeleteSystemPrefsFromCache();
 
                 // clear all cache
                 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
@@ -410,6 +413,13 @@ class CampInstallationBase
             $this->m_message = 'Error: Could not update the admin user credentials.';
             return false;
         }
+
+        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+        	}
+        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
+        }
         if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
         && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
@@ -593,6 +603,7 @@ class CampInstallationBase
     private static function InstallPlugins()
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+        require_once(dirname(dirname(dirname(__FILE__))) . DIR_SEP . 'db_connect.php');
         require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 
         foreach (CampPlugin::GetPluginsInfo() as $info) {

@@ -45,7 +45,7 @@ ArticleImage::AddImageToArticle($f_image_id, $f_article_number);
 <script>
 try {
     parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", $imageObj->getDescription()); ?>";
+    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", addslashes($imageObj->getDescription())); ?>";
     parent.$.fancybox.close();
 } catch (e) {}
 </script>

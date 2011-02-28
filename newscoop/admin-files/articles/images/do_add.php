@@ -80,7 +80,7 @@ ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNum
 <script type="text/javascript">
 try {
     parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", $image->getDescription()); ?>";
+    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", addslashes($image->getDescription())); ?>";
     parent.$.fancybox.close();
 } catch (e) {}
 </script>
