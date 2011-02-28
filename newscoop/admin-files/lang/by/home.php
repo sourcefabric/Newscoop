@@ -98,5 +98,4 @@ regGS("Login failed", "Памылка ўваходу");
 regGS("Please make sure that you typed the correct user name and password.", "Калi ласка, праверце, цi правiльна Вы ўвялі лагiн і пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Калi праблема iснуе, зьвярнецеся да адмiнiстратара сайта $1");
 regGS("Backup/Restore", "Рэзервнае капіраванне");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Прывітаньне, \\ \\ n Для аднаўлення пароля прайдзіце па гэтай спасылцы:% s");
 ?>

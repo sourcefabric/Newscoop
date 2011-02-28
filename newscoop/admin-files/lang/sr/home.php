@@ -98,5 +98,4 @@ regGS("Login failed", "Неуспешна пријава");
 regGS("Please make sure that you typed the correct user name and password.", "Проверите да ли сте исправно уписали корисничко име и лозинку");
 regGS("If your problem persists please contact the site administrator $1", "Ако се проблем понови контактирајте администратора сајта $1");
 regGS("Backup/Restore", "Бекап/враћање");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Здраво, \\nза повраћај лозинке, молимо следите овај линк: %s");
 ?>
