@@ -1941,6 +1941,12 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
+        $leftOperand = 'constrained';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
         $poi_count = 0;
         $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
 
@@ -2164,9 +2170,14 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
+        $leftOperand = 'constrained';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
         $poi_count = 0;
         $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
-
 
         $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
 

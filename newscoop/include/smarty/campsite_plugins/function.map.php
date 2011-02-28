@@ -35,27 +35,6 @@ function smarty_function_map($p_params, &$p_smarty)
     $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
-    //var_dump($campsite->map_dynamic);
-    if ($campsite->map_dynamic) {
-        return $campsite->map_dynamic;
-    }
-
-
-
-    // language and article must be set in context
-    if (!$campsite->language->defined || !$campsite->article->defined) {
-        return;
-    }
-
-    // do nothing if article does not have a map
-    if ($campsite->article->has_map == FALSE) {
-        return;
-    }
-
-    // get article and language from context
-    $article = (int) $campsite->article->number;
-    $language = (int) $campsite->language->number;
-
     // get show locations list parameter
     $showLocationsList = FALSE;
     if (isset($p_params['show_locations_list'])
@@ -79,6 +58,78 @@ function smarty_function_map($p_params, &$p_smarty)
     // get map width and height
     $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
+
+    //var_dump($campsite->map_dynamic);
+    if ($campsite->map_dynamic) {
+    // language must be set in context
+        if (!$campsite->language->defined) {
+            return;
+        }
+
+        $map_part = "<!-- Begin Map //-->\n";
+        $map_body = "";
+
+        //var_dump($campsite->map_dynamic);
+        //return json_encode($campsite->map_dynamic);
+
+        $offset = 0;
+        $limit = 200;
+        //$map_width = 300;
+        //$map_height = 400;
+
+        $language = $campsite->language->number;
+
+        $map_header = Geo_Map::GetMultiMapTagHeader($language, $campsite->map_dynamic, $offset, $limit, $width, $height);
+
+        //$map_div = Geo_Map::GetMultiMapTagBody($language);
+
+        $map_body .= '
+        <div class="geomap_container">';
+    if ($showLocationsList == TRUE) {
+        $map_body .= '
+            <div class="geomap_locations">
+                ' . Geo_Map::GetMultiMapTagList($language, $campsite->map_dynamic, $offset, $limit) . '
+            </div>';
+    }
+    if ($showResetLink == TRUE) {
+        $map_body .= '
+            <div class="geomap_menu">
+                <a href="#" onClick="' . Geo_Map::GetMultiMapTagCenter($language) . 'return false;">' . camp_javascriptspecialchars($resetLinkText) . '</a>
+            </div>';
+    }
+        $map_body .= '
+            <div class="geomap_map">
+                ' . Geo_Map::GetMultiMapTagBody($language) . '
+            </div>
+        </div>
+        <div style="clear:both" ></div>
+        <!--End Map //-->
+';
+
+        $map_part .= $map_header . $map_body;
+
+        //var_dump(htmlspecialchars($map_part));
+
+        return $map_part;
+        //return "multi-map test";
+    }
+
+    //return "";
+
+    // language and article must be set in context
+    if (!$campsite->language->defined || !$campsite->article->defined) {
+        return;
+    }
+
+    // do nothing if article does not have a map
+    if ($campsite->article->has_map == FALSE) {
+        return;
+    }
+
+    // get article and language from context
+    $article = (int) $campsite->article->number;
+    $language = (int) $campsite->language->number;
+
     $auto_focus = isset($p_params['auto_focus']) ? (bool) $p_params['auto_focus'] : null;
 
     // get core pieces to display the map

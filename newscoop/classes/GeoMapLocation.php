@@ -308,6 +308,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     public static function GetListExt(array $p_parameters, array $p_order = array(),
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
 	{
+        //var_dump($p_parameters);
         $p_count = 0;
 
         $ps_asArray = true;
@@ -316,14 +317,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $ps_preview = false;
         $ps_textOnly = false;
 
-        $mc_mapCons = array();
+        $mc_mapCons = false;
+        $mc_authors_yes = array();
+        $mc_authors_no = array();
         $mc_users_yes = array();
         $mc_users_no = array();
         $mc_articles_yes = array();
         $mc_articles_no = array();
         $mc_issues = array();
         $mc_sections = array();
+        $mc_section_names = array();
         $mc_topics = array();
+        $mc_topic_names = array();
         $mc_topics_matchall = false;
         $mc_multimedia = array();
         $mc_areas = array();
@@ -334,6 +339,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         // process params
         foreach ($p_parameters as $param) {
             switch ($param->getLeftOperand()) {
+                case 'constrained':
+                    $mc_mapCons = true;
                 case 'as_array':
                     $ps_asArray = $param->getRightOperand();
                     break;
@@ -343,6 +350,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'language':
                     $ps_languageId = $param->getRightOperand();
                     break;
+                case 'active_only':
                 case 'preview':
                     $ps_preview = $param->getRightOperand();
                     break;
@@ -352,17 +360,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'author':
                     $one_user_value = $param->getRightOperand();
                     $one_user_type = $param->getOperator()->getName();
-                    if (!is_numeric($one_user_value)) {break;}
+                    //if (!is_numeric($one_user_value)) {break;}
                     if ("is" == $one_user_type) {
-                        $mc_users_yes[] = $one_user_value;
+                        $mc_authors_yes[] = $one_user_value;
                         $mc_mapCons = true;
                     }
                     if ("not" == $one_user_type) {
-                        $mc_users_no[] = $one_user_value;
+                        $mc_authors_no[] = $one_user_value;
                         $mc_mapCons = true;
                     }
                     break;
                 case 'article':
+                    //var_dump($param);
                     $one_article_value = $param->getRightOperand();
                     $one_article_type = $param->getOperator()->getName();
                     if ("is" == $one_article_type) {
@@ -382,8 +391,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $mc_sections[] = $param->getRightOperand();
                     $mc_mapCons = true;
                     break;
+                case 'section_name':
+                    $mc_section_names[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
                 case 'topic':
                     $mc_topics[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
+                case 'topic_name':
+                    $mc_topic_names[] = $param->getRightOperand();
                     $mc_mapCons = true;
                     break;
                 case 'matchalltopics':
@@ -419,10 +436,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
+        $Context = CampTemplate::singleton()->context();
+        //var_dump($Context->publication->identifier);
+        $ps_publicationId = $Context->publication->identifier;
+        //return array();
+        //$ps_publication = $Context->publication->id;
         if ((!$ps_languageId) || (0 >= $ps_languageId)) {
-            $Context = CampTemplate::singleton()->context();
             $ps_languageId = $Context->language->number;
         }
+
 
         if ((!$ps_languageId) || (0 >= $ps_languageId)) {
             return array();
@@ -457,7 +479,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
+        //echo "cccccccccccccccc";
         if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
+        //echo "dddddddddddddddd";
+
 
         $mc_limit = 0 + $p_limit;
         if (0 > $mc_limit) {$mc_limit = 0;}
@@ -479,18 +504,23 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         if (!$p_skipCache) {
             $paramsArray_arr["as_array"] = true;
             $paramsArray_arr["map_id"] = $ps_mapId;
+            $paramsArray_arr["publication_id"] = $ps_publicationId;
             $paramsArray_arr["language_id"] = $ps_languageId;
             $paramsArray_arr["preview"] = $ps_preview;
             $paramsArray_arr["text_only"] = $ps_textOnly;
     
             $paramsArray_arr["map_cons"] = $mc_mapCons;
-            $paramsArray_arr["users_yes"] = $mc_users_yes;
-            $paramsArray_arr["users_no"] = $mc_users_no;
+            $paramsArray_arr["authors_yes"] = $mc_authors_yes;
+            $paramsArray_arr["authors_no"] = $mc_authors_no;
+            //$paramsArray_arr["users_yes"] = $mc_users_yes;
+            //$paramsArray_arr["users_no"] = $mc_users_no;
             $paramsArray_arr["articles_yes"] = $mc_articles_yes;
             $paramsArray_arr["articles_no"] = $mc_articles_no;
             $paramsArray_arr["issues"] = $mc_issues;
             $paramsArray_arr["sections"] = $mc_sections;
+            $paramsArray_arr["section_names"] = $mc_section_names;
             $paramsArray_arr["topics"] = $mc_topics;
+            $paramsArray_arr["topic_names"] = $mc_topic_names;
             $paramsArray_arr["topics_matchall"] = $mc_topics_matchall;
             $paramsArray_arr["multimedia"] = $mc_multimedia;
             $paramsArray_arr["areas"] = $mc_areas;
@@ -523,6 +553,110 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
 		global $g_ado_db;
+
+        if (0 < count($mc_authors_yes)) {
+            $author_ids_req_names = ArticleAuthor::BuildAuthorIdsQuery($mc_authors_yes);
+            $author_ids_req_alias = AuthorAlias::BuildAuthorIdsQuery($mc_authors_yes);
+
+            if ($author_ids_req_names) {
+                $rows = $g_ado_db->GetAll($author_ids_req_names);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_users_yes[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+            if ($author_ids_req_alias) {
+                $rows = $g_ado_db->GetAll($author_ids_req_alias);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_users_yes[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+
+            if (0 == count($mc_users_yes)) {return array();}
+        }
+        if (0 < count($mc_authors_no)) {
+            $author_ids_req_names = ArticleAuthor::BuildAuthorIdsQuery($mc_authors_no);
+            $author_ids_req_alias = AuthorAlias::BuildAuthorIdsQuery($mc_authors_no);
+
+            if ($author_ids_req_names) {
+                $rows = $g_ado_db->GetAll($author_ids_req_names);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_users_no[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+            if ($author_ids_req_alias) {
+                $rows = $g_ado_db->GetAll($author_ids_req_alias);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_users_no[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+        }
+
+        if (0 < count($mc_section_names)) {
+            $section_ids_req_names = Section::BuildSectionIdsQuery($mc_section_names, $ps_publicationId);
+
+            if ($section_ids_req_names) {
+                $rows = $g_ado_db->GetAll($section_ids_req_names);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_sections[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+
+            if (0 == count($mc_sections)) {return array();}
+        }
+
+        if (0 < count($mc_topic_names)) {
+            $topic_ids_req_names = TopicName::BuildTopicIdsQuery($mc_topic_names);
+
+            if ($topic_ids_req_names) {
+                $rows = $g_ado_db->GetAll($topic_ids_req_names);
+                if (is_array($rows)) {
+                    foreach ($rows as $row) {
+                        $mc_topics[] = trim(strtolower($row['id']));
+                    }
+                }
+            }
+
+            if (0 == count($mc_topics)) {return array();}
+        }
+
+        $ps_orders = array();
+        if ((!$p_order) || (!is_array($p_order)) || (0 == count($p_order))) {
+            if ($mc_mapCons) {
+                $ps_orders = array(array("a.Number" => "DESC"), array("m.id" => "DESC"));
+            }
+        } else {
+            $allowed_order_dirs = array("DESC" => true, "ASC" => true);
+            foreach ($p_order as $one_order_column => $one_order_dir) {
+                $one_dir = strtoupper($one_order_dir);
+                if (!array_key_exists($one_dir, $allowed_order_dirs)) {continue;}
+                switch(strtolower($one_order_column)) {
+                    case 'article':
+                        if (!$mc_mapCons) {break;}
+                        $ps_orders[] = array("a.Number" => $one_dir);
+                        break;
+                    case 'map':
+                        $ps_orders[] = array("m.id" => $one_dir);
+                        break;
+                    case 'name':
+                        $ps_orders[] = array("c.poi_name" => $one_dir);
+                        break;
+                }
+            }
+        }
+
+        //echo "cccccccccccccccc";
+        if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
+        //echo "dddddddddddddddd";
 
 		$sql_params = array();
         $sql_params_count = array();
@@ -568,7 +702,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $queryStr .= "INNER JOIN ArticleAuthors AS aa ON aa.fk_article_number = a.Number ";
             }
 
-            $query_mcons = "";
+            $query_mcons = "a.IdPublication = $ps_publicationId AND ";
             $article_mcons = false;
 
             foreach ($mc_multimedia as $one_multimedia) {
@@ -800,6 +934,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
 
+
+        //echo "$queryStr";
 		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
 
 		if (is_array($rows)) {
