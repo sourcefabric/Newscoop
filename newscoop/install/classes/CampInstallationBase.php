@@ -75,11 +75,11 @@ class CampInstallationBase
 
         switch($this->m_step) {
         case 'precheck':
+            break;
+        case 'license':
             $session->unsetData('config.db', 'installation');
             $session->unsetData('config.site', 'installation');
             $session->unsetData('config.demo', 'installation');
-            break;
-        case 'license':
             $this->preInstallationCheck();
             break;
         case 'database':
