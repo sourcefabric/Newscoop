@@ -1410,7 +1410,7 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Article status changed from $3 to $4.',
+        $logtext = getGS('Article status changed from $1 to $2.',
             $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value));
         Log::ArticleMessage($this, $logtext, null, 35);
         return true;

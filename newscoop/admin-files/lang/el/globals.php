@@ -261,5 +261,5 @@ regGS("Reads", "Αναγνώσεις");
 regGS("Publish with issue", "Δημοσίευση με τεύχος");
 regGS("Universal List", "Καθολική λίστα");
 regGS("Invalid security token!", "Άκυρο τεκμήριο ασφαλείας!");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την εικόνα \\'$1\\';");
+regGS("Authors", "");
 ?>

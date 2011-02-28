@@ -133,8 +133,7 @@ if ($isValidXMLFile) {
 	    $existingArticle = array_pop($existingArticles);
 	    // Is overwrite articles false? then skip and process next article
 	    if ($f_overwrite_articles == 'N') {
-	        $errorMessages[][] = 'Article "<i>'.(string) $article->name.'</i>" '
-		    .'already exist and was not overwritten.<br />';
+	        $errorMessages[][] = getGS('Article "<i>$1</i>" already exists, and was not overwritten.<br />',$article->name);
 	        continue;
 	    }
 	}
@@ -349,7 +348,7 @@ echo camp_html_breadcrumbs($crumbs);
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Overwrite existing articles"); ?>?:</td>
+      <td align="right"><?php putGS("Overwrite articles with matching names"); ?>?:</td>
       <td>
         <input type="radio" name="f_overwrite_articles" value="Y" <?php if ($f_overwrite_articles == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_overwrite_articles" value="N" <?php if ($f_overwrite_articles == 'N' || $f_overwrite_articles == '') p("checked"); ?> /> <?php putGS("No"); ?>

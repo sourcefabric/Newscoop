@@ -58,11 +58,15 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 . $p_params['html_code'] . ' /> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
-            if (is_null($fieldValue)) {
+        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
+        	if (!isGS('Mr.')) {
+        		camp_load_translation_strings("users", $campsite->language->code);
+        	}
+        	if (is_null($fieldValue)) {
                 $fieldValue = $campsite->user->$attribute;
             }
             $selectTag = true;
-            $output = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
+            $output = array(getGS('Mr.'), getGS('Mrs.'), getGS('Ms.'), getGS('Dr.'));
             $values = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'country') {
@@ -87,11 +91,15 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $values = array('0-17', '18-24', '25-39', '40-49', '50-65', '65-');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'employertype') {
-            if (is_null($fieldValue)) {
+        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
+        	if (!isGS('Corporate')) {
+        		camp_load_translation_strings("users", $campsite->language->code);
+        	}
+        	if (is_null($fieldValue)) {
                 $fieldValue = $campsite->user->$attribute;
             }
             $selectTag = true;
-            $output = array('Corporate', 'Non-Governmental', 'Government Agency', 'Academic', 'Media', 'Other');
+            $output = array(getGS('Corporate'), getGS('Non-Governmental'), getGS('Government Agency'), getGS('Academic'), getGS('Media'), getGS('Other'));
             $values = array('Corporate', 'NGO', 'Government Agency', 'Academic', 'Media', 'Other');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif (substr($attribute, 0, 4) == 'pref') {
