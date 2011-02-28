@@ -75,11 +75,11 @@ class CampInstallationBase
 
         switch($this->m_step) {
         case 'precheck':
+            break;
+        case 'license':
             $session->unsetData('config.db', 'installation');
             $session->unsetData('config.site', 'installation');
             $session->unsetData('config.demo', 'installation');
-            break;
-        case 'license':
             $this->preInstallationCheck();
             break;
         case 'database':
@@ -409,6 +409,12 @@ class CampInstallationBase
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not update the admin user credentials.';
             return false;
+        }
+        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+        	}
+        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
         }
         if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
         && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
