@@ -1,11 +1,11 @@
-newscoop (3.5.0~test5) 64studio; urgency=low
+newscoop (3.5.0-1) 64studio; urgency=low
   * update to upstream 3.5.0
   * added debconf template & config files for apache-setup
   * fixed postrm - remove php newscoop.ini 
   * (added newscoop crontab)
   * set RewriteBase during postinst
 
- -- Robin Gareus <robin@gareus.org>  Tue, 01 Feb 2011 22:02:17 +0100
+ -- Robin Gareus <robin@gareus.org>  Wed, 09 Feb 2011 14:59:18 +0100
 
 newscoop (3.5.0~rc2-4) 64studio; urgency=low
 

@@ -7,7 +7,7 @@
 # git archive --format tar release-3.5.0-GA newscoop/ | gzip -9 > /tmp/newscoop-3.5.0.tar.gz
 
 DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
-DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g')
+DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g;s/~test[0-9]*//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 DEBPATH=`pwd`/debian # TODO check dirname $0
