@@ -1,6 +1,6 @@
 <?php
 regGS("You do not have the right to add countries.", "국가를 추가할 권한이 없습니다. ");
-regGS("The country $1 could not be created", "국가 $1 을 생성할 수 없습니다.");
+regGS("The country $1 could not be created.", "국가 $1 을 생성할 수 없습니다.");
 regGS("Delete country", "국가 삭제");
 regGS("You do not have the right to delete countries.", "국가를 삭제할 권한이 없습니다. ");
 regGS("Are you sure you want to delete the country $1?", "국가 $1 을 확실히 삭제합니까?");

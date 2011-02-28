@@ -92,9 +92,6 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_poll_publication');
         $g_ado_db->execute('DROP TABLE plugin_poll_section');
         $g_ado_db->execute('DROP TABLE plugin_pollanswer_attachment');
-
-
-        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'/poll');
     }
 
     function plugin_poll_init(&$p_context)

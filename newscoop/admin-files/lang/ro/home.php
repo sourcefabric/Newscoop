@@ -98,5 +98,4 @@ regGS("Login failed", "Eroare la deschiderea sesiunii");
 regGS("Please make sure that you typed the correct user name and password.", "Asigură-te ca ai scris corect numele de utilizator şi parola.");
 regGS("If your problem persists please contact the site administrator $1", "Dacă problema nu dispare, contactează-l administratorul site-ului $1");
 regGS("Backup/Restore", "Arhivează/Restaurează");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "");
 ?>

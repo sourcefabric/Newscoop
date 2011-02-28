@@ -35,7 +35,7 @@ class WidgetManager
         'MapsGoogleGadget',
 
         'RecentlyPublishedArticlesWidget',
-        'WikipediaGoogleGadget',
+        'SearchWikipedia',
 
         'MostPopularArticlesWidget',
         'SourcefabricDevFeed',

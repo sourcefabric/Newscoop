@@ -280,6 +280,9 @@ $().ready(function() {
         paste_remove_spans: true,
         paste_remove_styles: true,
 
+        // not escaping greek characters
+        entity_encoding: 'raw',
+
         <?php if ($p_user->hasPermission('EditorSpellcheckerEnabled')): ?>
         gecko_spellcheck : true,
         <?php endif; ?>

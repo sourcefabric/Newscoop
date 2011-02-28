@@ -8,17 +8,13 @@ $info = array(
         'name' => 'interview',
         'label' => 'Interviews',
         'icon' => '/css/interview.png',
+        'permission' => 'plugin_interview_moderator',
+        'path' => 'interview/moderator/index.php',
         'sub' => array(
             array(
                 'permission' => 'plugin_interview_admin',
                 'path' => "interview/admin/index.php",
                 'label' => 'Administer',
-                'icon' => 'css/interview.png',
-            ),
-            array(
-                'permission' => 'plugin_interview_moderator',
-                'path' => "interview/moderator/index.php",
-                'label' => 'Moderate',
                 'icon' => 'css/interview.png',
             ),
             array(
@@ -119,8 +115,6 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
 
         $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
         $g_ado_db->execute('DROP TABLE plugin_interview_items');
-
-        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
 
     function plugin_interview_update()

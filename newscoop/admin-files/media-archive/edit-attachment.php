@@ -1,6 +1,7 @@
 <?php
 camp_load_translation_strings("media_archive");
 camp_load_translation_strings("article_files");
+camp_load_translation_strings("library");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');

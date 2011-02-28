@@ -198,6 +198,12 @@ $.fn.widgets = function (options) {
             handle: '.header',
             forcePlaceholderSize: true,
             opacity: 0.8,
+            helper: function(event, original) {
+                return $('<div />').addClass("helper")
+                    .css('height', original.height()+'px')
+                    .css('background-color', '#fff')
+                    .appendTo($('body'));
+            },
             stop: function(event, ui) {
                 // reload content
                 callServer(['WidgetRendererDecorator', 'render'], [

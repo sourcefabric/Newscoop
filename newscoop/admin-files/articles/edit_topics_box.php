@@ -10,7 +10,7 @@
       <fieldset class="frame">
         <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
         <input type="text" name="Keywords" id="Keywords" size="45"
-          class="input_text" value="<?php echo $articleObj->getKeywords(); ?>" onkeyup="" autocomplete="off" style="width:340px;" /><input
+          class="input_text" value="<?php echo $articleObj->getKeywords(); ?>" onkeyup="" autocomplete="off" style="width:75%;" /><input
           type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
       </fieldset>
     </form>

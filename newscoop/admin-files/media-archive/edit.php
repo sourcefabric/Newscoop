@@ -43,10 +43,10 @@ echo $breadcrumbs;
 <?php } ?>
 <?php if ($g_user->hasPermission('DeleteImage') && !$imageObj->inUse()) { ?>
     <td style="padding-left: 15px;">
-		<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($imageObj->getDescription())); ?>"></A>
+		<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($imageObj->getDescription())); ?>"></A>
     </TD>
     <TD style="padding-left: 3px;">
-    	<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><b><?php putGS('Delete'); ?></b></a>
+    	<A HREF="do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><b><?php putGS('Delete'); ?></b></a>
     </TD>
 <?php } ?>
 </tr>
