@@ -44,6 +44,12 @@ class Attachment extends DatabaseObject {
         if (!$this->exists()) {
             return false;
         }
+        // Deleting the from from disk path is the most common place for
+        // something to go wrong, so we do that first.
+        $file = $this->getStorageLocation();
+        if (file_exists($file) && is_file($file)) {
+            unlink($file);
+        }
 
         // Delete all the references to this image.
         ArticleAttachment::OnAttachmentDelete($this->m_data['id']);
@@ -55,12 +61,6 @@ class Attachment extends DatabaseObject {
 
         // Delete the record in the database
         $success = parent::delete();
-
-        // Delete the images from disk
-        $file = $this->getStorageLocation();
-        if (file_exists($file) && is_file($file)) {
-            unlink($file);
-        }
 
         $logtext = getGS('File #$1 "$2" deleted.', $tmpData['id'], $tmpData['file_name']);
         Log::Message($logtext, null, 39);
