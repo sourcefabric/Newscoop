@@ -108,8 +108,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
         elseif (is_string($match_all_topics_val)) {
             $match_all_topics_val = trim(strtolower($match_all_topics_val));
-            if (array_key_exists($match_all_topics_val, $values_known_yes) {$con_match_all_topics[0] = true;}
-            if (array_key_exists($match_all_topics_val, $values_known_no) {$con_match_all_topics[0] = false;}
+            if (array_key_exists($match_all_topics_val, $values_known_yes)) {$con_match_all_topics[0] = true;}
+            if (array_key_exists($match_all_topics_val, $values_known_no)) {$con_match_all_topics[0] = false;}
         }
     }
 
@@ -120,8 +120,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
         elseif (is_string($match_any_topic_val)) {
             $match_any_topic_val = trim(strtolower($match_any_topic_val));
-            if (array_key_exists($match_any_topic_val, $values_known_yes) {$con_match_all_topics[0] = false;}
-            if (array_key_exists($match_any_topic_val, $values_known_no) {$con_match_all_topics[0] = true;}
+            if (array_key_exists($match_any_topic_val, $values_known_yes)) {$con_match_all_topics[0] = false;}
+            if (array_key_exists($match_any_topic_val, $values_known_no)) {$con_match_all_topics[0] = true;}
         }
     }
 
@@ -137,8 +137,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
         elseif (is_string($has_multimedia_val)) {
             $has_multimedia_val = trim(strtolower($has_multimedia_val));
-            if (array_key_exists($has_multimedia_val, $values_known_yes) {$con_has_multimedia[0] = "any";}
-            if (array_key_exists($has_multimedia_val, $values_known_no) {$con_has_multimedia = array();}
+            if (array_key_exists($has_multimedia_val, $values_known_yes)) {$con_has_multimedia[0] = "any";}
+            if (array_key_exists($has_multimedia_val, $values_known_no)) {$con_has_multimedia = array();}
             if ("video" == $has_multimedia_val) {$con_has_multimedia[0] = "video";};
             if ("image" == $has_multimedia_val) {$con_has_multimedia[0] = "image";};
         }
@@ -168,6 +168,19 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
     }
 
+    if (isset($p_params['area'])) {
+        $area_val = trim($p_params['area']);
+        $area_val = strtolower(str_replace('"', '""', trim($area_val)));
+        $area_val_arr = explode(" ", $area_val);
+/*
+        if (0 < strlen($area_val)) {
+            if ("rectangle" == substr()) {
+                ;
+            }
+            $con_arae[0] = $area_val;
+        }
+*/
+    }
 
 
 
