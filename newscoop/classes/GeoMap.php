@@ -736,8 +736,9 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
+        $pois = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count);
         return array(
-            'pois' => Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count),
+            'pois' => $pois,
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
     } // fn LoadMapData
@@ -2252,6 +2253,148 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $html .= '</div>';
         return $html;
     } // fn GetMultiMapTagList
+
+
+
+
+
+    // filter functions
+
+    /**
+     * Gives the header part for the map front end search by map-based rectangle selection
+     * the optional p_bboxDivs array of divs for automatical setting of the box corners coordinates.
+     * The bounding-box corners are available by js calls too (see e.g. locations/search.php).
+     *
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     * @param mixed $p_bboxDivs
+     *
+     * @return string
+     */
+    public static function GetMapFilterHeader($p_mapWidth = 0, $p_mapHeight = 0)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $cnf_html_dir = $Campsite['HTML_DIR'];
+        $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+        //$map_provider = Geo_Preferences::GetMapProviderDefault();
+        //$geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $map_provider);
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_info['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_info['height'] = $p_mapHeight;
+        }
+
+        $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_json = "";
+        $geo_map_json .= json_encode($geo_map_info["json_obj"]);
+
+        $geo_icons_info = Geo_Preferences::GetSearchInfo($cnf_html_dir, $cnf_website_url);
+        $geo_icons_json = "";
+        $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+
+
+        $tag_string .= $geo_map_incl;
+        $tag_string .= "\n";
+
+        $tag_string .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_filter.js"></script>
+
+<script type="text/javascript">
+
+    geo_object'. $map_suffix .' = new geo_locations();
+
+var useSystemParameters = function()
+{
+';
+
+    $loc_strings = json_encode(array("corners" => getGS("corners")));
+
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string .= "\n";
+    //$tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
+    //$tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_strings($loc_strings);";
+    $tag_string .= "\n";
+
+        $tag_string .= '
+};
+var on_load_proc = function()
+{
+
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        map_obj.style.width = "' . $geo_map_info["width"] . 'px";
+        map_obj.style.height = "' . $geo_map_info["height"] . 'px";
+
+        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
+
+    }
+};
+    $(document).ready(function()
+    {
+        on_load_proc();
+    });
+</script>
+';
+
+        return $tag_string;
+
+    } // fn GetMapFilterHeader
+
+    /**
+     * Gives the body map-placement part for the map front end search by map-based rectangle selection
+     *
+     * @return string
+     */
+    public static function GetMapFilterBody()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
+
+        return $tag_string;
+    } // fn GetMapFilterBody
+
+    /**
+     * Gives the body map-centering (js call) part for the map front end search by map-based rectangle selection
+     *
+     * @return string
+     */
+    public static function GetMapFilterCenter()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+
+        return $tag_string;
+    } // fn GetMapFilterCenter
+
+
+
+
 
 
     // search functions

@@ -55,7 +55,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         parent::__construct($this->m_columnNames);
 
         if (is_array($arg)) {
-            //echo "has array";
         	$this->fetch($arg, $p_forceExists);
         } else if (is_numeric($arg)) {
             $this->m_data['id'] = (int) $arg;
@@ -146,7 +145,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     private function getLocation()
     {
         if ($this->location === NULL) {
-            echo "--- f*ck ---";
             $this->location = new Geo_Location($this->m_data['fk_location_id']);
         }
         return $this->location;
@@ -308,7 +306,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     public static function GetListExt(array $p_parameters, array $p_order = array(),
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
 	{
-        //var_dump($p_parameters);
         $p_count = 0;
 
         $ps_asArray = true;
@@ -371,7 +368,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     }
                     break;
                 case 'article':
-                    //var_dump($param);
                     $one_article_value = $param->getRightOperand();
                     $one_article_type = $param->getOperator()->getName();
                     if ("is" == $one_article_type) {
@@ -435,12 +431,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
             }
         }
+        
+        $ps_publicationId = 0;
+        if ($mc_mapCons && CampTemplate::singleton()) {
+            $Context = CampTemplate::singleton()->context();
+            if ($Context->publication) {
+                $ps_publicationId = $Context->publication->identifier;
+            }
+        }
 
-        $Context = CampTemplate::singleton()->context();
-        //var_dump($Context->publication->identifier);
-        $ps_publicationId = $Context->publication->identifier;
-        //return array();
-        //$ps_publication = $Context->publication->id;
         if ((!$ps_languageId) || (0 >= $ps_languageId)) {
             $ps_languageId = $Context->language->number;
         }
@@ -479,10 +478,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
-        //echo "cccccccccccccccc";
         if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
-        //echo "dddddddddddddddd";
-
 
         $mc_limit = 0 + $p_limit;
         if (0 > $mc_limit) {$mc_limit = 0;}
@@ -654,9 +650,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
-        //echo "cccccccccccccccc";
         if (((0 == $ps_mapId) || (!$ps_mapId)) && (!$mc_mapCons)) {return array();}
-        //echo "dddddddddddddddd";
 
 		$sql_params = array();
         $sql_params_count = array();
@@ -934,8 +928,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
 
-
-        //echo "$queryStr";
 		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
 
 		if (is_array($rows)) {
