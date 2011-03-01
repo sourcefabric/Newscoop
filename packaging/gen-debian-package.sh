@@ -13,9 +13,9 @@ UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 
-if test "${UPSTREAMDIST}" == "3.5"; then
-	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
-fi
+#if test "${UPSTREAMDIST}" == "3.5"; then
+#	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
+#fi
 
 if test ! -d ${DEBPATH}; then
   echo "can not find debian/ folder. Please 'cd <newscoop-git>/packaging/'"
@@ -52,7 +52,10 @@ elif [ -n "$CUSTOMURL" ]; then
 		| tar xzf - || exit
 else
 	echo "download from sourceforge."
-  curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
+  #curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
+  curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMVERSION/newscoop-$UPSTREAMVERSION.tar.gz \
+		| tee ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz \
+		| tar xzf - || exit
 fi
 
 # done in README.debian
@@ -79,6 +82,12 @@ if test "${UPSTREAMVERSION}" == "3.5.0-rc2"; then
   rm "newscoop/install/sample_templates/classic/templates/classic/tpl/banner/bannerleftcol.tpl .tpl"
 fi
 
+### fixes for 3.5.1 ###
+if test "${UPSTREAMVERSION}" == "3.5.1"; then
+	chmod -x newscoop/install/sample_templates/the_journal/templates/system_templates/img/newscoop_logo_big.png
+	rm newscoop/javascript/editarea/edit_area/plugins/test/images/Thumbs.db
+	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
+fi
 
 ############################
 

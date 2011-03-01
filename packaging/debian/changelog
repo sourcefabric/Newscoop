@@ -1,3 +1,8 @@
+newscoop (3.5.1-1) 64studio; urgency=low
+  * update to upstream 3.5.1
+
+ -- Robin Gareus <robin@gareus.org>  Mon, 28 Feb 2011 19:37:13 +0100
+
 newscoop (3.5.0-1) 64studio; urgency=low
   * update to upstream 3.5.0
   * added debconf template & config files for apache-setup
