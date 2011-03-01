@@ -125,10 +125,9 @@ class TopicName extends DatabaseObject {
             if (2 <= count($one_name_parts)) {
                 $topic_name = $one_name_parts[0];
                 $topic_lang = $one_name_parts[1];
-                $topic_names_full[] = "(name = \"$topic_name\" AND fk_language_id = \"$topic_lang\")";
+                $topic_names_full[] = "(name = \"$topic_name\" AND fk_language_id IN (SELECT Id FROM Languages WHERE Code = \"$topic_lang\"))";
             }
-
-            if (0 < strlen($one_name)) {
+            elseif (0 < strlen($one_name)) {
                 $topic_names[] = $one_name;
             }
         }
@@ -139,7 +138,7 @@ class TopicName extends DatabaseObject {
 
         $names_str = 'trim(name) IN ("' . implode('", "', $topic_names) . '") ';
         $names_str_full = '(' . implode(' OR ', $topic_names_full) . ') ';
-        $topics_query = "SELECT DISTINCT fk_topic_id AS id FROM TopicAliases WHERE ";
+        $topics_query = "SELECT DISTINCT fk_topic_id AS id FROM TopicNames WHERE ";
 
         $continuing = "";
         if (0 < count($topic_names)) {

@@ -60,11 +60,39 @@ function smarty_function_map($p_params, &$p_smarty)
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
 
     //var_dump($campsite->map_dynamic);
-    if ($campsite->map_dynamic) {
+    if (!is_null($campsite->map_dynamic)) {
     // language must be set in context
         if (!$campsite->language->defined) {
             return;
         }
+
+/* -- testing --
+        $run_article = ($campsite->article->defined) ? $campsite->article : null;
+        $run_language = $campsite->language;
+        //var_dump($campsite->language->code);
+
+        if ($run_article && $run_language) {
+            $run_authors = $run_article->authors;
+            foreach ($run_authors as $one_author) {
+                $con_authors[] = $one_author->name;
+            }
+            echo json_encode($con_authors);
+            $run_issue = $run_article->issue;
+            var_dump($run_issue->number);
+            $run_section = $run_article->section;
+            var_dump($run_section->number);
+
+            $run_topics = $run_article->topics;
+            //var_dump($run_topics);
+            foreach ($run_topics as $art_topic) {
+                $con_topics[] = $art_topic . ":" . $run_language->code;
+            }
+            //echo json_encode($con_topics);
+            //var_dump(TopicName::BuildTopicIdsQuery(array("Local News:en", "Hot Properties:en")));
+            var_dump(TopicName::BuildTopicIdsQuery($con_topics));
+
+        }
+*/
 
         $map_part = "<!-- Begin Map //-->\n";
         $map_body = "";
@@ -77,9 +105,50 @@ function smarty_function_map($p_params, &$p_smarty)
         //$map_width = 300;
         //$map_height = 400;
 
-        $language = $campsite->language->number;
+        $map_language = (int) $campsite->language->number;
 
-        $map_header = Geo_Map::GetMultiMapTagHeader($language, $campsite->map_dynamic, $offset, $limit, $width, $height);
+        $map_constraints = $campsite->map_dynamic;
+
+/*
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $map_constraints[] = $constraint;
+
+        $leftOperand = 'preview';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $map_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $map_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $map_language;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $map_constraints[] = $constraint;
+
+        $leftOperand = 'constrained';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $map_constraints[] = $constraint;
+
+        $poi_count = 0;
+        $poi_array = Geo_MapLocation::GetListExt($map_constraints, array(), 0, 200, $poi_count);
+        $poi_array["retrieved"] = true;
+*/
+
+        //$map_header = Geo_Map::GetMultiMapTagHeader($map_language, $poi_array, $offset, $limit, $width, $height);
+        //$poi_list = Geo_Map::GetMultiMapTagList($map_language, $poi_array, $offset, $limit);
+        $map_header = Geo_Map::GetMultiMapTagHeader($map_language, $map_constraints, $offset, $limit, $width, $height);
+        $poi_list = Geo_Map::GetMultiMapTagList($map_language, $map_constraints, $offset, $limit);
 
         //$map_div = Geo_Map::GetMultiMapTagBody($language);
 
@@ -88,18 +157,18 @@ function smarty_function_map($p_params, &$p_smarty)
     if ($showLocationsList == TRUE) {
         $map_body .= '
             <div class="geomap_locations">
-                ' . Geo_Map::GetMultiMapTagList($language, $campsite->map_dynamic, $offset, $limit) . '
+                ' . $poi_list . '
             </div>';
     }
     if ($showResetLink == TRUE) {
         $map_body .= '
             <div class="geomap_menu">
-                <a href="#" onClick="' . Geo_Map::GetMultiMapTagCenter($language) . 'return false;">' . camp_javascriptspecialchars($resetLinkText) . '</a>
+                <a href="#" onClick="' . Geo_Map::GetMultiMapTagCenter($map_language) . 'return false;">' . camp_javascriptspecialchars($resetLinkText) . '</a>
             </div>';
     }
         $map_body .= '
             <div class="geomap_map">
-                ' . Geo_Map::GetMultiMapTagBody($language) . '
+                ' . Geo_Map::GetMultiMapTagBody($map_language) . '
             </div>
         </div>
         <div style="clear:both" ></div>

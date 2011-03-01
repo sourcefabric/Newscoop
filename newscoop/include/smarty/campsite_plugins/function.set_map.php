@@ -71,8 +71,11 @@ function smarty_function_set_map($p_params, &$p_smarty)
 {
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('gimme');
+    $run_article = ($campsite->article->defined) ? $campsite->article : null;
+    $run_language = $campsite->language;
 
     $parameters = array();
+    $running = "running";
 
     $con_authors = array();
     $con_articles = array();
@@ -95,9 +98,19 @@ function smarty_function_set_map($p_params, &$p_smarty)
     if (isset($p_params['authors'])) {
         foreach (explode(",", $p_params['authors']) as $one_author) {
             //$one_author = str_replace('"', '""', trim($one_author));
-            $one_author = trim($one_author);
+            $one_author = trim("" . $one_author);
             if (0 < strlen($one_author)) {
-                $con_authors[] = $one_author;
+                if ($running == $one_author) {
+                    if ($run_article) {
+                        $run_authors = $run_article->authors;
+                        foreach ($run_authors as $art_author) {
+                            $con_authors[] = $art_author->name;
+                        }
+                    }
+                }
+                else {
+                    $con_authors[] = $one_author;
+                }
             }
         }
     }
@@ -107,7 +120,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
     if (isset($p_params['articles'])) {
         foreach (explode(",", "" . $p_params['articles']) as $one_article) {
-            $one_article = trim($one_article);
+            $one_article = trim("" . $one_article);
             if (is_numeric($one_article)) {
                 $con_articles[] = $one_article;
             }
@@ -116,9 +129,19 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
     if (isset($p_params['issues'])) {
         foreach (explode(",", $p_params['issues']) as $one_issue) {
-            $one_issue = trim($one_issue);
-            if (is_numeric($one_issue)) {
-                $con_issues_num[] = $one_issue;
+            $one_issue = trim("" . $one_issue);
+            if ($running == $one_issue) {
+                if ($run_article) {
+                    $run_issue = $run_article->issue;
+                    if ($run_issue) {
+                        $con_issues_num[] = $run_issue->number;
+                    }
+                }
+            }
+            else {
+                if (is_numeric($one_issue)) {
+                    $con_issues_num[] = $one_issue;
+                }
             }
             //elseif (0 < strlen($one_issue)) {
             //    $one_issue = str_replace('"', '""', trim($one_issue));
@@ -129,8 +152,16 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
     if (isset($p_params['sections'])) {
         foreach (explode(",", $p_params['sections']) as $one_section) {
-            $one_section = trim($one_section);
-            if (is_numeric($one_section)) {
+            $one_section = trim("" . $one_section);
+            if ($running == $one_section) {
+                if ($run_article) {
+                    $run_section = $run_article->section;
+                    if ($run_section) {
+                        $con_sections_num[] = $run_section->number;
+                    }
+                }
+            }
+            elseif (is_numeric($one_section)) {
                 $con_sections_num[] = $one_section;
             }
             elseif (0 < strlen($one_section)) {
@@ -145,11 +176,21 @@ function smarty_function_set_map($p_params, &$p_smarty)
     // then the Topic::BuildAllSubtopicsQuery on those ids
     if (isset($p_params['topics'])) {
         foreach (explode(",", $p_params['topics']) as $one_topic) {
-            $one_topic = trim($one_topic);
+            $one_topic = trim("" . $one_topic);
             if (0 < strlen($one_topic)) {
-                //$one_topic = str_replace('"', '""', trim($one_topic));
-                $one_topic = trim($one_topic);
-                $con_topics[] = $one_topic;
+                if ($running == $one_topic) {
+                    if ($run_article) {
+                        $run_topics = $run_article->topics;
+                        foreach ($run_topics as $art_topic) {
+                            $con_topics[] = $art_topic . ":" . $run_language->code;
+                        }
+                    }
+                }
+                else {
+                    //$one_topic = str_replace('"', '""', trim($one_topic));
+                    $one_topic = trim($one_topic);
+                    $con_topics[] = $one_topic;
+                }
             }
         }
     }
