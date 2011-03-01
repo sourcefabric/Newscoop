@@ -21,7 +21,7 @@ regGS("There was a problem trying to communicate to Campcaster", "Problem bei de
 regGS("There is no valid Campcaster session", "Keine gültige Airtime Sitzung");
 regGS("Stereo", "Stereo");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Soll diese Datei nur für die Übersetzung dieses Artikels zur Verfügung stehen oder für alle Übersetzungen?");
-regGS("Sample rate", "Beispielfrequenz");
+regGS("Sample rate", "Sample Rate");
 regGS("Reset Criteria", "Kriterien zurücksetzen");
 regGS("Report organizations", "Organisationen melden");
 regGS("Report location", "Standort melden");

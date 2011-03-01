@@ -107,6 +107,28 @@ var domTT_styleClass = 'domTTOverlib';
               </td>
             </tr>
             {{ /foreach }}
+
+            <tr>
+              <td class="first"><strong>Recommended</strong></td>
+              <td>&nbsp;</td>
+              <td><strong>Status</strong></td>
+            </tr>
+            {{ foreach from=$php_recommended item="phpopt" }}
+            <tr>
+              <td class="first">{{ $phpopt.tag }}</td>
+              <td>&nbsp;</td>
+              <td align="center">
+              {{ if $phpopt.exists eq 'Yes' }}
+                <span class="success">
+              {{ elseif $phpopt.exists eq 'No' }}
+                <span class="warning">
+              {{ else }}
+                <span class="other">
+              {{ /if }}
+                {{ $phpopt.exists }}</span>
+              </td>
+            </tr>
+            {{ /foreach }}
             </table>
           </td>
         </tr>
@@ -115,20 +137,19 @@ var domTT_styleClass = 'domTTOverlib';
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="3">
-            <div class="subtitle"><h3>Recommended PHP Settings:</h3></div>
+            <div class="subtitle"><h3>PHP Settings:</h3></div>
           </td>
         </tr>
         <tr>
           <td width="35%" valign="top">
             <div class="help">
               <p>These settings are recommended for PHP in order to ensure
-              <em>Newscoop</em> will work quite well. However,
-              <em>Newscoop</em> will still operate if your settings do not
-              quite match the recommended.</p>
+              <em>Newscoop</em> will work well. <em>Newscoop</em> will still
+              operate even though these settings are not set as suggested.</p>
 
-	      <p><span class="error">WARNING</span>: Always make sure that
-	      <span class="error"><em>register_globals</em> is OFF</span>,
-	      because it is a big security hole.</p>
+              <p><span class="error">WARNING</span>: Always make sure that
+              <span class="error"><em>register_globals</em> is OFF</span>,
+              because it is a big security hole.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>
@@ -141,19 +162,19 @@ var domTT_styleClass = 'domTTOverlib';
               <td>&nbsp;</td>
               <td><strong>Current Set</strong></td>
             </tr>
-            {{ foreach from=$php_options item="phpopt" }}
+            {{ foreach from=$php_settings item="phpset" }}
             <tr>
-              <td class="first">{{ $phpopt.tag }}</td>
+              <td class="first">{{ $phpset.tag }}</td>
               <td>&nbsp;</td>
-              <td align="center">{{ $phpopt.rec_state }}</td>
+              <td align="center">{{ $phpset.rec_state }}</td>
               <td>&nbsp;</td>
               <td align="center">
-              {{ if $phpopt.cur_state eq $phpopt.rec_state }}
+              {{ if $phpset.cur_state eq $phpset.rec_state }}
                 <span class="success">
               {{ else }}
-                <span class="error">
+                <span class="warning">
               {{ /if }}
-                {{ $phpopt.cur_state }}</span>
+                {{ $phpset.cur_state }}</span>
               </td>
             </tr>
             {{ /foreach }}

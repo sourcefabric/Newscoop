@@ -148,13 +148,19 @@ if ($f_destination_publication_id > 0) {
 // Get all the sections.
 $allSections = array();
 if ($f_destination_issue_number > 0) {
-	$destIssue = new Issue($f_destination_publication_id);
-	$allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, null, array("ORDER BY" => array("Number" => "DESC")), true);
-	// Automatically select the section if there is only one.
-	if (count($allSections) == 1) {
-		$tmpSection = camp_array_peek($allSections);
-		$f_destination_section_number = $tmpSection->getSectionNumber();
-	}
+    $destIssue = new Issue($f_destination_publication_id);
+    $allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, null, array("ORDER BY" => array("Number" => "DESC")), true);
+    // Automatically select the section if there is only one.
+    if (count($allSections) == 1) {
+        $tmpSection = camp_array_peek($allSections);
+        $f_destination_section_number = $tmpSection->getSectionNumber();
+    } else {
+        $tmpSection = new Section($f_destination_publication_id, $f_destination_issue_number,
+            $firstArticle->getLanguageId(), $f_destination_section_number);
+        if (!$tmpSection->exists()) {
+            $f_destination_section_number = 0;
+        }
+    }
 }
 
 

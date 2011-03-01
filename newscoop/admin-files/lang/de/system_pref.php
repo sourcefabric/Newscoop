@@ -2,7 +2,7 @@
 regGS("Enable Airtime audio attachments?", "Airtime Audioanhänge aktivieren?");
 regGS("Airtime Server", "Airtime Server");
 regGS("Run scheduled tasks externally?", "Geplante Aufgaben extern ausführen?");
-regGS("Setting up a Newscoop Replication Server?", "Newscoop Replikationsserver erstellen?");
+regGS("Setting up a Newscoop Replication Server?", "Newscoop Replication Server erstellen?");
 regGS("Newscoop Online Server Database", "Newscoop Online Server Datenbank");
 regGS("OpenStreet Map", "OpenStreet Karte");
 regGS("MapQuest Map", "MapQuest Karte");
@@ -45,12 +45,12 @@ regGS("Invalid: You need PHP $1 enabled in order to use the caching system.", "U
 regGS("Image Resizing Ratio:", "Bildratio verändern:");
 regGS("Image Resizing Ratio", "Bildratio verändern:");
 regGS("Editor Settings", "Einstellungen bearbeiten");
-regGS("Session Lifetime", "Dauer der Sitzung");
+regGS("Session Lifetime", "Dauer der Sitzungs-Session");
 regGS("Please enter the site title", "Bitte Seitentitel eingeben.");
 regGS("Please enter the site meta keywords", "Bitte Metaschlagwörter für Seite eingeben.");
 regGS("Please enter the site meta description", "Bitte Metabeschreibung für Seite eingeben.");
 regGS("Please enter the secret key", "Bitte geheimen Schlüssel eingeben.");
-regGS("Please enter the Keyword Seperator", "Bitte Schlagwort Separator eingeben");
+regGS("Please enter the Keyword Seperator", "Bitte Trennzeichen für Schlagwörter eingeben");
 regGS("Site Title:", "Seitentitel:");
 regGS("Site On-Line:", "Seite online:");
 regGS("Site Meta Keywords:", "Metaschlagwörter der Seite:");
@@ -83,7 +83,7 @@ regGS("Login Attempts", "Login Versuche");
 regGS("Keyword separator must be at least one character.", "Schlagwort Separator muss aus mindestens einem Zeichen bestehen.");
 regGS("You do not have the right to change system preferences.", "Keine Berechtigung um Systemeinstellungen zu verändern.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Anzahl fehlgeschlagener Loginversuche bevor CAPTCHA angezeigt wird:");
-regGS("Keyword separator:", "Schlagwort Separator:");
+regGS("Keyword separator:", "Trennzeichen für Schlagwörter:");
 regGS("Time Zone:", "Zeitzone:");
 regGS("disabled", "deaktiviert");
 ?>

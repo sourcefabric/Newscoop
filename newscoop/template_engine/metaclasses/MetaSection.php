@@ -19,7 +19,7 @@ final class MetaSection extends MetaDbObject {
     'description'=>'Description',
     'url_name'=>'ShortName'
 	);
-	
+
 	private static $m_defaultCustomProperties = array(
 	'template'=>'getTemplate',
     'publication'=>'getPublication',
@@ -40,6 +40,8 @@ final class MetaSection extends MetaDbObject {
         if (!$this->m_dbObject->exists() && !is_null($p_sectionNumber)) {
             $this->m_dbObject = new Section();
         }
+
+        $this->m_skipFilter = array('description');
     } // fn __construct
 
 

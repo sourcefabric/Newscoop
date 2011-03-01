@@ -98,5 +98,4 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Επαναφορά");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Καλησπέρα, \\nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
 ?>

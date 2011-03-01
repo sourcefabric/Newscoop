@@ -170,7 +170,7 @@ if ($f_publication_id > 0) {
     camp_html_content_top($title, $topArray);
 } else {
     $crumbs = array();
-    $crumbs[] = array(getGS('Actions'), '');
+    $crumbs[] = array(getGS('Pending Article'), '');
     $crumbs[] = array($title, '');
     echo camp_html_breadcrumbs($crumbs);
 }
@@ -252,7 +252,7 @@ foreach ($dbColumns as $dbColumn) {
 }
 if ($inEditMode && $hasArticleBodyField) {
     $languageSelectedObj = new Language($f_language_selected);
-    $editorLanguage = camp_session_get('TOL_Language', $languageSelectedObj->getCode());
+    $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 

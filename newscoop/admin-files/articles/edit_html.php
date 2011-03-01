@@ -103,69 +103,6 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
   </div>
   <!-- END Infor/Messaging bar //-->
 
-  <!-- START Side bar //-->
-  <div class="sidebar">
-      <!-- BEGIN Scheduled Publishing table -->
-      <?php require('edit_main_box.php'); ?>
-      <!-- END Scheduled Publishing table -->
-
-      <!-- BEGIN Geo-locations table -->
-      <?php require('edit_locations_box.php'); ?>
-      <!-- END Geo-locations table -->
-
-      <!-- BEGIN Topics table -->
-      <?php require('edit_topics_box.php'); ?>
-      <!-- END Topics table -->
-
-      <!-- BEGIN Switches table -->
-      <?php require('edit_switches_box.php'); ?>
-      <!-- END Switches table -->
-
-      <!-- BEGIN Info table -->
-      <?php require('edit_info_box.php'); ?>
-      <!-- END Info table -->
-
-      <!-- BEGIN Media table -->
-      <?php require('edit_media_box.php'); ?>
-      <!-- END Images table -->
-
-      <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') { ?>
-      <!-- BEGIN Audioclips table -->
-      <?php // require('edit_audioclips_box.php'); ?>
-      <!-- END Audioclips table -->
-      <?php } ?>
-
-      <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
-
-  </div>
-  <script type="text/javascript">
-  $(document).ready(function() {
-    $('.sidebar .articlebox').each(function() {
-        var box = $(this);
-        var title = box.attr('title');
-
-        // main classes
-        box.addClass('ui-widget-content small-block block-shadow');
-
-        // wrap content
-        $('> *', box).wrapAll('<div class="padded clearfix" />');
-
-        // wrap header
-        var header = $('<div class="collapsible" />').prependTo(box);
-        $('<h3><span class="ui-icon"></span><a href="#" tabindex="-1">'+title+'</a></h3>')
-            .addClass('head ui-accordion-header ui-helper-reset ui-state-default ui-widget')
-            .appendTo(header);
-    });
-
-    // init tabs
-    $('.sidebar .tabs').each(function() {
-        $(this).tabs();
-        $(this).closest('.padded').addClass('inner-tabs');
-    });
-  });
-  </script>
-  <!-- END Side bar //-->
-
   <!-- START Main form //-->
   <div class="main-content-wrapper">
     <form id="article-main" action="post.php" method="POST">
@@ -239,7 +176,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
               class="input_text"
               autocomplete="off"
-              style="width:532px;"
+              style="width:70%;"
               <?php print $spellcheck ?> />
             <?php } else {
                 print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
@@ -265,13 +202,13 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               value="<?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
               class="input_text datepicker"
               size="11"
-              maxlength="10"
+              maxlength="10" />
             <?php } else { ?>
             <span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;"><?php echo htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></span>
             <?php
             }
             ?>
-            <?php putGS('YYYY-MM-DD'); ?>
+            &nbsp;<?php putGS('YYYY-MM-DD'); ?>
           </li>
         <?php
             } elseif ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
@@ -386,5 +323,69 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     <!-- END Comments //-->
   </div>
   <!-- END Main form //-->
+
+  <!-- START Side bar //-->
+  <div class="sidebar">
+      <!-- BEGIN Scheduled Publishing table -->
+      <?php require('edit_main_box.php'); ?>
+      <!-- END Scheduled Publishing table -->
+
+      <!-- BEGIN Geo-locations table -->
+      <?php require('edit_locations_box.php'); ?>
+      <!-- END Geo-locations table -->
+
+      <!-- BEGIN Topics table -->
+      <?php require('edit_topics_box.php'); ?>
+      <!-- END Topics table -->
+
+      <!-- BEGIN Switches table -->
+      <?php require('edit_switches_box.php'); ?>
+      <!-- END Switches table -->
+
+      <!-- BEGIN Info table -->
+      <?php require('edit_info_box.php'); ?>
+      <!-- END Info table -->
+
+      <!-- BEGIN Media table -->
+      <?php require('edit_media_box.php'); ?>
+      <!-- END Images table -->
+
+      <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') { ?>
+      <!-- BEGIN Audioclips table -->
+      <?php // require('edit_audioclips_box.php'); ?>
+      <!-- END Audioclips table -->
+      <?php } ?>
+
+      <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
+
+  </div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('.sidebar .articlebox').each(function() {
+        var box = $(this);
+        var title = box.attr('title');
+
+        // main classes
+        box.addClass('ui-widget-content small-block block-shadow');
+
+        // wrap content
+        $('> *', box).wrapAll('<div class="padded clearfix" />');
+
+        // wrap header
+        var header = $('<div class="collapsible" />').prependTo(box);
+        $('<h3><span class="ui-icon"></span><a href="#" tabindex="-1">'+title+'</a></h3>')
+            .addClass('head ui-accordion-header ui-helper-reset ui-state-default ui-widget')
+            .appendTo(header);
+    });
+
+    // init tabs
+    $('.sidebar .tabs').each(function() {
+        $(this).tabs();
+        $(this).closest('.padded').addClass('inner-tabs');
+    });
+  });
+  </script>
+  <!-- END Side bar //-->
+
 </div>
 <?php camp_html_copyright_notice(); ?>

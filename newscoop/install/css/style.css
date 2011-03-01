@@ -272,6 +272,9 @@ span.success {
 span.error {
     color: red;
 }
+span.warning {
+    color: #e1b60a;
+}
 span.other {
     color: orange;
 }

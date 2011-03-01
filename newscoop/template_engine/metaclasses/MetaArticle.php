@@ -145,13 +145,20 @@ final class MetaArticle extends MetaDbObject {
         try {
             if (array_search($property, $this->m_properties)) {
                 $methodName = $this->m_getPropertyMethod;
-                return $this->m_dbObject->$methodName($property);
+                $propertyValue = $this->m_dbObject->$methodName($property);
             } elseif (array_key_exists($property, $this->m_customProperties)) {
                 return $this->getCustomProperty($property);
             } else {
                 $this->trigger_invalid_property_error($p_property);
                 return null;
             }
+            if (empty($propertyValue) || !is_string($propertyValue) || is_numeric($propertyValue)) {
+            	return $propertyValue;
+            }
+            if (count($this->m_skipFilter) == 0 || !in_array(strtolower($p_property), $this->m_skipFilter)) {
+            	$propertyValue = self::htmlFilter($propertyValue);
+            }
+            return $propertyValue;
         } catch (InvalidPropertyException $e) {
             $this->trigger_invalid_property_error($p_property);
             return null;

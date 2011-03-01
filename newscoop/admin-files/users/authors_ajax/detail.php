@@ -30,15 +30,14 @@ if ($id > 0) {
     $getBio = Input::Get("getBio", "int", 0);
     $author = new Author($id);
     if ($getBio == 1) {
-        $json = '{
-            "first_name":"%s",
-            "last_name":"%s",
-            "biography":"%s"
-        }';
+        $json = '{"first_name":"","last_name":"","biography":""}';
         $language = Input::Get("language", "int", 0);
         $bioObj = new AuthorBiography($author->getId(), $language);
         if ($bioObj->exists()) {
-            $json = sprintf($json, addslashes($bioObj->getFirstName()), addslashes($bioObj->getLastName()), addslashes($bioObj->getBiography()));
+            $json = '{"first_name":"'.addslashes($bioObj->getFirstName())
+                .'","last_name":"'.addslashes($bioObj->getLastName())
+                .'","biography":"'.addslashes($bioObj->getBiography())
+                .'"}';
         }
         echo $json;
         exit();
@@ -207,7 +206,7 @@ if ($id > 0) {
           $image = new Image($author->getImage());
           echo '<img src="' . $image->getThumbnailUrl() . '"/>';
       } else {
-          echo '<img src="../../temp_img/author_1.jpg" width="100" height="120" alt="1" />';
+          echo '<img src="" width="100" height="120" alt="" />';
       }
       ?>
       </div>
@@ -291,7 +290,8 @@ $languageObj = new Language($Language);
 if (!is_object($languageObj)) {
     $languageObj = new Language(1);
 }
-$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
+
+$editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('txt_biography', $g_user, 0, $editorLanguage, 'authorbiography');
 ?>
 </form>

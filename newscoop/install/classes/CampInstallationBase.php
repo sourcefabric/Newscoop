@@ -75,11 +75,11 @@ class CampInstallationBase
 
         switch($this->m_step) {
         case 'precheck':
+            break;
+        case 'license':
             $session->unsetData('config.db', 'installation');
             $session->unsetData('config.site', 'installation');
             $session->unsetData('config.demo', 'installation');
-            break;
-        case 'license':
             $this->preInstallationCheck();
             break;
         case 'database':
@@ -122,6 +122,9 @@ class CampInstallationBase
             if ($this->finish()) {
                 $this->saveConfiguration();
                 self::InstallPlugins();
+
+                require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+                SystemPref::DeleteSystemPrefsFromCache();
 
                 // clear all cache
                 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
@@ -174,17 +177,22 @@ class CampInstallationBase
         if (!$g_db->isConnected()) {
             $error = true;
         } else {
+            $isDbEmpty = TRUE;
             $selectDb = $g_db->SelectDB($db_database);
-            if ($selectDb && !$db_overwrite) {
+            if ($selectDb) {
+                $dbTables = $g_db->GetAll('SHOW TABLES');
+                $isDbEmpty = empty($dbTables) ? TRUE : FALSE;
+            }
+            if (!$isDbEmpty && !$db_overwrite) {
                 $this->m_step = 'database';
                 $this->m_overwriteDb = true;
                 $this->m_message = '<p>There is already a database named <i>' . $db_database . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.</p>';
                 $this->m_config['database'] = array(
-                                            'hostname' => $db_hostname,
-                                            'hostport' => $db_hostport,
-                                            'username' => $db_username,
-                                            'userpass' => $db_userpass,
-                                            'database' => $db_database
+                    'hostname' => $db_hostname,
+                    'hostport' => $db_hostport,
+                    'username' => $db_username,
+                    'userpass' => $db_userpass,
+                    'database' => $db_database
                 );
                 $session->unsetData('config.db', 'installation');
                 $session->setData('config.db', $this->m_config['database'], 'installation', true);
@@ -405,6 +413,13 @@ class CampInstallationBase
             $this->m_message = 'Error: Could not update the admin user credentials.';
             return false;
         }
+
+        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+        	}
+        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
+        }
         if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
         && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
@@ -588,6 +603,7 @@ class CampInstallationBase
     private static function InstallPlugins()
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
+        require_once(dirname(dirname(dirname(__FILE__))) . DIR_SEP . 'db_connect.php');
         require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
 
         foreach (CampPlugin::GetPluginsInfo() as $info) {

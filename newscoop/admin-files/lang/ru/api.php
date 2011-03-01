@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Создан тип автора \"$1\".")
 regGS("Author #$1 \"$2\" deleted.", "Автор  #$1 \"$2\" удален.");
 regGS("Article type \"$1\" deleted.", "Тип автора \"$1\" удален.");
 regGS("Article translated to \"$4\" ($5)", "Статья переведена на \"$4\" ($5)");
-regGS("Article status changed from $3 to $4.", "Статус статьи изменен с $3 на $4.");
+regGS("Article status changed from $1 to $2.", "Статус статьи изменен с $1 на $2.");
 regGS("Article deleted.", "Статья удалена.");
 regGS("Article created.", "Статья создана.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Статья скопирована в статью Article #$4 (издание $5, выпуск $6, рубрика $7 )");

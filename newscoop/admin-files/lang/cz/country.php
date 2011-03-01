@@ -1,6 +1,6 @@
 <?php 
 regGS("You do not have the right to add countries.", "Nemáte právo přidat zemi");
-regGS("The country $1 could not be created", "Země $1 nemohla být vytvořena");
+regGS("The country $1 could not be created.", "Země $1 nemohla být vytvořena");
 regGS("Delete country", "Smazat zemi");
 regGS("You do not have the right to delete countries.", "Nemáte právo smazat zemi");
 regGS("Are you sure you want to delete the country $1?", "Určitě chcete smazat zemi $1?");

@@ -429,6 +429,7 @@ if (!$isNewUser) {
 				<td align="right" nowrap><?php putGS("Country"); ?>:</td>
 				<td>
 				<SELECT name="CountryCode" class="input_select">
+                                <option value="">-- <?php putGS('Select Country'); ?> --</option>
 				<?php
 				foreach ($countries as $country) {
 					camp_html_select_option($country->getCode(), $CountryCode, $country->getName());

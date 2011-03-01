@@ -8,17 +8,13 @@ $info = array(
         'name' => 'interview',
         'label' => 'Interviews',
         'icon' => '/css/interview.png',
+        'permission' => 'plugin_interview_moderator',
+        'path' => 'interview/moderator/index.php',
         'sub' => array(
             array(
                 'permission' => 'plugin_interview_admin',
                 'path' => "interview/admin/index.php",
                 'label' => 'Administer',
-                'icon' => 'css/interview.png',
-            ),
-            array(
-                'permission' => 'plugin_interview_moderator',
-                'path' => "interview/moderator/index.php",
-                'label' => 'Moderate',
                 'icon' => 'css/interview.png',
             ),
             array(
@@ -39,12 +35,12 @@ $info = array(
     'permissions' => array(
     /**
      * Do not remove this comment: it is needed for the localizer
-     * getGS('User recives notification about new interviews');
+     * getGS('User receives notification about new interviews');
      * getGS('User is interview admin');
      * getGS('User is interview moderator');
      * getGS('User is interview guest');
      */
-        'plugin_interview_notify' => 'User recives notification about new interviews',
+        'plugin_interview_notify' => 'User receives notification about new interviews',
         'plugin_interview_admin' => 'User is interview admin',
         'plugin_interview_moderator' => 'User is interview moderator',
         'plugin_interview_guest' => 'User is interview guest'
@@ -119,8 +115,6 @@ if (!defined('PLUGIN_INTERVIEW_FUNCTIONS')) {
 
         $g_ado_db->execute('DROP TABLE plugin_interview_interviews');
         $g_ado_db->execute('DROP TABLE plugin_interview_items');
-
-        system('rm -rf '.CS_PATH_PLUGINS.DIR_SEP.'interview');
     }
 
     function plugin_interview_update()

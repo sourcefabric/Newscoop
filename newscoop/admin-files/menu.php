@@ -276,9 +276,9 @@ if ($showUserMenu) {
     }
 
     if ($g_user->hasPermission('EditAuthors')) {
-        $menu_item =& DynMenuItem::Create('Manage Authors',
-        "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
-        array('icon' => ''));
+        $menu_item =& DynMenuItem::Create(getGS('Authors'),
+            "/$ADMIN/users/authors.php?Back=".urlencode($_SERVER['REQUEST_URI']),
+            array('icon' => ''));
         $menu_users->addItem($menu_item);
     }
 }
