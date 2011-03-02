@@ -98,5 +98,4 @@ regGS("Login failed", "Login fehlgeschlagen");
 regGS("Please make sure that you typed the correct user name and password.", "Bitte prüfen, ob Benutzername und Passwort korrekt eingegeben wurden.");
 regGS("If your problem persists please contact the site administrator $1", "Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.");
 regGS("Backup/Restore", "Backup/Wiederherstellung");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Hi, \\nUm das Passwort wiederherzustellen, bitte diesem Link folgen: %s");
 ?>

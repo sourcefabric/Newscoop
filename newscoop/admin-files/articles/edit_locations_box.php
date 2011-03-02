@@ -9,8 +9,7 @@ $map = $articleObj->getMap();
 if (is_object($map) && $map->exists()) {
     $locations = $map->getLocations();
     $map_name = $map->getName();
-    if (0 < strlen($map_name))
-    {
+    if (0 < strlen($map_name)) {
         $map_name_title = $map_name;
         $map_name_title = str_replace("&", "&amp;", $map_name_title);
         $map_name_title = str_replace("<", "&lt;", $map_name_title);
@@ -20,8 +19,7 @@ if (is_object($map) && $map->exists()) {
         $map_name_title = " title='$map_name_title'";
     }
     $map_name_max_len = 20;
-    if ($map_name_max_len < strlen($map_name))
-    {
+    if ($map_name_max_len < strlen($map_name)) {
         $map_name = substr($map_name, 0, $map_name_max_len) . "...";
     }
     $map_name = str_replace("&", "&amp;", $map_name);
@@ -52,12 +50,9 @@ geomap_popup_show = function (edit) {
         }
     } catch (e) { geomap_force_new = true; }
     if (geomap_force_new) {
-        if (edit)
-        {
+        if (edit) {
             geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
-        }
-        else
-        {
+        } else {
             geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/preview.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
         }
         try {
@@ -78,6 +73,9 @@ geomap_popup_show = function (edit) {
   if ($map->exists()) {
   ?>
     <?php if ($canEdit) { ?>
+    <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"
+      class="iframe map-thumb"><img
+      src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Edit'); ?>" title="<?php putGS('Edit'); ?>" /></a>
     <a class="ui-state-default icon-button right-floated"
       href="<?php p($detachMapUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the map from the article?"); ?>'); return false;"><span
       class="ui-icon ui-icon-closethick"></span><?php putGS('Remove'); ?></a>
@@ -87,16 +85,13 @@ geomap_popup_show = function (edit) {
     <a class="iframe ui-state-default icon-button right-floated"
       href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"><span
       class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
-    <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"
-        class="iframe map-thumb"><img
-      src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Edit'); ?>" title="<?php putGS('Edit'); ?>" /></a>
     <?php } else { ?>
-    <a class="iframe ui-state-default icon-button right-floated"
-      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"><span
-      class="ui-icon ui-icon-zoomin"></span><?php putGS('Preview'); ?></a>
     <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"
         class="iframe map-thumb"><img
       src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Preview'); ?>" title="<?php putGS('Preview'); ?>" /></a>
+    <a class="iframe ui-state-default icon-button right-floated"
+      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/preview.php'); ?>"><span
+      class="ui-icon ui-icon-zoomin"></span><?php putGS('Preview'); ?></a>
   <?php }
   } elseif ($canEdit) { ?>
     <a class="iframe ui-state-default icon-button right-floated"
@@ -119,8 +114,7 @@ geomap_popup_show = function (edit) {
 
         $poi_name = $content->getName();
         $poi_name_max_len = 40;
-        if ($poi_name_max_len < strlen($poi_name))
-        {
+        if ($poi_name_max_len < strlen($poi_name)) {
             $poi_name = substr($poi_name, 0, $poi_name_max_len) . "...";
         }
         $poi_name = str_replace("&", "&amp;", $poi_name);

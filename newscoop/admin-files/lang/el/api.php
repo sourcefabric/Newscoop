@@ -15,7 +15,7 @@ regGS("Author type \"$1\" created.", "Ο τύπος συγγραφέα \"$1\" δ
 regGS("Author #$1 \"$2\" deleted.", "Ο συγγραφέας #$1 \"$2\" διαγράφτηκε.");
 regGS("Article type \"$1\" deleted.", "Ο τύπος άρθρου \"$1\" διαγράφτηκε.");
 regGS("Article translated to \"$4\" ($5)", "Το άρθρο μεταφράστηκε σε \"$4\" ($5)");
-regGS("Article status changed from $3 to $4.", "Η κατάσταση του άρθρου άλλαξε από $3 σε $4.");
+regGS("Article status changed from $1 to $2.", "Η κατάσταση του άρθρου άλλαξε από $1 σε $2.");
 regGS("Article deleted.", "Το άρθρο διαγράφτηκε.");
 regGS("Article created.", "Το άρθρο δημιουργήθηκε.");
 regGS("Article copied to Article #$4 (publication $5, issue $6, section $7).", "Το άρθρο αντιγράφτηκε στο Άρθρο #$4 (δημοσίευση $5, τεύχος $6, ενότητα $7).");

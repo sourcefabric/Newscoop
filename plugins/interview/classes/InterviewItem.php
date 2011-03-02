@@ -87,11 +87,7 @@ class InterviewItem extends DatabaseObject {
     {
         global $g_ado_db;
 
-        /*
-        if (!strlen($p_title) || !strlen($p_question) || !$p_date_begin || !$p_date_end || !$p_nr_of_answers) {
-            return false;
-        }
-        */
+        $this->m_data['item_id'] = NULL; // fix position generating
 
         // Create the record
         $values = array(
@@ -568,7 +564,7 @@ class InterviewItem extends DatabaseObject {
         if ($form->validate() && SecurityToken::isValid()) {
             $data = $form->getSubmitValues();
             if ($this->getId()==0) {
-                $this->create();
+                $this->create($data['f_questioneer_user_id'], $data['f_question'], $data['f_status']);
                 $this->setInterviewId($data['f_interview_id']);
                 $this->setQuestioneerwId($data['fk_questioneer_user_id']);
             }

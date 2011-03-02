@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.41, for debian-linux-gnu (i486)
+-- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: newscoop_ga
+-- Host: localhost    Database: newscoop35
 -- ------------------------------------------------------
--- Server version	5.1.41-3ubuntu12.6
+-- Server version	5.1.49-1ubuntu8.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -872,7 +872,7 @@ CREATE TABLE `Templates` (
   `CacheLifetime` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=1219 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=1221 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1103,7 +1103,7 @@ DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
 CREATE TABLE `liveuser_rights_right_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=226 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1881,4 +1881,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-31 10:16:31
+-- Dump completed on 2011-02-24 19:28:39

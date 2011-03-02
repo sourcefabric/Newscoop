@@ -11,7 +11,6 @@ define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
 $GLOBALS['g_campsiteDir'] = WWW_DIR;
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
-header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Content-Type: text/html; charset=UTF-8");
 

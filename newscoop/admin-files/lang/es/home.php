@@ -98,5 +98,4 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegurese de que escribio correctamente su nombre de usuario y clave.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
-regGS("Hi, \\nfor password recovery, please follow this link: %s", "Hola, \\npara la recuperación de la clave de acceso por favor siga este enlace: %s");
 ?>

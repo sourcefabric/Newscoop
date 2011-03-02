@@ -530,7 +530,7 @@ class Image extends DatabaseObject {
                     throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
                 }
     			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
-    												 $Campsite['THUMBNAIL_MAX_SIZE']);
+    												 $Campsite['THUMBNAIL_MAX_SIZE'], true, $imageInfo[2]);
     			if (PEAR::isError($thumbnailImage)) {
     				throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
     			}
@@ -621,11 +621,13 @@ class Image extends DatabaseObject {
 	 * 		The maximum height of the resized image
 	 * @param bool $p_keepRatio
 	 * 		If true keep the image ratio
+     * @param int $type
+     *      Image type
 	 * @return int
 	 * 		Return the new image resource handler.
 	 */
 	public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
-	                                   $p_keepRatio = true)
+	                                   $p_keepRatio = true, $type = IMAGETYPE_JPEG)
 	{
 		$origImageWidth = imagesx($p_image);
 		$origImageHeight = imagesy($p_image);
@@ -652,7 +654,20 @@ class Image extends DatabaseObject {
 			$newImageWidth = $p_maxWidth;
 			$newImageHeight = $p_maxHeight;
 		}
+
 		$newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
+
+        // fix transparent backgrounds for png/gif
+        if (in_array($type, array(IMAGETYPE_PNG, IMAGETYPE_GIF))) {
+            imagesavealpha($newImage, TRUE);
+            $color = imagecolorallocatealpha($newImage, 0, 0, 0, 127);
+
+            imagealphablending($newImage, FALSE);
+            imagefilledrectangle($newImage, 0, 0, $newImageWidth - 1, $newImageHeight - 1, $color);
+            imagealphablending($newImage, TRUE);
+            imagecolortransparent($newImage, $color);
+        }
+
 		imagecopyresampled($newImage, $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
 						   $origImageWidth, $origImageHeight);
 		return $newImage;
