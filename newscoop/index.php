@@ -11,7 +11,8 @@
 
 header("Content-type: text/html; charset=UTF-8");
 
-$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+define('WWW_DIR', dirname(__FILE__));
+$GLOBALS['g_campsiteDir'] = WWW_DIR;
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 .DIRECTORY_SEPARATOR.'campsite_constants.php');
