@@ -696,6 +696,7 @@ this.poi_order_revert = function(index)
 // for updating the side-bar with POI links
 this.update_poi_descs = function(active, index_type)
 {
+    var geo_obj = this;
     var obj_name = this.get_obj_name();
 
     if (0 == this.poi_markers.length)
@@ -835,7 +836,7 @@ this.update_poi_descs = function(active, index_type)
 
         $("#map_poi_side_list").bind( "sortupdate", function(event, ui) {
             var poi_order = $(this).sortable('toArray');
-            this.poi_order_update(poi_order);
+            geo_obj.poi_order_update(poi_order);
         });
 
         $('#map_poi_side_list .icon-button').hover(
