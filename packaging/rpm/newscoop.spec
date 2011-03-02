@@ -5,8 +5,8 @@
 
 Summary:        The open content management system for professional journalists
 Name:           newscoop
-Version:        3.5.0
-Release:        test5
+Version:        3.5.1
+Release:        1
 License:        GPL
 Packager:       Robin Gareus <robin@gareus.org>
 
@@ -30,7 +30,7 @@ Requires: php-gd
 Requires: php-mysql
 Requires: curl
 Requires: mysql
-Requires: GraphicsMagick
+Requires: ImageMagick
 # TODO: find MTA package
 #Requires: mail-server
 #Requires: sendmail
@@ -120,7 +120,7 @@ fi
 /etc/init.d/httpd restart
 
 ## CRON JOB
-#CU=www-data
+#CU=apache
 #CE=root@localhost
 #sed -e "s/__CRON_EMAIL__/${CE}/;s/__WWW_USER__/${CU}/" \
 #	${crontplfile} > ${cronincfile}
