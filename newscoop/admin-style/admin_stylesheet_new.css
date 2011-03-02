@@ -633,11 +633,10 @@ fieldset ul.nameList {
         margin:10px 0 1px 15px;
 }   
 .geo_map_name {
-        margin:0px 10px 0px 27px;
-        float: left;
-        padding-top: 20px;
+        margin:0;
+		clear:both;
+        padding-top: 10px;
         font-size: 13px;
-        width: 217px;
 }
 
 /*------ END Locations box ----------*/
