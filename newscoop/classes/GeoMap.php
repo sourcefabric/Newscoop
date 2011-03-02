@@ -2260,6 +2260,12 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
     // filter functions
 
+    public static function GetMapFilterObjName()
+    {
+        $map_suffix = "_filter";
+        return "geo_object" . $map_suffix;
+    }
+
     /**
      * Gives the header part for the map front end search by map-based rectangle selection
      * the optional p_bboxDivs array of divs for automatical setting of the box corners coordinates.
@@ -2281,8 +2287,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
 
-        //$map_provider = Geo_Preferences::GetMapProviderDefault();
-        //$geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $map_provider);
         $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
         if (0 < $p_mapWidth)
         {
@@ -2297,10 +2301,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
-        $geo_icons_info = Geo_Preferences::GetSearchInfo($cnf_html_dir, $cnf_website_url);
-        $geo_icons_json = "";
-        $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
-
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
 
@@ -2309,47 +2309,54 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $tag_string .= '
 
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_filter.js"></script>
 
 <script type="text/javascript">
 
-    geo_object'. $map_suffix .' = new geo_locations();
+    geo_object'. $map_suffix .' = new geo_locations_filter();
 
-var useSystemParameters = function()
+var on_load_proc_filter = function()
 {
-';
+    var res_state = false;
+    try {
+        res_state = OpenLayers.Util.test_ready();
+    } catch (e) {res_state = false;}
 
-    $loc_strings = json_encode(array("corners" => getGS("corners")));
-
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
-    $tag_string .= "\n";
-    //$tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
-    //$tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_strings($loc_strings);";
-    $tag_string .= "\n";
-
-        $tag_string .= '
-};
-var on_load_proc = function()
-{
+    if (!res_state)
+    {
+        setTimeout("on_load_proc_filter();", 250);
+        return;
+    }
 
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
         map_obj.style.width = "' . $geo_map_info["width"] . 'px";
         map_obj.style.height = "' . $geo_map_info["height"] . 'px";
+';
+    $loc_strings = json_encode(array("corners" => getGS("vertices")));
+    $img_dir = $Campsite['ADMIN_STYLE_URL'] . "/images/";
 
-        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_obj_name('geo_object$map_suffix');";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_strings($loc_strings);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_img_dir('$img_dir');";
+    $tag_string .= "\n";
+
+    $tag_string .= '
+        geo_object' . $map_suffix . '.main_init("geo_map_mapcanvas' . $map_suffix. '");
 
     }
 };
     $(document).ready(function()
     {
-        on_load_proc();
+        on_load_proc_filter();
     });
 </script>
 ';

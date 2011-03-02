@@ -1,123 +1,14 @@
-var map, vectors, controls;
-var geo_handler;
-var del_click;
-var last_info_string = "";
-
-var auto_report = setInterval("report(null);", 500);
-
-var into_method_pan = function() {
-    var geo_obj = geo_handler;
-    if (!geo_handler) {return;}
-
-    controls.polygon.deactivate();
-
-    var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
-    var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(pan_obj).removeClass("geo_filter_unselected");
-    $(new_obj).addClass("geo_filter_unselected");
-    $(new_obj).removeClass("geo_filter_selected");
-    $(pan_obj).addClass("geo_filter_selected");
-};
-
-var into_method_new = function() {
-    var geo_obj = geo_handler;
-    if (!geo_handler) {return;}
-
-    controls.polygon.activate();
-
-    controls.modify.deactivate();
-    controls.modify.activate();
-
-    var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
-    var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(new_obj).removeClass("geo_filter_unselected");
-    $(pan_obj).addClass("geo_filter_unselected");
-    $(pan_obj).removeClass("geo_filter_selected");
-    $(new_obj).addClass("geo_filter_selected");
-};
-
-var remove_polygon = function(rank) {
-    var geo_obj = geo_handler;
-    if (!geo_handler) {return;}
-
-    var feature = vectors.features[rank];
-
-    if (feature == controls.modify.feature) {
-        controls.modify.unselectFeature(feature);
-    }
-
-    vectors.removeFeatures(feature);
-    report(null);
-};
-
-var report = function(event) {
-    var geo_obj = geo_handler;
-    if (!geo_obj) {return;}
-
-    var info_obj = document.getElementById ? document.getElementById("geo_polygons_info") : null;
-    //var info_text = "<br>&nbsp;<br>\nPolygon coordinates:<br>&nbsp;<br>\n";
-    var info_text = "";
-
-    var features = vectors.features;
-
-    var features_count = features.length;
-
-    for (var find = 0; find < features_count; find++) {
-        var cur_feature = features[find];
-        var geometry = cur_feature["geometry"];
-        var verts = geometry.getVertices();
-
-        if (2 > verts.length) {continue;}
-
-        info_text += "<div style='float:left'>" + verts.length + " " + geo_obj.loc_strings.corners + " <a href='#' onclick='remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div><br>\n";
-
-        var sel_mod = false;
-        if (cur_feature == controls.modify.feature) {
-            sel_mod = true;
-        }
-
-        var cons_pol = "";
-        if (sel_mod) {
-            cons_pol += "<span style='color:#663300'>";
-        }
-
-        cons_pol += "polygon";
-        var vert_count = verts.length;
-        for (var vind = 0; vind < vert_count; vind++) {
-            var cur_vx = verts[vind];
-
-            var point = new OpenLayers.LonLat(cur_vx.x, cur_vx.y).transform(
-                geo_obj.map.getProjectionObject(), // to Spherical Mercator Projection
-                new OpenLayers.Projection("EPSG:4326") // transform from WGS 1984
-            );
-            cons_pol += " " + point.lat + " " + point.lon + ";";
-
-        }
-        if (sel_mod) {
-            cons_pol += "</span>";
-        }
-        info_text += cons_pol + "<br>\n";
-        info_text += "<br>\n";
-    }
-
-    if (last_info_string == info_text) {return;}
-    last_info_string = info_text;
-
-    info_obj.innerHTML = info_text;
-
-};
-
 // better for some providers to try more than once
 if (5 > OpenLayers.IMAGE_RELOAD_ATTEMPTS)
 {
     OpenLayers.IMAGE_RELOAD_ATTEMPTS = 5;
 }
 
-
 // the main object to hold geo-things
-function geo_locations () {
+function geo_locations_filter () {
 
-// specifying the article that the map is for
+this.inited = false;
+this.last_info_string = "";
 
 // what map provider should be used, and map position
 this.map_view_layer_google = "googlev3";
@@ -134,83 +25,32 @@ this.map_view_layer_name = "";
 this.map_view_layer_center_ini = {};
 this.map_view_layer_center = null;
 this.map_view_layer_zoom = 0;
-this.map_art_view_width_default = 0;
-this.map_art_view_height_default = 0;
-
-// values for popup style properties
-this.popup_width = 0;
-this.popup_height = 0;
-this.popup_video_labels = [];
-this.popup_video_props = {};
-
-// values for the lines to display the proposed map size
-this.map_art_view_width = 600;
-this.map_art_view_height = 400;
-this.map_art_view_top = 70;
-this.map_art_view_right = 105;
-this.map_art_view_width_display = 600;
-this.map_art_view_height_display = 400;
-this.map_art_view_top_display = 70;
-this.map_art_view_right_display = 105;
-
-this.map_label_name = "";
-this.map_id = 0;
-
-// currently edited (via the edit link) point
-this.edited_point = 0;
-this.edit_text_mode = 'plain';
-this.edit_view_mode = 'edit';
-
-
-// the order of the pois done by drag-n-drop; we do not reorder pois in the layer
-this.poi_order_user = [];
-
-// map controls
-this.select_control = null
-
-// the pan zoom-and-bar control
-this.pzb_ctrl = null;
-this.not_to_pan_update = true;
-
-// for ids of pop-ups
-this.cur_pop_rank = 0;
 
 // tha map layer
 this.map = null;
-// the markers layer
-this.layer = null;
+this.vectors = null;
+this.controls = null;
+this.obj_name = "";
+this.auto_report = null;
+this.img_url = "";
 
-// saving info on markers that should be deleted from db
-this.poi_deletion = [];
+this.loc_strings = {
+    "corners": "corners"
+};
 
-// info on markers, with the original ids, so that we can push changes into db
-this.poi_markers = [];
+this.display_strings = {
+    google_map: "Google&nbsp;Maps",
+    mapquest_map: "MapQuest&nbsp;Open",
+    openstreet_map: "OpenStreetMap"
+};
 
-// whether map is shown, used at the initial version
-this.map_shown = false;
-this.map_obj = null
+this.set_obj_name = function(name) {
+    this.obj_name = name;
+};
 
-// auxiliary index for accordion selection
-this.poi_rank_out = -1;
-
-// auxiliary for POI side-bar updates
-this.descs_elm = null;
-this.descs_elm_name = "";
-this.descs_inner = "";
-
-// count of POIs, with/without counting removals
-this.descs_count = 0;
-this.descs_count_inc = 0;
-
-// not to make new POI on closing a pop-up
-this.ignore_click = false;
-// the used pop-up window
-this.popup = null;
-
-this.map_limit_width_display = 800;
-this.map_limit_height_display = 500;
-this.map_limit_width_view = 1200;
-this.map_limit_height_view = 1200;
+this.set_img_dir = function(dir) {
+    this.img_url = dir;
+};
 
 // setting the db based default info
 this.set_map_info = function(params)
@@ -229,68 +69,9 @@ this.set_map_info = function(params)
     this.map_art_view_height_default = parseInt(params.height);
 };
 
-// setting info on available icons
-this.set_icons_info = function(params)
-{
-    this.marker_src_base = params.webdir;
-    this.marker_src_default = params["default"];
-    this.marker_src_labels = [];
-    this.marker_src_icons = {};
-
-    var icon_len = params.icons.length;
-    for (var iind = 0; iind < icon_len; iind++)
-    {
-        var cur_icon = params.icons[iind];
-        var cur_label = cur_icon.label;
-
-        if (cur_icon['name'] == this.marker_src_default)
-        {
-            this.marker_src_default_ind = iind;
-        }
-
-        this.marker_src_labels.push(cur_label);
-        this.marker_src_icons[cur_label] = {
-            "name": cur_icon["name"],
-            "path": cur_icon["path"],
-            "width": parseFloat(cur_icon["width"]),
-            "height": parseFloat(cur_icon["height"]),
-            "width_off": parseFloat(cur_icon["width_off"]),
-            "height_off": parseFloat(cur_icon["height_off"])
-        };
-    }
-
-};
-
-this.loc_strings = {
-    "corners": "corners"
-}
-
 this.set_strings = function(params) {
-    //alert(params);
     var corners = params["corners"];
     if (corners) {this.loc_strings["corners"] = corners;}
-};
-
-// to center the map view on the requested position
-this.center_lonlat = function(longitude, latitude)
-{
-    var lonLat = new OpenLayers.LonLat(longitude, latitude).transform(
-        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-        this.map.getProjectionObject() // to Spherical Mercator Projection
-    );
-
-    this.map.setCenter (lonLat);
-};
-
-// sets map center onto the requested POI (bound on the 'center' link)
-this.center_poi = function(index)
-{
-    var mlon = this.poi_markers[index].map_lon;
-    var mlat = this.poi_markers[index].map_lat;
-    var lonLat = new OpenLayers.LonLat(mlon, mlat);
-
-    this.map.setCenter (lonLat);
-
 };
 
 // showing the current initial reader view
@@ -319,12 +100,138 @@ this.map_showview = function()
 
 };
 
+this.into_method_pan = function() {
+    var geo_obj = this;
+    if (!geo_obj.inited) {return;}
+
+    geo_obj.controls.polygon.deactivate();
+
+    var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
+    var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
+    $(pan_obj).removeClass("geo_filter_unselected");
+    $(new_obj).addClass("geo_filter_unselected");
+    $(new_obj).removeClass("geo_filter_selected");
+    $(pan_obj).addClass("geo_filter_selected");
+};
+
+this.into_method_new = function() {
+    var geo_obj = this;
+    if (!geo_obj.inited) {return;}
+
+    geo_obj.controls.polygon.activate();
+
+    geo_obj.controls.modify.deactivate();
+    geo_obj.controls.modify.activate();
+
+    var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
+    var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
+    $(new_obj).removeClass("geo_filter_unselected");
+    $(pan_obj).addClass("geo_filter_unselected");
+    $(pan_obj).removeClass("geo_filter_selected");
+    $(new_obj).addClass("geo_filter_selected");
+};
+
+this.remove_polygon = function(rank) {
+    var geo_obj = this;
+    if (!geo_obj.inited) {return;}
+
+    var feature = this.vectors.features[rank];
+
+    if (feature == geo_obj.controls.modify.feature) {
+        geo_obj.controls.modify.unselectFeature(feature);
+    }
+
+    this.vectors.removeFeatures(feature);
+    geo_obj.report(null);
+};
+
+this.report = function(event) {
+    var geo_obj = this;
+    if (!geo_obj.inited) {return;}
+
+    var info_obj = document.getElementById ? document.getElementById("geo_polygons_info") : null;
+    var info_text = "";
+
+    var features = this.vectors.features;
+
+    var features_count = features.length;
+
+    for (var find = 0; find < features_count; find++) {
+        var cur_feature = features[find];
+        var geometry = cur_feature["geometry"];
+        var verts = geometry.getVertices();
+
+        if (2 > verts.length) {continue;}
+
+        var sel_mod = false;
+        if (cur_feature == geo_obj.controls.modify.feature) {
+            sel_mod = true;
+        }
+
+        var cons_pol = "";
+        var polygon_class_name = "geo_polygon_info_std";
+        if (sel_mod) {
+            polygon_class_name = "geo_polygon_info_edited";
+        }
+        cons_pol += "<div class='" + polygon_class_name + "'>";
+
+        var vert_arr = [];
+
+        var is_convex = true;
+        var dp_positive = 0;
+        var dp_negative = 0;
+
+        var vert_count = verts.length;
+        for (var vind = 0; vind < vert_count; vind++) {
+            var cur_vx = verts[vind];
+
+            var vx_next = verts[((vind+1)%vert_count)];
+            var vx_angle = verts[((vind+2)%vert_count)];
+
+            var norm_x = vx_next.y - cur_vx.y;
+            var norm_y = cur_vx.x - vx_next.x;
+            var test_x = vx_angle.x - cur_vx.x;
+            var test_y = vx_angle.y - cur_vx.y;
+            var dot_prod = (norm_x * test_x) + (norm_y * test_y);
+            if (0 < dot_prod) {dp_positive += 1;}
+            if (0 > dot_prod) {dp_negative += 1;}
+
+            var point = new OpenLayers.LonLat(cur_vx.x, cur_vx.y).transform(
+                geo_obj.map.getProjectionObject(), // to Spherical Mercator Projection
+                new OpenLayers.Projection("EPSG:4326") // transform from WGS 1984
+            );
+            cons_pol += " " + point.lat + " " + point.lon + ";";
+
+        }
+        cons_pol += "</div>";
+
+        if ((0 < dp_positive) && (0 < dp_negative)) {is_convex = false;}
+
+        var polygon_geometry_class = "geo_polygon_type_convex";
+        if (!is_convex) {
+            polygon_geometry_class = "geo_polygon_type_concave";
+        }
+
+        info_text += "<div class='geo_polygon_info'><div class='geo_polygon_labels'>";
+        info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + "</div>";
+        info_text += "<div class='geo_polygon_remove'><a href='#' onclick='" + this.obj_name + ".remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div>\n";
+        info_text += "</div><div>";
+
+        info_text += cons_pol + "</div></div>\n";
+        info_text += "<br>\n";
+    }
+
+    if (this.last_info_string == info_text) {return;}
+    this.last_info_string = info_text;
+
+    info_obj.innerHTML = info_text;
+
 };
 
 // map related initialization
-var geo_main_openlayers_init = function(geo_obj, map_div_name)
+this.main_init = function(map_div_name)
 {
-    geo_handler = geo_obj;
+    geo_obj = this;
 
     var pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
     pzb_ctrl.geo_obj = geo_obj;
@@ -351,76 +258,53 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     var mqm_label = geo_obj.map_view_layer_mapquest;
     var osm_label = geo_obj.map_view_layer_osm;
 
-    if (geo_obj.map_view_layer_providers[google_label])
+    if (this.map_view_layer_providers[google_label])
     {
         // google map v3
-        map_gsm = new OpenLayers.Layer.Google(
-            "Google Maps",
-            {
-                numZoomLevels: 20, 'sphericalMercator': true, 'repositionMapElements': function () {
-                    google.maps.event.trigger(this.mapObject, "resize");
-                    var div = this.mapObject.getDiv().firstChild;
-                    if (!div || div.childNodes.length < 3) {
-                        this.repositionTimer = window.setTimeout(OpenLayers.Function.bind(this.repositionMapElements, this), 250);
-                        return false;
-                    }
-
-                    var cache = OpenLayers.Layer.Google.cache[this.map.id];
-                    var container = this.map.viewPortDiv;
-
-                    var termsOfUse = div.lastChild;
-                    container.appendChild(termsOfUse);
-                    termsOfUse.style.zIndex = "1100";
-                    termsOfUse.style.bottom = "";
-                    termsOfUse.className = "olLayerGoogleCopyright olLayerGoogleV3";
-                    //termsOfUse.style.display = "";
-                    //cache.termsOfUse = termsOfUse;
-
-                    var poweredBy = div.lastChild;
-                    container.appendChild(poweredBy);
-                    poweredBy.style.zIndex = "1100";
-                    poweredBy.style.bottom = "";
-                    poweredBy.className = "olLayerGooglePoweredBy olLayerGoogleV3 gmnoprint";
-                    poweredBy.style.display = "";
-                    cache.poweredBy = poweredBy;
-
-                    this.setGMapVisibility(this.visibility);
-                }
-            }
+        map_gsm = new OpenLayers.Layer.GoogleMod(
+            //"Google Map",
+            this.display_strings.google_map,
+            {}
         );
-        geo_obj.map_view_layer_names_all[google_label] = map_gsm.name;
-        if (google_label == geo_obj.map_view_layer_default)
+
+        this.map_view_layer_names_all[google_label] = map_gsm.name;
+        if (google_label == this.map_view_layer_default)
         {
             map_provs.push(map_gsm);
         }
     }
 
-    if (geo_obj.map_view_layer_providers[mqm_label])
+    if (this.map_view_layer_providers[mqm_label])
     {
         // openstreetmap by mapquest
         map_mqm = new OpenLayers.Layer.MapQuest(
-            "MapQuest Open"
+            //"MapQuest Map"
+            this.display_strings.mapquest_map
         );
         map_mqm.wrapDateLine = true;
         map_mqm.displayOutsideMaxExtent = true;
         map_mqm.transitionEffect = 'resize';
 
-        geo_obj.map_view_layer_names_all[mqm_label] = map_mqm.name;
-        if (mqm_label == geo_obj.map_view_layer_default)
+        this.map_view_layer_names_all[mqm_label] = map_mqm.name;
+        if (mqm_label == this.map_view_layer_default)
         {
             map_provs.push(map_mqm);
         }
     }
 
-    if (geo_obj.map_view_layer_providers[osm_label])
+    if (this.map_view_layer_providers[osm_label])
     {
         // openstreetmap
-        map_osm = new OpenLayers.Layer.OSM();
+        map_osm = new OpenLayers.Layer.OSMMod(
+            //"OpenStreet Map"
+            this.display_strings.openstreet_map
+        );
         map_osm.wrapDateLine = true;
-        //map_osm.displayOutsideMaxExtent = true;
-        map_osm.attribution = "Data CC-By-SA by <a href='http://openstreetmap.org/' target='_blank'>OpenStreetMap</a>";
-        geo_obj.map_view_layer_names_all[osm_label] = map_osm.name;
-        if (osm_label == geo_obj.map_view_layer_default)
+        map_osm.displayOutsideMaxExtent = true;
+        map_osm.transitionEffect = 'resize';
+
+        this.map_view_layer_names_all[osm_label] = map_osm.name;
+        if (osm_label == this.map_view_layer_default)
         {
             map_provs.push(map_osm);
         }
@@ -439,44 +323,43 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
         map_provs.push(map_osm);
     }
 
-    geo_obj.map.addLayers(map_provs);
-    geo_obj.map.addControl(new OpenLayers.Control.Attribution());
+    this.map.addLayers(map_provs);
+    this.map.addControl(new OpenLayers.Control.Attribution());
+    // for switching between maps
 
-    //var lswitch = new OpenLayers.Control.LayerSwitcherMod();
-    var lswitch = new OpenLayers.Control.LayerSwitcher();
-    geo_obj.map.addControl(lswitch);
+    var lswitch = new OpenLayers.Control.LayerSwitcherMod();
 
-
+    this.map.addControl(lswitch);
 
     OpenLayers.Feature.Vector.style['default']['strokeWidth'] = '2';
-    vectors = new OpenLayers.Layer.Vector("Vector Layer");
+    this.vectors = new OpenLayers.Layer.Vector("Polygon Layer");
 
-    geo_obj.map.addLayers([vectors]);
+    geo_obj.map.addLayers([geo_obj.vectors]);
 
-    controls = {
-        polygon: new OpenLayers.Control.DrawFeature(vectors,
+    geo_obj.controls = {
+        polygon: new OpenLayers.Control.DrawFeature(geo_obj.vectors,
                     OpenLayers.Handler.Polygon),
-        modify: new OpenLayers.Control.ModifyFeature(vectors)
+        modify: new OpenLayers.Control.ModifyFeature(geo_obj.vectors)
     };
 
-    for(var key in controls) {
-        geo_obj.map.addControl(controls[key]);
+    for(var key in geo_obj.controls) {
+        geo_obj.map.addControl(geo_obj.controls[key]);
     }
 
-    controls.polygon.activate();
-    controls.modify.activate();
+    geo_obj.controls.polygon.activate();
+    geo_obj.controls.modify.activate();
 
-    controls.modify.mode = OpenLayers.Control.ModifyFeature.RESHAPE;
-    controls.modify.mode |= OpenLayers.Control.ModifyFeature.DRAG;
+    geo_obj.controls.modify.mode = OpenLayers.Control.ModifyFeature.RESHAPE;
+    geo_obj.controls.modify.mode |= OpenLayers.Control.ModifyFeature.DRAG;
 
-    vectors.events.on({
-        "beforefeaturemodified": report,
-        "featuremodified": report,
-        "afterfeaturemodified": report,
-        "vertexmodified": report,
-        "sketchmodified": report,
-        "sketchstarted": report,
-        "sketchcomplete": report
+    geo_obj.vectors.events.on({
+        "beforefeaturemodified": geo_obj.report,
+        "featuremodified": geo_obj.report,
+        "afterfeaturemodified": geo_obj.report,
+        "vertexmodified": geo_obj.report,
+        "sketchmodified": geo_obj.report,
+        "sketchstarted": geo_obj.report,
+        "sketchcomplete": geo_obj.report
     });
 
     // an initial center point, set via parameters
@@ -496,77 +379,11 @@ var geo_main_openlayers_init = function(geo_obj, map_div_name)
     geo_obj.map_view_layer_center = geo_obj.map.getCenter();
     geo_obj.map_view_layer_zoom = geo_obj.map.getZoom();
 
+    this.inited = true;
+    if (0 < this.obj_name.length) {
+        this.auto_report = setInterval(this.obj_name + ".report(null);", 500);
+    }
 };
-
-// the entry initialization point
-var geo_main_selecting_locations = function (geo_obj, geocodingdir, div_name, descs_name, names_show, names_hide, editing)
-{
-    var map_canvas = document.getElementById ? document.getElementById(div_name) : null;
-    geo_obj.descs_elm = document.getElementById ? document.getElementById(descs_name) : null;
-    geo_obj.descs_elm_name = descs_name;
-
-    var divs_show = [];
-    var divs_hide = [];
-
-    var show_obj = null;
-    var hide_obj = null;
-
-    if (names_show) {
-        var divs_show_names = names_show.split(",");
-        var len_show_names = divs_show_names.length;
-        for (var nsind = len_show_names - 1; nsind >= 0; nsind--)
-        {
-            show_obj = null;
-            show_obj = document.getElementById ? document.getElementById(divs_show_names[nsind]) : null;
-            if (show_obj) {divs_show.push(show_obj);}
-        }
-    }
-
-    if (names_hide) {
-        var divs_hide_names = names_hide.split(",");
-        var len_hide_names = divs_hide_names.length;
-        for (var nhind = len_hide_names - 1; nhind >= 0; nhind--)
-        {
-            hide_obj = null;
-            hide_obj = document.getElementById ? document.getElementById(divs_hide_names[nhind]) : null;
-            if (hide_obj) {divs_hide.push(hide_obj);}
-        }
-    }
-
-    var use_show_class = "map_shown";
-    var use_hide_class = "map_hidden";
-    if (geo_obj.map_shown)
-    {
-        use_show_class = "map_hidden";
-        use_hide_class = "map_shown";
-    }
-
-    {
-        var len_show = divs_show.length;
-        for (var dsind = len_show - 1; dsind >= 0; dsind--)
-        {
-            show_obj = divs_show[dsind];
-            show_obj.className = use_show_class;
-        }
-
-        var len_hide = divs_hide.length;
-        for (var dhind = len_hide - 1; dhind >= 0; dhind--)
-        {
-            hide_obj = divs_hide[dhind];
-            hide_obj.className = use_hide_class;
-        }
-    }
-
-    if (geo_obj.map_shown) {
-        geo_obj.map_shown = false;
-        return;
-    }
-
-    geo_obj.map_shown = true;
-
-    useSystemParameters();
-
-    geo_main_openlayers_init(geo_obj, div_name);
 
 };
 
