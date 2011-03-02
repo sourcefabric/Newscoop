@@ -277,7 +277,7 @@ select {
 .sidebar {
 	float:left;
 	width:28%;
-	min-width:280px;
+	min-width:200px;
 }
 .big-block {
 	margin-bottom:10px;
@@ -666,9 +666,6 @@ dl.inline-list dd {
 .sidebar dt {
 	width:100px;
 }
-.sidebar dd {
-	width:250px;
-}
 .main-content-wrapper dl.inline-list {
 	padding: 0 0 0 3px;
 	width:100%;
@@ -743,17 +740,23 @@ dl.inline-list dd {
 .map-thumb {
 	margin:0;
 	padding:0;
-	width:170px;
-	height:95px;
+	width:128px;
 	float:left;
+	border:1px solid #9d9d9d;
+	background:#9d9d9d;
+}
+.map-thumb:hover {
+	border:1px solid #007eb1;
+	background:#007eb1;
 }
 .map-thumb img {
-	border:1px solid #ccc;
+	border:none;
 	margin:0;
 	padding:0;
+	display:block;
 }
 .map-thumb:hover img {
-	border:1px solid #007fb3;
+	border:none;
 }
 
 .input_radio {
@@ -1649,4 +1652,29 @@ fieldset {
 table.message_box td {
     font-size: 1.2em;
     line-height: 1.5em;
+}
+
+/*--- TinyMCE Overrides ---*/
+
+.defaultSkin table.mceLayout {
+    width: 100% !important;
+}
+
+.map-thumb span {
+	margin:0;
+	padding:4px 0 4px 24px;
+	font-size:12px;
+	display:block;
+	background:#f6f6f6 url(images/edit_small.png) no-repeat 7px 7px;
+	border-top:1px solid #cccccc;
+}
+.map-thumb:hover span {
+	color:#fff;
+	background-color:#007eb1;
+	background-position: 7px -18px;
+	border-top:1px solid #007eb1;
+}
+
+.top-field, .top-field:last-child {
+	margin-bottom:8px;
 }
