@@ -3,7 +3,6 @@
 # edit rpm/newscoop.spec file -> set version number
 #
 
-
 RPMVERS=$(awk '/Version:/{print $2;}' rpm/newscoop.spec)
 RPMRELEASE=$(awk '/Release:/{printf "-%s",$2;}' rpm/newscoop.spec)
 VERSION=$(echo $RPMVERS | sed 's/-.*$//g')
@@ -21,13 +20,14 @@ fi
 echo -n "OK? [enter|CTRL-C]" ; read
 
 cd ${TMP}/
-tar czf /tmp/newscoop-${VERSION}.tar.gz newscoop-${VERSION}/
+tar czf /tmp/rpm_newscoop-${VERSION}.tar.gz newscoop-${VERSION}/
 cd -
-mv -vi /tmp/newscoop-${VERSION}.tar.gz ${HOME}/rpmbuild/SOURCES/newscoop-${VERSION}.tar.gz
-rpmbuild -ba --sign rpm/newscoop.spec
 
-ls -l ${HOME}/rpmbuild/RPMS/*/newscoop-${VERSION}*.rpm
-ls -l ${HOME}/rpmbuild/SRPMS/newscoop-${VERSION}*.src.rpm
+mv -vi /tmp/rpm_newscoop-${VERSION}.tar.gz ${HOME}/rpmbuild/SOURCES/newscoop-${VERSION}.tar.gz
+rpmbuild -ba --sign rpm/newscoop.spec || exit 1
+
+ls -l ${HOME}/rpmbuild/RPMS/*/newscoop-${RPMVERS}${RPMRELEASE}*.rpm
+ls -l ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}*.src.rpm
 
 if [ `hostname` != "soyuz" ]; then
 	exit
@@ -35,14 +35,24 @@ fi
 
 echo -n "UPLOAD? [enter|CTRL-C]" ; read
 
-rsync -P -bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm rg42.org:/var/www/yum/14/i386/ || exit
-rsync -P -bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm rg42.org:/var/www/yum/14/source/ || exit
+YUMSIG=$(grep -v "^#" ~/.rpmmacros  | grep "_gpg_name  Sourcefabric")
 
-ssh rg42.org << EOF
-cd /var/www/yum/14/x86_64/
+if [ -z "$YUMSIG" ]; then
+	YUMHOST=rg42.org
+	YUMPATH=/var/www/yum
+else
+	YUMHOST=yum.sourcefabric.org
+	YUMPATH=/home/rgareus/yum
+fi
+
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm ${YUMHOST}:${YUMPATH}/14/i386/ || exit
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm ${YUMHOST}:${YUMPATH}/14/source/ || exit
+
+ssh ${YUMHOST} << EOF
+cd ${YUMPATH}/14/x86_64/
 ln ../i386/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm
 
-createrepo /var/www/yum/14/source/
-createrepo /var/www/yum/14/i386/
-createrepo /var/www/yum/14/x86_64/
+createrepo ${YUMPATH}/14/source/
+createrepo ${YUMPATH}/14/i386/
+createrepo ${YUMPATH}/14/x86_64/
 EOF
