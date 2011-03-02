@@ -62,10 +62,13 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
         }
     }
 } else {
-    $doPreviewLink = 'preview';
-    $previewLinkURL = "/$ADMIN/articles/preview.php?f_publication_id=$f_publication_id"
-        . "&f_issue_number=$f_issue_number&f_section_number=$f_section_number"
-        . "&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
+    if (isset($publicationObj) && (0 < $f_publication_id) && (0 < $f_issue_number) && (0 < $f_section_number))
+    {
+        $doPreviewLink = 'preview';
+        $previewLinkURL = "/$ADMIN/articles/preview.php?f_publication_id=$f_publication_id"
+            . "&f_issue_number=$f_issue_number&f_section_number=$f_section_number"
+            . "&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
+    }
 }
 ?>
   <!-- BEGIN Article Title and Saving buttons bar //-->
