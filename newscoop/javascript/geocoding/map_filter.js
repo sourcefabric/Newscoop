@@ -175,7 +175,7 @@ this.report = function(event) {
         if (sel_mod) {
             polygon_class_name = "geo_polygon_info_edited";
         }
-        cons_pol += "<div class='" + polygon_class_name + "'>";
+        cons_pol += "<div class='" + polygon_class_name + "'>polygon";
 
         var vert_arr = [];
 
@@ -202,7 +202,7 @@ this.report = function(event) {
                 geo_obj.map.getProjectionObject(), // to Spherical Mercator Projection
                 new OpenLayers.Projection("EPSG:4326") // transform from WGS 1984
             );
-            cons_pol += " " + point.lat + " " + point.lon + ";";
+            cons_pol += " " + point.lat.toFixed(6) + " " + point.lon.toFixed(6) + ";";
 
         }
         cons_pol += "</div>";
