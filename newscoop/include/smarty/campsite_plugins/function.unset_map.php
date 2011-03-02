@@ -21,7 +21,9 @@ function smarty_function_unset_map($p_params, &$p_smarty)
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('gimme');
 
-    $campsite->map_dynamic = null;
+    $campsite->map_dynamic_constraints = null;
+    $campsite->map_dynamic_points_raw = null;
+    $campsite->map_dynamic_points_objects = null;
 } // fn smarty_function_unset_map
 
 ?>

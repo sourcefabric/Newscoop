@@ -712,14 +712,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
-        $leftOperand = 'preview';
-        $rightOperand = false;
+        $leftOperand = 'active_only';
+        $rightOperand = $p_preview;
         $operator = new Operator('is', 'php');
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
         $leftOperand = 'text_only';
-        $rightOperand = false;
+        $rightOperand = $p_textOnly;
         $operator = new Operator('is', 'php');
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
@@ -736,7 +736,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
-        $pois = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count);
+        $pois = array();
+        $poi_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count, false, $pois);
         return array(
             'pois' => $pois,
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
@@ -963,8 +964,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $p_constraints[] = $constraint;
 
-        $found_list = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count);
-
+        $found_list = array();
+        $found_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count, false, $found_list);
     
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
@@ -1913,47 +1914,60 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight)
+    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight, $p_rank = 0)
     {
         global $Campsite;
         $tag_string = "";
 
-        $leftOperand = 'as_array';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        $points = null;
 
-        $leftOperand = 'preview';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        if (!array_key_exists("retrieved", $p_constraints)) {
 
-        $leftOperand = 'text_only';
-        $rightOperand = false;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+            $leftOperand = 'as_array';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'active_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'text_only';
+            $rightOperand = false;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'language';
+            $rightOperand = $p_languageId;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'constrained';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $poi_count = 0;
+            $points = array();
+            $point_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count, false, $points);
 
-        $leftOperand = 'language';
-        $rightOperand = $p_languageId;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        }
+        else {
 
-        $leftOperand = 'constrained';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+            $points = $p_constraints;
+            unset($points["retrieved"]);
 
-        $poi_count = 0;
-        $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
+        }
 
         $f_language_id = $p_languageId;
 
-        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
@@ -2092,14 +2106,14 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagBody($p_languageId)
+    public static function GetMultiMapTagBody($p_languageId, $p_rank = 0)
     {
         global $Campsite;
         $tag_string = "";
 
         $f_language_id = $p_languageId;
 
-        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
 
@@ -2114,14 +2128,14 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagCenter($p_languageId)
+    public static function GetMultiMapTagCenter($p_languageId, $p_rank = 0)
     {
         global $Campsite;
         $tag_string = "";
 
         $f_language_id = $p_languageId;
 
-        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
         $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
 
@@ -2138,47 +2152,60 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return array
      */
-    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_offset, $p_limit)
+    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank = 0)
     {
         $f_language_id = (int) $p_languageId;
-        $map_suffix = "_" . "multimap" . "_" . $f_language_id;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
         $preview = true;
         $text_only = true;
 
         $geo_map_usage = Geo_Map::ReadMultiMapInfo();
 
-        $leftOperand = 'as_array';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        $points = null;
 
-        $leftOperand = 'preview';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        if (!array_key_exists("retrieved", $p_constraints)) {
 
-        $leftOperand = 'text_only';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+            $leftOperand = 'as_array';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'active_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'text_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'language';
+            $rightOperand = $p_languageId;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'constrained';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
 
-        $leftOperand = 'language';
-        $rightOperand = $p_languageId;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+            $poi_count = 0;
+            $points = array();
+            $point_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count, false, $points);
 
-        $leftOperand = 'constrained';
-        $rightOperand = true;
-        $operator = new Operator('is', 'php');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $p_constraints[] = $constraint;
+        }
+        else {
 
-        $poi_count = 0;
-        $points = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count);
+            $points = $p_constraints;
+            unset($points["retrieved"]);
+
+        }
 
         $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
 
@@ -2202,10 +2229,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_offset, $p_limit)
+    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank = 0)
     {
 
-        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_offset, $p_limit);
+        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank);
         $map = $geo['map'];
         $pois = $geo['pois'];
 
@@ -2254,26 +2281,24 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         return $html;
     } // fn GetMultiMapTagList
 
-
-
-
-
     // filter functions
 
+    /**
+     * Gives the name of the javascript object used for the map filtering
+     *
+     * @return string
+     */
     public static function GetMapFilterObjName()
     {
         $map_suffix = "_filter";
         return "geo_object" . $map_suffix;
-    }
+    } // fn GetMapFilterObjName
 
     /**
-     * Gives the header part for the map front end search by map-based rectangle selection
-     * the optional p_bboxDivs array of divs for automatical setting of the box corners coordinates.
-     * The bounding-box corners are available by js calls too (see e.g. locations/search.php).
+     * Gives the header part for the map filtering
      *
      * @param int $p_mapWidth
      * @param int $p_mapHeight
-     * @param mixed $p_bboxDivs
      *
      * @return string
      */
@@ -2366,7 +2391,7 @@ var on_load_proc_filter = function()
     } // fn GetMapFilterHeader
 
     /**
-     * Gives the body map-placement part for the map front end search by map-based rectangle selection
+     * Gives the body map-placement part for the map filtering
      *
      * @return string
      */
@@ -2383,7 +2408,7 @@ var on_load_proc_filter = function()
     } // fn GetMapFilterBody
 
     /**
-     * Gives the body map-centering (js call) part for the map front end search by map-based rectangle selection
+     * Gives the body map-centering (js call) part for the map filtering
      *
      * @return string
      */
@@ -2398,11 +2423,6 @@ var on_load_proc_filter = function()
 
         return $tag_string;
     } // fn GetMapFilterCenter
-
-
-
-
-
 
     // search functions
 

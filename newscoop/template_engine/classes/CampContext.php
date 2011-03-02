@@ -242,8 +242,10 @@ final class CampContext
         }
 
         // initialize geo-map holder
-        $this->m_properties['map_article'] = null;
-        $this->m_properties['map_dynamic'] = null;
+        $this->m_properties['map_dynamic_constraints'] = null;
+        $this->m_properties['map_dynamic_points_raw'] = null;
+        $this->m_properties['map_dynamic_points_objects'] = null;
+        $this->m_properties['map_dynamic_id_counter'] = 0;
 
     } // fn __construct
 

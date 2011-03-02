@@ -4,6 +4,14 @@
  * @package Campsite
  */
 
+/**
+ * Auxiliar function for parsing area map constraints
+ *
+ * @param string
+ *     $p_areaSpec The area(s) constraint
+ * @param array
+ *     $p_areaCons The array with parsed area constraints
+ */
 function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
 {
     $area_val = strtolower(str_replace('"', '""', trim($p_areaSpec)));
@@ -52,7 +60,7 @@ function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
         $p_areaCons[] = array($parsed_polygon_name => $parsed_polygon_values);
     }
 
-}
+} // fn aux_parser_set_map_area
 
 /**
  * Campsite set_map function plugin
@@ -62,8 +70,7 @@ function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
  * Purpose:
  *
  * @param array
- *     $p_params[name] The Name of the article to be set
- *     $p_params[number] The Number of the article to be set
+ *     $p_params the map constarints set at the template
  * @param object
  *     $p_smarty The Smarty object
  */
@@ -80,24 +87,19 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $con_authors = array();
     $con_articles = array();
     $con_issues_num = array();
-    //$con_issues_str = array();
     $con_sections_num = array();
     $con_sections_str = array();
     $con_topics = array();
     $con_match_all_topics = array();
-    //$con_match_any_topic = array();
     $con_has_multimedia = array();
     $con_start_date = array();
     $con_end_date = array();
     $con_date = array();
-    //$con_area = array();
     $con_areas = array();
     $con_match_any_area = array();
-    //$con_areas_match = array();
 
     if (isset($p_params['authors'])) {
         foreach (explode(",", $p_params['authors']) as $one_author) {
-            //$one_author = str_replace('"', '""', trim($one_author));
             $one_author = trim("" . $one_author);
             if (0 < strlen($one_author)) {
                 if ($running == $one_author) {
@@ -114,9 +116,6 @@ function smarty_function_set_map($p_params, &$p_smarty)
             }
         }
     }
-    // $con_authors_str = '"' . implode('", "', $con_authors) . '"';
-    // SELECT DISTINCT id FROM Authors WHERE trim(concat(first_name, " ", last_name)) IN ($con_authors_str) OR trim(concat(last_name, " ", first_name) IN ($con_authors_str));
-    // SELECT DISTINCT id FROM AuthorAliases WHERE trim(alias) IN ($con_authors_str);
 
     if (isset($p_params['articles'])) {
         foreach (explode(",", "" . $p_params['articles']) as $one_article) {
@@ -143,10 +142,6 @@ function smarty_function_set_map($p_params, &$p_smarty)
                     $con_issues_num[] = $one_issue;
                 }
             }
-            //elseif (0 < strlen($one_issue)) {
-            //    $one_issue = str_replace('"', '""', trim($one_issue));
-            //    $con_issues_str[] = $one_issue;
-            //}
         }
     }
 
@@ -165,15 +160,12 @@ function smarty_function_set_map($p_params, &$p_smarty)
                 $con_sections_num[] = $one_section;
             }
             elseif (0 < strlen($one_section)) {
-                //$one_section = str_replace('"', '""', trim($one_section));
                 $one_section = trim($one_section);
                 $con_sections_str[] = $one_section;
             }
         }
     }
 
-    // SELECT DISTINCT fk_topic_id FROM TopicNames WHERE name IN (...);
-    // then the Topic::BuildAllSubtopicsQuery on those ids
     if (isset($p_params['topics'])) {
         foreach (explode(",", $p_params['topics']) as $one_topic) {
             $one_topic = trim("" . $one_topic);
@@ -187,7 +179,6 @@ function smarty_function_set_map($p_params, &$p_smarty)
                     }
                 }
                 else {
-                    //$one_topic = str_replace('"', '""', trim($one_topic));
                     $one_topic = trim($one_topic);
                     $con_topics[] = $one_topic;
                 }
@@ -283,16 +274,11 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
     }
 
-    //$known_area_match_types = array("intersection" => true, "union" => true);
     if (isset($p_params['area_match'])) {
 
         $area_match_val = $p_params['area_match'];
         if (is_string($area_match_val)) {
-
             $area_match_val = strtolower($area_match_val);
-            //if (array_key_exists($area_match_val, $known_area_match_types)) {
-            //    $con_areas_match[0] = trim(strtolower($area_match_val));
-            //}
             if ("intersection" == $area_match_val) {$con_match_any_area = false;}
             if ("union" == $area_match_val) {$con_match_any_area = true;}
         }
@@ -323,16 +309,6 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $parameters[] = $constraint;
     }
-
-/*
-    foreach ($con_issues_str as $one_issue) {
-        $leftOperand = 'issue_name';
-        $rightOperand = $one_issue;
-        $operator = new Operator('is', 'sql');
-        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
-        $parameters[] = $constraint;
-    }
-*/
 
     foreach ($con_sections_num as $one_section) {
         $leftOperand = 'section';
@@ -414,7 +390,69 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $parameters[] = $constraint;
     }
 
-    $campsite->map_dynamic = $parameters;
+    // publication id has to be set for all multi-maps
+    {
+        $run_publicationId = 0;
+        if (CampTemplate::singleton()) {
+            $Context = CampTemplate::singleton()->context();
+            if ($Context->publication) {
+                $run_publicationId = $Context->publication->identifier;
+            }
+        }
+
+        $leftOperand = 'publication';
+        $rightOperand = $run_publicationId;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+    }
+
+    $campsite->map_dynamic_constraints = $parameters;
+
+    // to retrieve the points for next usage
+    {
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $leftOperand = 'active_only';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = (int) $run_language->number;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $leftOperand = 'constrained';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+
+        $poi_count = 0;
+        $poi_array = array();
+        $poi_objects = Geo_MapLocation::GetListExt($parameters, array(), 0, 200, $poi_count, false, $poi_array);
+        $poi_array["retrieved"] = true;
+
+        $campsite->map_dynamic_points_raw = $poi_array;
+        $campsite->map_dynamic_points_objects = $poi_objects;
+
+        $campsite->map_dynamic_id_counter += 1;
+    }
 
 } // fn smarty_function_set_map
 

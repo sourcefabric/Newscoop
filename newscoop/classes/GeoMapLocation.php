@@ -300,19 +300,29 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
      *    The offset, how many records from $p_start will be retrieved
      * @param integer $p_count
      *    Total count of POIs without p_start/p_limit limitations
+     * @param bool $p_skipCache
+     *    Whether to skip caching
+     * @param array $p_rawData
+     *    The variable for returning read points as raw array, used for the JS processing
      *
      * @return array
      */
     public static function GetListExt(array $p_parameters, array $p_order = array(),
-                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false, &$p_rawData = null)
 	{
         $p_count = 0;
 
-        $ps_asArray = true;
+        $ps_saveArray = false;
+        if (!is_null($p_rawData)) {
+            $ps_saveArray = true;
+            $p_rawData = array();
+        }
         $ps_mapId = 0;
         $ps_languageId = 0;
         $ps_preview = false;
-        $ps_textOnly = false;
+        // read all the info, mostly cached at the upstream
+        //$ps_textOnly = false;
+        $ps_publicationId = 0;
 
         $mc_mapCons = false;
         $mc_authors_yes = array();
@@ -332,15 +342,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $mc_areas_matchall = false;
         $mc_dates = array();
 
-
         // process params
         foreach ($p_parameters as $param) {
             switch ($param->getLeftOperand()) {
                 case 'constrained':
                     $mc_mapCons = true;
-                case 'as_array':
-                    $ps_asArray = $param->getRightOperand();
-                    break;
                 case 'map':
                     $ps_mapId = $param->getRightOperand();
                     break;
@@ -351,13 +357,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'preview':
                     $ps_preview = $param->getRightOperand();
                     break;
-                case 'text_only':
-                    $ps_textOnly = $param->getRightOperand();
+                //case 'text_only':
+                //    $ps_textOnly = $param->getRightOperand();
+                //    break;
+                case 'publication':
+                    $ps_publicationId = (int) $param->getRightOperand();
                     break;
                 case 'author':
                     $one_user_value = $param->getRightOperand();
                     $one_user_type = $param->getOperator()->getName();
-                    //if (!is_numeric($one_user_value)) {break;}
                     if ("is" == $one_user_type) {
                         $mc_authors_yes[] = $one_user_value;
                         $mc_mapCons = true;
@@ -432,12 +440,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
         
-        $ps_publicationId = 0;
-        if ($mc_mapCons && CampTemplate::singleton()) {
-            $Context = CampTemplate::singleton()->context();
-            if ($Context->publication) {
-                $ps_publicationId = $Context->publication->identifier;
-            }
+        // constrained maps ned to have set publication
+        if ($mc_mapCons && (!$ps_publicationId)) {
+            return array();
         }
 
         if ((!$ps_languageId) || (0 >= $ps_languageId)) {
@@ -450,8 +455,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
         if (!CampCache::IsEnabled()) {$p_skipCache = true;}
-        // to make the caching easier
-        if (!$p_skipCache) {$ps_textOnly = false;}
+        // to make the caching easier, but now read all the info regardless of this
+        //if (!$p_skipCache) {$ps_textOnly = false;}
 
         $ps_orders = array();
         if ((!$p_order) || (!is_array($p_order)) || (0 == count($p_order))) {
@@ -503,13 +508,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $paramsArray_arr["publication_id"] = $ps_publicationId;
             $paramsArray_arr["language_id"] = $ps_languageId;
             $paramsArray_arr["preview"] = $ps_preview;
-            $paramsArray_arr["text_only"] = $ps_textOnly;
+            //$paramsArray_arr["text_only"] = $ps_textOnly;
     
             $paramsArray_arr["map_cons"] = $mc_mapCons;
             $paramsArray_arr["authors_yes"] = $mc_authors_yes;
             $paramsArray_arr["authors_no"] = $mc_authors_no;
-            //$paramsArray_arr["users_yes"] = $mc_users_yes;
-            //$paramsArray_arr["users_no"] = $mc_users_no;
             $paramsArray_arr["articles_yes"] = $mc_articles_yes;
             $paramsArray_arr["articles_no"] = $mc_articles_no;
             $paramsArray_arr["issues"] = $mc_issues;
@@ -532,13 +535,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         	$cacheList_arr = new CampCacheList($paramsArray_arr, __METHOD__);
         	$cacheList_obj = new CampCacheList($paramsArray_obj, __METHOD__);
 
-            if ($p_asArray) {
+            if ($ps_saveArray) {
                 $cachedData = $cacheList_arr->fetchFromCache();
                 if ($cachedData !== false && is_array($cachedData)) {
                     $p_count = $cachedData['count'];
-                    return $cachedData['data'];
+                    $p_rawData = $cachedData['data'];
                 }
-            } else {
+            }
+            {
                 $cachedData = $cacheList_obj->fetchFromCache();
                 if ($cachedData !== false && is_array($cachedData)) {
                     $p_count = $cachedData['count'];
@@ -924,7 +928,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
 		$p_count = $g_ado_db->GetOne($queryStr_count, $sql_params_count);
 
-        if (!$ps_textOnly) {
+        //if (!$ps_textOnly)
+        {
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
 
@@ -985,15 +990,20 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 $dataArray[] = $tmpPoint;
 
-                if (!$ps_textOnly) {
+                //if (!$ps_textOnly)
+                {
                     $success = $g_ado_db->Execute($queryStr_tt_in, array($row['ml_id']));
                 }
 
             }
         }
 
-        if (0 == count($dataArray)) {return $dataArray;}
-        if ($ps_textOnly) {return $dataArray;}
+        if (0 == count($dataArray)) {return $array();}
+        // reading all the info, mostly chached at the upstream
+        //if ($ps_textOnly) {
+        //    $p_rawData = $dataArray;
+        //    return array();
+        //}
 
         {
             $imagesArray = array();
@@ -1056,7 +1066,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         foreach ($dataArray_tmp as $one_poi)
         {
-            if ((!$p_skipCache) || (!$ps_asArray)) {
+            {
                 $one_poi_source = array(
                     'id' => $one_poi['loc_id'],
                     'fk_map_id' => $one_poi['map_id'],
@@ -1103,7 +1113,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $objsArray[] = $one_poi_obj;
             }
 
-            if ((!$p_skipCache) || ($ps_asArray)) {
+            if ((!$p_skipCache) || ($ps_saveArray)) {
                 $dataArray[] = $one_poi;
             }
         }
@@ -1113,11 +1123,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         	$cacheList_obj->storeInCache(array('count' => $p_count, 'data' => $objsArray));
         }
 
-        if (!$ps_asArray) {
-            return $objsArray;
+        if ($ps_saveArray) {
+            $p_rawData = $dataArray;
         }
 
-		return $dataArray;
+		return $objsArray;
 
 	} // fn GetListExt
 
