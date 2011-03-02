@@ -61,6 +61,7 @@
 
 .geo_polygon_type_info {
     float: left;
+    margin-left: 10px;
 }
 .geo_polygon_remove {
     float:left;

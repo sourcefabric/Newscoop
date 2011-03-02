@@ -162,6 +162,8 @@ this.report = function(event) {
         var verts = geometry.getVertices();
 
         if (2 > verts.length) {continue;}
+        var size_kmsq = geometry.getGeodesicArea(geo_obj.map.getProjectionObject()) / 1000000;
+        size_kmsq = size_kmsq.toFixed(3);
 
         var sel_mod = false;
         if (cur_feature == geo_obj.controls.modify.feature) {
@@ -213,8 +215,8 @@ this.report = function(event) {
         }
 
         info_text += "<div class='geo_polygon_info'><div class='geo_polygon_labels'>";
-        info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + "</div>";
         info_text += "<div class='geo_polygon_remove'><a href='#' onclick='" + this.obj_name + ".remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div>\n";
+        info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + ", " + size_kmsq + " km<sup>2</sup></div>";
         info_text += "</div><div>";
 
         info_text += cons_pol + "</div></div>\n";
