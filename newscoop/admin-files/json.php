@@ -48,9 +48,9 @@ try {
     $serverRequest->allow('ImageList::doData');
     $serverRequest->allow('MediaList::doDelete');
     $serverRequest->allow('ImageList::doDelete');
-    $serverRequest->allow('Article::setOnFrontPage');
-    $serverRequest->allow('Article::setOnSectionPage');
-    $serverRequest->allow('Article::setIsPublic');
+    $serverRequest->allow('Article::setOnFrontPage','Publish');
+    $serverRequest->allow('Article::setOnSectionPage','Publish');
+    $serverRequest->allow('Article::setIsPublic','Publish');
     $serverRequest->allow('Article::setKeywords');
     $serverRequest->allow('Article::setIsLocked');
     $serverRequest->allow('ArticleData::setProperty');
