@@ -41,7 +41,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 <div id="files">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
     <p class="actions">
-        <a id="new_file" href="<?php echo "/$ADMIN"; ?>/articles/files/popup.php?archive=1" target="_blank" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
+        <a href="./add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
     </p>
     <script type="text/javascript"><!--
         $(document).ready(function() {

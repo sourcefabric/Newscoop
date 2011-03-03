@@ -1331,12 +1331,12 @@ ul.rss p {
 ul.rss li a { color: #007fb3; }
 ul.rss li a:hover { text-decoration: underline; }
 
-ul#edit-images {
+ul#edit-images, ul#edit-files {
     height: 1%;
     overflow: hidden;
 }
 
-ul#edit-images li {
+ul#edit-images li{
     float: left;
     width: 300px;
     margin: 5px 0 0 5px;
@@ -1344,19 +1344,31 @@ ul#edit-images li {
     border: 1px solid #ccc;
 }
 
-ul#edit-images li > div {
+ul#edit-files li {
+    float: left;
+    width: 350px;
+    margin: 5px 0 0 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+ul#edit-files dl {
+    display: inline-block;
+}
+
+ul#edit-images li > div, ul#edit-files li > div {
     height: 50px;
     overflow: hidden;
     padding-left: 10px;
 }
 
-#edit-images fieldset {
+#edit-images fieldset, #edit-files fieldset {
     margin: 5px;
     padding: 5px;
     border: 1px solid #ccc;
 }
 
-#edit-images a.copy-to-all {
+#edit-images a.copy-to-all, #edit-files a.copy-to-all {
     clear: left;
     display: block;
     width: 100%;
