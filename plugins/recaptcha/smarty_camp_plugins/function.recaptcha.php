@@ -24,6 +24,10 @@ function smarty_function_recaptcha($p_params, &$p_smarty)
     $captcha = Captcha::factory('ReCAPTCHA');
     if ($captcha->isEnabled()) {
         $html = $captcha->render();
+        if (is_array($html) && isset($html['error'])) {
+            $html = '<p style="color:red;">' . $html['error'] . '</p>';
+            return $html;
+        }
         $html .= "\n<input type=\"hidden\" name=\"f_captcha_handler\" value=\"ReCAPTCHA\" />\n";
     }
     return $html;

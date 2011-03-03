@@ -37,8 +37,10 @@ class Captcha_ReCAPTCHA extends Captcha
      */
     public function render()
     {
+        global $Campsite;
+
         $publicKey = $this->getPublicKey();
-        return recaptcha_get_html(htmlspecialchars($publicKey));
+        return recaptcha_get_html(htmlspecialchars($publicKey), NULL, $Campsite['SSL_SITE']);
     }
 
     /**
