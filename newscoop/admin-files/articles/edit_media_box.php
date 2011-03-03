@@ -17,12 +17,13 @@
                 $imageSize = getimagesize($image->getImageStorageLocation());
             ?>
             <li>
-                <?php if ($inEditMode) { ?>
-                <a href="<?php echo $imageEditUrl; ?>"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
-                <?php } else { ?>
-                <img src="<?php p($image->getThumbnailUrl()); ?>" />
-                <?php } ?>
-
+                <div class="image-thumbnail-container">
+                    <?php if ($inEditMode) { ?>
+                    <a href="<?php echo $imageEditUrl; ?>"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
+                    <?php } else { ?>
+                    <img src="<?php p($image->getThumbnailUrl()); ?>" />
+                    <?php } ?>
+                </div>
                 <strong><?php echo $articleImage->getTemplateId(); ?></strong><br />
                 <?php echo htmlspecialchars($image->getDescription()); ?><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>

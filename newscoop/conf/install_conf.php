@@ -20,10 +20,13 @@ $Campsite['WWW_DIR'] = $Campsite['CAMPSITE_DIR'];
 
 $Campsite['HTML_DIR'] = $Campsite['CAMPSITE_DIR'];
 
+$Campsite['SSL_SITE'] = FALSE;
 if (isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1)) {
     $scheme = 'https://';
+    $Campsite['SSL_SITE'] = TRUE;
 } elseif (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) {
     $scheme = 'https://';
+    $Campsite['SSL_SITE'] = TRUE;
 } else {
     $scheme = 'http://';
 }

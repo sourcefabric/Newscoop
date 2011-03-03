@@ -151,6 +151,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 $inEditMode = ($f_edit_mode == 'edit');
 $inViewMode = ($f_edit_mode == 'view');
+$publishRights = $g_user->hasPermission('Publish');
 
 if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
     $spellcheck = 'spellcheck="true"';
