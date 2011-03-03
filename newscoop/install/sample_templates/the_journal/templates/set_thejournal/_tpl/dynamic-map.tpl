@@ -16,6 +16,11 @@
 
 {{ map show_locations_list="true" show_reset_link="Show initial Map" width="300" height="450" }}
 
+{{ list_locations }}
+    {{ if $gimme->location->enabled}}
+        <li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+    {{ /if }}
+{{ /list_locations }}
 {{ unset_map }}
 
     </div>

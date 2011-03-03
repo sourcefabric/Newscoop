@@ -446,12 +446,26 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $poi_count = 0;
         $poi_array = array();
         $poi_objects = Geo_MapLocation::GetListExt($parameters, array(), 0, 200, $poi_count, false, $poi_array);
-        $poi_array["retrieved"] = true;
+
+        $poi_retrieved_count = count($poi_array);
+        for ($poi_idx = 0; $poi_idx < $poi_retrieved_count; $poi_idx++) {
+            $articleNo = $poi_array[$poi_idx]["art_number"];
+            $myArticle = new MetaArticle((int) $run_language->number, $articleNo);
+            $url = CampSite::GetURIInstance();
+            $url->publication = $myArticle->publication;
+            $url->issue = $myArticle->issue;
+            $url->section = $myArticle->section;
+            $url->article = $myArticle;
+            $articleURI = $url->getURI('article');
+            $poi_array[$poi_idx]["link"] = $articleURI;
+        }
+
 
         $campsite->map_dynamic_points_raw = $poi_array;
         $campsite->map_dynamic_points_objects = $poi_objects;
 
         $campsite->map_dynamic_id_counter += 1;
+
     }
 
 } // fn smarty_function_set_map

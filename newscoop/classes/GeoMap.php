@@ -1960,8 +1960,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         }
         else {
 
-            $points = $p_constraints;
-            unset($points["retrieved"]);
+            $points = $p_constraints["pois"];
+            //unset($points["retrieved"]);
 
         }
 
@@ -2202,8 +2202,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         }
         else {
 
-            $points = $p_constraints;
-            unset($points["retrieved"]);
+            $points = $p_constraints["pois"];
+            //unset($points["retrieved"]);
 
         }
 

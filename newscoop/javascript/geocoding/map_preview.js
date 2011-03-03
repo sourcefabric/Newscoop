@@ -2,6 +2,14 @@
 // the main object to hold geo-things
 function geo_locations () {
 
+/*
+// if we used poi grouping
+this.poi_groups = null;
+this.group_links = null;
+this.do_grouping = false;
+this.stored_pois = null
+*/
+
 this.something_to_save = false;
 this.auto_focus = true;
 this.auto_focus_max_zoom = true;
@@ -357,6 +365,95 @@ this.map_showview = function()
 
 };
 
+/*
+// if we used poi grouping
+this.poi_grouping_at_map = function(poi_a, poi_b) {
+    if (poi_a["latitude"] < poi_b["latitude"]) {return -1;}
+    if (poi_a["latitude"] == poi_b["latitude"]) {
+        if (poi_a["longitude"] <= poi_b["longitude"]) {
+            return -1;
+        }
+        //todo: put the style distinction into this too
+    }
+
+    return 1;
+};
+*/
+
+/*
+// if we used poi grouping
+this.prepare_grouping = function(pois) {
+
+    var sortArray = [];
+    var linkArray = [];
+    var groupArray = [];
+
+    var poi_rank = 0;
+    var feature_count = pois.length;
+    var feature_parts = [];
+
+    var find = 0;
+    var cur_part = null;
+
+    for (find = 0; find < feature_count; find++)
+    {
+        var cur_feature = pois[find];
+        cur_part = {};
+        cur_part["rank"] = find;
+        cur_part["longitude"] = cur_feature["longitude"];;
+        cur_part["latitude"] = cur_feature["latitude"];
+        cur_part['style'] = cur_feature["style"];
+        sortArray.push(cur_part);
+        linkArray.push(-1);
+        poi_rank += 1;
+
+    }
+
+    sortArray.sort(this.poi_grouping_at_map);
+
+    var cur_group_rank = -1;
+    var cur_group = [];
+    var last_lat = 0;
+    var last_lon = 0;
+    var last_style = "";
+
+    for (find = 0; find < feature_count; find++)
+    {
+        cur_part = sortArray[find];
+        poi_rank = cur_part['rank'];
+        if (0 > cur_group_rank) {
+            cur_group_rank = 0;
+            linkArray[poi_rank] = cur_group_rank;
+            last_lat = cur_part["latitude"];
+            last_lon = cur_part["longitude"];
+            last_style = cur_part["style"];
+            cur_group = [];
+            cur_group.push(poi_rank);
+            continue;
+        }
+        if ((last_lat == cur_part["latitude"]) && (last_lon == part["longitude"])) {
+            if (last_style = cur_part["style"]) {
+                linkArray[poi_rank] = cur_group_rank;
+                cur_group.push(poi_rank);
+                continue;
+            }
+        }
+        groupArray.push(cur_group);
+
+        cur_group = [];
+        cur_group_rank += 1;
+        cur_group.push(poi_rank);
+        linkArray[poi_rank] = cur_group_rank;
+        last_lat = cur_part["latitude"];
+        last_lon = cur_part["longitude"];
+        last_style = cur_part["style"];
+    }
+    groupArray.push(cur_group);
+
+    return ({links: linkArray, groups: groupArray});
+};
+*/
+
 // the main action on data retrieval
 this.got_load_data = function (load_data, is_obj) {
     load_response = load_data;
@@ -404,8 +501,6 @@ this.got_load_data = function (load_data, is_obj) {
         this.popup = null;
     }
 
-    var features_to_add = [];
-
     var lonlat = null;
 
     var poi_lon_min = 10e100;
@@ -426,6 +521,27 @@ this.got_load_data = function (load_data, is_obj) {
     var tos_lat_min = 10e100;
     var tos_lat_max = -10e100;
     var use_zone_shift = false;
+
+    var features_to_add = [];
+
+/*
+    // if we used poi grouping
+    this.poi_groups = null;
+    this.group_links = null;
+    this.do_grouping = false;
+    this.stored_pois = null
+
+    var poi_groups = null;
+    var group_links = null;
+    var do_grouping = false;
+    var poi_links = null;
+
+    var features_to_store = [];
+
+    var group_preps = this.prepare_grouping(received_obj.pois);
+    var group_links = group_preps["links"];
+    var poi_groups = group_preps["groups"];
+*/
 
     var shifts = [0, -360, 360];
 
@@ -568,10 +684,33 @@ this.got_load_data = function (load_data, is_obj) {
         vector.attributes.m_maplon = one_marker['map_lon'];
         vector.attributes.m_maplat = one_marker['map_lat'];
 
+/*
+        // if we used poi grouping
+        features_to_store.push(vector);
+        if (do_grouping) {
+            var cur_group_rank = poi_groups[pind];
+            var cur_group = poi_groups[cur_group_rank];
+            var cur_group_head = cur_group[0];
+            if (pind == cur_group_head) {
+                features_to_add.push(vector);
+            }
+        }
+        else {
+            features_to_add.push(vector);
+        }
+*/
         features_to_add.push(vector);
 
     }
     }
+
+/*
+    // if we used poi grouping
+    this.stored_pois = features_to_store;
+    this.poi_groups = poi_groups;
+    this.group_links = group_links;
+    this.do_grouping = do_grouping;
+*/
 
     this.layer.addFeatures(features_to_add);
 

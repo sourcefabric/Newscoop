@@ -673,7 +673,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $queryStr_start .= "l.poi_radius AS l_radius, l.IdUser AS l_user, l.time_updated AS l_updated, ";
         if ($mc_mapCons)
         {
-            $queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, ";
+            $queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, m.fk_article_number AS art_number, ";
         }
         $queryStr_start .= "c.IdUser AS c_user, c.time_updated AS c_updated, ";
 
@@ -974,9 +974,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 				$tmpPoint['video_height'] = "";
 
                 // for the list-of-objects array
-                $tmpPoint['map_id'] = $p_mapId;
+                $tmpPoint['art_id'] = $p_mapId;
+                $tmpPoint['art_number'] = 0;
                 if ($mc_mapCons) {
                     $tmpPoint['map_id'] = $row['m_id'];
+                    $tmpPoint['art_number'] = $row['art_number'];
                 }
                 $tmpPoint['geo_id'] = $row['loc_id'];
                 $tmpPoint['geo_type'] = $row['poi_type'];
@@ -1266,8 +1268,5 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
 
 } // class Geo_MapLocation
-
-
-
 
 

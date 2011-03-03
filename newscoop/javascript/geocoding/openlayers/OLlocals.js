@@ -478,6 +478,22 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
         geo_obj.select_control.unselect(geo_obj.popup.feature);
     }
 
+/* 
+    //if we would use a poi grouping
+    var pop_info_stack = [];
+    if (geo_obj.do_grouping) {
+        var feature_reank = feature.attributes.m_rank;
+        var group_rank = geo_obj.group_links[feature_reank];
+        var feature_group = geo_obj.poi_groups[group_rank];
+        var feature_count = feature_group.length;
+        for (var find = 1; find < feature_count; find++) {
+            var cur_feature = feature_group[find];
+            var cur_content = GeoPopups.create_popup_content(cur_feature, geo_obj)
+            alert(cur_content['inner_html']);
+        }
+    }
+*/
+
     var pop_info = GeoPopups.create_popup_content(feature, geo_obj);
     var pop_text = pop_info['inner_html'];
 
