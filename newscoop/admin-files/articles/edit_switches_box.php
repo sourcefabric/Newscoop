@@ -3,15 +3,15 @@
 
     <ul class="check-list padded">
       <li><input type="checkbox" name="f_on_front_page" id="f_on_front_page"
-        class="input_checkbox" <?php if ($articleObj->onFrontPage()) { ?> checked<?php } ?> <?php if ($inViewMode) { ?>disabled<?php } ?> />
+        class="input_checkbox" <?php if ($articleObj->onFrontPage()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights ) { ?>disabled<?php } ?> />
         <label for="f_on_front_page"><?php putGS('Show article on front page'); ?></label>
       </li>
       <li><input type="checkbox" name="f_on_section_page" id="f_on_section_page"
-        class="input_checkbox" <?php if ($articleObj->onSectionPage()) { ?> checked<?php } ?> <?php if ($inViewMode) { ?>disabled<?php } ?> />
+        class="input_checkbox" <?php if ($articleObj->onSectionPage()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
         <label for="f_on_section_page"><?php putGS('Show article on section page'); ?></label>
       </li>
       <li><input type="checkbox" name="f_is_public" id="f_is_public"
-        class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php putGS('Visible to non-subscribers'); ?></label> </li>
+        class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php putGS('Visible to non-subscribers'); ?></label> </li>
     <?php
     foreach ($dbColumns as $dbColumn) {
         // Custom switches
@@ -40,16 +40,16 @@
         $('form#article-switches').submit(function() {
             var form = $(this);
             var vals = {
-                'setOnFrontPage': $('input[name=f_on_front_page]:checked', form).val(),
-                'setOnSectionPage': $('input[name=f_on_section_page]:checked', form).val(),
-                'setIsPublic': $('input[name=f_is_public]:checked', form).val()
+                'setOnFrontPage': $('input[name=f_on_front_page]', form),
+                'setOnSectionPage': $('input[name=f_on_section_page]', form),
+                'setIsPublic': $('input[name=f_is_public]', form)
             };
 
             // check if saved
             if (!form.hasClass('changed')) {
                 return false;
             }
-            
+
             // set dynamic
             $('input.db', form).each(function() {
                 var val = 'off';
@@ -63,23 +63,20 @@
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     <?php echo $f_language_selected; ?>,
                     $(this).attr('name'), val], function(json) {
-                        ajax_forms--;
+                	   flashMessage('<?php putGS('Switches saved.'); ?>');
+                	    ajax_forms--;
                     });
             });
 
             // set static
             for (method in vals) {
-                if (vals[method] == 'on') {
-                    vals[method] = 1;
-                } else {
-                    vals[method] = 0;
-                }
-
+                if (vals[method].attr('disabled'))
+                    continue;
                 ajax_forms++;
                 callServer(['Article', method], [
                     <?php echo $f_language_selected; ?>,
                     <?php echo $articleObj->getArticleNumber(); ?>,
-                    vals[method]], function(json) {
+                    Number(vals[method].attr('checked'))], function(json) {
                         flashMessage('<?php putGS('Switches saved.'); ?>');
                         ajax_forms--;
                     });
