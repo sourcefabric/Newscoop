@@ -1678,3 +1678,9 @@ table.message_box td {
 .top-field, .top-field:last-child {
 	margin-bottom:8px;
 }
+
+/*--- Media Box ---*/
+div.image-thumbnail-container {
+    float:left;
+    width:80px;
+}
