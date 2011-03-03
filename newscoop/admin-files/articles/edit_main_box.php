@@ -83,7 +83,7 @@ function change_language(select)
     <!-- END Language -->
 
     <!-- BEGIN Actions -->
-    <select name="f_action" class="input_select left-floated" onchange="action_selected(this);">
+    <select name="f_action" class="input_select" onchange="action_selected(this);" style="margin-bottom:2px;">
       <option value=""><?php putGS("Actions"); ?>...</option>
       <option value=""></option>
       <?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
@@ -110,7 +110,7 @@ function change_language(select)
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated"
+    <select name="f_action_workflow" class="input_select"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     if (!isset($issueObj)) {

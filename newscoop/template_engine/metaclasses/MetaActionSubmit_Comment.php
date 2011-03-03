@@ -52,6 +52,35 @@ class MetaActionSubmit_Comment extends MetaAction
         }
     }
 
+    /**
+     * @return void
+     */
+    private function _processCaptcha()
+    {
+        @session_start();
+        $captchaHandler = CampRequest::GetVar('f_captcha_handler', '', 'POST');
+        if (!empty($captchaHandler)) {
+            $captcha = Captcha::factory($captchaHandler);
+            if (!$captcha->validate()) {
+                $this->m_error = new PEAR_Error('The code you entered is not the same as the one shown.',
+                ACTION_SUBMIT_COMMENT_ERR_INVALID_CAPTCHA_CODE);
+                return FALSE;
+            }
+        } else {
+            $f_captcha_code = CampRequest::GetVar('f_captcha_code');
+            if (is_null($f_captcha_code) || empty($f_captcha_code)) {
+                $this->m_error = new PEAR_Error('Please enter the code shown in the image.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_CAPTCHA_CODE);
+                return FALSE;
+            }
+            if (!PhpCaptcha::Validate($f_captcha_code, true)) {
+                $this->m_error = new PEAR_Error('The code you entered is not the same with the one shown in the image.',
+                ACTION_SUBMIT_COMMENT_ERR_INVALID_CAPTCHA_CODE);
+                return FALSE;
+            }
+        }
+        return TRUE;
+    }
 
     /**
      * Performs the action; returns true on success, false on error.
@@ -128,17 +157,8 @@ class MetaActionSubmit_Comment extends MetaAction
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
         if ($publicationObj->isCaptchaEnabled()) {
-            @session_start();
-            $f_captcha_code = CampRequest::GetVar('f_captcha_code');
-            if (is_null($f_captcha_code) || empty($f_captcha_code)) {
-                $this->m_error = new PEAR_Error('Please enter the code shown in the image.',
-                ACTION_SUBMIT_COMMENT_ERR_NO_CAPTCHA_CODE);
-                return false;
-            }
-            if (!PhpCaptcha::Validate($f_captcha_code, true)) {
-                $this->m_error = new PEAR_Error('The code you entered is not the same with the one shown in the image.',
-                ACTION_SUBMIT_COMMENT_ERR_INVALID_CAPTCHA_CODE);
-                return false;
+            if ($this->_processCaptcha() === FALSE) {
+                return FALSE;
             }
         }
 
