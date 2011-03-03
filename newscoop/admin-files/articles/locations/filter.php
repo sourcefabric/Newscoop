@@ -60,6 +60,7 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 
 <div class="geo_filter_map_actions">
 <span><a href="#" class="geo_filter_polygon_actions geo_filter_unselected" id="geo_filter_pan_map" onclick="<?php echo Geo_Map::GetMapFilterObjName(); ?>.into_method_pan(); return false;"><?php putGS("pan map"); ?></a></span>
+<span><a href="#" class="geo_filter_polygon_actions geo_filter_unselected" id="geo_filter_edit_polygon" onclick="<?php echo Geo_Map::GetMapFilterObjName(); ?>.into_method_mod(); return false;"><?php putGS("edit polygon"); ?></a></span>
 <span><a href="#" class="geo_filter_polygon_actions geo_filter_selected" id="geo_filter_create_polygon" onclick="<?php echo Geo_Map::GetMapFilterObjName(); ?>.into_method_new(); return false;" checked><?php putGS("create polygon"); ?></a></span>
 </div><!-- end of geo_filter_map_actions -->
 

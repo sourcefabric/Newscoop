@@ -105,29 +105,52 @@ this.into_method_pan = function() {
     if (!geo_obj.inited) {return;}
 
     geo_obj.controls.polygon.deactivate();
+    geo_obj.controls.modify.deactivate();
 
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
+    var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
     var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
     $(pan_obj).removeClass("geo_filter_unselected");
+    $(mod_obj).addClass("geo_filter_unselected");
     $(new_obj).addClass("geo_filter_unselected");
-    $(new_obj).removeClass("geo_filter_selected");
     $(pan_obj).addClass("geo_filter_selected");
+    $(mod_obj).removeClass("geo_filter_selected");
+    $(new_obj).removeClass("geo_filter_selected");
+};
+
+this.into_method_mod = function() {
+    var geo_obj = this;
+    if (!geo_obj.inited) {return;}
+
+    geo_obj.controls.polygon.deactivate();
+    geo_obj.controls.modify.activate();
+
+    var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
+    var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
+    var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
+    $(pan_obj).addClass("geo_filter_unselected");
+    $(mod_obj).removeClass("geo_filter_unselected");
+    $(new_obj).addClass("geo_filter_unselected");
+    $(pan_obj).removeClass("geo_filter_selected");
+    $(mod_obj).addClass("geo_filter_selected");
+    $(new_obj).removeClass("geo_filter_selected");
 };
 
 this.into_method_new = function() {
     var geo_obj = this;
     if (!geo_obj.inited) {return;}
 
+    geo_obj.controls.modify.deactivate();
     geo_obj.controls.polygon.activate();
 
-    geo_obj.controls.modify.deactivate();
-    geo_obj.controls.modify.activate();
-
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
+    var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
     var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(new_obj).removeClass("geo_filter_unselected");
     $(pan_obj).addClass("geo_filter_unselected");
+    $(mod_obj).addClass("geo_filter_unselected");
+    $(new_obj).removeClass("geo_filter_unselected");
     $(pan_obj).removeClass("geo_filter_selected");
+    $(mod_obj).removeClass("geo_filter_selected");
     $(new_obj).addClass("geo_filter_selected");
 };
 
@@ -348,9 +371,6 @@ this.main_init = function(map_div_name)
         geo_obj.map.addControl(geo_obj.controls[key]);
     }
 
-    geo_obj.controls.polygon.activate();
-    geo_obj.controls.modify.activate();
-
     geo_obj.controls.modify.mode = OpenLayers.Control.ModifyFeature.RESHAPE;
     geo_obj.controls.modify.mode |= OpenLayers.Control.ModifyFeature.DRAG;
 
@@ -382,6 +402,8 @@ this.main_init = function(map_div_name)
     geo_obj.map_view_layer_zoom = geo_obj.map.getZoom();
 
     this.inited = true;
+    geo_obj.into_method_new();
+
     if (0 < this.obj_name.length) {
         this.auto_report = setInterval(this.obj_name + ".report(null);", 500);
     }
