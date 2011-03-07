@@ -316,6 +316,10 @@ class BlogEntry extends DatabaseObject {
             }
         }
 
+        $languageSelectedObj = new Language($data['fk_language_id']);
+        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+
         $mask = array(
             'f_entry_id'    => array(
                 'element'   => 'f_entry_id',
@@ -334,7 +338,7 @@ class BlogEntry extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
+                'text'      => Blog::GetEditor('tiny_mce_box', $g_user, $editorLanguage),
                 'type'  => 'static'
             ),
             'title'     => array(
