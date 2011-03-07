@@ -651,9 +651,14 @@ class CampInstallationBaseHelper
             return false;
         }
 
+        $dbhost = $dbData['hostname'];
+        if (!empty($dbData['hostport'])) { // add port to hostname
+            $dbhost .= ':' . $dbData['hostport'];
+        }
+
         $g_db = ADONewConnection('mysql');
         $g_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        return @$g_db->Connect($dbData['hostname'], $dbData['username'],
+        return @$g_db->Connect($dbhost, $dbData['username'],
                                $dbData['userpass'], $dbData['database']);
     } // fn ConnectDB
 
