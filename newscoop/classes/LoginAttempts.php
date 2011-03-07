@@ -18,7 +18,7 @@ class LoginAttempts {
 	public static function DeleteOldLoginAttempts()
 	{
 		global $g_ado_db;
-		$now = mktime();
+		$now = time();
 		// Records are kept for 12 hours.
 		$diff = $now - 43200;
         $queryStr = "DELETE FROM FailedLoginAttempts WHERE time_of_attempt <=".$diff;
@@ -34,7 +34,7 @@ class LoginAttempts {
 	public static function RecordLoginAttempt()
 	{
 		global $g_ado_db;
-		$now = mktime();
+		$now = time();
 		$userIp = getenv('REMOTE_ADDR');
 		$queryStr = "INSERT INTO FailedLoginAttempts (ip_address,time_of_attempt) VALUES('".$userIp."','".$now."')";
 		$g_ado_db->Execute($queryStr);
