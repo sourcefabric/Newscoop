@@ -77,7 +77,12 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bScrollCollapse': true,
     'bDestroy': true,
     'sDom': '<?php echo $this->getSDom(); ?>',
-    'aaSorting': [[2, 'asc']],
+    'aaSorting': [
+        <?php foreach ($this->orderBy as $column => $dir) { ?>
+        [<?php echo $column; ?>, '<?php echo $dir; ?>'],
+        <?php } ?>
+        [2, 'asc']
+    ],
     'oLanguage': {
         'oPaginate': {
             'sFirst': '<?php putGS('First'); ?>',

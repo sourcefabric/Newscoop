@@ -15,6 +15,8 @@ require_once LIBS_DIR . '/ArticleList/ArticleList.php';
  */
 abstract class ArticlesWidget extends Widget
 {
+    const LIMIT = 20; // articles limit
+
     protected $title = NULL;
 
     protected $items = array();
