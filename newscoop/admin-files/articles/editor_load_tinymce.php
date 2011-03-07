@@ -274,7 +274,6 @@ $().ready(function() {
         media_external_list_url : "lists/media_list.js",
 
         // paste options
-        paste_use_dialog: false,
         paste_auto_cleanup_on_paste: true,
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
@@ -289,6 +288,9 @@ $().ready(function() {
 
         <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
         setup : function(ed) {
+            ed.onInit.add(function(){ed.controlManager.setDisabled('pasteword', true);});
+            ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
+
             ed.onKeyUp.add(function(ed, l) {
                 var idx = ed.id.lastIndexOf('_');
                 var buttonId = ed.id.substr(0, idx);
@@ -301,7 +303,7 @@ $().ready(function() {
                     CampsiteSubhead(ed);
                 }
             });
-        }
+        },
         <?php } ?>
     });
 });
