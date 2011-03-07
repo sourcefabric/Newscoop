@@ -12,9 +12,18 @@ if (!isset($g_ado_db)) {
 	//$g_ado_db->debug = true;
 	// Set fetch mode to return associative arrays
 	$g_ado_db->SetFetchMode(ADODB_FETCH_ASSOC);
-	$g_ado_db->Connect($Campsite['DATABASE_SERVER_ADDRESS'], $Campsite['DATABASE_USER'],
+
+    // add port to hostname if set
+    $dbhost = $Campsite['DATABASE_SERVER_ADDRESS'];
+    if (!empty($Campsite['DATABASE_SERVER_PORT'])) {
+        $dbhost .= ':' . $Campsite['DATABASE_SERVER_PORT'];
+    }
+
+	$g_ado_db->Connect($dbhost, $Campsite['DATABASE_USER'],
 		$Campsite['DATABASE_PASSWORD'], $Campsite['DATABASE_NAME']);
     $g_ado_db->Execute("SET NAMES 'utf8'");
+
+    unset($dbhost);
 }
 
 if (!$g_ado_db->IsConnected()) {
