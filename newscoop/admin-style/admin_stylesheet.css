@@ -1223,6 +1223,16 @@ input.input_file {
     box-shadow: 0 2px 2px rgba(0,0,0,.10);
 }
 
+.login_box p {
+    font-size: 1.2em;
+    line-height: 1.5em;
+    text-align: left;
+}
+
+.login_box a.goto {
+    font-size: 1.2em;
+}
+
 .logobox {
     height:102px;
     text-align:center;
