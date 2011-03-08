@@ -230,7 +230,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <tr class="buttonBlock2">
   <td>
   <?php if (SystemPref::Get("PasswordRecovery") == 'Y') { ?>
-    <a href="password_recovery.php"><?php putGS('Forgot your password?'); ?></a>
+    <a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/password_recovery.php"><?php putGS('Forgot your password?'); ?></a>
   <?php } ?>
   </td>
   <td>
