@@ -52,7 +52,7 @@ camp_html_display_msgs();
 
             <dl>
                 <dt><?php  putGS("Description"); ?>:</dt>
-                <dd><input type="text" name="file[<?php echo $file->getAttachmentId(); ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>"/></dd>
+                <dd><input type="text" name="file[<?php echo $file->getAttachmentId(); ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file: '$1'.",$file->getFileName()); ?>"/></dd>
             </dl>
             <dl>
                 <dt><?php  putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></dt>
