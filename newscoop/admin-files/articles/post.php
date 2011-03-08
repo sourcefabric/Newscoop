@@ -66,7 +66,7 @@ foreach ($dbColumns as $dbColumn) {
     if (isset($_REQUEST[$dbColumnParam])) {
         $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
     } else {
-    	$articleFields[$dbColumn->getName()] = null;
+        unset($articleFields[$dbColumn->getName()]); // ignore if not set
     }
 }
 
