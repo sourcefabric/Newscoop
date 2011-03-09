@@ -67,28 +67,26 @@ $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";
 if (SystemPref::Get("PasswordRecovery") == 'N') {
-    $errors[] = getGS('Password recovery is disabled.') . '<br/> <a href="login.php">' . getGS('login') . '</a>';
+    $errors[] = getGS('Password recovery is disabled.');
 } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
     $usr = User::FetchUserByEmail($email);
     if ($usr != null) {
-        if ("|" . strtoupper($usr->getPasswordResetToken()) == $token) {
+        if ($usr->getPasswordResetToken() == $token) {
             $newPassword = Input::Get("f_password","string");
             if (strlen($newPassword) > 0) {
                $usr->setPassword($newPassword);
-               $errors[] = getGS('Your password has been reset <br/> you may now proceed to')
-                   . ' <a href="login.php">' . getGS('login') . '</a>';
+               $errors[] = getGS('Your password has been reset.');
             } else {
                 $action = "inputs";
             }
         } else {
-            $errors[] = getGS('This link is not valid.') . '<br/> <a href="login.php">'
-                . getGS('login') . '</a>';
+            $errors[] = getGS('This link is not valid.');
         }
     } else {
-        $errors[] = getGS('Bad input parameters.') . '<br/> <a href="login.php">' . getGS('login') .'</a>';
+        $errors[] = getGS('Bad input parameters.');
     }
 } else {
-    $errors[] = getGS('Bad input parameters.') . '<br/> <a href="login.php">' . getGS('login') . '</a>';
+    $errors[] = getGS('Bad input parameters.');
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -96,6 +94,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 <head>
   <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
   <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
@@ -104,22 +103,20 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="token" value="<?php echo $token; ?>" />
   <div class="login_box">
-    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/newscoop_logo_big.png" border="0" alt="" /></div>
+    <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php
         putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
     ?>
     </noscript>
-    <?php
-    if (isset($errors)) {
-    ?>
+
+    <?php if (isset($errors)) { ?>
     <div class="login_error">
-        <?php
-        foreach ($errors as $error) {
-            echo "$error <br/>";
-        }
-        ?>
+        <?php foreach ($errors as $error) { ?>
+        <p><?php echo $error; ?></p>
+        <?php } ?>
+        <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php putGS('Go to login'); ?></a>
     </div>
     <?php
     }
@@ -142,8 +139,8 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
       </td>
     </tr>
     </table>
-  </div>
-  <input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
+
   <?php } ?>
+  </div>
 </form>
 <?php camp_html_copyright_notice(false); ?>

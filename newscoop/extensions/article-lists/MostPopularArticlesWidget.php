@@ -22,20 +22,22 @@ class MostPopularArticlesWidget extends ArticlesWidget
 
     public function beforeRender()
     {
-        $count = 0;
-        $popularArticlesParams = array(
+        $this->items = Article::GetList(array(
             new ComparisonOperation('published', new Operator('is'), 'true'),
             new ComparisonOperation('reads', new Operator('greater'), '0'),
-        );
-        $this->items = Article::GetList($popularArticlesParams,
-            array(array('field'=>'bypopularity', 'dir'=>'desc')),
-            NULL, $NumDisplayArticles, $count);
+            ), array(
+                array(
+                    'field' => 'bypopularity',
+                    'dir' => 'desc',
+                )
+            ), 0, self::LIMIT, $count = 0);
     }
 
     public function render()
     {
         $articlelist = new ArticleList();
         $articlelist->setItems($this->items);
+        $articlelist->setOrderBy('Reads', 'desc');
         if (!$this->isFullscreen()) {
             $articlelist->setHidden('Status');
             $articlelist->setHidden('Comments');

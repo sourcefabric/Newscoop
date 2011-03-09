@@ -31,6 +31,9 @@ class ArticleList extends BaseList
     /** @var array */
     protected $filters = array();
 
+    /** @var array */
+    protected $orderBy = array();
+
     /** @var bool */
     protected static $renderFilters = FALSE;
 
@@ -130,6 +133,25 @@ class ArticleList extends BaseList
     public function setFilter($name, $value)
     {
         $this->filters[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * Set column to order by.
+     *
+     * @param string $column
+     * @param string $direction
+     * @return ArticleList
+     */
+    public function setOrderBy($column, $direction = 'asc')
+    {
+        if (!isset($this->cols[$column])) {
+            return $this;
+        }
+
+        $columnNo = array_search($column, array_keys($this->cols));
+        $this->orderBy[$columnNo] = strtolower($direction) == 'desc' ? 'desc' : 'asc';
+
         return $this;
     }
 

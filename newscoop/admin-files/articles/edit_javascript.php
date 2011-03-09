@@ -186,11 +186,13 @@ $('.save-button-bar input#save_and_close').click(function() {
 });
 <?php } ?>
 
+
+
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
 $quoteStringFn = create_function('&$value, $key',
-    '$value = "\"" . camp_javascriptspecialchars($value) . "\"";');
+    '$value = json_encode((string) $value);');
 array_walk($allAuthors, $quoteStringFn);
 echo implode(",\n", $allAuthors);
 ?>

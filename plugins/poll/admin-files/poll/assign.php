@@ -117,7 +117,7 @@ switch ($f_poll_item) {
     break;
 
     case 'article':
-        foreach (PollArticle::GetAssignments(null, $f_language_id, $f_article_number) as $assignObj) {
+        foreach (PollArticle::GetAssignments(null, $f_language_id, $f_article_nr) as $assignObj) {
             $assigned[$assignObj->getPollNumber()] = true;
         }
     break;

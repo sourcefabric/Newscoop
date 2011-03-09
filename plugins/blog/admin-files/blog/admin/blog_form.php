@@ -32,32 +32,34 @@ if ($Blog->store($is_admin)) {
 
 ?>
 <head>
-    <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<META HTTP-EQUIV="Expires" CONTENT="now">
-	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Expires" content="now">
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/admin_stylesheet.css">
 	<title><?php $Blog->exists() ? putGS('Edit Blog') : putGS('Add new Blog'); ?></title>
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
     <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
     <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
     <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
 </head>
 <body>
 
 <?php camp_html_display_msgs(); ?>
 
 <table style="margin-top: 10px; margin-left: 15px; margin-right: 15px;" cellpadding="0" cellspacing="0" width="95%" class="table_input">
-    <TR>
-    	<TD style="padding: 3px";>
-    		<B><?php $Blog->exists() ? putGS('Edit Blog') : putGS('Add new Blog'); ?></B>
-    		<hr style="color: #8baed1";>
-    	</TD>
-    </TR>
-    <tr>
-        <td>
-            <?php p($Blog->getForm(basename(__FILE__), $is_admin)); ?>
-        </td>
-    </tr>
+<tr>
+  <td style="padding: 3px";>
+    <b><?php $Blog->exists() ? putGS('Edit Blog') : putGS('Add new Blog'); ?></b>
+    <hr style="color: #8baed1";>
+  </td>
+</tr>
+<tr>
+  <td>
+    <?php p($Blog->getForm(basename(__FILE__), $is_admin)); ?>
+  </td>
+</tr>
 </table>
 </body>
 </html>

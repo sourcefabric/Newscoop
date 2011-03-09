@@ -234,6 +234,9 @@ class Blog extends DatabaseObject {
             $active_topics[$Topic->getTopicId()] = $Topic->getName($this->getLanguageId());
         }
 
+        $languageSelectedObj = new Language($data['fk_language_id']);
+        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
         $mask = array(
             'f_blog_id'    => array(
                 'element'   => 'f_blog_id',
@@ -262,7 +265,7 @@ class Blog extends DatabaseObject {
             ),
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => self::GetEditor('tiny_mce_box', $g_user, camp_session_get('TOL_Language', $data['fk_language_id'])),
+                'text'      => self::GetEditor('tiny_mce_box', $g_user, $editorLanguage),
                 'type'      => 'static'
             ),
             'info'      => array(
@@ -271,7 +274,7 @@ class Blog extends DatabaseObject {
                 'label'     => getGS('Info'),
                 'default'   => $data['info'],
                 'required'  => true,
-                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box', 'class' => 'tinymce')
             ),
             'feature'     => array(
                 'element'   => 'Blog[feature]',
@@ -714,7 +717,7 @@ class Blog extends DatabaseObject {
     	}
     	if ($p_user->hasPermission('EditorLink')) {
     	    $toolbar1[] = "|";
-    	    #$toolbar1[] = "campsiteinternallink";
+    	    $toolbar1[] = "campsiteinternallink";
     	    $toolbar1[] = "link";
     	}
     	if ($p_user->hasPermission('EditorSubhead')) {
@@ -799,11 +802,16 @@ class Blog extends DatabaseObject {
     	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
     	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
 
+        $localeFile = $Campsite['CAMPSITE_DIR'] . '/javascript/tinymce/langs/' . $p_editorLanguage . '.js';
+        if (!file_exists($localeFile)) {
+            $p_editorLanguage = 'en';
+        }
+
     	ob_start();
     ?>
 
     <!-- TinyMCE -->
-        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/jquery.tinymce.js"></script>
     <script type="text/javascript">
     function CampsiteSubhead(ed) {
         element = ed.dom.getParent(ed.selection.getNode(), 'span');
@@ -813,54 +821,60 @@ class Blog extends DatabaseObject {
             html = ed.selection.getContent({format : 'text'});
     	ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
         }
-    } // fn CampsiteSubhead
+    }
 
-    // Default skin
-    tinyMCE.init({
-        // General options
-        language : "<?php p($p_editorLanguage); ?>",
-        mode : "exact",
-        elements : "<?php p($p_box_id); ?>",
-        theme : "advanced",
-        plugins : "<?php p($plugins_list); ?>",
-        forced_root_block : "",
-        relative_urls : false,
+    $().ready(function() {
+        $('textarea.tinymce').tinymce({
+            // Location of TinyMCE script
+            script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js',
 
-        // Theme options
-        theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
-        theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
-        theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
+            // General options
+            language : "<?php p($p_editorLanguage); ?>",
+            theme : "advanced",
+            plugins : "<?php p($plugins_list); ?>",
+            forced_root_block : "",
+            relative_urls : false,
 
-        theme_advanced_toolbar_location : "top",
-        theme_advanced_toolbar_align : "left",
-        theme_advanced_resizing : false,
-        theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
+            // Theme options
+            theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
+            theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
+            theme_advanced_buttons3 : "<?php p($theme_buttons3); ?>",
 
-        // Example content CSS (should be your site CSS)
-        content_css : "<?php echo $stylesheetFile; ?>",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            theme_advanced_resizing : false,
+            theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
-        // Drop lists for link/image/media/template dialogs
-        template_external_list_url : "lists/template_list.js",
-        external_link_list_url : "lists/link_list.js",
-        external_image_list_url : "lists/image_list.js",
-        media_external_list_url : "lists/media_list.js",
+            // Example content CSS (should be your site CSS)
+            content_css : "<?php echo $stylesheetFile; ?>",
 
-        // paste options
-        paste_use_dialog: false,
-        paste_auto_cleanup_on_paste: true,
-        paste_convert_headers_to_strong: true,
-        paste_remove_spans: true,
-        paste_remove_styles: true,
+            // Drop lists for link/image/media/template dialogs
+            template_external_list_url : "lists/template_list.js",
+            external_link_list_url : "lists/link_list.js",
+            external_image_list_url : "lists/image_list.js",
+            media_external_list_url : "lists/media_list.js",
 
-        setup : function(ed) {
-            ed.onKeyUp.add(function(ed, l) {
-    	    var idx = ed.id.lastIndexOf('_');
-    	    var buttonId = ed.id.substr(0, idx);
-    	    buttonEnable('save_' + buttonId);
-    	});
+            // paste options
+            paste_use_dialog: false,
+            paste_auto_cleanup_on_paste: true,
+            paste_convert_headers_to_strong: true,
+            paste_remove_spans: true,
+            paste_remove_styles: true,
 
+            // not escaping greek characters
+            entity_encoding: 'raw',
 
-        }
+            setup : function(ed) {
+                ed.onInit.add(function(){ed.controlManager.setDisabled('pasteword', true);});
+                ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
+
+                ed.onKeyUp.add(function(ed, l) {
+                    var idx = ed.id.lastIndexOf('_');
+                    var buttonId = ed.id.substr(0, idx);
+                    buttonEnable('save_' + buttonId);
+                });
+            }
+        });
     });
     </script>
     <!-- /TinyMCE -->
