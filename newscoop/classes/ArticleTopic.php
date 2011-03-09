@@ -257,6 +257,16 @@ class ArticleTopic extends DatabaseObject {
             if (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
                 $hasArticleNr = true;
             }
+                       
+            if (strpos($comparisonOperation['left'], 'RootTopic') !== false) {
+                $rootId = (int)$comparisonOperation['right'];
+                $subtopicsQuery = Topic::BuildSubtopicsQueryWithoutDepth($rootId);
+                $whereCondition = 'TopicId IN ('.$subtopicsQuery->buildQuery().')';
+                $selectClauseObj->addConditionalWhere($whereCondition);
+                $countClauseObj->addConditionalWhere($whereCondition);
+                continue;            	
+            }
+			
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $g_ado_db->escape($comparisonOperation['right']) . "' ";
@@ -335,6 +345,10 @@ class ArticleTopic extends DatabaseObject {
             $comparisonOperation['left'] = 'NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
+    	case 'roottopic':
+    		$comparisonOperation['left'] = 'RootTopic';
+    		$comparisonOperation['right'] = (int) $p_param->getRightOperand();
+    		break;            
         }
 
         $operatorObj = $p_param->getOperator();

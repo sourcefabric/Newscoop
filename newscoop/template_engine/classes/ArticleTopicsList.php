@@ -80,6 +80,18 @@ class ArticleTopicsList extends ListObject
 	    				$parameters[$parameter] = $value;
     				}
     				break;
+                case 'root':
+                    $arrayTopics = explode(';',(string)$value);
+                    for ($i = 0, $count = count($arrayTopics); $i < $count; $i++) {
+                        $metaTopic = new MetaTopic($arrayTopics[$i]);
+                        if (!$metaTopic->defined) {
+                            CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_topics");
+                            return array();
+                        }
+                        $operator = new Operator('is', 'integer');
+                        $this->m_constraints[] = new ComparisonOperation('roottopic', $operator, $metaTopic->identifier);
+                    }
+                    break;
     			default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_topics", $p_smarty);
     		}

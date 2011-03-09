@@ -35,8 +35,8 @@ class Topic extends DatabaseObject {
             $this->m_data['id'] = $p_idOrName;
             $this->fetch();
 		} elseif (is_string($p_idOrName) && !empty($p_idOrName)) {
-		    $topic = Topic::GetByFullName($p_idOrName);
-		    if (!is_null($topic)) {
+            $topic = Topic::GetByFullName($p_idOrName);
+            if (!is_null($topic)) {
 		        $this->duplicateObject($topic);
 		    }
 		}
@@ -669,6 +669,27 @@ class Topic extends DatabaseObject {
 	}
 
 
+	/**
+	 * Returns an SQLSelectClause object that builds a query for retrieving the
+	 * subtopics of the given parent.
+	 *
+	 * @param integer $p_parentId - parent topic identifier
+	 * @return SQLSelectClause
+	 */
+	public static function BuildSubtopicsQueryWithoutDepth($p_parentId = 0)
+	{
+		$topicObj = new Topic();
+		$query = new SQLSelectClause($p_indent);
+		$query->addColumn('node.id AS id');
+		$query->setTable($topicObj->m_dbTableName . ' AS node');
+        $query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
+        $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
+        $query->addWhere('parent.id = ' . (int)$p_parentId);
+        $query->addOrderBy('node.node_left');        
+        return $query;
+	}
+	
+	
 	/**
 	 * Get all the topics in an array, where each element contains the entire
 	 * path for each topic.  Each topic will be indexed by its ID.
