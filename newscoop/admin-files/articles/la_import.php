@@ -31,33 +31,36 @@ $f_section_number = Input::Get('f_section_number', 'int', 0, true);
 // Whether articles must be overwritten
 $f_overwrite_articles = Input::Get('f_overwrite_articles', 'string', '', true);
 
+// Build the back link
+$backlink = $Campsite['WEBSITE_URL'] . DIR_SEP . 'admin' . DIR_SEP . 'articles' . DIR_SEP . basename(__FILE__);
+
 if ($f_save) {
     if (isset($_FILES["f_input_file"])) {
         switch($_FILES["f_input_file"]['error']) {
-	case 0: // UPLOAD_ERR_OK
-	    break;
-	case 1: // UPLOAD_ERR_INI_SIZE
-	case 2: // UPLOAD_ERR_FORM_SIZE
-	    camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
-	    break;
-	case 3: // UPLOAD_ERR_PARTIAL
-	    camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
-	    break;
-	case 4: // UPLOAD_ERR_NO_FILE
-	    camp_html_display_error(getGS("You must select a file to upload."), null, true);
-	    break;
-	case 6: // UPLOAD_ERR_NO_TMP_DIR
-	case 7: // UPLOAD_ERR_CANT_WRITE
-	    camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
-	    break;
-	}
+            case 0: // UPLOAD_ERR_OK
+                break;
+            case 1: // UPLOAD_ERR_INI_SIZE
+            case 2: // UPLOAD_ERR_FORM_SIZE
+                camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+                break;
+            case 3: // UPLOAD_ERR_PARTIAL
+                camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
+                break;
+            case 4: // UPLOAD_ERR_NO_FILE
+                camp_html_display_error(getGS("You must select a file to upload."), null, true);
+                break;
+            case 6: // UPLOAD_ERR_NO_TMP_DIR
+            case 7: // UPLOAD_ERR_CANT_WRITE
+                camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
+                break;
+        }
     } else {
         camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
     }
- }
+}
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $backlink);
     exit;
 }
 
@@ -69,52 +72,57 @@ $isValidXMLFile = false;
 if ($f_save && !empty($_FILES['f_input_file'])) {
     if (file_exists($_FILES['f_input_file']['tmp_name'])) {
         if (!($buffer = @file_get_contents($_FILES['f_input_file']['tmp_name']))) {
-	    camp_html_display_error(getGS("File could not be read."));
+	    camp_html_display_error(getGS("File could not be read."), $backlink);
 	    exit;
 	}
-	$xml = new SimpleXMLElement($buffer);
-	if (!is_object($xml)) {
-	    camp_html_display_error(getGS("File is not a valid XML file."));
-            exit;
-	}
+
+    try {
+        $xml = new SimpleXMLElement($buffer);
+        if (!is_object($xml)) {
+            throw new Exception();
+        }
+	} catch (Exception $e) {
+	    camp_html_display_error(getGS("File is not a valid XML file."), $backlink);
+	    exit;
+    }
 
 	if (!isset($xml->article->name)) {
-	    camp_html_add_msg(getGS("Bad format in XML file."));
+	    camp_html_add_msg(getGS("Bad format in XML file."), $backlink);
 	}
 
 	$isValidXMLFile = true;
 	@unlink($_FILES['f_input_file']['tmp_name']);
     } else {
-        camp_html_display_error(getGS("File does not exist."));
+        camp_html_display_error(getGS("File does not exist."), $backlink);
         exit;
     }
 } elseif ($f_save) {
-    camp_html_add_msg(getGS("File could not be uploaded."));
+    camp_html_add_msg(getGS("File could not be uploaded."), $backlink);
 }
 
 
 if ($isValidXMLFile) {
     if ($f_publication_id > 0) {
         $publicationObj = new Publication($f_publication_id);
-	if (!$publicationObj->exists()) {
-	    camp_html_display_error(getGS('Publication does not exist.'));
-	    exit;
-	}
-	if ($f_issue_number > 0) {
-	    $issueObj = new Issue($f_publication_id, $f_article_language_id, $f_issue_number);
-	    if (!$issueObj->exists()) {
-	        camp_html_display_error(getGS('Issue does not exist.'));
-		exit;
-	    }
+        if (!$publicationObj->exists()) {
+            camp_html_display_error(getGS('Publication does not exist.'), $backlink);
+            exit;
+        }
+    	if ($f_issue_number > 0) {
+    	    $issueObj = new Issue($f_publication_id, $f_article_language_id, $f_issue_number);
+    	    if (!$issueObj->exists()) {
+    	        camp_html_display_error(getGS('Issue does not exist.'), $backlink);
+                exit;
+    	    }
 
-	    if ($f_section_number > 0) {
-	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_article_language_id, $f_section_number);
-		if (!$sectionObj->exists()) {
-		    camp_html_display_error(getGS('Section does not exist.'));
-		    exit;
-		}
-	    }
-	}
+    	    if ($f_section_number > 0) {
+    	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_article_language_id, $f_section_number);
+                if (!$sectionObj->exists()) {
+                    camp_html_display_error(getGS('Section does not exist.'), $backlink);
+                    exit;
+                }
+    	    }
+    	}
     }
 
     // Loads article data from XML file into database
@@ -148,7 +156,7 @@ if ($isValidXMLFile) {
 
 	// Checks whether article was successfully created
 	if (!$articleObj->exists()) {
-	    camp_html_display_error(getGS('Article could not be created.'), $BackLink);
+	    camp_html_display_error(getGS('Article could not be created.'), $backlink);
 	    exit;
 	}
 	$articleFields['name'] = true;
