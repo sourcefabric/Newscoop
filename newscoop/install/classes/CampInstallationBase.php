@@ -159,8 +159,11 @@ class CampInstallationBase
         $db_database = Input::Get('db_database', 'text');
         $db_overwrite = Input::Get('db_overwrite', 'int', 0);
 
+        $dbhost = $db_hostname;
         if (empty($db_hostport)) {
             $db_hostport = 3306;
+        } else { // add port to hostname
+            $dbhost .= ':' . $db_hostport;
         }
 
         if (empty($db_hostname) || empty($db_hostport)
@@ -173,7 +176,7 @@ class CampInstallationBase
         $error = false;
         $g_db = ADONewConnection('mysql');
         $g_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        @$g_db->Connect($db_hostname, $db_username, $db_userpass);
+        @$g_db->Connect($dbhost, $db_username, $db_userpass);
         if (!$g_db->isConnected()) {
             $error = true;
         } else {
@@ -648,9 +651,14 @@ class CampInstallationBaseHelper
             return false;
         }
 
+        $dbhost = $dbData['hostname'];
+        if (!empty($dbData['hostport'])) { // add port to hostname
+            $dbhost .= ':' . $dbData['hostport'];
+        }
+
         $g_db = ADONewConnection('mysql');
         $g_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        return @$g_db->Connect($dbData['hostname'], $dbData['username'],
+        return @$g_db->Connect($dbhost, $dbData['username'],
                                $dbData['userpass'], $dbData['database']);
     } // fn ConnectDB
 

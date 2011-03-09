@@ -1,7 +1,5 @@
 <?php
-/**
- * Includes
- */
+
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 
@@ -279,8 +277,20 @@ class CampGetImage
 		$h_dest = $this->m_resizeHeight;
 	    }
 	}
-
         $dest = @imagecreatetruecolor($w_dest, $h_dest);
+        $imageType = $this->m_image->getContentType();
+
+        // fix transparent backgrounds for png/gif
+        if (in_array($imageType, array('image/gif', 'image/png'))) {
+            imagesavealpha($dest, TRUE);
+            $color = imagecolorallocatealpha($dest, 0, 0, 0, 127);
+
+            imagealphablending($dest, FALSE);
+            imagefilledrectangle($dest, 0, 0, $w_dest - 1, $h_dest - 1, $color);
+            imagealphablending($dest, TRUE);
+            imagecolortransparent($dest, $color);
+        }
+
         @imagecopyresampled($dest, $p_im, 0, 0, 0, 0, $w_dest, $h_dest, $w_src, $h_src);
         return $dest;
     }  // fn ResizeImage
@@ -421,6 +431,4 @@ class CampGetImage
         }
         return false;
     }
-} // class CampGetImagePlus
-
-?>
+}

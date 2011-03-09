@@ -47,6 +47,8 @@ final class MetaBlogEntry extends MetaDbObject {
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['comments'] = 'getCommentsCount';
         $this->m_customProperties['mood'] = 'getMood';
+
+        $this->m_skipFilter = array('content');
     } // fn __construct
     
     public function getBlog()

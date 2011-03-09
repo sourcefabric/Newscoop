@@ -112,8 +112,8 @@ function drawFiles($list, &$manager)
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo $file['alt']; ?>', '<?php echo $file['alt']; ?>');" title="<?php echo $file['alt']; ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/></a>
+		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  htmlentities($file['alt']); ?>', '<?php echo  htmlentities($file['alt']); ?>');">
+		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  htmlentities($file['alt']); ?>', '<?php echo  htmlentities($file['alt']); ?>');" title="<?php echo  htmlentities($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  htmlentities($file['alt']); ?>"/></a>
 		                </td></tr><tr><td class="edit">
 		<?php
 		if ($file['image']) {
