@@ -676,20 +676,23 @@ class Topic extends DatabaseObject {
 	 * @param integer $p_parentId - parent topic identifier
 	 * @return SQLSelectClause
 	 */
-	public static function BuildSubtopicsQueryWithoutDepth($p_parentId = 0)
+	public static function BuildSubtopicsQueryWithoutDepth($p_parentIds = 0)
 	{
-		$topicObj = new Topic();
-		$query = new SQLSelectClause($p_indent);
-		$query->addColumn('node.id AS id');
-		$query->setTable($topicObj->m_dbTableName . ' AS node');
+        $p_parentIds = is_array($p_parentIds)? $p_parentIds: array($p_parentIds);
+        $topicObj = new Topic();
+        $query = new SQLSelectClause($p_indent);
+        $query->addColumn('node.id AS id');
+        $query->setTable($topicObj->m_dbTableName . ' AS node');
         $query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
         $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        $query->addWhere('parent.id = ' . (int)$p_parentId);
-        $query->addOrderBy('node.node_left');        
+        foreach($p_parentIds as $p_parentId) {
+            $query->addConditionalWhere('parent.id = ' . (int)$p_parentId);
+        }
+        $query->addOrderBy('node.node_left');
         return $query;
 	}
-	
-	
+
+
 	/**
 	 * Get all the topics in an array, where each element contains the entire
 	 * path for each topic.  Each topic will be indexed by its ID.

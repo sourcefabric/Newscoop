@@ -246,7 +246,7 @@ class ArticleTopic extends DatabaseObject {
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
-
+        $rootTopicIds = array();
         // processes the parameters
         foreach ($p_parameters as $parameter) {
             $comparisonOperation = self::ProcessListParameters($parameter);
@@ -257,16 +257,12 @@ class ArticleTopic extends DatabaseObject {
             if (strpos($comparisonOperation['left'], 'NrArticle') !== false) {
                 $hasArticleNr = true;
             }
-                       
+
             if (strpos($comparisonOperation['left'], 'RootTopic') !== false) {
-                $rootId = (int)$comparisonOperation['right'];
-                $subtopicsQuery = Topic::BuildSubtopicsQueryWithoutDepth($rootId);
-                $whereCondition = 'TopicId IN ('.$subtopicsQuery->buildQuery().')';
-                $selectClauseObj->addConditionalWhere($whereCondition);
-                $countClauseObj->addConditionalWhere($whereCondition);
-                continue;            	
+                $rootTopicIds[] = (int)$comparisonOperation['right'];
+                continue;
             }
-			
+
             $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
                 . $g_ado_db->escape($comparisonOperation['right']) . "' ";
@@ -278,6 +274,13 @@ class ArticleTopic extends DatabaseObject {
         if ($hasArticleNr === false) {
             CampTemplate::singleton()->trigger_error("missed parameter Article Number in statement list_article_topics");
             return array();
+        }
+
+        if(count($rootTopicIds) > 0) {
+            $subtopicsQuery = Topic::BuildSubtopicsQueryWithoutDepth($rootTopicIds);
+            $whereCondition = 'TopicId IN ('.$subtopicsQuery->buildQuery().')';
+            $selectClauseObj->addWhere($whereCondition);
+            $countClauseObj->addWhere($whereCondition);
         }
 
         // sets the main table and columns to be fetched
@@ -348,7 +351,7 @@ class ArticleTopic extends DatabaseObject {
     	case 'roottopic':
     		$comparisonOperation['left'] = 'RootTopic';
     		$comparisonOperation['right'] = (int) $p_param->getRightOperand();
-    		break;            
+    		break;
         }
 
         $operatorObj = $p_param->getOperator();
