@@ -29,9 +29,9 @@ class LocationsList extends ListObject
         $campsite = CampTemplate::singleton()->context();
 
 	    //$articleLocationsList = $campsite->m_properties['map_dynamic_points_objects'];
-	    $articleLocationsList = $campsite->map_dynamic_points_objects;
+	    $mapLocationsList = $campsite->map_dynamic_points_objects;
 	    $metaLocationsList = array();
-	    foreach ($articleLocationsList as $location) {
+	    foreach ($mapLocationsList as $location) {
 	        $metaLocationsList[] = new MetaMapLocation($location);
 	    }
         //var_dump($metaLocationsList);

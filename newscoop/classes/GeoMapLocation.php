@@ -312,6 +312,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 	{
         $p_count = 0;
 
+        if (!is_numeric($p_limit)) {$p_limit = 0;}
+        if (!is_numeric($p_start)) {$p_start = 0;}
+
         $ps_saveArray = false;
         if (!is_null($p_rawData)) {
             $ps_saveArray = true;
@@ -348,10 +351,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 case 'constrained':
                     $mc_mapCons = true;
                 case 'map':
-                    $ps_mapId = $param->getRightOperand();
+                    if (is_numeric($param->getRightOperand())) {
+                        $ps_mapId = $param->getRightOperand();
+                    }
                     break;
                 case 'language':
-                    $ps_languageId = $param->getRightOperand();
+                    if (is_numeric($param->getRightOperand())) {
+                        $ps_languageId = 0 + $param->getRightOperand();
+                    }
                     break;
                 case 'active_only':
                 case 'preview':
@@ -487,7 +494,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         $mc_limit = 0 + $p_limit;
         if (0 > $mc_limit) {$mc_limit = 0;}
-        if (!$mc_limit) {$mc_limit = 200;}
+        if (!$mc_limit) {$mc_limit = 2000;}
 
         $mc_start = 0 + $p_start;
         if (0 > $mc_start) {$mc_start = 0;}
@@ -664,7 +671,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $queryStr_count = "";
         $queryStr_count_start = "";
 
-        $queryStr_count_start .= "SELECT count(DISTINCT ml.id) ";
+        //$queryStr_count_start .= "SELECT count(DISTINCT ml.id) ";
 
 		$queryStr_start .= "SELECT DISTINCT ml.id AS ml_id, mll.id as mll_id, ml.fk_location_id AS loc_id, mll.fk_content_id AS con_id, ";
         $queryStr_start .= "ml.poi_style AS poi_style, ml.rank AS rank, mll.poi_display AS poi_display, ";
@@ -673,14 +680,35 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $queryStr_start .= "l.poi_radius AS l_radius, l.IdUser AS l_user, l.time_updated AS l_updated, ";
         if ($mc_mapCons)
         {
-            $queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, m.fk_article_number AS art_number, ";
+            //$queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, m.fk_article_number AS art_number, ";
+            $queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, m.fk_article_number AS art_number, GROUP_CONCAT(DISTINCT m.fk_article_number) AS art_numbers, ";
         }
+
+        //$queryStr_start .= "GROUP_CONCAT(mlmume.fk_multimedia_id) AS multimedia_ids, ";
+        //$queryStr_start .= "GROUP_CONCAT(mume.id) AS multimedia_ids, ";
+
+        //$queryStr_start .= "(SELECT mlmu.id FROM MapLocationMultimedia AS mlmu $mmu_test_join WHERE mlmu.fk_maplocation_id = ml.id $mmu_test_spec) AS mlmu_id, ";
+
+        //$queryStr_mm .= "m.media_type AS media_type, m.media_spec AS media_spec, ";
+        //$queryStr_mm .= "m.media_src AS media_src, m.media_height AS media_height, m.media_width AS media_width ";
+
+
+        //$queryStr_start .= "ROW ('image_mm', 'image_spec', 'image_src', 'image_height', 'image_width') = (SELECT mu.id, mu.media_spec, mu.media_src, mu.media_height, mu.media_width FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'image' LIMIT 1), ";
+        //$queryStr_start_mm = "";
+        $queryStr_start .= "(SELECT mu.id FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'image' ORDER BY mu.id LIMIT 1) AS image_mm, ";
+        $queryStr_start .= "(SELECT mu.id FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'video' ORDER BY mu.id LIMIT 1) AS video_mm, ";
+        //$queryStr_start .= $queryStr_start_mm + ", ";
+        //$queryStr_count_start .= ", " . $queryStr_start_mm;
+
         $queryStr_start .= "c.IdUser AS c_user, c.time_updated AS c_updated, ";
 
         $queryStr_start .= "AsText(l.poi_location) AS loc, l.poi_type AS poi_type, l.poi_type_style AS poi_type_style, ";
 
         $queryStr_start .= "c.poi_name AS poi_name, c.poi_link AS poi_link, c.poi_perex AS poi_perex, ";
         $queryStr_start .= "c.poi_content_type AS poi_content_type, c.poi_content AS poi_content, c.poi_text AS poi_text ";
+
+        //$queryStr .= "FROM MapLocations AS ml LEFT JOIN MapLocationMultimedia AS mlmume ON mlmume.fk_maplocation_id = ml.id ";
+        //$queryStr .= "INNER JOIN MapLocationLanguages AS mll ON ml.id = mll.fk_maplocation_id ";
 
         $queryStr .= "FROM MapLocations AS ml INNER JOIN MapLocationLanguages AS mll ON ml.id = mll.fk_maplocation_id ";
         $queryStr .= "INNER JOIN Locations AS l ON l.id = ml.fk_location_id ";
@@ -836,6 +864,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $query_mcons .= "(" . implode(" $mc_areas_conn ", $mc_areas_list) . ") AND ";
             }
 
+/*
+            // the multimedia constraints are handled differently at the count_query, since it doeas not have image_mm, video_mm columns
+            $query_mcons_count = $query_mcons;
 
             $mmu_test_join = "%%mmu_test_join%%";
             $mmu_test_spec = "%%mmu_test_spec%%";
@@ -853,44 +884,85 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $multimedia_test_video = $multimedia_test_spec;
             $multimedia_test_video = str_replace($mmu_test_spec, "AND mu.media_type = 'video'", $multimedia_test_video);
 
-
             if ($mc_filter_image) {
-                $query_mcons .= $multimedia_test_image;
+                $query_mcons_count .= $multimedia_test_image;
             }
             if ($mc_filter_video) {
-                $query_mcons .= $multimedia_test_video;
+                $query_mcons_count .= $multimedia_test_video;
             }
             if ($mc_filter_mm) {
-                $query_mcons .= $multimedia_test_basic;
+                $query_mcons_count .= $multimedia_test_basic;
+            }
+*/
+
+            if ($mc_filter_image) {
+                $query_mcons .= "AND image_mm IS NOT NULL, ";
+            }
+            if ($mc_filter_video) {
+                $query_mcons .= "AND video_mm IS NOT NULL, ";
+            }
+            if ($mc_filter_mm) {
+                $query_mcons .= "AND (image_mm IS NOT NULL OR video_mm IS NOT NULL), ";
             }
 
+            //$queryStr .= "LEFT JOIN MapLocationMultimedia AS mlmume ON mlmume.fk_maplocation_id = ml.id LEFT JOIN Multimedia AS mume ON mlmume.fk_multimedia_id = mume.id ";
+            //$queryStr .= "LEFT JOIN MapLocationMultimedia AS mlmume ON mlmume.fk_maplocation_id = ml.id ";
 
             $queryStr .= "WHERE ";
+
+            //$queryStr_count = $queryStr;
+
             if ($article_mcons) {
                 $queryStr .= $query_mcons;
             }
+            //if ($article_mcons_count) {
+            //    $queryStr_count .= $query_mcons_count;
+            //}
 
-            $queryStr .= "a.Published = 'Y' AND a.IdLanguage = ? ";
-            $sql_params[] = $ps_languageId;
+            //$queryStr .= "a.Published = 'Y' AND a.IdLanguage = ? ";
+            //$sql_params[] = $ps_languageId;
+            $queryStr .= "a.Published = 'Y' AND a.IdLanguage = $ps_languageId ";
+            //$queryStr_count .= "a.Published = 'Y' AND a.IdLanguage = $ps_languageId ";
 
         }
         else
         {
-            $queryStr .= "WHERE ml.fk_map_id = ? ";
-            $sql_params[] = $ps_mapId;
+            //$queryStr .= "LEFT JOIN MapLocationMultimedia AS mlmume ON mlmume.fk_maplocation_id = ml.id LEFT JOIN Multimedia AS mume ON mlmume.fk_multimedia_id = mume.id ";
+            //$queryStr .= "LEFT JOIN MapLocationMultimedia AS mlmume ON mlmume.fk_maplocation_id = ml.id ";
+
+            //$queryStr .= "WHERE ml.fk_map_id = ? ";
+            //$sql_params[] = $ps_mapId;
+
+            $queryStr .= "WHERE ml.fk_map_id = $ps_mapId ";
+            //$queryStr_count = $queryStr;
+
         }
 
-        $queryStr .= "AND mll.fk_language_id = ? ";
-        $sql_params[] = $ps_languageId;
+        //$queryStr .= "AND mll.fk_language_id = ? ";
+        //$sql_params[] = $ps_languageId;
+
+        $queryStr_mid = "";
+        $queryStr_mid .= "AND mll.fk_language_id = $ps_languageId ";
 
         if ($ps_preview)
         {
-            $queryStr .= "AND mll.poi_display = 1 ";
+            $queryStr_mid .= "AND mll.poi_display = 1 ";
         }
 
+        if ($mc_mapCons)
+        {
+            $queryStr_mid .= "GROUP BY ml.fk_location_id, mll.fk_content_id, ml.poi_style, mll.poi_display, image_mm, video_mm ";
+            //$queryStr .= "GROUP BY ml.fk_location_id ";
+        }
+
+        $queryStr .= $queryStr_mid;
+        //$queryStr_count .= $queryStr_mid;
+
         // for the total count query
-        $queryStr_count = $queryStr_count_start . $queryStr;
-        $sql_params_count = $sql_params;
+        //$queryStr_count = $queryStr_count . $queryStr;
+        $queryStr_count = $queryStr_start . $queryStr;
+        //$queryStr_count = $queryStr_count_start . $queryStr;
+        //$sql_params_count = $sql_params;
         // for the count-limited query
         $queryStr = $queryStr_start . $queryStr;
 
@@ -904,36 +976,56 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         if ($mc_limit)
         {
-            $queryStr .= " LIMIT ?";
-            $sql_params[] = $mc_limit;
+            //$queryStr .= " LIMIT ?";
+            //$sql_params[] = $mc_limit;
+            $queryStr .= " LIMIT $mc_limit";
             if ($mc_start)
             {
-                $queryStr .= " OFFSET ?";
-                $sql_params[] = $mc_start;
+                //$queryStr .= " OFFSET ?";
+                //$sql_params[] = $mc_start;
+                $queryStr .= " OFFSET $mc_start";
             }
         }
 
+/*
         $tmp_name = "tmp_poi_ids_" . mt_rand();
+*/
 
+/*
         $queryStr_mm = "SELECT m.id AS m_id, mlm.id AS mlm_id, ml.id AS ml_id, ";
         $queryStr_mm .= "m.media_type AS media_type, m.media_spec AS media_spec, ";
         $queryStr_mm .= "m.media_src AS media_src, m.media_height AS media_height, m.media_width AS media_width ";
         $queryStr_mm .= "FROM Multimedia AS m INNER JOIN MapLocationMultimedia AS mlm ON m.id = mlm.fk_multimedia_id ";
         $queryStr_mm .= "INNER JOIN MapLocations AS ml ON ml.id = mlm.fk_maplocation_id ";
         $queryStr_mm .= "INNER JOIN $tmp_name AS p ON p.id = ml.id ";
+*/
 
+/*
         $queryStr_tt_cr = "CREATE TEMPORARY TABLE $tmp_name (id int(10) unsigned) ENGINE=MEMORY;";
         $queryStr_tt_in = "INSERT INTO $tmp_name (id) VALUES (?);";
         $queryStr_tt_rm = "DROP TABLE $tmp_name;";
+*/
 
-		$p_count = $g_ado_db->GetOne($queryStr_count, $sql_params_count);
+		//$p_count = $g_ado_db->GetOne($queryStr_count, $sql_params_count);
+		$rows_count = $g_ado_db->GetAll($queryStr_count);
+		if (is_array($rows_count)) {
+            $p_count = count($rows_count);
+            //echo " xxx $p_count yyy ";
+        }
 
+/*
         //if (!$ps_textOnly)
         {
             $success = $g_ado_db->Execute($queryStr_tt_cr);
         }
+*/
 
-		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
+        $mm_objs = array();
+
+        //var_dump($queryStr);
+        //var_dump($sql_params);
+		//$rows = $g_ado_db->GetAll($queryStr, $sql_params);
+		$rows = $g_ado_db->GetAll($queryStr);
 
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
@@ -967,18 +1059,50 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 				$tmpPoint['image_width'] = "";
 				$tmpPoint['image_height'] = "";
 
+                $tmp_image = null;
+                $tmp_video = null;
+
+                if ($row['image_mm']) {
+                    $tmpPoint['image_mm'] = $row['image_mm'];
+
+                    $tmp_image = new Geo_Multimedia($row['image_mm']);
+                    if ($tmp_image) {
+                        $tmpPoint['image_src'] = $tmp_image->getSrc();
+                        $tmpPoint['image_width'] = $tmp_image->getWidth();
+                        $tmpPoint['image_height'] = $tmp_image->getHeight();
+                    }
+                }
+
 				$tmpPoint['video_mm'] = 0;
 				$tmpPoint['video_id'] = "";
 				$tmpPoint['video_type'] = "";
 				$tmpPoint['video_width'] = "";
 				$tmpPoint['video_height'] = "";
 
+                if ($row['video_mm']) {
+                    $tmpPoint['video_mm'] = $row['video_mm'];
+
+                    $tmp_video = new Geo_Multimedia($row['video_mm']);
+                    if ($tmp_video) {
+                        $tmpPoint['video_id'] = $tmp_video->getSrc();
+                        $tmpPoint['video_type'] = $tmp_video->getSpec();
+                        $tmpPoint['video_width'] = $tmp_video->getWidth();
+                        $tmpPoint['video_height'] = $tmp_video->getHeight();
+                    }
+                }
+
+                if ($tmp_image || $tmp_video) {
+                    $mm_objs[$row['ml_id']] = array("image" => $tmp_image, "video" => $tmp_video);
+                }
+
                 // for the list-of-objects array
                 $tmpPoint['art_id'] = $p_mapId;
                 $tmpPoint['art_number'] = 0;
+                $tmpPoint['art_numbers'] = "";
                 if ($mc_mapCons) {
                     $tmpPoint['map_id'] = $row['m_id'];
                     $tmpPoint['art_number'] = $row['art_number'];
+                    $tmpPoint['art_numbers'] = $row['art_numbers'];
                 }
                 $tmpPoint['geo_id'] = $row['loc_id'];
                 $tmpPoint['geo_type'] = $row['poi_type'];
@@ -992,10 +1116,12 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 $dataArray[] = $tmpPoint;
 
+/*
                 //if (!$ps_textOnly)
                 {
                     $success = $g_ado_db->Execute($queryStr_tt_in, array($row['ml_id']));
                 }
+*/
 
             }
         }
@@ -1007,6 +1133,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         //    return array();
         //}
 
+/*
         {
             $imagesArray = array();
             $videosArray = array();
@@ -1061,6 +1188,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
 
         $success = $g_ado_db->Execute($queryStr_tt_rm);
+*/
 
         $dataArray_tmp = $dataArray;
         $objsArray = array();
@@ -1112,6 +1240,17 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     'time_updated' => $one_poi['txt_updated'],
                 );
                 $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
+
+                if(array_key_exists($one_poi['loc_id'], $mm_objs)) {
+                    $poi_mm = $mm_objs[$one_poi['loc_id']];
+                    $one_poi_obj->multimedia = array();
+                    foreach ($poi_mm as $one_mm) {
+                        if ($one_mm) {
+                            $one_poi_obj->multimedia[] = $one_mm;
+                        }
+                    }
+                }
+
                 $objsArray[] = $one_poi_obj;
             }
 

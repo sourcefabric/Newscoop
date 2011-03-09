@@ -119,6 +119,30 @@ this.ignore_click = false;
 this.popup = null;
 
 
+this.display_strings = {
+    'articles': 'Articles'
+};
+
+this.set_display_strings = function(local_strings)
+{
+    if (!local_strings) {return;}
+
+    var display_string_names = [
+        "articles"
+    ];
+
+    var str_count = display_string_names.length;
+    for (var sind = 0; sind < str_count; sind++)
+    {
+        var cur_str_name = display_string_names[sind];
+
+        if (undefined !== local_strings[cur_str_name])
+        {
+            this.display_strings[cur_str_name] = local_strings[cur_str_name];
+        }
+    }
+};
+
 
 // setting the article info
 this.set_article_spec = function(params)
@@ -648,6 +672,14 @@ this.got_load_data = function (load_data, is_obj) {
 
         vector.attributes.m_text = one_poi['text'];
         vector.attributes.m_link = one_poi['link'];
+        vector.attributes.m_backlink = null;
+        vector.attributes.m_backlinks = null;
+        if (one_poi['backlink']) {
+            vector.attributes.m_backlink = one_poi['backlink'];
+        }
+        if (one_poi['backlinks']) {
+            vector.attributes.m_backlinks = one_poi['backlinks'];
+        }
         vector.attributes.m_image_mm = one_poi['image_mm'];
         vector.attributes.m_image_source = one_poi['image_src'];
         var one_image_width = one_poi['image_width'];

@@ -12,7 +12,9 @@ require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoPreferences.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/ComparisonOperation.php');
+camp_load_translation_strings("globals");
 
 /**
  * @package Campsite
@@ -1855,6 +1857,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $map = $geo['map'];
         $pois = $geo['pois'];
 
+        $icons_dir = Geo_Preferences::GetIconsWebDir();
+
         $map_name = $map['name'];
         $map_name = str_replace("&", "&amp;", $map_name);
         $map_name = str_replace("<", "&lt;", $map_name);
@@ -1883,7 +1887,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $poi_perex = str_replace("<", "&lt;", $poi_perex);
             $poi_perex = str_replace(">", "&gt;", $poi_perex);
 
+            $poi_icon = $poi['style'];
+
             $html .= '<div id="poi_seq_' . $poiIdx . '">
+                <a class="geomap_poi_icon_link" href="#" onClick="' . $poi['open'] . ' return false;"><img class="geomap_poi_icon" src="' . $icons_dir . '/' . $poi_icon . '" /></a>
                 <a class="geomap_poi_name" href="#" onClick="'
                 . $poi['open'] . ' return false;">' . $poi_title . '</a>
                 <div class="geomap_poi_perex">' . $poi_perex . '</div>
@@ -2049,6 +2056,10 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => 0);
     $article_spec = json_encode($article_spec_arr);
 
+    $local_strings = array();
+    $local_strings["articles"] = getGS('Articles');
+    $local_strings_json = json_encode($local_strings);
+
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
     $tag_string .= "\n";
@@ -2061,6 +2072,8 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_display_strings($local_strings_json);";
     $tag_string .= "\n";
 
         $tag_string .= '
@@ -2229,19 +2242,23 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank = 0)
+    public static function GetMultiMapTagList($p_languageId, $p_constraints, $map_label, $p_offset, $p_limit, $p_rank = 0)
     {
 
         $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank);
         $map = $geo['map'];
         $pois = $geo['pois'];
 
-        $map_name = $map['name'];
+        $icons_dir = Geo_Preferences::GetIconsWebDir();
+
+        //$map_name = $map['name'];
+        $map_name = $map_label;
         $map_name = str_replace("&", "&amp;", $map_name);
         $map_name = str_replace("<", "&lt;", $map_name);
         $map_name = str_replace(">", "&gt;", $map_name);
 
-        $html = '
+        if (0 < strlen($map_name)) {
+            $html = '
             <div class="geomap_info">
               <dl class="geomap_map_name">
                 <dt class="geomap_map_name_label">' .
@@ -2251,7 +2268,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                   $map_name . '
                 </dd>
               </dl>
-            </div>
+            </div>';
+        }
+
+        $html .= '
             <div id="side_info" class="geo_side_info">';
         $poiIdx = 0;
         foreach ($pois as $poi) {
@@ -2264,7 +2284,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $poi_perex = str_replace("<", "&lt;", $poi_perex);
             $poi_perex = str_replace(">", "&gt;", $poi_perex);
 
+            $poi_icon = $poi['style'];
+
             $html .= '<div id="poi_seq_' . $poiIdx . '">
+                <a class="geomap_poi_icon_link" href="#" onClick="' . $poi['open'] . ' return false;"><img class="geomap_poi_icon" src="' . $icons_dir . '/' . $poi_icon . '" /></a>
                 <a class="geomap_poi_name" href="#" onClick="'
                 . $poi['open'] . ' return false;">' . $poi_title . '</a>
                 <div class="geomap_poi_perex">' . $poi_perex . '</div>

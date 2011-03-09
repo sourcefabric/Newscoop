@@ -54,6 +54,8 @@ final class CampContext
 	                         				   'url_id'=>'sec'),
 	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
 	                         				   'url_id'=>'art'),
+	                         'maparticles'=>array('class'=>'MapArticles', 'list'=>'map_articles',
+	                         				   'url_id'=>'mart'),
 	                         'articleauthors'=>array('class'=>'ArticleAuthors',
 	                                                 'list'=>'article_authors',
 	                                                 'url_id'=>'aas'),
@@ -244,10 +246,12 @@ final class CampContext
             }
         }
 
-        // initialize geo-map holder
+        // initialize geo-map holders
         $this->m_properties['map_dynamic_constraints'] = null;
         $this->m_properties['map_dynamic_points_raw'] = null;
         $this->m_properties['map_dynamic_points_objects'] = null;
+        $this->m_properties['map_dynamic_meta_article_objects'] = null;
+        $this->m_properties['map_dynamic_map_label'] = "";
         $this->m_properties['map_dynamic_id_counter'] = 0;
 
     } // fn __construct

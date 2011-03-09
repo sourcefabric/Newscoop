@@ -637,6 +637,34 @@ public static function GetIncludeCSS($p_htmlDir = "", $p_websiteUrl = "")
 
 
 	/**
+	 * Gets icons directory for map (pre)view
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return string
+	 */
+public static function GetIconsWebDir($p_htmlDir = "", $p_websiteUrl = "")
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+    $icons_subpath = SystemPref::Get("MapMarkerDirectory");
+    if (!$icons_subpath)
+    {
+        $icons_subpath = "/javascript/geocoding/markers";
+    }
+
+    $icons_webdir = $cnf_website_url . $icons_subpath;
+    return $icons_webdir;
+
+} // GetIconsWebDir
+
+	/**
 	 * Gets translated strings for the geo-map templates
 	 * This is used for having translated those strings, even when they are not used via this function
 	 * Look at include/smarty/plugins/function.math.php for the usage

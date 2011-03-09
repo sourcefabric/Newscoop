@@ -154,6 +154,21 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
     }
 
+    if (attrs.m_backlinks) {
+        pop_text += "<div class='article_backlinks'>" + geo_obj.display_strings.articles + ": ";
+        var bl_count = attrs.m_backlinks.length;
+        for (var bl_ind = 0; bl_ind < bl_count; bl_ind++) {
+            var curr_backlink = attrs.m_backlinks[bl_ind];
+            if (0 < bl_ind) {pop_text += ", ";}
+            pop_text += "<a href=\"" + curr_backlink + "\" target=\"_blank\">" + (bl_ind + 1) + "</a>";
+        }
+
+        pop_text += "</div>";
+    }
+    else if (attrs.m_backlink) {
+        pop_text += "<div class='article_backlinks'> " + geo_obj.display_strings.articles + ": <a href=\"" + attrs.m_backlink + "\" target=\"_blank\">" + "1" + "</a></div>";
+    }
+
     var min_width = geo_obj.popup_width;
     var min_height = geo_obj.popup_height;
     if (with_embed) {

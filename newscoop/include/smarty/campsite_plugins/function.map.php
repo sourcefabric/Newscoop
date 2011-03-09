@@ -79,15 +79,17 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_poi_list = "";
 
         $multi_map_points = $campsite->map_dynamic_points_raw;
+        $multi_map_label = $campsite->map_dynamic_map_label;
+
         if ($multi_map_points) {
             $multi_map_points_info = array("pois" => $multi_map_points, "retrieved" => true);
             $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_points_info, $offset, $limit, $width, $height, $multi_map_rank);
-            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_points_info, $offset, $limit, $multi_map_rank);
+            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_points_info, $multi_map_label, $offset, $limit, $multi_map_rank);
         }
         else {
             $multi_map_constraints = $campsite->map_dynamic_constraints;
             $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_constraints, $offset, $limit, $width, $height, $multi_map_rank);
-            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_constraints, $offset, $limit, $multi_map_rank);
+            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_constraints, $multi_map_label, $offset, $limit, $multi_map_rank);
         }
 
         $multi_map_center = Geo_Map::GetMultiMapTagCenter($map_language, $multi_map_rank);

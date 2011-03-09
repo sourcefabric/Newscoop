@@ -23,12 +23,39 @@ class MapArticlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
+/*
 	    $articleLocationsList = Geo_MapLocation::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaLocationsList = array();
 	    foreach ($articleLocationsList as $location) {
 	        $metaLocationsList[] = new MetaMapLocation($location);
 	    }
 	    return $metaLocationsList;
+*/
+	    //$articleLocationsList = Geo_MapLocation::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+        //$campsite = $p_smarty->get_template_vars('gimme');
+        $campsite = CampTemplate::singleton()->context();
+
+	    //$articleLocationsList = $campsite->m_properties['map_dynamic_points_objects'];
+	    $mapArticlesList = $campsite->map_dynamic_meta_article_objects;
+	    $metaMapArticlesList = array();
+	    foreach ($mapArticlesList as $article) {
+	        //$metaMapArticlesList[] = new MetaArticle($article);
+	        $metaMapArticlesList[] = $article;
+	    }
+        //var_dump($mapArticlesList[0]);
+        //var_dump($metaMapArticlesList[0]);
+
+/*
+        $art_names = array();
+        foreach ($metaArticlesList as $one_art) {
+            $art_names[] = $one_art->name;
+        }
+        var_dump($art_names);
+*/
+        //echo " HERE !!! ";
+
+	    return $metaMapArticlesList;
+
 	}
 
 	/**
@@ -84,7 +111,7 @@ class MapArticlesList extends ListObject
 	                CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_locations", $p_smarty);
 	        }
 	    }
-
+/*
         $operator = new Operator('is', 'integer');
         $context = CampTemplate::singleton()->context();
         if (!$context->article->defined) {
@@ -92,7 +119,7 @@ class MapArticlesList extends ListObject
         	return array();
         }
         $this->m_constraints[] = new ComparisonOperation('article', $operator, $context->article->number);
-
+*/
 		return $parameters;
 	}
 }
