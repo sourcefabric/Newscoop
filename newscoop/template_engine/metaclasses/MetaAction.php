@@ -142,8 +142,6 @@ class MetaAction
         	return self::$m_availableActions;
         }
 
-        require_once('File/Find.php');
-
         $actions = array();
 
         $basePaths = array('.');
@@ -152,9 +150,7 @@ class MetaAction
         }
         foreach ($basePaths as $basePath) {
             $directoryPath = $GLOBALS['g_campsiteDir'].'/'.$basePath.'/template_engine/metaclasses';
-            $actionIncludeFiles = File_Find::search('/^MetaAction[^.]*\.php$/',
-            $directoryPath, 'perl', false);
-
+            $actionIncludeFiles = glob(realpath($directoryPath) . '/MetaAction*.php');
             foreach ($actionIncludeFiles as $includeFile) {
                 if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
                 || strtolower($matches[1]) == 'request') {

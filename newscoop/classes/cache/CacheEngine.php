@@ -168,8 +168,7 @@ abstract class CacheEngine
             $path = $p_path;
         }
 
-        require_once('File/Find.php');
-        $includeFiles = File_Find::search('/^CacheEngine_[^.]*\.php$/', $path, 'perl', false);
+        $includeFiles = glob(realpath($path) . '/CacheEngine_*.php');
         $engines = array();
         foreach ($includeFiles as $includeFile) {
             if (preg_match('/CacheEngine_([^.]+)\.php/', $includeFile, $matches) == 0) {

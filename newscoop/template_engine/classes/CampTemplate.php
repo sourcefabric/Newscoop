@@ -10,10 +10,7 @@
  * @link http://www.sourcefabric.org
  */
 
-/**
- * Includes
- */
-require_once('smarty/Smarty.class.php');
+require_once('smarty/libs/Smarty.class.php');
 
 /**
  * Class CampTemplate
