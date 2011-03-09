@@ -1,5 +1,6 @@
 <?php
-require_once ($GLOBALS['g_campsiteDir'] . '/classes/BugReporter.php');
+
+require_once $GLOBALS['g_campsiteDir'] . '/classes/BugReporter.php';
 
 /**
  * Called for all Campsite errors.
@@ -20,10 +21,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     global $ADMIN_DIR;
     global $ADMIN;
     global $Campsite;
-    global $g_bugReporterDefaultServer;
-    global $g_user;
-
-    $server = $g_bugReporterDefaultServer;
+	global $g_user;
 
     // --- Return on unimportant errors ---
     if (!$Campsite['DEBUG']) {
@@ -127,21 +125,12 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     $version = explode(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
-    if (!isset($reporter)) {
-        $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line, 'Campsite', $version);
-    }
+	if (!isset($reporter)) {
+	    $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line,
+	    							'Newscoop', $version);
+	}
 
-    $reporter->setServer($server);
-
-    // --- Ping AutoTrac Server ---
-    $wasPinged = $reporter->pingServer();
-
-    // --- Print results ---
-    if ($wasPinged) {
-        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/errormessage.php");
-    } else {
-        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
-    }
+	// --- Print results ---
+	include dirname(__FILE__) . '/emailus.php';
     exit();
 }
-

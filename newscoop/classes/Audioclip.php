@@ -13,7 +13,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/AudioclipXMLMetadata.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/AudioclipDatabaseMetadata.php');
-require_once('HTTP/Client.php');
 
 
 $metatagLabel = array(
