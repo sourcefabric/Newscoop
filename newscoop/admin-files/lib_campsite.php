@@ -582,38 +582,30 @@ function camp_get_calendar_include($p_languageCode = null)
 {
     global $Campsite;
 
-	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jquery/';
-    $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
-    if (!file_exists("$calendarPath/$calendarLocalization")) {
-        $codeParts = explode('_', $p_languageCode);
-        if (count($codeParts) > 1) {
-            $p_languageCode = $codeParts[0];
-            $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
-            if (!file_exists("$calendarPath/$calendarLocalization")) {
-                $p_languageCode = 'en';
-                $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
-            }
-        } else {
-            $p_languageCode = 'en';
-            $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
-        }
+	$calendarURL = '/javascript/jquery-ui/ui';
+
+    if (empty($p_languageCode)) {
+        $p_languageCode = 'en';
     }
 
-	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
-	$calendarURL = "$websiteURL/javascript/jquery";
 	ob_start();
 ?>
+
 <style type="text/css">@import url('<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/jquery-ui-1.8.6.datepicker.css');</style>
-<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
-<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
-<?php if (file_exists(dirname(__FILE__) . '/../javascript/jquery/' . $calendarLocalization)) { ?>
-<script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
-<?php } ?>
+
+<script src="/javascript/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="/javascript/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
+<?php if ($p_languageCode != 'en') { ?>
+<script type="text/javascript" src="<?php echo $calendarURL, '/i18n/jquery.ui.datepicker-', $p_languageCode; ?>"></script>
 <script type="text/javascript"><!--
     $(document).ready(function() {
         $.datepicker.setDefaults( $.datepicker.regional['<?php echo $p_languageCode; ?>'] );
     });
 //--></script>
+<?php } ?>
+
 <?php
 	return ob_get_clean();
 }
