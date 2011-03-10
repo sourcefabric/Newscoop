@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Dateien");
 regGS("Select section:", "Rubrik wählen");
 regGS("Add another author", "Autor/in hinzufügen");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Keine Berechtigung u
 regGS("There was a problem uploading the file.", "Es gab ein Problem beim Hochladen der Datei.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Die Datei wurde nur teilweise hochgeladen. Dies passiert wenn die Höchstdauer für das Hochladen der Datei im Vergleich zur Dateigröße zu kurz ist. Die Höchstdauer ist in 'php.ini' festgelegt.");
 regGS("The file exceeds the allowed max file size.", "Die Datei überschreitet die erlaubte maximale Dateigröße.");
-regGS("Overwrite existing articles", "Bestehende Artikel überschreiben");
 regGS("Optional", "Optional");
 regGS("Input File", "Eingabe Datei");
 regGS("Import XML", "XML importieren");

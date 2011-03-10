@@ -1,4 +1,11 @@
 <?php 
+regGS("Your password has been reset.", "");
+regGS("Proceed to login.", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Go to login", "");
+regGS("Back to login.", "");
+regGS("Back to login", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
 regGS("Session expired.", "Сесија је истекла.");
 regGS("Processing...", "Обрађујем...");
 regGS("Please", "молим");
@@ -22,23 +29,17 @@ regGS("Please login to continue.", "Пријавите се да бисте на
 regGS("Add to dashboard", "Додај на контролну таблу");
 regGS("Add more widgets", "Додај још виџета");
 regGS("login", "пријава");
-regGS("Your password has been reset <br/> you may now proceed to", "Ваша лозинка је поништена  <br/>можете наставити на");
 regGS("This link is not valid.", "Овај линк је неисправан");
 regGS("Recover password", "Поврати лозинку");
 regGS("Please enter your email.", "Унесите ваш имејл");
-regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "Повраћај лозинке је онемогућен.<br/> <a href=\"login.php\">пријава</a>");
 regGS("Password recovery is disabled.", "Повраћај лозинке је онемогућен");
-regGS("Password recovery email", "Имејл за повраћај лозинке");
 regGS("Password recovery", "Повраћај лозинке");
 regGS("Password Recovery", "Повраћај лозинке");
 regGS("No user is registered with this email.", "Не постоји корисник са овим имејлом");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "Здраво, \nза повраћај лозинке, молимо следите овај линк: %s");
-regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Здраво, <br>за повраћај лозинке молимо следите овај линк: <a href=\"%s\">Повраћај лозинке</a>");
 regGS("Forgot your password?", "Заборавили сте лозинку?");
 regGS("Email: incorrect format.", "Имејл: погрешан формат.");
 regGS("Email", "Имејл");
 regGS("Bad input parameters.", "Погрешни параметри уноса.");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "Имејл порука са упутствима како да повратите своју лозинку је послата на вашу адресу. <br/><a href=\"login.php\">Иди на пријављивање</a>");
 regGS("You do not have the right to manage backup.", "Немате право управљања бекаповима.");
 regGS("There was an error trying to delete the file $1.", "Дошло је до грешке при покушају брисања фајла $1.");
 regGS("The file $1 was deleted successfully.", "Фајл $1 је успешно обрисан.");

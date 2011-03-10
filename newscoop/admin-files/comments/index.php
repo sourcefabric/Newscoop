@@ -370,7 +370,7 @@ function onSummaryClick(p_messageId)
             </tr>
 
             <tr>
-                <td colspan="2"><textarea name="f_comment_<?php p($comment->getMessageId()); ?>" class="input_textarea" rows="15" cols="70"><?php echo $comment->getBody(); ?></textarea></td>
+                <td colspan="2"><textarea name="f_comment_<?php p($comment->getMessageId()); ?>" class="input_textarea" rows="15" cols="70"><?php p(htmlspecialchars($comment->getBody())); ?></textarea></td>
             </tr>
             </table>
         </td>

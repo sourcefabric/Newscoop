@@ -1,4 +1,11 @@
 <?php 
+regGS("Your password has been reset.", "");
+regGS("Proceed to login.", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Go to login", "");
+regGS("Back to login.", "");
+regGS("Back to login", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
 regGS("Session expired.", "Relace je ukončena.");
 regGS("Processing...", "Zpracovávám...");
 regGS("Please", "Prosíme");
@@ -22,23 +29,17 @@ regGS("Please login to continue.", "Prosím přihlašte se aby jste mohli pokra�
 regGS("Add to dashboard", "Přidat na hlavní panel");
 regGS("Add more widgets", "Přidat další widety");
 regGS("login", "Přihlásit se ");
-regGS("Your password has been reset <br/> you may now proceed to", "Vaše heslo bylo obnoveno  <br/> nyní můžete přejít k");
 regGS("This link is not valid.", "Tento link je neplatný");
 regGS("Recover password", "Obnovit heslo");
 regGS("Please enter your email.", "Prosím zadejte váš email.");
-regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "Obnova hesla je zakázána.<br/> <a href=\"login.php\">login</a>");
 regGS("Password recovery is disabled.", "Obnova hesla je zakázána.");
-regGS("Password recovery email", "Obnovení hesla emailem");
 regGS("Password recovery", "Obnovení hesla");
 regGS("Password Recovery", "Obnovení Hesla");
 regGS("No user is registered with this email.", "Žadný uživatel s tímto emailem není registrován");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "Ahoj, \nfor obnova hesla, prosím následuj tento odkaz: %s");
-regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Ahoj, <br>pro ovnovu hesla, prosím následuj tento odkaz: <a href=\"%s\">Recover Password</a>");
 regGS("Forgot your password?", "Zapoměli jste heslo?");
 regGS("Email: incorrect format.", "Email: nesprávný formát");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Nesprávné vstupní parametry.");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "Email s insturkcemi jak obnovit vaše heslo byl zaslán na váš email.<br/><a href=\"login.php\">Proceed to login.</a>");
 regGS("You do not have the right to manage backup.", "Nemáte oprávnění spravovat zálohování.");
 regGS("There was an error trying to delete the file $1.", "Stala se chyba při pokusu vymazat soubor $1.");
 regGS("The file $1 was deleted successfully.", "Soubor $1 byl úspěšně vymazán.");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Αρχεία");
 regGS("Select section:", "Επιλογή ενότητας:");
 regGS("Add another author", "Προσθήκη άλλου συγγραφέα");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Δεν έχετε τ
 regGS("There was a problem uploading the file.", "Υπήρξε ένα πρόβλημα ανεβάζοντας το αρχείο.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος αρχείου είναι χαμηλός σε σχέση με το μέγεθος του αρχείου που προσπαθείτε να ανεβάσετε. Ο μέγιστος χρόνος εισαγωγής έχει οριστεί σε 'php.ini'");
 regGS("The file exceeds the allowed max file size.", "Το αρχείο υπερβαίνει το επιτρεπόμενο μέγιστο μέγεθος αρχείου.");
-regGS("Overwrite existing articles", "Αντικατάσταση υπαρχώντων άρθρων");
 regGS("Optional", "Προαιρετικό");
 regGS("Input File", "Εισαγωγή Αρχείου");
 regGS("Import XML", "Εισαγωγή XML");
@@ -143,8 +145,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι επιθυμείται να αφαιρέσετε το αρχείο ήχου \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>

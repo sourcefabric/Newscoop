@@ -42,7 +42,7 @@ camp_html_display_msgs();
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td width="190">
-    <img src="/plugins/recaptcha/css/recaptcha-logo.gif" />
+    <img src="<?php echo $Campsite['WEBSITE_URL']; ?>/plugins/recaptcha/css/recaptcha-logo.gif" />
   </td>
   <td valign="top">
     <p><?php putGS('reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.'); ?></p>
