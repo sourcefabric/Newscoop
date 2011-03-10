@@ -1,5 +1,5 @@
-<?PHP
-require_once ($GLOBALS['g_campsiteDir'] . "/classes/BugReporter.php");
+<?php
+require_once ($GLOBALS['g_campsiteDir'] . '/classes/BugReporter.php');
 
 /**
  * Called for all Campsite errors.
@@ -20,21 +20,20 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     global $ADMIN_DIR;
     global $ADMIN;
     global $Campsite;
-	global $g_bugReporterDefaultServer;
-	global $g_user;
+    global $g_bugReporterDefaultServer;
+    global $g_user;
 
-	$server = $g_bugReporterDefaultServer;
+    $server = $g_bugReporterDefaultServer;
 
     // --- Return on unimportant errors ---
     if (!$Campsite['DEBUG']) {
-        switch ($p_number)
-            {
+        switch ($p_number) {
             case E_NOTICE:
             case E_WARNING:
             case E_USER_NOTICE:
             case E_USER_WARNING:
                 return;
-            }
+        }
     }
 
     // -- Return on getid3 errors ---
@@ -47,7 +46,12 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     if (preg_match ('/^Undefined offset:/i', $p_string)){
         return;
     }
-    
+
+    // -- SimpleXMLElement errors ---
+    if (preg_match('/^SimpleXMLElement/i', $p_string)) {
+        return;
+    }
+
     // -- Return on URL parse errors
     if (preg_match('/^parse_url/i', $p_string)) {
     	return;
@@ -117,29 +121,27 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     	echo "</td></tr>\n<tr><td>\n";
     }
 
-	// --- If reporter doesn't exist, make one ($reporter might exist
-	//     already if this script is an 'include') ---
-
-	// Remove the code name from the version number.
+    // --- If reporter doesn't exist, make one ($reporter might exist
+    //     already if this script is an 'include') ---
+    // Remove the code name from the version number.
     $version = explode(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
-	if (!isset($reporter)) {
-	    $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line,
-	    							"Campsite", $version);
-	}
+    if (!isset($reporter)) {
+        $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line, 'Campsite', $version);
+    }
 
-	$reporter->setServer($server);
+    $reporter->setServer($server);
 
-	// --- Ping AutoTrac Server ---
-	$wasPinged = $reporter->pingServer();
+    // --- Ping AutoTrac Server ---
+    $wasPinged = $reporter->pingServer();
 
-	// --- Print results ---
-	if ($wasPinged) {
-	    include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/errormessage.php");
-	} else {
-	    include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
-	}
+    // --- Print results ---
+    if ($wasPinged) {
+        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/errormessage.php");
+    } else {
+        include($Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/emailus.php");
+    }
     exit();
 }
-?>
+

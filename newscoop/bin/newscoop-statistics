@@ -12,17 +12,17 @@
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
-function update_statistics($p_confDir)
+function clean_statistics($p_confDir)
 {
     db_connect($p_confDir);
 
-    $sessionDiff = 3600 * 12;
+    $sessionDiff = 3600 * 48;
     $requestTimeDiff = 3600;
-    // select sections older than 12 hours
-    $sql = "SELECT ss.id, TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,"
-         . " MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_request_time))) AS last_update_diff"
-         . " FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id"
-         . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
+    // select sections older than 48 hours
+    $sql = 'SELECT ss.id, TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,'
+        . ' MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_request_time))) AS last_update_diff'
+        . ' FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id'
+        . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
     $sessRes = mysql_query($sql);
     if (empty($sessRes)) {
         return;
@@ -35,26 +35,12 @@ function update_statistics($p_confDir)
             continue;
         }
 
-        // select session requests (each requests identifies an object)
-        $sessionId = $sessRow['id'];
-        $sql = "SELECT * FROM Requests WHERE session_id = '"
-             . mysql_escape_string($sessionId) . "'";
-        $reqRes = mysql_query($sql);
-        while ($reqRow = mysql_fetch_array($reqRes, MYSQL_ASSOC)) {
-            // increment the request count for the object id
-            $objectId = $reqRow['object_id'];
-            $sql = "UPDATE RequestObjects SET request_count = LAST_INSERT_ID(request_count + 1)"
-                 . " WHERE object_id = '" . mysql_escape_string($objectId) . "'";
-            mysql_query($sql);
-        }
-
         // delete the session requests
-        $sql = "DELETE FROM Requests WHERE session_id = '"
-             . mysql_escape_string($sessionId) . "'";
+        $sql = "DELETE FROM Requests WHERE session_id = '" . mysql_escape_string($sessRow['Id']) . "'";
         mysql_query($sql);
 
         // delete the session
-        $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessionId) . "'";
+        $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessRow['Id']) . "'";
         mysql_query($sql);
     }
 }
@@ -71,7 +57,7 @@ function db_connect($p_conf_dir)
         die('Could not connect: ' . mysql_error());
     mysql_select_db($Campsite['DATABASE_NAME']);
     mysql_query("SET NAMES 'utf8'");
-} // fn db_connect
+}
 
 
 function is_valid_conf_dir($p_conf_dir)
@@ -85,9 +71,8 @@ function is_valid_conf_dir($p_conf_dir)
         print('Error: ' . $e->getMessage() . "\n");
         exit(1);
     }
-} // fn isValidConfDir
+}
 
 
 // runs the script
-update_statistics(WWW_DIR . '/conf');
-
+clean_statistics(WWW_DIR . '/conf');
