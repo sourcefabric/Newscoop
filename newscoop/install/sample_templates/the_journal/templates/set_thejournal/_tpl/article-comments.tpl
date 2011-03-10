@@ -105,7 +105,6 @@
 
 <div class="comment-info">
   <p>Please fill the required box or you can&rsquo;t comment at all. Please use kind words. Your e-mail address will not be published. </p>
-  <p>You can use these HTML tags and attributes: &lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt;</p>
 </div>
 
 <div class="fix"></div>
