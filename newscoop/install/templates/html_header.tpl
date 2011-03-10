@@ -1,11 +1,25 @@
-<!DOCTYPE html
-    PUBLIC "-//W3C//DTD HTML 4.01//EN"
-    "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-<title>{{ $site_title }}</title>
-<script type="text/javascript" src="include/js/install.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{{ $site_title }}</title>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+
+    <script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
+    <script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
+    <script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
+    <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="include/js/install.js"></script>
+    <script type="text/javascript"><!--
+    $(function() {
+        $('a[rel=lightbox]').fancybox();
+    });
+    //--></script>
 </head>
 
 <body>

@@ -1,25 +1,18 @@
 <?php
 camp_load_translation_strings("plugin_poll");
 ?>
-
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<script language="javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/scriptaculous/prototype.js"></script>
-<SCRIPT language="javascript">
+<script language="javascript">
 function poll_assign(poll_nr, action)
 {
-    $('f_poll_nr').value = poll_nr;
-    $('f_action').value = action;
+    $('#f_poll_nr').val(poll_nr);
+    $('#f_action').val(action);
 
-    var myAjax = new Ajax.Request(
-            '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/poll/ajax_do_assign.php',
-            {
-                method: 'get',
-                parameters: Form.serialize($('assignments')),
-                onComplete: poll_switch
-            }
-        );
-
-
+    $.get('<?php echo $Campsite['WEBSITE_URL']; ?>/admin/poll/ajax_do_assign.php',
+        $('form#assignments').serialize(),
+        function(response) {
+            poll_switch(response);
+        });
 }
 
 function poll_switch(response)
@@ -28,21 +21,21 @@ function poll_switch(response)
     var funct;
     var poll_nr;
 
-    eval(response.responseText);
+    eval(response);
 
     switch (action) {
         case 'assign':
-            img     = '<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">';
-            funct   = 'poll_assign('+poll_nr+', \'unassign\')';
+            img = '<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" alt="" />';
+            funct = 'poll_assign('+poll_nr+', \'unassign\')';
         break;
 
         case 'unassign':
-            img     = '<IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0">';
-            funct   = 'poll_assign('+poll_nr+', \'assign\')';
+            img = '<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="" />';
+            funct = 'poll_assign('+poll_nr+', \'assign\')';
         break;
     }
 
-    $('poll_'+poll_nr).innerHTML = '<a href="javascript: '+funct+'; ">'+img+'</a>';
+    $('#poll_'+poll_nr).html('<a href="javascript: '+funct+'; ">'+img+'</a>');
 
     // set fancybox to reload
     try {
