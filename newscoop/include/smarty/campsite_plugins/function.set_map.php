@@ -82,9 +82,10 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $run_language = $campsite->language;
 
     $parameters = array();
-    $running = "running";
+    $running = "_current";
 
     $map_label = "";
+    $map_max_points = 0;
 
     $con_authors = array();
     $con_articles = array();
@@ -103,6 +104,12 @@ function smarty_function_set_map($p_params, &$p_smarty)
     if (isset($p_params['label'])) {
         $map_label = trim("" . $p_params['label']);
     }
+    if (isset($p_params['max_points'])) {
+        $map_max_points = trim("" . $p_params['max_points']);
+        if (!is_numeric($map_max_points)) { $map_max_points = 0; }
+        $map_max_points = 0 + $map_max_points;
+    }
+    $campsite->map_dynamic_max_points = $map_max_points;
 
     if (isset($p_params['authors'])) {
         foreach (explode(",", $p_params['authors']) as $one_author) {
@@ -290,7 +297,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
     }
 
-    // to put the read constarints into parameters list
+    // to put the read constraints into parameters list
 
     foreach ($con_authors as $one_author) {
         $leftOperand = 'author';
@@ -452,24 +459,22 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
         $poi_count = 0;
         $poi_array = array();
-        $poi_objects = Geo_MapLocation::GetListExt($parameters, array(), 0, 200, $poi_count, false, $poi_array);
+        $poi_objects = Geo_MapLocation::GetListExt($parameters, array(), 0, $map_max_points, $poi_count, false, $poi_array);
 
+        $campsite->map_dynamic_tot_points = $poi_count;
 
         $map_art_ids = array();
         $art_backlinks = array();
         $meta_art_objs = array();
 
         $arts_per_pois = array();
-        //$arts_at_pois = array();
 
         $poi_retrieved_count = count($poi_array);
         for ($poi_idx = 0; $poi_idx < $poi_retrieved_count; $poi_idx++) {
             $poi_arts = array();
-            //$poi_art = array();
 
             $articleNos = $poi_array[$poi_idx]["art_numbers"];
             if (0 < strlen($articleNos)) {
-                //var_dump($articleNos);
                 foreach (explode(",", $articleNos) as $one_art) {
                     $one_art = trim($one_art);
                     if (0 == strlen($one_art)) {continue;}
@@ -486,22 +491,18 @@ function smarty_function_set_map($p_params, &$p_smarty)
                 if (is_numeric($articleNo)) {
                     $articleNo = 0 + $articleNo;
                     if (0 < $articleNo) {
-                        //$poi_art[] = $articleNo;
                         $poi_arts[] = $articleNo;
                         $map_art_ids[$articleNo] = true;
                     }
                 }
             }
             $arts_per_pois[] = $poi_arts;
-            //$arts_at_pois[] = $poi_art;
 
         }
 
-        //var_dump($map_art_ids);
-
         foreach ($map_art_ids as $one_art_id => $one_art_aux) {
             $myArticle = new MetaArticle((int) $run_language->number, $one_art_id);
-            $meta_art_objs[] = $myArticle;
+            $meta_art_objs[$one_art_id] = $myArticle;
             $url = CampSite::GetURIInstance();
             $url->publication = $myArticle->publication;
             $url->issue = $myArticle->issue;
@@ -511,8 +512,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
             $art_backlinks[$one_art_id] = $articleURI;
         }
-
-        //var_dump($art_backlinks);
+        krsort($meta_art_objs);
 
         for ($poi_idx = 0; $poi_idx < $poi_retrieved_count; $poi_idx++) {
             $curr_back_list = array();
@@ -525,74 +525,12 @@ function smarty_function_set_map($p_params, &$p_smarty)
                 $poi_array[$poi_idx]["backlinks"] = $curr_back_list;
             }
 
-/*
-            $curr_art_ids = $arts_at_pois[$poi_idx];
-            foreach ($curr_art_ids as $one_art_id) {
-                $curr_back_list[] = $art_backlinks[$one_art_id];
-            }
-            if (0 < count($curr_back_list)) {
-                $poi_array[$poi_idx]["backlink"] = $curr_back_list;
-            }
-*/
-
-/*
-            $articleNos = $poi_array[$poi_idx]["art_numbers"];
-            if (0 < strlen($articleNos)) {
-                foreach (explode(",", $articleNos) as $one_art) {
-                    $one_art = trim($one_art);
-                    if (0 == strlen($one_art)) {continue;}
-                    if (!is_numeric($one_art)) {continue;}
-                    $one_art = 0 + $one_art;
-
-                    $myArticle = new MetaArticle((int) $run_language->number, $one_art);
-                    $url = CampSite::GetURIInstance();
-                    $url->publication = $myArticle->publication;
-                    $url->issue = $myArticle->issue;
-                    $url->section = $myArticle->section;
-                    $url->article = $myArticle;
-                    $articleURI = $url->getURI('article');
-
-                    $curr_back_list[] = $articleURI;
-
-                }
-            }
-
-            if (0 < count($curr_back_list)) {
-                //var_dump($curr_back_list);
-                $poi_array[$poi_idx]["backlinks"] = $curr_back_list;
-            }
-            else {
-
-                $articleNo = $poi_array[$poi_idx]["art_number"];
-                if (!is_numeric($articleNo)) {continue;}
-                $articleNo = 0 + $articleNo;
-                if (0 >= $articleNo) {continue;}
-
-                $myArticle = new MetaArticle((int) $run_language->number, $articleNo);
-                $url = CampSite::GetURIInstance();
-                $url->publication = $myArticle->publication;
-                $url->issue = $myArticle->issue;
-                $url->section = $myArticle->section;
-                $url->article = $myArticle;
-                $articleURI = $url->getURI('article');
-                $poi_array[$poi_idx]["backlink"] = $articleURI;
-            }
-*/
         }
 
 
         $campsite->map_dynamic_points_raw = $poi_array;
         $campsite->map_dynamic_points_objects = $poi_objects;
         $campsite->map_dynamic_meta_article_objects = $meta_art_objs;
-
-        //var_dump($art_objs);
-/*
-        $art_names = array();
-        foreach ($art_objs as $one_art) {
-            $art_names[] = $one_art->name;
-        }
-        var_dump($art_names);
-*/
 
         $campsite->map_dynamic_id_counter += 1;
 

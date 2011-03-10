@@ -11,29 +11,30 @@
 
 {{ set_map
     label="some display string"
-    topics="running"
+    topics="_current"
     areas="rectangle 20 0; 60 100;"
+    max_points=1000
 }}
 
-{{ map show_locations_list="true" show_reset_link="Show initial Map" width="300" height="450" }}
+{{ map show_locations_list=true show_reset_link="Show initial Map" width="300" height="450" }}
 
-<div>
-<ul><b>Map Articles</b>
+<div class="dynamic_map_articles_list">
+<ul>Map Articles
 {{ local }}
-{{ list_map_articles }}
+{{ list_map_articles length="200" }}
         <li><a href="{{ uri options="article" }}">{{ $gimme->article->name }}</a></li>
 {{ /list_map_articles }}
 {{ /local }}
 </ul>
 </div>
 
-<div>
-<br /><ul><b>Map Locations</b>
-{{ list_locations }}
+<div class="dynamic_map_locations_list">
+<ul>Map Locations
+{{ list_map_locations length="200" }}
     {{ if $gimme->location->enabled}}
         <li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
     {{ /if }}
-{{ /list_locations }}
+{{ /list_map_locations }}
 </ul>
 </div>
 

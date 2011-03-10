@@ -35,11 +35,22 @@ function smarty_function_map($p_params, &$p_smarty)
     $campsite = $p_smarty->get_template_vars('gimme');
     $html = '';
 
+    $map_common_header_set = $campsite->map_common_header_set;
+    $map_load_common_header = !$map_common_header_set;
+
     // get show locations list parameter
     $showLocationsList = FALSE;
-    if (isset($p_params['show_locations_list'])
-            && (strtolower(trim((string) $p_params['show_locations_list'])) == 'true')) {
-        $showLocationsList = TRUE;
+    if (isset($p_params['show_locations_list'])) {
+        if (is_string($p_params['show_locations_list'])) {
+            if (strtolower(trim((string) $p_params['show_locations_list'])) == 'true') {
+                $showLocationsList = TRUE;
+            }
+        }
+        if (is_bool($p_params['show_locations_list'])) {
+            if ($p_params['show_locations_list']) {
+                $showLocationsList = TRUE;
+            }
+        }
     }
 
     // get show reset link parameter
@@ -67,7 +78,8 @@ function smarty_function_map($p_params, &$p_smarty)
         }
 
         $offset = 0;
-        $limit = 2000;
+        $limit = $campsite->map_dynamic_max_points;
+        if (!$limit) {$limit = 2000;}
 
         $multi_map_rank = $campsite->map_dynamic_id_counter;
 
@@ -81,15 +93,20 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_map_points = $campsite->map_dynamic_points_raw;
         $multi_map_label = $campsite->map_dynamic_map_label;
 
+        $multi_options = array();
+        $multi_options["load_common"] = $map_load_common_header;
+        $multi_options["pois_retrieved"] = false;
+
         if ($multi_map_points) {
-            $multi_map_points_info = array("pois" => $multi_map_points, "retrieved" => true);
-            $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_points_info, $offset, $limit, $width, $height, $multi_map_rank);
-            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_points_info, $multi_map_label, $offset, $limit, $multi_map_rank);
+            $multi_options["pois_retrieved"] = true;
+
+            $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_points, $multi_options, $offset, $limit, $width, $height, $multi_map_rank);
+            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_points, $multi_options, $multi_map_label, $offset, $limit, $multi_map_rank);
         }
         else {
             $multi_map_constraints = $campsite->map_dynamic_constraints;
-            $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_constraints, $offset, $limit, $width, $height, $multi_map_rank);
-            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_constraints, $multi_map_label, $offset, $limit, $multi_map_rank);
+            $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_constraints, $multi_options, $offset, $limit, $width, $height, $multi_map_rank);
+            $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_constraints, $multi_options, $multi_map_label, $offset, $limit, $multi_map_rank);
         }
 
         $multi_map_center = Geo_Map::GetMultiMapTagCenter($map_language, $multi_map_rank);
@@ -121,6 +138,7 @@ function smarty_function_map($p_params, &$p_smarty)
 
         $multi_map_part .= $multi_map_header . $multi_map_body;
 
+        $campsite->map_common_header_set = true;
         return $multi_map_part;
     }
     // the end of the multi-map part; the article map is processed below
@@ -143,7 +161,10 @@ function smarty_function_map($p_params, &$p_smarty)
     $auto_focus = isset($p_params['auto_focus']) ? (bool) $p_params['auto_focus'] : null;
 
     // get core pieces to display the map
-    $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height, $auto_focus);
+    $map_options = array();
+    $map_options["auto_focus"] = $auto_focus;
+    $map_options["load_common"] = $map_load_common_header;
+    $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height, $map_options);
     $mapMain = MetaMap::GetMapTagBody($article, $language);
 
     // build javascript code
@@ -176,7 +197,8 @@ function smarty_function_map($p_params, &$p_smarty)
         <!--End Map //-->
     ';
 
+    $campsite->map_common_header_set = true;
     return $html;
-}
+} // fn smarty_function_map
 
 ?>

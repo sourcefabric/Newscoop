@@ -4,10 +4,10 @@ require_once('ListObject.php');
 
 
 /**
- * ArticleLocationsList class
+ * MapLocationsList class
  *
  */
-class LocationsList extends ListObject
+class MapLocationsList extends ListObject
 {
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -23,18 +23,41 @@ class LocationsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-        //echo " HERE ";
-	    //$articleLocationsList = Geo_MapLocation::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-        //$campsite = $p_smarty->get_template_vars('gimme');
+        $p_count = 0;
+
+        if (!is_numeric($p_start)) {
+            $p_start = 0;
+        }
+        $p_start = 0 + $p_start;
+        if (0 > $p_start) {$p_start = 0;}
+
+        if (!is_numeric($p_limit)) {
+            $p_limit = 0;
+        }
+        $p_limit = 0 + $p_limit;
+        if (0 > $p_limit) {$p_limit = 0;}
+
         $campsite = CampTemplate::singleton()->context();
 
-	    //$articleLocationsList = $campsite->m_properties['map_dynamic_points_objects'];
 	    $mapLocationsList = $campsite->map_dynamic_points_objects;
+        if (!is_array($mapLocationsList)) {
+            return array();
+        }
+        if ($campsite->map_dynamic_tot_points) {
+            $p_count = $campsite->map_dynamic_tot_points;
+        }
+
+        if ($p_limit) {
+            $mapLocationsList = array_slice($mapLocationsList, $p_start, $p_limit);
+        }
+        if ($p_start && (!$p_limit)) {
+            $mapLocationsList = array_slice($mapLocationsList, $p_start);
+        }
+
 	    $metaLocationsList = array();
 	    foreach ($mapLocationsList as $location) {
 	        $metaLocationsList[] = new MetaMapLocation($location);
 	    }
-        //var_dump($metaLocationsList);
 	    return $metaLocationsList;
 	}
 
@@ -91,15 +114,6 @@ class LocationsList extends ListObject
 	                CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_locations", $p_smarty);
 	        }
 	    }
-/*
-        $operator = new Operator('is', 'integer');
-        $context = CampTemplate::singleton()->context();
-        if (!$context->article->defined) {
-        	CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_locations");
-        	return array();
-        }
-        $this->m_constraints[] = new ComparisonOperation('article', $operator, $context->article->number);
-*/
 		return $parameters;
 	}
 }

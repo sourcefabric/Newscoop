@@ -1625,13 +1625,26 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      * @param int $p_languageId
      * @param int $p_mapWidth
      * @param int $p_mapHeight
+     * @param array $p_options
      *
      * @return string
      */
-    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0, $p_autoFocus = null)
+    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0, $p_options = null)
     {
         global $Campsite;
         $tag_string = "";
+
+        $auto_focus = null;
+        $load_common = null;
+
+        if (is_array($p_options)) {
+            if (array_key_exists("auto_focus", $p_options)) {
+                $auto_focus = $p_options["auto_focus"];
+            }
+            if (array_key_exists("load_common", $p_options)) {
+                $load_common = $p_options["load_common"];
+            }
+        }
 
         $f_article_number = $p_articleNumber;
         $f_language_id = $p_languageId;
@@ -1668,9 +1681,9 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
         $geo_focus_info = Geo_Preferences::GetFocusInfo($cnf_html_dir, $cnf_website_url);
-        if (null !== $p_autoFocus)
+        if (null !== $auto_focus)
         {
-            $geo_focus_info["json_obj"]["auto_focus"] = $p_autoFocus;
+            $geo_focus_info["json_obj"]["auto_focus"] = $auto_focus;
         }
         $geo_focus_json = "";
         $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
@@ -1685,12 +1698,16 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
-        $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
-        $include_files_css = $include_files["css_files"];
         $include_files_tags = "";
-        foreach ($include_files_css as $css_file)
-        {
-            $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+        if ($load_common) {
+
+            $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+            $include_files_css = $include_files["css_files"];
+            foreach ($include_files_css as $css_file)
+            {
+                $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+            }
+
         }
 
         $tag_string .= $geo_map_incl;
@@ -1698,13 +1715,19 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $tag_string .= $include_files_tags;
 
-        $tag_string .= '
+        if ($load_common) {
+
+            $tag_string .= '
 
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
+';
 
+        }
+
+        $tag_string .= '
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
 var geo_on_load_proc_map' . $map_suffix . ' = function()
@@ -1914,21 +1937,36 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @param int $p_languageId
      * @param array $p_constarints
+     * @param array $p_options
      * @param int $p_offset
      * @param int $p_limit
      * @param int $p_mapWidth
      * @param int $p_mapHeight
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
      *
      * @return string
      */
-    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight, $p_rank = 0)
+    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight, $p_rank = 0)
     {
         global $Campsite;
         $tag_string = "";
 
         $points = null;
 
-        if (!array_key_exists("retrieved", $p_constraints)) {
+        $pois_loaded = false;
+        $load_common = true;
+
+        if (is_array($p_options)) {
+            if (array_key_exists("pois_retrieved", $p_options)) {
+                $pois_loaded = $p_options["pois_retrieved"];
+            }
+            if (array_key_exists("load_common", $p_options)) {
+                $load_common = $p_options["load_common"];
+            }
+        }
+
+        if (!$pois_loaded) {
 
             $leftOperand = 'as_array';
             $rightOperand = true;
@@ -1967,8 +2005,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         }
         else {
 
-            $points = $p_constraints["pois"];
-            //unset($points["retrieved"]);
+            $points = $p_constraints;
 
         }
 
@@ -2021,12 +2058,14 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
 
-        $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
-        $include_files_css = $include_files["css_files"];
         $include_files_tags = "";
-        foreach ($include_files_css as $css_file)
-        {
-            $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+        if ($load_common) {
+            $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+            $include_files_css = $include_files["css_files"];
+            foreach ($include_files_css as $css_file)
+            {
+                $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+            }
         }
 
         $tag_string .= $geo_map_incl;
@@ -2034,12 +2073,19 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $tag_string .= $include_files_tags;
 
-        $tag_string .= '
+        if ($load_common) {
+
+            $tag_string .= '
 
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
+
+';
+        }
+
+        $tag_string .= '
 
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
@@ -2116,6 +2162,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      * Gives the body map-placement part for the map front end presentation
      *
      * @param int $p_languageId
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
      *
      * @return string
      */
@@ -2160,12 +2208,15 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @param int $p_languageId
      * @param array $p_constraints
+     * @param array $p_options
      * @param int $p_offset
      * @param int $p_limit
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
      *
      * @return array
      */
-    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank = 0)
+    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_rank = 0)
     {
         $f_language_id = (int) $p_languageId;
         $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
@@ -2176,7 +2227,15 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $points = null;
 
-        if (!array_key_exists("retrieved", $p_constraints)) {
+        $pois_loaded = false;
+
+        if (is_array($p_options)) {
+            if (array_key_exists("pois_retrieved", $p_options)) {
+                $pois_loaded = $p_options["pois_retrieved"];
+            }
+        }
+
+        if (!$pois_loaded) {
 
             $leftOperand = 'as_array';
             $rightOperand = true;
@@ -2215,8 +2274,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         }
         else {
 
-            $points = $p_constraints["pois"];
-            //unset($points["retrieved"]);
+            $points = $p_constraints;
 
         }
 
@@ -2237,22 +2295,26 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
     /**
      * @param int $p_languageId
      * @param array $p_constraints
+     * @param array $p_options
+     * @param string $p_label
      * @param int $p_offset
      * @param int $p_limit
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
      *
      * @return string
      */
-    public static function GetMultiMapTagList($p_languageId, $p_constraints, $map_label, $p_offset, $p_limit, $p_rank = 0)
+    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_options, $p_label, $p_offset, $p_limit, $p_rank = 0)
     {
 
-        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_offset, $p_limit, $p_rank);
+        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_rank);
         $map = $geo['map'];
         $pois = $geo['pois'];
 
         $icons_dir = Geo_Preferences::GetIconsWebDir();
 
         //$map_name = $map['name'];
-        $map_name = $map_label;
+        $map_name = $p_label;
         $map_name = str_replace("&", "&amp;", $map_name);
         $map_name = str_replace("<", "&lt;", $map_name);
         $map_name = str_replace(">", "&gt;", $map_name);
