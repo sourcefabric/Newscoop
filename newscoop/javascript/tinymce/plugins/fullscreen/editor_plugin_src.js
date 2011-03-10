@@ -14,7 +14,7 @@
 	tinymce.create('tinymce.plugins.FullScreenPlugin', {
 		init : function(ed, url) {
 			var t = this, s = {}, vp;
-
+			editorId = ed.settings.id;
 			t.editor = ed;
 
 			// Register commands
@@ -79,13 +79,13 @@
 						vp.h -= 1;
 
 					n = DOM.add(DOM.doc.body, 'div', {id : 'mce_fullscreen_container', style : 'position:' + (tinymce.isIE6 || (tinymce.isIE && !DOM.boxModel) ? 'absolute' : 'fixed') + ';top:0;left:0;width:' + vp.w + 'px;height:' + vp.h + 'px;z-index:200000;'});
-					DOM.add(n, 'div', {id : 'mce_fullscreen'});
+					DOM.add(n, 'div', {id : 'mce_fullscreen__'+editorId});
 
 					tinymce.each(ed.settings, function(v, n) {
 						s[n] = v;
 					});
 
-					s.id = 'mce_fullscreen';
+					s.id = 'mce_fullscreen__'+editorId;
 					s.width = n.clientWidth;
 					s.height = n.clientHeight - 15;
 					s.fullscreen_is_enabled = true;
@@ -103,7 +103,7 @@
 					if (s.theme_advanced_toolbar_location === 'external')
 						s.theme_advanced_toolbar_location = 'top';
 
-					t.fullscreenEditor = new tinymce.Editor('mce_fullscreen', s);
+					t.fullscreenEditor = new tinymce.Editor('mce_fullscreen__'+editorId, s);
 					t.fullscreenEditor.onInit.add(function() {
 						t.fullscreenEditor.setContent(ed.getContent());
 						t.fullscreenEditor.focus();
