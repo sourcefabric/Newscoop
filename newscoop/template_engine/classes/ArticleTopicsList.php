@@ -85,7 +85,7 @@ class ArticleTopicsList extends ListObject
                     for ($i = 0, $count = count($arrayTopics); $i < $count; $i++) {
                         $metaTopic = new MetaTopic($arrayTopics[$i]);
                         if (!$metaTopic->defined) {
-                            CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_topics");
+                            CampTemplate::singleton()->trigger_error("invalid value " . $arrayTopics[$i] . " of parameter $parameter in statement list_article_topics");
                             return array();
                         }
                         $operator = new Operator('is', 'integer');
