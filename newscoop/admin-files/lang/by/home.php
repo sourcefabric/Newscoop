@@ -1,4 +1,11 @@
 <?php 
+regGS("Your password has been reset.", "");
+regGS("Proceed to login.", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Go to login", "");
+regGS("Back to login.", "");
+regGS("Back to login", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
 regGS("Session expired.", "Сесія скончана.");
 regGS("Processing...", "Апрацоўка...");
 regGS("Please", "Калі ласка");
@@ -22,23 +29,17 @@ regGS("Please login to continue.", "Калі ласка, увядзіце лаг
 regGS("Add to dashboard", "Дадаць у \"Мой Newscoop\"");
 regGS("Add more widgets", "Дадаць іншыя віджэты");
 regGS("login", "Уваход");
-regGS("Your password has been reset <br/> you may now proceed to", "Ваш пароль быў скінуты <br/> Вы можаце прыступіць да");
 regGS("This link is not valid.", "Гэтая спасылка няправільная!");
 regGS("Recover password", "Аднавіць пароль");
 regGS("Please enter your email.", "Калі ласка, увядзіце свой email.");
-regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "Немагчыма аднавіць пароль. <br/> <a href=\"login.php\">login</a>");
 regGS("Password recovery is disabled.", "Немагчыма аднавіць пароль.");
-regGS("Password recovery email", "Email для аднаўленне пароля");
 regGS("Password recovery", "Аднаўленне пароля");
 regGS("Password Recovery", "Аднаўленне Пароля");
 regGS("No user is registered with this email.", "Няма карыстальнікаў, зарэгістраваных пад гэтым паролем.");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "Прывітаньне, \ \ n Для аднаўлення пароля прайдзіце па гэтай спасылцы:% s");
-regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Прывітанне, <br> для аднаўлення пароля прайдзіце па гэтай спасылцы: <a href=\"%s\"> Аднаўленне Пароля </ a>");
 regGS("Forgot your password?", "Забыўся пароль?");
 regGS("Email: incorrect format.", "Email: няправільны фармат.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Няправільныя ўваходныя параметры.");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "Email з інструкцыямі па аднаўленні пароля былі адпраўленыя на ваш электронны адрас. <br/> <a Href=\"login.php\"> Увайсці ў адміністрацыйны інтэрфейс </ a>");
 regGS("You do not have the right to manage backup.", "Вы ня маеце права доступу для кіравання рэзервным капіраваннем.");
 regGS("There was an error trying to delete the file $1.", "Памылка пры выдаленні файла $1.");
 regGS("The file $1 was deleted successfully.", "Файл $1 ");

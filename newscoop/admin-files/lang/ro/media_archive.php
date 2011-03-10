@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to add files.", "");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "");
+regGS("Please enter a description for the file: '$1'.", "");
+regGS("Only this translation", "");
+regGS("No files for multi editing.", "");
+regGS("Edit files", "");
+regGS("Change file information", "");
+regGS("All translations", "");
 regGS("Save All", "Salvează totul");
 regGS("Files", "Fișiere");
 regGS("You can't delete used files.", "Nu se pot șterge fișiere în uz.");
