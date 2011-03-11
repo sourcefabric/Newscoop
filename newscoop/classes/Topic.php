@@ -35,8 +35,8 @@ class Topic extends DatabaseObject {
             $this->m_data['id'] = $p_idOrName;
             $this->fetch();
 		} elseif (is_string($p_idOrName) && !empty($p_idOrName)) {
-		    $topic = Topic::GetByFullName($p_idOrName);
-		    if (!is_null($topic)) {
+            $topic = Topic::GetByFullName($p_idOrName);
+            if (!is_null($topic)) {
 		        $this->duplicateObject($topic);
 		    }
 		}
@@ -663,6 +663,30 @@ class Topic extends DatabaseObject {
         } else {
         	$query->addHaving($depthGreater);
         	$query->addHaving('depth <= ' . $depthMax);
+        }
+        $query->addOrderBy('node.node_left');
+        return $query;
+	}
+
+
+	/**
+	 * Returns an SQLSelectClause object that builds a query for retrieving the
+	 * subtopics of the given parent.
+	 *
+	 * @param integer $p_parentId - parent topic identifier
+	 * @return SQLSelectClause
+	 */
+	public static function BuildSubtopicsQueryWithoutDepth($p_parentIds = 0)
+	{
+        $p_parentIds = is_array($p_parentIds)? $p_parentIds: array($p_parentIds);
+        $topicObj = new Topic();
+        $query = new SQLSelectClause($p_indent);
+        $query->addColumn('node.id AS id');
+        $query->setTable($topicObj->m_dbTableName . ' AS node');
+        $query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
+        $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
+        foreach($p_parentIds as $p_parentId) {
+            $query->addConditionalWhere('parent.id = ' . (int)$p_parentId);
         }
         $query->addOrderBy('node.node_left');
         return $query;
