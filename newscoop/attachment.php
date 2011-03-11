@@ -34,7 +34,7 @@ if (($extensionStart = strrpos($attachment, '.')) !== false) {
 $attachmentId = (int)ltrim($attachment, " 0\t\n\r\0");
 
 $attachmentObj = new Attachment($attachmentId);
-if (!$attachmentObj->exists() || $filename != $attachmentObj->getFileName()) {
+if (!$attachmentObj->exists() || $filename != basename($attachmentObj->getStorageLocation())) {
     header('HTTP/1.0 404 Not Found');
     echo 'Error 404: File not found';
     exit;
