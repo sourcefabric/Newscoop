@@ -3,6 +3,8 @@
 // This file will deliver the attachment. It is supposed to work like this:
 // http://site/attachment/id/file_name
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');

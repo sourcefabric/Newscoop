@@ -1706,3 +1706,11 @@ div.image-thumbnail-container {
     float:left;
     width:80px;
 }
+
+ul#edit-files h2 {
+    margin: 0;
+    padding: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    overflow: hidden;
+}
