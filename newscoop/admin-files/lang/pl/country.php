@@ -1,6 +1,7 @@
 <?php 
+regGS("The country \"$1\" could not be created.", "");
+regGS("Country with code \"$1\" exists already.", "");
 regGS("You do not have the right to add countries.", "Brak wystarczających praw do dodawania krajów.");
-regGS("The country $1 could not be created.", "Kraj $1 nie został utworzony.");
 regGS("Delete country", "Usuń kraj");
 regGS("You do not have the right to delete countries.", "Nie masz praw by usuwać kraje");
 regGS("Are you sure you want to delete the country $1?", "Na pewno usunąć kraj $1?");

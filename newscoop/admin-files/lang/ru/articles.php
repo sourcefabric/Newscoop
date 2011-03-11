@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Файлы");
 regGS("Select section:", "Выберите раздел");
 regGS("Add another author", "Добавить автора");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "У Вас нет п�
 regGS("There was a problem uploading the file.", "Случилась ошибка при загрузке файла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Файл был загружен только частично. Это случается, когда максимально-установленное время загрузки файла ниже, чем время загрузки подобного файла. максимально-установленное время загрузки файлов прописано в 'php.ini' ");
 regGS("The file exceeds the allowed max file size.", "Размер файла превосходит максимально-возможный размер файлов");
-regGS("Overwrite existing articles", "Перезаписать существующие файлы.");
 regGS("Optional", "Необязательное");
 regGS("Input File", "Входной файл");
 regGS("Import XML", "Импорт XML");
@@ -150,8 +152,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы уверены, что хотите удалить этот аудио файл из этой статьи");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>

@@ -1,5 +1,5 @@
 <?php 
-regGS("User recives notification about new interviews", "User recives notification about new interviews");
+regGS("User receives notification about new interviews", "User receives notification about new interviews");
 regGS("User is interview moderator", "User is interview moderator");
 regGS("User is interview guest", "User is interview guest");
 regGS("User is interview admin", "User is interview admin");

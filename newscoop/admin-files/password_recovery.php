@@ -6,9 +6,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
-
-// token
-$key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
+require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 
 /**
  * Send token via email
@@ -30,11 +28,17 @@ function send_token($p_email, $p_token)
     // email message
     $message = getGS("Hi, \n\nfor password recovery, please follow this link: $1", $link);
 
+    // get from email
+    $from = SystemPref::Get('PasswordRecoveryFrom');
+    if (empty($from)) {
+        $from = 'no-reply@' . $_SERVER['SERVER_NAME'];
+    }
+
     // set headers
     $headers = array(
         'MIME-Version: 1.0',
         'Content-type: text/plain; charset=UTF-8',
-        'From: no-reply@' . $_SERVER['SERVER_NAME'],
+        "From: $from",
     );
 
     // send mail
@@ -44,53 +48,11 @@ function send_token($p_email, $p_token)
         implode("\r\n", $headers));
 }
 
-// Special case for the login screen:
-// We have to figure out what language to use.
-// If they havent logged in before, we should try to display the
-// language as set by the browser.  If the user has logged in before,
-// use the language that they previously used.
 $defaultLanguage = null;
 if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_REQUEST['TOL_Language'];
 } elseif (isset($_COOKIE['TOL_Language'])) {
     $defaultLanguage = $_COOKIE['TOL_Language'];
-} else {
-    // Get the browser languages
-    $browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
-    $browserLanguageArray = preg_split("/[,;]/", $browserLanguageStr);
-    $browserLanguagePrefs = array();
-    foreach ($browserLanguageArray as $tmpLang) {
-        if (!(substr($tmpLang, 0, 2) == 'q=')) {
-            $browserLanguagePrefs[] = $tmpLang;
-        }
-    }
-    // Try to match preference exactly.
-    foreach ($browserLanguagePrefs as $pref) {
-        if (array_key_exists($pref, $languages)) {
-            $defaultLanguage = $pref;
-            break;
-        }
-    }
-    // Try to match two-letter language code.
-    if (is_null($defaultLanguage)) {
-        foreach ($browserLanguagePrefs as $pref) {
-            if (substr($pref, 0, 2) != "" && array_key_exists(substr($pref, 0, 2), $languages)) {
-                $defaultLanguage = $pref;
-                break;
-            }
-        }
-    }
-
-    // Default to english if we dont find anything that matches.
-    if (is_null($defaultLanguage)) {
-        $defaultLanguage = 'en';
-    }
-    // HACK: the function regGS() strips off the ":en" from
-    // english language strings, but only if it knows that
-    // the language being displayed is english...and it knows
-    // via the cookie.
-    $_COOKIE['TOL_Language'] = $defaultLanguage;
-    $_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 
 // Load the language files.
@@ -116,6 +78,9 @@ if (Input::Get("f_post_sent", "int",0)==1) {
 
             send_token($email, $token);
             $sent = true;
+
+            $logMessage = getGS('Password recovery request for $1', $email);
+            Log::Message($logMessage, NULL, 54);
         }
         else {
             $errors[] = getGS("No user is registered with this email.");

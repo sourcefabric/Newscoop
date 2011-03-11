@@ -241,14 +241,26 @@ class ArticleComment
 
         if (!empty($p_searchString)) {
             $p_searchString = mysql_real_escape_string($p_searchString);
+
             if (!empty($whereQuery)) {
                 $whereQuery .= " AND ";
             }
-            $whereQuery .="($messageTable.subject LIKE '%$p_searchString%'"
-                        ." OR $messageTable.body LIKE '%$p_searchString%'"
-                        ." OR $messageTable.email LIKE '%$p_searchString%'"
-                        ." OR $messageTable.author LIKE '%$p_searchString%'"
-                        ." OR $messageTable.ip LIKE '%$p_searchString%')";
+
+            $search_columns = array(
+                'subject',
+                'body',
+                'email',
+                'author',
+                'ip',
+                'Name',
+            );
+
+            $whereAry = array();
+            foreach ($search_columns as $column) {
+                $whereAry[] = $column . " LIKE '%$p_searchString%'";
+            }
+
+            $whereQuery .= '(' . implode(' OR ', $whereAry) . ')';
         }
 
         if (!empty($whereQuery)) {
@@ -266,7 +278,6 @@ class ArticleComment
             return $numComments;
         } else {
             $queryStr = DatabaseObject::ProcessOptions($baseQuery, $p_sqlOptions);
-            //echo $queryStr;
             $rows = $g_ado_db->GetAll($queryStr);
             $returnArray = array();
             if (is_array($rows)) {

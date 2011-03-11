@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to add files.", "You do not have the right to add files.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Should this file only be available for this translation of the article, or for all translations?");
+regGS("Please enter a description for the file: '$1'.", "Please enter a description for the file: '$1'.");
+regGS("Only this translation", "Only this translation");
+regGS("No files for multi editing.", "No files for multi editing.");
+regGS("Edit files", "Edit files");
+regGS("Change file information", "Change file information");
+regGS("All translations", "All translations");
 regGS("Save All", "Save All");
 regGS("Files", "Files");
 regGS("You can't delete used files.", "You can't delete used files.");

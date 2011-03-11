@@ -738,11 +738,15 @@ class User extends DatabaseObject {
         $this->setProperty('password_reset_token','');
     }  // fn setPassword
 
+    /**
+     * Generates token
+     *
+     * @return void
+     */
     public function setPasswordResetToken()
     {
-        $this->setProperty('password_reset_token',md5(rand(0, 9999)));
+        $this->setProperty('password_reset_token', sha1(uniqid('', TRUE)) . (string) time());
     }
-
 
 
     /**

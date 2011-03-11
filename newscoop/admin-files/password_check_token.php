@@ -6,56 +6,11 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
-// token
-$key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
-
-// Special case for the login screen:
-// We have to figure out what language to use.
-// If they havent logged in before, we should try to display the
-// language as set by the browser.  If the user has logged in before,
-// use the language that they previously used.
 $defaultLanguage = null;
 if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_REQUEST['TOL_Language'];
 } elseif (isset($_COOKIE['TOL_Language'])) {
     $defaultLanguage = $_COOKIE['TOL_Language'];
-} else {
-    // Get the browser languages
-    $browserLanguageStr = isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
-    $browserLanguageArray = preg_split("/[,;]/", $browserLanguageStr);
-    $browserLanguagePrefs = array();
-    foreach ($browserLanguageArray as $tmpLang) {
-        if (!(substr($tmpLang, 0, 2) == 'q=')) {
-            $browserLanguagePrefs[] = $tmpLang;
-        }
-    }
-    // Try to match preference exactly.
-    foreach ($browserLanguagePrefs as $pref) {
-        if (array_key_exists($pref, $languages)) {
-            $defaultLanguage = $pref;
-            break;
-        }
-    }
-    // Try to match two-letter language code.
-    if (is_null($defaultLanguage)) {
-        foreach ($browserLanguagePrefs as $pref) {
-            if (substr($pref, 0, 2) != "" && array_key_exists(substr($pref, 0, 2), $languages)) {
-                $defaultLanguage = $pref;
-                break;
-            }
-        }
-    }
-
-    // Default to english if we dont find anything that matches.
-    if (is_null($defaultLanguage)) {
-        $defaultLanguage = 'en';
-    }
-    // HACK: the function regGS() strips off the ":en" from
-    // english language strings, but only if it knows that
-    // the language being displayed is english...and it knows
-    // via the cookie.
-    $_COOKIE['TOL_Language'] = $defaultLanguage;
-    $_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 
 // Load the language files.
@@ -71,7 +26,9 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
     $usr = User::FetchUserByEmail($email);
     if ($usr != null) {
-        if ($usr->getPasswordResetToken() == $token) {
+        $tokenGenerated = (int) substr($token, -10);
+        if ($usr->getPasswordResetToken() == $token
+            && (time() - $tokenGenerated < 48 * 3600)) { // valid for 48 hours
             $newPassword = Input::Get("f_password","string");
             if (strlen($newPassword) > 0) {
                $usr->setPassword($newPassword);

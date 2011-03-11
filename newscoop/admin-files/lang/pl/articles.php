@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Pliki");
 regGS("Select section:", "Wybierz sekcję:");
 regGS("Add another author", "Dodaj kolejnego autora");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Nie masz praw aby im
 regGS("There was a problem uploading the file.", "Wystąpił błąd podczas dodawania pliku.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Plik został wgrany tylko częściowo. To typowe zjawisko kiedy maksymalny czas wgrywania pliku jest za niski do jego rozmiaru. Maksymalny czas wgrywania jest ustalony w pliku 'php.ini'");
 regGS("The file exceeds the allowed max file size.", "Rozmiar pliku jest większy niż maksymalny.");
-regGS("Overwrite existing articles", "Napisz istniejące artykuły");
 regGS("Optional", "Opcjonalne");
 regGS("Input File", "Plik wsadowy");
 regGS("Import XML", "Import XML");
@@ -143,8 +145,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Ten artykuł nie może być podejrzany. Upewnij się, że szablon strony głównej jest wybrany.");
 regGS("No such article.", "Brak artykułu.");
 regGS("No such section.", "Brak sekcji.");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Czy na pewno chcesz usunąc plik audio \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Czy na pewno chcesz usunąć temat \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Czy na pewno chcesz usunąć plik \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Czy na pewno chcesz usunąć obraz \\'$1\\' z artykułu?");
 ?>
