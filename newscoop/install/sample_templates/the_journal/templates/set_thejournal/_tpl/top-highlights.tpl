@@ -11,7 +11,7 @@
                   <div style="background: {{ if $gimme->article->has_image(2) }}url({{uri options="image 2"}}&ImageRatio=25){{ else }}url({{uri options="image 1"}}&ImageRatio=33){{ /if }} no-repeat center center; width: 135px; height: 75px" class="woo-image thumbnail">&nbsp;</div>
                 </div>
                 <div class="content">
-                  <p><a href="{{ uri options="article" }}" rel="bookmark">{{ $gimme->article->name }}</a></p>
+                  <p><a href="{{ uri options="article" }}" rel="bookmark">{{ if ! $gimme->article->content_accessible }}* {{ /if }}{{ $gimme->article->name }}</a></p>
                     <p class="read_more"><a href="{{ uri options="article" }}" rel="bookmark">MORE +</a></p>
                 </div>
             </div>

@@ -12,7 +12,7 @@
                 
                     <li>
                         <div class="category"><a href="{{ uri options="section" }}" title="View all posts in {{ $gimme->section->name }}" rel="category tag">{{ $gimme->section->name }}</a></div>
-                        <h4><a title="{{ $gimme->article->name }}" href="{{ uri options="article" }}" rel="bookmark">{{ $gimme->article->name }}</a></h4>
+                        <h4><a title="{{ $gimme->article->name }}" href="{{ uri options="article" }}" rel="bookmark">{{ if ! $gimme->article->content_accessible }}* {{ /if }}{{ $gimme->article->name }}</a></h4>
                     </li>
 
 {{ /list_articles }}
