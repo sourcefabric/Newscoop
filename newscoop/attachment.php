@@ -26,7 +26,7 @@ if (($questionMark = strpos($attachment, '?')) !== false) {
 
 // Remove all attempts to get at other parts of the file system
 $attachment = str_replace('/../', '/', $attachment);
-$filename = basename($attachment);
+$filename = urldecode(basename($attachment));
 
 $extension = '';
 if (($extensionStart = strrpos($attachment, '.')) !== false) {
