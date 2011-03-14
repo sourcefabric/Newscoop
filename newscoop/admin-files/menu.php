@@ -381,7 +381,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 	.fg-button-icon-right .fg-button-ui-icon { left: auto; right: .2em; margin-left: 0; }
 	.fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */
 
-	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(spinner_bar.gif) no-repeat 0 0; }
+	.fg-button.ui-state-loading .fg-button-ui-icon { background: url(<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg-menu/spinner_bar.gif) no-repeat 0 0; }
 	</style>
 
 	<!-- style exceptions for IE 6 -->
