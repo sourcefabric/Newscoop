@@ -12,6 +12,7 @@
 {{ /list_sections }}
 {{ /local }}
 
-            </ul>
+            </ul>       
         </div>
+{{ include file="set_thejournal/_tpl/top-search-box.tpl" }}
     </div><!-- /#nav -->

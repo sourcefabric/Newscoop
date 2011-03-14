@@ -7,7 +7,7 @@
 {{ assign var="curartno" value=$gimme->article->number }}
 {{ list_articles length="4" ignore_issue="true" order="bypublishdate desc" constraints="number not $curartno" }}
         
-            <li><a href="{{ uri options="article" }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>
+            <li><a href="{{ uri options="article" }}" title="{{ $gimme->article->name }}">{{ if ! $gimme->article->content_accessible }}* {{ /if }}{{ $gimme->article->name }}</a></li>
             
 {{ /list_articles }} 
 {{ /local }}
