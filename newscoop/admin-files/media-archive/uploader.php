@@ -7,12 +7,12 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
- 
+
 require_once($GLOBALS['g_campsiteDir']. "/classes/Plupload.php");
 
 if (!$g_user->hasPermission('AddImage')) {
-	camp_html_display_error(getGS("You do not have the right to add images."));
-	exit;
+    camp_html_display_error(getGS("You do not have the right to add images."));
+    exit;
 }
 
 // Plupload

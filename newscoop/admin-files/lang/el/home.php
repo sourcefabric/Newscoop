@@ -1,4 +1,11 @@
 <?php 
+regGS("Your password has been reset.", "");
+regGS("Proceed to login.", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Go to login", "");
+regGS("Back to login.", "");
+regGS("Back to login", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
 regGS("Session expired.", "Η συνεδρία έληξε.");
 regGS("Processing...", "Επεξεργασία...");
 regGS("Please", "Παρακαλούμε");
@@ -22,23 +29,17 @@ regGS("Please login to continue.", "Παρακαλούμε πραγματοπο�
 regGS("Add to dashboard", "Προσθήκη στον πίνακα");
 regGS("Add more widgets", "Προσθήκη περισσότερων widgets");
 regGS("login", "Σύνδεση");
-regGS("Your password has been reset <br/> you may now proceed to", "Ο κωδικός ασφαλείας σας έχει επαναρυθμιστεί <br/> Τώρα μπορείτε να προχωρήσετε σε");
 regGS("This link is not valid.", "Ο σύνδεσμος δεν είναι έγκυρος.");
 regGS("Recover password", "Ανάκτηση κωδικού πρόσβασης");
 regGS("Please enter your email.", "Παρακαλούμε εισάγετε το email σας.");
-regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "Η ανάκτηση κωδικού πρόσβασης απενεργοποιήθηκε.<br/> <a href=\"login.php\">login</a>");
 regGS("Password recovery is disabled.", "Η ανάκτηση κωδικού πρόσβασης είναι απενεργοποιημένη.");
-regGS("Password recovery email", "Email ανάκτησης κωδικού πρόσβασης");
 regGS("Password recovery", "Ανάκτηση κωδικού πρόσβασης");
 regGS("Password Recovery", "Ανάκτηση κωδικού πρόσβασης");
 regGS("No user is registered with this email.", "Κανένας χρήστης δεν είναι εγγεγραμμένος με αυτό το email.");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "Καλησπέρα, \nγια ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: %s");
-regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "Καλησπέρα, <br>για ανάκτηση κωδικού πρόσβασης, παρακαλούμε ακολουθήστε αυτή τη σύνδεση: <a href=\"%s\">Recover Password</a>");
 regGS("Forgot your password?", "Ξεχάσατε τον κωδικό πρόσβασής σας?");
 regGS("Email: incorrect format.", "Email: λάθος μορφή.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Κακή εισαγωγή παραμέτρων.");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "Ένα email με οδηγίες σχετικά με το πως να ανακτήσετε τον κωδικό πρόσβασής σας, σας έχει σταλεί στα εισερχόμενα. <br/><ahref=\"login.php\">Προχωρήστε στη σύνδεση.</a>");
 regGS("You do not have the right to manage backup.", "Δεν έχετε το δικαίωμα να διαχειριστείτε το αντίγραφο ασφαλείας.");
 regGS("There was an error trying to delete the file $1.", "Υπήρξε πρόβλημα στην προσπάθεια διαγραφής του αρχείου $1.");
 regGS("The file $1 was deleted successfully.", "Το αρχείο $1 διαγράφηκε επιτυχώς.");

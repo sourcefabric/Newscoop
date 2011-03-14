@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Fajlova");
 regGS("Select section:", "Izaberi rubriku:");
 regGS("Add another author", "Dodaj autora");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Nemate pravo uvoza X
 regGS("There was a problem uploading the file.", "Došlo je do problema pri aploudu fajla.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Fajl je samo delimično aploudovan. Ovo se obično dešava kada je maksimalno vreme za aploud kratko u odnosu na veličinu fajla koji pokušavate da prebacite. Maksimalno vreme prebacivanja se podešava u 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "Fajl je veći od maksimalno dozvoljene veličine.");
-regGS("Overwrite existing articles", "Pretabaj postojeće tekstove.");
 regGS("Optional", "Opciono");
 regGS("Input File", "Fajl za unos");
 regGS("Import XML", "Uvezi XML");
@@ -145,8 +147,4 @@ regGS("No such article.", "Nema takvog teksta.");
 regGS("No such section.", "Nema te rubrike.");
 regGS("Are you sure you want to delete this scheduled action?", " ");
 regGS("Are you sure you want to remove the image '$1' from the article?", "Da li ste sigurni da želite da obrišete sliku $1 iz članka?");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Da li ste sigurni da želite da uklonite audio fajl \\'$1\\' iz članka?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite temu \\'$1\\'?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite fajl \\'$1\\'?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite sliku \\'$1\\'?");
 ?>

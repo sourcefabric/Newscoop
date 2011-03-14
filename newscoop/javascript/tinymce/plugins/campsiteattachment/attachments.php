@@ -3,6 +3,10 @@
  * Show a list of attachments in a long horizontal table.
  * @author $Author: holman $
  */
+
+// set SCRIPT_FILE for correct attachment urls
+$_SERVER['SCRIPT_NAME'] = preg_replace('#javascript/.*$#', 'admin.php', $_SERVER['SCRIPT_NAME']);
+
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
@@ -23,8 +27,6 @@ if (!$LiveUser->isLoggedIn()) {
 require_once('config.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once('classes/AttachmentManager.php');
-
-$Campsite['SUBDIR'] = str_replace('/javascript/tinymce/plugins/campsiteattachment', '', $Campsite['SUBDIR']);
 
 $manager = new AttachmentManager($AMConfig);
 
@@ -52,7 +54,7 @@ function drawFiles($list, &$manager)
     {
         $counter++;
         $languageId = ($file['attachment']->getLanguageId()) ? $file['attachment']->getLanguageId() : $languageSelected;
-        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($file['attachment']->getStorageLocation()) . '?g_download=1';
+        $downloadURL = $file['attachment']->getAttachmentUrl() . '?g_download=1';
 ?>
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
@@ -148,11 +150,15 @@ function drawErrorBase(&$manager)
 <?php
     $firstAttachment = array_shift($list);
     if (!empty($firstAttachment)) {
-        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($firstAttachment['attachment']->getStorageLocation()) . '?g_download=1';
+        $downloadURL = $firstAttachment['attachment']->getAttachmentUrl() . '?g_download=1';
+        $languageId = $firstAttachment['attachment']->getLanguageId();
+        if (empty($languageId)) {
+            $languageId = (int) $_REQUEST['language_selected'];
+        }
 ?>
   <!-- automatically select the first attachment -->
   <script>
-    CampsiteAttachmentDialog.select(<?php echo $firstAttachment['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');
+    CampsiteAttachmentDialog.select(<?php echo $firstAttachment['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($firstAttachment["attachment"]->getDescription($languageId)); ?>');
   </script>
 <?php } ?>
 

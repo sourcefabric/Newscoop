@@ -576,6 +576,7 @@ class CampInstallationBase
 
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
+        @chmod($path2, 0600);
 
         // create images and files directories
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images');

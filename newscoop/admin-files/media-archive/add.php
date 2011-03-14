@@ -70,11 +70,11 @@ $(function() {
     $("#uploader").pluploadQueue({
         // General settings
         runtimes : 'html5',
-        url : 'multifile_uploader.php',
+        url : 'uploader.php',
         unique_names : true,
         filters : [
-            {title : "Image files", extensions : "jpg,gif,png"},
-        ],
+            {title : "Image files", extensions : "jpg,gif,png"}
+        ]
     });
 
     // Client side form validation
@@ -104,12 +104,12 @@ $(function() {
 });
 
 plupload.addI18n({
-    'Select files' : '<?php putGS('Select files'); ?>',
+    'Select files' : '<?php putGS('Select files'); ?>', // Select images
     'Add files to the upload queue and click the start button.' : '<?php putGS('Add files to the upload queue and click the start button.'); ?>',
     'Filename' : '<?php putGS('Filename'); ?>',
     'Status' : '<?php putGS('Status'); ?>',
     'Size' : '<?php putGS('Size'); ?>',
-    'Add files' : '<?php putGS('Add files'); ?>',
+    'Add files' : '<?php putGS('Add files'); ?>', // Add images
     'Start upload' : '<?php putGS('Start upload'); ?>',
     'Stop current upload' : '<?php putGS('Stop current upload'); ?>',
     'Start uploading queue' : '<?php putGS('Start uploading queue'); ?>',

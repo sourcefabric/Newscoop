@@ -11,7 +11,8 @@
     tinymce.create('tinymce.plugins.campsiteattachment', {
         init : function(ed, url) {
             this.editor = ed;
-            editorId = ed.id;
+            editorId = typeof ed.settings.fullscreen_editor_id != 'undefined' ? 
+        			ed.settings.fullscreen_editor_id : ed.editorId;
             articleNo = editorId.substring(editorId.lastIndexOf('_')+1);
             topDoc = window.top.document;
             langId = topDoc.getElementById('f_language_selected').value;

@@ -148,15 +148,28 @@ final class CampInstallation extends CampInstallationBase
 
         $tpl->assign('sample_templates',$files);
         $tpl->assign('overwrite_db', $this->m_overwriteDb);
+ 
+        $database_conf = dirname(__FILE__) . '/../../conf/database_conf.php';
 
         if (!empty($config_db)) {
             $tpl->assign('db', $config_db);
+        } elseif (file_exists($database_conf)) { // use predefined settings
+            global $Campsite;
+            require_once $database_conf;
+            $tpl->assign('db', array(
+                'hostname' => $Campsite['db']['host'],
+                'hostport' => $Campsite['db']['port'],
+                'username' => $Campsite['db']['user'],
+                'userpass' => $Campsite['db']['pass'],
+                'database' => $Campsite['db']['name'],
+                'predefined' => TRUE,
+            ));
         } else {
-            $tpl->assign('db',
-                         array('hostname'=>'localhost',
-                               'username'=>'root',
-                               'database'=>'newscoop')
-                        );
+            $tpl->assign('db', array(
+                'hostname' => 'localhost',
+                'username' => 'root',
+                'database' => 'newscoop',
+            ));
         }
 
         $config_site = $session->getData('config.site', 'installation');

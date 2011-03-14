@@ -1,4 +1,11 @@
 <?php 
+regGS("Your password has been reset.", "");
+regGS("Proceed to login.", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Go to login", "");
+regGS("Back to login.", "");
+regGS("Back to login", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
 regGS("Session expired.", "Sesiunea a expirat.");
 regGS("Processing...", "");
 regGS("Please", "");
@@ -22,23 +29,17 @@ regGS("Please login to continue.", "Reinițializați sesiunea pentru a continua.
 regGS("Add to dashboard", "Adaugă la panou");
 regGS("Add more widgets", "");
 regGS("login", "");
-regGS("Your password has been reset <br/> you may now proceed to", "");
 regGS("This link is not valid.", "");
 regGS("Recover password", "Recuperează parola.");
 regGS("Please enter your email.", "Introdu adresa de email.");
-regGS("Password recovery is disabled.<br/> <a href=\"login.php\">login</a>", "");
 regGS("Password recovery is disabled.", "Recuperarea parolei este invalidată.");
-regGS("Password recovery email", "");
 regGS("Password recovery", "");
 regGS("Password Recovery", "");
 regGS("No user is registered with this email.", "");
-regGS("Hi, \nfor password recovery, please follow this link: %s", "");
-regGS("Hi, <br>for password recovery, please follow this link: <a href=\"%s\">Recover Password</a>", "");
 regGS("Forgot your password?", "");
 regGS("Email: incorrect format.", "");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Parametrii de intrare invalizi.");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.<br/><a href=\"login.php\">Proceed to login.</a>", "");
 regGS("You do not have the right to manage backup.", "Nu ai dreptul să gestionezi arhivele.");
 regGS("There was an error trying to delete the file $1.", "Eroare la ștergerea fișierului $1.");
 regGS("The file $1 was deleted successfully.", "Fișierul $1 a fost șters.");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Archivos");
 regGS("Select section:", "Elija sección:");
 regGS("Add another author", "Añada otro autor");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "No tienes el derecho
 regGS("There was a problem uploading the file.", "Hubo un problema al subir el archivo.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "El archivo subido fue solamente parcialemente subido. Esto es común cuando el tiempo máximo para subir un archivo es bajo en contraste con el tamaño del archivo que se está tratando de ingresar. El tiempo máximo para ingresar está especificado en 'php.ini'  ");
 regGS("The file exceeds the allowed max file size.", "El archivo excede el tamaño máximo permitido para un archivo.");
-regGS("Overwrite existing articles", "Superponer archivos existentes. ");
 regGS("Optional", "Opciones");
 regGS("Input File", "Archivo de entrada");
 regGS("Import XML", "Importar XML");
@@ -146,8 +148,4 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Está seguro que quiere remover el archivo de audio \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

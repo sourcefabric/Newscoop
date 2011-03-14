@@ -53,7 +53,7 @@ camp_html_display_msgs();
         <div><img src="<?php echo $image['thumbnail_url']; ?>" border="0"></div>
 		<fieldset>
 		    <legend><?php  putGS("Change image information"); ?></legend>
-		    
+
 		    <dl>
 		        <dt><?php  putGS("Description"); ?>:</dt>
 		        <dd><input type="text" name="image[<?php echo $image['id']; ?>][f_description]" value="<?php echo htmlspecialchars($image['description']); ?>" size="32" class="input_text"></dd>

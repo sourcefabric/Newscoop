@@ -9,6 +9,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/mime_content_type.php');
 
 /**
  * @package Campsite
@@ -321,6 +322,17 @@ class Attachment extends DatabaseObject {
     }
 
     /**
+     * Return the ids of the file not edited yet.
+     *
+     * @return array
+     */
+    public static function GetUnedited($p_id)
+    {
+        $search = new Attachment();
+        return $search->Search('Attachment',array(array('fk_description_id','0'),array('fk_user_id',$p_id)));
+    }
+
+    /**
      * This function should be called when an attachment is uploaded.  It will
      * save the attachment to the appropriate place on the disk, and create a
      * database entry for the file.
@@ -343,11 +355,15 @@ class Attachment extends DatabaseObject {
      *		If the attachment already exists and we just want to update it, specify the
      *		current ID here.
      *
+     * @param bool $p_uploaded
+     *      If the attachment was uploaded with other mechanism (ex: plUploader)
+     *      this is set so that the single upload file from article functionality is still secured.
+     *
      * @return mixed
      *		The Attachment object that was created or updated.
      *		Return a PEAR_Error on failure.
      */
-    public static function OnFileUpload($p_fileVar, $p_attributes, $p_id = null)
+    public static function OnFileUpload($p_fileVar, $p_attributes, $p_id = null, $p_uploaded = false)
     {
         if (!is_array($p_fileVar)) {
             return null;
@@ -386,7 +402,20 @@ class Attachment extends DatabaseObject {
         }
         $target = $attachment->getStorageLocation();
         $attachment->makeDirectories();
-        if (!move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+        ob_start();
+        var_dump(is_uploaded_file($p_fileVar['tmp_name']));
+        $dump = ob_get_clean();
+        /**
+         * for security reason
+         *  for file uploaded normal not with other mechanism (ex: plUploader)
+         *  we still need the move_uploaded_file functionality
+         */
+        if (!$p_uploaded && !move_uploaded_file($p_fileVar['tmp_name'], $target)) {
+            $attachment->delete();
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
+        }
+        // if the file was uploaded with other mechanism (ex: plUploader) use rename(move) functionality
+        if ($p_uploaded && !rename($p_fileVar['tmp_name'], $target)) {
             $attachment->delete();
             return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $target), CAMP_ERROR_CREATE_FILE);
         }
@@ -394,6 +423,42 @@ class Attachment extends DatabaseObject {
         $attachment->commit();
         return $attachment;
     } // fn OnFileUpload
+
+
+    /**
+     * Process multi-upload file.
+     *
+     * @param string $p_tmpFile
+     * @param string $p_newFile
+     * @param int $p_userId
+     *
+     * @return Image|NULL
+     */
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    {
+        $tmp_attachment = new Attachment();
+        $tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
+        $file = array(
+            'name' => $p_newFile,
+            'tmp_name' => $tmp_name,
+            'type' => mime_content_type($tmp_name),
+            'size' => filesize($tmp_name),
+            'error' => 0,
+        );
+
+        $attributes = array(
+            'fk_user_id' => $p_userId,
+            'fk_description_id' => 0
+        );
+
+        try {
+            $image = self::OnFileUpload($file, $attributes, null, true);
+            return $image;
+        } catch (PEAR_Error $e) {
+            return NULL;
+        }
+
+    } // fn ProcessImage
 
 } // class Attachment
 

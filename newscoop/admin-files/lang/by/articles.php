@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Файлы");
 regGS("Select section:", "Выберыце раздзел");
 regGS("Add another author", "Дадаць аўтара");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "У вас няма �
 regGS("There was a problem uploading the file.", "Здарылася памылка пры загрузцы файла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Файл быў загружаны толькі часткова. Гэта здараецца, калі максімальна-усталяваны час загрузкі файла ніжэйшы, чым час загрузкі падобнага файла. Максімальна-усталяваны час загрузкі файлаў прапісаны ў  'php.ini' ");
 regGS("The file exceeds the allowed max file size.", "Памер файла перавышае максімальна-магчымы памер файлаў");
-regGS("Overwrite existing articles", "Перазапісаць існуючыя файлы");
 regGS("Optional", "Неабавязковае");
 regGS("Input File", "Уваходны файл");
 regGS("Import XML", "Імпарт XML");
@@ -150,8 +152,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Вы ўпэўненыя, што жадаеце выдаліць аўдыёфайл \\'$1\\' з гэтага артыкула?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>

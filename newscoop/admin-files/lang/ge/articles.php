@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "");
 regGS("Select section:", "");
 regGS("Add another author", "");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "თქვენ ა�
 regGS("There was a problem uploading the file.", "პრობლემა იყო ფაილის ატვირთვისას");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "");
 regGS("The file exceeds the allowed max file size.", "");
-regGS("Overwrite existing articles", "არსებული სტატიების გადაწერა");
 regGS("Optional", "");
 regGS("Input File", "ფაილის ");
 regGS("Import XML", "XML ს იმპორტი");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Фајлова");
 regGS("Select section:", "Изабери рубрику:");
 regGS("Add another author", "Додај аутора");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Немате пра�
 regGS("There was a problem uploading the file.", "Дошло је до проблема при аплоуду фајла.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Фајл је само делимично аплоудован. Ово се обично дешава када је максимално време за аплоуд кратко у односу на величину фајла који покушавате да пребаците. Максимално време пребацивања се подешава у 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "Фајл је већи од максимално дозвољене величине.");
-regGS("Overwrite existing articles", "Претабај постојеће текстове.");
 regGS("Optional", "Опционо");
 regGS("Input File", "Фајл за унос");
 regGS("Import XML", "Увези XML");
@@ -147,8 +149,4 @@ regGS("Reorder", "Промени распоред");
 regGS("Author", "аутор");
 regGS("Are you sure you want to delete this scheduled action?", " ");
 regGS("Are you sure you want to remove the image '$1' from the article?", "Да ли сте сигурни да желите да обришете слику  '$1'  из текста? ");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Да ли сте сигурни да желите да уклоните аудио фајл \\'$1\\' из текста?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните тему \\'$1\\'?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните фајл \\'$1\\'?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните слику \\'$1\\'?");
 ?>
