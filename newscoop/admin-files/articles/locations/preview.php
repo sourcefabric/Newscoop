@@ -31,7 +31,7 @@ if (!Input::IsValid()) {
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
+	<script type="text/javascript" src="/javascript/json/json2.min.js"></script>
 
 	<script type="text/javascript">
 
