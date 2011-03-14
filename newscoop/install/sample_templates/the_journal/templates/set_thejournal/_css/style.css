@@ -44,24 +44,22 @@ body {
 #top-meta .date {
   font-size:12px;
   height:21px;
-  width:465px;
+  width:150px;
   float:left;
-
   margin-right:12px;
 }
 
-#top-meta .search {
+#top-nav .search {
   font-size:11px;
-  padding: 0 5px 0 15px;
+  padding: 0 0 0 15px;
   float:right;
-  border-left-width: 5px;
-  border-left-style:solid;
+  margin-top: 4px;
 }
 
 form#topSearch {
   background-color:#ffffff;
   border:1px solid #cccccc;
-  width: 133px; height: 16px; padding:2px;
+  width: 133px; height: 15px; padding: 1px 2px;
   position: relative;
 }
   form#topSearch p.fields {
@@ -85,11 +83,10 @@ form#topSearch {
       width: 16px; height: 16px;
       border: none;
       position: absolute;
-      top: 2px; left: 2px;
-            text-indent: -999px
+      top: 1px; left: 2px;
+      text-indent: -999px
     }
     
-
 
 #top-meta .rss {
   padding: 4px 0px 0 10px;

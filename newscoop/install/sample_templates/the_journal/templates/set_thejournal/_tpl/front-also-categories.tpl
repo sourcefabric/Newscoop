@@ -18,7 +18,7 @@
                         <div class="panel">
                             <p class="category"><a href="{{ uri options="section" }}" title="View all posts in {{ $gimme->section->name }}" rel="category tag">{{ $gimme->section->name }}</a></p>
                             <div class="panel-image"><a title="{{ $gimme->article->name }}" href="{{ uri options="article" }}"><div style="background: {{ if $gimme->article->has_image(2) }}url({{uri options="image 2"}}&ImageRatio=40){{ else }}url({{uri options="image 1"}}&ImageRatio=40){{ /if }} no-repeat center center; width: 147px; height: 144px" class="woo-image thumbnail">&nbsp;</div></a></div>
-                            <h3><a href="{{ uri options="article" }}">{{ $gimme->article->name }}</a></h3>
+                            <h3><a href="{{ uri options="article" }}">{{ if ! $gimme->article->content_accessible }}* {{ /if }}{{ $gimme->article->name }}</a></h3>
                             <div class="fix"></div>
                          </div>
                               
