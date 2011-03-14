@@ -6,7 +6,14 @@
  */
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
-
+// function to escape javascript parameters in function called in attribute
+function escape_js_param($str) {
+    $str = str_replace('"','\x22',$str);
+    $str = str_replace('\'','\x27',$str);
+    $str = str_replace('&#039;','\x27',$str);
+    $str = str_replace('&quot;','\x22',$str);
+    return $str;
+}
 // Only logged in admin users allowed
 if (!$LiveUser->isLoggedIn()) {
     header("Location: /$ADMIN/login.php");
@@ -112,8 +119,8 @@ function drawFiles($list, &$manager)
 		<td>
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
-		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  htmlentities($file['alt']); ?>', '<?php echo  htmlentities($file['alt']); ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  htmlentities($file['alt']); ?>', '<?php echo  htmlentities($file['alt']); ?>');" title="<?php echo  htmlentities($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  htmlentities($file['alt']); ?>"/></a>
+		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');">
+		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');" title="<?php echo  escape_js_param($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  escape_js_param($file['alt']); ?>"/></a>
 		                </td></tr><tr><td class="edit">
 		<?php
 		if ($file['image']) {
@@ -309,7 +316,7 @@ function drawErrorBase(&$manager)
 	?>
 	<!-- automatically select the image -->
 	<script>
-	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo $imageAlt; ?>', '<?php echo $imageTitle; ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
+	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo escape_js_param($imageAlt); ?>', '<?php echo escape_js_param($imageTitle); ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
 	</script>
 <?php } else { drawNoResults(); } ?>
 </body>
