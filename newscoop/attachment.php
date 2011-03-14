@@ -3,6 +3,8 @@
 // This file will deliver the attachment. It is supposed to work like this:
 // http://site/attachment/id/file_name
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+
+require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
@@ -34,7 +36,7 @@ if (($extensionStart = strrpos($attachment, '.')) !== false) {
 $attachmentId = (int)ltrim($attachment, " 0\t\n\r\0");
 
 $attachmentObj = new Attachment($attachmentId);
-if (!$attachmentObj->exists() || $filename != $attachmentObj->getFileName()) {
+if (!$attachmentObj->exists() || urldecode($filename) != basename($attachmentObj->getFileName())) {
     header('HTTP/1.0 404 Not Found');
     echo 'Error 404: File not found';
     exit;

@@ -1,4 +1,7 @@
 <?php 
+regGS("Pending Article", "");
+regGS("Overwrite articles with matching names", "");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
 regGS("Files", "Soubory");
 regGS("Select section:", "Vybrat rubriku:");
 regGS("Add another author", "Přidat dalšího autora");
@@ -35,7 +38,6 @@ regGS("You do not have the right to import XML archives.", "Nemáte oprávnění
 regGS("There was a problem uploading the file.", "Vyskytl se problé při uploadování souboru.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "Soubor překračuje maximální povolenou velikost.");
-regGS("Overwrite existing articles", "Přepsat existující články");
 regGS("Optional", "Volitelné");
 regGS("Input File", "Vstupní Soubor");
 regGS("Import XML", "Importovat XML");
@@ -144,8 +146,4 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the audio file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit audio soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

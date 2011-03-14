@@ -1,4 +1,5 @@
 <?php 
+regGS("No topics have been created yet.", "");
 regGS("Topics updated.", "Τα θέματα ανανεώθηκαν.");
 regGS("Topic does not exist.", "Το θέμα δεν υπάρχει.");
 regGS("The topic '$1' has been removed from article.", "Το θέμα '$1' αφαιρέθηκε από το άρθρο.");
@@ -6,5 +7,4 @@ regGS("You do not have the right to detach topics from articles.", "Δεν έχ�
 regGS("You do not have the right to attach topics to articles.", "Δεν έχετε το δικαίωμα να επισυνάψετε θέματα στα άρθρα.");
 regGS("Attach Topics", "Επισύναψη Θεμάτων");
 regGS("Attach Topic To Article", "Επισύναψη Θέματος Στο Άρθρο");
-regGS("No topics.", "Κανένα θέμα.");
 ?>

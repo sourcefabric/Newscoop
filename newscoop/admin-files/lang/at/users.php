@@ -1,11 +1,11 @@
 <?php 
+regGS("Select Country", "");
 regGS("Filters", "");
 regGS("Add new Author", "");
 regGS("You do not have the right to sync Newscoop and Phorum users.", "");
 regGS("User may synchronize Newscoop and Phorum users", "");
 regGS("Unsubscribe email notifications", "");
 regGS("New author \"$1\" ($2) created.", "");
-regGS("Manage Authors", "");
 regGS("Loading Data", "");
 regGS("Delete author type", "");
 regGS("Cannot remove author type.", "");

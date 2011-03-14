@@ -1,6 +1,6 @@
 <?php 
+regGS("Wikipedia Search", "");
 regGS("Files", "");
-regGS("Wikipedia search", "");
 regGS("Sourcefabric.org newsletter subscription", "");
 regGS("Maps search", "");
 regGS("Default location", "");

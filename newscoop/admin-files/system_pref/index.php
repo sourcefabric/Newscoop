@@ -176,6 +176,14 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
+        <?php putGS('From email address:'); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_password_recovery_from" value="<?php echo SystemPref::Get('PasswordRecoveryFrom'); ?>" maxlength="80" size="40" class="input_text" emsg="<?php putGS('Please enter password recovery from email.'); ?>" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("Secret Key:"); ?>
     </td>
     <td align="left" valign="top">
@@ -675,4 +683,22 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <p></p>
 <br />
 <br />
-<?php //camp_html_copyright_notice(); ?>
+<script type="text/javascript"><!--
+    $(function() {
+        // hide from email accoring to radio toggle
+        $('input:radio[name=f_password_recovery]').change(function() {
+            var email_tr = $(this).closest('tr').next('tr');
+            if ($(this).val() == 'Y') {
+                email_tr.show();
+            } else {
+                email_tr.hide();
+            }
+        });
+
+        // init
+        $('input:radio[name=f_password_recovery]:checked').change();
+    });
+//--></script>
+<?php camp_html_copyright_notice(); ?>
+</body>
+</html>
