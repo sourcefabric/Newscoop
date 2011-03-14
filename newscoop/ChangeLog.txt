@@ -30,6 +30,9 @@
   * [CS-2887] "Most popular" widget shows all articles and breaks the Dashboard
   * [CS-2888] Newline chars break javascript in the article edit screen
   * [CS-2677] Adding a new file to the Media Archive does not save description
+  * [CS-2933] Image tinymce plugin does not show correctly images with non-latin caption
+  * [CS-2934] Special characters in image caption throw a fatal error
+  * [CS-2937] Attachments handler does not support blank spaces in file names
   * [CS-2879] Improvements and fixes for a more flexible layout
   * [CS-2454] GUI gets scrambled when width is below a certain value
   * [CS-2916] Insert images/attachments do not work when the editor is in fullscreen mode
@@ -64,6 +67,7 @@
   * [CS-2844] Invalid biography content in the author management screen
   * [CS-2908[ Import (invalid) XML file generates a system error
   * [CS-2168] Missing javascript files
+  * [CS-2935] System errors show Campsite instead of Newscoop
   * [CS-2676] Creating a new staff member set country by default to Andorra
   * [CS-2225] Localization of Calendar jQuery plugin does not work for danish language
   * [CS-2766] Wrong breadcrumbs in the article edit screen for pending article
@@ -83,6 +87,7 @@
   * [CS-2772] Typo and misleading label on Import XML page
   * [CS-2923] Recaptcha image does not show when Newscoop is installed in a subdirectory
 
+  * [CS-2932] Blogs Plugin: popup/comment form does not work since tinymce requires jQuery
   * [CS-2899] Blogs Plugin: A jQuery alert is displayed on loading
   * [CS-2894] Blogs Plugin: Content is not being escaped
   * [CS-2670] Polls Plugin: Attach Polls shows invalid (add/remove) icon state
