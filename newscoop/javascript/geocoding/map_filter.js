@@ -86,21 +86,75 @@ this.map_showview = function()
 
     return;
 
-    var feature = this.layer.features[0];
-
-    var lonlat = this.map.getCenter();
-    var pixel = this.map.getViewPortPxFromLonLat(lonlat);
-    feature.move(pixel);
-
-    var attrs = feature.attributes;
-    attrs['map_lon'] = lonlat.lon;
-    attrs['map_lat'] = lonlat.lat;
-
-    geo_hook_set_search_corners(feature);
-
 };
 
-this.into_method_pan = function() {
+this.add_polygon = function(data) {
+    var geo_obj = this;
+
+    var cur_polygon_points = [];
+    var one_point = null;
+
+    var geo_ring = null;
+    var geo_polygon = null;
+    var geo_polygon_feature = null;
+
+    var cur_stage = "lat";
+    var cur_lat = null;
+    var cur_lon = null;
+
+    try {
+        var data_parts = data.split(" ");
+        var data_parts_size = data_parts.length;
+        for (var dind = 0; dind < data_parts_size; dind++) {
+            var one_part = data_parts[dind].replace(/^\s+|\s+$/g, '');
+            if ("" == one_part) {continue;}
+            one_part = one_part.replace(/;$/g, '');
+
+            one_part = one_part.toLowerCase();
+            if ("polygon" == one_part) {
+                if (0 < cur_polygon_points.length) {
+                    this.insert_polygon(cur_polygon_points);
+                }
+
+                cur_polygon_points = [];
+
+                cur_stage = "lat";
+                cur_lat = null;
+                cur_lon = null;
+
+                continue;
+            }
+
+            one_number = parseFloat(one_part);
+            if (isNaN(one_number)) {continue;}
+            if (!isFinite(one_number)) {continue;}
+
+            if ("lat" == cur_stage) {
+                cur_lat = one_number;
+                cur_stage = "lon";
+            }
+            else {
+                cur_lon = one_number;
+                cur_stage = "lat";
+                one_point = new OpenLayers.Geometry.Point(cur_lon, cur_lat).transform(
+                    new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+                    geo_obj.map.getProjectionObject() // to Spherical Mercator Projection
+                );
+                cur_polygon_points.push(one_point);
+                one_point = null;
+            }
+        }
+
+        if (0 < cur_polygon_points.length) {
+            this.insert_polygon(cur_polygon_points);
+        }
+
+    } catch(e) {
+        alert("wrong polygon data");
+    }
+};
+
+this.into_method_pan = function(event) {
     var geo_obj = this;
     if (!geo_obj.inited) {return;}
 
@@ -110,15 +164,43 @@ this.into_method_pan = function() {
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
     var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
     var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(pan_obj).removeClass("geo_filter_unselected");
-    $(mod_obj).addClass("geo_filter_unselected");
-    $(new_obj).addClass("geo_filter_unselected");
-    $(pan_obj).addClass("geo_filter_selected");
-    $(mod_obj).removeClass("geo_filter_selected");
-    $(new_obj).removeClass("geo_filter_selected");
+    if (pan_obj) {
+        $(pan_obj).removeClass("geo_filter_unselected");
+    }
+    if (mod_obj) {
+        $(mod_obj).addClass("geo_filter_unselected");
+    }
+    if (new_obj) {
+        $(new_obj).addClass("geo_filter_unselected");
+    }
+    if (pan_obj) {
+        $(pan_obj).addClass("geo_filter_selected");
+    }
+    if (mod_obj) {
+        $(mod_obj).removeClass("geo_filter_selected");
+    }
+    if (new_obj) {
+        $(new_obj).removeClass("geo_filter_selected");
+    }
+
+    if (this.act_pan_map) {
+        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_on + " onClick='return false;'></div>"
+    }
+    if (this.act_edit_polygon) {
+        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+    }
+    if (this.act_create_polygon) {
+        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_off + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+    }
+
+    if (event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    }
+
 };
 
-this.into_method_mod = function() {
+this.into_method_mod = function(event) {
     var geo_obj = this;
     if (!geo_obj.inited) {return;}
 
@@ -128,12 +210,39 @@ this.into_method_mod = function() {
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
     var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
     var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(pan_obj).addClass("geo_filter_unselected");
-    $(mod_obj).removeClass("geo_filter_unselected");
-    $(new_obj).addClass("geo_filter_unselected");
-    $(pan_obj).removeClass("geo_filter_selected");
-    $(mod_obj).addClass("geo_filter_selected");
-    $(new_obj).removeClass("geo_filter_selected");
+    if (pan_obj) {
+        $(pan_obj).addClass("geo_filter_unselected");
+    }
+    if (mod_obj) {
+        $(mod_obj).removeClass("geo_filter_unselected");
+    }
+    if (new_obj) {
+        $(new_obj).addClass("geo_filter_unselected");
+    }
+    if (pan_obj) {
+        $(pan_obj).removeClass("geo_filter_selected");
+    }
+    if (mod_obj) {
+        $(mod_obj).addClass("geo_filter_selected");
+    }
+    if (new_obj) {
+        $(new_obj).removeClass("geo_filter_selected");
+    }
+
+    if (this.act_pan_map) {
+        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+    }
+    if (this.act_edit_polygon) {
+        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_on + " onClick='return false;'></div>"
+    }
+    if (this.act_create_polygon) {
+        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_off + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+    }
+
+    if (event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    }
 };
 
 this.into_method_new = function() {
@@ -146,12 +255,40 @@ this.into_method_new = function() {
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
     var mod_obj = document.getElementById ? document.getElementById("geo_filter_edit_polygon") : null;
     var new_obj = document.getElementById ? document.getElementById("geo_filter_create_polygon") : null;
-    $(pan_obj).addClass("geo_filter_unselected");
-    $(mod_obj).addClass("geo_filter_unselected");
-    $(new_obj).removeClass("geo_filter_unselected");
-    $(pan_obj).removeClass("geo_filter_selected");
-    $(mod_obj).removeClass("geo_filter_selected");
-    $(new_obj).addClass("geo_filter_selected");
+    if (pan_obj) {
+        $(pan_obj).addClass("geo_filter_unselected");
+    }
+    if (mod_obj) {
+        $(mod_obj).addClass("geo_filter_unselected");
+    }
+    if (new_obj) {
+        $(new_obj).removeClass("geo_filter_unselected");
+    }
+    if (pan_obj) {
+        $(pan_obj).removeClass("geo_filter_selected");
+    }
+    if (mod_obj) {
+        $(mod_obj).removeClass("geo_filter_selected");
+    }
+    if (new_obj) {
+        $(new_obj).addClass("geo_filter_selected");
+    }
+
+    if (this.act_pan_map) {
+        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+    }
+    if (this.act_edit_polygon) {
+        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+    }
+    if (this.act_create_polygon) {
+        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_on + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+    }
+
+    if (event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    }
+
 };
 
 this.remove_polygon = function(rank) {
@@ -182,6 +319,8 @@ this.report = function(event) {
     for (var find = 0; find < features_count; find++) {
         var cur_feature = features[find];
         var geometry = cur_feature["geometry"];
+        if (!geometry) {continue;}
+        if (!geometry.getVertices) {continue;}
         var verts = geometry.getVertices();
 
         if (2 > verts.length) {continue;}
@@ -407,6 +546,71 @@ this.main_init = function(map_div_name)
     if (0 < this.obj_name.length) {
         this.auto_report = setInterval(this.obj_name + ".report(null);", 500);
     }
+
+    this.act_pan_map_img_off = this.img_url + "geo_move_off.png";
+    this.act_pan_map_img_on = this.img_url + "geo_move_on.png";
+
+    this.act_edit_polygon_img_off = this.img_url + "geo_edit_off.png";
+    this.act_edit_polygon_img_on = this.img_url + "geo_edit_on.png";
+
+    this.act_create_polygon_img_off = this.img_url + "geo_polygon_off.png";
+    this.act_create_polygon_img_on = this.img_url + "geo_polygon_on.png";
+
+    var act_pan_map_pos = new OpenLayers.Pixel(700, 3);
+    var act_pan_map = OpenLayers.Util.createDiv("act_pan_map", act_pan_map_pos, null, null, "absolute");
+    act_pan_map.style.fontSize = "1px";
+    act_pan_map.style.width = "10px";
+    act_pan_map.style.height = "10px";
+    act_pan_map.style.background = "#a0a0a0";
+    act_pan_map.style.backgroundColor = "#a0a0a0";
+    act_pan_map.style.zIndex = 1500;
+    act_pan_map.style.opacity = "0.80";
+    act_pan_map.style.filter = "alpha(opacity=80)"; // IE
+    act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+    this.act_pan_map = act_pan_map;
+    this.map.viewPortDiv.appendChild(this.act_pan_map);
+
+    var act_edit_polygon_pos = new OpenLayers.Pixel(724, 3);
+    var act_edit_polygon = OpenLayers.Util.createDiv("act_edit_polygon", act_edit_polygon_pos, null, null, "absolute");
+    act_edit_polygon.style.fontSize = "1px";
+    act_edit_polygon.style.width = "10px";
+    act_edit_polygon.style.height = "10px";
+    act_edit_polygon.style.background = "#a0a0a0";
+    act_edit_polygon.style.backgroundColor = "#a0a0a0";
+    act_edit_polygon.style.zIndex = 1500;
+    act_edit_polygon.style.opacity = "0.80";
+    act_edit_polygon.style.filter = "alpha(opacity=80)"; // IE
+    act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+    this.act_edit_polygon = act_edit_polygon;
+    this.map.viewPortDiv.appendChild(this.act_edit_polygon);
+
+    var act_create_polygon_pos = new OpenLayers.Pixel(748, 3);
+    var act_create_polygon = OpenLayers.Util.createDiv("act_create_polygon", act_create_polygon_pos, null, null, "absolute");
+    act_create_polygon.style.fontSize = "1px";
+    act_create_polygon.style.width = "10px";
+    act_create_polygon.style.height = "10px";
+    act_create_polygon.style.background = "#a0a0a0";
+    act_create_polygon.style.backgroundColor = "#a0a0a0";
+    act_create_polygon.style.zIndex = 1500;
+    act_create_polygon.style.opacity = "0.80";
+    act_create_polygon.style.filter = "alpha(opacity=80)"; // IE
+    act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_on + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+    this.act_create_polygon = act_create_polygon;
+    this.map.viewPortDiv.appendChild(this.act_create_polygon);
+
+};
+
+
+this.insert_polygon = function(parsed_points) {
+    if (!parsed_points) {return;}
+
+    var linear_ring = new OpenLayers.Geometry.LinearRing(parsed_points);
+    if (!linear_ring) {return;}
+    var polygon_feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Polygon([linear_ring]), null, null);
+    if (!polygon_feature) {return;}
+
+    this.vectors.addFeatures([polygon_feature]);
+
 };
 
 };

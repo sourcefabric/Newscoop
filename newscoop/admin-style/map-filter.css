@@ -47,6 +47,7 @@
     color: #663300;
 }
 .polygon_info {
+    margin-top: 5px;
     font-size: 12px;
 }
 .polygon_info_label {
@@ -82,4 +83,15 @@
     color: #ff0000;
 }
 
+.geo_add_polygon {
+    float: left;
+}
+
+.geo_polygon_new {
+    border: 2px solid #fffff0;
+}
+
+.polygon_append {
+    margin-bottom: 10px;
+}
 

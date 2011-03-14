@@ -1271,8 +1271,9 @@ input.input_file {
 	z-index:100;
 }
 /*---  IMPORTANT: z-index of .fg-menu-container must be bigger then z-index of .sticky !! ---*/
+/*---  IMPORTANT: z-index of .fg-menu-container must be bigger then z-index of geo-maps too !! ---*/
 .fg-menu-container {
-	z-index:101;
+	z-index:2001;
 }
 
 /** plugins */

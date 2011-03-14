@@ -534,9 +534,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <select name="f_map_provider_default" class="input_select">
             <?php
-            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), getGS('Google Streets Map'));
-            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), getGS('MapQuest Map'));
-            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), getGS('OpenStreet Map'));
+            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Maps');
+            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), 'MapQuest Open');
+            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreetMap');
             ?>
         </select>
     </td>
