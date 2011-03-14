@@ -10,8 +10,8 @@ Developers:
 - Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
 - Holman Romero <holman.romero@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>
-- Mugurel Rus <mugur.rus@sourcefabric.org>
 - Mihai Nistor <mihai.nistor@sourcefabric.org>
+- Mugurel Rus <mugur.rus@sourcefabric.org>
 - Petr Jašek <petr.jasek@sourcefabric.org>
 
 User Interface:
