@@ -1,3 +1,101 @@
+3.5.2 (March 15, 2011)
+  New Features
+  ------------
+  * [CS-2868] New plugin providing reCAPTCHA service
+
+  Improvements
+  ------------
+  * [CS-2724] Multi upload enabled to add files to the Media Archive
+  * [CS-2880] Select root topics in the article topics list
+  * [CS-2797] Dashboard rendering is faster now in Firefox
+  * [CS-2758] Better rendering of widgets in the Dashboard
+  * [CS-2867] Captcha capability extended to support plugins
+  * [CS-2655] Installer uses and input data into existing database if empty
+  * [CS-2633] Installer loads predefined database settings if any
+  * [CS-2866] Daily script for tables (Requests, Sessions) cleaning
+  * [CS-2622] Author types filter is not longer hidden by default
+  * [CS-2837] Init script uses now date_default_timezone_set()
+
+  Tasks
+  -----
+  * [CS-2870] Tinymce editor updated to latest stable version
+
+  Bug Fixes
+  ---------
+  * [CS-2921] XSS vulnerability in comments form compromises the backend
+  * [CS-2927] Database conf file is readable by any user on the system
+
+  * [CS-2752] System preferences cache is not removed during upgrade
+  * [CS-2893] Custom swtiches are not saved when editing an article
+  * [CS-2887] "Most popular" widget shows all articles and breaks the Dashboard
+  * [CS-2888] Newline chars break javascript in the article edit screen
+  * [CS-2677] Adding a new file to the Media Archive does not save description
+  * [CS-2879] Improvements and fixes for a more flexible layout
+  * [CS-2454] GUI gets scrambled when width is below a certain value
+  * [CS-2916] Insert images/attachments do not work when the editor is in fullscreen mode
+  * [CS-2679] Searching does not work for Comments in the admin interface
+  * [CS-2865] Restore password is completly unusable
+  * [CS-2926] All links to article attachments in frontend pages produce 404 error
+  * [CS-2361] Transparent png and gif images thumbnails/resized versions lose transparency
+  * [CS-2836] Moving an article is possible without selecting a section
+  * [CS-2822] Article preview fails when publication/issue/section is not selected at article creation time
+  * [CS-2835] Un-assigned article should not have the 'move' action available
+  * [CS-2774] Installer does not work with Chrome
+  * [CS-2658] Paste as Plain Text inserts random html <span> tags into text when using chromium
+  * [CS-2895] MySql port variable does not work
+  * [CS-2759] Author biography is not displayed in the selected language but English always
+  * [CS-2642] OpenLayers hack to the zooming bar
+  * [CS-2834] WYSIWYG editor always loads in English language
+  * [CS-2656] Missing translations in TinyMCE
+  * [CS-2900] Top navigation does not work in Media Archive => Add new image
+  * [CS-2581] Greek Html not displaying correctly in article edit
+  * [CS-2789] Error while attaching an existing image with quotation marks
+  * [CS-2557] Paste plain text/from Word pop-up window sometimes does not work
+  * [CS-2860] Special chars in image description do not allow inserting into article
+  * [CS-2811] Files in the media archive are not removed from file system but database only
+  * [CS-2902] Pasting Word text into an article add html tags
+  * [CS-2158] Unable to reinstall a plugin
+  * [CS-2776] Missed files generate lintian warnings
+  * [CS-2427] Relogin under Chrome closes its tab
+  * [CS-2829] Status change notification email uses variable names, not actual values
+  * [CS-2719] Article switches have no explicit user type permission
+  * [CS-2855] Image deletion gives Error "Invalid security token!"
+  * [CS-2754] During installation the .htaccess file should be rewritten
+  * [CS-2844] Invalid biography content in the author management screen
+  * [CS-2908[ Import (invalid) XML file generates a system error
+  * [CS-2168] Missing javascript files
+  * [CS-2676] Creating a new staff member set country by default to Andorra
+  * [CS-2225] Localization of Calendar jQuery plugin does not work for danish language
+  * [CS-2766] Wrong breadcrumbs in the article edit screen for pending article
+  * [CS-2845] Non-sense text shows up on the author image box when adding a new author
+  * [CS-2852] Some strings are missing from the localizer
+  * [CS-2886] Bad use of mktime() generates error at installation time on RHEL
+  * [CS-2825] Google ads shown in the Wikipedia search widget
+  * [CS-2808] Image box in article editing shows only image numbering with no discription
+  * [CS-2688] Page not found in root directory can cause language switch
+  * [CS-2453] Image metadata in the image box is not aligned
+  * [CS-2901] Unfriendly error message on media archive file upload
+  * [CS-2418] Add New Country gives an uninformative error
+  * [CS-2323] Not all strings from the front end user form are translated
+  * [CS-2718] Small typo on "Change user type permissions" page
+  * [CS-2841] Unintuitive error message displayed when the image directory is not created
+  * [CS-2790] Breadcrumbs do not handle quotation marks properly
+  * [CS-2772] Typo and misleading label on Import XML page
+  * [CS-2923] Recaptcha image does not show when Newscoop is installed in a subdirectory
+
+  * [CS-2899] Blogs Plugin: A jQuery alert is displayed on loading
+  * [CS-2894] Blogs Plugin: Content is not being escaped
+  * [CS-2670] Polls Plugin: Attach Polls shows invalid (add/remove) icon state
+  * [CS-2911] Add new poll dates does not work
+  * [CS-2678] Interviews Plugin: Add new questions does not work
+  * [CS-2823] Top level of Plugins menu does not work for blogs or interviews
+
+  * [CS-2721] Subscription features should function in sample template and demo site
+  * [CS-2849] Templates: Clean up "The Newsport" templates and database
+  * [CS-2847] Templates: Clean up "The Journal" templates and database
+  * [CS-2720] Templates: Un-used/non-sense articles in "The journal"
+
+
 3.5.1 (February 18, 2011)
   Bug Fixes
   ---------

@@ -354,7 +354,7 @@ class BlogEntry extends DatabaseObject {
                 'label'     => getGS('Content'),
                 'default'   => $data['content'],
                 'required'  => true,
-                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box')
+                'attributes'=> array('cols' => 86, 'rows' => 16, 'id' => 'tiny_mce_box', 'class' => 'tinymce')
             ),
             'status' => array(
                 'element'   => 'BlogEntry[status]',

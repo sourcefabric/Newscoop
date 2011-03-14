@@ -8,7 +8,7 @@
             
             <div class="threecol_two">            
                 <div id="featured_post">
-                    <h2><a href="{{ uri options="article" }}" rel="bookmark" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></h2>
+                    <h2><a href="{{ uri options="article" }}" rel="bookmark" title="{{ $gimme->article->name }}">{{ if ! $gimme->article->content_accessible }}* {{ /if }}{{ $gimme->article->name }}</a></h2>
                     <p>{{ $gimme->article->deck }}</p>      
                 </div>
                 
