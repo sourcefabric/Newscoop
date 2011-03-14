@@ -1,17 +1,18 @@
     <div class="widget block">
         <h3>Aggregated Map</h3>
 <constraint_examples
-    authors="running"
+    authors="_current"
     articles="82,83,84"
-    issues="running"
-    sections="running"
-    topics="running"
+    issues="_current"
+    sections="_current"
+    topics="_current"
     areas="rectangle 20 0; 60 100;"
 >
 
 {{ set_map
     label="some display string"
-    topics="_current"
+    authors="James Q. Reporter"
+    sections="business"
     areas="rectangle 20 0; 60 100;"
     max_points=1000
 }}

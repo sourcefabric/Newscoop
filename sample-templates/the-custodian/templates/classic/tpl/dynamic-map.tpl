@@ -1,11 +1,11 @@
     <div class="dynamic_map">
         <h3>Aggregated Map</h3>
 <constraint_examples
-    authors="running"
+    authors="_current"
     articles="82,83,84"
-    issues="running"
-    sections="running"
-    topics="running"
+    issues="_current"
+    sections="_current"
+    topics="_current"
     areas="rectangle 20 0; 60 100;"
 >
 
