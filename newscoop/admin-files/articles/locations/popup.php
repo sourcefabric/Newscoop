@@ -491,7 +491,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     <div class="map_editinner">
         <a onclick="geo_locations.close_edit_window(); return false;" href="#" class="ui-state-default icon-button no-text" style="position:absolute; top:16px; right:16px; z-index:3000;" ><span class="ui-icon ui-icon-closethick"></span></a>
         <div class="map_editpart1">
-            <form action="#" onSubmit="return false";>
+            <form action="#" onSubmit="return false;">
               <fieldset>
 
                 <div id="edit_tabs_all">

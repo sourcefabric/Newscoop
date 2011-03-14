@@ -69,9 +69,11 @@
 }
 
 .geo_polygon_info_std {
+    float:left;
     color: #000000;
 }
 .geo_polygon_info_edited {
+    float:left;
     color: #663300;
 }
 
@@ -93,5 +95,8 @@
 
 .polygon_append {
     margin-bottom: 10px;
+}
+.geo_filter_polygon_spacer {
+    float: right;
 }
 

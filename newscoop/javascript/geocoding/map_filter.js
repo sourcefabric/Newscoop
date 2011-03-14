@@ -152,6 +152,8 @@ this.add_polygon = function(data) {
     } catch(e) {
         alert("wrong polygon data");
     }
+
+    this.report();
 };
 
 this.into_method_pan = function(event) {
@@ -245,7 +247,7 @@ this.into_method_mod = function(event) {
     }
 };
 
-this.into_method_new = function() {
+this.into_method_new = function(event) {
     var geo_obj = this;
     if (!geo_obj.inited) {return;}
 
@@ -381,8 +383,8 @@ this.report = function(event) {
         info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + ", " + size_kmsq + " km<sup>2</sup></div>";
         info_text += "</div><div>";
 
-        info_text += cons_pol + "</div></div>\n";
-        info_text += "<br>\n";
+        info_text += cons_pol + "</div></div><br />\n";
+        info_text += "<div class='geo_filter_polygon_spacer'>&nbsp;</div><br />\n";
     }
 
     if (this.last_info_string == info_text) {return;}
@@ -559,8 +561,8 @@ this.main_init = function(map_div_name)
     var act_pan_map_pos = new OpenLayers.Pixel(700, 3);
     var act_pan_map = OpenLayers.Util.createDiv("act_pan_map", act_pan_map_pos, null, null, "absolute");
     act_pan_map.style.fontSize = "1px";
-    act_pan_map.style.width = "10px";
-    act_pan_map.style.height = "10px";
+    act_pan_map.style.width = "24px";
+    act_pan_map.style.height = "23px";
     act_pan_map.style.background = "#a0a0a0";
     act_pan_map.style.backgroundColor = "#a0a0a0";
     act_pan_map.style.zIndex = 1500;
@@ -573,8 +575,8 @@ this.main_init = function(map_div_name)
     var act_edit_polygon_pos = new OpenLayers.Pixel(724, 3);
     var act_edit_polygon = OpenLayers.Util.createDiv("act_edit_polygon", act_edit_polygon_pos, null, null, "absolute");
     act_edit_polygon.style.fontSize = "1px";
-    act_edit_polygon.style.width = "10px";
-    act_edit_polygon.style.height = "10px";
+    act_edit_polygon.style.width = "24px";
+    act_edit_polygon.style.height = "23px";
     act_edit_polygon.style.background = "#a0a0a0";
     act_edit_polygon.style.backgroundColor = "#a0a0a0";
     act_edit_polygon.style.zIndex = 1500;
@@ -587,8 +589,8 @@ this.main_init = function(map_div_name)
     var act_create_polygon_pos = new OpenLayers.Pixel(748, 3);
     var act_create_polygon = OpenLayers.Util.createDiv("act_create_polygon", act_create_polygon_pos, null, null, "absolute");
     act_create_polygon.style.fontSize = "1px";
-    act_create_polygon.style.width = "10px";
-    act_create_polygon.style.height = "10px";
+    act_create_polygon.style.width = "24px";
+    act_create_polygon.style.height = "23px";
     act_create_polygon.style.background = "#a0a0a0";
     act_create_polygon.style.backgroundColor = "#a0a0a0";
     act_create_polygon.style.zIndex = 1500;

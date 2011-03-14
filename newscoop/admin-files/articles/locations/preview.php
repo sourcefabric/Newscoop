@@ -105,7 +105,8 @@ if ((!$focus_default) && $auto_focus) {$focus_other_label = $map_focused_label; 
 
 if (!$focus_default) {$auto_focus = !$auto_focus;}
 
-echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $map_height, $auto_focus);
+$map_options = array("auto_focus" => $auto_focus, "load_common" => true);
+echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $map_height, $map_options);
 ?>
 </head>
 <body onLoad="return false;">

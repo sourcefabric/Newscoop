@@ -1635,7 +1635,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $tag_string = "";
 
         $auto_focus = null;
-        $load_common = null;
+        $load_common = true;
 
         if (is_array($p_options)) {
             if (array_key_exists("auto_focus", $p_options)) {

@@ -65,12 +65,16 @@ camp_html_content_top(getGS('Geo Filtering'), null);
 
 
 <div class="polygon_append">
-<a href='#' onclick='<?php echo Geo_Map::GetMapFilterObjName(); ?>.add_polygon(geo_polygon_new.value); return false;'><span class="geo_add_polygon ui-icon ui-icon-plusthick"></span></a>
+<form name="polygon_spec_new" action="#" onSubmit="<?php echo Geo_Map::GetMapFilterObjName(); ?>.add_polygon(polygon_spec_new.geo_polygon_new.value); return false;">
+<a style="float:left" href='#' onclick='<?php echo Geo_Map::GetMapFilterObjName(); ?>.add_polygon(polygon_spec_new.geo_polygon_new.value); return false;'><span class="geo_add_polygon ui-icon ui-icon-plusthick"></span></a>
 <input id="geo_polygon_new" class="geo_polygon_new" name="geo_polygon_new" size="80">
+</form>
 </div><!-- end of polygon_append -->
 
 
 </div><!-- end of map_show_filter -->
+
+<?php camp_html_copyright_notice(); ?>
 
 </body>
 </html>
