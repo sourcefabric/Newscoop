@@ -68,13 +68,20 @@
     float:left;
 }
 
+.geo_polkygon_info {
+    width: 800px;
+    height: 100%;
+}
+
 .geo_polygon_info_std {
     float:left;
     color: #000000;
+    width: 800px;
 }
 .geo_polygon_info_edited {
     float:left;
     color: #663300;
+    width: 800px;
 }
 
 .geo_polygon_type_convex {
@@ -94,9 +101,10 @@
 }
 
 .polygon_append {
+    width: 800px;
     margin-bottom: 10px;
 }
 .geo_filter_polygon_spacer {
-    float: right;
+    width: 800px;
 }
 

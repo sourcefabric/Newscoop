@@ -383,8 +383,8 @@ this.report = function(event) {
         info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + ", " + size_kmsq + " km<sup>2</sup></div>";
         info_text += "</div><div>";
 
-        info_text += cons_pol + "</div></div><br />\n";
-        info_text += "<div class='geo_filter_polygon_spacer'>&nbsp;</div><br />\n";
+        info_text += cons_pol + "</div></div>\n";
+        info_text += "<div class='geo_filter_polygon_spacer'>&nbsp;</div>\n";
     }
 
     if (this.last_info_string == info_text) {return;}
