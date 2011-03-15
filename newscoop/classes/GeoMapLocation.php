@@ -757,9 +757,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 }
             }
 
-            foreach ($mc_dates as $one_date_type => $one_date_value) {
+            foreach ($mc_dates as $one_date_type => $one_date_value_arr) {
+                if (0 == count($one_date_value_arr)) {continue;}
+
+                $one_date_value = $one_date_value_arr[0];
+                $one_date_value = trim($one_date_value);
+                $one_date_value = trim($one_date_value, "\"'");
+
                 $one_date_value = str_replace("'", "\"", $one_date_value);
-                $one_date_usage = "a.PublishDate ";
+                $one_date_usage = "CAST(a.PublishDate AS DATE) ";
                 $one_date_known = false;
                 if ("smaller_equal" == $one_date_type) {$one_date_usage .= "<= "; $one_date_known = true;}
                 if ("smaller" == $one_date_type) {$one_date_usage .= "< "; $one_date_known = true;}
@@ -785,11 +791,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 foreach ($mc_topics as $one_topic) {
                     if (!is_numeric($one_topic)) {continue;}
-                    $mc_topics_list[] = "at.TopicId IN (" . Topic::BuildAllSubtopicsQuery($one_topic, false) . ")";
+                    $mc_topics_list[] = "EXISTS (SELECT at.TopicId FROM ArticleTopics AS at WHERE a.Number = at.NrArticle AND at.TopicId IN (" . Topic::BuildAllSubtopicsQuery($one_topic, false) . "))";
                 }
 
                 if (0 < count($mc_topics_list)) {
-                    $queryStr .= "INNER JOIN ArticleTopics AS at ON a.Number = at.NrArticle ";
                     $query_mcons .= "(" . implode(" $mc_topics_conn ", $mc_topics_list) . ") AND ";
                     $article_mcons = true;
                 }
@@ -831,17 +836,53 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
             if (0 < count($mc_areas_list)) {
                 $query_mcons .= "(" . implode(" $mc_areas_conn ", $mc_areas_list) . ") AND ";
+                $article_mcons = true;
             }
 
+            $mmu_test_join = "%%mmu_test_join%%";
+            $mmu_test_spec = "%%mmu_test_spec%%";
+            $multimedia_test_common = "EXISTS (SELECT mlmu.id FROM MapLocationMultimedia AS mlmu $mmu_test_join WHERE mlmu.fk_maplocation_id = ml.id $mmu_test_spec) AND ";
+
+            $multimedia_test_basic = $multimedia_test_common;
+            $multimedia_test_basic = str_replace($mmu_test_join, "", $multimedia_test_basic);
+            $multimedia_test_basic = str_replace($mmu_test_spec, "", $multimedia_test_basic);
+
+            $multimedia_test_spec = $multimedia_test_common;
+            $multimedia_test_spec = str_replace($mmu_test_join, "INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id ", $multimedia_test_spec);
+
+            $multimedia_test_image = $multimedia_test_spec;
+            $multimedia_test_image = str_replace($mmu_test_spec, "AND mu.media_type = 'image'", $multimedia_test_image);
+            $multimedia_test_video = $multimedia_test_spec;
+            $multimedia_test_video = str_replace($mmu_test_spec, "AND mu.media_type = 'video'", $multimedia_test_video);
+
             if ($mc_filter_image) {
-                $query_mcons .= "AND image_mm IS NOT NULL, ";
+                $query_mcons .= $multimedia_test_image;
+                $article_mcons = true;
             }
             if ($mc_filter_video) {
-                $query_mcons .= "AND video_mm IS NOT NULL, ";
+                $query_mcons .= $multimedia_test_video;
+                $article_mcons = true;
             }
             if ($mc_filter_mm) {
-                $query_mcons .= "AND (image_mm IS NOT NULL OR video_mm IS NOT NULL), ";
+                $query_mcons .= $multimedia_test_basic;
+                $article_mcons = true;
+           }
+
+/*
+            // mysql can not work with image_mm, video_mm columns at the WHERE part, thus done via subselects above
+            if ($mc_filter_image) {
+                $query_mcons .= "image_mm IS NOT NULL AND ";
+                $article_mcons = true;
             }
+            if ($mc_filter_video) {
+                $query_mcons .= "video_mm IS NOT NULL AND ";
+                $article_mcons = true;
+            }
+            if ($mc_filter_mm) {
+                $query_mcons .= "(image_mm IS NOT NULL OR video_mm IS NOT NULL) AND ";
+                $article_mcons = true;
+            }
+*/
 
             $queryStr .= "WHERE ";
 

@@ -292,8 +292,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $area_match_val = $p_params['area_match'];
         if (is_string($area_match_val)) {
             $area_match_val = strtolower($area_match_val);
-            if ("intersection" == $area_match_val) {$con_match_any_area = false;}
-            if ("union" == $area_match_val) {$con_match_any_area = true;}
+            if ("intersection" == $area_match_val) {$con_match_any_area[0] = false;}
+            if ("union" == $area_match_val) {$con_match_any_area[0] = true;}
         }
     }
 
@@ -395,7 +395,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $parameters[] = $constraint;
     }
 
-    if (0 < count($con_areas_match)) {
+    if (0 < count($con_match_any_area)) {
         $leftOperand = 'matchanyarea';
         $rightOperand = $con_match_any_area[0];
         $operator = new Operator('is', 'sql');
