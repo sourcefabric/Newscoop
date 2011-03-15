@@ -7,7 +7,6 @@
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-require_once('XML/RPC.php');
 
 /**
  *  Array with methods description

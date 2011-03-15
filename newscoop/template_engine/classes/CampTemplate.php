@@ -10,10 +10,7 @@
  * @link http://www.sourcefabric.org
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/include/smarty/Smarty.class.php');
+require_once('smarty/libs/Smarty.class.php');
 
 /**
  * Class CampTemplate
@@ -80,8 +77,8 @@ final class CampTemplate extends Smarty
             $plugin_smarty_camp_plugin_paths[] = CS_PATH_SITE.DIR_SEP.$CampPlugin->getBasePath().DIR_SEP.'smarty_camp_plugins';
         }
 
-        $this->plugins_dir = array_merge(array(CS_PATH_SMARTY.DIR_SEP.'campsite_plugins',
-                                               CS_PATH_SMARTY.DIR_SEP.'plugins'),
+        $this->plugins_dir = array_merge($this->plugins_dir,
+        								 array(CS_PATH_SMARTY.DIR_SEP.'campsite_plugins'),
                                          $plugin_smarty_camp_plugin_paths);
         $this->template_dir = CS_PATH_TEMPLATES;
         $this->compile_dir = CS_PATH_SITE.DIR_SEP.'templates_cache';

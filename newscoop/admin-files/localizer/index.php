@@ -2,7 +2,7 @@
 require_once($GLOBALS['g_campsiteDir']."/conf/configuration.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 camp_load_translation_strings("localizer");
-require_once('Localizer.php');
+require_once(dirname(__FILE__).'/Localizer.php');
 
 global $g_translationStrings;
 global $g_localizerConfig;

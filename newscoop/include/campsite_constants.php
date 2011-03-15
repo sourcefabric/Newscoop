@@ -40,10 +40,6 @@ $tmpDir = @ini_get('upload_tmp_dir') ? @ini_get('upload_tmp_dir') : '/tmp';
 define('CS_TMP_DIR', $tmpDir);
 define('CS_TMP_TPL_DIR', CS_TMP_DIR.DIR_SEP.'mtupload');
 
-// Campsite session var names for campcaster and file archive storages
-define('CS_CAMPCASTER_SESSION_VAR_NAME', 'cc_sessid');
-define('CS_FILEARCHIVE_SESSION_VAR_NAME', 'fa_sessid');
-
 // Campsite exception strings
 define('INVALID_OBJECT_STRING', 'invalid object');
 define('INVALID_PROPERTY_STRING', 'invalid property');

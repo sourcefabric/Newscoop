@@ -14,6 +14,9 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
+$local_path = realpath(dirname(__FILE__) . '/../include');
+set_include_path(get_include_path() . PATH_SEPARATOR . $local_path);
+
 if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
         && file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
     header("Location: ".CS_PATH_BASE_URL.str_replace('/install', '', $Campsite['SUBDIR']));

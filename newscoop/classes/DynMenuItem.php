@@ -197,7 +197,7 @@ class DynMenuItem_JQueryFG extends DynMenuItem
             if (count($subItem->m_subItems) > 0) {
                 $str .= str_repeat("\t", $p_level);
                 $str .= '<li><a href="' . $subItem->m_url . '">' . $subItem->m_title . '</a>';
-                $str .= "\n". $subItem->__recurseBuild($p_level + 1, $p_newLevel);
+                $str .= "\n". $subItem->__recurseBuild($p_level + 1, $p_newLevel = 0);
                 $str .= "</li>\n";
             } else {
                 $str .= str_repeat("\t", $p_level);

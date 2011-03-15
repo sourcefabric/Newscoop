@@ -53,40 +53,19 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 <?php
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="Expires" content="now" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 	<title><?php putGS("Setting Map Locations"); ?></title>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
-    <script type="text/javascript">
-    <!--
-        var localizer = localizer || {};
-        localizer.processing = '<?php putGS('Processing...'); ?>';
-        localizer.session_expired = '<?php putGS('Session expired.'); ?>';
-        localizer.please = '<?php putGS('Please'); ?>';
-        localizer.login = '<?php putGS('login'); ?>';
-    //-->
-    </script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
-    <script type="text/javascript">
-    <!--
-        var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
-        var g_admin_url = '/<?php echo $ADMIN; ?>';
-        var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
-    //-->
-    </script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
+	<script type="text/javascript" src="/javascript/json/json2.min.js"></script>
     <?php echo $geo_map_incl; ?>
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
@@ -96,7 +75,6 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_cens.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">
 // prepare localized strings
