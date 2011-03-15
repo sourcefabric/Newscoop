@@ -44,14 +44,18 @@ class ArticleList extends BaseList
     protected static $lastId = NULL;
 
     /**
+     * @param bool $randomId
      */
-    public function __construct()
+    public function __construct($randomId = FALSE)
     {
         parent::__construct();
 
         // generate id - unique per page instance
         if (empty(self::$lastId)) {
             self::$lastId = __FILE__;
+            if ($randomId) {
+                self::$lastId = uniqid();
+            }
         }
         $this->id = substr(sha1(self::$lastId), -6);
         self::$lastId = $this->id;
