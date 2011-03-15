@@ -35,7 +35,7 @@ class MostPopularArticlesWidget extends ArticlesWidget
 
     public function render()
     {
-        $articlelist = new ArticleList();
+        $articlelist = new ArticleList(TRUE);
         $articlelist->setItems($this->items);
         $articlelist->setOrderBy('Reads', 'desc');
         if (!$this->isFullscreen()) {
