@@ -31,22 +31,27 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             $this->widget->setView($view);
         }
 
-        // run beforeRender method
-        if (method_exists($this->widget, 'beforeRender')) {
-            $this->widget->beforeRender();
-        }
+        if ($ajax) { // render content
+            // run beforeRender method
+            if (method_exists($this->widget, 'beforeRender')) {
+                $this->widget->beforeRender();
+            }
 
-        // get content
-        ob_start();
-        $this->widget->render();
-        $content = ob_get_contents();
-        ob_end_clean();
+            // get content
+            ob_start();
+            $this->widget->render();
+            $content = ob_get_clean();
 
-        if ($ajax) { // return content
             return $content;
         }
 
-        // render whole widget
+        // get height from cookie
+        $height = (int) $_COOKIE[$this->getId() . '_height'];
+        if (empty($height)) {
+            $height = 100;
+        }
+
+        // render widget placeholder
         echo '<li id="', $this->getId(), '" class="widget ui-dialog ui-widget-content ui-corner-all">';
         if ($this->widget->getTitle() !== NULL) {
             echo '<div class="header ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">';
@@ -54,7 +59,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             echo '</div>';
         }
         echo '<div class="content"><div class="scroll ui-dialog-content ui-widget-content">', "\n";
-        echo $content;
+        echo '<div class="loading" style="height:', $height, 'px"><p>', getGS('Loading...'), '</p></div>';
         echo '</div></div>', "\n";
         echo '<div class="extra">';
         $this->renderMeta();
