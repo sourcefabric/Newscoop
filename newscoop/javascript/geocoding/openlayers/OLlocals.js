@@ -596,12 +596,17 @@ OpenLayers.HooksLocal.map_feature_redraw = function(geo_obj) {
 
 // on map click for the (pre)view mode
 OpenLayers.HooksLocal.nothing_on_map_click = function(evt, map) {
+    if (!map) {return;}
     var geo_obj = map.geo_obj;
+    if (!geo_obj) {return;}
 
-    geo_obj.select_control.destroy();
+    if (geo_obj.select_control) {
+        geo_obj.select_control.destroy();
+    }
     geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
     map.addControl(map.geo_obj.select_control);
     geo_obj.select_control.activate();
+
 };
 
 // to insert new POI on map click, but not on a click that closes a pop-up
@@ -653,6 +658,7 @@ OpenLayers.HooksLocal.new_poi_on_map_click = function(evt, map) {
 };
 
 OpenLayers.HooksLocal.map_check_popup = function(geo_obj) {
+    if (!geo_obj) {return;}
 
     if (geo_obj.popup)
     {

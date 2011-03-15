@@ -1032,6 +1032,18 @@ this.main_openlayers_init = function(map_div_name) {
         'featureunselected': function(evt) {OpenLayers.HooksPopups.on_feature_unselect(evt, geo_obj);}
     });
 
+    this.map.events.register("moveend", null, function() {
+        geo_obj.on_view_change_hook();
+    });
+    this.map.events.register("zoomend", null, function() {
+        geo_obj.on_view_change_hook();
+    });
+
+};
+
+this.on_view_change_hook = function() {
+    var geo_obj = this;
+    OpenLayers.HooksLocal.map_check_popup(geo_obj);
 };
 
 };
