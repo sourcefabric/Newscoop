@@ -1043,7 +1043,8 @@ this.main_openlayers_init = function(map_div_name) {
 
 this.on_view_change_hook = function() {
     var geo_obj = this;
-    OpenLayers.HooksLocal.map_check_popup(geo_obj);
+    // can not have a direct call here, since it would cycle at some situations
+    setTimeout('OpenLayers.HooksLocal.map_check_popup(' + geo_obj.obj_name + ');', 500);
 };
 
 };
