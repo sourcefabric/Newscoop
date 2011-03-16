@@ -5,6 +5,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 {
     private static $m_name = 'DB',
                    $m_description = "It allows to store tempalte cache in a database.";
+    private $_ado_db;
 
     public function TemplateCacheHandler_DB()
     {
