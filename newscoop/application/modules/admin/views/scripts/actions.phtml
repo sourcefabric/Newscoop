@@ -1,0 +1,12 @@
+<?php
+if (!isset($this->actions)) {
+    return;
+} ?>
+<div class="actions">
+    <ul>
+        <?php foreach ($this->actions as $url => $title) {
+            $class = basename($url); ?>
+        <li><a href="<?php echo $url; ?>" class="<?php echo $class; ?>" title="<?php echo $title; ?>"><?php echo $title; ?></a></li>
+        <?php } ?>
+    </ul>
+</div>

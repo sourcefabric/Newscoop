@@ -5,6 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
+require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampRequest.php");
 
 list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
 if ($access) { // logged in allready
