@@ -6,6 +6,12 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     private static $m_name = 'DB',
                    $m_description = "It allows to store tempalte cache in a database.";
 
+    public function TemplateCacheHandler_DB()
+    {
+        global $g_ado_db;
+        $this->_ado_db = $g_ado_db;
+    }
+
     /**
      * Returns true if the engine was supported in PHP, false otherwise.
      * @return boolean
