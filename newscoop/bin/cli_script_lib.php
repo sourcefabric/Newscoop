@@ -524,11 +524,11 @@ function camp_detect_database_version($p_dbName, &$version)
 
     $version = "2.0.x";
     $row = mysql_fetch_row($res);
-    if (in_array($row[0], array("ArticleTopics", "Topics"))) {
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("ArticleTopics", "Topics")))) {
         $version = $version < "2.1.x" ? "2.1.x" : $version;
     }
-    if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
-                                "ArticlePublish", "IssuePublish", "ArticleImages"))) {
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+                                "ArticlePublish", "IssuePublish", "ArticleImages")))) {
         $version = "2.2.x";
         if (!$res2 = mysql_query("DESC Articles PublishDate")) {
             return "Unable to query the database $p_dbName";
