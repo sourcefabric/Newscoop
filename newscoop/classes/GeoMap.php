@@ -2446,7 +2446,12 @@ var on_load_proc_filter = function()
         map_obj.style.width = "' . $geo_map_info["width"] . 'px";
         map_obj.style.height = "' . $geo_map_info["height"] . 'px";
 ';
-    $loc_strings = json_encode(array("corners" => getGS("vertices")));
+    $loc_strings = json_encode(array(
+        "corners" => getGS("vertices"),
+        "pan_map" => getGS("Pan Map"),
+        "edit_polygon" => getGS("Edit Polygon"),
+        "create_polygon" => getGS("Create Polygon"),
+    ));
     $img_dir = $Campsite['ADMIN_STYLE_URL'] . "/images/";
 
     $tag_string .= "\n";
@@ -2454,7 +2459,7 @@ var on_load_proc_filter = function()
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_obj_name('geo_object$map_suffix');";
     $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_strings($loc_strings);";
+    $tag_string .= "geo_object$map_suffix.set_display_strings($loc_strings);";
     $tag_string .= "\n";
     $tag_string .= "geo_object$map_suffix.set_img_dir('$img_dir');";
     $tag_string .= "\n";

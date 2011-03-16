@@ -53,10 +53,6 @@ $menu_item =& DynMenuItem::Create(getGS('Search'), "/$ADMIN/universal-list/index
     array('icon' => '', 'id' => 'universal_list'));
 $menu_content->addItem($menu_item);
 
-$menu_item =& DynMenuItem::Create(getGS('Geo Filtering'), "/$ADMIN/articles/locations/filter.php",
-    array('icon' => '', 'id' => 'geo_filtering'));
-$menu_content->addItem($menu_item);
-
 foreach ($Campsite["publications"] as $publication) {
     $pubId = $publication->getPublicationId();
     $menu_item_pub =& DynMenuItem::Create($publication->getName(),
@@ -213,6 +209,11 @@ if ($showConfigureMenu) {
             array('icon' => ''));
         $menu_config->addItem($menu_item);
     }
+
+    $menu_item =& DynMenuItem::Create(getGS('Geo Filtering'), "/$ADMIN/articles/locations/filter.php",
+        array('icon' => '', 'id' => 'geo_filtering'));
+    $menu_config->addItem($menu_item);
+
     if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
         $menu_item =& DynMenuItem::Create(getGS('Article Types'),
             "/$ADMIN/article_types/",

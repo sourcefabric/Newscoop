@@ -34,14 +34,14 @@ this.obj_name = "";
 this.auto_report = null;
 this.img_url = "";
 
-this.loc_strings = {
-    "corners": "corners"
-};
-
 this.display_strings = {
+    corners: "corners",
     google_map: "Google&nbsp;Maps",
     mapquest_map: "MapQuest&nbsp;Open",
-    openstreet_map: "OpenStreetMap"
+    openstreet_map: "OpenStreetMap",
+    pan_map: "Pan Map",
+    edit_polygon: "Edit Polygon",
+    create_polygon: "Create Polygon"
 };
 
 this.set_obj_name = function(name) {
@@ -69,9 +69,31 @@ this.set_map_info = function(params)
     this.map_art_view_height_default = parseInt(params.height);
 };
 
-this.set_strings = function(params) {
-    var corners = params["corners"];
-    if (corners) {this.loc_strings["corners"] = corners;}
+this.set_display_strings = function(local_strings)
+{
+    if (!local_strings) {return;}
+
+    var display_string_names = [
+        "corners",
+        "google_map",
+        "mapquest_map",
+        "openstreet_map",
+        "pan_map",
+        "edit_polygon",
+        "create_polygon"
+    ];
+
+    var str_count = display_string_names.length;
+    for (var sind = 0; sind < str_count; sind++)
+    {
+        var cur_str_name = display_string_names[sind];
+
+        if (undefined !== local_strings[cur_str_name])
+        {
+            this.display_strings[cur_str_name] = local_strings[cur_str_name];
+        }
+    }
+
 };
 
 // showing the current initial reader view
@@ -186,13 +208,13 @@ this.into_method_pan = function(event) {
     }
 
     if (this.act_pan_map) {
-        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_on + " onClick='return false;'></div>"
+        this.act_pan_map.innerHTML = this.act_pan_map_button_on;
     }
     if (this.act_edit_polygon) {
-        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+        this.act_edit_polygon.innerHTML = this.act_edit_polygon_button_off;
     }
     if (this.act_create_polygon) {
-        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_off + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+        this.act_create_polygon.innerHTML = this.act_create_polygon_button_off;
     }
 
     if (event) {
@@ -207,6 +229,7 @@ this.into_method_mod = function(event) {
     if (!geo_obj.inited) {return;}
 
     geo_obj.controls.polygon.deactivate();
+    geo_obj.controls.modify.deactivate();
     geo_obj.controls.modify.activate();
 
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
@@ -232,13 +255,13 @@ this.into_method_mod = function(event) {
     }
 
     if (this.act_pan_map) {
-        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+        this.act_pan_map.innerHTML = this.act_pan_map_button_off;
     }
     if (this.act_edit_polygon) {
-        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_on + " onClick='return false;'></div>"
+        this.act_edit_polygon.innerHTML = this.act_edit_polygon_button_on;
     }
     if (this.act_create_polygon) {
-        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_off + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+        this.act_create_polygon.innerHTML = this.act_create_polygon_button_off;
     }
 
     if (event) {
@@ -252,6 +275,7 @@ this.into_method_new = function(event) {
     if (!geo_obj.inited) {return;}
 
     geo_obj.controls.modify.deactivate();
+    geo_obj.controls.polygon.deactivate();
     geo_obj.controls.polygon.activate();
 
     var pan_obj = document.getElementById ? document.getElementById("geo_filter_pan_map") : null;
@@ -277,13 +301,13 @@ this.into_method_new = function(event) {
     }
 
     if (this.act_pan_map) {
-        this.act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+        this.act_pan_map.innerHTML = this.act_pan_map_button_off;
     }
     if (this.act_edit_polygon) {
-        this.act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+        this.act_edit_polygon.innerHTML = this.act_edit_polygon_button_off;
     }
     if (this.act_create_polygon) {
-        this.act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_on + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+        this.act_create_polygon.innerHTML = this.act_create_polygon_button_on;
     }
 
     if (event) {
@@ -380,7 +404,7 @@ this.report = function(event) {
 
         info_text += "<div class='geo_polygon_info'><div class='geo_polygon_labels'>";
         info_text += "<div class='geo_polygon_remove'><a href='#' onclick='" + this.obj_name + ".remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div>\n";
-        info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.loc_strings.corners + ", " + size_kmsq + " km<sup>2</sup></div>";
+        info_text += "<div class='geo_polygon_type_info " + polygon_geometry_class + "'>" + verts.length + " " + geo_obj.display_strings.corners + ", " + size_kmsq + " km<sup>2</sup></div>";
         info_text += "</div><div>";
 
         info_text += cons_pol + "</div></div>\n";
@@ -491,9 +515,9 @@ this.main_init = function(map_div_name)
 
     this.map.addLayers(map_provs);
     this.map.addControl(new OpenLayers.Control.Attribution());
-    // for switching between maps
 
-    var lswitch = new OpenLayers.Control.LayerSwitcherMod();
+    // for switching between maps
+    var lswitch = new OpenLayers.Control.LayerSwitcher();
 
     this.map.addControl(lswitch);
 
@@ -558,6 +582,15 @@ this.main_init = function(map_div_name)
     this.act_create_polygon_img_off = this.img_url + "geo_polygon_off.png";
     this.act_create_polygon_img_on = this.img_url + "geo_polygon_on.png";
 
+    this.act_pan_map_button_on = "<div><img src=" + this.act_pan_map_img_on + " onClick='" + this.obj_name + ".into_method_pan(); return false;' alt='" + this.display_strings.pan_map + "' title='" + this.display_strings.pan_map + "'></div>";
+    this.act_pan_map_button_off = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;' alt='" + this.display_strings.pan_map + "' title='" + this.display_strings.pan_map + "'></div>";
+
+    this.act_edit_polygon_button_on = "<div><img src=" + this.act_edit_polygon_img_on + " onClick='" + this.obj_name + ".into_method_mod(); return false;' alt='" + this.display_strings.edit_polygon + "' title='" + this.display_strings.edit_polygon + "'></div>";
+    this.act_edit_polygon_button_off = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;' alt='" + this.display_strings.edit_polygon + "' title='" + this.display_strings.edit_polygon + "'></div>";
+
+    this.act_create_polygon_button_on = "<div><img src=" + this.act_create_polygon_img_on + " onClick='" + this.obj_name + ".into_method_new(); return false;' alt='" + this.display_strings.create_polygon + "' title='" + this.display_strings.create_polygon + "'></div>";
+    this.act_create_polygon_button_off = "<div><img src=" + this.act_create_polygon_img_off + " onClick='" + this.obj_name + ".into_method_new(); return false;' alt='" + this.display_strings.create_polygon + "' title='" + this.display_strings.create_polygon + "'></div>";
+
     var act_pan_map_pos = new OpenLayers.Pixel(700, 3);
     var act_pan_map = OpenLayers.Util.createDiv("act_pan_map", act_pan_map_pos, null, null, "absolute");
     act_pan_map.style.fontSize = "1px";
@@ -568,7 +601,7 @@ this.main_init = function(map_div_name)
     act_pan_map.style.zIndex = 1500;
     act_pan_map.style.opacity = "0.80";
     act_pan_map.style.filter = "alpha(opacity=80)"; // IE
-    act_pan_map.innerHTML = "<div><img src=" + this.act_pan_map_img_off + " onClick='" + this.obj_name + ".into_method_pan(); return false;'></div>"
+    act_pan_map.innerHTML = this.act_pan_map_button_off;
     this.act_pan_map = act_pan_map;
     this.map.viewPortDiv.appendChild(this.act_pan_map);
 
@@ -582,7 +615,7 @@ this.main_init = function(map_div_name)
     act_edit_polygon.style.zIndex = 1500;
     act_edit_polygon.style.opacity = "0.80";
     act_edit_polygon.style.filter = "alpha(opacity=80)"; // IE
-    act_edit_polygon.innerHTML = "<div><img src=" + this.act_edit_polygon_img_off + " onClick='" + this.obj_name + ".into_method_mod(); return false;'></div>"
+    act_edit_polygon.innerHTML = this.act_edit_polygon_button_off;
     this.act_edit_polygon = act_edit_polygon;
     this.map.viewPortDiv.appendChild(this.act_edit_polygon);
 
@@ -596,12 +629,16 @@ this.main_init = function(map_div_name)
     act_create_polygon.style.zIndex = 1500;
     act_create_polygon.style.opacity = "0.80";
     act_create_polygon.style.filter = "alpha(opacity=80)"; // IE
-    act_create_polygon.innerHTML = "<div><img src=" + this.act_create_polygon_img_on + " onClick='" + this.obj_name + ".into_method_new(); return false;'></div>"
+    act_create_polygon.innerHTML = this.act_create_polygon_button_on;
     this.act_create_polygon = act_create_polygon;
     this.map.viewPortDiv.appendChild(this.act_create_polygon);
 
+    this.map.events.register("changelayer", null, function(evt) {
+        if ("visibility" == evt.property) {
+            OpenLayers.HooksLocal.on_layer_switch(geo_obj.map);
+        }
+    });
 };
-
 
 this.insert_polygon = function(parsed_points) {
     if (!parsed_points) {return;}

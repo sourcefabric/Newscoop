@@ -1151,9 +1151,9 @@ this.main_openlayers_init = function(map_div_name, descs_name)
 
     this.map.addLayers(map_provs);
     this.map.addControl(new OpenLayers.Control.Attribution());
-    // for switching between maps
 
-    var lswitch = new OpenLayers.Control.LayerSwitcherMod();
+    // for switching between maps
+    var lswitch = new OpenLayers.Control.LayerSwitcher();
 
     this.map.addControl(lswitch);
 
@@ -1330,6 +1330,12 @@ this.main_openlayers_init = function(map_div_name, descs_name)
     });
     this.map.events.register("zoomend", null, function() {
         geo_obj.map_zoom_changed();
+    });
+    this.map.events.register("changelayer", null, function(evt) {
+        if ("visibility" == evt.property) {
+            OpenLayers.HooksLocal.on_layer_switch(geo_obj.map);
+            geo_obj.set_map_provider();
+        }
     });
 
 };

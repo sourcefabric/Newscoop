@@ -157,37 +157,6 @@ OpenLayers.Layer.GoogleMod = OpenLayers.Class(OpenLayers.Layer.Google, {
     CLASS_NAME: "OpenLayers.Layer.Google"
 });
 
-OpenLayers.Control.LayerSwitcherMod = OpenLayers.Class(OpenLayers.Control.LayerSwitcher, {
-    checkRedraw: function() {
-        var redraw = false;
-        if ( !this.layerStates.length ||
-             (this.map.layers.length != this.layerStates.length) ) {
-            redraw = true;
-        } else {
-            for (var i=0, len=this.layerStates.length; i<len; i++) {
-                var layerState = this.layerStates[i];
-                var layer = this.map.layers[i];
-                if ( (layerState.name != layer.name) ||
-                     (layerState.inRange != layer.inRange) ||
-                     (layerState.id != layer.id) ||
-                     (layerState.visibility != layer.visibility) ) {
-                    redraw = true;
-                    break;
-                }
-            }
-        }
-
-        if (redraw)
-        {
-            OpenLayers.Hooks.LayerSwitcher.layerSwitched(this);
-        }
-
-        return redraw;
-    },
-
-    CLASS_NAME: "OpenLayers.Control.LayerSwitcher"
-});
-
 // controls for actions on hover and click
 
 OpenLayers.Control.Hover = OpenLayers.Class(OpenLayers.Control, {
@@ -556,9 +525,6 @@ OpenLayers.HooksLocal.on_layer_switch = function(map) {
         $('.olLayerGooglePoweredBy').addClass('map_hidden');
     }
 
-    if (map.geo_obj.set_map_provider) {
-        map.geo_obj.set_map_provider();
-    }
 };
 
 OpenLayers.HooksLocal.redraw_times = {
