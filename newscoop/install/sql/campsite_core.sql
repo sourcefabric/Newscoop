@@ -1145,7 +1145,8 @@ CREATE TABLE `Log` (
   `fk_event_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_user_id` int(10) unsigned DEFAULT NULL,
   `text` varchar(255) NOT NULL DEFAULT '',
-  `user_ip` int(10) unsigned DEFAULT NULL,
+  `user_ip` varchar(39) NOT NULL DEFAULT '',
+  `priority` smallint(1) unsigned NOT NULL DEFAULT '6',
   KEY `IdEvent` (`fk_event_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
