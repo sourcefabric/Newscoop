@@ -1,9 +1,11 @@
 <?php
 
+use Newscoop\Log\Writer;
+
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
-     * Init autoloader.
+     * Init autoloader
      */
     protected function _initAutoloader()
     {
@@ -24,5 +26,29 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         return $autoloader;
     }
-}
 
+    /**
+     * Init Log
+     */
+    protected function _initLog()
+    {
+        global $g_user;
+
+        // get entity manager
+        $this->bootstrap('doctrine');
+        $em = $this->getResource('doctrine')
+            ->getEntityManager();
+
+        // create logger
+        $writer = new Writer($em);
+        $logger = new Zend_Log($writer);
+
+        // set user if any
+        if (isset($g_user)) {
+            $user = $em->find('Newscoop\Entity\User', $g_user->getUserId());
+            $logger->setEventItem('user', $user);
+        }
+
+        return $logger;
+    }
+}

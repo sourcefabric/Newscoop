@@ -8,15 +8,15 @@
 namespace Newscoop\Entity;
 
 /**
+ * User entity
  * @entity
  * @table(name="liveuser_users")
  */
 class User
 {
     /**
-     * @id
+     * @id @generatedValue
      * @column(type="integer")
-     * @generatedValue
      * @var int
      */
     private $Id;
@@ -28,7 +28,7 @@ class User
     private $Name;
 
     /**
-     * Get user name.
+     * Get user name
      *
      * @return string
      */

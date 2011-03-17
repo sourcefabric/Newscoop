@@ -1,13 +1,11 @@
 <?php
 
-require_once APPLICATION_PATH . '/../classes/SimplePager.php';
-
 class Admin_LogsController extends Zend_Controller_Action
 {
-    /** @var \Doctrine\ORM\EntityRepository */
-    private $eventRepository = NULL;
+    /** @var array */
+    private $priorityNames = NULL;
 
-    /** @var \Doctrine\ORM\EntityRepository */
+    /** @var Newscoop\Entity\Repository\LogRepository */
     private $logRepository = NULL;
 
     /**
@@ -24,18 +22,29 @@ class Admin_LogsController extends Zend_Controller_Action
     }
 
     /**
-     * Init Doctrine
+     * Init
      */
     public function init()
     {
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        $em = $bootstrap->getResource('doctrine')
-            ->getEntityManager();
-
-        $this->logRepository = $em->getRepository('\Newscoop\Entity\Log');
-        $this->eventRepository = $em->getRepository('\Newscoop\Entity\Event');
-
         camp_load_translation_strings('logs');
+
+        // get log repository
+        $bootstrap = $this->getInvokeArg('bootstrap');
+        $this->logRepository = $bootstrap->getResource('doctrine')
+            ->getEntityManager()
+            ->getRepository('Newscoop\Entity\Log');
+
+        // set priority names
+        $this->priorityNames = array(
+            getGS('Emergency'),
+            getGS('Alert'),
+            getGS('Critical'),
+            getGS('Error'),
+            getGS('Warning'),
+            getGS('Notice'),
+            getGS('Info'),
+            getGS('Debug'),
+        );
     }
 
     /**
@@ -43,56 +52,49 @@ class Admin_LogsController extends Zend_Controller_Action
      */
     public function indexAction()
     {
-        // get event form
-        $event = NULL;
-        $form = $this->getEventForm()
+        // get priority form
+        $priority = NULL;
+        $form = $this->getPriorityForm()
             ->setMethod('get')
             ->setAction($this->view->url());
 
         // handle form if valid
         if ($form->isValid($this->getRequest()->getParams())) {
             $values = $form->getValues();
-            $event = $this->eventRepository->find($values['event']);
+            $priority = !empty($values['priority']) ? (int) $values['priority'] : NULL;
         }
 
-        // pass form and event to view
         $this->view->form = $form;
-        $this->view->event = $event;
+        $this->view->priority = $priority;
+        $this->view->priorityNames = $this->priorityNames;
 
         // fetch logs
         $limit = 15;
-        $offset = max(0, camp_session_get('f_log_page_offset', 0));
-        $this->view->logs = $this->logRepository->getLogs($offset, $limit, $event);
+        $offset = max(0, (int) $_GET['offset']);
+        $this->view->logs = $this->logRepository->getLogs($offset, $limit, $priority);
 
         // set pager
-        $count = $this->logRepository->getCount($event);
-        $eventId = isset($event) ? $event->getId() : 0;
-        $this->view->pager = new SimplePager($count, $limit, 'f_log_page_offset', "?event={$eventId}&");
+        $count = $this->logRepository->getCount($priority);
+        $this->view->pager = new SimplePager($count, $limit, 'offset', $priority ? "?priority={$priority}&" : '?');
     }
 
     /**
-     * Get event form
+     * Get priority form
      *
      * @return \Zend_Form
      */
-    private function getEventForm()
+    private function getPriorityForm()
     {
         $form = new Zend_Form;
 
-        // get events
-        $events = array();
-        foreach ($this->eventRepository->findAll() as $event) {
-            $events[$event->getId()] = $event->getName();
-        }
-
-        $form->addElement('select', 'event', array(
-            'multioptions' => array(getGS('All')) + $events,
-            'label' => getGS('Event'),
+        $form->addElement('select', 'priority', array(
+            'multioptions' => array('' => getGS('All')) + $this->priorityNames,
+            'label' => getGS('Severity'),
         ));
 
         $form->addElement('submit', 'submit', array(
             'ignore' => true,
-            'label' => getGS('Search'),
+            'label' => getGS('Filter'),
         ));
 
         return $form;

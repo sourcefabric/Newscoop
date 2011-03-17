@@ -1,12 +1,14 @@
 <?php
 /**
  * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl.txt
  */
 
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Event;
+    Doctrine\ORM\QueryBuilder;
 
 /**
  * Log repository
@@ -18,17 +20,14 @@ class LogRepository extends EntityRepository
      *
      * @param int $offset
      * @param int $limit
-     * @param \Newscoop\Entity\Event|null $event
+     * @param int|NULL $priority
      * @return array
      */
-    public function getLogs($offset, $limit, Event $event = NULL)
+    public function getLogs($offset, $limit, $priority = NULL)
     {
         $qb = $this->createQueryBuilder('l');
 
-        if (isset($event)) {
-            $qb->where('l.event = :event')
-                ->setParameter('event', $event->getId());
-        }
+        $this->filterByPriority($qb, $priority);
 
         return $qb->orderBy('l.time_created', 'DESC')
             ->setFirstResult((int) $offset)
@@ -40,21 +39,35 @@ class LogRepository extends EntityRepository
     /**
      * Get logs count
      *
-     * @param \Newscoop\Entity\Event|null $event
+     * @param int|NULL $priority
      * @return int
      */
-    public function getCount(Event $event = NULL)
+    public function getCount($priority = NULL)
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(l)')
             ->from('Newscoop\Entity\Log', 'l');
 
-        if (isset($event)) {
-            $qb->where('l.event = :event')
-                ->setParameter('event', $event->getId());
-        }
+        $this->filterByPriority($qb, $priority);
 
         return (int) $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Filter query by priority
+     *
+     * @param Doctrine\ORM\QueryBuilder $qb
+     * @param int $priority
+     * @return Doctrine\ORM\QueryBuilder
+     */
+    private function filterByPriority(QueryBuilder $qb, $priority)
+    {
+        if (isset($priority)) {
+            $qb->where('l.priority = :priority')
+                ->setParameter('priority', (int) $priority);
+        }
+
+        return $qb;
     }
 }
