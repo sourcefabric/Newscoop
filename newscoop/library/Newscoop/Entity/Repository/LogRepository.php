@@ -63,7 +63,7 @@ class LogRepository extends EntityRepository
      */
     private function filterByPriority(QueryBuilder $qb, $priority)
     {
-        if (isset($priority)) {
+        if ($priority != '') {
             $qb->where('l.priority = :priority')
                 ->setParameter('priority', (int) $priority);
         }

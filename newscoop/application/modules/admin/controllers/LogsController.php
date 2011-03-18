@@ -61,11 +61,11 @@ class Admin_LogsController extends Zend_Controller_Action
         // handle form if valid
         if ($form->isValid($this->getRequest()->getParams())) {
             $values = $form->getValues();
-            $priority = !empty($values['priority']) ? (int) $values['priority'] : NULL;
+            $priority = isset($values['priority']) ? $values['priority'] : NULL;
         }
 
         $this->view->form = $form;
-        $this->view->priority = $priority;
+        $this->view->priorityName = !empty($this->priorityNames[$priority]) ? $this->priorityNames[$priority] : '';
         $this->view->priorityNames = $this->priorityNames;
 
         // fetch logs
@@ -75,7 +75,7 @@ class Admin_LogsController extends Zend_Controller_Action
 
         // set pager
         $count = $this->logRepository->getCount($priority);
-        $this->view->pager = new SimplePager($count, $limit, 'offset', $priority ? "?priority={$priority}&" : '?');
+        $this->view->pager = new SimplePager($count, $limit, 'offset', isset($priority) ? "?priority={$priority}&" : '?');
     }
 
     /**
