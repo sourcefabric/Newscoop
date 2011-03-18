@@ -1759,10 +1759,17 @@ ul#edit-files h2 {
     font-size: 2em;
 }
 
+body > .content {
+    margin: 0 30px;
+}
+
+body > .content h1 {
+    margin: 0 -30px 13px;
+}
+
 /** Tables theming */
 .content > table {
-    width: 62.5%;
-    margin: 0 30px 1em;
+    margin: 0 0 1em;
     font-size: 1.2em;
     border: 1px solid #ccc;
     background-color: #fff;
@@ -1777,11 +1784,16 @@ ul#edit-files h2 {
 }
 
 .content > table tr > * {
+    width: 13em;
     margin: 0;
     padding: 3px 5px;
     background-color: #f6f6f6;
     border: 1px solid #ebebeb;
     border-width: 1px 0 0 1px;
+}
+
+.content > table .text {
+    width: 21em;
 }
 
 .content > table tr > th {
@@ -1800,13 +1812,9 @@ ul#edit-files h2 {
     background-color: #cce5f0;
 }
 
-.content > table.user-types {
-    width: 30em;
-}
-
 /** Forms theme */
 form dl {
-    margin: 1em 30px;
+    margin: 1em 0;
     padding: 8px;
     background-color: #fff;
     border: 1px solid #ccc;
@@ -1841,7 +1849,7 @@ form dd ul.errors li {
 
 /** Actions theme */
 .content > .actions {
-    margin: 1em 30px;
+    margin: 1em 0;
     font-size: 1.2em;
 }
 
@@ -1939,4 +1947,13 @@ ul.navigation li {
 
 ul.navigation li:first-child a {
     padding-right: 11px;
+}
+
+.content > .pager {
+    margin: 8px 0;
+    font-size: 1.2em;
+}
+
+.content > table + .pager {
+    margin-top: 0;
 }

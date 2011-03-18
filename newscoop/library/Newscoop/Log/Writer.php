@@ -10,7 +10,8 @@ namespace Newscoop\Log;
 use DateTime,
     Doctrine\ORM\EntityManager,
     Zend_Log_Writer_Abstract,
-    Newscoop\Entity\Log;
+    Newscoop\Entity\Log,
+    Newscoop\Entity\User;
 
 /**
  * Log Writer for Zend_Log
@@ -49,6 +50,10 @@ class Writer extends Zend_Log_Writer_Abstract
                 $ip = $_SERVER[$key];
                 break;
             }
+        }
+
+        if (empty($event['user'])) { // Can't store without user
+            $event['user'] = new User;
         }
 
         // create log entity

@@ -89,7 +89,7 @@ class Admin_LogsController extends Zend_Controller_Action
 
         $form->addElement('select', 'priority', array(
             'multioptions' => array('' => getGS('All')) + $this->priorityNames,
-            'label' => getGS('Severity'),
+            'label' => getGS('Severity:'),
         ));
 
         $form->addElement('submit', 'submit', array(

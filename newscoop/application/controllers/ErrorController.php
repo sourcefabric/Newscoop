@@ -6,6 +6,7 @@ class ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
+        $request = $this->getRequest();
         
         if (!$errors) {
             $this->view->message = 'You have reached the error page';
@@ -17,7 +18,7 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // throw exception if in admin module - will continue with legacy code
-                if ($this->getRequest()->getParam('module') == 'admin') {
+                if ($request->getParam('module') == 'admin') {
                     throw new InvalidArgumentException;
                 }
 

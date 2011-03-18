@@ -149,7 +149,7 @@ class SimplePager
 			}
     		foreach ($this->m_urls["links"] as $number => $url) {
 				if ($number == $this->m_selectedPageNumber) {
-					$this->m_renderedStr .= "$number | ";
+					$this->m_renderedStr .= "<strong>$number</strong> | ";
 				} else {
 					$this->m_renderedStr .= "<a href=\"".$url."\">$number</a> | ";
 				}
