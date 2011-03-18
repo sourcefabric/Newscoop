@@ -1,6 +1,6 @@
 <h1><?php putGS('Logs'); ?></h1>
 
-<?php echo $this->form->setAttrib('class', 'filter'); ?>
+<?php $this->renderFilter($this->form); ?>
 
 <?php
 if (empty($this->logs)) { // no logs

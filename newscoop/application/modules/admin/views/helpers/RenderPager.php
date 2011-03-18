@@ -13,10 +13,6 @@ class Admin_View_Helper_RenderPager extends Zend_View_Helper_Abstract
      */
     public function renderPager(SimplePager $pager)
     {
-        if (empty($pager)) {
-            return;
-        }
-
         $this->view->pager = $pager;
         echo $this->view->render('pager.phtml');
     }

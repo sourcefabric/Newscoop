@@ -1748,7 +1748,7 @@ ul#edit-files h2 {
 }
 
 .message {
-    margin: 1em 35px;
+    margin: 1em 0;
     padding: 8px;
     background-color: #fff;
 }
@@ -1956,4 +1956,12 @@ ul.navigation li:first-child a {
 
 .content > table + .pager {
     margin-top: 0;
+}
+
+.content > p {
+    font-size: 1.2em;
+}
+
+.content > pre {
+    font-size: 12px;
 }
