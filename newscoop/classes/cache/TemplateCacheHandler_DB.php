@@ -4,7 +4,14 @@ require_once  dirname(__FILE__) . DIR_SEP. 'TemplateCacheHandler.php';
 class TemplateCacheHandler_DB extends TemplateCacheHandler
 {
     private static $m_name = 'DB',
-                   $m_description = "It allows to store tempalte cache in a database.";
+                   $m_description = "It allows to store template cache in a database.";
+    private $_ado_db;
+
+    public function TemplateCacheHandler_DB()
+    {
+        global $g_ado_db;
+        $this->_ado_db = $g_ado_db;
+    }
 
     /**
      * Returns true if the engine was supported in PHP, false otherwise.
@@ -29,9 +36,8 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
      */
     public function update($campsiteVector)
     {
-        global $g_ado_db;
         $queryStr = 'DELETE FROM Cache WHERE ' . self::vectorToWhereString($campsiteVector);
-        $g_ado_db->Execute($queryStr);
+        $this->_ado_db->Execute($queryStr);
 
         if ($campsiteVector['language'] && $campsiteVector['publication']) {
             $whereStr = "language = {$campsiteVector['language']} AND ";
@@ -43,18 +49,18 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             if ($campsiteVector['section']) {
                 $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section = {$campsiteVector['section']} AND ";
                 $queryStr .= "article IS NULL";
-                $g_ado_db->Execute($queryStr);
+                $this->_ado_db->Execute($queryStr);
             }
 
             // clear language, publication, issue, null, null vector
             $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section IS NULL AND article IS NULL";
-            $g_ado_db->Execute($queryStr);
+            $this->_ado_db->Execute($queryStr);
 
             // clear language, publication, null, null, null vector
             if ($campsiteVector['issue']) {
                 $queryStr = 'DELETE FROM Cache WHERE language = '. "{$campsiteVector['language']} AND "
                 . "publication = {$campsiteVector['publication']} AND issue IS NULL AND section IS NULL AND article IS NULL";
-                $g_ado_db->Execute($queryStr);
+                $this->_ado_db->Execute($queryStr);
             }
         }
         return;
@@ -151,10 +157,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             } else {
                 $output .= $key . ' IS NULL';
             }
-            if ($key != 'params') {
-                $output .= ' AND ';
-            }
+            $output .= ' AND ';
         }
+        $output = substr($output, 0, strlen($output) - 4);
         return $output;
     }
 }

@@ -289,6 +289,10 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();
     @exec($cmd, $p_output, $result);
+    $additionalFile = $Campsite['CAMPSITE_DIR'] . '/bin/mysql-dump-ext.sql';
+    if (file_exists($additionalFile)) {
+        @exec('cat ' . $additionalFile . '>>' .$p_destFile, $p_output, $result);
+    }
     return $result;
 } // fn camp_backup_database
 
@@ -437,11 +441,11 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
                 echo "\n\t* Upgrading the database from version $db_version...";
             }
             if ($old_version < '3.4.x') {
-            	$res = camp_utf8_convert(null, $skipped);
-            	if ($res !== true) {
-            		flock($lockFile, LOCK_UN); // release the lock
-            		return $res;
-            	}
+                $res = camp_utf8_convert(null, $skipped);
+                if ($res !== true) {
+                    flock($lockFile, LOCK_UN); // release the lock
+                    return $res;
+                }
             }
             $first = false;
         }
@@ -524,11 +528,11 @@ function camp_detect_database_version($p_dbName, &$version)
 
     $version = "2.0.x";
     $row = mysql_fetch_row($res);
-    if (in_array($row[0], array("ArticleTopics", "Topics"))) {
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("ArticleTopics", "Topics")))) {
         $version = $version < "2.1.x" ? "2.1.x" : $version;
     }
-    if (in_array($row[0], array("URLTypes", "TemplateTypes", "Templates", "Aliases",
-                                "ArticlePublish", "IssuePublish", "ArticleImages"))) {
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+                                "ArticlePublish", "IssuePublish", "ArticleImages")))) {
         $version = "2.2.x";
         if (!$res2 = mysql_query("DESC Articles PublishDate")) {
             return "Unable to query the database $p_dbName";
