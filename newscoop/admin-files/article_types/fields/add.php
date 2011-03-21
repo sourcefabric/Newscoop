@@ -59,6 +59,14 @@ function UpdateArticleFieldContext() {
         ToggleRowVisibility('precision');
         ToggleBoolValue('show_precision');
     }
+
+    var show_maxsize = my_form.elements["show_maxsize"].value
+    if ((show_maxsize == "true" && field_type != "text")
+            || (show_maxsize == "false" && field_type == "text")) {
+        ToggleRowVisibility('maxsize');
+        ToggleBoolValue('show_maxsize');
+    }
+
 }
 </script>
 
@@ -68,6 +76,7 @@ function UpdateArticleFieldContext() {
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <input type="hidden" name="show_precision" id="show_precision" value="false">
+<input type="hidden" name="show_maxsize" id="show_maxsize" value="true">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?></TD></TR>
 <TR>
@@ -123,6 +132,10 @@ foreach ($topics as $topicPath) {
 <tr style="display: none;" id="precision">
     <td><?php putGS('Precision'); ?>:</td>
     <td><input type="text" class="input_select" size="2" maxlength="2" name="f_precision"></td>
+</tr>
+<tr style="display: block;" id="maxsize">
+    <td><?php putGS('Maxsize'); ?>:</td>
+    <td><input type="text" class="input_select" size="3" maxlength="3" name="f_maxsize"></td>
 </tr>
 <TR>
 	<TD COLSPAN="2">
