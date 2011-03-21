@@ -63,7 +63,7 @@ class Extension_Extension extends DatabaseObject
      */
     public function getPath()
     {
-        return (string) $this->m_data['path'];
+        return WWW_DIR . WidgetManager::PATH . $this->m_data['path'];
     }
 
     /**
