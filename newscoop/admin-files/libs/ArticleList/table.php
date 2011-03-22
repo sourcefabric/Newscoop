@@ -204,6 +204,10 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             });
         }
         <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) {
+            if ($filter == 'language' && !$this->order) {
+                continue; // ignore language on non-section pages
+            }
+
             if (!empty($this->$filter)) { ?>
             aoData.push({
                 'name': '<?php echo $filter; ?>',
