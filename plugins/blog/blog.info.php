@@ -13,6 +13,11 @@ $info = array(
         'sub' => array(
             array(
                 'permission' => 'plugin_blog_admin',
+                'path' => "blog/admin/list_entries.php",
+                'label' => 'Posts',
+            ),
+            array(
+                'permission' => 'plugin_blog_admin',
                 'path' => "blog/admin/list_blogs.php",
                 'label' => 'Administer',
                 'icon' => 'css/gear.png',
