@@ -2,7 +2,6 @@
 regGS("Account", "حساب");
 regGS("Items per page", "عدد العناصر للصفحة");
 regGS("Add new", "أضف جديد");
-regGS("Campsite", "كامبسايت");
 regGS("Home", "البداية");
 regGS("Logout", "خروج");
 regGS("More...", "المزيد...");

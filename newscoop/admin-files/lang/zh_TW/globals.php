@@ -4,7 +4,6 @@ regGS("Manage Plugins", "管理插件");
 regGS("Account", "賬戶");
 regGS("Items per page", "");
 regGS("Add new", "添加");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "首頁");
 regGS("Logout", "登出");
 regGS("More...", "更多…");

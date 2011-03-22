@@ -4,7 +4,6 @@ regGS("Manage Plugins", "");
 regGS("Account", "მომხმარებლის მონაცემი");
 regGS("Items per page", "რაოდენობა ყოველ გვერდზე");
 regGS("Add new", "დამატება");
-regGS("Campsite", "Campsite");
 regGS("Home", "მთავარი");
 regGS("Logout", "გასვლა");
 regGS("More...", "მეტი");
