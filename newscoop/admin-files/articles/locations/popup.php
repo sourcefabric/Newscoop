@@ -8,7 +8,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
 
 camp_load_translation_strings("api");
 camp_load_translation_strings("geolocation");
-camp_load_translation_strings("home"); 
+camp_load_translation_strings("home");
 
 $f_language_id = Input::Get('f_language_selected', 'int', 0);
 if (0 == $f_language_id) {
@@ -64,8 +64,8 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<title><?php putGS("Setting Map Locations"); ?></title>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
 
     <script type="text/javascript">
     <!--
@@ -76,7 +76,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
         localizer.login = '<?php putGS('login'); ?>';
     //-->
     </script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/admin.js" type="text/javascript"></script>
     <script type="text/javascript">
     <!--
         var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
@@ -85,18 +85,18 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
     //-->
     </script>
 
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/base64.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/json2.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
     <?php echo $geo_map_incl; ?>
 
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/openlayers/OLlocals.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/location_chooser.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/location_chooser.js"></script>
 
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_codes.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/country_cens.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/geocoding/geonames/search.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/country_codes.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/country_cens.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/geonames/search.js"></script>
+	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">
 // prepare localized strings
@@ -151,9 +151,9 @@ var findLocation = function(forced)
 {
     var city_obj = document.getElementById ? document.getElementById("search-city") : null;
     var cc_obj = document.getElementById ? document.getElementById("search-country") : null;
-    
+
     var cc_code = cc_obj.options[cc_obj.selectedIndex].value;
-    
+
     var cities_term = city_obj.value.replace(/\*/g, "%");
     cities_term = cities_term.replace(/^\s+|\s+$/g, '');
     if (0 == cities_term.length)
@@ -170,16 +170,16 @@ var findLocation = function(forced)
 
         return;
     }
-    
+
     var longitude = null;
     var latitude = null;
-    
+
     var comma_sep = false;
     if ((-1 == cities_term.indexOf(';')) && (-1 == cities_term.indexOf(' ')))
     {
         comma_sep = true;
     }
-    
+
     var test_list = [];
     if (comma_sep)
     {
@@ -189,7 +189,7 @@ var findLocation = function(forced)
     {
         test_list = cities_term.split(/[\s;][\s,;]*/);
     }
-    
+
     geonames_dir = "<?php echo $Campsite['WEBSITE_URL']; ?>/admin/cities/";
 
     var direct_coords = true;
@@ -211,7 +211,7 @@ var findLocation = function(forced)
             return;
         }
     }
-    
+
     var found_locs = geo_names.askForCityLocation(cities_term, cc_code, geonames_dir, "search_results");
 
 };
@@ -391,23 +391,23 @@ var map_show_preview = function()
 <script type="text/javascript">
 
     $(function(){
-		
+
 
 		$('.icon-button').hover(
-			function() { $(this).addClass('ui-state-hover'); }, 
+			function() { $(this).addClass('ui-state-hover'); },
 			function() { $(this).removeClass('ui-state-hover'); }
 		);
 		$('.text-button').hover(
-			function() { $(this).addClass('ui-state-hover'); }, 
+			function() { $(this).addClass('ui-state-hover'); },
 			function() { $(this).removeClass('ui-state-hover'); }
 		);
     });
 
-	
+
 </script>
 
 </head>
-<?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/'; ?>
+<?php $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/'; ?>
 <body onLoad="on_load_proc(); return false;" id="geolocation">
 <div class="map_editor clearfix">
 <!--Toolbar-->
@@ -423,7 +423,7 @@ var map_show_preview = function()
         <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
      </div>
     <!-- end of map_save_part -->
-     
+
   </div>
 <!--END Toolbar-->
 <div class="clear" style="height:10px;"></div>
@@ -505,16 +505,16 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <ol>
                     <li class="edit_label_top">
                     <label class="edit_label" for="point_predefined"><?php putGS("Pop-up content"); ?>:</label>
-                    
+
                     <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
                     <option value="0" selected="true"><?php putGS("plain text"); ?></option>
                     <option value="1"><?php putGS("html content"); ?></option>
                     </select>
-                    
+
                     <input id="point_edit_mode_edit" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('edit'); return false;" checked /><?php putGS("Edit"); ?>
                     <input id="point_edit_mode_view" name="point_edit_mode" class="text" type="radio" onChange="geo_locations.edit_set_mode('view'); return false;" /><?php putGS("View"); ?>
                     </li>
-                    
+
                     <li>
                     <div id="edit_part_text" class="">
                     <label class="edit_label" for="point_descr"><!--Textual description:-->&nbsp;</label>
@@ -542,7 +542,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     &nbsp;
                     </li>
                     <li>
-                    
+
                     </li>
                     <li>
                     <label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
@@ -560,7 +560,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
                     <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
                     </li>
-                    
+
                     <li>
                     <label class="edit_label" for="point_video_type"><?php putGS("source"); ?>:</label>
                     <select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
@@ -570,7 +570,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <option value="flash">Flash (sfw)</option>
                     <option value="flv">Flash (flv)</option>
                     </select>
-                    
+
                     </li>
                     <li>
 
@@ -593,7 +593,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                             <div class="edit_marker_choices"><div id="edit_marker_choices">&nbsp;</div></div>
                         </div>
                 </div>
-              </fieldset>  
+              </fieldset>
             </form>
 
           </div><!-- end of map_editpart1 -->

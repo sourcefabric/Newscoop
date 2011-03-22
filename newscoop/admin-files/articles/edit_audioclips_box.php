@@ -40,10 +40,10 @@
 					</TABLE>
 				</TD>
 			</TR>
-            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></SCRIPT>
-            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></SCRIPT>
-            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/scriptaculous/prototype.js"></SCRIPT>
-            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/scriptaculous/scriptaculous.js"></SCRIPT>
+            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/domTT/domLib.js"></SCRIPT>
+            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/domTT/domTT.js"></SCRIPT>
+            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/scriptaculous/prototype.js"></SCRIPT>
+            <SCRIPT type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/scriptaculous/scriptaculous.js"></SCRIPT>
             <SCRIPT type="text/javascript">
             <!--
                 function populateHiddenVars(sortableList)

@@ -611,7 +611,7 @@ function camp_get_calendar_include($p_languageCode = null)
 {
     global $Campsite;
 
-	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jquery/';
+	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/js/jquery/';
     $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
     if (!file_exists("$calendarPath/$calendarLocalization")) {
         $codeParts = explode('_', $p_languageCode);
@@ -629,13 +629,13 @@ function camp_get_calendar_include($p_languageCode = null)
     }
 
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
-	$calendarURL = "$websiteURL/javascript/jquery";
+	$calendarURL = "$websiteURL/js/jquery";
 	ob_start();
 ?>
 <style type="text/css">@import url('<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/jquery-ui-1.8.6.datepicker.css');</style>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
-<?php if (file_exists(dirname(__FILE__) . '/../javascript/jquery/' . $calendarLocalization)) { ?>
+<?php if (file_exists(dirname(__FILE__) . '/../js/jquery/' . $calendarLocalization)) { ?>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
 <?php } ?>
 <script type="text/javascript"><!--

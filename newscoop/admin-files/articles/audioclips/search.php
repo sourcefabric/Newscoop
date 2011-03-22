@@ -120,7 +120,7 @@ camp_html_display_msgs();
 if ($isCcOnline) {
 ?>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-audiosearch.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-audiosearch.js"></script>
 
 <form method="POST" name="search" action="popup.php">
 <table cellspacing="1" cellpadding="2" class="table_list">

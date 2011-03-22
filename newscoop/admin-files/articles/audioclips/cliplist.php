@@ -5,8 +5,8 @@ if ($f_order_direction == 1) {
     $arrowImage = "<img align=\"absmiddle\" src=\"".$Campsite["ADMIN_IMAGE_BASE_URL"]."/search_order_direction_down.png\" border=\"0\" />";
 }
 ?>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domLib.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/domTT/domTT.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/domTT/domLib.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/domTT/domTT.js"></script>
 <script type="text/javascript">
     function ClipList_reOrder(formName, orderBy, orderDirection)
     {
@@ -17,7 +17,7 @@ if ($f_order_direction == 1) {
 
     var domTT_styleClass = 'domTTOverlib';
 </script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <table class="table_actions">
 <tr>
     <td align="right">
