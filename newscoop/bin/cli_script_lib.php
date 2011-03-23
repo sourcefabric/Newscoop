@@ -460,6 +460,9 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         $db_conf_file = $etc_dir . '/database_conf.php';
         $install_conf_file = $etc_dir . "/install_conf.php";
 
+        // We shall use CampInstallationBaseHelper::ImportDB() as in CampInstallationBase.php::CampInstallationBase::databaseConfiguration()
+        // instead of using the exec() as below since the current version does not work on mswin and other platforms without mysql command, etc.
+
         // run upgrade scripts
         $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
         foreach ($sql_scripts as $index=>$script) {
@@ -1076,6 +1079,7 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
                 continue;
             }
 
+            // we have a php file to run
             $command_path = dirname($p_sqlFile);
             $command_path = camp_combine_paths($command_path, $command_script);
 
