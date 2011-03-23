@@ -4,7 +4,6 @@ regGS("Manage Plugins", "");
 regGS("Account", "Konto");
 regGS("Items per page", "Föremål per sida");
 regGS("Add new", "Lägg till ny");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "Hem");
 regGS("Logout", "Logga ut");
 regGS("More...", "Mer...");

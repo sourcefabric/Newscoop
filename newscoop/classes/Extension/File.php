@@ -19,6 +19,9 @@ class Extension_File
     private $path;
 
     /** @var string */
+    private $realpath;
+
+    /** @var string */
     private $checksum = '';
 
     /** @var array */
@@ -29,12 +32,13 @@ class Extension_File
      */
     public function __construct($path)
     {
-        $real = realpath($path);
-        if ($real === FALSE || !is_file($real)) {
-            throw new InvalidArgumentException("File '$path' not found.");
+        $this->realpath = realpath($path);
+        if ($this->realpath === FALSE || !is_file($this->realpath)) {
+            throw new InvalidArgumentException("File '$this->path' not found.");
         }
 
-        $this->path = $real;
+        $filter = realpath(WWW_DIR . WidgetManager::PATH) . '/';
+        $this->path = str_replace($filter, '', $this->realpath);
     }
 
     /**
@@ -92,7 +96,7 @@ class Extension_File
     private function parse()
     {
         $this->extensions = array();
-        $s = file_get_contents($this->getPath());
+        $s = file_get_contents($this->realpath);
         $tokens = token_get_all($s);
         $tokens_size = sizeof($tokens);
         for ($i = 0; $i < $tokens_size; $i++) {
@@ -100,7 +104,7 @@ class Extension_File
                 continue;
             }
 
-            require_once $this->getPath();
+            require_once $this->realpath;
             $class = $tokens[$i + 2][1];
             $reflector = new ReflectionClass($class);
             if (!$reflector->isInstantiable()) {
@@ -109,7 +113,7 @@ class Extension_File
 
             foreach ($reflector->getInterfaceNames() as $interface) {
                 $this->extensions[] = new Extension_Extension(
-                    $class, $this->getPath(), $interface);
+                    $class, $this->path, $interface);
             }
         }
 

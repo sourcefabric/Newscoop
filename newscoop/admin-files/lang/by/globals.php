@@ -4,7 +4,6 @@ regGS("Manage Plugins", "Кіраванне плагінамі");
 regGS("Account", "Улiковы запiс");
 regGS("Items per page", "Аб'ектаў на старонцы");
 regGS("Add new", "Дадаць");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "Галоўная");
 regGS("Logout", "Выхад");
 regGS("More...", "Далей...");

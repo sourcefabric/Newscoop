@@ -6,8 +6,7 @@ camp_load_translation_strings("plugin_blog");
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
     $is_admin = true;
 }
-if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
-    $is_moderator = true;
+if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) { $is_moderator = true;
 }
 
 // Check permissions
@@ -256,6 +255,10 @@ function ajax_action(action)
 </TABLE>
 </form>
 
+<div class="pager indent">
+    <?php echo $pager->render(); ?>
+</div>
+
 <?php
 $counter = 0;
 $color= 0;
@@ -395,6 +398,11 @@ if ($BlogEntriesList->getLength()) {
       ?>
     </table>
 </FORM>
+
+<div class="pager indent">
+    <?php echo $pager->render(); ?>
+</div>
+
 <?php
 } else {?>
     <BLOCKQUOTE>

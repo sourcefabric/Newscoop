@@ -122,7 +122,15 @@ foreach (Topic::GetTree() as $topic) {
             <?php } ?>
         </select></dd>
     </dl>
-
+    <dl>
+        <dt><label for="filter_language"><?php putGS('Language'); ?></label></dt>
+        <dd><select id="filter_name" name="language">
+            <option value=""><?php putGS('All'); ?></option>
+            <?php foreach(Language::GetLanguages() as $language) { ?>
+            <option value="<?php echo $language->getLanguageId(); ?>"><?php echo $language->getNativeName(); ?></option>
+            <?php } ?>
+        </select></dd>
+    </dl>
     </div>
 </fieldset>
 </div><!-- /.smartlist-filters -->

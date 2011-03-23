@@ -266,6 +266,11 @@ $color= 0;
 
 if ($BlogCommentsList->getLength()) {
     ?>
+
+<div class="pager indent">
+    <?php echo $pager->render(); ?>
+</div>
+
     <FORM name="comments_list" id="comments_list" action="action.php" method="POST">
 	<?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_action" id="f_action" />
@@ -363,6 +368,11 @@ if ($BlogCommentsList->getLength()) {
       ?>
     </table>
 </FORM>
+
+<div class="pager indent">
+    <?php echo $pager->render(); ?>
+</div>
+
 <?php
 } else {?>
     <BLOCKQUOTE>

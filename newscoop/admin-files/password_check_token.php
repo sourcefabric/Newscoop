@@ -17,7 +17,7 @@ if (isset($_REQUEST['TOL_Language'])) {
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";

@@ -290,6 +290,10 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();
     @exec($cmd, $p_output, $result);
+    $additionalFile = $Campsite['CAMPSITE_DIR'] . '/bin/mysql-dump-ext.sql';
+    if (file_exists($additionalFile)) {
+        @exec('cat ' . $additionalFile . '>>' .$p_destFile, $p_output, $result);
+    }
     return $result;
 } // fn camp_backup_database
 
@@ -433,10 +437,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
 
     $first = true;
     $skipped = array();
-    $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-                      "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
-                      "2.7.x", "3.0.x", "3.1.0", "3.1.x", "3.2.x", "3.3.x",
-                      "3.4.x");
+    $versions = array_map('basename', glob(WWW_DIR . '/install/sql/upgrade/[2-9].[0-9]*'));
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
@@ -446,11 +447,11 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
                 echo "\n\t* Upgrading the database from version $db_version...";
             }
             if ($old_version < '3.4.x') {
-            	$res = camp_utf8_convert(null, $skipped);
-            	if ($res !== true) {
-            		flock($lockFile, LOCK_UN); // release the lock
-            		return $res;
-            	}
+                $res = camp_utf8_convert(null, $skipped);
+                if ($res !== true) {
+                    flock($lockFile, LOCK_UN); // release the lock
+                    return $res;
+                }
             }
             $first = false;
         }

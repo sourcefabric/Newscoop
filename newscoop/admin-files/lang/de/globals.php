@@ -4,7 +4,6 @@ regGS("Manage Plugins", "Plugins verwalten");
 regGS("Account", "Konto");
 regGS("Items per page", "Anzahl pro Seite");
 regGS("Add new", "Hinzufügen");
-regGS("Campsite", "Newscoop");
 regGS("Home", "Dashboard");
 regGS("Logout", "Ausloggen");
 regGS("More...", "Mehr...");

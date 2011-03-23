@@ -157,13 +157,9 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             } else {
                 $output .= $key . ' IS NULL';
             }
-            if ($key != 'params') {
-                $output .= ' AND ';
-            }
+            $output .= ' AND ';
         }
-        if (!array_key_exists('params', $vector)) {
-            $output .= 'params IS NULL ';
-        }
+        $output = substr($output, 0, strlen($output) - 4);
         return $output;
     }
 }

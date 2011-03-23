@@ -23,6 +23,8 @@ class WidgetManager
 {
     const SETTING = 'WidgetsInstalled';
 
+    const PATH = '/extensions/';
+
     /** @var array */
     private static $defaults = array(
         'YourArticlesWidget',
@@ -58,7 +60,7 @@ class WidgetManager
 
         // get all widget extensions
         $index = new Extension_Index();
-        $extensions = $index->addDirectory(dirname(__FILE__) . '/../../extensions')
+        $extensions = $index->addDirectory(WWW_DIR . self::PATH)
             ->find('IWidget');
 
         // filter not-available (used)

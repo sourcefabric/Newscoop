@@ -2,7 +2,6 @@
 regGS("Account", "حه ساب");
 regGS("Items per page", "با به ت له هه ر لا په ڕه یه کدا");
 regGS("Add new", "نوێی پێ زیاد بکه");
-regGS("Campsite", "که مپسا یت");
 regGS("Home", "ماڵه وه");
 regGS("Logout", "بچۆ ده ر");
 regGS("More...", "زۆر تر");
