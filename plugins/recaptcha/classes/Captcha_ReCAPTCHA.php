@@ -25,11 +25,16 @@ class Captcha_ReCAPTCHA extends Captcha
     }
 
     /**
+     * @param string $form
      * @return boolean
      */
-    public function isEnabled()
+    public function isEnabled($form = '')
     {
-        return (SystemPref::Get('PLUGIN_RECAPTCHA_ENABLED') == 'Y') ? TRUE : FALSE;
+        if (!empty($form)) {
+            $form = strtoupper($form . '_');
+        }
+
+        return (SystemPref::Get("PLUGIN_RECAPTCHA_{$form}ENABLED") == 'Y') ? TRUE : FALSE;
     }
 
     /**

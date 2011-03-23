@@ -1708,26 +1708,6 @@ table.message_box td {
 	margin-bottom:8px;
 }
 
-/*--- Media Box ---*/
-div.image-thumbnail-container {
-    float:left;
-    width:80px;
-}
-
-ul#edit-files h2 {
-    margin: 0;
-    padding: 8px;
-    font-size: 1.2em;
-    font-weight: bold;
-    overflow: hidden;
-}
-
-.widget div.loading p {
-    font-size: 1.3em;
-    margin: 0;
-    padding: 0.5em;
-}
-
 /** Zend form theming */
 .filter dl.zend_form {
     height: 1%;
@@ -1964,4 +1944,29 @@ ul.navigation li:first-child a {
 
 .content > pre {
     font-size: 12px;
+}
+
+/*--- Media Box ---*/
+div.image-thumbnail-container {
+    float:left;
+    width:80px;
+}
+
+ul#edit-files h2 {
+    margin: 0;
+    padding: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.widget div.loading p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.pager.indent {
+    padding: 3px;
+    font-size: 1.1em;
 }

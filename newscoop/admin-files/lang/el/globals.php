@@ -4,7 +4,6 @@ regGS("Manage Plugins", "Διαχείριση Προσθέτων");
 regGS("Account", "Λογαριασμός");
 regGS("Items per page", "Στοιχεία ανά σελίδα");
 regGS("Add new", "Προσθήκη νέου");
-regGS("Campsite", "Campsite");
 regGS("Home", "Αρχική Σελίδα");
 regGS("Logout", "Έξοδος");
 regGS("More...", "Περισσότερα...");
