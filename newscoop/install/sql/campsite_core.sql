@@ -1141,13 +1141,15 @@ DROP TABLE IF EXISTS `Log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `fk_event_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_user_id` int(10) unsigned DEFAULT NULL,
   `text` varchar(255) NOT NULL DEFAULT '',
   `user_ip` varchar(39) NOT NULL DEFAULT '',
   `priority` smallint(1) unsigned NOT NULL DEFAULT '6',
-  KEY `IdEvent` (`fk_event_id`)
+  PRIMARY KEY (`id`),
+  KEY (`priority`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
