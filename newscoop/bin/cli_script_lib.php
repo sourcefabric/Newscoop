@@ -1,4 +1,5 @@
 <?php
+require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
 
 function camp_is_readable($p_fileName)
 {
@@ -422,6 +423,14 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         return $res;
     }
 
+    $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
+    $db_port = $Campsite['DATABASE_SERVER_PORT'];
+    $db_username = $Campsite['DATABASE_USER'];
+    $db_userpass = $Campsite['DATABASE_PASSWORD'];
+    $db_database = $p_dbName;
+    $db_conn = null;
+    //$db_conn = camp_connect_to_adodb($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database);
+
     $first = true;
     $skipped = array();
     $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
@@ -451,7 +460,11 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         $db_conf_file = $etc_dir . '/database_conf.php';
         $install_conf_file = $etc_dir . "/install_conf.php";
 
+        // We shall use CampInstallationBaseHelper::ImportDB() as in CampInstallationBase.php::CampInstallationBase::databaseConfiguration()
+        // instead of using the exec() as below since the current version does not work on mswin and other platforms without mysql command, etc.
+
         // run upgrade scripts
+/*
         $cmd_prefix = "cd " . escapeshellarg($upgrade_dir)
             . " && mysql --user=" . $Campsite['DATABASE_USER']
             . " --host=" . $Campsite['DATABASE_SERVER_ADDRESS']
@@ -461,17 +474,32 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
             $cmd_prefix .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
         }
         $cmd_prefix .= " " . escapeshellarg($p_dbName) . " < ";
+*/
         $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
+        //$sql_scripts = array("data-required.sql", "data-optional.sql");
         foreach ($sql_scripts as $index=>$script) {
             if (!is_file($upgrade_dir . $script)) {
                 continue;
             }
+            //$db_conn = camp_connect_to_adodb($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database);
+            $error_queries = array();
+            $sq_file = $upgrade_dir . $script;
+            //$err_count = camp_import_dbfile($db_conn, $sq_file, &$error_queries);
+            $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, &$error_queries);
+
+            if ($err_count && ($script != "data-optional.sql")) {
+                flock($lockFile, LOCK_UN); // release the lock
+                return "$script ($db_version) errors on:\n" . implode("\n", $error_queries);
+            }
+
+/*
             $cmd = $cmd_prefix . $script . " 2>&1";
             exec($cmd, $output, $res);
             if ($res != 0 && $script != "data-optional.sql") {
                 flock($lockFile, LOCK_UN); // release the lock
                 return "$script ($db_version): " . implode("\n", $output);
             }
+*/
         }
     }
     if (!$p_silent) {
@@ -514,6 +542,9 @@ Please save the following list of skipped queries:\n";
  */
 function camp_detect_database_version($p_dbName, &$version)
 {
+    //$version = "3.4.x";
+    //return 0;
+
     if (!mysql_select_db($p_dbName)) {
         return "Can't select the database $p_dbName";
     }
@@ -927,4 +958,213 @@ function flush_output($flush)
         flush();
     }
 }
+
+
+// auxiliary functions from CampInstallationBase.php, put here to not dor 'require' on all that files there
+
+/**
+ *
+ */
+function camp_split_sql($p_sqlFileName)
+{
+    $sqlFile_raw = null;
+    if(!($sqlFile_raw = file($p_sqlFileName))) {
+        return false;
+    }
+
+    $sqlFile_arr = array();
+    foreach ($sqlFile_raw as $one_row) {
+        $one_row = trim($one_row);
+        if (0 === strpos($one_row, "--")) {continue;}
+        if (0 === strpos($one_row, "#")) {continue;}
+        if ("" == $one_row) {continue;}
+
+        // we need to end 'system php ...' commands with semicolons
+        $one_row_arr = array();
+        foreach (explode(" ", $one_row) as $one_row_token) {
+            $one_row_token = trim($one_row_token);
+            if ("" == $one_row_token) {continue;}
+            $one_row_arr[] = $one_row_token;
+        }
+        if (3 <= count($one_row_arr)) {
+            if ("system php" == implode(" ", array_map("strtolower", array_slice($one_row_arr, 0, 2))) ) {
+                if ((strlen($one_row) - 1) != strrpos($one_row, ";")) {
+                    $one_row .= ";";
+                }
+            }
+        }
+
+        $sqlFile_arr[] = $one_row;
+    }
+
+    $sqlContent = implode("\n", $sqlFile_arr);
+
+    //$sqlContent = trim($sqlContent);
+    //$p_sqlFile = preg_replace("/\n\#[^\n]*/", '', "\n".$p_sqlFile);
+    $buffer = array ();
+    $return = array ();
+    $inString = false;
+
+    for ($i = 0; $i < strlen($sqlContent) - 1; $i ++) {
+        if ($sqlContent[$i] == ";" && !$inString) {
+            $return[] = substr($sqlContent, 0, $i);
+            $sqlContent = substr($sqlContent, $i +1);
+            $i = 0;
+        }
+
+        if ($inString && ($sqlContent[$i] == $inString)
+                && $buffer[1] != "\\") {
+            $inString = false;
+        } elseif (!$inString && ($sqlContent[$i] == '"'
+                                 || $sqlContent[$i] == "'")
+                      && (!isset ($buffer[0]) || $buffer[0] != "\\")) {
+            $inString = $sqlContent[$i];
+        }
+        if (isset($buffer[1])) {
+            $buffer[0] = $buffer[1];
+        }
+
+        $buffer[1] = $sqlContent[$i];
+    }
+
+    if (!empty($sqlContent)) {
+        $return[] = $sqlContent;
+    }
+
+    return $return;
+} // fn SplitSQL
+
+/**
+ *
+ */
+//function camp_import_dbfile($db_conn, $p_sqlFile, &$errorQueries)
+function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database, $p_sqlFile, &$errorQueries)
+{
+    //echo "\n<br><br>file:<br>\n";
+    //var_dump($p_sqlFile);
+    //echo "\n<br>\n";
+
+    //if(!($sqlFile = file_get_contents($p_sqlFile))) {
+    //if(!($sqlFile = file($p_sqlFile))) {
+    //    return false;
+    //}
+
+    $db_conn = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
+
+    $queries = camp_split_sql($p_sqlFile);
+    if (!$queries) {return false;}
+
+    $errors = 0;
+    $errorQueries = array();
+    foreach($queries as $query) {
+        $query = trim($query);
+        //echo "\n<br>\n";
+        //var_dump($query);
+        //echo "\n<br>\n";
+        if (!empty($query) && ($query{0} != '#') && (0 !== strpos($query, "--"))) {
+
+            if (0 !== strpos(strtolower($query), "system")) {
+                if ($db_conn->Execute($query) == false) {
+                    $errors++;
+                    $errorQueries[] = $query;
+                    $errorQueries[] = $db_conn->ErrorMsg();
+                }
+                continue;
+            }
+
+            // if it started via the system command
+            $command_parts = array();
+            foreach (explode(" ", $query) as $query_part) {
+                $query_part = trim($query_part);
+                if ("" != $query_part) {
+                    $command_parts[] = $query_part;
+                }
+            }
+            //var_dump($command_parts);
+
+            $command_script = "";
+            $command_known = false;
+            if (3 == count($command_parts)) {
+                if ("php" == strtolower($command_parts[1])) {
+                    $command_known = true;
+                    $command_script = trim($command_parts[2], ";");
+                }
+            }
+            if (!$command_known) {
+                $errors++;
+                $errorQueries[] = $query;
+                continue;
+            }
+
+            // we have a php file to run
+            $command_path = dirname($p_sqlFile);
+            $command_path = camp_combine_paths($command_path, $command_script);
+
+            $db_conn->Close();
+            $GLOBALS['g_ado_db']->Close();
+            $GLOBALS['g_ado_db'] = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
+            
+            //echo "\n<br>\ngoing to execute: " . $command_path . "\n<br>\n";
+            require_once($command_path);
+            $db_conn = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
+            $GLOBALS['g_ado_db']->Close();
+            $GLOBALS['g_ado_db'] = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
+
+        }
+    }
+
+    $db_conn->Close();
+
+    return $errors;
+} // fn camp_import_dbfile
+
+/**
+ *
+ */
+function camp_combine_paths($p_dirFirst, $p_dirSecond)
+{
+    if (0 === strpos(strtolower($p_dirSecond), "/")) {
+        return $p_dirSecond;
+    }
+
+    if (0 === strpos(strtolower($p_dirSecond), "./")) {
+        $p_dirSecond = substr($p_dirSecond, 2);
+        return $p_dirFirst . DIRECTORY_SEPARATOR . $p_dirSecond;
+    }
+
+    while (0 === strpos(strtolower($p_dirSecond), "../")) {
+        $p_dirFirst = dirname($p_dirFirst);
+        $p_dirSecond = substr($p_dirSecond, 3);
+    }
+
+    return $p_dirFirst . DIRECTORY_SEPARATOR . $p_dirSecond;
+}
+
+
+/**
+ *
+ */
+function camp_connect_to_adodb($db_host, $db_username, $db_userpass, $db_database = "")
+{
+
+    $db_conn = ADONewConnection('mysql');
+    $db_conn->SetFetchMode(ADODB_FETCH_ASSOC);
+
+    @$db_conn->Connect($db_host, $db_username, $db_userpass);
+    if (!$db_conn->isConnected()) {
+        return null;
+    }
+
+    if ("" != $db_database) {
+        $selectDb = $db_conn->SelectDB($db_database);
+        if (!$selectDb) {
+            return null;
+        }
+
+        $db_conn->Execute("SET NAMES 'utf8'");
+    }
+
+    return $db_conn;
+} // camp_connect_to_adodb
+
 ?>
