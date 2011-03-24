@@ -9,7 +9,6 @@ regGS("Translation status:", "");
 regGS("Editor Media Plugin", "");
 regGS("$1 of $2 strings translated", "");
 regGS("Preview Window", "");
-regGS("Article Audioclips", "");
 regGS("Show translated strings", "Afişează string-urile traduse");
 regGS("Hide translated strings", "Ascunde string-urile traduse");
 regGS("Feedback", "Răspuns");

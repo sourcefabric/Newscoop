@@ -37,8 +37,6 @@ regGS("User may use the editor status bar", "Uživatel smí použít status bar 
 regGS("User may clear up the system cache", "Uživatel smí vyčistit system cache");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Tento e-mail se již používá, prosím zvolte jiný.");
 regGS("There was an error when trying to update the user info.", "Vyskytla se chyba při pokusu o aktualizování uživatelských informací.");
-regGS("User may attach audioclips to articles", "Uživatel smí přikládat audioklipy k článkům");
-regGS("User may add audioclips", "Uživatel smí přidávat audioklipy");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Jste si jistí, že chcete odstranit Skupinu IP $1:$2?");
 regGS("User may moderate comments", "Uživatel smí moderovat komentáře");
 regGS("User may enable comments", "Uživatel smí povolit komentáře");

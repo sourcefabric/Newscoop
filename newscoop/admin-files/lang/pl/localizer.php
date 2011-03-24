@@ -9,7 +9,6 @@ regGS("Translation status:", "Stan tłumaczenia");
 regGS("Editor Media Plugin", "Edytor Media Pluginów");
 regGS("$1 of $2 strings translated", "$1 z $2 zmiennych przetłumaczonych");
 regGS("Preview Window", "Okno podglądu");
-regGS("Article Audioclips", "Audioclipy artykułu");
 regGS("Show translated strings", "Pokaż przetłumaczone zmienne");
 regGS("Hide translated strings", "Schowaj przetłumaczone zmienne");
 regGS("Feedback", "Feedback");
