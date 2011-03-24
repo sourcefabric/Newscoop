@@ -382,6 +382,10 @@ if (!empty($plugin_pages)) {
 
 $container = new Zend_Navigation($pages);
 $view->navigation($container);
+
+if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
+    return;
+}
 ?>
 
 <div class="main-menu-bar">

@@ -110,6 +110,8 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
         return;
     }
 
+    define('IN_BUG_HANDLE', TRUE);
+
     // --- Don't print out the previous screen (in which the error occurred). ---
     ob_end_clean();
 
