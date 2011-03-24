@@ -37,7 +37,7 @@ class Extension_File
             throw new InvalidArgumentException("File '$this->path' not found.");
         }
 
-        $filter = realpath(WWW_DIR . WidgetManager::PATH) . '/';
+        $filter = realpath(WWW_DIR . WidgetManager::ExtPath()) . DIR_SEP;
         $this->path = str_replace($filter, '', $this->realpath);
     }
 
