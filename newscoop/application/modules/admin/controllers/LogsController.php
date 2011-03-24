@@ -13,11 +13,10 @@ class Admin_LogsController extends Zend_Controller_Action
      */
     public function preDispatch()
     {
-        global $g_user;
-
-        // permissions check
-        if (!$g_user->hasPermission('ViewLogs')) {
-	        camp_html_display_error(getGS("You do not have the right to view logs."));
+        if (!$this->_helper->acl->isAllowed('Logs', 'view')) {
+            $this->_forward('deny', 'error', 'admin', array(
+                getGS("You do not have the right to view logs."),
+            ));
         }
     }
 
@@ -28,11 +27,8 @@ class Admin_LogsController extends Zend_Controller_Action
     {
         camp_load_translation_strings('logs');
 
-        // get log repository
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        $this->logRepository = $bootstrap->getResource('doctrine')
-            ->getEntityManager()
-            ->getRepository('Newscoop\Entity\Log');
+        // get repository
+        $this->logRepository = $this->_helper->em->getRepository('Newscoop\Entity\Log');
 
         // set priority names
         $this->priorityNames = array(

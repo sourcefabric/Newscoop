@@ -1739,6 +1739,10 @@ table.message_box td {
     font-size: 2em;
 }
 
+.message.error {
+    color: #cc0000;
+}
+
 body > .content {
     margin: 0 30px;
 }
@@ -1969,4 +1973,34 @@ ul#edit-files h2 {
 .pager.indent {
     padding: 3px;
     font-size: 1.1em;
+}
+
+dl.resource {
+    width: 21em;
+    font-size: 1.2em;
+}
+
+dl.resource dt {
+    margin: 0 0 3px;
+    padding: 5px;
+    background-color: #fff;
+    font-weight: bold;
+}
+
+dl.resource dd {
+    margin: 3px 0 3px 13px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+dl.resource dd.allow strong {
+    color: #3d8215;
+}
+
+dl.resource dd.deny strong {
+    color: #cc3333;
+}
+
+dl.resource dd a.delete {
+    float: right;
 }

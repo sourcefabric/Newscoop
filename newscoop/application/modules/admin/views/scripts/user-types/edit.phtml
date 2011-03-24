@@ -1,0 +1,18 @@
+<h1><?php echo getGS('Edit'), ' ', $this->role->getName(); ?></h1>
+
+<?php $this->renderError(); ?>
+
+<?php foreach ($this->resources as $resource) { ?>
+<dl class="resource">
+    <dt><?php echo $resource->name ?: getGS('General'); ?></dt>
+    <?php foreach ($resource->rules as $rule) { ?>
+    <dd class="<?php echo $rule->getType(); ?>">
+        <a class="delete" href="<?php echo $this->url(array('action' => 'delete-rule', 'rule' => $rule->getId(), 'role' => $this->role->getId())); ?>"><?php putGS('Remove'); ?></a>
+        <strong><?php echo $rule->getType(); ?></strong>
+        <?php echo $rule->getAction() ? $rule->getAction()->getName() : getGS('Any action'); ?>
+    </dd>
+    <?php } ?>
+</dl>
+<?php } ?>
+
+<?php echo $this->form->setAction($this->url())->setMethod('post')->render(); ?>

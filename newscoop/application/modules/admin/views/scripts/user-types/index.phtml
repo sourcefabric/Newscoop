@@ -1,0 +1,29 @@
+<h1><?php echo getGS('User types'); ?></h1>
+
+<?php
+$this->renderActions(array(
+    $this->url(array('action' => 'add')) => getGS('Add new user type'),
+));
+?>
+
+<?php
+if (empty($this->roles)) {
+    $this->renderMessage(getGS('No user types.'));
+    return;
+}
+?>
+
+<table class="user-types">
+    <tr>
+        <th><?php putGS('Type'); ?></th>
+        <th><?php putGS('Access'); ?></th>
+        <th><?php putGS('Delete'); ?></th>
+    </tr>
+    <?php foreach ($this->roles as $role) { ?>
+    <tr>
+        <td><?php echo $role->getName(); ?></td>
+        <td><a class="edit" href="<?php echo $this->url(array('action' => 'edit', 'role' => $role->getId())); ?>" title="<?php putGS('Edit user type $1', $role->getName()); ?>"><?php putGS('Edit'); ?></a></td>
+        <td><a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'role' => $role->getId())); ?>" title="<?php putGS('Delete user type $1', $role->getName()); ?>"><?php putGS('Delete'); ?></a></td>
+    </tr>
+    <?php } ?>
+</table>
