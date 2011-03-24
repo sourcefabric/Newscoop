@@ -1,12 +1,6 @@
 <?php
-//echo "\n<br>load_geonames_data: ";
-//var_dump(__FILE__);
-//echo "<br>\n";
-//if (!$GLOBALS['g_campsiteDir']) {
 $cs_dir = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 $GLOBALS['g_campsiteDir'] = $cs_dir;
-//}
-//$cs_dir = $GLOBALS['g_campsiteDir'];
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'campsite_constants.php');
 require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');

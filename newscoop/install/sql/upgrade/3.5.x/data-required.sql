@@ -17,8 +17,8 @@ WHERE ID IN (
 
 -- Change Widget absolute paths to relative
 UPDATE `Widget`
-SET path = SUBSTRING(path, LOCATE('extensions/', path) + LENGTH('extensions/'))
-WHERE path LIKE '/%';
+SET path = SUBSTRING(path, LOCATE('extensions', path) + LENGTH('extensions') + 1)
+WHERE path LIKE '/%' OR path LIKE '_:\\\\%';
 
 -- Delete missing Widget references
 DELETE FROM `WidgetContext_Widget`
