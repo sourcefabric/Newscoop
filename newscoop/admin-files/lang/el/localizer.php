@@ -9,7 +9,6 @@ regGS("Translation status:", "Κατάσταση μετάφρασης:");
 regGS("Editor Media Plugin", "Επεξεργαστής Προσθέτου Media ");
 regGS("$1 of $2 strings translated", "$1 από $2 σειρές μεταφράστηκαν");
 regGS("Preview Window", "Προεπισκόπηση παραθύρου");
-regGS("Article Audioclips", "Αρχεία Ήχου Άρθρων");
 regGS("Show translated strings", "Εμφάνιση μεταφρασμένων σειρών");
 regGS("Hide translated strings", "Απόκρυψη μεταφρασμένων σειρών");
 regGS("Feedback", "Feedback");

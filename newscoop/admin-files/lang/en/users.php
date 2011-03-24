@@ -37,8 +37,6 @@ regGS("User may use the editor status bar", "User may use the editor status bar"
 regGS("User may clear up the system cache", "User may clear up the system cache");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Another user is registered with that e-mail address, please choose a different one.");
 regGS("There was an error when trying to update the user info.", "There was an error when trying to update the user info.");
-regGS("User may attach audioclips to articles", "User may attach audioclips to articles");
-regGS("User may add audioclips", "User may add audioclips");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Are you sure you want to delete the IP Group $1:$2?");
 regGS("User may moderate comments", "User may moderate comments");
 regGS("User may enable comments", "User may enable comments");

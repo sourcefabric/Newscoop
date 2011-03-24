@@ -67,11 +67,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "با به ته که به سترا له رێگه ی  $1 ($2) $3 چرکه له مه و پێش ");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "بابه ته که به سترا له ڕێگه ی  $1 ($2) $3 کاتژمێر و $4 چرکه له مه و پێش   ");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "هه ڵه له کاتی دانانی نوسه ر  \"$1\" بۆ بابه تی ژماره .  $2 (\"$3\") له جۆری $4.خ  ");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "نه توانرا په یوه ند ی بکا ت به سێر ڤه ری که مکاسته ره وه ، تکا یه بزانه سێر ڤه ری که مکاسته ر باش دامه زراوه");
 regGS("Clear system cache", "سڕینه وه ی هه ڵگره کانی سیسته م");
 regGS("The system was unable to upload the file '$1'. ", "سیسته مه که نیتوانی فایلی  '$1' به رز کاته وه ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "تکایه د ڵنیا به له و فایله ی که ئه ته وێ به رزی بکه یته وه ، له وا نه یه شکا بێت");
-regGS("Your user is not a valid Campcaster user", "به کار هێنه ره که ت به کارهێنه رێکی به بایه خ نی یه");
 regGS("Connection refused", "په یوه ند ی  ڕه د کرایه وه");
 regGS("An error occured in session management. Please reload the login page.", "هه ڵه یه ك د ه ر که وت له ماوه ی به ڕێوه برد ن ، تکایه دوباره په ڕه ی چۆنه ژووره وه بکه وه");
 regGS("This file is stored on disk as '$1'.", "ئه م فایله له د یسکا خه زن کرا وه ك '$1'.خ ");

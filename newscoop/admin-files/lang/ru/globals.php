@@ -255,7 +255,6 @@ regGS("Thank you.", "Спасибо.");
 regGS("Please take a minute to send us an email.", "Пожалуйста уделите минутку, чтобы послать нам e-mail.");
 regGS("(optional)", "(дополнительно)");
 regGS("The URL you entered is invalid: '$1'", "Введенный URL неверен: '$1'");
-regGS("There was an error logging in to the Campcaster server", "Произошла ошибка входа в административный интерфейс Campsite");
 regGS("Reads", "Количество просмотров");
 regGS("Publish with issue", "Опубликовать выпуск");
 regGS("Universal List", "Универсальный список");
