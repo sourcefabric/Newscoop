@@ -37,8 +37,6 @@ regGS("User may use the editor status bar", "");
 regGS("User may clear up the system cache", "");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "");
 regGS("There was an error when trying to update the user info.", "");
-regGS("User may attach audioclips to articles", "");
-regGS("User may add audioclips", "");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "");
 regGS("User may moderate comments", "Utilizatorul poate modera comentariile");
 regGS("User may enable comments", "Utilizatorul poate activa comentariile");

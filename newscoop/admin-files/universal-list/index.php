@@ -1,12 +1,9 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
-
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
-require_once LIBS_DIR . '/ArticleList/ArticleList.php';
-
-camp_load_translation_strings("articles");
+camp_load_translation_strings('articles');
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);

@@ -41,7 +41,7 @@ function smarty_block_list_issues($p_params, $p_content, &$p_smarty, &$p_repeat)
     	$campContext->setCurrentList($issuesList, array('publication', 'language',
     	                                                'issue', 'section', 'article',
     	                                                'image', 'attachment', 'comment',
-    	                                                'audioclip', 'subtitle'));
+    	                                                'subtitle'));
     	$campContext->issue = $campContext->current_issues_list->current;
     	$p_repeat = true;
     } else {

@@ -255,7 +255,6 @@ regGS("Thank you.", "Хвала");
 regGS("Please take a minute to send us an email.", "Молимо Вас одвојите који минут да нам пошаљете имејл");
 regGS("(optional)", "(опционо)");
 regGS("The URL you entered is invalid: '$1'", "УРЛ који сте унели је енисправан: '$1'");
-regGS("There was an error logging in to the Campcaster server", "'Дошло је до грешке при пријављивању на Кемпкастер сервер");
 regGS("Reads", "читања");
 regGS("Publish with issue", "Објави заједно са издањем");
 regGS("Universal List", "Универзална листа");
