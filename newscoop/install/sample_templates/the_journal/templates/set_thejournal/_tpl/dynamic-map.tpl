@@ -13,6 +13,7 @@
     sections="business"
     topics="_current"
     topics="Local News, Funny"
+    topics="Geography:en, Fashion:en"
     match_all_topics=false
     match_any_topic=true
     area="rectangle 20 0; 60 100;"
@@ -25,10 +26,13 @@
     end_date="2010-12-25"
     area_match="union"
     area_match="intersection"
+    icons="marker-green.png, marker-blue.png"
+    has_multimedia=true
 >
 
 {{ set_map
     label="some display string"
+    icons="marker-green.png, marker-blue.png"
     has_multimedia=true
     max_points=1000
 }}

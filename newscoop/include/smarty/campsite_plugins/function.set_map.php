@@ -100,6 +100,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $con_date = array();
     $con_areas = array();
     $con_match_any_area = array();
+    $con_icons = array();
 
     if (isset($p_params['label'])) {
         $map_label = trim("" . $p_params['label']);
@@ -297,6 +298,16 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
     }
 
+    if (isset($p_params['icons'])) {
+        $icons_val = trim($p_params['icons']);
+        foreach (explode(",", $icons_val) as $cur_icon) {
+            $cur_icon = str_replace('"', '""', trim($cur_icon));
+            if (0 < strlen($cur_icon)) {
+                $con_icons[] = $cur_icon;
+            }
+        }
+    }
+
     // to put the read constraints into parameters list
 
     foreach ($con_authors as $one_author) {
@@ -398,6 +409,14 @@ function smarty_function_set_map($p_params, &$p_smarty)
     if (0 < count($con_match_any_area)) {
         $leftOperand = 'matchanyarea';
         $rightOperand = $con_match_any_area[0];
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
+
+    foreach ($con_icons as $one_icon) {
+        $leftOperand = 'icon';
+        $rightOperand = $one_icon;
         $operator = new Operator('is', 'sql');
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $parameters[] = $constraint;

@@ -343,6 +343,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $mc_areas = array();
         $mc_areas_matchall = false;
         $mc_dates = array();
+        $mc_icons = array();
 
         // process params
         foreach ($p_parameters as $param) {
@@ -438,6 +439,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     $mc_dates[$param->getOperator()->getName()] = $param->getRightOperand();
                     $mc_mapCons = true;
                     break;
+                case 'icon':
+                    $mc_icons[] = $param->getRightOperand();
+                    $mc_mapCons = true;
+                    break;
                 default:
                     break;
             }
@@ -523,6 +528,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $paramsArray_arr["multimedia"] = $mc_multimedia;
             $paramsArray_arr["areas"] = $mc_areas;
             $paramsArray_arr["dates"] = $mc_dates;
+            $paramsArray_arr["icons"] = $mc_icons;
 
             $paramsArray_arr["orders"] = $ps_orders;
             $paramsArray_arr["limit"] = $mc_limit;
@@ -777,6 +783,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $one_date_usage .= "'$one_date_value' AND ";
     
                 $query_mcons .= $one_date_usage;
+                $article_mcons = true;
+            }
+
+            $mc_icons_usage = array();
+            foreach ($mc_icons as $one_icon_value) {
+                $one_icon_value = str_replace("'", "\"", $one_icon_value);
+                if (0 < strlen($one_icon_value)) {
+                    $mc_icons_usage[] = $one_icon_value;
+                }
+            }
+            if (0 < count($mc_icons_usage)) {
+                $query_mcons .= "ml.poi_style IN ('" . implode("', '", $mc_icons_usage) . "') AND ";
                 $article_mcons = true;
             }
 
