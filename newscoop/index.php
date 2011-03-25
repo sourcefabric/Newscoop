@@ -47,6 +47,12 @@ if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
     exit(0);
 }
 
+$stats_only = false;
+$campsite->writeStats($stats_only);
+if ($stats_only) {
+    exit(0);
+}
+
 // initiates the context
 $campsite->init();
 
