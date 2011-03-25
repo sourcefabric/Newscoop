@@ -9,6 +9,9 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusBorder','100
 -- css file to be included for map views
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoCSSFile','/javascript/geocoding/styles/map-info.css');
 
+-- Index on icons, they can be used for multi-map constraints
+ALTER TABLE MapLocations ADD INDEX map_locations_poi_style_idx(poi_style(64));
+
 -- Fix references to duplicated widgets
 UPDATE `WidgetContext_Widget`
 SET fk_widget_id = (

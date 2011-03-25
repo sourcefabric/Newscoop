@@ -1176,7 +1176,8 @@ CREATE TABLE `MapLocations` (
   `rank` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `map_locations_point_id` (`fk_location_id`),
-  KEY `map_locations_map_id` (`fk_map_id`)
+  KEY `map_locations_map_id` (`fk_map_id`),
+  KEY `map_locations_poi_style_idx` (`poi_style`(64))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
