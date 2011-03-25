@@ -1,6 +1,5 @@
 <?php
 camp_load_translation_strings('home');
-require_once($GLOBALS['g_campsiteDir'].'/classes/XR_CcClient.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
@@ -9,7 +8,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/crypto/rc4Encrypt.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/pear/PEAR.php');
-camp_load_translation_strings("api");
+camp_load_translation_strings('api');
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
@@ -90,8 +89,7 @@ function camp_passwd_decrypt($xorkey, $password)
 // password invalid, encrypted -> upgrade
 // password invalid, not encrypted -> userpass
 
-if (!$LiveUser->isLoggedIn() ||
-        ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
+if (!$LiveUser->isLoggedIn() || ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
     if (!$f_user_name) {
         $LiveUser->login(null, null, true);
     } elseif (!$LiveUser->login($f_user_name, $t_password, false)) {
@@ -103,10 +101,10 @@ if (!$LiveUser->isLoggedIn() ||
 }
 
 if ($LiveUser->getProperty('reader') == 'Y') {
-	camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-    	'error_code' => 'userpass',
-    	'request' => $requestId,
-	));
+    camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
+        'error_code' => 'userpass',
+        'request' => $requestId,
+    ));
 }
 
 $user = User::FetchUserByName($f_user_name, true);
@@ -123,20 +121,6 @@ if ($LiveUser->isLoggedIn()) {
     if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
         // if user valid, password valid, encrypted, no CAPTCHA -> login
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
-        if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') {
-            $ccLogin = camp_campcaster_login($f_user_name, $t_password);
-            if (PEAR::isError($ccLogin)) {
-                $errorMessage = $ccLogin->getMessage();
-                if ($ccLogin->getCode() == '802') {
-                    camp_html_add_msg(getGS("Your user is not a valid Campcaster user"));
-                } elseif (!empty($errorMessage)) {
-                    camp_html_add_msg(getGS("There was an error logging in to the Campcaster server")
-                    .':<br>'.$errorMessage);
-                } else {
-                    camp_html_add_msg(getGS("There was an error logging in to the Campcaster server"));
-                }
-            }
-        }
         camp_successful_login($user, $f_login_language);
     }
 }

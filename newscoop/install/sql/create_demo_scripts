@@ -14,7 +14,6 @@ fi
 TABLES="
  Aliases\
  ArticleAttachments\
- ArticleAudioclips\
  ArticleAuthors\
  ArticleComments\
  ArticleImages\
@@ -24,7 +23,6 @@ TABLES="
  ArticleTypeMetadata\
  Articles\
  Attachments\
- AudioclipMetadata\
  AuthorAliases\
  AuthorAssignedTypes\
  AuthorBiographies\

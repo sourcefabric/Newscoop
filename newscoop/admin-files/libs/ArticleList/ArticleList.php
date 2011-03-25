@@ -263,6 +263,9 @@ class ArticleList extends BaseList
         $commentsNo = 'No';
     }
 
+    // get language code
+    $language = new Language($article->getLanguageId());
+
     return array(
         $article->getArticleNumber(),
         $article->getLanguageId(),
@@ -270,8 +273,8 @@ class ArticleList extends BaseList
         sprintf('%s <a href="%s" title="%s %s">%s</a>',
             $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
             $articleLink,
-            getGS('Edit'), $article->getName(),
-            $article->getName()),
+            getGS('Edit'), $article->getName() . " ({$article->getLanguageName()})",
+            $article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : '')),
         $tmpArticleType->getDisplayName(),
         $tmpUser->getRealName(),
         $tmpAuthor->getName(),

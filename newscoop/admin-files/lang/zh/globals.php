@@ -2,7 +2,6 @@
 regGS("Account", "");
 regGS("Items per page", "");
 regGS("Add new", "");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "首页");
 regGS("Logout", "注销");
 regGS("More...", "");
@@ -254,7 +253,6 @@ regGS("Thank you.", "");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("User name", "用户名");

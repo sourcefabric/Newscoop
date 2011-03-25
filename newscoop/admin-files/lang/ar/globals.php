@@ -2,7 +2,6 @@
 regGS("Account", "حساب");
 regGS("Items per page", "عدد العناصر للصفحة");
 regGS("Add new", "أضف جديد");
-regGS("Campsite", "كامبسايت");
 regGS("Home", "البداية");
 regGS("Logout", "خروج");
 regGS("More...", "المزيد...");
@@ -254,7 +253,6 @@ regGS("Thank you.", "");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Cuenta", "");

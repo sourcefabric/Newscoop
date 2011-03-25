@@ -68,9 +68,6 @@ $no_menu_scripts = array(
     '/articles/images/view.php',
     '/articles/topics/popup.php',
     '/articles/files/popup.php',
-    '/articles/audioclips/campcaster_login.php',
-    '/articles/audioclips/popup.php',
-    '/articles/audioclips/edit.php',
     '/articles/empty.php',
     '/articles/post.php',
     '/comments/ban.php',
@@ -115,17 +112,7 @@ if (($extension == '.php') || ($extension == '')) {
         // Check if the user is logged in already
         list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
         if (!$access) {
-            if ($call_script == '/articles/audioclips/popup.php') {
-                print("<script>\n");
-                print("try {\n");
-                print("window.opener.document.forms.article_edit.submit();\n");
-                print("} catch (e) {}\n");
-                print("window.close();\n");
-                print("</script>\n");
-            }
-
-            // If not logged in:
-            // store request
+            // If not logged in: store request
             $request = serialize(array(
                 'uri' => $_SERVER['REQUEST_URI'],
                 'post' => $_POST,

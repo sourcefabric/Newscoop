@@ -289,6 +289,10 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();
     @exec($cmd, $p_output, $result);
+    $additionalFile = $Campsite['CAMPSITE_DIR'] . '/bin/mysql-dump-ext.sql';
+    if (file_exists($additionalFile)) {
+        @exec('cat ' . $additionalFile . '>>' .$p_destFile, $p_output, $result);
+    }
     return $result;
 } // fn camp_backup_database
 
@@ -424,10 +428,8 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
 
     $first = true;
     $skipped = array();
-    $versions = array("2.0.x", "2.1.x", "2.2.x", "2.3.x", "2.4.x", "2.5.x",
-                      "2.6.0", "2.6.1", "2.6.2", "2.6.3", "2.6.4", "2.6.x",
-                      "2.7.x", "3.0.x", "3.1.0", "3.1.x", "3.2.x", "3.3.x",
-                      "3.4.x", "3.5.x");
+    $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
+    usort($versions, camp_version_compare);
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
@@ -437,11 +439,11 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
                 echo "\n\t* Upgrading the database from version $db_version...";
             }
             if ($old_version < '3.4.x') {
-            	$res = camp_utf8_convert(null, $skipped);
-            	if ($res !== true) {
-            		flock($lockFile, LOCK_UN); // release the lock
-            		return $res;
-            	}
+                $res = camp_utf8_convert(null, $skipped);
+                if ($res !== true) {
+                    flock($lockFile, LOCK_UN); // release the lock
+                    return $res;
+                }
             }
             $first = false;
         }
@@ -913,6 +915,33 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
     camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
                       true, $p_silent);
     return true;
+}
+
+/**
+ * Compares versions of Newscoop
+ * 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
+ */
+function camp_version_compare($p_version1, $p_version2) {
+    $version1 = "" . $p_version1;
+    $version2 = "" . $p_version2;
+
+    $ver1_arr = explode(".", $version1);
+    $ver2_arr = explode(".", $version2);
+    $ver1_len = count($ver1_arr);
+    $ver2_len = count($ver2_arr);
+
+    $ver_len = $ver1_len;
+    if ($ver2_len < $ver_len) {$ver_len = $ver2_len;}
+
+    for ($ind = 0; $ind < $ver_len; $ind++) {
+        if ($ver1_arr[$ind] < $ver2_arr[$ind]) {return -1;}
+        if ($ver1_arr[$ind] > $ver2_arr[$ind]) {return 1;}
+    }
+
+    if ($ver1_len < $ver2_len) {return -1;}
+    if ($ver1_len > $ver2_len) {return 1;}
+
+    return 0;
 }
 
 /**

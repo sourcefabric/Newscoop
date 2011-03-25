@@ -59,7 +59,7 @@ if (isset($_REQUEST['TOL_Language'])) {
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 $sent = false;
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 $disabled=false;
 if (SystemPref::Get("PasswordRecovery")=='N') {
     $disabled = true;
@@ -107,7 +107,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php
-    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
     ?>
     </noscript>
     <?php

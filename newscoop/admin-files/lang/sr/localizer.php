@@ -9,7 +9,6 @@ regGS("Translation status:", "Статус превода:");
 regGS("Editor Media Plugin", "Едитор Медиа плагин");
 regGS("$1 of $2 strings translated", "$1 од $2 стринг(ов)а преведено");
 regGS("Preview Window", "Прозор за преглед");
-regGS("Article Audioclips", "Аудио записи уз текст");
 regGS("Show translated strings", "Прикажи преведене стрингове");
 regGS("Hide translated strings", "Сакриј преведене стрингове");
 regGS("Feedback", "Повратна информација");
