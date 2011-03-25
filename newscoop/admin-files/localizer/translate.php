@@ -109,7 +109,6 @@ function translationForm($p_request)
     $mapPrefixToDisplay["article_files"] = getGS("Article Files");
     $mapPrefixToDisplay["article_topics"] = getGS("Article Topics");
     $mapPrefixToDisplay["article_comments"] = getGS("Article Comments");
-    $mapPrefixToDisplay["article_audioclips"] = getGS("Article Audioclips");
     $mapPrefixToDisplay["media_archive"] = getGS("Media Archive");
     $mapPrefixToDisplay["geolocation"] = getGS("Geo-location");
     $mapPrefixToDisplay["comments"] = getGS("Comments");

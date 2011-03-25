@@ -2,7 +2,6 @@
 regGS("Account", "Profiel");
 regGS("Items per page", "Items");
 regGS("Add new", "Voeg nieuw toe");
-regGS("Campsite", "Campsite");
 regGS("Home", "Start");
 regGS("Logout", "Loguit");
 regGS("More...", "Meer...");
@@ -254,7 +253,6 @@ regGS("Thank you.", "");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Cannot create file \"$1\"", "Kan bestand \"$1\" niet maken");

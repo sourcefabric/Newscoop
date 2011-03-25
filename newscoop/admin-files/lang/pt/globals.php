@@ -2,7 +2,6 @@
 regGS("Account", "Conta");
 regGS("Items per page", "Items por página");
 regGS("Add new", "Adicionar Novo");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "Página Principal");
 regGS("Logout", "Terminar Sessão");
 regGS("More...", "Mais...");
@@ -254,7 +253,6 @@ regGS("Thank you.", "Abrigado.");
 regGS("Please take a minute to send us an email.", "Por favor perca um minuto enviando-nos uma mensagem.");
 regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "O Endereço introduzido é inválido: '$1'");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("User name", "Nome de Utilizador");

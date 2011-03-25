@@ -1,5 +1,5 @@
 <?php 
-regGS("Unable to reach Campsite. Please check your internet connection.", "Nie można połączyć z Airtime. Sprawdź swoje połączenie z Internetem.");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.");
 regGS("Comments updated.", "Komentarze uaktulnione.");
 regGS("Post a Comment", "Dodaj komentarz");
 regGS("From", "Od");

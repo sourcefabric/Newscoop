@@ -2,7 +2,6 @@
 regGS("Account", "아이디 ");
 regGS("Items per page", "페이지당 아이템");
 regGS("Add new", "신규로 추가");
-regGS("Campsite", "캠프사이트");
 regGS("Home", "홈");
 regGS("Logout", "로그아웃");
 regGS("More...", "더보기");
@@ -254,7 +253,6 @@ regGS("Thank you.", "");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Publish with issue", "");

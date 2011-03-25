@@ -67,11 +67,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 минут(ы) назад.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Статья была заблокирована $1 ($2) $3 час(ов) $4 минут(ы) назад.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Ошибка в процессе установки автора \"$1\" для статьи №$2 (\"$3\") типа $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Невозможно соединиться с сервером Campsite, пожалуйста, проверьте настройки сервера.");
 regGS("Clear system cache", "Очистить систему кеширования");
 regGS("The system was unable to upload the file '$1'. ", "Система не может загрузить файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.");
-regGS("Your user is not a valid Campcaster user", "Данный пользователь не является зарегистрированным пользователем Campsite");
 regGS("Connection refused", "Соединение сброшено");
 regGS("An error occured in session management. Please reload the login page.", "Произошла ошибка в управлении БД. Пожалуйста, перезагрузите страницу.");
 regGS("This file is stored on disk as '$1'.", "Этот файл сохранен на диске как '$1'.");

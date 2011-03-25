@@ -32,16 +32,6 @@ echo camp_html_breadcrumbs($crumbs);
 camp_html_display_msgs("0.25em", "0.25em");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
-<table border="0" cellspacing="1" cellpadding="1" width="100%" class="current_location_table">
-	<tr>
-		<td align="right" width="1%" nowrap valign="top" class="current_location_title">
-			&nbsp;<?php putGS("User type"); ?>:
-		</td>
-		<td valign="top" class="current_location_content">
-			<?php echo $userType->getName(); ?>
-		</td>
-	</tr>
-</table>
 <?php
 $rightsList = array();
 $checkboxPrefix = 'checkbox_';
@@ -64,7 +54,7 @@ $jsRightsArray = implode(',', $rightsList);
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
-		<b><?php  putGS("Change user type permissions"); ?></b>
+		<b><?php putGS('User type'); echo ': ' . htmlspecialchars($userType->getName()); ?></b>
 	</td>
 </tr>
 <tr>

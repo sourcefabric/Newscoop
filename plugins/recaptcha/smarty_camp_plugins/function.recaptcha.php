@@ -22,7 +22,7 @@ function smarty_function_recaptcha($p_params, &$p_smarty)
 {
     $html = '';
     $captcha = Captcha::factory('ReCAPTCHA');
-    if ($captcha->isEnabled()) {
+    if ($captcha->isEnabled($p_params['form'] ?: '')) {
         $html = $captcha->render();
         if (is_array($html) && isset($html['error'])) {
             $html = '<p style="color:red;">' . $html['error'] . '</p>';

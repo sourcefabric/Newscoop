@@ -989,12 +989,6 @@ abstract class CampURI
                 $this->m_buildQueryArray = array();
                 $p_params = array();
                 break;
-            case 'audioattachment':
-                $context = CampTemplate::singleton()->context();
-                $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/audioclip/';
-                $this->m_buildQueryArray = array();
-                $p_params = array();
-                break;
             case 'articlecomment':
                 $context = CampTemplate::singleton()->context();
                 if ($context->comment->defined) {

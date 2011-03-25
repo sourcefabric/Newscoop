@@ -19,10 +19,12 @@ if (Input::Get('save')) {
     }
 
     $f_recaptcha_enabled = Input::Get('f_recaptcha_enabled', 'string', 'N');
+    $f_recaptcha_subscriptions_enabled = Input::Get('f_recaptcha_subscriptions_enabled', 'string', 'N');
     $f_recaptcha_public_key = Input::Get('f_recaptcha_public_key', 'string');
     $f_recaptcha_private_key = Input::Get('f_recaptcha_private_key', 'string');
 
     SystemPref::Set('PLUGIN_RECAPTCHA_ENABLED', $f_recaptcha_enabled);
+    SystemPref::Set('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED', $f_recaptcha_subscriptions_enabled);
     SystemPref::Set('PLUGIN_RECAPTCHA_PUBLIC_KEY', $f_recaptcha_public_key);
     SystemPref::Set('PLUGIN_RECAPTCHA_PRIVATE_KEY', $f_recaptcha_private_key);
 
@@ -60,6 +62,10 @@ camp_html_display_msgs();
 <tr>
   <td align="left"><?php putGS('Enable reCAPTCHA for comments'); ?></td>
   <td><input type="checkbox" name="f_recaptcha_enabled" value="Y" <?php if (SystemPref::Get('PLUGIN_RECAPTCHA_ENABLED') == 'Y') p('checked'); ?> /></td>
+</tr>
+<tr>
+  <td align="left"><?php putGS('Enable reCAPTCHA for subscriptions'); ?></td>
+  <td><input type="checkbox" name="f_recaptcha_subscriptions_enabled" value="Y" <?php if (SystemPref::Get('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED') == 'Y') p('checked'); ?> /></td>
 </tr>
 <tr>
   <td><?php putGS('Enter your reCAPTCHA public key'); ?>:</td>

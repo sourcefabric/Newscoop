@@ -72,7 +72,6 @@ $mapPrefixToDir["article_images"] = "/admin-files/articles/images";
 $mapPrefixToDir["article_files"] = "/admin-files/articles/files";
 $mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
 $mapPrefixToDir["article_comments"] = "/admin-files/articles/comments";
-$mapPrefixToDir["article_audioclips"] = "/admin-files/articles/audioclips";
 $mapPrefixToDir["media_archive"] = "/admin-files/media-archive";
 $mapPrefixToDir["geolocation"] = "/admin-files/articles/locations";
 $mapPrefixToDir["comments"] = "/admin-files/comments";

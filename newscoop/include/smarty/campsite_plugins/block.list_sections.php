@@ -41,7 +41,7 @@ function smarty_block_list_sections($p_params, $p_content, &$p_smarty, &$p_repea
     	$campContext->setCurrentList($sectionsList, array('publication', 'language',
     	                                                  'issue', 'section', 'article',
     	                                                  'image', 'attachment', 'comment',
-    	                                                  'audioclip', 'subtitle'));
+    	                                                  'subtitle'));
     	$campContext->section = $campContext->current_sections_list->current;
     	$p_repeat = true;
     } else {

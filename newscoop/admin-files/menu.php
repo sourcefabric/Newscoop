@@ -292,7 +292,7 @@ if ($showUserMenu) {
 $menu_plugins = CampPlugin::CreatePluginMenu();
 
 // Page title
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 
 // locale setting for datepicker
 $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';

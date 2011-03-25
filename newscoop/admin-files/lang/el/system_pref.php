@@ -3,8 +3,6 @@ regGS("Include CSS file for map view", "");
 regGS("Maximal zoom for auto-focusing:", "");
 regGS("Map border for auto-focusing:", "");
 regGS("Map auto-focusing as the default behavior:", "");
-regGS("Enable Airtime audio attachments?", "Ενεργοποίηση συννημένων ήχου Airtime;");
-regGS("Airtime Server", "Διακομιστής Airtime");
 regGS("Run scheduled tasks externally?", "Εκτέλεση προγραμματισμένων εργασιών εξωτερικά;");
 regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση Αντιγράφου του Διακομιστή Newscoop;");
 regGS("Newscoop Online Server Database", "Βάση Δεδομένων του Online Διακομιστή Newscoop ");
