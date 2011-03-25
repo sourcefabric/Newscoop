@@ -32,7 +32,6 @@
 
 {{ set_map
     label="some display string"
-    icons="marker-green.png, marker-blue.png"
     has_multimedia=true
     max_points=1000
 }}
@@ -54,6 +53,15 @@
 {{ list_map_locations length="200" }}
     {{ if $gimme->location->enabled}}
         <li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+        <ul>POI multimedia
+        {{ foreach from=`$gimme->location->multimedia` item=multimediaitem }}
+            <li>{{ $multimediaitem->src }}</li>
+            <li>{{ $multimediaitem->type }}</li>
+            <li>{{ $multimediaitem->spec }}</li>
+            <li>{{ $multimediaitem->width }}</li>
+            <li>{{ $multimediaitem->height }}</li>
+        {{ /foreach }}
+        </ul>
     {{ /if }}
 {{ /list_map_locations }}
 </ul>
