@@ -148,6 +148,8 @@ final class MetaArticleBodyField {
      */
     private function getContent(array $p_subtitles = array())
     {
+        global $Campsite;
+
         $printAll = count($p_subtitles) == 0;
         $content = '';
         foreach ($this->m_subtitles as $index=>$subtitle) {
@@ -168,6 +170,16 @@ final class MetaArticleBodyField {
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
+                $content .= '<script type="text/javascript">;
+                        var article_object = ' . $requestObjectId . '
+                        var request_randomizer = Math.random();
+                        $.ajax({
+                            url: "' . $Campsite['WEBSITE_URL'] . '/statistics/",
+                            data: {stats_only: 1, article_object: article_object, randomizer: request_randomizer},
+                            success: function() {}
+                        });
+                    </script>
+                ';
             } catch (Exception $ex) {
                 $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()
                          . "</font></strong></p>\n";

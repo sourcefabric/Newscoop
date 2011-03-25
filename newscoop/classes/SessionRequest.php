@@ -63,7 +63,7 @@ class SessionRequest {
         	if (!$requestStats->exists()) {
         		$requestStats->create();
         	}
-        	$requestStats->incrementRequestCount();
+        	//$requestStats->incrementRequestCount();
             $request->setLastStatsUpdate();
         }
     }

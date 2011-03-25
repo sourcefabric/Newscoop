@@ -266,6 +266,72 @@ final class CampSite extends CampSystem
         return $uriInstance;
     } // fn GetURI
 
+    /**
+     * Writes the statistics for the request.
+     *
+     * @param bool $p_uri
+     *      Is this request just for statistics.
+     * @return bool
+     */
+    public function writeStats(&$p_statsOnly)
+    {
+        $p_statsOnly = false;
+        //$p_statsOnly = true;
+        $output_html = " ";
+
+        // get _REQUEST['stats_only'], _REQUEST['article_number'], _REQUEST['language_id']
+        $p_statsOnly = $_REQUEST['stats_only'];
+
+        //$fh = fopen("/tmp/asdf0.txt", "a");
+        //fwrite($fh, "\n" . json_encode($_REQUEST) . "\n");
+        //fclose($fh);
+
+        if ($p_statsOnly)
+        {
+            global $g_ado_db;
+
+            //$article_number = $_REQUEST['article_number'];
+            //$language_id = $_REQUEST['language_id'];
+
+            $objId = null;
+            $objId = $_REQUEST['article_object'];
+/*
+            if ($article_number && $language_id) {
+                $queryStr = "SELECT object_id FROM Articles WHERE Number = ? AND IdLanguage = ?";
+                $objId = $g_ado_db->GetOne($queryStr, array($article_number, $language_id));
+            }
+*/
+
+            if ($objId)
+            {
+                //$fh = fopen("/tmp/asdf.txt", "a");
+                //fwrite($fh, "\n" . $objId . "\n");
+                //fclose($fh);
+
+                //if (!$request->isInStats())
+                {
+                    $requestStats = new RequestStats($objId);
+                    if (!$requestStats->exists()) {
+                        $requestStats->create();
+                    }
+                    $requestStats->incrementRequestCount();
+                    //$request->setLastStatsUpdate();
+                }
+            }
+
+            // the output string for stats only requests
+            echo $output_html;
+/*
+            echo "\n<pre>\n";
+            var_dump($_REQUEST);
+            echo "\n</pre>\n";
+*/
+        }
+
+        // whether the stats processing was correct
+        return true;
+    } // fn writeStats
+
 } // class CampSite
 
 ?>
