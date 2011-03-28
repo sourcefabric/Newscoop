@@ -146,10 +146,6 @@ class Admin_UserTypesController extends Zend_Controller_Action
         // get actions
         $actions = array(getGS('Any action'));
         foreach ($this->actionRepository->findAll() as $action) {
-            if ($action->getResource()) { // no resource specific
-                continue;
-            }
-
             $actions[$action->getId()] = $action->getName();
         }
         $form->addElement('select', 'action', array(

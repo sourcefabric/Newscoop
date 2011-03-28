@@ -39,16 +39,10 @@ class NewscoopEntityAclActionProxy extends \Newscoop\Entity\Acl\Action implement
         return parent::getName();
     }
 
-    public function getResource()
-    {
-        $this->_load();
-        return parent::getResource();
-    }
-
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'resource');
+        return array('__isInitialized__', 'id', 'name');
     }
 
     public function __clone()

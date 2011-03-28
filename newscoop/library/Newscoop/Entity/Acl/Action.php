@@ -28,12 +28,6 @@ class Action
     private $name;
 
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Acl\Resource")
-     * @var Newscoop\Entity\Acl\Resource
-     */
-    private $resource;
-
-    /**
      * Get id
      *
      * @return int
@@ -51,15 +45,5 @@ class Action
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Get resource
-     *
-     * @return Newscoop\Entity\Acl\Resource
-     */
-    public function getResource()
-    {
-        return $this->resource;
     }
 }
