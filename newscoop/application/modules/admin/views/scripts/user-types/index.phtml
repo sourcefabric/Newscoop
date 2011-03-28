@@ -13,17 +13,11 @@ if (empty($this->roles)) {
 }
 ?>
 
-<table class="user-types">
-    <tr>
-        <th><?php putGS('Type'); ?></th>
-        <th><?php putGS('Access'); ?></th>
-        <th><?php putGS('Delete'); ?></th>
-    </tr>
+<ul class="edit user-types">
     <?php foreach ($this->roles as $role) { ?>
-    <tr>
-        <td><?php echo $role->getName(); ?></td>
-        <td><a class="edit" href="<?php echo $this->url(array('action' => 'edit', 'role' => $role->getId())); ?>" title="<?php putGS('Edit user type $1', $role->getName()); ?>"><?php putGS('Edit'); ?></a></td>
-        <td><a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'role' => $role->getId())); ?>" title="<?php putGS('Delete user type $1', $role->getName()); ?>"><?php putGS('Delete'); ?></a></td>
-    </tr>
+    <li>
+        <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'role' => $role->getId())); ?>" title="<?php putGS('Delete user type $1', $role->getName()); ?>"><?php putGS('Delete'); ?></a>
+        <a class="edit" href="<?php echo $this->url(array('action' => 'edit', 'role' => $role->getId())); ?>" title="<?php putGS('Edit user type $1', $role->getName()); ?>"><?php echo $role->getName(); ?></a>
+    </li>
     <?php } ?>
-</table>
+</ul>

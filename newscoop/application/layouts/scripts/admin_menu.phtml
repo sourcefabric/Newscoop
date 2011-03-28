@@ -349,6 +349,14 @@ if ($showUserMenu) {
             'label' => getGS('Staff User Types'),
             'module' => 'admin',
             'controller' => 'user-types',
+            'pages' => array(
+                array(
+                    'label' => getGS('Edit user type'),
+                    'module' => 'admin',
+                    'controller' => 'user-types',
+                    'action' => 'edit',
+                ),
+            ),
         );
     }
 

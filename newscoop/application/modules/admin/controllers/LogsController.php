@@ -13,7 +13,7 @@ class Admin_LogsController extends Zend_Controller_Action
      */
     public function preDispatch()
     {
-        if (!$this->_helper->acl->isAllowed('Logs', 'view')) {
+        if (!$this->_helper->acl->isAllowed('Log', 'view')) {
             $this->_forward('deny', 'error', 'admin', array(
                 getGS("You do not have the right to view logs."),
             ));

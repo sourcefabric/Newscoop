@@ -38,7 +38,7 @@ class Admin_UserTypesController extends Zend_Controller_Action
 
     public function preDispatch()
     {
-        if (!$this->_helper->acl->isAllowed('Users', 'edit')) {
+        if (!$this->_helper->acl->isAllowed('User', 'edit')) {
             $this->_forward('deny', 'error', 'admin', array(
                 getGS("You do not have the right to change user type permissions."),
             ));
@@ -90,6 +90,7 @@ class Admin_UserTypesController extends Zend_Controller_Action
         $this->view->role = $role;
         $this->view->form = $form;
         $this->view->resources = $resources;
+        $this->view->ruleTypes = $this->ruleTypes;
     }
 
     public function deleteRuleAction()
@@ -132,6 +133,16 @@ class Admin_UserTypesController extends Zend_Controller_Action
             'label' => getGS('Add Rule'),
         ));
 
+        // get resources
+        $resources = array(getGS('Any resource'));
+        foreach ($this->resourceRepository->findAll() as $resource) {
+            $resources[$resource->getId()] = $resource->getName();
+        }
+        $form->addElement('select', 'resource', array(
+            'multioptions' => $resources,
+            'label' => getGS('Resource'),
+        ));
+
         // get actions
         $actions = array(getGS('Any action'));
         foreach ($this->actionRepository->findAll() as $action) {
@@ -144,16 +155,6 @@ class Admin_UserTypesController extends Zend_Controller_Action
         $form->addElement('select', 'action', array(
             'multioptions' => $actions,
             'label' => getGS('Action'),
-        ));
-
-        // get resources
-        $resources = array(getGS('Any resource'));
-        foreach ($this->resourceRepository->findAll() as $resource) {
-            $resources[$resource->getId()] = $resource->getName();
-        }
-        $form->addElement('select', 'resource', array(
-            'multioptions' => $resources,
-            'label' => getGS('Resource'),
         ));
 
         $form->addElement('hidden', 'role');

@@ -13,8 +13,7 @@ $(function() {
                 showSpeed: 150
             });
 
-            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s')
-                .prependTo(menu);
+            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s') .prependTo(menu);
         }
 
         // add css/attributes to main links
@@ -188,6 +187,22 @@ $(function() {
         $('<span />').addClass('ui-icon ui-icon-plus')
             .prependTo($(this));
     });
+
+    // zend_form fixes
+    $('dl.zend_form').each(function() {
+        var form = $(this);
+
+        // hide hidden fields
+        $('input:hidden', form).each(function() {
+            $(this).closest('dd').hide().prev('dt').hide();
+        });
+
+        // hide submit dt
+        $('input:submit', form).each(function() {
+            $(this).closest('dd').css('margin-top', '13px').prev('dt').hide();
+        });
+    });
+
 });
 
 /**
