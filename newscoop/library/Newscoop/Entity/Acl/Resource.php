@@ -28,6 +28,19 @@ class Resource
     private $name;
 
     /**
+     * @manyToMany(targetEntity="Action")
+     * @joinTable(name="acl_resource_action")
+     */
+    private $actions;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->actions = new ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -45,5 +58,15 @@ class Resource
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get actions
+     *
+     * @return ArrayCollection
+     */
+    public function getActions()
+    {
+        return $this->actions;
     }
 }

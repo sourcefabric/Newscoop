@@ -32,21 +32,18 @@ class Rule
 
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\Acl\Role", inversedBy="rules")
-     * @joinColumn(name="acl_role_id")
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
 
     /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Resource")
-     * @joinColumn(name="acl_resource_id")
      * @var Newscoop\Entity\Acl\Resource
      */
     private $resource;
 
     /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Action")
-     * @joinColumn(name="acl_action_id")
      * @var Newscoop\Entity\Acl\Action
      */
     private $action;
@@ -67,11 +64,12 @@ class Rule
      * @param string $type
      * @return Newscoop\Entity\Acl\Rule
      * @throws InvalidArgumentException
-     */ public function setType($type)
+     */
+    public function setType($type)
     {
         $type = strtolower((string) $type);
         if (!in_array($type, $this->types)) {
-            throw new InvalidArgumentException('Unknown rule type.');
+            throw new \InvalidArgumentException("Rule type '$type' not allowed.");
         }
 
         $this->type = (string) $type;

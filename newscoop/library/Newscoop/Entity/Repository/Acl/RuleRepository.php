@@ -34,9 +34,9 @@ class RuleRepository extends EntityRepository
         // get entities
         $role = $em->find('Newscoop\Entity\Acl\Role', (int) $values['role']);
         $resource = $values['resource'] ?
-            $em->find('Newscoop\Entity\Acl\Resource', (int) $values['resource']) : NULL;
+            $em->getReference('Newscoop\Entity\Acl\Resource', (int) $values['resource']) : NULL;
         $action = $values['action'] ?
-            $em->find('Newscoop\Entity\Acl\Action', (int) $values['action']) : NULL;
+            $em->getReference('Newscoop\Entity\Acl\Action', (int) $values['action']) : NULL;
 
         if ($this->isDuplicated($role, $resource, $action)) {
             throw new InvalidArgumentException(getGS('Rule for this resource/action exists already.'));

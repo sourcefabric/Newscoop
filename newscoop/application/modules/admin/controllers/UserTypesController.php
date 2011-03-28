@@ -102,6 +102,27 @@ class Admin_UserTypesController extends Zend_Controller_Action
     }
 
     /**
+     * Get actions for resource
+     */
+    public function actionsAction()
+    {
+        $params = $this->getRequest()->getParams();
+        $resourceId = isset($params['resource']) ? $params['resource'] : 0;
+        $resource = $this->resourceRepository->find((int) $resourceId);
+        if (!$resource) {
+            $this->view->actions = array();
+            return;
+        }
+
+        $actions = array();
+        foreach ($resource->getActions() as $action) {
+            $actions[] = $action->getId();
+        }
+
+        $this->view->actions = $actions;
+    }
+
+    /**
      * Get role
      *
      * @return Newscoop\Entity\Acl\Role
