@@ -42,7 +42,7 @@ if ($uType == "Staff") {
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 <div class="wrapper mid-sized">
 
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
@@ -118,7 +118,7 @@ if ($canManage) {
 
 <fieldset>
 <legend><?php putGS("IP address"); ?></legend>
-		
+
 		<input type="text" class="input_text" name="startIP1" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP1'] != 0) echo $userSearchParameters['startIP1']; ?>">.
 		<input type="text" class="input_text" name="startIP2" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP2'] != 0) echo $userSearchParameters['startIP2']; ?>">.
 		<input type="text" class="input_text" name="startIP3" size="3" maxlength="3" value="<?php if ($userSearchParameters['startIP3'] != 0) echo $userSearchParameters['startIP3']; ?>">.

@@ -35,13 +35,13 @@ foreach ($articleTopics as $topic) {
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
-  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js"></script>
-  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-1.8.6.custom.min.js"></script>
-  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.4.2.min.js"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/admin.js"></script>
 </head>
 <body class="pop-up">
 <?php if (count($topics) > 0) { ?>
-<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
+<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="post">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
@@ -144,7 +144,7 @@ $(document).ready(function() {
 <h1><?php putGS("Attach Topics"); ?></h1>
 </div>
 <p><?php putGS('No topics have been created yet.'); ?></p>
-    
+
 <?php } ?>
 
 </body>
