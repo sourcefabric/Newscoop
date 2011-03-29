@@ -126,15 +126,15 @@ foreach ($topics as $topicPath) {
 	</td>
 </tr>
 <tr style="display: none;" id="is_content">
-    <td><?php putGS('Is Content'); ?>:</td>
+    <td align="right"><?php putGS('Is Content'); ?>:</td>
     <td><input type="checkbox" name="f_is_content"></td>
 </tr>
 <tr style="display: none;" id="precision">
-    <td><?php putGS('Precision'); ?>:</td>
+    <td align="right"><?php putGS('Precision'); ?>:</td>
     <td><input type="text" class="input_select" size="2" maxlength="2" name="f_precision"></td>
 </tr>
-<tr style="display: block;" id="maxsize">
-    <td><?php putGS('Maxsize'); ?>:</td>
+<tr id="maxsize">
+    <td align="right"><?php putGS('Maxsize'); ?>:</td>
     <td><input type="text" class="input_select" size="3" maxlength="3" name="f_maxsize"></td>
 </tr>
 <TR>
