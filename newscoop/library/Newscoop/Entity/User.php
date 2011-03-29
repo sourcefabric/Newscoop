@@ -16,24 +16,80 @@ class User
 {
     /**
      * @id @generatedValue
-     * @column(type="integer")
+     * @column(type="integer", name="Id")
      * @var int
      */
-    private $Id;
+    private $id;
 
     /**
-     * @column
+     * @column(name="Name")
      * @var string
      */
-    private $Name;
+    private $name;
 
     /**
-     * Get user name
+     * @column(name="UName")
+     * @var string
+     */
+    private $username;
+
+    /**
+     * @column(name="Password")
+     * @var string
+     */
+    private $password;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     * @deprecated
+     */
+    public function getUserId()
+    {
+        return $this->getId();
+    }
+
+    /**
+     * Get name
      *
      * @return string
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
+    }
+
+    /**
+     * Get real name
+     *
+     * @return string
+     * @deprecated
+     */
+    public function getRealName()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Check permissions
+     *
+     * @param string $permission
+     * @return bool
+     * @deprecated
+     */
+    public function hasPermission($permission)
+    {
+        return true;
     }
 }

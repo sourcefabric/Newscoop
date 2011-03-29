@@ -10,9 +10,9 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected function _initDoctype()
     {
-        global $Campsite, $g_user;
+        global $Campsite;
 
-        $this->bootstrap('View');
+        $this->bootstrap('view');
         $this->view = $this->getResource('view');
 
         $this->view->doctype('HTML5');
@@ -26,9 +26,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             'cz' => 'cs',
         );
         $this->view->locale = $locale_fix[$locale] ?: $locale;
-
-        // set user
-        $this->view->user = $g_user;
     }
 
     /**
@@ -45,14 +42,29 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     }
 
     /**
-     * Add user to view if any
+     * Init auth
      */
     protected function _initAuth()
     {
+        global $g_user;
+
         $this->bootstrap('session');
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Newscoop\Auth\Plugin);
+
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
-            $this->view->user = $auth->getIdentity();
+            $doctrine = Zend_Registry::get('doctrine');
+            $user = $doctrine->getEntityManager()
+                ->find('Newscoop\Entity\User', $auth->getIdentity());
+            Zend_Registry::set('user', $user);
+
+            // set user to view
+            $this->bootstrap('view');
+            $this->view->user = $user;
+
+            // set user for legacy code
+            $g_user = $user;
         }
     }
 

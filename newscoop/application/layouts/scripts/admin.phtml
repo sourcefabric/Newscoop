@@ -18,8 +18,7 @@
 	<style type="text/css">
 		.fg-menu-ipod .fg-menu li { width: 95%; }
 		.fg-menu-ipod .ui-widget-content { border:0; }
-	</style>
-	<![endif]-->
+	</style> <![endif]-->
 
     <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery-ui/jquery-ui.min.js"></script>
@@ -69,7 +68,7 @@
 <body>
 <div class="meta-bar">
     <ul>
-        <li><a href="<?php echo $this->baseUrl('admin/logout.php'); ?>"><?php putGS('Logout'); ?></a></li>
+        <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'auth')); ?>"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php echo $this->helpUrl; ?>" target="_blank"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
     </ul>

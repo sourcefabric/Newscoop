@@ -61,6 +61,13 @@ $plugins = CampPlugin::GetEnabled(true);
 foreach ($plugins as $plugin) {
     camp_load_translation_strings("plugin_".$plugin->getName());
 }
+    // Load common translation strings
+    camp_load_translation_strings('globals');
+
+require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
+
+// run zend
+require_once dirname(__FILE__) . '/public/index.php';
 
 $no_menu_scripts = array(
     $prefix . 'login.php',
@@ -116,40 +123,6 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 }
 
 if (($extension == '.php') || ($extension == '')) {
-
-    // If they arent trying to login in...
-    if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php') && $call_script != $prefix . 'password_recovery.php' && $call_script != $prefix . 'password_check_token.php') {
-
-        // Check if the user is logged in already
-        list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
-        if (!$access) {
-            if ($call_script == '/articles/audioclips/popup.php') {
-                print("<script>\n");
-                print("try {\n");
-                print("window.opener.document.forms.article_edit.submit();\n");
-                print("} catch (e) {}\n");
-                print("window.close();\n");
-                print("</script>\n");
-            }
-
-            // If not logged in:
-            // store request
-            $request = serialize(array(
-                'uri' => $_SERVER['REQUEST_URI'],
-                'post' => $_POST,
-            ));
-            $requestId = sha1($request);
-            camp_session_set("request_$requestId", $request);
-
-            // show the login screen
-            header("Location: /{$ADMIN}{$prefix}login.php?request=$requestId");
-            exit(0);
-        }
-    }
-
-    // Load common translation strings
-    camp_load_translation_strings('globals');
-
     // If its not a PHP file, assume its a directory.
     if ($extension != '.php') {
         // If its a directory
@@ -171,30 +144,10 @@ if (($extension == '.php') || ($extension == '')) {
     unset($no_menu_scripts);
     unset($request_uri);
 
-    // Restore POST request
-    $requestId = Input::Get('request', 'string', '', TRUE);
-    $request = camp_session_get("request_$requestId", '');
-    if (!empty($request)) {
-        $request = unserialize($request);
-
-        // Update security token.
-        $token_field = SecurityToken::SECURITY_TOKEN;
-        $request['post'][$token_field] = SecurityToken::GetToken();
-
-        // Set values.
-        foreach ($request['post'] as $key => $val) {
-            $_POST[$key] = $_REQUEST[$key] = $val;
-        }
-    }
-
     if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
         CampCache::singleton()->clear('user');
         unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
     }
-    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
-
-    // run zend
-    require_once dirname(__FILE__) . '/public/index.php';
 
     if (!file_exists($path_name)) {
 

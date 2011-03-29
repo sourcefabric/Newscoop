@@ -7,6 +7,10 @@ global $Campsite, $g_user;
 
 camp_load_translation_strings('home');
 
+if (!isset($g_user)) {
+    $g_user = Zend_Registry::get('user');
+}
+
 $showPublishingEnvironmentMenu = ($g_user->hasPermission('ManageTempl')
     || $g_user->hasPermission('DeleteTempl')
     || $g_user->hasPermission('ManageArticleTypes')
@@ -224,7 +228,7 @@ if ($g_user->hasPermission('ManageLanguages')) {
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Change your password'),
-    'uri' => $view->baseUrl("admin/users/edit.php?uType=Staff&User={$g_user->getUserId()}"),
+    'uri' => $view->baseUrl("admin/users/edit.php?uType=Staff&User={$g_user->getId()}"),
 );
 
 if ($showAdminActions) {
