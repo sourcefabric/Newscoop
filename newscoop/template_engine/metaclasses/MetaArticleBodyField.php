@@ -170,16 +170,29 @@ final class MetaArticleBodyField {
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
-                $content .= '<script type="text/javascript">;
-                        var article_object = ' . $requestObjectId . '
-                        var request_randomizer = Math.random();
+
+                $stat_web_url = $Campsite['WEBSITE_URL'];
+                if ((strlen($stat_web_url) - 1) != strrpos($stat_web_url, "/")) {$stat_web_url .= "/";}
+                $stat_web_url .= "statistics/";
+
+                $article_number = $this->m_parent_article->getProperty('Number');
+                $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
+                $language_code = $language_obj->Code;
+
+                $context = CampTemplate::singleton()->context();
+                if (!$context->preview) {
+                    $content .= '
+                        <script type="text/javascript">;
+                        var read_date = new Date();
+                        var request_randomizer = "" + read_date.getTime() + Math.random();
                         $.ajax({
-                            url: "' . $Campsite['WEBSITE_URL'] . '/statistics/",
-                            data: {stats_only: 1, article_object: article_object, randomizer: request_randomizer},
+                            url: "' . $stat_web_url . 'reader/article/' . $article_number . '/' . $language_code . '/",
+                            data: {randomizer: request_randomizer},
                             success: function() {}
                         });
                     </script>
-                ';
+                    ';
+                }
             } catch (Exception $ex) {
                 $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()
                          . "</font></strong></p>\n";
