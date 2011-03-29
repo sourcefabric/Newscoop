@@ -37,11 +37,11 @@ $countries = Country::GetCountries(1);
 $my_user_type = $editUser->getUserType();
 
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_meter_min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/js/pwd_generator_min.js"></script>
-<link href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/pwd_meter/css/default.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/pwd_meter/js/pwd_meter_min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/pwd_meter/js/pwd_generator_min.js"></script>
+<link href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/pwd_meter/css/default.css" rel="stylesheet" type="text/css" />
 
 
 <form name="user_add" method="POST" action="<?php echo $action; ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
