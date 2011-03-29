@@ -48,7 +48,7 @@ if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
 }
 
 $stats_only = false;
-$campsite->writeStats($stats_only);
+$campsite->processStats($stats_only);
 if ($stats_only) {
     exit(0);
 }
