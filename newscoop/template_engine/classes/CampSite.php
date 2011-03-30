@@ -321,7 +321,6 @@ final class CampSite extends CampSystem
             }
             if (1 < count($one_part_arr)) {break;}
         }
-        //var_dump($stat_info_arr);
 
         $art_read_action = false;
 
@@ -375,18 +374,14 @@ final class CampSite extends CampSystem
 
         // taking the article object, if it exists
         $art_obj = new Article($language_id, $p_articleNumber);
-        //var_dump($art_obj);
         if ((!$art_obj) || (!$art_obj->exists())) {return false;}
 
         // no new stats for non-published articles
         if (!$art_obj->isPublished()) {return false;}
 
-        // session used for 1) taking user id if article not public, 2) for stats writing
-        // we require to have a session, since it should be already created on article reading
+        // session used for stats writing (not to take an article reading more than once per session)
+        // session may be new when reading an externally cached article, thus not checking sessions here
         $session_id = session_id();
-        if (!$session_id) {return false;}
-        $session = new Session($session_id);
-        if (!$session->exists()) {return false;}
 
         /*
             a user can read (and thus update stats) just for articles with correct access rights to
@@ -396,24 +391,68 @@ final class CampSite extends CampSystem
         if ($art_obj->isPublic()) {
             $is_accessible = true;
         }
-        //var_dump($is_accessible);
 
         // if not a public article, we have to have read access to it
+        // taking user id (article not public) from CampURI that is contained via an URIInstance
+        $user_id = 0;
+        $uri_inst = self::GetURIInstance();
+        $meta_user = $uri_inst->user;
+        if ($meta_user) {
+            $user_id = $meta_user->identifier;
+        }
         if (!$is_accessible) {
+            require_once($GLOBALS['g_campsiteDir'].'/include/pear/Date.php');
+
+            // user info
+            $user = new User($user_id);
+
+            // article info
+            $publ_id = $art_obj->getPublicationId();
             $section_number = $art_obj->getSectionNumber();
-            $sessionUserId = intval($session->getUserId());
-            if ($sessionUserId)
+
+            // if having a user
+            if ($user_id)
             {
-                $user = new User($sessionUserId);
-                if ($user && $user->exists()) {
-                    $is_accessible = (bool) ($user->defined && $user->subscription->is_valid
-                    && $user->subscription->has_section($section_number));
+                // taking all subscriptions of the user on the current publication
+                $subs = Subscription::GetSubscriptions($publ_id, $user_id);
+
+                $sub_sec_valid = false;
+                foreach ($subs as $one_sub) {
+                    $today = new Date(time());
+                    $today_date = $today->getDate();
+                    // section can be subscribed either under current language or for any language
+                    if ($one_sub->isActive()) {
+                        $sub_sec = new SubscriptionSection($one_sub->getSubscriptionId(), $section_number, $language_id);
+                        if ($sub_sec && $sub_sec->exists()) {
+                            $exp_day = $sub_sec->getExpirationDate();
+                            if ($exp_date >= $today->getDate()) {
+                                $sub_sec_valid = true;
+                            }
+                        }
+                        if (!$sub_sec_valid) {
+                            $sub_sec = new SubscriptionSection($one_sub->getSubscriptionId(), $section_number, 0);
+                            if ($sub_sec && $sub_sec->exists()) {
+                                $exp_date = $sub_sec->getExpirationDate();
+                                if ($exp_date >= $today_date) {
+                                    $sub_sec_valid = true;
+                                }
+                            }
+                        }
+                    }
+                    // do not need to search more if found
+                    if ($sub_sec_valid) {
+                        break;
+                    }
+
+                }
+
+                if ($sub_sec_valid) {
+                    $is_accessible = true;
                 }
             }
         }
 
         // if the article not open for us, no stats on that (since reading not possible)
-        //var_dump($is_accessible);
         if (!$is_accessible) {return false;}
 
         // the object_id is used for actual statistics
@@ -421,13 +460,10 @@ final class CampSite extends CampSystem
         // if no object_id on the article, then no statistics
         if ($objId)
         {
-            echo "<br>\ngoing to write stats for $objId<br>\n";
-            //$fh = fopen("/tmp/asdf.txt", "a");
-            //fwrite($fh, "\n" . $objId . "\n");
-            //fclose($fh);
-
-            // the stats writing itself
-            SessionRequest::UpdateStats($session_id, $objId);
+            // the stats writing itself; going through session checking/creation for situations when a cached article was read
+            // thus calling SessionRequest::Create() instead of doing direct statistics updates via SessionRequest::UpdateStats()
+            $objectType = new ObjectType('article');
+            SessionRequest::Create($session_id, $objId, $objectType->getObjectTypeId(), $user_id, true);
         }
 
     } // fn writeStats

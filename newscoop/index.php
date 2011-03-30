@@ -46,6 +46,7 @@ if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
     exit(0);
 }
 
+// checking whether it is a statistics (js based) request
 $stats_only = false;
 $campsite->processStats($stats_only);
 if ($stats_only) {

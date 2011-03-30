@@ -83,7 +83,7 @@ class SessionRequest {
             }
             $requestStats->incrementRequestCount();
             $request->setLastStatsUpdate();
-            echo "stats updated";
+
             return true;
         }
 
