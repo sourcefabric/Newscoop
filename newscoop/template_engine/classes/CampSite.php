@@ -282,25 +282,31 @@ final class CampSite extends CampSystem
 
         /*
             looking whether the request is of form used for statistics, i.e.
-            http(s)://newscoop_domain/(newscoop_dir/)statistics/...
+            http(s)://newscoop_domain/(newscoop_dir/)_statistics/...
         */
-        // website url without 'http(s)://'
-        $path_prefix = substr($Campsite['WEBSITE_URL'], 8);
-        // removing domain from website_url (i.e. up to the first '/')
-        $path_domain = strpos($path_prefix, "/");
-        if (FALSE !== $path_domain) {
-            $path_prefix = substr($path_prefix, $path_domain + 1); // the path of website url without the leading '/'
+
+        $path_campsite = strtolower($Campsite['WEBSITE_URL']);
+        $path_request = strtolower($_SERVER['REQUEST_URI']);
+
+        // here we take the uri part of the campsite webdir
+        // it is an empty string for domain based installations
+        $path_matches = array();
+        preg_match("@^http(?:s)?://(?:[^/]+)(?:/)?(.*)$@i", $path_campsite, $path_matches);
+
+        // the path prefix that should be removed when checking the statistics directory
+        $path_prefix = "/";
+        if (2 <= count($path_matches)) {
+            $path_prefix .= $path_matches[1];
         }
-        else {
-            $path_prefix = ""; // empty path if website url is just a domain
+        if ("/" != $path_prefix[strlen($path_prefix)-1]) {
+            $path_prefix .= "/";
         }
-        $path_prefix = "/" . $path_prefix; // the website url path, w/o domain
-        if ((strlen($path_prefix) - 1) != strrpos($path_prefix, "/")) {$path_prefix .= "/";}
+
         // the path (as of request_uri) that is for the statistics part
-        $stat_start = $path_prefix . "statistics";
+        $stat_start = $path_prefix . "_statistics";
         $stat_start_len = strlen($stat_start);
         // if request_uri starts with the statistics path, it is just for the statistics things
-        if (substr($_SERVER['REQUEST_URI'], 0, $stat_start_len) == $stat_start) {
+        if (substr($path_request, 0, $stat_start_len) == $stat_start) {
             $p_statsOnly = true;
         }
         // if not on statistics, just return and let run the standard newscoop processing
@@ -319,7 +325,9 @@ final class CampSite extends CampSystem
             if ("" != $one_part) {
                 $stat_info_arr[] = $one_part;
             }
-            if (1 < count($one_part_arr)) {break;}
+            if (1 < count($one_part_arr)) {
+                break;
+            }
         }
 
         $art_read_action = false;
@@ -327,10 +335,8 @@ final class CampSite extends CampSystem
         // for now, the only known action is to update statistics on article readering, i.e. for
         // uri path of form (/newscoop_path)/statistics/reader/article/article_number/language_code/?...
         if (4 <= count($stat_info_arr)) {
-            if ("reader" == $stat_info_arr[0]) {
-                if ("article" == $stat_info_arr[1]) {
-                    $art_read_action =  true;
-                }
+            if (("reader" == $stat_info_arr[0]) && ("article" == $stat_info_arr[1])) {
+                $art_read_action =  true;
             }
         }
 
@@ -344,7 +350,9 @@ final class CampSite extends CampSystem
             $language_code = $stat_info_arr[3];
 
             $written = $this->writeStats($article_number, $language_code);
-            if (!$written) {return false;}
+            if (!$written) {
+                return false;
+            }
         } // end of the stats action on article reading
 
         // the output string for stats only requests; nothing for now
@@ -366,18 +374,26 @@ final class CampSite extends CampSystem
      */
     private function writeStats($p_articleNumber, $p_languageCode)
     {
-        if ((!$p_articleNumber) || (!$p_languageCode)) {return false;}
+        if ((!$p_articleNumber) || (!$p_languageCode)) {
+            return false;
+        }
 
         // taking the language id, if it exists
         $language_id = Language::GetLanguageIdByCode($p_languageCode);
-        if (!$language_id) {return false;}
+        if (!$language_id) {
+            return false;
+        }
 
         // taking the article object, if it exists
         $art_obj = new Article($language_id, $p_articleNumber);
-        if ((!$art_obj) || (!$art_obj->exists())) {return false;}
+        if ((!$art_obj) || (!$art_obj->exists())) {
+            return false;
+        }
 
         // no new stats for non-published articles
-        if (!$art_obj->isPublished()) {return false;}
+        if (!$art_obj->isPublished()) {
+            return false;
+        }
 
         // session used for stats writing (not to take an article reading more than once per session)
         // session may be new when reading an externally cached article, thus not checking sessions here
@@ -387,10 +403,6 @@ final class CampSite extends CampSystem
             a user can read (and thus update stats) just for articles with correct access rights to
         */
         // if a public article, can write stats
-        $is_accessible = false;
-        if ($art_obj->isPublic()) {
-            $is_accessible = true;
-        }
 
         // if not a public article, we have to have read access to it
         // taking user id (article not public) from CampURI that is contained via an URIInstance
@@ -400,6 +412,14 @@ final class CampSite extends CampSystem
         if ($meta_user) {
             $user_id = $meta_user->identifier;
         }
+
+        // to save processing time, we push the statistics requests even on articles we do not have access to
+/*
+        $is_accessible = false;
+        if ($art_obj->isPublic()) {
+            $is_accessible = true;
+        }
+
         if (!$is_accessible) {
             require_once($GLOBALS['g_campsiteDir'].'/include/pear/Date.php');
 
@@ -411,8 +431,7 @@ final class CampSite extends CampSystem
             $section_number = $art_obj->getSectionNumber();
 
             // if having a user
-            if ($user_id)
-            {
+            if ($user_id) {
                 // taking all subscriptions of the user on the current publication
                 $subs = Subscription::GetSubscriptions($publ_id, $user_id);
 
@@ -453,13 +472,15 @@ final class CampSite extends CampSystem
         }
 
         // if the article not open for us, no stats on that (since reading not possible)
-        if (!$is_accessible) {return false;}
+        if (!$is_accessible) {
+            return false;
+        }
+*/
 
         // the object_id is used for actual statistics
         $objId = $art_obj->m_data['object_id'];
         // if no object_id on the article, then no statistics
-        if ($objId)
-        {
+        if ($objId) {
             // the stats writing itself; going through session checking/creation for situations when a cached article was read
             // thus calling SessionRequest::Create() instead of doing direct statistics updates via SessionRequest::UpdateStats()
             $objectType = new ObjectType('article');

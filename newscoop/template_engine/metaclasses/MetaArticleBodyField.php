@@ -170,11 +170,10 @@ final class MetaArticleBodyField {
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
-
                 $stat_web_url = $Campsite['WEBSITE_URL'];
-                if ((strlen($stat_web_url) - 1) != strrpos($stat_web_url, "/")) {$stat_web_url .= "/";}
-                $stat_web_url .= "statistics/";
-
+                if ("/" != $stat_web_url[strlen($stat_web_url)-1]) {
+                    $stat_web_url .= "/";
+                }
                 $article_number = $this->m_parent_article->getProperty('Number');
                 $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
                 $language_code = $language_obj->Code;
@@ -184,7 +183,7 @@ final class MetaArticleBodyField {
                     $content .= '
                         <script type="text/javascript">
                         var read_date = new Date();
-                        var read_path = "reader/article/";
+                        var read_path = "_statistics/reader/article/";
                         var request_randomizer = "" + read_date.getTime() + Math.random();
                         try {
                             $.ajax({
