@@ -1,0 +1,5 @@
+<h1><?php echo getGS('Edit'), ' ', $this->language->getName(); ?></h1>
+
+<?php $this->renderError(); ?>
+
+<?php echo $this->form->setAction($this->url())->setMethod('post')->render(); ?>
