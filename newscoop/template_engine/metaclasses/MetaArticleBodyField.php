@@ -182,14 +182,17 @@ final class MetaArticleBodyField {
                 $context = CampTemplate::singleton()->context();
                 if (!$context->preview) {
                     $content .= '
-                        <script type="text/javascript">;
+                        <script type="text/javascript">
                         var read_date = new Date();
+                        var read_path = "reader/article/";
                         var request_randomizer = "" + read_date.getTime() + Math.random();
-                        $.ajax({
-                            url: "' . $stat_web_url . 'reader/article/' . $article_number . '/' . $language_code . '/",
-                            data: {randomizer: request_randomizer},
-                            success: function() {}
-                        });
+                        try {
+                            $.ajax({
+                                url: "' . $stat_web_url . '" + read_path + "' . $article_number . '/' . $language_code . '/",
+                                data: {randomizer: request_randomizer},
+                                success: function() {}
+                            });
+                        } catch (e) {}
                     </script>
                     ';
                 }
