@@ -15,12 +15,12 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Content-Type: text/html; charset=UTF-8");
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
-.DIRECTORY_SEPARATOR.'campsite_constants.php');
+    .DIRECTORY_SEPARATOR.'campsite_constants.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
 // goes to install process if configuration files does not exist yet
 if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
-|| !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+        || !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
     header('Location: '.$Campsite['SUBDIR'].'/install/');
     exit(0);
 }
@@ -61,8 +61,9 @@ $plugins = CampPlugin::GetEnabled(true);
 foreach ($plugins as $plugin) {
     camp_load_translation_strings("plugin_".$plugin->getName());
 }
-    // Load common translation strings
-    camp_load_translation_strings('globals');
+
+// Load common translation strings
+camp_load_translation_strings('globals');
 
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
 
