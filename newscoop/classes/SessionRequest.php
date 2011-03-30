@@ -69,7 +69,9 @@ class SessionRequest {
      * @return bool
      */
     public static function UpdateStats($p_sessionId, $p_objectId) {
-        if ((!$p_sessionId) || (!$p_objectId)) {return false;}
+        if ((!$p_sessionId) || (!$p_objectId)) {
+            return false;
+        }
 
         $request = new Request($p_sessionId, $p_objectId);
         if (!$request->exists()) {
