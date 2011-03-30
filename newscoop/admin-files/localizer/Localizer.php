@@ -720,7 +720,8 @@ class Localizer {
             return true;
         }
         $files = File_Find::mapTreeMultiple($langDir, 1);
-        foreach ($files as $pathname) {
+        foreach ($files as $fileName) {
+            $pathname = $langDir . DIR_SEP . $fileName;
             if (file_exists($pathname)) {
             	if (is_writable($pathname)) {
                 	unlink($pathname);
