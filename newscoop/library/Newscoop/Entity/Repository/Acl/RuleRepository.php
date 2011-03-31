@@ -39,7 +39,7 @@ class RuleRepository extends EntityRepository
             $em->getReference('Newscoop\Entity\Acl\Action', (int) $values['action']) : NULL;
 
         if ($this->isDuplicated($role, $resource, $action)) {
-            throw new InvalidArgumentException(getGS('Rule for this resource/action exists already.'));
+            throw new InvalidArgumentException;
         }
 
         $rule->setType($values['type']);

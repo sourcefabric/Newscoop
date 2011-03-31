@@ -7,6 +7,9 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Entity\Acl\Role;
+
 /**
  * User entity
  * @entity
@@ -38,6 +41,28 @@ class User
      * @var string
      */
     private $password;
+
+    /**
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
+     * @joinTable(name="liveuser_groupusers",
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
+     *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
+     *      )
+     */
+    private $groups;
+
+    /**
+     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role")
+     * @var Newscoop\Entity\Acl\Role
+     */
+    private $role;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection;
+    }
 
     /**
      * Get id
@@ -79,6 +104,48 @@ class User
     public function getRealName()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get groups
+     *
+     * @return array of Newscoop\Entity\User\Group
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set role
+     *
+     * @param Newscoop\Entity\Acl\Role $role
+     * @return Newscoop\Entity\User
+     */
+    public function setRole(Role $role)
+    {
+        $this->role = $role;
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return Newscoop\Entity\Acl\Role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get role id
+     *
+     * @return int
+     */
+    public function getRoleId()
+    {
+        return $this->role ? $this->role->getId() : 0;
     }
 
     /**

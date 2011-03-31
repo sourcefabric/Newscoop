@@ -15,8 +15,7 @@ class Admin_ErrorController extends Zend_Controller_Action
 
     public function denyAction()
     {
-        $params = $this->getRequest()->getParams();
-        $this->view->message = $params[0];
+        $this->view->message = $this->getRequest()->getParam('message', '');
     }
 }
 

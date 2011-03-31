@@ -13,11 +13,7 @@ class Admin_LogsController extends Zend_Controller_Action
      */
     public function preDispatch()
     {
-        if (!$this->_helper->acl->isAllowed('Log', 'view')) {
-            $this->_forward('deny', 'error', 'admin', array(
-                getGS("You do not have the right to view logs."),
-            ));
-        }
+        $this->_helper->acl->check('log', 'view');
     }
 
     /**
@@ -52,12 +48,11 @@ class Admin_LogsController extends Zend_Controller_Action
         $priority = NULL;
         $form = $this->getPriorityForm()
             ->setMethod('get')
-            ->setAction($this->view->url());
+            ->setAction('');
 
         // handle form if valid
         if ($form->isValid($this->getRequest()->getParams())) {
-            $values = $form->getValues();
-            $priority = isset($values['priority']) ? $values['priority'] : NULL;
+            $priority = $this->getRequest()->getParam('priority', NULL);
         }
 
         $this->view->form = $form;

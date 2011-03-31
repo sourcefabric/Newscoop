@@ -2,22 +2,28 @@
 
 <?php
 $this->renderActions(array(
-    $this->url(array('action' => 'add')) => getGS('Add new user type'),
+    $this->url(array('action' => 'add-group')) => getGS('Add new user type'),
 ));
 ?>
 
 <?php
-if (empty($this->roles)) {
+if (empty($this->groups)) {
     $this->renderMessage(getGS('No user types.'));
     return;
 }
 ?>
 
 <ul class="edit user-types">
-    <?php foreach ($this->roles as $role) { ?>
+    <?php foreach ($this->groups as $group) { ?>
     <li>
-        <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'role' => $role->getId())); ?>" title="<?php putGS('Delete user type $1', $role->getName()); ?>"><?php putGS('Delete'); ?></a>
-        <a class="edit" href="<?php echo $this->url(array('action' => 'edit', 'role' => $role->getId())); ?>" title="<?php putGS('Edit user type $1', $role->getName()); ?>"><?php echo $role->getName(); ?></a>
+        <a class="delete confirm" href="<?php echo $this->url(array(
+            'action' => 'delete-group',
+            'group' => $group->getId(),
+        )); ?>" title="<?php putGS('Delete user type $1', $group->getName()); ?>"><?php putGS('Delete'); ?></a>
+        <a class="edit" href="<?php echo $this->url(array(
+            'action' => 'edit-role',
+            'role' => $group->getRoleId(),
+        )); ?>" title="<?php putGS('Edit user type $1', $group->getName()); ?>"><?php echo $group->getName(); ?></a>
     </li>
     <?php } ?>
 </ul>

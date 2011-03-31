@@ -61,10 +61,4 @@ foreach ($acl as $resource => $resourceActions) {
     }
 }
 
-// populate roles
-$sql = 'TRUNCATE acl_role';
-$g_ado_db->Execute($sql);
-$sql = 'INSERT INTO acl_role(name) SELECT group_define_name FROM liveuser_groups';
-$g_ado_db->Execute($sql);
-
 /** @todo populate rules */

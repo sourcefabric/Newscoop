@@ -1,11 +1,15 @@
 <?php
 
-use Newscoop\Entity\Acl\Rule;
+use Newscoop\Entity\Acl\Rule,
+    Newscoop\Entity\User\Group;
 
 class Admin_UserTypesController extends Zend_Controller_Action
 {
     /** @var array */
     private $ruleTypes;
+
+    /** @var Doctrine\ORM\EntityRepository */
+    private $groupRepository;
 
     /** @var Doctrine\ORM\EntityRepository */
     private $ruleRepository;
@@ -28,6 +32,7 @@ class Admin_UserTypesController extends Zend_Controller_Action
         $this->roleRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Role');
         $this->resourceRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Resource');
         $this->actionRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Action');
+        $this->groupRepository = $this->_helper->em->getRepository('Newscoop\Entity\User\Group');
 
         // set rule types
         $this->ruleTypes = array(
@@ -38,24 +43,22 @@ class Admin_UserTypesController extends Zend_Controller_Action
 
     public function preDispatch()
     {
-        if (!$this->_helper->acl->isAllowed('User', 'edit')) {
-            $this->_forward('deny', 'error', 'admin', array(
-                getGS("You do not have the right to change user type permissions."),
-            ));
-        }
+        $this->_helper->acl->check('userType', 'manage');
     }
 
     public function indexAction()
     {
-        $this->view->roles = $this->roleRepository->findAll();
+        $this->view->groups = $this->groupRepository->findAll();
     }
 
-    public function editAction()
+    public function editRoleAction()
     {
         $role = $this->getRole();
 
-        $form = $this->getAddRuleForm();
-        $form->setDefaults(array(
+        $form = $this->getAddRuleForm()
+            ->setAction('')
+            ->setMethod('post')
+            ->setDefaults(array(
                 'type' => 'allow',
                 'role' => $role->getId(),
             ));
@@ -67,9 +70,11 @@ class Admin_UserTypesController extends Zend_Controller_Action
                 $this->ruleRepository->save($rule, $form->getValues());
 
                 $this->_helper->flashMessenger->addMessage(getGS('Rule saved.'));
-                $this->_helper->redirector('edit', 'user-types', 'admin', array('role' => $role->getId()));
-            } catch (InvalidArgumentException $e) {
-                $this->view->error = $e->getMessage();
+                $this->_helper->redirector('edit-role', 'user-types', 'admin', array(
+                    'role' => $role->getId(),
+                ));
+            } catch (Exception $e) {
+                $this->view->error = getGS('Rule for this resource/action exists already.');
             }
         }
 
@@ -93,12 +98,40 @@ class Admin_UserTypesController extends Zend_Controller_Action
         $this->view->ruleTypes = $this->ruleTypes;
     }
 
+    public function addGroupAction()
+    {
+        $form = $this->getGroupForm()
+            ->setMethod('post')
+            ->setAction('');
+
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            try {
+                $group = new Group;
+                $this->groupRepository->save($group, $form->getValues());
+                $this->_helper->flashMessenger->addMessage(getGS('User type added.'));
+                $this->_helper->redirector('index');
+            } catch (Exception $e) {
+                $form->getElement('name')->addError(getGS('Name taken.'));
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function deleteGroupAction()
+    {
+        $this->groupRepository->delete((int) $this->getRequest()->getParam('group', 0));
+        $this->_helper->flashMessenger->addMessage(getGS('User type deleted.'));
+        $this->_helper->redirector('index');
+    }
+
     public function deleteRuleAction()
     {
-        $params = $this->getRequest()->getParams();
-        $this->ruleRepository->delete($params['rule']);
+        $this->ruleRepository->delete($this->getRequest()->getParam('rule', 0));
         $this->_helper->flashMessenger->addMessage(getGS('Rule removed.'));
-        $this->_helper->redirector('edit', 'user-types', 'admin', array('role' => $params['role']));
+        $this->_helper->redirector('edit-role', 'user-types', 'admin', array(
+            'role' => $this->getRequest()->getParam('role', 0),
+        ));
     }
 
     /**
@@ -175,6 +208,28 @@ class Admin_UserTypesController extends Zend_Controller_Action
         ));
 
         $form->addElement('hidden', 'role');
+
+        $form->addElement('submit', 'submit', array(
+            'ignore' => true,
+            'label' => getGS('Add'),
+        ));
+
+        return $form;
+    }
+
+    /**
+     * Get group form
+     *
+     * @return Zend_Form
+     */
+    private function getGroupForm()
+    {
+        $form = new Zend_Form;
+
+        $form->addElement('text', 'name', array(
+            'required' => true,
+            'label' => getGS('Name'),
+        ));
 
         $form->addElement('submit', 'submit', array(
             'ignore' => true,

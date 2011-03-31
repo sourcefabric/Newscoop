@@ -11,9 +11,7 @@
 class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 {
     /** @var Zend_Acl */
-    private $acl = NULL;
-
-    /**
+    private $acl = NULL; /**
      * Init
      */
     public function init()
@@ -29,34 +27,48 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         // set resources
         $resourceRepository = $em->getRepository($options['resourceEntity']);
         foreach ($resourceRepository->findAll() as $resource) {
-            $this->acl->addResource(new Zend_Acl_Resource($resource->getName()));
+            $this->acl->addResource(new Zend_Acl_Resource(strtolower($resource->getName())));
         }
 
-        // get roles
-        $userRole = $em->find($options['roleEntity'], 1); // TODO add real user role id
-        $roles = array(
-            $userRole->getParent(),
-            $userRole,
-        );
+        // get user roles
+        $auth = Zend_Auth::getInstance();
+        if (!$auth->hasIdentity()) { // no rules for guests
+            return $this;
+        }
 
+        $user = $em->find('Newscoop\Entity\User', $auth->getIdentity());
+
+        // get user groups roles
+        $parent = NULL;
+        $roles = array();
+        foreach ($user->getGroups() as $group) {
+            $roles[] = array(
+                $group->getRole(),
+                $parent,
+            );
+            $parent = $group->getRole();
+        }
+
+        // get user specific role
+        $roles[] = array($user->getRole(), $parent);
+
+        // set acl roles/rules
         foreach ($roles as $role) {
-            if ($role == NULL) {
-                continue;
-            }
+            list($role, $parent) = array_values($role);
 
             // add role
-            $this->acl->addRole(new Zend_Acl_Role($role->getName(), $role->getParent() ? $role->getParent()->getName() : NULL));
+            $this->acl->addRole(new Zend_Acl_Role($role->getId()), $parent ? $parent->getId() : NULL);
 
             // add rules
             foreach ($role->getRules() as $rule) {
                 $type = $rule->getType();
-                $resource = $rule->getResource() ? $rule->getResource()->getName() : NULL;
-                $action = $rule->getAction() ? $rule->getAction()->getName() : NULL;
-                $this->acl->$type($role->getName(), $resource, $action);
+                $resource = $rule->getResource() ? strtolower($rule->getResource()->getName()) : NULL;
+                $action = $rule->getAction() ? strtolower($rule->getAction()->getName()) : NULL;
+                $this->acl->$type((string) $role->getId(), $resource, $action);
             }
         }
 
-        Zend_Registry::set('acl', $this);
+        Zend_Registry::set('acl', $this->acl);
         return $this;
     }
 
