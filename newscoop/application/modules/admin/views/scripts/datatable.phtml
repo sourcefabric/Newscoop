@@ -1,0 +1,29 @@
+<div class="datatable">
+<table class="data">
+<thead>
+<tr>
+    <?php foreach ($this->cols as $col) { ?>
+    <th><?php echo $col; ?></th>
+    <?php } ?>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td class="message" colspan="<?php echo sizeof($this->cols); ?>"><?php putGS('Loading..'); ?></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<script type="text/javascript">
+$(function() {
+    $('table.data').dataTable({
+        'aoColumnDefs': [
+            { 'bSortable': false, 'aTargets': [-1] }
+        ],
+        'bJQueryUI': true,
+        'sAjaxSource': '<?php echo $this->url(array('action' => 'data')); ?>?format=json',
+        'bServerSide': true
+    });
+});
+</script>
