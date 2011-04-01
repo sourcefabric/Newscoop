@@ -43,6 +43,18 @@ class User
     private $password;
 
     /**
+     * @column(name="EMail")
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @column(type="datetime", name="time_created")
+     * @var DateTime
+     */
+    private $timeCreated;
+
+    /**
      * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
      * @joinTable(name="liveuser_groupusers",
      *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
@@ -104,6 +116,36 @@ class User
     public function getRealName()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get user name
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Get time created
+     *
+     * @return DateTime
+     */
+    public function getTimeCreated()
+    {
+        return $this->timeCreated;
     }
 
     /**

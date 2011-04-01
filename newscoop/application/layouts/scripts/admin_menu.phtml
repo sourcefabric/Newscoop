@@ -336,7 +336,8 @@ if ($showUserMenu) {
     if ($g_user->hasPermission('ManageUsers') || $g_user->hasPermission('DeleteUsers')) {
         $pages[4]['pages'][] = array(
             'label' => getGS('Staff'),
-            'uri' => $view->baseUrl('admin/users/?uType=Staff&reset_search=true'),
+            'module' => 'admin',
+            'controller' => 'users',
         );
     }
 
