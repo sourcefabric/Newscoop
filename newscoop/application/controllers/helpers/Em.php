@@ -57,4 +57,14 @@ class Action_Helper_Em extends Zend_Controller_Action_Helper_Abstract
     {
         return $this->getEntityManager()->getRepository((string) $entity);
     }
+
+    /**
+     * Flush entity manager
+     *
+     * @return void
+     */
+    public function flush()
+    {
+        $this->getEntityManager()->flush();
+    }
 }

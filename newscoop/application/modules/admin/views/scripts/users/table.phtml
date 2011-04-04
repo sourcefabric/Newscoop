@@ -1,3 +1,7 @@
 <h1><?php putGS('Users'); ?></h1>
 
+<?php $this->renderActions(array(
+    $this->url(array('action' => 'add')) => getGS('Add new User'),
+)); ?>
+
 <?php $this->renderDatatable(); ?>
