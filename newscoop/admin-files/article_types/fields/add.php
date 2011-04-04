@@ -131,11 +131,13 @@ foreach ($topics as $topicPath) {
 </tr>
 <tr style="display: none;" id="precision">
     <td><?php putGS('Precision'); ?>:</td>
-    <td><input type="text" class="input_select" size="2" maxlength="2" name="f_precision"></td>
+    <td><input type="text" class="input_text" size="2" maxlength="2" name="f_precision" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 99, getGS('Precision')); ?>" alt="number|0|0|99|bok"></td>
 </tr>
 <tr style="display: block;" id="maxsize">
-    <td><?php putGS('Maxsize'); ?>:</td>
-    <td><input type="text" class="input_select" size="3" maxlength="3" name="f_maxsize"></td>
+    <td><?php putGS('Characters limit'); ?>:</td>
+    <td>
+        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 999, getGS('Characters limit')); ?>" alt="number|0|0|999|bok">
+    </td>
 </tr>
 <TR>
 	<TD COLSPAN="2">
