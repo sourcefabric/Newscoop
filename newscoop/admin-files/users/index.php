@@ -140,13 +140,13 @@ if (is_array($usersSearchResult) && sizeof($usersSearchResult) > 0) {
 	$nr = sizeof($usersSearchResult);
 	$last = $nr > $ItemsPerPage ? $ItemsPerPage : $nr;
 	?>
-<?php /*?>	<table class="indent">
+	<table class="indent">
 	<tr>
 		<td>
 			<?php echo $pager->render(); ?>
 		</td>
 	</tr>
-	</table><?php */?>
+	</table>
 	<table border="0" cellspacing="1" cellpadding="3" class="table_list full-sized">
 	<tr class="table_list_header">
 		<td align="left" valign="middle">
