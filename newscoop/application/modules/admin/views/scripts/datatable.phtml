@@ -19,10 +19,10 @@
 $(function() {
     $('table.data').dataTable({
         'aoColumnDefs': [
-            { 'bSortable': false, 'aTargets': [-1] }
+            { 'bSortable': false, 'aTargets': [-1] } // actions
         ],
         'bJQueryUI': true,
-        'sAjaxSource': '<?php echo $this->url(array('action' => 'data')); ?>?format=json',
+        'sAjaxSource': '<?php echo $this->url(array('action' => 'index', 'format' => 'json')); ?>',
         'bServerSide': true
     });
 });

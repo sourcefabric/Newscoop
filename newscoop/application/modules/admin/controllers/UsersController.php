@@ -1,17 +1,21 @@
 <?php
 
-use Newscoop\Controller\BaseTableController,
-    Newscoop\Entity\User;
+use Newscoop\Entity\User;
 
-class Admin_UsersController extends BaseTableController
+class Admin_UsersController extends Zend_Controller_Action
 {
-    public function init()
+    public function indexAction()
     {
-        parent::init();
+        $this->_forward('table');
+    }
 
-        $this->setEntity('Newscoop\Entity\User');
+    public function tableAction()
+    {
+        $table = $this->getHelper('datatable');
 
-        $this->setCols(array(
+        $table->setEntity('Newscoop\Entity\User');
+
+        $table->setCols(array(
             'name' => getGS('Full Name'),
             'username' => getGS('Accout Name'),
             'email' => getGS('E-Mail'),
@@ -20,7 +24,7 @@ class Admin_UsersController extends BaseTableController
         ));
 
         $view = $this->view;
-        $this->setHandle(function(User $user) use ($view) {
+        $table->setHandle(function(User $user) use ($view) {
             $editLink = sprintf('<a href="%s" class="edit" title="%s">%s</a>',
                 $view->url(array(
                     'action' => 'edit',
@@ -47,10 +51,7 @@ class Admin_UsersController extends BaseTableController
                 $deleteLink,
             );
         });
-    }
 
-    public function indexAction()
-    {
-        $this->_forward('table');
+        $table->dispatch();
     }
 }
