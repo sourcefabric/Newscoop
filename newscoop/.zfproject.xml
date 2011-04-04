@@ -24,6 +24,10 @@
             <controllerFile controllerName="Logs">
               <actionMethod actionName="index"/>
             </controllerFile>
+            <controllerFile controllerName="Comments">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="listUsers"/>
+            </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
           <layoutsDirectory enabled="false"/>
@@ -31,6 +35,9 @@
           <viewsDirectory>
             <viewScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Logs">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Comments">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -46,6 +53,10 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Comments"/>
+          <viewControllerScriptsDirectory forControllerName="Comments">
+            <viewScriptFile forActionName="listUsers"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -82,6 +93,7 @@
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
           <testApplicationControllerFile filesystemName="LogsControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentsControllerTest.php"/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
