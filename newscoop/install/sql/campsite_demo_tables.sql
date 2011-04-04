@@ -48,22 +48,6 @@ CREATE TABLE `ArticleAttachments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `ArticleAudioclips`
---
-
-DROP TABLE IF EXISTS `ArticleAudioclips`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ArticleAudioclips` (
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_audioclip_gunid` varchar(20) NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned DEFAULT NULL,
-  `order_no` smallint(5) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fk_article_number`,`fk_audioclip_gunid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `ArticleAuthors`
 --
 
@@ -260,24 +244,6 @@ CREATE TABLE `Attachments` (
   `time_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `AudioclipMetadata`
---
-
-DROP TABLE IF EXISTS `AudioclipMetadata`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `AudioclipMetadata` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `gunid` varchar(20) NOT NULL DEFAULT '0',
-  `predicate_ns` varchar(10) DEFAULT '',
-  `predicate` varchar(30) NOT NULL DEFAULT '',
-  `object` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `gunid_tag_id` (`gunid`,`predicate_ns`,`predicate`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

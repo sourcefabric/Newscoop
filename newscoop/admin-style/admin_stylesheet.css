@@ -1720,3 +1720,8 @@ ul#edit-files h2 {
     margin: 0;
     padding: 0.5em;
 }
+
+.pager.indent {
+    padding: 3px;
+    font-size: 1.1em;
+}

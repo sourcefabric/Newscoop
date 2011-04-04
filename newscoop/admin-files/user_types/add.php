@@ -20,7 +20,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 camp_html_display_msgs("0.25em", "0.25em");
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <form name="user_type_add" method="post" action="do_add.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <p>
@@ -33,17 +33,7 @@ foreach ($rights as $group_name => $group) {
 ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
-	<td colspan="2" style="padding-top: 5px; padding-left: 10px;">
-		<b><?php  putGS("Add new user type"); ?></b>
-	</td>
-</tr>
-<tr>
-	<td colspan="2">
-		<hr noshade size="1" color="black">
-	</td>
-</tr>
-<tr>
-	<td colspan="2" style="padding-top: 5px; padding-bottom: 10px;" align="center">
+	<td colspan="2" style="padding-top: 10px; padding-bottom: 10px;" align="center">
 		<input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>">
 	</td>
 </tr>

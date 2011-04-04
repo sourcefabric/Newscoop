@@ -39,11 +39,6 @@ $f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
 $f_db_repl_user = strip_tags(Input::Get('f_db_repl_user'));
 $f_db_repl_pass = strip_tags(Input::Get('f_db_repl_pass'));
 $f_db_repl_port = Input::Get('f_db_repl_port', 'int');
-$f_use_campcaster = Input::Get('f_use_campcaster');
-$f_cc_hostname = strip_tags(Input::Get('f_cc_hostname'));
-$f_cc_hostport = Input::Get('f_cc_hostport', 'int');
-$f_cc_xrpcpath = strip_tags(Input::Get('f_cc_xrpcpath'));
-$f_cc_xrpcfile = strip_tags(Input::Get('f_cc_xrpcfile'));
 $f_external_subs_management = Input::Get('f_external_subs_management');
 $f_password_recovery = Input::Get('f_password_recovery');
 $f_password_recovery_from = Input::Get('f_password_recovery_from');
@@ -206,18 +201,6 @@ if ($f_use_replication == 'Y') {
     SystemPref::Set("DBReplicationPort", $f_db_repl_port);
 } else {
     SystemPref::Set("UseDBReplication", 'N');
-}
-
-// Campcaster integrity
-if ($f_use_campcaster == 'Y') {
-    // Campcaster Server
-    SystemPref::Set("CampcasterHostName", $f_cc_hostname);
-    SystemPref::Set("CampcasterHostPort", $f_cc_hostport);
-    SystemPref::Set("CampcasterXRPCPath", $f_cc_xrpcpath);
-    SystemPref::Set("CampcasterXRPCFile", $f_cc_xrpcfile);
-    SystemPref::Set("UseCampcasterAudioclips", $f_use_campcaster);
-} else {
-    SystemPref::Set("UseCampcasterAudioclips", 'N');
 }
 
 // template filter

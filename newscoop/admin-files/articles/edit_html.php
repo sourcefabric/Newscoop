@@ -359,12 +359,6 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_media_box.php'); ?>
       <!-- END Images table -->
 
-      <?php if (SystemPref::Get("UseCampcasterAudioclips") == 'Y') { ?>
-      <!-- BEGIN Audioclips table -->
-      <?php // require('edit_audioclips_box.php'); ?>
-      <!-- END Audioclips table -->
-      <?php } ?>
-
       <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 
   </div>

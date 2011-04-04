@@ -210,24 +210,26 @@ $(".aauthor").live('focus', function() {
 
 // fancybox for popups
 $('a.iframe').each(function() {
-    $(this).fancybox({
-        hideOnContentClick: false,
-        width: 660,
-        height: 500,
-        onStart: function() { // check if there are any changes
-            return checkChanged();
-        },
-        onClosed: function(url, params) {
-            if ($.fancybox.reload) { // reload if set
-                if ($.fancybox.message) { // set message after reload
-                    $.cookie('flashMessage', $.fancybox.message);
+    if (!$(this).attr('custom')) {
+        $(this).fancybox({
+            hideOnContentClick: false,
+            width: 660,
+            height: 500,
+            onStart: function() { // check if there are any changes
+                return checkChanged();
+            },
+            onClosed: function(url, params) {
+                if ($.fancybox.reload) { // reload if set
+                    if ($.fancybox.message) { // set message after reload
+                        $.cookie('flashMessage', $.fancybox.message);
+                    }
+                    window.location.reload();
+                } else if ($.fancybox.error) {
+                    flashMessage($.fancybox.error, 'error');
                 }
-                window.location.reload();
-            } else if ($.fancybox.error) {
-                flashMessage($.fancybox.error, 'error');
             }
-        }
-    });
+        });
+    }
 });
 $('#locations_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;

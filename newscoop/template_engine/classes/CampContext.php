@@ -31,7 +31,6 @@ final class CampContext
 								                     'handler'=>'setArticleHandler'),
 								    'image'=>array('class'=>'Image'),
 								    'attachment'=>array('class'=>'Attachment'),
-								    'audioclip'=>array('class'=>'Audioclip'),
 								    'comment'=>array('class'=>'Comment',
 								    				 'handler'=>'setCommentHandler'),
 								    'subtitle'=>array('class'=>'Subtitle',
@@ -66,9 +65,6 @@ final class CampContext
     						 'articleattachments'=>array('class'=>'ArticleAttachments',
 	                                                     'list'=>'article_attachments',
 	                                                     'url_id'=>'aat'),
-	                         'articleaudioattachments'=>array('class'=>'ArticleAudioAttachments',
-	                                                          'list'=>'article_audio_attachments',
-	                                                          'url_id'=>'aau'),
     						 'articlecomments'=>array('class'=>'ArticleComments',
 	                                                  'list'=>'article_comments',
 	                                                  'url_id'=>'acm'),
@@ -516,7 +512,6 @@ final class CampContext
         $propertiesNames[]= 'article';
         $propertiesNames[]= 'image';
         $propertiesNames[]= 'attachment';
-        $propertiesNames[]= 'audioclip';
         $propertiesNames[]= 'comment';
         $propertiesNames[]= 'subtitle';
         $propertiesNames[]= 'topic';
@@ -1017,7 +1012,6 @@ final class CampContext
         unset($this->m_objects['subtitle']);
         unset($this->m_objects['image']);
         unset($this->m_objects['attachment']);
-        unset($this->m_objects['audioclip']);
         unset($this->m_objects['comment']);
         unset($this->m_objects['location']);
         $this->m_readonlyProperties['url']->article = $p_newArticle;

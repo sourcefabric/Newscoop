@@ -393,36 +393,6 @@ function camp_session_unset($p_name)
 
 
 /**
- * Performs Campcaster authentication
- *
- * @param string $f_cc_username
- * @param string $f_cc_password
- * @return boolean true or PEAR_Error
- */
-function camp_campcaster_login($f_cc_username, $f_cc_password)
-{
-    global $mdefs;
-
-    $xrc =& XR_CcClient::Factory($mdefs);
-    if (PEAR::isError($xrc)) {
-    	return $xrc;
-    }
-    $r = $xrc->xr_login($f_cc_username, $f_cc_password);
-    if (is_string($r) && $r == 'Connection refused') {
-        $r = new PEAR_Error(getGS("Connection refused"));
-    }
-    if (PEAR::isError($r)) {
-        return $r;
-    }
-    if (!is_array($r) && !isset($r['sessid'])) {
-        return new PEAR_Error(getGS('Unable to connect to the Campcaster server, please verify the Campcaster server settings.'));
-    }
-    camp_session_set('cc_sessid', $r['sessid']);
-    return true;
-} // fn camp_campcaster_login
-
-
-/**
  * Print out the array or object surrounded with PRE tags so that its readable.
  * @param mixed $p_object
  * @return void
@@ -611,7 +581,7 @@ function camp_get_calendar_include($p_languageCode = null)
 {
     global $Campsite;
 
-	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/javascript/jquery/';
+	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/js/jquery/';
     $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
     if (!file_exists("$calendarPath/$calendarLocalization")) {
         $codeParts = explode('_', $p_languageCode);
@@ -629,13 +599,13 @@ function camp_get_calendar_include($p_languageCode = null)
     }
 
 	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
-	$calendarURL = "$websiteURL/javascript/jquery";
+	$calendarURL = "$websiteURL/js/jquery";
 	ob_start();
 ?>
 <style type="text/css">@import url('<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/jquery-ui-1.8.6.datepicker.css');</style>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
-<?php if (file_exists(dirname(__FILE__) . '/../javascript/jquery/' . $calendarLocalization)) { ?>
+<?php if (file_exists(dirname(__FILE__) . '/../js/jquery/' . $calendarLocalization)) { ?>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
 <?php } ?>
 <script type="text/javascript"><!--

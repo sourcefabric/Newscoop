@@ -33,7 +33,7 @@ if (!is_object($languageObj)) {
 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
 <tr>
