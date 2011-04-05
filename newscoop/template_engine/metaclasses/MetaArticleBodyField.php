@@ -176,22 +176,52 @@ final class MetaArticleBodyField {
                 $article_number = $this->m_parent_article->getProperty('Number');
                 $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
                 $language_code = $language_obj->Code;
+                $name_spec = '_' . $article_number . '_' . $language_code;
 
                 $context = CampTemplate::singleton()->context();
                 if (!$context->preview) {
                     $content .= '
                         <script type="text/javascript">
-                        var read_date = new Date();
-                        var read_path = "_statistics/reader/article/";
-                        var request_randomizer = "" + read_date.getTime() + Math.random();
-                        try {
-                            $.ajax({
-                                url: "' . $stat_web_url . '" + read_path + "' . $article_number . '/' . $language_code . '/",
-                                data: {randomizer: request_randomizer},
-                                success: function() {}
-                            });
-                        } catch (e) {}
-                    </script>
+                        var stats_getHTTPObject' . $name_spec . ' = function () {
+                            var xhr = false;
+                            if (window.XMLHttpRequest) {
+                                xhr = new XMLHttpRequest();
+                            } else if (window.ActiveXObject) {
+                                try {
+                                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
+                                } catch(e) {
+                                    try {
+                                        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                                    } catch(e) {
+                                        xhr = false;
+                                    }
+                                }
+                            }
+                            return xhr;
+                        };
+
+                        var stats_submit' . $name_spec . ' = function () {
+                            var stats_request = stats_getHTTPObject' . $name_spec . '();
+                            stats_request.onreadystatechange = function() {};
+    
+                            var read_date = new Date();
+                            var read_path = "_statistics/reader/article/";
+                            var request_randomizer = "" + read_date.getTime() + Math.random();
+                            var stats_url = "' . $stat_web_url . '" + read_path + "' . $article_number . '/' . $language_code . '/";
+                            try {
+                                stats_request.open("GET", stats_url + "?randomizer=" + request_randomizer, true);
+                                stats_request.send(null);
+                                /* not everybody has jquery installed
+                                $.ajax({
+                                    url: stats_url,
+                                    data: {randomizer: request_randomizer},
+                                    success: function() {}
+                                });
+                                */
+                            } catch (e) {}
+                        };
+                        stats_submit' . $name_spec . '();
+                        </script>
                     ';
                 }
             } catch (Exception $ex) {
