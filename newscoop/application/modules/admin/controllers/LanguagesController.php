@@ -1,8 +1,16 @@
 <?php
+/**
+ * @package Newscoop
+ * @subpackage Languages
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+use Newscoop\Entity\Language;
 
 class Admin_LanguagesController extends Zend_Controller_Action
 {
-    /** @var Newscoop\Entity\Repository\LogRepository */
+    /** @var Newscoop\Entity\Repository\LanguageRepository */
     private $languageRepository= NULL;
 
     public function init()
@@ -27,19 +35,38 @@ class Admin_LanguagesController extends Zend_Controller_Action
         $this->view->languages = $this->languageRepository->getLanguages();
     }
 
+    public function addAction()
+    {
+        $form = new Admin_Form_BaseLanguage;
+        $form->setMethod('post')
+            ->setAction('');
+
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            try {
+                $language = new Language;
+                $this->languageRepository->save($language, $form->getValues());
+                $this->_helper->flashMessenger->addMessage(getGS('Language added.'));
+                $this->_helper->redirector('index');
+            } catch (Exception $e) {
+                $form->getElement('name')->addError($e->getMessage());
+                $form->getElement('name')->addError(getGS('Name taken.'));
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
     public function editAction()
     {
         $language = $this->getLanguage();
 
-        $form = $this->getAddLanguageForm();
-        $form->setDefaults(array(
-                'language' => $language->getId(),
-            ));
+        $form = new Admin_Form_BaseLanguage;
+        $form->setAction('')
+            ->setMethod('post')
+            ->setDefaultsFromEntity($language);
 
-        // form handle
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             try {
-                $language = new Language();
                 $this->languageRepository->save($language, $form->getValues());
 
                 $this->_helper->flashMessenger->addMessage(getGS('Language saved.'));
@@ -61,7 +88,6 @@ class Admin_LanguagesController extends Zend_Controller_Action
             ));
         }
 
-        $language = $this->getLanguage();
         Localizer::DeleteLanguageFiles($language->getCode());
         $this->languageRepository->delete($language->getId());
         $this->_helper->flashMessenger->addMessage(getGS('Language removed.'));
@@ -78,75 +104,10 @@ class Admin_LanguagesController extends Zend_Controller_Action
         $id = $this->getRequest()->getParam('language');
         $language = $this->languageRepository->find($id);
         if (empty($language)) {
-            $this->_helper->flashMessenger->addMessage(getGS('Not found.'));
+            $this->_helper->flashMessenger->addMessage(getGS('Language not found.'));
             $this->_forward('index');
         }
 
         return $language;
     }
-
-    /**
-     * Get add language form
-     *
-     * @return Zend_Form
-     */
-    private function getAddLanguageForm()
-    {
-        $form = new Zend_Form();
-
-        $form->addElement('text', 'name', array('label' => getGS('Name')));
-        $form->addElement('text', 'native_name', array('label' => getGS('Native Name')));
-        $form->addelement('text', 'code', array('label' => getGS('Code Page')));
-
-        $form->addElement('text', 'month_1', array('label' => getGS('Month 1')));
-        $form->addElement('text', 'month_2', array('label' => getGS('Month 2')));
-        $form->addElement('text', 'month_3', array('label' => getGS('Month 3')));
-        $form->addElement('text', 'month_4', array('label' => getGS('Month 4')));
-        $form->addElement('text', 'month_5', array('label' => getGS('Month 5')));
-        $form->addElement('text', 'month_6', array('label' => getGS('Month 6')));
-        $form->addElement('text', 'month_7', array('label' => getGS('Month 7')));
-        $form->addElement('text', 'month_8', array('label' => getGS('Month 8')));
-        $form->addElement('text', 'month_9', array('label' => getGS('Month 9')));
-        $form->addElement('text', 'month_10', array('label' => getGS('Month 10')));
-        $form->addElement('text', 'month_11', array('label' => getGS('Month 11')));
-        $form->addElement('text', 'month_12', array('label' => getGS('Month 12')));
-
-        $form->addElement('text', 'short_month_1', array('label' => getGS('Short Month 1')));
-        $form->addElement('text', 'short_month_2', array('label' => getGS('Short Month 2')));
-        $form->addElement('text', 'short_month_3', array('label' => getGS('Short Month 3')));
-        $form->addElement('text', 'short_month_4', array('label' => getGS('Short Month 4')));
-        $form->addElement('text', 'short_month_5', array('label' => getGS('Short Month 5')));
-        $form->addElement('text', 'short_month_6', array('label' => getGS('Short Month 6')));
-        $form->addElement('text', 'short_month_7', array('label' => getGS('Short Month 7')));
-        $form->addElement('text', 'short_month_8', array('label' => getGS('Short Month 8')));
-        $form->addElement('text', 'short_month_9', array('label' => getGS('Short Month 9')));
-        $form->addElement('text', 'short_month_10', array('label' => getGS('Short Month 10')));
-        $form->addElement('text', 'short_month_11', array('label' => getGS('Short Month 11')));
-        $form->addElement('text', 'short_month_12', array('label' => getGS('Short Month 12')));
-
-        $form->addElement('text', 'day_1', array('label' => getGS('Day 1')));
-        $form->addElement('text', 'day_2', array('label' => getGS('Day 2')));
-        $form->addElement('text', 'day_3', array('label' => getGS('Day 3')));
-        $form->addElement('text', 'day_4', array('label' => getGS('Day 4')));
-        $form->addElement('text', 'day_5', array('label' => getGS('Day 5')));
-        $form->addElement('text', 'day_6', array('label' => getGS('Day 6')));
-        $form->addElement('text', 'day_7', array('label' => getGS('Day 7')));
-
-        $form->addElement('text', 'short_day_1', array('label' => getGS('Short Day 1')));
-        $form->addElement('text', 'short_day_2', array('label' => getGS('Short Day 2')));
-        $form->addElement('text', 'short_day_3', array('label' => getGS('Short Day 3')));
-        $form->addElement('text', 'short_day_4', array('label' => getGS('Short Day 4')));
-        $form->addElement('text', 'short_day_5', array('label' => getGS('Short Day 5')));
-        $form->addElement('text', 'short_day_6', array('label' => getGS('Short Day 6')));
-        $form->addElement('text', 'short_day_7', array('label' => getGS('Short Day 7')));
-
-        $form->addElement('hidden', 'language');
-
-        $form->addElement('submit', 'submit', array(
-            'ignore' => true,
-            'label' => getGS('Add'),
-        ));
-
-        return $form;
-    }
-}
+ }
