@@ -6,8 +6,13 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+// at some situations (e.g. after session expired) we require to have user name/password
+// and by this, it is forced for all (ajax) windows where something was put to be saved
+$f_force_login = Input::Get('f_force_login');
+
 list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
-if ($access) { // logged in allready
+if ($access && (!$f_force_login)) { // logged in allready
     header("Location: /{$ADMIN}{$prefix}");
     exit;
 }
