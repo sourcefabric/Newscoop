@@ -165,8 +165,7 @@ final class MetaArticleBodyField {
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {
-                SessionRequest::Create(session_id(), $requestObjectId,
-                                       $objectType->getObjectTypeId(), $userId);
+                // note that SessionRequest::Create() is called at the js-based stats now, at CampSite::writeStats();
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
