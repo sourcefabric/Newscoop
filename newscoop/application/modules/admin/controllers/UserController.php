@@ -2,7 +2,7 @@
 
 use Newscoop\Entity\User;
 
-class Admin_UsersController extends Zend_Controller_Action
+class Admin_UserController extends Zend_Controller_Action
 {
     /** @var Doctrine\ORM\EntityRepository */
     private $userRepository;
@@ -26,7 +26,7 @@ class Admin_UsersController extends Zend_Controller_Action
      */
     public function addAction()
     {
-        $form = new Application_Form_AddUser;
+        $form = new Admin_Form_AddUser;
         $form->getElement('roles')->setMultioptions($this->getUserRoles());
         $form->setAction('')
             ->setMethod('post')
@@ -57,7 +57,7 @@ class Admin_UsersController extends Zend_Controller_Action
             $this->_forward('index');
         }
 
-        $form = new Application_Form_EditUser;
+        $form = new Admin_Form_EditUser;
         $form->getElement('roles')->setMultioptions($this->getUserRoles());
         $form->setAction('')
             ->setMethod('post')
@@ -75,6 +75,23 @@ class Admin_UsersController extends Zend_Controller_Action
         $this->view->user = $user;
     }
 
+    /**
+     * Delete user
+     */
+    public function deleteAction()
+    {
+        $user = $this->getRequest()->getParam('user', NULL);
+        $this->userRepository->delete($user);
+
+        $this->_helper->em->flush();
+
+        $this->_helper->flashMessenger(getGS('User deleted.'));
+        $this->_helper->redirector->gotoSimple('index');
+    }
+
+    /**
+     * List users
+     */
     public function tableAction()
     {
         $table = $this->getHelper('datatable');

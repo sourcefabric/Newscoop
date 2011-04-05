@@ -179,7 +179,9 @@ if ($g_user->hasPermission('ManagePub')) {
 if ($g_user->hasPermission('ManageUsers')) {
     $pages[2]['pages'][] = array(
         'label' => getGS('Add new staff member'),
-        'uri' => $view->baseUrl("admin/users/edit.php?uType=Staff"),
+        'module' => 'admin',
+        'controller' => 'user',
+        'action' => 'add',
     );
 }
 
@@ -337,7 +339,7 @@ if ($showUserMenu) {
         $pages[4]['pages'][] = array(
             'label' => getGS('Staff'),
             'module' => 'admin',
-            'controller' => 'users',
+            'controller' => 'user',
         );
     }
 

@@ -188,7 +188,7 @@ $(function() {
             .prependTo($(this));
     });
 
-    // zend_form fixes
+    // zend_form utils
     $('dl.zend_form').each(function() {
         var form = $(this);
 
@@ -201,8 +201,12 @@ $(function() {
         $('input:submit', form).each(function() {
             $(this).closest('dd').css('margin-top', '13px').prev('dt').hide();
         });
-    });
 
+        // toogle fieldsets
+        $('fieldset.toggle legend').click(function() {
+            $('+ dl', $(this)).toggle();
+        }).click().css('cursor', 'pointer');
+    });
 });
 
 /**

@@ -5,7 +5,7 @@ use Newscoop\Entity\User;
 /**
  * User form
  */
-class Application_Form_AddUser extends Application_Form_BaseUser
+class Admin_Form_AddUser extends Admin_Form_BaseUser
 {
     public function init()
     {

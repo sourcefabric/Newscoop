@@ -1,0 +1,11 @@
+<h1><?php putGS('Edit user'); ?> <em><?php echo $this->user->getName(); ?></em></h1>
+
+<?php echo $this->renderActions(array(
+    $this->url(array(
+        'action' => 'edit',
+        'controller' => 'acl',
+        'user' => $this->user->getId()
+    )) => getGS('Edit permissions'),
+)); ?>
+
+<?php echo $this->form; ?>

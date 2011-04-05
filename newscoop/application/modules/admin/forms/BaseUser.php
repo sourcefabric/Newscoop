@@ -5,7 +5,7 @@ use Newscoop\Entity\User;
 /**
  * User form
  */
-abstract class Application_Form_BaseUser extends Zend_Form
+abstract class Admin_Form_BaseUser extends Zend_Form
 {
     public function addUserDetails()
     {

@@ -7,7 +7,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
+use InvalidArgumentException,
+    Doctrine\ORM\EntityRepository,
     Newscoop\Entity\User,
     Newscoop\Entity\Acl\Role;
 
@@ -17,7 +18,7 @@ use Doctrine\ORM\EntityRepository,
 class UserRepository extends EntityRepository
 {
     /**
-     * Save entity
+     * Save user
      *
      * @param Newscoop\Entity\User $user
      * @param array $values
@@ -65,5 +66,19 @@ class UserRepository extends EntityRepository
         }
 
         $em->persist($user);
+    }
+
+    /**
+     * Delete user
+     *
+     * @param int $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        $em = $this->getEntityManager();
+        $proxy = $em->getReference('Newscoop\Entity\User', (int) $id);
+
+        $em->remove($proxy);
     }
 }

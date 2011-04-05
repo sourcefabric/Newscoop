@@ -5,7 +5,7 @@ use Newscoop\Entity\User;
 /**
  * User form
  */
-class Application_Form_EditUser extends Application_Form_BaseUser
+class Admin_Form_EditUser extends Admin_Form_BaseUser
 {
     public function init()
     {
@@ -23,6 +23,10 @@ class Application_Form_EditUser extends Application_Form_BaseUser
             'label' => getGS('Phone'),
         ));
 
+        $this->addElement('multiCheckbox', 'roles', array(
+            'label' => getGS('User Type'),
+        ));
+
         // password change
         $this->addElement('password', 'password', array(
             'label' => getGS('Password'),
@@ -38,10 +42,6 @@ class Application_Form_EditUser extends Application_Form_BaseUser
         ), 'password_change', array(
             'legend' => getGS('Change password'),
             'class' => 'toggle',
-        ));
-
-        $this->addElement('multiCheckbox', 'roles', array(
-            'label' => getGS('User Type'),
         ));
 
         $this->addUserDetails();
