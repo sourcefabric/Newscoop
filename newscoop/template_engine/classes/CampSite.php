@@ -282,28 +282,24 @@ final class CampSite extends CampSystem
 
         /*
             looking whether the request is of form used for statistics, i.e.
-            http(s)://newscoop_domain/(newscoop_dir/)_statistics/...
+            http(s)://newscoop_domain/(newscoop_dir/)_statistics(/...)(?...)
         */
 
-        $path_campsite = strtolower($Campsite['WEBSITE_URL']);
-        $path_request = strtolower($_SERVER['REQUEST_URI']);
-
-        // here we take the uri part of the campsite webdir
-        // it is an empty string for domain based installations
-        $path_matches = array();
-        preg_match("@^http(?:s)?://(?:[^/]+)(?:/)?(.*)$@i", $path_campsite, $path_matches);
-
-        // the path prefix that should be removed when checking the statistics directory
-        $path_prefix = "/";
-        if (2 <= count($path_matches)) {
-            $path_prefix .= $path_matches[1];
+        $path_request_parts = explode("?", $_SERVER['REQUEST_URI']);
+        $path_request = strtolower($path_request_parts[0]);
+        if (("" == $path_request) || ("/" != $path_request[strlen($path_request)-1])) {
+            $path_request .= "/";
         }
-        if ("/" != $path_prefix[strlen($path_prefix)-1]) {
-            $path_prefix .= "/";
+
+        // the path prefix that should be considered when checking the statistics directory
+        // it is an empty string for domain based installations
+        $stat_start = strtolower($Campsite['SUBDIR']);
+        if (("" == $stat_start) || ("/" != $stat_start[strlen($stat_start)-1])) {
+            $stat_start .= "/";
         }
 
         // the path (as of request_uri) that is for the statistics part
-        $stat_start = $path_prefix . "_statistics";
+        $stat_start .= "_statistics/";
         $stat_start_len = strlen($stat_start);
         // if request_uri starts with the statistics path, it is just for the statistics things
         if (substr($path_request, 0, $stat_start_len) == $stat_start) {
@@ -315,18 +311,14 @@ final class CampSite extends CampSystem
         }
 
         // taking the statistics specification part of the request uri
-        $stat_info = "" . substr($_SERVER['REQUEST_URI'], $stat_start_len + 1);
+        $stat_info = substr($path_request, $stat_start_len);
 
         $stat_info_arr = array();
         foreach (explode("/", $stat_info) as $one_part) {
             $one_part = trim($one_part);
-            $one_part_arr = explode("?", $one_part); // ignoring parameters used for request randomization
-            $one_part = trim($one_part_arr[0]);
-            if ("" != $one_part) {
+            // here we take that '0' is not valid id for any db object
+            if (!empty($one_part)) {
                 $stat_info_arr[] = $one_part;
-            }
-            if (1 < count($one_part_arr)) {
-                break;
             }
         }
 
@@ -478,7 +470,7 @@ final class CampSite extends CampSystem
 */
 
         // the object_id is used for actual statistics
-        $objId = $art_obj->m_data['object_id'];
+        $objId = $art_obj->getProperty('object_id');
         // if no object_id on the article, then no statistics
         if ($objId) {
             // the stats writing itself; going through session checking/creation for situations when a cached article was read
@@ -487,6 +479,7 @@ final class CampSite extends CampSystem
             SessionRequest::Create($session_id, $objId, $objectType->getObjectTypeId(), $user_id, true);
         }
 
+        return true;
     } // fn writeStats
 
 } // class CampSite
