@@ -137,7 +137,7 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
 /*
         if ("mapquest" == $one_prov_name)
         {
-            $one_prov_include = $p_websiteUrl . "/javascript/geocoding/openlayers/OLlocals.js";
+            $one_prov_include = $p_websiteUrl . "/js/geocoding/openlayers/OLlocals.js";
         }
 */
 
@@ -236,7 +236,7 @@ public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
     $icons_subpath = SystemPref::Get("MapMarkerDirectory");
     if (!$icons_subpath)
     {
-        $icons_subpath = "/javascript/geocoding/markers";
+        $icons_subpath = "/js/geocoding/markers";
     }
 
     $icons_subdir = $cnf_html_dir . $icons_subpath;
@@ -372,7 +372,7 @@ public static function GetSearchInfo($p_htmlDir, $p_websiteUrl)
 
     $use_icons = array();
 
-    $icons_subpath = "/javascript/geocoding/search";
+    $icons_subpath = "/js/geocoding/search";
     $icon_filename = "search.png";
 
     $icons_subdir = $cnf_html_dir . $icons_subpath;
@@ -535,7 +535,7 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
     $icons_subpath = SystemPref::Get("MapMarkerDirectory");
     if (!$icons_subpath)
     {
-        $icons_subpath = "/javascript/geocoding/markers";
+        $icons_subpath = "/js/geocoding/markers";
     }
 
     $icons_subdir = $cnf_html_dir . $icons_subpath;

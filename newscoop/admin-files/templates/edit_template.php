@@ -179,7 +179,7 @@ if (in_array($extension, $imageExtensions)) {
     <tr>
       <td colspan="2">
         <textarea rows="40" cols="120" name="cField" id="cField" wrap="NO" class="input_textarea"><?php p(htmlspecialchars($contents)); ?></textarea>
-        <script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/editarea/edit_area/edit_area_full.js"></script>
+        <script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/editarea/edit_area/edit_area_full.js"></script>
       <script language="javascript" type="text/javascript">
       editAreaLoader.init({
           id : "cField",

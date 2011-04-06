@@ -83,7 +83,7 @@ $(function() {
 </div><!-- /#dashboard -->
 
 <div class="clear"></div>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.cookie.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.cookie.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('.context').widgets({

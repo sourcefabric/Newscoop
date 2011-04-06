@@ -31,7 +31,7 @@ if (!$LiveUser->isLoggedIn()) {
 require_once('config.inc.php');
 require_once('classes/ImageManager.php');
 
-$Campsite['IMAGE_BASE_URL'] = str_replace('/javascript/tinymce/plugins/campsiteimage', '', $Campsite['SUBDIR']) . '/images/';
+$Campsite['IMAGE_BASE_URL'] = str_replace('/js/tinymce/plugins/campsiteimage', '', $Campsite['SUBDIR']) . '/images/';
 $Campsite['THUMBNAIL_BASE_URL'] = $Campsite['IMAGE_BASE_URL'] . 'thumbnails/';
 
 //default path is /
