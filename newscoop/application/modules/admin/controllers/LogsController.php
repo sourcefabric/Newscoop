@@ -24,7 +24,7 @@ class Admin_LogsController extends Zend_Controller_Action
         camp_load_translation_strings('logs');
 
         // get repository
-        $this->logRepository = $this->_helper->em->getRepository('Newscoop\Entity\Log');
+        $this->logRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Log');
 
         // set priority names
         $this->priorityNames = array(

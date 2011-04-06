@@ -1,10 +1,10 @@
-<h1><?php putGS('Edit user'); ?> <em><?php echo $this->user->getName(); ?></em></h1>
+<h1><?php putGS('Change user account information'); ?></h1>
 
 <?php echo $this->renderActions(array(
     $this->url(array(
         'action' => 'edit',
         'controller' => 'acl',
-        'user' => $this->user->getId()
+        'user' => $this->staff->getId()
     )) => getGS('Edit permissions'),
 )); ?>
 

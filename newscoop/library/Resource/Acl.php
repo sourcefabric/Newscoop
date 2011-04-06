@@ -11,7 +11,9 @@
 class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 {
     /** @var Zend_Acl */
-    private $acl = NULL; /**
+    private $acl = NULL;
+    
+    /**
      * Init
      */
     public function init()
@@ -36,7 +38,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             return $this;
         }
 
-        $user = $em->find('Newscoop\Entity\User', $auth->getIdentity());
+        $user = $em->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
 
         // get user groups roles
         $parent = NULL;

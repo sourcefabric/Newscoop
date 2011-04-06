@@ -180,7 +180,7 @@ if ($g_user->hasPermission('ManageUsers')) {
     $pages[2]['pages'][] = array(
         'label' => getGS('Add new staff member'),
         'module' => 'admin',
-        'controller' => 'user',
+        'controller' => 'staff',
         'action' => 'add',
     );
 }
@@ -188,7 +188,9 @@ if ($g_user->hasPermission('ManageUsers')) {
 if ($g_user->hasPermission('ManageUsers')) {
     $pages[2]['pages'][] = array(
         'label' => getGS('Add new subscriber'),
-        'uri' => $view->baseUrl("admin/users/edit.php?uType=Subscribers"),
+        'module' => 'admin',
+        'controller' => 'subscriber',
+        'action' => 'add',
     );
 }
 
@@ -339,7 +341,7 @@ if ($showUserMenu) {
         $pages[4]['pages'][] = array(
             'label' => getGS('Staff'),
             'module' => 'admin',
-            'controller' => 'user',
+            'controller' => 'staff',
         );
     }
 
@@ -347,7 +349,8 @@ if ($showUserMenu) {
             && SystemPref::Get('ExternalSubscriptionManagement') != 'Y') {
         $pages[4]['pages'][] = array(
             'label' => getGS('Subscribers'),
-            'uri' => $view->baseUrl('admin/users/?uType=Subscribers&reset_search=true'),
+            'module' => 'admin',
+            'controller' => 'subscriber',
         );
     }
 

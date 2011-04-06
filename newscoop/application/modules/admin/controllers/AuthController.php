@@ -18,7 +18,7 @@ class Admin_AuthController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             $values = $form->getValues();
-            $repository = $this->_helper->em->getRepository('Newscoop\Entity\User');
+            $repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
             $adapter = new Newscoop\Auth\Adapter($repository, $values['username'], $values['password']);
             $result = $auth->authenticate($adapter);
 

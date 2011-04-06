@@ -12,11 +12,14 @@ use DateTime,
     Newscoop\Entity\Acl\Role;
 
 /**
- * User entity
- * @entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * Base user entity
+ * @entity
+ * @inheritanceType("SINGLE_TABLE")
+ * @discriminatorColumn(name="Reader", type="string")
+ * @discriminatorMap({"N" = "Newscoop\Entity\User\Staff", "Y" = "Newscoop\Entity\User\Subscriber"})
  * @table(name="liveuser_users")
  */
-class User
+abstract class User
 {
     /**
      * @id @generatedValue
@@ -48,6 +51,11 @@ class User
      * @var string
      */
     private $email;
+
+    /**
+     * @var string
+     */
+    private $reader;
 
     /**
      * @column(type="datetime", name="time_created")
@@ -146,25 +154,9 @@ class User
     private $position;
 
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
-     * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
-     *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
-     *      )
-     */
-    private $groups;
-
-    /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role")
-     * @var Newscoop\Entity\Acl\Role
-     */
-    private $role;
-
-    /**
      */
     public function __construct()
     {
-        $this->groups = new ArrayCollection;
         $this->timeCreated = new DateTime('now');
     }
 
@@ -616,59 +608,5 @@ class User
     public function getPosition()
     {
         return $this->position;
-    }
-
-    /**
-     * Get groups
-     *
-     * @return array of Newscoop\Entity\User\Group
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
-
-    /**
-     * Set role
-     *
-     * @param Newscoop\Entity\Acl\Role $role
-     * @return Newscoop\Entity\User
-     */
-    public function setRole(Role $role)
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    /**
-     * Get role
-     *
-     * @return Newscoop\Entity\Acl\Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * Get role id
-     *
-     * @return int
-     */
-    public function getRoleId()
-    {
-        return $this->role ? $this->role->getId() : 0;
-    }
-
-    /**
-     * Check permissions
-     *
-     * @param string $permission
-     * @return bool
-     * @deprecated
-     */
-    public function hasPermission($permission)
-    {
-        return true;
     }
 }

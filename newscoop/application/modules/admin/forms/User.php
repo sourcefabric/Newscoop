@@ -5,9 +5,12 @@ use Newscoop\Entity\User;
 /**
  * User form
  */
-abstract class Admin_Form_BaseUser extends Zend_Form
+abstract class Admin_Form_User extends Zend_Form
 {
-    public function addUserDetails()
+    /**
+     * Add user fields
+     */
+    protected function addUserDetails()
     {
         // user details
         $this->addElement('select', 'title', array(
@@ -57,7 +60,6 @@ abstract class Admin_Form_BaseUser extends Zend_Form
         ));
 
         $this->addElement('select', 'country', array(
-            'multioptions' => $this->getCountries(),
             'label' => getGS('Country'),
         ));
 
@@ -112,6 +114,8 @@ abstract class Admin_Form_BaseUser extends Zend_Form
             'legend' => getGS('Show more user details'),
             'class' => 'toggle',
         ));
+
+        $this->addElement('hidden', 'reader');
     }
 
     /**
@@ -138,20 +142,5 @@ abstract class Admin_Form_BaseUser extends Zend_Form
             'employer_type' => $user->getEmployerType(),
             'position' => $user->getPosition(),
         ));
-    }
-
-    /**
-     * Get countries
-     *
-     * @return array
-     */
-    private function getCountries()
-    {
-        $countries = array();
-        foreach (Country::GetCountries(1) as $country) {
-            $countries[$country->getCode()] = $country->getName();
-        }
-
-        return $countries;
     }
 }

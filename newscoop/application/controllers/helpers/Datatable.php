@@ -37,7 +37,10 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      */
     public function setEntity($entity)
     {
-        $em = $this->getActionController()->getHelper('em')->getEntityManager();
+        $em = $this->getActionController()
+            ->getHelper('entity')
+            ->getManager();
+
         $this->repository = new DatatableRepository($em, (string) $entity);
         return $this;
     }

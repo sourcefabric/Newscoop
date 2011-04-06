@@ -7,15 +7,13 @@
 
 namespace Newscoop\Entity\Repository;
 
-use InvalidArgumentException,
-    Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\User,
-    Newscoop\Entity\Acl\Role;
+use Doctrine\ORM\EntityRepository,
+    Newscoop\Entity\User;
 
 /**
- * User repository
+ * Base user repository
  */
-class UserRepository extends EntityRepository
+abstract class UserRepository extends EntityRepository
 {
     /**
      * Save user
@@ -46,23 +44,11 @@ class UserRepository extends EntityRepository
             ->setEmployerType($values['employer_type'])
             ->setPosition($values['position']);
 
-        // set groups
-        $groups = $user->getGroups();
-        $groups->clear();
-        foreach ($values['roles'] as $roleId) {
-            $group = $em->getReference('Newscoop\Entity\User\Group', (int) $roleId);
-            $groups->add($group);
-        }
-
         // set username/password
         if ($user->getId() > 0) { // edit
         } else { // add
-            $role = new Role();
-            $em->persist($role);
-
             $user->setUsername($values['username'])
-                ->setPassword($values['password'])
-                ->setRole($role);
+                ->setPassword($values['password']);
         }
 
         $em->persist($user);
@@ -71,14 +57,12 @@ class UserRepository extends EntityRepository
     /**
      * Delete user
      *
-     * @param int $id
+     * @param Newscoop\Entity\User $user
      * @return void
      */
-    public function delete($id)
+    public function delete(User $user)
     {
         $em = $this->getEntityManager();
-        $proxy = $em->getReference('Newscoop\Entity\User', (int) $id);
-
-        $em->remove($proxy);
+        $em->remove($user);
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-use Newscoop\Entity\User;
+use Newscoop\Entity\User\Staff;
 
 /**
  * User form
  */
-class Admin_Form_AddUser extends Admin_Form_BaseUser
+class Admin_Form_Staff extends Admin_Form_User
 {
     public function init()
     {
@@ -30,6 +30,7 @@ class Admin_Form_AddUser extends Admin_Form_BaseUser
         ));
 
         $this->addElement('text', 'email', array(
+            'required' => true,
             'label' => getGS('E-mail'),
         ));
 
@@ -37,7 +38,7 @@ class Admin_Form_AddUser extends Admin_Form_BaseUser
             'label' => getGS('Phone'),
         ));
 
-        $this->addElement('multiCheckbox', 'roles', array(
+        $this->addElement('multiCheckbox', 'groups', array(
             'label' => getGS('User Type'),
         ));
 
@@ -51,17 +52,40 @@ class Admin_Form_AddUser extends Admin_Form_BaseUser
     /**
      * Set default values by entity
      *
-     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\User\Staff $staff
      * @return void
      */
-    public function setDefaultsFromEntity(User $user)
+    public function setDefaultsFromEntity(Staff $staff)
     {
-        parent::setDefaultsFromEntity($user);
+        parent::setDefaultsFromEntity($staff);
+
+        $groups = array();
+        foreach ($staff->getGroups() as $group) {
+            $groups[] = $group->getId();
+        }
 
         $this->setDefaults(array(
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'phone' => $user->getPhone(),
+            'username' => $staff->getUsername(),
+            'name' => $staff->getName(),
+            'email' => $staff->getEmail(),
+            'phone' => $staff->getPhone(),
+            'groups' => $groups,
         ));
+
+        // can't change on edit
+        $this->getElement('username')->setAttrib('readonly', TRUE);
+
+        // make password change optional
+        $this->getElement('password')->setRequired(false);
+        $this->getElement('password_confirm')->setRequired(false);
+        $this->addDisplayGroup(array(
+            'password',
+            'password_confirm',
+        ), 'password_change', array(
+            'legend' => getGS('Change password'),
+            'class' => 'toggle',
+            'order' => 5,
+        ));
+
     }
 }
