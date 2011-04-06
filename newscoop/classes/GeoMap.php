@@ -729,7 +729,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
 
         $status = true;
-        
+
         if ("" != $p_map)
         {
             $map_data = array();
@@ -738,7 +738,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $p_map = str_replace("%2B", "+", $p_map);
                 $p_map = str_replace("%2F", "/", $p_map);
                 $map_json = base64_decode($p_map);
-    
+
                 $map_data = json_decode($map_json);
             }
             catch (Exception $exc)
@@ -750,12 +750,12 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $status = Geo_Map::UpdateMap($p_mapId, $p_articleNumber, $map_data);
             }
         }
-    
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
+
         if ("" != $p_remove)
         {
             $remove_data = array();
@@ -775,12 +775,12 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $status = Geo_Map::RemovePoints($p_mapId, $remove_data);
             }
         }
-    
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
+
         $new_ids = array();
         if ("" != $p_insert)
         {
@@ -790,7 +790,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $p_insert = str_replace("%2B", "+", $p_insert);
                 $p_insert = str_replace("%2F", "/", $p_insert);
                 $insert_json = base64_decode($p_insert);
-    
+
                 $insert_data = json_decode($insert_json);
             }
             catch (Exception $exc)
@@ -800,17 +800,17 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             if ($status)
             {
                 $status = Geo_Map::InsertPoints($p_mapId, $p_languageId, $p_articleNumber, $insert_data, $new_ids);
-    
+
             }
         }
-    
-    
+
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
-    
+
+
         if ("" != $p_locations)
         {
             $locations_data = array();
@@ -827,27 +827,27 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             }
             if ($status)
             {
-    
+
                 $status = Geo_Location::UpdateLocations($p_mapId, $locations_data);
             }
         }
-    
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
-    
+
+
         if ("" != $p_contents)
         {
             $contents_data = array();
             try
             {
-    
+
                 $p_contents = str_replace("%2B", "+", $p_contents);
                 $p_contents = str_replace("%2F", "/", $p_contents);
                 $contents_json = base64_decode($p_contents);
-    
+
                 $contents_data = json_decode($contents_json);
             }
             catch (Exception $exc)
@@ -859,12 +859,12 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $status = Geo_Location::UpdateContents($p_mapId, $contents_data);
             }
         }
-    
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
+
         if ("" != $p_order)
         {
             $order_data = array();
@@ -884,17 +884,17 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $status = Geo_Location::UpdateOrder($p_mapId, $order_data, $new_ids);
             }
         }
-    
+
         if (!$status)
         {
             return $data_wrong;
         }
-    
+
         $geo_map_usage = Geo_Map::ReadMapInfo("map", $p_mapId);
-    
-    
+
+
         $found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
-    
+
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
         return $res_array;
@@ -1484,7 +1484,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 $locpos_del_params = array();
                 $locpos_del_params[] = $one_loc;
                 $locpos_del_params[] = $one_loc;
-    
+
                 $success = $g_ado_db->Execute($queryStr_locpos_del, $locpos_del_params);
             }
         }
@@ -1599,7 +1599,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             {
 
                 $loc_id = null;
-    
+
                 $new_loc = array();
                 $new_loc[] = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
                 $new_cen = array('latitude' => $poi["latitude"], 'longitude' => $poi["longitude"]);
@@ -1616,11 +1616,11 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                     // ad B 1)
                     $loc_in_params = array();
                     $loc_in_params[] = $poi["latitude"];
-    
+
                     $loc_in_params[] = $poi["longitude"];
                     $loc_in_params[] = $poi["latitude"];
                     $loc_in_params[] = $poi["longitude"];
-    
+
                     // the POI itself insertion
                     $queryStr_loc_in = str_replace("%%user_id%%", $g_user->getUserId(), $queryStr_loc_in);
 
@@ -1706,7 +1706,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $cnf_html_dir = $Campsite['HTML_DIR'];
         $cnf_website_url = $Campsite['WEBSITE_URL'];
-        
+
         $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
         if (0 < $p_mapWidth)
         {
@@ -1728,7 +1728,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $geo_icons_info = Geo_Preferences::GetIconsInfo($cnf_html_dir, $cnf_website_url);
         $geo_icons_json = "";
         $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
-        
+
         $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
         $geo_popups_json = "";
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
@@ -1745,11 +1745,11 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $preview = true;
         $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
-        
+
         //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
         $poi_info_json = json_encode($poi_info);
-        
-        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
 
         $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
         $include_files_css = $include_files["css_files"];
@@ -1766,10 +1766,10 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $tag_string .= '
 
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_preview.js"></script>
 
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
@@ -2010,7 +2010,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $geo_icons_json = "";
         $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
 
-        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
 
 
         $tag_string .= $geo_map_incl;
@@ -2018,10 +2018,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $tag_string .= '
 
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_search.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_search.js"></script>
 
 <script type="text/javascript">
 

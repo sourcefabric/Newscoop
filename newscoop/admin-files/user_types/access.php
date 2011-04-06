@@ -31,7 +31,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 camp_html_display_msgs("0.25em", "0.25em");
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <?php
 $rightsList = array();
 $checkboxPrefix = 'checkbox_';

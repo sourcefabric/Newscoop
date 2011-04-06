@@ -40,7 +40,7 @@ if(isset($files) && is_array($files)) {
 
 ?>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 
 <FORM name="template_list" action="/<?php echo $ADMIN; ?>/templates/do_template_list_action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
