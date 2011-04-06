@@ -28,11 +28,11 @@ class Admin_UserTypesController extends Zend_Controller_Action
         camp_load_translation_strings('user_types');
 
         // get repositories
-        $this->ruleRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Rule');
-        $this->roleRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Role');
-        $this->resourceRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Resource');
-        $this->actionRepository = $this->_helper->em->getRepository('Newscoop\Entity\Acl\Action');
-        $this->groupRepository = $this->_helper->em->getRepository('Newscoop\Entity\User\Group');
+        $this->ruleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Acl\Rule');
+        $this->roleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Acl\Role');
+        $this->resourceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Acl\Resource');
+        $this->actionRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Acl\Action');
+        $this->groupRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
 
         // set rule types
         $this->ruleTypes = array(
