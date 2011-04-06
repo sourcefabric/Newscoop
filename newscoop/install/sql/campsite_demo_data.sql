@@ -527,7 +527,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_groups` WRITE;
 /*!40000 ALTER TABLE `liveuser_groups` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_groups` VALUES (1,0,'Administrator'),(2,0,'Chief Editor'),(3,0,'Editor'),(4,0,'Journalist'),(5,0,'Subscription manager');
+INSERT  IGNORE INTO `liveuser_groups` (`group_id`, `group_type`, `group_define_name`, `role_id`) VALUES (1,0,'Administrator', 1),(2,0,'Chief Editor', 3),(3,0,'Editor', 4),(4,0,'Journalist', 5),(5,0,'Subscription manager', 6);
 /*!40000 ALTER TABLE `liveuser_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,7 +597,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_users` VALUES (1,804830992,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','localhost@localhost','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2011-03-14 14:29:45','2011-02-10 16:00:31','2011-03-14 15:29:45',1,''),(26,770302083,'Test Person','test','1c6027c0667c7646b964476b61960e0cf7b559ee','test@persona.org','Y',0,'Otawa, Canada','','','','1','','','2','Mr.','','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-03-10 14:16:24','2011-03-10 08:45:53','2011-03-10 15:16:24',1,'');
+INSERT  IGNORE INTO `liveuser_users` VALUES (1,804830992,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','localhost@localhost','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2011-03-14 14:29:45','2011-02-10 16:00:31','2011-03-14 15:29:45',1,'',2),(26,770302083,'Test Person','test','1c6027c0667c7646b964476b61960e0cf7b559ee','test@persona.org','Y',0,'Otawa, Canada','','','','1','','','2','Mr.','','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-03-10 14:16:24','2011-03-10 08:45:53','2011-03-10 15:16:24',1,'',NULL);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 

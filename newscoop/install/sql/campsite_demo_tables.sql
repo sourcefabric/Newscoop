@@ -1017,6 +1017,7 @@ CREATE TABLE `liveuser_groups` (
   `group_id` int(11) NOT NULL DEFAULT '0',
   `group_type` int(11) NOT NULL DEFAULT '0',
   `group_define_name` varchar(32) NOT NULL DEFAULT '',
+  `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `groups_define_name_i_idx` (`group_define_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1161,6 +1162,7 @@ CREATE TABLE `liveuser_users` (
   `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
   `isActive` tinyint(1) DEFAULT '1',
   `password_reset_token` varchar(85) DEFAULT NULL,
+  `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;

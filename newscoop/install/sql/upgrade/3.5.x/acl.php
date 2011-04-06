@@ -61,4 +61,4 @@ foreach ($acl as $resource => $resourceActions) {
     }
 }
 
-/** @todo populate rules */
+// populate admin rights

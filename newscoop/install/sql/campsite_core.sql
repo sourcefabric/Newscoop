@@ -2129,6 +2129,7 @@ CREATE TABLE `liveuser_groups` (
   `group_id` int(11) NOT NULL DEFAULT '0',
   `group_type` int(11) NOT NULL DEFAULT '0',
   `group_define_name` varchar(32) NOT NULL DEFAULT '',
+  `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `groups_define_name_i_idx` (`group_define_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -2140,7 +2141,7 @@ CREATE TABLE `liveuser_groups` (
 
 LOCK TABLES `liveuser_groups` WRITE;
 /*!40000 ALTER TABLE `liveuser_groups` DISABLE KEYS */;
-INSERT INTO `liveuser_groups` VALUES (1,0,'Administrator'),(2,0,'Chief Editor'),(3,0,'Editor'),(4,0,'Journalist'),(5,0,'Subscription manager');
+INSERT INTO `liveuser_groups` VALUES (1,0,'Administrator', 1),(2,0,'Chief Editor', 3),(3,0,'Editor', 4),(4,0,'Journalist', 5),(5,0,'Subscription manager', 6);
 /*!40000 ALTER TABLE `liveuser_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2506,6 +2507,7 @@ CREATE TABLE `liveuser_users` (
   `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
   `isActive` tinyint(1) DEFAULT '1',
   `password_reset_token` varchar(85) DEFAULT NULL,
+  `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -2517,7 +2519,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-01-17 12:31:17','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-01-17 12:31:17','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,2);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -3527,6 +3529,230 @@ LOCK TABLES `plugin_pollanswer_attachment` WRITE;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` ENABLE KEYS */;
 UNLOCK TABLES;
+
+-- Acl actions
+DROP TABLE IF EXISTS `acl_action`;
+CREATE TABLE IF NOT EXISTS `acl_action` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- Acl actions data
+INSERT INTO `acl_action` (`id`, `name`) VALUES
+(1, 'Add'),
+(2, 'Edit'),
+(3, 'Delete'),
+(4, 'Move'),
+(5, 'Publish'),
+(6, 'Translate'),
+(7, 'Attach'),
+(8, 'Manage'),
+(9, 'Clear'),
+(10, 'Enable'),
+(11, 'Moderate'),
+(12, 'Bold'),
+(13, 'CharacterMap'),
+(14, 'CopyCutPaste'),
+(15, 'Enlarge'),
+(16, 'FindReplace'),
+(17, 'FontColor'),
+(18, 'FontFace'),
+(19, 'FontSize'),
+(20, 'HorizontalRule'),
+(21, 'Image'),
+(22, 'Indent'),
+(23, 'Italic'),
+(24, 'Link'),
+(25, 'ListBullet'),
+(26, 'ListNumber'),
+(27, 'SourceView'),
+(28, 'Strikethrough'),
+(29, 'Subhead'),
+(30, 'Subscript'),
+(31, 'Superscript'),
+(32, 'Table'),
+(33, 'TextAlignment'),
+(34, 'TextDirection'),
+(35, 'Underline'),
+(36, 'UndoRedo'),
+(37, 'StatusBar'),
+(38, 'SpellcheckerEnabled'),
+(39, 'Get'),
+(40, 'View'),
+(41, 'Synchronize'),
+(42, 'Admin'),
+(43, 'Moderator'),
+(44, 'Notify'),
+(45, 'Guest');
+
+
+-- Acl resource
+DROP TABLE IF EXISTS `acl_resource`;
+CREATE TABLE IF NOT EXISTS `acl_resource` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(40) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- Acl resource data
+INSERT INTO `acl_resource` (`id`, `name`) VALUES
+(1, 'Article'),
+(2, 'ArticleType'),
+(3, 'Author'),
+(4, 'Backup'),
+(5, 'Cache'),
+(6, 'Comment'),
+(7, 'Country'),
+(8, 'Editor'),
+(9, 'File'),
+(10, 'Image'),
+(11, 'Indexer'),
+(12, 'Issue'),
+(13, 'Language'),
+(14, 'Localizer'),
+(15, 'Log'),
+(16, 'Notification'),
+(17, 'PhorumUser'),
+(18, 'Plugin'),
+(19, 'PluginBlog'),
+(20, 'PluginInterview'),
+(21, 'PluginPoll'),
+(22, 'Pub'),
+(23, 'Readers'),
+(24, 'Section'),
+(25, 'Subscription'),
+(26, 'SystemPreferences'),
+(27, 'Templ'),
+(28, 'Topic'),
+(29, 'User'),
+(30, 'UserType');
+
+
+-- Acl resource action relation
+DROP TABLE IF EXISTS `acl_resource_action`;
+CREATE TABLE IF NOT EXISTS `acl_resource_action` (
+  `resource_id` int(10) NOT NULL,
+  `action_id` int(10) NOT NULL,
+  PRIMARY KEY (`resource_id`,`action_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Acl resource action relation data
+INSERT INTO `acl_resource_action` (`resource_id`, `action_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(2, 3),
+(2, 8),
+(3, 2),
+(4, 8),
+(5, 9),
+(6, 10),
+(6, 11),
+(7, 3),
+(7, 8),
+(8, 12),
+(8, 13),
+(8, 14),
+(8, 15),
+(8, 16),
+(8, 17),
+(8, 18),
+(8, 19),
+(8, 20),
+(8, 21),
+(8, 22),
+(8, 23),
+(8, 24),
+(8, 25),
+(8, 26),
+(8, 27),
+(8, 28),
+(8, 29),
+(8, 30),
+(8, 31),
+(8, 32),
+(8, 33),
+(8, 34),
+(8, 35),
+(8, 36),
+(8, 37),
+(8, 38),
+(9, 1),
+(9, 2),
+(9, 3),
+(10, 1),
+(10, 2),
+(10, 3),
+(10, 7),
+(11, 8),
+(12, 3),
+(12, 8),
+(13, 3),
+(13, 8),
+(14, 8),
+(15, 40),
+(16, 39),
+(17, 41),
+(18, 8),
+(19, 42),
+(19, 43),
+(20, 42),
+(20, 43),
+(20, 44),
+(20, 45),
+(21, 10),
+(22, 3),
+(22, 8),
+(23, 8),
+(24, 3),
+(24, 8),
+(25, 8),
+(26, 2),
+(27, 3),
+(27, 8),
+(28, 7),
+(28, 8),
+(29, 3),
+(29, 8),
+(30, 8);
+
+
+-- Acl roles
+DROP TABLE IF EXISTS `acl_role`;
+CREATE TABLE IF NOT EXISTS `acl_role` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- Acl roles data
+INSERT INTO `acl_role` (`id`) VALUES
+(1),
+(2),
+(3),
+(4),
+(5),
+(6);
+
+-- Acl rules
+DROP TABLE IF EXISTS `acl_rule`;
+CREATE TABLE IF NOT EXISTS `acl_rule` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` enum('allow','deny') NOT NULL DEFAULT 'allow',
+  `role_id` int(10) NOT NULL,
+  `resource_id` int(10) DEFAULT NULL,
+  `action_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- Acl rules data
+INSERT INTO `acl_rule` (`id`, `type`, `role_id`, `resource_id`, `action_id`) VALUES
+(1, 'allow', 1, NULL, NULL);
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
