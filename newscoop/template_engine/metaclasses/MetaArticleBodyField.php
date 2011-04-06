@@ -169,17 +169,19 @@ final class MetaArticleBodyField {
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
-                $stat_web_url = $Campsite['WEBSITE_URL'];
-                if ("/" != $stat_web_url[strlen($stat_web_url)-1]) {
-                    $stat_web_url .= "/";
-                }
-                $article_number = $this->m_parent_article->getProperty('Number');
-                $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
-                $language_code = $language_obj->Code;
-                $name_spec = '_' . $article_number . '_' . $language_code;
 
+                // statistics shall be only gathered if the site admin set it on (and not for editor previews)
                 $context = CampTemplate::singleton()->context();
-                if (!$context->preview) {
+                if ((SystemPref::CollectStatistics()) && (!$context->preview)) {
+                    $stat_web_url = $Campsite['WEBSITE_URL'];
+                    if ("/" != $stat_web_url[strlen($stat_web_url)-1]) {
+                        $stat_web_url .= "/";
+                    }
+                    $article_number = $this->m_parent_article->getProperty('Number');
+                    $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
+                    $language_code = $language_obj->Code;
+                    $name_spec = '_' . $article_number . '_' . $language_code;
+
                     $content .= '
                         <script type="text/javascript">
                         var stats_getHTTPObject' . $name_spec . ' = function () {
