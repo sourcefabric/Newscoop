@@ -39,21 +39,21 @@ class Comments
      * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publications
      */
-    private $forum_id;
+    private $forum;
 
     /**
      * @manyToOne(targetEntity="Comments")
      * @joinColumn(name="fk_parent_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Comments
      */
-    private $parent_id;
+    private $parent;
 
     /**
      * @manyToOne(targetEntity="Articles")
      * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
-     * @var Newscoop\Entity\Publications
+     * @var Newscoop\Entity\Articles
      */
-    private $thread_id;
+    private $thread;
 
     /**
      * @column(length=140)
@@ -102,6 +102,17 @@ class Comments
      * @var int
      */
     private $dislikes;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
 
 
     /**
@@ -212,9 +223,9 @@ class Comments
      * @param Newscoop\Entity\User $user
      * @return Newscoop\Entity\Comments
      */
-    public function setUser(CommentsUsers $user)
+    public function setUser(CommentsUsers $p_user)
     {
-        $this->user = $user;
+        $this->user = $p_user;
         // return this for chaining mechanism
         return $this;
     }
@@ -240,7 +251,7 @@ class Comments
     }
 
     /**
-     * Set status based upon the mapper
+     * Set status code
      *
      * @return Newscoop\Entity\Comments
      */
@@ -252,13 +263,35 @@ class Comments
     }
 
     /**
-     * Get status based upon the mapper
+     * Get status code
      *
      * @return string
      */
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * Set thread
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setThread(Articles $p_thread)
+    {
+        $this->thread = $p_thread;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return Newscoop\Entity\Articles
+     */
+    public function getThread()
+    {
+        return $this->thread;
     }
 
 }

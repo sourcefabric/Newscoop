@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/zend_admin_stylesheet.css'); ?>" />
 
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -49,7 +50,7 @@
         var g_admin_url = '<?php echo $this->baseUrl('admin'); ?>';
         var g_admin_img = '<?php echo $this->baseUrl('admin-style/images'); ?>';
         var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
-                
+
         var localizer = localizer || {
             processing: '<?php putGS('Processing...'); ?>',
             session_expired: '<?php putGS('Session expired.'); ?>',

@@ -7,6 +7,8 @@
  *
  *
  */
+use Newscoop\Entity\Comments;
+
 class Admin_CommentsController extends Zend_Controller_Action
 {
 
@@ -46,22 +48,47 @@ class Admin_CommentsController extends Zend_Controller_Action
         $this->commentsRepository = $bootstrap->getResource('doctrine')
             ->getEntityManager()
             ->getRepository('Newscoop\Entity\Comments');
+
+       $this->getHelper('contextSwitch')
+            ->addActionContext('index', 'json')
+            ->initContext();
+        return $this;
+
     }
 
     public function indexAction()
     {
-        $form = new Zend_Form;
-        $limit = 15;
-        $offset = max(0, (int) $_GET['offset']);
-        $this->view->comments = $this->commentsRepository->getList($offset, $limit);
-        $paramsPending = array('colums'=> array( 'status' => 'pending'));
-        $count = (object) array(
-            'pending' => $this->commentsRepository->getCount( $paramsPending ),
-            'approved' => $this->commentsRepository->getCount()
-        );
-        $this->view->count = $count;
-        $this->view->pager = new SimplePager($count->pending, $limit, 'offset', isset($name) ? "?name={$name}&" : '?');
+        $table = $this->getHelper('datatable');
 
+        $table->setDataSource($this->commentsRepository);
+
+        $table->setCols(array(
+            'time_created' => getGS('Date Posted'),
+            'subject' => getGS('Subject'),
+            'forum_id' => getGS('Article'),
+            getGS('Delete'),
+        ));
+
+        $view = $this->view;
+        $table->setHandle(function(Comments $comment) use ($view) {
+            $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
+                $view->url(array(
+                    'action' => 'delete',
+                    'user' => $comment->getId(),
+                )),
+                getGS('Delete comment $1', $comment->getSubject()),
+                getGS('Delete')
+            );
+
+            return array(
+                $comment->getTimeCreated()->format('Y-i-d H:i:s'),
+                $comment->getSubject(),
+                $comment->getSubject(),
+                $deleteLink,
+            );
+        });
+
+        $table->dispatch();
     }
 
     public function listUsersAction()
@@ -86,5 +113,8 @@ class Admin_CommentsController extends Zend_Controller_Action
         $this->view->pager = new SimplePager($count, $limit, 'offset', isset($name) ? "?name={$name}&" : '?');
     }
 
+    public function addAction()
+    {
 
+    }
 }

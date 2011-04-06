@@ -27,6 +27,12 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
     }
 
     
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
     public function setTimeCreated(\DateTime $p_datetime)
     {
         $this->_load();
@@ -75,10 +81,10 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
         return parent::getIp();
     }
 
-    public function setUser(\Newscoop\Entity\CommentsUsers $user)
+    public function setUser(\Newscoop\Entity\CommentsUsers $p_user)
     {
         $this->_load();
-        return parent::setUser($user);
+        return parent::setUser($p_user);
     }
 
     public function getUser()
@@ -105,10 +111,22 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
         return parent::getStatus();
     }
 
+    public function setThread(\Newscoop\Entity\Articles $p_thread)
+    {
+        $this->_load();
+        return parent::setThread($p_thread);
+    }
+
+    public function getThread()
+    {
+        $this->_load();
+        return parent::getThread();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'user', 'forum_id', 'parent_id', 'thread_id', 'subject', 'message', 'thread_level', 'status', 'ip', 'time_created', 'likes', 'dislikes');
+        return array('__isInitialized__', 'id', 'user', 'forum', 'parent', 'thread', 'subject', 'message', 'thread_level', 'status', 'ip', 'time_created', 'likes', 'dislikes');
     }
 
     public function __clone()
