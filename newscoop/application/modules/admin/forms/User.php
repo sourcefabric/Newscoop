@@ -7,12 +7,37 @@ use Newscoop\Entity\User;
  */
 abstract class Admin_Form_User extends Zend_Form
 {
-    /**
-     * Add user fields
-     */
-    protected function addUserDetails()
+    public function init()
     {
-        // user details
+        $this->addElement('text', 'username', array(
+            'required' => true,
+            'label' => getGS('Account name'),
+        ));
+
+        $this->addElement('password', 'password', array(
+            'required' => true,
+            'label' => getGS('Password'),
+        ));
+
+        $this->addElement('password', 'password_confirm', array(
+            'required' => true,
+            'label' => getGS('Confirm password'),
+        ));
+
+        $this->addElement('text', 'name', array(
+            'required' => true,
+            'label' => getGS('Name'),
+        ));
+
+        $this->addElement('text', 'email', array(
+            'required' => true,
+            'label' => getGS('E-mail'),
+        ));
+
+        $this->addElement('text', 'phone', array(
+            'label' => getGS('Phone'),
+        ));
+
         $this->addElement('select', 'title', array(
             'multioptions' => array(
                 'Mr.' => getGS('Mr.'),
@@ -115,7 +140,9 @@ abstract class Admin_Form_User extends Zend_Form
             'class' => 'toggle',
         ));
 
-        $this->addElement('hidden', 'reader');
+        $this->addElement('submit', 'submit', array(
+            'label' => getGS('Save'),
+        ));
     }
 
     /**
@@ -127,6 +154,10 @@ abstract class Admin_Form_User extends Zend_Form
     public function setDefaultsFromEntity(User $user)
     {
         $this->setDefaults(array(
+            'username' => $user->getUsername(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'phone' => $user->getPhone(),
             'title' => $user->getTitle(),
             'gender' => $user->getGender(),
             'age' => $user->getAge(),
@@ -141,6 +172,21 @@ abstract class Admin_Form_User extends Zend_Form
             'employer' => $user->getEmployer(),
             'employer_type' => $user->getEmployerType(),
             'position' => $user->getPosition(),
+        ));
+
+        // can't change on edit
+        $this->getElement('username')->setAttrib('readonly', TRUE);
+
+        // make password change optional
+        $this->getElement('password')->setRequired(false);
+        $this->getElement('password_confirm')->setRequired(false);
+        $this->addDisplayGroup(array(
+            'password',
+            'password_confirm',
+        ), 'password_change', array(
+            'legend' => getGS('Change password'),
+            'class' => 'toggle',
+            'order' => 4,
         ));
     }
 }

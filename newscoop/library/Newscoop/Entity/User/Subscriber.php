@@ -11,7 +11,7 @@ use Newscoop\Entity\User;
 
 /**
  * Subscriber entity
- * @entity
+ * @entity(repositoryClass="Newscoop\Entity\Repository\User\SubscriberRepository")
  */
 class Subscriber extends User
 {

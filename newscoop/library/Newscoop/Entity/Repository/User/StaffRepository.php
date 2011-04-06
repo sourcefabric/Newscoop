@@ -37,13 +37,11 @@ class StaffRepository extends UserRepository
             }
         }
 
-        // set username/password
+        // set role
         if ($staff->getId() == NULL) { // add
             $role = new Role;
             $em->persist($role);
-            $user->setUsername($values['username'])
-                ->setPassword($values['password'])
-                ->setRole($role);
+            $staff->setRole($role);
         }
 
         parent::save($staff, $values);

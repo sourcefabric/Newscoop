@@ -11,6 +11,13 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Subscriber');
         $this->form = new Admin_Form_Subscriber;
         $this->form->setAction('')->setMethod('post');
+
+        // set form countries
+        $countries = array();
+        foreach (Country::GetCountries(1) as $country) {
+            $countries[$country->getCode()] = $country->getName();
+        }
+        $this->form->getElement('country')->setMultioptions($countries);
     }
 
     public function indexAction()
@@ -25,17 +32,28 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->handleForm($this->form, $subscriber);
 
         $this->view->form = $this->form;
-        $this->view->staff = $staff;
+        $this->view->user = $subscriber;
+    }
+
+    public function editAction()
+    {
+        $subscriber = $this->_helper->entity->get(new Subscriber, 'user');
+        $this->form->setDefaultsFromEntity($subscriber);
+
+        $this->handleForm($this->form, $subscriber);
+
+        $this->view->form = $this->form;
+        $this->view->user = $subscriber;
     }
 
     public function deleteAction()
     {
-        $staff = $this->getStaff();
-        $this->repository->delete($staff);
+        $subscriber = $this->_helper->entity->get(new Subscriber, 'user');
+        $this->repository->delete($subscriber);
 
-        $this->_helper->em->flush();
+        $this->_helper->entity->getManager()->flush();
 
-        $this->_helper->flashMessenger(getGS('Staff member deleted.'));
+        $this->_helper->flashMessenger(getGS('Subscriber deleted.'));
         $this->_helper->redirector->gotoSimple('index');
     }
 
@@ -61,7 +79,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-                getGS('Edit staff member $1', $user->getName()),
+                getGS('Edit subscriber $1', $user->getName()),
                 $user->getName()
             );
 
@@ -71,7 +89,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-                getGS('Delete staff member $1', $user->getName()),
+               getGS('Delete subscriber $1', $user->getName()),
                 getGS('Delete')
             );
 
@@ -85,5 +103,16 @@ class Admin_SubscriberController extends Zend_Controller_Action
         });
 
         $table->dispatch();
+    }
+
+    private function handleForm(Zend_Form $form, Subscriber $subscriber)
+    {
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            $this->repository->save($subscriber, $form->getValues());
+            $this->_helper->entity->getManager()->flush();
+
+            $this->_helper->flashMessenger(getGS('Subscriber saved.'));
+            $this->_helper->redirector->gotoSimple('index');
+        }
     }
 }

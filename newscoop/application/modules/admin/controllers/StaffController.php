@@ -22,6 +22,13 @@ class Admin_StaffController extends Zend_Controller_Action
             $groups[$group->getId()] = $group->getName();
         }
         $this->form->getElement('groups')->setMultioptions($groups);
+
+        // set form countries
+        $countries = array();
+        foreach (Country::GetCountries(1) as $country) {
+            $countries[$country->getCode()] = $country->getName();
+        }
+        $this->form->getElement('country')->setMultioptions($countries);
     }
 
     public function indexAction()
@@ -36,7 +43,7 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->staff = $staff;
+        $this->view->user = $staff;
     }
 
     public function editAction()
@@ -47,7 +54,7 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->staff = $staff;
+        $this->view->user = $staff;
     }
 
     public function deleteAction()
