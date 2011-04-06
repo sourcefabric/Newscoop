@@ -10,7 +10,8 @@ WHERE fk_widget_id IN (
 -- Delete duplicated widgets
 DELETE FROM `Widget`
 WHERE ID IN (
-    SELECT ID FROM ( -- Must be materialized not to fail
+    -- Must be materialized not to fail
+    SELECT ID FROM (
         SELECT w2.id FROM `Widget` w1, `Widget` w2 WHERE w1.class = w2.class AND w1.id > w2.id
     ) as tmp
 );
