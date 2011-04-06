@@ -65,7 +65,7 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapProviderDefault', 'Go
 
 -- POI markers
 -- what marker figures are available
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerDirectory', '/javascript/geocoding/markers/');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerDirectory', '/js/geocoding/markers/');
 -- default marker figure to be used
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault', 'marker-gold.png');
 
