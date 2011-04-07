@@ -13,9 +13,8 @@ class Admin_Form_Staff extends Admin_Form_User
 
         $this->addElement('multiCheckbox', 'groups', array(
             'label' => getGS('User Type'),
+            'order' => 61,
         ));
-
-        $this->getElement('groups')->setOrder(5);
     }
 
     /**
@@ -37,6 +36,6 @@ class Admin_Form_Staff extends Admin_Form_User
             'groups' => $groups,
         ));
 
-        $this->getElement('groups')->setOrder(3);
+        $this->getElement('groups')->setOrder(31);
     }
 }
