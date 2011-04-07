@@ -25,6 +25,8 @@ if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
     exit(0);
 }
 
+set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/share/php/libzend-framework-php');
+
 // start zend session first to prevent exception
 require_once 'Zend/Session.php';
 Zend_Session::start();

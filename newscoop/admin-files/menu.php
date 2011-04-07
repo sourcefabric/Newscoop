@@ -28,13 +28,13 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 
     <?php include dirname(__FILE__) . '/html_head.php'; ?>
     
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fg.menu.js" type="text/javascript"></script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fg.menu.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.widgets.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg.menu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.css" />
 
     <!--[if IE 6]>
 	<style type="text/css">

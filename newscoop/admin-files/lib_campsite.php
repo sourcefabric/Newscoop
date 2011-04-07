@@ -609,7 +609,6 @@ function camp_get_calendar_include($p_languageCode = null)
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
 <?php if (file_exists(dirname(__FILE__) . '/../js/jquery/' . $calendarLocalization)) { ?>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
-<?php } ?>
 <script type="text/javascript"><!--
     $(document).ready(function() {
         $.datepicker.setDefaults( $.datepicker.regional['<?php echo $p_languageCode; ?>'] );
