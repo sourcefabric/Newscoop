@@ -9,7 +9,6 @@ regGS("Translation status:", "");
 regGS("Editor Media Plugin", "");
 regGS("$1 of $2 strings translated", "");
 regGS("Preview Window", "");
-regGS("Article Audioclips", "");
 regGS("Show translated strings", "");
 regGS("Feedback", "");
 regGS("You do not have the right to manage the localizer.", "");

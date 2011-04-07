@@ -274,10 +274,10 @@ class CampInstallationBase
             return false;
         }
 
-        if (!CampInstallationBaseHelper::ValidatePassword($mc_adminpsswd,
-                                                          $mc_admincpsswd)) {
+        $psswd_validation = CampInstallationBaseHelper::ValidatePassword($mc_adminpsswd, $mc_admincpsswd);
+        if ($psswd_validation['result'] == FALSE) {
             $this->m_step = 'mainconfig';
-            $this->m_message = 'Error: Passwords do not match each other.';
+            $this->m_message = 'Error: ' . $psswd_validation['message'];
             return false;
         }
 
@@ -634,6 +634,8 @@ class CampInstallationBase
  */
 class CampInstallationBaseHelper
 {
+    const PASSWORD_MINLENGTH = 5;
+
     /**
      *
      */
@@ -781,7 +783,18 @@ class CampInstallationBaseHelper
      */
     public static function ValidatePassword($p_password1, $p_password2)
     {
-        return ($p_password1 == $p_password2);
+        $validator = array('result' => TRUE);
+        if (strlen($p_password1) < self::PASSWORD_MINLENGTH) {
+            $validator['result'] = FALSE;
+            $validator['message'] = 'Password must be at least ' . self::PASSWORD_MINLENGTH . ' characters long.';
+        }
+
+        if ($validator['result'] == TRUE && ($p_password1 !== $p_password2)) {
+            $validator['result'] = FALSE;
+            $validator['message'] = 'Passwords do not match each other.';
+        }
+
+        return $validator;
     } // fn ValidatePassword
 
 

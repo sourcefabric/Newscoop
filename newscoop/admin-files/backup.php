@@ -107,7 +107,7 @@ echo $breadcrumbs;
 
 // view template
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
 <!--  CONTENT  -->
 <div class="wrapper mid-sized">

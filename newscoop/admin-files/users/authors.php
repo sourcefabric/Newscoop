@@ -153,7 +153,7 @@ echo $breadcrumbs;
 ?>
 
 <?php include dirname(__FILE__) . '/../javascript_common.php'; ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('.filter-button').click(function() {
@@ -214,11 +214,11 @@ $(document).ready(function(){
 </div>
 <script type="text/javascript">
 $('.icon-button').hover(
-   function() { $(this).addClass('ui-state-hover'); }, 
+   function() { $(this).addClass('ui-state-hover'); },
    function() { $(this).removeClass('ui-state-hover'); }
 );
 $('.text-button').hover(
-   function() { $(this).addClass('ui-state-hover'); }, 
+   function() { $(this).addClass('ui-state-hover'); },
    function() { $(this).removeClass('ui-state-hover'); }
 );
 

@@ -4,7 +4,7 @@
  */
 class SourcefabricDevFeed extends FeedWidget
 {
-    protected $title = 'Sourcefabric.org dev feed reader';
+    protected $title = 'Sourcefabric.org dev reader';
 
     protected $url = 'http://feeds.feedburner.com/SourcefabricDevPrNews?format=xml';
 

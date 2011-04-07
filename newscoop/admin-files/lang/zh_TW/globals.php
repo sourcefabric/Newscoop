@@ -255,7 +255,6 @@ regGS("Thank you.", "謝謝");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "（選擇性的）");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "閱讀");
 regGS("Publish with issue", "");
 regGS("Universal List", "");

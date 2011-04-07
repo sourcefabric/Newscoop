@@ -52,13 +52,7 @@ final class MetaMapLocation extends MetaDbObject
     protected function getName()
     {
         $poi_name = !is_null($this->m_content) ? $this->m_content->getName() : null;
-	if ($poi_name)
-	{
-		$poi_name = str_replace("&", "&amp;", $poi_name);
-		$poi_name = str_replace("<", "&lt;", $poi_name);
-		$poi_name = str_replace(">", "&gt;", $poi_name);
-	}
-	return $poi_name;
+        return $poi_name;
     }
 
     /**
@@ -97,13 +91,7 @@ final class MetaMapLocation extends MetaDbObject
     protected function getText()
     {
         $poi_text = !is_null($this->m_content) ? $this->m_content->getText() : null;
-	if ($poi_text)
-	{
-		$poi_text = str_replace("&", "&amp;", $poi_text);
-		$poi_text = str_replace("<", "&lt;", $poi_text);
-		$poi_text = str_replace(">", "&gt;", $poi_text);
-	}
-	return $poi_text;
+        return $poi_text;
     }
 
     /**

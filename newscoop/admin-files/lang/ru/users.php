@@ -37,8 +37,6 @@ regGS("User may use the editor status bar", "Пользователь может
 regGS("User may clear up the system cache", "Пользователь может очищать систему кеширования");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Другой пользователь зарегистрировался под этим электронным адресом, пожалуйста, введите другой.");
 regGS("There was an error when trying to update the user info.", "Произошла ошибка при попытке обновления информации о пользователе.");
-regGS("User may attach audioclips to articles", "Пользователь может присоединять аудиоклипы к статье");
-regGS("User may add audioclips", "Пользватель может добавлять аудиоклипы");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Вы уверены, что хотите удалить IP группы?");
 regGS("User may moderate comments", "Пользователь может модерировать комментарии");
 regGS("User may enable comments", "Пользователь может разрешать комментарии");

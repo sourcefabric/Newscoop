@@ -255,7 +255,6 @@ regGS("Thank you.", "Gracias");
 regGS("Please take a minute to send us an email.", "Por favor tome un minuto para enviarnos un mensaje de correo.");
 regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "El URL que ingresó es inválido: '$1'");
-regGS("There was an error logging in to the Campcaster server", "Hubo un errror al ingresar al servidro de Campcaster");
 regGS("Reads", "Impresiones");
 regGS("Publish with issue", "Publicar con edición");
 regGS("Universal List", "Lista universal");

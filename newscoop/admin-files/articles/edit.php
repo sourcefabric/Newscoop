@@ -6,7 +6,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 
 require_once WWW_DIR . '/classes/GeoMap.php';
@@ -55,7 +54,6 @@ $articleCreator = new User($articleObj->getCreatorId());
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, TRUE);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 $articleFiles = ArticleAttachment::GetAttachmentsByArticleNumber($f_article_number, $f_language_selected);
-$articleAudioclips = ArticleAudioclip::GetAudioclipsByArticleNumber($f_article_number, $f_language_selected);
 $articleLanguages = $articleObj->getLanguages();
 
 // Create displayable "last modified" time.

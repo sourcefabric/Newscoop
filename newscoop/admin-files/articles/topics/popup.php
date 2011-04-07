@@ -32,11 +32,12 @@ foreach ($articleTopics as $topic) {
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
   <title><?php putGS("Attach Topic To Article"); ?></title>
-  <?php include dirname(__FILE__) . '/../../html_head.php' ?>
+  
+<?php include dirname(__FILE__) . '/../../html_head.php' ?>
 </head>
 <body class="pop-up">
 <?php if (count($topics) > 0) { ?>
-<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="POST">
+<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="post">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
@@ -139,7 +140,7 @@ $(document).ready(function() {
 <h1><?php putGS("Attach Topics"); ?></h1>
 </div>
 <p><?php putGS('No topics have been created yet.'); ?></p>
-    
+
 <?php } ?>
 
 </body>

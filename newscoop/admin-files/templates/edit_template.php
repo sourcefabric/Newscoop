@@ -178,9 +178,9 @@ if (in_array($extension, $imageExtensions)) {
     <table border="0" cellspacing="0" cellpadding="0" class="box_table">
     <tr>
       <td colspan="2">
-        <textarea id="cField" rows="40" cols="120" name="cField" id="cField" wrap="NO" class="input_textarea"><?php p(htmlspecialchars($contents)); ?></textarea>
-        <script type="text/javascript" src="/javascript/edit-area/edit_area_full.js"></script>
-        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/editarea/smarty.js"></script>
+        <textarea rows="40" cols="120" name="cField" id="cField" wrap="NO" class="input_textarea"><?php p(htmlspecialchars($contents)); ?></textarea>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/editarea/edit_area_full.js"></script>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/editarea/smarty.js"></script>
         <script type="text/javascript">
         $(function() {
             editAreaLoader.init({

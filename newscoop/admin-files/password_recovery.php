@@ -100,7 +100,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 
   <?php include dirname(__FILE__) . '/javascript_common.php'; ?>
-  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js"></script>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js"></script>
 </head>
 <body>
   <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">

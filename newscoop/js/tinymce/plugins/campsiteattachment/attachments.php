@@ -3,6 +3,10 @@
  * Show a list of attachments in a long horizontal table.
  * @author $Author: holman $
  */
+
+// set SCRIPT_FILE for correct attachment urls
+$_SERVER['SCRIPT_NAME'] = preg_replace('#js/.*$#', 'admin.php', $_SERVER['SCRIPT_NAME']);
+
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
@@ -21,12 +25,8 @@ if (!$LiveUser->isLoggedIn()) {
 }
 
 require_once('config.inc.php');
-require_once('classes/AttachmentManager.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
-camp_load_translation_strings("tiny_media_plugin");
-
-$Campsite['SUBDIR'] = str_replace('/javascript/tinymce/plugins/campsitemedia', '', $Campsite['SUBDIR']);
+require_once('classes/AttachmentManager.php');
 
 $manager = new AttachmentManager($AMConfig);
 
@@ -54,13 +54,13 @@ function drawFiles($list, &$manager)
     {
         $counter++;
         $languageId = ($file['attachment']->getLanguageId()) ? $file['attachment']->getLanguageId() : $languageSelected;
-        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($file['attachment']->getStorageLocation());
+        $downloadURL = $file['attachment']->getAttachmentUrl() . '?g_download=1';
 ?>
     <td>
       <table width="100" cellpadding="0" cellspacing="0">
       <tr>
-        <td class="block" id="block_<?php echo $counter; ?>" onclick="CampsiteMediaDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>', '<?php echo $counter; ?>');">
-          <a href="javascript:;" onclick="CampsiteMediaDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
+        <td class="block" id="block_<?php echo $counter; ?>" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo camp_javascriptspecialchars($file["attachment"]->getDescription($languageId)); ?>', '<?php echo $counter; ?>');">
+          <a href="javascript:;" onclick="CampsiteAttachmentDialog.select(<?php echo $file['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo camp_javascriptspecialchars($file["attachment"]->getDescription($languageId)); ?>');" title="<?php echo addslashes($file['attachment']->getDescription($languageId)); ?>"><?php echo $file['attachment']->getFileName(); ?></a><br />
        <?php echo htmlspecialchars($file['attachment']->getDescription($languageId)); ?>
         </td>
       </tr>
@@ -76,7 +76,7 @@ function drawNoResults()
 ?>
 <table width="100%">
   <tr>
-    <td class="noResult"><?php putGS("No Media Files Found"); ?></td>
+    <td class="noResult"><script>document.write(i18n("No Attachments Found"));</script></td>
   </tr>
 </table>
 <?php
@@ -135,7 +135,7 @@ function drawErrorBase(&$manager)
     </script>
 
   <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
-  <script type="text/javascript" src="js/campsitemedia.js"></script>
+  <script type="text/javascript" src="js/campsiteattachment.js"></script>
   <script type="text/javascript" src="assets/images.js"></script>
 </head>
 <body>
@@ -150,11 +150,15 @@ function drawErrorBase(&$manager)
 <?php
     $firstAttachment = array_shift($list);
     if (!empty($firstAttachment)) {
-        $downloadURL = $Campsite['SUBDIR'] . '/attachment/' . basename($firstAttachment['attachment']->getStorageLocation());
+        $downloadURL = $firstAttachment['attachment']->getAttachmentUrl() . '?g_download=1';
+        $languageId = $firstAttachment['attachment']->getLanguageId();
+        if (empty($languageId)) {
+            $languageId = (int) $_REQUEST['language_selected'];
+        }
 ?>
   <!-- automatically select the first attachment -->
   <script>
-    CampsiteMediaDialog.select(<?php echo $firstAttachment['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($file["attachment"]->getDescription($languageId)); ?>');
+    CampsiteAttachmentDialog.select(<?php echo $firstAttachment['attachment']->getAttachmentId(); ?>, '<?php echo $downloadURL; ?>', '<?php echo htmlspecialchars($firstAttachment["attachment"]->getDescription($languageId)); ?>');
   </script>
 <?php } ?>
 

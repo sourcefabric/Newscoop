@@ -155,7 +155,7 @@ $list->setColVis(FALSE)
     <div style="margin: 8px 0; text-align:center">
         <input type="submit" class="button" value="<?php putGS('Attach'); ?>" />
     </div>
-    
+
     </form>
 </div>
 

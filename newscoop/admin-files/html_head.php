@@ -15,13 +15,13 @@ if ($locale == 'cz') {
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
 
-<script src="/javascript/jquery/jquery.min.js" type="text/javascript"></script>
-<script src="/javascript/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 
 <?php if ($locale != 'en') { ?>
-<script src="/javascript/jquery-ui/ui/i18n/jquery.ui.datepicker-<?php echo $locale; ?>.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery-ui/ui/i18n/jquery.ui.datepicker-<?php echo $locale; ?>.js" type="text/javascript"></script>
 <?php } ?>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-ui-timepicker-addon.min.js" type="text/javascript"></script>
 
 <script type="text/javascript"><!--
     var website_url = '<?php echo $Campsite['WEBSITE_URL'];?>';
@@ -42,8 +42,8 @@ if ($locale == 'cz') {
     });
 //--></script>
 
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.cookie.js" type="text/javascript"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/ColVis.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.cookie.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/ColVis.min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/admin.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/admin.js"></script>
