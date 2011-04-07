@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "Password recovery request for $1");
 regGS("Your password has been reset.", "Your password has been reset.");
 regGS("Proceed to login.", "Proceed to login.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Hi, \n\nfor password recovery, please follow this link: $1");
