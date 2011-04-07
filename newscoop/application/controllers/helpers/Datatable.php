@@ -1,13 +1,11 @@
 <?php
-
-use Newscoop\Entity\Repository\DatatableRepository;
-
+use Newscoop\Entity\Repository\IDatatableSource;
 /**
  * Datatable helper
  */
 class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
 {
-    /** @var Newscoop\Entity\Repository\DatatableRepository */
+    /** @var Newscoop\Entity\Repository\IDatatableSource */
     private $dataSource;
 
     /** @var array */
@@ -28,12 +26,12 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set entity
      *
-     * @param DataSource $dataSource
+     * @param IDatatableSource $p_dataSource
      * @return Action_Helper_Datatable
      */
-    public function setDataSource($dataSource)
+    public function setDataSource($p_dataSource)
     {
-        $this->dataSource = $dataSource;
+        $this->dataSource = $p_dataSource;
         return $this;
     }
 

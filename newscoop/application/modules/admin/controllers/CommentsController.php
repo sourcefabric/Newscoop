@@ -14,11 +14,9 @@ class Admin_CommentsController extends Zend_Controller_Action
 {
 
     /**
-     * @var Newscoop\Entity\Repository\CommentsUsersRepository
+     * @var Newscoop\Entity\Repository\CommentsRepository
      *
      */
-    private $commentsUsersRepository = null;
-
     private $commentsRepository = null;
 
     /**
@@ -41,10 +39,6 @@ class Admin_CommentsController extends Zend_Controller_Action
     {
         // get comments user repository
         $bootstrap = $this->getInvokeArg('bootstrap');
-        $this->commentsUsersRepository = $bootstrap->getResource('doctrine')
-            ->getEntityManager()
-            ->getRepository('Newscoop\Entity\CommentsUsers');
-
         // get comments repository
         $this->commentsRepository = $bootstrap->getResource('doctrine')
             ->getEntityManager()
@@ -134,30 +128,4 @@ class Admin_CommentsController extends Zend_Controller_Action
         $this->view->added = "true";
     }
 
-    public function addAction()
-    {
-
-
-        $form = new Zend_Form;
-        $form->addElement('text', 'author', array(
-                'class'=>'input_text',
-                'label'=>getGS('Author')
-            ))->addElement('text', 'email', array(
-                'class'=>'input_text',
-                'label'=>getGS('Email Address')
-            ))->addElement('text', 'url', array(
-                'class'=>'input_text',
-                'label'=>getGS('Web site')
-            ))->addElement('text', 'subject', array(
-                'class'=>'input_text',
-                'label'=>getGS('Subject')
-            ))->addElement('text', 'message', array(
-                'class'=>'input_text',
-                'label'=>getGS('Message')
-            ))
-            ->addElement('submit', 'submit', array(
-                'ignore' => true,
-                'label' => getGS('Submit')));
-        $this->view->form = $form;
-    }
 }
