@@ -19,6 +19,15 @@ use DateTime,
  */
 class Comments
 {
+    /**
+     * @var string to code mapper for status
+     */
+    static $status_mapper = array(
+        'approved' => 1,
+        'pending' => 2,
+        'hidden'  => 3,
+        'deleted' => 4
+    );
 
     /**
      * @id @generatedValue
@@ -54,6 +63,13 @@ class Comments
      * @var Newscoop\Entity\Articles
      */
     private $thread;
+
+    /**
+     * @manyToOne(targetEntity="Articles")
+     * @joinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     * @var Newscoop\Entity\Articles
+     */
+    private $language;
 
     /**
      * @column(length=140)
@@ -251,25 +267,25 @@ class Comments
     }
 
     /**
-     * Set status code
+     * Set status string
      *
      * @return Newscoop\Entity\Comments
      */
     public function setStatus($p_status)
     {
-        $this->status = $p_status;
+        $this->status = self::$status_mapper[$p_status];
         // return this for chaining mechanism
         return $this;
     }
 
     /**
-     * Get status code
+     * Get status string
      *
      * @return string
      */
     public function getStatus()
     {
-        return $this->status;
+        return self::$status_mapper[$this->status];
     }
 
     /**

@@ -7,7 +7,8 @@
  *
  *
  */
-use Newscoop\Entity\Comments;
+use Newscoop\Entity\Comments,
+    Newscoop\Entity\CommentsRepository;
 
 class Admin_CommentsController extends Zend_Controller_Action
 {
@@ -49,15 +50,15 @@ class Admin_CommentsController extends Zend_Controller_Action
             ->getEntityManager()
             ->getRepository('Newscoop\Entity\Comments');
 
-       $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
-            ->initContext();
         return $this;
 
     }
 
     public function indexAction()
     {
+       $this->getHelper('contextSwitch')
+            ->addActionContext('index', 'json')
+            ->initContext();
         $table = $this->getHelper('datatable');
 
         $table->setDataSource($this->commentsRepository);
@@ -113,8 +114,50 @@ class Admin_CommentsController extends Zend_Controller_Action
         $this->view->pager = new SimplePager($count, $limit, 'offset', isset($name) ? "?name={$name}&" : '?');
     }
 
+    public function setAddAction() {
+        $this->getHelper('contextSwitch')
+            ->addActionContext('index', 'json')
+            ->initContext();
+
+        if (empty($params['format'])) { // render table
+            return;
+        }
+        $comment = new Comment;
+        $comment->setSubject($params['subject']);
+        $comment->setMessage($params['message']);
+        $comment->setTimeCreated(new DateTime());
+        $comment->setStatus('approved');
+        $comment->setUser();
+
+        $this->view->code = '200';
+        $this->view->message = "succesfull";
+        $this->view->added = "true";
+    }
+
     public function addAction()
     {
 
+
+        $form = new Zend_Form;
+        $form->addElement('text', 'author', array(
+                'class'=>'input_text',
+                'label'=>getGS('Author')
+            ))->addElement('text', 'email', array(
+                'class'=>'input_text',
+                'label'=>getGS('Email Address')
+            ))->addElement('text', 'url', array(
+                'class'=>'input_text',
+                'label'=>getGS('Web site')
+            ))->addElement('text', 'subject', array(
+                'class'=>'input_text',
+                'label'=>getGS('Subject')
+            ))->addElement('text', 'message', array(
+                'class'=>'input_text',
+                'label'=>getGS('Message')
+            ))
+            ->addElement('submit', 'submit', array(
+                'ignore' => true,
+                'label' => getGS('Submit')));
+        $this->view->form = $form;
     }
 }

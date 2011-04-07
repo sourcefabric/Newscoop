@@ -8,19 +8,25 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-Doctrine\ORM\QueryBuilder;
+    Doctrine\ORM\QueryBuilder,
+    Newscoop\Entity\Comments;
 
 /**
  * Comments users repository
  */
 class CommentsRepository extends EntityRepository
 {
-    private $status_mapper = array(
-        'approved' => 1,
-        'pending' => 2,
-        'hidden'  => 3,
-        'deleted' => 4
-    );
+
+    /**
+     * Get status code from the string provided
+     *
+     * @param string $p_status
+     * @return int
+     */
+    public function getStatusCode($p_status)
+    {
+        return $this->status_mapper[$p_status];
+    }
 
     /**
      * Get comments users list
@@ -52,7 +58,7 @@ class CommentsRepository extends EntityRepository
         */
         $qb->orderBy('c.'.$p_params['order']['by'], $p_params['order']['dir'])
             ->andWhere('c.'.$colums_keys[0].' = :column_value')
-            ->setParameter('column_value', $this->status_mapper[$colums_values[0]])
+            ->setParameter('column_value', $this->getStatusCode($colums_values[0]))
             ->setFirstResult((int) $p_params['offset'])
             ->setMaxResults((int) $p_params['limit']);
         return $qb->getQuery()->getResult();
@@ -76,10 +82,9 @@ class CommentsRepository extends EntityRepository
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(c)')
-            ->from('Newscoop\Entity\Comments', 'c')
+            ->from('Comments', 'c')
             ->andWhere('c.'.$colums_keys[0].' = :column_value')
-            ->setParameter('column_value', $this->status_mapper[$colums_values[0]]);
-        print_r($this->status_mapper[$colums_values[0]]);
+            ->setParameter('column_value', $this->getStatusCodesta($colums_values[0]));
         $qb = $this->filterBySearch($qb, $p_search);
 
         return (int) $qb->getQuery()->getSingleScalarResult();
@@ -191,20 +196,5 @@ class CommentsRepository extends EntityRepository
 
         return $or;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

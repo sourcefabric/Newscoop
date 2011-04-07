@@ -126,7 +126,7 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'user', 'forum', 'parent', 'thread', 'subject', 'message', 'thread_level', 'status', 'ip', 'time_created', 'likes', 'dislikes');
+        return array('__isInitialized__', 'id', 'user', 'forum', 'parent', 'thread', 'language', 'subject', 'message', 'thread_level', 'status', 'ip', 'time_created', 'likes', 'dislikes');
     }
 
     public function __clone()

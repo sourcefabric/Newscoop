@@ -8,7 +8,6 @@
 namespace Newscoop\Entity;
 
 use DateTime,
-    InvalidArgumentException,
     Newscoop\Entity\User;
 
 /**
