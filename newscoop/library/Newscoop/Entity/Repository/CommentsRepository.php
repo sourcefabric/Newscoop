@@ -10,7 +10,7 @@ namespace Newscoop\Entity\Repository;
 use Doctrine\ORM\EntityRepository,
     Doctrine\ORM\QueryBuilder,
     Newscoop\Entity\Comments,
-    Newscoop\Datatable\DatatableSource;
+    Newscoop\Datatable\Source as DatatableSource;
 
 /**
  * Comments users repository

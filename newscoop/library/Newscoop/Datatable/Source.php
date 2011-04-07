@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository,
  * Class implementation of the IDatatableSource class
  *
  */
-class DatatableSource extends EntityRepository implements IDatatableSource
+class Source extends EntityRepository implements ISource
 {
     /**
      * Get data for table

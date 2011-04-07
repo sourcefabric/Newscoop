@@ -59,27 +59,16 @@ class Admin_CommentsController extends Zend_Controller_Action
 
         $table->setCols(array(
             'time_created' => getGS('Date Posted'),
-            'subject' => getGS('Subject'),
-            'forum_id' => getGS('Article'),
-            getGS('Delete'),
+            'fk_comments_user_id' => getGS('Author'),
+            'fk_thread_id' => getGS('Article')
         ));
 
         $view = $this->view;
         $table->setHandle(function(Comments $comment) use ($view) {
-            $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
-                $view->url(array(
-                    'action' => 'delete',
-                    'user' => $comment->getId(),
-                )),
-                getGS('Delete comment $1', $comment->getSubject()),
-                getGS('Delete')
-            );
-
             return array(
+                $comment->getSubject(),
                 $comment->getTimeCreated()->format('Y-i-d H:i:s'),
-                $comment->getSubject(),
-                $comment->getSubject(),
-                $deleteLink,
+                $comment->getSubject()
             );
         });
 

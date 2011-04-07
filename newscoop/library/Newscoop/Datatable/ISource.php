@@ -8,7 +8,7 @@ namespace Newscoop\Datatable;
 /**
  * Data table Interface
  */
-interface IDatatableSource
+interface ISource
 {
     /**
      * Get the data needed by data table listing
