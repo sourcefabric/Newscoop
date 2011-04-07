@@ -19,7 +19,7 @@ require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
 $local_path = dirname(__FILE__) . '/include';
-set_include_path(get_include_path() . PATH_SEPARATOR . $local_path);
+set_include_path($local_path . PATH_SEPARATOR . get_include_path());
 
 // goes to install process if configuration files does not exist yet
 if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')

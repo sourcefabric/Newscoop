@@ -27,17 +27,17 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '3.5.2';
+    private $m_release = '3.6.0';
 
     /**
      * @var string
      */
-    private $m_devStatus = '';
+    private $m_devStatus = 'dev';
 
     /**
      * @var string
      */
-    private $m_codeName = 'Bea';
+    private $m_codeName = '';
 
     /**
      * @var string
