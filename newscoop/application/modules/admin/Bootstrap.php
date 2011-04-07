@@ -56,15 +56,14 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         if ($auth->hasIdentity()) {
             $doctrine = Zend_Registry::get('doctrine');
             $user = $doctrine->getEntityManager()
-                ->find('Newscoop\Entity\User', $auth->getIdentity());
+                ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
+
+            $g_user = $user;
             Zend_Registry::set('user', $user);
 
             // set user to view
             $this->bootstrap('view');
             $this->view->user = $user;
-
-            // set user for legacy code
-            $g_user = $user;
         }
     }
 

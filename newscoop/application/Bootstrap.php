@@ -32,8 +32,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initLog()
     {
-        global $g_user;
-
         // get entity manager
         $this->bootstrap('doctrine');
         $em = $this->getResource('doctrine')
@@ -41,12 +39,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         // create logger
         $writer = new Writer($em);
-        $logger = new Zend_Log($writer);
-
-        if (isset($g_user)) {
-            $logger->setEventItem('user', $g_user);
-        }
-
-        return $logger;
+        return new Zend_Log($writer);
     }
 }

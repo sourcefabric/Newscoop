@@ -11,15 +11,37 @@
 class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 {
     /** @var Zend_Acl */
-    private $acl = NULL;
-    
+    private $acl;
+
     /**
      * Init
      */
     public function init()
     {
-        $this->acl = new Zend_Acl();
+        $this->acl = $this->getAcl();
+
+        return $this;
+    }
+
+    /**
+     * Get acl for user
+     *
+     * @param object|null $user
+     * @return Zend_Acl|null
+     */
+    public function getAcl($user = NULL)
+    {
+        if ($user === NULL && $this->acl !== NULL) {
+            return $this->acl;
+        }
+
+        $acl = new Zend_Acl;
+        $auth = Zend_Auth::getInstance();
         $options = $this->getOptions();
+
+        if (!$auth->hasIdentity()) { // no rules for guests
+            return NULL;
+        }
 
         // get doctrine
         $bootstrap = $this->getBootstrap();
@@ -29,16 +51,16 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         // set resources
         $resourceRepository = $em->getRepository($options['resourceEntity']);
         foreach ($resourceRepository->findAll() as $resource) {
-            $this->acl->addResource(new Zend_Acl_Resource(strtolower($resource->getName())));
+            $acl->addResource($resource);
         }
 
-        // get user roles
-        $auth = Zend_Auth::getInstance();
-        if (!$auth->hasIdentity()) { // no rules for guests
-            return $this;
+        if (empty($user)) { // get auth user
+            $user = $em->find($options['userEntity'], $auth->getIdentity());
+        } else {
+            if (!$user instanceof $options['userEntity']) {
+                throw new InvalidArgumentException;
+            }
         }
-
-        $user = $em->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
 
         // get user groups roles
         $parent = NULL;
@@ -59,28 +81,22 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             list($role, $parent) = array_values($role);
 
             // add role
-            $this->acl->addRole(new Zend_Acl_Role($role->getId()), $parent ? $parent->getId() : NULL);
+            $acl->addRole($role, $parent);
 
             // add rules
             foreach ($role->getRules() as $rule) {
                 $type = $rule->getType();
-                $resource = $rule->getResource() ? strtolower($rule->getResource()->getName()) : NULL;
+                $resource = $rule->getResource() ?: NULL;
                 $action = $rule->getAction() ? strtolower($rule->getAction()->getName()) : NULL;
-                $this->acl->$type((string) $role->getId(), $resource, $action);
+                $acl->$type($role, $resource, $action);
             }
         }
 
-        Zend_Registry::set('acl', $this->acl);
-        return $this;
-    }
+        if ($user->getId() == $auth->getIdentity()) { // store for current user
+            Zend_Registry::set('acl', $acl);
+            $this->acl = $acl;
+        }
 
-    /**
-     * Get Acl
-     *
-     * @return Zend_Acl
-     */
-    public function getAcl()
-    {
-        return $this->acl;
+        return $acl;
     }
 }

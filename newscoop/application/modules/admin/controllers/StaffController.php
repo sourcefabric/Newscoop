@@ -57,6 +57,12 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->view->user = $staff;
     }
 
+    public function editAccessAction()
+    {
+        $staff = $this->_helper->entity->get(new Staff, 'user');
+        $this->view->user = $staff;
+    }
+
     public function deleteAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');

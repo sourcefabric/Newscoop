@@ -151,4 +151,14 @@ class Rule
     {
         return $this->action;
     }
+
+    /**
+     * Get action name
+     *
+     * @return string|NULL
+     */
+    public function getActionName()
+    {
+        return $this->action ? $this->action->getName() : NULL;
+    }
 }

@@ -2011,6 +2011,10 @@ dl.resource dd a.delete {
     float: right;
 }
 
+dl.resource dd.inherited {
+    opacity: 0.7;
+}
+
 dl.zend_form {
     border: none;
     -moz-box-shadow: 3px 3px 3px #ccc;

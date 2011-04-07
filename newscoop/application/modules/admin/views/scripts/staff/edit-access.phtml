@@ -1,0 +1,6 @@
+<h1><?php echo getGS('Edit Access'); ?></h1>
+
+<?php echo $this->action('edit', 'acl', 'admin', array(
+    'role' => $this->user->getRoleId(),
+    'user' => $this->user->getId(),
+)); ?>

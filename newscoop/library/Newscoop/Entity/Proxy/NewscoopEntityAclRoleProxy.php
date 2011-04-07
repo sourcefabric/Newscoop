@@ -33,6 +33,12 @@ class NewscoopEntityAclRoleProxy extends \Newscoop\Entity\Acl\Role implements \D
         return parent::getId();
     }
 
+    public function getRoleId()
+    {
+        $this->_load();
+        return parent::getRoleId();
+    }
+
     public function getRules()
     {
         $this->_load();

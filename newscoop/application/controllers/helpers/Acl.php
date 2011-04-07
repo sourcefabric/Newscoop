@@ -61,7 +61,7 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function isAllowed($resource, $action = NULL, $user = NULL)
     {
-        $role = $user ? $user->getRoleId() : $this->getCurrentUser()->getRoleId();
+        $role = $user ? $user->getRole() : $this->getCurrentUser()->getRole();
 
         if ($resource !== NULL) {
             $resource = strtolower($resource);

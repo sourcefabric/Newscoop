@@ -73,18 +73,27 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      *
      * @param mixed $entity
      * @param string $key
-     * @return object
+     * @param bool $throw
+     * @return object|NULL
      */
-    public function get($entity, $key = 'id')
+    public function get($entity, $key = 'id', $throw = TRUE)
     {
         $params = $this->getRequest()->getParams();
         if (!isset($params[$key])) {
-            throw new InvalidArgumentException;
+            if ($throw) {
+                throw new InvalidArgumentException;
+            }
+
+            return NULL;
         }
 
         $match = $this->getManager()->find($this->getClassName($entity), $params[$key]);
         if (!$match) {
-            throw new InvalidArgumentException;
+            if ($throw) {
+                throw new InvalidArgumentException;
+            }
+
+            return NULL;
         }
 
         return $match;

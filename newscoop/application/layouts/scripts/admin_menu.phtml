@@ -176,32 +176,32 @@ if ($g_user->hasPermission('ManagePub')) {
     );
 }
 
-if ($g_user->hasPermission('ManageUsers')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new staff member'),
-        'module' => 'admin',
-        'controller' => 'staff',
-        'action' => 'add',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new staff member'),
+    'module' => 'admin',
+    'controller' => 'staff',
+    'action' => 'add',
+    'resource' => 'user',
+    'privilege' => 'manage',
+);
 
-if ($g_user->hasPermission('ManageUsers')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new subscriber'),
-        'module' => 'admin',
-        'controller' => 'subscriber',
-        'action' => 'add',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new subscriber'),
+    'module' => 'admin',
+    'controller' => 'subscriber',
+    'action' => 'add',
+    'resource' => 'user',
+    'privilege' => 'manage',
+);
 
-if ($g_user->hasPermission('ManageUserTypes')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new user type'),
-        'module' => 'admin',
-        'controller' => 'user_types',
-        'action' => 'add.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new user type'),
+    'module' => 'admin',
+    'controller' => 'user-group',
+    'action' => 'add',
+    'resource' => 'usertype',
+    'privilege' => 'manage',
+);
 
 if ($g_user->hasPermission('ManageArticleTypes')) {
     $pages[2]['pages'][] = array(
@@ -232,7 +232,12 @@ if ($g_user->hasPermission('ManageLanguages')) {
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Change your password'),
-    'uri' => $view->baseUrl("admin/users/edit.php?uType=Staff&User={$g_user->getId()}"),
+    'module' => 'admin',
+    'controller' => 'staff',
+    'action' => 'edit',
+    'params' => array(
+        'user' => $g_user->getId(),
+    ),
 );
 
 if ($showAdminActions) {
@@ -342,6 +347,31 @@ if ($showUserMenu) {
             'label' => getGS('Staff'),
             'module' => 'admin',
             'controller' => 'staff',
+            'pages' => array(
+                array(
+                    'label' => getGS('Add new staff member'),
+                    'module' => 'admin',
+                    'controller' => 'staff',
+                    'action' => 'add',
+                    'visible' => false,
+                ),
+                array(
+                    'label' => getGS('Edit staff member'),
+                    'module' => 'admin',
+                    'controller' => 'staff',
+                    'action' => 'edit',
+                    'visible' => false,
+                    'pages' => array(
+                        array(
+                            'label' => getGS('Edit access'),
+                            'module' => 'admin',
+                            'controller' => 'staff',
+                            'action' => 'edit-access',
+                            'visible' => false,
+                        ),
+                    ),
+                ),
+            ),
         );
     }
 
@@ -351,6 +381,22 @@ if ($showUserMenu) {
             'label' => getGS('Subscribers'),
             'module' => 'admin',
             'controller' => 'subscriber',
+            'pages' => array(
+                array(
+                    'label' => getGS('Add new subscriber'),
+                    'module' => 'admin',
+                    'controller' => 'subscriber',
+                    'action' => 'add',
+                    'visible' => false,
+                ),
+                array(
+                    'label' => getGS('Edit subscriber'),
+                    'module' => 'admin',
+                    'controller' => 'subscriber',
+                    'action' => 'edit',
+                    'visible' => false,
+                ),
+            ),
         );
     }
 
@@ -358,13 +404,21 @@ if ($showUserMenu) {
         $pages[4]['pages'][] = array(
             'label' => getGS('Staff User Types'),
             'module' => 'admin',
-            'controller' => 'user-types',
+            'controller' => 'user-group',
             'pages' => array(
+                array(
+                    'label' => getGS('Add new user type'),
+                    'module' => 'admin', 
+                    'controller' => 'user-group',
+                    'action' => 'add',
+                    'visible' => false,
+                ),
                 array(
                     'label' => getGS('Edit user type'),
                     'module' => 'admin',
-                    'controller' => 'user-types',
-                    'action' => 'edit',
+                    'controller' => 'user-group',
+                    'action' => 'edit-access',
+                    'visible' => false,
                 ),
             ),
         );
@@ -412,6 +466,6 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
 
 <?php if (isset($this)) { // zend framework only ?>
 <div class="breadcrumb-bar zend clearfix">
-    <?php echo $this->navigation()->breadcrumbs(); ?>
+    <?php echo $this->navigation()->breadcrumbs()->setRenderInvisible(TRUE); ?>
 </div>
 <?php } ?>
