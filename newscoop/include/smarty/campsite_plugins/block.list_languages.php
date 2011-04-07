@@ -41,7 +41,7 @@ function smarty_block_list_languages($p_params, $p_content, &$p_smarty, &$p_repe
     	$campContext->setCurrentList($languagesList, array('publication', 'language',
     	                                                  'issue', 'section', 'article',
     	                                                  'image', 'attachment', 'comment',
-    	                                                  'audioclip', 'subtitle'));
+    	                                                  'subtitle'));
     	$campContext->language = $campContext->current_list->current;
     	$p_repeat = true;
     } else {

@@ -68,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Текст је закључан од стране $1 ($2) пре $3 минут(а).");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а).");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Грешка при подешавању аутора \"$1\" за текст број $2 (\"$3\") типа $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Није могуће повезати се на Кемпкастер сервер, молимо Вас проверите поставке за Кемпкастер сервер.");
 regGS("Clear system cache", "Обриши системски кеш");
 regGS("The system was unable to upload the file '$1'. ", "Систем није био у могуности да аплоудује фајл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Проверите фајл који покушавате да аплоудујете, могуће је да је оштећен.");
-regGS("Your user is not a valid Campcaster user", "Ваш корисник није важећи Кемпкастер корисник");
 regGS("Connection refused", "Конекција је одбијена");
 regGS("An error occured in session management. Please reload the login page.", "Дошло је до грешке у сесији. Молимо Вас учитајте поново страницу за пријављивање.");
 regGS("This file is stored on disk as '$1'.", "Фајл је спремљен на диску као '$1'.");

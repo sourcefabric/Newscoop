@@ -1,6 +1,4 @@
 <?php 
-regGS("Enable Airtime audio attachments?", "");
-regGS("Airtime Server", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");

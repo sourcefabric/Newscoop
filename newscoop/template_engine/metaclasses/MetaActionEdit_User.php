@@ -135,6 +135,15 @@ class MetaActionEdit_User extends MetaAction
             ACTION_EDIT_USER_ERR_NO_EMAIL)) {
                 return false;
             }
+
+            if (SystemPref::Get('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED') == 'Y') {
+                $captcha = Captcha::factory('ReCAPTCHA');
+                if (!$captcha->validate()) {
+                    $this->m_error = new PEAR_Error('The code you entered is not the same as the one shown.',
+                        ACTION_SUBMIT_COMMENT_ERR_INVALID_CAPTCHA_CODE);
+                    return false;
+                }
+            }
         } else {
             $this->m_properties['type'] = 'edit';
             if (isset($this->m_properties['password'])) {

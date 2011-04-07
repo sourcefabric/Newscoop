@@ -264,6 +264,12 @@ $color= 0;
 
 if ($BlogsList->getLength()) {
     ?>
+
+    <div class="pager indent">
+        <?php echo $pager->render(); ?>
+    </div>
+
+
     <FORM name="blogs_list" id="blogs_list" action="action.php" method="POST">
 	<?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_action" id="f_action" />
@@ -397,6 +403,11 @@ if ($BlogsList->getLength()) {
       ?>
     </table>
 </FORM>
+
+<div class="pager indent">
+    <?php echo $pager->render(); ?>
+</div>
+
 <?php
 } else {?>
     <BLOCKQUOTE>

@@ -68,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Artykuł został zablokowany przez $1 ($2) $3 minut(y) temu.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Artykuł został zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Błąd przy tworzeniu autora \"$1\" do artykułu numer $2 (\"$3\") typu $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Nie możńa połączyć z serwerem Airtime - zweryfikuj jego ustawienia.");
 regGS("Clear system cache", "Oczyść cache systemowy");
 regGS("The system was unable to upload the file '$1'. ", "System nie mógł dodać pliku '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Sprawdź plik, który próbujesz dodać, możliwe że jest uszkodzony.");
-regGS("Your user is not a valid Campcaster user", "Twój użytkownik nie jest poprawnym użytkownikiem Campcaster");
 regGS("Connection refused", "Odmowa połączenia.");
 regGS("An error occured in session management. Please reload the login page.", "Wystąpił błąd przy zarządzaniu sesją. Załaduj stronę logowania ponownie.");
 regGS("This file is stored on disk as '$1'.", "Plik jest zachowany na dysku jako '$1'.");

@@ -68,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "El artículo ha sido bloqueado por $1 ($2) $3 hace minuto(s). ");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "El artículo ha sido bloqueado por $1 ($2) $3 hora(s) y hace $4 minuto(s).");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Error al fijar el autor \"$1\" para el artículo no. $2 (\"3\") del tipo $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Incapaz de conectarse al servidor Campcaster, por favor verificar la configuración del servidor Campcaster.");
 regGS("Clear system cache", "Despejar el caché del sistema");
 regGS("The system was unable to upload the file '$1'. ", "El sistema fue incapaz de subir el archivo '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Por favor revisar el archivo que está tratando de subir, puede estar corrompido.");
-regGS("Your user is not a valid Campcaster user", "Su usuario no es un usuario válido de Campcaster.");
 regGS("Connection refused", "Conección rechazada.");
 regGS("An error occured in session management. Please reload the login page.", "Un error ocurrió en la administración de la sesión. Por favor recargar la página de inicio.");
 regGS("This file is stored on disk as '$1'.", "Este archivo esta guardado en el disco como '$1'.");

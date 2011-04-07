@@ -17,7 +17,7 @@ if (isset($_REQUEST['TOL_Language'])) {
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";
@@ -50,7 +50,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
   <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
   <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>

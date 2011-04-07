@@ -68,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "");
 regGS("Clear system cache", "");
 regGS("The system was unable to upload the file '$1'. ", "");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "");
-regGS("Your user is not a valid Campcaster user", "");
 regGS("Connection refused", "");
 regGS("An error occured in session management. Please reload the login page.", "");
 regGS("This file is stored on disk as '$1'.", "");

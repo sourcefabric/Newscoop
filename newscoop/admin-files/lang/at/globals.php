@@ -2,7 +2,6 @@
 regGS("Account", "Konto");
 regGS("Items per page", "Anzahl pro Seite");
 regGS("Add new", "Hinzufügen");
-regGS("Campsite", "CAMPSITE");
 regGS("Home", "Startseite");
 regGS("Logout", "Ausloggen");
 regGS("More...", "Mehr...");
@@ -268,7 +267,6 @@ regGS("Thank you.", "");
 regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
-regGS("There was an error logging in to the Campcaster server", "");
 regGS("Reads", "");
 regGS("Plugins", "");
 regGS("Publish with issue", "");

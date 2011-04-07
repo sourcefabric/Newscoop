@@ -59,7 +59,7 @@ if (isset($_REQUEST['TOL_Language'])) {
 camp_load_translation_strings("globals");
 camp_load_translation_strings("home");
 $sent = false;
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Campsite") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 $disabled=false;
 if (SystemPref::Get("PasswordRecovery")=='N') {
     $disabled = true;
@@ -92,7 +92,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/crypt.js" type="text/javascript"></script>
+  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js" type="text/javascript"></script>
   <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
@@ -107,7 +107,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
     <h2><?php putGS("Password Recovery"); ?></h2>
     <noscript>
     <?php
-    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.');
+    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
     ?>
     </noscript>
     <?php
