@@ -7,7 +7,7 @@
  *
  *
  */
-use Newscoop\Entity\CommentsUser,
+use Newscoop\Entity\CommentsUsers,
     Newscoop\Entity\CommentsUserRepository;
 
 class Admin_CommentsUserController extends Zend_Controller_Action
@@ -41,6 +41,12 @@ class Admin_CommentsUserController extends Zend_Controller_Action
         $this->commentsUsersRepository = $bootstrap->getResource('doctrine')
             ->getEntityManager()
             ->getRepository('Newscoop\Entity\CommentsUsers');
+        $this->getHelper('contextSwitch')
+            ->addActionContext('index', 'json')
+            ->initContext();
+
+        $this->form = new Admin_Form_CommentsUser;
+        $this->form->setMethod('post');
 
         return $this;
 
@@ -53,39 +59,56 @@ class Admin_CommentsUserController extends Zend_Controller_Action
             ->initContext();
         $table = $this->getHelper('datatable');
 
-        $table->setRepository($this->commentsRepository);
+        $table->setDataSource($this->commentsUsersRepository);
 
         $table->setCols(array(
-            'time_created' => getGS('Date Posted'),
-            'subject' => getGS('Subject'),
-            'forum_id' => getGS('Article')
+            'time_created' => getGS('Date Created'),
+            'name' => getGS('Name'),
+            'fk_user_id' => getGS('Username'),
+            'email' => getGS('Email'),
+            'url'   => getGS('Website'),
+            'ip'   => getGS('Ip'),
+            'edit' => getGS('Edit'),
+            'delete' => getGS('Delete')
         ));
 
         $view = $this->view;
-        $table->setHandle(function(Comments $comment) use ($view) {
-            $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
-                $view->url(array(
-                    'action' => 'delete',
-                    'user' => $comment->getId(),
-                )),
-                getGS('Delete comment $1', $comment->getSubject()),
-                getGS('Delete')
-            );
-
+        $table->setHandle(function(CommentsUsers $commentsUsers) use ($view) {
+            $urlParam = array('user' => $commentsUsers->getId());
             return array(
-                $comment->getTimeCreated()->format('Y-i-d H:i:s'),
-                $comment->getSubject(),
-                $comment->getSubject(),
-                $deleteLink,
+                $commentsUsers->getTimeCreated()->format('Y-i-d H:i:s'),
+                $commentsUsers->getName(),
+                $commentsUsers->getUsername(),
+                $commentsUsers->getEmail(),
+                $commentsUsers->getUrl(),
+                $commentsUsers->getIp(),
+                $view->linkEdit($urlParam),
+                $view->linkDelete($urlParam)
             );
         });
 
         $table->dispatch();
     }
 
-
     public function addAction()
     {
+        $subscriber = new Subscriber;
 
+        $this->handleForm($this->form, $subscriber);
+
+        $this->view->form = $this->form;
+        $this->view->user = $subscriber;
     }
+
+    private function handleForm(Zend_Form $form, Subscriber $subscriber)
+    {
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            $this->repository->save($subscriber, $form->getValues());
+            $this->_helper->entity->getManager()->flush();
+
+            $this->_helper->flashMessenger(getGS('Subscriber saved.'));
+            $this->_helper->redirector->gotoSimple('index');
+        }
+    }
+
 }

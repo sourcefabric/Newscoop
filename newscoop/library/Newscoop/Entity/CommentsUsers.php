@@ -66,6 +66,28 @@ class CommentsUsers
     private $time_created;
 
 
+    /**
+     * Set comment user id
+     *
+     * @param int $p_id
+     * @return Newscoop\Entity\CommentsUsers
+     */
+    public function setId($p_id)
+    {
+        $this->id = $p_id;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get user id
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set comment user full name

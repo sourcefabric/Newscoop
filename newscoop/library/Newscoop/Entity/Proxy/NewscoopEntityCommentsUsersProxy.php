@@ -27,6 +27,18 @@ class NewscoopEntityCommentsUsersProxy extends \Newscoop\Entity\CommentsUsers im
     }
 
     
+    public function setId($p_id)
+    {
+        $this->_load();
+        return parent::setId($p_id);
+    }
+
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
     public function setName($p_name)
     {
         $this->_load();
