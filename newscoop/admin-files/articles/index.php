@@ -136,8 +136,11 @@ camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $to
     $articlelist->setLanguage($f_language_id);
 
     $articlelist->setColVis(TRUE);
-    $articlelist->setOrder(TRUE);
+    if ($g_user->hasPermission('Publish')) {
+    	$articlelist->setOrder(TRUE);
+    }
     $articlelist->setSearch(TRUE);
+    
 
     $articlelist->renderActions();
     $articlelist->render();
