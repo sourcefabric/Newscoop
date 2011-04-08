@@ -1,6 +1,6 @@
 <?php
 
-class Admin_LogsController extends Zend_Controller_Action
+class Admin_LogController extends Zend_Controller_Action
 {
     /** @var array */
     private $priorityNames = NULL;

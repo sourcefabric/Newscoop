@@ -84,13 +84,12 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     public function check($resource, $action = NULL)
     {
         if (!$this->isAllowed($resource, $action)) {
-            $this->getRequest()
-                ->setControllerName('error')
-                ->setActionName('deny')
-                ->setDispatched(false)
-                ->setParam('message', getGS('You are not allowed to $1 $2.',
+            $redirector = $this->getActionController()->getHelper('redirector');
+            $redirector->gotoSimple('deny', 'error', 'admin', array(
+                'message' => getGS('You are not allowed to $1 $2.',
                     $action ? $action : getGS('handle'),
-                    $resource ? $resource : getGS('any resource')));
+                    $resource ? $resource : getGS('any resource')),
+            ));
         }
     }
 

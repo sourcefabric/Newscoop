@@ -335,7 +335,9 @@ if ($showConfigureMenu) {
         $pages[3]['pages'][] = array(
             'label' => getGS('Logs'),
             'module' => 'admin',
-            'controller' => 'logs',
+            'controller' => 'log',
+            'resource' => 'log',
+            'privilege' => 'view',
         );
     }
 }
@@ -361,6 +363,7 @@ if ($showUserMenu) {
                     'controller' => 'staff',
                     'action' => 'edit',
                     'visible' => false,
+                    'reset_params' => false,
                     'pages' => array(
                         array(
                             'label' => getGS('Edit access'),
@@ -381,6 +384,8 @@ if ($showUserMenu) {
             'label' => getGS('Subscribers'),
             'module' => 'admin',
             'controller' => 'subscriber',
+            'resource' => 'readers',
+            'privilege' => 'manage',
             'pages' => array(
                 array(
                     'label' => getGS('Add new subscriber'),
@@ -453,6 +458,10 @@ if (!empty($plugin_pages)) {
 
 $container = new Zend_Navigation($pages);
 $view->navigation($container);
+
+// set acl
+$view->navigation()->setAcl(Zend_Registry::get('acl'));
+$view->navigation()->setRole($g_user->getRole());
 
 if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     return;

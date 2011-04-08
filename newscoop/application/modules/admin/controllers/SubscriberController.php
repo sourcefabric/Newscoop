@@ -6,6 +6,11 @@ class Admin_SubscriberController extends Zend_Controller_Action
 {
     private $repository;
 
+    public function preDispatch()
+    {
+        $this->_helper->acl->check('readers', 'manage');
+    }
+
     public function init()
     {
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Subscriber');
@@ -112,7 +117,9 @@ class Admin_SubscriberController extends Zend_Controller_Action
             $this->_helper->entity->getManager()->flush();
 
             $this->_helper->flashMessenger(getGS('Subscriber saved.'));
-            $this->_helper->redirector->gotoSimple('index');
+            $this->_helper->redirector->gotoSimple('edit', 'subscriber', 'admin', array(
+                'user' => $subscriber->getId(),
+            ));
         }
     }
 }

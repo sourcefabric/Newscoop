@@ -8,10 +8,10 @@ class Admin_View_Helper_RenderActions extends Zend_View_Helper_Abstract
     /**
      * Render actions
      *
-     * @param array $actions
+     * @param array|NULL $actions
      * @return void
      */
-    public function renderActions(array $actions)
+    public function renderActions(array $actions = NULL)
     {
         if (empty($actions)) {
             return;
