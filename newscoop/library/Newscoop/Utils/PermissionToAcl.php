@@ -15,6 +15,7 @@ class PermissionToAcl
     /** @var array */
     private static $filters = array(
         'ToArticle' => '',
+        'ArticleTypes' => 'Article-Type',
         'plugin_manager' => 'ManagePlugin',
         'MailNotify' => 'GetNotification',
         'Publish' => 'PublishArticle',
@@ -24,7 +25,7 @@ class PermissionToAcl
         'Users' => 'User',
         'Topics' => 'Topic',
         'Languages' => 'Language',
-        'Types' => 'Type',
+        'UserTypes' => 'User-Group',
         'Authors' => 'Author',
         'Countries' => 'Country',
         'Logs' => 'Log',

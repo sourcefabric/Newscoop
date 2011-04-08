@@ -62,22 +62,23 @@ $pages = array(
     ),
 );
 
-// add content menu
 $pages[1]['pages'][] = array(
     'label' => 'Publications',
     'module' => 'admin',
     'controller' => 'pub',
     'action' => 'index.php',
+    'resource' => 'pub',
+    'privilege' => 'manage',
 );
 
-if ($g_user->hasPermission('CommentModerate')) {
-    $pages[1]['pages'][] = array(
-        'label' => getGS('Comments'),
-        'module' => 'admin',
-        'controller' => 'comments',
-        'action' => 'index.php',
-    );
-}
+$pages[1]['pages'][] = array(
+    'label' => getGS('Comments'),
+    'module' => 'admin',
+    'controller' => 'comments',
+    'action' => 'index.php',
+    'resource' => 'comment',
+    'privilege' => 'moderate',
+);
 
 $pages[1]['pages'][] = array(
     'label' => getGS('Media Archive'),
@@ -148,33 +149,32 @@ foreach ($Campsite['publications'] as $publication) {
     $pages[1]['pages'][] = $publication_page;
 }
 
-// add actions menu
-if ($g_user->hasPermission('AddArticle')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new article'),
-        'module' => 'admin',
-        'controller' => 'articles',
-        'action' => 'add_move.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new article'),
+    'module' => 'admin',
+    'controller' => 'articles',
+    'action' => 'add_move.php',
+    'resource' => 'article',
+    'privilege' => 'add',
+);
 
-if ($g_user->hasPermission('ManageTempl')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Upload new template'),
-        'module' => 'admin',
-        'controller' => 'templates',
-        'action' => 'upload_templ.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Upload new template'),
+    'module' => 'admin',
+    'controller' => 'templates',
+    'action' => 'upload_templ.php',
+    'resource' => 'templ',
+    'privilege' => 'manage',
+);
 
-if ($g_user->hasPermission('ManagePub')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new publication'),
-        'module' => 'admin',
-        'controller' => 'pub',
-        'action' => 'add.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new publication'),
+    'module' => 'admin',
+    'controller' => 'pub',
+    'action' => 'add.php',
+    'resource' => 'pub',
+    'privilege' => 'add',
+);
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Add new staff member'),
@@ -199,36 +199,36 @@ $pages[2]['pages'][] = array(
     'module' => 'admin',
     'controller' => 'user-group',
     'action' => 'add',
-    'resource' => 'usertype',
+    'resource' => 'user-group',
     'privilege' => 'manage',
 );
 
-if ($g_user->hasPermission('ManageArticleTypes')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new article type'),
-        'module' => 'admin',
-        'controller' => 'article_types',
-        'action' => 'add.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new article type'),
+    'module' => 'admin',
+    'controller' => 'article_types',
+    'action' => 'add.php',
+    'resource' => 'article-type',
+    'privilege' => 'manage',
+);
 
-if ($g_user->hasPermission('ManageCountries')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new country'),
-        'module' => 'admin',
-        'controller' => 'country',
-        'action' => 'add.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new country'),
+    'module' => 'admin',
+    'controller' => 'country',
+    'action' => 'add.php',
+    'resource' => 'country',
+    'privilege' => 'manage',
+);
 
-if ($g_user->hasPermission('ManageLanguages')) {
-    $pages[2]['pages'][] = array(
-        'label' => getGS('Add new language'),
-        'module' => 'admin',
-        'controller' => 'languages',
-        'action' => 'add_modify.php',
-    );
-}
+$pages[2]['pages'][] = array(
+    'label' => getGS('Add new language'),
+    'module' => 'admin',
+    'controller' => 'languages',
+    'action' => 'add_modify.php',
+    'resource' => 'language',
+    'privilege' => 'manage',
+);
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Change your password'),
@@ -257,25 +257,25 @@ if ($showAdminActions) {
         );
     }
 
-    if ($g_user->hasPermission('ManageBackup')) {
-        $pages[2]['pages'][] = array(
-            'label' => getGS('Backup/Restore'),
-            'module' => 'admin',
-            'controller' => 'backup.php',
-        );
-    }
+    $pages[2]['pages'][] = array(
+        'label' => getGS('Backup/Restore'),
+        'module' => 'admin',
+        'controller' => 'backup.php',
+        'resource' => 'backup',
+        'privilege' => 'manage',
+    );
 }
 
 // add configure menu
 if ($showConfigureMenu) {
-    if ($g_user->hasPermission('ChangeSystemPreferences')) {
-        $pages[3]['pages'][] = array(
-            'label' => getGS('System Preferences'),
-            'module' => 'admin',
-            'controller' => 'system_pref',
-            'action' => 'index.php',
-        );
-    }
+    $pages[3]['pages'][] = array(
+        'label' => getGS('System Preferences'),
+        'module' => 'admin',
+        'controller' => 'system_pref',
+        'action' => 'index.php',
+        'resource' => 'systempreferences',
+        'privilege' => 'edit',
+    );
 
     if ($g_user->hasPermission('ManageTempl') || $g_user->hasPermission('DeleteTempl')) {
         $pages[3]['pages'][] = array(
@@ -286,23 +286,23 @@ if ($showConfigureMenu) {
         );
     }
 
-    if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
-        $pages[3]['pages'][] = array(
-            'label' => getGS('Article Types'),
-            'module' => 'admin',
-            'controller' => 'article_types',
-            'action' => 'index.php',
-        );
-    }
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Article Types'),
+        'module' => 'admin',
+        'controller' => 'article_types',
+        'action' => 'index.php',
+        'resource' => 'article-type',
+        'action' => 'manage',
+    );
 
-    if ($g_user->hasPermission('ManageTopics')) {
-        $pages[3]['pages'][] = array(
-            'label' => getGS('Topics'),
-            'module' => 'admin',
-            'controller' => 'topics',
-            'action' => 'index.php',
-        );
-    }
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Topics'),
+        'module' => 'admin',
+        'controller' => 'topics',
+        'action' => 'index.php',
+        'resource' => 'topic',
+        'privilege' => 'manage',
+    );
 
     if ($g_user->hasPermission('ManageLanguages') || $g_user->hasPermission('DeleteLanguages')) {
         $pages[3]['pages'][] = array(
@@ -405,29 +405,29 @@ if ($showUserMenu) {
         );
     }
 
-    if ($g_user->hasPermission('ManageUserTypes')) {
-        $pages[4]['pages'][] = array(
-            'label' => getGS('Staff User Types'),
-            'module' => 'admin',
-            'controller' => 'user-group',
-            'pages' => array(
-                array(
-                    'label' => getGS('Add new user type'),
-                    'module' => 'admin', 
-                    'controller' => 'user-group',
-                    'action' => 'add',
-                    'visible' => false,
-                ),
-                array(
-                    'label' => getGS('Edit user type'),
-                    'module' => 'admin',
-                    'controller' => 'user-group',
-                    'action' => 'edit-access',
-                    'visible' => false,
-                ),
+    $pages[4]['pages'][] = array(
+        'label' => getGS('Staff User Types'),
+        'module' => 'admin',
+        'controller' => 'user-group',
+        'resource' => 'user-group',
+        'privilege' => 'edit',
+        'pages' => array(
+        array(
+                'label' => getGS('Add new user type'),
+                'module' => 'admin', 
+                'controller' => 'user-group',
+                'action' => 'add',
+                'visible' => false,
             ),
-        );
-    }
+            array(
+                'label' => getGS('Edit user type'),
+                'module' => 'admin',
+                'controller' => 'user-group',
+                'action' => 'edit-access',
+                'visible' => false,
+            ),
+        ),
+    );
 
     if ($g_user->hasPermission('SyncPhorumUsers')) {
         $pages[4]['pages'][] = array(

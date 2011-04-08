@@ -51,6 +51,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $this->bootstrap('session');
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Newscoop\Auth\Plugin);
+        $front->registerPlugin(new Newscoop\Acl\Plugin);
 
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {

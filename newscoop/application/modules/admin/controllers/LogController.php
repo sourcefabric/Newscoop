@@ -8,17 +8,6 @@ class Admin_LogController extends Zend_Controller_Action
     /** @var Newscoop\Entity\Repository\LogRepository */
     private $logRepository = NULL;
 
-    /**
-     * Check permissions
-     */
-    public function preDispatch()
-    {
-        $this->_helper->acl->check('log', 'view');
-    }
-
-    /**
-     * Init
-     */
     public function init()
     {
         camp_load_translation_strings('logs');
@@ -40,7 +29,7 @@ class Admin_LogController extends Zend_Controller_Action
     }
 
     /**
-     * List logs
+     * @Acl(action="view")
      */
     public function indexAction()
     {

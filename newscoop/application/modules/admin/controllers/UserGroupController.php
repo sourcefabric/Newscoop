@@ -13,11 +13,6 @@ class Admin_UserGroupController extends Zend_Controller_Action
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
     }
 
-    public function preDispatch()
-    {
-        $this->_helper->acl->check('usertype', 'manage');
-    }
-
     public function indexAction()
     {
         $this->view->groups = $this->repository->findAll();
