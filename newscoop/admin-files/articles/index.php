@@ -127,7 +127,6 @@ camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $to
 	<?php  } ?>
 </tr>
 </TABLE>
-
 <?php
     $articlelist = new ArticleList();
 
