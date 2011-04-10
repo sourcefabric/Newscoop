@@ -249,13 +249,8 @@ $().ready(function() {
      	// General options
         language : "<?php p($p_editorLanguage); ?>",
         theme : "advanced",
-        //plugins : "<?php p($plugins_list); ?>",
+        plugins : "<?php p($plugins_list); ?>",
         
-        
-        //essentialy the php list without the ",iframe,codehighlighting"
-        //plugins : "paste,searchreplace,fullscreen,table,campsiteinternallink,campsiteattachment,campsiteimage,media",
-        plugins : "paste,searchreplace,fullscreen,table,campsiteinternallink,campsiteattachment,campsiteimage,media,iframe,codehighlighting",
-        //plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
         file_browser_callback : "campsitemedia",
         forced_root_block : "",
         relative_urls : false,
