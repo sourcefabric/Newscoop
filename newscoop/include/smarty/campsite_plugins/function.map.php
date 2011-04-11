@@ -206,6 +206,7 @@ function smarty_function_map($p_params, &$p_smarty)
     $map_options["auto_focus"] = $auto_focus;
     $map_options["load_common"] = $map_load_common_header;
 
+    $map_options["large_map_on_click"] = true;
     $map_options["large_map_open"] = $showOpenLink;
     $map_options["large_map_width"] = $width_large;
     $map_options["large_map_height"] = $height_large;

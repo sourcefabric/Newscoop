@@ -1650,13 +1650,20 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             }
         }
 
+        $large_map_on_click = false;
         $open_large_map = false;
         $width_large_map = 800;
         $height_large_map = 600;
         $label_large_map = "";
         if (is_array($p_options)) {
+            if (array_key_exists("large_map_on_click", $p_options)) {
+                $large_map_on_click = $p_options["large_map_on_click"];
+            }
             if (array_key_exists("large_map_open", $p_options)) {
                 $open_large_map = $p_options["large_map_open"];
+            }
+            if ($large_map_on_click && (!$open_large_map)) {
+                $open_large_map = true;
             }
             if (array_key_exists("large_map_width", $p_options)) {
                 $width_large_map_param = 0 + $p_options["large_map_width"];
@@ -1758,9 +1765,33 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $tag_string_mid .= '
 <script type="text/javascript">
     geo_object'. $map_suffix .' = new geo_locations();
+
+window.center_large_map' . $map_suffix . ' = function () {
+    try {
+        if (window.map_win_popup) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                //window.geo_open_large_map' . $map_suffix . '();
+                window.map_win_popup.geo_object' . $map_suffix . '.map_showview();
+            }
+        }
+    } catch (e) {}
+};
+
+window.point_large_map_center' . $map_suffix . ' = function (index, select) {
+    try {
+        if (window.map_win_popup) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.center_poi(index);
+                if (select) {
+                    window.map_win_popup.OpenLayers.HooksPopups.on_map_feature_select(window.map_win_popup.geo_object' . $map_suffix . ', index);
+                }
+            }
+        }
+    } catch (e) {}
+};
+
 var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
-
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
@@ -1789,6 +1820,14 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $tag_string_mid .= "\n";
     $tag_string_mid .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
     $tag_string_mid .= "\n";
+    if ($large_map_on_click) {
+        $tag_string_mid .= "if (typeof(window.not_set_map_sizes) == \"undefined\") {\n";
+        $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";
+        $tag_string_mid .= "        " . self::GetMapTagOpen($p_articleNumber, $p_languageId, "open_form") . "(params);\n";
+        $tag_string_mid .= "    });\n";
+        $tag_string_mid .= "}\n";
+        $tag_string_mid .= "\n";
+    }
     $tag_string_mid .= "if (typeof(window.not_set_map_sizes) != \"undefined\") {\n";
     $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map});\n";
     $tag_string_mid .= "}\n";
@@ -1817,6 +1856,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
+        if (undefined !== window.deferred_action) {
+            try {window.deferred_action();} catch (e) {}
+        }
+
 };
 
     $(document).ready(function()
@@ -1832,8 +1875,36 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $tag_string_fin .= '
 <script>
 window.map_win_popup = null;
-var geo_open_large_map' . $map_suffix . ' = function()
+window.geo_open_large_map' . $map_suffix . ' = function(params)
 {
+    var select_poi = null;
+    if (undefined !== params) {
+        if (undefined !== params["select_poi"]) {
+            select_poi = params["select_poi"];
+            window.deferred_poi_select = select_poi;
+        }
+    }
+
+    var already_focused = false;
+    try {
+        if (window.map_win_popup) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.blur();
+                setTimeout("try {window.map_win_popup.focus();} catch(e) {}", 0);
+                if (null !== select_poi) {
+                    window.point_large_map_center' . $map_suffix . '(select_poi, true);
+                }
+                already_focused = true;
+            }
+        }
+    } catch (e) {already_focused = false;}
+
+    if (window.map_win_popup && window.map_win_popup.closed) {
+        already_focused = false;
+    }
+
+    if (already_focused) {return;}
+
     window.map_win_popup = window.open("", "map_win_popup", "width=' . $width_large_map . ', height=' . $height_large_map . ',directories=0,location=0,menubar=0,toolbar=0");
     window.map_win_popup.document.write("<html><head>\n");
     window.map_win_popup.document.write("<title>' . $label_large_map . '</title>\n");
@@ -1843,6 +1914,13 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
             $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
             $tag_string_fin .= 'window.map_win_popup.document.write("window.not_set_map_sizes = true;\n");' . "\n";
+            $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $map_suffix . '\";\n");' . "\n";
+            $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null;}\n");' . "\n";
+
+            if (true) {
+                $tag_string_fin .= 'window.map_win_popup.document.write("window.deferred_action = function() {if (null !== window.opener.deferred_poi_select) {window.geo_object' . $map_suffix . '.proc_subst_action({select_poi: window.opener.deferred_poi_select});}}\n");' . "\n";
+            }
+
             $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
 
             $tag_string_arr = explode("\n", $tag_string_top . $tag_string_ini . $tag_string_mid);
@@ -1922,7 +2000,7 @@ var geo_open_large_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMapTagOpen($p_articleNumber, $p_languageId)
+    public static function GetMapTagOpen($p_articleNumber, $p_languageId, $p_specifier)
     {
         global $Campsite;
         $tag_string = "";
@@ -1932,7 +2010,12 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "geo_open_large_map$map_suffix();";
+        if ("open_form" == $p_specifier) {
+            $tag_string .= "geo_open_large_map$map_suffix";
+        }
+        else {
+            $tag_string .= "geo_open_large_map$map_suffix();";
+        }
 
         return $tag_string;
     } // fn GetMapTagOpen
@@ -1955,7 +2038,8 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview(); ";
+        $tag_string .= "window.center_large_map" . $map_suffix . "(); ";
 
         return $tag_string;
     } // fn GetMapTagCenter
@@ -1982,9 +2066,10 @@ var geo_open_large_map' . $map_suffix . ' = function()
         foreach ($poi_info["pois"] as $rank => $poi) {
             $cur_lon = $poi["longitude"];
             $cur_lat = $poi["latitude"];
-            $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
-            $poi_info["pois"][$rank]["center"] = $center;
-            $poi_info["pois"][$rank]["open"] = "OpenLayers.HooksPopups.on_map_feature_select(geo_object$map_suffix, $pind);";
+            $center_poi = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat); point_large_map_center" . $map_suffix . "($pind, false);";
+            $select_poi = "geo_object$map_suffix.select_poi($pind); point_large_map_center" . $map_suffix . "($pind, true);";
+            $poi_info["pois"][$rank]["center"] = $center_poi;
+            $poi_info["pois"][$rank]["open"] = $select_poi;
             $pind += 1;
         }
         return (array) $poi_info;
@@ -2333,6 +2418,8 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
             $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
             $tag_string_fin .= 'window.map_win_popup.document.write("window.not_set_map_sizes = true;\n");' . "\n";
+            $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $map_suffix . '\";\n");' . "\n";
+            $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null;}\n");' . "\n";
             $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
 
             $tag_string_arr = explode("\n", $tag_string_top . $tag_string_ini . $tag_string_mid);
