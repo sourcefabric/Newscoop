@@ -674,10 +674,11 @@ public static function GetIconsWebDir($p_htmlDir = "", $p_websiteUrl = "")
 public static function TemplateGeoStrings()
 {
     $show_original_map = getGS('Show original map');
+    $open_large_map = getGS('Open large map');
     $map = getGS('Map');
     $center = getGS('Center');
 
-    return array('show_original_map' => $show_original_map, 'map' => $map, 'center' => $center);
+    return array('show_original_map' => $show_original_map, 'open_large_map' => $open_large_map, 'map' => $map, 'center' => $center);
 
 } // fn TemplateGeoStrings
 

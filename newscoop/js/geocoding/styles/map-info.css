@@ -9,6 +9,10 @@
     font-size: 12px;
 }
 
+.geo_map_mapcanvas_large {
+    font-size: 12px;
+}
+
 .popup_title {
     font-size: 20px;
     margin-top: 10px;
@@ -33,4 +37,9 @@
     margin-top: 10px;
     width: 180px;
 
+}
+
+.geomap_open_large_map {
+    float: right;
+    margin-top: -22px;
 }

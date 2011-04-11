@@ -14,6 +14,8 @@ this.something_to_save = false;
 this.auto_focus = true;
 this.auto_focus_max_zoom = true;
 this.auto_focus_border = 100;
+this.map_is_popup = false;
+this.map_div_name = "";
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -278,6 +280,23 @@ this.set_popups_info = function(params)
 
 };
 
+this.set_map_large = function(params) {
+    if (params.width) {
+        this.map_art_view_width_default = parseInt(params.width);
+    }
+    if (params.height) {
+        this.map_art_view_height_default = parseInt(params.height);
+    }
+
+    this.map_is_popup = true;
+}
+
+this.try_size_updated = function() {
+    if (this.map) {
+        this.map.updateSize();
+    }
+}
+
 // to center the map view on the requested position
 this.center_lonlat = function(longitude, latitude)
 {
@@ -408,7 +427,6 @@ this.prepare_grouping = function(pois) {
 // the main action on data retrieval
 this.got_load_data = function (load_data, is_obj) {
     load_response = load_data;
-    //alert(JSON.stringify(load_response));
 
     var received_obj = null;
     if (is_obj)
@@ -763,6 +781,7 @@ this.got_load_data = function (load_data, is_obj) {
 };
 
 this.main_openlayers_init = function(map_div_name) {
+    this.map_div_name = map_div_name;
 
     var pzb_ctrl = null;
     var pzb_with_bar = false;
@@ -776,6 +795,7 @@ this.main_openlayers_init = function(map_div_name) {
     {
         pzb_ctrl = new OpenLayers.Control.PanZoomMod();
     }
+
     pzb_ctrl.geo_obj = this;
 
     this.map = new OpenLayers.Map(map_div_name, {

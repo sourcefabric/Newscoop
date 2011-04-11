@@ -30,6 +30,7 @@ function smarty_function_map($p_params, &$p_smarty)
 
     // Default text for the reset link
     define('DEFAULT_RESET_TEXT', getGS('Show original map'));
+    define('DEFAULT_OPEN_TEXT', getGS('Open large map'));
 
     // get the context variable
     $campsite = $p_smarty->get_template_vars('gimme');
@@ -57,8 +58,14 @@ function smarty_function_map($p_params, &$p_smarty)
     $showResetLink = TRUE;
     $resetLinkText = DEFAULT_RESET_TEXT;
     if (isset($p_params['show_reset_link'])) {
-        $resetLinkText = trim((string) $p_params['show_reset_link']);
-        if (strtolower($resetLinkText) == 'false') {
+        $resetLinkText_param = trim((string) $p_params['show_reset_link']);
+        if (('1' != $resetLinkText_param) && ('0' != $resetLinkText_param)) {
+            $resetLinkText = $resetLinkText_param;
+        }
+        if (strtolower($resetLinkText_param) == 'false') {
+            $showResetLink = FALSE;
+        }
+        if (empty($p_params['show_reset_link'])) {
             $showResetLink = FALSE;
         }
     }
@@ -66,9 +73,32 @@ function smarty_function_map($p_params, &$p_smarty)
             $resetLinkText = DEFAULT_RESET_TEXT;
     }
 
+    // get show open link parameter
+    $showOpenLink = TRUE;
+    $openLinkText = DEFAULT_OPEN_TEXT;
+    if (isset($p_params['show_open_link'])) {
+        $openLinkText_param = trim((string) $p_params['show_open_link']);
+        if (('1' != $openLinkText_param) && ('0' != $openLinkText_param)) {
+            $openLinkText = $openLinkText_param;
+        }
+        if (strtolower($openLinkText) == 'false') {
+            $showOpenLink = FALSE;
+        }
+        if (empty($p_params['show_open_link'])) {
+            $showOpenLink = FALSE;
+        }
+    }
+    if (strtolower($openLinkText) == 'true') {
+            $openLinkText = DEFAULT_OPEN_TEXT;
+    }
+
+
     // get map width and height
     $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
+
+    $width_large = isset($p_params['popup_width']) ? (int) $p_params['width_popup'] : 800;
+    $height_large = isset($p_params['popup_height']) ? (int) $p_params['height_popup'] : 600;
 
     // if we shall display a multi-map
     if ((!is_null($campsite->map_dynamic_points_raw)) || (!is_null($campsite->map_dynamic_constraints))) {
@@ -96,6 +126,10 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_options = array();
         $multi_options["load_common"] = $map_load_common_header;
         $multi_options["pois_retrieved"] = false;
+        $multi_options["large_map_open"] = $showOpenLink;
+        $multi_options["large_map_width"] = $width_large;
+        $multi_options["large_map_height"] = $height_large;
+        $multi_options["large_map_label"] = $multi_map_label;
 
         if ($multi_map_points) {
             $multi_options["pois_retrieved"] = true;
@@ -110,6 +144,7 @@ function smarty_function_map($p_params, &$p_smarty)
         }
 
         $multi_map_center = Geo_Map::GetMultiMapTagCenter($map_language, $multi_map_rank);
+        $multi_map_open = Geo_Map::GetMultiMapTagOpen($map_language, $multi_map_rank);
         $multi_map_div = Geo_Map::GetMultiMapTagBody($map_language, $multi_map_rank);
 
         $multi_map_body .= '
@@ -125,6 +160,12 @@ function smarty_function_map($p_params, &$p_smarty)
             $multi_map_body .= '
                 <div class="geomap_menu">
                     <a href="#" onClick="' . $multi_map_center . 'return false;">' . camp_javascriptspecialchars($resetLinkText) . '</a>
+                </div>';
+        }
+        if ($showOpenLink == TRUE) {
+            $multi_map_body .= '
+                <div class="geomap_open_large_map">
+                    <a href="#" onClick="' . $multi_map_open . 'return false;">' . camp_javascriptspecialchars($openLinkText) . '</a>
                 </div>';
         }
         $multi_map_body .= '
@@ -164,6 +205,11 @@ function smarty_function_map($p_params, &$p_smarty)
     $map_options = array();
     $map_options["auto_focus"] = $auto_focus;
     $map_options["load_common"] = $map_load_common_header;
+
+    $map_options["large_map_open"] = $showOpenLink;
+    $map_options["large_map_width"] = $width_large;
+    $map_options["large_map_height"] = $height_large;
+
     $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height, $map_options);
     $mapMain = MetaMap::GetMapTagBody($article, $language);
 
@@ -186,6 +232,13 @@ function smarty_function_map($p_params, &$p_smarty)
             <div class="geomap_menu">
                 <a href="#" onClick="' . $mapResetLink . '
                  return false;">' . camp_javascriptspecialchars($resetLinkText) . '</a>
+            </div>';
+    }
+    if ($showOpenLink == TRUE) {
+        $mapOpenLink = Geo_Map::GetMapTagOpen($article, $language);
+        $html .= '
+            <div class="geomap_open_large_map">
+                <a href="#" onClick="' . $mapOpenLink . 'return false;">' . camp_javascriptspecialchars($openLinkText) . '</a>
             </div>';
     }
     $html .= '

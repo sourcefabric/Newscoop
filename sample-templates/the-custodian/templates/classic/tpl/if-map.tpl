@@ -3,6 +3,7 @@
            auto_focus=true
            width="550"
            height="400"
+           show_open_link=true
            show_reset_link="Show initial Map" }}
 
     {{ if $gimme->language->name == "English" }}
