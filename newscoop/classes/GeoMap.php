@@ -1951,6 +1951,9 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
     {
         global $Campsite;
         $tag_string = "";
+        $tag_string_ini = "";
+        $tag_string_mid = "";
+        $tag_string_fin = "";
 
         $points = null;
 
@@ -1965,6 +1968,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                 $load_common = $p_options["load_common"];
             }
         }
+        // debugging
+        $load_common = true;
 
         if (!$pois_loaded) {
 
@@ -2056,7 +2061,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
         $poi_info_json = json_encode($poi_info);
         
-        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
 
         $include_files_tags = "";
         if ($load_common) {
@@ -2077,10 +2082,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
             $tag_string .= '
 
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_popups.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_preview.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_preview.js"></script>
 
 ';
         }
@@ -2095,8 +2100,13 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
-        map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
-        map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
+        if (typeof(not_set_map_sizes) == "undefined") {
+            map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+            map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
+        } else {
+            map_obj.style.width = "' . "800" . 'px";
+            map_obj.style.height = "' . "600" . 'px";
+        }
 ';
 
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => 0);
@@ -2154,7 +2164,53 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 </script>
 ';
 
-        return $tag_string;
+        $tag_string_fin .= '
+<script>
+var map_win_popup = null;
+var geo_open_large_map' . $map_suffix . ' = function()
+{
+    map_win_popup = window.open("", "map_win_popup", "width=810,height=610");
+    map_win_popup.document.write("<html><head>\n");
+    map_win_popup.document.write("<title>Map view</title>\n");
+    map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
+    map_win_popup.document.write("</head><body>\n");
+';
+
+        $tag_string_fin .= 'map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
+        $tag_string_fin .= 'map_win_popup.document.write("not_set_map_sizes = true;\n");' . "\n";
+        $tag_string_fin .= 'map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
+
+        //$l_r = 0;
+        $tag_string_arr = explode("\n", $tag_string);
+        foreach ($tag_string_arr as $tag_string_line) {
+            //$l_r += 1;
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
+            $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
+            $tag_string_fin .= 'map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= "\n";
+
+        $tag_string_arr = explode("\n", self::GetMultiMapTagBody($p_languageId, $p_rank, false));
+        foreach ($tag_string_arr as $tag_string_line) {
+            //$l_r += 1;
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
+            $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
+            $tag_string_fin .= 'map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= '
+    map_win_popup.document.write("</body></html>");
+    map_win_popup.document.close();
+}
+</script>
+';
+
+        return $tag_string . $tag_string_fin;
 
     } // fn GetMultiMapTagHeader
 
@@ -2167,7 +2223,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagBody($p_languageId, $p_rank = 0)
+    public static function GetMultiMapTagBody($p_languageId, $p_rank = 0, $p_openTag = true)
     {
         global $Campsite;
         $tag_string = "";
@@ -2176,6 +2232,9 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
+        if ($p_openTag) {
+            $tag_string .= "<div style='float:right;margin-top:-20px'><a href=\"#\" onClick=\"geo_open_large_map$map_suffix(); return false;\">open large map</a></div>";
+        }
         $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
 
         return $tag_string;
@@ -2411,7 +2470,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
-        $geocodingdir = $Campsite['WEBSITE_URL'] . '/javascript/geocoding/';
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
 
 
         $tag_string .= $geo_map_incl;
@@ -2419,9 +2478,9 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $tag_string .= '
 
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OpenLayers.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/openlayers/OLlocals.js"></script>
-	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/javascript/geocoding/map_filter.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_filter.js"></script>
 
 <script type="text/javascript">
 
