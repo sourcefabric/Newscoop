@@ -29,7 +29,7 @@ class PermissionToAcl
         'Authors' => 'Author',
         'Countries' => 'Country',
         'Logs' => 'Log',
-        'Readers' => 'Readers',
+        'Readers' => 'Subscriber',
         'Subscriptions' => 'Subscription',
     );
 

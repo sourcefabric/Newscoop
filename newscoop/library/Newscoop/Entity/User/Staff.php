@@ -96,7 +96,7 @@ class Staff extends User
     {
         static $acl;
         if ($acl === NULL) {
-            $acl = Zend_Registry::get('acl');
+            $acl = Zend_Registry::get('acl')->getAcl();
         }
 
         try {

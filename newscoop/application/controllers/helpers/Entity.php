@@ -15,7 +15,8 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        return $this->getManager();
+        $this->getManager();
+        return $this;
     }
 
     /**
@@ -38,9 +39,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
     public function getManager()
     {
         if ($this->em === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $doctrine = $bootstrap->getResource('doctrine');
+            $doctrine = Zend_Registry::get('doctrine');
             $this->setManager($doctrine->getEntityManager());
         }
 
@@ -55,7 +54,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      */
     public function getRepository($entity)
     {
-        return $this->getManager()->getRepository($this->getClassName($entity));
+        return $this->em->getRepository($this->getClassName($entity));
     }
 
     /**
@@ -65,7 +64,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      */
     public function flushManager()
     {
-        $this->getManager()->flush();
+        $this->em->flush();
     }
 
     /**
@@ -87,7 +86,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
             return NULL;
         }
 
-        $match = $this->getManager()->find($this->getClassName($entity), $params[$key]);
+        $match = $this->em->find($this->getClassName($entity), $params[$key]);
         if (!$match) {
             if ($throw) {
                 throw new InvalidArgumentException;

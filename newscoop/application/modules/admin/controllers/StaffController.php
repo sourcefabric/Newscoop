@@ -2,20 +2,14 @@
 
 use Newscoop\Entity\User\Staff;
 
+/**
+ * @acl(resource="user", action="manage")
+ */
 class Admin_StaffController extends Zend_Controller_Action
 {
     private $repository;
 
     private $form;
-
-    public function preDispatch()
-    {
-        $user = $this->_getParam('user', 0);
-        $auth = Zend_Auth::getInstance();
-        if ($user != $auth->getIdentity()) { // check if user != current
-            $this->_helper->acl->check('user', 'manage');
-        }
-    }
 
     public function init()
     {
@@ -57,33 +51,49 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->view->user = $staff;
     }
 
+    /**
+     * @acl(ignore="1")
+     */
     public function editAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');
+
+        // check permission
+        $auth = Zend_Auth::getInstance();
+        if ($staff->getId() != $auth->getIdentity()) { // check if user != current
+            $this->_helper->acl->check('user', 'manage');
+        }
+
         $this->form->setDefaultsFromEntity($staff);
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
         $this->view->user = $staff;
 
-        if ($this->_helper->acl->isAllowed('user', 'manage')) {
-            $this->view->actions = array(
-                $this->view->url(array(
-                    'action' => 'edit-access',
-                    'user' => $staff->getId()
-                )) => getGS('Edit permissions'),
-            );
-        }
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Edit access'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'edit-access',
+                'params' => array(
+                    'user' => $staff->getId(),
+                ),
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     public function editAccessAction()
     {
-        $this->_helper->acl->check('user', 'manage');
-
         $staff = $this->_helper->entity->get(new Staff, 'user');
         $this->view->user = $staff;
     }
 
+    /**
+     * @acl(action="delete")
+     */
     public function deleteAction()
     {
         $this->_helper->acl->check('user', 'delete');
@@ -97,10 +107,11 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->_helper->redirector->gotoSimple('index');
     }
 
+    /**
+     * @acl(action="manage")
+     */
     public function tableAction()
     {
-        $this->_helper->acl->check('user', 'manage');
-
         $table = $this->getHelper('datatable');
 
         $table->setEntity('Newscoop\Entity\User\Staff');
@@ -145,6 +156,17 @@ class Admin_StaffController extends Zend_Controller_Action
         });
 
         $table->dispatch();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new staff member'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'add',
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     private function handleForm(Zend_Form $form, Staff $staff)

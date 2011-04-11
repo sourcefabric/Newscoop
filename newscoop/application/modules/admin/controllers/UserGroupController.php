@@ -2,6 +2,9 @@
 
 use Newscoop\Entity\User\Group;
 
+/**
+ * @acl(action="manage")
+ */
 class Admin_UserGroupController extends Zend_Controller_Action
 {
     private $repository;
@@ -16,6 +19,17 @@ class Admin_UserGroupController extends Zend_Controller_Action
     public function indexAction()
     {
         $this->view->groups = $this->repository->findAll();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new user type'),
+                'module' => 'admin',
+                'controller' => 'user-group',
+                'action' => 'add',
+                'resource' => 'user-group',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     public function addAction()

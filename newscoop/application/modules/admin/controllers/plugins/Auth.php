@@ -5,20 +5,18 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Auth;
-
-use Zend_Auth,
-    Zend_Controller_Plugin_Abstract,
-    Zend_Controller_Request_Abstract;
-
 /**
  * Auth controller plugin
  */
-class Plugin extends Zend_Controller_Plugin_Abstract
+class Admin_Controller_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
+    private $ignored = array(
+        'auth',
+    );
+
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        if ($request->getControllerName() == 'auth') { // loggin in/out
+        if (in_array($request->getControllerName(), $this->ignored)) {
             return;
         }
 

@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Acl;
-
 use Doctrine\Common\Annotations\AnnotationReader,
     Doctrine\Common\Annotations\Parser,
     Doctrine\Common\Cache\ArrayCache;
@@ -14,7 +12,7 @@ use Doctrine\Common\Annotations\AnnotationReader,
 /**
  * Acl controller plugin
  */
-class Plugin extends \Zend_Controller_Plugin_Abstract
+class Admin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 {
     const ANNOTATION_NS = 'Newscoop\Annotations\\';
 
@@ -32,7 +30,7 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
     /** @var Zend_Acl_Role_Interface */
     private $role;
 
-    public function preDispatch(\Zend_Controller_Request_Abstract $request)
+    public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
         $resource = $request->getControllerName();
         $action = $request->getActionName();
@@ -82,7 +80,7 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
             if ($acl->isAllowed($role, $resource, $action)) {
                 return;
             }
-        } catch (\Zend_Acl_Exception $e) { // ignore not found resources - old code
+        } catch (Zend_Acl_Exception $e) { // ignore not found resources - old code
             return;
         }
 
@@ -90,6 +88,9 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
         $request->setModuleName('admin')
             ->setControllerName('error')
             ->setActionName('deny')
+            ->setParam('message', getGS('You are not allowed to $1 $2.',
+                    $action ? $action : getGS('handle'),
+                    $resource ? $resource : getGS('any resource')))
             ->setDispatched(false);
     }
 
@@ -101,7 +102,7 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
     private function getAcl()
     {
         if ($this->acl === NULL) {
-            $this->acl = \Zend_Registry::get('acl');
+            $this->acl = Zend_Registry::get('acl')->getAcl();
         }
 
         return $this->acl;
@@ -115,7 +116,7 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
     private function getRole()
     {
         if ($this->role === NULL) {
-            $this->role = \Zend_Registry::get('user')->getRole();
+            $this->role = Zend_Registry::get('user')->getRole();
         }
 
         return $this->role;
@@ -146,11 +147,11 @@ class Plugin extends \Zend_Controller_Plugin_Abstract
     private function getReflection($resource)
     {
         $controller = $this->formatName($resource) . 'Controller';
-        $front = \Zend_Controller_Front::getInstance();
+        $front = Zend_Controller_Front::getInstance();
         foreach ($front->getControllerDirectory() as $dir) {
             if (file_exists("$dir/$controller.php")) {
                 require_once "$dir/$controller.php";
-                return new \ReflectionClass("Admin_$controller");
+                return new ReflectionClass("Admin_$controller");
             }
         }
 

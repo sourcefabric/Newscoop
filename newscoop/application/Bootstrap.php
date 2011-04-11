@@ -1,7 +1,5 @@
 <?php
 
-use Newscoop\Log\Writer;
-
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
@@ -24,21 +22,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
+        // case-insensitive annotations
+        $autoloader->pushAutoloader(function($class) {
+            $file = implode('/', array_map('ucfirst', explode('\\', $class)));
+            include_once "$file.php";
+        }, 'Newscoop\Annotations');
+
+        // controller plugin loader
+        $autoloader->pushAutoloader(function($class) {
+            $front = Zend_Controller_Front::getInstance();
+            $path = $front->getControllerDirectory('admin');
+            $file = array_pop(explode('_', $class));
+            include_once "$path/plugins/$file.php";
+        }, 'Admin_Controller_Plugin_');
+
         return $autoloader;
-    }
-
-    /**
-     * Init Log
-     */
-    protected function _initLog()
-    {
-        // get entity manager
-        $this->bootstrap('doctrine');
-        $em = $this->getResource('doctrine')
-            ->getEntityManager();
-
-        // create logger
-        $writer = new Writer($em);
-        return new Zend_Log($writer);
     }
 }

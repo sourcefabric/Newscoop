@@ -2,14 +2,12 @@
 
 use Newscoop\Entity\User\Subscriber;
 
+/**
+ * @acl(action="manage")
+ */
 class Admin_SubscriberController extends Zend_Controller_Action
 {
     private $repository;
-
-    public function preDispatch()
-    {
-        $this->_helper->acl->check('readers', 'manage');
-    }
 
     public function init()
     {
@@ -108,6 +106,17 @@ class Admin_SubscriberController extends Zend_Controller_Action
         });
 
         $table->dispatch();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new subscriber'),
+                'module' => 'admin',
+                'controller' => 'subscriber',
+                'action' => 'add',
+                'resource' => 'subscriber',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     private function handleForm(Zend_Form $form, Subscriber $subscriber)

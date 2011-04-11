@@ -1,10 +1,6 @@
 <h1><?php echo getGS('User types'); ?></h1>
 
-<?php
-$this->renderActions(array(
-    $this->url(array('action' => 'add')) => getGS('Add new user type'),
-));
-?>
+<?php $this->renderActions(); ?>
 
 <?php
 if (empty($this->groups)) {

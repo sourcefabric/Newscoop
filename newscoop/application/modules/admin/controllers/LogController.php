@@ -29,7 +29,7 @@ class Admin_LogController extends Zend_Controller_Action
     }
 
     /**
-     * @Acl(action="view")
+     * @acl(action="view")
      */
     public function indexAction()
     {

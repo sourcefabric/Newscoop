@@ -20,7 +20,8 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        return $this->getAcl();
+        $this->getAcl();
+        return $this;
     }
 
     /**
@@ -43,9 +44,8 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     public function getAcl()
     {
         if ($this->acl === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $this->setAcl($bootstrap->getResource('Acl')->getAcl());
+            $acl = Zend_Registry::get('acl');
+            $this->setAcl($acl->getAcl());
         }
 
         return $this->acl;

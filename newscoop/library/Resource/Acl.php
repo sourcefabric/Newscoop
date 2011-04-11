@@ -1,9 +1,11 @@
 <?php
 /**
- * @package Newscoop
+ * @package Resource
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
+
+use Newscoop\Entity\User\Staff;
 
 /**
  * Acl Zend application resource
@@ -14,12 +16,11 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     private $acl;
 
     /**
-     * Init
+     * Init acl
      */
     public function init()
     {
-        $this->acl = $this->getAcl();
-
+        Zend_Registry::set('acl', $this);
         return $this;
     }
 
@@ -29,14 +30,16 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      * @param object|null $user
      * @return Zend_Acl|null
      */
-    public function getAcl($user = NULL)
+    public function getAcl(Staff $user = NULL)
     {
-        if ($user === NULL && $this->acl !== NULL) {
+        $auth = Zend_Auth::getInstance();
+
+        if ($this->acl !== NULL
+            && ($user === NULL || $auth->getIdentity() == $user->getId())) { // current user
             return $this->acl;
         }
 
         $acl = new Zend_Acl;
-        $auth = Zend_Auth::getInstance();
         $options = $this->getOptions();
 
         if (!$auth->hasIdentity()) { // no rules for guests
@@ -93,7 +96,6 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         }
 
         if ($user->getId() == $auth->getIdentity()) { // store for current user
-            Zend_Registry::set('acl', $acl);
             $this->acl = $acl;
         }
 

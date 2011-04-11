@@ -292,7 +292,7 @@ if ($showConfigureMenu) {
         'controller' => 'article_types',
         'action' => 'index.php',
         'resource' => 'article-type',
-        'action' => 'manage',
+        'privilege' => 'manage',
     );
 
     $pages[3]['pages'][] = array(
@@ -384,7 +384,7 @@ if ($showUserMenu) {
             'label' => getGS('Subscribers'),
             'module' => 'admin',
             'controller' => 'subscriber',
-            'resource' => 'readers',
+            'resource' => 'subscriber',
             'privilege' => 'manage',
             'pages' => array(
                 array(
@@ -410,7 +410,7 @@ if ($showUserMenu) {
         'module' => 'admin',
         'controller' => 'user-group',
         'resource' => 'user-group',
-        'privilege' => 'edit',
+        'privilege' => 'manage',
         'pages' => array(
         array(
                 'label' => getGS('Add new user type'),
@@ -456,12 +456,11 @@ if (!empty($plugin_pages)) {
     );
 }
 
-$container = new Zend_Navigation($pages);
-$view->navigation($container);
-
-// set acl
-$view->navigation()->setAcl(Zend_Registry::get('acl'));
-$view->navigation()->setRole($g_user->getRole());
+// set navigation
+$navigation = new Zend_Navigation($pages);
+$view->navigation()->menu()->setContainer($navigation);
+$view->navigation()->breadcrumbs()->setContainer($navigation);
+$view->navigation()->breadcrumbs()->setRenderInvisible(true);
 
 if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     return;
@@ -475,6 +474,6 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
 
 <?php if (isset($this)) { // zend framework only ?>
 <div class="breadcrumb-bar zend clearfix">
-    <?php echo $this->navigation()->breadcrumbs()->setRenderInvisible(TRUE); ?>
+    <?php echo $this->navigation()->breadcrumbs(); ?>
 </div>
 <?php } ?>
