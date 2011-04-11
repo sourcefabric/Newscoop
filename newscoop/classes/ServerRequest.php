@@ -18,6 +18,7 @@ require_once dirname(__FILE__) . '/../admin-files/localizer/Localizer.php';
 class ServerRequest
 {
     const ERROR_NOT_CALLABLE = 1;
+    // note that the value of the ERROR_SECURITY_TOKEN constant is used at the /js/admin.js file too!
     const ERROR_SECURITY_TOKEN = 2;
     const ERROR_PERMISSION = 3;
 

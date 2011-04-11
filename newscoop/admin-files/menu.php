@@ -400,7 +400,6 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
     }
     <?php } ?>
     var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
-    var popupFlash = false;
     $(document).ready(function() {
         $.datepicker.setDefaults( $.datepicker.regional['<?php echo $locale; ?>'] );
     });

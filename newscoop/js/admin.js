@@ -162,6 +162,34 @@ function flashMessage(message, type, fixed)
 
 var queue = [];
 
+var popupFlash = null;
+
+/**
+ * Ask user to relogin for a server function calling, e.g. after session expired or wrong security token (after a different relogin)
+ * @param {array} p_callback
+ * @param {object} p_args
+ * @param {callback} p_handle
+ * @return none
+ */
+function reloginRequest(p_callback, p_args, p_handle)
+{
+    try {
+        var login = window.open(g_admin_url + '/login.php?request=ajax&f_force_login=1', 'login', 'height=500,width=500');
+        login.focus();
+    } catch (e) {}
+    // make the flash if not already done (e.g. at the article editing page where several ajax calls are done)
+    if (!popupFlash) {
+        popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php?f_force_login=1" target="_blank">' + localizer.login + '</a>.', 'error', true);
+    }
+
+    // store request
+    queue.push({
+        callback: p_callback,
+        args: p_args,
+        handle: p_handle
+    });
+};
+
 /**
  * Call server function
  * @param {array} p_callback
@@ -186,10 +214,18 @@ function callServer(p_callback, p_args, p_handle)
         },
         'dataType': 'json',
         'success': function(json) {
+            /* note that the value of the 'sec_token_err' variable is defined at classes ServerRequest.php file too, as ServerRequest::ERROR_SECURITY_TOKEN */
+            var sec_token_err = 2;
+
             flash.fadeOut();
 
             if (json.error_code) {
-                flashMessage(json.error_message, 'error', true);
+                if (sec_token_err == json.error_code) {
+                    // making relogin available even when at a session with wrong security token (happens when user relogged at a different window)
+                    reloginRequest(p_callback, p_args, p_handle);
+                } else {
+                    flashMessage(json.error_message, 'error', true);
+                }
                 return;
             }
 
@@ -198,17 +234,9 @@ function callServer(p_callback, p_args, p_handle)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
+            // standard relogin situation, i.e. after session expired
             flash.hide();
-            var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
-            login.focus();
-            popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
-
-            // store request
-            queue.push({
-                callback: p_callback,
-                args: p_args,
-                handle: p_handle
-            });
+            reloginRequest(p_callback, p_args, p_handle);
         }
     });
 }
@@ -225,6 +253,7 @@ function setSecurityToken(security_token)
 
     if (popupFlash) {
         popupFlash.hide();
+        popupFlash = null;
     }
 
     // restore request
