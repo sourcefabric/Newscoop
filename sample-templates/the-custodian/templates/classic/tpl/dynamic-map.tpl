@@ -16,7 +16,7 @@
     max_points=1000
 }}
 
-{{ map show_locations_list=true show_reset_link="Show initial Map" width="550" height="450" show_open_link="Pop-up the map" }}
+{{ map show_locations_list=true show_reset_link="Show initial Map" width="550" height="450" show_open_link="Pop-up the map" open_map_on_click=false }}
 
 <div class="dynamic_map_articles_list">
 <ul>Map Articles

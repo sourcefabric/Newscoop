@@ -1619,6 +1619,202 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     // presentation functions
 
     /**
+     * Gives the large map opener part of the header part for all the presentation maps
+     *
+     * @param string $p_mapSuffix
+     * @param int $p_widthLargeMap
+     * @param int $p_heightLargeMap
+     * @param string $p_labelLargeMap
+     * @param string $p_tagStringPrev
+     * @param string $p_tagStringBody
+     *
+     * @return string
+     */
+    private static function GetLargeMapOpener($p_mapSuffix, $p_widthLargeMap, $p_heightLargeMap, $p_labelLargeMap, $p_tagStringPrev, $p_tagStringBody)
+    {
+        $tag_string_fin = "";
+
+        $tag_string_fin .= '
+<script>
+window.map_win_popup = null;
+window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
+{
+    window.deferred_poi_select = null;
+    var select_poi = null;
+    if (undefined !== params) {
+        if (undefined !== params["select_poi"]) {
+            select_poi = params["select_poi"];
+            window.deferred_poi_select = select_poi;
+        }
+    }
+
+    var already_focused = false;
+    try {
+        // TODO: debugging
+        if (true && window.map_win_popup) {
+            if ("' . $p_mapSuffix . '" == window.map_win_popup.map_obj_specifier) {
+                //window.map_win_popup.blur();
+                setTimeout("try {window.map_win_popup.focus();} catch(e) {}", 0);
+                if (null !== select_poi) {
+                    window.point_large_map_center' . $p_mapSuffix . '(select_poi, true);
+                }
+                already_focused = true;
+            }
+        }
+    } catch (e) {already_focused = false;}
+
+    if (window.map_win_popup && window.map_win_popup.closed) {
+        already_focused = false;
+    }
+
+    if (already_focused) {return;}
+
+    //alert(window.map_win_popup);
+    if (window.map_win_popup && (!window.map_win_popup.closed)) {
+        window.map_win_popup.close();
+    }
+
+
+    window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0");
+    // still the problems if opener reloads before making again the map popup; thus closing it here for sure
+    // for now the popup-window variable of opener is set via setInterval 
+    if (false) {
+        window.map_win_popup.close();
+        window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0");
+    }
+
+    //window.map_win_popup.document.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\">\n");
+    window.map_win_popup.document.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+    window.map_win_popup.document.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+    window.map_win_popup.document.write("<head profile=\"http://gmpg.org/xfn/11\">\n");
+    //window.map_win_popup.document.write("<html>\n");
+    //window.map_win_popup.document.write("<head>\n");
+    window.map_win_popup.document.write("<title>' . $p_labelLargeMap . '</title>\n");
+    window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
+    window.map_win_popup.document.write("\n");
+    //window.map_win_popup.document.write("<" + "script src=\"http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js\" type=\"text/javascript\"></" + "script>\n");
+    window.map_win_popup.document.write("\n");
+';
+
+/*
+// not used now
+$hack_part = '
+        <script type="text/javascript">
+            var rnk = 0;
+            //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
+            if (undefined === window.document.write_orig) {
+                window.document.write_orig = window.document.write;
+            }
+            //window.document.write_orig = window.document.write;
+            //window.document.write = function (txt) {if (txt) {$.getScript("http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js", function() {});}}
+            //window.document.write = function (txt) {if (txt) {window.document.open("text/html", true); window.document.write_orig(txt); window.document.close();}};
+            window.doc_write_mod = function (txt) {
+                if (txt) {
+                    //var write_parts_obj = document.getElementById ? document.getElementById("write_parts") : null;
+                    //if (null & write_parts_obj) {
+                    //    var curr_html = "" + write_parts_obj.innerHTML;
+                    //    curr_html += txt;
+                    //    write_parts_obj.innerHTML = curr_html;
+                    //}
+                    rnk += 1;
+                    if (rnk < 5) {alert(rnk);}
+                    if (-1 < txt.indexOf("://maps.gstatic.com/")) {
+                        $("#write_parts").append(txt);
+                        alert("appended: " + txt);
+                    }
+                    else {
+                        window.document.write_orig(txt);
+                    }
+                }
+            };
+            window.document.write = window.doc_write_mod;
+            alert(window.document.write);
+        </script>
+';
+*/
+
+$header_part = '
+        <script type="text/javascript">
+        window.set_map_popup_at_opener = function () {
+            if (window.opener && (undefined !== window.opener.map_win_popup) && (!window.opener.map_win_popup)) {
+                window.opener.map_win_popup = window;
+            }
+        };
+        //setInterval ("window.set_map_popup_at_opener();", 1000);
+        setInterval ("window.set_map_popup_at_opener();", 500);
+        </script>
+';
+
+        foreach (explode("\n", $header_part) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= '
+    //window.map_win_popup.document.write("</head>\n");
+    //window.map_win_popup.document.write("<body>\n");
+    //window.map_win_popup.document.write("<body>aaaaaaaaaaa\n");
+';
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
+        //$tag_string_fin .= 'window.map_win_popup.document.write("if (window.document.write_orig !== undefined) {window.document.write = window.document.write_orig;};\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_prepared = false;\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_popup_win = true;\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $p_mapSuffix . '\";\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null; window.map_prepared = false;}\n");' . "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.deferred_action = function() {if (null !== window.opener.deferred_poi_select) {window.geo_object' . $p_mapSuffix . '.proc_subst_action({select_poi: window.opener.deferred_poi_select});}}\n");' . "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
+
+        foreach (explode("\n", $p_tagStringPrev) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
+        //$tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 2000);\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 1000);\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
+
+        $tag_string_fin .= '
+    window.map_win_popup.document.write("</head>\n");
+    window.map_win_popup.document.write("<body>\n");
+    //window.map_win_popup.document.write("<body>aaaaaaaaaaa\n");
+';
+
+        //$tag_string_fin .= 'window.map_win_popup.document.write("<div style=\"width:800px;height:500px;\">\n");';
+        //$tag_string_fin .= 'window.map_win_popup.document.write("<div style=\"width:100%;height:500px;\">\n");';
+        $tag_string_fin .= 'window.map_win_popup.document.write("<div id=\"map_body_holder\" style=\"width:100%;height:100%;\">\n");';
+        foreach (explode("\n", $p_tagStringBody) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+        $tag_string_fin .= 'window.map_win_popup.document.write("</div>\n");';
+
+        $tag_string_fin .= '
+    window.map_win_popup.document.write("<div id=\"write_parts\" style=\"width=0px;height=0px;\"></div>");
+    window.map_win_popup.document.write("</body></html>");
+    window.map_win_popup.document.close();
+}
+</script>
+';
+
+        return $tag_string_fin;
+    } // fn GetLargeMapOpener
+
+    /**
      * Gives the header part for the map front end presentation
      *
      * @param int $p_articleNumber
@@ -1764,13 +1960,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $tag_string_mid .= '
 <script type="text/javascript">
+    window.map_prepared = false;
+
     geo_object'. $map_suffix .' = new geo_locations();
 
 window.center_large_map' . $map_suffix . ' = function () {
     try {
-        if (window.map_win_popup) {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
             if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
-                //window.geo_open_large_map' . $map_suffix . '();
                 window.map_win_popup.geo_object' . $map_suffix . '.map_showview();
             }
         }
@@ -1779,7 +1976,7 @@ window.center_large_map' . $map_suffix . ' = function () {
 
 window.point_large_map_center' . $map_suffix . ' = function (index, select) {
     try {
-        if (window.map_win_popup) {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
             if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
                 window.map_win_popup.geo_object' . $map_suffix . '.center_poi(index);
                 if (select) {
@@ -1795,11 +1992,13 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
-        if (typeof(window.not_set_map_sizes) == "undefined") {
+        if (typeof(window.map_popup_win) == "undefined") {
             map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
             map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         } else {
             // not setting the map size for the large map
+            // map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+            // map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         }
 
 ';
@@ -1821,19 +2020,57 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $tag_string_mid .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
     $tag_string_mid .= "\n";
     if ($large_map_on_click) {
-        $tag_string_mid .= "if (typeof(window.not_set_map_sizes) == \"undefined\") {\n";
+        $tag_string_mid .= "if (typeof(window.map_popup_win) == \"undefined\") {\n";
         $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";
         $tag_string_mid .= "        " . self::GetMapTagOpen($p_articleNumber, $p_languageId, "open_form") . "(params);\n";
         $tag_string_mid .= "    });\n";
         $tag_string_mid .= "}\n";
         $tag_string_mid .= "\n";
     }
-    $tag_string_mid .= "if (typeof(window.not_set_map_sizes) != \"undefined\") {\n";
+    $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
     $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map});\n";
     $tag_string_mid .= "}\n";
     $tag_string_mid .= "\n";
 
         $tag_string_mid .= '
+
+        if (true && (typeof(window.map_popup_win) != "undefined")) {
+//
+try {
+            //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
+            if (undefined === window.document.write_orig) {
+                window.document.write_orig = window.document.write;
+            }
+            //window.document.write_orig = window.document.write;
+            //window.document.write = function (txt) {if (txt) {$.getScript("http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js", function() {});}}
+            //window.document.write = function (txt) {if (txt) {window.document.open("text/html", true); window.document.write_orig(txt); window.document.close();}};
+            window.document.write = function (txt) {if (txt) {
+                //var write_parts_obj = document.getElementById ? document.getElementById("write_parts") : null;
+                //if (null & write_parts_obj) {
+                //    var curr_html = "" + write_parts_obj.innerHTML;
+                //    curr_html += txt;
+                //    write_parts_obj.innerHTML = curr_html;
+                //}
+                if (-1 < txt.indexOf("://maps.gstatic.com/")) {
+                    $("#write_parts").append(txt);
+                }
+                else {
+                    window.document.write_orig(txt);
+                }
+            }};
+//
+            //alert("?");
+            //alert(window.document.write);
+            $.getScript("http://maps.google.com/maps/api/js?v=3.2&sensor=false", function() {
+            //$.getScript("http://newscoop_new/js/geocoding/openlayers/gv3api-local.js", function() {}
+                //alert("Load was performed.");
+                setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+            });
+
+} catch (e) {alert(e);}
+
+            return;
+        }
 
         setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
         return;
@@ -1856,6 +2093,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
+        window.map_prepared = true;
+
         if (undefined !== window.deferred_action) {
             try {window.deferred_action();} catch (e) {}
         }
@@ -1872,87 +2111,9 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // should we provide js for large-map openning
         if ($open_large_map) {
 
-            $tag_string_fin .= '
-<script>
-window.map_win_popup = null;
-window.geo_open_large_map' . $map_suffix . ' = function(params)
-{
-    var select_poi = null;
-    if (undefined !== params) {
-        if (undefined !== params["select_poi"]) {
-            select_poi = params["select_poi"];
-            window.deferred_poi_select = select_poi;
-        }
-    }
+            //$tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top . $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
+            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
 
-    var already_focused = false;
-    try {
-        if (window.map_win_popup) {
-            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
-                window.map_win_popup.blur();
-                setTimeout("try {window.map_win_popup.focus();} catch(e) {}", 0);
-                if (null !== select_poi) {
-                    window.point_large_map_center' . $map_suffix . '(select_poi, true);
-                }
-                already_focused = true;
-            }
-        }
-    } catch (e) {already_focused = false;}
-
-    if (window.map_win_popup && window.map_win_popup.closed) {
-        already_focused = false;
-    }
-
-    if (already_focused) {return;}
-
-    window.map_win_popup = window.open("", "map_win_popup", "width=' . $width_large_map . ', height=' . $height_large_map . ',directories=0,location=0,menubar=0,toolbar=0");
-    window.map_win_popup.document.write("<html><head>\n");
-    window.map_win_popup.document.write("<title>' . $label_large_map . '</title>\n");
-    window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
-    window.map_win_popup.document.write("</head><body>\n");
-';
-
-            $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.not_set_map_sizes = true;\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $map_suffix . '\";\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null;}\n");' . "\n";
-
-            if (true) {
-                $tag_string_fin .= 'window.map_win_popup.document.write("window.deferred_action = function() {if (null !== window.opener.deferred_poi_select) {window.geo_object' . $map_suffix . '.proc_subst_action({select_poi: window.opener.deferred_poi_select});}}\n");' . "\n";
-            }
-
-            $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
-
-            $tag_string_arr = explode("\n", $tag_string_top . $tag_string_ini . $tag_string_mid);
-            foreach ($tag_string_arr as $tag_string_line) {
-                $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
-                $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
-                $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
-                $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
-                $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
-            }
-
-            $tag_string_fin .= "\n";
-
-            $tag_string_arr = explode("\n", self::GetMapTagBody($p_articleNumber, $p_languageId, true));
-            foreach ($tag_string_arr as $tag_string_line) {
-                $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
-                $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
-                $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
-                $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
-                $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
-            }
-
-            $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $map_suffix . '.try_size_updated()\", 2000);\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
-
-            $tag_string_fin .= '
-    window.map_win_popup.document.write("</body></html>");
-    window.map_win_popup.document.close();
-}
-</script>
-';
         }
 
         $tag_string .= $tag_string_top;
@@ -2014,7 +2175,8 @@ window.geo_open_large_map' . $map_suffix . ' = function(params)
             $tag_string .= "geo_open_large_map$map_suffix";
         }
         else {
-            $tag_string .= "geo_open_large_map$map_suffix();";
+            //$tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix(); setTimeout('geo_open_large_map$map_suffix();', 1000);} ";
+            $tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix();} ";
         }
 
         return $tag_string;
@@ -2038,7 +2200,7 @@ window.geo_open_large_map' . $map_suffix . ' = function(params)
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "geo_object" . $map_suffix . ".map_showview(); ";
+        $tag_string .= "if (window.map_prepared) {geo_object" . $map_suffix . ".map_showview();} ";
         $tag_string .= "window.center_large_map" . $map_suffix . "(); ";
 
         return $tag_string;
@@ -2066,8 +2228,8 @@ window.geo_open_large_map' . $map_suffix . ' = function(params)
         foreach ($poi_info["pois"] as $rank => $poi) {
             $cur_lon = $poi["longitude"];
             $cur_lat = $poi["latitude"];
-            $center_poi = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat); point_large_map_center" . $map_suffix . "($pind, false);";
-            $select_poi = "geo_object$map_suffix.select_poi($pind); point_large_map_center" . $map_suffix . "($pind, true);";
+            $center_poi = "if (window.map_prepared) {geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);} point_large_map_center" . $map_suffix . "($pind, false);";
+            $select_poi = "if (window.map_prepared) {geo_object$map_suffix.select_poi($pind);} point_large_map_center" . $map_suffix . "($pind, true);";
             $poi_info["pois"][$rank]["center"] = $center_poi;
             $poi_info["pois"][$rank]["open"] = $select_poi;
             $pind += 1;
@@ -2176,13 +2338,20 @@ window.geo_open_large_map' . $map_suffix . ' = function(params)
             }
         }
 
+        $large_map_on_click = false;
         $open_large_map = false;
         $width_large_map = 800;
         $height_large_map = 600;
         $label_large_map = "";
         if (is_array($p_options)) {
+            if (array_key_exists("large_map_on_click", $p_options)) {
+                $large_map_on_click = $p_options["large_map_on_click"];
+            }
             if (array_key_exists("large_map_open", $p_options)) {
                 $open_large_map = $p_options["large_map_open"];
+            }
+            if ($large_map_on_click && (!$open_large_map)) {
+                $open_large_map = true;
             }
             if (array_key_exists("large_map_width", $p_options)) {
                 $width_large_map_param = 0 + $p_options["large_map_width"];
@@ -2327,14 +2496,40 @@ window.geo_open_large_map' . $map_suffix . ' = function(params)
         $tag_string_mid .= '
 
 <script type="text/javascript">
+    window.map_prepared = false;
+
     geo_object'. $map_suffix .' = new geo_locations();
+
+window.center_large_map' . $map_suffix . ' = function () {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.map_showview();
+            }
+        }
+    } catch (e) {}
+};
+
+window.point_large_map_center' . $map_suffix . ' = function (index, select) {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.center_poi(index);
+                if (select) {
+                    window.map_win_popup.OpenLayers.HooksPopups.on_map_feature_select(window.map_win_popup.geo_object' . $map_suffix . ', index);
+                }
+            }
+        }
+    } catch (e) {}
+};
+
 var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
 
     var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
     if (map_obj)
     {
-        if (typeof(window.not_set_map_sizes) == "undefined") {
+        if (typeof(window.map_popup_win) == "undefined") {
             map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
             map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         } else {
@@ -2364,7 +2559,15 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $tag_string_mid .= "\n";
     $tag_string_mid .= "geo_object$map_suffix.set_display_strings($local_strings_json);";
     $tag_string_mid .= "\n";
-    $tag_string_mid .= "if (typeof(window.not_set_map_sizes) != \"undefined\") {\n";
+    if ($large_map_on_click) {
+        $tag_string_mid .= "if (typeof(window.map_popup_win) == \"undefined\") {\n";
+        $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";
+        $tag_string_mid .= "        " . self::GetMultiMapTagOpen($p_languageId, $p_rank, "open_form") . "(params);\n";
+        $tag_string_mid .= "    });\n";
+        $tag_string_mid .= "}\n";
+        $tag_string_mid .= "\n";
+    }
+    $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
     $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map});\n";
     $tag_string_mid .= "}\n";
     $tag_string_mid .= "\n";
@@ -2392,6 +2595,11 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
 
+        window.map_prepared = true;
+
+        if (undefined !== window.deferred_action) {
+            try {window.deferred_action();} catch (e) {}
+        }
 };
 
     $(document).ready(function()
@@ -2404,54 +2612,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // should we provide js for large-map openning
         if ($open_large_map) {
 
-            $tag_string_fin .= '
-<script>
-window.map_win_popup = null;
-var geo_open_large_map' . $map_suffix . ' = function()
-{
-    window.map_win_popup = window.open("", "map_win_popup", "width=' . $width_large_map . ', height=' . $height_large_map . ',directories=0,location=0,menubar=0,toolbar=0");
-    window.map_win_popup.document.write("<html><head>\n");
-    window.map_win_popup.document.write("<title>' . camp_javascriptspecialchars($label_large_map) . '</title>\n");
-    window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
-    window.map_win_popup.document.write("</head><body>\n");
-';
+            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top . $tag_string_ini . $tag_string_mid, self::GetMultiMapTagBody($p_languageId, $p_rank, true));
 
-            $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.not_set_map_sizes = true;\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $map_suffix . '\";\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null;}\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
-
-            $tag_string_arr = explode("\n", $tag_string_top . $tag_string_ini . $tag_string_mid);
-            foreach ($tag_string_arr as $tag_string_line) {
-                $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
-                $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
-                $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
-                $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
-                $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
-            }
-
-            $tag_string_fin .= "\n";
-
-            $tag_string_arr = explode("\n", self::GetMultiMapTagBody($p_languageId, $p_rank));
-            foreach ($tag_string_arr as $tag_string_line) {
-                $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
-                $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
-                $tag_string_line = str_replace("<script>", "<\" + \"script>", trim($tag_string_line));
-                $tag_string_line = str_replace("</script>", "<\" + \"/script>", trim($tag_string_line));
-                $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
-            }
-
-            $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $map_suffix . '.try_size_updated()\", 2000);\n");' . "\n";
-            $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
-
-            $tag_string_fin .= '
-    window.map_win_popup.document.write("</body></html>");
-    window.map_win_popup.document.close();
-}
-</script>
-';
         }
 
         $tag_string .= $tag_string_top;
@@ -2500,7 +2662,7 @@ var geo_open_large_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagOpen($p_languageId, $p_rank = 0)
+    public static function GetMultiMapTagOpen($p_languageId, $p_rank = 0, $p_specifier)
     {
         global $Campsite;
         $tag_string = "";
@@ -2509,7 +2671,12 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
-        $tag_string .= "geo_open_large_map$map_suffix();";
+        if ("open_form" == $p_specifier) {
+            $tag_string .= "geo_open_large_map$map_suffix";
+        }
+        else {
+            $tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix();} ";
+        }
 
         return $tag_string;
     } // fn GetMultiMapTagOpen
@@ -2531,7 +2698,8 @@ var geo_open_large_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
 
-        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+        $tag_string .= "if (window.map_prepared) {geo_object" . $map_suffix . ".map_showview();} ";
+        $tag_string .= "window.center_large_map" . $map_suffix . "(); ";
 
         return $tag_string;
     } // fn GetMultiMapTagCenter
@@ -2617,9 +2785,10 @@ var geo_open_large_map' . $map_suffix . ' = function()
         foreach ($poi_info["pois"] as $rank => $poi) {
             $cur_lon = $poi["longitude"];
             $cur_lat = $poi["latitude"];
-            $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
-            $poi_info["pois"][$rank]["center"] = $center;
-            $poi_info["pois"][$rank]["open"] = "OpenLayers.HooksPopups.on_map_feature_select(geo_object$map_suffix, $pind);";
+            $center_poi = "if (window.map_prepared) {geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);} point_large_map_center" . $map_suffix . "($pind, false);";
+            $select_poi = "if (window.map_prepared) {geo_object$map_suffix.select_poi($pind);} point_large_map_center" . $map_suffix . "($pind, true);";
+            $poi_info["pois"][$rank]["center"] = $center_poi;
+            $poi_info["pois"][$rank]["open"] = $select_poi;
             $pind += 1;
         }
         return (array) $poi_info;

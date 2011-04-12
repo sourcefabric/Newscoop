@@ -92,6 +92,14 @@ function smarty_function_map($p_params, &$p_smarty)
             $openLinkText = DEFAULT_OPEN_TEXT;
     }
 
+    // should be the map a simple one, with opening the large map on any click
+    $openMapOnClick = false;
+    if (isset($p_params['open_map_on_click'])) {
+        $openMapOnClick_param = strtolower(trim((string) $p_params['open_map_on_click']));
+        if (('false' != $openMapOnClick_param) && ('0' != $openMapOnClick_param) && (!empty($p_params['open_map_on_click']))) {
+            $openMapOnClick = true;
+        }
+    }
 
     // get map width and height
     $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
@@ -126,6 +134,8 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_options = array();
         $multi_options["load_common"] = $map_load_common_header;
         $multi_options["pois_retrieved"] = false;
+
+        $multi_options["large_map_on_click"] = $openMapOnClick;
         $multi_options["large_map_open"] = $showOpenLink;
         $multi_options["large_map_width"] = $width_large;
         $multi_options["large_map_height"] = $height_large;
@@ -206,7 +216,7 @@ function smarty_function_map($p_params, &$p_smarty)
     $map_options["auto_focus"] = $auto_focus;
     $map_options["load_common"] = $map_load_common_header;
 
-    $map_options["large_map_on_click"] = true;
+    $map_options["large_map_on_click"] = $openMapOnClick;
     $map_options["large_map_open"] = $showOpenLink;
     $map_options["large_map_width"] = $width_large;
     $map_options["large_map_height"] = $height_large;

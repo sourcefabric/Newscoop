@@ -17,6 +17,8 @@ this.auto_focus_border = 100;
 this.map_is_popup = false;
 this.map_div_name = "";
 this.action_substitute = null;
+this.last_page_height = 0;
+this.page_height_offset = 16;
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -341,8 +343,22 @@ this.proc_subst_action = function(params) {
 }
 
 this.try_size_updated = function() {
-    if (this.map) {
-        this.map.updateSize();
+    if (this.map_is_popup) {
+        var page_height = $(window).height();
+        var cur_page_height = (page_height - this.page_height_offset);
+
+        if (cur_page_height == this.last_page_height) {return;}
+
+        this.last_page_height = cur_page_height;
+        var body_holder = document.getElementById ? document.getElementById("map_body_holder") : null;
+        if (body_holder) {
+            body_holder.style.height = "" + this.last_page_height + "px";
+        }
+
+        if (this.map) {
+            this.map.updateSize();
+        }
+
     }
 };
 
@@ -848,6 +864,18 @@ this.main_openlayers_init = function(map_div_name) {
     var geo_obj = this;
     this.map_div_name = map_div_name;
 
+    if (this.map_is_popup) {
+        var page_height = $(window).height();
+        this.map_art_view_height_default = page_height;
+
+        this.last_page_height = (page_height - this.page_height_offset);
+        var body_holder = document.getElementById ? document.getElementById("map_body_holder") : null;
+        if (body_holder) {
+            body_holder.style.height = "" + this.last_page_height + "px";
+        }
+
+    }
+
     var pzb_ctrl = null;
     var pzb_with_bar = false;
 
@@ -1081,6 +1109,12 @@ this.main_openlayers_init = function(map_div_name) {
         geo_obj.on_view_change_hook();
     });
 
+    //var test_height = $(window).height();
+    //alert("test_height: " + test_height);
+
+    //alert("inited0");
+    //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
+    //alert("inited");
 };
 
 this.on_view_change_hook = function() {
