@@ -400,6 +400,24 @@ if ($showUserMenu) {
                     'controller' => 'subscriber',
                     'action' => 'edit',
                     'visible' => false,
+                    'reset_params' => false,
+                    'pages' => array(
+                        array(
+                            'label' => getGS('Subscriptions'),
+                            'module' => 'admin',
+                            'controller' => 'subscription',
+                            'resource' => 'subscription',
+                            'privilege' => 'manage',
+                        ),
+                        array(
+                            'label' => getGS('Add new subscription'),
+                            'module' => 'admin',
+                            'controller' => 'subscription',
+                            'action' => 'add',
+                            'resource' => 'subscription',
+                            'privilege' => 'manage',
+                        ),
+                    ),
                 ),
             ),
         );

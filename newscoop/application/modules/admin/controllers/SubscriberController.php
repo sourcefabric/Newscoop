@@ -70,6 +70,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
             'name' => getGS('Full Name'),
             'username' => getGS('Accout Name'),
             'email' => getGS('E-Mail'),
+            'subscription' => getGS('Subscriptions'),
             'timeCreated' => getGS('Creation Date'),
             'delete' => getGS('Delete'),
         ));
@@ -86,13 +87,23 @@ class Admin_SubscriberController extends Zend_Controller_Action
                 $user->getName()
             );
 
+            $subsLink = sprintf('<a href="%s" class="edit" title="%s">%s</a>',
+                $view->url(array(
+                    'controller' => 'subscription',
+                    'user' => $user->getId(),
+                    'format' => NULL,
+                )),
+                getGS('Edit subscriptions'),
+                getGS('Subscriptions')
+            );
+
             $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
                 $view->url(array(
                     'action' => 'delete',
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-               getGS('Delete subscriber $1', $user->getName()),
+                getGS('Delete subscriber $1', $user->getName()),
                 getGS('Delete')
             );
 
@@ -100,6 +111,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                 $editLink,
                 $user->getUsername(),
                 $user->getEmail(),
+                $subsLink,
                 $user->getTimeCreated()->format('Y-m-d H:i:s'),
                 $deleteLink,
             );

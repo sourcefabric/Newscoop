@@ -197,3 +197,4 @@ class Log
         return $this->getUser() ? $this->getUser()->getName() : '';
     }
 }
+
