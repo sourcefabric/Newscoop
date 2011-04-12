@@ -26,7 +26,7 @@ class PublicationRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         // get publications subscribed already
-        $query = $em->createQuery('SELECT p.id FROM Newscoop\Entity\User\Subscription s JOIN s.subscriber u JOIN s.publication p WHERE u.id = ?1');
+        $query = $em->createQuery('SELECT p.id FROM Newscoop\Entity\Subscription s JOIN s.subscriber u JOIN s.publication p WHERE u.id = ?1');
         $query->setParameter(1, $user->getId());
         $rows = $query->getResult();
         $ids = array_reduce($rows, function($next, $current) {

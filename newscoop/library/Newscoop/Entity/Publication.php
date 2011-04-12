@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Publication entity
  * @Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
@@ -28,6 +30,19 @@ class Publication
     private $name;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
+     * @var array
+     */
+    private $issues;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->issues = new ArrayCollection;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -45,6 +60,21 @@ class Publication
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get languages
+     *
+     * @return array
+     */
+    public function getLanguages()
+    {
+        $languages = array();
+        foreach ($this->issues as $issue) {
+            $languages[] = $issue->getLanguage();
+        }
+
+        return $languages;
     }
 }
 

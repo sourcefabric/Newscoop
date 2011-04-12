@@ -33,6 +33,12 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         return parent::getSubscriptions();
     }
 
+    public function hasSubscriptions()
+    {
+        $this->_load();
+        return parent::hasSubscriptions();
+    }
+
     public function getId()
     {
         $this->_load();

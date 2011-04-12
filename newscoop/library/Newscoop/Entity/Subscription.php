@@ -5,11 +5,13 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Entity\User;
+namespace Newscoop\Entity;
+
+use Newscoop\Entity\Publication;
 
 /**
  * Subscription entity
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\SubscriptionRepository")
  * @Table(name="Subscriptions")
  */
 class Subscription
@@ -39,7 +41,7 @@ class Subscription
      * @Column(type="decimal", name="ToPay")
      * @var float
      */
-    private $toPay;
+    private $toPay = 0.0;
 
     /**
      * @Column(name="Type")
@@ -64,6 +66,30 @@ class Subscription
     }
 
     /**
+     * Set subscriber
+     *
+     * @param Newscoop\Entity\User\Subscriber $user
+     * @return Newscoop\Entity\User\Subscription
+     */
+    public function setSubscriber(Subscriber $user)
+    {
+        $this->subscriber = $user;
+        return $this;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param Newscoop\Entity\Publication $publication
+     * @return Newscoop\Entity\Subscription
+     */
+    public function setPublication(Publication $publication)
+    {
+        $this->publication = $publication;
+        return $this;
+    }
+
+    /**
      * Get publication
      *
      * @return Newscoop\Entity\Publication
@@ -81,6 +107,18 @@ class Subscription
     public function getToPay()
     {
         return (float) $this->toPay;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Newscoop\Entity\User\Subscription
+     */
+    public function setType($type)
+    {
+        $this->type = (string) $type;
+        return $this;
     }
 
     /**
@@ -102,6 +140,7 @@ class Subscription
     public function setActive($active)
     {
         $this->active = (bool) $active ? 'Y' : 'N';
+        return $this;
     }
 
     /**

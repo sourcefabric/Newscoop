@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection,
 class Subscriber extends User
 {
     /**
-     * @OneToMany(targetEntity="Newscoop\Entity\User\Subscription", mappedBy="subscriber")
+     * @OneToMany(targetEntity="Newscoop\Entity\Subscription", mappedBy="subscriber")
      * @var array
      */
     private $subscriptions;

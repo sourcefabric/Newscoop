@@ -1,6 +1,7 @@
 <?php
 
-use Newscoop\Entity\User\Subscriber;
+use Newscoop\Entity\Subscription,
+    Newscoop\Entity\User\Subscriber;
 
 /**
  * @Acl(action="manage")
@@ -35,8 +36,31 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     {
         $user = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
 
-        $form = $this->getForm($user);
+        $publications = $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($user);
+        if (empty($publications)) {
+            $this->_helper->flashMessenger(getGS('Subscriptions exist for all available publications!'));
+            $this->_helper->redirector('index', 'subscription', 'admin', array(
+                'user' => $user->getId(),
+            ));
+        }
+
+        $form = new Admin_Form_Subscription(array(
+            'publications' => $publications,
+            'languages' => $this->getLanguages(),
+        ));
+
         $form->setMethod('post')->setAction('');
+
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            $subscription = new Subscription;
+            $this->_helper->entity->getRepository($subscription)->save($subscription, $user, $form->getValues());
+            $this->_helper->entity->flushManager();
+
+            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('created')));
+            $this->_helper->redirector('index', 'subscription', 'admin', array(
+                'user' => $this->_getParam('user', 0),
+            ));
+        }
 
         $this->view->form = $form;
     }
@@ -45,7 +69,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     {
         $em = $this->_helper->entity->getManager();
 
-        $subscription = $this->_helper->entity->get('Newscoop\Entity\User\Subscription', 'subscription');
+        $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $subscription->setActive(!$subscription->isActive());
         $em->flush();
 
@@ -59,7 +83,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     {
         $em = $this->_helper->entity->getManager();
 
-        $subscription = $this->_helper->entity->get('Newscoop\Entity\User\Subscription', 'subscription');
+        $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $em->remove($subscription);
         $em->flush();
 
@@ -70,40 +94,27 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     }
 
     /**
-     * Get form
+     * Get languages
      *
-     * @return Zend_Form
+     * @return array
      */
-    private function getForm(Subscriber $user)
+    private function getLanguages()
     {
-        $form = new Zend_Form;
+        $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
+        $publications = $repository->findAll();
 
-        $form->addElement('select', 'publication', array(
-            'label' => getGS('Publication'),
-            'required' => true,
-            'multioptions' => $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($user),
-        ));
+        if (empty($publications)) {
+            return array();
+        }
 
-        $form->addElement('select', 'language-set', array(
-            'label' => getGS('Language'),
-            'required' => true,
-            'multioptions' => array(
-                'select' => getGS('Individual languages'),
-                'all' => getGS('Regardless of the language'),
-            ),
-        ));
+        $publication = $publications[0];
 
-        $form->addElement('select', 'languages', array(
-            'multioptions' => array(
-                'tic' => 'toc',
-            ),
-        ));
+        $langs = array();
+        foreach ($publication->getLanguages() as $lang) {
+            $langs[$lang->getId()] = $lang->getName();
+        }
 
-        $form->addElement('submit', 'submit', array(
-            'label' => getGS('Add'),
-        ));
-
-        return $form;
+        return $langs;
     }
 }
 
