@@ -255,7 +255,6 @@ regGS("Thank you.", "Děkuji.");
 regGS("Please take a minute to send us an email.", "Prosíme, najděte si chvíli a pošlete nám email.");
 regGS("(optional)", "(volitelný)");
 regGS("The URL you entered is invalid: '$1'", "URL, kterou jste zadali je neplatná: '$1'");
-regGS("There was an error logging in to the Campcaster server", "Stala se chyba v přilhašování na server Campcaster");
 regGS("Reads", "Přečteno");
 regGS("Publish with issue", "Publikovat s vydáním");
 regGS("Universal List", "Všeobecný přehled");

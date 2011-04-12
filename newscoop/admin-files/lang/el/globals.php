@@ -255,7 +255,6 @@ regGS("Thank you.", "Ευχαριστούμε.");
 regGS("Please take a minute to send us an email.", "Παρακαλούμε αφιερώστε ένα λεπτό για να μας στείλετε ένα email.");
 regGS("(optional)", "(προαιρετικό)");
 regGS("The URL you entered is invalid: '$1'", "Το URL που εισήχθει είναι άκυρο: '$1'");
-regGS("There was an error logging in to the Campcaster server", "Υπήρξε σφάλμα στη σύνδεση με τον server Campcaster ");
 regGS("Reads", "Αναγνώσεις");
 regGS("Publish with issue", "Δημοσίευση με τεύχος");
 regGS("Universal List", "Καθολική λίστα");

@@ -25,6 +25,8 @@ if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
     exit(0);
 }
 
+set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/share/php/libzend-framework-php');
+
 // start zend session first to prevent exception
 require_once 'Zend/Session.php';
 Zend_Session::start();
@@ -84,9 +86,6 @@ $no_menu_scripts = array(
     '/articles/images/view.php',
     '/articles/topics/popup.php',
     '/articles/files/popup.php',
-    '/articles/audioclips/campcaster_login.php',
-    '/articles/audioclips/popup.php',
-    '/articles/audioclips/edit.php',
     '/articles/empty.php',
     '/articles/post.php',
     '/comments/ban.php',

@@ -9,7 +9,6 @@ regGS("Translation status:", "Stav překladu:");
 regGS("Editor Media Plugin", "Editor Media Plugin");
 regGS("$1 of $2 strings translated", "$1 z $2 řetězců přeloženo");
 regGS("Preview Window", "Zobrazit Okno");
-regGS("Article Audioclips", "Audioklipy Článů");
 regGS("Show translated strings", "Zobrazit přeložené řetězce");
 regGS("Hide translated strings", "Skrýt přeložené řetězce");
 regGS("Feedback", "Zpětná vazba");

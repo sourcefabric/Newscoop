@@ -255,7 +255,6 @@ regGS("Thank you.", "Vielen Dank.");
 regGS("Please take a minute to send us an email.", "Bitte nehmen Sie sich eine Minute um uns eine E-Mail zu senden.");
 regGS("(optional)", "(optional)");
 regGS("The URL you entered is invalid: '$1'", "Die angegebene URL is ungültig: '$1'");
-regGS("There was an error logging in to the Campcaster server", "Fehler beim Einloggen in Airtime");
 regGS("Reads", "Gelesen");
 regGS("Publish with issue", "Mit Ausgabe veröffentlichen");
 regGS("Universal List", "Universelle Liste und Suche");

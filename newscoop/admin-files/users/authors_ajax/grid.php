@@ -37,7 +37,7 @@ foreach($authors as $author) {
   <td><?php echo $author->getName(); ?></td>
   <td><?php echo l_getType($author->getTypeWithNames()); ?></td>
   <td align="right" class="last" id="row_0">
-    <a href="?del_id=<?php echo $author->getId() ?>" onclick="return deleteAuthor();"><img
+    <a href="" onclick="return deleteAuthor(<?php echo $author->getId() ?>);"><img
       src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0"
       alt="<?php echo getGS('Delete author'); ?>" title="<?php echo getGS('Delete author'); ?>" /></a>
   </td>

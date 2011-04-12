@@ -45,3 +45,7 @@ CREATE TABLE IF NOT EXISTS `acl_rule` (
 -- Add role id to user/group table
 ALTER TABLE `liveuser_groups` ADD `role_id` int(10) DEFAULT NULL; -- to be altered to NOT NULL when populated
 ALTER TABLE `liveuser_users` ADD `role_id` int(10) DEFAULT NULL; -- to be altered to NOT NULL when populated
+
+-- Remove article audioclips tables
+DROP TABLE IF EXISTS `ArticleAudioclips`;
+DROP TABLE IF EXISTS `AudioclipMetadata`;

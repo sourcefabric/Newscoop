@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
@@ -67,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Članak je zaključan od strane $1 ($2) pre $3 minut(a).");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Članak je zaključan od strane $1 ($2) pre $3 čas(ova) i $4 minut(a).");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Greška pri podešavanju autora \"$1\" za članak broj $2 (\"$3\") tipa $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Nije moguće povezati se na Kempkaster server, molimo Vas proverite postavke za Kempkaster server.");
 regGS("Clear system cache", "Obriši sistemski keš");
 regGS("The system was unable to upload the file '$1'. ", "Sistem nije bio u stanju da uploaduje fajl '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Proverite fajl koji pokušavate da uploadujete, moguće je da je oštećen.");
-regGS("Your user is not a valid Campcaster user", "Vaš korisnik nije važeći Kempkaster korisnik");
 regGS("Connection refused", "Konekcija je odbijena");
 regGS("An error occured in session management. Please reload the login page.", "Došlo je do greške u sesiji. Molimo Vas učitajte ponovo stranicu za prijavljivanje.");
 regGS("This file is stored on disk as '$1'.", "Fajl je spremljen na disku kao '$1'.");

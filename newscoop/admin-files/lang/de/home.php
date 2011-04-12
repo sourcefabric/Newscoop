@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
@@ -67,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Der Artikel wurde vor $3 Minute(n) von $1 ($2) gesperrt.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Der Artikel wurde vor $3 Stunde(n) und $4 Minute(n) von $1 ($2) gesperrt.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Fehler bei der Erstellung von Autor/in \"$1\" für die Artikelnr. $2 (\"$3\") vom Typ $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Verbindung zum Airtime Server kann nicht hergestellt werden, bitte Airtime Server Einstellungen überprüfen.");
 regGS("Clear system cache", "System-Cache leeren");
 regGS("The system was unable to upload the file '$1'. ", "Das System konnte die Datei '$1' nicht hochladen.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Die Datei, die Sie hochladen möchten, könnte beschädigt sein.");
-regGS("Your user is not a valid Campcaster user", "Kein gültiger Airtime User");
 regGS("Connection refused", "Verbindung verweigert");
 regGS("An error occured in session management. Please reload the login page.", "Fehler im Sitzungsmanagement. Bitte aktualisieren Sie die Login-Seite.");
 regGS("This file is stored on disk as '$1'.", "Diese Datei ist als '$1' gespeichert.");

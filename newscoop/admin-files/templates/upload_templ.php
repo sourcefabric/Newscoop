@@ -38,10 +38,10 @@ camp_html_display_msgs();
 
 <!-- Load Queue widget CSS and jQuery -->
 <style>
-@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/plupload/css/plupload.queue.css);
+@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/css/plupload.queue.css);
 </style>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/plupload/js/plupload.full.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/plupload/js/jquery.plupload.queue.min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/jquery.plupload.queue.min.js"></script>
 
 <br />
 <form method="POST" action="do_upload_templ.php" enctype="multipart/form-data">
@@ -66,7 +66,7 @@ camp_html_display_msgs();
     </div>
     <div class="info last">
     	<?php putGS("(optional)"); ?>
-    </div>   
+    </div>
     <div class="buttons">
         <input type="submit" class="save-button" name="save" value="<?php putGS('Save'); ?>" />
 	</div>

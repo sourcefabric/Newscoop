@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
@@ -67,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Článek byl zamčen přes $1 ($2) $3 před pár minutami.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Článek byl zamčen přes  $1 ($2) $3 hour(s) a $4 před pár minutami.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Chyba v nastavení autora \"$1\" pro článek ($2) $3 typu $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Je nemožné se spojit s Campcaster serverem, prosím ověřte servrové nastavení Campcaster.");
 regGS("Clear system cache", "Vymazat system cache");
 regGS("The system was unable to upload the file '$1'. ", "Systém byl neschopen nahrát soubor '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Prosím, zkontrolujte soubor, který se snažíte nahrát zda není poškozený. ");
-regGS("Your user is not a valid Campcaster user", "Vaše uživatelské jméno není platné pro Campcaster");
 regGS("Connection refused", "Spojení odmítnuto");
 regGS("An error occured in session management. Please reload the login page.", "Objevila se chyba v session managementu. Prosime znovu si nahrajte přihlašovací stránku.");
 regGS("This file is stored on disk as '$1'.", "Tento soubor je uložen na disku jako '$1'. ");

@@ -72,7 +72,7 @@ function smarty_block_list_search_results($p_params, $p_content, &$p_smarty, &$p
         $campContext->setCurrentList($searchResultsList, array('publication', 'language',
     	                                                       'issue', 'section', 'article',
     	                                                       'image', 'attachment', 'comment',
-    	                                                       'audioclip', 'subtitle'));
+    	                                                       'subtitle'));
         $campContext->article = $campContext->current_search_results_list->current;
         $p_repeat = true;
     } else {

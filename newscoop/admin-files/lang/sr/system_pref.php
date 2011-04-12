@@ -1,6 +1,4 @@
 <?php 
-regGS("Enable Airtime audio attachments?", "Омогући качење Airtime аудио фајлова?");
-regGS("Airtime Server", "Airtime сервер");
 regGS("Run scheduled tasks externally?", "Екстерно покретање планираних акција?");
 regGS("Setting up a Newscoop Replication Server?", "Подешавање Newscoop репликационог сервера?");
 regGS("Newscoop Online Server Database", "Newscoop база података на онлајн серверу");

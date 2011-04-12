@@ -222,15 +222,6 @@ $pages[2]['pages'][] = array(
 );
 
 $pages[2]['pages'][] = array(
-    'label' => getGS('Add new language'),
-    'module' => 'admin',
-    'controller' => 'languages',
-    'action' => 'add_modify.php',
-    'resource' => 'language',
-    'privilege' => 'manage',
-);
-
-$pages[2]['pages'][] = array(
     'label' => getGS('Change your password'),
     'module' => 'admin',
     'controller' => 'staff',
@@ -304,14 +295,32 @@ if ($showConfigureMenu) {
         'privilege' => 'manage',
     );
 
-    if ($g_user->hasPermission('ManageLanguages') || $g_user->hasPermission('DeleteLanguages')) {
-        $pages[3]['pages'][] = array(
-            'label' => getGS('Languages'),
-            'module' => 'admin',
-            'controller' => 'languages',
-            'action' => 'index.php',
-        );
-    }
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Languages'),
+        'module' => 'admin',
+        'controller' => 'languages',
+        'resource' => 'language',
+        'privilege' => 'manage',
+        'pages' => array(
+            array(
+                'label' => getGS('Edit language'),
+                'module' => 'admin',
+                'controller' => 'languages',
+                'action' => 'edit',
+                'visible' => false,
+                'resource' => 'language',
+                'privilege' => 'manage',
+            ),
+            array(
+                'label' => getGS('Add new language'),
+                'module' => 'admin',
+                'controller' => 'languages',
+                'action' => 'add',
+                'visible' => false,
+                'resource' => 'language',
+                'privilege' => 'manage',
+            ),
+        ));
 
     if ($g_user->hasPermission('ManageCountries') || $g_user->hasPermission('DeleteCountries')) {
         $pages[3]['pages'][] = array(
