@@ -16,16 +16,39 @@ class User
 {
     /**
      * @id @generatedValue
-     * @column(type="integer")
+     * @column(type="integer", name="Id")
      * @var int
      */
-    private $Id;
+    private $id;
 
     /**
-     * @column
+     * @column(name="Name")
      * @var string
      */
-    private $Name;
+    private $name;
+
+    /**
+     * @column(name="UName")
+     * @var string
+     */
+    private $username;
+
+    /**
+     * @column(name="EMail")
+     * @var string
+     */
+    private $email;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Get user name
@@ -34,6 +57,16 @@ class User
      */
     public function getName()
     {
-        return $this->Name;
+        return $this->name;
+    }
+
+   /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

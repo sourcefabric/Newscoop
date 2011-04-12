@@ -243,4 +243,15 @@ class CommentsUsers
     {
         return $this->getUser() ? $this->getUser()->getName() : '';
     }
+
+    /**
+     * Get id of the linked user if there is one
+     *
+     * @return string
+     */
+    public function getUserId()
+    {
+        return $this->getUser() ? $this->getUser()->getId() : '';
+    }
+
 }

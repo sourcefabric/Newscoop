@@ -117,6 +117,12 @@ class NewscoopEntityCommentsUsersProxy extends \Newscoop\Entity\CommentsUsers im
         return parent::getUserName();
     }
 
+    public function getUserId()
+    {
+        $this->_load();
+        return parent::getUserId();
+    }
+
 
     public function __sleep()
     {

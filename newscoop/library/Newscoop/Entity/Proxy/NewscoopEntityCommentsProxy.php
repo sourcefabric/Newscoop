@@ -111,6 +111,18 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
         return parent::getStatus();
     }
 
+    public function setForum(\Newscoop\Entity\Publications $p_forum)
+    {
+        $this->_load();
+        return parent::setForum($p_forum);
+    }
+
+    public function getForum()
+    {
+        $this->_load();
+        return parent::getForum();
+    }
+
     public function setThread(\Newscoop\Entity\Articles $p_thread)
     {
         $this->_load();
@@ -123,10 +135,58 @@ class NewscoopEntityCommentsProxy extends \Newscoop\Entity\Comments implements \
         return parent::getThread();
     }
 
+    public function setThreadLevel($p_level)
+    {
+        $this->_load();
+        return parent::setThreadLevel($p_level);
+    }
+
+    public function getThreadLevel()
+    {
+        $this->_load();
+        return parent::getThreadLevel();
+    }
+
+    public function setThreadOrder($p_order)
+    {
+        $this->_load();
+        return parent::setThreadOrder($p_order);
+    }
+
+    public function getThreadOrder()
+    {
+        $this->_load();
+        return parent::getThreadOrder();
+    }
+
+    public function setLanguage(\Newscoop\Entity\Languages $p_language)
+    {
+        $this->_load();
+        return parent::setLanguage($p_language);
+    }
+
+    public function getLanguage()
+    {
+        $this->_load();
+        return parent::getLanguage();
+    }
+
+    public function setParent(\Newscoop\Entity\Comments $p_parent)
+    {
+        $this->_load();
+        return parent::setParent($p_parent);
+    }
+
+    public function getParent()
+    {
+        $this->_load();
+        return parent::getParent();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'user', 'forum', 'parent', 'thread', 'language', 'subject', 'message', 'thread_level', 'status', 'ip', 'time_created', 'likes', 'dislikes');
+        return array('__isInitialized__', 'id', 'user', 'forum', 'parent', 'thread', 'language', 'subject', 'message', 'thread_level', 'thread_order', 'status', 'ip', 'time_created');
     }
 
     public function __clone()

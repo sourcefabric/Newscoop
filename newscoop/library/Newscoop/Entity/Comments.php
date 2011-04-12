@@ -9,7 +9,9 @@ namespace Newscoop\Entity;
 
 use DateTime,
     InvalidArgumentException,
-    Newscoop\Entity\CommentsUsers;
+    Newscoop\Entity\CommentsUsers,
+    Newscoop\Entity\Languages,
+    Newscoop\Entity\Publications;
 
 /**
  * Comments entity
@@ -22,11 +24,11 @@ class Comments
     /**
      * @var string to code mapper for status
      */
-    static $status_mapper = array(
-        'approved' => 1,
-        'pending' => 2,
-        'hidden'  => 3,
-        'deleted' => 4
+    static $status_enum = array(
+        'approved',
+        'pending',
+        'hidden',
+        'deleted'
     );
 
     /**
@@ -38,7 +40,7 @@ class Comments
 
     /**
      * @manyToOne(targetEntity="CommentsUsers")
-     * @joinColumn(name="fk_comments_user_id", referencedColumnName="Id")
+     * @joinColumn(name="fk_comments_user_id", referencedColumnName="id")
      * @var Newscoop\Entity\CommentsUsers
      */
     private $user;
@@ -52,7 +54,7 @@ class Comments
 
     /**
      * @manyToOne(targetEntity="Comments")
-     * @joinColumn(name="fk_parent_id", referencedColumnName="Id")
+     * @joinColumn(name="fk_parent_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comments
      */
     private $parent;
@@ -65,9 +67,9 @@ class Comments
     private $thread;
 
     /**
-     * @manyToOne(targetEntity="Articles")
-     * @joinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     * @var Newscoop\Entity\Articles
+     * @manyToOne(targetEntity="Languages")
+     * @joinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\Languages
      */
     private $language;
 
@@ -84,10 +86,16 @@ class Comments
     private $message;
 
     /**
-     * @column(length=2)
+     * @column(length=4)
      * @var int
      */
     private $thread_level;
+
+    /**
+     * @column(length=4)
+     * @var int
+     */
+    private $thread_order;
 
     /**
      * @column(length=2)
@@ -111,13 +119,13 @@ class Comments
      * @column(length=4)
      * @var int
      */
-    private $likes;
+//    private $likes;
 
     /**
      * @column(length=4)
      * @var int
      */
-    private $dislikes;
+//    private $dislikes;
 
     /**
      * Get id
@@ -164,7 +172,7 @@ class Comments
      */
     public function setSubject($p_subject)
     {
-        $this->message = (string) $p_subject;
+        $this->subject = (string) $p_subject;
         // return this for chaining mechanism
         return $this;
     }
@@ -211,7 +219,7 @@ class Comments
     public function setIp($p_ip){
         // remove subnet & limit to IP_LENGTH
         $ip_array = explode('/', (string) $p_ip);
-        $this->ip = substr($ip_array[0], 0, self::IP_LENGTH);
+        $this->ip = substr($ip_array[0], 0, 39);
         // return this for chaining mechanism
         return $this;
     }
@@ -263,7 +271,7 @@ class Comments
      */
     public function getUserName()
     {
-        return $this->getUser() ? $this->getUser()->getName() : '';
+        return $this->getUser()->getName();
     }
 
     /**
@@ -273,7 +281,8 @@ class Comments
      */
     public function setStatus($p_status)
     {
-        $this->status = self::$status_mapper[$p_status];
+        $status_enum = array_flip(self::$status_enum);
+        $this->status = $status_enum[$p_status];
         // return this for chaining mechanism
         return $this;
     }
@@ -285,7 +294,29 @@ class Comments
      */
     public function getStatus()
     {
-        return self::$status_mapper[$this->status];
+        return self::$status_enum[$this->status];
+    }
+
+    /**
+     * Set forum
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setForum(Publications $p_forum)
+    {
+        $this->forum = $p_forum;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get thread
+     *
+     * @return Newscoop\Entity\Publications
+     */
+    public function getForum()
+    {
+        return $this->forum;
     }
 
     /**
@@ -309,5 +340,94 @@ class Comments
     {
         return $this->thread;
     }
+
+    /**
+     * Set thread level
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setThreadLevel($p_level)
+    {
+        $this->thread_level = $p_level;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get thread level
+     *
+     * @return integer
+     */
+    public function getThreadLevel()
+    {
+        return $this->thread_level;
+    }
+
+    /**
+     * Set thread order
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setThreadOrder($p_order)
+    {
+        $this->thread_order = $p_order;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get thread level
+     *
+     * @return integer
+     */
+    public function getThreadOrder()
+    {
+        return $this->thread_order;
+    }
+
+    /**
+     * Set Language
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setLanguage(Languages $p_language)
+    {
+        $this->language = $p_language;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get Language
+     *
+     * @return integer
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set Parent
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function setParent(Comments $p_parent)
+    {
+        $this->parent = $p_parent;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get Parent
+     *
+     * @return Newscoop\Entity\Comments
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
 
 }

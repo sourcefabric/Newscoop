@@ -33,10 +33,22 @@ class NewscoopEntityArticlesProxy extends \Newscoop\Entity\Articles implements \
         return parent::getName();
     }
 
+    public function setId($p_id)
+    {
+        $this->_load();
+        return parent::setId($p_id);
+    }
+
+    public function setCommentsEnabled($p_enabled)
+    {
+        $this->_load();
+        return parent::setCommentsEnabled($p_enabled);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'Id', 'Name');
+        return array('__isInitialized__', 'id', 'language', 'comments_enabled', 'comments_locked', 'name');
     }
 
     public function __clone()

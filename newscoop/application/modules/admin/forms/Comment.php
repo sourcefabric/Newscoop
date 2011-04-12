@@ -1,19 +1,17 @@
 <?php
 
-use Newscoop\Entity\User;
-
 /**
  * User form
  */
-class Admin_Form_CommentsUser extends Zend_Form
+class Admin_Form_Comment extends Zend_Form
 {
     public function init()
     {
-        /*
-        $user = new Zend_Form_Element_Select('user');
+        /*$user = new Zend_Form_Element_Select('user');
         $user->setLabel(getGS('Username'))
-            ->setRequired(true)
+            ->setRequired(false)
             ->setOrder(30);
+        $this->addElement($user);
         */
         $user = new Zend_Form_Element_Text('user');
         $user->setLabel(getGS('User id'))
@@ -46,6 +44,41 @@ class Admin_Form_CommentsUser extends Zend_Form
             'order' => 60,
         ));
 
+
+        $this->addElement('text', 'parent', array(
+            'label' => getGS('Parent'),
+            'required' => false,
+            'order' => 61,
+        ));
+
+        $this->addElement('text', 'subject', array(
+            'label' => getGS('Subject'),
+            'required' => false,
+            'order' => 70,
+        ));
+
+        $this->addElement('textarea', 'message', array(
+            'label' => getGS('Subject'),
+            'required' => false,
+            'order' => 80,
+        ));
+
+        $this->addDisplayGroup(array(
+            'user'
+        ), 'commentsUser', array(
+            'legend' => getGS('Show comment user'),
+            'class' => 'toggle',
+            'order' => 35,
+        ));
+
+        $this->addDisplayGroup(array(
+            'parent'
+        ), 'comments_parent', array(
+            'legend' => getGS('Show parent comment'),
+            'class' => 'toggle',
+            'order' =>67,
+        ));
+
         $this->addDisplayGroup(array(
             'name',
             'email',
@@ -53,15 +86,16 @@ class Admin_Form_CommentsUser extends Zend_Form
         ), 'commentsUser_info', array(
             'legend' => getGS('Show comment user details'),
             'class' => 'toggle',
-            'order' => 70,
+            'order' => 65,
         ));
 
         $this->addDisplayGroup(array(
-            'user',
-        ), 'commentsUser', array(
-            'legend' => getGS('Show user'),
+            'subject',
+            'message'
+        ), 'comment_info', array(
+            'legend' => getGS('Show comment details'),
             'class' => 'toggle',
-            'order' => 20,
+            'order' => 75,
         ));
 
         $this->addElement('submit', 'submit', array(
@@ -73,16 +107,16 @@ class Admin_Form_CommentsUser extends Zend_Form
     /**
      * Set default values by entity
      *
-     * @param Newscoop\Models\Comment\IUser $commentUser
+     * @param Newscoop\Entity\CommentsUsers $commentsUser
      * @return void
      */
-    public function setFromEntity($commentUser)
+    public function setFromEntity(Comments $comment)
     {
         $this->setDefaults(array(
-            'user' => $commentUser->getUserId(),
-            'name' => $commentUser->getName(),
-            'email' => $commentUser->getEmail(),
-            'url'   => $commentUser->getUrl()
+            'user' => $user->getUser(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'url'   => $user->getUrl()
         ));
 
     }

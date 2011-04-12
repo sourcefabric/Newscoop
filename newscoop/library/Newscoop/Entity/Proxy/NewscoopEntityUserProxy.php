@@ -27,16 +27,28 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
     }
 
     
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
     public function getName()
     {
         $this->_load();
         return parent::getName();
     }
 
+    public function getEmail()
+    {
+        $this->_load();
+        return parent::getEmail();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'Id', 'Name');
+        return array('__isInitialized__', 'id', 'name', 'username', 'email');
     }
 
     public function __clone()
