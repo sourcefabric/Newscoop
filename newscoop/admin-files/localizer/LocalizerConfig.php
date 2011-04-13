@@ -8,8 +8,8 @@
  * we must use our own package.  The package has a bug fix applied
  * that is required for the Localizer XML files to work.
  */
-require_once("XML/Serializer/Serializer.php");
-require_once("XML/Serializer/Unserializer.php");
+require_once("XML/Serializer.php");
+require_once("XML/Unserializer.php");
 
 global $g_localizerConfig;
 

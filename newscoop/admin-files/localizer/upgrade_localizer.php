@@ -1,5 +1,5 @@
 <?PHP
-require_once('../../management/localizer/Localizer.php');
+require_once(dirname(__FILE__).'/Localizer.php');
 
 global $g_localizerConfig;
 $languages = Localizer::GetAllLanguages('gs');

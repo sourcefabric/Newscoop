@@ -10,7 +10,7 @@
  */
 
 $_docRoot = dirname(dirname(__FILE__));
-require_once($_docRoot.'/include/pear/PEAR.php');
+require_once('PEAR.php');
 require_once($_docRoot.'/classes/TemplateConverterHelper.php');
 
 define('CS_OPEN_TAG', '{{');

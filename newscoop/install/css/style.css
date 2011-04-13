@@ -282,23 +282,6 @@ span.optional {
     color: grey;
 }
 
-/* Tooltip Overlib Style */
-div.domTTOverlib {
-        border: 1px solid #8baed1;
-        background-color: #d5e2ee;
-}
-div.domTTOverlib .caption {
-        font-size: 10px;
-        font-weight: bold;
-        color: #000;
-        background-color: #fff;
-        padding: 2px;
-}
-div.domTTOverlib .contents {
-        font-size: 10px;
-        padding: 2px;
-        background-color: #d5e2ee;
-}
 th.innerHead {
 	padding: 10px 0 10px 0;
 	font-size:1.3em;

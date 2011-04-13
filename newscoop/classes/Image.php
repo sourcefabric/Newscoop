@@ -3,20 +3,17 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
-require_once('HTTP/Client.php');
 
 
 /**
  * @package Campsite
  */
-class Image extends DatabaseObject {
+class Image extends DatabaseObject
+{
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_dbTableName = 'Images';
@@ -524,34 +521,28 @@ class Image extends DatabaseObject {
     		chmod($target, 0644);
 
     		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
-    		if ($createMethodName != null) {
-    			$imageHandler = $createMethodName($target);
-                if ($imageHandler == false) {
-                    throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
-                }
-    			$thumbnailImage = Image::ResizeImage($imageHandler, $Campsite['THUMBNAIL_MAX_SIZE'],
-    												 $Campsite['THUMBNAIL_MAX_SIZE'], true, $imageInfo[2]);
-    			if (PEAR::isError($thumbnailImage)) {
-    				throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
-    			}
-    			$result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
-    			if (PEAR::isError($result)) {
-    				throw new Exception($result->getMessage(), $result->getCode());
-    			}
-               	chmod($thumbnail, 0644);
-    		} elseif ($Campsite['IMAGEMAGICK_INSTALLED']) {
-                $cmd = $Campsite['THUMBNAIL_COMMAND'].' '.$target.' '.$thumbnail;
-                system($cmd);
-                if (file_exists($thumbnail)) {
-                	chmod($thumbnail, 0644);
-                } else {
-    	    		throw new Exception(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $thumbnail),
-    	    							CAMP_ERROR_CREATE_FILE);
-                }
-            } else {
+    		if (!isset($createMethodName)) {
             	throw new Exception(getGS("Image type $1 is not supported.",
     								image_type_to_mime_type($p_imageType)));
             }
+
+            $imageHandler = $createMethodName($target);
+            if (!$imageHandler) {
+                throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
+            }
+
+            $thumbnailImage = Image::ResizeImage($imageHandler,
+                $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+            if (PEAR::isError($thumbnailImage)) {
+                throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
+            }
+
+            $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+            if (PEAR::isError($result)) {
+                throw new Exception($result->getMessage(), $result->getCode());
+            }
+
+            chmod($thumbnail, 0644);
 	    } catch (Exception $ex) {
 	        if (file_exists($target)) {
 	            @unlink($target);
@@ -712,35 +703,28 @@ class Image extends DatabaseObject {
 			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir), CAMP_ERROR_WRITE_DIR);
 		}
 
-		$client = new HTTP_Client();
-	    $client->get($p_url);
-	    $response = $client->currentResponse();
-	    if ($response['code'] != 200) {
-	    	return new PEAR_Error(getGS("Unable to fetch image from remote server."));
-	    }
-	    foreach ($response['headers'] as $headerName => $value) {
-	    	if (strtolower($headerName) == "content-type") {
-	    		$ContentType = $value;
-	    		break;
-	    	}
-	    }
+        // fetch headers
+        $headers = get_headers($p_url, TRUE);
+        if (strpos($headers[0], '200 OK') === FALSE) {
+            return new PEAR_Error(getGS("Unable to fetch image from remote server."));
+        }
+
+        // get type
+        $ContentType = $headers['Content-Type'];
 
         // Check content type
-        if (!preg_match('/image/', $ContentType)) {
-            // wrong URL
+        if (strpos($ContentType, 'image') === FALSE) { // wrong URL
             return new PEAR_Error(getGS('URL "$1" is invalid or is not an image.', $p_url));
         }
 
-    	// Save the file
-        $tmpname = $Campsite['TMP_DIRECTORY'].'img'.md5(rand());
-        if (is_writable($Campsite['TMP_DIRECTORY'])) {
-	        if ($tmphandle = fopen($tmpname, 'w')) {
-	            fwrite($tmphandle, $response['body']);
-	            fclose($tmphandle);
-	        }
-        } else {
+    	// check path
+        if (!is_writable($Campsite['TMP_DIRECTORY'])) {
 	    	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $tmpname), CAMP_ERROR_CREATE_FILE);
-	    }
+        }
+
+        // save image
+        $tmpname = $Campsite['TMP_DIRECTORY'].'img'.md5(uniqid());
+        file_put_contents($tmpname, file_get_contents($p_url));
 
         // Check if it is really an image file
         $imageInfo = getimagesize($tmpname);
@@ -771,15 +755,16 @@ class Image extends DatabaseObject {
 				}
 	    	}
         } else {
-        	// Creating the image
         	$image = new Image();
         	$image->create($p_attributes);
         	$image->setProperty('TimeCreated', 'NULL', true, true);
         	$image->setProperty('LastModified', 'NULL', true, true);
         }
+
         if (!isset($p_attributes['Date'])) {
         	$image->setProperty('Date', 'NOW()', true, true);
         }
+
         $image->setProperty('Location', 'remote', false);
         $image->setProperty('URL', $p_url, false);
 	    if (isset($imageInfo['mime'])) {
@@ -791,24 +776,41 @@ class Image extends DatabaseObject {
 			$image->setProperty('UploadedByUser', $p_userId, false);
         }
 
-        if ($Campsite['IMAGEMAGICK_INSTALLED']) {
-		    // Set thumbnail file name
-		    $extension = Image::__ImageTypeToExtension($imageInfo[2]);
-		    $thumbnail = $image->generateThumbnailStorageLocation($extension);
-		    $image->setProperty('ThumbnailFileName', basename($thumbnail), false);
+        // create thumbnail
+		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
+		$thumbnail = $image->generateThumbnailStorageLocation($extension);
+		$image->setProperty('ThumbnailFileName', basename($thumbnail), false);
 
-		    if (!is_writable(dirname($image->getThumbnailStorageLocation()))) {
-            	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_CREATE_FILE);
-		    }
+		if (!is_writable(dirname($thumbnail))) {
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $image->getThumbnailStorageLocation()), CAMP_ERROR_CREATE_FILE);
+		}
 
-		    // Create the thumbnail
-            $cmd = $Campsite['THUMBNAIL_COMMAND'].' '
-            	. $tmpname . ' ' . $image->getThumbnailStorageLocation();
-            system($cmd);
-            if (file_exists($image->getThumbnailStorageLocation())) {
-            	chmod($image->getThumbnailStorageLocation(), 0644);
-            }
+        $createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
+    	if (!isset($createMethodName)) {
+            throw new Exception(getGS("Image type $1 is not supported.",
+    							image_type_to_mime_type($ContentType)));
         }
+
+        $imageHandler = $createMethodName($tmpname);
+        if (!$imageHandler) {
+            throw new Exception(camp_get_error_message(CAMP_ERROR_UPLOAD_FILE, $p_fileVar['name']), CAMP_ERROR_UPLOAD_FILE);
+        }
+
+        $thumbnailImage = Image::ResizeImage($imageHandler,
+            $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+        if (PEAR::isError($thumbnailImage)) {
+            throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
+        }
+
+        $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+        if (PEAR::isError($result)) {
+            throw new Exception($result->getMessage(), $result->getCode());
+        }
+        
+        if (file_exists($thumbnail)) {
+            chmod($thumbnail, 0644);
+        }
+
         unlink($tmpname);
         $image->commit();
 

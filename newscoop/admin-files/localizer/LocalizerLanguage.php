@@ -7,8 +7,8 @@
  * Includes
  */
 require_once('PEAR.php');
-require_once('LocalizerConfig.php');
-require_once('LocalizerFileFormat.php');
+require_once(dirname(__FILE__).'/LocalizerConfig.php');
+require_once(dirname(__FILE__).'/LocalizerFileFormat.php');
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 
 /**

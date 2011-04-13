@@ -3,9 +3,6 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 
@@ -54,13 +51,16 @@ class Log extends DatabaseObject {
 		} else {
 			$userIP = null;
 		}
+
 		$queryStr = "INSERT INTO Log SET "
 					." time_created=NOW(), "
 					." fk_event_id=$p_eventId,"
 					." fk_user_id=$p_userId, "
 					." text='".$g_ado_db->escape($p_text)."'";
 		if (!is_null($userIP)) {
-			$queryStr .= ", user_ip=INET_ATON('$userIP')";
+            $ip_ary = explode('/', (string) $userIP);
+            $userIP = substr($ip_ary[0], 0, 39); // IPv6
+			$queryStr .= ", user_ip='" . $g_ado_db->escape($userIP) . "'";
 		}
 		$g_ado_db->Execute($queryStr);
 	} // fn Message

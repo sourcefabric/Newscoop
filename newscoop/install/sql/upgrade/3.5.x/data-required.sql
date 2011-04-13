@@ -7,7 +7,14 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusMaxZoom','18
 -- map border spaces for autofocusing
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusBorder','100');
 -- css file to be included for map views
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoCSSFile','/javascript/geocoding/styles/map-info.css');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoCSSFile','/js/geocoding/styles/map-info.css');
+
+-- remove Campcaster related preferences
+DELETE FROM `SystemPreferences` WHERE `varname` ='UseCampcasterAudioclips';
+DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterHostName';
+DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterHostPort';
+DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterXRPCPath';
+DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterXRPCFile';
 
 -- Index on icons, they can be used for multi-map constraints
 ALTER TABLE MapLocations ADD INDEX map_locations_poi_style_idx(poi_style(64));
