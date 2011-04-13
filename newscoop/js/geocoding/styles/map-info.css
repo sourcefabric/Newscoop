@@ -9,6 +9,11 @@
     font-size: 12px;
 }
 
+.geomap_body_holder {
+    width: 100%;
+    height: 100%;
+}
+
 .geo_map_mapcanvas_large {
     font-size: 12px;
     width: 100%;
@@ -45,3 +50,6 @@
     float: right;
     margin-top: -22px;
 }
+
+
+

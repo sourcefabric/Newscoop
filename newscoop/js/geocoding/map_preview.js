@@ -1114,12 +1114,6 @@ this.main_openlayers_init = function(map_div_name) {
         geo_obj.on_view_change_hook();
     });
 
-    //var test_height = $(window).height();
-    //alert("test_height: " + test_height);
-
-    //alert("inited0");
-    //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
-    //alert("inited");
 };
 
 this.on_view_change_hook = function() {

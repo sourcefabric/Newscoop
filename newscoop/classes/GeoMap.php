@@ -1650,10 +1650,8 @@ window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
 
     var already_focused = false;
     try {
-        // TODO: debugging
-        if (true && window.map_win_popup) {
+        if (window.map_win_popup) {
             if ("' . $p_mapSuffix . '" == window.map_win_popup.map_obj_specifier) {
-                //window.map_win_popup.blur();
                 setTimeout("try {window.map_win_popup.focus();} catch(e) {}", 0);
                 if (null !== select_poi) {
                     window.point_large_map_center' . $p_mapSuffix . '(select_poi, true);
@@ -1669,69 +1667,16 @@ window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
 
     if (already_focused) {return;}
 
-    //alert(window.map_win_popup);
-    if (window.map_win_popup && (!window.map_win_popup.closed)) {
-        //window.map_win_popup.close();
-    }
+    window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0,resizable=1");
 
-
-    window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0");
-    // still the problems if opener reloads before making again the map popup; thus closing it here for sure
-    // for now the popup-window variable of opener is set via setInterval 
-    if (false) {
-        window.map_win_popup.close();
-        window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0");
-    }
-
-    //window.map_win_popup.document.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\">\n");
     window.map_win_popup.document.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
     window.map_win_popup.document.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
     window.map_win_popup.document.write("<head profile=\"http://gmpg.org/xfn/11\">\n");
-    //window.map_win_popup.document.write("<html>\n");
-    //window.map_win_popup.document.write("<head>\n");
     window.map_win_popup.document.write("<title>' . $p_labelLargeMap . '</title>\n");
     window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
     window.map_win_popup.document.write("\n");
-    //window.map_win_popup.document.write("<" + "script src=\"http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js\" type=\"text/javascript\"></" + "script>\n");
     window.map_win_popup.document.write("\n");
 ';
-
-/*
-// not used now
-$hack_part = '
-        <script type="text/javascript">
-            var rnk = 0;
-            //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
-            if (undefined === window.document.write_orig) {
-                window.document.write_orig = window.document.write;
-            }
-            //window.document.write_orig = window.document.write;
-            //window.document.write = function (txt) {if (txt) {$.getScript("http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js", function() {});}}
-            //window.document.write = function (txt) {if (txt) {window.document.open("text/html", true); window.document.write_orig(txt); window.document.close();}};
-            window.doc_write_mod = function (txt) {
-                if (txt) {
-                    //var write_parts_obj = document.getElementById ? document.getElementById("write_parts") : null;
-                    //if (null & write_parts_obj) {
-                    //    var curr_html = "" + write_parts_obj.innerHTML;
-                    //    curr_html += txt;
-                    //    write_parts_obj.innerHTML = curr_html;
-                    //}
-                    rnk += 1;
-                    if (rnk < 5) {alert(rnk);}
-                    if (-1 < txt.indexOf("://maps.gstatic.com/")) {
-                        $("#write_parts").append(txt);
-                        alert("appended: " + txt);
-                    }
-                    else {
-                        window.document.write_orig(txt);
-                    }
-                }
-            };
-            window.document.write = window.doc_write_mod;
-            alert(window.document.write);
-        </script>
-';
-*/
 
 $header_part = '
         <script type="text/javascript">
@@ -1754,13 +1699,9 @@ $header_part = '
         }
 
         $tag_string_fin .= '
-    //window.map_win_popup.document.write("</head>\n");
-    //window.map_win_popup.document.write("<body>\n");
-    //window.map_win_popup.document.write("<body>aaaaaaaaaaa\n");
 ';
 
         $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-        //$tag_string_fin .= 'window.map_win_popup.document.write("if (window.document.write_orig !== undefined) {window.document.write = window.document.write_orig;};\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("window.map_prepared = false;\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("window.map_popup_win = true;\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $p_mapSuffix . '\";\n");' . "\n";
@@ -1781,19 +1722,15 @@ $header_part = '
         $tag_string_fin .= "\n";
 
         $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-        //$tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 2000);\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 1000);\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
 
         $tag_string_fin .= '
     window.map_win_popup.document.write("</head>\n");
     window.map_win_popup.document.write("<body>\n");
-    //window.map_win_popup.document.write("<body>aaaaaaaaaaa\n");
 ';
 
-        //$tag_string_fin .= 'window.map_win_popup.document.write("<div style=\"width:800px;height:500px;\">\n");';
-        //$tag_string_fin .= 'window.map_win_popup.document.write("<div style=\"width:100%;height:500px;\">\n");';
-        $tag_string_fin .= 'window.map_win_popup.document.write("<div id=\"map_body_holder\" style=\"width:100%;height:100%;\">\n");';
+        $tag_string_fin .= 'window.map_win_popup.document.write("<div id=\"map_body_holder\" class=\"geomap_body_holder\">\n");';
         foreach (explode("\n", $p_tagStringBody) as $tag_string_line) {
             $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
             $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
@@ -1804,7 +1741,6 @@ $header_part = '
         $tag_string_fin .= 'window.map_win_popup.document.write("</div>\n");';
 
         $tag_string_fin .= '
-    window.map_win_popup.document.write("<div id=\"write_parts\" style=\"width=0px;height=0px;\"></div>");
     window.map_win_popup.document.write("</body></html>");
     window.map_win_popup.document.close();
 }
@@ -1830,7 +1766,6 @@ $header_part = '
         global $Campsite;
         $tag_string = "";
         $tag_string_top = "";
-        $tag_string_top_async = "";
         $tag_string_gv3_async = false;
         $tag_string_ini = "";
         $tag_string_mid = "";
@@ -1904,7 +1839,6 @@ $header_part = '
         $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
         $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
 
-        $geo_map_incl_async = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj_async"]);
         $tag_string_gv3_async = $geo_map_info["incl_gv3"];
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
@@ -1937,8 +1871,6 @@ $header_part = '
 
         // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
         $tag_string_top .= $geo_map_incl;
-        $tag_string_top .= "\n";
-        $tag_string_top_async .= $geo_map_incl_async;
         $tag_string_top .= "\n";
 
         $check_gv3 = "false";
@@ -2061,8 +1993,6 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
             map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         } else {
             // not setting the map size for the large map
-            // map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
-            // map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
         }
 
 ';
@@ -2106,10 +2036,7 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
         foreach ($geo_map_incl_async_arr as $one_async_scr) {
             if (!empty($one_async_scr)) {
                 $count_to_async_load += 1;
-                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {
-    window.count_to_async_load' . $map_suffix . ' -= 1;
-    //alert("got ' . $one_async_scr . '");
-});';
+                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {window.count_to_async_load' . $map_suffix . ' -= 1;});';
             }
         }
 
@@ -2164,7 +2091,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // should we provide js for large-map openning
         if ($open_large_map) {
 
-            //$tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top_async . $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
             $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
 
         }
@@ -2228,7 +2154,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $tag_string .= "geo_open_large_map$map_suffix";
         }
         else {
-            //$tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix(); setTimeout('geo_open_large_map$map_suffix();', 1000);} ";
             $tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix();} ";
         }
 
@@ -2373,7 +2298,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         global $Campsite;
         $tag_string = "";
         $tag_string_top = "";
-        $tag_string_top_async = "";
         $tag_string_gv3_async = false;
         $tag_string_ini = "";
         $tag_string_mid = "";
@@ -2496,7 +2420,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
         $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
 
-        $geo_map_incl_async = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj_async"]);
         $tag_string_gv3_async = $geo_map_info["incl_gv3"];
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
@@ -2527,8 +2450,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
         $tag_string_top .= $geo_map_incl;
-        $tag_string_top .= "\n";
-        $tag_string_top_async .= $geo_map_incl_async;
         $tag_string_top .= "\n";
 
         $check_gv3 = "false";
@@ -2753,7 +2674,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // should we provide js for large-map openning
         if ($open_large_map) {
 
-            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top . $tag_string_ini . $tag_string_mid, self::GetMultiMapTagBody($p_languageId, $p_rank, true));
+            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMultiMapTagBody($p_languageId, $p_rank, true));
 
         }
 
