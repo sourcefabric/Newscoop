@@ -92,35 +92,35 @@ toggleComments();
 
 // main form submit
 $('form#article-main').submit(function() {
+
     var form = $(this);
 
-    if (!form.hasClass('changed')) {
+    if (!form.hasClass('changed') && !tinyMCE.activeEditor.isDirty()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
-        return false;
+    } else {
+    	 // ping for connection
+        callServer('ping', [], function(json) {
+            ajax_forms++;
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
+                data: form.serialize(),
+                success: function(data, status, p) {
+                    flashMessage('<?php putGS('Article saved.'); ?>');
+                    ajax_forms--;
+                    toggleComments();
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+                    }
+                }
+            });
+
+        }); // /ping
+        $(this).removeClass('changed');
     }
 
-    // ping for connection
-    callServer('ping', [], function(json) {
-        ajax_forms++;
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
-            data: form.serialize(),
-            success: function(data, status, p) {
-                flashMessage('<?php putGS('Article saved.'); ?>');
-                ajax_forms--;
-                toggleComments();
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
-                }
-            }
-        });
-
-    }); // /ping
-
-    $(this).removeClass('changed');
     return false;
 }).change(function() {
     $(this).addClass('changed');
