@@ -46,7 +46,7 @@ final class CampSession
     private function __construct()
     {
         // makes sure session will use files to store its data
-        ini_set('session.save_handler', 'files');
+        @ini_set('session.save_handler', 'files');
 
         $this->start();
 
@@ -77,8 +77,8 @@ final class CampSession
      */
     function start()
     {
-        session_cache_limiter('none');
-        session_start();
+        @session_cache_limiter('none');
+        @session_start();
     } // fn start
 
 

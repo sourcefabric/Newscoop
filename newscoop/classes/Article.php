@@ -2370,8 +2370,10 @@ class Article extends DatabaseObject {
                     $isNullCond = Article::$s_regularParameters[$leftOperand]
                                 . ' IS NULL';
                     $selectClauseObj->addConditionalWhere($isNullCond);
+                } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=' ) {
+					$selectClauseObj->addConditionalWhere($whereCondition);
                 } else {
-                    $selectClauseObj->addWhere($whereCondition);
+                	$selectClauseObj->addWhere($whereCondition);
                 }
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag

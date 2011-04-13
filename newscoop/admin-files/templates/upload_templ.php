@@ -40,8 +40,6 @@ camp_html_display_msgs();
 <style>
 @import url(<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/css/plupload.queue.css);
 </style>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery-1.4.2.min.js"></script>
-<!-- Load plupload and all it's runtimes and the jQuery queue widget -->
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/jquery.plupload.queue.min.js"></script>
 

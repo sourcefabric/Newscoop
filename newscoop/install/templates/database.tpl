@@ -1,8 +1,4 @@
 {{ include file="html_header.tpl" }}
-<script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>
   <td valign="top">

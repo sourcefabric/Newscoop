@@ -7,7 +7,7 @@
  * Includes
  */
 require_once dirname(__FILE__) . '/../include/campsite_constants.php';
-require_once dirname(__FILE__) . '/../include/pear/PEAR.php';
+require_once 'PEAR.php';
 require_once dirname(__FILE__) . '/DbObjectArray.php';
 require_once dirname(__FILE__) . '/SystemPref.php';
 require_once dirname(__FILE__) . '/CampCache.php';

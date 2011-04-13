@@ -1,5 +1,7 @@
 <?php
 
+require_once('localizer/Localizer.php');
+
 /**
  * Check if user has access to the admin.
  * @param array $p_request
@@ -269,7 +271,6 @@ function camp_mime_content_type($p_file)
  */
 function camp_load_translation_strings($p_prefix, $p_langCode = null)
 {
-    require_once('localizer/Localizer.php');
     $langCode = null;
     if (!is_null($p_langCode)) {
         $langCode = $p_langCode;
@@ -581,7 +582,7 @@ function camp_get_calendar_include($p_languageCode = null)
 {
     global $Campsite;
 
-	$calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/js/jquery/';
+    $calendarPath = $GLOBALS['Campsite']['CAMPSITE_DIR'] . '/js/jquery/';
     $calendarLocalization = "i18n/jquery.ui.datepicker-$p_languageCode.js";
     if (!file_exists("$calendarPath/$calendarLocalization")) {
         $codeParts = explode('_', $p_languageCode);
@@ -598,21 +599,23 @@ function camp_get_calendar_include($p_languageCode = null)
         }
     }
 
-	$websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
-	$calendarURL = "$websiteURL/js/jquery";
-	ob_start();
+    $websiteURL = $GLOBALS['Campsite']["WEBSITE_URL"];
+    $calendarURL = "$websiteURL/js/jquery";
+    ob_start();
 ?>
+
 <style type="text/css">@import url('<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/jquery-ui-1.8.6.datepicker.css');</style>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/jquery-ui-timepicker-addon.min.js"></script>
 <?php if (file_exists(dirname(__FILE__) . '/../js/jquery/' . $calendarLocalization)) { ?>
 <script type="text/javascript" src="<?php echo htmlspecialchars($calendarURL); ?>/<?php echo $calendarLocalization; ?>"></script>
-<?php } ?>
 <script type="text/javascript"><!--
     $(document).ready(function() {
         $.datepicker.setDefaults( $.datepicker.regional['<?php echo $p_languageCode; ?>'] );
     });
 //--></script>
+<?php } ?>
+
 <?php
 	return ob_get_clean();
 }
