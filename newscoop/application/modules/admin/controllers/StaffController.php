@@ -2,6 +2,9 @@
 
 use Newscoop\Entity\User\Staff;
 
+/**
+ * @acl(resource="user", action="manage")
+ */
 class Admin_StaffController extends Zend_Controller_Action
 {
     private $repository;
@@ -12,16 +15,17 @@ class Admin_StaffController extends Zend_Controller_Action
     {
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
 
-        $this->form = new Admin_Form_Staff;
+        $this->form = new Admin_Form_Staff($this->_helper->acl->isAllowed('user', 'manage'));
         $this->form->setAction('')->setMethod('post');
 
-        // set form user groups
-        $groups = array();
-        $groupRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
-        foreach ($groupRepository->findAll() as $group) {
-            $groups[$group->getId()] = $group->getName();
+        if ($this->_helper->acl->isAllowed('user', 'manage')) { // set form user groups
+            $groups = array();
+            $groupRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
+            foreach ($groupRepository->findAll() as $group) {
+                $groups[$group->getId()] = $group->getName();
+            }
+            $this->form->getElement('groups')->setMultioptions($groups);
         }
-        $this->form->getElement('groups')->setMultioptions($groups);
 
         // set form countries
         $countries = array();
@@ -38,27 +42,62 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $staff = new Staff();
+        $this->_helper->acl->check('user', 'manage');
 
+        $staff = new Staff();
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
         $this->view->user = $staff;
     }
 
+    /**
+     * @acl(ignore="1")
+     */
     public function editAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');
-        $this->form->setDefaultsFromEntity($staff);
 
+        // check permission
+        $auth = Zend_Auth::getInstance();
+        if ($staff->getId() != $auth->getIdentity()) { // check if user != current
+            $this->_helper->acl->check('user', 'manage');
+        }
+
+        $this->form->setDefaultsFromEntity($staff);
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
         $this->view->user = $staff;
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Edit access'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'edit-access',
+                'params' => array(
+                    'user' => $staff->getId(),
+                ),
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
+    public function editAccessAction()
+    {
+        $staff = $this->_helper->entity->get(new Staff, 'user');
+        $this->view->user = $staff;
+    }
+
+    /**
+     * @acl(action="delete")
+     */
     public function deleteAction()
     {
+        $this->_helper->acl->check('user', 'delete');
+
         $staff = $this->_helper->entity->get(new Staff, 'user');
         $this->repository->delete($staff);
 
@@ -68,6 +107,9 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->_helper->redirector->gotoSimple('index');
     }
 
+    /**
+     * @acl(action="manage")
+     */
     public function tableAction()
     {
         $table = $this->getHelper('datatable');
@@ -114,6 +156,17 @@ class Admin_StaffController extends Zend_Controller_Action
         });
 
         $table->dispatch();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new staff member'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'add',
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     private function handleForm(Zend_Form $form, Staff $staff)
@@ -123,7 +176,9 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->_helper->entity->getManager()->flush();
 
             $this->_helper->flashMessenger(getGS('Staff member saved.'));
-            $this->_helper->redirector->gotoSimple('index');
+            $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(
+                'user' => $staff->getId(),
+            ));
         }
     }
 }

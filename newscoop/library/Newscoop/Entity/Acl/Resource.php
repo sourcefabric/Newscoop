@@ -7,12 +7,14 @@
 
 namespace Newscoop\Entity\Acl;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Resource entity
  * @entity
  * @table(name="acl_resource")
  */
-class Resource
+class Resource implements \Zend_Acl_Resource_Interface
 {
     /**
      * @id @generatedValue
@@ -34,6 +36,11 @@ class Resource
     private $actions;
 
     /**
+     * @var array
+     */
+    private $rules = array(array(), array());
+
+    /**
      */
     public function __construct()
     {
@@ -47,7 +54,29 @@ class Resource
      */
     public function getId()
     {
-        return $this->id;
+        return (int) $this->id;
+    }
+
+    /**
+     * Get resource id for acl
+     *
+     * @return string|NULL
+     */
+    public function getResourceId()
+    {
+        return empty($this->id) ? 0 : strtolower($this->getName());
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Newscoop\Entity\Acl\Resource
+     */
+    public function setName($name)
+    {
+        $this->name = (string) $name;
+        return $this;
     }
 
     /**
@@ -61,6 +90,18 @@ class Resource
     }
 
     /**
+     * Set actions
+     *
+     * @param array $actions
+     * @return Newscoop\Entity\Acl\Resource
+     */
+    public function setActions(array $actions)
+    {
+        $this->actions = $actions;
+        return $this;
+    }
+
+    /**
      * Get actions
      *
      * @return ArrayCollection
@@ -68,5 +109,28 @@ class Resource
     public function getActions()
     {
         return $this->actions;
+    }
+
+    /**
+     * Set rules
+     *
+     * @param array $rules
+     * @return Newscoop\Entity\Acl\Resource
+     */
+    public function addRule(Rule $rule, $inherited = FALSE)
+    {
+        $this->rules[(bool) $inherited][] = $rule;
+        return $this;
+    }
+
+    /**
+     * Get rules
+     *
+     * @param bool $inherited
+     * @return array
+     */
+    public function getRules($inherited = FALSE)
+    {
+        return $this->rules[(bool) $inherited];
     }
 }

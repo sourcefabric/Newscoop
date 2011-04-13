@@ -1,5 +1,7 @@
 <?php
 
+use Newscoop\Log\Writer;
+
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
     /** @var Zend_View */
@@ -50,21 +52,29 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         $this->bootstrap('session');
         $front = Zend_Controller_Front::getInstance();
-        $front->registerPlugin(new Newscoop\Auth\Plugin);
+        $front->registerPlugin(new Admin_Controller_Plugin_Auth);
+        $front->registerPlugin(new Admin_Controller_Plugin_Acl);
 
         $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) {
-            $doctrine = Zend_Registry::get('doctrine');
+        if ($auth->hasIdentity()) { // get current user
+            $this->bootstrap('doctrine');
+            $doctrine = $this->getResource('doctrine');
             $user = $doctrine->getEntityManager()
-                ->find('Newscoop\Entity\User', $auth->getIdentity());
+                ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
+
+            // set user for application
+            $g_user = $user;
             Zend_Registry::set('user', $user);
 
-            // set user to view
+            // set view user
             $this->bootstrap('view');
             $this->view->user = $user;
 
-            // set user for legacy code
-            $g_user = $user;
+            // set view navigation acl
+            $this->bootstrap('acl');
+            $acl = $this->getResource('acl')->getAcl();
+            $this->view->navigation()->setAcl($acl);
+            $this->view->navigation()->setRole($user->getRole());
         }
     }
 
@@ -77,5 +87,20 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         if ($flashMessenger->hasMessages()) {
             $this->view->messages = $flashMessenger->getMessages();
         }
+    }
+
+    /**
+     * Init Log
+     */
+    protected function _initLog()
+    {
+        // get entity manager
+        $this->bootstrap('doctrine');
+        $em = $this->getResource('doctrine')
+            ->getEntityManager();
+
+        // create logger
+        $writer = new Writer($em);
+        return new Zend_Log($writer);
     }
 }

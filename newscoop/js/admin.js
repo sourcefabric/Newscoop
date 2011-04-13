@@ -194,7 +194,7 @@ $(function() {
 
         // hide hidden fields
         $('input:hidden', form).each(function() {
-            $(this).closest('dd').hide().prev('dt').hide();
+            //$(this).closest('dd').hide().prev('dt').hide();
         });
 
         // hide submit dt

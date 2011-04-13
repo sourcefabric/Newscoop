@@ -8,7 +8,9 @@
 namespace Newscoop\Entity\User;
 
 use DateTime,
+    Zend_Registry,
     Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Utils\PermissionToAcl,
     Newscoop\Entity\User,
     Newscoop\Entity\Acl\Role;
 
@@ -92,7 +94,16 @@ class Staff extends User
      */
     public function hasPermission($permission)
     {
-        // @todo check with Acl helper
-        return true;
+        static $acl;
+        if ($acl === NULL) {
+            $acl = Zend_Registry::get('acl')->getAcl();
+        }
+
+        try {
+            list($resource, $action) = PermissionToAcl::translate($permission);
+            return $acl->isAllowed($this->getRole(), strtolower($resource), strtolower($action));
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }

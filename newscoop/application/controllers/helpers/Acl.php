@@ -20,7 +20,8 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        return $this->getAcl();
+        $this->getAcl();
+        return $this;
     }
 
     /**
@@ -43,9 +44,8 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     public function getAcl()
     {
         if ($this->acl === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $this->setAcl($bootstrap->getResource('Acl')->getAcl());
+            $acl = Zend_Registry::get('acl');
+            $this->setAcl($acl->getAcl());
         }
 
         return $this->acl;
@@ -61,7 +61,7 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function isAllowed($resource, $action = NULL, $user = NULL)
     {
-        $role = $user ? $user->getRoleId() : $this->getCurrentUser()->getRoleId();
+        $role = $user ? $user->getRole() : $this->getCurrentUser()->getRole();
 
         if ($resource !== NULL) {
             $resource = strtolower($resource);
@@ -84,13 +84,12 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     public function check($resource, $action = NULL)
     {
         if (!$this->isAllowed($resource, $action)) {
-            $this->getRequest()
-                ->setControllerName('error')
-                ->setActionName('deny')
-                ->setDispatched(false)
-                ->setParam('message', getGS('You are not allowed to $1 $2.',
+            $redirector = $this->getActionController()->getHelper('redirector');
+            $redirector->gotoSimple('deny', 'error', 'admin', array(
+                'message' => getGS('You are not allowed to $1 $2.',
                     $action ? $action : getGS('handle'),
-                    $resource ? $resource : getGS('any resource')));
+                    $resource ? $resource : getGS('any resource')),
+            ));
         }
     }
 

@@ -2,6 +2,9 @@
 
 use Newscoop\Entity\User\Subscriber;
 
+/**
+ * @acl(action="manage")
+ */
 class Admin_SubscriberController extends Zend_Controller_Action
 {
     private $repository;
@@ -67,6 +70,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
             'name' => getGS('Full Name'),
             'username' => getGS('Accout Name'),
             'email' => getGS('E-Mail'),
+            'subscription' => getGS('Subscriptions'),
             'timeCreated' => getGS('Creation Date'),
             'delete' => getGS('Delete'),
         ));
@@ -83,13 +87,23 @@ class Admin_SubscriberController extends Zend_Controller_Action
                 $user->getName()
             );
 
+            $subsLink = sprintf('<a href="%s" class="edit" title="%s">%s</a>',
+                $view->url(array(
+                    'controller' => 'subscription',
+                    'user' => $user->getId(),
+                    'format' => NULL,
+                )),
+                getGS('Edit subscriptions'),
+                getGS('Subscriptions')
+            );
+
             $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
                 $view->url(array(
                     'action' => 'delete',
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-               getGS('Delete subscriber $1', $user->getName()),
+                getGS('Delete subscriber $1', $user->getName()),
                 getGS('Delete')
             );
 
@@ -97,12 +111,24 @@ class Admin_SubscriberController extends Zend_Controller_Action
                 $editLink,
                 $user->getUsername(),
                 $user->getEmail(),
+                $subsLink,
                 $user->getTimeCreated()->format('Y-m-d H:i:s'),
                 $deleteLink,
             );
         });
 
         $table->dispatch();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new subscriber'),
+                'module' => 'admin',
+                'controller' => 'subscriber',
+                'action' => 'add',
+                'resource' => 'subscriber',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     private function handleForm(Zend_Form $form, Subscriber $subscriber)
@@ -112,7 +138,9 @@ class Admin_SubscriberController extends Zend_Controller_Action
             $this->_helper->entity->getManager()->flush();
 
             $this->_helper->flashMessenger(getGS('Subscriber saved.'));
-            $this->_helper->redirector->gotoSimple('index');
+            $this->_helper->redirector->gotoSimple('edit', 'subscriber', 'admin', array(
+                'user' => $subscriber->getId(),
+            ));
         }
     }
 }
