@@ -10,11 +10,16 @@
 
 ?>
 <div class="actions">
+<?php 
+	global $g_user;
+?>
 <fieldset class="actions">
     <legend><?php putGS('Select action'); ?></legend>
     <select name="action">
         <option value="">---</option>
+        <?php if ($g_user->hasPermission('Publish')) { ?>
         <option value="workflow_publish"><?php putGS('Status: Publish'); ?></option>
+        <?php } ?>
         <option value="workflow_submit"><?php putGS('Status: Submit'); ?></option>
         <option value="workflow_new"><?php putGS('Status: Set New'); ?></option>
         <option value="switch_onfrontpage"><?php putGS("Toggle: 'On Front Page'"); ?></option>
@@ -24,7 +29,9 @@
         <option value="publish_schedule"><?php putGS('Publish Schedule'); ?></option>
         <?php } ?>
         <option value="unlock"><?php putGS('Unlock'); ?></option>
+        <?php if ($g_user->hasPermission('DeleteArticle')) { ?>
         <option value="delete"><?php putGS('Delete'); ?></option>
+        <?php } ?>
         <option value="duplicate"><?php putGS('Duplicate'); ?></option>
         <option value="duplicate_interactive"><?php putGS('Duplicate to another section'); ?></option>
         <option value="move"><?php putGS('Move'); ?></option>
