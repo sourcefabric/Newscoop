@@ -56,7 +56,7 @@ class Publications
      */
     public function getId()
     {
-        return $this->id = $p_id;
+        return $this->id;
     }
 
     /**

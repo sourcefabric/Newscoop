@@ -1,6 +1,8 @@
-<div class="comments-user">
-    <?php echo $this->user->getName(); ?>
-    <?php echo $this->user->getEmail(); ?>
-    <?php echo $this->user->getUrl(); ?>
-    <?php echo $this->user->getIp(); ?>
+<div class="commentUserHolder">
+    <div> </div>
+    <p><b><?php $this->user->getUserName();?></b><br>
+    <?php $this->user->getName();?><br>
+    <a href="#"><?php echo $this->user->getIp(); ?></a><br>
+    <a href="#"><?php echo $this->user->getEmail(); ?></a><br>
+    <a href="#"><?php echo $this->user-getUrl();?></a></p>
 </div>

@@ -70,7 +70,7 @@ class Admin_CommentsController extends Zend_Controller_Action
 
     public function indexAction()
     {
-       $this->getHelper('contextSwitch')
+        $this->getHelper('contextSwitch')
             ->addActionContext('index', 'json')
             ->initContext();
         $table = $this->getHelper('datatable');
@@ -78,16 +78,18 @@ class Admin_CommentsController extends Zend_Controller_Action
         $table->setDataSource($this->repository);
 
         $table->setCols(array(
-            'time_created' => getGS('Date Posted'),
+            'id' => '<input type="checkbox">',
             'user' => getGS('Author'),
+            'time_created' => getGS('Date Posted'),
             'thread' => getGS('Article')
         ));
 
         $view = $this->view;
         $table->setHandle(function(Comments $comment) use ($view) {
             return array(
-                $comment->getTimeCreated()->format('Y-i-d H:i:s'),
+                $view->commentsIndex($comment),
                 $view->commentsUser($comment->getUser()),
+                $comment->getTimeCreated()->format('Y-i-d H:i:s'),
                 $comment->getSubject()
             );
         });
@@ -95,32 +97,9 @@ class Admin_CommentsController extends Zend_Controller_Action
         $table->dispatch();
     }
 
-    public function setAddAction() {
-        $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
-            ->initContext();
-
-        if (empty($params['format'])) { // render table
-            return;
-        }
-        $comment = new Comment;
-        $comment->setSubject($params['subject']);
-        $comment->setMessage($params['message']);
-        $comment->setTimeCreated(new DateTime());
-        $comment->setStatus('approved');
-        $comment->setUser();
-
-        $this->view->code = '200';
-        $this->view->message = "succesfull";
-        $this->view->added = "true";
-    }
-
-    public function addExtAction() {
-
-    }
 
     /**
-     * Action for Adding a Comments User
+     * Action for Adding a Comment
      */
     public function addAction()
     {

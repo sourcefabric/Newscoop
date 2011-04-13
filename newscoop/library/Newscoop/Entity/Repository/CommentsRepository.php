@@ -36,6 +36,34 @@ class CommentsRepository extends DatatableSource
             $em->persist($comment);
         }
     }
+
+    public function getComments($params)
+    {
+        // get the enitity manager
+        //$em = $this->getEntityManager();
+
+        $qb = $this->createQueryBuilder('e');
+        $qb->select();
+        /*
+        $articlesRepository = $em->getRepository('Newscoop\Entity\Articles');
+        $languagesRepository = $em->getRepository('Newscoop\Entity\Languages');
+        if(isset($params['article'])) {
+            $article = $articlesRepository->find($params['article']);
+            $qb->andWhere('c.thread = :thread')
+               ->andWhere('c.forum = :forum')
+               ->setParameter('thread', $article)
+               ->setParameter('forum',$article->getPublication());
+        }
+        if(isset($params['language'])) {
+            $language = $languagesRepository->find($params['language']);
+            $qb->andWhere('c.language = :language')
+               ->setParameter('language',$language);
+        }
+        */
+        return $qb->getQuery()->getResult();
+
+    }
+
     /**
      * Method for saving a comment
      *

@@ -7,7 +7,8 @@
 
 namespace Newscoop\Entity;
 
-use Newscoop\Entity\Languages;
+use Newscoop\Entity\Languages,
+    Newscoop\Entity\Publications;
 
 /**
  * Articles entity
@@ -32,6 +33,12 @@ class Articles
     private $language;
 
     /**
+     * @manyToOne(targetEntity="Publications")
+     * @joinColumn(name="IdPublication", referencedColumnName="Id")
+     * @var Newscoop\Entity\Publications
+     */
+    private $publication;
+    /**
      * @column(name="comments_enabled")
      * @var int
      */
@@ -50,7 +57,30 @@ class Articles
     private $name;
 
     /**
-     * Get user name
+     * Set article id
+     *
+     * @param int $p_id
+     * @return Newscoop\Entity\Articles
+     */
+    public function setId($p_id)
+    {
+        $this->id = $p_id;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get article id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get article name
      *
      * @return string
      */
@@ -59,18 +89,64 @@ class Articles
         return $this->name;
     }
 
-    /**
-     * Set Id
-     *
-     * @return string
-     */
-    public function setId($p_id)
-    {
-        return $this->id = $p_id;
-    }
 
+    /**
+     * Set the flag if the comments are enabled or not
+     *
+     * @param $p_enabled
+     * @return Newscoop\Entity\Articles
+     */
     public function setCommentsEnabled($p_enabled )
     {
         $this->comments_enabled = $p_enabled;
+        // return this for chaining mechanism
+        return $this;
     }
+
+    /**
+     * Set publication
+     *
+     * @param  Newscoop\Entity\Publications $p_publication
+     * @return Newscoop\Entity\Articles
+     */
+    public function setPublication(Publications $p_publication)
+    {
+        $this->publication = $p_publication;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return Newscoop\Entity\Publications
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Set language
+     *
+     * @param  Newscoop\Entity\Languages $p_language
+     * @return Newscoop\Entity\Articles
+     */
+    public function setLanguage(Languages $p_language)
+    {
+        $this->language = $p_language;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return Newscoop\Entity\Languages
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
 }

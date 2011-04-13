@@ -27,16 +27,22 @@ class NewscoopEntityArticlesProxy extends \Newscoop\Entity\Articles implements \
     }
 
     
-    public function getName()
-    {
-        $this->_load();
-        return parent::getName();
-    }
-
     public function setId($p_id)
     {
         $this->_load();
         return parent::setId($p_id);
+    }
+
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
+    public function getName()
+    {
+        $this->_load();
+        return parent::getName();
     }
 
     public function setCommentsEnabled($p_enabled)
@@ -45,10 +51,34 @@ class NewscoopEntityArticlesProxy extends \Newscoop\Entity\Articles implements \
         return parent::setCommentsEnabled($p_enabled);
     }
 
+    public function setPublication(\Newscoop\Entity\Publications $p_publication)
+    {
+        $this->_load();
+        return parent::setPublication($p_publication);
+    }
+
+    public function getPublication()
+    {
+        $this->_load();
+        return parent::getPublication();
+    }
+
+    public function setLanguage(\Newscoop\Entity\Languages $p_language)
+    {
+        $this->_load();
+        return parent::setLanguage($p_language);
+    }
+
+    public function getLanguage()
+    {
+        $this->_load();
+        return parent::getLanguage();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'language', 'comments_enabled', 'comments_locked', 'name');
+        return array('__isInitialized__', 'id', 'language', 'publication', 'comments_enabled', 'comments_locked', 'name');
     }
 
     public function __clone()

@@ -4,5 +4,17 @@
 <?php $this->renderDatatable(); ?>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	$('table.data').dataTable().fnSettings().aoDrawCallback.push({
+		"fn": function () {
+		   var index = 1;
+		   $('.index').each(function(){
+                $(this).html(index+$(this).html());
+                index++;
+            });
+		  },
+		"sName": "user"
+	});
 
+});
 </script>
