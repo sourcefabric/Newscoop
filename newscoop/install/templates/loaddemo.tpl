@@ -1,12 +1,4 @@
 {{ include file="html_header.tpl" }}
-<script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
-<script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
-<script type="text/javascript" src="js/prototype.js"></script>
-<script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
-<script type="text/javascript" src="js/lightbox.js"></script>
-<link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
 
 <form action="index.php" method="post" name="install_form" autocomplete="off">
 <tr>

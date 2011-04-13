@@ -1,0 +1,34 @@
+<table class="data">
+<thead>
+<tr>
+    <?php foreach ($this->cols as $col) { ?>
+    <th><?php echo $col; ?></th>
+    <?php } ?>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td class="message" colspan="<?php echo sizeof($this->cols); ?>"><?php putGS('Loading..'); ?></td>
+</tr>
+</tbody>
+</table>
+
+<script type="text/javascript">
+$(function() {
+    $('table.data')
+        .wrap($('<div />').addClass('table')).wrap($('<div />').addClass('smartlist'))
+        .css('position', 'relative').css('width', '100%')
+        .dataTable({
+            'sAjaxSource': '<?php echo $this->url(array('action' => 'index', 'format' => 'json')); ?>',
+            'bServerSide': true,
+            'bJQueryUI': true,
+            'bAutoWidth': true,
+            'iDisplayLength': 25,
+            'bLengthChange': false,
+            'sPaginationType': 'full_numbers',
+            'aoColumnDefs': [
+                { 'bSortable': false, 'aTargets': [-1] }
+            ]
+    });
+});
+</script>

@@ -1,5 +1,5 @@
 <?PHP
-require_once('Localizer.php');
+require_once(dirname(__FILE__).'Localizer.php');
 
 $localizerLanguage = new LocalizerLanguage('locals', 'xx');
 $localizerLanguage->setMode('xml');

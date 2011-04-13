@@ -347,9 +347,13 @@ class CampPlugin extends DatabaseObject
         }
     }
 
+    /**
+     * Generate pages array for Zend_Navigation.
+     *
+     * @return array
+     */
     static public function CreatePluginMenu()
     {
-        global $ADMIN;
         global $g_user;
 
         $root_menu = false;
@@ -372,22 +376,24 @@ class CampPlugin extends DatabaseObject
         }
 
         if (empty($root_menu)) {
-            return;
+            return array();
         }
 
-        $menu_modules =& DynMenuItem::Create(getGS('Plugins'), '',
-            array('icon' => '', 'id' => 'plugins'));
+        $view = new Zend_View;
+        $pages = array();
 
         if ($g_user->hasPermission('plugin_manager')) {
-            $menu_item =& DynMenuItem::Create(getGS('Manage Plugins'),
-                "/$ADMIN/plugins/manage.php",
-                array('icon' => ''));
-            $menu_modules->addItem($menu_item);
+            $pages[] = array(
+                'label' => getGS('Manage Plugins'),
+                'module' => 'admin',
+                'controller' => 'plugins',
+                'action' => 'manage.php',
+            );
         }
 
         foreach ($plugin_infos as $info) {
             if (CampPlugin::IsPluginEnabled($info['name'])) {
-                $menu_plugin = null;
+                $menu_plugin = array();
                 $parent_menu = false;
 
                 $Plugin = new CampPlugin($info['name']);
@@ -403,29 +409,42 @@ class CampPlugin extends DatabaseObject
                 }
 
                 if ($parent_menu && isset($info['menu'])) {
-                    $menu_plugin =& DynMenuItem::Create(getGS($info['menu']['label']),
-                        isset($info['menu']['path']) ? "/$ADMIN/".$info['menu']['path'] : null,
-                        array('icon' => ''));
+                    $uri = '#';
+                    if (isset($info['menu']['path'])) {
+                        $uri = $view->baseUrl('admin/' . $info['menu']['path']);
+                    }
+                    $menu_plugin = array(
+                        'label' => getGS($info['menu']['label']),
+                        'uri' => $uri,
+                    );
                 }
 
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
                     foreach ($info['menu']['sub'] as $menu_info) {
                         if ($g_user->hasPermission($menu_info['permission'])) {
-                            $menu_item =& DynMenuItem::Create(getGS($menu_info['label']),
-                                is_null($menu_info['path']) ? null : "/$ADMIN/".$menu_info['path'],
-                                array('icon' => ''));
-                            $menu_plugin->addItem($menu_item);
+                            $uri = '#';
+                            if (isset($menu_info['path'])) {
+                                $uri = $view->baseUrl('admin/' . $menu_info['path']);
+                            }
+                            $menu_item = array(
+                                'label' => getGS($menu_info['label']),
+                                'uri' => $uri,
+                            );
+
+                            $menu_plugin['pages'][] = $menu_item;
                         }
                     }
                 }
 
-                if (is_object($menu_plugin)) {
-                    $menu_modules->addItem($menu_plugin);
+                if (!empty($menu_plugin)) {
+                    $pages[] = $menu_plugin;
                 }
             }
         }
-        return $menu_modules;
+
+        return $pages;
     }
+
 
     static public function ExtractPackage($p_uploaded_package, &$p_log = null)
     {
@@ -471,7 +490,7 @@ class CampPlugin extends DatabaseObject
         $script = str_replace($admin_path, '', $filename);
 
         foreach (self::GetEnabled() as $plugin) {
-            $filepath = $plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
+            $filepath = dirname(APPLICATION_PATH).$plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
             if (file_exists($filepath))  {
                 include $filepath;
             }

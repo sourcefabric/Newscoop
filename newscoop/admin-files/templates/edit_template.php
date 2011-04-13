@@ -179,18 +179,20 @@ if (in_array($extension, $imageExtensions)) {
     <tr>
       <td colspan="2">
         <textarea rows="40" cols="120" name="cField" id="cField" wrap="NO" class="input_textarea"><?php p(htmlspecialchars($contents)); ?></textarea>
-        <script language="javascript" type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/editarea/edit_area/edit_area_full.js"></script>
-      <script language="javascript" type="text/javascript">
-      editAreaLoader.init({
-          id : "cField",
-          start_highlight: true,
-          allow_toggle: true,
-          toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, word_wrap, |, change_smooth_selection, fullscreen, |, help",
-          syntax: "smarty",
-          syntax_selection_allow: "css,html,js,php,smarty,xml",
-          replace_tab_by_spaces: 2
-      });
-      </script>
+        <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/editarea/edit_area/edit_area_full.js"></script>
+        <script type="text/javascript">
+        $(function() {
+            editAreaLoader.init({
+                id : "cField",
+                start_highlight: true,
+                allow_toggle: true,
+                toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, word_wrap, |, change_smooth_selection, fullscreen, |, help",
+                syntax: "smarty",
+                syntax_selection_allow: "css,html,js,php,smarty,xml",
+                replace_tab_by_spaces: 2
+            });
+        });
+        </script>
       </td>
     </tr>
     <tr>
