@@ -82,7 +82,7 @@ $crumbs[] = array(getGS("Comments"), "");
 echo camp_html_content_top(getGS('Comments'), null);
 
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 

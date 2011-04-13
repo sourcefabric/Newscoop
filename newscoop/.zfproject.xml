@@ -28,6 +28,12 @@
               <actionMethod actionName="index"/>
               <actionMethod actionName="listUsers"/>
             </controllerFile>
+            <controllerFile controllerName="Error">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="UserTypes">
+              <actionMethod actionName="index"/>
+            </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
           <layoutsDirectory enabled="false"/>
@@ -38,6 +44,12 @@
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Comments">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Error">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="UserTypes">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -94,6 +106,8 @@
         <testApplicationControllerDirectory>
           <testApplicationControllerFile filesystemName="LogsControllerTest.php"/>
           <testApplicationControllerFile filesystemName="CommentsControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="ErrorControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="UserTypesControllerTest.php"/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>

@@ -21,10 +21,14 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
+        $this->getActionController()->getHelper('contextSwitch')
+            ->addActionContext('table', 'json')
+            ->initContext();
+        return $this;
     }
 
     /**
-     * Set entity
+     * Set Datasource
      *
      * @param IDatatableSource $p_dataSource
      * @return Action_Helper_Datatable
@@ -32,6 +36,21 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     public function setDataSource($p_dataSource)
     {
         $this->dataSource = $p_dataSource;
+    }
+
+    /**
+     * Set entity
+     *
+     * @param string $entity
+     * @return Action_Helper_Datatable
+     */
+    public function setEntity($entity)
+    {
+        $em = $this->getActionController()
+            ->getHelper('entity')
+            ->getManager();
+
+        $this->dataSource = new DatatableRepository($em, (string) $entity);
         return $this;
     }
 

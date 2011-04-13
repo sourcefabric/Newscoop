@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
@@ -67,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Артыкул быў заблакаваны $1 ($2) $3 хвілін назад.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Артыкул быў заблакаваны $1 ($2) $3 гадзін $4 хвілін назад.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Памылка падчас усталёвак аўтара \"$1\" для артыкула №$2 (\"$3\") тыпу $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Немагчыіа хлучыцца з сэрвэрам Campsite, калі ласка, праверце наладкі сэрвэра");
 regGS("Clear system cache", "Ачысьціць сыстэму кэшаваньня");
 regGS("The system was unable to upload the file '$1'. ", "Сыстэма ня можа загрузіць файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Калі ласка  праверце, які файл Вы спрабуеце загрузіць. Файл можа быць сапсаваны.");
-regGS("Your user is not a valid Campcaster user", "Гэты карыстальнік не зарэгістраваўся з сыстэме Campsite");
 regGS("Connection refused", "Злучэньне скінута");
 regGS("An error occured in session management. Please reload the login page.", "Адбылася памылка ў кiраваньнi БД. Калi ласка, перагрузiце старонку.");
 regGS("This file is stored on disk as '$1'.", "Гэты файл захаваны на дыску як '$1'.");

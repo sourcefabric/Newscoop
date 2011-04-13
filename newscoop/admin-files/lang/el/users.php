@@ -37,8 +37,6 @@ regGS("User may use the editor status bar", "Ο χρήστης μπορεί να
 regGS("User may clear up the system cache", "Ο χρήστης μπορεί να καθαρίσει τη προσωρινή μνήμη του συστήματος");
 regGS("Another user is registered with that e-mail address, please choose a different one.", "Ένας άλλος χρήστης είναι εγγεγραμμένος με αυτή τη διεύθυνση e-mail, παρακαλούμε επιλέξτε κάποια άλλη.");
 regGS("There was an error when trying to update the user info.", "Υπήρξε κάποιο σφάλμα κατά την προσπάθεια ανανέωσης των πληροφοριών χρήστη.");
-regGS("User may attach audioclips to articles", "Ο χρήστης μπορεί να επισυνάψει αρχεία ήχου σε άρθρα");
-regGS("User may add audioclips", "Ο χρήστης μπορεί να προσθέσει αρχεία ήχου");
 regGS("Are you sure you want to delete the IP Group $1:$2?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την Ομάδα IP $1:$2;");
 regGS("User may moderate comments", "Ο χρήστης μπορεί να ρυθμίσει τα σχόλια");
 regGS("User may enable comments", "Ο χρήστης μπορεί να ενεργοποιήσει τα σχόλια");

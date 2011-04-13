@@ -254,7 +254,6 @@ regGS("Thank you.", "سپا س");
 regGS("Please take a minute to send us an email.", "تکا یه ساتێك ته رخا ن بکه بۆ نارد نی ئیمه یلێك بۆ مان ");
 regGS("(optional)", "(مه رج نی یه )");
 regGS("The URL you entered is invalid: '$1'", "ئه د ره سی ئه و وێبه ی نوسیت هه ڵه یه: '$1'");
-regGS("There was an error logging in to the Campcaster server", "هه ڵه یه ك له چونه ژووره وه  بۆ ناو سێر ڤه ری کامکاسته ر");
 regGS("Reads", "بینراوه");
 regGS("Plugins", "چه سپێنه ره کا ن");
 regGS("Publish with issue", "");

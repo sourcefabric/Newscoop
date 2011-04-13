@@ -43,10 +43,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $writer = new Writer($em);
         $logger = new Zend_Log($writer);
 
-        // set user if any
         if (isset($g_user)) {
-            $user = $em->find('Newscoop\Entity\User', $g_user->getUserId());
-            $logger->setEventItem('user', $user);
+            $logger->setEventItem('user', $g_user);
         }
 
         return $logger;

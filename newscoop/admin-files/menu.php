@@ -12,20 +12,29 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <!DOCTYPE html>
 <html lang="<?php echo $locale; ?>" dir="ltr">
 <head>
-    <meta charset="utf-8" />
-    <title><?php p($siteTitle); ?></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Expires" content="now" />
+  <title><?php p($siteTitle); ?></title>
 
-    <meta http-equiv="Expires" content="now" />
+  <script type="text/javascript"><!--
+    var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
+
+    var localizer = localizer || {};
+    localizer.processing = '<?php putGS('Processing...'); ?>';
+    localizer.session_expired = '<?php putGS('Session expired.'); ?>';
+    localizer.please = '<?php putGS('Please'); ?>';
+    localizer.login = '<?php putGS('login'); ?>';
+  //--></script>
 
     <?php include dirname(__FILE__) . '/html_head.php'; ?>
     
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fg.menu.js" type="text/javascript"></script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery.widgets.js" type="text/javascript"></script>
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fg.menu.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.widgets.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg.menu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.css" />
 
     <!--[if IE 6]>
 	<style type="text/css">
@@ -34,27 +43,104 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 	</style>
 	<![endif]-->
 
-    <script type="text/javascript"><!--
-        <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
-        if (opener && !opener.closed && opener.setSecurityToken) {
-            opener.setSecurityToken(g_security_token);
-            opener.focus();
-            window.close();
-        }
-        <?php } ?>
-        
-        var user_msgs = '';
-        <?php if (!empty($_SESSION['camp_user_msgs'])) { ?>
-        user_msgs = "<?php echo str_replace('"', "'", $_SESSION['camp_user_msgs'][0]['msg']); ?>";
-        <?php
-            $_SESSION['camp_user_msgs'] = array();
-        } ?>
-    //--></script>
+  <script type="text/javascript">
+  <!--
+    var g_admin_url = '/<?php echo $ADMIN; ?>';
+    var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+    <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
+    if (opener && !opener.closed && opener.setSecurityToken) {
+        opener.setSecurityToken(g_security_token);
+        opener.focus();
+        window.close();
+    }
+    <?php } ?>
+    var g_admin_img = '<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>';
+    $(document).ready(function() {
+        $.datepicker.setDefaults( $.datepicker.regional['<?php echo $locale; ?>'] );
+    });
+    //-->
+  </script>
+  <script type="text/javascript">
+  <!--
+  $(function(){
+      // BUTTONS
+      $('.fg-button').hover(
+          function(){ $(this).removeClass('fg-button-ui-state-default').addClass('fg-button-ui-state-focus'); },
+          function(){ $(this).removeClass('fg-button-ui-state-focus').addClass('fg-button-ui-state-default'); }
+      );
+
+      // MENUS
+      $('#newscoop_menu_content').topmenu({
+          content: $('#newscoop_menu_content').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php if ($showAdminActions) { ?>
+      $('#newscoop_menu_action').topmenu({
+          content: $('#newscoop_menu_action').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php
+      }
+      if ($showConfigureMenu) {
+      ?>
+      $('#newscoop_menu_configure').topmenu({
+          content: $('#newscoop_menu_configure').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php
+      }
+      if ($showUserMenu) {
+      ?>
+      $('#newscoop_menu_users').topmenu({
+          content: $('#newscoop_menu_users').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+      <?php } ?>
+      $('#newscoop_menu_plugins').topmenu({
+          content: $('#newscoop_menu_plugins').next().html(),
+          flyOut: true,
+          showSpeed: 150
+      });
+  });
+  //-->
+  </script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+      var sticky_limit = 0;
+      $(window).scroll(function() {
+          if ($('.sticky').size() == 0) {
+              return false; // no sticky
+          }
+
+          var windowTop = $(window).scrollTop();
+          var stickyTop = $('.sticky').offset().top;
+          if (windowTop > stickyTop && sticky_limit == 0) {
+              $('.sticky').css('width', '100%').css('position', 'fixed').css('top', '0');
+              sticky_limit = stickyTop;
+          }
+          if (sticky_limit > 0 && windowTop < sticky_limit) {
+              $('.sticky').css('position', 'relative');
+              sticky_limit = 0;
+          }
+      });
+  });
+
+  var user_msgs = '';
+  <?php if (!empty($_SESSION['camp_user_msgs'])) { ?>
+  user_msgs = "<?php echo str_replace('"', "'", $_SESSION['camp_user_msgs'][0]['msg']); ?>";
+  <?php
+    $_SESSION['camp_user_msgs'] = array();
+  } ?>
+  </script>
 </head>
 <body>
 <div class="meta-bar">
     <ul>
-        <li><a href="/<?php p($ADMIN); ?>/logout.php"><?php putGS('Logout'); ?></a></li>
+        <li><a href="/<?php p($ADMIN); ?>/auth/logout"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php p($Campsite['site']['help_url']); ?>" target="_blank"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $g_user->getRealName() . '</strong>'); ?></li>
     </ul>

@@ -5,7 +5,6 @@ camp_load_translation_strings("system_pref");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/XR_CcClient.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");

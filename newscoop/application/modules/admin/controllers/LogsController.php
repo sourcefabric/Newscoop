@@ -13,12 +13,7 @@ class Admin_LogsController extends Zend_Controller_Action
      */
     public function preDispatch()
     {
-        global $g_user;
-
-        // permissions check
-        if (!$g_user->hasPermission('ViewLogs')) {
-	        camp_html_display_error(getGS("You do not have the right to view logs."));
-        }
+        $this->_helper->acl->check('log', 'view');
     }
 
     /**
@@ -28,11 +23,8 @@ class Admin_LogsController extends Zend_Controller_Action
     {
         camp_load_translation_strings('logs');
 
-        // get log repository
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        $this->logRepository = $bootstrap->getResource('doctrine')
-            ->getEntityManager()
-            ->getRepository('Newscoop\Entity\Log');
+        // get repository
+        $this->logRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Log');
 
         // set priority names
         $this->priorityNames = array(
@@ -56,12 +48,11 @@ class Admin_LogsController extends Zend_Controller_Action
         $priority = NULL;
         $form = $this->getPriorityForm()
             ->setMethod('get')
-            ->setAction($this->view->url());
+            ->setAction('');
 
         // handle form if valid
         if ($form->isValid($this->getRequest()->getParams())) {
-            $values = $form->getValues();
-            $priority = isset($values['priority']) ? $values['priority'] : NULL;
+            $priority = $this->getRequest()->getParam('priority', NULL);
         }
 
         $this->view->form = $form;

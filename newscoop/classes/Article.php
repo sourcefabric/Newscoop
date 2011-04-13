@@ -351,7 +351,6 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
 
         $copyArticles = array();
         if ($p_copyTranslations) {
@@ -452,9 +451,6 @@ class Article extends DatabaseObject {
 
             // Copy file pointers
             ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
-
-            // Copy audioclip pointers
-            ArticleAudioclip::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
 
             // Position the new article at the beginning of the section
             $articleCopy->positionAbsolute(1);
@@ -628,7 +624,6 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAudioclip.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
@@ -648,9 +643,6 @@ class Article extends DatabaseObject {
 
             // Delete file pointers
             ArticleAttachment::OnArticleDelete($this->m_data['Number']);
-
-            // Delete audioclip pointers
-            ArticleAudioclip::OnArticleDelete($this->m_data['Number']);
 
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
@@ -2378,8 +2370,10 @@ class Article extends DatabaseObject {
                     $isNullCond = Article::$s_regularParameters[$leftOperand]
                                 . ' IS NULL';
                     $selectClauseObj->addConditionalWhere($isNullCond);
+                } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=' ) {
+					$selectClauseObj->addConditionalWhere($whereCondition);
                 } else {
-                    $selectClauseObj->addWhere($whereCondition);
+                	$selectClauseObj->addWhere($whereCondition);
                 }
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag

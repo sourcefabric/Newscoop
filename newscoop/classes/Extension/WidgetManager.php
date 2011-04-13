@@ -23,8 +23,6 @@ class WidgetManager
 {
     const SETTING = 'WidgetsInstalled';
 
-    const PATH = '/extensions/';
-
     /** @var array */
     private static $defaults = array(
         'YourArticlesWidget',
@@ -45,6 +43,10 @@ class WidgetManager
         'PendingArticlesWidget',
     );
 
+    public static function ExtPath() {
+        return DIR_SEP . 'extensions' . DIR_SEP;
+    }
+
     /**
      * Get available widgets for user
      * @param int|NULL $uid
@@ -60,7 +62,7 @@ class WidgetManager
 
         // get all widget extensions
         $index = new Extension_Index();
-        $extensions = $index->addDirectory(WWW_DIR . self::PATH)
+        $extensions = $index->addDirectory(WWW_DIR . self::ExtPath())
             ->find('IWidget');
 
         // filter not-available (used)

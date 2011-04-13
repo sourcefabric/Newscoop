@@ -25,7 +25,7 @@ if ($userId > 0) {
 
 $rights = camp_get_permission_list();
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <table border="0" cellspacing="0" cellpadding="3" align="left">
 <?php
 $rightsList = array();

@@ -92,35 +92,35 @@ toggleComments();
 
 // main form submit
 $('form#article-main').submit(function() {
+
     var form = $(this);
 
-    if (!form.hasClass('changed')) {
+    if (!form.hasClass('changed') && !tinyMCE.activeEditor.isDirty()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
-        return false;
+    } else {
+    	 // ping for connection
+        callServer('ping', [], function(json) {
+            ajax_forms++;
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
+                data: form.serialize(),
+                success: function(data, status, p) {
+                    flashMessage('<?php putGS('Article saved.'); ?>');
+                    ajax_forms--;
+                    toggleComments();
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+                    }
+                }
+            });
+
+        }); // /ping
+        $(this).removeClass('changed');
     }
 
-    // ping for connection
-    callServer('ping', [], function(json) {
-        ajax_forms++;
-        $.ajax({
-            type: 'POST',
-            url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
-            data: form.serialize(),
-            success: function(data, status, p) {
-                flashMessage('<?php putGS('Article saved.'); ?>');
-                ajax_forms--;
-                toggleComments();
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
-                }
-            }
-        });
-
-    }); // /ping
-
-    $(this).removeClass('changed');
     return false;
 }).change(function() {
     $(this).addClass('changed');
@@ -210,24 +210,26 @@ $(".aauthor").live('focus', function() {
 
 // fancybox for popups
 $('a.iframe').each(function() {
-    $(this).fancybox({
-        hideOnContentClick: false,
-        width: 660,
-        height: 500,
-        onStart: function() { // check if there are any changes
-            return checkChanged();
-        },
-        onClosed: function(url, params) {
-            if ($.fancybox.reload) { // reload if set
-                if ($.fancybox.message) { // set message after reload
-                    $.cookie('flashMessage', $.fancybox.message);
+    if (!$(this).attr('custom')) {
+        $(this).fancybox({
+            hideOnContentClick: false,
+            width: 660,
+            height: 500,
+            onStart: function() { // check if there are any changes
+                return checkChanged();
+            },
+            onClosed: function(url, params) {
+                if ($.fancybox.reload) { // reload if set
+                    if ($.fancybox.message) { // set message after reload
+                        $.cookie('flashMessage', $.fancybox.message);
+                    }
+                    window.location.reload();
+                } else if ($.fancybox.error) {
+                    flashMessage($.fancybox.error, 'error');
                 }
-                window.location.reload();
-            } else if ($.fancybox.error) {
-                flashMessage($.fancybox.error, 'error');
             }
-        }
-    });
+        });
+    }
 });
 $('#locations_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;

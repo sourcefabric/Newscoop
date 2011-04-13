@@ -255,7 +255,6 @@ regGS("Thank you.", "გმადლობ");
 regGS("Please take a minute to send us an email.", "გთხოვთ ");
 regGS("(optional)", "დამატებით");
 regGS("The URL you entered is invalid: '$1'", "შეყვანილი URL არასწორია: $1");
-regGS("There was an error logging in to the Campcaster server", "დაშვებული იყო შეცდომა Campcaster –ის სერვერში შესვლისას");
 regGS("Reads", "წაკითხვები");
 regGS("Publish with issue", "");
 regGS("Universal List", "");

@@ -428,7 +428,8 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
 
     $first = true;
     $skipped = array();
-    $versions = array_map('basename', glob(WWW_DIR . '/install/sql/upgrade/[2-9].[0-9]*'));
+    $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
+    usort($versions, camp_version_compare);
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;
@@ -914,6 +915,33 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
     camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
                       true, $p_silent);
     return true;
+}
+
+/**
+ * Compares versions of Newscoop
+ * 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
+ */
+function camp_version_compare($p_version1, $p_version2) {
+    $version1 = "" . $p_version1;
+    $version2 = "" . $p_version2;
+
+    $ver1_arr = explode(".", $version1);
+    $ver2_arr = explode(".", $version2);
+    $ver1_len = count($ver1_arr);
+    $ver2_len = count($ver2_arr);
+
+    $ver_len = $ver1_len;
+    if ($ver2_len < $ver_len) {$ver_len = $ver2_len;}
+
+    for ($ind = 0; $ind < $ver_len; $ind++) {
+        if ($ver1_arr[$ind] < $ver2_arr[$ind]) {return -1;}
+        if ($ver1_arr[$ind] > $ver2_arr[$ind]) {return 1;}
+    }
+
+    if ($ver1_len < $ver2_len) {return -1;}
+    if ($ver1_len > $ver2_len) {return 1;}
+
+    return 0;
 }
 
 /**

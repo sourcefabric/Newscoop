@@ -1,4 +1,5 @@
 <?php 
+regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
@@ -67,11 +68,9 @@ regGS("The author was set successfuly for articles of type '$1' from the field '
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 λεπτό/ά.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 ώρα/ες και $3 λεπτό/ά.");
 regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.", "Σφάλμα κατά τη ρύθμιση του συγγραφέα \"$1\" για το άρθρο αρ. $2 (\"$3\") τύπου $4.");
-regGS("Unable to connect to the Campcaster server, please verify the Campcaster server settings.", "Η σύνδεση με τον διακομιστή Campcaster είναι αδύνατη, παρακαλούμε ελέγξτε τις ρυθμίσεις του διακομιστή Campcaster. ");
 regGS("Clear system cache", "Εκκαθάριση προσωρινής μνήμης");
 regGS("The system was unable to upload the file '$1'. ", "Το σύστημα δεν μπόρεσε να ανεβάσει το αρχείο '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Παρακαλούμε ελέγξτε το αρχείο που προσπαθείτε να ανεβάσετε, γιατί μπορεί να είναι κατεστραμένο.");
-regGS("Your user is not a valid Campcaster user", "Ο χρήστης σας δεν είναι έγκυρος χρήστης Campcaster");
 regGS("Connection refused", "Άρνηση σύνδεσης");
 regGS("An error occured in session management. Please reload the login page.", "Παρουσιάστηκε σφάλμα στην διαχείρηση συνόδου. Παρακαλούμε επαναφορτώστε την σελίδα εισόδου.");
 regGS("This file is stored on disk as '$1'.", "Το αρχείο είναι αποθηκευμένο στον δίσκο ως '$1'.");

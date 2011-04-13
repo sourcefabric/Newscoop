@@ -5,15 +5,15 @@
     <title>{{ $site_title }}</title>
 
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../javascript/jquery/fancybox/jquery.fancybox-1.3.4.css" />
+    <link rel="stylesheet" type="text/css" href="../js/jquery/fancybox/jquery.fancybox-1.3.4.css" />
 
     <script type="text/javascript" src="include/js/fValidate/fValidate.config.js"></script>
     <script type="text/javascript" src="include/js/fValidate/fValidate.core.js"></script>
     <script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
     <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
 
-    <script type="text/javascript" src="/javascript/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="../javascript/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <script type="text/javascript" src="include/js/install.js"></script>
     <script type="text/javascript"><!--
     $(function() {
