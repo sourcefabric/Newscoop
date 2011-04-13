@@ -1671,7 +1671,7 @@ window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
 
     //alert(window.map_win_popup);
     if (window.map_win_popup && (!window.map_win_popup.closed)) {
-        window.map_win_popup.close();
+        //window.map_win_popup.close();
     }
 
 
@@ -1740,8 +1740,8 @@ $header_part = '
                 window.opener.map_win_popup = window;
             }
         };
-        //setInterval ("window.set_map_popup_at_opener();", 1000);
-        setInterval ("window.set_map_popup_at_opener();", 500);
+        setInterval ("window.set_map_popup_at_opener();", 1000);
+        //setInterval ("window.set_map_popup_at_opener();", 500);
         </script>
 ';
 
@@ -1830,6 +1830,8 @@ $header_part = '
         global $Campsite;
         $tag_string = "";
         $tag_string_top = "";
+        $tag_string_top_async = "";
+        $tag_string_gv3_async = false;
         $tag_string_ini = "";
         $tag_string_mid = "";
         $tag_string_fin = "";
@@ -1899,6 +1901,11 @@ $header_part = '
 
         $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
         $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
+        $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
+
+        $geo_map_incl_async = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj_async"]);
+        $tag_string_gv3_async = $geo_map_info["incl_gv3"];
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
@@ -1931,6 +1938,17 @@ $header_part = '
         // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
         $tag_string_top .= $geo_map_incl;
         $tag_string_top .= "\n";
+        $tag_string_top_async .= $geo_map_incl_async;
+        $tag_string_top .= "\n";
+
+        $check_gv3 = "false";
+        if ($tag_string_gv3_async) {
+            $check_gv3 = "true";
+        }
+        $check_gv3_init = "false";
+        if ("" != $geo_map_incl_async_init) {
+            $check_gv3_init = "true";
+        }
 
         $include_files_tags = "";
         if (true) {
@@ -1962,6 +1980,20 @@ $header_part = '
 <script type="text/javascript">
     window.map_prepared = false;
 
+';
+
+        if ("" != $geo_map_incl_async_init) {
+        $tag_string_mid .= '
+if (undefined === window.' . $geo_map_incl_async_init . ') {
+    window.' . $geo_map_incl_async_init . ' = function () {
+        window.gv3_maps_loaded = true;
+    };
+}
+';
+        }
+
+        $tag_string_mid .= '
+
     geo_object'. $map_suffix .' = new geo_locations();
 
 window.center_large_map' . $map_suffix . ' = function () {
@@ -1986,6 +2018,38 @@ window.point_large_map_center' . $map_suffix . ' = function (index, select) {
         }
     } catch (e) {}
 };
+
+window.geo_on_load_proc_check_async_map' . $map_suffix . ' = function()
+{
+
+    var async_loaded = true;
+    if (' . $check_gv3 . ') {
+        var loaded_gv3 = false;
+        if ((undefined !== window.google) && (undefined !== window.google.maps) && (undefined !== window.google.maps.event)) {
+            loaded_gv3 = true;
+        }
+
+        if (' . $check_gv3_init . ') {
+            if ((undefined === window.gv3_maps_loaded) || (!window.gv3_maps_loaded)) {
+                loaded_gv3 = false;
+            }
+        }
+
+        if (!loaded_gv3) {async_loaded = false;}
+    }
+
+    if (0 < window.count_to_async_load' . $map_suffix . ') {
+        async_loaded = false;
+    }
+
+    if (async_loaded) {
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+
+    setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+
+}
 
 var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
@@ -2028,48 +2092,37 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
         $tag_string_mid .= "\n";
     }
     $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
-    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map});\n";
+    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map,map_holder:\"map_body_holder\"});\n";
     $tag_string_mid .= "}\n";
     $tag_string_mid .= "\n";
 
         $tag_string_mid .= '
 
         if (true && (typeof(window.map_popup_win) != "undefined")) {
-//
-try {
-            //if (undefined !== window.document.write_orig) {window.document.write = window.document.write_orig;}
-            if (undefined === window.document.write_orig) {
-                window.document.write_orig = window.document.write;
+';
+
+        $tag_async_load_bunch = "";
+        $count_to_async_load = 0;
+        foreach ($geo_map_incl_async_arr as $one_async_scr) {
+            if (!empty($one_async_scr)) {
+                $count_to_async_load += 1;
+                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {
+    window.count_to_async_load' . $map_suffix . ' -= 1;
+    //alert("got ' . $one_async_scr . '");
+});';
             }
-            //window.document.write_orig = window.document.write;
-            //window.document.write = function (txt) {if (txt) {$.getScript("http://maps.gstatic.com/intl/en_us/mapfiles/api-3/2/12/main.js", function() {});}}
-            //window.document.write = function (txt) {if (txt) {window.document.open("text/html", true); window.document.write_orig(txt); window.document.close();}};
-            window.document.write = function (txt) {if (txt) {
-                //var write_parts_obj = document.getElementById ? document.getElementById("write_parts") : null;
-                //if (null & write_parts_obj) {
-                //    var curr_html = "" + write_parts_obj.innerHTML;
-                //    curr_html += txt;
-                //    write_parts_obj.innerHTML = curr_html;
-                //}
-                if (-1 < txt.indexOf("://maps.gstatic.com/")) {
-                    $("#write_parts").append(txt);
-                }
-                else {
-                    window.document.write_orig(txt);
-                }
-            }};
-//
-            //alert("?");
-            //alert(window.document.write);
-            $.getScript("http://maps.google.com/maps/api/js?v=3.2&sensor=false", function() {
-            //$.getScript("http://newscoop_new/js/geocoding/openlayers/gv3api-local.js", function() {}
-                //alert("Load was performed.");
-                setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
-            });
+        }
 
-} catch (e) {alert(e);}
+        $tag_string_mid .= '
+            window.count_to_async_load' . $map_suffix . ' = ' . $count_to_async_load . ';
+            window.gv3_maps_loaded = false;
 
-            return;
+            ' . $tag_async_load_bunch . '
+
+            if (true) {
+                setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+                return;
+            }
         }
 
         setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
@@ -2111,7 +2164,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // should we provide js for large-map openning
         if ($open_large_map) {
 
-            //$tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top . $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
+            //$tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_top_async . $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
             $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
 
         }
@@ -2320,6 +2373,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         global $Campsite;
         $tag_string = "";
         $tag_string_top = "";
+        $tag_string_top_async = "";
+        $tag_string_gv3_async = false;
         $tag_string_ini = "";
         $tag_string_mid = "";
         $tag_string_fin = "";
@@ -2438,6 +2493,11 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
         $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
+        $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
+
+        $geo_map_incl_async = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj_async"]);
+        $tag_string_gv3_async = $geo_map_info["incl_gv3"];
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
@@ -2468,6 +2528,17 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
         $tag_string_top .= $geo_map_incl;
         $tag_string_top .= "\n";
+        $tag_string_top_async .= $geo_map_incl_async;
+        $tag_string_top .= "\n";
+
+        $check_gv3 = "false";
+        if ($tag_string_gv3_async) {
+            $check_gv3 = "true";
+        }
+        $check_gv3_init = "false";
+        if ("" != $geo_map_incl_async_init) {
+            $check_gv3_init = "true";
+        }
 
         $include_files_tags = "";
         if (true) {
@@ -2498,6 +2569,20 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 <script type="text/javascript">
     window.map_prepared = false;
 
+';
+
+        if ("" != $geo_map_incl_async_init) {
+        $tag_string_mid .= '
+if (undefined === window.' . $geo_map_incl_async_init . ') {
+    window.' . $geo_map_incl_async_init . ' = function () {
+        window.gv3_maps_loaded = true;
+    };
+}
+';
+        }
+
+        $tag_string_mid .= '
+
     geo_object'. $map_suffix .' = new geo_locations();
 
 window.center_large_map' . $map_suffix . ' = function () {
@@ -2522,6 +2607,38 @@ window.point_large_map_center' . $map_suffix . ' = function (index, select) {
         }
     } catch (e) {}
 };
+
+window.geo_on_load_proc_check_async_map' . $map_suffix . ' = function()
+{
+
+    var async_loaded = true;
+    if (' . $check_gv3 . ') {
+        var loaded_gv3 = false;
+        if ((undefined !== window.google) && (undefined !== window.google.maps) && (undefined !== window.google.maps.event)) {
+            loaded_gv3 = true;
+        }
+
+        if (' . $check_gv3_init . ') {
+            if ((undefined === window.gv3_maps_loaded) || (!window.gv3_maps_loaded)) {
+                loaded_gv3 = false;
+            }
+        }
+
+        if (!loaded_gv3) {async_loaded = false;}
+    }
+
+    if (0 < window.count_to_async_load' . $map_suffix . ') {
+        async_loaded = false;
+    }
+
+    if (async_loaded) {
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+
+    setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+
+}
 
 var geo_on_load_proc_map' . $map_suffix . ' = function()
 {
@@ -2568,11 +2685,35 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
         $tag_string_mid .= "\n";
     }
     $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
-    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map});\n";
+    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map,map_holder:\"map_body_holder\"});\n";
     $tag_string_mid .= "}\n";
     $tag_string_mid .= "\n";
 
         $tag_string_mid .= '
+
+        if (true && (typeof(window.map_popup_win) != "undefined")) {
+';
+
+        $tag_async_load_bunch = "";
+        $count_to_async_load = 0;
+        foreach ($geo_map_incl_async_arr as $one_async_scr) {
+            if (!empty($one_async_scr)) {
+                $count_to_async_load += 1;
+                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {window.count_to_async_load' . $map_suffix . ' -= 1;});';
+            }
+        }
+
+        $tag_string_mid .= '
+            window.count_to_async_load' . $map_suffix . ' = ' . $count_to_async_load . ';
+            window.gv3_maps_loaded = false;
+
+            ' . $tag_async_load_bunch . '
+
+            if (true) {
+                setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+                return;
+            }
+        }
 
         setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
         return;

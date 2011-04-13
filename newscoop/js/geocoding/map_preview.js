@@ -19,6 +19,7 @@ this.map_div_name = "";
 this.action_substitute = null;
 this.last_page_height = 0;
 this.page_height_offset = 16;
+this.page_map_holder = "";
 
 // specifying the article that the map is for
 this.article_number = 0;
@@ -291,6 +292,10 @@ this.set_map_large = function(params) {
         this.map_art_view_height_default = parseInt(params.height);
     }
 
+    if (params.map_holder) {
+        this.page_map_holder = params.map_holder;
+    }
+
     this.map_is_popup = true;
 };
 
@@ -350,7 +355,7 @@ this.try_size_updated = function() {
         if (cur_page_height == this.last_page_height) {return;}
 
         this.last_page_height = cur_page_height;
-        var body_holder = document.getElementById ? document.getElementById("map_body_holder") : null;
+        var body_holder = document.getElementById ? document.getElementById(this.page_map_holder) : null;
         if (body_holder) {
             body_holder.style.height = "" + this.last_page_height + "px";
         }
@@ -869,7 +874,7 @@ this.main_openlayers_init = function(map_div_name) {
         this.map_art_view_height_default = page_height;
 
         this.last_page_height = (page_height - this.page_height_offset);
-        var body_holder = document.getElementById ? document.getElementById("map_body_holder") : null;
+        var body_holder = document.getElementById ? document.getElementById(this.page_map_holder) : null;
         if (body_holder) {
             body_holder.style.height = "" + this.last_page_height + "px";
         }
