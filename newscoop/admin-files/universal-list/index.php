@@ -14,7 +14,7 @@ if (isset($_SESSION['f_language_selected'])) {
 } else {
     $f_old_language_selected = 0;
 }
-$f_language_selected = (int)camp_session_get('f_language_selected', 0); 
+$f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 camp_html_content_top(getGS('Search'), NULL);
 

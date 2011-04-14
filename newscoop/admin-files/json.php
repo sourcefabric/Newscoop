@@ -32,6 +32,8 @@ try {
     $serverRequest->allow('ping');
     $serverRequest->allow('ArticleList::doAction'); // checked in handler
     $serverRequest->allow('ArticleList::doData');
+    $serverRequest->allow('ArticleList::getFilterIssues');
+    $serverRequest->allow('ArticleList::getFilterSections');
     $serverRequest->allow('ArticleList::doOrder', 'Publish');
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
