@@ -27,22 +27,16 @@ class NewscoopEntityLanguageProxy extends \Newscoop\Entity\Language implements \
     }
 
     
-    public function setId($p_id)
-    {
-        $this->_load();
-        return parent::setId($p_id);
-    }
-
     public function getId()
     {
         $this->_load();
         return parent::getId();
     }
 
-    public function setName($p_name)
+    public function setName($name)
     {
         $this->_load();
-        return parent::setName($p_name);
+        return parent::setName($name);
     }
 
     public function getName()
@@ -51,10 +45,46 @@ class NewscoopEntityLanguageProxy extends \Newscoop\Entity\Language implements \
         return parent::getName();
     }
 
+    public function setNativeName($native_name)
+    {
+        $this->_load();
+        return parent::setNativeName($native_name);
+    }
+
+    public function getNativeName()
+    {
+        $this->_load();
+        return parent::getNativeName();
+    }
+
+    public function setCodePage($code_page)
+    {
+        $this->_load();
+        return parent::setCodePage($code_page);
+    }
+
+    public function getCodePage()
+    {
+        $this->_load();
+        return parent::getCodePage();
+    }
+
+    public function setCode($code)
+    {
+        $this->_load();
+        return parent::setCode($code);
+    }
+
+    public function getCode()
+    {
+        $this->_load();
+        return parent::getCode();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name');
+        return array('__isInitialized__', 'id', 'name', 'code_page', 'original_name', 'code');
     }
 
     public function __clone()

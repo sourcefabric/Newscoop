@@ -27,22 +27,10 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     }
 
     
-    public function setId($p_id)
-    {
-        $this->_load();
-        return parent::setId($p_id);
-    }
-
     public function getId()
     {
         $this->_load();
         return parent::getId();
-    }
-
-    public function setName($p_name)
-    {
-        $this->_load();
-        return parent::setName($p_name);
     }
 
     public function getName()
@@ -51,10 +39,10 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
         return parent::getName();
     }
 
-    public function setDefaultLanguage(\Newscoop\Entity\Language $p_language)
+    public function getLanguages()
     {
         $this->_load();
-        return parent::setDefaultLanguage($p_language);
+        return parent::getLanguages();
     }
 
     public function getDefaultLanguage()
@@ -72,7 +60,7 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'default_language');
+        return array('__isInitialized__', 'id', 'name', 'default_language', 'issues');
     }
 
     public function __clone()

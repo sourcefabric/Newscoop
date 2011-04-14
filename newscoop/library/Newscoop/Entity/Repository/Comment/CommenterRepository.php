@@ -12,6 +12,7 @@ use
     DateTime,
     Doctrine\ORM\EntityRepository,
     Doctrine\ORM\QueryBuilder,
+    Newscoop\Entity\Comment\Commenter,
     Newscoop\Datatable\Source as DatatableSource;
 
 /**
@@ -63,7 +64,17 @@ class CommenterRepository extends DatatableSource
         return $p_entity;
     }
 
-
+    /**
+     * Delete a commenter
+     *
+     * @param Newscoop\Entity\Comment\Commenter $p_commenter
+     * @return void
+     */
+    public function delete(Commenter $p_commenter)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($p_commenter);
+    }
     public function flush()
     {
         $this->getEntityManager()->flush();

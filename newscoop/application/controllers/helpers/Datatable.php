@@ -15,6 +15,12 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     private $handle;
 
     /**
+     *
+     * @var array where are keept the settings
+     */
+    private $settings;
+
+    /**
      * Init
      *
      * @return Action_Helper_Datatable
@@ -28,6 +34,10 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         return $this;
     }
 
+    public function setSetting($key, $value)
+    {
+        $this->setting[$key] = $value;
+    }
     /**
      * Set Datasource
      *

@@ -24,7 +24,7 @@ class Admin_CommentController extends Zend_Controller_Action
 {
 
     /**
-     * @var CommentRepository
+     * @var ICommentRepository
      *
      */
     private $repository;
@@ -35,21 +35,6 @@ class Admin_CommentController extends Zend_Controller_Action
      */
     private $form;
 
-    /**
-     * Check permissions
-     *
-     *
-     */
-    public function preDispatch()
-    {
-        global $g_user;
-
-        // permissions check
-        if (!$g_user->hasPermission('CommentModerate')) {
-            camp_html_display_error(getGS("You do not have the right to view logs."));
-
-        }
-    }
 
     public function init()
     {
@@ -64,6 +49,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $view = $this->view;
         $this->getHelper('contextSwitch')
             ->addActionContext('index', 'json')
             ->initContext();
@@ -72,13 +58,12 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setDataSource($this->repository);
 
         $table->setCols(array(
-            'id' => '<input type="checkbox">',
+            'id' => $view->toggleCheckbox(),
             'user' => getGS('Author'),
-            'time_created' => getGS('Date Posted'),
+            'time_created' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
         ));
 
-        $view = $this->view;
         $table->setHandle(function($comment) use ($view) {
             return array(
                 $view->commentIndex($comment),
@@ -91,6 +76,13 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->dispatch();
     }
 
+    public function listAction()
+    {
+        $this->getHelper('contextSwitch')
+            ->addActionContext('index', 'json')
+            ->initContext();
+
+    }
 
     /**
      * Action for Adding a Comment

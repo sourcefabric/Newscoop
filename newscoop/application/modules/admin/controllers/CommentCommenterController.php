@@ -125,11 +125,18 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
      */
     public function deleteAction()
     {
-        $commenter = new Commenter;
-        $this->repository->delete($commenter);
-        $this->repository->flush();
-        $this->_helper->flashMessenger(getGS('Commenter "$1" deleted.',$commenter->getName()));
-        $this->_helper->redirector->gotoSimple('index');
+        $params = $this->getRequest()->getParams();
+        if (!isset($params['commenter'])) {
+            throw new InvalidArgumentException;
+        }
+        $commenter = $this->repository->find($params['commenter']);
+        if($commenter)
+        {
+            $this->repository->delete($commenter);
+            $this->repository->flush();
+            $this->_helper->flashMessenger(getGS('Commenter "$1" deleted.',$commenter->getName()));
+            $this->_helper->redirector->gotoSimple('index');
+        }
     }
 
     /**
