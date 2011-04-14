@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Collections\ArrayCollection;
+
 /**
  * Issue entity
  * @Entity
@@ -38,6 +40,19 @@ class Issue
     private $language;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
+     * @var array
+     */
+    private $sections;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sections = new ArrayCollection;
+    }
+
+    /**
      * Get language
      *
      * @return Newscoop\Entity\Language
@@ -45,6 +60,16 @@ class Issue
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Get sections
+     *
+     * @return array
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 }
 

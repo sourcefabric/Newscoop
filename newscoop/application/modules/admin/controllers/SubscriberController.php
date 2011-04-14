@@ -35,7 +35,6 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->handleForm($this->form, $subscriber);
 
         $this->view->form = $this->form;
-        $this->view->user = $subscriber;
     }
 
     public function editAction()
@@ -46,7 +45,6 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->handleForm($this->form, $subscriber);
 
         $this->view->form = $this->form;
-        $this->view->user = $subscriber;
     }
 
     public function deleteAction()

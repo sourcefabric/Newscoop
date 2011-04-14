@@ -36,7 +36,7 @@ class Admin_Form_Subscription extends Zend_Form
         ));
 
         if (!empty($this->languages)) {
-            $this->addElement('select', 'language-set', array(
+            $this->addElement('select', 'language_set', array(
                 'label' => getGS('Language'),
                 'multioptions' => array(
                     'select' => getGS('Individual languages'),
@@ -45,10 +45,20 @@ class Admin_Form_Subscription extends Zend_Form
             ));
 
             $this->addElement('multiselect', 'languages', array(
+                'required' => isset($_POST['language_set']) && $_POST['language_set'] == 'select', // check only if language_set == select
                 'multioptions' => $this->languages,
+                'validators' => array(
+                    array(new Zend_Validate_Callback(function($value, $context) {
+                        return $context['language_set'] == 'all' || !empty($value);
+                    }), true),
+                ),
+                'errorMessages' => array(getGS('Please select a language')),
             ));
+
+            $this->getElement('languages')->setAutoInsertNotEmptyValidator(false);
+
         } else {
-            $this->addElement('hidden', 'language-set', array(
+            $this->addElement('hidden', 'language_set', array(
                 'value' => 'all',
             ));
         }
@@ -61,7 +71,7 @@ class Admin_Form_Subscription extends Zend_Form
             ),
         ));
 
-        $this->addElement('text', 'start', array(
+        $this->addElement('text', 'start_date', array(
             'label' => getGS('Start'),
             'required' => true,
             'class' => 'date',

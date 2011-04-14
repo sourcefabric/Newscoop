@@ -7,7 +7,9 @@
 
 namespace Newscoop\Entity;
 
-use Newscoop\Entity\Publication;
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Entity\Publication,
+    Newscoop\Entity\User\Subscriber;
 
 /**
  * Subscription entity
@@ -56,6 +58,19 @@ class Subscription
     private $active;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Entity\SubscriptionSection", mappedBy="subscription")
+     * @var array
+     */
+    private $sections;
+
+    /**
+     */
+    public function __construct()
+    {
+        $this->sections = new ArrayCollection;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -68,12 +83,12 @@ class Subscription
     /**
      * Set subscriber
      *
-     * @param Newscoop\Entity\User\Subscriber $user
-     * @return Newscoop\Entity\User\Subscription
+     * @param Newscoop\Entity\User\Subscriber $subscriber
+     * @return Newscoop\Entity\Subscription
      */
-    public function setSubscriber(Subscriber $user)
+    public function setSubscriber(Subscriber $subscriber)
     {
-        $this->subscriber = $user;
+        $this->subscriber = $subscriber;
         return $this;
     }
 
@@ -100,6 +115,28 @@ class Subscription
     }
 
     /**
+     * Get publication name
+     *
+     * @return string
+     */
+    public function getPublicationName()
+    {
+        return $this->publication->getName();
+    }
+
+    /**
+     * Set to pay
+     *
+     * @param float $toPay
+     * @return Newscoop\Entity\Subscription
+     */
+    public function setToPay($toPay)
+    {
+        $this->toPay = (float) $toPay;
+        return $this;
+    }
+
+    /**
      * Get to pay
      *
      * @return float
@@ -113,11 +150,11 @@ class Subscription
      * Set type
      *
      * @param string $type
-     * @return Newscoop\Entity\User\Subscription
+     * @return Newscoop\Entity\Subscription
      */
     public function setType($type)
     {
-        $this->type = (string) $type;
+        $this->type = strtolower($type) == 't' ? 'T' : 'P';
         return $this;
     }
 
@@ -135,7 +172,7 @@ class Subscription
      * Set active
      *
      * @param bool $active
-     * @return Newscoop\Entity\User\Subscription
+     * @return Newscoop\Entity\Subscription
      */
     public function setActive($active)
     {
@@ -151,6 +188,16 @@ class Subscription
     public function isActive()
     {
         return strtolower($this->active) == 'y';
+    }
+
+    /**
+     * Get sections
+     *
+     * @return array
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 }
 

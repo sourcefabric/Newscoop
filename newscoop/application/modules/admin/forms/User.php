@@ -42,6 +42,11 @@ abstract class Admin_Form_User extends Zend_Form
             'filters' => array(
                 'stringTrim',
             ),
+            'validators' => array(
+                array(new Zend_Validate_Callback(function($value, $context) {
+                    return empty($context['password']) || $context['password'] == $value;
+                }), false),
+            ),
             'errorMessages' => array(getGS('Confirmation failed')),
             'order' => 30,
         ));
@@ -227,18 +232,5 @@ abstract class Admin_Form_User extends Zend_Form
             'class' => 'toggle',
             'order' => 62,
         ));
-    }
-
-    public function isValid($values)
-    {
-        $valid = parent::isValid($values);
-
-        if (empty($values['password'])
-            || $values['password'] == $values['password_confirm']) {
-            return $valid;
-        }
-
-        $this->getElement('password_confirm')->markAsError();
-        return FALSE;
     }
 }

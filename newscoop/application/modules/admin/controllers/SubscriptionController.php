@@ -8,16 +8,10 @@ use Newscoop\Entity\Subscription,
  */
 class Admin_SubscriptionController extends Zend_Controller_Action
 {
-
-    public function init()
-    {
-        /* Initialize action controller here */
-    }
-
     public function indexAction()
     {
-        $user = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
-        $this->view->user = $user;
+        $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
+        $this->view->subscriber = $subscriber;
 
         $this->view->actions = array(
             array(
@@ -34,13 +28,13 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $user = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
+        $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
 
-        $publications = $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($user);
+        $publications = $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($subscriber);
         if (empty($publications)) {
-            $this->_helper->flashMessenger(getGS('Subscriptions exist for all available publications!'));
+            $this->_helper->flashMessenger(getGS('Subscriptions exist for all available publications.'));
             $this->_helper->redirector('index', 'subscription', 'admin', array(
-                'user' => $user->getId(),
+                'user' => $subscriber->getId(),
             ));
         }
 
@@ -53,12 +47,39 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             $subscription = new Subscription;
-            $this->_helper->entity->getRepository($subscription)->save($subscription, $user, $form->getValues());
+            $repository = $this->_helper->entity->getRepository($subscription);
+            $repository->save($subscription, $subscriber, $form->getValues());
             $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('created')));
+            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
             $this->_helper->redirector('index', 'subscription', 'admin', array(
-                'user' => $this->_getParam('user', 0),
+                'user' => $this->_getParam('user'),
+            ));
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function editAction()
+    {
+        $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
+
+        $form = $this->getToPayForm();
+        $form->setAction('')->setMethod('post');
+
+        $form->setDefaults(array(
+            'to_pay' => sprintf('%.2f', $subscription->getToPay()),
+        ));
+
+        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
+            $em = $this->_helper->entity->getManager();
+            $values = $form->getValues();
+            $subscription->setToPay($values['to_pay']);
+            $this->_helper->entity->flushManager();
+
+            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
+            $this->_helper->redirector('index', 'subscription', 'admin', array(
+                'user' => $this->_getParam('user'),
             ));
         }
 
@@ -81,11 +102,10 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        $em = $this->_helper->entity->getManager();
-
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
-        $em->remove($subscription);
-        $em->flush();
+        $this->_helper->entity->getRepository($subscription)
+            ->delete($subscription);
+        $this->_helper->entity->flushManager();
 
         $this->_helper->flashMessenger(getGS('Subscription $1', getGS('removed')));
         $this->_helper->redirector('index', 'subscription', 'admin', array(
@@ -115,6 +135,27 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         }
 
         return $langs;
+    }
+
+    /**
+     * Get to pay form
+     *
+     * @return Zend_Form
+     */
+    private function getToPayForm()
+    {
+        $form = new Zend_Form;
+
+        $form->addElement('text', 'to_pay', array(
+            'label' => getGS('Left to pay'),
+            'required' => true,
+        ));
+
+        $form->addElement('submit', 'submit', array(
+            'label' => getGS('Save'),
+        ));
+
+        return $form;
     }
 }
 

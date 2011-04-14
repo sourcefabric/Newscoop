@@ -48,7 +48,6 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
     }
 
     /**
@@ -68,7 +67,6 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
 
         $this->view->actions = array(
             array(
@@ -88,7 +86,6 @@ class Admin_StaffController extends Zend_Controller_Action
     public function editAccessAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');
-        $this->view->user = $staff;
     }
 
     /**
