@@ -30,14 +30,12 @@ class CommentsUsersRepository extends DatatableSource
     {
 
         foreach($p_values as $key => $value) {
-
             $p_entity->setType('deny');
             $p_entity->setForColumn($key);
             $p_entity->setSearch($value);
             $p_entity->setSearchType('normal');
+
         }
         return $p_entity;
     }
-
-
 }

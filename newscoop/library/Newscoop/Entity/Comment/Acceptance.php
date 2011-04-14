@@ -7,8 +7,7 @@
 
 namespace Newscoop\Entity\Comment;
 
-use Newscoop\Entity\Languages,
-    Newscoop\Entity\Publications;
+use Newscoop\Entity\Publication;
 
 /**
  * Publications entity
@@ -50,11 +49,11 @@ class Acceptance
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Publications")
+     * @manyToOne(targetEntity="Publication")
      * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
-     * @var Newscoop\Entity\Publications
+     * @var Newscoop\Entity\Publication
      */
-    private $forum;
+    //private $forum;
 
     /**
      * @column(type="integer")
@@ -85,7 +84,7 @@ class Acceptance
      * Set acceptance id
      *
      * @param int $p_id
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setId($p_id)
     {
@@ -107,8 +106,8 @@ class Acceptance
     /**
      * Set acceptance forum
      *
-     * @param Newscoop\Entity\Publications $p_forum
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @param Newscoop\Entity\Publication $p_forum
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setForum(Publications $p_forum)
     {
@@ -131,7 +130,7 @@ class Acceptance
      * Set acceptance for_column
      *
      * @param string $p_for_column
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setForColumn($p_for_column)
     {
@@ -155,7 +154,7 @@ class Acceptance
      * Set acceptance type
      *
      * @param string $p_type
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setType($p_type)
     {
@@ -179,7 +178,7 @@ class Acceptance
      * Set acceptance search by
      *
      * @param string $p_search
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setSearch($p_search)
     {
@@ -202,7 +201,7 @@ class Acceptance
      * Set acceptance search type
      *
      * @param string $p_search_type
-     * @return Newscoop\Entity\CommentsAcceptance
+     * @return Newscoop\Entity\Comment\Acceptance
      */
     public function setSearchType($p_search_type)
     {

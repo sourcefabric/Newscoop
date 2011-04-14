@@ -7,7 +7,7 @@
  *
  *
  */
-use Newscoop\Entity\Comment\User as CommentUser;
+use Newscoop\Entity\Comment\Commenter;
 
 //function to get the ip address
 function getIp()
@@ -20,48 +20,31 @@ function getIp()
         return $_SERVER['REMOTE_ADDR'];
 }
 
-class Admin_CommentUserController extends Zend_Controller_Action
+class Admin_CommentCommenterController extends Zend_Controller_Action
 {
 
     /**
-     * @var ICommentUsers
+     * @var ICommenter
      */
     private $repository;
 
     /**
      *
-     * @var Admin_Form_Comment_User
+     * @var Admin_Form_Comment_Commenter
      */
     private $form;
 
-    /**
-     * Check permissions
-     *
-     */
-    public function preDispatch()
-    {
-        global $g_user;
-
-        // permissions check
-        if (!$g_user->hasPermission('CommentModerate')) {
-            camp_html_display_error(getGS("You do not have the right to view logs."));
-
-        }
-    }
 
     public function init()
     {
-        // get comment user repository
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        $this->repository = $bootstrap->getResource('doctrine')
-            ->getEntityManager()
-            ->getRepository('Newscoop\Entity\Comment\User');
+        // get commenter repository
+        $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Commenter');
 
         $this->getHelper('contextSwitch')
             ->addActionContext('index', 'json')
             ->initContext();
-        // set the default form for comment user and set method to post
-        $this->form = new Admin_Form_CommentUser;
+        // set the default form for comment commenter and set method to post
+        $this->form = new Admin_Form_CommentCommenter;
         $this->form->setMethod('post');
         return $this;
 
@@ -88,15 +71,15 @@ class Admin_CommentUserController extends Zend_Controller_Action
         ));
 
         $view = $this->view;
-        $table->setHandle(function($commentUser) use ($view) {
-            $urlParam = array('comment-user' => $commentUser->getId());
+        $table->setHandle(function($commenter) use ($view) {
+            $urlParam = array('commenter' => $commenter->getId());
             return array(
-                $commentUser->getTimeCreated()->format('Y-i-d H:i:s'),
-                $commentUser->getName(),
-                $commentUser->getUsername(),
-                $commentUser->getEmail(),
-                $commentUser->getUrl(),
-                $commentUser->getIp(),
+                $commenter->getTimeCreated()->format('Y-i-d H:i:s'),
+                $commenter->getName(),
+                $commenter->getUsername(),
+                $commenter->getEmail(),
+                $commenter->getUrl(),
+                $commenter->getIp(),
                 $view->linkEdit($urlParam),
                 $view->linkDelete($urlParam)
             );
@@ -106,64 +89,64 @@ class Admin_CommentUserController extends Zend_Controller_Action
     }
 
     /**
-     * Action for Adding a Comment User
+     * Action for Adding a Commenter
      */
     public function addAction()
     {
-        $commentUser = new CommentUser;
+        $commenter = new Commenter;
 
-        $this->handleForm($this->form, $commentUser);
+        $this->handleForm($this->form, $commenter);
 
         $this->view->form = $this->form;
-        $this->view->commentUser = $commentUser;
+        $this->view->commenter = $commenter;
     }
 
     /**
-     * Action for Editing a Comment User
+     * Action for Editing a Commenter
      */
     public function editAction()
     {
         $params = $this->getRequest()->getParams();
-        if (!isset($params['comment-user'])) {
+        if (!isset($params['commenter'])) {
             throw new InvalidArgumentException;
         }
-        $commentUser = $this->repository->find($params['comment-user']);
-        if($commentUser)
+        $commenter = $this->repository->find($params['commenter']);
+        if($commenter)
         {
-            $this->form->setFromEntity($commentUser);
-            $this->handleForm($this->form, $commentUser);
+            $this->form->setFromEntity($commenter);
+            $this->handleForm($this->form, $commenter);
             $this->view->form = $this->form;
-            $this->view->commentUser = $commentUser;
+            $this->view->commenter = $commenter;
         }
     }
 
     /**
-     * Action for Deleteing a Comment User
+     * Action for Deleteing a Commenter
      */
     public function deleteAction()
     {
-        $commentUser = new CommentUser;
-        $this->repository->delete($commentUser);
+        $commenter = new Commenter;
+        $this->repository->delete($commenter);
         $this->repository->flush();
-        $this->_helper->flashMessenger(getGS('Comment User "$1" deleted.',$p_user->getName()));
+        $this->_helper->flashMessenger(getGS('Commenter "$1" deleted.',$commenter->getName()));
         $this->_helper->redirector->gotoSimple('index');
     }
 
     /**
-     * Method for saving a comment user
+     * Method for saving a commenter
      *
      * @param ZendForm $p_form
-     * @param ICommentUser $p_user
+     * @param ICommenter $p_commenter
      */
-    private function handleForm(Zend_Form $p_form, $p_user)
+    private function handleForm(Zend_Form $p_form, $p_commenter)
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
             $values['ip'] = getIp();
             $values['time_created'] = new DateTime;
-            $this->repository->save($p_user, $values);
-            $this->repository->flush();
-            $this->_helper->flashMessenger(getGS('Comment User "$1" saved.',$p_user->getName()));
+            $this->repository->save($p_commenter, $values);
+           $this->repository->flush();
+            $this->_helper->flashMessenger(getGS('Commenter "$1" saved.',$p_commenter->getName()));
             $this->_helper->redirector->gotoSimple('index');
         }
     }

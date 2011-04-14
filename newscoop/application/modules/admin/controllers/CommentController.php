@@ -7,8 +7,7 @@
  *
  *
  */
-use Newscoop\Entity\Comment,
-    Newscoop\Entity\CommentRepository;
+use Newscoop\Entity\Comment;
 
  // function to get the ip address
 function getIp()
@@ -83,7 +82,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setHandle(function($comment) use ($view) {
             return array(
                 $view->commentIndex($comment),
-                $view->commentUser($comment->getUser()),
+                $view->commentCommenter($comment->getCommenter()),
                 $comment->getTimeCreated()->format('Y-i-d H:i:s'),
                 $comment->getSubject()
             );
@@ -107,7 +106,7 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
-     * Method for saving a comment user
+     * Method for saving a comment
      *
      * @param ZendForm $p_form
      * @param IComment $p_comment
@@ -116,11 +115,9 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
-            /*
             $values['language_id'] = 1;
             $values['thread_id'] = 64;
             $values['forum_id'] = 2;
-            */
             $values['ip'] = getIp();
             $values['status'] = 'hidden';
             $values['time_created'] = new DateTime;

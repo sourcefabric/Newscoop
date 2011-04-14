@@ -11,15 +11,13 @@ use DateTime,
     Newscoop\Entity\User;
 
 /**
- * User entity
+ * Commenter entity
  * @entity
- * @table(name="CommentsUsers")
- * @entity(repositoryClass="Newscoop\Entity\Repository\CommentsUsersRepository")
+ * @table(name="CommentCommenter")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\CommenterRepository")
  */
-class User
+class Commenter
 {
-
-    const IP_LENGTH = 39; // IPv6 ready
 
     /**
      * @id @generatedValue
@@ -29,7 +27,7 @@ class User
     private $id;
 
     /**
-     * @manyToOne(targetEntity="User")
+     * @manyToOne(targetEntity="Newscoop\Entity\User")
      * @joinColumn(name="fk_user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
@@ -67,10 +65,10 @@ class User
 
 
     /**
-     * Set comment user id
+     * Set commenter id
      *
      * @param int $p_id
-     * @return Newscoop\Entity\CommentsUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setId($p_id)
     {
@@ -90,10 +88,10 @@ class User
     }
 
     /**
-     * Set comment user full name
+     * Set commenter full name
      *
      * @param string $p_name
-     * @return Newscoop\Entity\CommentsUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setName($p_name)
     {
@@ -103,7 +101,7 @@ class User
     }
 
     /**
-     * Get user name
+     * Get commenter name
      *
      * @return string
      */
@@ -113,10 +111,10 @@ class User
     }
 
     /**
-     * Set comment user email address
+     * Set commenter email address
      *
      * @param string $p_email
-     * @return Newscoop\Entity\CommentsUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setEmail($p_email)
     {
@@ -126,7 +124,7 @@ class User
     }
 
    /**
-     * Get user email address
+     * Get commenter email address
      *
      * @return string
      */
@@ -139,7 +137,7 @@ class User
      * Set user
      *
      * @param Newscoop\Entity\User $user
-     * @return Newscoop\Entity\CommentsUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setUser(User $user)
     {
@@ -161,7 +159,7 @@ class User
      * Set comment user url
      *
      * @param string $p_url
-     * @return Newscoop\Entity\CommentsUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setUrl($p_url)
     {
@@ -184,13 +182,13 @@ class User
      * Set ip
      *
      * @param string $p_ip
-     * @return Newscoop\Entity\Log
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setIp($p_ip)
     {
         // remove subnet & limit to IP_LENGTH
         $ip_array = explode('/', (string) $p_ip);
-        $this->ip = substr($ip_array[0], 0, self::IP_LENGTH);
+        $this->ip = substr($ip_array[0], 0, 39);
         // return this for chaining mechanism
         return $this;
     }
@@ -216,11 +214,12 @@ class User
      * Set time created
      *
      * @param DateTime $p_datetime
-     * @return Newscoop\Entity\Log
+     * @return Newscoop\Entity\Comment\Commenter
      */
     public function setTimeCreated(DateTime $p_datetime)
     {
         $this->time_created = $p_datetime;
+        // return this for chaining mechanism
         return $this;
     }
 

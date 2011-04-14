@@ -21,12 +21,11 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-/*
+
         $this->getActionController()->getHelper('contextSwitch')
             ->addActionContext('table', 'json')
             ->initContext();
         return $this;
-*/
     }
 
     /**

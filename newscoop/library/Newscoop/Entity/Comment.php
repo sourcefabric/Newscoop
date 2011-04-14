@@ -9,7 +9,7 @@ namespace Newscoop\Entity;
 
 use DateTime,
     InvalidArgumentException,
-    Newscoop\Entity\Comment\User as CommentUser,
+    Newscoop\Entity\Comment\Commenter,
     Newscoop\Entity\Language,
     Newscoop\Entity\Publication;
 
@@ -39,11 +39,11 @@ class Comment
     private $id;
 
     /**
-     * @manyToOne(targetEntity="CommentUser")
-     * @joinColumn(name="fk_comment_user_id", referencedColumnName="id")
-     * @var Newscoop\Entity\Comment\User
+     * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter")
+     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
+     * @var Newscoop\Entity\Comment\Commenter
      */
-    private $user;
+    private $commenter;
 
     /**
      * @manyToOne(targetEntity="Publication")
@@ -242,36 +242,36 @@ class Comment
     }
 
     /**
-     * Set user
+     * Set commenter
      *
-     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Comment\Commenter $p_commenter
      * @return Newscoop\Entity\Comment
      */
-    public function setUser(CommentUser $p_user)
+    public function setCommenter(Commenter $p_commenter)
     {
-        $this->user = $p_user;
+        $this->commenter = $p_commenter;
         // return this for chaining mechanism
         return $this;
     }
 
     /**
-     * Get user
+     * Get commenter
      *
-     * @return Newscoop\Entity\CommentUsers
+     * @return Newscoop\Entity\Comment\Commenter
      */
-    public function getUser()
+    public function getCommenter()
     {
-        return $this->user;
+        return $this->commenter;
     }
 
     /**
-     * Get user name
+     * Get commenter name
      *
      * @return string
      */
-    public function getUserName()
+    public function getCommenterName()
     {
-        return $this->getUser()->getName();
+        return $this->getCommenter()->getName();
     }
 
     /**

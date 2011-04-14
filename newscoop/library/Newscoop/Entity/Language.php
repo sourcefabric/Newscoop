@@ -11,9 +11,9 @@ namespace Newscoop\Entity;
 /**
  * Language entity
  * @entity(repositoryClass="Newscoop\Entity\Repository\LanguageRepository")
- * @table(name="Languages_Tmp")
+ * @table(name="Languages")
  */
-class Language 
+class Language
 {
     /**
      * @id @generatedValue

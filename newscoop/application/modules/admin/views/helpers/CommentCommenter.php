@@ -3,7 +3,7 @@
 /**
  * Render actions view helper
  */
-class Admin_View_Helper_CommentUser extends Zend_View_Helper_Abstract
+class Admin_View_Helper_CommentCommenter extends Zend_View_Helper_Abstract
 {
     /**
      * Render actions

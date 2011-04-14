@@ -15,16 +15,16 @@ use
     Newscoop\Datatable\Source as DatatableSource;
 
 /**
- * Comments users repository
+ * Comments author repository
  */
-class CommentsUsersRepository extends DatatableSource
+class CommenterRepository extends DatatableSource
 {
     /**
-     * Method for geting a user
+     * Method for geting a commenter
      *
-     * @param Newscoop\Entity\Comment\User $p_entity
+     * @param Newscoop\Entity\Comment\Commenter $p_entity
      * @param array $p_values
-     * @return Newscoop\Entity\Comment\User $p_entity
+     * @return Newscoop\Entity\Comment\Commenter $p_entity
      */
     public function save($p_entity, array $p_values)
     {
@@ -50,9 +50,9 @@ class CommentsUsersRepository extends DatatableSource
            }
         }
 
-        $commentUsers = $this->findBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
-        if(count($commentUsers)==1)
-            $p_entity = $commentUsers[0];
+        $commenters = $this->findBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
+        if(count($commenters)==1)
+            $p_entity = $commenters[0];
         $p_entity->setName($p_values['name'])
                  ->setEmail($p_values['email'])
                  ->setUrl($p_values['url'])

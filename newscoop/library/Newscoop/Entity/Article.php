@@ -7,16 +7,13 @@
 
 namespace Newscoop\Entity;
 
-use Newscoop\Entity\Languages,
-    Newscoop\Entity\Publications;
-
 /**
- * Articles entity
+ * Article entity
  * @entity
  * @table(name="Articles")
- * @entity(repositoryClass="Newscoop\Entity\Repository\ArticlesRepository")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
  */
-class Articles
+class Article
 {
     /**
      * @id @generatedValue
@@ -26,14 +23,14 @@ class Articles
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Languages")
+     * @manyToOne(targetEntity="Language")
      * @joinColumn(name="IdLanguage", referencedColumnName="Id")
-     * @var Newscoop\Entity\Languages
+     * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @manyToOne(targetEntity="Publications")
+     * @manyToOne(targetEntity="Publication")
      * @joinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publications
      */
@@ -60,7 +57,7 @@ class Articles
      * Set article id
      *
      * @param int $p_id
-     * @return Newscoop\Entity\Articles
+     * @return Article
      */
     public function setId($p_id)
     {
@@ -94,7 +91,7 @@ class Articles
      * Set the flag if the comments are enabled or not
      *
      * @param $p_enabled
-     * @return Newscoop\Entity\Articles
+     * @return Article
      */
     public function setCommentsEnabled($p_enabled )
     {
@@ -106,8 +103,8 @@ class Articles
     /**
      * Set publication
      *
-     * @param  Newscoop\Entity\Publications $p_publication
-     * @return Newscoop\Entity\Articles
+     * @param  Publication $p_publication
+     * @return Article
      */
     public function setPublication(Publications $p_publication)
     {
@@ -129,10 +126,10 @@ class Articles
     /**
      * Set language
      *
-     * @param  Newscoop\Entity\Languages $p_language
-     * @return Newscoop\Entity\Articles
+     * @param  Newscoop\Entity\Language $p_language
+     * @return Newscoop\Entity\Article
      */
-    public function setLanguage(Languages $p_language)
+    public function setLanguage(Language $p_language)
     {
         $this->language = $p_language;
         // return this for chaining mechanism
@@ -142,7 +139,7 @@ class Articles
     /**
      * Get language
      *
-     * @return Newscoop\Entity\Languages
+     * @return Newscoop\Entity\Language
      */
     public function getLanguage()
     {

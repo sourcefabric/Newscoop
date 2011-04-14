@@ -10,11 +10,11 @@ namespace Newscoop\Entity\Repository;
 use Doctrine\ORM\EntityRepository,
     Doctrine\ORM\QueryBuilder,
     Newscoop\Entity\Comment,
-    Newscoop\Entity\Comment\User as CommentUser,
+    Newscoop\Entity\Comment\Commenter,
     Newscoop\Datatable\Source as DatatableSource;
 
 /**
- * Comment users repository
+ * Comment repository
  */
 class CommentRepository extends DatatableSource
 {
@@ -76,11 +76,11 @@ class CommentRepository extends DatatableSource
         // get the enitity manager
         $em = $this->getEntityManager();
 
-        $commentUserRepository = $em->getRepository('Newscoop\Entity\Comment\User');
-        $commentUser = new CommentUser;
-        $commentUser = $commentUserRepository->save($commentUser, $p_values);
+        $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
+        $commenter = new Commenter;
+        $commenter = $commenterRepository->save($commenter, $p_values);
 
-        $p_entity->setUser($commentUser)
+        $p_entity->setCommenter($commenter)
                  ->setSubject($p_values['subject'])
                  ->setMessage($p_values['message'])
                  ->setStatus($p_values['status'])
@@ -127,6 +127,7 @@ class CommentRepository extends DatatableSource
         }
         else
         {
+            $qb = $this->createQueryBuilder('c');
             $threadOrder = $qb->select('MAX(c.thread_order)')
                ->andWhere('c.thread = :thread')
                ->andWhere('c.language = :language')
@@ -136,18 +137,18 @@ class CommentRepository extends DatatableSource
                ->getSingleScalarResult();
             // increase by one of the current comment
             $threadOrder+= 1;
-            $articlesRepository = $em->getRepository('Newscoop\Entity\Article');
-            $publicationsRepository = $em->getRepository('Newscoop\Entity\Publication');
-            $languagesRepository = $em->getRepository('Newscoop\Entity\Language');
-
-            $thread = $articlesRepository->find($p_values['thread_id']);
-            $forum = $publicationsRepository->find($p_values['forum_id']);
-            $language = $languagesRepository->find($p_values['language_id']);
+            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
+            $publicationRepository = $em->getRepository('Newscoop\Entity\Publication');
+            $languageRepository = $em->getRepository('Newscoop\Entity\Language');
+            /*
+            $thread = $articleRepository->find($p_values['thread_id']);
+            $forum = $publicationRepository->find($p_values['forum_id']);
+            $language = $languageRepository->find($p_values['language_id']);
 
             $p_entity->setLanguage($language)
                      ->setForum( $forum )
                      ->setThread( $thread );
-
+            */
         }
         $p_entity->setThreadOrder($threadOrder)
                  ->setThreadLevel($threadLevel);

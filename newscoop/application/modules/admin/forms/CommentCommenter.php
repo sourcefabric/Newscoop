@@ -1,11 +1,8 @@
 <?php
-
-use Newscoop\Entity\User;
-
 /**
- * User form
+ * Commenter form
  */
-class Admin_Form_CommentsUser extends Zend_Form
+class Admin_Form_CommentCommenter extends Zend_Form
 {
     public function init()
     {
@@ -50,16 +47,16 @@ class Admin_Form_CommentsUser extends Zend_Form
             'name',
             'email',
             'url'
-        ), 'commentsUser_info', array(
-            'legend' => getGS('Show comment user details'),
+        ), 'commenter_info', array(
+            'legend' => getGS('Show commenter details'),
             'class' => 'toggle',
             'order' => 70,
         ));
 
         $this->addDisplayGroup(array(
             'user',
-        ), 'commentsUser', array(
-            'legend' => getGS('Show user'),
+        ), 'commenter', array(
+            'legend' => getGS('Show commenter'),
             'class' => 'toggle',
             'order' => 20,
         ));
@@ -73,16 +70,16 @@ class Admin_Form_CommentsUser extends Zend_Form
     /**
      * Set default values by entity
      *
-     * @param Newscoop\Models\Comment\IUser $commentUser
+     * @param $commenter
      * @return void
      */
-    public function setFromEntity($commentUser)
+    public function setFromEntity($commenter)
     {
         $this->setDefaults(array(
-            'user' => $commentUser->getUserId(),
-            'name' => $commentUser->getName(),
-            'email' => $commentUser->getEmail(),
-            'url'   => $commentUser->getUrl()
+            'user' => $commenter->getUserId(),
+            'name' => $commenter->getName(),
+            'email' => $commenter->getEmail(),
+            'url'   => $commenter->getUrl()
         ));
 
     }
