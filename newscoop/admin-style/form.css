@@ -1,0 +1,51 @@
+form dl {
+    margin: 1em 0;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+form dt, form dd {
+    margin-left: 0;
+}
+
+form dt {
+    padding: 3px 5px;
+    font-weight: bold;
+}
+
+form dd input[type=text] {
+    width: 21em;
+    padding: 3px 5px;
+}
+
+form dd input[type=text]:focus {
+    border: 1px solid #cce5f0;
+}
+
+form dd ul.errors {
+    padding: 3px 8px;
+}
+
+form dd ul.errors li {
+    font-size: 1.1em;
+    color: #cc0000;
+}
+
+.filter dl.zend_form {
+    height: 1%;
+    overflow: hidden;
+    padding: 8px;
+}
+
+.filter dl.zend_form > * {
+    float: left;
+}
+
+.filter dl.zend_form dt {
+    padding-top: 1px;
+}
+
+.filter dl.zend_form dd {
+    margin-left: 1em;
+}

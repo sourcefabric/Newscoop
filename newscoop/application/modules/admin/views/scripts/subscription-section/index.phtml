@@ -1,4 +1,4 @@
-<h1><?php putGS('Subscribed sections: $1', $this->subscription->getPublicationName()); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Subscribed sections: $1', $this->subscription->getPublicationName())); ?>
 
 <?php $this->renderActions(); ?>
 

@@ -13,15 +13,19 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
         $this->view->subscriber = $subscriber;
 
+        $next = $this->_getParam('next');
+        $this->view->next = $next;
+
         $this->view->actions = array(
             array(
                 'label' => getGS('Add new subscription'),
-                'module' => $this->_getParam('module'),
-                'controller' => $this->_getParam('controller'),
+                'module' => 'admin',
+                'controller' => 'subscription',
                 'action' => 'add',
-                'resource' => $this->_getParam('controller'),
-                'privilege' => 'manage',
                 'reset_params' => false,
+                'params' => array(
+                    'next' => $next,
+                ),
             ),
         );
     }
@@ -33,9 +37,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $publications = $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($subscriber);
         if (empty($publications)) {
             $this->_helper->flashMessenger(getGS('Subscriptions exist for all available publications.'));
-            $this->_helper->redirector('index', 'subscription', 'admin', array(
-                'user' => $subscriber->getId(),
-            ));
+            $this->redirect();
         }
 
         $form = new Admin_Form_Subscription(array(
@@ -52,9 +54,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
             $this->_helper->entity->flushManager();
 
             $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
-            $this->_helper->redirector('index', 'subscription', 'admin', array(
-                'user' => $this->_getParam('user'),
-            ));
+            $this->redirect();
         }
 
         $this->view->form = $form;
@@ -78,9 +78,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
             $this->_helper->entity->flushManager();
 
             $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
-            $this->_helper->redirector('index', 'subscription', 'admin', array(
-                'user' => $this->_getParam('user'),
-            ));
+            $this->redirect();
         }
 
         $this->view->form = $form;
@@ -95,9 +93,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $em->flush();
 
         $this->_helper->flashMessenger(getGS('Subscription $1', $subscription->isActive() ? getGS('activated') : getGS('deactivated')));
-        $this->_helper->redirector('index', 'subscription', 'admin', array(
-            'user' => $this->_getParam('user', 0),
-        ));
+        $this->redirect();
     }
 
     public function deleteAction()
@@ -108,9 +104,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $this->_helper->entity->flushManager();
 
         $this->_helper->flashMessenger(getGS('Subscription $1', getGS('removed')));
-        $this->_helper->redirector('index', 'subscription', 'admin', array(
-            'user' => $this->_getParam('user', 0),
-        ));
+        $this->redirect();
     }
 
     /**
@@ -157,5 +151,24 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
         return $form;
     }
-}
 
+    /**
+     * Redirect after action
+     *
+     * @return void
+     */
+    public function redirect()
+    {
+        $action = 'index';
+        $controller = $this->_getParam('controller');
+
+        $next = $this->_getParam('next');
+        if ($next) {
+            list($controller, $action) = explode(':', $next);
+        }
+
+        $this->_helper->redirector($action, $controller, 'admin', array(
+            'user' => $this->_getParam('user', 0),
+        ));
+    }
+}

@@ -13,6 +13,10 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
 
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -65,7 +69,7 @@
         });
     //--></script>
 </head>
-<body>
+<body<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
 <div class="meta-bar">
     <ul>
         <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'auth')); ?>"><?php putGS('Logout'); ?></a></li>
@@ -76,9 +80,16 @@
 
 <?php echo $this->render('admin_menu.phtml'); ?>
 
+<?php echo $this->placeholder('title'); ?>
 <div class="content">
     <?php echo $this->layout()->content; ?>
 </div>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+<div class="sidebar">
+<?php echo $this->placeholder('sidebar'); ?>
+</div>
+<?php } ?>
 
 <?php if (!empty($this->messages)) { ?>
 <script type="text/javascript"><!--

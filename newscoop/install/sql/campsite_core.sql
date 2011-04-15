@@ -1545,14 +1545,16 @@ DROP TABLE IF EXISTS `SubsSections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SubsSections` (
+  `id` int(10) AUTO_INCREMENT,
   `IdSubscription` int(10) unsigned NOT NULL DEFAULT '0',
   `SectionNumber` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdLanguage` int(10) NOT NULL DEFAULT '0',
+  `IdLanguage` int(10) NULL,
   `StartDate` date NOT NULL DEFAULT '0000-00-00',
   `Days` int(10) unsigned NOT NULL DEFAULT '0',
   `PaidDays` int(10) unsigned NOT NULL DEFAULT '0',
   `NoticeSent` enum('N','Y') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`IdSubscription`,`SectionNumber`,`IdLanguage`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`IdSubscription`,`SectionNumber`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -3546,7 +3548,7 @@ CREATE TABLE IF NOT EXISTS `acl_resource` (
 -- Acl resource data
 INSERT INTO `acl_resource` (`id`, `name`) VALUES
 (1, 'Article'),
-(2, 'ArticleType'),
+(2, 'Article-Type'),
 (3, 'Author'),
 (4, 'Backup'),
 (5, 'Cache'),
@@ -3567,14 +3569,14 @@ INSERT INTO `acl_resource` (`id`, `name`) VALUES
 (20, 'PluginInterview'),
 (21, 'PluginPoll'),
 (22, 'Pub'),
-(23, 'Readers'),
+(23, 'Subscriber'),
 (24, 'Section'),
 (25, 'Subscription'),
 (26, 'SystemPreferences'),
 (27, 'Templ'),
 (28, 'Topic'),
 (29, 'User'),
-(30, 'UserType');
+(30, 'User-Group');
 
 
 -- Acl resource action relation

@@ -99,6 +99,19 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
     }
 
     /**
+     * Direct strategy
+     *
+     * @param mixed $entity
+     * @param string $key
+     * @param bool $throw
+     * @return object|NULL
+     */
+    public function direct($entity, $key, $throw = TRUE)
+    {
+        return $this->get($entity, $key, $throw);
+    }
+
+    /**
      * Get entity name
      *
      * @param mixed $entity

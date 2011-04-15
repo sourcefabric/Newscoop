@@ -44,6 +44,20 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
         $this->handleForm($this->form, $subscriber);
 
+        $this->_helper->sidebar(array(
+            'controller' => 'subscription',
+            'action' => 'index',
+            'user' => $subscriber->getId(),
+            'next' => 'subscriber:edit',
+        ));
+
+        $this->_helper->sidebar(array(
+            'controller' => 'subscription-ip',
+            'action' => 'index',
+            'user' => $subscriber->getId(),
+            'next' => 'subscriber:edit',
+        ));
+
         $this->view->form = $this->form;
     }
 

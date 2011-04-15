@@ -178,7 +178,7 @@ select {
 }
 /* Toolbar */
 
-.toolbar, #geolocation .toolbar, .activeSection, .content h1 {
+.toolbar, #geolocation .toolbar, .activeSection, h1 {
 	background:#f5f5f5;
 	min-height:39px;
 	text-align:left;
@@ -978,7 +978,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 /*---- END Geolocation ----*/
 
-.article-title, .article-title-locked, .breadcrumb_active, .content h1	{
+.article-title, .article-title-locked, .breadcrumb_active, h1 {
     color: #3B3B3B;
     float: left;
     font-size: 17px;
@@ -989,7 +989,7 @@ a.clear-margin:hover, .icon-button:hover  {
     text-indent: 6px;
     font-weight: normal;
 }
-.article-title, .breadcrumb_active, .content h1	{
+.article-title, .breadcrumb_active, h1 {
     color: #3B3B3B;
 }
 .article-title-locked {
@@ -1747,6 +1747,19 @@ body > .content {
     margin: 0 30px;
 }
 
+body.with-sidebar > .content {
+    float: left;
+    width: 60%;
+}
+
+body > .sidebar {
+    float: right;
+    width: 32%;
+    margin: 1em 30px 0 0;
+    background-color: #fff;
+    -webkit-box-shadow: #ccc 3px 3px 3px;
+}
+
 body > .content h1 {
     margin: 0 -30px 13px;
 }
@@ -1832,26 +1845,26 @@ form dd ul.errors li {
 }
 
 /** Actions theme */
-.content > .actions {
+.content .actions {
     margin: 1em 0;
     font-size: 1.2em;
 }
 
-.content > .actions ul {
+.content .actions ul {
     margin: 0;
     padding: 0;
     height: 1%;
     overflow: hidden;
 }
 
-.content > .actions li {
+.content .actions li {
     float: left;
     margin: 0 0 0 5px;
     padding: 0 0 0 5px;
     border-left: 1px solid #ccc;
 }
 
-.content > .actions li:first-child {
+.content .actions li:first-child {
     border-left: 0;
     padding-left: 0;
 }
@@ -1867,7 +1880,7 @@ a.ui-icon-wrapper span {
     left: 0;
 }
 
-.content h1 {
+body h1 {
     float: none;
     margin: 0;
     padding: 13px 30px 0;
@@ -1933,20 +1946,20 @@ ul.navigation li:first-child a {
     padding-right: 11px;
 }
 
-.content > .pager {
+.content .pager {
     margin: 8px 0;
     font-size: 1.2em;
 }
 
-.content > table + .pager {
+table + .pager {
     margin-top: 0;
 }
 
-.content > p {
+.content p {
     font-size: 1.2em;
 }
 
-.content > pre {
+.content pre {
     font-size: 12px;
 }
 

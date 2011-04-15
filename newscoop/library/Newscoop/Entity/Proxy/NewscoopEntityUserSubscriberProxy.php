@@ -39,6 +39,18 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         return parent::hasSubscriptions();
     }
 
+    public function getIps()
+    {
+        $this->_load();
+        return parent::getIps();
+    }
+
+    public function hasIps()
+    {
+        $this->_load();
+        return parent::hasIps();
+    }
+
     public function getId()
     {
         $this->_load();
@@ -285,10 +297,16 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         return parent::getPosition();
     }
 
+    public function __toString()
+    {
+        $this->_load();
+        return parent::__toString();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'username', 'password', 'email', 'timeCreated', 'phone', 'title', 'gender', 'age', 'city', 'streetAddress', 'postalCode', 'state', 'country', 'fax', 'contactPerson', 'phoneSecond', 'employer', 'employerType', 'position', 'subscriptions');
+        return array('__isInitialized__', 'id', 'name', 'username', 'password', 'email', 'timeCreated', 'phone', 'title', 'gender', 'age', 'city', 'streetAddress', 'postalCode', 'state', 'country', 'fax', 'contactPerson', 'phoneSecond', 'employer', 'employerType', 'position', 'subscriptions', 'ips');
     }
 
     public function __clone()

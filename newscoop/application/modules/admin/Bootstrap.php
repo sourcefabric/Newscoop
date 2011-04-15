@@ -103,4 +103,22 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $writer = new Writer($em);
         return new Zend_Log($writer);
     }
+
+    /**
+     * Init view placeholders
+     */
+    protected function _initPlaceholders()
+    {
+        $this->bootstrap('view');
+
+        // content title
+        $this->view->placeholder('title')
+            ->setPrefix('<h1>')
+            ->setPostfix('</h1>');
+
+        // content sidebar
+        // not using prefix/postfix to detect if is empty
+        $this->view->placeholder('sidebar')
+            ->setSeparator('</div><div class="sidebar">' . "\n");
+    }
 }

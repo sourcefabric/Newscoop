@@ -1,4 +1,4 @@
-<h1><?php echo getGS('Edit Access'); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Edit Access')); ?>
 
 <?php echo $this->action('edit', 'acl', 'admin', array(
     'role' => $this->user->getRoleId(),
