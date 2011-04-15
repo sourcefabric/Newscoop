@@ -26,40 +26,38 @@ class CommentRepository extends DatatableSource
      * @param string $status
      * @return mixed
      */
-    public function setStatus(array $p_comment_ids, $status)
+    public function setStatus(array $p_comment_ids, $p_status)
     {
         $em = $this->getEntityManager();
         foreach($p_comment_ids as $comment_id)
         {
             $comment = $this->find($comment_id);
-            $comment->setStatus($status);
+            $comment->setStatus($p_status);
             $em->persist($comment);
         }
     }
 
-    public function getComment($params)
+    public function getArticleComments($p_thread, $p_language, $p_params)
     {
+
         // get the enitity manager
-        //$em = $this->getEntityManager();
+        $em = $this->getEntityManager();
 
         $qb = $this->createQueryBuilder('e');
         $qb->select();
-        /*
-        $articlesRepository = $em->getRepository('Newscoop\Entity\Articles');
-        $languagesRepository = $em->getRepository('Newscoop\Entity\Languages');
-        if(isset($params['article'])) {
-            $article = $articlesRepository->find($params['article']);
-            $qb->andWhere('c.thread = :thread')
-               ->andWhere('c.forum = :forum')
-               ->setParameter('thread', $article)
-               ->setParameter('forum',$article->getPublication());
-        }
-        if(isset($params['language'])) {
-            $language = $languagesRepository->find($params['language']);
-            $qb->andWhere('c.language = :language')
-               ->setParameter('language',$language);
-        }
-        */
+
+        $articleRepository = $em->getRepository('Newscoop\Entity\Article');
+        $languageRepository = $em->getRepository('Newscoop\Entity\Language');
+
+        $article = $articleRepository->find($p_thread);
+        $language = $languageRepository->find($p_language);
+        $qb->andWhere('e.thread = :thread')
+            ->andWhere('e.forum = :forum')
+            ->andWhere('e.language = :language')
+            ->setParameter('thread', $article)
+            ->setParameter('forum',$article->getPublication())
+            ->setParameter('language',$language);
+
         return $qb->getQuery()->getResult();
 
     }
@@ -140,7 +138,7 @@ class CommentRepository extends DatatableSource
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $publicationRepository = $em->getRepository('Newscoop\Entity\Publication');
             $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-            /*
+
             $thread = $articleRepository->find($p_values['thread_id']);
             $forum = $publicationRepository->find($p_values['forum_id']);
             $language = $languageRepository->find($p_values['language_id']);
@@ -148,7 +146,6 @@ class CommentRepository extends DatatableSource
             $p_entity->setLanguage($language)
                      ->setForum( $forum )
                      ->setThread( $thread );
-            */
         }
         $p_entity->setThreadOrder($threadOrder)
                  ->setThreadLevel($threadLevel);
@@ -165,11 +162,11 @@ class CommentRepository extends DatatableSource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $cols, $search)
+    protected function buildWhere(array $p_cols, $p_search)
     {
         $qb = $this->createQueryBuilder('e');
         $or = $qb->expr()->orx();
-        foreach (array_keys($cols) as $i => $property) {
+        foreach (array_keys($p_cols) as $i => $property) {
             if (!is_string($property)) { // not searchable
                 continue;
             }
@@ -181,7 +178,7 @@ class CommentRepository extends DatatableSource
             {
             }
             else
-                $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$search}%")));
+                $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
         }
         return $or;
     }

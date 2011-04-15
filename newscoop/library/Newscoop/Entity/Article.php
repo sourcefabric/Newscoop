@@ -32,7 +32,7 @@ class Article
     /**
      * @manyToOne(targetEntity="Publication")
      * @joinColumn(name="IdPublication", referencedColumnName="Id")
-     * @var Newscoop\Entity\Publications
+     * @var Newscoop\Entity\Publication
      */
     private $publication;
     /**
@@ -106,7 +106,7 @@ class Article
      * @param  Publication $p_publication
      * @return Article
      */
-    public function setPublication(Publications $p_publication)
+    public function setPublication(Publication $p_publication)
     {
         $this->publication = $p_publication;
         // return this for chaining mechanism
@@ -116,7 +116,7 @@ class Article
     /**
      * Get publication
      *
-     * @return Newscoop\Entity\Publications
+     * @return Newscoop\Entity\Publication
      */
     public function getPublication()
     {

@@ -10,7 +10,7 @@ namespace Newscoop\Entity\Comment;
 use Newscoop\Entity\Publication;
 
 /**
- * Publications entity
+ * Publication entity
  * @entity
  * @table(name="CommentAcceptance")
  */
@@ -109,7 +109,7 @@ class Acceptance
      * @param Newscoop\Entity\Publication $p_forum
      * @return Newscoop\Entity\Comment\Acceptance
      */
-    public function setForum(Publications $p_forum)
+    public function setForum(Publication $p_forum)
     {
         $this->forum = $p_forum;
         // return this for chaining mechanism

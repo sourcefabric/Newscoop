@@ -302,7 +302,7 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setForum(Publications $p_forum)
+    public function setForum(Publication $p_forum)
     {
         $this->forum = $p_forum;
         // return this for chaining mechanism
@@ -312,7 +312,7 @@ class Comment
     /**
      * Get thread
      *
-     * @return Newscoop\Entity\Publications
+     * @return Newscoop\Entity\Publication
      */
     public function getForum()
     {
@@ -324,7 +324,7 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThread(Articles $p_thread)
+    public function setThread(Article $p_thread)
     {
         $this->thread = $p_thread;
         // return this for chaining mechanism
@@ -390,7 +390,7 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setLanguage(Languages $p_language)
+    public function setLanguage(Language $p_language)
     {
         $this->language = $p_language;
         // return this for chaining mechanism

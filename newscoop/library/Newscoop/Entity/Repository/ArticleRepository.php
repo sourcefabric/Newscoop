@@ -13,7 +13,7 @@ use DateTime,
     Newscoop\Datatable\Source as DatatableSource;
 
 /**
- * Publications repository
+ * Article repository
  */
 class ArticleRepository extends DatatableSource
 {

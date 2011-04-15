@@ -78,6 +78,8 @@ if ($f_publication_id > 0) {
 }
 
 if ($showComments) {
+//    $comments = array();
+
     require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
     if (SystemPref::Get("UseDBReplication") == 'Y') {
         $dbReplicationObj = new DbReplication();
@@ -92,6 +94,7 @@ if ($showComments) {
         // (from local database)
         $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
     }
+
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions

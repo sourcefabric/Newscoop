@@ -76,12 +76,59 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->dispatch();
     }
 
+    /**
+     * Action for setting a status
+     */
+    public function setStatusAction()
+    {
+
+        $this->getHelper('contextSwitch')
+            ->addActionContext('set-status', 'json')
+            ->initContext();
+        try
+        {
+            $comment = (int)$this->getRequest()->getParam('comment');
+            $status = $this->getRequest()->getParam('status');
+            $this->repository->setStatus(array($comment),$status);
+            $this->repository->flush();
+        }
+        catch(Exception $e)
+        {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+        $this->view->status = 200;
+        $this->view->message = "succcesful";
+    }
+
+    /*
+     * Action for listing the comments per article
+     */
     public function listAction()
     {
         $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
+            ->addActionContext('list', 'json')
             ->initContext();
-
+        $article = $this->getRequest()->getParam('article');
+        $language = $this->getRequest()->getParam('language');
+        $article = 64;
+        $comments = $this->repository->getArticleComments($article, $language, array());
+        $result = array();
+        foreach($comments as $comment) {
+            $commenter = $comment->getCommenter();
+            $result[] = array(
+                "name"  => $commenter->getName(),
+                "email" => $commenter->getEmail(),
+                "ip"    => $commenter->getIp(),
+                "id"      => $comment->getId(),
+                "status"  => $comment->getStatus(),
+                "subject" => $comment->getSubject(),
+                "message" => $comment->getMessage(),
+                "time_created"    => $comment->getTimeCreated()->format('Y-i-d H:i:s'),
+            );
+        }
+        $this->view->result = $result;
     }
 
     /**
