@@ -92,6 +92,7 @@ class Article extends DatabaseObject {
                                            array('field'=>'bySectionOrder', 'dir'=>'ASC'));
 
     private static $s_regularParameters = array('idpublication'=>'Articles.IdPublication',
+    											'publication'=>'Articles.IdPublication',
                                                 'nrissue'=>'Articles.NrIssue',
                                                 'issue'=>'Articles.NrIssue',
                                                 'nrsection'=>'Articles.NrSection',
