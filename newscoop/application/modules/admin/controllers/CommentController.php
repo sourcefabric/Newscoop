@@ -1,12 +1,4 @@
 <?php
-/**
- * @package Newscoop
- * @subpackage Subscriptions
- * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl-3.0.txt
- *
- *
- */
 use Newscoop\Entity\Comment;
 
  // function to get the ip address
@@ -44,7 +36,6 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->form->setMethod('post');
 
         return $this;
-
     }
 
     public function indexAction()

@@ -1,11 +1,10 @@
-  <a name="add_comment"></a>
-  <form id="article-comments" action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
-  <?php echo SecurityToken::FormParameter(); ?>
-  <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
-  <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
-  <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-  <h3><?php putGS('Post a Comment'); ?></h3>
-  <fieldset class="plain">
+<form id="../comment/add-to-article/format/json" method="POST">
+    <?php echo SecurityToken::FormParameter(); ?>
+    <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
+    <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
+    <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
+    <h3><?php putGS('Post a Comment'); ?></h3>
+    <fieldset class="plain">
     <ul>
       <li>
         <label><?php putGS('Author'); ?></label>
@@ -21,5 +20,8 @@
       </li>
       <li><input type="submit" value="<?php putGS('Submit'); ?>" class="default-button" /></li>
     </ul>
-  </fieldset>
-  </form>
+    </fieldset>
+</form>
+<script>
+
+</script>

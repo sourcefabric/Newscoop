@@ -10,9 +10,10 @@ namespace Newscoop\Entity\Comment;
 use Newscoop\Entity\Publication;
 
 /**
- * Publication entity
+ * Acceptance entity
  * @entity
  * @table(name="CommentAcceptance")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\AcceptanceRepository")
  */
 class Acceptance
 {
@@ -27,7 +28,7 @@ class Acceptance
     /**
      * @var string to code mapper for search_type
      */
-    static $seach_type_enum = array(
+    static $search_type_enum = array(
         'normal',
         'regex'
     );
@@ -35,7 +36,7 @@ class Acceptance
     /**
      * @var string to code mapper for for_colum
      */
-    static $for_colum_enum = array(
+    static $for_column_enum = array(
         'ip',
         'name',
         'email'
@@ -49,11 +50,11 @@ class Acceptance
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Publication")
+     * @manyToOne(targetEntity="Newscoop\Entity\Publication")
      * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    //private $forum;
+    private $forum;
 
     /**
      * @column(type="integer")
@@ -100,7 +101,7 @@ class Acceptance
      */
     public function getId()
     {
-        return $this->id = $p_id;
+        return $this->id;
     }
 
     /**
@@ -135,7 +136,7 @@ class Acceptance
     public function setForColumn($p_for_column)
     {
         $for_column_enum = array_flip(self::$for_column_enum);
-        $this->for_column = $for_column_enum[$p_type];
+        $this->for_column = $for_column_enum[$p_for_column];
         // return this for chaining mechanism
         return $this;
     }
@@ -206,7 +207,7 @@ class Acceptance
     public function setSearchType($p_search_type)
     {
         $search_type_enum = array_flip(self::$search_type_enum);
-        $this->search_type = $search_type_enum[$p_type];
+        $this->search_type = $search_type_enum[$p_search_type];
         // return this for chaining mechanism
         return $this;
     }

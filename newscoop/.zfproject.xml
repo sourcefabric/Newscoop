@@ -24,7 +24,7 @@
             <controllerFile controllerName="Logs">
               <actionMethod actionName="index"/>
             </controllerFile>
-            <controllerFile controllerName="Comments">
+            <controllerFile controllerName="Comment">
               <actionMethod actionName="index"/>
               <actionMethod actionName="listUsers"/>
             </controllerFile>
@@ -32,6 +32,12 @@
               <actionMethod actionName="index"/>
             </controllerFile>
             <controllerFile controllerName="UserTypes">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="CommentAcceptances">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="CommentAcceptance">
               <actionMethod actionName="index"/>
             </controllerFile>
           </controllersDirectory>
@@ -43,13 +49,19 @@
               <viewControllerScriptsDirectory forControllerName="Logs">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
-              <viewControllerScriptsDirectory forControllerName="Comments">
+              <viewControllerScriptsDirectory forControllerName="Comment">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Error">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="UserTypes">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="CommentAcceptances">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="CommentAcceptance">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -66,8 +78,7 @@
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
           </viewControllerScriptsDirectory>
-          <viewControllerScriptsDirectory forControllerName="Comments"/>
-          <viewControllerScriptsDirectory forControllerName="Comments">
+          <viewControllerScriptsDirectory forControllerName="Comment">
             <viewScriptFile forActionName="listUsers"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
@@ -105,9 +116,11 @@
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
           <testApplicationControllerFile filesystemName="LogsControllerTest.php"/>
-          <testApplicationControllerFile filesystemName="CommentsControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentControllerTest.php"/>
           <testApplicationControllerFile filesystemName="ErrorControllerTest.php"/>
           <testApplicationControllerFile filesystemName="UserTypesControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentAcceptancesControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentAcceptanceControllerTest.php"/>
         </testApplicationControllerDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>

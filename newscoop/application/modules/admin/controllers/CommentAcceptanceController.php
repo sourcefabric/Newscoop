@@ -1,19 +1,11 @@
 <?php
-/**
- * @package Newscoop
- * @subpackage Subscriptions
- * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl-3.0.txt
- *
- *
- */
-//use Newscoop\Entity\Comment\Acceptance;
+use Newscoop\Entity\Comment\Acceptance;
 
 class Admin_CommentAcceptanceController extends Zend_Controller_Action
 {
-
     /**
-     * @var ICommentAcceptance
+     * @var ICommentAcceptanceRepository
+     *
      */
     private $repository;
 
@@ -26,51 +18,47 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
 
     public function init()
     {
-        /*
-        // get comment acceptance repository
+        // get comment repository
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
-
-        $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
-            ->initContext();
-        // set the default form for comment commenter and set method to post
         $this->form = new Admin_Form_CommentAcceptance;
         $this->form->setMethod('post');
-        return $this;
-        */
 
+        return $this;
     }
 
     public function indexAction()
     {
+        $this->_forward('table');
+    }
+
+    public function tableAction()
+    {
        $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
+            ->addActionContext('table', 'json')
             ->initContext();
         $table = $this->getHelper('datatable');
 
         $table->setDataSource($this->repository);
 
         $table->setCols(array(
-            'id' => getGS('Identifier'),
-            'forum' => getGS('Forum'),
-            'for_column' => getGS('For column'),
+            'id' => getGS('ID'),
+            'for_column' => getGS('For Column'),
             'type' => getGS('Type'),
+            'search' => getGS('Search'),
             'search_type'   => getGS('Search Type'),
-            'search'   => getGS('Search'),
             'edit' => getGS('Edit'),
             'delete' => getGS('Delete')
         ));
 
         $view = $this->view;
         $table->setHandle(function($acceptance) use ($view) {
-            $urlParam = array('acceptance' => $acceptace->getId());
+            $urlParam = array('acceptance' => $acceptance->getId());
             return array(
-                $commenter->getTimeCreated()->format('Y-i-d H:i:s'),
-                $commenter->getName(),
-                $commenter->getUsername(),
-                $commenter->getEmail(),
-                $commenter->getUrl(),
-                $commenter->getIp(),
+                $acceptance->getId(),
+                $acceptance->getForColumn(),
+                $acceptance->getType(),
+                $acceptance->getSearch(),
+                $acceptance->getSearchType(),
                 $view->linkEdit($urlParam),
                 $view->linkDelete($urlParam)
             );
@@ -80,12 +68,11 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
     }
 
     /**
-     * Action for Adding a Comment acceptance criteria
+     * Action for Adding a Acceptance Criteria
      */
     public function addAction()
     {
-        //$acceptance = new Acceptance;
-
+        $acceptance = new Acceptance;
         $this->handleForm($this->form, $acceptance);
 
         $this->view->form = $this->form;
@@ -93,7 +80,7 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
     }
 
     /**
-     * Action for Editing a acceptance criteria
+     * Action for Editing a Acceptance Criteria
      */
     public function editAction()
     {
@@ -101,45 +88,52 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
         if (!isset($params['acceptance'])) {
             throw new InvalidArgumentException;
         }
-        $commenter = $this->repository->find($params['acceptance']);
-        if($commenter)
+        $acceptance = $this->repository->find($params['acceptance']);
+        if($acceptance)
         {
-            $this->form->setFromEntity($commenter);
-            $this->handleForm($this->form, $commenter);
+            $this->form->setFromEntity($acceptance);
+            $this->handleForm($this->form, $acceptance);
             $this->view->form = $this->form;
-            $this->view->commenter = $commenter;
+            $this->view->acceptance = $acceptance;
         }
     }
 
     /**
-     * Action for Deleteing a Commenter
+     * Action for Deleteing a Acceptance Criteria
      */
     public function deleteAction()
     {
-        $commenter = new Commenter;
-        $this->repository->delete($commenter);
-        $this->repository->flush();
-        $this->_helper->flashMessenger(getGS('Commenter "$1" deleted.',$commenter->getName()));
-        $this->_helper->redirector->gotoSimple('index');
+        $params = $this->getRequest()->getParams();
+        if (!isset($params['acceptance'])) {
+            throw new InvalidArgumentException;
+        }
+        $acceptance = $this->repository->find($params['acceptance']);
+        if($acceptance)
+        {
+            $this->repository->delete($acceptance);
+            $this->repository->flush();
+
+            $this->_helper->flashMessenger(getGS('Acceptance "$1" deleted.',$acceptance->getSearch()));
+            $this->_helper->redirector->gotoSimple('index');
+        }
     }
 
     /**
-     * Method for saving a commenter
+     * Method for saving a Acceptance Criteria
      *
      * @param ZendForm $p_form
-     * @param ICommenter $p_commenter
+     * @param IComment $p_acceptance
      */
-    private function handleForm(Zend_Form $p_form, $p_commenter)
+    private function handleForm(Zend_Form $p_form, Acceptance $p_acceptance)
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
-            $values['ip'] = getIp();
-            $values['time_created'] = new DateTime;
-            $this->repository->save($p_commenter, $values);
-           $this->repository->flush();
-            $this->_helper->flashMessenger(getGS('Commenter "$1" saved.',$p_commenter->getName()));
+            $this->repository->save($p_acceptance, $values);
+            $this->repository->flush();
+            $this->_helper->flashMessenger(getGS('Acceptance "$1" saved.',$p_acceptance->getSearch()));
             $this->_helper->redirector->gotoSimple('index');
         }
     }
 
 }
+

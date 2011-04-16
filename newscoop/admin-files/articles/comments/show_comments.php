@@ -5,7 +5,6 @@ if (!$g_user->hasPermission('CommentModerate')) {
 }
 ?>
 
-<form id="comments-moderate" action="comment/do_moderate.php" method="POST">
 <?php
 // add token
 echo SecurityToken::FormParameter();
@@ -21,15 +20,8 @@ foreach ($hiddens as $name) {
     echo '" value="', $$name, '" />', "\n";
 }
 ?>
-<?php
-// check for comments
-$comments = (array) $comments;
-if (empty($comments)) {
-    echo '<p>', putGS('No comments posted.'), '</p>';
-    return;
-}
-?>
-<fieldset id="comment-prototype" class="plain comments-prototype">
+<p style="display:none"><?php putGS('No comments posted.'); ?></p>
+<fieldset id="comment-prototype" class="plain comments-prototype" style="display:none">
     <?php if ($inEditMode): ?>
     <ul class="action-list clearfix">
       <li>
@@ -75,11 +67,11 @@ if (empty($comments)) {
       </dl>
     </div>
 </fieldset>
-
+<form id="comments-moderate" action="comment/do_moderate.php" method="POST">
 </form>
 <script>
-$(function() {
-	$('#comment-prototype').hide();
+function loadComments() {
+	$('#comments-moderate').empty();
     $.ajax({
         type: 'POST',
         url: '../comment/list/format/json',
@@ -88,7 +80,9 @@ $(function() {
             "language": "<?php echo $f_language_selected; ?>"
         },
         success: function(data) {
+            hasComents = false;
             for(i in data.result) {
+                hasComment = true;
                 comment = data.result[i];
                 if(typeof(comment) == "function")
                     continue;
@@ -102,22 +96,26 @@ $(function() {
                 }
             	$('#comments-moderate').append(template);
             }
+            if(!hasComment)
+                $('#no-comments').show();
+
         }
     });
-    $('.action-list a').live('click',function(){
-    	var el = $(this).parents('ul').find('input:checked').first();
-    	$.ajax({
-            type: 'POST',
-            url: '../comment/set-status/format/json',
-            data: {
-    		   "comment": el.attr('id').match(/\d+/)[0],
-    		   "status": el.val()
-    		},
-    		success: function(data) {
-    		    console.log('succes');
-    		    //set color
-    		}
-    	});
-    });
+}
+$('.action-list a').live('click',function(){
+	var el = $(this).parents('ul').find('input:checked').first();
+	$.ajax({
+        type: 'POST',
+        url: '../comment/set-status/format/json',
+        data: {
+		   "comment": el.attr('id').match(/\d+/)[0],
+		   "status": el.val()
+		},
+		success: function(data) {
+		}
+	});
+});
+$(function() {
+	loadComments();
 });
 </script>
