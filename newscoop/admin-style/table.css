@@ -41,3 +41,12 @@ table tr.odd td {
 table tr:hover td {
     background-color: #cce5f0;
 }
+
+.content .dataTables_wrapper {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.content table.data {
+    margin-bottom: 0;
+}

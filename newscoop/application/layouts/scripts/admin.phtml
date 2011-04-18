@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
 
 	<!--[if IE 6]>
@@ -81,14 +82,23 @@
 <?php echo $this->render('admin_menu.phtml'); ?>
 
 <?php echo $this->placeholder('title'); ?>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+<div class="content-sidebar">
+<?php } ?>
+
 <div class="content">
     <?php echo $this->layout()->content; ?>
 </div>
 
 <?php if ($this->placeholder('sidebar') != '') { ?>
-<div class="sidebar">
+<div class="sidebar first">
 <?php echo $this->placeholder('sidebar'); ?>
 </div>
+<?php } ?>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+</div><!-- /.content-sidebar -->
 <?php } ?>
 
 <?php if (!empty($this->messages)) { ?>

@@ -1,6 +1,2 @@
-<?php $this->placeholder('title')->set(getGS('Edit Access')); ?>
-
-<?php echo $this->action('edit', 'acl', 'admin', array(
-    'role' => $this->group->getRoleId(),
-    'group' => $this->group->getId(),
-)); ?>
+<?php $this->placeholder('title')
+->set(getGS('Edit Access: $1', $this->group)); ?>

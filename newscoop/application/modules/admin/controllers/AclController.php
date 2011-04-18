@@ -38,7 +38,7 @@ class Admin_AclController extends Zend_Controller_Action
             ->initContext();
     }
 
-    public function editAction()
+    public function formAction()
     {
         $form = $this->getForm()
             ->setAction('')
@@ -63,6 +63,11 @@ class Admin_AclController extends Zend_Controller_Action
             }
         }
 
+        $this->view->form = $form;
+    }
+
+    public function editAction()
+    {
         // populate resources
         $global = new Resource;
         $global->setName(getGS('Global'))
@@ -88,10 +93,18 @@ class Admin_AclController extends Zend_Controller_Action
             }
         }
 
+        $this->_helper->sidebar(array(
+            'label' => getGS('Add new rule'),
+            'module' => 'admin',
+            'controller' => 'acl',
+            'action' => 'form',
+        ));
+
         $this->view->role = $role;
-        $this->view->form = $form;
         $this->view->resources = $resources;
         $this->view->ruleTypes = $this->ruleTypes;
+
+        $this->render();
     }
 
     public function deleteAction()
@@ -127,11 +140,6 @@ class Admin_AclController extends Zend_Controller_Action
     {
         $form = new Zend_Form();
 
-        $form->addElement('radio', 'type', array(
-            'multioptions' => $this->ruleTypes,
-            'label' => getGS('Add Rule'),
-        ));
-
         // get resources
         $resources = array(getGS('Any resource'));
         foreach ($this->resourceRepository->findAll() as $resource) {
@@ -152,14 +160,19 @@ class Admin_AclController extends Zend_Controller_Action
             'label' => getGS('Action'),
         ));
 
+        $form->addElement('radio', 'type', array(
+            'label' => getGS('Add Rule'),
+            'multioptions' => $this->ruleTypes,
+            'class' => 'acl type',
+        ));
+
+        $form->addElement('submit', 'submit', array(
+            'label' => getGS('Add'),
+        ));
+
         $form->addElement('hidden', 'role');
         $form->addElement('hidden', 'group');
         $form->addElement('hidden', 'user');
-
-        $form->addElement('submit', 'submit', array(
-            'ignore' => true,
-            'label' => getGS('Add'),
-        ));
 
         return $form;
     }

@@ -45,6 +45,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->handleForm($this->form, $subscriber);
 
         $this->_helper->sidebar(array(
+            'label' => getGS('Subscriptions'),
             'controller' => 'subscription',
             'action' => 'index',
             'user' => $subscriber->getId(),
@@ -52,6 +53,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
         ));
 
         $this->_helper->sidebar(array(
+            'label' => getGS('Subscription IP Addresses'),
             'controller' => 'subscription-ip',
             'action' => 'index',
             'user' => $subscriber->getId(),

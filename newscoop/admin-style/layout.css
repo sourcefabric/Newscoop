@@ -4,19 +4,36 @@ body {
 }
 
 body > .content {
-    margin: 0 30px;
+    margin: 22px 30px;
 }
 
-body.with-sidebar > .content {
+.content-sidebar {
+    width: 800px;
+    height: 1%;
+    overflow: hidden;
+    margin: 22px 30px;
+    padding: 0 0 2px;
+    background: transparent url('images/content-sidebar-bg.png') repeat-y 441px 0;
+}
+
+.content-sidebar .content {
     float: left;
-    width: 60%;
+    width: 420px;
+    min-height: 1em;
+    margin: 0;
 }
 
-body > .sidebar {
-    float: right;
-    width: 31%;
-    margin: 1em 30px 0 0;
-    padding: 5px;
+.content-sidebar .sidebar {
+    float: left;
+    width: 320px;
+    margin: 0 0 22px 41px;
     background-color: #fff;
-    -webkit-box-shadow: #ccc 3px 3px 3px;
+    border: 1px solid #a9a9a9;
+    -mozilla-box-shadow: 1px 1px 1px #ccc;
+    -webkit-box-shadow: 2px 2px 3px #d4d4d4;
+    box-shadow: 1px 1px 1px #e5e5e5;
+}
+
+.content-sidebar .sidebar.first {
+    margin-bottom: 0;
 }

@@ -3,7 +3,7 @@
 use Newscoop\Entity\User\Group;
 
 /**
- * @acl(action="manage")
+ * @Acl(action="manage")
  */
 class Admin_UserGroupController extends Zend_Controller_Action
 {
@@ -20,16 +20,11 @@ class Admin_UserGroupController extends Zend_Controller_Action
     {
         $this->view->groups = $this->repository->findAll();
 
-        $this->view->actions = array(
-            array(
-                'label' => getGS('Add new user type'),
-                'module' => 'admin',
-                'controller' => 'user-group',
-                'action' => 'add',
-                'resource' => 'user-group',
-                'privilege' => 'manage',
-            ),
-        );
+        $this->_helper->sidebar(array(
+            'label' => getGS('Add new user type'),
+            'controller' => 'user-group',
+            'action' => 'add',
+        ));
     }
 
     public function addAction()
@@ -54,8 +49,13 @@ class Admin_UserGroupController extends Zend_Controller_Action
 
     public function editAccessAction()
     {
-        $group = $this->_helper->entity->get(new Group, 'group');
+        $group = $this->_helper->entity(new Group, 'group');
         $this->view->group = $group;
+
+        $this->_helper->actionStack('edit', 'acl', 'admin', array(
+            'role' => $group->getRoleId(),
+            'group' => $group->getId(),
+        ));
     }
 
     public function deleteAction()
