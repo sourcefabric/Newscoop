@@ -136,15 +136,13 @@ class CommentRepository extends DatatableSource
             // increase by one of the current comment
             $threadOrder+= 1;
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
-            $publicationRepository = $em->getRepository('Newscoop\Entity\Publication');
             $languageRepository = $em->getRepository('Newscoop\Entity\Language');
 
             $thread = $articleRepository->find($p_values['thread_id']);
-            $forum = $publicationRepository->find($p_values['forum_id']);
             $language = $languageRepository->find($p_values['language_id']);
 
             $p_entity->setLanguage($language)
-                     ->setForum( $forum )
+                     ->setForum( $thread->getPublication() )
                      ->setThread( $thread );
         }
         $p_entity->setThreadOrder($threadOrder)

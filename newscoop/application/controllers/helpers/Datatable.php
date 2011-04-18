@@ -16,9 +16,9 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
 
     /**
      *
-     * @var array where are keept the settings
+     * @var array where are keept the options
      */
-    private $settings;
+    private $options = array();
 
     /**
      * Init
@@ -34,9 +34,15 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         return $this;
     }
 
-    public function setSetting($key, $value)
+    /**
+     * Setter for options
+     *
+     * @param string $key
+     * @param mixed $value
+     */
+    public function setOption($key, $value)
     {
-        $this->setting[$key] = $value;
+        $this->options[$key] = $value;
     }
     /**
      * Set Datasource
@@ -114,5 +120,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
         $view->aaData = $rows;
         $view->sEcho = $params['sEcho'];
+        $view->iOptions = $this->options;
     }
 }

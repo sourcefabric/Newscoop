@@ -27,7 +27,18 @@ $(function() {
             'sPaginationType': 'full_numbers',
             'aoColumnDefs': [
                 { 'bSortable': false, 'aTargets': [0,-1] }
-            ]
+            ],
+            <?php if(count($this->iOptions)): ?>
+                <?php foreach($this->iOptions as $key => $value):?>
+                '<?php echo $key;?>':
+                    <?php if(is_string($value)):?>
+                        '<?php echo $value; ?>',
+                    <?php elseif(is_bool($value) || is_numeric($value)):?>
+                        <?php echo $value; ?>,
+                    <?php endif;?>
+                <?php endforeach;?>
+            <?php endif;?>
+
     });
 });
 </script>

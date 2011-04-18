@@ -93,6 +93,43 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->view->message = "succcesful";
     }
 
+    /**
+     *
+     */
+    public function addToArticleAction()
+    {
+       $this->getHelper('contextSwitch')
+            ->addActionContext('add-to-article', 'json')
+            ->initContext();
+        $comment = new Comment;
+        $request = $this->getRequest();
+        $user = Zend_Registry::get('user');
+        $values['user'] = $user;
+        $values['name'] = $request->getParam('name');
+        $values['subject'] = $request->getParam('subject');
+        $values['message'] = $request->getParam('message');
+        $values['language_id'] = $request->getParam('language');
+        $values['thread_id'] =  $request->getParam('article');
+        $values['thread_id'] = 64;
+        $values['ip'] = getIp();
+        $values['status'] = 'pending';
+        $values['time_created'] = new DateTime;
+        try
+        {
+            $this->repository->save($comment, $values);
+            $this->repository->flush();
+        }
+        catch(Exception $e)
+        {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+        $this->view->status = 200;
+        $this->view->message = "succcesful";
+        $this->view->comment = $comment->getId();
+    }
+
     /*
      * Action for listing the comments per article
      */
@@ -109,9 +146,9 @@ class Admin_CommentController extends Zend_Controller_Action
         foreach($comments as $comment) {
             $commenter = $comment->getCommenter();
             $result[] = array(
-                "name"  => $commenter->getName(),
-                "email" => $commenter->getEmail(),
-                "ip"    => $commenter->getIp(),
+                "name"    => $commenter->getName(),
+                "email"   => $commenter->getEmail(),
+                "ip"      => $commenter->getIp(),
                 "id"      => $comment->getId(),
                 "status"  => $comment->getStatus(),
                 "subject" => $comment->getSubject(),

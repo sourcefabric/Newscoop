@@ -21,7 +21,7 @@ foreach ($hiddens as $name) {
 }
 ?>
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
-<fieldset id="comment-prototype" class="plain comments-prototype" style="display:none">
+<fieldset id="comment-prototype" class="plain" style="display:none">
     <?php if ($inEditMode): ?>
     <ul class="action-list clearfix">
       <li>
@@ -67,11 +67,11 @@ foreach ($hiddens as $name) {
       </dl>
     </div>
 </fieldset>
-<form id="comments-moderate" action="comment/do_moderate.php" method="POST">
+<form id="comment-moderate" action="comment/do_moderate.php" method="POST">
 </form>
 <script>
 function loadComments() {
-	$('#comments-moderate').empty();
+	$('#comment-moderate').empty();
     $.ajax({
         type: 'POST',
         url: '../comment/list/format/json',
@@ -94,7 +94,7 @@ function loadComments() {
                     }
                 	template = template.replace(new RegExp("\\${"+key+"}","g"),comment[key]);
                 }
-            	$('#comments-moderate').append(template);
+            	$('#comment-moderate').append(template);
             }
             if(!hasComment)
                 $('#no-comments').show();
@@ -115,6 +115,8 @@ $('.action-list a').live('click',function(){
 		}
 	});
 });
+</script>
+<script>
 $(function() {
 	loadComments();
 });
