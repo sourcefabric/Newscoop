@@ -1,0 +1,9 @@
+<a href="<?php echo $this->url($this->urlOptions); ?>"
+    class="<?php echo $this->class; ?>"
+    title="<?php echo $this->title; ?>"
+    <?php foreach($this->attributes as $key => $value):?>
+        <?php echo $key; ?> = "<?php echo $value; ?>"
+    <?php endforeach;?>
+>
+    <?php echo $this->name; ?>
+ </a>

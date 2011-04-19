@@ -1,0 +1,16 @@
+<div class="dateCommentHolder">
+<h4>
+<span>
+    <?php echo $this->comment->getTimeCreated()->format('Y.i.d.');?>
+    <?php putGS('at');?>
+    <?php echo $this->comment->getTimeCreated()->format('H:i:s');?>
+</span>
+<?php echo $this->comment->getSubject(); ?>
+</h4>
+<div class="ratingHolder">
+    <span class="thumbs up"><?php echo $this->comment->getLikes();?></span>
+    <span class="thumbs down"><?php echo $this->comment->getDislikes();?></span> </div>
+<p>
+Lorem ipsum sed detraxit signiferumque at Pulvinar est sed rhoncus sit massa penatibus pulvinar augue! Mauris turpis in, porta. Pulvinar velit proin mus arcu mus scelerisque amet cum. sed rhoncus sit massa penatibus pulvinar augue! Mauris turpis in, porta.
+</p>
+</div>

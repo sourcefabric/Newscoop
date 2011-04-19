@@ -2,7 +2,7 @@
 /**
  * Commenter form
  */
-class Admin_Form_CommentCommenter extends Zend_Form
+class Admin_Form_Commenter extends Zend_Form
 {
     public function init()
     {

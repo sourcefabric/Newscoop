@@ -1,4 +1,4 @@
-<table class="data">
+<table class="datatable" cellspacing="0" cellpadding="0">
 <thead>
 <tr>
     <?php foreach ($this->cols as $col) { ?>
@@ -14,7 +14,7 @@
 </table>
 <script type="text/javascript">
 $(function() {
-    $('table.data')
+    $('table.datatable')
         .wrap($('<div />').addClass('table')).wrap($('<div />').addClass('smartlist'))
         .css('position', 'relative').css('width', '100%')
         .dataTable(

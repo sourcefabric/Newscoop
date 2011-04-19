@@ -16,7 +16,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      *
      * @var array
      */
-    private $keyCols;
+    private $colsIndex;
 
     /** @var Closure */
     private $handle;
@@ -56,14 +56,16 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Setter for options
      *
-     * @param string $key
-     * @param mixed $value
+     * @param string $p_key
+     * @param mixed  $p_value
+     * @return Action_Helper_Datatable
      */
-    public function setOption($key, $value)
+    public function setOption($p_key, $p_value)
     {
-        $this->iOptions[$key] = $value;
+        $this->iOptions[$p_key] = $p_value;
+        // return this for chaining mechanism
+        return $this;
     }
-
 
     /**
      * Set Datasource
@@ -74,6 +76,8 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     public function setDataSource($p_dataSource)
     {
         $this->dataSource = $p_dataSource;
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
@@ -82,81 +86,80 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      * @param string $entity
      * @return Action_Helper_Datatable
      */
-    public function setEntity($entity)
+    public function setEntity($p_entity)
     {
         $em = $this->getActionController()
             ->getHelper('entity')
             ->getManager();
 
-        $this->dataSource = new DatatableRepository($em, (string) $entity);
+        $this->dataSource = new DatatableRepository($em, (string) $p_entity);
+        // return this for chaining mechanism
         return $this;
     }
 
+    private function buildColumnDefs()
+    {
+        foreach($this->colsIndex as $key => $value)
+        {
+            $this->iOptions['aoColumnDefs'][] = array( 'aTargets' => array($value));
+        }
+    }
     /**
      * Set table columns
      *
      * @param array $cols
      * @return Action_Helper_Datatable
      */
-    public function setCols(array $cols, array $nonsorting = array(), array $sorting = array())
+    public function setCols(array $cols, array $sorting = array())
     {
         $this->cols = $cols;
-        $this->keyCols = array_flip(array_keys($this->cols));
+        $this->colsIndex = array_flip(array_keys($this->cols));
+        $this->buildColumnDefs();
         $this->setSorting($sorting);
-        $this->setNonSorting($nonsorting);
+        // return this for chaining mechanism
         return $this;
     }
 
-    /**
-     * Set non sorting columns,
-     * in case you have edit, delete or other static columns
-     *
-     * @param array $nonsorting
-     */
-    public function setNonSorting(array $nonsorting = array())
-    {
-        $aTargets = array();
-        foreach($nonsorting as $value)
-            $aTargets[] = $this->keyCols[$value];
-        if(count($aTargets))
-            $this->iOptions['aoColumnDefs'][0] = array( 'bSortable'=> false, 'aTargets'=> $aTargets);
-    }
 
     /**
      * Set sorting columns
      *
      * @param array $nonsorting
+     * @return Action_Helper_Datatable
      */
-    public function setSorting(array $sorting = array())
+    public function setSorting(array $p_sorting = array())
     {
-        $aTargets = array();
-        foreach($sorting as $value)
-            $aTargets[] = $this->keyCols[$value];
-        if(count($aTargets)) {
-            $this->iOptions['aoColumnDefs'][1] = array( 'bSortable'=> true, 'aTargets'=> $aTargets);
-        }
+        $this->setHeader('bSortable', $p_sorting);
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
      * Toggle automatic width
      *
      * @param bool $p_state null
+     * @return Action_Helper_Datatable
      */
     public function toggleAutomaticWidth($p_state = null)
     {
         if(!is_null($p_state))
             $this->iOptions['bAutoWidth'] = $p_state;
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
      * Set custom widths
      *
      * @param array|bool $p_widths
+     * @return Action_Helper_Datatable
      */
-    public function setHeaderWidths($p_widths = false)
+    public function setWidths($p_widths = false)
     {
         $this->toggleAutomaticWidth(false);
         $this->setHeader('sWidth', $p_widths);
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
@@ -164,6 +167,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      *
      * @param string $p_columnProperty
      * @param array $p_values
+     * @return Action_Helper_Datatable
      */
     public function setHeader($p_columnProperty, array $p_values = array())
     {
@@ -171,20 +175,26 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         {
             foreach($p_values as $key => $value)
             {
-                $this->iOptions['aoColumns'][$this->keyCols[$key]][$p_columnProperty] = $value;
+                if(is_string($key))
+                    $key = $this->colsIndex[$key];
+                $this->iOptions['aoColumnDefs'][$key][$p_columnProperty] = $value;
             }
         }
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
-     * Set header properties
+     * Set header style classes
      *
-     * @param string $p_columnProperty
      * @param array $p_values
+     * @return Action_Helper_Datatable
      */
-    public function setHeaderClasses(array $p_values = array())
+    public function setClasses(array $p_values = array())
     {
         $this->setHeader('sClass',$p_values);
+        // return this for chaining mechanism
+        return $this;
     }
 
     /**
@@ -196,6 +206,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     public function setHandle(Closure $handle)
     {
         $this->handle = $handle;
+        // return this for chaining mechanism
         return $this;
     }
 

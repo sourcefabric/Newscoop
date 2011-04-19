@@ -29,8 +29,23 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
     private $repository;
 
     /**
+     * @var IAcceptance
+     */
+    private $acceptanceRepository;
+
+    /**
+     * @var IArticle
+     */
+    private $articleRepository;
+
+    /**
+     * @var IPublication
+     */
+    private $publicationRepository;
+
+    /**
      *
-     * @var Admin_Form_Comment_Commenter
+     * @var Admin_Form_Commenter
      */
     private $form;
 
@@ -40,11 +55,20 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
         // get commenter repository
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Commenter');
 
+        // get acceptance repository
+        $this->acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+
+        // get article repository
+        $this->articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+
+        // get publication repository
+        $this->publicationRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
+
         $this->getHelper('contextSwitch')
             ->addActionContext('index', 'json')
             ->initContext();
         // set the default form for comment commenter and set method to post
-        $this->form = new Admin_Form_CommentCommenter;
+        $this->form = new Admin_Form_Commenter;
         $this->form->setMethod('post');
         return $this;
 
@@ -67,6 +91,7 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
             'url'   => getGS('Website'),
             'ip'   => getGS('Ip'),
             'edit' => getGS('Edit'),
+            'ban' => getGS('Ban'),
             'delete' => getGS('Delete')
         ));
 
@@ -81,7 +106,8 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
                 $commenter->getUrl(),
                 $commenter->getIp(),
                 $view->linkEdit($urlParam),
-                $view->linkDelete($urlParam)
+                $view->linkBan($urlParam),
+                $view->linkDelete($urlParam),
             );
         });
 
@@ -139,6 +165,42 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
         }
     }
 
+    public function toggleBanAction()
+    {
+        $params = $this->getRequest()->getParams();
+        if (!isset($params['commenter']) && (!isset($params['article']) || !isset($params['forum']) )) {
+            throw new InvalidArgumentException;
+        }
+        if(isset($params['thread']))
+            $publication = $this->articleRepository->find($params['thread'])->getPublication();
+        if(isset($params['forum']))
+            $publication = $this->publicationRepository->find($params['forum']);
+
+        $commenter = $this->repository->find($params['commenter']);
+
+        $form = new Admin_Form_Ban;
+        $this->handleBanForm($form, $commenter, $publication);
+        $form->setValues($commenter, $this->acceptanceRepository->isBanned($commenter, $publication));
+        $this->view->form = $form;
+    }
+
+    /**
+     * Method for saving a banned
+     *
+     * @param ZendForm $p_form
+     * @param ICommenter $p_commenter
+     */
+    private function handleBanForm(Zend_Form $p_form, $p_commenter, $p_publication)
+    {
+        if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
+            $values = $p_form->getValues();
+            $this->acceptanceRepository->saveBanned($p_commenter, $p_publication, $values);
+            $this->acceptanceRepository->flush();
+            $this->_helper->flashMessenger(getGS('Ban for commenter "$1" saved.',$p_commenter->getName()));
+            $this->_helper->redirector->gotoSimple('index');
+        }
+    }
+
     /**
      * Method for saving a commenter
      *
@@ -152,7 +214,7 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
             $values['ip'] = getIp();
             $values['time_created'] = new DateTime;
             $this->repository->save($p_commenter, $values);
-           $this->repository->flush();
+            $this->repository->flush();
             $this->_helper->flashMessenger(getGS('Commenter "$1" saved.',$p_commenter->getName()));
             $this->_helper->redirector->gotoSimple('index');
         }

@@ -482,6 +482,22 @@ select.actions {
     width: 30px;
 }
 
+.dataTables_wrapper .commentUser {
+    width: 245px;
+}
+
+.dataTables_wrapper .commentTimeCreated {
+    width: 305px;
+}
+
+.dataTables_wrapper .commentMessage {
+    width: 410px;
+}
+
+.dataTables_wrapper .commentThreadOrder {
+    width: 95px;
+}
+
 .dataTables_wrapper {
     margin: 0;
 }

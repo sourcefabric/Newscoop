@@ -119,13 +119,13 @@ class Comment
      * @column(length=4)
      * @var int
      */
-//    private $likes;
+    private $likes;
 
     /**
      * @column(length=4)
      * @var int
      */
-//    private $dislikes;
+    private $dislikes;
 
     /**
      * Get id
@@ -429,5 +429,24 @@ class Comment
         return $this->parent;
     }
 
+    /**
+     * Get the likes count
+     *
+     * @return int
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Get the dislikes count
+     *
+     * @return int
+     */
+    public function getDislikes()
+    {
+        return $this->dislikes;
+    }
 
 }

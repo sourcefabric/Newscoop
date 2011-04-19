@@ -56,17 +56,19 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setCols(array(
             'id' => $view->toggleCheckbox(),
             'user' => getGS('Author'),
+            'thread_order' => getGS('Thread Order'),
             'time_created' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
-        ),array('id'));
+        ),array('id' => false));
 
 
         $table->setHandle(function($comment) use ($view) {
             return array(
                 $view->commentIndex($comment),
                 $view->commentCommenter($comment->getCommenter()),
-                $comment->getTimeCreated()->format('Y-i-d H:i:s'),
-                $comment->getSubject()
+                $view->commentAction($comment),
+                $view->commentMessage($comment),
+                $view->commentArticle($comment)
             );
         });
 
@@ -74,11 +76,12 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setOption('fnDrawCallback','datatableCallback.draw');
 
         $table->toggleAutomaticWidth(false);
-        $table->setHeaderClasses(array(
+        $table->setClasses(array(
             'id'   => 'commentId',
             'user' => 'commentUser',
-            'time_created' => 'timeCreated',
-            'thread' => 'thread'));
+            'thread_order' => 'commentThreadOrder',
+            'time_created' => 'commentTimeCreated',
+            'thread' => 'commentThread'));
         $table->dispatch();
     }
 
@@ -168,7 +171,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 "status"  => $comment->getStatus(),
                 "subject" => $comment->getSubject(),
                 "message" => $comment->getMessage(),
-                "time_created"    => $comment->getTimeCreated()->format('Y-i-d H:i:s'),
+                "time_created" => $comment->getTimeCreated()->format('Y-i-d H:i:s'),
             );
         }
         $this->view->result = $result;

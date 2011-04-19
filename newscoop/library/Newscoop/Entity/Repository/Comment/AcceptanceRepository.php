@@ -14,6 +14,7 @@ use
     Doctrine\ORM\QueryBuilder,
     Newscoop\Datatable\Source as DatatableSource,
     Newscoop\Entity\Comment\Acceptance,
+    Newscoop\Entity\Comment\Commenter,
     Newscoop\Entity\Publication;
 
 /**
@@ -33,8 +34,13 @@ class AcceptanceRepository extends DatatableSource
 
         $em = $this->getEntityManager();
 
-        $publicationRepository = $em->getRepository('Newscoop\Entity\Publication');
-        $forum = $publicationRepository->find($p_values['forum']);
+        if(is_numeric($p_values['forum']))
+        {
+            $publicationRepository = $em->getRepository('Newscoop\Entity\Publication');
+            $forum = $publicationRepository->find($p_values['forum']);
+        }
+        else
+            $forum = $p_values['forum'];
         $p_acceptance->setSearch($p_values['search'])
                      ->setSearchType($p_values['search_type'])
                      ->setForum($forum)
@@ -60,8 +66,10 @@ class AcceptanceRepository extends DatatableSource
                 'type' => 'deny',
                 'search_type' => 'normal'
             );
-            $acceptances = $this->findBy( $p_params );
-            $this->delete($acceptances[0]);
+            $value = $this->setEntity($value);
+            $acceptance = $this->findBy( $value );
+            if(count($acceptance)>0)
+                $this->delete($acceptance[0]);
         }
     }
 
@@ -81,29 +89,61 @@ class AcceptanceRepository extends DatatableSource
                 'type' => 'deny',
                 'search_type' => 'normal'
             );
-            if($this->matched($p_params))
+            if($this->matched($value))
                 return;
             $this->save(new Acceptance, $value);
+
         }
+    }
+
+    /**
+     * Get the setters for the entity
+     *
+     * @param array $p_params
+     * @return array $p_params
+     */
+    private function setEntity(array $p_params)
+    {
+        // properies don't go to setters or getters
+        if(!is_numeric($p_params['for_column']))
+        {
+            $rev = array_flip(Acceptance::$for_column_enum);
+            $p_params['for_column'] = $rev[$p_params['for_column']];
+        }
+        if(!is_numeric($p_params['type']))
+        {
+            $rev = array_flip(Acceptance::$type_enum);
+            $p_params['type'] = $rev[$p_params['type']];
+        }
+        if(!is_numeric($p_params['search_type']))
+        {
+            $rev = array_flip(Acceptance::$search_type_enum);
+            $p_params['search_type'] = $rev[$p_params['search_type']];
+        }
+        if(!is_numeric($p_params['forum']))
+        {
+            $p_params['forum'] = $p_params['forum']->getId();
+        }
+        return $p_params;
     }
 
     public function matched(array $p_params)
     {
         // this is for simple match if all search_type are normal
         // @todo implement later regex
+        $p_params = $this->setEntity($p_params);
         $results = $this->findBy( $p_params );
-
         if(count($results)>0)
             return true;
         return false;
     }
 
     /**
-     * Method that search for if a user is banned
+     * Method that search for if a coomenter is banned
      *
      * @param array $p_params
      */
-    public function isBannned(array $p_params)
+    public function wasBannned(array $p_params)
     {
         foreach($p_params as $key => $value)
         {
@@ -118,6 +158,72 @@ class AcceptanceRepository extends DatatableSource
                 return true;
         }
         return false;
+    }
+
+    /**
+     * Method that search for if a commenter is banned
+     *
+     * @param Commenter $p_commenter
+     */
+    public function isBanned(Commenter $p_commenter, $p_forum)
+    {
+            $return = array();
+            $name = array(
+                'forum' => $p_forum,
+                'search' => $p_commenter->getName(),
+                'for_column' => 'name',
+                'type' => 'deny',
+                'search_type' => 'normal'
+            );
+            $return['name'] = $this->matched($name);
+
+            $email = array(
+                'forum' => $p_forum,
+                'search' => $p_commenter->getEmail(),
+                'for_column' => 'email',
+                'type' => 'deny',
+                'search_type' => 'normal'
+            );
+            $return['email'] = $this->matched($email);
+
+            $ip = array(
+                'forum' => $p_forum,
+                'search' => $p_commenter->getIp(),
+                'for_column' => 'ip',
+                'type' => 'deny',
+                'search_type' => 'normal'
+            );
+            $return['ip'] = $this->matched($ip);
+
+            return $return;
+    }
+
+    /**
+     * Method that save banned for a commenter
+     *
+     * @param Commenter $p_commenter
+     */
+    public function saveBanned(Commenter $p_commenter, $p_forum, $p_values)
+    {
+        $unban = array();
+        $ban = array();
+        if($p_values['name'])
+            $ban['name'] = $p_commenter->getName();
+        else
+            $unban['name'] = $p_commenter->getName();
+
+        if($p_values['email'])
+            $ban['email'] = $p_commenter->getEmail();
+        else
+            $unban['email'] = $p_commenter->getEmail();
+
+        if($p_values['ip'])
+            $ban['ip'] = $p_commenter->getIp();
+        else
+            $unban['ip'] = $p_commenter->getIp();
+
+        $this->ban($p_forum, $ban);
+        $this->unban($p_forum, $unban);
     }
 
     /**
