@@ -72,6 +72,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
         $table->setOption('fnRowCallback','datatableCallback.row');
         $table->setOption('fnDrawCallback','datatableCallback.draw');
+
         $table->toggleAutomaticWidth(false);
         $table->setHeaderClasses(array(
             'id'   => 'commentId',
