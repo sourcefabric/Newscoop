@@ -429,7 +429,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     $first = true;
     $skipped = array();
     $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
-    usort($versions, camp_version_compare);
+    usort($versions, 'camp_version_compare');
     foreach ($versions as $index=>$db_version) {
         if ($old_version > $db_version) {
             continue;

@@ -43,6 +43,25 @@ $fields = array(
     'creator' => 'iduser',
 );
 
+//fix for the new issue filters
+if( isset($_REQUEST['issue']) ) {
+	if($_REQUEST['issue'] != 0) {
+		$issueFiltersArray = explode('_', $_REQUEST['issue']);
+		$_REQUEST['publication'] = $issueFiltersArray[0];
+		$_REQUEST['issue'] = $issueFiltersArray[1];
+		$_REQUEST['language'] = $issueFiltersArray[2];
+	}
+}
+//fix for the new section filters
+if( isset($_REQUEST['section']) ) {
+	if($_REQUEST['section'] != 0) {
+		$sectionFiltersArray = explode('_', $_REQUEST['section']);
+		$_REQUEST['publication'] = $sectionFiltersArray[0];
+		$_REQUEST['language'] = $sectionFiltersArray[2];
+		$_REQUEST['section'] = $sectionFiltersArray[3];
+	}
+}
+
 foreach ($filters as $name => $opts) {
     if (!empty($_REQUEST[$name])) {
         $field = !empty($fields[$name]) ? $fields[$name] : $name;
