@@ -1,0 +1,29 @@
+<h1><?php putGS('Languages'); ?></h1>
+
+<?php
+$this->renderActions(array(
+    $this->url(array('action' => 'add')) => getGS('Add new Language'),
+));
+
+if (empty($this->languages)) { // no languages
+    $this->renderMessage(getGS('No languages.'));
+    return;
+} ?>
+
+<table class="languages">
+    <caption><?php putGS('Languages'); ?></caption>
+    <tr>
+        <th><?php putGS('Language'); ?></th>
+        <th><?php putGS('Native name'); ?></th>
+        <th><?php putGS('Code'); ?></th>
+        <th><?php putGS('Delete'); ?></th>
+    </tr>
+    <?php foreach ($this->languages as $language) { ?>
+    <tr>
+        <td><a href="<?php echo $this->url(array('action' => 'edit', 'language' => $language->getId())); ?>"><?php echo $language->getName(); ?></a></td>
+        <td><?php echo $language->getNativeName(); ?></td>
+        <td class="text"><?php echo $language->getCode(); ?></td>
+        <td><a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>">X</a></td>
+    </tr>
+    <?php } ?>
+</table>

@@ -9,6 +9,10 @@
  * @link http://www.sourcefabric.org
  */
 
+require_once 'Mail.php';
+require_once 'Mail/mime.php';
+    
+
 /**
  * This class provides easy-to-use mail functionality
  *
@@ -26,9 +30,6 @@ class CampMail
      */
     static public function MailMime($recipients, $text=false, $html=false, $hdrs)
     {
-        include_once 'Mail.php';
-        include_once 'Mail/mime.php';
-    
         $crlf = "\n";
     
         $mime = new Mail_mime($crlf);

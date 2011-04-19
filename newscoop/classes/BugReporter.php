@@ -1,50 +1,45 @@
 <?php
-
 /**
- * @package Campsite
+ * @package Newscoop
  */
 
-global $g_bugReporterDefaultServer;
-$g_bugReporterDefaultServer = null;
-
+/**
+ * BugReporter
+ *
+ * An object for sending captured error info to an HTTP server.
+ *
+ * An object for sending captured error info to an HTTP server.  In
+ * particular this is made to work with the Trac plugin Autotrac, though
+ * it would be quite simple to make another HTTP server to work with it.
+ *
+ * A simple way to use this object is to create an error handler to the
+ * following function report_bug():
+ *
+ *     function report_bug ($p_number, $p_string, $p_file, $p_line)
+ *     {
+ *         $reporter = new BugReporter ($p_number, $p_string, $p_file, $p_line);
+ *         $reporter->setServer ("http://myserver.com/mydirectory")
+ *         $reporter->sendToServer();
+ *     }
+ *
+ * The errors are always sent to the server URL plus the extension
+ * "/report".  So the above example would POST the error variables to
+ * http://myserver.com/mydirectory/newreport .  The error variables
+ * POSTed are:
+ *
+ *     - f_backtrace
+ *     - f_id
+ *     - f_software
+ *     - f_str
+ *     - f_num
+ *     - f_file
+ *     - f_line
+ *     - f_backtrace *     - f_description
+ *     - f_email
+ */
 class BugReporter
 {
     /**
-     * Constructor
-     *
-     * An object for sending captured error info to an HTTP server.
-     *
-     * An object for sending captured error info to an HTTP server.  In
-     * particular this is made to work with the Trac plugin Autotrac, though
-     * it would be quite simple to make another HTTP server to work with it.
-     *
-     * A simple way to use this object is to create an error handler to the
-     * following function report_bug():
-     *
-     *     function report_bug ($p_number, $p_string, $p_file, $p_line)
-     *     {
-     *         $reporter = new BugReporter ($p_number, $p_string, $p_file, $p_line);
-     *         $reporter->setServer ("http://myserver.com/mydirectory")
-     *         $reporter->sendToServer();
-     *     }
-     *
-     * The errors are always sent to the server URL plus the extension
-     * "/report".  So the above example would POST the error variables to
-     * http://myserver.com/mydirectory/newreport .  The error variables
-     * POSTed are:
-     *
-     *     - f_backtrace
-     *     - f_id
-     *     - f_software
-     *     - f_str
-     *     - f_num
-     *     - f_file
-     *     - f_line
-     *     - f_backtrace
-     *     - f_description
-     *     - f_email
-     *
-     *
      * @param int $p_number The PHP error number.
      * @param string $p_string The error message.
      * @param string $p_file The file which encountered the error.
@@ -54,13 +49,9 @@ class BugReporter
      * @param string $p_time The date and time.  If left blank, it is the current date and time.
      * @param mixed $p_backtrace The stack trace.  This can be an array or string.
      */
-    public function BugReporter($p_number, $p_string, $p_file, $p_line,
+    public function __construct($p_number, $p_string, $p_file, $p_line,
                                 $p_software, $p_version, $p_time = "", $p_backtrace = "")
     {
-        require_once "HTTP/Client.php";
-
-        global $g_bugReporterDefaultServer;
-
         $this->invalidParam = "Invalid parameter value.";
 
         if (!is_string($p_software)) {
@@ -82,8 +73,6 @@ class BugReporter
             $backtrace = $p_backtrace;
         }
 
-        $this->m_req = new HTTP_Request("");
-
         $this->m_software = $p_software;
         $this->m_version =  $p_version;
         $this->m_num = (int) $p_number;
@@ -92,10 +81,6 @@ class BugReporter
         $this->m_line = (int) $p_line;
         $this->m_backtrace = $this->__convertBacktraceArrayToString ($backtrace);
         $this->m_time = $p_time;
-
-
-        $this->setServer ($g_bugReporterDefaultServer);
-        $this->setPingStatus(true);
     } // fn BugReporter
 
 
@@ -124,36 +109,6 @@ class BugReporter
     {
         return $this->__server;
     } // fn getServer
-
-
-    /**
-     * Confirms that the server is online.
-     *
-     * @return boolean
-     *          True if the server is up, else false.
-     */
-    public function pingServer()
-    {
-
-        // --- if ping status is false, return true without making the call ---
-        if (isset ($this->m_disablePing) && ($this->m_disablePing == true)) {
-            return true;
-        }
-        $client = new HTTP_Client();
-        $code = $client->get ($this->__ping);
-
-        $response = $client->currentResponse();
-
-        $this->__responseHeader = $response['headers'];
-        $this->__responseBody = $response['body'];
-        $this->__responseCode = $code;
-
-        if (preg_match ("/pong/", $this->__responseBody) && ($code == 200)) {
-            return true;
-        } else {
-        	return false;
-        }
-    } // fn pingServer
 
 
     /**
@@ -201,43 +156,6 @@ class BugReporter
             return false;
         }
     } // fn getFormToken
-
-
-    /**
-     * Send the error details to the server via HTTP.
-     * @return void
-     */
-    public function sendToServer()
-    {
-        $client = new HTTP_Client();
-        $code = $client->post
-            ($this->m_newReport, array('f_software' => $this->m_software,
-                                       'f_version' => $this->m_version,
-                                       'f_num' => $this->m_num,
-                                       'f_str' => $this->m_str,
-                                       'f_line' => $this->m_line,
-                                       'f_id' => $this->getId(),
-                                       'f_backtrace' => $this->getBacktraceString(),
-                                       'f_time' => $this->getTime(),
-                                       'f_description' => $this->getDescription(),
-                                       'f_email' => $this->getEmail(),
-                                       '__FORM_TOKEN' => $this->getFormToken($client),
-                                    ));
-
-        $response = $client->currentResponse();
-        $this->__responseHeader = $response['headers'];
-        $this->__responseBody = $response['body'];
-        $this->__responseCode = $code;
-
-        if ($code != 200) {
-        	return false;
-        } elseif (preg_match ("/\baccepted\b/", $this->__responseBody)) {
-        	// --- Did we get an "accepted"?
-        	return true;
-        } else {
-        	return false;
-        }
-    } // fn sendToServer
 
 
     /**
@@ -540,6 +458,4 @@ class BugReporter
         } else trigger_error ($this->invalidParam);
     } // fn __convertBacktraceArrayToString
 
-} // class Bugreporter
-
-?>
+}

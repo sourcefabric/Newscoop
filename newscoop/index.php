@@ -1,11 +1,9 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop 
  *
- * @author Holman Romero <holman.romero@gmail.com>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2007 MDLF, Inc., 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
- * @version $Revision$
  * @link http://www.sourcefabric.org
  */
 
@@ -15,12 +13,15 @@ define('WWW_DIR', dirname(__FILE__));
 $GLOBALS['g_campsiteDir'] = WWW_DIR;
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
-.DIRECTORY_SEPARATOR.'campsite_constants.php');
+    .DIRECTORY_SEPARATOR.'campsite_constants.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
+
+$local_path = dirname(__FILE__) . '/include';
+set_include_path($local_path . PATH_SEPARATOR . get_include_path());
 
 // goes to install process if configuration files does not exist yet
 if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
-|| !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+        || !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
     header('Location: '.$Campsite['SUBDIR'].'/install/');
     exit(0);
 }

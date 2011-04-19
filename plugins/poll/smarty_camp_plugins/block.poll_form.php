@@ -4,7 +4,6 @@
  * @package Campsite
  */
 
-
 /**
  * Campsite poll_form block plugin
  *
@@ -49,35 +48,22 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 	    if ($p_params['ajax'] == true && !Input::Get('f_poll_ajax_request')) {
 	       $html .= 
 '
-<script language="javascript" src="'.$Campsite['WEBSITE_URL'].'/javascript/scriptaculous/prototype.js"></script>
-<script language="javascript">
-    function poll_'.$campsite->poll->identifier.'_vote()
-    {
-        var data = Form.serialize($("poll_'.$campsite->poll->identifier.'_form"));
-        var func = poll_'.$campsite->poll->identifier.'_reload;
-        
-        // avoid building the div tag on ajax request
-        data = data + "&f_poll_ajax_request=1";
-        
-        // debug:
-        //alert("data: " + data);
-        //alert("func: " + func);
-    
-        var myAjax = new Ajax.Request(
-            $("poll_'.$campsite->poll->identifier.'_form").action,
-                { 
-                    method: "get",
-                    parameters: data,
-                    onComplete: func
-                }
-            ); 
-    }
-    
-    function poll_'.$campsite->poll->identifier.'_reload(response)
-    {   
-        $("poll_'.$campsite->poll->identifier.'_div").innerHTML = response.responseText;  
-    }
-</script>	
+<script language="javascript" src="/javascript/jquery/jquery.min.js"></script>
+<script language="javascript"><!--
+function poll_'.$campsite->poll->identifier.'_vote()
+{
+    var data = $("#poll_'.$campsite->poll->identifier.'_form").serialize();
+
+    // avoid building the div tag on ajax request
+    data = data + "&f_poll_ajax_request=1";
+
+    $.get($("#poll_'.$campsite->poll->identifier.'_form").attr("action"),
+        data,
+        function(response) {
+            $("#poll_'.$campsite->poll->identifier.'_div").html(response);  
+        });
+}
+//--></script>	
 ';
 	       $html .= '<div id="poll_'.$campsite->poll->identifier.'_div">';
 	       

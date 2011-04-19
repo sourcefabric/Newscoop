@@ -49,11 +49,15 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js" type="text/javascript"></script>
+
+  <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
-  <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
+
+  <?php include dirname(__FILE__) . '/javascript_common.php'; ?>
+  <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js"></script>
 </head>
 <body>
   <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">

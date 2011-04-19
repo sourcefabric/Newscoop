@@ -1,5 +1,52 @@
 var terms = [];
-$(document).ready(function() {
+$(function() {
+    // main menu
+    $('.main-menu-bar ul.navigation ul').hide();
+    $('.main-menu-bar ul.navigation > li > a').each(function(i) {
+        var menu = $(this);
+
+        // init menu for all but first
+        if (i > 0) {
+            menu.topmenu({
+                content: '<ul>' + menu.next('ul').html() + '</ul>',
+                flyOut: true,
+                showSpeed: 150
+            });
+
+            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s') .prependTo(menu);
+        }
+
+        // add css/attributes to main links
+        menu.attr('tabindex', i)
+            .addClass('fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all')
+            .hover(function() {
+                $(this).removeClass('fg-button-ui-state-default')
+                    .addClass('fg-button-ui-state-focus');
+            }, function() {
+                $(this).removeClass('fg-button-ui-state-focus')
+                    .addClass('fg-button-ui-state-default');
+            });
+    });
+
+    // sticky buttons
+    var sticky_limit = 0;
+    $(window).scroll(function() {
+        if ($('.sticky').size() == 0) {
+            return false; // no sticky
+        }
+
+        var windowTop = $(window).scrollTop();
+        var stickyTop = $('.sticky').offset().top;
+        if (windowTop > stickyTop && sticky_limit == 0) {
+            $('.sticky').css('width', '100%').css('position', 'fixed').css('top', '0');
+            sticky_limit = stickyTop;
+        }
+        if (sticky_limit > 0 && windowTop < sticky_limit) {
+            $('.sticky').css('position', 'relative');
+            sticky_limit = 0;
+        }
+    });
+
     // topics search autocomplete
     $('input[name=search].topics').each(function() {
         var input = $(this);
@@ -120,6 +167,46 @@ $(document).ready(function() {
     $('input#googlegadget-code').each(function() {
             $(this).attr('maxlength', '500');
         });
+
+    // zebra
+    $('.content > table tr:odd').addClass('odd');
+
+    // confirmations
+    $('.confirm[title]').click(function() {
+        var title = $(this).attr('title');
+
+        // first letter to lowercase
+        title = title.charAt(0).toLowerCase() + title.slice(1);
+
+        return confirm(localizer.confirm + ' ' + title + '?');
+    });
+
+    // add plus icons
+    $('a.add').each(function() {
+        $(this).addClass('ui-icon-wrapper');
+        $('<span />').addClass('ui-icon ui-icon-plus')
+            .prependTo($(this));
+    });
+
+    // zend_form utils
+    $('dl.zend_form').each(function() {
+        var form = $(this);
+
+        // hide hidden fields
+        $('input:hidden', form).each(function() {
+            $(this).closest('dd').hide().prev('dt').hide();
+        });
+
+        // hide submit dt
+        $('input:submit', form).each(function() {
+            $(this).closest('dd').css('margin-top', '13px').prev('dt').hide();
+        });
+
+        // toogle fieldsets
+        $('fieldset.toggle legend').click(function() {
+            $('+ dl', $(this)).toggle();
+        }).click().css('cursor', 'pointer');
+    });
 });
 
 /**

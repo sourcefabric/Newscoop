@@ -15,15 +15,21 @@ header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Content-Type: text/html; charset=UTF-8");
 
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'include'
-.DIRECTORY_SEPARATOR.'campsite_constants.php');
+    .DIRECTORY_SEPARATOR.'campsite_constants.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
 // goes to install process if configuration files does not exist yet
 if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
-|| !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+        || !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
     header('Location: '.$Campsite['SUBDIR'].'/install/');
     exit(0);
 }
+
+set_include_path(get_include_path() . PATH_SEPARATOR . '/usr/share/php/libzend-framework-php');
+
+// start zend session first to prevent exception
+require_once 'Zend/Session.php';
+Zend_Session::start();
 
 require_once(CS_PATH_SITE.DIR_SEP.'include'.DIR_SEP.'campsite_init.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
@@ -44,7 +50,11 @@ global $g_user;
 require_once(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR.DIR_SEP.'camp_html.php');
 require_once(CS_PATH_CLASSES.DIR_SEP.'SecurityToken.php');
 
-set_include_path(get_include_path() . PATH_SEPARATOR . CS_PATH_PEAR_LOCAL);
+// load if possible before setting camp_report_bug error handler
+// to prevent error messages
+include_once 'HTML/QuickForm.php';
+include_once 'HTML/QuickForm/RuleRegistry.php';
+include_once 'HTML/QuickForm/group.php';
 
 camp_set_error_handler("camp_report_bug");
 
@@ -53,6 +63,14 @@ $plugins = CampPlugin::GetEnabled(true);
 foreach ($plugins as $plugin) {
     camp_load_translation_strings("plugin_".$plugin->getName());
 }
+
+// Load common translation strings
+camp_load_translation_strings('globals');
+
+require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
+
+// run zend
+require_once dirname(__FILE__) . '/public/index.php';
 
 $no_menu_scripts = array(
     $prefix . 'login.php',
@@ -105,30 +123,6 @@ if (($extension_start = strrpos($call_script, '.')) !== false) {
 }
 
 if (($extension == '.php') || ($extension == '')) {
-
-    // If they arent trying to login in...
-    if (($call_script != $prefix . 'login.php') && ($call_script != $prefix . 'do_login.php') && $call_script != $prefix . 'password_recovery.php' && $call_script != $prefix . 'password_check_token.php') {
-
-        // Check if the user is logged in already
-        list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
-        if (!$access) {
-            // If not logged in: store request
-            $request = serialize(array(
-                'uri' => $_SERVER['REQUEST_URI'],
-                'post' => $_POST,
-            ));
-            $requestId = sha1($request);
-            camp_session_set("request_$requestId", $request);
-
-            // show the login screen
-            header("Location: /{$ADMIN}{$prefix}login.php?request=$requestId");
-            exit(0);
-        }
-    }
-
-    // Load common translation strings
-    camp_load_translation_strings('globals');
-
     // If its not a PHP file, assume its a directory.
     if ($extension != '.php') {
         // If its a directory
@@ -142,21 +136,6 @@ if (($extension == '.php') || ($extension == '')) {
     // Verify the file exists
     $path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
 
-    if (!file_exists($path_name)) {
-
-        foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-           $plugin_path_name = $Campsite['HTML_DIR'].'/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
-           if (file_exists($plugin_path_name)) {
-               $path_name = $plugin_path_name;
-               break;
-           }
-        }
-        if (!file_exists($path_name)) {
-            header("HTTP/1.1 404 Not found");
-            exit;
-        }
-    }
-
     // Clean up the global namespace before we call the script
     unset($access);
     unset($extension);
@@ -165,27 +144,49 @@ if (($extension == '.php') || ($extension == '')) {
     unset($no_menu_scripts);
     unset($request_uri);
 
-    // Restore POST request
-    $requestId = Input::Get('request', 'string', '', TRUE);
-    $request = camp_session_get("request_$requestId", '');
-    if (!empty($request)) {
-        $request = unserialize($request);
-
-        // Update security token.
-        $token_field = SecurityToken::SECURITY_TOKEN;
-        $request['post'][$token_field] = SecurityToken::GetToken();
-
-        // Set values.
-        foreach ($request['post'] as $key => $val) {
-            $_POST[$key] = $_REQUEST[$key] = $val;
-        }
-    }
-
     if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
         CampCache::singleton()->clear('user');
         unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
     }
-    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php");
+
+    if (!file_exists($path_name)) {
+
+        foreach (CampPlugin::GetEnabled() as $CampPlugin) {
+            $plugin_path_name = dirname(APPLICATION_PATH) . '/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
+            if (file_exists($plugin_path_name)) {
+                $path_name = $plugin_path_name;
+
+                // possible plugin include paths
+                $include_paths = array(
+                    '/classes',
+                    '/template_engine/classes',
+                    '/template_engine/metaclasses',
+                );
+
+                // set include paths for plugin
+                foreach ($include_paths as $path) {
+                    $path = dirname(APPLICATION_PATH) . '/' . $CampPlugin->getBasePath() . $path;
+                    if (file_exists($path)) {
+                        set_include_path(implode(PATH_SEPARATOR, array(
+                            realpath($path),
+                            get_include_path(),
+                        )));
+                    }
+                }
+
+               break;
+           }
+        }
+
+        if (!file_exists($path_name)) {
+            header("HTTP/1.1 404 Not found");
+            echo '<html><head><title>404 Not Found</title></head><body>';
+            echo '<h1>Not Found</h1>';
+            echo '<p>The requested URL ', $_SERVER['REQUEST_URI'], ' was not found on this server.</p>';
+            echo '</body></html>';
+            exit;
+        }
+    }
 
     // Get the main content
     ob_start();
@@ -198,8 +199,6 @@ if (($extension == '.php') || ($extension == '')) {
     $_top_menu = '';
     if ($needs_menu) {
         ob_start();
-        echo '<!DOCTYPE html>';
-        echo '<html dir="ltr" lang="en">';
         require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
         $_top_menu = ob_get_clean();
     }

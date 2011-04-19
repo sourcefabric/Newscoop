@@ -16,7 +16,7 @@ global $g_db;
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
@@ -150,6 +150,13 @@ class CampInstallationBase
     {
         global $g_db;
 
+        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+        	}
+        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
+        }
+
         $session = CampSession::singleton();
 
         $db_hostname = Input::Get('db_hostname', 'text');
@@ -274,10 +281,10 @@ class CampInstallationBase
             return false;
         }
 
-        if (!CampInstallationBaseHelper::ValidatePassword($mc_adminpsswd,
-                                                          $mc_admincpsswd)) {
+        $psswd_validation = CampInstallationBaseHelper::ValidatePassword($mc_adminpsswd, $mc_admincpsswd);
+        if ($psswd_validation['result'] == FALSE) {
             $this->m_step = 'mainconfig';
-            $this->m_message = 'Error: Passwords do not match each other.';
+            $this->m_message = 'Error: ' . $psswd_validation['message'];
             return false;
         }
 
@@ -417,13 +424,7 @@ class CampInstallationBase
             return false;
         }
 
-        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
-        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
-        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
-        	}
-        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
-        }
-        if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
+		if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
         && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
@@ -634,6 +635,8 @@ class CampInstallationBase
  */
 class CampInstallationBaseHelper
 {
+    const PASSWORD_MINLENGTH = 5;
+
     /**
      *
      */
@@ -781,7 +784,18 @@ class CampInstallationBaseHelper
      */
     public static function ValidatePassword($p_password1, $p_password2)
     {
-        return ($p_password1 == $p_password2);
+        $validator = array('result' => TRUE);
+        if (strlen($p_password1) < self::PASSWORD_MINLENGTH) {
+            $validator['result'] = FALSE;
+            $validator['message'] = 'Password must be at least ' . self::PASSWORD_MINLENGTH . ' characters long.';
+        }
+
+        if ($validator['result'] == TRUE && ($p_password1 !== $p_password2)) {
+            $validator['result'] = FALSE;
+            $validator['message'] = 'Passwords do not match each other.';
+        }
+
+        return $validator;
     } // fn ValidatePassword
 
 

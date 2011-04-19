@@ -283,30 +283,4 @@ class Language extends DatabaseObject {
         }
         return $order;
     }
-
-
-	/**
-	 * This will create the symbolic links needed for short URLs to work
-	 *
-	 */
-	public static function CreateLanguageLinks()
-	{
-	    global $g_ado_db;
-
-	    $languages = $g_ado_db->GetAll('select Code from Languages');
-	    $index_file = $GLOBALS['g_campsiteDir'].'/index.php';
-	    foreach ($languages as $language) {
-	        $languageCode = $language["Code"];
-	        $link = $GLOBALS['g_campsiteDir']."/$languageCode.php";
-	        if (file_exists($link) && !is_link($link)) {
-	            unlink($link);
-	        }
-	        if (!is_link($link)) {
-	            symlink($index_file, $link);
-	        }
-	    }
-	}
-
-} // class Language
-
-?>
+}

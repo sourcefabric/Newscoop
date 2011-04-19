@@ -15,16 +15,12 @@ camp_load_translation_strings("geolocation");
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta http-equiv="Expires" content="now" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-preview.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 	<title><?php putGS("Map Search Example"); ?></title>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css">
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+    <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/admin.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-preview.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
 
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>

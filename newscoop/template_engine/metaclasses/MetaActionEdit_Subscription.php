@@ -1,6 +1,6 @@
 <?php
 
-require_once($GLOBALS['g_campsiteDir'].'/include/pear/Date.php');
+require_once('Date.php');
 
 define('ACTION_EDIT_SUBSCRIPTION_ERR_INTERNAL', 'action_edit_subscription_err_internal');
 define('ACTION_EDIT_SUBSCRIPTION_ERR_NO_USER', 'action_edit_subscription_err_no_user');
@@ -50,9 +50,9 @@ class MetaActionEdit_Subscription extends MetaAction
         } else {
             $this->m_languages = array(0);
         }
-        
+
         $this->m_properties['subs_by_type'] = 'publication';
-        
+
         if (isset($p_input['subs_by_type'])
         && strtolower($p_input['subs_by_type']) == 'by_section') {
         	$this->m_properties[''] = 'section';
@@ -115,7 +115,7 @@ class MetaActionEdit_Subscription extends MetaAction
         $p_context->publication->subscription_time);
 
         $startDate = new Date();
-        
+
         $columns = array(
         'StartDate'=>$startDate->getDate(),
         'Days'=>$subscriptionDays,
