@@ -1,0 +1,64 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
+<h2><?php echo $this->name; ?></h2>
+<h1><?php putGS('Comments'); ?></h1>
+<div class="wrapper">
+  <div class="ui-widget-content small-block block-shadow commentsHolder">
+    <div class="padded clearfix inner-tabs">
+      <div class="tabs">
+        <ul>
+          <li><a href="#tabs-1">Comments</a></li>
+          <li><a href="#tabs-2">Users</a></li>
+        </ul>
+        <div id="tabs-1">
+<div id="showComments">
+<fieldset>
+<legend><?php putGS('Show');?></legend>
+<ul>
+    <li class="published">
+        <input type="checkbox" id="show_published">
+        <label for="show_published">Published</label>
+    </li>
+    <li class="new">
+        <input type="checkbox" id="show_new">
+        <label for="show_new">New</label>
+    </li>
+    <li class="approved">
+        <input type="checkbox" id="show_approved">
+        <label for="show_approved">Approved</label>
+    </li>
+    <li class="hidden">
+        <input type="checkbox" id="show_hidden">
+        <label for="show_hidden">Hidden</label>
+    </li>
+    <li class="deleted">
+        <input type="checkbox" id="show_deleted">
+        <label for="show_deleted">Deleted</label>
+    </li>
+</ul>
+</fieldset>
+</div>
+<?php $this->renderDatatable(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+var datatableCallback = {
+	rowIndex:1,
+	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        console.log(aData);
+	    that = datatableCallback;
+        $('.index', nRow).text(that.rowIndex++);
+        jRow = $('<tr></tr>').append($('<td></td>').attr('colspan',4).append($('<table cellspacing="0" cellpadding="0">').append(nRow)));
+        return jRow.get(0);
+    },
+    draw: function()
+    {
+    	that = datatableCallback;
+    	that.rowIndex =1;
+    }
+}
+</script>

@@ -45,12 +45,6 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getName();
     }
 
-    public function setCommentsEnabled($p_enabled)
-    {
-        $this->_load();
-        return parent::setCommentsEnabled($p_enabled);
-    }
-
     public function setPublication(\Newscoop\Entity\Publication $p_publication)
     {
         $this->_load();
@@ -78,7 +72,7 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'language', 'publication', 'comments_enabled', 'comments_locked', 'name');
+        return array('__isInitialized__', 'id', 'language', 'publication', 'name');
     }
 
     public function __clone()

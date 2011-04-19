@@ -17,28 +17,12 @@ $(function() {
     $('table.data')
         .wrap($('<div />').addClass('table')).wrap($('<div />').addClass('smartlist'))
         .css('position', 'relative').css('width', '100%')
-        .dataTable({
-            'sAjaxSource': '<?php echo $this->url(array('action' => 'index', 'format' => 'json')); ?>',
-            'bServerSide': true,
-            'bJQueryUI': true,
-            'bAutoWidth': true,
-            'iDisplayLength': 25,
-            'bLengthChange': false,
-            'sPaginationType': 'full_numbers',
-            'aoColumnDefs': [
-                { 'bSortable': false, 'aTargets': [0,-1] }
-            ],
-            <?php if(count($this->iOptions)): ?>
-                <?php foreach($this->iOptions as $key => $value):?>
-                '<?php echo $key;?>':
-                    <?php if(is_string($value)):?>
-                        '<?php echo $value; ?>',
-                    <?php elseif(is_bool($value) || is_numeric($value)):?>
-                        <?php echo $value; ?>,
-                    <?php endif;?>
-                <?php endforeach;?>
-            <?php endif;?>
-
-    });
+        .dataTable(
+        <?php
+            $regex = '/"(fnRowCallback|fnDrawCallback)":"([\w\-\.]+)"/i';
+            $replace = '"$1":$2';
+            $jsonified = preg_replace($regex, $replace, json_encode($this->iOptions));
+        echo $jsonified;
+        ?> );
 });
 </script>

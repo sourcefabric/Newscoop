@@ -5,13 +5,13 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Entity;
+namespace Newscoop\Entity\Comment\Prefence;
 
 /**
  * Article entity
  * @entity
  * @table(name="Articles")
- * @entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\ArticleRepository")
  */
 class Article
 {
@@ -30,72 +30,61 @@ class Article
     private $language;
 
     /**
-     * @manyToOne(targetEntity="Publication")
-     * @joinColumn(name="IdPublication", referencedColumnName="Id")
-     * @var Newscoop\Entity\Publication
+     * @column(name="comments_enabled")
+     * @var int
      */
-    private $publication;
+    private $enabled;
 
     /**
-     * @column(name="Name")
-     * @var string
+     * @column(name="comments_locked")
+     * @var int
      */
-    private $name;
+    private $locked;
 
     /**
-     * Set article id
+     * Set the flag if the comments are enabled or not
      *
-     * @param int $p_id
+     * @param bool $p_enabled
      * @return Article
      */
-    public function setId($p_id)
+    public function setEnabled($p_enabled)
     {
-        $this->id = $p_id;
+        $this->enabled = $p_enabled;
         // return this for chaining mechanism
         return $this;
     }
 
     /**
-     * Get article id
+     * Get the flag if the comments are enabled or not
      *
-     * @return int
+     * @return bool
      */
-    public function getId()
+    public function getEnabled()
     {
-        return $this->id;
+        return $this->enabled;
     }
 
     /**
-     * Get article name
+     * Set the flag if the comments are enabled or not
      *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set publication
-     *
-     * @param  Publication $p_publication
+     * @param bool $p_enabled
      * @return Article
      */
-    public function setPublication(Publication $p_publication)
+    public function setLocked($p_locked)
     {
-        $this->publication = $p_publication;
+        $this->locked = $p_locked;
         // return this for chaining mechanism
         return $this;
     }
 
     /**
-     * Get publication
+     * Get the flag if the comments are enabled or not
      *
-     * @return Newscoop\Entity\Publication
+     * @return bool
      */
-    public function getPublication()
+    public function getLocked()
     {
-        return $this->publication;
+        return $this->locked;
     }
 
     /**

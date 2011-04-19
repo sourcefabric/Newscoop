@@ -20,8 +20,7 @@ foreach ($hiddens as $name) {
     echo '" value="', $$name, '" />', "\n";
 }
 ?>
-<p style="display:none"><?php putGS('No comments posted.'); ?></p>
-<fieldset id="comment-prototype" class="plain" style="display:none">
+<fieldset id="comment-prototype" class="plain comments-block" style="display:none">
     <?php if ($inEditMode): ?>
     <ul class="action-list clearfix">
       <li>
@@ -67,9 +66,28 @@ foreach ($hiddens as $name) {
       </dl>
     </div>
 </fieldset>
-<form id="comment-moderate" action="comment/do_moderate.php" method="POST">
-</form>
+<p style="display:none"><?php putGS('No comments posted.'); ?></p>
+<form id="comment-moderate" action="comment/do_moderate.php" method="POST"></form>
 <script>
+function toggleCommentStatus() {
+    $('#comment-moderate .comments-block').each(function() {
+    	var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
+    	var block = $(this);
+        var status = $('input:radio:checked', block).val();
+        var cclass = 'comment_'+statusClassMap[status];
+        var button = $('dd.buttons', block);
+
+        // set class
+        $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
+            .addClass(cclass);
+
+        // show/hide button
+        button.hide();
+        if (status == 'approve') {
+            button.show();
+        }
+    });
+}
 function loadComments() {
 	$('#comment-moderate').empty();
     $.ajax({
@@ -94,11 +112,11 @@ function loadComments() {
                     }
                 	template = template.replace(new RegExp("\\${"+key+"}","g"),comment[key]);
                 }
-            	$('#comment-moderate').append(template);
+            	$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
             }
             if(!hasComment)
                 $('#no-comments').show();
-
+            toggleCommentStatus();
         }
     });
 }
@@ -112,7 +130,14 @@ $('.action-list a').live('click',function(){
 		   "status": el.val()
 		},
 		success: function(data) {
-		}
+            flashMessage('<?php putGS('Comments updated.'); ?>');
+            toggleCommentStatus();
+		},
+        error: function (rq, status, error) {
+            if (status == 0 || status == -1) {
+                flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+            }
+        }
 	});
 });
 </script>

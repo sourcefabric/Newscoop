@@ -40,10 +40,15 @@ class Admin_CommentController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->_forward('table');
+    }
+
+    /**
+     * Action to make the table
+     */
+    public function tableAction()
+    {
         $view = $this->view;
-        $this->getHelper('contextSwitch')
-            ->addActionContext('index', 'json')
-            ->initContext();
         $table = $this->getHelper('datatable');
 
         $table->setDataSource($this->repository);
@@ -53,7 +58,8 @@ class Admin_CommentController extends Zend_Controller_Action
             'user' => getGS('Author'),
             'time_created' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
-        ));
+        ),array('id'));
+
 
         $table->setHandle(function($comment) use ($view) {
             return array(
@@ -64,6 +70,14 @@ class Admin_CommentController extends Zend_Controller_Action
             );
         });
 
+        $table->setOption('fnRowCallback','datatableCallback.row');
+        $table->setOption('fnDrawCallback','datatableCallback.draw');
+        $table->toggleAutomaticWidth(false);
+        $table->setHeaderClasses(array(
+            'id'   => 'commentId',
+            'user' => 'commentUser',
+            'time_created' => 'timeCreated',
+            'thread' => 'thread'));
         $table->dispatch();
     }
 
@@ -104,7 +118,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $comment = new Comment;
         $request = $this->getRequest();
         $user = Zend_Registry::get('user');
-        $values['user'] = $user;
+        //$values['user'] = $user;
         $values['name'] = $request->getParam('name');
         $values['subject'] = $request->getParam('subject');
         $values['message'] = $request->getParam('message');
