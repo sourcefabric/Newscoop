@@ -1,14 +1,8 @@
 <?php
-camp_load_translation_strings('home');
-require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/crypto/rc4Encrypt.php');
-require_once('PEAR.php');
-camp_load_translation_strings('api');
+$auth = Zend_Auth::getInstance();
+if ($auth->hasIdentity()) { // ignore for logged user
+    return;
+}
 
 $f_user_name = Input::Get('f_user_name');
 $f_password = Input::Get('f_password');
@@ -16,62 +10,16 @@ $f_login_language = Input::Get('f_login_language', 'string', 'en');
 $f_is_encrypted = Input::Get('f_is_encrypted', 'int', '1');
 $f_captcha_code = Input::Get('f_captcha_code', 'string', '', true);
 
-// Get request.
-$requestId = Input::Get('request', 'string', '', TRUE);
-$request = camp_session_get("request_$requestId", '');
-
 $xorkey = camp_session_get('xorkey', '');
 if (trim($xorkey) == '') {
-    camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-        'error_code' => 'xorkey',
-        'request' => $requestId,
-    ));
+    return 'xorkey';
 }
-$t_password = camp_passwd_decrypt($xorkey, $f_password);
-$f_password = sha1($t_password);
-
 
 if (!Input::isValid()) {
-    camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-        'error_code' => 'userpass',
-        'request' => $requestId,
-    ));
+    return 'userpass';
 }
 
-function camp_successful_login($user, $f_login_language)
-{
-    global $ADMIN, $LiveUser, $LiveUserAdmin, $request, $requestId;
-
-    $user->initLoginKey();
-    $data = array('KeyId' => $user->getKeyId());
-    if (is_object($LiveUser->_perm)) {
-        $permUserId = $LiveUser->_perm->getProperty('perm_user_id');
-        $LiveUserAdmin->updateUser($data, $permUserId);
-        $LiveUser->updateProperty(true, true);
-        LoginAttempts::ClearLoginAttemptsForIp();
-        setcookie("LoginUserId", $user->getUserId());
-        setcookie("LoginUserKey", $user->getKeyId());
-        setcookie("TOL_Language", $f_login_language);
-        Article::UnlockByUser($user->getUserId());
-
-        // Try to restore request.
-        if (!empty($request)) { // restore request
-            camp_session_set("request_$requestId", $request);
-            $request = unserialize($request);
-            camp_html_goto_page($request['uri'], TRUE, array(
-                'request' => $requestId,
-            ));
-        }
-
-        // Go to admin index if no request is set.
-        camp_html_goto_page("/$ADMIN/index.php");
-    }
-}
-
-function camp_passwd_decrypt($xorkey, $password)
-{
-	return rc4($xorkey, base64ToText($password));
-}
+$t_password = rc4($xorkey, base64ToText($f_password));
 
 //
 // Valid logins
@@ -89,39 +37,70 @@ function camp_passwd_decrypt($xorkey, $password)
 // password invalid, encrypted -> upgrade
 // password invalid, not encrypted -> userpass
 
-if (!$LiveUser->isLoggedIn() || ($f_user_name && $LiveUser->getProperty('handle') != $f_user_name)) {
-    if (!$f_user_name) {
-        $LiveUser->login(null, null, true);
-    } elseif (!$LiveUser->login($f_user_name, $t_password, false)) {
-    	camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-            'error_code' => 'userpass',
-            'request' => $requestId,
-        ));
+if (!$auth->hasIdentity()) {
+    $repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
+    $adapter = new Newscoop\Auth\Adapter($repository, $f_user_name, $t_password);
+    $result = $auth->authenticate($adapter);
+
+    if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
+        return 'userpass';
     }
 }
 
-if ($LiveUser->getProperty('reader') == 'Y') {
-    camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-        'error_code' => 'userpass',
-        'request' => $requestId,
-    ));
-}
-
-$user = User::FetchUserByName($f_user_name, true);
+$user = $repository->find($auth->getIdentity());
 $validateCaptcha = LoginAttempts::MaxLoginAttemptsExceeded();
+
+// set user for environment
+$g_user = $user;
+$this->view->user = $user;
+Zend_Registry::set('user', $user);
 
 //
 // Valid login section
 //
-if ($LiveUser->isLoggedIn()) {
-    if (is_null($user)) {
-        // load data to User from liveuser_users
-        // and create the user object
-    }
+if ($auth->hasIdentity()) {
     if (!$validateCaptcha || PhpCaptcha::Validate($f_captcha_code, true)) {
         // if user valid, password valid, encrypted, no CAPTCHA -> login
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
-        camp_successful_login($user, $f_login_language);
+
+        LoginAttempts::ClearLoginAttemptsForIp();
+        setcookie("TOL_Language", $f_login_language);
+        Article::UnlockByUser($user->getId());
+
+        // next action GET/POST detection
+        if (!empty($_POST['_next']) && $_POST['_next'] == 'get') {
+            $_SERVER['REQUEST_METHOD'] = 'GET';
+            $method = 'redirect';
+        }
+
+        // fix csfr protection
+        if (!empty($_POST['csrf'])) {
+            $form = new Zend_Form;
+            $form->addElement('hash', 'csrf');
+            $csrf = $form->getElement('csrf');
+            $_POST['csrf'] = $csrf->getHash();
+        }
+
+        // fix legacy cs
+        if (!empty($_POST[SecurityToken::SECURITY_TOKEN])) {
+            $_POST[SecurityToken::SECURITY_TOKEN] = SecurityToken::GetToken();
+        }
+
+        // fix uri
+        $_SERVER['REQUEST_URI'] = $this->getRequest()->getRequestUri();
+
+        // reset view
+        $this->view->legacy = NULL;
+        $this->_helper->layout->enableLayout();
+
+        // redirect/forward
+        if (!empty($_POST['_next']) && $_POST['_next'] == 'post') { // forward POST request
+            $this->_forward($this->_getParam('action'), $this->_getParam('controller'), 'admin');
+        } else { // redirect GET request
+            $this->_helper->redirector->gotoSimple($this->_getParam('action'), $this->_getParam('controller'), 'admin');
+        }
+
+        return;
     }
 }
 
@@ -134,24 +113,13 @@ LoginAttempts::RecordLoginAttempt();
 
 // CAPTCHA invalid -> captcha login page
 if ($validateCaptcha && !PhpCaptcha::Validate($f_captcha_code, true)) {
-	camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-        'error_code' => 'captcha',
-        'request' => $requestId,
-    ));
+    return 'captcha';
 }
 
 // user valid, password invalid, encrypted, CAPTCHA valid -> upgrade
-if (!is_null($user) && $f_is_encrypted && (strlen($user->getPassword()) < 40)) {
-    camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-        'error_code' => 'upgrade',
-        'f_user_name' => $f_user_name,
-        'request' => $requestId,
-    ));
+if (!is_null($user) && $f_is_encrypted && (strlen($user->getPasswordHash()) < 40)) {
+    return 'upgrade';
 }
 
 // Everything else
-camp_html_goto_page("/$ADMIN/login.php", TRUE, array(
-    'error_code' => 'userpass',
-    'request' => $requestId,
-));
-?>
+return 'userpass';

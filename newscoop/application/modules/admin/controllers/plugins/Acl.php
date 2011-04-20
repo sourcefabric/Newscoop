@@ -22,6 +22,10 @@ class Admin_Controller_Plugin_Acl extends Zend_Controller_Plugin_Abstract
     private $ignored = array(
         'auth',
         'error',
+        'legacy',
+        'login.php',
+        'password_recovery.php',
+        'password_check_token.php',
     );
 
     /** @var Zend_Acl */

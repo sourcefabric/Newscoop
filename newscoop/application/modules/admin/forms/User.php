@@ -9,7 +9,7 @@ abstract class Admin_Form_User extends Zend_Form
 {
     public function init()
     {
-        $this->addElement('hash', 'csrf', array('salt' => get_class($this)));
+        $this->addElement('hash', 'csrf');
 
         $this->addElement('text', 'username', array(
             'label' => getGS('Account name'),

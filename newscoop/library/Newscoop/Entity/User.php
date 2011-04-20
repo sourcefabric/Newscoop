@@ -248,6 +248,16 @@ abstract class User
     }
 
     /**
+     * Get password hash
+     *
+     * @return string
+     */
+    public function getPasswordHash()
+    {
+        return $this->password;
+    }
+
+    /**
      * Set email
      *
      * @param string $email

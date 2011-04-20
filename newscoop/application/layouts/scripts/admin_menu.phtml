@@ -544,7 +544,7 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     <?php echo $view->navigation(); ?>
 </div>
 
-<?php if (isset($this)) { // zend framework only ?>
+<?php if (!$this->legacy) { // zend framework only ?>
 <div class="breadcrumb-bar zend clearfix">
     <?php echo $this->navigation()->breadcrumbs(); ?>
 </div>

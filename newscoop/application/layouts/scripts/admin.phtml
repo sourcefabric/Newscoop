@@ -13,11 +13,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
+
+    <?php if (!$this->legacy) { ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
+    <?php } ?>
 
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -73,7 +76,7 @@
 <body<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
 <div class="meta-bar">
     <ul>
-        <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'auth')); ?>"><?php putGS('Logout'); ?></a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php echo $this->helpUrl; ?>" target="_blank"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
     </ul>
@@ -81,15 +84,19 @@
 
 <?php echo $this->render('admin_menu.phtml'); ?>
 
-<?php echo $this->placeholder('title'); ?>
+<?php echo $this->legacy ? '' : $this->placeholder('title'); ?>
 
 <?php if ($this->placeholder('sidebar') != '') { ?>
 <div class="content-sidebar">
 <?php } ?>
 
+<?php if (!$this->legacy) { ?>
 <div class="content">
     <?php echo $this->layout()->content; ?>
 </div>
+<?php } else { ?>
+    <?php echo $this->layout()->content; ?>
+<?php } ?>
 
 <?php if ($this->placeholder('sidebar') != '') { ?>
 <div class="sidebar first">
@@ -111,6 +118,8 @@ $(function() {
 //--></script>
 <?php } ?>
 
-<?php camp_html_copyright_notice(); ?>
+<?php if (!$this->legacy) {
+    camp_html_copyright_notice();
+} ?>
 </body>
 </html>

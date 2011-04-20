@@ -4,8 +4,79 @@ use Newscoop\Log\Writer;
 
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
-    /** @var Zend_View */
-    private $view = NULL;
+    /**
+     * Legacy admin bootstrap
+     */
+    protected function _initNewscoop()
+    {
+        global $ADMIN_DIR, $ADMIN, $g_user, $prefix;
+
+        header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Content-Type: text/html; charset=UTF-8");
+
+        define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
+        define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
+        $GLOBALS['g_campsiteDir'] = WWW_DIR;
+
+        require_once $GLOBALS['g_campsiteDir'] . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'campsite_constants.php';
+        require_once CS_PATH_CONFIG . DIR_SEP . 'install_conf.php';
+
+        // goes to install process if configuration files does not exist yet
+        if (!file_exists(CS_PATH_CONFIG . DIR_SEP . 'configuration.php')
+            || !file_exists(CS_PATH_CONFIG . DIR_SEP . 'database_conf.php')) {
+            header('Location: '.$Campsite['SUBDIR'].'/install/');
+            exit;
+        }
+
+        require_once CS_PATH_CONFIG . DIR_SEP . 'database_conf.php';
+        $this->bootstrap('auth');
+
+        require_once CS_PATH_SITE . DIR_SEP . 'include' . DIR_SEP . 'campsite_init.php';
+        require_once CS_PATH_SITE . DIR_SEP . 'classes' . DIR_SEP . 'CampTemplateCache.php';
+
+        // check for upgrade
+        if (file_exists(CS_PATH_SITE . DIR_SEP . 'upgrade.php')) {
+            camp_display_message("Site is down for upgrade. Please initiate upgrade process.");
+            echo '<meta http-equiv="Refresh" content="10" />';
+            exit;
+        }
+
+        // detect extended login/logout files
+        $prefix = file_exists(CS_PATH_SITE . DIR_SEP . 'admin-files' . DIR_SEP . 'ext_login.php') ? '/ext_' : '/';
+
+        require_once CS_PATH_SITE . DIR_SEP . $ADMIN_DIR . DIR_SEP . 'camp_html.php';
+        require_once CS_PATH_CLASSES . DIR_SEP . 'SecurityToken.php';
+
+        // load if possible before setting camp_report_bug error handler
+        // to prevent error messages
+        include_once 'HTML/QuickForm.php';
+        include_once 'HTML/QuickForm/RuleRegistry.php';
+        include_once 'HTML/QuickForm/group.php';
+
+        set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
+            global $ADMIN_DIR, $Campsite;
+
+            require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
+            camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
+        }, E_ALL);
+
+        camp_load_translation_strings("api");
+        $plugins = CampPlugin::GetEnabled(true);
+        foreach ($plugins as $plugin) {
+            camp_load_translation_strings("plugin_".$plugin->getName());
+        }
+
+        // Load common translation strings
+        camp_load_translation_strings('globals');
+
+        require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php";
+
+        if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
+            CampCache::singleton()->clear('user');
+            unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
+        }
+    }
 
     /**
      * Init doctype & view - first function using it
@@ -68,13 +139,14 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
             // set view user
             $this->bootstrap('view');
-            $this->view->user = $user;
+            $view = $this->getResource('view');
+            $view->user = $user;
 
             // set view navigation acl
             $this->bootstrap('acl');
             $acl = $this->getResource('acl')->getAcl();
-            $this->view->navigation()->setAcl($acl);
-            $this->view->navigation()->setRole($user->getRole());
+            $view->navigation()->setAcl($acl);
+            $view->navigation()->setRole($user->getRole());
         }
     }
 

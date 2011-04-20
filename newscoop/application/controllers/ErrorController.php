@@ -2,6 +2,26 @@
 
 class ErrorController extends Zend_Controller_Action
 {
+    /**
+     * Forward to legacy controller if controller/action not found
+     */
+    public function preDispatch()
+    {
+        $errors = $this->_getParam('error_handler');
+        if (!$errors) {
+            return;
+        }
+
+        $notFound = array(
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
+        );
+
+        if (in_array($errors->type, $notFound) && $this->_getParam('module') == 'admin') { // handle with old code
+            $this->_forward('index', 'legacy', 'admin');
+        }
+    }
+
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
@@ -16,11 +36,6 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // throw exception if in admin module - will continue with legacy code
-                if ($request->getParam('module') == 'admin') {
-                    throw new InvalidArgumentException;
-                }
-
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $priority = Zend_Log::NOTICE;

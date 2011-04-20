@@ -3,7 +3,7 @@
 use Newscoop\Entity\User\Subscriber;
 
 /**
- * @acl(action="manage")
+ * @Acl(action="manage")
  */
 class Admin_SubscriberController extends Zend_Controller_Action
 {

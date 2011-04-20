@@ -3,7 +3,7 @@
 use Newscoop\Entity\User\Staff;
 
 /**
- * @acl(resource="user", action="manage")
+ * @Acl(resource="user", action="manage")
  */
 class Admin_StaffController extends Zend_Controller_Action
 {
@@ -51,7 +51,7 @@ class Admin_StaffController extends Zend_Controller_Action
     }
 
     /**
-     * @acl(ignore="1")
+     * @Acl(ignore="1")
      */
     public function editAction()
     {
@@ -95,7 +95,7 @@ class Admin_StaffController extends Zend_Controller_Action
     }
 
     /**
-     * @acl(action="delete")
+     * @Acl(action="delete")
      */
     public function deleteAction()
     {
@@ -110,9 +110,6 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->_helper->redirector->gotoSimple('index');
     }
 
-    /**
-     * @acl(action="manage")
-     */
     public function tableAction()
     {
         $table = $this->getHelper('datatable');
