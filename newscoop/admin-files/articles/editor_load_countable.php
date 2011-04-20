@@ -1,6 +1,6 @@
 <!-- Load TinyMCE -->
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jCountable/jquery.jCountable.css" />
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jCountable/jquery.jCountable.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jCountable/jquery.jCountable.css" />
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jCountable/jquery.jCountable.js"></script>
 <script type="text/javascript">
 $().ready(function() {
 	$('#f_article_title').jCountable(
