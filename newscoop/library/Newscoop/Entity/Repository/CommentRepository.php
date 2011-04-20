@@ -151,6 +151,55 @@ class CommentRepository extends DatatableSource
         return $p_entity;
     }
 
+    /**
+     * Get data for table
+     *
+     * @param array $params
+     * @param array $cols
+     * @return array
+     */
+    public function getData(array $p_params, array $p_cols)
+    {
+        $qb = $this->createQueryBuilder('e');
+        if (!empty($p_params['sSearch'])) {
+            $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
+        }
+
+        // sort
+        foreach (array_keys($p_cols) as $id => $property) {
+            if (!is_string($property)) { // not sortable
+                continue;
+            }
+
+            if (isset($p_params["iSortCol_$id"])) {
+                $dir = $p_params["sSortDir_$id"] ?: 'asc';
+                $qb->orderBy("e.$property", $dir);
+            }
+        }
+
+        if(isset($p_params['sFilter']))
+        {
+            foreach($p_params['sFilter'] as $key => $values)
+            {
+                if(is_array($values))
+                {
+                    $or = $qb->expr()->orx();
+                    $mapper = array_flip($values);
+                    if($key=='status')
+                        $mapper = array_flip(Comment::$status_enum);
+                    foreach($values as $value)
+                        $or->add($qb->expr()->eq('e.'.$key, $mapper[$value]));
+                    $qb->where($or);
+                }
+            }
+        }
+
+        // limit
+        $qb->setFirstResult((int) $p_params['iDisplayStart'])
+            ->setMaxResults((int) $p_params['iDisplayLength']);
+
+        return $qb->getQuery()->getResult();
+    }
 
     /**
      * Build where condition

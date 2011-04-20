@@ -13,28 +13,43 @@
 <div id="showComments">
 <fieldset>
 <legend><?php putGS('Show');?></legend>
-<ul>
+<ul class="status_filter">
     <li class="published">
-        <input type="checkbox" id="show_published">
-        <label for="show_published">Published</label>
+        <input type="checkbox" id="show_published" value="approved">
+        <label for="show_published"><?php putGS('Published');?></label>
     </li>
     <li class="new">
-        <input type="checkbox" id="show_new">
-        <label for="show_new">New</label>
+        <input type="checkbox" id="show_new" value="pending">
+        <label for="show_new"><?php putGS('New');?></label>
     </li>
-    <li class="approved">
-        <input type="checkbox" id="show_approved">
-        <label for="show_approved">Approved</label>
+    <li class="approved" style="display: none;">
+        <input type="checkbox" id="show_approved" value="approved">
+        <label for="show_approved"><?php putGS('Approved');?></label>
     </li>
     <li class="hidden">
-        <input type="checkbox" id="show_hidden">
-        <label for="show_hidden">Hidden</label>
+        <input type="checkbox" id="show_hidden" value="hidden">
+        <label for="show_hidden"><?php putGS('Hidden');?></label>
     </li>
     <li class="deleted">
-        <input type="checkbox" id="show_deleted">
-        <label for="show_deleted">Deleted</label>
+        <input type="checkbox" id="show_deleted" value="deleted">
+        <label for="show_deleted"><?php putGS('Deleted');?></label>
     </li>
 </ul>
+<script type="text/javascript">
+$('.status_filter li').click(function(evt){
+    var ck = $(this).find('input[type="checkbox"]');
+    var checked = true;
+    if (ck.attr("checked")) {
+        checked = false;
+        ck.removeAttr("checked");
+    }
+    else
+        ck.attr("checked","checked");
+    datatableCallback.serverData[ck.val()] = checked;
+    datatable.fnDraw();
+    evt.preventDefault();
+});
+</script>
 </fieldset>
 </div>
 <?php $this->renderDatatable(); ?>
@@ -45,11 +60,9 @@
 </div>
 <script type="text/javascript">
 var datatableCallback = {
-	rowIndex:1,
+	serverData: {},
 	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 	    that = datatableCallback;
-	    elIndex = $('.index', nRow);
-	    elIndex.text(that.rowIndex+elIndex.text());
         var tr = $('<tr></tr>');
         tr.addClass(that.rowIndex%2?'list_row_odd odd':'list_row_even even');
         tr.hover(function() {
@@ -70,10 +83,15 @@ var datatableCallback = {
         that.rowIndex++;
         return jRow.get(0);
     },
-    draw: function()
-    {
+    addServerData: function ( sSource, aoData, fnCallback ) {
     	that = datatableCallback;
-    	that.rowIndex =1;
+        for(i in that.serverData) {
+            if(that.serverData[i])
+                aoData.push({"name": "sFilter[status][]", "value": i});
+        }
+    	$.getJSON( sSource, aoData, function (json) {
+    		fnCallback(json);
+    	});
     }
 }
 </script>

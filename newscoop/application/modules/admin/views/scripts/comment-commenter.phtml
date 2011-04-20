@@ -5,5 +5,4 @@
     <a href="#"><?php echo $this->commenter->getIp(); ?></a><br>
     <a href="#"><?php echo $this->commenter->getEmail(); ?></a><br>
     <a href="#"><?php echo $this->commenter->getUrl();?></a></p>
-    <a href="<?php echo $this->url(array("controller" => "comment-commenter", "action" => "ban", "commenter"=> $this->commenter->getId()));?>">Ban</a>
 </div>

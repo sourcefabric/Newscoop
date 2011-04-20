@@ -205,14 +205,11 @@ select.actions {
 	border: none;
 }
 
-.commentsHolder .sorting_1 {
-	padding-top: 7px;
-	text-align: center;
-	vertical-align: top;
-	border: 0px;
-}
-
 .commentsHolder .index {
+    padding-top: 7px;
+    text-align: center;
+    vertical-align: top;
+    border: 0px;	
 	display: block;
 	font-weight: normal;
 }
@@ -500,4 +497,11 @@ select.actions {
 
 .dataTables_wrapper {
     margin: 0;
+}
+
+.hidden {
+    overflow: auto !important;
+    position: inherit !important;
+    top: ;
+    width: auto !important;
 }
