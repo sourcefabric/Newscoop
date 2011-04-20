@@ -51,14 +51,17 @@ class CommenterRepository extends DatatableSource
            }
         }
 
+        $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $acceptanceRepository->isBanned();
+
         $commenters = $this->findBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
         if(count($commenters)==1)
             $p_entity = $commenters[0];
         $p_entity->setName($p_values['name'])
                  ->setEmail($p_values['email'])
                  ->setUrl($p_values['url'])
-                 ->setIp(getIp())
-                 ->setTimeCreated(new DateTime);
+                 ->setIp($p_values['ip'])
+                 ->setTimeCreated($p_values['time_created']);
 
         $em->persist($p_entity);
         return $p_entity;

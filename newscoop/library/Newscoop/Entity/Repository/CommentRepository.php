@@ -77,7 +77,6 @@ class CommentRepository extends DatatableSource
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
         $commenter = new Commenter;
         $commenter = $commenterRepository->save($commenter, $p_values);
-
         $p_entity->setCommenter($commenter)
                  ->setSubject($p_values['subject'])
                  ->setMessage($p_values['message'])

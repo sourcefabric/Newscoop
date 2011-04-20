@@ -5,12 +5,38 @@
     <?php putGS('at');?>
     <?php echo $this->comment->getTimeCreated()->format('H:i:s');?>
 </span>
-<?php echo $this->comment->getSubject(); ?>
+    <?php echo $this->comment->getSubject(); ?>
 </h4>
 <div class="ratingHolder">
     <span class="thumbs up"><?php echo $this->comment->getLikes();?></span>
     <span class="thumbs down"><?php echo $this->comment->getDislikes();?></span> </div>
 <p>
-Lorem ipsum sed detraxit signiferumque at Pulvinar est sed rhoncus sit massa penatibus pulvinar augue! Mauris turpis in, porta. Pulvinar velit proin mus arcu mus scelerisque amet cum. sed rhoncus sit massa penatibus pulvinar augue! Mauris turpis in, porta.
+<?php echo $this->comment->getMessage();?>
 </p>
+</div>
+
+<div class="dateCommentHolderEdit" style="display:none;">
+<fieldset>
+    <label><?php putGS('Subject');?></label>
+    <input type="text" class="input_text">
+    <label><?php putGS('Comment');?></label>
+    <textarea class="input_text_area"></textarea>
+<div class="buttonBar">
+    <input type="button" value="Cancel" class="button">
+    <input type="button" value="Reply" class="button">
+    <input type="button" value="Update comment" class="save-button-small">
+</div>
+</fieldset>
+
+<fieldset>
+    <h3>Reply to comment</h3>
+    <label>Subject</label>
+    <input type="text" class="input_text">
+    <label>Comment</label>
+    <textarea class="input_text_area"></textarea>
+<div class="buttonBar">
+    <input type="button" value="Cancel" class="button">
+    <input type="button" value="Submit" class="button">
+</div>
+</fieldset>
 </div>

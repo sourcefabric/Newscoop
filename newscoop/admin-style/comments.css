@@ -205,14 +205,14 @@ select.actions {
 	border: none;
 }
 
-.commentsHolder table tbody tr td table tbody tr th {
+.commentsHolder .sorting_1 {
 	padding-top: 7px;
 	text-align: center;
 	vertical-align: top;
 	border: 0px;
 }
 
-.commentsHolder table tbody tr td table tbody tr th span {
+.commentsHolder .index {
 	display: block;
 	font-weight: normal;
 }
@@ -479,7 +479,7 @@ select.actions {
 }
 
 .dataTables_wrapper .commentId {
-    width: 30px;
+    width: 20px;
 }
 
 .dataTables_wrapper .commentUser {
@@ -495,7 +495,7 @@ select.actions {
 }
 
 .dataTables_wrapper .commentThreadOrder {
-    width: 95px;
+    width: 110px;
 }
 
 .dataTables_wrapper {

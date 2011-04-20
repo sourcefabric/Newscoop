@@ -22,6 +22,18 @@ class Admin_CommentController extends Zend_Controller_Action
     private $repository;
 
     /**
+     * @var IArticleRepository
+     *
+     */
+    private $articleRepository;
+
+    /**
+     * @var IAcceptanceRepository
+     *
+     */
+    private $acceptanceRepository;
+
+    /**
      *
      * @var Admin_Form_Comment
      */
@@ -32,6 +44,9 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         // get comment repository
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
+        // get article repository
+        $this->articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+
         $this->form = new Admin_Form_Comment;
         $this->form->setMethod('post');
 

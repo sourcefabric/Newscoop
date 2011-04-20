@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Entity\Comment\Prefence;
+namespace Newscoop\Entity\Comment\Preference;
 
 /**
  * Article entity
@@ -40,6 +40,29 @@ class Article
      * @var int
      */
     private $locked;
+
+    /**
+     * Set article id
+     *
+     * @param int $p_id
+     * @return Article
+     */
+    public function setId($p_id)
+    {
+        $this->id = $p_id;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get article id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set the flag if the comments are enabled or not
