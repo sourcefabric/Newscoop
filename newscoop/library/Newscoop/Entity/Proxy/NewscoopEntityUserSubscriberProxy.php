@@ -99,6 +99,12 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         return parent::setPassword($password);
     }
 
+    public function getPasswordHash()
+    {
+        $this->_load();
+        return parent::getPasswordHash();
+    }
+
     public function setEmail($email)
     {
         $this->_load();

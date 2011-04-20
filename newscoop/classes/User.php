@@ -10,7 +10,6 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/UserType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
-require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
 
 /**
@@ -68,9 +67,6 @@ class User extends DatabaseObject {
         'password_reset_token');
 
     private static $m_defaultConfig = array();
-
-    var $m_liveUserData = array();
-
 
     /**
      * A user of the system is a frontend reader or a 'admin' user, meaning
@@ -185,49 +181,11 @@ class User extends DatabaseObject {
      */
     public function fetch($p_recordSet = null)
     {
-        global $g_ado_db, $LiveUserAdmin;
+        global $g_ado_db;
 
         $success = parent::fetch($p_recordSet);
         if ($success) {
-            // find out LiveUser perm and auth identifiers
-            $param = array('filters' => array('handle' => $this->m_data['UName']));
-            $liveUserData = $LiveUserAdmin->auth->getUsers($param);
-            if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
-                $this->m_liveUserData['auth_user_id'] = $liveUserData[0]['auth_user_id'];
-                $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
-                $permData = $LiveUserAdmin->perm->getUsers($params);
-		if (is_array($permData) && sizeof($permData) > 0) {
-		  $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
-		}
-            }
-
-            // fetch the permissions for this user
-            if ($this->getUserType()) {
-                $userType = new UserType($this->getUserType());
-                if ($userType) {
-                    $this->m_config = $userType->getConfig();
-		    $this->m_exists = true;
-                }
-            } elseif ($this->getPermUserId()) {
-                $queryStr = 'SELECT r.right_id as value, '
-                                  .'r.right_define_name as varname '
-                           .'FROM liveuser_users as u, '
-                                .'liveuser_rights as r, '
-                                .'liveuser_perm_users p, '
-                                .'liveuser_userrights as l '
-                           .'WHERE u.Id=p.auth_user_id AND '
-                                .'p.perm_user_id=l.perm_user_id AND '
-                                .'r.right_id=l.right_id AND '
-                                .'p.perm_user_id='.$this->getPermUserId();
-                $config = $g_ado_db->GetAll($queryStr);
-                if ($config) {
-                    // make m_config an associative array
-                    foreach ($config as $value) {
-                        $this->m_config[$value['varname']] = $value['value'];
-                    }
-                }
-		$this->m_exists = true;
-            }
+            $this->m_exists = true;
         }
     } // fn fetch
 

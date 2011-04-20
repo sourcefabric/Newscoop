@@ -22,14 +22,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
-        // controller plugin loader
-        $autoloader->pushAutoloader(function($class) {
-            $front = Zend_Controller_Front::getInstance();
-            $path = $front->getControllerDirectory('admin'); // @todo detect module
-            $file = array_pop(explode('_', $class));
-            include_once "$path/plugins/$file.php";
-        }, 'Admin_Controller_Plugin_');
-
         return $autoloader;
+    }
+
+    /**
+     * Init session
+     */
+    protected function _initSession()
+    {
+        $options = $this->getOptions();
+        $name = isset($options['session']['name']) ? $options['session']['name'] : session_name();
+
+        Zend_Session::setOptions(array(
+            'name' => $name,
+        ));
+
+        Zend_Session::start();
+    }
+
+    /**
+     * Init bootstrap plugin
+     */
+    protected function _initBootstrapPlugin()
+    {
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_Bootstrap($this->getOptions()));
     }
 }

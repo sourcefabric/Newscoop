@@ -1,5 +1,6 @@
 <?php
 
+use Newscoop\Entity\User\Staff;
 use Newscoop\Log\Writer;
 
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
@@ -11,8 +12,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         global $ADMIN_DIR, $ADMIN, $g_user, $prefix;
 
-        header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
-        header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Content-Type: text/html; charset=UTF-8");
 
         define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
@@ -29,9 +28,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             exit;
         }
 
+        $this->bootstrap('session');
         require_once CS_PATH_CONFIG . DIR_SEP . 'database_conf.php';
-        $this->bootstrap('auth');
-
         require_once CS_PATH_SITE . DIR_SEP . 'include' . DIR_SEP . 'campsite_init.php';
         require_once CS_PATH_SITE . DIR_SEP . 'classes' . DIR_SEP . 'CampTemplateCache.php';
 
@@ -86,19 +84,20 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         global $Campsite;
 
         $this->bootstrap('view');
-        $this->view = $this->getResource('view');
+        $view = $this->getResource('view');
+        Zend_Registry::set('view', $view);
 
-        $this->view->doctype('HTML5');
+        $view->doctype('HTML5');
 
         // set help url
-        $this->view->helpUrl = $Campsite['site']['help_url'];
+        $view->helpUrl = $Campsite['site']['help_url'];
 
         // set locale
         $locale = $_COOKIE['TOL_Language'] ?: 'en';
         $locale_fix = array(
             'cz' => 'cs',
         );
-        $this->view->locale = $locale_fix[$locale] ?: $locale;
+        $view->locale = $locale_fix[$locale] ?: $locale;
     }
 
     /**
@@ -110,44 +109,9 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
 
-        $this->view->headTitle($title . ' (powered by Zend)')
+        $view = $this->getResource('view');
+        $view->headTitle($title . ' (powered by Zend)')
             ->setSeparator(' - ');
-    }
-
-    /**
-     * Init auth
-     */
-    protected function _initAuth()
-    {
-        global $g_user;
-
-        $this->bootstrap('session');
-        $front = Zend_Controller_Front::getInstance();
-        $front->registerPlugin(new Admin_Controller_Plugin_Auth);
-        $front->registerPlugin(new Admin_Controller_Plugin_Acl);
-
-        $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) { // get current user
-            $this->bootstrap('doctrine');
-            $doctrine = $this->getResource('doctrine');
-            $user = $doctrine->getEntityManager()
-                ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
-
-            // set user for application
-            $g_user = $user;
-            Zend_Registry::set('user', $user);
-
-            // set view user
-            $this->bootstrap('view');
-            $view = $this->getResource('view');
-            $view->user = $user;
-
-            // set view navigation acl
-            $this->bootstrap('acl');
-            $acl = $this->getResource('acl')->getAcl();
-            $view->navigation()->setAcl($acl);
-            $view->navigation()->setRole($user->getRole());
-        }
     }
 
     /**
@@ -157,7 +121,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
         if ($flashMessenger->hasMessages()) {
-            $this->view->messages = $flashMessenger->getMessages();
+            $view = $this->getResource('view');
+            $view->messages = $flashMessenger->getMessages();
         }
     }
 
@@ -182,15 +147,16 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initPlaceholders()
     {
         $this->bootstrap('view');
+        $view = $this->getResource('view');
 
         // content title
-        $this->view->placeholder('title')
+        $view->placeholder('title')
             ->setPrefix('<h1>')
             ->setPostfix('</h1>');
 
         // content sidebar
         // not using prefix/postfix to detect if is empty
-        $this->view->placeholder('sidebar')
+        $view->placeholder('sidebar')
             ->setSeparator('</div><div class="sidebar">' . "\n");
     }
 }
