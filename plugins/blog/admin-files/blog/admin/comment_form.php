@@ -4,7 +4,7 @@ camp_load_translation_strings("plugin_blog");
 
 // User role depend on path to this file. Tricky: moderator folder is just symlink to admin files!
 if (strpos($call_script, '/blog/admin/') !== false && $g_user->hasPermission('plugin_blog_admin')) {
-    $is_admin = true;   
+    $is_admin = true;
 }
 if (strpos($call_script, '/blog/moderator/') !== false && $g_user->hasPermission('plugin_blog_moderator')) {
     $is_moderator = true;
@@ -20,7 +20,7 @@ $f_entry_id = Input::Get('f_entry_id', 'int');
 $f_comment_id = Input::Get('f_comment_id', 'int');
 
 if (!$f_comment_id) {
-    $user_id = $g_user->getUserId();   
+    $user_id = $g_user->getUserId();
 }
 
 $BlogComment = new BlogComment($f_comment_id, $f_entry_id);
@@ -43,12 +43,12 @@ if ($BlogComment->store($is_admin, $user_id)) {
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin-style/admin_stylesheet.css" />
 	<title><?php $BlogComment->exists() ? putGS('Edit comment') : putGS('Add new comment'); ?></title>
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-system.css);</style>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
-    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/javascript/jscalendar/calendar-setup.js"></script>
+	<style type="text/css">@import url(<?php echo $Campsite["WEBSITE_URL"]; ?>/js/jscalendar/calendar-system.css);</style>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/jscalendar/calendar.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/jscalendar/lang/calendar-<?php echo camp_session_get('TOL_Language', 'en'); ?>.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite["WEBSITE_URL"]; ?>/js/jscalendar/calendar-setup.js"></script>
 
-    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
 </head>
 
 <body>
