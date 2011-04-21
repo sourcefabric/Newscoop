@@ -24,7 +24,7 @@ define('CS_PATH_SITE', dirname(dirname(__FILE__)));
 define('CS_PATH_CONFIG', CS_PATH_SITE.DIR_SEP.'conf');
 define('CS_PATH_CLASSES', CS_PATH_SITE.DIR_SEP.'classes');
 define('CS_PATH_INCLUDES', CS_PATH_SITE.DIR_SEP.'include');
-define('CS_PATH_PEAR_LOCAL', CS_PATH_INCLUDES.DIR_SEP.'pear');
+define('CS_PATH_PEAR_LOCAL', CS_PATH_INCLUDES);
 define('CS_PATH_SMARTY', CS_PATH_INCLUDES.DIR_SEP.'smarty');
 define('CS_TEMPLATES_DIR', 'templates');
 define('CS_DEMO_ASSETS_DIR', 'sample_data');
