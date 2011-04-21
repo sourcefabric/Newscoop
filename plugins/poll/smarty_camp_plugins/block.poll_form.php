@@ -46,9 +46,9 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 	        $p_params['html_code'] = '';
 	    }
 	    if ($p_params['ajax'] == true && !Input::Get('f_poll_ajax_request')) {
-	       $html .= 
+	       $html .=
 '
-<script language="javascript" src="/javascript/jquery/jquery.min.js"></script>
+<script language="javascript" src="/js/jquery/jquery.min.js"></script>
 <script language="javascript"><!--
 function poll_'.$campsite->poll->identifier.'_vote()
 {

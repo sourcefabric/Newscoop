@@ -1,7 +1,7 @@
 <?php
 camp_load_translation_strings("plugin_poll");
 ?>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/campsite-checkbox.js"></script>
+<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <script language="javascript">
 function poll_assign(poll_nr, action)
 {

@@ -150,6 +150,13 @@ class CampInstallationBase
     {
         global $g_db;
 
+        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+        	}
+        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
+        }
+
         $session = CampSession::singleton();
 
         $db_hostname = Input::Get('db_hostname', 'text');
@@ -417,13 +424,7 @@ class CampInstallationBase
             return false;
         }
 
-        if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
-        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
-        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
-        	}
-        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
-        }
-        if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
+		if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
         && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
