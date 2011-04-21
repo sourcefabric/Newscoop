@@ -1,8 +1,0 @@
-How to setup the database examples
-
-For every example found in this directory you need to create a database
-and insert the relevant schema dumps called demodata.xml from the example directory.
-
-The demodata.php script in this directory explains how to install these schema files.
-You can call the demodata.php script without parameters from the web or from the shell
-to learn how it works.

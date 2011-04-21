@@ -20,6 +20,9 @@ if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
     exit;
 }
 
+// set include path for local pear packages
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
+
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSite.php');
