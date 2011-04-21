@@ -15,28 +15,35 @@
 </p>
 </div>
 
-<div class="dateCommentHolderEdit" style="display:none">
+<div class="dateCommentHolderEdit">
 <fieldset>
+    <form action="<?php echo $this->url(array('action' => 'update', 'format' => 'json'));?>">
     <label><?php putGS('Subject');?></label>
-    <input type="text" class="input_text">
+    <input type="hidden" name="comment" value="<?php echo $this->comment->getId();?>" />
+    <input type="text" name="subject" class="input_text" value="<?php echo $this->comment->getSubject(); ?>">
+
     <label><?php putGS('Comment');?></label>
-    <textarea class="input_text_area"></textarea>
+    <textarea name="message" class="input_text_area"><?php echo $this->comment->getMessage();?></textarea>
 <div class="buttonBar">
     <input type="button" value="<?php putGS('Cancel');?>" class="button">
     <input type="button" value="<?php putGS('Reply');?>" class="button">
-    <input type="button" value="<?php putGS('Update comment');?>" class="save-button-small update">
+    <input type="submit" value="<?php putGS('Update comment');?>" class="save-button-small update">
+    </form>
 </div>
 </fieldset>
 
 <fieldset>
+    <form action="<?php echo $this->url(array('action' => 'reply', 'format' => 'json'));?>">
+    <input type="hidden" name="parent" value="<?php echo $this->comment->getId();?>" />
     <h3>Reply to comment</h3>
     <label><?php putGS('Subject');?></label>
-    <input type="text" class="input_text">
+    <input name="subject" type="text" class="input_text">
     <label><?php putGS('Comment');?></label>
-    <textarea class="input_text_area"></textarea>
+    <textarea name="message" class="input_text_area"></textarea>
 <div class="buttonBar">
     <input type="button" value="<?php putGS('Cancel');?>" class="button">
-    <input type="button" value="<?php putGS('Submit');?>'" class="button">
+    <input type="submit" value="<?php putGS('Submit');?>'" class="button">
+    </form>
 </div>
 </fieldset>
 </div>

@@ -39,24 +39,26 @@ class CommenterRepository extends DatatableSource
         $em = $this->getEntityManager();
         if(!empty($p_values['user']))
         {
-            $userRepository = $em->getRepository('Newscoop\Entity\User');
-            $user = $userRepository->find($p_values['user']);
-            if($user)
+            if(is_numeric($p_values['user'])) {
+                $userRepository = $em->getRepository('Newscoop\Entity\User');
+                $p_values['user'] = $userRepository->find($p_values['user']);
+            }
+            if($p_values['user'])
             {
-                $p_entity->setUser($user);
+                $p_entity->setUser($p_values['user']);
                 if(empty($p_values['name']))
-                    $p_values['name'] = $user->getName();
+                    $p_values['name'] = $p_values['user']->getName();
                 if(empty($p_values['email']))
-                    $p_values['email'] = $user->getEmail();
+                    $p_values['email'] = $p_values['user']->getEmail();
            }
         }
-
-        $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $acceptanceRepository->isBanned();
-
         $commenters = $this->findBy(array( 'email' => $p_values['email'], 'name' => $p_values['name']));
         if(count($commenters)==1)
             $p_entity = $commenters[0];
+        /*
+        $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $acceptanceRepository->isBanned($p_entity);
+        */
         $p_entity->setName($p_values['name'])
                  ->setEmail($p_values['email'])
                  ->setUrl($p_values['url'])

@@ -111,9 +111,11 @@ class Admin_CommentController extends Zend_Controller_Action
             ->initContext();
         try
         {
-            $comment = (int)$this->getRequest()->getParam('comment');
+            $comment = $this->getRequest()->getParam('comment');
             $status = $this->getRequest()->getParam('status');
-            $this->repository->setStatus(array($comment),$status);
+            if(!is_array($comment))
+                $comment = array($comment);
+            $this->repository->setStatus($comment,$status);
             $this->repository->flush();
         }
         catch(Exception $e)
@@ -193,6 +195,69 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
+     * Action for Updateing a Comment
+     */
+    public function updateAction()
+    {
+        $this->getHelper('contextSwitch')
+            ->addActionContext('update', 'json')
+            ->initContext();
+        $values = $this->getRequest()->getParams();
+        $comment = $this->repository->find($values['comment']);
+        if ($this->getRequest()->isPost() && $comment) {
+            $values['time_updated'] = new DateTime;
+            try
+            {
+                $this->repository->update($comment, $values);
+                $this->repository->flush();
+            }
+            catch(Exception $e)
+            {
+                $this->view->status = $e->getCode();
+                $this->view->message = $e->getMessage();
+                return;
+            }
+            $this->view->status = 200;
+            $this->view->message = "succcesful";
+            $this->view->comment = $comment->getId();
+        }
+        $this->view->comment = $comment;
+    }
+
+    /**
+     * Action for Replying to a Comment
+     */
+    public function replyAction()
+    {
+        $this->getHelper('contextSwitch')
+            ->addActionContext('reply', 'json')
+            ->initContext();
+        $values = $this->getRequest()->getParams();
+        $comment = new Comment;
+        if ($this->getRequest()->isPost()) {
+            $values['user'] = Zend_Registry::get('user');
+            $values['time_created'] = new DateTime;
+            $values['ip'] = getIp();
+            $values['status'] = 'approved';
+            try
+            {
+                $this->repository->save($comment, $values);
+                $this->repository->flush();
+            }
+            catch(Exception $e)
+            {
+                $this->view->status = $e->getCode();
+                $this->view->message = $e->getMessage();
+                return;
+            }
+            $this->view->status = 200;
+            $this->view->message = "succcesful";
+            $this->view->comment = $comment->getId();
+        }
+        $this->view->comment = $comment;
+    }
+
+    /**
      * Action for Adding a Comment
      */
     public function addAction()
@@ -215,9 +280,6 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
-            $values['language_id'] = 1;
-            $values['thread_id'] = 64;
-            $values['forum_id'] = 2;
             $values['ip'] = getIp();
             $values['status'] = 'hidden';
             $values['time_created'] = new DateTime;

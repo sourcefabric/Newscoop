@@ -115,6 +115,12 @@ class Comment
      */
     private $time_created;
 
+    /*
+     * @column(type="datetime")
+     * @var DateTime
+     */
+    private $time_updated;
+
     /**
      * @column(length=4)
      * @var int
@@ -128,6 +134,17 @@ class Comment
     private $dislikes;
 
     /**
+     * Set id
+     *
+     * @param int $p_id
+     * @return Newscoop\Entity\Comment
+     */
+    public function setId($p_id)
+    {
+        return $this->id;
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -136,8 +153,6 @@ class Comment
     {
         return $this->id;
     }
-
-
 
     /**
      * Set timecreated
@@ -152,7 +167,6 @@ class Comment
         return $this;
     }
 
-
     /**
      * Get creation time.
      *
@@ -163,6 +177,28 @@ class Comment
         return $this->time_created;
     }
 
+    /**
+     * Set time updated
+     *
+     * @param DateTime $p_datetime
+     * @return Newscoop\Entity\Comment
+     */
+    public function setTimeUpdated(DateTime $p_datetime)
+    {
+        $this->time_updated = $p_datetime;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get creation time.
+     *
+     * @return DateTime
+     */
+    public function getTimeUpdated()
+    {
+        return $this->time_updated;
+    }
 
     /**
      * Set comment subject.

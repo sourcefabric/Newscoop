@@ -18,7 +18,6 @@ use Doctrine\ORM\EntityRepository,
  */
 class CommentRepository extends DatatableSource
 {
-
     /**
      * Method for setting status
      *
@@ -63,6 +62,24 @@ class CommentRepository extends DatatableSource
     }
 
     /**
+     * Method for update a comment
+     *
+     * @param Comment $p_enitity
+     * @param array $params
+     * @return Comment $p_enitity
+     */
+    public function update(Comment $p_entity, $p_values)
+    {
+        // get the enitity manager
+        $em = $this->getEntityManager();
+        $p_entity->setSubject($p_values['subject'])
+                 ->setMessage($p_values['message'])
+                 ->setTimeUpdated($p_values['time_updated']);
+        $em->persist($p_entity);
+        return $p_entity;
+    }
+
+    /**
      * Method for saving a comment
      *
      * @param Comment $p_enitity
@@ -88,7 +105,10 @@ class CommentRepository extends DatatableSource
         {
             $parent = $this->find($p_values['parent']);
             // set parent of the comment
-            $p_entity->setParent($parent);
+            $p_entity->setParent($parent)
+                     ->setLanguage($parent->getLanguage())
+                     ->setForum( $parent->getForum() )
+                     ->setThread( $parent->getThread() );
             /**
              * get the maximum thread order from the current parent
              */

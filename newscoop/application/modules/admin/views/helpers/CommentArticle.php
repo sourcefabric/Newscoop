@@ -10,9 +10,9 @@ class Admin_View_Helper_CommentArticle extends Zend_View_Helper_Abstract
      * @param array $actions
      * @return void
      */
-    public function commentArticle($comment)
+    public function commentArticle($article)
     {
-        $this->view->comment = $comment;
+        $this->view->article = $article;
         return $this->view->render('comment-article.phtml');
     }
 }

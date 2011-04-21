@@ -495,6 +495,10 @@ select.actions {
     width: 110px;
 }
 
+.dataTables_wrapper .commentThread {
+    width: 110px;
+}
+
 .dataTables_wrapper {
     margin: 0;
 }

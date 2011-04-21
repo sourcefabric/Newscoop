@@ -1,9 +1,9 @@
 <div class="commentBtns">
     <ul>
-        <li><a href="#" class="new">New</a></li>
-        <li><a href="#" class="approved">Approved</a></li>
-        <li><a href="#" class="hidden">Hidden</a></li>
-        <li><a href="#" class="deleted">Delete</a></li>
+        <li><a href="javascript:;" id="pending_<?php echo $this->comment->getId();?>" class="action new">New</a></li>
+        <li><a href="javascript:;" id="approved_<?php echo $this->comment->getId();?>" class="action approved">Approved</a></li>
+        <li><a href="javascript:;" id="hidden_<?php echo $this->comment->getId();?>" class="action hidden">Hidden</a></li>
+        <li><a href="javascript:;" id="deleted_<?php echo $this->comment->getId();?>" class="action deleted">Delete</a></li>
         <li><a class="link icon-link" href="#"><span class="icon ui-icon-pencil"></span>Quick edit</a></li>
         <li><a class="link icon-link" href="#"><span class="icon ui-icon-star"></span>Add rating</a></li>
         <li class="last">
