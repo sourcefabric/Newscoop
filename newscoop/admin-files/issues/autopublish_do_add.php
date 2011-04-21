@@ -28,8 +28,30 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+
 $correct = ($publish_date != "") && ($publish_hour != "")
 	&& ($publish_min != "") && ($action == "P" || $action == "U");
+
+// Check that publish date is not in the past
+$past_publish = 0;
+if( date ("Y-m-d", time() ) == $publish_date ) {
+	if(strlen($publish_hour) == 1) {
+		$server_hour = date("G", time());
+	} else {
+		$server_hour = date("H", time());
+	}
+	if( $server_hour >= $publish_hour) {
+		if( $server_hour > $publish_hour) {
+			$correct = 0;
+			$past_publish = 1;
+		} else {
+			if( date("i", time()) > $publish_min) {
+				$correct = 0;
+				$past_publish = 1;
+			}
+		}
+	}
+}
 
 if ($publish_articles != "Y" && $publish_articles != "N") {
 	$publish_articles = "N";
@@ -37,7 +59,7 @@ if ($publish_articles != "Y" && $publish_articles != "N") {
 
 $created = 0;
 if ($correct) {
-        $issuePublishExists = true;
+    $issuePublishExists = true;
 	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
     $issuePublishObj = new IssuePublish($event_id);
 	if (!$issuePublishObj->exists()) {
@@ -53,6 +75,7 @@ if ($correct) {
 	$created = 1;
 }
 if ($created) {
+
         $action = ($issuePublishExists) ? 'updated' : 'added';
         $issueObj = new Issue($Pub, $Language, $Issue);
         $logtext = getGS('Scheduled action $1 for issue #$2: "$3" (Publication: $4)', $action, $Issue, $issueObj->getName(), $Pub);
@@ -87,6 +110,11 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 	if ( ($action != "P") && ($action != "U") ) {
 	$correct= 0; ?>	<LI><?php putGS('You must select an action.'); ?></LI>
     <?php }
+
+	if ($past_publish) {
+	?>	<LI><?php putGS('The publishing schedule can not be set in in the past'); ?></LI>
+    <?php }
+
 
 	if ($correct) {
 		if (!$created) { ?>
