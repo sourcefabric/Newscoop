@@ -1,1 +1,0 @@
-ADOdb Version 5.10
