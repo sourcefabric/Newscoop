@@ -802,7 +802,7 @@ class Blog extends DatabaseObject {
     	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
     	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
 
-        $localeFile = $Campsite['CAMPSITE_DIR'] . '/javascript/tinymce/langs/' . $p_editorLanguage . '.js';
+        $localeFile = $Campsite['CAMPSITE_DIR'] . '/js/tinymce/langs/' . $p_editorLanguage . '.js';
         if (!file_exists($localeFile)) {
             $p_editorLanguage = 'en';
         }
@@ -811,7 +811,7 @@ class Blog extends DatabaseObject {
     ?>
 
     <!-- TinyMCE -->
-    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/jquery.tinymce.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/tinymce/jquery.tinymce.js"></script>
     <script type="text/javascript">
     function CampsiteSubhead(ed) {
         element = ed.dom.getParent(ed.selection.getNode(), 'span');
@@ -826,7 +826,7 @@ class Blog extends DatabaseObject {
     $().ready(function() {
         $('textarea.tinymce').tinymce({
             // Location of TinyMCE script
-            script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/javascript/tinymce/tiny_mce.js',
+            script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/js/tinymce/tiny_mce.js',
 
             // General options
             language : "<?php p($p_editorLanguage); ?>",

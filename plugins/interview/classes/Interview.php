@@ -1031,7 +1031,7 @@ class Interview extends DatabaseObject {
             isset($p_preview) ? null :
                 array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/javascript/tinymce/tiny_mce.js"></script>'.
+                'text'      => '<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/js/tinymce/tiny_mce.js"></script>'.
                                '<script language="javascript" type="text/javascript">'.
                                '     tinyMCE.init({'.
                                '     	mode : "exact",'.

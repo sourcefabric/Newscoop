@@ -1,4 +1,0 @@
-Auth_XML.xml/Perm_XML.xml must have read and write on other users ...
-776 would be the best permission .... chmod 776 Auth_XML.xml Perm_XML.xml
-
-Applies only on linux and unix
