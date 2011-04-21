@@ -241,19 +241,23 @@ function CampsiteSubhead(ed) {
 
 $().ready(function() {
     $('textarea.tinymce').tinymce({
-        // Location of TinyMCE script
+
+		
+    	// Location of TinyMCE script
         script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/js/tinymce/tiny_mce.js',
 
-        // General options
+     	// General options
         language : "<?php p($p_editorLanguage); ?>",
         theme : "advanced",
         plugins : "<?php p($plugins_list); ?>",
+        
         file_browser_callback : "campsitemedia",
         forced_root_block : "",
         relative_urls : false,
         onchange_callback : function() { $('form#article-main').change(); },
         extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
+        
         // Theme options
         theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
         theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
@@ -264,16 +268,17 @@ $().ready(function() {
         theme_advanced_resizing : false,
         theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
-        // Example content CSS (should be your site CSS)
+     	// Example content CSS (should be your site CSS)
         content_css : "<?php echo $stylesheetFile; ?>",
 
-        // Drop lists for link/image/media/template dialogs
+     	// Drop lists for link/image/media/template dialogs
         template_external_list_url : "lists/template_list.js",
         external_link_list_url : "lists/link_list.js",
         external_image_list_url : "lists/image_list.js",
         media_external_list_url : "lists/media_list.js",
 
-        // paste options
+
+     	// paste options
         paste_auto_cleanup_on_paste: true,
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
@@ -305,6 +310,7 @@ $().ready(function() {
             });
         },
         <?php } ?>
+
     });
 });
 
