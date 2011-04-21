@@ -45,8 +45,12 @@ abstract class UserRepository extends EntityRepository
             ->setPosition($values['position']);
 
         // set username/password
-        if ($user->getId() > 0) { // edit
-        } else { // add
+        if ($user->getId() > 0) { // update
+            if (!empty($values['password'])) {
+                $user->setPassword($values['password']);
+            }
+
+        } else { // insert
             $user->setUsername($values['username'])
                 ->setPassword($values['password']);
         }

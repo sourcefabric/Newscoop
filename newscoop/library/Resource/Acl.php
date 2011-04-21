@@ -59,6 +59,9 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 
         if (empty($user)) { // get auth user
             $user = $em->find($options['userEntity'], $auth->getIdentity());
+            if (!$user instanceof $options['userEntity']) { // ignore subscribers
+                return;
+            }
         } else {
             if (!$user instanceof $options['userEntity']) {
                 throw new InvalidArgumentException;

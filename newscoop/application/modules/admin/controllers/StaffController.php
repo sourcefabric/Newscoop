@@ -3,7 +3,7 @@
 use Newscoop\Entity\User\Staff;
 
 /**
- * @acl(resource="user", action="manage")
+ * @Acl(resource="user", action="manage")
  */
 class Admin_StaffController extends Zend_Controller_Action
 {
@@ -48,11 +48,10 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
     }
 
     /**
-     * @acl(ignore="1")
+     * @Acl(ignore="1")
      */
     public function editAction()
     {
@@ -68,7 +67,6 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->handleForm($this->form, $staff);
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
 
         $this->view->actions = array(
             array(
@@ -87,12 +85,17 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function editAccessAction()
     {
-        $staff = $this->_helper->entity->get(new Staff, 'user');
-        $this->view->user = $staff;
+        $staff = $this->_helper->entity(new Staff, 'user');
+        $this->view->staff = $staff;
+
+        $this->_helper->actionStack('edit', 'acl', 'admin', array(
+            'role' => $staff->getRoleId(),
+            'user' => $staff->getId(),
+        ));
     }
 
     /**
-     * @acl(action="delete")
+     * @Acl(action="delete")
      */
     public function deleteAction()
     {
@@ -107,9 +110,6 @@ class Admin_StaffController extends Zend_Controller_Action
         $this->_helper->redirector->gotoSimple('index');
     }
 
-    /**
-     * @acl(action="manage")
-     */
     public function tableAction()
     {
         $table = $this->getHelper('datatable');

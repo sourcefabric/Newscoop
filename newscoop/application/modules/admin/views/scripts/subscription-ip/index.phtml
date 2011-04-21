@@ -1,0 +1,28 @@
+<?php $this->placeholder('title')->set(getGS('IP Access')); ?>
+
+<?php $this->renderActions(); ?>
+
+<?php if (!$this->subscriber->hasIps()) {
+    $this->renderMessage(getGS('No IP Addresses'));
+    return;
+} ?>
+
+<table>
+<tr>
+    <th><?php putGS('Start IP'); ?></th>
+    <th><?php putGS('Number of Addressses'); ?></th>
+    <th><?php putGS('Delete'); ?></th>
+</tr>
+<?php foreach ($this->subscriber->getIps() as $ip) { ?>
+<tr>
+    <td><?php echo $ip; ?></td>
+    <td><?php echo $ip->getNumber(); ?></td>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'subscription-ip',
+        'action' => 'delete',
+        'user' => $this->subscriber->getId(),
+        'ip' => $ip->getIp(),
+    )); ?>"><?php putGS('Delete'); ?></a></td>
+</tr>
+<?php } ?>
+</table>

@@ -3,7 +3,7 @@
 use Newscoop\Entity\User\Subscriber;
 
 /**
- * @acl(action="manage")
+ * @Acl(action="manage")
  */
 class Admin_SubscriberController extends Zend_Controller_Action
 {
@@ -35,7 +35,6 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->handleForm($this->form, $subscriber);
 
         $this->view->form = $this->form;
-        $this->view->user = $subscriber;
     }
 
     public function editAction()
@@ -45,8 +44,23 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
         $this->handleForm($this->form, $subscriber);
 
+        $this->_helper->sidebar(array(
+            'label' => getGS('Subscriptions'),
+            'controller' => 'subscription',
+            'action' => 'index',
+            'user' => $subscriber->getId(),
+            'next' => 'subscriber:edit',
+        ));
+
+        $this->_helper->sidebar(array(
+            'label' => getGS('Subscription IP Addresses'),
+            'controller' => 'subscription-ip',
+            'action' => 'index',
+            'user' => $subscriber->getId(),
+            'next' => 'subscriber:edit',
+        ));
+
         $this->view->form = $this->form;
-        $this->view->user = $subscriber;
     }
 
     public function deleteAction()

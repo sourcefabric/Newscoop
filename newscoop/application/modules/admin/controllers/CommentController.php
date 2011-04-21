@@ -83,7 +83,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $view->commentCommenter($comment->getCommenter()),
                 $view->commentAction($comment),
                 $view->commentMessage($comment),
-                $view->commentArticle($comment)
+                $view->commentArticle($comment->getThread())
             );
         });
 

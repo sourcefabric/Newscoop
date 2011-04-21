@@ -415,16 +415,61 @@ if ($showUserMenu) {
                             'label' => getGS('Subscriptions'),
                             'module' => 'admin',
                             'controller' => 'subscription',
-                            'resource' => 'subscription',
-                            'privilege' => 'manage',
+                            'action' => 'index',
+                            'reset_params' => false,
+                            'pages' => array(
+                                array(
+                                    'label' => getGS('Add new subscription'),
+                                    'module' => 'admin',
+                                    'controller' => 'subscription',
+                                    'action' => 'add',
+                                ),
+                                array(
+                                    'label' => getGS('Edit subscription'),
+                                    'module' => 'admin',
+                                    'controller' => 'subscription',
+                                    'action' => 'edit',
+                                ),
+                                array(
+                                    'label' => getGS('Sections'),
+                                    'module' => 'admin',
+                                    'controller' => 'subscription-section',
+                                    'action' => 'index',
+                                    'reset_params' => false,
+                                    'pages' => array(
+                                        array(
+                                            'label' => getGS('Add new subscription section'),
+                                            'module' => 'admin',
+                                            'controller' => 'subscription-section',
+                                            'action' => 'add',
+                                        ),
+                                        array(
+                                            'label' => getGS('Edit section'),
+                                            'module' => 'admin',
+                                            'controller' => 'subscription-section',
+                                            'action' => 'edit',
+                                        ),
+                                        array(
+                                            'label' => getGS('Edit all sections'),
+                                            'module' => 'admin',
+                                            'controller' => 'subscription-section',
+                                            'action' => 'edit-all',
+                                        ),
+                                    ),
+                                ),
+                            ),
                         ),
                         array(
                             'label' => getGS('Add new subscription'),
                             'module' => 'admin',
                             'controller' => 'subscription',
                             'action' => 'add',
-                            'resource' => 'subscription',
-                            'privilege' => 'manage',
+                        ),
+                        array(
+                            'label' => getGS('Add new IP Address'),
+                            'module' => 'admin',
+                            'controller' => 'subscription-ip',
+                            'action' => 'add',
                         ),
                     ),
                 ),
@@ -499,7 +544,7 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     <?php echo $view->navigation(); ?>
 </div>
 
-<?php if (isset($this)) { // zend framework only ?>
+<?php if (!$this->legacy) { // zend framework only ?>
 <div class="breadcrumb-bar zend clearfix">
     <?php echo $this->navigation()->breadcrumbs(); ?>
 </div>

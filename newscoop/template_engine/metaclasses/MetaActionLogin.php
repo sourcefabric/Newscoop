@@ -33,12 +33,19 @@ class MetaActionLogin extends MetaAction
             ACTION_LOGIN_ERR_NO_PASSWORD);
             return;
         }
-        global $LiveUser;
-        if (!$LiveUser->login($p_input['f_login_uname'], $p_input['f_login_password'], false)) {
+
+        global $controller;
+        $auth = Zend_Auth::getInstance();
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User\Subscriber');
+        $adapter = new Newscoop\Auth\Adapter($repository, $p_input['f_login_uname'], $p_input['f_login_password']);
+        $result = $auth->authenticate($adapter);
+
+        if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
             $this->m_error = new PEAR_Error('Invalid user credentials',
-            ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
+                ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
             return;
         }
+
         $this->m_properties['remember_user'] = isset($p_input['f_login_rememberuser'])
         && !empty($p_input['f_login_rememberuser']);
 
@@ -69,8 +76,7 @@ class MetaActionLogin extends MetaAction
         }
         $time = $this->m_properties['remember_user'] ? time() + 14 * 24 * 3600 : null;
 
-        setcookie("LoginUserId", $this->m_user->getUserId(), $time, '/');
-        setcookie("LoginUserKey", $this->m_user->getKeyId(), $time, '/');
+        setcookie('LoginUserKey', $this->m_user->getKeyId(), $time, '/');
         $p_context->user = new MetaUser($this->m_user->getUserId());
         return true;
     }

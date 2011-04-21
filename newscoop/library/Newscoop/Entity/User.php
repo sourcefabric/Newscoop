@@ -1,6 +1,5 @@
 <?php
-/**
- * @package Newscoop
+/** * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
@@ -246,6 +245,16 @@ abstract class User
     {
         $this->password = sha1($password);
         return $this;
+    }
+
+    /**
+     * Get password hash
+     *
+     * @return string
+     */
+    public function getPasswordHash()
+    {
+        return $this->password;
     }
 
     /**
@@ -609,4 +618,14 @@ abstract class User
     {
         return $this->position;
     }
+    /**
+     * To string strategy
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
+

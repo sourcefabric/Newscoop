@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Publication
 {
     /**
-     * @Id @generatedValue
+     * @Id @GeneratedValue
      * @Column(type="integer", name="Id")
      * @var int
      */
@@ -70,6 +70,16 @@ class Publication
     }
 
     /**
+     * Get issues
+     *
+     * @return array
+     */
+    public function getIssues()
+    {
+        return $this->issues;
+    }
+
+    /**
      * Get languages
      *
      * @return array
@@ -102,6 +112,29 @@ class Publication
     public function getDefaultLanguageName()
     {
         return $this->default_language->getName();
+    }
+
+    /*
+     * Get sections
+     *
+     * @return array
+     */
+    public function getSections()
+    {
+        $added = array();
+        $sections = array();
+        foreach ($this->issues as $issue) {
+            foreach ($issue->getSections() as $section) {
+                if (in_array($section->getNumber(), $added)) { // @todo handle within repository
+                    continue;
+                }
+
+                $sections[] = $section;
+                $added[] = $section->getNumber();
+            }
+        }
+
+        return $sections;
     }
 }
 
