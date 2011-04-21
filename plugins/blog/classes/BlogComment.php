@@ -78,7 +78,7 @@ class BlogComment extends DatabaseObject {
         switch ($p_name) {
             case 'content':
                 global $Campsite;
-                $content = preg_replace('!(../)*javascript/tinymce/plugins/emotions/img/!', $Campsite['WEBSITE_URL'].'/javascript/tinymce/plugins/emotions/img/', parent::getProperty($p_name));
+                $content = preg_replace('!(../)*js/tinymce/plugins/emotions/img/!', $Campsite['WEBSITE_URL'].'/js/tinymce/plugins/emotions/img/', parent::getProperty($p_name));
                 return $content;
             break;
 
@@ -256,7 +256,7 @@ class BlogComment extends DatabaseObject {
             /*
             'tiny_mce'  => array(
                 'element'   => 'tiny_mce',
-                'text'      => '<script language="javascript" type="text/javascript" src="/javascript/tinymce/tiny_mce.js"></script>'.
+                'text'      => '<script language="javascript" type="text/javascript" src="/js/tinymce/tiny_mce.js"></script>'.
                                '<script language="javascript" type="text/javascript">'.
                                '     tinyMCE.init({'.
                                '     	mode : "exact",'.

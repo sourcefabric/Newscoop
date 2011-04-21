@@ -25,7 +25,7 @@ ln -s ../plugins/poll/css/* .
 cd ..
 
 cd javascript
-ln -s ../plugins/poll/javascript/* .
+ln -s ../plugins/poll/js/* .
 cd ..
 
 2. Install the plugins/poll/install/sql/plugin_poll.sql to campsite database.
