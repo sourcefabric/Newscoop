@@ -44,9 +44,8 @@ function smarty_function_blog_edit($p_params, &$p_smarty)
         case 'info':
             $value = htmlspecialchars(isset($_REQUEST['f_blog_info']) ? Input::Get('f_blog_info') : $campsite->blog->info);
             $html .= "<textarea name=\"f_blog_info\" id=\"f_blog_info\" {$p_params['html_code']} />$value</textarea>";
-            
             if ($p_params['wysiwyg']) {
-                $html .='<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/javascript/tinymce/tiny_mce.js"></script>'.
+                $html .='<script language="javascript" type="text/javascript" src="' . $Campsite['WEBSITE_URL'] . '/js/tinymce/tiny_mce.js"></script>'.
                         '<script language="javascript" type="text/javascript">'.
                         '     tinyMCE.init({'.
                         '     	mode : "exact",'.
