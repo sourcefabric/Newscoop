@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @entity
  * @table(name="acl_role")
  */
-class Role implements \Zend_Acl_Role_Interface
+class Role
 {
     /**
      * @id @generatedValue
@@ -43,16 +43,6 @@ class Role implements \Zend_Acl_Role_Interface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Get role id for acl
-     *
-     * @return string
-     */
-    public function getRoleId()
-    {
-        return 'role' . $this->getId();
     }
 
     /**
