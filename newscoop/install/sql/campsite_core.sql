@@ -2076,7 +2076,7 @@ DROP TABLE IF EXISTS `liveuser_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `liveuser_groups` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `group_type` int(11) NOT NULL DEFAULT '0',
   `group_define_name` varchar(32) NOT NULL DEFAULT '',
   `role_id` int(10) DEFAULT NULL,
