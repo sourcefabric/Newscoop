@@ -22,7 +22,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 
     const CACHE_NAMESPACE = '_resource_acl';
 
-    const CACHE_TTL = 30;
+    const CACHE_TTL = 300;
 
     /** @var Doctrine\Common\Annotations\AnnotationReader */
     private $reader;
