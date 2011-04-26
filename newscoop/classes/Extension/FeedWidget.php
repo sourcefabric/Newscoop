@@ -1,11 +1,9 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
  *
- * @author Petr Jasek <petr.jasek@sourcefabric.org>
- * @copyright 2010 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
- * @link http://www.sourcefabric.org
+ * @copyright 2010, 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 /**
@@ -41,9 +39,18 @@ abstract class FeedWidget extends Widget
      */
     public function render()
     {
-        ob_start();
         $even = false;
         $count = $this->getCount();
+
+        try {
+            $url = $this->getUrl();
+            $items = $this->getItems($url);
+        } catch (Exception $e) {
+            echo '<p>', getGS("Can't fetch news from '$1'", $url), '</p>';
+            return;
+        }
+
+        ob_start();
         foreach ($this->getItems($this->getUrl()) as $item) {
             if ($count <= 0) {
                 break;
@@ -56,12 +63,12 @@ abstract class FeedWidget extends Widget
 
             // add link
             printf('<a href="%s" title="%s" target="_blank">%s</a>',
-                $item->link,
-                $item->title,
-                $item->title);
+                $item->getLink(),
+                $item->getTitle(),
+                $item->getTitle());
 
             if ($this->isFullscreen()) {
-                echo '<p>', $item->description, '</p>';
+                echo '<p>', $item->getDescription(), '</p>';
             }
 
             echo '</li>', "\n";
@@ -70,50 +77,36 @@ abstract class FeedWidget extends Widget
 
         if (empty($content)) {
             echo '<p>', getGS('No news.'), '</p>';
-        } else {
-            echo '<ul class="rss">', "\n";
-            echo $content;
-            echo '</ul>', "\n";
+            return;
         }
+
+        echo '<ul class="rss">', "\n";
+        echo $content;
+        echo '</ul>', "\n";
     }
 
     /**
-     * Get feed items from specified url or cache
+     * Get feed items from specified url
+     *
      * @param string $p_url
      * @return Iterator
      */
     private function getItems($p_url)
     {
-        // check url
-        $p_url = (string) $p_url;
-        $parts = @parse_url($p_url);
-        if (!$parts
-            || empty($parts['scheme'])
-            || !in_array($parts['scheme'], array('http', 'https'))) {
-            return array();
-        }
+        // get cache
+        $cache = Zend_Cache::factory('Core', 'File', array(
+            'lifetime' => 300,
+            'automatic_serialization' => true,
+        ), array(
+            'cache_dir' => APPLICATION_PATH . '/../cache',
+        ));
 
-        // get url content
-        $cache = $this->getCache();
-        $feed = $cache->fetch($p_url);
-        if (empty($feed)) {
-            $feed = '';
-            $headers = @get_headers($p_url);
-            if (is_array($headers)
-                && strpos($headers[0], '200') !== FALSE) { // OK
-                $feed = file_get_contents($p_url);
-            }
-            $cache->add($p_url, $feed, $this->getTtl());
-        }
+        // set reader
+        Zend_Feed_Reader::setCache($cache);
+        Zend_Feed_Reader::useHttpConditionalGet();
 
-        // parse xml
-        libxml_use_internal_errors(true);
-        $xml = simplexml_load_string($feed);
-        if (!$xml) { // not well-formed xml
-            return array();
-        }
-
-        // return items
-        return empty($xml->item) ? $xml->channel->item : $xml->item;
+        // get feed
+        $feed = Zend_Feed_Reader::import($p_url);
+        return $feed;
     }
 }
