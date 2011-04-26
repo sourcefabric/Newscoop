@@ -23,7 +23,7 @@ if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
 }
 
 // check if template cache dir is writable
-$templates_cache = dirname(dirname(__FILE__)) . DIR_SEP . 'templates_cache';
+$templates_cache = dirname(dirname(__FILE__)) . DIR_SEP . 'cache';
 if (!is_writable($templates_cache)) {
     echo '<!DOCTYPE html>';
     echo '<html><head><meta charset="utf-8" />';
