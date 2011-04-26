@@ -358,7 +358,7 @@ $filesDestDir = $CAMPSITE_DIR.'/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates';
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
-$compiledTemplatesDir = $CAMPSITE_DIR.'/templates_cache';
+$compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
 
 $destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
 

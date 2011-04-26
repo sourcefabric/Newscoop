@@ -91,7 +91,7 @@ final class CampInstallationView
             CS_INSTALL_DIR.DIR_SEP.'cron_jobs' => 'Cron Jobs Writable',
             CS_PATH_CONFIG => 'Configuration Files Writable',
             CS_PATH_TEMPLATES => 'Templates Folder Writable',
-            CS_PATH_SITE.DIR_SEP.'templates_cache' => 'Templates Cache Writable',
+            CS_PATH_SITE . '/cache' => 'Cache Folder Writable',
             CS_PATH_SITE.DIR_SEP.'plugins' => 'Plugins Folder Writable',
             CS_PATH_SITE.DIR_SEP.'backup' => 'Backup Folder Writable',
             );
