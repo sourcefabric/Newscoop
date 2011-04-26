@@ -2,6 +2,8 @@
 
 /**
  * Legacy controller
+ *
+ * @Acl(ignore="1")
  */
 class Admin_LegacyController extends Zend_Controller_Action
 {

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @Acl(ignore="1")
+ */
 class Admin_ErrorController extends Zend_Controller_Action
 {
 

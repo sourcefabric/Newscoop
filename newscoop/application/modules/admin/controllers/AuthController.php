@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @Acl(ignore="1")
+ */
 class Admin_AuthController extends Zend_Controller_Action
 {
     public function logoutAction()
