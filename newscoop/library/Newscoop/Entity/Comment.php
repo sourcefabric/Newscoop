@@ -485,4 +485,23 @@ class Comment
         return $this->dislikes;
     }
 
+    public function getRealName()
+    {
+        return "George";//$this->getCommenter()
+    }
+
+    public function SameAs()
+    {
+        return false;
+    }
+
+    public function exists()
+    {
+        return !is_null($this->id);
+    }
+
+    public function getProperty($key)
+    {
+        echo $key;
+    }
 }

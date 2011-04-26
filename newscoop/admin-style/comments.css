@@ -19,7 +19,7 @@ body#comments {
 #showComments fieldset ul li {
 	float: left;
 	height: 25px;
-	width: 100px;
+	min-width: 100px;
 	margin-right: 8px;
 	padding: 0px 10px;
     border-radius: 4px;
@@ -28,8 +28,9 @@ body#comments {
 	-khtml-border-radius: 4px;
 }
 
-#showComments fieldset ul li.published {
+#showComments fieldset ul li.published, #showComments fieldset ul li.approved  {
 	border: 1px solid #cccccc;
+	background: #fff;
 }
 
 #showComments fieldset ul li.new {
@@ -37,10 +38,10 @@ body#comments {
 	border: 1px solid #bee78d;
 }
 
-#showComments fieldset ul li.approved {
+/*#showComments fieldset ul li.approved {
 	background: #ccecff;
 	border: 1px solid #7ac8ff;
-}
+}*/
 
 #showComments fieldset ul li.hidden {
 	background: #f2f2f2;
@@ -64,7 +65,7 @@ body#comments {
 	line-height: 25px;
 }
 
-#showComments fieldset ul li.published label {
+#showComments fieldset ul li.published label, #showComments fieldset ul li.approved label {
 	color: #585858;
 }
 
@@ -72,15 +73,15 @@ body#comments {
 	color: #006b0e;
 }
 
-#showComments fieldset ul li.approved label {
+/*#showComments fieldset ul li.approved label {
 	color: #004987;
-}
+}*/
 
 #showComments fieldset ul li.hidden label {
 	color: #969696;
 }
 
-#showComments fieldset ul li,deleted label {
+#showComments fieldset ul li.deleted label {
 	color: #9e0013;
 }
 
@@ -301,10 +302,13 @@ select.actions {
 	margin: 0px;
 }
 
-.dateCommentHolder fieldset,.dateCommentHolderEdit fieldset {
+.dateCommentHolder fieldset,.dateCommentHolderEdit fieldset, .dateCommentHolder fieldset:first-child, .dateCommentHolderEdit fieldset:first-child {
 	padding: 0px;
-	margin-bottom: 0px;
+	margin: 0px;
 	border: none;
+	float: none;
+    margin-top: 10px;
+    width: 100%;
 }
 
 .dateCommentHolder fieldset label,.dateCommentHolderEdit fieldset label
@@ -376,7 +380,8 @@ select.actions {
 
 .commentBtns {
 	height: 30px;
-	background: #f7f7f7;
+
+	background: rgba(212, 212, 212, 0.5);
 	visibility: hidden;
 }
 
@@ -444,9 +449,9 @@ select.actions {
 }
 
 .commentBtns ul li a.approved {
-	color: #004987;
-	background: #ccecff;
-	border: 1px solid #7ac8ff;
+	color: #585858;
+	background: #fff;
+	border: 1px solid #9D9D9D;
 }
 
 .commentBtns ul li a.hidden {
@@ -468,6 +473,18 @@ select.actions {
 	border: 1px solid #999999;
 }
 
+.commentBtns ul li a.new:hover {
+	border: 1px solid #2a8921;
+}
+.commentBtns ul li a.approved:hover  {
+	border: 1px solid #5b5b5b;
+}
+.commentBtns ul li a.hidden:hover  {
+	border: 1px solid #838383;
+}
+.commentBtns ul li a.deleted:hover {
+	border: 1px solid #ce3843;
+}
 .commentBtns ul li a.banUser span {
 	display: block;
 	height: 18px;
@@ -475,12 +492,18 @@ select.actions {
 	background: url(images/ban-user-icon.png) left 3px no-repeat;
 }
 
+.commentBtns ul li a.banUser:hover {
+	border: 1px solid #656565;
+	background-image: -moz-linear-gradient(100% 100% 90deg, #d2d2d2, #ffffff);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#d2d2d2) );
+}
+
 .dataTables_wrapper .commentId {
-    width: 20px;
+    width: 3%;
 }
 
 .dataTables_wrapper .commentUser {
-    width: 245px;
+    width: 27%;
 }
 
 .dataTables_wrapper .commentTimeCreated {
@@ -488,24 +511,122 @@ select.actions {
 }
 
 .dataTables_wrapper .commentMessage {
-    width: 410px;
+    width: 46%;
 }
 
+.dataTables_wrapper .commentThread {
+    width: 24%;
+}
 .dataTables_wrapper .commentThreadOrder {
     width: 110px;
 }
 
-.dataTables_wrapper .commentThread {
-    width: 110px;
-}
-
-.dataTables_wrapper {
+.commentsHolder .dataTables_wrapper {
     margin: 0;
 }
 
 .hidden {
-    overflow: auto !important;
+    overflow: hidden !important;
     position: inherit !important;
-    top: ;
     width: auto !important;
+	position:static!important;
 }
+
+
+.dataTables_filter input[type="text"] {
+	background:transparent url(images/searchfield_bg.png) no-repeat scroll 0 0;
+    border: 1px solid #9D9D9D;
+    float: none;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+    width: 60%;
+    text-indent: 23px;
+}
+
+.datatable input[type="checkbox"] {
+	height:13px;
+	width:13px;
+}'
+
+.commentsHolder .smartlist .ui-widget-header {
+	background: none;
+    color: #444444;
+    font-weight: bold;
+}
+
+.commentsHolder .smartlist .ui-widget-header:first-child {
+    border-width: 0 0 1px 0;
+	padding:0;
+}
+	
+.commentsHolder .smartlist .ui-widget-header:last-child {
+    border-width: 0;
+	padding:6px 0;
+}
+.commentsHolder  .dataTables_filter {
+	clear:both;
+}
+.commentsHolder  .dataTables_length {
+    padding: 0 0 10px 0;
+    vertical-align: top;
+	float:right;
+	line-height:23px;
+}
+.commentsHolder .ui-widget-header select {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    margin: 0;
+	min-width:60px;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
+}
+.commentsHolder .dataTables_actions {
+    padding: 0 0 10px 0;
+    vertical-align: top;
+	float:left;
+	line-height:21px;
+}
+
+.commentsHolder .dataTables_actions a {
+	font-size:12px;
+	color:#007fb3;
+	padding: 0;
+	margin: 0 0 0 10px;
+	line-height:23px;
+	font-weight:normal;
+	display:inline-block;
+}
+.commentsHolder .dataTables_actions a span {
+	float:left;
+	margin-top:3px;
+	padding-right:2px;
+}
+.commentsHolder .dataTables_actions a:hover {
+	text-decoration:underline;
+}
+.commentsHolder .dataTables_actions select {
+	width: 180px;
+}
+
+/*---////////// Status Colors //////////---*/
+
+.datatable tr.status_approved {
+	background:#fff;
+}
+.datatable tr.status_new {
+	background:#f3fbeb;
+}
+.datatable tr.status_hidden {
+	background:#f8f8f8;
+}
+.datatable tr.status_deleted {
+	background:#fff4f4;
+}
+

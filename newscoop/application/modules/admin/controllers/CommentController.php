@@ -173,10 +173,16 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')
             ->addActionContext('list', 'json')
             ->initContext();
-        $article = $this->getRequest()->getParam('article');
-        $language = $this->getRequest()->getParam('language');
-        $article = 64;
-        $comments = $this->repository->getArticleComments($article, $language, array());
+
+        $cols = array('thread_order' => 'default');
+        $filter = array(
+            'thread'   => $this->getRequest()->getParam('article'),
+            'language' => $this->getRequest()->getParam('language'),
+        );
+        $params = array(
+            'sFilter'        => $filter
+        );
+        $comments = $this->repository->getData($params, $cols);
         $result = array();
         foreach($comments as $comment) {
             $commenter = $comment->getCommenter();

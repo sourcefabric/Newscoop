@@ -147,7 +147,7 @@ class ArticleComment
                                               $p_skipCache = true)
     {
         global $PHORUM, $g_ado_db;
-
+        echo "here: getarticlecomments";
         if (CampCache::IsEnabled() && !$p_skipCache) {
         	$cacheKey = __METHOD__ . '_' . (int)$p_articleNumber . '_'
         	. (int)$p_languageId . '_' . $p_status . '_' . (int)$p_count_only;

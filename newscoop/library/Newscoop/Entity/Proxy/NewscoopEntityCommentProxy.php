@@ -213,6 +213,30 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::getDislikes();
     }
 
+    public function getRealName()
+    {
+        $this->_load();
+        return parent::getRealName();
+    }
+
+    public function SameAs()
+    {
+        $this->_load();
+        return parent::SameAs();
+    }
+
+    public function exists()
+    {
+        $this->_load();
+        return parent::exists();
+    }
+
+    public function getProperty($key)
+    {
+        $this->_load();
+        return parent::getProperty($key);
+    }
+
 
     public function __sleep()
     {

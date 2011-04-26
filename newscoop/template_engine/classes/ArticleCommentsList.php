@@ -25,12 +25,53 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-		$this->m_defaultTTL = ArticleComment::DEFAULT_TTL;
-	    $articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    $metaCommentsList = array();
-	    foreach ($articleCommentsList as $comment) {
-	        $metaCommentsList[] = new MetaComment($comment->getMessageId());
+	    global $controller;
+        $auth = Zend_Auth::getInstance();
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        //print_r($this->m_constraints);
+        //print_r($p_parameters);
+        //$repository
+
+        //$this->m_defaultTTL = ArticleComment::DEFAULT_TTL;
+	    //$articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    //print_r($articleCommentsList);
+
+
+
+        $cols = array('time_created' => 'bydate', 'thread_order' => 'default');
+
+        $filter = array();
+        $filter = $this->m_constraints;
+        $filter['status'] = 'approved';
+        $params = array(
+            'sFilter' => $filter
+        );
+        if($p_limit) {
+            $params['iDisplayStart'] = $p_start;
+            $params['iDisplayLength'] = $p_limit;
+        }
+        foreach($this->m_order as $order)
+        {
+            $index = $cols[$order['field']];
+            if($order['field'] == 'bydate') {
+                $params['iSortCol_0'] = 0;
+                $params['sSortDir_0'] = $order['dir'];
+            }
+            elseif($order['field'] == 'default')
+            {
+                $params['iSortCol_1'] = true;
+                $params['sSortDir_1'] = $order['dir'];
+            }
+        }
+	    //$p_count = $repository->getCount($params, $cols);
+
+
+        $articleCommentsList = $repository->getData($params, $cols);
+	    foreach ($articleCommentsList as $comment)
+	    {
+	        $metaCommentsList[] = new MetaComment($comment->getId());
 	    }
+	    /**/
 	    return $metaCommentsList;
 	}
 
@@ -133,8 +174,7 @@ class ArticleCommentsList extends ListObject
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
                 return false;
             }
-            $this->m_constraints[] = new ComparisonOperation('article_number', $operator,
-                                                             $context->article->number);
+            $this->m_constraints['thread'] = 64;
         } else {
             $order = array();
             foreach ($this->m_order as $orderCond) {
@@ -154,8 +194,7 @@ class ArticleCommentsList extends ListObject
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_comments");
                 return false;
             }
-            $this->m_constraints[] = new ComparisonOperation('language_id', $operator,
-                                                             $context->language->number);
+            $this->m_constraints['language'] = $context->language->number;
         }
 
     	return $parameters;
