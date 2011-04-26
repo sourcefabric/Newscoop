@@ -1,8 +1,11 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 /**
- * Legacy controller
- *
  * @Acl(ignore="1")
  */
 class Admin_LegacyController extends Zend_Controller_Action

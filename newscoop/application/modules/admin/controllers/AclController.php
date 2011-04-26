@@ -1,9 +1,13 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\Acl\Role,
     Newscoop\Entity\Acl\Rule,
     Newscoop\Entity\User\Staff;
-
 
 /**
  * @Acl(ignore="1")

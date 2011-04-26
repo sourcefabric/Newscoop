@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User\Staff;
 
@@ -13,6 +18,9 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
+
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
 
         $this->form = new Admin_Form_Staff($this->_helper->acl->isAllowed('user', 'manage'));

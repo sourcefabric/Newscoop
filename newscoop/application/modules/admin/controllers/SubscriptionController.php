@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\Subscription,
     Newscoop\Entity\User\Subscriber;
@@ -8,6 +13,13 @@ use Newscoop\Entity\Subscription,
  */
 class Admin_SubscriptionController extends Zend_Controller_Action
 {
+    public function init()
+    {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
+        camp_load_translation_strings('user_subscriptions');
+    }
+
     public function indexAction()
     {
         $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
