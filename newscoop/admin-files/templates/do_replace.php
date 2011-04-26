@@ -27,7 +27,7 @@ $oldMimeType = (function_exists('mime_content_type')) ? mime_content_type($oldFi
 							camp_mime_content_type($oldFilePath);
 $oldRelativeFilePath = (!empty($f_path)) ? ltrim($f_path.DIR_SEP.$f_old_name, '/') : $f_old_name;
 $newMimeType = $_FILES['f_file']['type'];
-$equivalentTextTypes = array("text/plain", "text/html", "application/x-php", "application/octet-stream");
+$equivalentTextTypes = array("text/plain", "text/html", "application/x-php", "application/octet-stream", "application/javascript", "text/x-c", "text/css" , "text/x-php", "application/x-httpd-php", "text/x-c++");
 $matched = false;
 if (in_array($oldMimeType, $equivalentTextTypes) && in_array($newMimeType, $equivalentTextTypes)) {
 	$matched = true;
