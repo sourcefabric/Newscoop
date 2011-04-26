@@ -175,6 +175,11 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->repository->save($staff, $form->getValues());
             $this->_helper->entity->getManager()->flush();
 
+            // add default widgets for new staff
+            if ($this->_getParam('action') == 'add') {
+                WidgetManager::SetDefaultWidgets($staff->getId());
+            }
+
             $this->_helper->flashMessenger(getGS('Staff member saved.'));
             $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(
                 'user' => $staff->getId(),
