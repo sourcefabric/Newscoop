@@ -185,21 +185,6 @@ if ($files) {
 </div>
 <?php camp_html_copyright_notice();
 
-// internal filesize function returns maximum 4Gb size
-function getRealSize($file) {
-  $fmod = filesize($file);
-  if ($fmod < 0) $fmod += 2.0 * (PHP_INT_MAX + 1);
-  $i = 0;
-  $myfile = fopen($file, "r");
-  while (strlen(fread($myfile, 1)) === 1) {
-    fseek($myfile, PHP_INT_MAX, SEEK_CUR);
-    $i++;
-  }
-  fclose($myfile);
-  if ($i % 2 == 1) $i--;
-  return ((float)($i) * (PHP_INT_MAX + 1)) + $fmod;
-}
-
 function getBackupList() {
     $files = array();
     $backupDir = CS_PATH_SITE . DIR_SEP . 'backup';
@@ -213,7 +198,7 @@ function getBackupList() {
         if ($fileType != "dir" && $file != '.htaccess') {
             $tmp = array();
             $tmp['name'] = $file;
-            $tmp['size'] = ceil(getRealSize($fullPath)/1024/1024);
+            $tmp['size'] = ceil(filesize($fullPath)/1024/1024);
             $tmp['time'] = date("Y-F-d H:i:s", filectime($fullPath));
             $files[] = $tmp;
         }
