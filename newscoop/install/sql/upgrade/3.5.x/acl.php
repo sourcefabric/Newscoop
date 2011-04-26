@@ -68,3 +68,8 @@ $rules = array_map(function($rule) {
 
 $sql = 'INSERT INTO acl_rule (`type`, `role_id`, `resource`, `action`) VALUES (' . implode("),\n(", $rules) . ")\n";
 $g_ado_db->Execute($sql);
+
+for ($i = 1; $i < $roleId; $i++) {
+    $sql = "INSERT INTO acl_role (`id`) VALUE ( $i );";
+    $g_ado_db->Execute($sql);
+}
