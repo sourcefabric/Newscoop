@@ -10,7 +10,7 @@
 
 ?>
 <div class="actions">
-<?php 
+<?php
 	global $g_user;
 ?>
 <fieldset class="actions">
@@ -94,12 +94,34 @@ $('.smartlist .actions select').change(function() {
         items,
         params,
         ], function(data) {
+    		var dataJson = eval('(' + data + ')');
             if (action == 'duplicate_interactive'
                 || action == 'move'
                 || action == 'publish_schedule') {
-                window.location = data; // redirect
+                window.location = dataJson.hiperlink; // redirect
             }
-            flashMessage('<?php putGS('Articles updated.'); ?>');
+			var messages = dataJson.messages;
+
+			var sentFlash = false;
+			for(var i=0; i< messages.length; i++) {
+				var message = messages[i];
+				if(message.no > 0) {
+					var flashType = '';
+					var textMessage = message.textMessage;
+					if(message.status == 'notAffected') {
+						flashType = 'error';
+					}
+					if(sentFlash == true) {
+						setTimeout(function() {
+							flashMessage(message.textMessage, flashType);
+						},3000);
+					} else {
+						flashMessage(textMessage, flashType);
+					}
+					sentFlash = true;
+				}
+			}
+
             var smartlistId = smartlist.attr('id').split('-')[1];
             tables[smartlistId].fnDraw(true);
         }
