@@ -22,8 +22,6 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 
     const CACHE_NAMESPACE = '_resource_acl';
 
-    const CACHE_TTL = 300;
-
     /** @var Doctrine\Common\Annotations\AnnotationReader */
     private $reader;
 
@@ -123,122 +121,11 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      */
     public function getResources()
     {
-        $this->scan();
+        if ($this->resources === NULL) {
+            $this->scan();
+        }
 
         return $this->resources;
-    }
-
-    /**
-     * Scan for resources/actions
-     *
-     * @return void
-     */
-    private function scan()
-    {
-        $options = $this->getOptions();
-
-        $cache = false;
-        if (!empty($options['cache'])) { // use cache
-            $cache = new $options['cache'];
-
-            if ($cache->contains(self::CACHE_NAMESPACE)) {
-                list($this->resources, $this->access) = json_decode($cache->fetch(self::CACHE_NAMESPACE), TRUE);
-                return;
-            }
-        }
-
-        $front = Zend_Controller_Front::getInstance();
-        $paths = $front->getControllerDirectory();
-        $path = $paths['admin'];
-
-        $resources = $access = array();
-
-        // load resources from file if any
-        $file = APPLICATION_PATH . '/configs/resources.ini';
-        if (file_exists($file)) {
-            $config = new Zend_Config_Ini($file);
-            $resources = $config->toArray();
-        }
-
-        // scan controllers
-        $reader = $this->getAnnotationReader();
-        foreach (glob("$path/*Controller.php") as $controllerFile) {
-            require_once($controllerFile);
-            $controller = 'Admin_' . current(explode('.', basename($controllerFile)));
-            $reflection = new ReflectionClass($controller);
-
-            $resource = $this->formatName($controller);
-            $defaultAction = NULL;
-
-            $controllerKey = $resource;
-            $access[$controllerKey] = array();
-
-            // process annotations
-            $annotation = $reader->getClassAnnotation($reflection, self::ANNOTATION);
-            if ($annotation !== NULL) {
-                if (!empty($annotation->ignore)) { // ignored class
-                    continue;
-                }
-
-                if (!empty($annotation->resource)) {
-                    $resource = $this->formatName($annotation->resource);
-                }
-
-                if (!empty($annotation->action)) {
-                    $defaultAction = $this->formatName($annotation->action);
-                }
-            }
-
-            // get actions
-            $actions = array();
-            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-                if (!preg_match('/Action$/', $method->getName())) {
-                    continue;
-                }
-
-                $action = $this->formatName($method->getName());
-                $target = $resource;
-
-                $methodKey = $action;
-                $access[$controllerKey][$methodKey] = array();
-
-                // process annotations
-                $annotation = $reader->getMethodAnnotation($method, self::ANNOTATION);
-                if ($annotation !== NULL) {
-                    if (!empty($annotation->ignore)) {
-                        continue;
-                    }
-
-                    if (!empty($annotation->resource)) {
-                        $target = $this->formatName($annotation->resource);
-                    }
-
-                    if (!empty($annotation->action)) {
-                        $action = $this->formatName($annotation->action);
-                    }
-                } elseif ($defaultAction !== NULL) {
-                    $action = $defaultAction;
-                }
-
-                // add action to target resource
-                if (!isset($resources[$target])) {
-                    $resources[$target] = array($action);
-                } elseif (!in_array($action, $resources[$target])) {
-                    $resources[$target][] = $action;
-                }
-
-                if ($target) {
-                    $access[$controllerKey][$methodKey] = array($target, $action);
-                }
-            }
-        }
-
-        $this->resources = $resources;
-        $this->access = $access;
-
-        if ($cache) {
-            $cache->save(self::CACHE_NAMESPACE, json_encode(array($resources, $access)), self::CACHE_TTL);
-        }
     }
 
     /**
@@ -250,7 +137,9 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      */
     public function getAccess($controller, $action)
     {
-        $this->scan();
+        if ($this->access === NULL) {
+            $this->scan();
+        }
 
         if (isset($this->access[$controller][$action])) {
             return $this->access[$controller][$action];
@@ -284,26 +173,6 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     }
 
     /**
-     * Get annotation reader
-     *
-     * @return Doctrine\Common\Annotations\AnnotationReader
-     */
-    private function getAnnotationReader()
-    {
-        if ($this->reader === NULL) {
-            $namespaces = explode('\\', self::ANNOTATION);
-            array_pop($namespaces);
-            $namespace = implode('\\', $namespaces) . '\\';
-
-            $this->reader = new AnnotationReader;
-            $this->reader->setAutoloadAnnotations(true);
-            $this->reader->setDefaultAnnotationNamespace($namespace);
-        }
-
-        return $this->reader;
-    }
-
-    /**
      * Set acl storage
      *
      * @param Resource\Acl\StorageInterface
@@ -326,15 +195,150 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     }
 
     /**
+     * Scan for resources/actions
+     *
+     * @return void
+     */
+    private function scan()
+    {
+        $options = $this->getOptions() + array(
+            'cache' => 'Doctrine\Common\Cache\ArrayCache',
+            'cache_ttl' => 300,
+        );
+
+        // try to fetch from cache
+        $cache = new $options['cache'];
+        if ($cache->contains(self::CACHE_NAMESPACE)) {
+            list($this->resources, $this->access) = json_decode($cache->fetch(self::CACHE_NAMESPACE), TRUE);
+            return;
+        }
+
+        $resources = $access = array();
+
+        // load resources from file if any
+        $file = APPLICATION_PATH . '/configs/resources.ini';
+        if (file_exists($file)) {
+            $config = new Zend_Config_Ini($file);
+            $resources = $config->toArray();
+        }
+
+        $reader = $this->getAnnotationReader();
+
+        // get modules to scan
+        $front = Zend_Controller_Front::getInstance();
+        $paths = $front->getControllerDirectory();
+        $modules = !empty($options['modules']) ? $options['modules'] : array();
+        foreach ($modules as $module) {
+            $path = $paths[$module];
+            foreach (glob("$path/*Controller.php") as $controllerFile) {
+                require_once($controllerFile);
+                $controller = ucfirst($module) . '_' . current(explode('.', basename($controllerFile)));
+                $reflection = new ReflectionClass($controller);
+
+                $resource = $this->formatName($controller, $module);
+                $defaultAction = NULL;
+
+                $controllerKey = $resource;
+                $access[$controllerKey] = array();
+
+                // process annotations
+                $annotation = $reader->getClassAnnotation($reflection, self::ANNOTATION);
+                if ($annotation !== NULL) {
+                    if (!empty($annotation->ignore)) { // ignored class
+                        continue;
+                    }
+
+                    if (!empty($annotation->resource)) {
+                        $resource = $this->formatName($annotation->resource);
+                    }
+
+                    if (!empty($annotation->action)) {
+                        $defaultAction = $this->formatName($annotation->action);
+                    }
+                }
+
+                // get actions
+                $actions = array();
+                foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+                    if (!preg_match('/Action$/', $method->getName())) {
+                        continue;
+                    }
+
+                    $action = $this->formatName($method->getName());
+                    $target = $resource;
+
+                    $methodKey = $action;
+                    $access[$controllerKey][$methodKey] = array();
+    
+                    // process annotations
+                    $annotation = $reader->getMethodAnnotation($method, self::ANNOTATION);
+                    if ($annotation !== NULL) {
+                        if (!empty($annotation->ignore)) {
+                            continue;
+                        }
+
+                        if (!empty($annotation->resource)) {
+                            $target = $this->formatName($annotation->resource);
+                        }
+
+                        if (!empty($annotation->action)) {
+                            $action = $this->formatName($annotation->action);
+                        }
+                    } elseif ($defaultAction !== NULL) {
+                        $action = $defaultAction;
+                    }
+
+                    // add action to target resource
+                    if (!isset($resources[$target])) {
+                        $resources[$target] = array($action);
+                    } elseif (!in_array($action, $resources[$target])) {
+                        $resources[$target][] = $action;
+                    }
+
+                    if ($target) {
+                        $access[$controllerKey][$methodKey] = array($target, $action);
+                    }
+                }
+            }
+        }
+
+        $this->resources = $resources;
+        $this->access = $access;
+
+        $cache->save(self::CACHE_NAMESPACE, json_encode(array($resources, $access)), (int) $options['cache_ttl']);
+    }
+
+    /**
+     * Get annotation reader
+     *
+     * @return Doctrine\Common\Annotations\AnnotationReader
+     */
+    private function getAnnotationReader()
+    {
+        if ($this->reader === NULL) {
+            $namespaces = explode('\\', self::ANNOTATION);
+            array_pop($namespaces);
+            $namespace = implode('\\', $namespaces) . '\\';
+
+            $this->reader = new AnnotationReader;
+            $this->reader->setAutoloadAnnotations(true);
+            $this->reader->setDefaultAnnotationNamespace($namespace);
+        }
+
+        return $this->reader;
+    }
+
+    /**
      * Format name for resource/action
      *
      * @param string $name
+     * @param string $module
      * @return string
      */
-    private function formatName($name)
+    private function formatName($name, $module = '')
     {
         $name = str_replace(array(
-            'Admin_',
+            ucfirst($module) . '_',
             'Controller',
             'Action',
         ), array(
