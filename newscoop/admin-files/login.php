@@ -174,7 +174,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 </tr>
 <tr>
   <td align="right" ><strong>
-    <?php putGS("Account name"); ?>
+    <?php putGS("User name"); ?>
     :</strong></td>
   <td>
     <?php if ($error_code != "upgrade") { ?>
