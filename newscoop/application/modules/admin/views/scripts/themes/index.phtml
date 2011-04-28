@@ -1,0 +1,22 @@
+<ul>
+    <?php foreach ($this->themes as $theme) { ?>
+    <li>
+        <?php echo $theme->getId(); ?>:<?php echo $theme->getName(); ?>:<?php echo $theme->getVersion(); ?><br />
+
+        <?php if ($theme->isInstalled()) { ?>
+        installed version: <?php echo $theme->getInstalledVersion(); ?>
+        <a href="<?php echo $this->url(array(
+            'action' => 'delete',
+            'theme' => $theme->getId(),
+        )); ?>">Delete</a>
+
+        <?php } else { ?>
+        <a href="<?php echo $this->url(array(
+            'action' => 'install',
+            'theme' => $theme->getId(),
+        )); ?>">Install</a>
+        <?php } ?>
+    </li>
+    <?php } ?>
+</ul>
+

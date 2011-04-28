@@ -270,6 +270,12 @@ if ($showConfigureMenu) {
             'controller' => 'templates',
             'action' => 'index.php',
         );
+
+        $pages[3]['pages'][] = array(
+            'label' => getGS('Themes'),
+            'module' => 'admin',
+            'controller' => 'themes',
+        );
     }
 
     if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
