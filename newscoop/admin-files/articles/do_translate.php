@@ -141,6 +141,8 @@ if ($f_publication_id > 0) {
 $articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->getUserId(), $f_translation_title);
 
 camp_html_add_msg(getGS("Article translation created."), "ok");
-camp_html_goto_page(camp_html_article_url($articleCopy, $f_language_id, 'edit.php'), false);
+
+camp_html_goto_page(camp_html_article_url($articleCopy, $f_translation_language, 'edit.php'), false);
+
 ArticleIndex::RunIndexer(3, 10, true);
 ?>
