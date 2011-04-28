@@ -485,23 +485,54 @@ class Comment
         return $this->dislikes;
     }
 
+    /**
+     * Get username witch should be the real name
+     *
+     * @return string
+     * @deprecated legacy from frontend controllers
+     */
     public function getRealName()
     {
-        return "George";//$this->getCommenter()
+        $this->getCommenter()->getUserName();
     }
 
-    public function SameAs()
+    /**
+     * Check if the comment is the same as this one
+     *
+     * @param Comment $p_comment
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
+    public function SameAs($p_comment)
     {
-        return false;
+        return $p_comment->getId() == $this->getId();
     }
 
+    /**
+     * Check if the comment exists
+     * Test if there is set an id
+     *
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
     public function exists()
     {
         return !is_null($this->id);
     }
 
-    public function getProperty($key)
+    /**
+     * Get an enity property
+     *
+     * @param $p_key
+     * @return mixed
+     * @deprecated legacy from frontend controllers
+     */
+    public function getProperty($p_key)
     {
-        echo $key;
+        if(isset($this->$p_key))
+            return $this->$p_key;
+        else
+            return null;
+
     }
 }

@@ -26,18 +26,7 @@ class ArticleCommentsList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
 	    global $controller;
-        $auth = Zend_Auth::getInstance();
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-        //print_r($this->m_constraints);
-        //print_r($p_parameters);
-        //$repository
-
-        //$this->m_defaultTTL = ArticleComment::DEFAULT_TTL;
-	    //$articleCommentsList = ArticleComment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    //print_r($articleCommentsList);
-
-
-
         $cols = array('time_created' => 'bydate', 'thread_order' => 'default');
 
         $filter = array();
@@ -64,14 +53,11 @@ class ArticleCommentsList extends ListObject
             }
         }
 	    //$p_count = $repository->getCount($params, $cols);
-
-
         $articleCommentsList = $repository->getData($params, $cols);
 	    foreach ($articleCommentsList as $comment)
 	    {
 	        $metaCommentsList[] = new MetaComment($comment->getId());
 	    }
-	    /**/
 	    return $metaCommentsList;
 	}
 
@@ -174,7 +160,7 @@ class ArticleCommentsList extends ListObject
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
                 return false;
             }
-            $this->m_constraints['thread'] = 64;
+            $this->m_constraints['thread'] = 64;//$context->article->number;
         } else {
             $order = array();
             foreach ($this->m_order as $orderCond) {

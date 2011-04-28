@@ -161,16 +161,52 @@ class AcceptanceRepository extends DatatableSource
     }
 
     /**
+     * Method that search for if a params are banned
+     *
+     * @param $p_name
+     * @param $p_email
+     * @param $p_ip
+     * @param $p_forum
+     * @return bool
+     */
+    public function checkParamsBanned($p_name, $p_email, $p_ip, $p_forum)
+    {
+        $params = array( 'name' => $p_name, 'email' => $p_email, 'ip' => $p_ip);
+        $return = $this->checkBanned($params, $p_forum);
+        if (!empty($return['name']) || !empty($return['email']) || !empty($return['ip']))
+            return true;
+        else
+            return false;
+    }
+
+    /**
      * Method that search for if a commenter is banned
      *
-     * @param Commenter $p_commenter
+     * @param $p_commenter
+     * @param $p_forum
+     * @return array
      */
-    public function isBanned(Commenter $p_commenter, $p_forum)
+    public function isBanned($p_commenter, $p_forum)
+    {
+        $params = array(
+            'name' => $p_commenter->getName(),
+            'email' => $p_commenter->getEmail(),
+            'ip' => $p_commenter->getIp()
+        );
+        return $this->checkBanned($params, $p_forum);
+    }
+
+    /**
+     * Method that checks for if a commenter is banned
+     *
+     * @param mixed $p_params
+     */
+    public function checkBanned($p_params, $p_forum)
     {
             $return = array();
             $name = array(
                 'forum' => $p_forum,
-                'search' => $p_commenter->getName(),
+                'search' => $p_params['name'],
                 'for_column' => 'name',
                 'type' => 'deny',
                 'search_type' => 'normal'
@@ -179,7 +215,7 @@ class AcceptanceRepository extends DatatableSource
 
             $email = array(
                 'forum' => $p_forum,
-                'search' => $p_commenter->getEmail(),
+                'search' => $p_params['email'],
                 'for_column' => 'email',
                 'type' => 'deny',
                 'search_type' => 'normal'
@@ -188,7 +224,7 @@ class AcceptanceRepository extends DatatableSource
 
             $ip = array(
                 'forum' => $p_forum,
-                'search' => $p_commenter->getIp(),
+                'search' => $p_params['ip'],
                 'for_column' => 'ip',
                 'type' => 'deny',
                 'search_type' => 'normal'

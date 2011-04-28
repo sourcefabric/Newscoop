@@ -27,7 +27,6 @@ class Admin_Form_Ban extends Zend_Form
 
     public function init()
     {
-
         $this->name = new Zend_Form_Element_Checkbox('name');
         $this->name->setLabel(getGS('Name').":")
                    ->setOrder(10)
@@ -48,11 +47,22 @@ class Admin_Form_Ban extends Zend_Form
                    ->setRequired(false);
 
         $this->addElement($this->ip);
-
+        /*
+        $this->addDisplayGroup(array(
+            'name',
+            'email',
+            'ip'
+        ), 'commenter_ban', array(
+            'legend' => getGS('Show commenter details'),
+            'class' => 'toggle',
+            'order' => 70,
+        ));
+        */
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),
             'order' => 99,
         ));
+
     }
 
     /**

@@ -51,10 +51,10 @@ class Source extends EntityRepository implements ISource
     }
 
     /**
-     * Get user count
+     * Get entity count
      *
-     * @param array $params|null
-     * @param array $cols|null
+     * @param array $p_params|null
+     * @param array $p_cols|null
      *
      * @return int
      */
@@ -63,8 +63,8 @@ class Source extends EntityRepository implements ISource
 
         $qb = $this->createQueryBuilder('e')
             ->select('COUNT(e)');
-        if(is_array($p_params) && !empty($params['sSearch'])) {
-            $qb->where($this->buildWhere($cols, $params['sSearch']));
+        if(is_array($p_params) && !empty($p_params['sSearch'])) {
+            $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
         }
         return $qb->getQuery()->getSingleScalarResult();
     }
@@ -77,16 +77,16 @@ class Source extends EntityRepository implements ISource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    private function buildWhere(array $cols, $search)
+    private function buildWhere(array $p_cols, $p_search)
     {
         $qb = $this->createQueryBuilder('e');
         $or = $qb->expr()->orx();
-        foreach (array_keys($cols) as $i => $property) {
+        foreach (array_keys($p_cols) as $i => $property) {
             if (!is_string($property)) { // not searchable
                 continue;
             }
 
-            $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$search}%")));
+            $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
         }
 
         return $or;

@@ -16,7 +16,7 @@
 </div>
 
 <div class="dateCommentHolderEdit">
-<fieldset>
+<fieldset class="content-edit" style="display:none;">
     <form action="<?php echo $this->url(array('action' => 'update', 'format' => 'json'));?>">
     <label><?php putGS('Subject');?></label>
     <input type="hidden" name="comment" value="<?php echo $this->comment->getId();?>" />
@@ -32,7 +32,7 @@
 </div>
 </fieldset>
 
-<fieldset>
+<fieldset class="content-reply" style="display:none;">
     <form action="<?php echo $this->url(array('action' => 'reply', 'format' => 'json'));?>">
     <input type="hidden" name="parent" value="<?php echo $this->comment->getId();?>" />
     <h3>Reply to comment</h3>

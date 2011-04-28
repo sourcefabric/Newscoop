@@ -33,7 +33,8 @@ function addComment() {
                 "language": "<?php echo $f_language_selected; ?>",
                 "name": $('#commenter_name').val(),
                 "subject": $('#comment_subject').val(),
-                "message" :$('#comment_message').val()
+                "message" :$('#comment_message').val(),
+                "security_token": '<?php echo SecurityToken::GetToken();?>'
             },
             success: function(data) {
                 $('#comment-add').each(function(){

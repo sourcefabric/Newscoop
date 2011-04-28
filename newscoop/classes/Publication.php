@@ -37,7 +37,11 @@ class Publication extends DatabaseObject {
 	                           'comments_captcha_enabled',
 	                           'comments_spam_blocking_enabled',
 							   'url_error_tpl_id',
-                               'seo');
+                               'seo',
+	                           'comments_public_enabled',
+                               'comments_moderator_to',
+	                           'comments_moderator_from'
+	                           );
 
 	/**
 	 * A publication represents a magazine or newspaper.
@@ -300,15 +304,24 @@ class Publication extends DatabaseObject {
 
 
 	/**
-	 * Return TRUE if comments are enabled for this publication.
+	 * Alias for getCommentsEnabled
 	 *
 	 * @return boolean
 	 */
 	public function commentsEnabled()
 	{
-	    return $this->m_data['comments_enabled'];
+	    return $this->getCommentsEnabled();
 	} // commentsEnabled
 
+    /**
+     * Return TRUE if comments are enabled for this publication.
+     *
+     * @return boolean
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->m_data['comments_enabled'];
+    } // commentsEnabled
 
 	/**
 	 * Set whether comments are enabled for this publication.
@@ -321,7 +334,6 @@ class Publication extends DatabaseObject {
 	    $p_value = $p_value ? '1' : '0';
 	    return $this->setProperty('comments_enabled', $p_value);
 	} // fn setCommentsEnabled
-
 
 	/**
 	 * Return TRUE if comments will default to enabled in the
@@ -447,24 +459,22 @@ class Publication extends DatabaseObject {
         return $this->setProperty('comments_spam_blocking_enabled', $p_value);
     } // fn setSpamBlockingEnabled
 
+    /**
+     * Alias for getPublicComments
+     *
+     * @return bool
+     */
+    public function publicComments() {
+        return $this->getPublicComments();
+    }
 
     /**
      * Return true if comments can be posted by unknown readers.
      *
      * @return bool
      */
-    public function publicComments() {
-        if (!$this->exists()) {
-            return null;
-        }
-	    $forum = new Phorum_forum($this->getForumId());
-	    if (!$forum->exists()) {
-	        $forum->create();
-	        $forum->setName($this->getName());
-	        $this->setForumId($forum->getForumId());
-	    }
-	    return $forum->getPublicPermissions()
-	    & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY);
+    public function getPublicComments() {
+        return $this->m_data['comments_public_enabled'];
     }
 
 
@@ -474,25 +484,52 @@ class Publication extends DatabaseObject {
      * @param boolean $isOn
      * @return boolean
      */
-    public function setPublicComments($isOn) {
-        if (!$this->exists()) {
-            return null;
-        }
-	    $forum = new Phorum_forum($this->getForumId());
-	    if (!$forum->exists()) {
-	        $forum->create();
-	        $forum->setName($this->getName());
-	        $this->setForumId($forum->getForumId());
-	    }
-	    $publicPermissions = $forum->getPublicPermissions();
-	    if ($isOn) {
-	        $publicPermissions |= PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY;
-	    } else {
-	        $publicPermissions &= !PHORUM_USER_ALLOW_NEW_TOPIC & !PHORUM_USER_ALLOW_REPLY;
-	    }
-	    return $forum->setPublicPermissions($publicPermissions);
+    public function setPublicComments($p_value) {
+        $p_value = $p_value ? '1' : '0';
+        return $this->setProperty('comments_public_enabled', $p_value);
     }
 
+    /**
+     * Get moderator email address for this publication.
+     *
+     * @return string
+     */
+    public function getCommentsModeratorTo()
+    {
+        return $this->m_data['comments_moderator_to'];
+    }
+
+    /**
+     * Set moderator email adddress to which info email is send.
+     *
+     * @param string $p_value
+     * @return boolean
+     */
+    public function setCommentsModeratorTo($p_value)
+    {
+        return $this->setProperty('comments_moderator_to', $p_value);
+    }
+
+    /**
+     * Get from which address moderator receives the info email.
+     *
+     * @return string
+     */
+    public function getCommentsModeratorFrom()
+    {
+        return $this->m_data['comments_moderator_from'];
+    }
+
+    /**
+     * Set from which address moderator receives the info email.
+     *
+     * @param string $p_value
+     * @return boolean
+     */
+    public function setCommentsModeratorFrom($p_value)
+    {
+        return $this->setProperty('comments_moderator_from', $p_value);
+    }
 
 	/**
 	 * Return all languages used in the publication as an array of

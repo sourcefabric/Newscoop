@@ -517,8 +517,8 @@ select.actions {
 .dataTables_wrapper .commentThread {
     width: 24%;
 }
-.dataTables_wrapper .commentThreadOrder {
-    width: 110px;
+.dataTables_wrapper .commentAction {
+    display: none;
 }
 
 .commentsHolder .dataTables_wrapper {

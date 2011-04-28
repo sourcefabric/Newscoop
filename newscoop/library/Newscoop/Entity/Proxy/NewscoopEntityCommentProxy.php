@@ -219,10 +219,10 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::getRealName();
     }
 
-    public function SameAs()
+    public function SameAs($p_comment)
     {
         $this->_load();
-        return parent::SameAs();
+        return parent::SameAs($p_comment);
     }
 
     public function exists()
@@ -231,10 +231,10 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::exists();
     }
 
-    public function getProperty($key)
+    public function getProperty($p_key)
     {
         $this->_load();
-        return parent::getProperty($key);
+        return parent::getProperty($p_key);
     }
 
 

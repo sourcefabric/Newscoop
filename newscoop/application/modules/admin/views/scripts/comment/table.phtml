@@ -116,7 +116,7 @@ $().ready(function(){
 </div>
 <script type="text/javascript">
 $().ready(function(){
-	$('.action').live('click',function(){
+	$('.datatable .action').live('click',function(){
 	    var el = $(this);
 	    var id = el.attr('id');
 	    var ids = [id.match(/\d+/)[0]];
@@ -129,7 +129,8 @@ $().ready(function(){
                "status": status
             },
             success: function(data) {
-                flashMessage("<?php putGS('Comment updated.')?>");
+                datatable.fnDraw();
+                flashMessage("<?php putGS('Comments updated.')?>");
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
@@ -140,11 +141,13 @@ $().ready(function(){
 
 	});
 	$('.dateCommentHolderEdit form').live('submit', function(){
+	    var that = this;
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
             data: $(this).serialize(),
             success: function(data) {
+                datatable.fnDraw();
                 flashMessage("<?php putGS('Comment updated.')?>");
             },
             error: function (rq, status, error) {
@@ -155,6 +158,11 @@ $().ready(function(){
         });
         return false;
 	});
+	$('.datatable .action-edit').live('click', function(){
+		 var el = $(this);
+		 //console.log('here');
+		 el.parents('td').find('.content-edit').toggle("slow");
+	});
 });
 </script>
 <script type="text/javascript">
@@ -163,17 +171,23 @@ var datatableCallback = {
 	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 	    that = datatableCallback;
         var tr = $('<tr></tr>');
-        tr.addClass(that.rowIndex%2?'list_row_odd odd':'list_row_even even');
+        tr.addClass('status_deleted');
         tr.hover(function() {
         	   $(this).find(".commentBtns").css("visibility","visible");
             },function() {
             	$(this).find(".commentBtns").css("visibility","hidden");
-            });
+        });/*
+        .click(function(e){
+            //$(this).find(".action-edit").click();
+            e.preventDefault();
+        	return false;
+        });
+        */
         var td = $('<td></td>');
         td.attr('colspan',5);
         nRow = $(nRow);
-        actions = nRow.find('.commentThreadOrder').first();
-        nRow.find('.commentTimeCreated').removeClass('commentTimeCreated').addClass('commentMessage');//.attr('colspan',2);
+        actions = nRow.find('.commentAction').first();
+        nRow.find('.commentTimeCreated').removeClass('commentTimeCreated').addClass('commentMessage');
         nActions = actions.clone();
         actions.hide();
         td.append($('<table cellspacing="0" cellpadding="0">').append(nRow));

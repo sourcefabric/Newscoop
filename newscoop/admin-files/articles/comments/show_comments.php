@@ -11,9 +11,9 @@ echo SecurityToken::FormParameter();
 
 // add hidden inputs
 $hiddens = array(
-    'f_language_id',
-    'f_article_number',
-    'f_language_selected',
+    'f_language_id' => 'language_id',
+    'f_article_number' => 'article_id',
+    'f_language_selected' => 'language_selected_id',
 );
 foreach ($hiddens as $name) {
     echo '<input type="hidden" name="', $name;
@@ -32,7 +32,7 @@ foreach ($hiddens as $name) {
       </li>
 
       <li>
-        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="delete_${id}"/>
+        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="delete_${id}" ${deleted_checked}/>
         <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
       </li>
 
@@ -60,14 +60,14 @@ foreach ($hiddens as $name) {
         <?php if ($inEditMode): ?>
         <dt>&nbsp;</dt>
         <dd class="buttons">
-            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id='); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
+            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
         </dd>
         <?php endif; //inEditMode?>
       </dl>
     </div>
 </fieldset>
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
-<form id="comment-moderate" action="comment/do_moderate.php" method="POST"></form>
+<form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
 <script>
 function toggleCommentStatus() {
     $('#comment-moderate .comments-block').each(function() {
@@ -87,9 +87,14 @@ function toggleCommentStatus() {
             button.show();
         }
     });
+    //detach deleted
+    $('input[value=deleted]:checked', $('#comment-moderate')).each(function() {
+        $(this).closest('fieldset').slideUp(function() {
+            $(this).detach();
+        });
+    });
 }
 function loadComments() {
-	$('#comment-moderate').empty();
     $.ajax({
         type: 'POST',
         url: '../comment/list/format/json',
@@ -98,7 +103,8 @@ function loadComments() {
             "language": "<?php echo $f_language_selected; ?>"
         },
         success: function(data) {
-            hasComents = false;
+            $('#comment-moderate').empty();
+        	hasComents = false;
             for(i in data.result) {
                 hasComment = true;
                 comment = data.result[i];
@@ -107,10 +113,10 @@ function loadComments() {
                 template = $('#comment-prototype').html();
                 for(key in comment) {
                     if(key == 'status') {
-                    	template = template.replace(new RegExp("\\${"+comment[key]+"_checked}","g"),'checked="true"');
+                    	template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
                     	template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
                     }
-                	template = template.replace(new RegExp("\\${"+key+"}","g"),comment[key]);
+                	template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
                 }
             	$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
             }
@@ -127,9 +133,14 @@ $('.action-list a').live('click',function(){
         url: '../comment/set-status/format/json',
         data: {
 		   "comment": el.attr('id').match(/\d+/)[0],
-		   "status": el.val()
+		   "status": el.val(),
+		   "<?php echo SecurityToken::SECURITY_TOKEN; ?>": '<?php echo SecurityToken::GetToken();?>'
 		},
 		success: function(data) {
+		    if(data.status != 200) {
+		    	flashMessage(data.message);
+		    	return;
+		    }
             flashMessage('<?php putGS('Comments updated.'); ?>');
             toggleCommentStatus();
 		},

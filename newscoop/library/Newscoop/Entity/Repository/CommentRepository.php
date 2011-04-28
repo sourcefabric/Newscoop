@@ -45,30 +45,6 @@ class CommentRepository extends DatatableSource
         }
     }
 
-    public function getArticleComments($p_thread, $p_language, $p_params)
-    {
-
-        // get the enitity manager
-        $em = $this->getEntityManager();
-
-        $qb = $this->createQueryBuilder('e');
-        $qb->select();
-
-        $articleRepository = $em->getRepository('Newscoop\Entity\Article');
-        $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-
-        $article = $articleRepository->find($p_thread);
-        $language = $languageRepository->find($p_language);
-        $qb->andWhere('e.thread = :thread')
-            ->andWhere('e.forum = :forum')
-            ->andWhere('e.language = :language')
-            ->setParameter('thread', $article)
-            ->setParameter('forum',$article->getPublication())
-            ->setParameter('language',$language);
-        return $qb->getQuery()->getResult();
-
-    }
-
     /**
      * Method for update a comment
      *
@@ -152,6 +128,16 @@ class CommentRepository extends DatatableSource
         }
         else
         {
+            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
+            $thread = $articleRepository->find($p_values['thread']);
+            if(!isset($p_values['language']))
+                $language = $thread->getLanguage();
+            else
+            {
+                $languageRepository = $em->getRepository('Newscoop\Entity\Language');
+                $language = $languageRepository->find($p_values['language']);
+            }
+
             $qb = $this->createQueryBuilder('c');
             $threadOrder = $qb->select('MAX(c.thread_order)')
                ->andWhere('c.thread = :thread')
@@ -162,11 +148,6 @@ class CommentRepository extends DatatableSource
                ->getSingleScalarResult();
             // increase by one of the current comment
             $threadOrder+= 1;
-            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
-            $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-
-            $thread = $articleRepository->find($p_values['thread_id']);
-            $language = $languageRepository->find($p_values['language_id']);
 
             $p_entity->setLanguage($language)
                      ->setForum( $thread->getPublication() )
@@ -192,6 +173,8 @@ class CommentRepository extends DatatableSource
         if (!empty($p_params['sSearch']))
             $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
 
+        if (!empty($p_params['sFilter']))
+            $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
 
         // sort
         foreach (array_keys($p_cols) as $id => $property) {
@@ -204,36 +187,32 @@ class CommentRepository extends DatatableSource
             }
         }
 
-        if(isset($p_params['sFilter']))
-        {
-            foreach($p_params['sFilter'] as $key => $values)
-            {
-                if(!is_array($values))
-                    $values = array($values);
-                $or = $qb->expr()->orx();
-                switch($key)
-                {
-                    case 'status':
-                        $mapper = array_flip(Comment::$status_enum);
-                        foreach($values as $value)
-                            $or->add($qb->expr()->eq('e.status', $mapper[$value]));
-                        break;
-                    case 'forum':
-                    case 'thread':
-                    case 'language':
-                        foreach($values as $value)
-                            $or->add($qb->expr()->eq("e.$key", $value));
-                        break;
-                }
-                $qb->andWhere($or);
-            }
-        }
-
         // limit
         if(isset($p_params['iDisplayLength']))
             $qb->setFirstResult((int) $p_params['iDisplayStart'])
                ->setMaxResults((int) $p_params['iDisplayLength']);
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Get entity count
+     *
+     * @param array $p_params|null
+     * @param array $p_cols|null
+     *
+     * @return int
+     */
+    public function getCount(array $p_params = null, array $p_cols = null)
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('COUNT(e)');
+        if(is_array($p_params) && !empty($p_params['sSearch']))
+            $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
+
+        if (is_array($p_params) && !empty($p_params['sFilter']))
+            $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
+
+        return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -262,6 +241,42 @@ class CommentRepository extends DatatableSource
                 $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
         }
         return $or;
+    }
+
+    /**
+     * Build filter condition
+     *
+     * @param array $p_
+     * @param string $p_cols
+     * @return Doctrine\ORM\Query\Expr
+     */
+    protected function buildFilter(array $p_cols, array $p_filter)
+    {
+        $qb = $this->createQueryBuilder('e');
+        $and = $qb->expr()->andx();
+        foreach($p_filter as $key => $values)
+        {
+            if(!is_array($values))
+                $values = array($values);
+            $or = $qb->expr()->orx();
+            switch($key)
+            {
+                case 'status':
+                    $mapper = array_flip(Comment::$status_enum);
+                    foreach($values as $value)
+                        $or->add($qb->expr()->eq('e.status', $mapper[$value]));
+                    break;
+                case 'id':
+                case 'forum':
+                case 'thread':
+                case 'language':
+                    foreach($values as $value)
+                        $or->add($qb->expr()->eq("e.$key", $value));
+                    break;
+            }
+            $and->add($or);
+        }
+        return $and;
     }
 
     public function flush()

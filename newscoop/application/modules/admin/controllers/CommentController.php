@@ -71,10 +71,10 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setCols(array(
             'id' => $view->toggleCheckbox(),
             'user' => getGS('Author'),
-            'thread_order' => getGS('Thread Order'),
+            'action' => '',
             'time_created' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
-        ),array('id' => false));
+        ),array('id' => false, 'action' => false));
 
 
         $table->setHandle(function($comment) use ($view) {
@@ -94,7 +94,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setClasses(array(
             'id'   => 'commentId',
             'user' => 'commentUser',
-            'thread_order' => 'commentThreadOrder',
+            'action' => 'commentAction',
             'time_created' => 'commentTimeCreated',
             'thread' => 'commentThread'));
         $table->dispatch();
@@ -109,6 +109,11 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')
             ->addActionContext('set-status', 'json')
             ->initContext();
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
         try
         {
             $comment = $this->getRequest()->getParam('comment');
@@ -138,17 +143,21 @@ class Admin_CommentController extends Zend_Controller_Action
             ->initContext();
         $comment = new Comment;
         $request = $this->getRequest();
-        $user = Zend_Registry::get('user');
-        //$values['user'] = $user;
+        $values['user'] = Zend_Registry::get('user');
         $values['name'] = $request->getParam('name');
         $values['subject'] = $request->getParam('subject');
         $values['message'] = $request->getParam('message');
-        $values['language_id'] = $request->getParam('language');
-        $values['thread_id'] =  $request->getParam('article');
-        $values['thread_id'] = 64;
+        $values['language'] = $request->getParam('language');
+        $values['thread'] =  $request->getParam('article');
         $values['ip'] = getIp();
-        $values['status'] = 'pending';
+        $values['status'] = 'approved';
         $values['time_created'] = new DateTime;
+
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
         try
         {
             $this->repository->save($comment, $values);
@@ -175,10 +184,18 @@ class Admin_CommentController extends Zend_Controller_Action
             ->initContext();
 
         $cols = array('thread_order' => 'default');
-        $filter = array(
-            'thread'   => $this->getRequest()->getParam('article'),
-            'language' => $this->getRequest()->getParam('language'),
-        );
+        $article = $this->getRequest()->getParam('article');
+        $language = $this->getRequest()->getParam('language');
+        $comment = $this->getRequest()->getParam('comment');
+        if($article)
+            $filter = array(
+                'thread'   => $article,
+                'language' => $language,
+            );
+        elseif($comment)
+            $filter = array(
+                'id' => $comment,
+            );
         $params = array(
             'sFilter'        => $filter
         );
@@ -238,6 +255,12 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')
             ->addActionContext('reply', 'json')
             ->initContext();
+
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
         $values = $this->getRequest()->getParams();
         $comment = new Comment;
         if ($this->getRequest()->isPost()) {
