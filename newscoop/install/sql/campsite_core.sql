@@ -3511,6 +3511,12 @@ CREATE TABLE IF NOT EXISTS `acl_rule` (
 INSERT INTO `acl_rule` (`id`, `type`, `role_id`, `resource`, `action`) VALUES
 (1, 'allow', 1, '', '');
 
+-- Themes
+CREATE TABLE IF NOT EXISTS `theme` (
+  `id` varchar(80) NOT NULL DEFAULT '',
+  `version` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

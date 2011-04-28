@@ -275,6 +275,12 @@ if ($showConfigureMenu) {
             'controller' => 'templates',
             'action' => 'index.php',
         );
+
+        $pages[3]['pages'][] = array(
+            'label' => getGS('Themes'),
+            'module' => 'admin',
+            'controller' => 'themes',
+        );
     }
 
     $pages[3]['pages'][] = array(
