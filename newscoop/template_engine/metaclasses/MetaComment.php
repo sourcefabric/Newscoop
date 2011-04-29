@@ -24,7 +24,7 @@ final class MetaComment extends MetaDbObject {
         else
             $this->m_dbObject = $repository->find($p_messageId);
 
-        $this->m_properties['level'] = 'thread_depth';
+        $this->m_customProperties['level'] = 'getThreadDepth';
 
         $this->m_customProperties['identifier'] = 'getId';
         $this->m_customProperties['subject'] = 'getSubject';
@@ -41,6 +41,11 @@ final class MetaComment extends MetaDbObject {
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
+
+    protected function getThreadDepth()
+    {
+        return $this->m_dbObject->getThreadLevel();
+    }
 
     protected function getId()
     {

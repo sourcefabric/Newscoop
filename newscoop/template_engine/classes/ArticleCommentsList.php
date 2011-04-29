@@ -160,7 +160,7 @@ class ArticleCommentsList extends ListObject
                 CampTemplate::singleton()->trigger_error("undefined environment attribute 'Article' in statement list_article_comments");
                 return false;
             }
-            $this->m_constraints['thread'] = 64;//$context->article->number;
+            $this->m_constraints['thread'] = $context->article->number;
         } else {
             $order = array();
             foreach ($this->m_order as $orderCond) {

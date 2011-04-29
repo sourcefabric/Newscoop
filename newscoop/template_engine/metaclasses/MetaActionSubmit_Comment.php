@@ -64,7 +64,7 @@ class MetaActionSubmit_Comment extends MetaAction
      */
     private function _processCaptcha()
     {
-        @session_start();
+        //@session_start();
         $captchaHandler = CampRequest::GetVar('f_captcha_handler', '', 'POST');
         if (!empty($captchaHandler)) {
             $captcha = Captcha::factory($captchaHandler);
@@ -132,20 +132,31 @@ class MetaActionSubmit_Comment extends MetaAction
         }
         else
         {
+            if (!isset($this->m_properties['reader_email']))
+            {
+                $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
+                return false;
+            }
+            if(!$publicationObj->getPublicComments())
+            {
+                $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_EMAIL);
+                return false;
+            }
             $userId = null;
             $userEmail = $this->m_properties['reader_email'];
             $userRealName = $this->m_properties['nickname'];
         }
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
-        /*if ($publicationObj->isCaptchaEnabled()) {
+        if ($publicationObj->isCaptchaEnabled()) {
             if ($this->_processCaptcha() === FALSE) {
                 return FALSE;
             }
         }
-        */
+
         // Check if the reader was banned from posting comments.
-        // $userRealName, $userEmail, $userIp
         global $controller;
         $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
@@ -155,7 +166,7 @@ class MetaActionSubmit_Comment extends MetaAction
             ACTION_SUBMIT_COMMENT_ERR_BANNED);
             return false;
         }
-        // Create the first post message (if needed)
+        // get the article object
         $articleObj = new Article($articleMetaObj->language->number, $articleMetaObj->number);
 
         // Set the parent to the currently viewed comment if a certain existing

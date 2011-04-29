@@ -34,7 +34,7 @@ function addComment() {
                 "name": $('#commenter_name').val(),
                 "subject": $('#comment_subject').val(),
                 "message" :$('#comment_message').val(),
-                "security_token": '<?php echo SecurityToken::GetToken();?>'
+                <?php echo SecurityToken::JsParameter();?>,
             },
             success: function(data) {
                 $('#comment-add').each(function(){

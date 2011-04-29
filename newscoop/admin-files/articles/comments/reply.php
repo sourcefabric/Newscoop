@@ -121,7 +121,7 @@ function replyComment() {
                 "parent": "<?php echo $f_comment_id; ?>",
                 "subject": $('#comment_subject').val(),
                 "message": $('#comment_message').val(),
-                "security_token": '<?php echo SecurityToken::GetToken();?>'
+                <?php echo SecurityToken::JsParameter();?>,
             },
             success: function(data) {
                 if(data.status != 200) {

@@ -134,7 +134,7 @@ $('.action-list a').live('click',function(){
         data: {
 		   "comment": el.attr('id').match(/\d+/)[0],
 		   "status": el.val(),
-		   "<?php echo SecurityToken::SECURITY_TOKEN; ?>": '<?php echo SecurityToken::GetToken();?>'
+		   <?php echo SecurityToken::JsParameter();?>,
 		},
 		success: function(data) {
 		    if(data.status != 200) {

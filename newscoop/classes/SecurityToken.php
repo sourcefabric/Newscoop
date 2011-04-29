@@ -23,6 +23,10 @@ class SecurityToken
 		return urlencode(self::SECURITY_TOKEN) . '=' . urlencode(CampSession::singleton()->getToken());
 	}
 
+	public static function JsParameter()
+	{
+        return '"'.self::SECURITY_TOKEN . '": "'. CampSession::singleton()->getToken() . '"';
+	}
 
 	public static function FormParameter()
 	{

@@ -8,8 +8,6 @@ define('ACTION_PREVIEW_COMMENT_ERR_NO_EMAIL', 'action_comment_preview_err_no_ema
 define('ACTION_PREVIEW_COMMENT_ERR_NO_PUBLIC', 'action_comment_preview_err_no_public');
 define('ACTION_PREVIEW_COMMENT_ERR_BANNED', 'action_comment_preview_err_banned');
 
-require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
-
 
 class MetaActionPreview_Comment extends MetaAction
 {
@@ -77,35 +75,33 @@ class MetaActionPreview_Comment extends MetaAction
 
         // Get the publication.
         $publicationObj = new Publication($articleMetaObj->publication->identifier);
-        $forum = new Phorum_forum($publicationObj->getForumId());
-        if (!$forum->exists()) {
-            $forum->create();
-            $forum->setName($publicationObj->getName());
-            $publicationObj->setForumId($forum->getForumId());
-        }
-        $forumId = $forum->getForumId();
 
         $user = $p_context->user;
         if ($user->defined) {
             $this->m_properties['reader_email'] = $user->email;
         } else {
-            if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) {
-                if (!isset($this->m_properties['reader_email'])) {
-                    $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
-                    ACTION_PREVIEW_COMMENT_ERR_NO_EMAIL);
-                    return false;
-                }
-            } else {
+            if (!isset($this->m_properties['reader_email']))
+            {
                 $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
-                ACTION_PREVIEW_COMMENT_ERR_NO_PUBLIC);
+                ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
+                return false;
+            }
+            if(!$publicationObj->getPublicComments())
+            {
+                $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_EMAIL);
                 return false;
             }
         }
 
         // Check if the reader was banned from posting comments.
-        if (Phorum_user::IsBanned($userRealName, $userEmail)) {
+        global $controller;
+        $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        if ($repositoryAcceptance->checkParamsBanned($userRealName, $userEmail, $userIp, $publication_id))
+        {
             $this->m_error = new PEAR_Error('You are banned from submitting comments.',
-            ACTION_PREVIEW_COMMENT_ERR_BANNED);
+            ACTION_SUBMIT_COMMENT_ERR_BANNED);
             return false;
         }
 

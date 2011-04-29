@@ -92,7 +92,8 @@ $().ready(function(){
                 url: 'comment/set-status/format/json',
                 data: {
                    "comment": ids,
-                   "status": status
+                   "status": status,
+                   <?php echo SecurityToken::JsParameter();?>,
                 },
                 success: function(data) {
                     flashMessage("<?php putGS('Comments updated.')?>");
@@ -126,7 +127,8 @@ $().ready(function(){
             url: 'comment/set-status/format/json',
             data: {
                "comment": ids,
-               "status": status
+               "status": status,
+               <?php echo SecurityToken::JsParameter();?>,
             },
             success: function(data) {
                 datatable.fnDraw();
