@@ -1,22 +1,36 @@
-<ul>
+<ul style="font-size: 1.2em">
     <?php foreach ($this->themes as $theme) { ?>
     <li>
-        <?php echo $theme->getId(); ?>:<?php echo $theme->getName(); ?>:<?php echo $theme->getVersion(); ?><br />
+        <h2><?php echo $theme->getName(); ?> <em>by <?php echo $theme->getPublisher(); ?></em></h2>
+        <p><?php echo $this->escape($theme->getDescription()); ?></p>
+
+        <dl>
+            <dt>version:</dt>
+            <dd><?php echo $theme->getVersion(); ?></dd>
+        </dl>
 
         <?php if ($theme->isInstalled()) { ?>
         installed version: <?php echo $theme->getInstalledVersion(); ?>
         <a href="<?php echo $this->url(array(
-            'action' => 'delete',
-            'theme' => $theme->getId(),
-        )); ?>">Delete</a>
+            'action' => 'uninstall',
+            'id' => $theme->getId(),
+        )); ?>">Uninstall</a>
 
-        <?php } else { ?>
+        <?php } elseif ($theme->isCompatible()) { ?>
         <a href="<?php echo $this->url(array(
             'action' => 'install',
-            'theme' => $theme->getId(),
+            'offset' => $theme->getOffset(),
         )); ?>">Install</a>
+
+        <?php } else { ?>
+        <p>This theme requires <strong>Newscoop <?php echo $theme->getNewscoopVersion(); ?></strong>. Please upgrade.</p>
         <?php } ?>
+
+        <ul>
+            <?php foreach ($theme->getImages() as $image) { ?>
+            <li><img src="<?php echo $this->baseUrl('templates/' . $image['src']); ?>" alt="<?php $image['alt']; ?>" width="100" /></li>
+            <?php } ?>
+        </ul>
     </li>
     <?php } ?>
 </ul>
-
