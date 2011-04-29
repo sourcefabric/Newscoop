@@ -25,7 +25,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $this->form->setAction('')->setMethod('post');
 
         // set form countries
-        $countries = array();
+        $countries = array('' => getGS('Select country'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }

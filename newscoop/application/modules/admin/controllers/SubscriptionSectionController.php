@@ -39,7 +39,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'action' => 'add',
                 'resource' => 'subscription',
                 'privilege' => 'manage',
-                'reset_params' => false,
+                'reset_params' => FALSE,
             ),
             array(
                 'label' => getGS('Edit all sections'),
@@ -48,7 +48,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'action' => 'edit-all',
                 'resource' => 'subscription',
                 'privilege' => 'manage',
-                'reset_params' => false,
+                'reset_params' => FALSE,
             ),
         );
     }
@@ -164,7 +164,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
         ));
     }
 
-    private function getOptions(array $sections, $language = false)
+    private function getOptions(array $sections, $language = FALSE)
     {
         $options = array();
         foreach ($sections as $section) {

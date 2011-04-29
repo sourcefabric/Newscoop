@@ -1,9 +1,9 @@
 -- Alter log table
-ALTER TABLE `Log` ADD `id` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `Log` ADD `id` int(10) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY(`id`);
 ALTER TABLE `Log` ADD `priority` SMALLINT(1) NOT NULL DEFAULT '6';
 ALTER TABLE `Log` CHANGE `user_ip` `user_ip` VARCHAR(39) NOT NULL DEFAULT '';
 ALTER TABLE `Log` DROP KEY `IdEvent`;
-ALTER TABLE `Log` ADD KEY `priority`;
+ALTER TABLE `Log` ADD KEY `priority` (`priority`);
 
 -- Add Acl Role table
 CREATE TABLE IF NOT EXISTS `acl_role` (

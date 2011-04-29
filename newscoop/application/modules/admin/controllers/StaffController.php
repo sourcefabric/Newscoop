@@ -16,6 +16,11 @@ class Admin_StaffController extends Zend_Controller_Action
 
     private $form;
 
+    /**
+     * Init
+     *
+     * @return void
+     */
     public function init()
     {
         camp_load_translation_strings('api');
@@ -36,7 +41,7 @@ class Admin_StaffController extends Zend_Controller_Action
         }
 
         // set form countries
-        $countries = array();
+        $countries = array('' => getGS('Select country'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
