@@ -275,7 +275,7 @@ function init_smarty()
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
     $tpl->template_dir = $CAMPSITE_DIR.'/templates/system_templates';
-    $tpl->compile_dir = $CAMPSITE_DIR.'/templates_cache';
+    $tpl->compile_dir = $CAMPSITE_DIR.'/cache';
 
     return $tpl;
 } // fn init_smarty

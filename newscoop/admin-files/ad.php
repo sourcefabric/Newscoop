@@ -4,6 +4,7 @@ camp_load_translation_strings("home");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
+
 ?>
 <p>
 <FORM>
@@ -27,7 +28,16 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <TR>
 	<TD COLSPAN="2" align="center">
 		<DIV ALIGN="CENTER">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'">
+		<!--
+
+ 		-->
+		<?php
+			if($BackLink != "/$ADMIN/home.php") {
+				?>
+					<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'">
+			<?php } else { ?>
+					<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="window.history.back()">
+		<?php } ?>
 		</DIV>
 	</TD>
 </TR>

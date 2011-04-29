@@ -9,13 +9,13 @@
  * @link http://www.sourcefabric.org
  */
 
+$local_path = realpath(dirname(__FILE__) . '/../include');
+set_include_path($local_path . PATH_SEPARATOR . get_include_path());
+
 $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
-
-$local_path = realpath(dirname(__FILE__) . '/../include');
-set_include_path($local_path . PATH_SEPARATOR . get_include_path());
 
 if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
         && file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
@@ -23,7 +23,7 @@ if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
 }
 
 // check if template cache dir is writable
-$templates_cache = dirname(dirname(__FILE__)) . DIR_SEP . 'templates_cache';
+$templates_cache = dirname(dirname(__FILE__)) . DIR_SEP . 'cache';
 if (!is_writable($templates_cache)) {
     echo '<!DOCTYPE html>';
     echo '<html><head><meta charset="utf-8" />';
