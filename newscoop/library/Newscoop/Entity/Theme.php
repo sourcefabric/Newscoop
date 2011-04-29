@@ -7,46 +7,65 @@
 
 namespace Newscoop\Entity;
 
+use Newscoop\Version;
+
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
- * @Table(name="theme")
  */
 class Theme
 {
     /**
-     * @Id
-     * @Column(length="80")
-     * @var string
+     * @Id @GeneratedValue
+     * @Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
-     * @Column(length="20", name="version")
+     * @Column(length="80")
      * @var string
      */
-    private $installedVersion;
+    private $offset;
+
+    /**
+     * @Column(length="20")
+     * @var string
+     */
+    private $version;
 
     /** @var SimpleXmlElement */
     private $config;
 
     /**
-     * @param string $id
+     * @param string $offset
      * @param SimpleXmlElement $config
      */
-    public function __construct($id, \SimpleXmlElement $config)
+    public function __construct($offset, \SimpleXmlElement $config)
     {
-        $this->id = (string) $id;
+        $this->offset = (string) $offset;
         $this->config = $config;
+    }
+
+    /**
+     * Set id
+     *
+     * @param int $id
+     * @return Newscoop\Entity\Theme
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+        return $this;
     }
 
     /**
      * Get id
      *
-     * @return string
+     * @return int
      */
     public function getId()
     {
-        return (string) $this->id;
+        return (int) $this->id;
     }
 
     /**
@@ -60,6 +79,16 @@ class Theme
     }
 
     /**
+     * Get offset
+     *
+     * @return string
+     */
+    public function getOffset()
+    {
+        return (string) $this->offset;
+    }
+
+    /**
      * Get version
      *
      * @return string
@@ -67,6 +96,16 @@ class Theme
     public function getVersion()
     {
         return (string) $this->config['version'];
+    }
+
+    /**
+     * Get publisher
+     *
+     * @return string
+     */
+    public function getPublisher()
+    {
+        return (string) $this->config['publisher'];
     }
 
     /**
@@ -81,7 +120,7 @@ class Theme
             $version = $this->getVersion();
         }
 
-        $this->installedVersion = (string) $version;
+        $this->version = (string) $version;
         return $this;
     }
 
@@ -92,7 +131,7 @@ class Theme
      */
     public function getInstalledVersion()
     {
-        return (string) $this->installedVersion;
+        return (string) $this->version;
     }
 
     /**
@@ -102,6 +141,52 @@ class Theme
      */
     public function isInstalled()
     {
-        return !empty($this->installedVersion);
+        return !empty($this->version);
+    }
+
+    /**
+     * Get newscoop required version
+     *
+     * @return string
+     */
+    public function getNewscoopVersion()
+    {
+        return (string) $this->config['newscoop'];
+    }
+
+    /**
+     * Get is compatible
+     *
+     * @return string
+     */
+    public function isCompatible()
+    {
+        return Version::compare($this->getVersion()) <= 0;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return (string) $this->config->description;
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        $images = array();
+        foreach ($this->config->img as $image) {
+            $image['src'] = $this->offset . '/' . $image['src'];
+            $images[] = $image;
+        }
+
+        return $images;
     }
 }

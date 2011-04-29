@@ -8,29 +8,25 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Theme;
+    Newscoop\Entity\Theme,
+    Newscoop\Entity\Theme\Loader;
 
 /**
  */
 class ThemeRepository extends EntityRepository
 {
-    /**
-     * Get theme by id
-     *
-     * @param string $id
-     * @param string $from
-     * @return Newscoop\Entity\Theme
-     */
-    public function get($id, $from)
-    {
-        $configFile = "$from/$id/theme.xml";
-        if (!file_exists($configFile)) {
-            throw new \InvalidArgumentException("'$id' not found in '$from'");
-        }
+    /** @var Newscoop\Theme\Loader\Loader */
+    private $loader;
 
-        $config = simplexml_load_file($configFile);
-        $theme = new Theme($id, $config);
-        return $theme;
+    /**
+     * Set theme loader
+     *
+     * @param Newscoop\Theme\Loader\Loader
+     * @return void
+     */
+    public function setLoader(Loader\Loader $loader)
+    {
+        $this->loader = $loader;
     }
 
     /**
@@ -39,30 +35,23 @@ class ThemeRepository extends EntityRepository
      * @param string $from
      * @return array
      */
-    public function findAll($from = null)
+    public function findAll()
     {
-        $path = realpath($from);
-        if (!$path) {
-            throw new \InvalidArgumentException("'$from' not found");
-        }
-
-        // get stored info per theme
+        // get installed versions
         $installed = array();
         foreach (parent::findAll() as $theme) {
-            $installed[$theme->getId()] = $theme->getInstalledVersion();
+            $installed[$theme->getOffset()] = $theme;
         }
 
-        $themes = array();
-        foreach (glob("$path/*/theme.xml") as $configFile) {
-            $id = basename(dirname($configFile));
-            $config = simplexml_load_file($configFile);
-            $theme = new Theme($id, $config);
-
-            if (isset($installed[$id])) {
-                $theme->setInstalledVersion($installed[$id]);
+        $themes = $this->loader->findAll();
+        foreach ($themes as $theme) {
+            $offset = $theme->getOffset();
+            if (isset($installed[$offset])) {
+                $installedTheme = $installed[$offset];
+                $theme
+                    ->setId($installedTheme->getId())
+                    ->setInstalledVersion($installedTheme->getInstalledVersion());
             }
-
-            $themes[] = $theme;
         }
 
         return $themes;
@@ -72,28 +61,26 @@ class ThemeRepository extends EntityRepository
      * Install theme
      *
      * @param string $id
-     * @param string $from
      * @return void
      */
-    public function install($id, $from)
+    public function install($offset)
     {
-        $em = $this->getEntityManager();
-        $theme = $this->get($id, $from);
+        $theme = $this->loader->find($offset);
         $theme->setInstalledVersion();
+        $em = $this->getEntityManager();
         $em->persist($theme);
     }
 
     /**
-     * Delete theme
+     * Uninstall theme
      *
-     * @param string $id
-     * @param string $from
+     * @param int $id
      * @return void
      */
-    public function delete($id, $from)
+    public function uninstall($id)
     {
         $em = $this->getEntityManager();
-        $theme = $this->find($id);
+        $theme = $em->getReference($this->getEntityName(), (int) $id);
         $em->remove($theme);
     }
 }

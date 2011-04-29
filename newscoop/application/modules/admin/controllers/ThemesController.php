@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Entity\Theme\Loader\LocalLoader;
+
 /**
  */
 class Admin_ThemesController extends Zend_Controller_Action
@@ -13,29 +15,28 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->path = APPLICATION_PATH . '/../templates';
+        $loader = new LocalLoader(APPLICATION_PATH . '/../templates');
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Theme');
+        $this->repository->setLoader($loader);
     }
 
     public function indexAction()
     {
-        $this->view->themes = $this->repository->findAll($this->path);
+        $this->view->themes = $this->repository->findAll();
     }
 
     public function installAction()
     {
-        $id = $this->_getParam('theme');
-        $this->repository->install($id, $this->path);
+        $this->repository->install($this->_getParam('offset'));
         $this->_helper->entity->flushManager();
 
         $this->_helper->flashMessenger(getGS('Theme $1', getGS('installed')));
         $this->_helper->redirector('index');
     }
 
-    public function deleteAction()
+    public function uninstallAction()
     {
-        $id = $this->_getParam('theme');
-        $this->repository->delete($id, $this->path);
+        $this->repository->uninstall($this->_getParam('id'));
         $this->_helper->entity->flushManager();
 
         $this->_helper->flashMessenger(getGS('Theme $1', getGS('deleted')));
