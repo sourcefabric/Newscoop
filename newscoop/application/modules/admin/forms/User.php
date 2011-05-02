@@ -25,7 +25,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(3, 32)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '3-32')),
             'order' => 10,
         ));
 
@@ -38,12 +37,12 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(5, 32)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '5-32')),
             'order' => 20,
         ));
 
         $this->addElement('password', 'password_confirm', array( // checked with isValid
             'label' => getGS('Confirm password'),
+            'required' => true,
             'filters' => array(
                 'stringTrim',
             ),
@@ -65,7 +64,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(1, 128)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '1-128')),
             'order' => 40,
         ));
 
@@ -119,7 +117,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(0, 255)),
             ),
-            'errorMessages' => array(getGS("Value is more than '$1' characters long", 255)),
         ));
 
         $this->addElement('text', 'postal_code', array(

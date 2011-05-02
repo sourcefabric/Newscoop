@@ -39,9 +39,12 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $subscriber = new Subscriber;
-
-        $this->handleForm($this->form, $subscriber);
+        try {
+            $subscriber = new Subscriber;
+            $this->handleForm($this->form, $subscriber);
+        } catch (Exception $e) {
+            $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+        }
 
         $this->view->form = $this->form;
     }

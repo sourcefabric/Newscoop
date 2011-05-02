@@ -174,4 +174,22 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $storage = new Newscoop\Acl\Storage($doctrine);
         $acl->setStorage($storage);
     }
+
+    /**
+     * Init forms translator
+     */
+    protected function _initForm()
+    {
+        $translate = new Zend_Translate(array(
+            'adapter' => 'array',
+            'disableNotices' => TRUE,
+            'content' => array(
+                "Value is required and can't be empty" => getGS("Value is required and can't be empty"),
+                "'%value%' is less than %min% characters long" => getGS("'%value%' is less than %min% characters long"),
+                "'%value%' is more than %max% characters long" => getGS("'%value%' is more than %max% characters long"),
+            ),
+        ));
+
+        Zend_Form::setDefaultTranslator($translate);
+    }
 }

@@ -52,7 +52,6 @@ class Admin_Form_Subscription extends Zend_Form
                         return $context['language_set'] == 'all' || !empty($value);
                     }), true),
                 ),
-                'errorMessages' => array(getGS('Please select a language')),
             ));
 
             $this->getElement('languages')->setAutoInsertNotEmptyValidator(false);
