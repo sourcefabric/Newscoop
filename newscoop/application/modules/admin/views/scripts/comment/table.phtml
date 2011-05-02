@@ -57,7 +57,7 @@ $().ready(function(){
 <fieldset>
   <select class="input_select actions">
     <option value=""><?php putGS('Actions');?></option>
-    <option value="pendding"><?php putGS('New');?></option>
+    <option value="pending"><?php putGS('New');?></option>
     <option value="approved"><?php putGS('Approved');?></option>
     <option value="hidden"><?php putGS('Hidden');?></option>
     <option value="deleted"><?php putGS('Deleted');?></option>
@@ -160,20 +160,38 @@ $().ready(function(){
         });
         return false;
 	});
+	$('.dateCommentHolderEdit .edit-cancel').live('click', function(){
+	    var el = $(this);
+	    var td = el.parents('td');
+	    var form = td.find('form');
+	    $(form).each(function(){
+            this.reset();
+        });
+	    td.find('.content-edit').hide("slow");
+	});
+    $('.dateCommentHolderEdit .edit-reply').live('click', function(){
+        var el = $(this);
+        var td = el.parents('td');
+        var form = td.find('form');
+        $(form).each(function(){
+            this.reset();
+        });
+        td.find('.content-edit').hide("slow");
+    });
+
 	$('.datatable .action-edit').live('click', function(){
 		 var el = $(this);
-		 //console.log('here');
 		 el.parents('td').find('.content-edit').toggle("slow");
 	});
 });
 </script>
 <script type="text/javascript">
+var statusMap ={ 'pending': 'status_new', 'hidden': 'status_hidden', 'deleted': 'status_deleted', 'approved': 'status_approved' };
 var datatableCallback = {
 	serverData: {},
 	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 	    that = datatableCallback;
         var tr = $('<tr></tr>');
-        tr.addClass('status_deleted');
         tr.hover(function() {
         	   $(this).find(".commentBtns").css("visibility","visible");
             },function() {
@@ -188,6 +206,7 @@ var datatableCallback = {
         var td = $('<td></td>');
         td.attr('colspan',5);
         nRow = $(nRow);
+        tr.addClass(statusMap[nRow.find('.status-code').val()]);
         actions = nRow.find('.commentAction').first();
         nRow.find('.commentTimeCreated').removeClass('commentTimeCreated').addClass('commentMessage');
         nActions = actions.clone();

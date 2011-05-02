@@ -135,6 +135,19 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     }
 
     /**
+     * Set strip classes to use when rendering the table
+     * Usefull for odd and even class
+     *
+     * @param array $p_value
+     * @return Action_Helper_Datatable
+     */
+    public function setStripClasses(array $p_value = array())
+    {
+       $this->iOptions['asStripClasses'] = $p_value;
+        // return this for chaining mechanism
+        return $this;
+    }
+    /**
      * Toggle automatic width
      *
      * @param bool $p_state null

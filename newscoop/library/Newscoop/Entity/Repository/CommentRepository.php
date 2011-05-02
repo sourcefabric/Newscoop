@@ -170,20 +170,30 @@ class CommentRepository extends DatatableSource
     public function getData(array $p_params, array $p_cols)
     {
         $qb = $this->createQueryBuilder('e');
+        $qb->leftJoin('e.commenter','c');
+        $qb->leftJoin('e.thread','a');
         if (!empty($p_params['sSearch']))
-            $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
+            $qb->where($this->buildWhere($p_cols, $p_params['sSearch'], $qb));
 
         if (!empty($p_params['sFilter']))
             $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
 
         // sort
-        foreach (array_keys($p_cols) as $id => $property) {
-            if (!is_string($property)) { // not sortable
-                continue;
-            }
-            if (isset($p_params["iSortCol_$id"])) {
-                $dir = $p_params["sSortDir_$id"] ?: 'asc';
-                $qb->orderBy("e.$property", $dir);
+        if (isset($p_params["iSortCol_0"])) {
+            $cols = array_keys($p_cols);
+            $sortId = $p_params["iSortCol_0"];
+            $sortBy = $cols[$sortId];
+            $dir = $p_params["sSortDir_0"] ?: 'asc';
+            switch($sortBy)
+            {
+                case 'user':
+                    $qb->orderBy("c.name", $dir);
+                    break;
+                case 'thread':
+                    $qb->orderBy("a.name", $dir);
+                    break;
+                default:
+                    $qb->orderBy("e.".$sortBy, $dir);
             }
         }
 
@@ -205,9 +215,11 @@ class CommentRepository extends DatatableSource
     public function getCount(array $p_params = null, array $p_cols = null)
     {
         $qb = $this->createQueryBuilder('e')
-            ->select('COUNT(e)');
+              ->leftJoin('e.commenter','c')
+              ->leftJoin('e.thread','a')
+              ->select('COUNT(e)');
         if(is_array($p_params) && !empty($p_params['sSearch']))
-            $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
+            $qb->where($this->buildWhere($p_cols, $p_params['sSearch'], $qb));
 
         if (is_array($p_params) && !empty($p_params['sFilter']))
             $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
@@ -222,24 +234,13 @@ class CommentRepository extends DatatableSource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $p_cols, $p_search)
+    protected function buildWhere(array $p_cols, $p_search, $qb)
     {
-        $qb = $this->createQueryBuilder('e');
         $or = $qb->expr()->orx();
-        foreach (array_keys($p_cols) as $i => $property) {
-            if (!is_string($property)) { // not searchable
-                continue;
-            }
-            if("user" == $property)
-            {
-                //$or->add($qb->expr()->like("u.$property", $qb->expr()->literal("%{$search}%")));
-            }
-            elseif("thread" == $property)
-            {
-            }
-            else
-                $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
-        }
+        $or->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));
+        $or->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
+        $or->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
+        $or->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
         return $or;
     }
 

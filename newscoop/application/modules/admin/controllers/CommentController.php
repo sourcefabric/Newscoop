@@ -87,16 +87,16 @@ class Admin_CommentController extends Zend_Controller_Action
             );
         });
 
-        $table->setOption('fnRowCallback','datatableCallback.row');
-        $table->setOption('fnServerData', 'datatableCallback.addServerData');
-
-        $table->toggleAutomaticWidth(false);
-        $table->setClasses(array(
-            'id'   => 'commentId',
-            'user' => 'commentUser',
-            'action' => 'commentAction',
-            'time_created' => 'commentTimeCreated',
-            'thread' => 'commentThread'));
+        $table->setOption('fnRowCallback','datatableCallback.row')
+              ->setOption('fnServerData', 'datatableCallback.addServerData')
+              ->setStripClasses()
+              ->toggleAutomaticWidth(false)
+              ->setClasses(array(
+                'id'   => 'commentId',
+                'user' => 'commentUser',
+                'action' => 'commentAction',
+                'time_created' => 'commentTimeCreated',
+                'thread' => 'commentThread'));
         $table->dispatch();
     }
 
