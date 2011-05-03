@@ -45,7 +45,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
                 $this->_helper->flashMessenger->addMessage(getGS('User type added.'));
                 $this->_helper->redirector('index');
             } catch (Exception $e) {
-                $form->getElement('name')->addError(getGS('Name taken.'));
+                $form->getElement('name')->addError(getGS('That type name already exists, please choose a different name.'));
             }
         }
 

@@ -225,7 +225,7 @@ abstract class Admin_Form_User extends Zend_Form
 
         // make password change optional
         $this->getElement('password')->setRequired(false);
-        $this->getElement('password_confirm')->setRequired(false);
+        $this->getElement('password_confirm')->setRequired(!empty($_POST['password']));
         $this->addDisplayGroup(array(
             'password',
             'password_confirm',
