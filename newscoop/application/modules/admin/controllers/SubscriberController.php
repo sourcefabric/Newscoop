@@ -42,7 +42,10 @@ class Admin_SubscriberController extends Zend_Controller_Action
         try {
             $subscriber = new Subscriber;
             $this->handleForm($this->form, $subscriber);
-        } catch (Exception $e) {
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        } catch (PDOException $e) {
             $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
         }
 
@@ -54,7 +57,12 @@ class Admin_SubscriberController extends Zend_Controller_Action
         $subscriber = $this->_helper->entity->get(new Subscriber, 'user');
         $this->form->setDefaultsFromEntity($subscriber);
 
-        $this->handleForm($this->form, $subscriber);
+        try {
+            $this->handleForm($this->form, $subscriber);
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->_helper->sidebar(array(
             'label' => getGS('Subscriptions'),

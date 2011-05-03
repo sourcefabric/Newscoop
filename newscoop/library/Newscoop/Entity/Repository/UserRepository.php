@@ -26,6 +26,16 @@ abstract class UserRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
+        // check for unique email
+        $query = $em->createQuery('SELECT u.id FROM Newscoop\Entity\User u WHERE u.email = ?1')
+            ->setParameter(1, $values['email']);
+        $conflicts = $query->getResult();
+        foreach ($conflicts as $conflict) {
+            if ($conflict != $user->getId()) {
+                throw new \InvalidArgumentException('email');
+            }
+        }
+
         $user->setName($values['name'])
             ->setEmail($values['email'])
             ->setPhone($values['phone'])

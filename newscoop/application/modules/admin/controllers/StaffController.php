@@ -58,8 +58,11 @@ class Admin_StaffController extends Zend_Controller_Action
         try {
             $staff = new Staff();
             $this->handleForm($this->form, $staff);
-        } catch (Exception $e) {
+        } catch (PDOException $e) {
             $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
         }
 
         $this->view->form = $this->form;
@@ -78,8 +81,13 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->_helper->acl->check('user', 'manage');
         }
 
-        $this->form->setDefaultsFromEntity($staff);
-        $this->handleForm($this->form, $staff);
+        try {
+            $this->form->setDefaultsFromEntity($staff);
+            $this->handleForm($this->form, $staff);
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->view->form = $this->form;
 
