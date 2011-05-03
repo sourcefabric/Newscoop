@@ -74,8 +74,8 @@ $pages[1]['pages'][] = array(
 $pages[1]['pages'][] = array(
     'label' => getGS('Comments'),
     'module' => 'admin',
-    'controller' => 'comments',
-    'action' => 'index.php',
+    'controller' => 'comment',
+    'action' => 'index',
     'resource' => 'comment',
     'privilege' => 'moderate',
 );
@@ -486,7 +486,7 @@ if ($showUserMenu) {
         'pages' => array(
         array(
                 'label' => getGS('Add new user type'),
-                'module' => 'admin', 
+                'module' => 'admin',
                 'controller' => 'user-group',
                 'action' => 'add',
                 'visible' => false,

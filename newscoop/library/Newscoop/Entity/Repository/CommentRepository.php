@@ -212,7 +212,7 @@ class CommentRepository extends DatatableSource
      *
      * @return int
      */
-    public function getCount(array $p_params = null, array $p_cols = null)
+    public function getCount(array $p_params = null, array $p_cols = array())
     {
         $qb = $this->createQueryBuilder('e')
               ->leftJoin('e.commenter','c')
@@ -223,7 +223,6 @@ class CommentRepository extends DatatableSource
 
         if (is_array($p_params) && !empty($p_params['sFilter']))
             $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
-
         return $qb->getQuery()->getSingleScalarResult();
     }
 

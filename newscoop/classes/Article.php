@@ -625,14 +625,14 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
         // Delete scheduled publishing
         ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
         // Delete Article Comments
-        ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
+        //@todo delete from the new one
+	//ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
         // is this the last translation?
         if (count($this->getLanguages()) <= 1) {
@@ -2885,16 +2885,20 @@ class Article extends DatabaseObject {
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
                 case 'bycomments':
-                    $dbField = 'comments_counter.comments_count';
+                    //@todo order by comments
+		    /*$dbField = 'comments_counter.comments_count';
                     $joinTable = "(SELECT COUNT(*) AS comments_count, fk_article_number, fk_language_id \n"
                                . "    FROM ArticleComments \n"
                                . '    GROUP BY fk_article_number, fk_language_id)';
                     $p_otherTables[$joinTable] = array('__TABLE_ALIAS'=>'comments_counter',
                                                        'Number'=>'fk_article_number',
                                                        'IdLanguage'=>'fk_language_id');
+		    */
                     break;
                 case 'bylastcomment':
-                    $dbField = 'comment_ids.last_comment_id';
+                    //@todo order by last comments
+		    /*
+		    $dbField = 'comment_ids.last_comment_id';
                     $joinTable = "(SELECT MAX(fk_comment_id) AS last_comment_id, fk_article_number, fk_language_id \n"
                                . "    FROM ArticleComments AS ac LEFT JOIN phorum_messages AS pm \n"
                                . "        ON ac.fk_comment_id = pm.message_id \n"
@@ -2904,6 +2908,7 @@ class Article extends DatabaseObject {
                                                         'Number'=>'fk_article_number',
                                                         'IdLanguage'=>'fk_language_id');
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
+		    */
                     break;
             }
             if (!is_null($dbField)) {

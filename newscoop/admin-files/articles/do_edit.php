@@ -1,6 +1,5 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/ArticleComment.php");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -82,15 +81,6 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	exit;
 }
 
-// Update the first comment if the article title has changed
-if ($f_article_title != $articleObj->getTitle()) {
-	$firstPostId = ArticleComment::GetCommentThreadId($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-	if ($firstPostId) {
-		$firstPost = new Phorum_message($firstPostId);
-		$firstPost->setSubject($f_article_title);
-	}
-}
-
 // Update the article author
 if (!empty($f_article_author)) {
     ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
@@ -132,12 +122,15 @@ if (!empty($f_comment_status)) {
     // as appropriate.
     if ($articleObj->commentsEnabled() != $commentsEnabled) {
 	    $articleObj->setCommentsEnabled($commentsEnabled);
-		$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
+		/**
+		 * @todo get comments or something
+	    $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
 		if ($comments) {
 			foreach ($comments as $comment) {
 				$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
 			}
 		}
+		*/
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
 }

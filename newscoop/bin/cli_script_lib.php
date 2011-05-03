@@ -564,14 +564,6 @@ function camp_detect_database_version($p_dbName, &$version)
             } else {
                 return 0;
             }
-            if (!$res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'")) {
-                return "Unable to query the database $p_dbName";
-            }
-            if (mysql_num_rows($res2) > 0) {
-                $version = "2.6.2";
-            } else {
-                return 0;
-            }
             if (!$res2 = mysql_query("SELECT * FROM Events WHERE Id = 171")) {
                 return "Unable to query the database $p_dbName";
             }
@@ -584,10 +576,6 @@ function camp_detect_database_version($p_dbName, &$version)
                                 . "WHERE varname = 'ExternalSubscriptionManagement'");
             if (is_resource($res2) && mysql_num_rows($res2) > 0) {
                 $version = "2.6.4";
-            }
-            if (!$res2 = mysql_query("SELECT * from phorum_users "
-                                     . "WHERE fk_campsite_user_id IS NULL")) {
-                return "Unable to query the database $p_dbName";
             }
             if (mysql_num_rows($res2) == 0) {
                 $version = "2.6.x";
