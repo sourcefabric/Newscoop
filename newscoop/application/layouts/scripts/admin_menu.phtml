@@ -349,6 +349,8 @@ if ($showConfigureMenu) {
             'privilege' => 'view',
         );
     }
+} else {
+    unset($pages[3]);
 }
 
 // add user menu
@@ -516,6 +518,8 @@ if ($showUserMenu) {
             'action' => 'authors.php',
         );
     }
+} else {
+    unset($pages[4]);
 }
 
 // get plugins menu
