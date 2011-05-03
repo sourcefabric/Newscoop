@@ -13,14 +13,44 @@ namespace Newscoop\Entity;
  */
 class Notification
 {
+
+    /**
+     * Comment structure
+     */
+    const COMMENT_NAME      = 0;
+    const COMMENT_EMAIL     = 1;
+    const COMMENT_IP        = 2;
+    const COMMENT_SUBJECT   = 3;
+    const COMMENT_MESSAGE   = 4;
+
+    /**
+     * Constants for status
+     */
+    const STATUS_PENDING    = 0;
+    const STATUS_WATING     = 1;
+    const STATUS_PROCESSED  = 2;
+    const STATUS_DELETED    = 3;
+
     /**
      * @var string to code mapper for status
      */
     static $status_enum = array(
-        'processed',
-        'pending',
-        'waiting',
-        'deleted'
+        self::STATUS_PROCESSED,
+        self::STATUS_PENDING,
+        self::STATUS_WATING,
+        self::STATUS_DELETED,
+    );
+
+    /**
+     * Constants for status
+     */
+    const TYPE_COMMENT      = 0;
+
+    /**
+     * @var string to code mapper for status
+     */
+    static $type_enum = array(
+        self::TYPE_COMMENT,
     );
 
     /**
@@ -36,6 +66,11 @@ class Notification
      */
     private $content;
 
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
+    private $type;
     /**
      * @Column(type="integer")
      * @var string
@@ -56,7 +91,7 @@ class Notification
      * Set the content of the notification
      *
      * @param string $p_content
-     * @return
+     * @return Newscoop\Entity\Notification
      */
     public function setContent($p_content)
     {
@@ -66,16 +101,62 @@ class Notification
     }
 
     /**
-     * Set status string
+     * Get the content of the notification
      *
-     * @return Newscoop\Entity\Comment
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set status
+     *
+     * @param int $p_status
+     * @return Newscoop\Entity\Notification
      */
     public function setStatus($p_status)
     {
-        $status_enum = array_flip(self::$status_enum);
-        $this->status = $status_enum[$p_status];
+        $this->status = $p_status;
         // return this for chaining mechanism
         return $this;
     }
+
+    /**
+     * Get status
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set Type of the notification
+     * for now only comment type
+     *
+     * @param int $p_type
+     * @return Newscoop\Entity\Notification
+     */
+    public function setType($p_type)
+    {
+        $this->type = $p_type;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get Type of the notification
+     * for now only comment type
+     *
+     * @return int
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
 }
 

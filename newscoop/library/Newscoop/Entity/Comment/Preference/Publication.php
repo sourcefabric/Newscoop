@@ -58,10 +58,10 @@ class Publication
     private $spam_blocking_enabled;
 
     /**
-     * @column(name="moderator_email")
+     * @column(name="moderator_to")
      * @var string
      */
-    private $moderator_email;
+    private $moderator_to;
 
     /**
      * @column(name="moderator_from")
@@ -229,6 +229,48 @@ class Publication
     public function getSpamBlockingEnabled()
     {
         return $this->spam_blocking_enabled;
+    }
+
+    /**
+     * Set moderator to email address
+     *
+     * @param string $p_moderator_to
+     * @return Publication
+     */
+    public function setModeratorTo($p_moderator_to)
+    {
+        return $this->moderator_to = $p_moderator_to;
+    }
+
+    /**
+     * Get moderator to email address
+     *
+     * @return string
+     */
+    public function getModeratorTo()
+    {
+        return $this->moderator_to;
+    }
+
+    /**
+     * Set moderator from email address
+     *
+     * @param string $p_moderator_from
+     * @return Publication
+     */
+    public function setModeratorFrom($p_moderator_from)
+    {
+        return $this->moderator_to = $p_moderator_from;
+    }
+
+    /**
+     * Get moderator from email address
+     *
+     * @return string
+     */
+    public function getModeratorFrom()
+    {
+        return $this->moderator_from;
     }
 
 }

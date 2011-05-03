@@ -150,12 +150,13 @@ class MetaActionSubmit_Comment extends MetaAction
         }
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
+        /*
         if ($publicationObj->isCaptchaEnabled()) {
             if ($this->_processCaptcha() === FALSE) {
                 return FALSE;
             }
         }
-
+        */
         // Check if the reader was banned from posting comments.
         global $controller;
         $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
@@ -212,8 +213,10 @@ class MetaActionSubmit_Comment extends MetaAction
             return false;
         }
 
+        $controller->getHelper('actionStack')->actionToStack("moderate-comment","notification","admin", array('comment'=>$comment->getId()));
 
-        $p_context->comment = new MetaComment($commentObj->getId());
+        $p_context->comment = new MetaComment($comment->getId());
+        $p_context->comment = new MetaComment($comment->getId());
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
         $p_context->default_url->reset_parameter('f_comment_content');

@@ -9,17 +9,6 @@
  */
 use Newscoop\Entity\Comment\Commenter;
 
-//function to get the ip address
-function getIp()
-{
-    if(!empty($_SERVER['HTTP_CLIENT_IP']))
-        return $_SERVER['HTTP_CLIENT_IP'];
-    elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else
-        return $_SERVER['REMOTE_ADDR'];
-}
-
 class Admin_CommentCommenterController extends Zend_Controller_Action
 {
 
@@ -211,7 +200,7 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
-            $values['ip'] = getIp();
+            $values['ip'] = $request->getClientIp();
             $values['time_created'] = new DateTime;
             $this->repository->save($p_commenter, $values);
             $this->repository->flush();

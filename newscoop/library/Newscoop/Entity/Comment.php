@@ -22,6 +22,23 @@ use DateTime,
 class Comment
 {
     /**
+     * Constants for status
+
+    const STATUS_APPROVED   = 0;
+    const STATUS_PENDING    = 1;
+    const STATUS_HIDDEN     = 2;
+    const STATUS_DELETED    = 3;
+    */
+    /**
+     * @var string to code mapper for status
+    static $status_enum = array(
+        self::STATUS_APPROVED,
+        self::STATUS_PENDING,
+        self::STATUS_HIDDEN,
+        self::STATUS_DELETED
+    );
+    */
+    /**
      * @var string to code mapper for status
      */
     static $status_enum = array(
@@ -308,6 +325,16 @@ class Comment
     public function getCommenterName()
     {
         return $this->getCommenter()->getName();
+    }
+
+    /**
+     * Get commenter email
+     *
+     * @return string
+     */
+    public function getCommenterEmail()
+    {
+        return $this->getCommenter()->getEmail();
     }
 
     /**

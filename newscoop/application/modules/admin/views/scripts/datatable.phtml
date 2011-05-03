@@ -19,11 +19,7 @@ $(function() {
         .wrap($('<div />').addClass('table')).wrap($('<div />').addClass('smartlist'))
         .css('position', 'relative').css('width', '100%')
         .dataTable(
-        <?php
-            $regex = '/"(fnRowCallback|fnDrawCallback|fnServerData)":"([\w\-\.]+)"/i';
-            $replace = '"$1":$2';
-            $jsonified = preg_replace($regex, $replace, json_encode($this->iOptions));
-        echo $jsonified;
-        ?> );
+            <?php echo $this->jsonified($this->iOptions, array('fnRowCallback', 'fnDrawCallback', 'fnServerData'));?>
+        );
 });
 </script>

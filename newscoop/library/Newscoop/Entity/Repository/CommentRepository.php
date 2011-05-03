@@ -280,6 +280,9 @@ class CommentRepository extends DatatableSource
         return $and;
     }
 
+    /**
+     * Flush method
+     */
     public function flush()
     {
         $this->getEntityManager()->flush();

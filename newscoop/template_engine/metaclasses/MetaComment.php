@@ -24,8 +24,8 @@ final class MetaComment extends MetaDbObject {
         else
             $this->m_dbObject = $repository->find($p_messageId);
 
+        $this->m_properties['id'] = 'id';
         $this->m_customProperties['level'] = 'getThreadDepth';
-
         $this->m_customProperties['identifier'] = 'getId';
         $this->m_customProperties['subject'] = 'getSubject';
         $this->m_customProperties['content'] = 'getMessage';

@@ -117,6 +117,12 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::getCommenterName();
     }
 
+    public function getCommenterEmail()
+    {
+        $this->_load();
+        return parent::getCommenterEmail();
+    }
+
     public function setStatus($p_status)
     {
         $this->_load();

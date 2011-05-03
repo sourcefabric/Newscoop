@@ -46,7 +46,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             'bAutoWidth' => true,
             'bSaveState' => true,
             'iDisplayLength' => 25,
-            'bLengthChange' => false,
+            'bLengthChange' => true,
             'sPaginationType' => 'full_numbers',
             'aoColumnDefs' => array()
         );
