@@ -31,7 +31,7 @@ abstract class UserRepository extends EntityRepository
             ->setParameter(1, $values['email']);
         $conflicts = $query->getResult();
         foreach ($conflicts as $conflict) {
-            if ($conflict != $user->getId()) {
+            if ($conflict['id'] != $user->getId()) {
                 throw new \InvalidArgumentException('email');
             }
         }
