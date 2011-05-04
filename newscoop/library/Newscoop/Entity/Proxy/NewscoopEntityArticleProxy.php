@@ -57,6 +57,30 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getPublication();
     }
 
+    public function getPublicationId()
+    {
+        $this->_load();
+        return parent::getPublicationId();
+    }
+
+    public function getSection()
+    {
+        $this->_load();
+        return parent::getSection();
+    }
+
+    public function getSectionId()
+    {
+        $this->_load();
+        return parent::getSectionId();
+    }
+
+    public function getIssueId()
+    {
+        $this->_load();
+        return parent::getIssueId();
+    }
+
     public function setLanguage(\Newscoop\Entity\Language $p_language)
     {
         $this->_load();
@@ -69,10 +93,16 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getLanguage();
     }
 
+    public function getLanguageId()
+    {
+        $this->_load();
+        return parent::getLanguageId();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'language', 'publication', 'name');
+        return array('__isInitialized__', 'id', 'language', 'publication', 'section', 'sectionId', 'issueId', 'name');
     }
 
     public function __clone()

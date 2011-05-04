@@ -92,15 +92,6 @@ $().ready(function(){
     <option value="deleted"><?php putGS('Deleted');?></option>
   </select>
 </fieldset>
-<fieldset class="right">
-  <label>Items per page:</label>
-  <select class="input_select">
-    <option>10</option>
-    <option>25</option>
-    <option>50</option>
-    <option>100</option>
-  </select>
-</fieldset>
 </div>
 <script>
 $().ready(function(){
@@ -189,14 +180,16 @@ $().ready(function(){
         });
         return false;
 	});
-	$('.dateCommentHolderEdit .edit-cancel').live('click', function(){
+	$('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function(){
 	    var el = $(this);
 	    var td = el.parents('td');
-	    var form = td.find('form');
+	    var form = el.parents('form');
 	    $(form).each(function(){
             this.reset();
         });
-	    td.find('.content-edit').hide("slow");
+	    td.find('.commentSubject,.commentBody').show("fast");
+	    td.find('.content-edit').hide("fast");
+	    td.find('.content-reply').hide("fast");
 	});
     $('.dateCommentHolderEdit .edit-reply').live('click', function(){
         var el = $(this);
@@ -205,12 +198,15 @@ $().ready(function(){
         $(form).each(function(){
             this.reset();
         });
-        td.find('.content-edit').hide("slow");
+        td.find('.content-edit').hide("fast");
+        td.find('.content-reply').show("fast");
     });
 
 	$('.datatable .action-edit').live('click', function(){
 		 var el = $(this);
-		 el.parents('td').find('.content-edit').toggle("slow");
+		 var td = el.parents('td');
+		 td.find('.commentSubject,.commentBody').toggle("fast");
+		 td.find('.content-edit').toggle("fast");
 	});
 });
 </script>

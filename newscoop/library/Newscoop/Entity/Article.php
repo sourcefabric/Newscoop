@@ -30,11 +30,30 @@ class Article
     private $language;
 
     /**
-     * @manyToOne(targetEntity="Publication")
-     * @joinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Publication")
+     * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
+
+    /**
+     * @ManyToOne(targetEntity="Section")
+     * @JoinColumn(name="NrSection", referencedColumnName="Number")
+     * @var Newscoop\Entity\Section
+     */
+    private $section;
+
+    /**
+     * @column(name="NrSection")
+     * @var int
+     */
+    private $sectionId;
+
+    /**
+     * @column(name="NrIssue")
+     * @var int
+     */
+    private $issueId;
 
     /**
      * @column(name="Name")
@@ -99,6 +118,46 @@ class Article
     }
 
     /**
+     * Get publication id
+     *
+     * @return int
+     */
+    public function getPublicationId()
+    {
+        return $this->publication->getId();
+    }
+
+    /**
+     * Get section
+     *
+     * @return Newscoop\Entity\Section
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * Get section id
+     *
+     * @return int
+     */
+    public function getSectionId()
+    {
+        return $this->sectionId;
+    }
+
+    /**
+     * Get issue id
+     *
+     * @return int
+     */
+    public function getIssueId()
+    {
+        return $this->issueId;
+    }
+
+    /**
      * Set language
      *
      * @param  Newscoop\Entity\Language $p_language
@@ -119,6 +178,16 @@ class Article
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Get language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->language->getId();
     }
 
 }

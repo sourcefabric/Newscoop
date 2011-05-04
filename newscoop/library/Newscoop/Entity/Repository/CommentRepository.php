@@ -38,10 +38,28 @@ class CommentRepository extends DatatableSource
     {
         $em = $this->getEntityManager();
         foreach($p_comment_ids as $comment_id)
+            $this->setCommentStatus($this->find($comment_id), $p_status);
+    }
+
+
+    /**
+     * Method for setting status for a comment
+     *
+     * @param Comment $p_comment
+     * @param string $p_status
+     */
+    private function setCommentStatus(Comment $p_comment, $p_status)
+    {
+        $em = $this->getEntityManager();
+        /*if($p_status == 'deleted')
         {
-            $comment = $this->find($comment_id);
-            $comment->setStatus($p_status);
-            $em->persist($comment);
+            $em->remove($p_comment);
+        }
+        else
+        */
+        {
+            $p_comment->setStatus($p_status);
+            $em->persist($p_comment);
         }
     }
 
@@ -277,6 +295,17 @@ class CommentRepository extends DatatableSource
             $and->add($or);
         }
         return $and;
+    }
+
+    public function deleteArticle($p_article, $p_language = null)
+    {
+        $em = $this->getEntityManager();
+        $params = array( 'thread' => $p_article );
+        if(!is_null($p_language))
+            $params['language'] = $p_language;
+        $comments = $this->findBy($params);
+        foreach($comments as $comment)
+            $this->setCommentStatus($comment,'deleted');
     }
 
     /**

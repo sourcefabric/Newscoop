@@ -75,7 +75,6 @@ class Admin_CommentController extends Zend_Controller_Action
             'thread' => getGS('Article')
         ),array('id' => false, 'action' => false));
 
-
         $table->setHandle(function($comment) use ($view) {
             return array(
                 $view->commentIndex($comment),
@@ -265,7 +264,7 @@ class Admin_CommentController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             $values['user'] = Zend_Registry::get('user');
             $values['time_created'] = new DateTime;
-            $values['ip'] = $request->getClientIp();
+            $values['ip'] = $this->getRequest()->getClientIp();
             $values['status'] = 'approved';
             try
             {
@@ -296,6 +295,18 @@ class Admin_CommentController extends Zend_Controller_Action
 
         $this->view->form = $this->form;
         $this->view->comment = $comment;
+    }
+
+    /**
+     * Method for deleting a comment
+     *
+     */
+    public function deleteArticleAction()
+    {
+        $article = $this->getRequest()->getParam('article');
+        $this->repository->deleteArticle($article);
+        $this->repository->flush();
+        $this->getHelper('viewRenderer')->setNoRender();
     }
 
     /**

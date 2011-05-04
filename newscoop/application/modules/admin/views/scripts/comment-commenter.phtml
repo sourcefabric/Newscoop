@@ -1,8 +1,8 @@
 <div class="commentUserHolder">
     <div> </div>
-    <p><b><?php $this->commenter->getUserName();?></b><br>
-    <?php $this->commenter->getName();?><br>
+    <p><b><?php echo $this->commenter->getUserName();?></b><br>
+    <?php echo $this->commenter->getName();?><br>
     <a href="#"><?php echo $this->commenter->getIp(); ?></a><br>
     <a href="#"><?php echo $this->commenter->getEmail(); ?></a><br>
-    <a href="#"><?php echo $this->commenter->getUrl();?></a></p>
+    <a href="<?php echo $this->commenter->getUrl();?>"><?php echo $this->commenter->getUrl();?></a></p>
 </div>
