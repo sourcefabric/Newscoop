@@ -278,6 +278,11 @@ if ($showConfigureMenu) {
     }
 
     $pages[3]['pages'][] = array(
+        'label' => getGS('Geo Filtering'),
+        'uri' => $view->baseUrl("admin/articles/locations/filter.php"),
+    );
+
+    $pages[3]['pages'][] = array(
         'label' => getGS('Article Types'),
         'module' => 'admin',
         'controller' => 'article_types',
