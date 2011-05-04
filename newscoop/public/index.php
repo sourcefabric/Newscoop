@@ -23,9 +23,5 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/application.ini'
 );
 
-try {
-    $application->bootstrap()
-        ->run();
-    exit;
-} catch (InvalidArgumentException $e) { // continue with legacy code
-}
+$application->bootstrap()
+    ->run();

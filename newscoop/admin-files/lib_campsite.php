@@ -3,44 +3,6 @@
 require_once('localizer/Localizer.php');
 
 /**
- * Check if user has access to the admin.
- * @param array $p_request
- * @return array
- */
-function camp_check_admin_access($p_request)
-{
-	global $ADMIN, $g_ado_db, $LiveUser;
-
-	require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
-
-	$access = false;
-	$XPerm = array();
-	$user = array();
-
-    // records current page as last visited page
-    camp_session_set('lastVisitPage', $_SERVER['REQUEST_URI']);
-
-    if (!$LiveUser->isLoggedIn()) {
-        return array($access, $user, $XPerm);
-    }
-
-	// check for required info
-	if (!isset($p_request['LoginUserId']) || !isset($p_request['LoginUserKey'])
-	 	|| !is_numeric($p_request['LoginUserId']) || !is_numeric($p_request['LoginUserKey'])) {
-		return array($access, $user, $XPerm);
-	}
-
-	// we passed LiveUser->isLoggedIn() so we can be sure the user
-    // actually exists in database table
-    if ($LiveUser->getProperty('keyid') == $p_request['LoginUserKey']) {
-        $access = true;
-        $user = new User($LiveUser->getProperty('auth_user_id'));
-    }
-	return array($access, $user);
-} // fn check_basic_access
-
-
-/**
  * Compute the difference between two string times.
  *
  * @param string $p_time1

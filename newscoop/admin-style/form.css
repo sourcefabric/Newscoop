@@ -1,0 +1,155 @@
+dl.zend_form {
+    width: 420px;
+    margin: 0;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
+    -mozilla-box-shadow: 2px 2px 3px #ccc;
+    -webkit-box-shadow: 2px 2px 3px #d4d4d4;
+    box-shadow: 2px 2px 3px #e5e5e5;
+}
+
+body.with-sidebar dl.zend_form {
+    width: auto;
+}
+
+.zend_form dt {
+    margin: 9px 0 0;
+    padding: 0 2px;
+    font-weight: bold;
+    color: #696969;
+}
+
+.zend_form dt:first-child {
+    margin-top: 0;
+}
+
+.zend_form dd {
+    margin: 4px 0 0;
+    padding: 0;
+}
+
+.zend_form dd input[type=text], .zend_form dd input[type=password] {
+    display: block;
+    width: 80%;
+    margin: 0;
+    padding: 3px 5px;
+    color: #333;
+    background-color: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #fff));
+    background: -moz-linear-gradient(top, #f5f5f5, #fff);
+    border: 1px solid #9d9d9d;
+}
+
+.zend_form dd input[type=password] {
+    width: 50%;
+}
+
+.zend_form dd input[type=text]:focus {
+    border-color: #cce5f0;
+}
+
+.zend_form dd select {
+    width: 50%;
+    margin: 0;
+    padding: 3px 5px;
+    border: 1px solid #9d9d9d;
+}
+
+.zend_form dd ul.errors {
+    margin: 3px 0;
+    padding: 0 8px;
+}
+
+.zend_form dd ul.errors li {
+    font-size: 1.1em;
+    color: #cc0000;
+}
+
+.zend_form fieldset {
+    border: 1px solid #ccc;
+}
+
+.zend_form fieldset.closed {
+    border-left-color: #fff;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+}
+
+.zend_form fieldset legend .ui-icon {
+    float: left;
+}
+
+.zend_form dd input[type=submit] {
+    margin: 0;
+    padding: 3px 12px 4px;
+    color: #fff;
+    background-color: #1187b7;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #228fbc), color-stop(1, #007fb3));
+    border: 1px solid #007fb3;
+    cursor: pointer;
+}
+
+.zend_form dd.buttons {
+    height: 1%;
+    overflow: hidden;
+    margin-top: 13px;
+}
+
+.zend_form label {
+    cursor: pointer;
+}
+
+.zend_form label[for=type-allow], .zend_form label[for=type-deny] {
+    display: block;
+    line-height: 21px;
+    color: #444;
+    background-color: #b4b4b4;
+    border-radius: 5px;
+}
+
+.zend_form label[for=type-allow] input, .zend_form label[for=type-deny] input {
+    vertical-align: top;
+}
+
+.zend_form label[for=type-allow].checked {
+    color: #fff;
+    background-color: #55a112;
+}
+
+.zend_form label[for=type-deny].checked {
+    color: #fff;
+    background-color: #da0101;
+}
+
+/** Filter form */
+.filter dl.zend_form {
+    height: 1%;
+    overflow: hidden;
+    margin: 0;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    -mozilla-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.filter dl.zend_form > * {
+    float: left;
+    margin: 0;
+    padding: 0;
+    line-height: 23px;
+}
+
+.filter dl.zend_form dt {
+    padding-top: 1px;
+}
+
+.filter dl.zend_form dd {
+    margin-left: 1em;
+}
+
+.filter dl.zend_form dd * {
+    width: auto;
+}

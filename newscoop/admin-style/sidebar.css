@@ -1,0 +1,40 @@
+.sidebar h3.label {
+    height: 33px;
+    line-height: 33px;
+    margin: 0;
+    padding: 0 9px;
+    font-size: 1.3em;
+    color: #444;
+    background-color: #fafafa;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #f5f5f5));
+    border-bottom: 1px solid #ccc;
+}
+
+.sidebar .actions {
+    height: 1%;
+    overflow: hidden;
+    margin: 8px 13px;
+    font-size: 1.2em;
+}
+
+.sidebar .message {
+    margin: 8px;
+    padding: 0;
+    border: none;
+    -mozilla-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.sidebar > table {
+    margin: 8px;
+} 
+
+.sidebar .zend_form {
+    margin: 0;
+    padding: 8px;
+    border: none;
+    -mozilla-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

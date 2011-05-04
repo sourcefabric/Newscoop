@@ -33,16 +33,46 @@ class NewscoopEntityAclResourceProxy extends \Newscoop\Entity\Acl\Resource imple
         return parent::getId();
     }
 
+    public function getResourceId()
+    {
+        $this->_load();
+        return parent::getResourceId();
+    }
+
+    public function setName($name)
+    {
+        $this->_load();
+        return parent::setName($name);
+    }
+
     public function getName()
     {
         $this->_load();
         return parent::getName();
     }
 
+    public function setActions(array $actions)
+    {
+        $this->_load();
+        return parent::setActions($actions);
+    }
+
     public function getActions()
     {
         $this->_load();
         return parent::getActions();
+    }
+
+    public function addRule(\Newscoop\Entity\Acl\Rule $rule, $inherited = false)
+    {
+        $this->_load();
+        return parent::addRule($rule, $inherited);
+    }
+
+    public function getRules($inherited = false)
+    {
+        $this->_load();
+        return parent::getRules($inherited);
     }
 
 

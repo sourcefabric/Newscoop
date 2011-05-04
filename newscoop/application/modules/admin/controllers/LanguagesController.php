@@ -8,6 +8,9 @@
 
 use Newscoop\Entity\Language;
 
+/**
+ * @Acl(resource="language", action="manage")
+ */
 class Admin_LanguagesController extends Zend_Controller_Action
 {
     /** @var Newscoop\Entity\Repository\LanguageRepository */
@@ -18,21 +21,22 @@ class Admin_LanguagesController extends Zend_Controller_Action
         camp_load_translation_strings('languages');
 
         // get repositories
-        $this->languageRepository = $this->_helper->em->getRepository('Newscoop\Entity\Language');
-    }
-
-    public function preDispatch()
-    {
-        if (!$this->_helper->acl->isAllowed('Language', 'edit')) {
-            $this->_forward('deny', 'error', 'admin', array(
-                getGS("You do not have the right to edit languages."),
-            ));
-        }
+        $this->languageRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
     }
 
     public function indexAction()
     {
         $this->view->languages = $this->languageRepository->getLanguages();
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new Language'),
+                'module' => 'admin',
+                'controller' => 'languages',
+                'action' => 'add',
+                'resource' => 'language',
+                'privilege' => 'edit',
+            ),
+        );
     }
 
     public function addAction()
@@ -80,14 +84,11 @@ class Admin_LanguagesController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    /**
+     * @Acl(action="delete")
+     */
     public function deleteAction()
     {
-        if (!$this->_helper->acl->isAllowed('Language', 'delete')) {
-                $this->_forward('deny', 'error', 'admin', array(
-                getGS("You do not have the right to delete languages."),
-            ));
-        }
-
         Localizer::DeleteLanguageFiles($language->getCode());
         $this->languageRepository->delete($language->getId());
         $this->_helper->flashMessenger->addMessage(getGS('Language removed.'));
