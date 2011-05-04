@@ -110,7 +110,11 @@ this.map_showview = function()
 
 };
 
-this.add_polygon = function(data) {
+this.add_polygon = function(data, layer) {
+    if (layer === undefined) {
+        layer = this.vectors;
+    }
+
     var geo_obj = this;
 
     var cur_polygon_points = [];
@@ -135,7 +139,7 @@ this.add_polygon = function(data) {
             one_part = one_part.toLowerCase();
             if ("polygon" == one_part) {
                 if (0 < cur_polygon_points.length) {
-                    this.insert_polygon(cur_polygon_points);
+                    this.insert_polygon(cur_polygon_points, layer);
                 }
 
                 cur_polygon_points = [];
@@ -168,14 +172,16 @@ this.add_polygon = function(data) {
         }
 
         if (0 < cur_polygon_points.length) {
-            this.insert_polygon(cur_polygon_points);
+            this.insert_polygon(cur_polygon_points, layer);
         }
 
     } catch(e) {
         alert("wrong polygon data");
     }
 
-    this.report();
+    if (this.vectors == layer) {
+        this.report();
+    }
 };
 
 this.into_method_pan = function(event) {
@@ -335,6 +341,8 @@ this.report = function(event) {
     var geo_obj = this;
     if (!geo_obj.inited) {return;}
 
+    var brecs = [];
+
     var info_obj = document.getElementById ? document.getElementById("geo_polygons_info") : null;
     var info_text = "";
 
@@ -343,6 +351,11 @@ this.report = function(event) {
     var features_count = features.length;
 
     for (var find = 0; find < features_count; find++) {
+        min_lon = 1000;
+        min_lat = 1000;
+        max_lon = -1000;
+        max_lat = -1000;
+
         var cur_feature = features[find];
         var geometry = cur_feature["geometry"];
         if (!geometry) {continue;}
@@ -392,15 +405,28 @@ this.report = function(event) {
             );
             cons_pol += " " + point.lat.toFixed(6) + " " + point.lon.toFixed(6) + ";";
 
+            if (point.lon < min_lon) {
+                min_lon = point.lon;
+            }
+            if (point.lon > max_lon) {
+                max_lon = point.lon;
+            }
+            if (point.lat < min_lat) {
+                min_lat = point.lat;
+            }
+            if (point.lat > max_lat) {
+                max_lat = point.lat;
+            }
+
         }
         cons_pol += "</div>";
 
         if ((0 < dp_positive) && (0 < dp_negative)) {is_convex = false;}
 
         var polygon_geometry_class = "geo_polygon_type_convex";
-        if (!is_convex) {
-            polygon_geometry_class = "geo_polygon_type_concave";
-        }
+        //if (!is_convex) {
+        //    polygon_geometry_class = "geo_polygon_type_concave";
+        //}
 
         info_text += "<div class='geo_polygon_info'><div class='geo_polygon_labels'>";
         info_text += "<div class='geo_polygon_remove'><a href='#' onclick='" + this.obj_name + ".remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div>\n";
@@ -409,10 +435,20 @@ this.report = function(event) {
 
         info_text += cons_pol + "</div></div>\n";
         info_text += "<div class='geo_filter_polygon_spacer'>&nbsp;</div>\n";
+
+        brecs.push("polygon" + " " + min_lat + " " + min_lon + ";" + " " + min_lat + " " + max_lon + ";" + " " + max_lat + " " + max_lon + ";" + " " + max_lat + " " + min_lon + ";");
+
     }
 
     if (this.last_info_string == info_text) {return;}
     this.last_info_string = info_text;
+
+    this.mbr.removeFeatures(this.mbr.features);
+
+    var brecs_count = brecs.length;
+    for (var brind = 0; brind < brecs_count; brind++) {
+        this.add_polygon(brecs[brind], this.mbr);
+    }
 
     info_obj.innerHTML = info_text;
 
@@ -522,9 +558,29 @@ this.main_init = function(map_div_name)
     this.map.addControl(lswitch);
 
     OpenLayers.Feature.Vector.style['default']['strokeWidth'] = '2';
+    OpenLayers.Feature.Vector.style['default']['strokeOpacity'] = 0.8;
+    OpenLayers.Feature.Vector.style['default']['strokeColor'] = '#000000';
+    OpenLayers.Feature.Vector.style['default']['fillOpacity'] = 0.25;
+    OpenLayers.Feature.Vector.style['default']['fillColor'] = '#0080ff';
     this.vectors = new OpenLayers.Layer.Vector("Polygon Layer");
 
-    geo_obj.map.addLayers([geo_obj.vectors]);
+    var mbr_style_map = new OpenLayers.StyleMap({
+            strokeWidth: 2,
+            strokeOpacity: 0.8,
+            strokeColor: "#000000",
+            fillOpacity: 0.25,
+            fillColor: "#0040ff"
+    });
+
+    this.mbr = new OpenLayers.Layer.Vector(
+        "Bounding Rectangles",
+        {
+            styleMap: mbr_style_map,
+            isBaseLayer: false
+        }
+    );
+
+    geo_obj.map.addLayers([geo_obj.mbr, geo_obj.vectors]);
 
     geo_obj.controls = {
         polygon: new OpenLayers.Control.DrawFeature(geo_obj.vectors,
@@ -640,16 +696,17 @@ this.main_init = function(map_div_name)
     });
 };
 
-this.insert_polygon = function(parsed_points) {
+this.insert_polygon = function(parsed_points, layer) {
+
     if (!parsed_points) {return;}
 
     var linear_ring = new OpenLayers.Geometry.LinearRing(parsed_points);
     if (!linear_ring) {return;}
-    var polygon_feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Polygon([linear_ring]), null, null);
+    var polygon_feature = null;
+    polygon_feature = new OpenLayers.Feature.Vector(new OpenLayers.Geometry.Polygon([linear_ring]), null, null);
     if (!polygon_feature) {return;}
 
-    this.vectors.addFeatures([polygon_feature]);
-
+    layer.addFeatures([polygon_feature]);
 };
 
 };
