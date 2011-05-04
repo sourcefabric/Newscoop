@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Newscoop 
  *
@@ -94,5 +95,7 @@ function camp_upgrade()
         <br>Normal service will resume shortly.");
     echo '<META HTTP-EQUIV="Refresh" content="10">';
 }
+
+require_once dirname(__FILE__) . '/public/index.php';
 
 ?>

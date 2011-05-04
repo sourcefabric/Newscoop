@@ -1,4 +1,4 @@
-<h1><?php echo getGS('Edit'), ' ', $this->language->getName(); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Edit language: $1', $this->language->getName())); ?>
 
 <?php $this->renderError(); ?>
 

@@ -137,7 +137,25 @@ abstract class AbstractPlatform
      *
      * @param array $field
      */
-    abstract public function getVarcharTypeDeclarationSQL(array $field);
+    public function getVarcharTypeDeclarationSQL(array $field)
+    {
+        if ( !isset($field['length'])) {
+            $field['length'] = $this->getVarcharDefaultLength();
+        }
+
+        $fixed = (isset($field['fixed'])) ? $field['fixed'] : false;
+
+        if ($field['length'] > $this->getVarcharMaxLength()) {
+            return $this->getClobTypeDeclarationSQL($field);
+        } else {
+            return $this->getVarcharTypeDeclarationSQLSnippet($field['length'], $fixed);
+        }
+    }
+
+    protected function getVarcharTypeDeclarationSQLSnippet($length, $fixed)
+    {
+        throw DBALException::notSupported('VARCHARs not supported by Platform.');
+    }
 
     /**
      * Gets the SQL snippet used to declare a CLOB column type.
@@ -1642,7 +1660,20 @@ abstract class AbstractPlatform
         throw DBALException::notSupported(__METHOD__);
     }
 
-    public function getListTableIndexesSQL($table)
+    /**
+     * Get the list of indexes for the current database.
+     * 
+     * The current database parameter is optional but will always be passed
+     * when using the SchemaManager API and is the database the given table is in.
+     * 
+     * Attention: Some platforms only support currentDatabase when they
+     * are connected with that database. Cross-database information schema
+     * requests may be impossible.
+     * 
+     * @param string $table
+     * @param string $currentDatabase 
+     */
+    public function getListTableIndexesSQL($table, $currentDatabase = null)
     {
         throw DBALException::notSupported(__METHOD__);
     }
@@ -1929,13 +1960,40 @@ abstract class AbstractPlatform
         return 'H:i:s';
     }
 
-    public function modifyLimitQuery($query, $limit, $offset = null)
+    /**
+     * Modify limit query
+     * 
+     * @param string $query
+     * @param int $limit
+     * @param int $offset
+     * @return string
+     */
+    final public function modifyLimitQuery($query, $limit, $offset = null)
     {
-        if ( ! is_null($limit)) {
+        if ( $limit !== null) {
+            $limit = (int)$limit;
+        }
+
+        if ( $offset !== null) {
+            $offset = (int)$offset;
+        }
+
+        return $this->doModifyLimitQuery($query, $limit, $offset);
+    }
+
+    /**
+     * @param string $query
+     * @param int $limit
+     * @param int $offset
+     * @return string
+     */
+    protected function doModifyLimitQuery($query, $limit, $offset)
+    {
+        if ( $limit !== null) {
             $query .= ' LIMIT ' . $limit;
         }
 
-        if ( ! is_null($offset)) {
+        if ( $offset !== null) {
             $query .= ' OFFSET ' . $offset;
         }
 

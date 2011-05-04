@@ -609,7 +609,7 @@ class CampInstallationBase
     {
         require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
         require_once(dirname(dirname(dirname(__FILE__))) . DIR_SEP . 'db_connect.php');
-        require_once(CS_PATH_CONFIG.DIR_SEP.'liveuser_configuration.php');
+        require_once dirname(dirname(dirname(__FILE__))) . '/classes/CampPlugin.php';
 
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             $CampPlugin = new CampPlugin($info['name']);
