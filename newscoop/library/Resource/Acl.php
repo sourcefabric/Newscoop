@@ -222,6 +222,15 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             $resources = $config->toArray();
         }
 
+        // load dynamic resources from storage
+        foreach ($this->storage->getResources() as $resource => $actions) {
+            if (!isset($resources[$resource])) {
+                $resources[$resource] = array();
+            }
+
+            $resources[$resource] += $actions;
+        }
+
         $reader = $this->getAnnotationReader();
 
         // get modules to scan

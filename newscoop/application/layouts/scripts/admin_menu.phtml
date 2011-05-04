@@ -282,8 +282,7 @@ if ($showConfigureMenu) {
         'uri' => $view->baseUrl("admin/articles/locations/filter.php"),
     );
 
-    if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
-        $pages[3]['pages'][] = array(
+    $pages[3]['pages'][] = array(
         'label' => getGS('Article Types'),
         'module' => 'admin',
         'controller' => 'article_types',
