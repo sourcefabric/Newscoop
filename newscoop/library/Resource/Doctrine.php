@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Newscoop
+ * @package Resource
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
@@ -10,45 +10,45 @@
  */
 class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
 {
-    /** @var \Doctrine\ORM\EntityManager */
-    private static $entityManager = NULL;
+    /** @var Doctrine\ORM\EntityManager */
+    private $em;
 
     /**
-     * Init doctrine resource.
+     * Init doctrine
      */
     public function init()
     {
-        \Zend_Registry::set('doctrine', $this);
+        Zend_Registry::set('doctrine', $this);
         return $this;
     }
 
     /**
-     * Get Doctrine Entity Manager instance.
+     * Get Entity Manager
      *
-     * @return \Doctrine\ORM\EntityManager
+     * @return Doctrine\ORM\EntityManager
      */
     public function getEntityManager()
     {
         global $Campsite;
 
-        if (isset(self::$entityManager)) {
-            return self::$entityManager;
+        if ($this->em !== NULL && $this->em->isOpen()) {
+            return $this->em;
         }
 
-        $config = new \Doctrine\ORM\Configuration;
+        $config = new Doctrine\ORM\Configuration;
         $options = $this->getOptions();
 
         // set annotation driver
-        $metadata = $config->newDefaultAnnotationDriver($options['entity']['dir']);
+        $metadata = $config->newDefaultAnnotationDriver(realpath($options['entity']['dir']));
         $config->setMetadataDriverImpl($metadata);
 
         // set proxy
-        $config->setProxyDir($options['proxy']['dir']);
+        $config->setProxyDir(realpath($options['proxy']['dir']));
         $config->setProxyNamespace($options['proxy']['namespace']);
         $config->setAutoGenerateProxyClasses($options['proxy']['autogenerate']);
 
         // set cache
-        $cache = new \Doctrine\Common\Cache\ArrayCache;
+        $cache = new $options['cache'];
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
@@ -61,6 +61,8 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             'password' => $Campsite['DATABASE_PASSWORD'],
         );
 
-        return self::$entityManager = \Doctrine\ORM\EntityManager::create($database, $config);
+
+        $this->em = Doctrine\ORM\EntityManager::create($database, $config);
+        return $this->em;
     }
 }

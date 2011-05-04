@@ -51,16 +51,22 @@ class NewscoopEntityUserGroupProxy extends \Newscoop\Entity\User\Group implement
         return parent::setRole($role);
     }
 
-    public function getRole()
-    {
-        $this->_load();
-        return parent::getRole();
-    }
-
     public function getRoleId()
     {
         $this->_load();
         return parent::getRoleId();
+    }
+
+    public function getRoleRules()
+    {
+        $this->_load();
+        return parent::getRoleRules();
+    }
+
+    public function __toString()
+    {
+        $this->_load();
+        return parent::__toString();
     }
 
 

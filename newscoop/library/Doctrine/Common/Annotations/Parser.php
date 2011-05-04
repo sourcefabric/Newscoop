@@ -99,7 +99,7 @@ class Parser
 
     /**
      * Gets the lexer used by this parser.
-     * 
+     *
      * @return Lexer The lexer.
      */
     public function getLexer()
@@ -303,7 +303,14 @@ class Parser
         $nameParts = array();
 
         $this->match(Lexer::T_AT);
-        $this->match(Lexer::T_IDENTIFIER);
+        if ($this->isNestedAnnotation === false) {
+            if ($this->lexer->lookahead['type'] !== Lexer::T_IDENTIFIER) {
+                return false;
+            }
+            $this->lexer->moveNext();
+        } else {
+            $this->match(Lexer::T_IDENTIFIER);
+        }
         $nameParts[] = $this->lexer->token['value'];
 
         while ($this->lexer->isNextToken(Lexer::T_NAMESPACE_SEPARATOR)) {
@@ -436,11 +443,11 @@ class Parser
 
             case Lexer::T_INTEGER:
                 $this->match(Lexer::T_INTEGER);
-                return $this->lexer->token['value'];
+                return (int)$this->lexer->token['value'];
 
             case Lexer::T_FLOAT:
                 $this->match(Lexer::T_FLOAT);
-                return $this->lexer->token['value'];
+                return (float)$this->lexer->token['value'];
 
             case Lexer::T_TRUE:
                 $this->match(Lexer::T_TRUE);

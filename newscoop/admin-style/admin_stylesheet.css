@@ -178,7 +178,7 @@ select {
 }
 /* Toolbar */
 
-.toolbar, #geolocation .toolbar, .activeSection, .content h1 {
+.toolbar, #geolocation .toolbar, .activeSection, h1 {
 	background:#f5f5f5;
 	min-height:39px;
 	text-align:left;
@@ -978,7 +978,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 /*---- END Geolocation ----*/
 
-.article-title, .article-title-locked, .breadcrumb_active, .content h1	{
+.article-title, .article-title-locked, .breadcrumb_active, h1 {
     color: #3B3B3B;
     float: left;
     font-size: 17px;
@@ -989,7 +989,7 @@ a.clear-margin:hover, .icon-button:hover  {
     text-indent: 6px;
     font-weight: normal;
 }
-.article-title, .breadcrumb_active, .content h1	{
+.article-title, .breadcrumb_active, h1 {
     color: #3B3B3B;
 }
 .article-title-locked {
@@ -1708,171 +1708,6 @@ table.message_box td {
 	margin-bottom:8px;
 }
 
-/** Zend form theming */
-.filter dl.zend_form {
-    height: 1%;
-    overflow: hidden;
-    padding: 8px;
-}
-
-.filter dl.zend_form > * {
-    float: left;
-}
-
-.filter dl.zend_form dt {
-    padding-top: 1px;
-}
-
-.filter dl.zend_form dd {
-    margin-left: 1em;
-}
-
-.message {
-    margin: 1em 0;
-    padding: 8px;
-    background-color: #fff;
-}
-
-.message p {
-    margin: 0;
-    padding: 0;
-    font-size: 2em;
-}
-
-.message.error {
-    color: #cc0000;
-}
-
-body > .content {
-    margin: 0 30px;
-}
-
-body > .content h1 {
-    margin: 0 -30px 13px;
-}
-
-/** Tables theming */
-.content > table {
-    margin: 0 0 1em;
-    font-size: 1.2em;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-collapse: collapse;
-}
-
-.content > table caption {
-    text-align: left;
-    margin: 1px;
-    padding: 5px 8px;
-    background-color: #fff;
-}
-
-.content > table tr > * {
-    width: 13em;
-    margin: 0;
-    padding: 3px 5px;
-    background-color: #f6f6f6;
-    border: 1px solid #ebebeb;
-    border-width: 1px 0 0 1px;
-}
-
-.content > table .text {
-    width: 21em;
-}
-
-.content > table tr > th {
-    border-top-color: #ccc;
-}
-
-.content > table tr > *:first-child {
-    border-left: none;
-}
-
-.content > table tr.odd td {
-    background-color: #fff;
-}
-
-.content > table tr:hover td {
-    background-color: #cce5f0;
-}
-
-/** Forms theme */
-form dl {
-    margin: 1em 0;
-    padding: 8px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-}
-
-form dt, form dd {
-    margin-left: 0;
-}
-
-form dt {
-    padding: 3px 5px;
-    font-weight: bold;
-}
-
-form dd input[type=text] {
-    width: 21em;
-    padding: 3px 5px;
-}
-
-form dd input[type=text]:focus {
-    border: 1px solid #cce5f0;
-}
-
-form dd ul.errors {
-    padding: 3px 8px;
-}
-
-form dd ul.errors li {
-    font-size: 1.1em;
-    color: #cc0000;
-}
-
-/** Actions theme */
-.content > .actions {
-    margin: 1em 0;
-    font-size: 1.2em;
-}
-
-.content > .actions ul {
-    margin: 0;
-    padding: 0;
-    height: 1%;
-    overflow: hidden;
-}
-
-.content > .actions li {
-    float: left;
-    margin: 0 0 0 5px;
-    padding: 0 0 0 5px;
-    border-left: 1px solid #ccc;
-}
-
-.content > .actions li:first-child {
-    border-left: 0;
-    padding-left: 0;
-}
-
-a.ui-icon-wrapper {
-    position: relative;
-    padding-left: 16px;
-}
-
-a.ui-icon-wrapper span {
-    position: absolute;
-    top: -2px;
-    left: 0;
-}
-
-.content h1 {
-    float: none;
-    margin: 0;
-    padding: 13px 30px 0;
-}
-
 /* fg menu */
 #menuLog {
 	font-size:1.4em;
@@ -1933,20 +1768,20 @@ ul.navigation li:first-child a {
     padding-right: 11px;
 }
 
-.content > .pager {
+.content .pager {
     margin: 8px 0;
     font-size: 1.2em;
 }
 
-.content > table + .pager {
+table + .pager {
     margin-top: 0;
 }
 
-.content > p {
+.content p {
     font-size: 1.2em;
 }
 
-.content > pre {
+.content pre {
     font-size: 12px;
 }
 
@@ -1973,76 +1808,4 @@ ul#edit-files h2 {
 .pager.indent {
     padding: 3px;
     font-size: 1.1em;
-}
-
-dl.resource {
-    width: 21em;
-    font-size: 1.3em;
-}
-
-dl.resource dt {
-    margin: 0 0 3px;
-    padding: 5px;
-    background-color: #fff;
-    font-weight: bold;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.resource dd {
-    margin: 5px 0 0 13px;
-    padding: 5px;
-    background-color: #fff;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.resource dd.allow strong {
-    color: #3d8215;
-}
-
-dl.resource dd.deny strong {
-    color: #cc3333;
-}
-
-dl.resource dd a.delete {
-    float: right;
-}
-
-dl.zend_form {
-    border: none;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.zend_form dt {
-    margin-top: 8px;
-}
-
-dl.zend_form dt:first-child {
-    margin-top: 0;
-}
-
-ul.edit {
-    margin: 0;
-    padding: 0;
-    font-size: 1.3em;
-}
-
-ul.edit li {
-    width: 21em;
-    margin: 0 0 5px;
-    padding: 5px;
-    background-color: #fff;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-ul.edit a.delete {
-    float: right;
-    color: #cc3333;
 }

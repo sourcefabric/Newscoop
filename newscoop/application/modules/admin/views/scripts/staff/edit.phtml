@@ -1,11 +1,5 @@
-<h1><?php putGS('Change user account information'); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Change user account information')); ?>
 
-<?php echo $this->renderActions(array(
-    $this->url(array(
-        'action' => 'edit',
-        'controller' => 'acl',
-        'user' => $this->user->getId()
-    )) => getGS('Edit permissions'),
-)); ?>
+<?php $this->renderActions(); ?>
 
 <?php echo $this->form; ?>

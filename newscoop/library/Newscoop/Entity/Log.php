@@ -168,10 +168,10 @@ class Log
     /**
      * Set user
      *
-     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\User|NULL $user
      * @return Newscoop\Entity\Log
      */
-    public function setUser(User $user)
+    public function setUser(User $user = NULL)
     {
         $this->user = $user;
         return $this;
@@ -197,3 +197,4 @@ class Log
         return $this->getUser() ? $this->getUser()->getName() : '';
     }
 }
+

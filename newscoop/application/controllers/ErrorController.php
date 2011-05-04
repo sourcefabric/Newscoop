@@ -1,9 +1,40 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
+/**
+ */
 class ErrorController extends Zend_Controller_Action
 {
+    /**
+     * Forward to legacy controller if controller/action not found
+     */
+    public function preDispatch()
+    {
+        $errors = $this->_getParam('error_handler');
+        if (!$errors) {
+            return;
+        }
+
+        $notFound = array(
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
+        );
+
+        if (in_array($errors->type, $notFound)) { // handle with old code
+            $this->_forward('index', 'legacy', $this->_getParam('module'));
+        }
+    }
+
     public function errorAction()
     {
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+            $this->_helper->layout->disableLayout(); // allow debuging
+        }
+
         $errors = $this->_getParam('error_handler');
         $request = $this->getRequest();
 
@@ -16,11 +47,6 @@ class ErrorController extends Zend_Controller_Action
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
-                // throw exception if in admin module - will continue with legacy code
-                if ($request->getParam('module') == 'admin') {
-                    throw new InvalidArgumentException;
-                }
-
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $priority = Zend_Log::NOTICE;

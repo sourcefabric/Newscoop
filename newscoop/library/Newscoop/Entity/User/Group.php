@@ -14,7 +14,7 @@ use Newscoop\Entity\Acl\Role;
  * @entity(repositoryClass="Newscoop\Entity\Repository\User\GroupRepository")
  * @table(name="liveuser_groups")
  */
-class Group
+class Group implements \Zend_Acl_Role_Interface
 {
     /**
      * @id @generatedValue
@@ -80,16 +80,6 @@ class Group
     }
 
     /**
-     * Get role
-     *
-     * @return Newscoop\Entity\Acl\Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Get role id
      *
      * @return int
@@ -97,6 +87,26 @@ class Group
     public function getRoleId()
     {
         return $this->role ? $this->role->getId() : 0;
+    }
+
+    /**
+     * Get role rules
+     *
+     * @return array
+     */
+    public function getRoleRules()
+    {
+        return $this->role ? $this->role->getRules() : array();
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
 

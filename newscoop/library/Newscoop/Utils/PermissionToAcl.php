@@ -15,6 +15,7 @@ class PermissionToAcl
     /** @var array */
     private static $filters = array(
         'ToArticle' => '',
+        'ArticleTypes' => 'Article-Type',
         'plugin_manager' => 'ManagePlugin',
         'MailNotify' => 'GetNotification',
         'Publish' => 'PublishArticle',
@@ -24,12 +25,13 @@ class PermissionToAcl
         'Users' => 'User',
         'Topics' => 'Topic',
         'Languages' => 'Language',
-        'Types' => 'Type',
+        'UserTypes' => 'User-Group',
         'Authors' => 'Author',
         'Countries' => 'Country',
         'Logs' => 'Log',
-        'Readers' => 'Readers',
+        'Readers' => 'Subscriber',
         'Subscriptions' => 'Subscription',
+        'SystemPreferences' => 'System-Preferences',
     );
 
     /** @var array */
@@ -53,6 +55,12 @@ class PermissionToAcl
         'Publish',
         'Enable',
         'Synchronize',
+    );
+
+    /** @var array */
+    private static $rename = array(
+        'Templ' => 'Template',
+        'Pub' => 'Publication',
     );
 
     /**
@@ -81,6 +89,9 @@ class PermissionToAcl
         foreach (self::$actions as $action) {
             if (strpos($perm, $action) !== FALSE) {
                 $resource = str_replace($action, '', $perm);
+                if (isset(self::$rename[$resource])) {
+                    $resource = self::$rename[$resource];
+                }
                 return array($resource, $action);
             }
         }

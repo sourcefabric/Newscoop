@@ -1,7 +1,5 @@
-<h1><?php putGS('Subscriber management'); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Subscriber management')); ?>
 
-<?php $this->renderActions(array(
-    $this->url(array('action' => 'add')) => getGS('Add new subscriber'),
-)); ?>
+<?php $this->renderActions(); ?>
 
 <?php $this->renderDatatable(); ?>

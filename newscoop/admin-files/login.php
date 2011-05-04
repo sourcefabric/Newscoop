@@ -1,44 +1,42 @@
 <?php
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/languages.php");
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/LoginAttempts.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/template_engine/classes/CampRequest.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/crypto/rc4Encrypt.php');
+require_once('PEAR.php');
+
+camp_load_translation_strings('home');
+camp_load_translation_strings('api');
+
+$error_code = '';
+if ($this->getRequest()->isPost() && !empty($_POST['f_user_name']) && !empty($_POST['f_password'])) { // handle login
+    $error_code = require_once dirname(__FILE__) . '/do_login.php';
+    if (empty($error_code)) { // logged in
+        return;
+    }
+}
+
 // at some situations (e.g. after session expired) we require to have user name/password
 // and by this, it is forced for all (ajax) windows where something was put to be saved
 $f_force_login = Input::Get('f_force_login');
 
-list($access, $g_user) = camp_check_admin_access(CampRequest::GetInput());
-if ($access && (!$f_force_login)) { // logged in allready
-    header("Location: /{$ADMIN}{$prefix}");
-    exit;
-}
-
-// Get request.
-$requestId = Input::Get('request', 'string', '', TRUE);
-if ($requestId != 'ajax' && !preg_match('/^[a-f0-9]{40}$/', $requestId)) {
-    $requestId = ''; // ignore non sha1|ajax
-}
-$request = camp_session_get("request_$requestId", '');
-$requestIsPost = FALSE;
-if (!empty($request)) {
-    $tmp = unserialize($request);
-    $requestIsPost = !empty($tmp['post']);
-    unset($tmp);
+$auth = Zend_Auth::getInstance();
+if ($auth->hasIdentity() && (!$f_force_login)) { // logged in allready
+    $this->_helper->redirector('index', 'index');
 }
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
 camp_session_set('xorkey', $key);
-// Delete any cookies they currently have.
-setcookie("LoginUserId", "", time() - 86400);
-setcookie("LoginUserKey", "", time() - 86400);
 
 // This can be "userpass", "captcha", "upgrade"
-$error_code = isset($_REQUEST['error_code']) ? $_REQUEST['error_code'] : '';
 $f_user_name = isset($_REQUEST['f_user_name']) ? $_REQUEST['f_user_name'] : '';
 
 LoginAttempts::DeleteOldLoginAttempts();
@@ -103,15 +101,10 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
-<<<<<<< HEAD
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 
-=======
-<head>
-  <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/crypt.js" type="text/javascript"></script>
->>>>>>> master
   <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
@@ -126,7 +119,27 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php");
 }
 ?>
-<form name="login_form" method="post" action="do_login.php?request=<?php echo htmlentities($requestId); ?>" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form name="login_form" action="" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+
+<?php if (!empty($_POST['_next'])) {
+    // print hidden field function
+    $view = $this->view;
+    $printHidden = function($name, $value) use ($view) {
+        echo '<input type="hidden" name="', $name, '" value="', $view->escape($value), '" />';
+    };
+
+    // store request post data into form fields
+    foreach ($_POST as $name => $value) {
+        if (is_array($value)) {
+            foreach ($value as $arrayValue) {
+                $printHidden("{$name}[]", $arrayValue);
+            } 
+        } else {
+            $printHidden($name, $value);
+        }
+    }
+} ?>
+
 <?php if ($error_code == "upgrade") { ?>
 <input type="hidden" name="f_is_encrypted" value="0" />
 <?php } else { ?>
@@ -164,7 +177,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     ?>
 
 <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
-<?php if (!empty($_GET['request'])) { ?>
+<?php if (!empty($_POST['_next'])) { ?>
 <tr>
     <td colspan="2"><strong class="light">
         <?php
@@ -250,15 +263,15 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     <noscript>
       <input type="submit" class="button" name="Login" value="<?php  putGS('Login'); ?>" disabled />
     </noscript>
-    <script type="text/javascript" language="JavaScript">
-        document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xkoery.value,f_password.value);" <?php } ?>/>');
+    <script type="text/javascript">
+        document.write('<input type="submit" class="button" name="Login" value="<?php putGS('Login'); ?>" <?php if ($error_code != "upgrade") { ?> onclick="if (f_password.value.trim() != \'\' && (f_password.value.trim().length) != 0) f_password.value = rc4encrypt(f_xorkey.value,f_password.value);" <?php } ?>/>');
     </script>
   </td>
 
 </tr>
 </table>
 </div>
-<input type="hidden" name="f_xkoery" value="<?php p($key); ?>" />
+<input type="hidden" name="f_xorkey" value="<?php echo $this->view->escape($key); ?>" />
 </form>
 <script type="text/javascript">
 <?php if ($error_code != "upgrade") { ?>
@@ -268,3 +281,5 @@ document.forms.login_form.f_password.focus();
 <?php } ?>
 </script>
 <?php camp_html_copyright_notice(false); ?>
+</body>
+</html>
