@@ -432,7 +432,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Maximal zoom for auto-focusing:"); ?>
+        <?php putGS("Maximal zoom for auto-focusing:"); ?> (0-18)
     </td>
     <td align="left" valign="top">
         <input type="text" name="f_map_auto_focus_max_zoom" value="<?php p(SystemPref::Get('MapAutoFocusMaxZoom')); ?>" maxlength="3" size="4" class="input_text" />
