@@ -31,6 +31,7 @@ class PermissionToAcl
         'Logs' => 'Log',
         'Readers' => 'Subscriber',
         'Subscriptions' => 'Subscription',
+        'SystemPreferences' => 'System-Preferences',
     );
 
     /** @var array */
@@ -54,6 +55,12 @@ class PermissionToAcl
         'Publish',
         'Enable',
         'Synchronize',
+    );
+
+    /** @var array */
+    private static $rename = array(
+        'Templ' => 'Template',
+        'Pub' => 'Publication',
     );
 
     /**
@@ -82,6 +89,9 @@ class PermissionToAcl
         foreach (self::$actions as $action) {
             if (strpos($perm, $action) !== FALSE) {
                 $resource = str_replace($action, '', $perm);
+                if (isset(self::$rename[$resource])) {
+                    $resource = self::$rename[$resource];
+                }
                 return array($resource, $action);
             }
         }

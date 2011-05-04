@@ -1,5 +1,12 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
+/**
+ */
 class ErrorController extends Zend_Controller_Action
 {
     /**
@@ -17,13 +24,17 @@ class ErrorController extends Zend_Controller_Action
             Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
         );
 
-        if (in_array($errors->type, $notFound) && $this->_getParam('module') == 'admin') { // handle with old code
-            $this->_forward('index', 'legacy', 'admin');
+        if (in_array($errors->type, $notFound)) { // handle with old code
+            $this->_forward('index', 'legacy', $this->_getParam('module'));
         }
     }
 
     public function errorAction()
     {
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+            $this->_helper->layout->disableLayout(); // allow debuging
+        }
+
         $errors = $this->_getParam('error_handler');
         $request = $this->getRequest();
 

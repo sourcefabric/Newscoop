@@ -26,7 +26,7 @@ body > .content {
 .content-sidebar .sidebar {
     float: left;
     width: 320px;
-    margin: 0 0 22px 41px;
+    margin: 22px 0 0 41px;
     background-color: #fff;
     border: 1px solid #a9a9a9;
     -mozilla-box-shadow: 1px 1px 1px #ccc;
@@ -35,5 +35,5 @@ body > .content {
 }
 
 .content-sidebar .sidebar.first {
-    margin-bottom: 0;
+    margin-top: 0;
 }

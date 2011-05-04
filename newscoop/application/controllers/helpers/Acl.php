@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User;
 
@@ -7,9 +12,6 @@ use Newscoop\Entity\User;
  */
 class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
 {
-    /** @var Zend_Acl */
-    private $acl = NULL;
-
     /** @var Newscoop\Entity\User */
     private $user = NULL;
 
@@ -20,19 +22,6 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        $this->getAcl();
-        return $this;
-    }
-
-    /**
-     * Set Acl
-     *
-     * @param Zend_Acl $acl
-     * @return Action_Helper_Acl
-     */
-    public function setAcl(Zend_Acl $acl)
-    {
-        $this->acl = $acl;
         return $this;
     }
 
@@ -41,14 +30,10 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      *
      * @return Zend_Acl
      */
-    public function getAcl()
+    public function getAcl(\Zend_Acl_Role_Interface $role)
     {
-        if ($this->acl === NULL) {
-            $acl = Zend_Registry::get('acl');
-            $this->setAcl($acl->getAcl());
-        }
-
-        return $this->acl;
+        $aclResource = Zend_Registry::get('acl');
+        return $aclResource->getAcl($role);
     }
 
     /**
@@ -61,7 +46,9 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function isAllowed($resource, $action = NULL, $user = NULL)
     {
-        $role = $user ? $user->getRole() : $this->getCurrentUser()->getRole();
+        if ($user === NULL) {
+            $user = $this->getCurrentUser();
+        }
 
         if ($resource !== NULL) {
             $resource = strtolower($resource);
@@ -71,7 +58,7 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
             $action = strtolower($action);
         }
 
-        return $this->getAcl()->isAllowed($role, $resource, $action);
+        return $this->getAcl($user)->isAllowed($user, $resource, $action);
     }
 
     /**

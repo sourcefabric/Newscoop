@@ -48,9 +48,9 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             $view->user = $user;
 
             // set view navigation acl
-            $acl = $this->getResource('acl')->getAcl();
+            $acl = $this->getResource('acl')->getAcl($user);
             $view->navigation()->setAcl($acl);
-            $view->navigation()->setRole($user->getRole());
+            $view->navigation()->setRole($user);
 
             return;
         }

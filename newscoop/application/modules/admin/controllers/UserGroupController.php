@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User\Group;
 
@@ -40,7 +45,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
                 $this->_helper->flashMessenger->addMessage(getGS('User type added.'));
                 $this->_helper->redirector('index');
             } catch (Exception $e) {
-                $form->getElement('name')->addError(getGS('Name taken.'));
+                $form->getElement('name')->addError(getGS('That type name already exists, please choose a different name.'));
             }
         }
 

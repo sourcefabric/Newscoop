@@ -11,7 +11,7 @@ $(function() {
         // reset
         actions.html(actions_default);
 
-        if (resource == 0) { // show all
+        if (resource == '') { // show all
             return;
         }
 
@@ -21,7 +21,7 @@ $(function() {
         }, function(data) {
             $('option', actions).each(function() {
                 var option = $(this);
-                if (option.val() > 0 && $.inArray(parseInt(option.val()), data.actions) < 0) {
+                if (option.val() != '' && $.inArray(option.val(), data.actions) < 0) {
                     option.detach();
                 }
             });

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User\Staff;
 
@@ -11,8 +16,16 @@ class Admin_StaffController extends Zend_Controller_Action
 
     private $form;
 
+    /**
+     * Init
+     *
+     * @return void
+     */
     public function init()
     {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
+
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
 
         $this->form = new Admin_Form_Staff($this->_helper->acl->isAllowed('user', 'manage'));
@@ -28,7 +41,7 @@ class Admin_StaffController extends Zend_Controller_Action
         }
 
         // set form countries
-        $countries = array();
+        $countries = array('' => getGS('Select country'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
@@ -42,10 +55,15 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $this->_helper->acl->check('user', 'manage');
-
-        $staff = new Staff();
-        $this->handleForm($this->form, $staff);
+        try {
+            $staff = new Staff();
+            $this->handleForm($this->form, $staff);
+        } catch (PDOException $e) {
+            $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->view->form = $this->form;
     }
@@ -63,8 +81,13 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->_helper->acl->check('user', 'manage');
         }
 
-        $this->form->setDefaultsFromEntity($staff);
-        $this->handleForm($this->form, $staff);
+        try {
+            $this->form->setDefaultsFromEntity($staff);
+            $this->handleForm($this->form, $staff);
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->view->form = $this->form;
 
@@ -174,6 +197,11 @@ class Admin_StaffController extends Zend_Controller_Action
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             $this->repository->save($staff, $form->getValues());
             $this->_helper->entity->getManager()->flush();
+
+            // add default widgets for new staff
+            if ($this->_getParam('action') == 'add') {
+                WidgetManager::SetDefaultWidgets($staff->getId());
+            }
 
             $this->_helper->flashMessenger(getGS('Staff member saved.'));
             $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(

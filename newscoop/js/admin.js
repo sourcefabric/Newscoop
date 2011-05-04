@@ -231,9 +231,14 @@ $(function() {
         $('fieldset.toggle legend', form).click(function() {
             $(this).closest('fieldset').toggleClass('closed');
             $('+ dl', $(this)).toggle();
-        }).click().each(function() {
+        }).each(function() {
             $(this).css('cursor', 'pointer');
             $('<span />').addClass('ui-icon ui-icon-triangle-2-n-s').prependTo($(this));
+
+            // toggle on load if not contain errors
+            if (!$('ul.errors', $(this).closest('fieldset')).size()) {
+                $(this).click();
+            }
         });
 
         // acl rule type colours switch

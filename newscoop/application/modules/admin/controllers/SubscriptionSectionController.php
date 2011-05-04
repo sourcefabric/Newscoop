@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\Subscription,
     Newscoop\Entity\SubscriptionSection,
@@ -14,6 +19,10 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
+        camp_load_translation_strings('user_subscription_sections');
+
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\SubscriptionSection');
     }
 
@@ -30,7 +39,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'action' => 'add',
                 'resource' => 'subscription',
                 'privilege' => 'manage',
-                'reset_params' => false,
+                'reset_params' => FALSE,
             ),
             array(
                 'label' => getGS('Edit all sections'),
@@ -39,7 +48,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'action' => 'edit-all',
                 'resource' => 'subscription',
                 'privilege' => 'manage',
-                'reset_params' => false,
+                'reset_params' => FALSE,
             ),
         );
     }
@@ -155,7 +164,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
         ));
     }
 
-    private function getOptions(array $sections, $language = false)
+    private function getOptions(array $sections, $language = FALSE)
     {
         $options = array();
         foreach ($sections as $section) {

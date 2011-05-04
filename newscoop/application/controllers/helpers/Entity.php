@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Doctrine\ORM\EntityManager;
 
@@ -12,6 +17,8 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
 
     /**
      * Init Entity manager
+     *
+     * @return Action_Helper_Entity
      */
     public function init()
     {

@@ -3,6 +3,8 @@
  * @package Campsite
  */
 
+use Newscoop\Entity\User\Subscriber;
+
 /**
  * Includes
  */
@@ -97,42 +99,36 @@ class User extends DatabaseObject {
      */
     public function create($p_values = null)
     {
-        global $LiveUserAdmin;
+        global $controller;
 
         if (is_array($p_values)) {
             $p_values['time_created'] = strftime("%Y-%m-%d %H:%M:%S", time());
         }
+
         foreach ($p_values as $key => $value) {
             if ($key == 'UName') {
                 $key = 'handle';
             }
             $values[$key] = $value;
         }
+
         $values['perm_type'] = 1;
 
-        if ($permUserId = $LiveUserAdmin->addUser($values)) {
-            $filter = array('container' => 'perm',
-                            'filters' => array('perm_user_id' => $permUserId));
-            $user = $LiveUserAdmin->getUsers($filter);
-            $p_values['Id'] = $user[0]['auth_user_id'];
-	    $p_values['Password'] = $user[0]['passwd'];
-            $this->fetch($p_values);
+        try {
+            $subscriber = new Subscriber;
+            $repository = $controller->getHelper('entity')->getRepository($subscriber);
+            $repository->save($subscriber, $values);
+            $controller->getHelper('entity')->flushManager();
+
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User account "$1" ($2) created', $this->m_data['Name'], $this->m_data['UName']);
+            $logtext = getGS('User account "$1" ($2) created', $subscriber->getName(), $subscriber->getUsername());
             Log::Message($logtext, null, 51);
-
-            if ($user['0']['reader'] == 'N') {
-                // add default widgets
-                require_once dirname(__FILE__) . '/Extension/WidgetManager.php';
-                WidgetManager::SetDefaultWidgets($p_values['Id']);
-            }
-
             return true;
+        } catch (Exception $e) {
+            return false;
         }
-
-        return false;
     } // fn create
 
 

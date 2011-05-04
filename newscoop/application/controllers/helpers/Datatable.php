@@ -1,5 +1,7 @@
 <?php
-use Newscoop\Entity\Repository\IDatatableSource;
+use Newscoop\Entity\Repository\IDatatableSource,
+    Newscoop\Entity\Repository\DatatableRepository;
+
 /**
  * Datatable helper
  */
