@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User;
 
@@ -9,7 +14,7 @@ abstract class Admin_Form_User extends Zend_Form
 {
     public function init()
     {
-        $this->addElement('hash', 'csrf', array('salt' => get_class($this)));
+        $this->addElement('hash', 'csrf');
 
         $this->addElement('text', 'username', array(
             'label' => getGS('Account name'),
@@ -20,7 +25,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(3, 32)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '3-32')),
             'order' => 10,
         ));
 
@@ -33,14 +37,19 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(5, 32)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '5-32')),
             'order' => 20,
         ));
 
         $this->addElement('password', 'password_confirm', array( // checked with isValid
             'label' => getGS('Confirm password'),
+            'required' => true,
             'filters' => array(
                 'stringTrim',
+            ),
+            'validators' => array(
+                array(new Zend_Validate_Callback(function($value, $context) {
+                    return empty($context['password']) || $context['password'] == $value;
+                }), false),
             ),
             'errorMessages' => array(getGS('Confirmation failed')),
             'order' => 30,
@@ -55,7 +64,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(1, 128)),
             ),
-            'errorMessages' => array(getGS('Value is not $1 characters long', '1-128')),
             'order' => 40,
         ));
 
@@ -109,7 +117,6 @@ abstract class Admin_Form_User extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(0, 255)),
             ),
-            'errorMessages' => array(getGS("Value is more than '$1' characters long", 255)),
         ));
 
         $this->addElement('text', 'postal_code', array(
@@ -218,7 +225,7 @@ abstract class Admin_Form_User extends Zend_Form
 
         // make password change optional
         $this->getElement('password')->setRequired(false);
-        $this->getElement('password_confirm')->setRequired(false);
+        $this->getElement('password_confirm')->setRequired(!empty($_POST['password']));
         $this->addDisplayGroup(array(
             'password',
             'password_confirm',
@@ -227,18 +234,5 @@ abstract class Admin_Form_User extends Zend_Form
             'class' => 'toggle',
             'order' => 62,
         ));
-    }
-
-    public function isValid($values)
-    {
-        $valid = parent::isValid($values);
-
-        if (empty($values['password'])
-            || $values['password'] == $values['password_confirm']) {
-            return $valid;
-        }
-
-        $this->getElement('password_confirm')->markAsError();
-        return FALSE;
     }
 }

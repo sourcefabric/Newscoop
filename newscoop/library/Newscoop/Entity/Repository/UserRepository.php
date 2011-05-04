@@ -26,6 +26,16 @@ abstract class UserRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
+        // check for unique email
+        $query = $em->createQuery('SELECT u.id FROM Newscoop\Entity\User u WHERE u.email = ?1')
+            ->setParameter(1, $values['email']);
+        $conflicts = $query->getResult();
+        foreach ($conflicts as $conflict) {
+            if ($conflict['id'] != $user->getId()) {
+                throw new \InvalidArgumentException('email');
+            }
+        }
+
         $user->setName($values['name'])
             ->setEmail($values['email'])
             ->setPhone($values['phone'])
@@ -45,8 +55,12 @@ abstract class UserRepository extends EntityRepository
             ->setPosition($values['position']);
 
         // set username/password
-        if ($user->getId() > 0) { // edit
-        } else { // add
+        if ($user->getId() > 0) { // update
+            if (!empty($values['password'])) {
+                $user->setPassword($values['password']);
+            }
+
+        } else { // insert
             $user->setUsername($values['username'])
                 ->setPassword($values['password']);
         }

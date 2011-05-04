@@ -1,0 +1,31 @@
+<?php echo $this->form; ?>
+
+<script type="text/javascript">
+$(function() {
+    // list actions per resource
+    var actions_default = $('select[name=action]').html();
+    $('select[name=resource]').change(function() {
+        var resource = $(this).val();
+        var actions = $('select[name=action]', $(this).closest('dl')).first();
+
+        // reset
+        actions.html(actions_default);
+
+        if (resource == '') { // show all
+            return;
+        }
+
+        // hide actions not used for resource
+        $.getJSON('<?php echo $this->url(array('action' => 'actions', 'controller' => 'acl', 'format' => 'json')); ?>', {
+            'resource': resource
+        }, function(data) {
+            $('option', actions).each(function() {
+                var option = $(this);
+                if (option.val() != '' && $.inArray(option.val(), data.actions) < 0) {
+                    option.detach();
+                }
+            });
+        });
+    });
+});
+</script>
