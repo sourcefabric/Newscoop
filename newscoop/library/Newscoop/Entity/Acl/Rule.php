@@ -7,12 +7,14 @@
 
 namespace Newscoop\Entity\Acl;
 
+use Resource\Acl\RuleInterface;
+
 /**
  * Rule entity
  * @entity(repositoryClass="Newscoop\Entity\Repository\Acl\RuleRepository")
  * @table(name="acl_rule")
  */
-class Rule
+class Rule implements RuleInterface
 {
     /**
      * @id @generatedValue
@@ -37,14 +39,14 @@ class Rule
     private $role;
 
     /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Resource")
-     * @var Newscoop\Entity\Acl\Resource
+     * @column(length="80")
+     * @var string
      */
     private $resource;
 
     /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Action")
-     * @var Newscoop\Entity\Acl\Action
+     * @column(length="80")
+     * @var string
      */
     private $action;
 
@@ -101,44 +103,34 @@ class Rule
     /**
      * Set resource
      *
-     * @param Newscoop\Entity\Acl\Resource|NULL $resource
+     * @param string $resource
      * @return Newscoop\Entity\Acl\Rule
      */
-    public function setResource(Resource $resource = NULL)
+    public function setResource($resource)
     {
-        $this->resource = $resource;
+        $this->resource = (string) $resource;
         return $this;
     }
 
     /**
      * Get resource
      *
-     * @return Newscoop\Entity\Acl\Resource
+     * @return string|NULL
      */
     public function getResource()
     {
-        return $this->resource;
-    }
-
-    /**
-     * Get resource id
-     *
-     * @return int
-     */
-    public function getResourceId()
-    {
-        return $this->resource ? $this->resource->getId() : 0;
+        return empty($this->resource) ? NULL : $this->resource;
     }
 
     /**
      * Set action
      *
-     * @param Newscoop\Entity\Acl\Action|NULL $action
+     * @param string $action
      * @return Newscoop\Entity\Acl\Rule
      */
-    public function setAction(Action $action = NULL)
+    public function setAction($action)
     {
-        $this->action = $action;
+        $this->action = (string) $action;
         return $this;
     }
 
@@ -149,6 +141,6 @@ class Rule
      */
     public function getAction()
     {
-        return $this->action;
+        return empty($this->action) ? NULL : $this->action;
     }
 }

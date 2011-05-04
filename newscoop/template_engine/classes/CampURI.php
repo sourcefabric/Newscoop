@@ -1166,21 +1166,18 @@ abstract class CampURI
 
     private function readUser()
     {
-        $userId = CampRequest::GetVar('LoginUserId');
-        if (!is_null($userId)) {
-            $user = new User($userId);
-            if ($user->exists()
-            && $user->getKeyId() == CampRequest::GetVar('LoginUserKey')) {
-                $this->m_user = new MetaUser($userId);
-                $this->m_preview = CampRequest::GetVar('preview') == 'on'
-                && $this->m_user->is_admin;
+        $auth = Zend_Auth::getInstance();
+        if ($auth->hasIdentity()) {
+            $user = new User($auth->getIdentity());
+            if ($user->exists()) {
+                $this->m_user = new MetaUser($auth->getIdentity());
+                $this->m_preview = CampRequest::GetVar('preview') == 'on' && $this->m_user->is_admin;
             }
         } else {
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
             if (count($ipUsers) > 0) {
                 $this->m_user = new MetaUser($ipUsers[0]->getUserId());
-                $this->m_preview = CampRequest::GetVar('preview') == 'on'
-                && $this->m_user->is_admin;
+                $this->m_preview = CampRequest::GetVar('preview') == 'on' && $this->m_user->is_admin;
             }
         }
     }

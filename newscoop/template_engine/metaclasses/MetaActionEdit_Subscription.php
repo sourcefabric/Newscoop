@@ -82,11 +82,10 @@ class MetaActionEdit_Subscription extends MetaAction
             return false;
         }
 
+        $auth = Zend_Auth::getInstance();
         $user = new User($p_context->user->identifier);
-        if ($user->getUserId() != CampRequest::GetVar('LoginUserId')
-        || $user->getKeyId() != CampRequest::GetVar('LoginUserKey')
-        || $user->getUserId() == 0
-        || $user->getKeyId() == 0) {
+        if ($user->getUserId() != $auth->getIdentity()
+        || $user->getUserId() == 0) {
             $this->m_error = new PEAR_Error('You must be logged in to create or edit your subscription.',
             ACTION_EDIT_SUBSCRIPTION_ERR_NO_USER);
             return false;

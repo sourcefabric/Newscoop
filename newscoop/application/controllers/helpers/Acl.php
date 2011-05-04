@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User;
 
@@ -7,9 +12,6 @@ use Newscoop\Entity\User;
  */
 class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
 {
-    /** @var Zend_Acl */
-    private $acl = NULL;
-
     /** @var Newscoop\Entity\User */
     private $user = NULL;
 
@@ -20,18 +22,6 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        return $this->getAcl();
-    }
-
-    /**
-     * Set Acl
-     *
-     * @param Zend_Acl $acl
-     * @return Action_Helper_Acl
-     */
-    public function setAcl(Zend_Acl $acl)
-    {
-        $this->acl = $acl;
         return $this;
     }
 
@@ -40,15 +30,10 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      *
      * @return Zend_Acl
      */
-    public function getAcl()
+    public function getAcl(\Zend_Acl_Role_Interface $role)
     {
-        if ($this->acl === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $this->setAcl($bootstrap->getResource('Acl')->getAcl());
-        }
-
-        return $this->acl;
+        $aclResource = Zend_Registry::get('acl');
+        return $aclResource->getAcl($role);
     }
 
     /**
@@ -61,7 +46,9 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      */
     public function isAllowed($resource, $action = NULL, $user = NULL)
     {
-        $role = $user ? $user->getRoleId() : $this->getCurrentUser()->getRoleId();
+        if ($user === NULL) {
+            $user = $this->getCurrentUser();
+        }
 
         if ($resource !== NULL) {
             $resource = strtolower($resource);
@@ -71,7 +58,7 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
             $action = strtolower($action);
         }
 
-        return $this->getAcl()->isAllowed($role, $resource, $action);
+        return $this->getAcl($user)->isAllowed($user, $resource, $action);
     }
 
     /**
@@ -84,13 +71,12 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     public function check($resource, $action = NULL)
     {
         if (!$this->isAllowed($resource, $action)) {
-            $this->getRequest()
-                ->setControllerName('error')
-                ->setActionName('deny')
-                ->setDispatched(false)
-                ->setParam('message', getGS('You are not allowed to $1 $2.',
+            $redirector = $this->getActionController()->getHelper('redirector');
+            $redirector->gotoSimple('deny', 'error', 'admin', array(
+                'message' => getGS('You are not allowed to $1 $2.',
                     $action ? $action : getGS('handle'),
-                    $resource ? $resource : getGS('any resource')));
+                    $resource ? $resource : getGS('any resource')),
+            ));
         }
     }
 

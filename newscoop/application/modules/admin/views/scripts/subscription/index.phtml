@@ -1,0 +1,46 @@
+<?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
+
+<?php $this->renderActions(); ?>
+
+<?php if (!$this->subscriber->hasSubscriptions()) {
+    $this->renderMessage(getGS('No subscriptions.'));
+    return;
+}?>
+
+<table>
+<tr>
+    <th><?php putGS('Publication'); ?></th>
+    <th><?php putGS('Left to pay'); ?></th>
+    <th><?php putGS('Type'); ?></th>
+    <th><?php putGS('Active'); ?></th>
+    <th><?php putGS('Delete'); ?></th>
+</tr>
+<?php foreach ($this->subscriber->getSubscriptions() as $subscription) { ?>
+<tr>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'subscription-section',
+        'action' => 'index',
+        'subscription' => $subscription->getId(),
+    )); ?>"><?php echo $this->escape($subscription->getPublication()->getName()); ?></td>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'subscription',
+        'action' => 'edit',
+        'subscription' => $subscription->getId(),
+        'next' => $this->next,
+    )); ?>"><?php echo $this->currency($subscription->getToPay()); ?></a></td>
+    <td><?php $subscription->getType() == 'T' ? putGS('Trial subscription') : putGS('Paid subscription'); ?></td>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'subscription',
+        'action' => 'toggle',
+        'subscription' => $subscription->getId(),
+        'next' => $this->next,
+    )); ?>" title="<?php $subscription->isActive() ? putGS('Deactivate') : putGS('Activate'); ?>"><?php $subscription->isActive() ? putGS('Yes') : putGS('No'); ?></a></td>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'subscription',
+        'action' => 'delete',
+        'subscription' => $subscription->getId(),
+        'next' => $this->next,
+    )); ?>">Delete</a></td>
+</tr>
+<?php } ?>
+</table>

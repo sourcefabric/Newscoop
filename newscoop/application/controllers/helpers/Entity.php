@@ -1,4 +1,9 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Doctrine\ORM\EntityManager;
 
@@ -12,10 +17,13 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
 
     /**
      * Init Entity manager
+     *
+     * @return Action_Helper_Entity
      */
     public function init()
     {
-        return $this->getManager();
+        $this->getManager();
+        return $this;
     }
 
     /**
@@ -38,9 +46,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
     public function getManager()
     {
         if ($this->em === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $doctrine = $bootstrap->getResource('doctrine');
+            $doctrine = Zend_Registry::get('doctrine');
             $this->setManager($doctrine->getEntityManager());
         }
 
@@ -55,7 +61,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      */
     public function getRepository($entity)
     {
-        return $this->getManager()->getRepository($this->getClassName($entity));
+        return $this->em->getRepository($this->getClassName($entity));
     }
 
     /**
@@ -65,7 +71,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      */
     public function flushManager()
     {
-        $this->getManager()->flush();
+        $this->em->flush();
     }
 
     /**
@@ -73,21 +79,43 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
      *
      * @param mixed $entity
      * @param string $key
-     * @return object
+     * @param bool $throw
+     * @return object|NULL
      */
-    public function get($entity, $key = 'id')
+    public function get($entity, $key = 'id', $throw = TRUE)
     {
         $params = $this->getRequest()->getParams();
         if (!isset($params[$key])) {
-            throw new InvalidArgumentException;
+            if ($throw) {
+                throw new InvalidArgumentException;
+            }
+
+            return NULL;
         }
 
-        $match = $this->getManager()->find($this->getClassName($entity), $params[$key]);
+        $match = $this->em->find($this->getClassName($entity), $params[$key]);
         if (!$match) {
-            throw new InvalidArgumentException;
+            if ($throw) {
+                throw new InvalidArgumentException;
+            }
+
+            return NULL;
         }
 
         return $match;
+    }
+
+    /**
+     * Direct strategy
+     *
+     * @param mixed $entity
+     * @param string $key
+     * @param bool $throw
+     * @return object|NULL
+     */
+    public function direct($entity, $key, $throw = TRUE)
+    {
+        return $this->get($entity, $key, $throw);
     }
 
     /**

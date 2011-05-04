@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body > .content {
+    margin: 22px 30px;
+}
+
+.content-sidebar {
+    width: 800px;
+    height: 1%;
+    overflow: hidden;
+    margin: 22px 30px;
+    padding: 0 0 2px;
+    background: transparent url('images/content-sidebar-bg.png') repeat-y 441px 0;
+}
+
+.content-sidebar .content {
+    float: left;
+    width: 420px;
+    min-height: 1em;
+    margin: 0;
+}
+
+.content-sidebar .sidebar {
+    float: left;
+    width: 320px;
+    margin: 22px 0 0 41px;
+    background-color: #fff;
+    border: 1px solid #a9a9a9;
+    -mozilla-box-shadow: 1px 1px 1px #ccc;
+    -webkit-box-shadow: 2px 2px 3px #d4d4d4;
+    box-shadow: 1px 1px 1px #e5e5e5;
+}
+
+.content-sidebar .sidebar.first {
+    margin-top: 0;
+}

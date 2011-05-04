@@ -81,6 +81,12 @@ class NewscoopEntityAclRuleProxy extends \Newscoop\Entity\Acl\Rule implements \D
         return parent::getAction();
     }
 
+    public function getActionName()
+    {
+        $this->_load();
+        return parent::getActionName();
+    }
+
 
     public function __sleep()
     {

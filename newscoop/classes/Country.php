@@ -158,8 +158,8 @@ class Country extends DatabaseObject {
 		if (is_null($p_sqlOptions)) {
 			$p_sqlOptions = array();
 		}
-		if (!isset($p_sqlOptions["ORDER BY"])) {
-			$p_sqlOptions["ORDER BY"] = array("Code", "IdLanguage");
+		if (!isset($p_sqlOptions['ORDER BY'])) {
+			$p_sqlOptions['ORDER BY'] = array('Name', 'Code', 'IdLanguage');
 		}
 		$constraints = array();
 		if (!is_null($p_languageId)) {

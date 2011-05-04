@@ -48,19 +48,8 @@ class DB2Platform extends AbstractPlatform
      *
      * @param array $field
      */
-    public function getVarcharTypeDeclarationSQL(array $field)
+    protected function getVarcharTypeDeclarationSQLSnippet($length, $fixed)
     {
-        if ( ! isset($field['length'])) {
-            if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharDefaultLength();
-            } else {
-                $field['length'] = false;
-            }
-        }
-
-        $length = ($field['length'] <= $this->getVarcharMaxLength()) ? $field['length'] : false;
-        $fixed = (isset($field['fixed'])) ? $field['fixed'] : false;
-
         return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR(255)')
                 : ($length ? 'VARCHAR(' . $length . ')' : 'VARCHAR(255)');
     }
@@ -245,7 +234,7 @@ class DB2Platform extends AbstractPlatform
         return "SELECT NAME, TEXT FROM SYSIBM.SYSVIEWS";
     }
 
-    public function getListTableIndexesSQL($table)
+    public function getListTableIndexesSQL($table, $currentDatabase = null)
     {
         return "SELECT NAME, COLNAMES, UNIQUERULE FROM SYSIBM.SYSINDEXES WHERE TBNAME = UPPER('" . $table . "')";
     }
@@ -464,7 +453,7 @@ class DB2Platform extends AbstractPlatform
         return "SESSION." . $tableName;
     }
 
-    public function modifyLimitQuery($query, $limit, $offset = null)
+    protected function doModifyLimitQuery($query, $limit, $offset = null)
     {
         if ($limit === null && $offset === null) {
             return $query;

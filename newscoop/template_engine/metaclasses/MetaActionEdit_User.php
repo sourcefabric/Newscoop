@@ -1,7 +1,6 @@
 <?php
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
 
 
 define('ACTION_EDIT_USER_ERR_INTERNAL', 'action_edit_user_err_internal');
@@ -168,8 +167,7 @@ class MetaActionEdit_User extends MetaAction
         }
 
         if (!$metaUser->defined) {
-            if (User::UserNameExists($this->m_properties['uname'])
-            || Phorum_user::UserNameExists($this->m_properties['uname'])) {
+            if (User::UserNameExists($this->m_properties['uname'])) {
                 $this->m_error = new PEAR_Error("The login name already exists, please choose a different one.",
                 ACTION_EDIT_USER_ERR_DUPLICATE_USER_NAME);
                 return false;
@@ -180,16 +178,12 @@ class MetaActionEdit_User extends MetaAction
                 return false;
             }
             $user = new User();
-            $phorumUser = new Phorum_user();
-            if (!$user->create($this->m_data)
-            || !$phorumUser->create($this->m_properties['uname'], $this->m_properties['password'], $this->m_properties['email'], $user->getUserId())) {
+            if (!$user->create($this->m_data)) {
                 $user->delete();
-                $phorumUser->delete();
                 $this->m_error = new PEAR_Error("There was an internal error creating the account (code 1).",
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
-            setcookie("LoginUserId", $user->getUserId(), null, '/');
             $user->initLoginKey();
             setcookie("LoginUserKey", $user->getKeyId(), null, '/');
             $p_context->user = new MetaUser($user->getUserId());
@@ -200,15 +194,6 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
-            $phorumUser = Phorum_user::GetByUserName($user->getUserName());
-            if (is_null($phorumUser)) {
-                $phorumUser = new Phorum_user();
-                if (!$phorumUser->create($user->getUserName(), $user->getPassword(), $user->getEmail(), $user->getUserId(), true)) {
-                    $this->m_error = new PEAR_Error("There was an internal error updating the account (code 3).",
-                    ACTION_EDIT_USER_ERR_INTERNAL);
-                    return false;
-                }
-            }
             foreach ($this->m_properties as $property=>$value) {
                 if (!isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
                     continue;
@@ -216,15 +201,11 @@ class MetaActionEdit_User extends MetaAction
                 $dbProperty = MetaActionEdit_User::$m_fields[$property]['db_field'];
                 if ($property != 'password' && $property != 'passwordagain') {
                     $user->setProperty($dbProperty, $value, false);
-                    if ($property == 'email') {
-                        $phorumUser->setProperty('email', $value, false);
-                    }
                 } elseif ($property == 'password') {
                     $user->setPassword($this->m_properties['password'], false);
-                    $phorumUser->setPassword($this->m_properties['password'], false);
                 }
             }
-            if (!$user->commit() || !$phorumUser->commit()) {
+            if (!$user->commit()) {
                 $this->m_error = new PEAR_Error("There was an internal error updating the account (code 4).",
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
