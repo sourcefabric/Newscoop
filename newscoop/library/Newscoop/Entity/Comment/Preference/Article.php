@@ -12,6 +12,7 @@ namespace Newscoop\Entity\Comment\Preference;
  * @entity
  * @table(name="Articles")
  * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\ArticleRepository")
+ * @Table(name="CommentPreferenceArticle")
  */
 class Article
 {

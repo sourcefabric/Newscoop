@@ -96,7 +96,7 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'default_language', 'issues', 'moderator_to', 'moderator_from');
+        return array('__isInitialized__', 'id', 'name', 'default_language', 'issues', 'public_enabled', 'moderator_to', 'moderator_from');
     }
 
     public function __clone()

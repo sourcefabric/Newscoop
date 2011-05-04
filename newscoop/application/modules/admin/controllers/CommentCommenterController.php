@@ -8,7 +8,8 @@
  *
  */
 use Newscoop\Entity\Comment\Commenter;
-
+/**
+ */
 class Admin_CommentCommenterController extends Zend_Controller_Action
 {
 

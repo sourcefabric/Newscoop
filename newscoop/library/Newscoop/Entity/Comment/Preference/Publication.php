@@ -10,7 +10,7 @@ namespace Newscoop\Entity\Comment\Preference;
 /**
  * Publication entity
  * @Entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\PublicationRepository")
- * @Table(name="CommentPrefencePublications")
+ * @Table(name="CommentPreferencePublication")
  */
 class Publication
 {
@@ -39,11 +39,17 @@ class Publication
      */
     private $subscribers_moderated;
 
-     /**
+    /**
      * @column(name="public_moderated")
      * @var bool
      */
     private $public_moderated;
+
+    /**
+     * @column(name="public_enabled")
+     * @var bool
+     */
+    private $public_enabled;
 
     /**
      * @column(name="captcha_enabled")

@@ -91,9 +91,10 @@ $columns = array('Name' => $f_name,
                  'comments_public_enabled' => $f_comments_public_enabled,
 				 'comments_captcha_enabled' => $f_comments_captcha_enabled,
 				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled,
-                 'seo' => serialize($f_seo),
                  'comments_moderator_to' => $f_comments_moderator_to,
-                 'comments_moderator_from' => $f_comments_moderator_from);
+                 'comments_moderator_from' => $f_comments_moderator_from,
+                 'seo' => serialize($f_seo),
+            );
 
 $updated = $publicationObj->update($columns);
 if ($updated) {

@@ -11,6 +11,8 @@ use Newscoop\Entity\Comment,
     Newscoop\Entity\Publication,
     Newscoop\Entity\Notification;
 
+/**
+ */
 class Admin_NotificationController extends Zend_Controller_Action
 {
     /**

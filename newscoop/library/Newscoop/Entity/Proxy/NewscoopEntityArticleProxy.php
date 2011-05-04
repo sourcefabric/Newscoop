@@ -57,7 +57,6 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getPublication();
     }
 
-<<<<<<< HEAD
     public function setLanguage(\Newscoop\Entity\Language $p_language)
     {
         $this->_load();
@@ -68,24 +67,6 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
     {
         $this->_load();
         return parent::getLanguage();
-=======
-    public function getRoleId()
-    {
-        $this->_load();
-        return parent::getRoleId();
-    }
-
-    public function getRoleRules()
-    {
-        $this->_load();
-        return parent::getRoleRules();
-    }
-
-    public function __toString()
-    {
-        $this->_load();
-        return parent::__toString();
->>>>>>> devel
     }
 
 

@@ -43,6 +43,12 @@ class Publication
     private $issues;
 
     /**
+     * @column(name="comments_public_enabled")
+     * @var bool
+     */
+    private $public_enabled;
+
+    /**
      * @Column(name="comments_moderator_to")
      * @var string
      */
