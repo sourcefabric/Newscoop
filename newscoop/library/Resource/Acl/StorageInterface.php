@@ -19,4 +19,11 @@ interface StorageInterface
      * @return array
      */
     public function getRules(\Zend_Acl_Role_Interface $role);
+
+    /**
+     * Get stored resources
+     *
+     * @return array
+     */
+    public function getResources();
 }
