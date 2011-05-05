@@ -1,0 +1,46 @@
+<?php $this->placeholder('title')->set(getGS('File manager')); ?>
+
+<table>
+    <caption><a href="<?php echo $this->url(array(
+        'path' => NULL,
+    )); ?>">Templates</a> / <?php echo $this->navigation()->breadcrumbs()
+        ->setContainer($this->nav)
+        ->setMinDepth(0)
+        ->setSeparator(' / ');
+    ?></caption>
+<tr>
+    <th class="id"><input type="checkbox" name="toggle" class="all" /></th>
+    <th><?php putGS('File name'); ?></th>
+    <th class="size"><?php putGS('File size'); ?></th>
+    <th><?php putGS('Last modified'); ?></th>
+</tr>
+
+<?php foreach ($this->manager as $file) {
+    if ($file->isDot() && ($file->getBasename() == '.' || $file->isRoot())) {
+        continue;
+    }
+?>
+<tr>
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getPath(); ?>" /></td>
+
+    <?php if ($file->isDot()) { // go to parent ?>
+    <td><a href="<?php echo $this->url(array(
+        'path' => $this->parent,
+    )); ?>"><strong><?php echo $file; ?></strong></a></td>
+    <td></td>
+
+    <?php } elseif ($file->isDir()) { ?>
+    <td><a href="<?php echo $this->url(array(
+        'path' => ltrim($this->path . $this->separator . (string) $file, $this->separator),
+    )); ?>"><?php echo $file; ?></a></td>
+    <td></td>
+
+    <?php } else { ?>
+    <td><?php echo $file; ?></td>
+    <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
+    <?php } ?>
+
+    <td><?php echo date($this->dateFormat, $file->getCTime()); ?></td>
+</tr>
+<?php } ?>
+</table>

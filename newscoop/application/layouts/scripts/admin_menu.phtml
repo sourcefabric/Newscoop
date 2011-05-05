@@ -268,20 +268,28 @@ if ($showConfigureMenu) {
         'privilege' => 'edit',
     );
 
-    if ($g_user->hasPermission('ManageTempl') || $g_user->hasPermission('DeleteTempl')) {
-        $pages[3]['pages'][] = array(
-            'label' => getGS('Templates'),
-            'module' => 'admin',
-            'controller' => 'templates',
-            'action' => 'index.php',
-        );
+    $pages[3]['pages'][] = array(
+        'label' => getGS('File manager'),
+        'module' => 'admin',
+        'controller' => 'file-manager',
+    );
 
-        $pages[3]['pages'][] = array(
-            'label' => getGS('Themes'),
-            'module' => 'admin',
-            'controller' => 'themes',
-        );
-    }
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Templates'),
+        'module' => 'admin',
+        'controller' => 'templates',
+        'action' => 'index.php',
+        'resource' => 'template',
+        'privilege' => 'manage',
+    );
+
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Themes'),
+        'module' => 'admin',
+        'controller' => 'themes',
+        'resource' => 'template',
+        'privilege' => 'manage',
+    );
 
     $pages[3]['pages'][] = array(
         'label' => getGS('Article Types'),
