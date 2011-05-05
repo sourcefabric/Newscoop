@@ -7,6 +7,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initAutoloader()
     {
+        global $g_campsiteDir;
+
+        $g_campsiteDir = realpath(APPLICATION_PATH . '/../');
+
         set_include_path(implode(PATH_SEPARATOR, array(
             realpath(APPLICATION_PATH . '/../classes/'),
             realpath(APPLICATION_PATH . '/../classes/Extension/'),
@@ -21,6 +25,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader->pushAutoloader(function($file) {
             return;
         }, 'ADO');
+
+        // init session before loading plugins to prevent session start errors
+        $this->bootstrap('session');
+
+        // plugin include paths
+        $includePaths = array(
+            'classes',
+            'template_engine/classes',
+            'template_engine/metaclasses',
+        );
+
+        // add plugins to path
+        foreach (CampPlugin::GetPluginsInfo(true) as $info) {
+            $name = $info['name'];
+            foreach ($includePaths as $path) {
+                $includePath = "$g_campsiteDir/plugins/$name/$path";
+                if (file_exists($includePath)) {
+                    set_include_path(implode(PATH_SEPARATOR, array(
+                        $includePath,
+                        get_include_path(),
+                    )));
+                }
+            }
+        }
 
         return $autoloader;
     }
