@@ -53,6 +53,11 @@ class Writer extends Zend_Log_Writer_Abstract
             }
         }
 
+        if (empty($event['user'])) { // Can't store without user
+            //FIXME: the user class is abstract cannot create instance $event['user'] = new User;
+            $event['user'] = new User;
+        }
+
         // create log entity
         $log = new Log;
         $log->setTimeCreated(new DateTime($event['timestamp']))

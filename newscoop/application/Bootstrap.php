@@ -16,6 +16,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             realpath(APPLICATION_PATH . '/../classes/Extension/'),
             realpath(APPLICATION_PATH . '/../template_engine/classes/'),
             realpath(APPLICATION_PATH . '/../template_engine/metaclasses/'),
+            realpath(APPLICATION_PATH . '/../library/Service/'),
         )) . PATH_SEPARATOR . get_include_path());
 
         $autoloader = Zend_Loader_Autoloader::getInstance();
