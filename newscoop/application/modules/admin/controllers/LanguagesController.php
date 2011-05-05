@@ -14,19 +14,24 @@ use Newscoop\Entity\Language;
 class Admin_LanguagesController extends Zend_Controller_Action
 {
     /** @var Newscoop\Entity\Repository\LanguageRepository */
-    private $languageRepository= NULL;
+    private $repository= NULL;
 
+    /** 
+     * Init
+     *
+     * @return void
+     */
     public function init()
     {
         camp_load_translation_strings('languages');
 
-        // get repositories
-        $this->languageRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
+        $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
     }
 
     public function indexAction()
     {
-        $this->view->languages = $this->languageRepository->getLanguages();
+        $this->view->languages = $this->repository->getLanguages();
+
         $this->view->actions = array(
             array(
                 'label' => getGS('Add new Language'),
@@ -41,18 +46,18 @@ class Admin_LanguagesController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $form = new Admin_Form_BaseLanguage;
-        $form->setMethod('post')
-            ->setAction('');
+        $this->_helper->acl->check('language', 'manage');
+
+        $form = new Admin_Form_Language;
+        $form->setMethod('post')->setAction('');
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             try {
                 $language = new Language;
-                $this->languageRepository->save($language, $form->getValues());
+                $this->repository->save($language, $form->getValues());
                 $this->_helper->flashMessenger->addMessage(getGS('Language added.'));
                 $this->_helper->redirector('index');
             } catch (Exception $e) {
-                $form->getElement('name')->addError($e->getMessage());
                 $form->getElement('name')->addError(getGS('Name taken.'));
             }
         }
@@ -64,14 +69,14 @@ class Admin_LanguagesController extends Zend_Controller_Action
     {
         $language = $this->getLanguage();
 
-        $form = new Admin_Form_BaseLanguage;
+        $form = new Admin_Form_Language;
         $form->setAction('')
             ->setMethod('post')
             ->setDefaultsFromEntity($language);
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             try {
-                $this->languageRepository->save($language, $form->getValues());
+                $this->repository->save($language, $form->getValues());
 
                 $this->_helper->flashMessenger->addMessage(getGS('Language saved.'));
                 $this->_helper->redirector('edit', 'languages', 'admin', array('language' => $language->getId()));
@@ -89,8 +94,10 @@ class Admin_LanguagesController extends Zend_Controller_Action
      */
     public function deleteAction()
     {
+        $language = $this->getLanguage();
+
         Localizer::DeleteLanguageFiles($language->getCode());
-        $this->languageRepository->delete($language->getId());
+        $this->repository->delete($language->getId());
         $this->_helper->flashMessenger->addMessage(getGS('Language removed.'));
         $this->_helper->redirector('index', 'languages', 'admin');
     }
@@ -103,7 +110,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
     private function getLanguage()
     {
         $id = $this->getRequest()->getParam('language');
-        $language = $this->languageRepository->find($id);
+        $language = $this->repository->find($id);
         if (empty($language)) {
             $this->_helper->flashMessenger->addMessage(getGS('Language not found.'));
             $this->_forward('index');
