@@ -11,7 +11,7 @@ use Newscoop\Entity\Language;
 /**
  * Language form
  */
-class Admin_Form_BaseLanguage extends Zend_Form
+class Admin_Form_Language extends Zend_Form
 {
     public function init()
     {

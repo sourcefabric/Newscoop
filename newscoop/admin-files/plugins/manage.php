@@ -54,6 +54,9 @@ if (Input::Get('save')) {
             $CampPlugin->disable();
         }
     }
+
+    $redirector = $this->getHelper('redirector');
+    $redirector->gotoSimple('manage.php', 'plugins', 'admin');
 }
 
 if (Input::Get('upload_package')) {

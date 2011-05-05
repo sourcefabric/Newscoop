@@ -7,7 +7,8 @@
 
 namespace Newscoop\Acl;
 
-use Resource\Acl\StorageInterface;
+use Resource\Acl\StorageInterface,
+    Newscoop\Utils\PermissionToAcl;
 
 /**
  * Acl storage
@@ -38,5 +39,27 @@ class Storage implements StorageInterface
         return (array) $repository->findBy(array(
             'role' => $role->getRoleId(),
         ));
+    }
+
+    /**
+     * Get dynamic resources
+     *
+     * @return array
+     */
+    public function getResources()
+    {
+        $em = $this->doctrine->getEntityManager();
+        $repository = $em->getRepository('Newscoop\Entity\Acl\Permission');
+
+        $resources = array();
+        foreach ($repository->findAll() as $permission) {
+            list($resource, $action) = PermissionToAcl::translate($permission);
+            if (!isset($resources[$resource])) {
+                $resources[$resource] = array();
+            }
+            $resources[$resource][] = $action;
+        }
+
+        return $resources;
     }
 }
