@@ -27,7 +27,6 @@ $(function(){
 });
 
 </script>
-
 <div class="wrapper">
   <div class="ui-widget-content small-block block-shadow commentsHolder">
     <div class="padded clearfix inner-tabs">
@@ -82,7 +81,7 @@ $().ready(function(){
 </fieldset>
 </div>
 
-<div id="actionExpand">
+<div id="actionExpand" class="dataTables_actions">
 <fieldset>
   <select class="input_select actions">
     <option value=""><?php putGS('Actions');?></option>
@@ -92,6 +91,10 @@ $().ready(function(){
     <option value="deleted"><?php putGS('Deleted');?></option>
   </select>
 </fieldset>
+<a href="javascript:;" class="sort_tread">
+    <span class="css_right ui-icon ui-icon-carat-2-n-s"></span>
+    <?php putGS('Sort by Thread order');?>
+</a>
 </div>
 <script>
 $().ready(function(){
@@ -126,6 +129,21 @@ $().ready(function(){
                 }
             });
         }
+    });
+    $('.sort_tread').click(function(){
+        var dir = $(this).find('span');
+        if(dir.hasClass('ui-icon-triangle-1-n'))
+        {
+            dir.removeClass("ui-icon-triangle-1-n");
+            dir.addClass('ui-icon-triangle-1-s');
+            datatable.fnSort( [ [2,'asc'] ] );
+        }
+        else {
+            dir.removeClass("ui-icon-triangle-1-s");
+            dir.addClass('ui-icon-triangle-1-n');
+            datatable.fnSort( [ [2,'desc'] ] );
+        }
+        dir.removeClass("ui-icon-carat-2-n-s");
     });
 });
 </script>
@@ -214,6 +232,9 @@ $().ready(function(){
 var statusMap ={ 'pending': 'status_new', 'hidden': 'status_hidden', 'deleted': 'status_deleted', 'approved': 'status_approved' };
 var datatableCallback = {
 	serverData: {},
+	sort: function(){
+		console.log('here');
+	},
 	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
 	    that = datatableCallback;
         var tr = $('<tr></tr>');
@@ -254,3 +275,48 @@ var datatableCallback = {
     }
 }
 </script>
+<script type="text/javascript">
+    $(function(){
+        // Dialog
+        $('.dialogPopup').dialog({
+            autoOpen: false,
+            width: 600,
+            height: 560,
+            position:'right',
+            buttons: {
+                "Cancel": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+        // Dialog Link
+        $('.articleLink').live('click',function(){
+        var that = this;
+        $.ajax({
+                type: 'GET',
+                url: $(this).attr('href'),
+                success: function(data) {
+                      var content = '<h3><a href="#">'+$(that).html()+'</a></h3>';
+                      for(i in data)
+                      {
+                    	  content+='<h4>'+i+'</h4>';
+                    	  content+='<p>'+data[i]+'</p>';
+                      }
+                      $('.dialogPopup').html(content);
+                      $('.dialogPopup').dialog('open');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage("<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>", "error");
+                    }
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+
+<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div>
+<div class="dialogPopup dialog-1" title="Full article">
+</div>

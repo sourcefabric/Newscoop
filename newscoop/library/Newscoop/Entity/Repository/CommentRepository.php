@@ -51,12 +51,11 @@ class CommentRepository extends DatatableSource
     private function setCommentStatus(Comment $p_comment, $p_status)
     {
         $em = $this->getEntityManager();
-        /*if($p_status == 'deleted')
+        if($p_status == 'deleted')
         {
             $em->remove($p_comment);
         }
         else
-        */
         {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);
@@ -209,6 +208,9 @@ class CommentRepository extends DatatableSource
                     break;
                 case 'thread':
                     $qb->orderBy("a.name", $dir);
+                    break;
+                case 'action':
+                    $qb->orderBy("e.thread_order", $dir);
                     break;
                 default:
                     $qb->orderBy("e.".$sortBy, $dir);

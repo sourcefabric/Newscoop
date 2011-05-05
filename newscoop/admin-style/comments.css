@@ -647,3 +647,6 @@ select.actions {
     background:#fff4f4;
 }
 
+.commentAction {
+    display: none;
+}

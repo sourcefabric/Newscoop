@@ -14,6 +14,21 @@ use Newscoop\Entity\Comment;
 class Admin_CommentController extends Zend_Controller_Action
 {
 
+    private $allowedTags = array(
+        'a'             => array('title','href'),
+        'abbr'          => array('title'),
+        'acronym'       => array('title'),
+        'b'             => array(),
+        'blockquote'    => array('cite'),
+        'cite'          => array(),
+        'code'          => array(),
+        'del'           => array('datetime'),
+        'em'            => array(),
+        'i'             => array(),
+        'q'             => array('cite'),
+        'strike'        => array(),
+        'strong'        => array()
+    );
     /**
      * @var ICommentRepository
      *
@@ -25,6 +40,12 @@ class Admin_CommentController extends Zend_Controller_Action
      *
      */
     private $articleRepository;
+
+    /**
+     * @var ILanguageRepository
+     *
+     */
+    private $languageRepository;
 
     /**
      * @var IAcceptanceRepository
@@ -45,6 +66,8 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
         // get article repository
         $this->articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+        // get language repository
+        $this->languageRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
 
         $this->form = new Admin_Form_Comment;
         $this->form->setMethod('post');
@@ -73,7 +96,7 @@ class Admin_CommentController extends Zend_Controller_Action
             'action' => '',
             'time_created' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
-        ),array('id' => false, 'action' => false));
+        ), array('id' => false));
 
         $table->setHandle(function($comment) use ($view) {
             return array(
@@ -114,11 +137,34 @@ class Admin_CommentController extends Zend_Controller_Action
         }
         try
         {
-            $comment = $this->getRequest()->getParam('comment');
+            $comments = $this->getRequest()->getParam('comment');
             $status = $this->getRequest()->getParam('status');
-            if(!is_array($comment))
-                $comment = array($comment);
-            $this->repository->setStatus($comment,$status);
+            if(!is_array($comments))
+                $comments = array($comments);
+            foreach($comments as $id)
+            {
+                $comment = $this->repository->find($id);
+                if($status == "deleted")
+                {
+                    $this->_helper->log(
+                        getGS('Comment delete by $1 from the article $2 ($3)',
+                            Zend_Registry::get('user')->getName(),
+                            $comment->getThread()->getName(),
+                            $comment->getLanguage()->getCode()
+                    ));
+                }
+                else
+                {
+                    $this->_helper->log(
+                        getGS('Comment $4 by $1 in the article $2 ($3)',
+                            Zend_Registry::get('user')->getName(),
+                            $comment->getThread()->getName(),
+                            $comment->getLanguage()->getCode(),
+                            $status
+                    ));
+                }
+            }
+            $this->repository->setStatus($comments, $status);
             $this->repository->flush();
         }
         catch(Exception $e)
@@ -144,21 +190,22 @@ class Admin_CommentController extends Zend_Controller_Action
         $values['user'] = Zend_Registry::get('user');
         $values['name'] = $request->getParam('name');
         $values['subject'] = $request->getParam('subject');
-        $values['message'] = $request->getParam('message');
+        $allowedTags = '<'.impload(array_keys($this->allowedTags),'><').'>';
+        $values['message'] = strip_tags($request->getParam('message'), $allowedTags);
         $values['language'] = $request->getParam('language');
         $values['thread'] =  $request->getParam('article');
         $values['ip'] = $request->getClientIp();
         $values['status'] = 'approved';
         $values['time_created'] = new DateTime;
-
         if (!SecurityToken::isValid()) {
+            $this->_helper->log(getGS('Invalid security token!'));
             $this->view->status = 401;
             $this->view->message = getGS('Invalid security token!');
             return;
         }
         try
         {
-            $this->repository->save($comment, $values);
+            $comment = $this->repository->save($comment, $values);
             $this->repository->flush();
         }
         catch(Exception $e)
@@ -167,6 +214,12 @@ class Admin_CommentController extends Zend_Controller_Action
             $this->view->message = $e->getMessage();
             return;
         }
+        $this->_helper->log(
+            getGS('Comment added by $1 to the article $2 ($3)',
+                Zend_Registry::get('user')->getName(),
+                $comment->getThread()->getName(),
+                $comment->getLanguage()->getCode()
+        ));
         $this->view->status = 200;
         $this->view->message = "succcesful";
         $this->view->comment = $comment->getId();
@@ -229,7 +282,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['time_updated'] = new DateTime;
             try
             {
-                $this->repository->update($comment, $values);
+                $comment = $this->repository->update($comment, $values);
                 $this->repository->flush();
             }
             catch(Exception $e)
@@ -238,6 +291,14 @@ class Admin_CommentController extends Zend_Controller_Action
                 $this->view->message = $e->getMessage();
                 return;
             }
+            $article = $this->articleRepository->find($values['thread']);
+            $language = $this->languageRepository->find($values['language']);
+            $this->_helper->log(
+                getGS('Comment updated by $1 to the article $2 ($3)',
+                Zend_Registry::get('user')->getName(),
+                $comment->getThread()->getName(),
+                $comment->getLanguage()->getCode()
+            ));
             $this->view->status = 200;
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();
@@ -268,7 +329,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['status'] = 'approved';
             try
             {
-                $this->repository->save($comment, $values);
+                $comment = $this->repository->save($comment, $values);
                 $this->repository->flush();
             }
             catch(Exception $e)
@@ -277,6 +338,12 @@ class Admin_CommentController extends Zend_Controller_Action
                 $this->view->message = $e->getMessage();
                 return;
             }
+            $this->_helper->log(
+                getGS('Comment added by $1 to the article $2 ($3)',
+                Zend_Registry::get('user')->getName(),
+                $comment->getThread()->getName(),
+                $comment->getLanguage()->getCode()
+            ));
             $this->view->status = 200;
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();

@@ -138,7 +138,9 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         // create logger
         $writer = new Writer($em);
-        return new Zend_Log($writer);
+        $log = new Zend_Log($writer);
+        Zend_Registry::set('log', $log);
+        return $log;
     }
 
     /**
