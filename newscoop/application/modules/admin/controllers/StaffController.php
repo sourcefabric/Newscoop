@@ -1,30 +1,47 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\Entity\User\Staff;
 
+/**
+ * @Acl(resource="user", action="manage")
+ */
 class Admin_StaffController extends Zend_Controller_Action
 {
     private $repository;
 
     private $form;
 
+    /**
+     * Init
+     *
+     * @return void
+     */
     public function init()
     {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
+
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
 
-        $this->form = new Admin_Form_Staff;
+        $this->form = new Admin_Form_Staff($this->_helper->acl->isAllowed('user', 'manage'));
         $this->form->setAction('')->setMethod('post');
 
-        // set form user groups
-        $groups = array();
-        $groupRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
-        foreach ($groupRepository->findAll() as $group) {
-            $groups[$group->getId()] = $group->getName();
+        if ($this->_helper->acl->isAllowed('user', 'manage')) { // set form user groups
+            $groups = array();
+            $groupRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Group');
+            foreach ($groupRepository->findAll() as $group) {
+                $groups[$group->getId()] = $group->getName();
+            }
+            $this->form->getElement('groups')->setMultioptions($groups);
         }
-        $this->form->getElement('groups')->setMultioptions($groups);
 
         // set form countries
-        $countries = array();
+        $countries = array('' => getGS('Select country'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
@@ -38,27 +55,75 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function addAction()
     {
-        $staff = new Staff();
-
-        $this->handleForm($this->form, $staff);
+        try {
+            $staff = new Staff();
+            $this->handleForm($this->form, $staff);
+        } catch (PDOException $e) {
+            $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
     }
 
+    /**
+     * @Acl(ignore="1")
+     */
     public function editAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');
-        $this->form->setDefaultsFromEntity($staff);
 
-        $this->handleForm($this->form, $staff);
+        // check permission
+        $auth = Zend_Auth::getInstance();
+        if ($staff->getId() != $auth->getIdentity()) { // check if user != current
+            $this->_helper->acl->check('user', 'manage');
+        }
+
+        try {
+            $this->form->setDefaultsFromEntity($staff);
+            $this->handleForm($this->form, $staff);
+        } catch (InvalidArgumentException $e) {
+            $field = $e->getMessage();
+            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+        }
 
         $this->view->form = $this->form;
-        $this->view->user = $staff;
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Edit access'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'edit-access',
+                'params' => array(
+                    'user' => $staff->getId(),
+                ),
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
+    public function editAccessAction()
+    {
+        $staff = $this->_helper->entity(new Staff, 'user');
+        $this->view->staff = $staff;
+
+        $this->_helper->actionStack('edit', 'acl', 'admin', array(
+            'role' => $staff->getRoleId(),
+            'user' => $staff->getId(),
+        ));
+    }
+
+    /**
+     * @Acl(action="delete")
+     */
     public function deleteAction()
     {
+        $this->_helper->acl->check('user', 'delete');
+
         $staff = $this->_helper->entity->get(new Staff, 'user');
         $this->repository->delete($staff);
 
@@ -114,6 +179,17 @@ class Admin_StaffController extends Zend_Controller_Action
         });
 
         $table->dispatch();
+
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Add new staff member'),
+                'module' => 'admin',
+                'controller' => 'staff',
+                'action' => 'add',
+                'resource' => 'user',
+                'privilege' => 'manage',
+            ),
+        );
     }
 
     private function handleForm(Zend_Form $form, Staff $staff)
@@ -122,8 +198,15 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->repository->save($staff, $form->getValues());
             $this->_helper->entity->getManager()->flush();
 
+            // add default widgets for new staff
+            if ($this->_getParam('action') == 'add') {
+                WidgetManager::SetDefaultWidgets($staff->getId());
+            }
+
             $this->_helper->flashMessenger(getGS('Staff member saved.'));
-            $this->_helper->redirector->gotoSimple('index');
+            $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(
+                'user' => $staff->getId(),
+            ));
         }
     }
 }

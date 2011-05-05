@@ -1,7 +1,7 @@
 <?php echo $this->doctype(); ?>
 <html lang="<?php echo $this->locale; ?>" dir="ltr">
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <?php echo $this->headTitle(); ?>
 
     <meta http-equiv="Expires" content="now" />
@@ -13,6 +13,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
+
+    <?php if (!$this->legacy) { ?>
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
+    <?php } ?>
 
 	<!--[if IE 6]>
 	<style type="text/css">
@@ -65,10 +73,10 @@
         });
     //--></script>
 </head>
-<body>
+<body<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
 <div class="meta-bar">
     <ul>
-        <li><a href="<?php echo $this->url(array('action' => 'logout', 'controller' => 'auth')); ?>"><?php putGS('Logout'); ?></a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php echo $this->helpUrl; ?>" target="_blank"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
     </ul>
@@ -76,9 +84,29 @@
 
 <?php echo $this->render('admin_menu.phtml'); ?>
 
+<?php echo $this->legacy ? '' : $this->placeholder('title'); ?>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+<div class="content-sidebar">
+<?php } ?>
+
+<?php if (!$this->legacy) { ?>
 <div class="content">
     <?php echo $this->layout()->content; ?>
 </div>
+<?php } else { ?>
+    <?php echo $this->layout()->content; ?>
+<?php } ?>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+<div class="sidebar first">
+<?php echo $this->placeholder('sidebar'); ?>
+</div>
+<?php } ?>
+
+<?php if ($this->placeholder('sidebar') != '') { ?>
+</div><!-- /.content-sidebar -->
+<?php } ?>
 
 <?php if (!empty($this->messages)) { ?>
 <script type="text/javascript"><!--
@@ -90,6 +118,8 @@ $(function() {
 //--></script>
 <?php } ?>
 
-<?php camp_html_copyright_notice(); ?>
+<?php if (!$this->legacy) {
+    camp_html_copyright_notice();
+} ?>
 </body>
 </html>

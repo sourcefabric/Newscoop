@@ -795,14 +795,16 @@ DROP TABLE IF EXISTS `SubsSections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SubsSections` (
+  `id` int(10) AUTO_INCREMENT,
   `IdSubscription` int(10) unsigned NOT NULL DEFAULT '0',
   `SectionNumber` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdLanguage` int(10) NOT NULL DEFAULT '0',
+  `IdLanguage` int(10) NULL,
   `StartDate` date NOT NULL DEFAULT '0000-00-00',
   `Days` int(10) unsigned NOT NULL DEFAULT '0',
   `PaidDays` int(10) unsigned NOT NULL DEFAULT '0',
   `NoticeSent` enum('N','Y') NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`IdSubscription`,`SectionNumber`,`IdLanguage`)
+  PRIMARY KEY (`id`),
+  UNIQUE (`IdSubscription`,`SectionNumber`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -980,7 +982,7 @@ DROP TABLE IF EXISTS `liveuser_groups`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `liveuser_groups` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL AUTO_INCREMENT,
   `group_type` int(11) NOT NULL DEFAULT '0',
   `group_define_name` varchar(32) NOT NULL DEFAULT '',
   `role_id` int(10) DEFAULT NULL,

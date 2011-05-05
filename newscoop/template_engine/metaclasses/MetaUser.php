@@ -118,15 +118,17 @@ final class MetaUser extends MetaDbObject {
      */
     protected function isLoggedIn()
     {
+        $auth = Zend_Auth::getInstance();
         $context = CampTemplate::singleton()->context();
-        return (($context->login_action->defined
-        && $context->login_action->ok
-        && $context->login_action->user_name == $this->uname
-        && $this->uname != '')
-        || ($this->m_dbObject->getUserId() == CampRequest::GetVar('LoginUserId')
-        && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey')
-        && $this->m_dbObject->getUserId() > 0
-        && $this->m_dbObject->getKeyId() > 0));
+
+        if ($context->login_action->defined
+            && $context->login_action->ok
+            && $context->login_action->user_name == $this->uname
+            && $this->uname != '') {
+            return true;
+        }
+
+        return $auth->hasIdentity() && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey');
     }
 
 

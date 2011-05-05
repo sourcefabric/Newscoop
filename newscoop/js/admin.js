@@ -169,7 +169,7 @@ $(function() {
         });
 
     // zebra
-    $('.content > table tr:odd').addClass('odd');
+    $('.content table tr:odd, .sidebar table tr:odd').addClass('odd');
 
     // confirmations
     $('.confirm[title]').click(function() {
@@ -188,24 +188,63 @@ $(function() {
             .prependTo($(this));
     });
 
+    // add cross icon for delete
+    $('a.delete.icon').each(function() {
+        $(this).html('');
+        $('<span />')
+            .addClass('ui-icon ui-icon-closethick')
+            .prependTo($(this));
+    });
+
     // zend_form utils
     $('dl.zend_form').each(function() {
         var form = $(this);
 
         // hide hidden fields
         $('input:hidden', form).each(function() {
-            $(this).closest('dd').hide().prev('dt').hide();
+            var dd = $(this).closest('dd');
+            var dt = dd.prev('dt');
+            var errors = $('ul.errors', dd);
+
+            dt.hide().detach().appendTo(form);
+
+            if (errors.length > 0) { // keep dd for errors
+                return;
+            }
+
+            dd.hide().detach().appendTo(form);
+        });
+
+        // hide fieldsets dt
+        $('fieldset', form).each(function() {
+            $(this).closest('dd').prev('dt').hide();
         });
 
         // hide submit dt
         $('input:submit', form).each(function() {
-            $(this).closest('dd').css('margin-top', '13px').prev('dt').hide();
+            $(this).closest('dd').addClass('buttons').prev('dt').hide();
         });
 
         // toogle fieldsets
-        $('fieldset.toggle legend').click(function() {
+        $('fieldset.toggle legend', form).click(function() {
+            $(this).closest('fieldset').toggleClass('closed');
             $('+ dl', $(this)).toggle();
-        }).click().css('cursor', 'pointer');
+        }).each(function() {
+            $(this).css('cursor', 'pointer');
+            $('<span />').addClass('ui-icon ui-icon-triangle-2-n-s').prependTo($(this));
+
+            // toggle on load if not contain errors
+            if (!$('ul.errors', $(this).closest('fieldset')).size()) {
+                $(this).click();
+            }
+        });
+
+        // acl rule type colours switch
+        $('input:radio.acl.type', form).change(function() {
+            if ($(this).attr('checked')) {
+                $(this).closest('label').addClass('checked').siblings('label').removeClass('checked');
+            }
+        }).change();
     });
 });
 

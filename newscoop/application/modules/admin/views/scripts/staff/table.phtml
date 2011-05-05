@@ -1,7 +1,5 @@
-<h1><?php putGS('Staff management'); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Staff management')); ?>
 
-<?php $this->renderActions(array(
-    $this->url(array('action' => 'add')) => getGS('Add new staff member'),
-)); ?>
+<?php $this->renderActions(); ?>
 
 <?php $this->renderDatatable(); ?>
