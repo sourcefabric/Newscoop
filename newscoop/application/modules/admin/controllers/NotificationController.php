@@ -53,13 +53,13 @@ class Admin_NotificationController extends Zend_Controller_Action
 
             $body = $this->view->moderateBodyComment($comment);
             $subject = $this->view->moderateSubjectComment($comment);
-
             $mail = new Zend_Mail();
             $mail->setBodyText($body);
             $mail->setFrom($moderatorFrom);
             $mail->addTo($moderatorTo);
             $mail->setSubject($subject);
             $mail->send();
+            //mail()
         } catch (Zend_Exception $e) {
             echo $e->getMessage();
         }

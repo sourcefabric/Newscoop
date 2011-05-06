@@ -585,7 +585,7 @@ select.actions {
     padding:6px 0;
 }
 .commentsHolder  .dataTables_filter {
-    clear:both;
+    clear:left;
 }
 .commentsHolder  .dataTables_length {
     padding: 0 0 10px 0;
@@ -593,13 +593,13 @@ select.actions {
     float:right;
     line-height:23px;
 }
-.commentsHolder .ui-widget-header select {
+.commentsHolder .ui-widget-header select, .dataTables_actions .actions {
     background-color: #FFFFFF;
     border: 1px solid #9D9D9D;
     font-family: Arial,Helvetica,sans-serif;
-    font-size: 12px;
+    font-size: 12px !important;
     height: 25px;
-    margin: 0 0 0 6px;
+    margin: 0 0 0 6px !important;
     min-width:60px;
     padding: 2px 2px 2px 0;
     vertical-align: top;
@@ -619,6 +619,8 @@ select.actions {
     line-height:23px;
     font-weight:normal;
     display:inline-block;
+    border: 0px solid black !important;
+    background: none !important;
 }
 .commentsHolder .dataTables_actions a span {
     float:left;

@@ -14,21 +14,6 @@ use Newscoop\Entity\Comment;
 class Admin_CommentController extends Zend_Controller_Action
 {
 
-    private $allowedTags = array(
-        'a'             => array('title','href'),
-        'abbr'          => array('title'),
-        'acronym'       => array('title'),
-        'b'             => array(),
-        'blockquote'    => array('cite'),
-        'cite'          => array(),
-        'code'          => array(),
-        'del'           => array('datetime'),
-        'em'            => array(),
-        'i'             => array(),
-        'q'             => array('cite'),
-        'strike'        => array(),
-        'strong'        => array()
-    );
     /**
      * @var ICommentRepository
      *
@@ -190,8 +175,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $values['user'] = Zend_Registry::get('user');
         $values['name'] = $request->getParam('name');
         $values['subject'] = $request->getParam('subject');
-        $allowedTags = '<'.impload(array_keys($this->allowedTags),'><').'>';
-        $values['message'] = strip_tags($request->getParam('message'), $allowedTags);
+        $values['message'] = $request->getParam('message');
         $values['language'] = $request->getParam('language');
         $values['thread'] =  $request->getParam('article');
         $values['ip'] = $request->getClientIp();

@@ -1,322 +1,84 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
-<script type="text/javascript">
-$(function(){
-    // Tabs
-    $('.tabs').tabs();
-    $('.tabs').tabs('select', '#tabs-1');
-    var commentFilterTriggerCount = 0;
-    $("#commentFilterTrigger").click(function () {
-        if (commentFilterTriggerCount == 0){
-            $("#commentFilterSearch").css("display","block");
-            $(this).addClass("collapsed");
-            commentFilterTriggerCount = 1;
-        } else {
-            $("#commentFilterSearch").css("display","none");
-            $(this).removeClass("collapsed");
-            commentFilterTriggerCount = 0;
-        }
-    });
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
+<script>
+function putGS(str) {
+    return serverObj.language[str];
+}
+var serverObj = {};
+serverObj.security = {};
+serverObj.security = {<?php echo SecurityToken::JsParameter();?>};
 
-    $(".commentsHolder table tbody tr").hover(function() {
-        $(this).find(".commentBtns").css("visibility","visible");
-    },function() {
-        $(this).find(".commentBtns").css("visibility","hidden");
-           });
-
-    $(".addFilterBtn").click(function () {$('#commentFilterSearch fieldset ul').append('<li><select class="input_select"><option>1</option><option>2</option></select><input type="text" class="input_text" /></li>'); return false; $("#commentFilterSearch").css("height","500px");});
-});
-
+serverObj.language = {};
+serverObj.language['Comments updated.'] = '<?php putGS('Comments updated.');?>';
+serverObj.language['Unable to reach Newscoop. Please check your internet connection.']
+                   = '<?php putGS('Unable to reach Campsite. Please check your internet connection.');?>';
 </script>
 <div class="wrapper">
-  <div class="ui-widget-content small-block block-shadow commentsHolder">
-    <div class="padded clearfix inner-tabs">
-      <div class="tabs">
-        <ul>
-          <li><a href="#tabs-1">Comments</a></li>
-          <li><a href="#tabs-2">Users</a></li>
-        </ul>
-        <div id="tabs-1">
+<div class="ui-widget-content small-block block-shadow commentsHolder">
+<div class="padded clearfix inner-tabs">
+<div class="tabs">
+<ul>
+    <li><a href="#tabs-1">Comments</a></li>
+    <li><a href="#tabs-2">Users</a></li>
+</ul>
+<div id="tabs-1">
 <div id="showComments">
-<fieldset>
-<legend><?php putGS('Show');?></legend>
+<fieldset><legend><?php putGS('Show');?></legend>
 <ul class="status_filter">
-    <li class="published" style="display: none;">
-        <input type="checkbox" id="show_published" value="approved">
-        <label for="show_published"><?php putGS('Published');?></label>
+    <li class="published" style="display: none;"><input type="checkbox"
+        id="show_published" value="approved"> <label for="show_published"><?php putGS('Published');?></label>
     </li>
-    <li class="new">
-        <input type="checkbox" id="show_new" value="pending">
-        <label for="show_new"><?php putGS('New');?></label>
+    <li class="new"><input type="checkbox" id="show_new" value="pending"> <label
+        for="show_new"><?php putGS('New');?></label></li>
+    <li class="approved"><input type="checkbox" id="show_approved"
+        value="approved"> <label for="show_approved"><?php putGS('Approved');?></label>
     </li>
-    <li class="approved">
-        <input type="checkbox" id="show_approved" value="approved">
-        <label for="show_approved"><?php putGS('Approved');?></label>
+    <li class="hidden"><input type="checkbox" id="show_hidden"
+        value="hidden"> <label for="show_hidden"><?php putGS('Hidden');?></label>
     </li>
-    <li class="hidden">
-        <input type="checkbox" id="show_hidden" value="hidden">
-        <label for="show_hidden"><?php putGS('Hidden');?></label>
-    </li>
-    <li class="deleted">
-        <input type="checkbox" id="show_deleted" value="deleted">
-        <label for="show_deleted"><?php putGS('Deleted');?></label>
+    <li class="deleted"><input type="checkbox" id="show_deleted"
+        value="deleted"> <label for="show_deleted"><?php putGS('Deleted');?></label>
     </li>
 </ul>
-<script type="text/javascript">
-$().ready(function(){
-    $('.status_filter li').click(function(evt){
-        var ck = $(this).find('input[type="checkbox"]');
-        var checked = true;
-        if (ck.attr("checked")) {
-            checked = false;
-            ck.removeAttr("checked");
-        }
-        else
-            ck.attr("checked","checked");
-        datatableCallback.serverData[ck.val()] = checked;
-        datatable.fnDraw();
-        evt.preventDefault();
-    });
-});
-</script>
 </fieldset>
 </div>
 
 <div id="actionExpand" class="dataTables_actions">
-<fieldset>
-  <select class="input_select actions">
+<fieldset><select class="input_select actions">
     <option value=""><?php putGS('Actions');?></option>
     <option value="pending"><?php putGS('New');?></option>
     <option value="approved"><?php putGS('Approved');?></option>
     <option value="hidden"><?php putGS('Hidden');?></option>
     <option value="deleted"><?php putGS('Deleted');?></option>
-  </select>
-</fieldset>
-<a href="javascript:;" class="sort_tread">
-    <span class="css_right ui-icon ui-icon-carat-2-n-s"></span>
-    <?php putGS('Sort by Thread order');?>
-</a>
+</select></fieldset>
+<a href="javascript:;" class="sort_tread"> <span
+    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order');?>
+</a></div>
+<?php $this->renderDatatable(); ?></div>
 </div>
-<script>
-$().ready(function(){
-    $('.actions').change(function(){
-        action = $(this);
-        var status = action.val();
-        if(status != '')
-        {
-            ids = [];
-            $('.table-checkbox:checked').each(function(){
-                ids[ids.length] = $(this).val();
-            });
-            action.val('');
-            if(!ids.length)
-                return;
-            $.ajax({
-                type: 'POST',
-                url: 'comment/set-status/format/json',
-                data: {
-                   "comment": ids,
-                   "status": status,
-                   <?php echo SecurityToken::JsParameter();?>,
-                },
-                success: function(data) {
-                    flashMessage("<?php putGS('Comments updated.')?>");
-                	datatable.fnDraw();
-                },
-                error: function (rq, status, error) {
-                    if (status == 0 || status == -1) {
-                        flashMessage("<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>", "error");
-                    }
-                }
-            });
-        }
-    });
-    $('.sort_tread').click(function(){
-        var dir = $(this).find('span');
-        if(dir.hasClass('ui-icon-triangle-1-n'))
-        {
-            dir.removeClass("ui-icon-triangle-1-n");
-            dir.addClass('ui-icon-triangle-1-s');
-            datatable.fnSort( [ [2,'asc'] ] );
-        }
-        else {
-            dir.removeClass("ui-icon-triangle-1-s");
-            dir.addClass('ui-icon-triangle-1-n');
-            datatable.fnSort( [ [2,'desc'] ] );
-        }
-        dir.removeClass("ui-icon-carat-2-n-s");
-    });
-});
-</script>
-<?php $this->renderDatatable(); ?>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<script type="text/javascript">
-$().ready(function(){
-	$('.datatable .action').live('click',function(){
-	    var el = $(this);
-	    var id = el.attr('id');
-	    var ids = [id.match(/\d+/)[0]];
-	    var status = id.match(/[^_]+/)[0];
-        $.ajax({
-            type: 'POST',
-            url: 'comment/set-status/format/json',
-            data: {
-               "comment": ids,
-               "status": status,
-               <?php echo SecurityToken::JsParameter();?>,
-            },
-            success: function(data) {
-                datatable.fnDraw();
-                flashMessage("<?php putGS('Comments updated.')?>");
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage("<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>", "error");
-                }
-            }
-        });
-
-	});
-	$('.dateCommentHolderEdit form').live('submit', function(){
-	    var that = this;
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function(data) {
-                datatable.fnDraw();
-                flashMessage("<?php putGS('Comment updated.')?>");
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage("<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>", "error");
-                }
-            }
-        });
-        return false;
-	});
-	$('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function(){
-	    var el = $(this);
-	    var td = el.parents('td');
-	    var form = el.parents('form');
-	    $(form).each(function(){
-            this.reset();
-        });
-	    td.find('.commentSubject,.commentBody').show("fast");
-	    td.find('.content-edit').hide("fast");
-	    td.find('.content-reply').hide("fast");
-	});
-    $('.dateCommentHolderEdit .edit-reply').live('click', function(){
-        var el = $(this);
-        var td = el.parents('td');
-        var form = td.find('form');
-        $(form).each(function(){
-            this.reset();
-        });
-        td.find('.content-edit').hide("fast");
-        td.find('.content-reply').show("fast");
-    });
-
-	$('.datatable .action-edit').live('click', function(){
-		 var el = $(this);
-		 var td = el.parents('td');
-		 td.find('.commentSubject,.commentBody').toggle("fast");
-		 td.find('.content-edit').toggle("fast");
-	});
-});
-</script>
-<script type="text/javascript">
-var statusMap ={ 'pending': 'status_new', 'hidden': 'status_hidden', 'deleted': 'status_deleted', 'approved': 'status_approved' };
-var datatableCallback = {
-	serverData: {},
-	sort: function(){
-		console.log('here');
-	},
-	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-	    that = datatableCallback;
-        var tr = $('<tr></tr>');
-        tr.hover(function() {
-        	   $(this).find(".commentBtns").css("visibility","visible");
-            },function() {
-            	$(this).find(".commentBtns").css("visibility","hidden");
-        });/*
-        .click(function(e){
-            //$(this).find(".action-edit").click();
-            e.preventDefault();
-        	return false;
-        });
-        */
-        var td = $('<td></td>');
-        td.attr('colspan',5);
-        nRow = $(nRow);
-        tr.addClass(statusMap[nRow.find('.status-code').val()]);
-        actions = nRow.find('.commentAction').first();
-        nRow.find('.commentTimeCreated').removeClass('commentTimeCreated').addClass('commentMessage');
-        nActions = actions.clone();
-        actions.hide();
-        td.append($('<table cellspacing="0" cellpadding="0">').append(nRow));
-        td.append(nActions.html());
-        jRow = tr.append(td);
-        that.rowIndex++;
-        return jRow.get(0);
-    },
-    addServerData: function ( sSource, aoData, fnCallback ) {
-    	that = datatableCallback;
-        for(i in that.serverData) {
-            if(that.serverData[i])
-                aoData.push({"name": "sFilter[status][]", "value": i});
-        }
-    	$.getJSON( sSource, aoData, function (json) {
-    		fnCallback(json);
-    	});
-    }
-}
-</script>
-<script type="text/javascript">
-    $(function(){
-        // Dialog
-        $('.dialogPopup').dialog({
-            autoOpen: false,
-            width: 600,
-            height: 560,
-            position:'right',
-            buttons: {
-                "Cancel": function() {
-                    $(this).dialog("close");
-                }
-            }
-        });
-        // Dialog Link
-        $('.articleLink').live('click',function(){
-        var that = this;
-        $.ajax({
-                type: 'GET',
-                url: $(this).attr('href'),
-                success: function(data) {
-                      var content = '<h3><a href="#">'+$(that).html()+'</a></h3>';
-                      for(i in data)
-                      {
-                    	  content+='<h4>'+i+'</h4>';
-                    	  content+='<p>'+data[i]+'</p>';
-                      }
-                      $('.dialogPopup').html(content);
-                      $('.dialogPopup').dialog('open');
-                },
-                error: function (rq, status, error) {
-                    if (status == 0 || status == -1) {
-                        flashMessage("<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>", "error");
-                    }
-                }
-            });
-            return false;
-        });
-
-    });
-</script>
-
-<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div>
-<div class="dialogPopup dialog-1" title="Full article">
 </div>
+</div>
+<div id="fancybox-tmp"></div>
+<div id="fancybox-loading">
+<div></div>
+</div>
+<div id="fancybox-overlay"></div>
+<div id="fancybox-wrap">
+<div id="fancybox-outer">
+<div class="fancybox-bg" id="fancybox-bg-n"></div>
+<div class="fancybox-bg" id="fancybox-bg-ne"></div>
+<div class="fancybox-bg" id="fancybox-bg-e"></div>
+<div class="fancybox-bg" id="fancybox-bg-se"></div>
+<div class="fancybox-bg" id="fancybox-bg-s"></div>
+<div class="fancybox-bg" id="fancybox-bg-sw"></div>
+<div class="fancybox-bg" id="fancybox-bg-w"></div>
+<div class="fancybox-bg" id="fancybox-bg-nw"></div>
+<div id="fancybox-content"></div>
+<a id="fancybox-close"></a>
+<div id="fancybox-title"></div>
+<a href="javascript:;" id="fancybox-left"><span class="fancy-ico"
+    id="fancybox-left-ico"></span></a><a href="javascript:;"
+    id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div>
+</div>
+<div class="dialogPopup dialog-1" title="Full article"></div>

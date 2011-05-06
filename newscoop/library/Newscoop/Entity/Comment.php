@@ -21,6 +21,21 @@ use DateTime,
  */
 class Comment
 {
+    private $allowedTags = array(
+        'a'             => array('title','href'),
+        'abbr'          => array('title'),
+        'acronym'       => array('title'),
+        'b'             => array(),
+        'blockquote'    => array('cite'),
+        'cite'          => array(),
+        'code'          => array(),
+        'del'           => array('datetime'),
+        'em'            => array(),
+        'i'             => array(),
+        'q'             => array('cite'),
+        'strike'        => array(),
+        'strong'        => array()
+    );
     /**
      * Constants for status
 
@@ -57,7 +72,7 @@ class Comment
 
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter")
-     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
+     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id", onDelete="CASCADE")
      * @var Newscoop\Entity\Comment\Commenter
      */
     private $commenter;
@@ -248,7 +263,8 @@ class Comment
      */
     public function setMessage($p_message)
     {
-        $this->message = (string) $p_message;
+        $allowedTags = '<'.implode(array_keys($this->allowedTags),'><').'>';
+        $this->message = strip_tags((string) $p_message, $allowedTags);
         // return this for chaining mechanism
         return $this;
     }

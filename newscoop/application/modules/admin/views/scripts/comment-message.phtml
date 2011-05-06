@@ -11,10 +11,7 @@
     <span class="thumbs up"><?php echo $this->comment->getLikes();?></span>
     <span class="thumbs down"><?php echo $this->comment->getDislikes();?></span> </div>
 <p class="commentBody">
-<?php
-echo substr($this->comment->getMessage(),0,140);
-?>
-<?php if(strlen($this->comment->getMessage())>140):?> ...<?php endif;?>
+<?php $this->stringLimit($this->comment->getMessage()); ?>
 </p>
 </div>
 

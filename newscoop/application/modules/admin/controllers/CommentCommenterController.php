@@ -187,7 +187,7 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
             $this->acceptanceRepository->saveBanned($p_commenter, $p_publication, $values);
             $this->acceptanceRepository->flush();
             $this->_helper->flashMessenger(getGS('Ban for commenter "$1" saved.',$p_commenter->getName()));
-            $this->_helper->redirector->gotoSimple('index');
+            $this->_helper->redirector->gotoSimple('index','comment');
         }
     }
 
