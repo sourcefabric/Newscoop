@@ -10,6 +10,6 @@ namespace Newscoop\File\Manager;
 /**
  * File manager interface
  */
-interface Manager extends \Iterator
+interface Manager extends \Iterator, \Countable
 {
 }

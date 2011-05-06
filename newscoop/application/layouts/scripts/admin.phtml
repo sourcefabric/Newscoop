@@ -112,7 +112,7 @@
 <script type="text/javascript"><!--
 $(function() {
     <?php foreach ($this->messages as $message) { ?>
-    flashMessage('<?php echo $this->escape($message); ?>');
+    flashMessage(<?php echo json_encode($message); ?>);
     <?php } ?>
 });
 //--></script>

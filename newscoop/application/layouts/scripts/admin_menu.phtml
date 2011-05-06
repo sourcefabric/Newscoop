@@ -272,6 +272,17 @@ if ($showConfigureMenu) {
         'label' => getGS('File manager'),
         'module' => 'admin',
         'controller' => 'file-manager',
+        'action' => 'index',
+        'reset_params' => FALSE,
+        'pages' => array(
+            array(
+                'label' => getGS('Edit template'),
+                'module' => 'admin',
+                'controller' => 'file-manager',
+                'action' => 'edit',
+                'visible' => FALSE,
+            ),
+        ),
     );
 
     $pages[3]['pages'][] = array(
