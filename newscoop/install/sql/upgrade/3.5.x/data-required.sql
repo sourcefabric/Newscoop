@@ -41,3 +41,4 @@ UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname
 -- whether we shall use internal statistics on article reading
 INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y');
 
+system php ./acl.php
